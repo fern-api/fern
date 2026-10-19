@@ -10,9 +10,7 @@ use std::collections::HashMap;
 use crate::auth::{AuthCredentialSource, AuthStrategy, DynAuthProvider, SchemeBinding};
 use crate::error::CliError;
 use crate::formatter;
-use crate::openapi::discovery::{
-    GlobalParameter, JsonSchema, RestDescription, RestMethod, RestResource,
-};
+use crate::openapi::discovery::{GlobalParameter, JsonSchema, RestDescription, RestMethod, RestResource};
 use crate::openapi::executor;
 
 /// Split a slash-delimited prefix string into its path components, dropping
@@ -198,7 +196,9 @@ pub(crate) fn collect_spec_server_variables(
 /// Whether a spec declares anything for server-variable resolution to
 /// act on: `servers[].variables` or `x-fern-default-url`, at the document
 /// root or on an operation.
-fn spec_declares_server_urls_to_resolve(doc: &crate::openapi::discovery::RestDescription) -> bool {
+fn spec_declares_server_urls_to_resolve(
+    doc: &crate::openapi::discovery::RestDescription,
+) -> bool {
     use crate::openapi::discovery::{RestResource, Server};
 
     fn any_server(servers: &[Server]) -> bool {
@@ -380,7 +380,10 @@ fn merge_security_schemes(
 /// Merge document-root OpenAPI tag descriptions across specs. First write
 /// wins on normalized-name collisions, preserving deterministic metadata when
 /// multiple specs declare the same tag.
-fn merge_tag_descriptions(acc: &mut HashMap<String, String>, incoming: HashMap<String, String>) {
+fn merge_tag_descriptions(
+    acc: &mut HashMap<String, String>,
+    incoming: HashMap<String, String>,
+) {
     for (name, description) in incoming {
         acc.entry(name).or_insert(description);
     }
@@ -629,8 +632,7 @@ fn global_header_flag_collides_with_builtin(kebab: &str) -> bool {
 /// flags (`--format`, `--dry-run`, …) are screened separately by
 /// [`global_header_flag_collides_with_builtin`].
 fn global_header_long_collides_with_param(cli: &clap::Command, long: &str) -> bool {
-    cli.get_subcommands()
-        .any(|sub| command_declares_long(sub, long))
+    cli.get_subcommands().any(|sub| command_declares_long(sub, long))
 }
 
 /// Recursive worker for [`global_header_long_collides_with_param`]: true
@@ -742,7 +744,9 @@ pub(crate) fn per_op_header_param_overrides_global(
     method: &RestMethod,
     wire_name: &str,
 ) -> bool {
-    let supplied = params.keys().any(|k| k.eq_ignore_ascii_case(wire_name));
+    let supplied = params
+        .keys()
+        .any(|k| k.eq_ignore_ascii_case(wire_name));
     if !supplied {
         return false;
     }
@@ -876,10 +880,9 @@ pub(crate) fn global_param_apply_mode_admits(
     use crate::openapi::discovery::GlobalParameterApplyMode;
     match decl.apply {
         GlobalParameterApplyMode::Auto => true,
-        GlobalParameterApplyMode::Explicit => method
-            .global_parameter_opt_ins
-            .iter()
-            .any(|n| n == &decl.name),
+        GlobalParameterApplyMode::Explicit => {
+            method.global_parameter_opt_ins.iter().any(|n| n == &decl.name)
+        }
     }
 }
 
@@ -944,9 +947,14 @@ pub(crate) fn build_global_parameter_overrides(
             (None, false) => {
                 if !p.optional {
                     let kebab = global_parameter_flag_name(p);
-                    let mut msg = format!("Required global parameter '{}' has no value.", p.name,);
+                    let mut msg = format!(
+                        "Required global parameter '{}' has no value.",
+                        p.name,
+                    );
                     if let Some(ref env) = p.env {
-                        msg.push_str(&format!(" Provide it via --{kebab} or {env}."));
+                        msg.push_str(&format!(
+                            " Provide it via --{kebab} or {env}."
+                        ));
                     } else {
                         msg.push_str(&format!(" Provide it via --{kebab}."));
                     }
@@ -1188,8 +1196,7 @@ impl CliApp {
     /// `x-fern-idempotent: true`; non-idempotent operations are
     /// unaffected.
     pub fn idempotency_header_env(mut self, name: &str, env_var: &str) -> Self {
-        self.idempotency_header_envs
-            .insert(name.to_string(), env_var.to_string());
+        self.idempotency_header_envs.insert(name.to_string(), env_var.to_string());
         self
     }
 
@@ -1270,7 +1277,12 @@ impl CliApp {
 
     /// Like [`spec_under`](Self::spec_under), but with a Fern-style overrides
     /// file deep-merged onto the spec before parsing.
-    pub fn spec_under_with_overrides(mut self, prefix: &str, yaml: &str, overrides: &str) -> Self {
+    pub fn spec_under_with_overrides(
+        mut self,
+        prefix: &str,
+        yaml: &str,
+        overrides: &str,
+    ) -> Self {
         self.specs.push(SpecEntry {
             yaml: yaml.to_string(),
             prefix_path: split_prefix(prefix),
@@ -1338,7 +1350,11 @@ impl CliApp {
     ///          include_str!("overrides/management/customers.v3.yml")),
     ///     ])
     /// ```
-    pub fn specs_under_named_with_overrides<I, K, V, O>(mut self, prefix: &str, named: I) -> Self
+    pub fn specs_under_named_with_overrides<I, K, V, O>(
+        mut self,
+        prefix: &str,
+        named: I,
+    ) -> Self
     where
         I: IntoIterator<Item = (K, V, O)>,
         K: AsRef<str>,
@@ -1411,22 +1427,24 @@ impl CliApp {
 
         for entry in &self.specs {
             // 1. Apply overlays (RFC 7396 style) first.
-            let effective_yaml =
-                crate::openapi::overlay::apply_overlays_to_spec(&entry.yaml, &entry.overlays)?;
+            let effective_yaml = crate::openapi::overlay::apply_overlays_to_spec(
+                &entry.yaml,
+                &entry.overlays,
+            )?;
 
             // 2. Apply Fern-style overrides (deep-merge) on top.
             let spec_doc = if entry.overrides.is_empty() {
                 crate::openapi::load_openapi_spec(&effective_yaml, &self.name)?
             } else {
-                let mut value: serde_yaml::Value =
-                    serde_yaml::from_str(&effective_yaml).map_err(|e| {
-                        CliError::Discovery(format!("Failed to parse OpenAPI spec: {e}"))
-                    })?;
+                let mut value: serde_yaml::Value = serde_yaml::from_str(&effective_yaml)
+                    .map_err(|e| CliError::Discovery(
+                        format!("Failed to parse OpenAPI spec: {e}"),
+                    ))?;
                 for ovr in &entry.overrides {
-                    let override_value: serde_yaml::Value =
-                        serde_yaml::from_str(ovr).map_err(|e| {
-                            CliError::Discovery(format!("Failed to parse overrides YAML: {e}"))
-                        })?;
+                    let override_value: serde_yaml::Value = serde_yaml::from_str(ovr)
+                        .map_err(|e| CliError::Discovery(
+                            format!("Failed to parse overrides YAML: {e}"),
+                        ))?;
                     value = crate::openapi::deep_merge_yaml(value, override_value);
                 }
                 crate::openapi::load_openapi_spec_from_value(value, &self.name)?
@@ -1480,13 +1498,9 @@ impl CliApp {
         // replace any spec-parsed param with the same name.
         if !self.builder_global_parameters.is_empty() {
             // Remove spec-parsed params that the builder overrides by name.
-            let builder_names: std::collections::HashSet<String> = self
-                .builder_global_parameters
-                .iter()
-                .map(|p| p.name.clone())
-                .collect();
-            doc.global_parameters
-                .retain(|p| !builder_names.contains(&p.name));
+            let builder_names: std::collections::HashSet<String> =
+                self.builder_global_parameters.iter().map(|p| p.name.clone()).collect();
+            doc.global_parameters.retain(|p| !builder_names.contains(&p.name));
             // Prepend builder params (they take precedence in flag order),
             // followed by the surviving spec-parsed params.
             let mut merged = self.builder_global_parameters.clone();
@@ -1528,8 +1542,10 @@ impl CliApp {
             } else {
                 // Reproduce the overlay + override merge from build_doc,
                 // stopping before parsing to RestDescription.
-                let effective =
-                    crate::openapi::overlay::apply_overlays_to_spec(&entry.yaml, &entry.overlays)?;
+                let effective = crate::openapi::overlay::apply_overlays_to_spec(
+                    &entry.yaml,
+                    &entry.overlays,
+                )?;
 
                 if entry.overrides.is_empty() {
                     documents.push(effective);
@@ -1667,9 +1683,15 @@ impl CliApp {
     /// multiple bindings or storing custom providers in a registry.
     ///
     /// [`auth_provider`]: Self::auth_provider
-    pub fn auth_provider_shared(mut self, scheme_name: &str, provider: DynAuthProvider) -> Self {
-        self.auth_bindings
-            .push((scheme_name.to_string(), SchemeBinding::Custom(provider)));
+    pub fn auth_provider_shared(
+        mut self,
+        scheme_name: &str,
+        provider: DynAuthProvider,
+    ) -> Self {
+        self.auth_bindings.push((
+            scheme_name.to_string(),
+            SchemeBinding::Custom(provider),
+        ));
         self
     }
 
@@ -1792,7 +1814,9 @@ impl CliApp {
             let help_text = var
                 .description
                 .clone()
-                .unwrap_or_else(|| format!("Value for the {{{}}} URL template variable", var.name));
+                .unwrap_or_else(|| {
+                    format!("Value for the {{{}}} URL template variable", var.name)
+                });
             let mut arg = clap::Arg::new(var.name.clone())
                 .long(kebab)
                 .global(true)
@@ -1973,10 +1997,8 @@ impl CliApp {
             }
             let arg_id = global_header_arg_id(h);
             let value_name = crate::text::to_screaming_snake(&kebab);
-            let mut help_lines: Vec<String> = vec![format!(
-                "Global header `{}` (sent on every request).",
-                h.header
-            )];
+            let mut help_lines: Vec<String> =
+                vec![format!("Global header `{}` (sent on every request).", h.header)];
             if let Some(env) = &h.env {
                 help_lines.push(format!("Env: {env}."));
             }
@@ -2054,7 +2076,10 @@ impl CliApp {
             if let Some(ref docs) = p.docs {
                 help_lines.push(docs.clone());
             } else {
-                help_lines.push(format!("Global {location_label} parameter `{}`.", p.target,));
+                help_lines.push(format!(
+                    "Global {location_label} parameter `{}`.",
+                    p.target,
+                ));
             }
             if let Some(ref env) = p.env {
                 help_lines.push(format!("Env: {env}."));
@@ -2096,7 +2121,7 @@ impl CliApp {
                 .long("debug")
                 .action(clap::ArgAction::SetTrue)
                 .global(true)
-                .help("Dump HTTP request and response to stderr"),
+                .help("Dump HTTP request and response to stderr")
         );
 
         // Compose the root --help footer. Preserves the section order
@@ -2178,7 +2203,11 @@ impl CliApp {
         self.server_vars.iter().map(|v| v.name.clone()).collect()
     }
 
-    pub(crate) fn apply_server_vars(&self, doc: &mut RestDescription, matches: &clap::ArgMatches) {
+    pub(crate) fn apply_server_vars(
+        &self,
+        doc: &mut RestDescription,
+        matches: &clap::ArgMatches,
+    ) {
         self.apply_server_vars_for(doc, matches, None);
     }
 
@@ -2272,12 +2301,8 @@ impl CliApp {
         let out_dir = output_dir.unwrap_or("skills").to_string();
         let resolved = crate::validate::validate_safe_output_dir(&out_dir)?;
 
-        let files = crate::openapi::skill_emitter::generate_skills(
-            doc,
-            &self.name,
-            &self.auth_bindings,
-            self.auth_strategy,
-        );
+        let files =
+            crate::openapi::skill_emitter::generate_skills(doc, &self.name, &self.auth_bindings, self.auth_strategy);
 
         for (rel_path, content) in &files {
             let full_path = resolved.join(rel_path);
@@ -2290,7 +2315,10 @@ impl CliApp {
                 })?;
             }
             std::fs::write(&full_path, content).map_err(|e| {
-                CliError::Validation(format!("Failed to write {}: {e}", full_path.display()))
+                CliError::Validation(format!(
+                    "Failed to write {}: {e}",
+                    full_path.display()
+                ))
             })?;
         }
 
@@ -2306,10 +2334,7 @@ impl CliApp {
     /// registered bindings. With no bindings, returns a `NoAuthProvider`
     /// — the CLI runs unauthenticated.
     pub(crate) fn build_auth_provider(&self, doc: &RestDescription) -> DynAuthProvider {
-        let has_per_endpoint = doc
-            .resources
-            .values()
-            .any(resource_has_per_endpoint_security);
+        let has_per_endpoint = doc.resources.values().any(resource_has_per_endpoint_security);
         let primary = crate::auth::build_provider_with_strategy(
             &self.auth_bindings,
             &doc.security_schemes,
@@ -2341,10 +2366,7 @@ impl CliApp {
         finalized: &[(String, crate::auth::SchemeBinding)],
         doc: &RestDescription,
     ) -> DynAuthProvider {
-        let has_per_endpoint = doc
-            .resources
-            .values()
-            .any(resource_has_per_endpoint_security);
+        let has_per_endpoint = doc.resources.values().any(resource_has_per_endpoint_security);
         let primary = crate::auth::build_provider_with_strategy(
             finalized,
             &doc.security_schemes,
@@ -2404,13 +2426,7 @@ impl AppContext {
         global_params: Vec<ResolvedGlobalParam>,
     ) -> Self {
         Self {
-            entries: vec![BindingEntry {
-                doc,
-                auth_provider,
-                http_config,
-                global_headers,
-                global_params,
-            }],
+            entries: vec![BindingEntry { doc, auth_provider, http_config, global_headers, global_params }],
             quiet: false,
             base_url_override: None,
             debug: false,
@@ -2525,11 +2541,7 @@ impl AppContext {
             .filter(|gp| {
                 // Look up the declaration by identity (`name`), not `target`:
                 // two params can share a target across locations.
-                let decl = entry
-                    .doc
-                    .global_parameters
-                    .iter()
-                    .find(|d| d.name == gp.name);
+                let decl = entry.doc.global_parameters.iter().find(|d| d.name == gp.name);
                 if let Some(d) = decl {
                     if !global_param_apply_mode_admits(d, method) {
                         return false;
@@ -2733,7 +2745,11 @@ impl AppContext {
     ///
     /// This is the recommended way to look up methods in a multi-binding
     /// CLI — it searches across all bindings and returns the first match.
-    pub fn find_method(&self, resource: &str, method_name: &str) -> Result<&RestMethod, CliError> {
+    pub fn find_method(
+        &self,
+        resource: &str,
+        method_name: &str,
+    ) -> Result<&RestMethod, CliError> {
         for entry in &self.entries {
             if let Some(r) = entry.doc.resources.get(resource) {
                 if let Some(m) = r.methods.get(method_name) {
@@ -2891,10 +2907,7 @@ fn resource_has_per_endpoint_security(resource: &RestResource) -> bool {
     {
         return true;
     }
-    resource
-        .resources
-        .values()
-        .any(resource_has_per_endpoint_security)
+    resource.resources.values().any(resource_has_per_endpoint_security)
 }
 
 /// Recursively walks clap ArgMatches to find the leaf method and its matches.
@@ -3031,7 +3044,10 @@ pub(crate) fn collect_params_from_flags(
         if let Some(var_name) = param_def.variable_reference.as_deref() {
             match matched_args.get_one::<String>(var_name) {
                 Some(value) => {
-                    params.insert(param_name.clone(), serde_json::Value::String(value.clone()));
+                    params.insert(
+                        param_name.clone(),
+                        serde_json::Value::String(value.clone()),
+                    );
                 }
                 None => {
                     missing_variable_bound.push((param_name.clone(), var_name.to_string()));
@@ -3046,7 +3062,8 @@ pub(crate) fn collect_params_from_flags(
         let arg_id = crate::openapi::commands::param_clap_arg_id(param_name);
 
         if param_def.repeated {
-            if matched_args.value_source(&arg_id) == Some(clap::parser::ValueSource::DefaultValue)
+            if matched_args.value_source(&arg_id)
+                == Some(clap::parser::ValueSource::DefaultValue)
                 && is_body_param(param_def)
                 && (body_json_supplied || ancestor_flag_typed(param_name))
             {
@@ -3119,8 +3136,8 @@ pub(crate) fn collect_params_from_flags(
         let Some(value) = matched_args.get_one::<String>(&arg_id) else {
             continue;
         };
-        let from_default =
-            matched_args.value_source(&arg_id) == Some(clap::parser::ValueSource::DefaultValue);
+        let from_default = matched_args.value_source(&arg_id)
+            == Some(clap::parser::ValueSource::DefaultValue);
         if from_default
             && is_body_param(param_def)
             && (body_json_supplied || ancestor_flag_typed(param_name))
@@ -3178,8 +3195,9 @@ pub(crate) fn collect_params_from_flags(
 
     // Override with --params JSON if provided (--params wins).
     if let Some(json_str) = params_override {
-        let overrides: serde_json::Map<String, serde_json::Value> = serde_json::from_str(json_str)
-            .map_err(|e| CliError::Validation(format!("Invalid --params JSON: {e}")))?;
+        let overrides: serde_json::Map<String, serde_json::Value> =
+            serde_json::from_str(json_str)
+                .map_err(|e| CliError::Validation(format!("Invalid --params JSON: {e}")))?;
         for (key, value) in overrides {
             params.insert(key, value);
         }
@@ -3467,10 +3485,7 @@ mod tests {
             Some("https://api.example.com"),
         );
         // No operation declares one either — nothing to invent.
-        assert_eq!(
-            first_method_root_url(&std::collections::HashMap::new()),
-            None
-        );
+        assert_eq!(first_method_root_url(&std::collections::HashMap::new()), None);
     }
 
     /// A global header/parameter whose flag was never registered on the
@@ -3636,7 +3651,8 @@ mod tests {
         let mut params = serde_json::Map::new();
         params.insert("X-API-Stage".into(), serde_json::json!("canary"));
 
-        let overrides = build_global_header_overrides(&matches, &doc, &method, &params).unwrap();
+        let overrides =
+            build_global_header_overrides(&matches, &doc, &method, &params).unwrap();
         assert!(
             overrides.is_empty(),
             "per-op param suppresses the global override, got: {overrides:?}",
@@ -3651,9 +3667,12 @@ mod tests {
         let cli = clap::Command::new("cli")
             // A root-level global flag must NOT count as a collision.
             .arg(clap::Arg::new("format").long("format").global(true))
-            .subcommand(clap::Command::new("products").subcommand(
-                clap::Command::new("retrieve").arg(clap::Arg::new("country").long("country")),
-            ));
+            .subcommand(
+                clap::Command::new("products").subcommand(
+                    clap::Command::new("retrieve")
+                        .arg(clap::Arg::new("country").long("country")),
+                ),
+            );
         assert!(
             global_header_long_collides_with_param(&cli, "country"),
             "a per-op param on a leaf must register as a collision",
@@ -3676,7 +3695,8 @@ mod tests {
         let cli = clap::Command::new("cli").subcommand(
             clap::Command::new("products")
                 .subcommand(
-                    clap::Command::new("retrieve").arg(clap::Arg::new("country").long("country")),
+                    clap::Command::new("retrieve")
+                        .arg(clap::Arg::new("country").long("country")),
                 )
                 .subcommand(clap::Command::new("list")),
         );
@@ -3808,9 +3828,7 @@ mod tests {
         // must be flagged as colliding so the global registration site
         // can skip them with a warning instead of letting clap panic.
         // Cover the names that are most likely to be picked accidentally.
-        for builtin in [
-            "params", "format", "dry-run", "base-url", "page-all", "output", "json", "debug",
-        ] {
+        for builtin in ["params", "format", "dry-run", "base-url", "page-all", "output", "json", "debug"] {
             assert!(
                 sdk_variable_collides_with_builtin(builtin),
                 "expected '{builtin}' to collide with a built-in flag",
@@ -3974,10 +3992,7 @@ mod tests {
         let msg = format!("{err}");
         assert!(msg.contains("--api-stage"), "should name flag: {msg}");
         assert!(msg.contains("FIXTURE_API_STAGE"), "should name env: {msg}");
-        assert!(
-            msg.contains("X-API-Stage"),
-            "should name wire header: {msg}"
-        );
+        assert!(msg.contains("X-API-Stage"), "should name wire header: {msg}");
     }
 
     /// A required global header with no resolved value is permitted
@@ -4025,10 +4040,7 @@ mod tests {
         let headers = ctx
             .extra_headers_for(&method, Some(params_json))
             .expect("per-op override should satisfy the required global header");
-        assert!(
-            headers.is_empty(),
-            "per-op wins: globals dropped: {headers:?}"
-        );
+        assert!(headers.is_empty(), "per-op wins: globals dropped: {headers:?}");
     }
 
     /// An optional global header with no resolved value is silently
@@ -4110,9 +4122,7 @@ mod tests {
     /// both landing on the wire).
     #[test]
     fn test_per_op_header_param_override_is_case_insensitive() {
-        use crate::openapi::discovery::{
-            GlobalHeader, MethodParameter, RestDescription, RestMethod,
-        };
+        use crate::openapi::discovery::{GlobalHeader, MethodParameter, RestDescription, RestMethod};
         use std::collections::HashMap;
 
         let doc = RestDescription {
@@ -4151,7 +4161,9 @@ mod tests {
         // without a CLI flag / env value.
         let headers = ctx
             .extra_headers_for(&method, Some(r#"{"X-Api-Stage": "canary"}"#))
-            .expect("per-op override should satisfy required-header check regardless of casing");
+            .expect(
+                "per-op override should satisfy required-header check regardless of casing",
+            );
         assert!(
             headers.is_empty(),
             "global header must be suppressed when per-op param overrides it: {headers:?}",
@@ -4174,8 +4186,10 @@ mod tests {
             env: None,
             default: None,
         };
-        let cmd = clap::Command::new("t")
-            .arg(clap::Arg::new(global_header_arg_id(&h)).long(global_header_flag_name(&h)));
+        let cmd = clap::Command::new("t").arg(
+            clap::Arg::new(global_header_arg_id(&h))
+                .long(global_header_flag_name(&h)),
+        );
         // Empty string flag value → None.
         let m = cmd.clone().get_matches_from(["t", "--api-stage", ""]);
         assert!(
@@ -4270,37 +4284,25 @@ mod tests {
 
         let mut res_a = HashMap::new();
         let mut methods_a = HashMap::new();
-        methods_a.insert(
-            "upload".to_string(),
-            RestMethod {
-                id: Some("files.upload".to_string()),
-                ..Default::default()
-            },
-        );
-        res_a.insert(
-            "files".to_string(),
-            RestResource {
-                methods: methods_a,
-                ..Default::default()
-            },
-        );
+        methods_a.insert("upload".to_string(), RestMethod {
+            id: Some("files.upload".to_string()),
+            ..Default::default()
+        });
+        res_a.insert("files".to_string(), RestResource {
+            methods: methods_a,
+            ..Default::default()
+        });
 
         let mut res_b = HashMap::new();
         let mut methods_b = HashMap::new();
-        methods_b.insert(
-            "list".to_string(),
-            RestMethod {
-                id: Some("users.list".to_string()),
-                ..Default::default()
-            },
-        );
-        res_b.insert(
-            "users".to_string(),
-            RestResource {
-                methods: methods_b,
-                ..Default::default()
-            },
-        );
+        methods_b.insert("list".to_string(), RestMethod {
+            id: Some("users.list".to_string()),
+            ..Default::default()
+        });
+        res_b.insert("users".to_string(), RestResource {
+            methods: methods_b,
+            ..Default::default()
+        });
 
         let doc_a = RestDescription {
             name: "spec-a".to_string(),
@@ -4329,14 +4331,10 @@ mod tests {
         });
 
         // find_method should find methods from either entry.
-        let m1 = ctx
-            .find_method("files", "upload")
-            .expect("should find files.upload");
+        let m1 = ctx.find_method("files", "upload").expect("should find files.upload");
         assert_eq!(m1.id.as_deref(), Some("files.upload"));
 
-        let m2 = ctx
-            .find_method("users", "list")
-            .expect("should find users.list");
+        let m2 = ctx.find_method("users", "list").expect("should find users.list");
         assert_eq!(m2.id.as_deref(), Some("users.list"));
 
         // entry_for_method routes to the correct entry.
@@ -4421,20 +4419,14 @@ mod tests {
         // with "Cannot combine --json with per-field body flags (--type)" — for a
         // flag the user never typed, and could not avoid.
         let method = method_with_defaulted_body_field();
-        let matches = command_with_defaulted_type().get_matches_from(vec![
-            "test",
-            "--json",
-            r#"{"type":"new","name":"n"}"#,
-        ]);
+        let matches = command_with_defaulted_type()
+            .get_matches_from(vec!["test", "--json", r#"{"type":"new","name":"n"}"#]);
         let result = collect_params_from_flags(&matches, &method, None).unwrap();
         assert!(
             !result.contains_key("type"),
             "a default-sourced body field must not look like a per-field flag under --json, got: {result:?}"
         );
-        assert!(
-            result.is_empty(),
-            "no body params should be collected, got: {result:?}"
-        );
+        assert!(result.is_empty(), "no body params should be collected, got: {result:?}");
     }
 
     #[test]
@@ -4640,11 +4632,7 @@ mod tests {
             ..Default::default()
         };
         let cmd = clap::Command::new("test")
-            .arg(
-                clap::Arg::new("page_size")
-                    .long("page-size")
-                    .default_value("25"),
-            )
+            .arg(clap::Arg::new("page_size").long("page-size").default_value("25"))
             .arg(clap::Arg::new("json").long("json"))
             .arg(clap::Arg::new("params").long("params"));
         let matches = cmd.get_matches_from(vec!["test", "--json", r#"{"a":1}"#]);
@@ -4794,7 +4782,10 @@ mod tests {
             .arg(clap::Arg::new("params").long("params"));
         let matches = cmd.get_matches_from(vec!["test", "--ids", "not-json"]);
         let result = collect_params_from_flags(&matches, &method, None).unwrap();
-        assert_eq!(result.get("ids").and_then(|v| v.as_str()), Some("not-json"),);
+        assert_eq!(
+            result.get("ids").and_then(|v| v.as_str()),
+            Some("not-json"),
+        );
     }
 
     #[test]
@@ -4898,9 +4889,8 @@ mod tests {
                     .action(clap::ArgAction::Append),
             )
             .arg(clap::Arg::new("params").long("params"));
-        let matches = cmd.get_matches_from(vec![
-            "test", "--tags", "123", "--tags", "null", "--tags", "{}",
-        ]);
+        let matches =
+            cmd.get_matches_from(vec!["test", "--tags", "123", "--tags", "null", "--tags", "{}"]);
         let result = collect_params_from_flags(&matches, &method, None).unwrap();
         assert_eq!(
             result.get("tags"),
@@ -5098,11 +5088,7 @@ mod tests {
             )
             .arg(clap::Arg::new("params").long("params"));
         let matches = cmd.get_matches_from(vec![
-            "test",
-            "--to",
-            "a@example.com",
-            "--to",
-            "b@example.com",
+            "test", "--to", "a@example.com", "--to", "b@example.com",
         ]);
         let result = collect_params_from_flags(&matches, &method, None).unwrap();
         assert_eq!(
@@ -5137,8 +5123,9 @@ mod tests {
                     .action(clap::ArgAction::Append),
             )
             .arg(clap::Arg::new("params").long("params"));
-        let matches =
-            cmd.get_matches_from(vec!["test", "--to", r#"["a@example.com","b@example.com"]"#]);
+        let matches = cmd.get_matches_from(vec![
+            "test", "--to", r#"["a@example.com","b@example.com"]"#,
+        ]);
         let result = collect_params_from_flags(&matches, &method, None).unwrap();
         assert_eq!(
             result.get("to"),
@@ -5241,7 +5228,10 @@ mod tests {
             .arg(clap::Arg::new("params").long("params"));
         let matches = cmd.get_matches_from(vec!["test", "--tag", "not-json"]);
         let result = collect_params_from_flags(&matches, &method, None).unwrap();
-        assert_eq!(result.get("tag").and_then(|v| v.as_str()), Some("not-json"),);
+        assert_eq!(
+            result.get("tag").and_then(|v| v.as_str()),
+            Some("not-json"),
+        );
     }
 
     // ------------------------------------------------------------------
@@ -5376,7 +5366,8 @@ paths:
     #[test]
     fn test_resolve_method_resource_not_found() {
         let doc = RestDescription::default();
-        let cmd = clap::Command::new("cli").subcommand(clap::Command::new("unknown"));
+        let cmd =
+            clap::Command::new("cli").subcommand(clap::Command::new("unknown"));
         let matches = cmd.get_matches_from(vec!["cli", "unknown"]);
         let err = resolve_method_from_matches(&doc, &matches).unwrap_err();
         assert!(err.to_string().contains("Resource 'unknown' not found"));
@@ -5385,14 +5376,8 @@ paths:
     #[test]
     fn test_resolve_method_method_not_found() {
         let mut resources = std::collections::HashMap::new();
-        resources.insert(
-            "files".to_string(),
-            crate::openapi::discovery::RestResource::default(),
-        );
-        let doc = RestDescription {
-            resources,
-            ..Default::default()
-        };
+        resources.insert("files".to_string(), crate::openapi::discovery::RestResource::default());
+        let doc = RestDescription { resources, ..Default::default() };
 
         let cmd = clap::Command::new("cli")
             .subcommand(clap::Command::new("files").subcommand(clap::Command::new("delete")));
@@ -5404,24 +5389,17 @@ paths:
     #[test]
     fn test_resolve_method_sub_resource_not_found() {
         let mut resources = std::collections::HashMap::new();
-        resources.insert(
-            "files".to_string(),
-            crate::openapi::discovery::RestResource::default(),
-        );
-        let doc = RestDescription {
-            resources,
-            ..Default::default()
-        };
+        resources.insert("files".to_string(), crate::openapi::discovery::RestResource::default());
+        let doc = RestDescription { resources, ..Default::default() };
 
-        let cmd =
-            clap::Command::new("cli").subcommand(clap::Command::new("files").subcommand(
+        let cmd = clap::Command::new("cli").subcommand(
+            clap::Command::new("files").subcommand(
                 clap::Command::new("permissions").subcommand(clap::Command::new("list")),
-            ));
+            ),
+        );
         let matches = cmd.get_matches_from(vec!["cli", "files", "permissions", "list"]);
         let err = resolve_method_from_matches(&doc, &matches).unwrap_err();
-        assert!(err
-            .to_string()
-            .contains("Sub-resource 'permissions' not found"));
+        assert!(err.to_string().contains("Sub-resource 'permissions' not found"));
     }
 
     #[test]
@@ -5630,11 +5608,7 @@ paths:
       x-fern-sdk-method-name: list
       responses: { "200": { description: ok } }
 "#;
-        let doc = CliApp::new("multi")
-            .spec(spec_a)
-            .spec(spec_b)
-            .build_doc()
-            .unwrap();
+        let doc = CliApp::new("multi").spec(spec_a).spec(spec_b).build_doc().unwrap();
         // Both schemes from both specs survive the merge.
         assert!(
             doc.security_schemes.contains_key("bearerAuth"),
@@ -5865,7 +5839,10 @@ paths:
       x-fern-sdk-method-name: list
       responses: { "200": { description: ok } }
 "#;
-        let app = CliApp::new("t").specs_under_named("v3", [("alpha", spec_a), ("beta", spec_b)]);
+        let app = CliApp::new("t").specs_under_named(
+            "v3",
+            [("alpha", spec_a), ("beta", spec_b)],
+        );
         let doc = app.build_doc().unwrap();
         let v3 = doc.resources.get("v3").expect("v3 namespace");
         // Both specs nested under their own sub-namespace inside v3 (with hoist).
@@ -5907,14 +5884,8 @@ paths:
         subs.insert("store_hash".to_string(), "xyz".to_string());
         apply_server_var_substitutions(&mut doc, &subs);
 
-        let nested_method = doc.resources["a"].resources["b"]
-            .methods
-            .get("get")
-            .unwrap();
-        assert_eq!(
-            nested_method.root_url,
-            "https://api.example.com/stores/xyz/v3"
-        );
+        let nested_method = doc.resources["a"].resources["b"].methods.get("get").unwrap();
+        assert_eq!(nested_method.root_url, "https://api.example.com/stores/xyz/v3");
     }
 
     #[test]
@@ -5951,15 +5922,9 @@ paths:
         // Top-level named servers are substituted.
         assert_eq!(doc.servers.len(), 2);
         assert_eq!(doc.servers[0].name.as_deref(), Some("Production"));
-        assert_eq!(
-            doc.servers[0].url,
-            "https://api.example.com/stores/abc123/v3"
-        );
+        assert_eq!(doc.servers[0].url, "https://api.example.com/stores/abc123/v3");
         assert_eq!(doc.servers[1].name.as_deref(), Some("Staging"));
-        assert_eq!(
-            doc.servers[1].url,
-            "https://staging.example.com/stores/abc123/v3"
-        );
+        assert_eq!(doc.servers[1].url, "https://staging.example.com/stores/abc123/v3");
 
         // Per-operation `servers:` overrides are substituted too.
         let create = doc.resources["uploads"].methods.get("create").unwrap();
@@ -5995,23 +5960,14 @@ paths:
 
     #[test]
     fn test_spec_server_variables_survive_parsing() {
-        let doc = CliApp::new("t")
-            .spec(TWILIO_SHAPED_SPEC)
-            .build_doc()
-            .unwrap();
+        let doc = CliApp::new("t").spec(TWILIO_SHAPED_SPEC).build_doc().unwrap();
         assert_eq!(doc.servers.len(), 1);
         let server = &doc.servers[0];
-        assert_eq!(
-            server.default_url.as_deref(),
-            Some("https://api.twilio.com")
-        );
+        assert_eq!(server.default_url.as_deref(), Some("https://api.twilio.com"));
         assert_eq!(server.variables.len(), 1);
         assert_eq!(server.variables[0].name, "region");
         assert_eq!(server.variables[0].default.as_deref(), Some("us1"));
-        assert_eq!(
-            server.variables[0].description.as_deref(),
-            Some("The Twilio region")
-        );
+        assert_eq!(server.variables[0].description.as_deref(), Some("The Twilio region"));
         assert_eq!(server.variables[0].enum_values, vec!["us1", "ie1", "au1"]);
 
         // Same metadata reachable through the collector the CLI layer uses.
@@ -6043,11 +5999,7 @@ paths:
         let mut doc = app.build_doc().unwrap();
 
         let collected = collect_spec_server_variables(&doc);
-        assert_eq!(
-            collected.len(),
-            1,
-            "later spec's `variables` must survive the merge"
-        );
+        assert_eq!(collected.len(), 1, "later spec's `variables` must survive the merge");
         assert_eq!(collected[0].name, "region");
         assert!(app.needs_server_var_resolution(&doc));
 
@@ -6138,10 +6090,7 @@ paths:
 
         assert_eq!(doc.root_url, "https://api.twilio.com");
         assert_eq!(doc.servers[0].url, "https://api.twilio.com");
-        let list = doc.resources["messages"]
-            .methods
-            .get("list-message")
-            .unwrap();
+        let list = doc.resources["messages"].methods.get("list-message").unwrap();
         assert_eq!(list.root_url, "https://api.twilio.com");
     }
 
@@ -6158,10 +6107,7 @@ paths:
         app.apply_server_vars(&mut doc, &matches);
 
         assert_eq!(doc.root_url, "https://api.ie1.twilio.com");
-        let list = doc.resources["messages"]
-            .methods
-            .get("list-message")
-            .unwrap();
+        let list = doc.resources["messages"].methods.get("list-message").unwrap();
         assert_eq!(list.root_url, "https://api.ie1.twilio.com");
     }
 
@@ -6235,10 +6181,7 @@ paths:
             .try_get_matches_from(["t", "uploads", "create"])
             .unwrap();
         app.apply_server_vars(&mut doc_default, &matches);
-        let create = doc_default.resources["uploads"]
-            .methods
-            .get("create")
-            .unwrap();
+        let create = doc_default.resources["uploads"].methods.get("create").unwrap();
         assert_eq!(create.servers[0].url, "https://upload.example.com");
 
         // Caller value: substituted into the per-operation server.
@@ -6247,10 +6190,7 @@ paths:
             .try_get_matches_from(["t", "--region", "ie1", "uploads", "create"])
             .unwrap();
         app.apply_server_vars(&mut doc_pinned, &matches);
-        let create = doc_pinned.resources["uploads"]
-            .methods
-            .get("create")
-            .unwrap();
+        let create = doc_pinned.resources["uploads"].methods.get("create").unwrap();
         assert_eq!(create.servers[0].url, "https://upload.ie1.example.com");
     }
 
@@ -6788,8 +6728,8 @@ paths:
     #[test]
     fn test_build_global_parameter_overrides_auto_mode() {
         use crate::openapi::discovery::{
-            GlobalParameter, GlobalParameterApplyMode, GlobalParameterLocation, RestDescription,
-            RestMethod,
+            GlobalParameter, GlobalParameterApplyMode, GlobalParameterLocation,
+            RestDescription, RestMethod,
         };
 
         let doc = RestDescription {
@@ -6807,15 +6747,13 @@ paths:
             ..Default::default()
         };
         let method = RestMethod::default();
-        let cmd = clap::Command::new("test").arg(
-            clap::Arg::new("global-param:api-version")
-                .long("api-version")
-                .default_value("2024-06-01"),
-        );
+        let cmd = clap::Command::new("test")
+            .arg(clap::Arg::new("global-param:api-version").long("api-version").default_value("2024-06-01"));
         let matches = cmd.get_matches_from(vec!["test"]);
         let params = serde_json::Map::new();
-        let overrides = build_global_parameter_overrides(&matches, &doc, &method, &params)
-            .expect("auto mode should always apply");
+        let overrides =
+            build_global_parameter_overrides(&matches, &doc, &method, &params)
+                .expect("auto mode should always apply");
         assert_eq!(overrides.len(), 1);
         assert_eq!(overrides[0].target, "api-version");
         assert_eq!(overrides[0].value, "2024-06-01");
@@ -6828,8 +6766,8 @@ paths:
     #[test]
     fn test_build_global_parameter_overrides_explicit_mode_included() {
         use crate::openapi::discovery::{
-            GlobalParameter, GlobalParameterApplyMode, GlobalParameterLocation, RestDescription,
-            RestMethod,
+            GlobalParameter, GlobalParameterApplyMode, GlobalParameterLocation,
+            RestDescription, RestMethod,
         };
 
         let doc = RestDescription {
@@ -6850,15 +6788,13 @@ paths:
             global_parameter_opt_ins: vec!["currency".to_string()],
             ..Default::default()
         };
-        let cmd = clap::Command::new("test").arg(
-            clap::Arg::new("global-param:currency")
-                .long("currency")
-                .default_value("USD"),
-        );
+        let cmd = clap::Command::new("test")
+            .arg(clap::Arg::new("global-param:currency").long("currency").default_value("USD"));
         let matches = cmd.get_matches_from(vec!["test"]);
         let params = serde_json::Map::new();
-        let overrides = build_global_parameter_overrides(&matches, &doc, &method, &params)
-            .expect("explicit mode with opt-in should apply");
+        let overrides =
+            build_global_parameter_overrides(&matches, &doc, &method, &params)
+                .expect("explicit mode with opt-in should apply");
         assert_eq!(overrides.len(), 1);
         assert_eq!(overrides[0].target, "currency");
         assert_eq!(overrides[0].value, "USD");
@@ -6867,8 +6803,8 @@ paths:
     #[test]
     fn test_build_global_parameter_overrides_explicit_mode_excluded() {
         use crate::openapi::discovery::{
-            GlobalParameter, GlobalParameterApplyMode, GlobalParameterLocation, RestDescription,
-            RestMethod,
+            GlobalParameter, GlobalParameterApplyMode, GlobalParameterLocation,
+            RestDescription, RestMethod,
         };
 
         let doc = RestDescription {
@@ -6886,15 +6822,13 @@ paths:
             ..Default::default()
         };
         let method = RestMethod::default(); // no opt-ins
-        let cmd = clap::Command::new("test").arg(
-            clap::Arg::new("global-param:currency")
-                .long("currency")
-                .default_value("USD"),
-        );
+        let cmd = clap::Command::new("test")
+            .arg(clap::Arg::new("global-param:currency").long("currency").default_value("USD"));
         let matches = cmd.get_matches_from(vec!["test"]);
         let params = serde_json::Map::new();
-        let overrides = build_global_parameter_overrides(&matches, &doc, &method, &params)
-            .expect("explicit mode without opt-in should skip");
+        let overrides =
+            build_global_parameter_overrides(&matches, &doc, &method, &params)
+                .expect("explicit mode without opt-in should skip");
         assert!(
             overrides.is_empty(),
             "explicit param not opted-in should not appear: {overrides:?}"
@@ -6904,8 +6838,8 @@ paths:
     #[test]
     fn test_build_global_parameter_overrides_per_op_override_suppresses_global() {
         use crate::openapi::discovery::{
-            GlobalParameter, GlobalParameterApplyMode, GlobalParameterLocation, MethodParameter,
-            RestDescription, RestMethod,
+            GlobalParameter, GlobalParameterApplyMode, GlobalParameterLocation,
+            MethodParameter, RestDescription, RestMethod,
         };
 
         let mut parameters = std::collections::HashMap::new();
@@ -6934,19 +6868,18 @@ paths:
             parameters,
             ..Default::default()
         };
-        let cmd = clap::Command::new("test").arg(
-            clap::Arg::new("global-param:api-version")
-                .long("api-version")
-                .default_value("v2"),
-        );
+        let cmd = clap::Command::new("test")
+            .arg(clap::Arg::new("global-param:api-version").long("api-version").default_value("v2"));
         let matches = cmd.get_matches_from(vec!["test"]);
         let mut params = serde_json::Map::new();
-        params.insert(
-            "X-Api-Version".to_string(),
-            serde_json::Value::String("v3-per-op".to_string()),
-        );
-        let overrides = build_global_parameter_overrides(&matches, &doc, &method, &params)
-            .expect("per-op override should suppress global");
+        params.insert("X-Api-Version".to_string(), serde_json::Value::String("v3-per-op".to_string()));
+        let overrides = build_global_parameter_overrides(
+            &matches,
+            &doc,
+            &method,
+            &params,
+        )
+        .expect("per-op override should suppress global");
         assert!(
             overrides.is_empty(),
             "per-op param wins, global should be suppressed: {overrides:?}"
@@ -6956,8 +6889,8 @@ paths:
     #[test]
     fn test_build_global_parameter_overrides_required_missing_errors() {
         use crate::openapi::discovery::{
-            GlobalParameter, GlobalParameterApplyMode, GlobalParameterLocation, RestDescription,
-            RestMethod,
+            GlobalParameter, GlobalParameterApplyMode, GlobalParameterLocation,
+            RestDescription, RestMethod,
         };
 
         let doc = RestDescription {
@@ -6976,14 +6909,13 @@ paths:
         };
         let method = RestMethod::default();
         // Register the arg so clap recognizes it, but don't provide a value
-        let cmd = clap::Command::new("test").arg(
-            clap::Arg::new("global-param:api-key")
-                .long("api-key")
-                .required(false),
-        );
+        let cmd = clap::Command::new("test")
+            .arg(clap::Arg::new("global-param:api-key").long("api-key").required(false));
         let matches = cmd.get_matches_from(vec!["test"]);
         let params = serde_json::Map::new();
-        let err = build_global_parameter_overrides(&matches, &doc, &method, &params).unwrap_err();
+        let err =
+            build_global_parameter_overrides(&matches, &doc, &method, &params)
+                .unwrap_err();
         let msg = format!("{err}");
         assert!(msg.contains("api-key"), "error names param: {msg}");
     }
@@ -6991,8 +6923,8 @@ paths:
     #[test]
     fn test_build_global_parameter_overrides_optional_missing_skips() {
         use crate::openapi::discovery::{
-            GlobalParameter, GlobalParameterApplyMode, GlobalParameterLocation, RestDescription,
-            RestMethod,
+            GlobalParameter, GlobalParameterApplyMode, GlobalParameterLocation,
+            RestDescription, RestMethod,
         };
 
         let doc = RestDescription {
@@ -7011,15 +6943,13 @@ paths:
         };
         let method = RestMethod::default();
         // Register the arg so clap recognizes it, but don't provide a value
-        let cmd = clap::Command::new("test").arg(
-            clap::Arg::new("global-param:trace-id")
-                .long("trace-id")
-                .required(false),
-        );
+        let cmd = clap::Command::new("test")
+            .arg(clap::Arg::new("global-param:trace-id").long("trace-id").required(false));
         let matches = cmd.get_matches_from(vec!["test"]);
         let params = serde_json::Map::new();
-        let overrides = build_global_parameter_overrides(&matches, &doc, &method, &params)
-            .expect("optional missing should succeed");
+        let overrides =
+            build_global_parameter_overrides(&matches, &doc, &method, &params)
+                .expect("optional missing should succeed");
         assert!(
             overrides.is_empty(),
             "optional with no value should be omitted: {overrides:?}"

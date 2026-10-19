@@ -276,7 +276,9 @@ channels:
         // The path `foo bar` must be reachable via clap argument parsing.
         let matches = cmd
             .clone()
-            .try_get_matches_from(["bin", "foo", "bar", "--agent-id", "abc"])
+            .try_get_matches_from([
+                "bin", "foo", "bar", "--agent-id", "abc",
+            ])
             .expect("foo bar should parse");
 
         // Drill down into the matched subcommand chain to confirm
@@ -286,9 +288,7 @@ channels:
         let (bar_name, bar_matches) = foo_matches.subcommand().expect("bar subcmd present");
         assert_eq!(bar_name, "bar");
         assert_eq!(
-            bar_matches
-                .get_one::<String>("agent_id")
-                .map(String::as_str),
+            bar_matches.get_one::<String>("agent_id").map(String::as_str),
             Some("abc"),
         );
     }
@@ -403,7 +403,9 @@ channels:
     #[test]
     fn shared_group_merges_two_distinct_leaves() {
         let cmd = build(SPEC_SHARED_GROUP);
-        let shared = cmd.find_subcommand("shared").expect("shared group present");
+        let shared = cmd
+            .find_subcommand("shared")
+            .expect("shared group present");
         assert!(
             shared.find_subcommand("first").is_some(),
             "first leaf must attach under shared",
@@ -448,9 +450,14 @@ channels:
     #[test]
     fn parameter_flags_are_kebab_cased() {
         let cmd = build(SPEC_PARAM_KEBAB);
-        let convai = cmd.find_subcommand("convai").expect("convai leaf present");
+        let convai = cmd
+            .find_subcommand("convai")
+            .expect("convai leaf present");
 
-        let longs: Vec<&str> = convai.get_arguments().filter_map(Arg::get_long).collect();
+        let longs: Vec<&str> = convai
+            .get_arguments()
+            .filter_map(Arg::get_long)
+            .collect();
         assert!(
             longs.contains(&"agent-id"),
             "agent_id should become --agent-id; got: {longs:?}",

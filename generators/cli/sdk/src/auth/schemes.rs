@@ -137,7 +137,10 @@ impl BasicAuthProvider {
 
     /// Username-only Basic auth (empty password). Common for APIs that
     /// accept an API key as the HTTP Basic username (e.g. Close CRM).
-    pub fn username_only(name: impl Into<String>, username: AuthCredentialSource) -> Self {
+    pub fn username_only(
+        name: impl Into<String>,
+        username: AuthCredentialSource,
+    ) -> Self {
         Self {
             name: name.into(),
             username,
@@ -148,7 +151,10 @@ impl BasicAuthProvider {
 
     /// Password-only Basic auth (empty username). Used by APIs that
     /// expect the token in the password field of HTTP Basic.
-    pub fn password_only(name: impl Into<String>, password: AuthCredentialSource) -> Self {
+    pub fn password_only(
+        name: impl Into<String>,
+        password: AuthCredentialSource,
+    ) -> Self {
         Self {
             name: name.into(),
             username: AuthCredentialSource::Missing,
@@ -223,8 +229,10 @@ impl AuthProvider for BasicAuthProvider {
         combined.push_str(p_ref);
         let encoded = BASE64.encode(&combined);
         let value = format!("Basic {encoded}");
-        let mut header = reqwest::header::HeaderValue::from_str(&value)
-            .map_err(|e| CliError::Auth(format!("Invalid basic-auth credentials: {e}")))?;
+        let mut header =
+            reqwest::header::HeaderValue::from_str(&value).map_err(|e| {
+                CliError::Auth(format!("Invalid basic-auth credentials: {e}"))
+            })?;
         header.set_sensitive(true);
         Ok(request.header(reqwest::header::AUTHORIZATION, header))
     }
@@ -313,12 +321,13 @@ impl AuthProvider for HeaderAuthProvider {
             }
             None => token.expose_secret().to_string(),
         };
-        let mut header_value = reqwest::header::HeaderValue::from_str(&value).map_err(|e| {
-            CliError::Auth(format!(
-                "Invalid token for header '{}': {e}",
-                self.header_name
-            ))
-        })?;
+        let mut header_value =
+            reqwest::header::HeaderValue::from_str(&value).map_err(|e| {
+                CliError::Auth(format!(
+                    "Invalid token for header '{}': {e}",
+                    self.header_name
+                ))
+            })?;
         header_value.set_sensitive(true);
         Ok(request.header(self.header_name.as_str(), header_value))
     }
@@ -334,9 +343,7 @@ mod tests {
     #[tokio::test]
     async fn bearer_provider_emits_authorization_bearer() {
         let p = BearerAuthProvider::new("bearerAuth", AuthCredentialSource::literal("tok"));
-        let r = p
-            .apply(req(), &EndpointAuthMetadata::unspecified())
-            .unwrap();
+        let r = p.apply(req(), &EndpointAuthMetadata::unspecified()).unwrap();
         assert_eq!(auth_header(r).as_deref(), Some("Bearer tok"));
     }
 
@@ -344,9 +351,7 @@ mod tests {
     async fn bearer_provider_no_token_is_noop() {
         let p = BearerAuthProvider::new("bearerAuth", AuthCredentialSource::Missing);
         assert!(!p.has_credentials());
-        let r = p
-            .apply(req(), &EndpointAuthMetadata::unspecified())
-            .unwrap();
+        let r = p.apply(req(), &EndpointAuthMetadata::unspecified()).unwrap();
         assert_eq!(auth_header(r), None);
     }
 
@@ -355,7 +360,10 @@ mod tests {
         // A token containing a newline is not a valid HeaderValue.
         // We must error, not panic — adversarial inputs are called out in
         // AGENTS.md.
-        let p = BearerAuthProvider::new("bearerAuth", AuthCredentialSource::literal("bad\ntoken"));
+        let p = BearerAuthProvider::new(
+            "bearerAuth",
+            AuthCredentialSource::literal("bad\ntoken"),
+        );
         let err = p
             .apply(req(), &EndpointAuthMetadata::unspecified())
             .unwrap_err();
@@ -371,9 +379,7 @@ mod tests {
             AuthCredentialSource::literal("alice"),
             AuthCredentialSource::literal("hunter2"),
         );
-        let r = p
-            .apply(req(), &EndpointAuthMetadata::unspecified())
-            .unwrap();
+        let r = p.apply(req(), &EndpointAuthMetadata::unspecified()).unwrap();
         // base64("alice:hunter2") = "YWxpY2U6aHVudGVyMg=="
         assert_eq!(
             auth_header(r).as_deref(),
@@ -408,16 +414,20 @@ mod tests {
             AuthCredentialSource::literal("api_key_123"),
         );
         assert!(p.has_credentials());
-        let r = p
-            .apply(req(), &EndpointAuthMetadata::unspecified())
-            .unwrap();
+        let r = p.apply(req(), &EndpointAuthMetadata::unspecified()).unwrap();
         // base64("api_key_123:") — colon present, empty password
-        assert_eq!(auth_header(r).as_deref(), Some("Basic YXBpX2tleV8xMjM6"),);
+        assert_eq!(
+            auth_header(r).as_deref(),
+            Some("Basic YXBpX2tleV8xMjM6"),
+        );
     }
 
     #[test]
     fn basic_provider_username_only_missing_is_no_credentials() {
-        let p = BasicAuthProvider::username_only("basicAuth", AuthCredentialSource::Missing);
+        let p = BasicAuthProvider::username_only(
+            "basicAuth",
+            AuthCredentialSource::Missing,
+        );
         assert!(!p.has_credentials());
     }
 
@@ -428,9 +438,7 @@ mod tests {
             AuthCredentialSource::literal("secret_token"),
         );
         assert!(p.has_credentials());
-        let r = p
-            .apply(req(), &EndpointAuthMetadata::unspecified())
-            .unwrap();
+        let r = p.apply(req(), &EndpointAuthMetadata::unspecified()).unwrap();
         // base64(":secret_token")
         assert_eq!(
             auth_header(r).as_deref(),
@@ -440,7 +448,10 @@ mod tests {
 
     #[test]
     fn basic_provider_password_only_missing_is_no_credentials() {
-        let p = BasicAuthProvider::password_only("basicAuth", AuthCredentialSource::Missing);
+        let p = BasicAuthProvider::password_only(
+            "basicAuth",
+            AuthCredentialSource::Missing,
+        );
         assert!(!p.has_credentials());
     }
 
@@ -454,9 +465,7 @@ mod tests {
             AuthCredentialSource::literal("lin_api_xxx"),
             false,
         );
-        let r = p
-            .apply(req(), &EndpointAuthMetadata::unspecified())
-            .unwrap();
+        let r = p.apply(req(), &EndpointAuthMetadata::unspecified()).unwrap();
         assert_eq!(auth_header(r).as_deref(), Some("lin_api_xxx"));
     }
 
@@ -468,9 +477,7 @@ mod tests {
             AuthCredentialSource::literal("tok"),
             true,
         );
-        let r = p
-            .apply(req(), &EndpointAuthMetadata::unspecified())
-            .unwrap();
+        let r = p.apply(req(), &EndpointAuthMetadata::unspecified()).unwrap();
         assert_eq!(header(r, "x-auth").as_deref(), Some("Bearer tok"));
     }
 
@@ -482,9 +489,7 @@ mod tests {
             AuthCredentialSource::literal("k"),
             false,
         );
-        let r = p
-            .apply(req(), &EndpointAuthMetadata::unspecified())
-            .unwrap();
+        let r = p.apply(req(), &EndpointAuthMetadata::unspecified()).unwrap();
         assert_eq!(header(r, "x-api-key").as_deref(), Some("k"));
     }
 
@@ -497,9 +502,7 @@ mod tests {
             false,
         )
         .with_prefix("Key");
-        let r = p
-            .apply(req(), &EndpointAuthMetadata::unspecified())
-            .unwrap();
+        let r = p.apply(req(), &EndpointAuthMetadata::unspecified()).unwrap();
         assert_eq!(header(r, "x-api-key").as_deref(), Some("Key k"));
     }
 
@@ -512,9 +515,7 @@ mod tests {
             true,
         )
         .with_prefix("Token");
-        let r = p
-            .apply(req(), &EndpointAuthMetadata::unspecified())
-            .unwrap();
+        let r = p.apply(req(), &EndpointAuthMetadata::unspecified()).unwrap();
         assert_eq!(auth_header(r).as_deref(), Some("Token k"));
     }
 
@@ -527,9 +528,7 @@ mod tests {
             true,
         )
         .with_prefix("");
-        let r = p
-            .apply(req(), &EndpointAuthMetadata::unspecified())
-            .unwrap();
+        let r = p.apply(req(), &EndpointAuthMetadata::unspecified()).unwrap();
         assert_eq!(header(r, "x-api-key").as_deref(), Some("k"));
     }
 }

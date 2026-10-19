@@ -341,29 +341,20 @@ mod tests {
     #[test]
     fn parameter_matches_the_wire_name() {
         let p = profile_with([("AccountSid".to_string(), "AC11".to_string())].into());
-        assert_eq!(
-            p.parameter("AccountSid", "account-sid").as_deref(),
-            Some("AC11")
-        );
+        assert_eq!(p.parameter("AccountSid", "account-sid").as_deref(), Some("AC11"));
     }
 
     #[test]
     fn parameter_matches_the_flag_spelling() {
         // The user typed what they see in `--help`.
         let p = profile_with([("account-sid".to_string(), "AC11".to_string())].into());
-        assert_eq!(
-            p.parameter("AccountSid", "account-sid").as_deref(),
-            Some("AC11")
-        );
+        assert_eq!(p.parameter("AccountSid", "account-sid").as_deref(), Some("AC11"));
     }
 
     #[test]
     fn parameter_matches_across_spellings_via_kebab() {
         let p = profile_with([("account_sid".to_string(), "AC11".to_string())].into());
-        assert_eq!(
-            p.parameter("AccountSid", "account-sid").as_deref(),
-            Some("AC11")
-        );
+        assert_eq!(p.parameter("AccountSid", "account-sid").as_deref(), Some("AC11"));
     }
 
     #[test]

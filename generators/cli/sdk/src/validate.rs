@@ -165,7 +165,9 @@ pub fn validate_safe_file_path(path_str: &str, flag_name: &str) -> Result<PathBu
         ))
     })?;
     let parent = resolved.parent().ok_or_else(|| {
-        CliError::Validation(format!("{flag_name} '{path_str}' has no parent directory"))
+        CliError::Validation(format!(
+            "{flag_name} '{path_str}' has no parent directory"
+        ))
     })?;
     if !parent.exists() {
         return Err(CliError::Validation(format!(
@@ -181,6 +183,7 @@ pub fn validate_safe_file_path(path_str: &str, flag_name: &str) -> Result<PathBu
 
     Ok(canonical_parent.join(basename))
 }
+
 
 // reject_control_chars is now a re-export from crate::output (see top of file)
 
@@ -227,35 +230,11 @@ fn normalize_non_existing(path: &Path) -> Result<PathBuf, CliError> {
 /// everything else is percent-encoded.
 use percent_encoding::{AsciiSet, CONTROLS};
 const PATH_SEGMENT: &AsciiSet = &CONTROLS
-    .add(b' ')
-    .add(b'!')
-    .add(b'"')
-    .add(b'#')
-    .add(b'$')
-    .add(b'%')
-    .add(b'&')
-    .add(b'\'')
-    .add(b'(')
-    .add(b')')
-    .add(b'*')
-    .add(b'+')
-    .add(b',')
-    .add(b'/')
-    .add(b':')
-    .add(b';')
-    .add(b'<')
-    .add(b'=')
-    .add(b'>')
-    .add(b'?')
-    .add(b'@')
-    .add(b'[')
-    .add(b'\\')
-    .add(b']')
-    .add(b'^')
-    .add(b'`')
-    .add(b'{')
-    .add(b'|')
-    .add(b'}');
+    .add(b' ').add(b'!').add(b'"').add(b'#').add(b'$').add(b'%')
+    .add(b'&').add(b'\'').add(b'(').add(b')').add(b'*').add(b'+')
+    .add(b',').add(b'/').add(b':').add(b';').add(b'<')
+    .add(b'=').add(b'>').add(b'?').add(b'@').add(b'[').add(b'\\')
+    .add(b']').add(b'^').add(b'`').add(b'{').add(b'|').add(b'}');
 
 /// Percent-encode a value for use as a single URL path segment (e.g., file ID,
 /// calendar ID, message ID). All RFC 3986 §2.3 unreserved characters
@@ -552,10 +531,7 @@ mod tests {
         // §2.3 and must NOT be encoded.
         let encoded = encode_path_segment("user@gmail.com");
         assert!(!encoded.contains('@'), "@ must be percent-encoded");
-        assert!(
-            encoded.contains('.'),
-            ". is unreserved and must not be encoded"
-        );
+        assert!(encoded.contains('.'), ". is unreserved and must not be encoded");
         assert_eq!(encoded, "user%40gmail.com");
     }
 
@@ -954,10 +930,7 @@ mod tests {
             let result = validate_safe_file_path("escape/secret.txt", "--output");
             std::env::set_current_dir(&saved_cwd).unwrap();
 
-            assert!(
-                result.is_ok(),
-                "symlinked parent should be allowed: {result:?}"
-            );
+            assert!(result.is_ok(), "symlinked parent should be allowed: {result:?}");
             assert_eq!(result.unwrap(), target_canonical.join("secret.txt"));
         }
     }

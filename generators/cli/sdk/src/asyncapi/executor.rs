@@ -321,10 +321,7 @@ pub(crate) fn response_timeout_error(timeout: Duration, frames_seen: usize) -> C
 ///   calling `.endpoint(...)` on the builder (or set `<NAME>_BASE_URL`
 ///   at runtime) — the error message lists every declared candidate so
 ///   the caller can pick.
-fn resolve_server_url(
-    doc: &AsyncApiDescription,
-    override_url: Option<&str>,
-) -> Result<String, CliError> {
+fn resolve_server_url(doc: &AsyncApiDescription, override_url: Option<&str>) -> Result<String, CliError> {
     if let Some(url) = override_url {
         return Ok(url.to_string());
     }
@@ -388,10 +385,7 @@ fn resolve_ws_auth(auth_bindings: &[(String, SchemeBinding)]) -> WsAuth {
         }
     }
     if auth_bindings.len() > 1 {
-        let schemes: Vec<&str> = auth_bindings
-            .iter()
-            .map(|(name, _)| name.as_str())
-            .collect();
+        let schemes: Vec<&str> = auth_bindings.iter().map(|(name, _)| name.as_str()).collect();
         tracing::warn!(
             schemes = ?schemes,
             "resolve_ws_auth: multiple auth bindings registered (only single-scheme is wired in v1); \
@@ -702,11 +696,7 @@ mod tests {
     #[test]
     fn connect_url_appends_channel_path_when_starts_with_slash() {
         let params = HashMap::new();
-        let url = build_connect_url(
-            "wss://api.elevenlabs.io",
-            "/v1/convai/conversation",
-            &params,
-        );
+        let url = build_connect_url("wss://api.elevenlabs.io", "/v1/convai/conversation", &params);
         assert_eq!(url, "wss://api.elevenlabs.io/v1/convai/conversation");
     }
 
@@ -717,10 +707,7 @@ mod tests {
         params.insert("nothing".to_string(), "".to_string());
         let url = build_connect_url("wss://example.com", "AgentMessages", &params);
         assert!(url.contains("agent_id=abc"));
-        assert!(
-            !url.contains("nothing="),
-            "empty-valued params must be skipped: {url}"
-        );
+        assert!(!url.contains("nothing="), "empty-valued params must be skipped: {url}");
     }
 
     // -- build_user_message_frame --------------------------------------------
@@ -872,8 +859,7 @@ mod tests {
 
     #[test]
     fn compose_base_url_uses_endpoint_alone() {
-        let out =
-            compose_base_url_override(None, Some("wss://api.elevenlabs.io/v1/convai/conversation"));
+        let out = compose_base_url_override(None, Some("wss://api.elevenlabs.io/v1/convai/conversation"));
         assert_eq!(
             out.as_deref(),
             Some("wss://api.elevenlabs.io/v1/convai/conversation"),
@@ -930,10 +916,7 @@ mod tests {
                 },
             );
         }
-        AsyncApiDescription {
-            servers,
-            ..Default::default()
-        }
+        AsyncApiDescription { servers, ..Default::default() }
     }
 
     #[test]
@@ -959,7 +942,10 @@ mod tests {
     fn resolve_server_url_empty_url_skipped() {
         // An entry with an empty URL is treated as not-present; the one
         // non-empty entry is unambiguous.
-        let doc = doc_with_servers(&[("production", "wss://api.example.com"), ("placeholder", "")]);
+        let doc = doc_with_servers(&[
+            ("production", "wss://api.example.com"),
+            ("placeholder", ""),
+        ]);
         let url = resolve_server_url(&doc, None).expect("ok");
         assert_eq!(url, "wss://api.example.com");
     }
@@ -1058,10 +1044,7 @@ mod tests {
         let info = build_dry_run_info(
             "wss://api.elevenlabs.io/v1/convai/conversation?agent_id=agt_1",
             "conversation",
-            &WsAuth::Header(
-                "xi-api-key".into(),
-                crate::auth::AuthCredentialSource::literal("k"),
-            ),
+            &WsAuth::Header("xi-api-key".into(), crate::auth::AuthCredentialSource::literal("k")),
             Some(&init),
             Some("hello"),
         );
@@ -1085,10 +1068,7 @@ mod tests {
     #[test]
     fn response_timeout_parses_valid_override() {
         assert_eq!(parse_response_timeout(Some("5")), Duration::from_secs(5));
-        assert_eq!(
-            parse_response_timeout(Some("  12 ")),
-            Duration::from_secs(12)
-        );
+        assert_eq!(parse_response_timeout(Some("  12 ")), Duration::from_secs(12));
     }
 
     #[test]
@@ -1117,7 +1097,13 @@ mod tests {
 
     #[test]
     fn dry_run_info_repl_has_null_message_and_init() {
-        let info = build_dry_run_info("wss://example.com/chan", "chan", &WsAuth::None, None, None);
+        let info = build_dry_run_info(
+            "wss://example.com/chan",
+            "chan",
+            &WsAuth::None,
+            None,
+            None,
+        );
         assert_eq!(info["mode"], json!("repl"));
         assert_eq!(info["message_frame"], Value::Null);
         assert_eq!(info["init_payload"], Value::Null);

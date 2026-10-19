@@ -226,9 +226,7 @@ mod tests {
     #[tokio::test]
     async fn no_auth_provider_emits_no_headers() {
         let p = NoAuthProvider;
-        let r = p
-            .apply(req(), &EndpointAuthMetadata::unspecified())
-            .unwrap();
+        let r = p.apply(req(), &EndpointAuthMetadata::unspecified()).unwrap();
         assert_eq!(auth_header(r), None);
         assert!(!p.has_credentials());
         assert_eq!(p.name(), "none");

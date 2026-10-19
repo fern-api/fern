@@ -44,9 +44,7 @@ pub fn set_suffix_flag(name: &str) {
 /// The configured suffix flag's long name (without the leading `--`),
 /// or [`DEFAULT_SUFFIX_FLAG`] when unset.
 pub fn suffix_flag() -> &'static str {
-    SUFFIX_FLAG
-        .get()
-        .map_or(DEFAULT_SUFFIX_FLAG, String::as_str)
+    SUFFIX_FLAG.get().map_or(DEFAULT_SUFFIX_FLAG, String::as_str)
 }
 
 /// The env-var segment for the current suffix flag: an underscore prefix

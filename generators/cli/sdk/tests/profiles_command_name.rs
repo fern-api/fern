@@ -156,14 +156,7 @@ fn the_spec_owned_operation_still_dispatches_to_its_binding() {
             SPEC_OWNING_PROFILES,
             ProfilesConfig::new(),
             &[
-                "collide",
-                "profiles",
-                "get",
-                "--id",
-                "abc",
-                "--dry-run",
-                "--format",
-                "json",
+                "collide", "profiles", "get", "--id", "abc", "--dry-run", "--format", "json",
             ],
         );
         assert_eq!(code, 0, "{output}");

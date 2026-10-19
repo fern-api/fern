@@ -64,22 +64,13 @@ fn list_all_operations(doc: &RestDescription) -> Value {
 
 fn render_pagination(p: &PaginationConfig) -> Value {
     match p {
-        PaginationConfig::Cursor {
-            cursor,
-            next_cursor,
-            results,
-        } => json!({
+        PaginationConfig::Cursor { cursor, next_cursor, results } => json!({
             "kind": "cursor",
             "cursorParam": cursor,
             "nextCursorPath": next_cursor,
             "resultsPath": results,
         }),
-        PaginationConfig::Offset {
-            offset,
-            results,
-            step,
-            has_next_page,
-        } => {
+        PaginationConfig::Offset { offset, results, step, has_next_page } => {
             let mut out = json!({
                 "kind": "offset",
                 "offsetParam": offset,
@@ -130,7 +121,9 @@ fn render_streaming(s: &StreamingConfig) -> Value {
     }
 }
 
-fn render_sdk_variables(vars: &[crate::openapi::discovery::SdkVariable]) -> Vec<Value> {
+fn render_sdk_variables(
+    vars: &[crate::openapi::discovery::SdkVariable],
+) -> Vec<Value> {
     vars.iter()
         .map(|v| {
             json!({
@@ -162,23 +155,14 @@ fn list_nested_resource_operations(doc: &RestDescription, path: &[&str]) -> Opti
     Some(json!(ops))
 }
 
-fn operation_schema(
-    doc: &RestDescription,
-    resource_path: &[&str],
-    method_name: &str,
-) -> Option<Value> {
+fn operation_schema(doc: &RestDescription, resource_path: &[&str], method_name: &str) -> Option<Value> {
     let first = resource_path.first()?;
     let mut res = doc.resources.get(*first)?;
     for segment in &resource_path[1..] {
         res = res.resources.get(*segment)?;
     }
     let method = res.methods.get(method_name)?;
-    Some(build_operation_schema(
-        resource_path,
-        method_name,
-        method,
-        &doc.schemas,
-    ))
+    Some(build_operation_schema(resource_path, method_name, method, &doc.schemas))
 }
 
 fn build_operation_schema(
@@ -441,11 +425,7 @@ fn build_operation_schema(
     // self-contained JSON Schema in one round-trip. Cycles break by
     // emitting a `$ref` at the second encounter of the same name in a
     // chain.
-    if let Some(response_ref) = method
-        .response
-        .as_ref()
-        .and_then(|r| r.schema_ref.as_deref())
-    {
+    if let Some(response_ref) = method.response.as_ref().and_then(|r| r.schema_ref.as_deref()) {
         if let Some(rendered) = render_ref(schemas, response_ref, &mut HashSet::new()) {
             output["output"] = rendered;
         }
@@ -476,27 +456,14 @@ fn build_operation_schema(
     // shape as ADR-0004's parser-side flattener (independent
     // implementation, see *Architecture: Code Generation Model* in
     // AGENTS.md).
-    if let Some(body_ref) = method
-        .request
-        .as_ref()
-        .and_then(|r| r.schema_ref.as_deref())
-    {
+    if let Some(body_ref) = method.request.as_ref().and_then(|r| r.schema_ref.as_deref()) {
         let mut body_props: BTreeMap<String, JsonSchemaProperty> = BTreeMap::new();
         let mut body_required: HashSet<String> = HashSet::new();
         let mut visited: HashSet<String> = HashSet::new();
-        collect_body_properties(
-            schemas,
-            body_ref,
-            &mut body_props,
-            &mut body_required,
-            &mut visited,
-            0,
-        );
+        collect_body_properties(schemas, body_ref, &mut body_props, &mut body_required, &mut visited, 0);
 
         if !body_props.is_empty() {
-            let input = output["input"]
-                .as_object_mut()
-                .expect("input must be object");
+            let input = output["input"].as_object_mut().expect("input must be object");
             let props_map = input
                 .get_mut("properties")
                 .and_then(|v| v.as_object_mut())
@@ -597,14 +564,7 @@ fn walk_inline_branch(
         return;
     }
     if let Some(ref_path) = branch.schema_ref.as_deref() {
-        collect_body_properties(
-            schemas,
-            ref_path,
-            out_props,
-            out_required,
-            visited,
-            depth + 1,
-        );
+        collect_body_properties(schemas, ref_path, out_props, out_required, visited, depth + 1);
         return;
     }
     for nested in &branch.all_of {
@@ -701,38 +661,23 @@ fn render_json_schema(
     if !schema.one_of.is_empty() {
         out.insert(
             "oneOf".into(),
-            json!(schema
-                .one_of
-                .iter()
-                .map(|p| render_property(schemas, p, visited))
-                .collect::<Vec<_>>()),
+            json!(schema.one_of.iter().map(|p| render_property(schemas, p, visited)).collect::<Vec<_>>()),
         );
     }
     if !schema.any_of.is_empty() {
         out.insert(
             "anyOf".into(),
-            json!(schema
-                .any_of
-                .iter()
-                .map(|p| render_property(schemas, p, visited))
-                .collect::<Vec<_>>()),
+            json!(schema.any_of.iter().map(|p| render_property(schemas, p, visited)).collect::<Vec<_>>()),
         );
     }
     if !schema.all_of.is_empty() {
         out.insert(
             "allOf".into(),
-            json!(schema
-                .all_of
-                .iter()
-                .map(|p| render_property(schemas, p, visited))
-                .collect::<Vec<_>>()),
+            json!(schema.all_of.iter().map(|p| render_property(schemas, p, visited)).collect::<Vec<_>>()),
         );
     }
     if let Some(ap) = &schema.additional_properties {
-        out.insert(
-            "additionalProperties".into(),
-            render_property(schemas, ap, visited),
-        );
+        out.insert("additionalProperties".into(), render_property(schemas, ap, visited));
     }
     Value::Object(out)
 }
@@ -823,38 +768,23 @@ fn render_property(
     if !prop.one_of.is_empty() {
         out.insert(
             "oneOf".into(),
-            json!(prop
-                .one_of
-                .iter()
-                .map(|p| render_property(schemas, p, visited))
-                .collect::<Vec<_>>()),
+            json!(prop.one_of.iter().map(|p| render_property(schemas, p, visited)).collect::<Vec<_>>()),
         );
     }
     if !prop.any_of.is_empty() {
         out.insert(
             "anyOf".into(),
-            json!(prop
-                .any_of
-                .iter()
-                .map(|p| render_property(schemas, p, visited))
-                .collect::<Vec<_>>()),
+            json!(prop.any_of.iter().map(|p| render_property(schemas, p, visited)).collect::<Vec<_>>()),
         );
     }
     if !prop.all_of.is_empty() {
         out.insert(
             "allOf".into(),
-            json!(prop
-                .all_of
-                .iter()
-                .map(|p| render_property(schemas, p, visited))
-                .collect::<Vec<_>>()),
+            json!(prop.all_of.iter().map(|p| render_property(schemas, p, visited)).collect::<Vec<_>>()),
         );
     }
     if let Some(ap) = &prop.additional_properties {
-        out.insert(
-            "additionalProperties".into(),
-            render_property(schemas, ap, visited),
-        );
+        out.insert("additionalProperties".into(), render_property(schemas, ap, visited));
     }
     Value::Object(out)
 }
@@ -961,10 +891,7 @@ mod tests {
             schema["path"].is_string(),
             "path must be advertised: {schema}",
         );
-        assert!(
-            schema.get("parameters").is_none(),
-            "`parameters` should be renamed to `input`"
-        );
+        assert!(schema.get("parameters").is_none(), "`parameters` should be renamed to `input`");
         let required = schema["input"]["required"].as_array().unwrap();
         assert!(required.iter().any(|v| v == "user_id"));
     }
@@ -1061,9 +988,7 @@ mod tests {
             description: Some("Tenant id".to_string()),
         }];
         let output = list_all_operations(&doc);
-        let obj = output
-            .as_object()
-            .expect("expected wrapped object when sdk_variables present");
+        let obj = output.as_object().expect("expected wrapped object when sdk_variables present");
         let vars = obj["sdkVariables"].as_array().unwrap();
         assert_eq!(vars.len(), 1);
         assert_eq!(vars[0]["name"], "gardenId");
@@ -1071,11 +996,7 @@ mod tests {
         assert_eq!(vars[0]["envVar"], "GARDEN_ID");
         assert_eq!(vars[0]["description"], "Tenant id");
         assert!(
-            obj["operations"]
-                .as_array()
-                .unwrap()
-                .iter()
-                .any(|op| op["operation"] == "users.get"),
+            obj["operations"].as_array().unwrap().iter().any(|op| op["operation"] == "users.get"),
             "operations array must still list every op when wrapped",
         );
     }
@@ -1132,10 +1053,7 @@ mod tests {
 
         let path: Vec<String> = vec!["organizations".into(), "memberships".into()];
         let result = build_schema(&doc, &path);
-        assert!(
-            result.is_some(),
-            "sub-resource path should list operations, not be None"
-        );
+        assert!(result.is_some(), "sub-resource path should list operations, not be None");
     }
 
     #[test]
@@ -1172,12 +1090,8 @@ mod tests {
             ..Default::default()
         };
 
-        let schema =
-            operation_schema(&doc, &["organizations", "memberships"], "get-membership").unwrap();
-        assert_eq!(
-            schema["operation"],
-            "organizations.memberships.get-membership"
-        );
+        let schema = operation_schema(&doc, &["organizations", "memberships"], "get-membership").unwrap();
+        assert_eq!(schema["operation"], "organizations.memberships.get-membership");
     }
 
     #[test]
@@ -1288,10 +1202,7 @@ mod tests {
             ..Default::default()
         };
         let schema = build_operation_schema(&["users"], "get", &method, &HashMap::new());
-        assert!(
-            schema.get("output").is_none(),
-            "unresolved response ref should omit `output`: {schema}"
-        );
+        assert!(schema.get("output").is_none(), "unresolved response ref should omit `output`: {schema}");
     }
 
     #[test]
@@ -1339,14 +1250,8 @@ mod tests {
         };
         let schema = build_operation_schema(&["users"], "create", &method, &schemas);
         let props = &schema["input"]["properties"];
-        assert_eq!(
-            props["name"]["location"], "body",
-            "name should be body: {schema}"
-        );
-        assert_eq!(
-            props["email"]["location"], "body",
-            "email should be body: {schema}"
-        );
+        assert_eq!(props["name"]["location"], "body", "name should be body: {schema}");
+        assert_eq!(props["email"]["location"], "body", "email should be body: {schema}");
         assert_eq!(props["email"]["format"], "email");
         let required = schema["input"]["required"].as_array().unwrap();
         assert!(
@@ -1360,9 +1265,7 @@ mod tests {
         // When a body field and a query/path/header param share a name,
         // the spec-declared parameter wins (existing CLI behavior). The
         // body field is dropped to avoid a contradictory location tag.
-        use crate::openapi::discovery::{
-            JsonSchema, JsonSchemaProperty, MethodParameter, SchemaRef,
-        };
+        use crate::openapi::discovery::{JsonSchema, JsonSchemaProperty, MethodParameter, SchemaRef};
         let mut body_props = HashMap::new();
         body_props.insert(
             "id".to_string(),
@@ -1465,14 +1368,8 @@ mod tests {
         };
         let schema = build_operation_schema(&["things"], "create", &method, &schemas);
         let props = &schema["input"]["properties"];
-        assert_eq!(
-            props["id"]["location"], "body",
-            "Base.id should surface: {schema}"
-        );
-        assert_eq!(
-            props["extra"]["location"], "body",
-            "overlay.extra should surface: {schema}"
-        );
+        assert_eq!(props["id"]["location"], "body", "Base.id should surface: {schema}");
+        assert_eq!(props["extra"]["location"], "body", "overlay.extra should surface: {schema}");
         let required = schema["input"]["required"].as_array().unwrap();
         assert!(
             required.iter().any(|v| v == "id"),
@@ -1576,9 +1473,9 @@ mod tests {
         };
         let schema = build_operation_schema(&["users"], "create", &method, &schemas);
         let address = &schema["input"]["properties"]["address"];
-        let nested_required = address["required"]
-            .as_array()
-            .expect("nested object body field must carry its own `required` array");
+        let nested_required = address["required"].as_array().expect(
+            "nested object body field must carry its own `required` array",
+        );
         assert!(
             nested_required.iter().any(|v| v == "street"),
             "nested required array must include `street`: {schema}",
@@ -1591,9 +1488,7 @@ mod tests {
         // with an OPTIONAL query/path/header param must NOT elevate the
         // surviving (param) entry to required. The body field lost the
         // collision; its required-ness lost with it.
-        use crate::openapi::discovery::{
-            JsonSchema, JsonSchemaProperty, MethodParameter, SchemaRef,
-        };
+        use crate::openapi::discovery::{JsonSchema, JsonSchemaProperty, MethodParameter, SchemaRef};
         let mut body_props = HashMap::new();
         body_props.insert(
             "id".to_string(),
@@ -1648,9 +1543,7 @@ mod tests {
         // excluded from `required` (see the variable_reference branch
         // earlier in build_operation_schema). A colliding required body
         // field must not silently re-elevate them.
-        use crate::openapi::discovery::{
-            JsonSchema, JsonSchemaProperty, MethodParameter, SchemaRef,
-        };
+        use crate::openapi::discovery::{JsonSchema, JsonSchemaProperty, MethodParameter, SchemaRef};
         let mut params = HashMap::new();
         params.insert(
             "gardenId".to_string(),
@@ -1956,18 +1849,9 @@ mod tests {
         };
         let schema = build_operation_schema(&["scores"], "create", &method, &schemas);
         let score = &schema["input"]["properties"]["score"];
-        assert!(
-            score.get("minimum").is_none(),
-            "NaN minimum must be omitted: {schema}"
-        );
-        assert!(
-            score.get("maximum").is_none(),
-            "+Inf maximum must be omitted: {schema}"
-        );
-        assert!(
-            score.get("exclusiveMinimum").is_none(),
-            "-Inf exclusiveMinimum must be omitted: {schema}"
-        );
+        assert!(score.get("minimum").is_none(), "NaN minimum must be omitted: {schema}");
+        assert!(score.get("maximum").is_none(), "+Inf maximum must be omitted: {schema}");
+        assert!(score.get("exclusiveMinimum").is_none(), "-Inf exclusiveMinimum must be omitted: {schema}");
         assert_eq!(
             score["exclusiveMaximum"], 0.5,
             "finite bound must still surface alongside the non-finite ones being skipped: {schema}",
@@ -1994,10 +1878,7 @@ mod tests {
             ..Default::default()
         };
         let schema2 = build_operation_schema(&["files"], "list", &method2, &HashMap::new());
-        assert!(
-            schema2.get("binaryResponse").is_none(),
-            "false default should be omitted: {schema2}"
-        );
+        assert!(schema2.get("binaryResponse").is_none(), "false default should be omitted: {schema2}");
     }
 
     #[test]
@@ -2071,14 +1952,8 @@ mod tests {
         };
         let schema = build_operation_schema(&["things"], "list", &method, &HashMap::new());
         let limit = &schema["input"]["properties"]["limit"];
-        assert_eq!(
-            limit["default"], 50,
-            "client default surfaces under `default`: {schema}"
-        );
-        assert_eq!(
-            limit["serverDefault"], 20,
-            "doc default surfaces under `serverDefault`: {schema}"
-        );
+        assert_eq!(limit["default"], 50, "client default surfaces under `default`: {schema}");
+        assert_eq!(limit["serverDefault"], 20, "doc default surfaces under `serverDefault`: {schema}");
         assert_eq!(limit["format"], "int32");
         assert_eq!(limit["nullable"], true);
         assert_eq!(limit["deprecated"], true);
@@ -2097,9 +1972,7 @@ mod tests {
         // type in --schema. Pre-fix, params emitted strings and bodies
         // emitted numbers — agents parsing constraints uniformly got
         // burned by the inconsistency.
-        use crate::openapi::discovery::{
-            JsonSchema, JsonSchemaProperty, MethodParameter, SchemaRef,
-        };
+        use crate::openapi::discovery::{JsonSchema, JsonSchemaProperty, MethodParameter, SchemaRef};
         let mut params = HashMap::new();
         params.insert(
             "score_param".to_string(),
@@ -2143,22 +2016,10 @@ mod tests {
         let schema = build_operation_schema(&["scores"], "create", &method, &schemas);
         let props = &schema["input"]["properties"];
         // Both must surface as JSON numbers.
-        assert!(
-            props["score_param"]["minimum"].is_number(),
-            "param min must be JSON number: {schema}"
-        );
-        assert!(
-            props["score_body"]["minimum"].is_number(),
-            "body min must be JSON number: {schema}"
-        );
-        assert_eq!(
-            props["score_param"]["minimum"],
-            props["score_body"]["minimum"]
-        );
-        assert_eq!(
-            props["score_param"]["maximum"],
-            props["score_body"]["maximum"]
-        );
+        assert!(props["score_param"]["minimum"].is_number(), "param min must be JSON number: {schema}");
+        assert!(props["score_body"]["minimum"].is_number(), "body min must be JSON number: {schema}");
+        assert_eq!(props["score_param"]["minimum"], props["score_body"]["minimum"]);
+        assert_eq!(props["score_param"]["maximum"], props["score_body"]["maximum"]);
     }
 
     #[test]
@@ -2172,10 +2033,7 @@ mod tests {
             ..Default::default()
         };
         let schema = build_operation_schema(&["users"], "delete", &method, &HashMap::new());
-        assert!(
-            schema.get("output").is_none(),
-            "no response → no `output` field: {schema}"
-        );
+        assert!(schema.get("output").is_none(), "no response → no `output` field: {schema}");
     }
 
     #[test]
@@ -2211,11 +2069,7 @@ mod tests {
             ..Default::default()
         };
 
-        let path: Vec<String> = vec![
-            "organizations".into(),
-            "memberships".into(),
-            "get-membership".into(),
-        ];
+        let path: Vec<String> = vec!["organizations".into(), "memberships".into(), "get-membership".into()];
         // Should resolve as the leaf operation, not be misrouted via "memberships" as method name.
         let result = build_schema(&doc, &path);
         assert!(result.is_some(), "nested path should resolve correctly");
@@ -2299,10 +2153,7 @@ mod tests {
 
         // The enum belongs on `items`, not the property: the property is the array.
         assert_eq!(props["event_types"]["items"]["type"], "string");
-        assert_eq!(
-            props["event_types"]["items"]["enum"],
-            json!(["sent", "received"])
-        );
+        assert_eq!(props["event_types"]["items"]["enum"], json!(["sent", "received"]));
         assert!(props["event_types"]["enum"].is_null());
         // A non-enum array is unchanged — no empty `enum` key invented.
         assert!(props["labels"]["items"]["enum"].is_null());
@@ -2376,10 +2227,7 @@ mod tests {
         let props = &schema["input"]["properties"];
 
         // Union param: oneOf [string, array<string>].
-        assert!(
-            props["to"]["type"].is_null(),
-            "should not have top-level type"
-        );
+        assert!(props["to"]["type"].is_null(), "should not have top-level type");
         let one_of = props["to"]["oneOf"].as_array().unwrap();
         assert_eq!(one_of.len(), 2);
         assert_eq!(one_of[0]["type"], "string");
@@ -2402,43 +2250,27 @@ mod tests {
         };
         let mut parameters = HashMap::new();
         // `settings` is spec-required and so are three of its leaves.
-        parameters.insert(
-            "settings".to_string(),
-            MethodParameter {
-                param_type: Some("object".to_string()),
+        parameters.insert("settings".to_string(), MethodParameter {
+            param_type: Some("object".to_string()),
+            ..body(true)
+        });
+        for leaf in ["settings.auth_type", "settings.name", "settings.webhook_url"] {
+            parameters.insert(leaf.to_string(), MethodParameter {
+                param_type: Some("string".to_string()),
+                required: true,
                 ..body(true)
-            },
-        );
-        for leaf in [
-            "settings.auth_type",
-            "settings.name",
-            "settings.webhook_url",
-        ] {
-            parameters.insert(
-                leaf.to_string(),
-                MethodParameter {
-                    param_type: Some("string".to_string()),
-                    required: true,
-                    ..body(true)
-                },
-            );
+            });
         }
         // A required parent with NO required leaves must survive — that is the
         // case `required_by_spec` was added for.
-        parameters.insert(
-            "workflow".to_string(),
-            MethodParameter {
-                param_type: Some("object".to_string()),
-                ..body(true)
-            },
-        );
-        parameters.insert(
-            "workflow.nodes".to_string(),
-            MethodParameter {
-                param_type: Some("string".to_string()),
-                ..body(false)
-            },
-        );
+        parameters.insert("workflow".to_string(), MethodParameter {
+            param_type: Some("object".to_string()),
+            ..body(true)
+        });
+        parameters.insert("workflow.nodes".to_string(), MethodParameter {
+            param_type: Some("string".to_string()),
+            ..body(false)
+        });
 
         let mut methods = HashMap::new();
         methods.insert(
@@ -2472,15 +2304,8 @@ mod tests {
             !required.contains(&"settings".to_string()),
             "an ancestor of a required leaf must be dropped: {required:?}",
         );
-        for leaf in [
-            "settings.auth_type",
-            "settings.name",
-            "settings.webhook_url",
-        ] {
-            assert!(
-                required.contains(&leaf.to_string()),
-                "{leaf} missing: {required:?}"
-            );
+        for leaf in ["settings.auth_type", "settings.name", "settings.webhook_url"] {
+            assert!(required.contains(&leaf.to_string()), "{leaf} missing: {required:?}");
         }
         assert!(
             required.contains(&"workflow".to_string()),
@@ -2553,10 +2378,7 @@ mod tests {
         assert!(props["file_format"].get("file").is_none());
 
         // Builtin-colliding field is skipped, matching flag registration.
-        assert!(
-            props.get("format").is_none(),
-            "builtin collision must be skipped"
-        );
+        assert!(props.get("format").is_none(), "builtin collision must be skipped");
 
         let required: Vec<&str> = schema["input"]["required"]
             .as_array()
@@ -2578,45 +2400,33 @@ mod tests {
         use crate::openapi::discovery::{MethodParameter, MultipartField};
         let mut parameters = HashMap::new();
         // Collides with the JMESPath global -> registered with a `-param` suffix.
-        parameters.insert(
-            "query".to_string(),
-            MethodParameter {
-                param_type: Some("string".to_string()),
-                location: Some("query".to_string()),
-                required: true,
-                ..Default::default()
-            },
-        );
+        parameters.insert("query".to_string(), MethodParameter {
+            param_type: Some("string".to_string()),
+            location: Some("query".to_string()),
+            required: true,
+            ..Default::default()
+        });
         // Header wire-casing -> kebab flag.
-        parameters.insert(
-            "Idempotency-Key".to_string(),
-            MethodParameter {
-                param_type: Some("string".to_string()),
-                location: Some("header".to_string()),
-                ..Default::default()
-            },
-        );
+        parameters.insert("Idempotency-Key".to_string(), MethodParameter {
+            param_type: Some("string".to_string()),
+            location: Some("header".to_string()),
+            ..Default::default()
+        });
         // Ordinary name -> unchanged.
-        parameters.insert(
-            "limit".to_string(),
-            MethodParameter {
-                param_type: Some("integer".to_string()),
-                location: Some("query".to_string()),
-                ..Default::default()
-            },
-        );
+        parameters.insert("limit".to_string(), MethodParameter {
+            param_type: Some("integer".to_string()),
+            location: Some("query".to_string()),
+            ..Default::default()
+        });
         // Two wire names sanitizing to `--page-size`: the command builder
         // registers only the first in sorted order, so the loser must stay
         // silent rather than point at the winner's flag.
         for wire in ["pageSize", "page_size"] {
-            parameters.insert(
-                wire.to_string(),
-                MethodParameter {
-                    param_type: Some("integer".to_string()),
-                    location: Some("query".to_string()),
-                    ..Default::default()
-                },
-            );
+            parameters.insert(wire.to_string(), MethodParameter {
+                param_type: Some("integer".to_string()),
+                location: Some("query".to_string()),
+                ..Default::default()
+            });
         }
 
         let mut methods = HashMap::new();

@@ -80,13 +80,8 @@ fn with_temp_home<R>(f: impl FnOnce() -> R) -> R {
 /// Create a profile pinning `region` to `region`, and activate it.
 fn create_region_profile(region: &str) {
     let (code, output) = run(&[
-        "regional",
-        "profiles",
-        "create",
-        "au",
-        "--server-var",
-        &format!("region={region}"),
-        "--use",
+        "regional", "profiles", "create", "au", "--server-var",
+        &format!("region={region}"), "--use",
     ]);
     assert_eq!(code, 0, "profiles create failed: {output}");
 }
@@ -198,10 +193,7 @@ fn transport_knobs_are_settable_and_shown_on_a_profile() {
         let (code, output) = run(&["regional", "profiles", "list", "--human"]);
         assert_eq!(code, 0, "{output}");
         let header = output.lines().next().unwrap_or_default();
-        assert!(
-            header.contains("TIMEOUT_SECS") && header.contains("PROXY"),
-            "{output}"
-        );
+        assert!(header.contains("TIMEOUT_SECS") && header.contains("PROXY"), "{output}");
 
         // Bad values are refused rather than stored inert.
         let (code, output) = run(&[
@@ -231,10 +223,7 @@ fn transport_knobs_are_settable_and_shown_on_a_profile() {
         }
         let (code, output) = run(&["regional", "profiles", "show", "corp", "--format", "json"]);
         assert_eq!(code, 0, "{output}");
-        assert!(
-            output.contains("\"timeout_secs\": 45"),
-            "rejected values must not clobber:\n{output}"
-        );
+        assert!(output.contains("\"timeout_secs\": 45"), "rejected values must not clobber:\n{output}");
     });
 }
 
@@ -242,14 +231,7 @@ fn transport_knobs_are_settable_and_shown_on_a_profile() {
 #[serial]
 fn an_unknown_prefixed_key_lists_the_transport_knobs_as_settable() {
     with_temp_home(|| {
-        let (code, output) = run(&[
-            "regional",
-            "profiles",
-            "set",
-            "corp",
-            "--yes",
-            "REGIONAL_TIMEOUT=45",
-        ]);
+        let (code, output) = run(&["regional", "profiles", "set", "corp", "--yes", "REGIONAL_TIMEOUT=45"]);
         assert_ne!(code, 0, "{output}");
         for var in [
             "REGIONAL_TIMEOUT_SECS",
@@ -270,9 +252,8 @@ fn a_server_variables_own_flag_sets_it_on_create() {
     // from ordinary commands, read from the propagated global rather than a
     // `create`-local duplicate.
     with_temp_home(|| {
-        let (code, output) = run(&[
-            "regional", "profiles", "create", "au", "--region", "au1", "--use",
-        ]);
+        let (code, output) =
+            run(&["regional", "profiles", "create", "au", "--region", "au1", "--use"]);
         assert_eq!(code, 0, "{output}");
 
         let (code, output) = run(&["regional", "profiles", "list", "--format", "json"]);
@@ -309,12 +290,7 @@ fn a_profile_server_variable_reaches_the_url() {
     with_temp_home(|| {
         create_region_profile("au1");
         let (code, output) = run(&[
-            "regional",
-            "messages",
-            "list",
-            "--dry-run",
-            "--format",
-            "json",
+            "regional", "messages", "list", "--dry-run", "--format", "json",
         ]);
         assert_eq!(code, 0, "{output}");
         assert!(
@@ -330,14 +306,8 @@ fn the_flag_beats_the_profiles_server_variable() {
     with_temp_home(|| {
         create_region_profile("au1");
         let (code, output) = run(&[
-            "regional",
-            "messages",
-            "list",
-            "--dry-run",
-            "--format",
-            "json",
-            "--region",
-            "us1",
+            "regional", "messages", "list", "--dry-run", "--format", "json",
+            "--region", "us1",
         ]);
         assert_eq!(code, 0, "{output}");
         assert!(
@@ -355,12 +325,7 @@ fn the_profile_beats_the_specs_declared_default() {
     with_temp_home(|| {
         create_region_profile("au1");
         let (code, output) = run(&[
-            "regional",
-            "messages",
-            "list",
-            "--dry-run",
-            "--format",
-            "json",
+            "regional", "messages", "list", "--dry-run", "--format", "json",
         ]);
         assert_eq!(code, 0, "{output}");
         assert!(!output.contains("us1"), "the spec default leaked: {output}");
@@ -372,12 +337,7 @@ fn the_profile_beats_the_specs_declared_default() {
 fn without_a_profile_the_specs_default_still_applies() {
     with_temp_home(|| {
         let (code, output) = run(&[
-            "regional",
-            "messages",
-            "list",
-            "--dry-run",
-            "--format",
-            "json",
+            "regional", "messages", "list", "--dry-run", "--format", "json",
         ]);
         assert_eq!(code, 0, "{output}");
         assert!(
@@ -392,12 +352,7 @@ fn without_a_profile_the_specs_default_still_applies() {
 fn an_unknown_server_variable_is_rejected() {
     with_temp_home(|| {
         let (code, output) = run(&[
-            "regional",
-            "profiles",
-            "create",
-            "bad",
-            "--server-var",
-            "regio=au1",
+            "regional", "profiles", "create", "bad", "--server-var", "regio=au1",
         ]);
         assert_ne!(code, 0, "{output}");
         assert!(output.contains("Did you mean `region`?"), "{output}");
@@ -426,12 +381,7 @@ fn a_server_variable_reads_its_prefixed_env_var() {
     with_temp_home(|| {
         with_env("au1", || {
             let (code, output) = run(&[
-                "regional",
-                "messages",
-                "list",
-                "--dry-run",
-                "--format",
-                "json",
+                "regional", "messages", "list", "--dry-run", "--format", "json",
             ]);
             assert_eq!(code, 0, "{output}");
             assert!(output.contains("https://au1.api.example.com"), "{output}");
@@ -445,14 +395,8 @@ fn the_flag_beats_the_env_var() {
     with_temp_home(|| {
         with_env("au1", || {
             let (code, output) = run(&[
-                "regional",
-                "messages",
-                "list",
-                "--dry-run",
-                "--format",
-                "json",
-                "--region",
-                "us1",
+                "regional", "messages", "list", "--dry-run", "--format", "json",
+                "--region", "us1",
             ]);
             assert_eq!(code, 0, "{output}");
             assert!(output.contains("https://us1.api.example.com"), "{output}");
@@ -469,12 +413,7 @@ fn an_activated_profile_beats_the_env_var() {
         create_region_profile("au1");
         with_env("us1", || {
             let (code, output) = run(&[
-                "regional",
-                "messages",
-                "list",
-                "--dry-run",
-                "--format",
-                "json",
+                "regional", "messages", "list", "--dry-run", "--format", "json",
             ]);
             assert_eq!(code, 0, "{output}");
             assert!(
@@ -494,14 +433,7 @@ fn an_explicitly_named_profile_beats_the_env_var() {
         create_region_profile("au1");
         with_env("us1", || {
             let (code, output) = run(&[
-                "regional",
-                "-p",
-                "au",
-                "messages",
-                "list",
-                "--dry-run",
-                "--format",
-                "json",
+                "regional", "-p", "au", "messages", "list", "--dry-run", "--format", "json",
             ]);
             assert_eq!(code, 0, "{output}");
             assert!(
@@ -517,14 +449,7 @@ fn an_explicitly_named_profile_beats_the_env_var() {
 fn the_env_var_beats_the_spec_default() {
     with_temp_home(|| {
         with_env("au1", || {
-            let (code, output) = run(&[
-                "regional",
-                "messages",
-                "list",
-                "--dry-run",
-                "--format",
-                "json",
-            ]);
+            let (code, output) = run(&["regional", "messages", "list", "--dry-run", "--format", "json"]);
             assert_eq!(code, 0, "{output}");
             assert!(!output.contains("us1"), "the spec default leaked: {output}");
         });
@@ -541,14 +466,7 @@ fn the_env_var_fills_in_when_the_selected_profile_has_no_server_variable() {
         let (code, output) = run(&["regional", "profiles", "create", "bare", "--use"]);
         assert_eq!(code, 0, "{output}");
         with_env("au1", || {
-            let (code, output) = run(&[
-                "regional",
-                "messages",
-                "list",
-                "--dry-run",
-                "--format",
-                "json",
-            ]);
+            let (code, output) = run(&["regional", "messages", "list", "--dry-run", "--format", "json"]);
             assert_eq!(code, 0, "{output}");
             assert!(output.contains("https://au1.api.example.com"), "{output}");
         });

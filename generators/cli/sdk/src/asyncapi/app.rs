@@ -97,7 +97,8 @@ type DynInitPayload = Arc<dyn Fn(&BindingArgs) -> Option<Value> + Send + Sync + 
 
 /// Dynamic autoresponder picker. Returning `None` falls back to the
 /// static `autoresponder` (if set).
-type DynAutoResponder = Arc<dyn Fn(&BindingArgs) -> Option<AutoResponder> + Send + Sync + 'static>;
+type DynAutoResponder =
+    Arc<dyn Fn(&BindingArgs) -> Option<AutoResponder> + Send + Sync + 'static>;
 
 /// Builder for the AsyncAPI binding's inner state.
 #[allow(dead_code)] // Several fields wired for future tasks (overlay, endpoint, init).
@@ -373,7 +374,11 @@ impl CliApp {
 
     /// Variant of [`auth_provider`](Self::auth_provider) for a pre-built
     /// [`DynAuthProvider`].
-    pub fn auth_provider_shared(mut self, scheme_name: &str, provider: DynAuthProvider) -> Self {
+    pub fn auth_provider_shared(
+        mut self,
+        scheme_name: &str,
+        provider: DynAuthProvider,
+    ) -> Self {
         self.auth_bindings
             .push((scheme_name.to_string(), SchemeBinding::Custom(provider)));
         self
@@ -463,7 +468,8 @@ mod tests {
 
     #[test]
     fn cli_arg_records_spec_with_no_env_fallback() {
-        let app = CliApp::new("ws-cli").cli_arg("voice", BindingArgKind::Flag, "Enable voice mode");
+        let app = CliApp::new("ws-cli")
+            .cli_arg("voice", BindingArgKind::Flag, "Enable voice mode");
         assert_eq!(app.binding_args.len(), 1);
         assert_eq!(app.binding_args[0].name, "voice");
         assert_eq!(app.binding_args[0].kind, BindingArgKind::Flag);
@@ -520,18 +526,19 @@ mod tests {
     /// interfere (no `Date.now()` available; the test's pid + line is
     /// enough entropy).
     fn unique_env(stem: &str) -> String {
-        format!(
-            "ASYNCAPI_TEST_{}_{}",
-            stem.to_uppercase(),
-            std::process::id()
-        )
+        format!("ASYNCAPI_TEST_{}_{}", stem.to_uppercase(), std::process::id())
     }
 
     #[test]
     fn resolve_binding_args_env_fallback_promotes_nonempty_to_true_flag() {
         let env_name = unique_env("voice_flag");
         std::env::set_var(&env_name, "1");
-        let app = CliApp::new("ws-cli").cli_arg_env("voice", BindingArgKind::Flag, "", &env_name);
+        let app = CliApp::new("ws-cli").cli_arg_env(
+            "voice",
+            BindingArgKind::Flag,
+            "",
+            &env_name,
+        );
         let matches = matches_with_app_args(&app, &["root"]);
         let resolved = app.resolve_binding_args(&matches);
         assert!(resolved.flag("voice"));
@@ -542,7 +549,12 @@ mod tests {
     fn resolve_binding_args_env_fallback_empty_string_leaves_flag_false() {
         let env_name = unique_env("voice_empty");
         std::env::set_var(&env_name, "");
-        let app = CliApp::new("ws-cli").cli_arg_env("voice", BindingArgKind::Flag, "", &env_name);
+        let app = CliApp::new("ws-cli").cli_arg_env(
+            "voice",
+            BindingArgKind::Flag,
+            "",
+            &env_name,
+        );
         let matches = matches_with_app_args(&app, &["root"]);
         let resolved = app.resolve_binding_args(&matches);
         assert!(
@@ -556,8 +568,12 @@ mod tests {
     fn resolve_binding_args_cli_value_overrides_env_fallback() {
         let env_name = unique_env("audio_out_override");
         std::env::set_var(&env_name, "from-env.pcm");
-        let app =
-            CliApp::new("ws-cli").cli_arg_env("audio-out", BindingArgKind::Value, "", &env_name);
+        let app = CliApp::new("ws-cli").cli_arg_env(
+            "audio-out",
+            BindingArgKind::Value,
+            "",
+            &env_name,
+        );
         let matches = matches_with_app_args(&app, &["root", "--audio-out", "from-cli.pcm"]);
         let resolved = app.resolve_binding_args(&matches);
         assert_eq!(resolved.value("audio-out"), Some("from-cli.pcm"));
@@ -568,8 +584,12 @@ mod tests {
     fn resolve_binding_args_env_value_fallback_used_when_cli_absent() {
         let env_name = unique_env("audio_out_envonly");
         std::env::set_var(&env_name, "from-env.pcm");
-        let app =
-            CliApp::new("ws-cli").cli_arg_env("audio-out", BindingArgKind::Value, "", &env_name);
+        let app = CliApp::new("ws-cli").cli_arg_env(
+            "audio-out",
+            BindingArgKind::Value,
+            "",
+            &env_name,
+        );
         let matches = matches_with_app_args(&app, &["root"]);
         let resolved = app.resolve_binding_args(&matches);
         assert_eq!(resolved.value("audio-out"), Some("from-env.pcm"));

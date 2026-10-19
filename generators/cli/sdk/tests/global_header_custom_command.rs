@@ -51,7 +51,8 @@ fn x_source_headers(args: &[&str]) -> Vec<String> {
         let server = wiremock::MockServer::start().await;
         wiremock::Mock::given(wiremock::matchers::method("GET"))
             .respond_with(
-                wiremock::ResponseTemplate::new(200).set_body_json(serde_json::json!({"ok": true})),
+                wiremock::ResponseTemplate::new(200)
+                    .set_body_json(serde_json::json!({"ok": true})),
             )
             .mount(&server)
             .await;
@@ -84,10 +85,7 @@ fn x_source_headers(args: &[&str]) -> Vec<String> {
 
 #[test]
 fn colliding_global_header_reaches_builtin_command() {
-    assert_eq!(
-        x_source_headers(&["things", "list"]),
-        vec!["cli".to_string()]
-    );
+    assert_eq!(x_source_headers(&["things", "list"]), vec!["cli".to_string()]);
 }
 
 #[test]

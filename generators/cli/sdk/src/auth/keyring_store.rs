@@ -420,8 +420,7 @@ impl<S: KeyringStore> KeyringStore for ChunkedKeyringStore<S> {
 
         // Remove chunks left over from a previous, larger value.
         for i in (new_count + 1)..=old_count {
-            self.inner
-                .delete(service, &Self::chunk_account(account, i))?;
+            self.inner.delete(service, &Self::chunk_account(account, i))?;
         }
         Ok(())
     }
@@ -430,8 +429,7 @@ impl<S: KeyringStore> KeyringStore for ChunkedKeyringStore<S> {
         let old_count = self.stored_chunk_count(service, account)?;
         self.inner.delete(service, account)?;
         for i in 1..=old_count {
-            self.inner
-                .delete(service, &Self::chunk_account(account, i))?;
+            self.inner.delete(service, &Self::chunk_account(account, i))?;
         }
         Ok(())
     }
@@ -456,14 +454,10 @@ pub fn auto_store() -> Arc<dyn KeyringStore> {
     // tests) where the OS keyring is unavailable or would pop an interactive unlock prompt. The
     // file location still honors `HOME` / `XDG_CONFIG_HOME`, so a test can redirect it to a temp dir.
     if std::env::var_os("FERN_CLI_CREDENTIAL_STORE").is_some_and(|value| value == "file") {
-        tracing::debug!(
-            "FERN_CLI_CREDENTIAL_STORE=file; using file backend for credential storage"
-        );
+        tracing::debug!("FERN_CLI_CREDENTIAL_STORE=file; using file backend for credential storage");
         return match FileKeyringStore::user_default() {
             Some(store) => Arc::new(store),
-            None => Arc::new(FileKeyringStore::at_root(PathBuf::from(
-                "/tmp/fern-cli-credentials",
-            ))),
+            None => Arc::new(FileKeyringStore::at_root(PathBuf::from("/tmp/fern-cli-credentials"))),
         };
     }
     #[cfg(not(target_env = "musl"))]
@@ -478,9 +472,7 @@ pub fn auto_store() -> Arc<dyn KeyringStore> {
         Some(store) => Arc::new(store),
         None => {
             tracing::warn!("No config dir available; using /tmp for credential storage");
-            Arc::new(FileKeyringStore::at_root(PathBuf::from(
-                "/tmp/fern-cli-credentials",
-            )))
+            Arc::new(FileKeyringStore::at_root(PathBuf::from("/tmp/fern-cli-credentials")))
         }
     }
 }
@@ -546,10 +538,10 @@ impl KeyringStore for MockKeyringStore {
     }
 
     fn set(&self, service: &str, account: &str, value: &str) -> Result<(), CliError> {
-        self.inner.write().unwrap().insert(
-            (service.to_string(), account.to_string()),
-            value.to_string(),
-        );
+        self.inner
+            .write()
+            .unwrap()
+            .insert((service.to_string(), account.to_string()), value.to_string());
         Ok(())
     }
 
@@ -617,14 +609,8 @@ mod tests {
         store.set("svc-a", "key", "value-a").unwrap();
         store.set("svc-b", "key", "value-b").unwrap();
 
-        assert_eq!(
-            store.get("svc-a", "key").unwrap().as_deref(),
-            Some("value-a")
-        );
-        assert_eq!(
-            store.get("svc-b", "key").unwrap().as_deref(),
-            Some("value-b")
-        );
+        assert_eq!(store.get("svc-a", "key").unwrap().as_deref(), Some("value-a"));
+        assert_eq!(store.get("svc-b", "key").unwrap().as_deref(), Some("value-b"));
     }
 
     #[test]
@@ -702,14 +688,8 @@ mod tests {
         let store = ChunkedKeyringStore::new(mock.clone());
 
         store.set("svc", "acct", "short-token").unwrap();
-        assert_eq!(
-            mock.get("svc", "acct").unwrap().as_deref(),
-            Some("short-token")
-        );
-        assert_eq!(
-            store.get("svc", "acct").unwrap().as_deref(),
-            Some("short-token")
-        );
+        assert_eq!(mock.get("svc", "acct").unwrap().as_deref(), Some("short-token"));
+        assert_eq!(store.get("svc", "acct").unwrap().as_deref(), Some("short-token"));
         assert_eq!(mock.snapshot().len(), 1);
     }
 
@@ -735,10 +715,7 @@ mod tests {
             );
         }
 
-        assert_eq!(
-            store.get("svc", "acct").unwrap().as_deref(),
-            Some(value.as_str())
-        );
+        assert_eq!(store.get("svc", "acct").unwrap().as_deref(), Some(value.as_str()));
     }
 
     /// Chunk entries (everything except the primary marker entry).
@@ -760,10 +737,7 @@ mod tests {
         let mut value = String::from("x");
         value.extend(std::iter::repeat_n('𝄞', MAX_ENTRY_UTF16_UNITS));
         store.set("svc", "acct", &value).unwrap();
-        assert_eq!(
-            store.get("svc", "acct").unwrap().as_deref(),
-            Some(value.as_str())
-        );
+        assert_eq!(store.get("svc", "acct").unwrap().as_deref(), Some(value.as_str()));
     }
 
     #[test]
@@ -777,11 +751,7 @@ mod tests {
 
         store.set("svc", "acct", "small").unwrap();
         assert_eq!(store.get("svc", "acct").unwrap().as_deref(), Some("small"));
-        assert_eq!(
-            mock.snapshot().len(),
-            1,
-            "stale chunk entries must be removed"
-        );
+        assert_eq!(mock.snapshot().len(), 1, "stale chunk entries must be removed");
     }
 
     #[test]
@@ -794,10 +764,7 @@ mod tests {
         store.delete("svc", "acct").unwrap();
 
         assert_eq!(store.get("svc", "acct").unwrap(), None);
-        assert!(
-            mock.snapshot().is_empty(),
-            "delete must remove marker and chunks"
-        );
+        assert!(mock.snapshot().is_empty(), "delete must remove marker and chunks");
     }
 
     #[test]
@@ -807,10 +774,7 @@ mod tests {
         mock.set("svc", "acct", "legacy-token").unwrap();
 
         let store = ChunkedKeyringStore::new(mock);
-        assert_eq!(
-            store.get("svc", "acct").unwrap().as_deref(),
-            Some("legacy-token")
-        );
+        assert_eq!(store.get("svc", "acct").unwrap().as_deref(), Some("legacy-token"));
     }
 
     #[test]
@@ -879,16 +843,10 @@ mod tests {
                 1,
                 "platforms without a blob limit must store plain"
             );
-            assert_eq!(
-                mock.get("svc", "acct").unwrap().as_deref(),
-                Some(big.as_str())
-            );
+            assert_eq!(mock.get("svc", "acct").unwrap().as_deref(), Some(big.as_str()));
         }
 
-        assert_eq!(
-            store.get("svc", "acct").unwrap().as_deref(),
-            Some(big.as_str())
-        );
+        assert_eq!(store.get("svc", "acct").unwrap().as_deref(), Some(big.as_str()));
     }
 
     #[test]
@@ -902,10 +860,7 @@ mod tests {
 
         // A non-chunking wrapper must still reassemble it.
         let reader = ChunkedKeyringStore::with_chunk_writes(mock, false);
-        assert_eq!(
-            reader.get("svc", "acct").unwrap().as_deref(),
-            Some(big.as_str())
-        );
+        assert_eq!(reader.get("svc", "acct").unwrap().as_deref(), Some(big.as_str()));
     }
 
     #[test]
@@ -923,10 +878,7 @@ mod tests {
         plain.set("svc", "acct", &big).unwrap();
 
         assert_eq!(mock.snapshot().len(), 1, "stale chunks must be removed");
-        assert_eq!(
-            plain.get("svc", "acct").unwrap().as_deref(),
-            Some(big.as_str())
-        );
+        assert_eq!(plain.get("svc", "acct").unwrap().as_deref(), Some(big.as_str()));
     }
 
     #[test]

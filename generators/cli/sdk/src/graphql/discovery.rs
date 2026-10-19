@@ -141,4 +141,5 @@ mod tests {
         let doc: GraphQLSchema = serde_json::from_str(json).unwrap();
         assert!(doc.resources.is_empty());
     }
+
 }

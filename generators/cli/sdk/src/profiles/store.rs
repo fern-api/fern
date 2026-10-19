@@ -301,7 +301,10 @@ impl ProfileStore {
     /// if it pointed at the removed profile, so the file never names a
     /// profile that does not exist.
     pub fn remove(&mut self, name: &str) -> bool {
-        let existed = self.profiles_table_mut().remove(name).is_some();
+        let existed = self
+            .profiles_table_mut()
+            .remove(name)
+            .is_some();
         if self.active() == Some(name) {
             self.doc.remove("active");
         }
@@ -398,9 +401,9 @@ fn map_field(table: &dyn toml_edit::TableLike, key: &str) -> BTreeMap<String, St
             Some(value) => {
                 out.insert(name.to_string(), value.to_string());
             }
-            None => {
-                tracing::warn!("profiles.toml: ignoring `{key}.{name}` — expected a string value")
-            }
+            None => tracing::warn!(
+                "profiles.toml: ignoring `{key}.{name}` — expected a string value"
+            ),
         }
     }
     out
@@ -494,16 +497,17 @@ fn set_map(table: &mut Table, key: &str, values: &BTreeMap<String, String>) {
 /// does not exist, when the chain is cyclic, or when it is deeper than
 /// [`MAX_PARENT_DEPTH`].
 pub fn resolve(store: &ProfileStore, name: &str) -> Result<ResolvedProfile, CliError> {
-    let entry = store
-        .entry(name)
-        .ok_or_else(|| unknown_profile(store, name))?;
+    let entry = store.entry(name).ok_or_else(|| unknown_profile(store, name))?;
 
     // Walk parents into a chain, nearest-first, checking for cycles and depth
     // as we go. `seen` starts with the requested profile so `parent = <self>`
     // is caught as the one-node cycle it is.
     let mut chain = vec![entry];
     let mut seen: Vec<String> = vec![name.to_string()];
-    while let Some(parent_name) = chain.last().and_then(|entry| entry.parent.clone()) {
+    while let Some(parent_name) = chain
+        .last()
+        .and_then(|entry| entry.parent.clone())
+    {
         if seen.iter().any(|s| s == &parent_name) {
             seen.push(parent_name.clone());
             return Err(CliError::Validation(format!(
@@ -560,7 +564,9 @@ pub fn resolve(store: &ProfileStore, name: &str) -> Result<ResolvedProfile, CliE
         );
     }
     // Deliberately outside the fold — see the doc comment.
-    resolved.format = chain.first().and_then(|entry| entry.format.clone());
+    resolved.format = chain
+        .first()
+        .and_then(|entry| entry.format.clone());
     resolved.credential_parameters = chain
         .first()
         .map(|entry| entry.credential_parameters.clone())
@@ -754,7 +760,9 @@ AccountSid = "AC99"
 
     #[test]
     fn mutual_parents_are_a_cycle() {
-        let store = store_from("[profiles.a]\nparent = \"b\"\n\n[profiles.b]\nparent = \"a\"\n");
+        let store = store_from(
+            "[profiles.a]\nparent = \"b\"\n\n[profiles.b]\nparent = \"a\"\n",
+        );
         let err = resolve(&store, "a").unwrap_err().to_string();
         assert!(err.contains("cyclic"), "{err}");
     }
@@ -930,7 +938,9 @@ AccountSid = "AC99"
 
     #[test]
     fn non_string_map_values_are_skipped_not_coerced() {
-        let store = store_from("[profiles.p.parameters]\nok = \"1\"\nbad = { nested = true }\n");
+        let store = store_from(
+            "[profiles.p.parameters]\nok = \"1\"\nbad = { nested = true }\n",
+        );
         let entry = store.entry("p").unwrap();
         assert_eq!(entry.parameters.get("ok").unwrap(), "1");
         assert!(!entry.parameters.contains_key("bad"));

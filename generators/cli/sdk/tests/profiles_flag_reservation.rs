@@ -119,16 +119,7 @@ fn the_global_profile_flag_still_works_on_that_operation() {
             CliApp::new("probe")
                 .profiles(ProfilesConfig::new())
                 .binding(OpenApiBinding::new().spec(SPEC_WITH_PARAM)),
-            &[
-                "probe",
-                "things",
-                "list",
-                "--dry-run",
-                "--format",
-                "json",
-                "-p",
-                "ghost",
-            ],
+            &["probe", "things", "list", "--dry-run", "--format", "json", "-p", "ghost"],
         );
         // Reaching profile *resolution* is the proof the flag was parsed as
         // the global; an unknown name is the expected outcome here.
