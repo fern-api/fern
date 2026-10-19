@@ -323,9 +323,15 @@ export class OneOfSchemaConverter extends AbstractConverter<
                 ref != null ? { $ref: ref } : variantSchema;
 
             // If the variant schema contains the discriminant property, filter it out
-            // and convert as an inlined schema with the original type ID
-            if (variantSchema?.properties != null && discriminantProperty in variantSchema.properties) {
-                // Create a filtered schema without the discriminant property
+            // and convert as an inlined schema with the original type ID. A variant that is
+            // already being inlined further up (a self-referencing union) stays a $ref, since
+            // inlining it again would recurse forever.
+            const isVariantInProgress = typeId != null && this.context.discriminatedVariantsInProgress.has(typeId);
+            const shouldInlineVariant =
+                variantSchema?.properties != null &&
+                discriminantProperty in variantSchema.properties &&
+                !(isVariantInProgress && ref != null);
+            if (shouldInlineVariant && variantSchema != null) {
                 schemaOrReference = this.filterDiscriminantFromSchema(variantSchema, discriminantProperty);
             }
             if (schemaOrReference == null) {
@@ -342,7 +348,18 @@ export class OneOfSchemaConverter extends AbstractConverter<
             if (typeId != null) {
                 referencedTypes.add(typeId);
             }
-            const convertedSchema = singleUnionTypeSchemaConverter.convert();
+            const trackVariant = shouldInlineVariant && typeId != null && !isVariantInProgress;
+            if (trackVariant) {
+                this.context.discriminatedVariantsInProgress.add(typeId);
+            }
+            let convertedSchema: ReturnType<typeof singleUnionTypeSchemaConverter.convert>;
+            try {
+                convertedSchema = singleUnionTypeSchemaConverter.convert();
+            } finally {
+                if (trackVariant) {
+                    this.context.discriminatedVariantsInProgress.delete(typeId);
+                }
+            }
             if (convertedSchema?.type != null && typeId != null) {
                 for (const inlinedTypeId of Object.keys(convertedSchema?.inlinedTypes ?? {})) {
                     referencedTypes.add(inlinedTypeId);

@@ -63,6 +63,8 @@ export abstract class AbstractConverterContext<Spec extends object> {
     public readonly generateV1Examples: boolean;
     public readonly documentBaseDir?: string;
     private readonly externalDocuments = new Map<string, Promise<unknown>>();
+    /** Type ids of discriminated union variants currently being inlined, to break self-referencing cycles. */
+    public readonly discriminatedVariantsInProgress = new Set<string>();
 
     constructor(protected readonly args: Spec.Args<Spec>) {
         this.spec = args.spec;
