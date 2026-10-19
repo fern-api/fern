@@ -1,4 +1,27 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.54.5
+  changelogEntry:
+    - summary: |
+        `profiles list`, `profiles show` and `profiles current` no longer read the OS keychain. On macOS each
+        keychain read by a binary that is not on the entry's access list asks for the login password, so
+        listing nine profiles could raise nine prompts. The ACCOUNT column (basic-auth username or OAuth
+        client id) and the "credential stored" check now come from a non-secret copy kept in
+        `[credentials.<slot>]` in `profiles.toml`, written whenever `profiles create`, `profiles set`,
+        `auth login` or an OAuth flow stores a credential and cleared by `profiles remove` / `auth logout`.
+        Only requests that need the secret read the keychain. `profiles set` also skips its keychain read
+        when every field of a multi-field credential is supplied. For a credential stored by an older version,
+        the first report after upgrading reads the same keychain entries it read before and records what it
+        finds, so the output is unchanged and later reports read nothing.
+      type: fix
+    - summary: |
+        A command now reads each OS keychain entry at most once. Choosing an auth scheme and then resolving
+        each field of the credential used to read the same entry several times per request (eight for a
+        Twilio API call), and on macOS each read can raise a password prompt. Values are kept in memory for
+        a few seconds; failed or denied reads are not kept, and the CLI's own writes and deletes update the
+        kept copy.
+      type: fix
+  createdAt: "2026-10-19"
+  irVersion: 67
 - version: 0.54.4
   changelogEntry:
     - summary: |
