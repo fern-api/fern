@@ -1350,6 +1350,7 @@ fn value_name_for(param: &MethodParameter) -> &'static str {
         Some("number") => "NUMBER",
         Some("boolean") => "BOOLEAN",
         Some("array") => "JSON_ARRAY",
+        Some("object") if param.shorthand_field.is_some() => "VALUE|JSON_OBJECT",
         Some("object") => "JSON_OBJECT",
         _ => "VALUE",
     }
@@ -3997,6 +3998,11 @@ paths:
             ..Default::default()
         };
         assert_eq!(value_name_for(&objects), "JSON_OBJECT");
+        let shorthand = MethodParameter {
+            shorthand_field: Some("email".to_string()),
+            ..objects.clone()
+        };
+        assert_eq!(value_name_for(&shorthand), "VALUE|JSON_OBJECT");
         // Body array: `item_type: None` means string — unchanged from before.
         assert_eq!(value_name_for(&strings), "STRING");
         assert_eq!(value_name_for(&query_strings), "STRING");

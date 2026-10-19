@@ -1162,6 +1162,14 @@ pub struct MethodParameter {
     /// while its scalar twin was checked — `--event-types bogus` went to the
     /// API, `--direction bogus` did not.
     pub item_enum_values: Option<Vec<String>>,
+    /// The sole required property of an object-valued parameter (or of each
+    /// element of an array of objects) when that property is a string, e.g.
+    /// `email` on `{email (required), name}`. A plain, non-JSON flag value
+    /// fills it: `--to a@x.com,b@x.com` sends
+    /// `[{"email":"a@x.com"},{"email":"b@x.com"}]`. Derived from the spec;
+    /// `None` when the object has zero or several required properties.
+    #[serde(default)]
+    pub shorthand_field: Option<String>,
     /// True for `oneOf/anyOf [string, array<string>]` unions where a single
     /// value should be sent as a scalar string, not wrapped in a length-1
     /// array. Pure `type: array` params leave this `false`.

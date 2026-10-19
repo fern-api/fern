@@ -3111,6 +3111,12 @@ pub(crate) fn collect_params_from_flags(
                             executor::resolve_file_refs(&mut decoded)?;
                             arr.push(decoded)
                         }
+                        // Not JSON at all, on a list of single-field objects:
+                        // each comma-separated value fills that field
+                        // (`--to a@x.com,b@x.com`).
+                        Err(_) if param_def.shorthand_field.is_some() => {
+                            arr.extend(shorthand_objects(param_def, v))
+                        }
                         // Anything else — including non-array JSON like "123"
                         // on a string-element flag — stays a literal string.
                         _ => arr.push(serde_json::Value::String(v.clone())),
@@ -3180,7 +3186,11 @@ pub(crate) fn collect_params_from_flags(
                             executor::resolve_file_refs(&mut parsed)?;
                             parsed
                         }
-                        Err(_) => serde_json::Value::String(value.clone()),
+                        Err(_) => match &param_def.shorthand_field {
+                            // `--from a@x.com` on a single-field object.
+                            Some(field) => serde_json::json!({ field.as_str(): value }),
+                            None => serde_json::Value::String(value.clone()),
+                        },
                     }
                 } else {
                     let wire = param_def
@@ -3218,6 +3228,164 @@ pub(crate) fn collect_params_from_flags(
     }
 
     Ok(params)
+}
+
+/// Whether prompts can be shown: both stdin and stderr are terminals. A
+/// script, CI job or agent piping I/O never sees a prompt.
+pub(crate) fn interactive_terminal() -> bool {
+    use std::io::IsTerminal;
+    std::io::stdin().is_terminal() && std::io::stderr().is_terminal()
+}
+
+/// Required parameters the user supplied by no flag, `--params` or `--json`,
+/// in the spec's order — the same set the executor would report as missing.
+/// `exempt` holds wire names a resolved global parameter will fill.
+pub(crate) fn missing_required_params(
+    matched_args: &clap::ArgMatches,
+    method: &RestMethod,
+    params: &serde_json::Map<String, serde_json::Value>,
+    exempt: &std::collections::HashSet<&str>,
+) -> Vec<String> {
+    let body_json_supplied = matched_args
+        .try_get_one::<String>("json")
+        .ok()
+        .flatten()
+        .is_some();
+    let mut names: Vec<&String> = method.parameter_order.iter().collect();
+    let mut rest: Vec<&String> = method
+        .parameters
+        .keys()
+        .filter(|name| !method.parameter_order.contains(*name))
+        .collect();
+    rest.sort();
+    names.extend(rest);
+
+    let ancestor_object_supplied = |name: &str| {
+        let mut rest = name;
+        while let Some((prefix, _)) = rest.rsplit_once('.') {
+            if params.contains_key(prefix)
+                && method
+                    .parameters
+                    .get(prefix)
+                    .and_then(|p| p.param_type.as_deref())
+                    == Some("object")
+            {
+                return true;
+            }
+            rest = prefix;
+        }
+        false
+    };
+
+    names
+        .into_iter()
+        .filter(|name| {
+            let Some(def) = method.parameters.get(*name) else {
+                return false;
+            };
+            let is_body = def.location.as_deref() == Some("body");
+            def.required
+                && def.variable_reference.is_none()
+                && !params.contains_key(*name)
+                && !exempt.contains(name.as_str())
+                && !(is_body && body_json_supplied)
+                && !(is_body && ancestor_object_supplied(name))
+        })
+        .cloned()
+        .collect()
+}
+
+/// Ask for each of `missing` on `out`, reading answers from `input`. An empty
+/// answer leaves the parameter unset, so the executor still reports it.
+pub(crate) fn prompt_for_params(
+    missing: &[String],
+    method: &RestMethod,
+    params: &mut serde_json::Map<String, serde_json::Value>,
+    input: &mut impl std::io::BufRead,
+    out: &mut impl std::io::Write,
+) -> Result<(), CliError> {
+    for name in missing {
+        let Some(def) = method.parameters.get(name) else {
+            continue;
+        };
+        let flag = crate::openapi::commands::resolve_param_flag_name(def, name)
+            .unwrap_or_else(|| crate::text::to_kebab_flag(name));
+        let hint = if def.repeated {
+            " (comma-separated)"
+        } else if def.param_type.as_deref() == Some("object") && def.shorthand_field.is_none() {
+            " (JSON)"
+        } else {
+            ""
+        };
+        let _ = write!(out, "--{flag}{hint}: ");
+        let _ = out.flush();
+        let mut answer = String::new();
+        input
+            .read_line(&mut answer)
+            .map_err(|e| CliError::Other(e.into()))?;
+        let answer = answer.trim();
+        if answer.is_empty() {
+            continue;
+        }
+        params.insert(name.clone(), prompted_value_to_json(def, answer)?);
+    }
+    Ok(())
+}
+
+/// Convert a prompt answer the way the equivalent flag value would be.
+fn prompted_value_to_json(
+    def: &crate::openapi::discovery::MethodParameter,
+    answer: &str,
+) -> Result<serde_json::Value, CliError> {
+    let json_items = def.item_type.as_deref().is_some_and(|t| t != "string");
+    if def.repeated {
+        return Ok(match serde_json::from_str::<serde_json::Value>(answer) {
+            Ok(serde_json::Value::Array(elems)) => serde_json::Value::Array(elems),
+            Ok(decoded) if json_items => serde_json::Value::Array(vec![decoded]),
+            Err(_) if def.shorthand_field.is_some() => {
+                serde_json::Value::Array(shorthand_objects(def, answer))
+            }
+            _ => serde_json::Value::Array(
+                answer
+                    .split(',')
+                    .map(str::trim)
+                    .filter(|part| !part.is_empty())
+                    .map(|part| serde_json::Value::String(part.to_string()))
+                    .collect(),
+            ),
+        });
+    }
+    if matches!(def.param_type.as_deref(), Some("object") | Some("array")) {
+        return Ok(match serde_json::from_str::<serde_json::Value>(answer) {
+            Ok(mut parsed) => {
+                executor::resolve_file_refs(&mut parsed)?;
+                parsed
+            }
+            Err(_) => match &def.shorthand_field {
+                Some(field) => serde_json::json!({ field.as_str(): answer }),
+                None => serde_json::Value::String(answer.to_string()),
+            },
+        });
+    }
+    Ok(serde_json::Value::String(
+        def.resolve_enum_display_to_wire(answer).into_owned(),
+    ))
+}
+
+/// Expand a non-JSON value on a list-of-objects flag into one object per
+/// comma-separated entry, keyed by [`MethodParameter::shorthand_field`].
+fn shorthand_objects(
+    param_def: &crate::openapi::discovery::MethodParameter,
+    raw: &str,
+) -> Vec<serde_json::Value> {
+    let Some(field) = param_def.shorthand_field.as_deref() else {
+        return Vec::new();
+    };
+    raw.split(',')
+        .map(str::trim)
+        .filter(|part| !part.is_empty())
+        .map(|part| serde_json::json!({ field: part }))
+        .collect()
 }
 
 /// Collect multipart/form-data parts from CLI arg matches. Returns `None`
@@ -6954,5 +7122,113 @@ paths:
             overrides.is_empty(),
             "optional with no value should be omitted: {overrides:?}"
         );
+    }
+
+    fn shorthand_method() -> crate::openapi::discovery::RestMethod {
+        let mut params = std::collections::HashMap::new();
+        params.insert(
+            "to".to_string(),
+            crate::openapi::discovery::MethodParameter {
+                param_type: Some("string".to_string()),
+                location: Some("body".to_string()),
+                required: true,
+                repeated: true,
+                item_type: Some("object".to_string()),
+                shorthand_field: Some("email".to_string()),
+                ..Default::default()
+            },
+        );
+        params.insert(
+            "from".to_string(),
+            crate::openapi::discovery::MethodParameter {
+                param_type: Some("object".to_string()),
+                location: Some("body".to_string()),
+                shorthand_field: Some("email".to_string()),
+                ..Default::default()
+            },
+        );
+        params.insert(
+            "subject".to_string(),
+            crate::openapi::discovery::MethodParameter {
+                param_type: Some("string".to_string()),
+                location: Some("body".to_string()),
+                required: true,
+                ..Default::default()
+            },
+        );
+        crate::openapi::discovery::RestMethod {
+            parameters: params,
+            parameter_order: vec!["to".to_string(), "subject".to_string()],
+            ..Default::default()
+        }
+    }
+
+    fn shorthand_matches(argv: &[&str]) -> clap::ArgMatches {
+        clap::Command::new("test")
+            .arg(clap::Arg::new("to").long("to").action(clap::ArgAction::Append))
+            .arg(clap::Arg::new("from").long("from"))
+            .arg(clap::Arg::new("subject").long("subject"))
+            .arg(clap::Arg::new("json").long("json"))
+            .arg(clap::Arg::new("params").long("params"))
+            .get_matches_from(std::iter::once("test").chain(argv.iter().copied()))
+    }
+
+    #[test]
+    fn test_collect_params_shorthand_fills_single_required_field() {
+        let matches = shorthand_matches(&[
+            "--to",
+            "a@x.com, b@x.com",
+            "--to",
+            r#"{"email":"c@x.com","name":"C"}"#,
+            "--from",
+            "me@x.com",
+        ]);
+        let result = collect_params_from_flags(&matches, &shorthand_method(), None).unwrap();
+        assert_eq!(
+            result.get("to"),
+            Some(&serde_json::json!([
+                {"email": "a@x.com"},
+                {"email": "b@x.com"},
+                {"email": "c@x.com", "name": "C"},
+            ])),
+        );
+        assert_eq!(result.get("from"), Some(&serde_json::json!({"email": "me@x.com"})));
+    }
+
+    #[test]
+    fn test_missing_required_params_respects_json_and_supplied_flags() {
+        let method = shorthand_method();
+        let empty = std::collections::HashSet::new();
+        let matches = shorthand_matches(&["--to", "a@x.com"]);
+        let params = collect_params_from_flags(&matches, &method, None).unwrap();
+        assert_eq!(missing_required_params(&matches, &method, &params, &empty), vec!["subject"]);
+
+        let matches = shorthand_matches(&["--json", "{}"]);
+        let params = collect_params_from_flags(&matches, &method, None).unwrap();
+        assert!(missing_required_params(&matches, &method, &params, &empty).is_empty());
+    }
+
+    #[test]
+    fn test_prompt_for_params_converts_answers_like_flags() {
+        let method = shorthand_method();
+        let mut params = serde_json::Map::new();
+        let mut input = std::io::Cursor::new(b"a@x.com,b@x.com\n\n".to_vec());
+        let mut out = Vec::new();
+        prompt_for_params(
+            &["to".to_string(), "subject".to_string()],
+            &method,
+            &mut params,
+            &mut input,
+            &mut out,
+        )
+        .unwrap();
+        assert_eq!(
+            params.get("to"),
+            Some(&serde_json::json!([{"email": "a@x.com"}, {"email": "b@x.com"}])),
+        );
+        assert!(!params.contains_key("subject"), "empty answer leaves it unset");
+        let shown = String::from_utf8(out).unwrap();
+        assert!(shown.contains("--to (comma-separated): "), "{shown}");
+        assert!(shown.contains("--subject: "), "{shown}");
     }
 }

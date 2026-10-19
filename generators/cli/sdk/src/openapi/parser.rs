@@ -3987,6 +3987,34 @@ fn classify_multipart_property_at_depth(
 /// nullable composition on the items. `None` for a non-array, an untyped
 /// element, or a plain string element — the caller treats `None` as "string",
 /// which is what every lowering produced before this existed.
+/// The sole required property of an object schema, when it is a string —
+/// `email` on `EmailAddr: {required: [email], properties: {email, name}}`.
+/// See [`MethodParameter::shorthand_field`].
+fn sole_required_string_field(
+    schema: &OpenApiSchemaObject,
+    component_schemas: &HashMap<String, OpenApiSchemaObject>,
+) -> Option<String> {
+    let resolved = resolve_ref_chain(schema, component_schemas)?;
+    let resolved = recognize_nullable_composite(resolved, component_schemas).unwrap_or(resolved);
+    if resolved.schema_type() != Some("object") || !resolved.all_of.is_empty() {
+        return None;
+    }
+    let [field] = resolved.required.as_slice() else {
+        return None;
+    };
+    let prop = resolved.properties.get(field)?;
+    let prop = resolve_ref_chain(prop, component_schemas)?;
+    (prop.schema_type() == Some("string")).then(|| field.clone())
+}
+
+/// [`sole_required_string_field`] of an array schema's element.
+fn array_item_shorthand_field(
+    schema: &OpenApiSchemaObject,
+    component_schemas: &HashMap<String, OpenApiSchemaObject>,
+) -> Option<String> {
+    sole_required_string_field(schema.items.as_deref()?, component_schemas)
+}
+
 fn array_item_type(
     schema: &OpenApiSchemaObject,
     component_schemas: &HashMap<String, OpenApiSchemaObject>,
@@ -4558,6 +4586,10 @@ fn flatten_body_params_prefix(
                                     .description
                                     .clone()
                                     .or_else(|| resolved.description.clone()),
+                                shorthand_field: sole_required_string_field(
+                                    resolved,
+                                    component_schemas,
+                                ),
                                 ..Default::default()
                             },
                         );
@@ -4651,6 +4683,7 @@ fn flatten_body_params_prefix(
                                     .description
                                     .clone()
                                     .or_else(|| inner.description.clone()),
+                                shorthand_field: sole_required_string_field(inner, component_schemas),
                                 nullable: composite_nullable,
                                 ..Default::default()
                             },
@@ -4697,6 +4730,13 @@ fn flatten_body_params_prefix(
                         } else {
                             None
                         },
+                        shorthand_field: if is_array {
+                            array_item_shorthand_field(effective, component_schemas)
+                        } else if promoted_composite.is_some() {
+                            sole_required_string_field(effective, component_schemas)
+                        } else {
+                            None
+                        },
                         nullable: is_scalar_nullable(resolved)
                             || promoted_scalar.is_some()
                             || composite_nullable,
@@ -4727,6 +4767,7 @@ fn flatten_body_params_prefix(
                         required: false,
                         required_by_spec: required.contains(name.as_str()),
                         description: prop.description.clone(),
+                        shorthand_field: sole_required_string_field(prop, component_schemas),
                         ..Default::default()
                     },
                 );
@@ -4816,6 +4857,7 @@ fn flatten_body_params_prefix(
                             .description
                             .clone()
                             .or_else(|| inner.description.clone()),
+                        shorthand_field: sole_required_string_field(inner, component_schemas),
                         nullable: composite_nullable,
                         ..Default::default()
                     },
@@ -4853,6 +4895,13 @@ fn flatten_body_params_prefix(
                 },
                 item_enum_values: if is_array {
                     array_item_enum_values(effective, component_schemas)
+                } else {
+                    None
+                },
+                shorthand_field: if is_array {
+                    array_item_shorthand_field(effective, component_schemas)
+                } else if promoted_composite.is_some() {
+                    sole_required_string_field(effective, component_schemas)
                 } else {
                     None
                 },
@@ -13427,4 +13476,43 @@ components:
         assert_eq!(value["openapi"], serde_yaml::Value::String("3.0.0".into()));
     }
 
+    #[test]
+    fn test_shorthand_field_for_single_required_string_objects() {
+        let schema: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: object
+            properties:
+              from:
+                $ref: '#/components/schemas/EmailAddr'
+              to:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EmailAddr'
+              content:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Content'
+            "#,
+        )
+        .unwrap();
+        let mut components = HashMap::new();
+        components.insert(
+            "EmailAddr".to_string(),
+            serde_yaml::from_str::<OpenApiSchemaObject>(
+                "type: object\nrequired: [email]\nproperties:\n  email:\n    type: string\n    format: email\n  name:\n    type: string\n",
+            )
+            .unwrap(),
+        );
+        components.insert(
+            "Content".to_string(),
+            serde_yaml::from_str::<OpenApiSchemaObject>(
+                "type: object\nrequired: [type, value]\nproperties:\n  type:\n    type: string\n  value:\n    type: string\n",
+            )
+            .unwrap(),
+        );
+        let params = flatten_body_params(&schema, &components, 0);
+        assert_eq!(params["from"].shorthand_field.as_deref(), Some("email"));
+        assert_eq!(params["to"].shorthand_field.as_deref(), Some("email"));
+        assert_eq!(params["content"].shorthand_field, None);
+    }
 }
