@@ -4925,6 +4925,14 @@ fn validate_property(
         }
     }
 
+    // 2b. `format: email` — catch a malformed address before the request
+    // goes out instead of relying on the API's 400.
+    if let (Some("email"), Value::String(s)) = (prop_schema.format.as_deref(), value) {
+        if !is_plausible_email(s) {
+            errors.push(format!("{path}: '{s}' is not a valid email address"));
+        }
+    }
+
     // 3. Array items validation
     if prop_schema.prop_type.as_deref() == Some("array") {
         if let Some(items_schema) = &prop_schema.items {
@@ -4978,6 +4986,20 @@ fn validate_property(
             }
         }
     }
+}
+
+/// A deliberately loose `local@domain.tld` check: rejects obvious typos
+/// (`NOT AN EMAIL`, `a@`, `a@b`) without second-guessing addresses the API
+/// may legitimately accept.
+fn is_plausible_email(s: &str) -> bool {
+    let Some((local, domain)) = s.rsplit_once('@') else {
+        return false;
+    };
+    !local.is_empty()
+        && !s.chars().any(char::is_whitespace)
+        && domain.contains('.')
+        && !domain.starts_with('.')
+        && !domain.ends_with('.')
 }
 
 fn get_value_type(val: &Value) -> &'static str {
@@ -14129,5 +14151,38 @@ mod credential_preflight_tests {
         .await;
         assert!(result.is_ok(), "got: {result:?}");
         assert_eq!(hits, 1);
+    }
+}
+
+#[cfg(test)]
+mod email_format_tests {
+    use super::*;
+
+    #[test]
+    fn plausible_email_accepts_normal_and_rejects_typos() {
+        assert!(is_plausible_email("a@x.com"));
+        assert!(is_plausible_email("first.last+tag@mail.example.co.uk"));
+        for bad in ["NOT AN EMAIL", "a@", "@x.com", "a@x", "a@.com", "a@x.", "a b@x.com"] {
+            assert!(!is_plausible_email(bad), "{bad}");
+        }
+    }
+
+    #[test]
+    fn validate_property_rejects_malformed_format_email() {
+        let prop: crate::openapi::discovery::JsonSchemaProperty =
+            serde_json::from_value(serde_json::json!({"type": "string", "format": "email"}))
+                .unwrap();
+        let doc = RestDescription::default();
+        let mut errors = Vec::new();
+        validate_property(&Value::String("a@x.com".into()), &prop, &doc, "to[0].email", &mut errors);
+        assert!(errors.is_empty(), "{errors:?}");
+        validate_property(
+            &Value::String("NOT AN EMAIL".into()),
+            &prop,
+            &doc,
+            "to[0].email",
+            &mut errors,
+        );
+        assert_eq!(errors, vec!["to[0].email: 'NOT AN EMAIL' is not a valid email address"]);
     }
 }
