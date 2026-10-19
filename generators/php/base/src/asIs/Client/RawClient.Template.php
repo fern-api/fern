@@ -311,6 +311,7 @@ class RawClient
         $baseUrl = $request->baseUrl;
         $trimmedBaseUrl = rtrim($baseUrl, '/');
         $trimmedBasePath = ltrim($request->path, '/');
+        self::assertNoDotSegments($trimmedBasePath);
         $url = "{$trimmedBaseUrl}/{$trimmedBasePath}";
         $query = array_merge(
             $request->query,
@@ -320,6 +321,25 @@ class RawClient
             $url .= '?' . $this->encodeQuery($query);
         }
         return $url;
+    }
+
+    /**
+     * Rejects "." and ".." path segments, which HTTP clients and servers resolve
+     * and which would otherwise change the endpoint a request is sent to.
+     *
+     * @param string $path
+     * @throws InvalidArgumentException
+     */
+    private static function assertNoDotSegments(string $path): void
+    {
+        foreach (explode('/', $path) as $segment) {
+            $decoded = rawurldecode($segment);
+            if ($decoded === '.' || $decoded === '..') {
+                throw new InvalidArgumentException(
+                    "Invalid request path \"/{$path}\": \".\" and \"..\" path segments are not allowed."
+                );
+            }
+        }
     }
 
     /**
