@@ -1,5 +1,6 @@
 import { getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
+import { getSchemaOptions } from "@fern-typescript/commons";
 import { FileContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
@@ -160,13 +161,22 @@ export function appendPropertyToFormData({
                 );
             } else if (property.style === "json") {
                 // if JSON, always serialize to JSON, regardless of whether the property is iterable or not
+                const jsonValue =
+                    includeSerdeLayer && referencesNamedType(property.valueType)
+                        ? context.typeSchema
+                              .getSchemaOfTypeReference(property.valueType)
+                              .jsonOrThrow(
+                                  referenceToBodyProperty,
+                                  getSchemaOptions({ allowExtraFields, omitUndefined })
+                              )
+                        : referenceToBodyProperty;
                 statement = context.coreUtilities.formDataUtils.append({
                     referenceToFormData,
                     key: getWireValue(property.name),
                     value: ts.factory.createCallExpression(
                         context.jsonContext.getReferenceToToJson().getExpression(),
                         [],
-                        [referenceToBodyProperty]
+                        [jsonValue]
                     )
                 });
             } else if (isMaybeIterable(property.valueType, context)) {
@@ -453,4 +463,28 @@ function isMaybeSet(typeReference: FernIr.TypeReference, context: FileContext): 
             throw new Error("Unknown TypeReference: " + typeReference.type);
         }
     });
+}
+
+function referencesNamedType(typeReference: FernIr.TypeReference): boolean {
+    if (typeReference.type === "named") {
+        return true;
+    }
+    if (typeReference.type !== "container") {
+        return false;
+    }
+    const container = typeReference.container;
+    switch (container.type) {
+        case "list":
+            return referencesNamedType(container.list);
+        case "set":
+            return referencesNamedType(container.set);
+        case "optional":
+            return referencesNamedType(container.optional);
+        case "nullable":
+            return referencesNamedType(container.nullable);
+        case "map":
+            return referencesNamedType(container.keyType) || referencesNamedType(container.valueType);
+        default:
+            return false;
+    }
 }

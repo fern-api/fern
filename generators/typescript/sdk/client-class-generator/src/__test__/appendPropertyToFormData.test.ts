@@ -313,6 +313,66 @@ describe("appendPropertyToFormData", () => {
             expect(text).toMatchSnapshot();
         });
 
+        const OPTIONS_TYPE = createNamedType(
+            "Options",
+            FernIr.Type.object({
+                properties: [],
+                extends: [],
+                extraProperties: false,
+                extendedProperties: undefined,
+                deferredUnionBaseProperties: undefined
+            })
+        );
+
+        function createContextWithSchemas() {
+            const context = createMockContext();
+            context.typeSchema = {
+                getSchemaOfTypeReference: (typeRef: FernIr.TypeReference) => ({
+                    jsonOrThrow: (value: ts.Expression) =>
+                        ts.factory.createCallExpression(
+                            ts.factory.createIdentifier(
+                                `serializers.${typeRef.type === "named" ? caseConverter.pascalUnsafe(typeRef.name) : "Unknown"}.jsonOrThrow`
+                            ),
+                            undefined,
+                            [value]
+                        )
+                })
+            };
+            return context;
+        }
+
+        it("serializes a named json style body property with the serde layer", () => {
+            const property = createBodyProperty("options", OPTIONS_TYPE, "json");
+            const stmt = appendPropertyToFormData({
+                property,
+                context: createContextWithSchemas(),
+                referenceToFormData,
+                wrapperName: "request",
+                requestParameter: createMockRequestParameter(),
+                includeSerdeLayer: true,
+                allowExtraFields: false,
+                omitUndefined: false
+            });
+            expect(getTextOfTsNode(stmt)).toContain(
+                '_body.append("options", JSON.stringify(serializers.Options.jsonOrThrow(request.options)))'
+            );
+        });
+
+        it("does not serialize a named json style body property without the serde layer", () => {
+            const property = createBodyProperty("options", OPTIONS_TYPE, "json");
+            const stmt = appendPropertyToFormData({
+                property,
+                context: createContextWithSchemas(),
+                referenceToFormData,
+                wrapperName: "request",
+                requestParameter: createMockRequestParameter(),
+                includeSerdeLayer: false,
+                allowExtraFields: false,
+                omitUndefined: false
+            });
+            expect(getTextOfTsNode(stmt)).toContain('_body.append("options", JSON.stringify(request.options))');
+        });
+
         it("generates Object.entries loop for form style body property", () => {
             const property = createBodyProperty("formData", STRING_TYPE, "form");
             const context = createMockContext();
