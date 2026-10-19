@@ -48,6 +48,8 @@ const header = (overrides: {
 
 const basic = (overrides: {
     key: string;
+    username?: string;
+    password?: string;
     usernameEnvVar?: string;
     passwordEnvVar?: string;
     usernameOmit?: boolean;
@@ -55,11 +57,11 @@ const basic = (overrides: {
 }): FernIr.AuthScheme =>
     FernIr.AuthScheme.basic({
         key: overrides.key,
-        username: "username",
+        username: overrides.username ?? "username",
         usernameEnvVar: overrides.usernameEnvVar,
         usernameOmit: overrides.usernameOmit,
         usernamePlaceholder: undefined,
-        password: "password",
+        password: overrides.password ?? "password",
         passwordEnvVar: overrides.passwordEnvVar,
         passwordOmit: overrides.passwordOmit,
         passwordPlaceholder: undefined,
@@ -186,6 +188,24 @@ describe("detectAuthBindings", () => {
         // unmatchable.
         expect(bindings[0]?.basicHalf).toBe("both");
         expect(bindings[0]?.envVars).toEqual(["CLOSE_USER", "CLOSE_PASS"]);
+    });
+
+    it("basic auth with named halves: emits prompt labels from the spec's names", () => {
+        const bindings = detectAuthBindings({
+            auth: auth(
+                basic({
+                    key: "accountSid_authToken",
+                    username: "accountSid",
+                    password: "auth_token",
+                    usernameEnvVar: "TWILIO_ACCOUNT_SID",
+                    passwordEnvVar: "TWILIO_AUTH_TOKEN"
+                })
+            ),
+            binaryName: "twilio"
+        });
+        expect(bindings[0]?.rustCall).toBe(
+            '.auth(BasicAuth::new("accountSid_authToken").username_env("TWILIO_ACCOUNT_SID").password_env("TWILIO_AUTH_TOKEN").username_label("Account Sid").password_label("Auth Token"))'
+        );
     });
 
     it("basic auth with passwordOmit (Close pattern): emits auth_provider with BasicAuthProvider::username_only", () => {
