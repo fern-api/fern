@@ -380,6 +380,7 @@
                     "properties": [
                         {
                             "type": "file",
+                            "isOptional": false,
                             "wireValue": "audio",
                             "name": {
                                 "originalName": "audio",
@@ -591,6 +592,7 @@
                     "properties": [
                         {
                             "type": "file",
+                            "isOptional": false,
                             "wireValue": "audio",
                             "name": {
                                 "originalName": "audio",
@@ -802,6 +804,7 @@
                     "properties": [
                         {
                             "type": "file",
+                            "isOptional": false,
                             "wireValue": "audio",
                             "name": {
                                 "originalName": "audio",
@@ -1110,6 +1113,7 @@
                     "properties": [
                         {
                             "type": "file",
+                            "isOptional": false,
                             "wireValue": "audio",
                             "name": {
                                 "originalName": "audio",

@@ -426,6 +426,7 @@
                         "properties": [
                             {
                                 "type": "file",
+                                "isOptional": false,
                                 "wireValue": "file",
                                 "name": {
                                     "originalName": "file",

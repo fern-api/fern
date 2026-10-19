@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v67.34.0] - 2026-10-17
+
+- Add `dynamic.FileUploadRequestBodyFileProperty.isOptional` (optional `boolean`) to the `file` and
+  `fileArray` variants of `dynamic.FileUploadRequestBodyProperty`, so dynamic snippet generators can
+  tell required files from optional ones. Populated from `FilePropertySingle.isOptional` /
+  `FilePropertyArray.isOptional`.
+
 ## [v67.33.0] - 2026-10-16
 
 - Add optional `WebhookAlgorithmHeader.keyIdParameter` / `algorithmParameter` so verifiers can parse

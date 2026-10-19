@@ -1,0 +1,388 @@
+{
+    "version": "1.0.0",
+    "types": {
+        "type_knowledge:UploadKnowledgeResponse": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "UploadKnowledgeResponse",
+                    "camelCase": {
+                        "unsafeName": "uploadKnowledgeResponse",
+                        "safeName": "uploadKnowledgeResponse"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "upload_knowledge_response",
+                        "safeName": "upload_knowledge_response"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "UPLOAD_KNOWLEDGE_RESPONSE",
+                        "safeName": "UPLOAD_KNOWLEDGE_RESPONSE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UploadKnowledgeResponse",
+                        "safeName": "UploadKnowledgeResponse"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "knowledge",
+                            "camelCase": {
+                                "unsafeName": "knowledge",
+                                "safeName": "knowledge"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "knowledge",
+                                "safeName": "knowledge"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "KNOWLEDGE",
+                                "safeName": "KNOWLEDGE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Knowledge",
+                                "safeName": "Knowledge"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "knowledge",
+                        "camelCase": {
+                            "unsafeName": "knowledge",
+                            "safeName": "knowledge"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "knowledge",
+                            "safeName": "knowledge"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "KNOWLEDGE",
+                            "safeName": "KNOWLEDGE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Knowledge",
+                            "safeName": "Knowledge"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "id",
+                        "name": {
+                            "originalName": "id",
+                            "camelCase": {
+                                "unsafeName": "id",
+                                "safeName": "id"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "id",
+                                "safeName": "id"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ID",
+                                "safeName": "ID"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "ID",
+                                "safeName": "ID"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
+        }
+    },
+    "headers": [],
+    "endpoints": {
+        "endpoint_knowledge.uploadKnowledge": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "uploadKnowledge",
+                    "camelCase": {
+                        "unsafeName": "uploadKnowledge",
+                        "safeName": "uploadKnowledge"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "upload_knowledge",
+                        "safeName": "upload_knowledge"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "UPLOAD_KNOWLEDGE",
+                        "safeName": "UPLOAD_KNOWLEDGE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UploadKnowledge",
+                        "safeName": "UploadKnowledge"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "knowledge",
+                            "camelCase": {
+                                "unsafeName": "knowledge",
+                                "safeName": "knowledge"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "knowledge",
+                                "safeName": "knowledge"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "KNOWLEDGE",
+                                "safeName": "KNOWLEDGE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Knowledge",
+                                "safeName": "Knowledge"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "knowledge",
+                        "camelCase": {
+                            "unsafeName": "knowledge",
+                            "safeName": "knowledge"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "knowledge",
+                            "safeName": "knowledge"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "KNOWLEDGE",
+                            "safeName": "KNOWLEDGE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Knowledge",
+                            "safeName": "Knowledge"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "POST",
+                "path": "/knowledge"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "UploadKnowledgeRequest",
+                        "camelCase": {
+                            "unsafeName": "uploadKnowledgeRequest",
+                            "safeName": "uploadKnowledgeRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "upload_knowledge_request",
+                            "safeName": "upload_knowledge_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UPLOAD_KNOWLEDGE_REQUEST",
+                            "safeName": "UPLOAD_KNOWLEDGE_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "UploadKnowledgeRequest",
+                            "safeName": "UploadKnowledgeRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "knowledge",
+                                "camelCase": {
+                                    "unsafeName": "knowledge",
+                                    "safeName": "knowledge"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "knowledge",
+                                    "safeName": "knowledge"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "KNOWLEDGE",
+                                    "safeName": "KNOWLEDGE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Knowledge",
+                                    "safeName": "Knowledge"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "knowledge",
+                            "camelCase": {
+                                "unsafeName": "knowledge",
+                                "safeName": "knowledge"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "knowledge",
+                                "safeName": "knowledge"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "KNOWLEDGE",
+                                "safeName": "KNOWLEDGE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Knowledge",
+                                "safeName": "Knowledge"
+                            }
+                        }
+                    }
+                },
+                "pathParameters": [],
+                "queryParameters": [],
+                "headers": [],
+                "body": {
+                    "type": "fileUpload",
+                    "properties": [
+                        {
+                            "type": "file",
+                            "isOptional": false,
+                            "wireValue": "file_0",
+                            "name": {
+                                "originalName": "file_0",
+                                "camelCase": {
+                                    "unsafeName": "file0",
+                                    "safeName": "file0"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "file0",
+                                    "safeName": "file0"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "FILE0",
+                                    "safeName": "FILE0"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "File0",
+                                    "safeName": "File0"
+                                }
+                            }
+                        },
+                        {
+                            "type": "file",
+                            "isOptional": true,
+                            "wireValue": "file_1",
+                            "name": {
+                                "originalName": "file_1",
+                                "camelCase": {
+                                    "unsafeName": "file1",
+                                    "safeName": "file1"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "file1",
+                                    "safeName": "file1"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "FILE1",
+                                    "safeName": "FILE1"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "File1",
+                                    "safeName": "File1"
+                                }
+                            }
+                        },
+                        {
+                            "type": "bodyProperty",
+                            "name": {
+                                "wireValue": "URLPath",
+                                "name": {
+                                    "originalName": "URLPath",
+                                    "camelCase": {
+                                        "unsafeName": "urlPath",
+                                        "safeName": "urlPath"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "url_path",
+                                        "safeName": "url_path"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "URL_PATH",
+                                        "safeName": "URL_PATH"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "URLPath",
+                                        "safeName": "URLPath"
+                                    }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        },
+                        {
+                            "type": "bodyProperty",
+                            "name": {
+                                "wireValue": "display_name_2",
+                                "name": {
+                                    "originalName": "display_name_2",
+                                    "camelCase": {
+                                        "unsafeName": "displayName2",
+                                        "safeName": "displayName2"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "display_name2",
+                                        "safeName": "display_name2"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "DISPLAY_NAME2",
+                                        "safeName": "DISPLAY_NAME2"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "DisplayName2",
+                                        "safeName": "DisplayName2"
+                                    }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "optional",
+                                "value": {
+                                    "type": "primitive",
+                                    "value": "STRING"
+                                }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        }
+                    ]
+                },
+                "metadata": {
+                    "includePathParameters": false,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        }
+    },
+    "pathParameters": [],
+    "environments": null,
+    "variables": null,
+    "globalParameters": null,
+    "generatorConfig": null
+}
