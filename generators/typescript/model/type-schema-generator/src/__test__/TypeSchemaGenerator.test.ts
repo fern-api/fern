@@ -912,6 +912,67 @@ describe("GeneratedUndiscriminatedUnionTypeSchemaImpl", () => {
             const output = writeSchemaAndGetText(schema);
             expect(output).toMatchSnapshot();
         });
+
+        function createRawTypeContext() {
+            const context = createMockContext();
+            const rawTypeNode = (typeRef: FernIr.TypeReference): ts.TypeNode => {
+                if (typeRef.type === "named") {
+                    return ts.factory.createTypeReferenceNode(
+                        `serializers.${caseConverter.pascalUnsafe(typeRef.name)}.Raw`
+                    );
+                }
+                if (typeRef.type === "container" && typeRef.container.type === "map") {
+                    return ts.factory.createTypeReferenceNode("Record", [
+                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                        rawTypeNode(typeRef.container.valueType)
+                    ]);
+                }
+                return ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
+            };
+            context.typeSchema.getReferenceToRawType = (typeRef: FernIr.TypeReference) => ({
+                typeNode: rawTypeNode(typeRef),
+                typeNodeWithoutUndefined: rawTypeNode(typeRef),
+                isOptional: false
+            });
+            return context;
+        }
+
+        function createMapMember(valueTypeName: string): FernIr.UndiscriminatedUnionMember {
+            return createUndiscriminatedMember(
+                FernIr.TypeReference.container(
+                    FernIr.ContainerType.map({
+                        keyType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                        valueType: FernIr.TypeReference.named({
+                            ...createDeclaredTypeName(valueTypeName),
+                            default: undefined,
+                            inline: undefined
+                        })
+                    })
+                )
+            );
+        }
+
+        it("uses an index signature in the raw type for a self-recursive map member", () => {
+            const schema = createUndiscriminatedUnionSchema({
+                typeName: "Node",
+                members: [
+                    createMapMember("Node"),
+                    createUndiscriminatedMember(FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }))
+                ]
+            });
+            const output = writeSchemaAndGetText(schema, createRawTypeContext());
+            expect(output).toContain("[key: string]: serializers.Node.Raw;");
+            expect(output).not.toContain("Record<string, serializers.Node.Raw>");
+        });
+
+        it("keeps Record in the raw type for a map member of another type", () => {
+            const schema = createUndiscriminatedUnionSchema({
+                typeName: "Node",
+                members: [createMapMember("Leaf")]
+            });
+            const output = writeSchemaAndGetText(schema, createRawTypeContext());
+            expect(output).toContain("Record<string, serializers.Leaf.Raw>");
+        });
     });
 });
 
