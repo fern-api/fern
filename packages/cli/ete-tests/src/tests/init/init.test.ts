@@ -16,7 +16,6 @@ import { init } from "./init.js";
 
 const FIXTURES_DIR = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
 const SDK_CONFIG_ENV = { FERN_USE_SDK_CONFIG: "true" };
-const LEGACY_CONFIG_ENV = { FERN_USE_SDK_CONFIG: "false" };
 
 describe("fern init", () => {
     it.concurrent("no existing fern directory", async ({ expect, signal }) => {
@@ -29,7 +28,6 @@ describe("fern init", () => {
     it.concurrent("no existing fern directory with fern definition", async ({ expect, signal }) => {
         const pathOfDirectory = await init({
             additionalArgs: [{ name: "--fern-definition" }],
-            env: LEGACY_CONFIG_ENV,
             signal
         });
         await runFernCli(["check"], { cwd: pathOfDirectory, signal });
@@ -42,7 +40,6 @@ describe("fern init", () => {
         // add existing directory
         const pathOfDirectory = await init({
             additionalArgs: [{ name: "--fern-definition" }],
-            env: LEGACY_CONFIG_ENV,
             signal
         });
 
@@ -50,7 +47,6 @@ describe("fern init", () => {
         await init({
             directory: pathOfDirectory,
             additionalArgs: [{ name: "--fern-definition" }],
-            env: LEGACY_CONFIG_ENV,
             signal
         });
         expect(
@@ -144,7 +140,6 @@ describe("fern init", () => {
         await init({
             directory: pathOfDirectory,
             additionalArgs: [{ name: "--fern-definition" }],
-            env: LEGACY_CONFIG_ENV,
             signal
         });
         expect(
@@ -195,7 +190,6 @@ describe("fern init", () => {
     it.concurrent("init docs", async ({ expect, signal }) => {
         const pathOfDirectory = await init({
             additionalArgs: [{ name: "--fern-definition" }],
-            env: LEGACY_CONFIG_ENV,
             signal
         });
 
@@ -674,26 +668,19 @@ describe("fern init", () => {
         expect(newConfig.targets[0]?.output.path).toBe("../sdks/typescript");
     }, 180_000);
 
-    it.concurrent("rejects Fern Definition initialization without exposing internal details", async ({
-        expect,
-        signal
-    }) => {
-        const tmpDir = await tmp.dir();
-        const pathOfDirectory = AbsoluteFilePath.of(tmpDir.path);
-
-        const result = await runFernCli(["init", "--organization", "fern", "--fern-definition"], {
-            cwd: pathOfDirectory,
+    it.concurrent("explicit Fern Definition initialization uses the legacy config path", async ({ expect, signal }) => {
+        const pathOfDirectory = await init({
+            additionalArgs: [{ name: "--fern-definition" }],
             env: SDK_CONFIG_ENV,
-            reject: false,
             signal
         });
+        const fernDirectory = join(pathOfDirectory, RelativeFilePath.of(FERN_DIRECTORY));
 
-        const output = result.stdout + result.stderr;
-        expect(result.exitCode).not.toBe(0);
-        expect(output).toContain("fern init --openapi <path-or-url>");
-        expect(output).not.toContain("FERN_USE_SDK_GEN_API");
-        expect(output).not.toContain("SDK Gen API");
-        expect(await doesPathExist(join(pathOfDirectory, RelativeFilePath.of(FERN_DIRECTORY)))).toBe(false);
+        await runFernCli(["check"], { cwd: pathOfDirectory, signal });
+
+        expect(await doesPathExist(join(fernDirectory, RelativeFilePath.of("definition")))).toBe(true);
+        expect(await doesPathExist(join(fernDirectory, RelativeFilePath.of("generators.yml")))).toBe(true);
+        expect(await doesPathExist(join(fernDirectory, RelativeFilePath.of("sdk-config.yml")))).toBe(false);
     }, 180_000);
 });
 
