@@ -3460,9 +3460,13 @@ fn prompted_value_to_json(
     def: &crate::openapi::discovery::MethodParameter,
     answer: &str,
 ) -> Result<serde_json::Value, CliError> {
+    // Null sentinel (ADR-0003), as on the equivalent flag.
+    if def.nullable && answer == "null" {
+        return Ok(serde_json::Value::Null);
+    }
     let json_items = def.item_type.as_deref().is_some_and(|t| t != "string");
     if def.repeated {
-        return Ok(match serde_json::from_str::<serde_json::Value>(answer) {
+        let value = match serde_json::from_str::<serde_json::Value>(answer) {
             Ok(serde_json::Value::Array(elems)) => serde_json::Value::Array(elems),
             Ok(decoded) if json_items => serde_json::Value::Array(vec![decoded]),
             Err(_) if def.shorthand_field.is_some() => {
@@ -3476,6 +3480,14 @@ fn prompted_value_to_json(
                     .map(|part| serde_json::Value::String(part.to_string()))
                     .collect(),
             ),
+        };
+        // A `oneOf [string, array<string>]` field keeps one value scalar, as
+        // on the equivalent flag.
+        return Ok(match value {
+            serde_json::Value::Array(mut arr) if def.scalar_or_array && arr.len() == 1 => {
+                arr.remove(0)
+            }
+            other => other,
         });
     }
     if matches!(def.param_type.as_deref(), Some("object") | Some("array")) {
@@ -7261,6 +7273,35 @@ paths:
         let shown = String::from_utf8(out).unwrap();
         assert!(shown.contains("--to (comma-separated): "), "{shown}");
         assert!(shown.contains("--subject: "), "{shown}");
+    }
+
+    #[test]
+    fn test_prompted_value_to_json_null_and_scalar_or_array_match_flags() {
+        use crate::openapi::discovery::MethodParameter;
+        let nullable_list = MethodParameter {
+            param_type: Some("string".to_string()),
+            repeated: true,
+            nullable: true,
+            ..Default::default()
+        };
+        assert_eq!(prompted_value_to_json(&nullable_list, "null").unwrap(), serde_json::Value::Null);
+        let nullable_string = MethodParameter {
+            param_type: Some("string".to_string()),
+            nullable: true,
+            ..Default::default()
+        };
+        assert_eq!(prompted_value_to_json(&nullable_string, "null").unwrap(), serde_json::Value::Null);
+        let scalar_or_array = MethodParameter {
+            param_type: Some("string".to_string()),
+            repeated: true,
+            scalar_or_array: true,
+            ..Default::default()
+        };
+        assert_eq!(prompted_value_to_json(&scalar_or_array, "a").unwrap(), serde_json::json!("a"));
+        assert_eq!(
+            prompted_value_to_json(&scalar_or_array, "a,b").unwrap(),
+            serde_json::json!(["a", "b"]),
+        );
     }
 
     #[test]
