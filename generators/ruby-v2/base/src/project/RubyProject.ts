@@ -758,7 +758,7 @@ class ModuleFile {
     public readonly fileName: string;
     private get baseContents(): string {
         const hasBasicAuth = this.context.ir.auth.schemes.some((s) => s.type === "basic");
-        const requires = ['"json"', '"net/http"', '"securerandom"'];
+        const requires = ['"json"', '"net/http"', '"securerandom"', '"time"'];
         if (hasBasicAuth) {
             requires.push('"base64"');
         }

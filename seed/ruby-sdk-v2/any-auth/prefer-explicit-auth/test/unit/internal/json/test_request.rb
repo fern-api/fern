@@ -108,4 +108,38 @@ describe Seed::Internal::JSON::Request do
       assert_equal({ name: "plant" }, body)
     end
   end
+
+  describe "#encode_body with time values" do
+    it "serializes Time values as ISO 8601 strings, including nested values" do
+      request = build_request(
+        body: {
+          begin_time: Time.utc(2026, 10, 16, 1, 40, 16),
+          nested: { times: [Time.new(2026, 1, 2, 3, 4, 5, "+05:00")] }
+        }
+      )
+
+      assert_equal(
+        {
+          "begin_time" => "2026-10-16T01:40:16.000Z",
+          "nested" => { "times" => ["2026-01-02T03:04:05.000+05:00"] }
+        },
+        encoded_body(request)
+      )
+    end
+
+    it "serializes Date values as ISO 8601 dates" do
+      request = build_request(body: { day: Date.new(2026, 10, 16) })
+
+      assert_equal({ "day" => "2026-10-16" }, encoded_body(request))
+    end
+
+    it "leaves non-time values unchanged" do
+      request = build_request(body: { name: "plant", count: 3, active: true, tags: ["a"], missing: nil })
+
+      assert_equal(
+        { "name" => "plant", "count" => 3, "active" => true, "tags" => ["a"], "missing" => nil },
+        encoded_body(request)
+      )
+    end
+  end
 end
