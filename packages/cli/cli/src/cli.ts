@@ -2229,8 +2229,9 @@ function addDocsMdGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCo
                 })
                 .option("local", {
                     boolean: true,
-                    default: false,
-                    description: "Run the library parser(s) locally using Docker instead of Fern's servers"
+                    default: true,
+                    description:
+                        "Run the library parser(s) locally using Docker. Pass --no-local to parse on Fern's servers instead"
                 }),
         async (argv) => {
             cliContext.instrumentPostHogEvent({

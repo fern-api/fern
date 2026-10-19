@@ -188,7 +188,7 @@ export async function runLibraryDocsGeneration({
             throw new CliError({
                 message:
                     "Authentication is required for remote library docs generation.\n\n" +
-                    "  Run 'fern login', or pass --local to parse libraries locally with Docker.",
+                    "  Run 'fern login', or drop --no-local to parse libraries locally with Docker.",
                 code: CliError.Code.AuthError
             });
         }
@@ -325,7 +325,7 @@ async function generateSingleLibrary({
         // Unreachable in practice (runLibraryDocsGeneration constructs a client for the remote
         // path), but keeps the nullable `client` honest without a non-null assertion.
         throw new CliError({
-            message: `Library '${name}': authentication is required for remote generation. Re-run with --local or run 'fern login'.`,
+            message: `Library '${name}': authentication is required for remote generation. Re-run without --no-local or run 'fern login'.`,
             code: CliError.Code.AuthError
         });
     }
@@ -397,7 +397,7 @@ async function generateIrRemotely({
 }): Promise<unknown> {
     if (!isGitLibraryInput(config.input)) {
         throw new CliError({
-            message: `Library '${name}': 'path' input requires the --local flag. Use 'git' input for remote generation.`,
+            message: `Library '${name}': 'path' input requires local generation. Drop --no-local, or use 'git' input for remote generation.`,
             code: CliError.Code.ConfigError
         });
     }
