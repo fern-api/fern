@@ -17,7 +17,6 @@ jobs:
         with:
           sparse-checkout: |
             packages/cli/cli
-            fern-versions-yml.schema.json
 
       - name: Validate cli versions.yml
         uses: dsanders11/json-schema-validate-action@v2.0.0
