@@ -5,7 +5,7 @@ import type * as FernIr from "../../../../../index.js";
 export interface FileUploadRequestBodyFileProperty extends FernIr.dynamic.NameAndWireValue {
     /**
      * Whether the file (or file list) may be omitted from the request. Unset in IR produced
-     * by older CLI versions, in which case consumers can't tell optional files from required ones.
+     * by older CLI versions; consumers should treat an unset value as required.
      */
     isOptional: boolean | undefined;
 }
