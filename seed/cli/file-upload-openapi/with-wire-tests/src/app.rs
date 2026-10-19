@@ -236,7 +236,10 @@ impl CliApp {
     ///     .run()
     /// ```
     pub fn auth(mut self, builder: impl AuthSchemeBuilder) -> Self {
-        self.auth_bindings.push(builder.into_binding());
+        let labels = builder.credential_labels();
+        let (name, binding) = builder.into_binding();
+        crate::auth::login::register_field_labels(&name, labels);
+        self.auth_bindings.push((name, binding));
         self
     }
 
@@ -1588,6 +1591,28 @@ impl CliApp {
                 Some("login" | "logout" | "status")
             );
             if builtin_sub || !spec_owns_auth {
+                if let (Some(config), Some(("login", login_matches))) =
+                    (&self.profiles, auth_matches.subcommand())
+                {
+                    if crate::profiles::commands::guided_auth_login_applies(config, login_matches) {
+                        crate::profiles::commands::guided_auth_login(
+                            config,
+                            &crate::profiles::commands::ProfilesContext {
+                                cli_name: &self.name,
+                                bindings: &self.bindings,
+                                revoke_op_path: config.revoke_op_path(),
+                                provision: config.provision_operation.clone(),
+                                command_name: &config.command_name,
+                                root_matches: &matches,
+                                auth_bindings: &self.auth_bindings,
+                                login_flows: &self.login_flows,
+                                vocabulary: &profiles_vocabulary,
+                            },
+                        )
+                        .await?;
+                        return Ok(PipelineOutcome::Success);
+                    }
+                }
                 crate::auth::login::dispatch_auth(
                     auth_matches,
                     &self.name,

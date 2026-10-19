@@ -119,6 +119,17 @@ pub struct ProvisionOperation {
     /// read from. Stored on the profile as `credential_parameters`, consulted
     /// only by `profiles remove --revoke` — never as a request default.
     pub revoke_parameters: Vec<(String, String)>,
+    /// Long name of the `profiles create` flag. `None` keeps `--provision`; when renamed,
+    /// `--provision` always stays accepted as a hidden alias.
+    pub flag: Option<String>,
+    /// Extra request values sent with the operation, e.g. `FriendlyName` →
+    /// `{cli} for {user} on {host}`. `{cli}`, `{profile}`, `{user}` and
+    /// `{host}` are substituted; a value the profile already sets wins.
+    pub parameters: Vec<(String, String)>,
+    /// Profile parameter → typed credential field it is copied from, e.g.
+    /// `AccountSid` → `username`, so requests keep the account once the
+    /// credential is replaced by the provisioned key.
+    pub profile_parameters: Vec<(String, String)>,
 }
 
 impl ProvisionOperation {
@@ -127,7 +138,44 @@ impl ProvisionOperation {
             operation: operation.into(),
             credential_fields: Vec::new(),
             revoke_parameters: Vec::new(),
+            flag: None,
+            parameters: Vec::new(),
+            profile_parameters: Vec::new(),
         }
+    }
+
+    pub fn profile_parameter(
+        mut self,
+        parameter: impl Into<String>,
+        field: impl Into<String>,
+    ) -> Self {
+        self.profile_parameters
+            .push((parameter.into(), field.into()));
+        self
+    }
+
+    /// The prompt label for credential `field`.
+    pub fn label_for(&self, field: &str) -> String {
+        let mut chars = field.replace('_', " ").chars().collect::<Vec<_>>();
+        if let Some(first) = chars.first_mut() {
+            *first = first.to_ascii_uppercase();
+        }
+        chars.into_iter().collect()
+    }
+
+    pub fn flag(mut self, flag: impl Into<String>) -> Self {
+        self.flag = Some(flag.into());
+        self
+    }
+
+    pub fn parameter(mut self, parameter: impl Into<String>, value: impl Into<String>) -> Self {
+        self.parameters.push((parameter.into(), value.into()));
+        self
+    }
+
+    /// The `profiles create` flag's long name.
+    pub fn flag_name(&self) -> &str {
+        self.flag.as_deref().unwrap_or("provision")
     }
 
     pub fn credential_field(
@@ -372,20 +420,29 @@ mod tests {
     #[test]
     fn parameter_matches_the_wire_name() {
         let p = profile_with([("AccountSid".to_string(), "AC11".to_string())].into());
-        assert_eq!(p.parameter("AccountSid", "account-sid").as_deref(), Some("AC11"));
+        assert_eq!(
+            p.parameter("AccountSid", "account-sid").as_deref(),
+            Some("AC11")
+        );
     }
 
     #[test]
     fn parameter_matches_the_flag_spelling() {
         // The user typed what they see in `--help`.
         let p = profile_with([("account-sid".to_string(), "AC11".to_string())].into());
-        assert_eq!(p.parameter("AccountSid", "account-sid").as_deref(), Some("AC11"));
+        assert_eq!(
+            p.parameter("AccountSid", "account-sid").as_deref(),
+            Some("AC11")
+        );
     }
 
     #[test]
     fn parameter_matches_across_spellings_via_kebab() {
         let p = profile_with([("account_sid".to_string(), "AC11".to_string())].into());
-        assert_eq!(p.parameter("AccountSid", "account-sid").as_deref(), Some("AC11"));
+        assert_eq!(
+            p.parameter("AccountSid", "account-sid").as_deref(),
+            Some("AC11")
+        );
     }
 
     #[test]
