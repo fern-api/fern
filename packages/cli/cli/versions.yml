@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.166.0
+  changelogEntry:
+    - summary: |
+        The dynamic IR now marks whether each file-upload property (`file` and `fileArray`) is optional,
+        so dynamic snippet generators can add placeholders for required files only.
+      type: feat
+  createdAt: "2026-10-19"
+  irVersion: 67
 - version: 5.165.0
   changelogEntry:
     - summary: |
