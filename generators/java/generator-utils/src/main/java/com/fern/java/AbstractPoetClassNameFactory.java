@@ -94,6 +94,14 @@ public abstract class AbstractPoetClassNameFactory {
         return ClassName.get(getCorePackage(), "QueryStringMapperTest");
     }
 
+    public final ClassName getPathSegmentsClassName() {
+        return ClassName.get(getCorePackage(), "PathSegments");
+    }
+
+    public final ClassName getPathSegmentsTestClassName() {
+        return ClassName.get(getCorePackage(), "PathSegmentsTest");
+    }
+
     public final ClassName getNullableClassName() {
         return ClassName.get(getCorePackage(), "Nullable");
     }
