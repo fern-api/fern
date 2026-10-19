@@ -1,4 +1,41 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.55.0
+  changelogEntry:
+    - summary: |
+        CLIs with `profiles.provisionOperation` configured get an interactive API-key flow in a terminal.
+        `auth login` asks for a profile name and the credential, offers to create an API key with it, and
+        saves and activates the profile. A bare `profiles create <name>` prompts the same way, and
+        `profiles remove` offers to revoke the profile's provisioned key after the existing confirmation,
+        and warns before removing the last profile.
+        The typed credential only authenticates the key creation; only the new key is stored. Scripts and
+        non-interactive runs, `auth login --with-token/--from-env/--scheme`, and CLIs without
+        `provisionOperation` are unchanged.
+      type: feat
+    - summary: |
+        `provisionOperation` accepts optional `flag` (rename `--provision`, e.g. to `--api-key`;
+        `--provision` keeps working as a hidden alias), `parameters` (extra request values
+        with `{cli}`, `{profile}`, `{user}` and `{host}` substituted, e.g. a Twilio `FriendlyName`)
+        and `profileParameters` (profile parameters copied from the typed credential).
+      type: feat
+    - summary: |
+        `profiles remove --revoke` now authenticates the revoke request with the profile's own stored
+        key. Previously it only worked when the parent credentials were also exported as env vars.
+      type: fix
+    - summary: |
+        `profiles create --provision` and the guided flow no longer require `--scheme` on CLIs that
+        declare several auth schemes: they use the first scheme whose credential fields the
+        provisioning response fills (e.g. the basic scheme for a `username`/`password` key).
+      type: fix
+    - summary: |
+        Credential prompts use the basic auth scheme's own field names: a scheme declaring
+        `username: {name: accountSid}` and `password: {name: authToken}` asks for "Account Sid" and
+        "Auth Token" (in the guided flow and `auth login --with-token`) instead of `username` / `password`.
+        Schemes using the default names are unchanged.
+        The `--with-token` prompts also take the value on the same line (`Account Sid: AC...`), and secret
+        fields (password / secret / token) are not echoed when typed in a terminal. Piped input is unchanged.
+      type: feat
+  createdAt: "2026-10-19"
+  irVersion: 67
 - version: 0.54.5
   changelogEntry:
     - summary: |
