@@ -2034,6 +2034,14 @@ async fn handle_remove(
                  Pass --yes when stdin is not a terminal."
             )));
         }
+        if let Some(warning) = last_profile_warning(
+            ctx.provision.is_some(),
+            store.entries().len(),
+            ctx.cli_name,
+            ctx.command_name,
+        ) {
+            let _ = writeln!(stderr, "{warning}");
+        }
         let question = format!("Remove profile `{name}` and its stored credentials?");
         if !confirm(&question, &mut std::io::stdin().lock(), &mut stderr)? {
             let _ = writeln!(stderr, "Aborted.");
@@ -2105,6 +2113,19 @@ async fn handle_remove(
         );
     }
     Ok(())
+}
+
+/// Twilio CLI-style heads-up before removing the only profile. Guided CLIs
+/// only, so other CLIs' confirm prompt is unchanged.
+fn last_profile_warning(
+    guided: bool,
+    profile_count: usize,
+    cli_name: &str,
+    command_name: &str,
+) -> Option<String> {
+    (guided && profile_count == 1).then(|| {
+        format!("This is your last profile. Run `{cli_name} {command_name} create` to create another one.")
+    })
 }
 
 /// What `profiles create --provision` minted: the keyring value to store,
@@ -3547,6 +3568,16 @@ mod tests {
                 "Profile `sandbox` doesn't exist. Create it? [y/N] "
             );
         }
+    }
+
+    #[test]
+    fn last_profile_warning_only_for_the_only_profile_of_a_guided_cli() {
+        assert_eq!(
+            last_profile_warning(true, 1, "twilio", "profiles").as_deref(),
+            Some("This is your last profile. Run `twilio profiles create` to create another one.")
+        );
+        assert_eq!(last_profile_warning(true, 2, "twilio", "profiles"), None);
+        assert_eq!(last_profile_warning(false, 1, "twilio", "profiles"), None);
     }
 
     #[test]
