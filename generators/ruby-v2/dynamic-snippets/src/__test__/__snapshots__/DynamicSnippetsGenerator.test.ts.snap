@@ -183,12 +183,13 @@ client.endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union(r
 
 exports[`snippets (default) > file-upload > 'POST /' 1`] = `
 "require "acme"
+require "stringio"
 
 client = Acme::Client.new
 
 client.service.post(
-  file: "Hello, world!",
-  file_list: %w[First Second],
+  file: StringIO.new("Hello, world!"),
+  file_list: [StringIO.new("First"), StringIO.new("Second")],
   maybe_file: "/path/to/your/file",
   maybe_file_list: ["/path/to/your/file"]
 )
@@ -197,22 +198,24 @@ client.service.post(
 
 exports[`snippets (default) > file-upload > 'POST /just-file' 1`] = `
 "require "acme"
+require "stringio"
 
 client = Acme::Client.new
 
-client.service.just_file(file: "Hello, world!")
+client.service.just_file(file: StringIO.new("Hello, world!"))
 "
 `;
 
 exports[`snippets (default) > file-upload > 'POST /just-file-with-query-params' 1`] = `
 "require "acme"
+require "stringio"
 
 client = Acme::Client.new
 
 client.service.just_file_with_query_params(
   maybe_string: "exists",
   integer: 42,
-  file: "Hello, world!"
+  file: StringIO.new("Hello, world!")
 )
 "
 `;

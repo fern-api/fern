@@ -1027,6 +1027,18 @@ export class EndpointSnippetGenerator {
         return undefined;
     }
 
+    /**
+     * The SDK reads a String file argument as a path, so example file contents are wrapped in an IO.
+     */
+    private getInlineFileContent(content: string): ruby.AstNode {
+        return ruby.codeblock((writer) => {
+            writer.addRequire("stringio");
+            writer.write("StringIO.new(");
+            writer.writeNode(ruby.TypeLiteral.string(content));
+            writer.write(")");
+        });
+    }
+
     private getFileUploadArgs({
         body,
         value
@@ -1043,20 +1055,23 @@ export class EndpointSnippetGenerator {
                     args.push(
                         ruby.keywordArgument({
                             name: this.context.getPropertyName(property.name),
-                            value: ruby.TypeLiteral.string(fileValue ?? FILE_PLACEHOLDER_PATH)
+                            value:
+                                fileValue != null
+                                    ? this.getInlineFileContent(fileValue)
+                                    : ruby.TypeLiteral.string(FILE_PLACEHOLDER_PATH)
                         })
                     );
                     break;
                 }
                 case "fileArray": {
-                    const resolvedValues = this.context.getFileArrayValues({ property, record });
-                    const fileValues =
-                        resolvedValues != null && resolvedValues.length > 0 ? resolvedValues : [FILE_PLACEHOLDER_PATH];
+                    const fileValues = this.context.getFileArrayValues({ property, record });
                     args.push(
                         ruby.keywordArgument({
                             name: this.context.getPropertyName(property.name),
                             value: ruby.TypeLiteral.list(
-                                fileValues.map((fileValue) => ruby.TypeLiteral.string(fileValue))
+                                fileValues != null && fileValues.length > 0
+                                    ? fileValues.map((fileValue) => this.getInlineFileContent(fileValue))
+                                    : [ruby.TypeLiteral.string(FILE_PLACEHOLDER_PATH)]
                             )
                         })
                     );
