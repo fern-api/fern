@@ -94,7 +94,7 @@
         {
           "method": "POST",
           "path": {
-            "head": "/oauth/token",
+            "head": "/token",
             "parts": []
           },
           "pathParameters": [],
@@ -147,6 +147,10 @@
             }
           ],
           "idempotent": false,
+          "basePath": {
+            "head": "/oauth",
+            "parts": []
+          },
           "fullPath": {
             "head": "/oauth/token",
             "parts": []
@@ -261,7 +265,7 @@
         {
           "method": "GET",
           "path": {
-            "head": "/api/v1/plants",
+            "head": "/plants",
             "parts": []
           },
           "pathParameters": [],
@@ -310,6 +314,10 @@
             }
           ],
           "idempotent": false,
+          "basePath": {
+            "head": "/api/v1",
+            "parts": []
+          },
           "fullPath": {
             "head": "/api/v1/plants",
             "parts": []
