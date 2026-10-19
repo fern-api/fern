@@ -8,6 +8,7 @@ import com.seed.trace.core.BodyProperties;
 import com.seed.trace.core.ClientOptions;
 import com.seed.trace.core.MediaTypes;
 import com.seed.trace.core.ObjectMappers;
+import com.seed.trace.core.PathSegments;
 import com.seed.trace.core.RequestOptions;
 import com.seed.trace.core.RetryInterceptor;
 import com.seed.trace.core.SeedTraceApiException;
@@ -143,7 +144,7 @@ public class AsyncRawProblemClient {
                 .newBuilder()
                 .addPathSegments("problem-crud")
                 .addPathSegments("update")
-                .addPathSegment(problemId);
+                .addPathSegment(PathSegments.validate(problemId));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -232,7 +233,7 @@ public class AsyncRawProblemClient {
                 .newBuilder()
                 .addPathSegments("problem-crud")
                 .addPathSegments("delete")
-                .addPathSegment(problemId);
+                .addPathSegment(PathSegments.validate(problemId));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);

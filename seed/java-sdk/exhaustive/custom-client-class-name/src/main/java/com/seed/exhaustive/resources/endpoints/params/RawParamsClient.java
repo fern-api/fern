@@ -12,6 +12,7 @@ import com.seed.exhaustive.core.ClientOptions;
 import com.seed.exhaustive.core.InputStreamRequestBody;
 import com.seed.exhaustive.core.MediaTypes;
 import com.seed.exhaustive.core.ObjectMappers;
+import com.seed.exhaustive.core.PathSegments;
 import com.seed.exhaustive.core.QueryStringMapper;
 import com.seed.exhaustive.core.RequestOptions;
 import com.seed.exhaustive.core.RetryInterceptor;
@@ -61,7 +62,7 @@ public class RawParamsClient {
                 .newBuilder()
                 .addPathSegments("params")
                 .addPathSegments("path")
-                .addPathSegment(param);
+                .addPathSegment(PathSegments.validate(param));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -118,7 +119,7 @@ public class RawParamsClient {
                 .newBuilder()
                 .addPathSegments("params")
                 .addPathSegments("path")
-                .addPathSegment(request.getParam());
+                .addPathSegment(PathSegments.validate(request.getParam()));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -287,7 +288,7 @@ public class RawParamsClient {
                 .newBuilder()
                 .addPathSegments("params")
                 .addPathSegments("path-query")
-                .addPathSegment(param);
+                .addPathSegment(PathSegments.validate(param));
         QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), false);
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
@@ -344,7 +345,7 @@ public class RawParamsClient {
                 .newBuilder()
                 .addPathSegments("params")
                 .addPathSegments("path-query")
-                .addPathSegment(request.getParam());
+                .addPathSegment(PathSegments.validate(request.getParam()));
         QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), false);
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
@@ -400,7 +401,7 @@ public class RawParamsClient {
                 .newBuilder()
                 .addPathSegments("params")
                 .addPathSegments("path")
-                .addPathSegment(param);
+                .addPathSegment(PathSegments.validate(param));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -468,7 +469,7 @@ public class RawParamsClient {
                 .newBuilder()
                 .addPathSegments("params")
                 .addPathSegments("path")
-                .addPathSegment(request.getParam());
+                .addPathSegment(PathSegments.validate(request.getParam()));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -536,7 +537,7 @@ public class RawParamsClient {
                 .newBuilder()
                 .addPathSegments("params")
                 .addPathSegments("path")
-                .addPathSegment(param);
+                .addPathSegment(PathSegments.validate(param));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -784,7 +785,7 @@ public class RawParamsClient {
                 .newBuilder()
                 .addPathSegments("params")
                 .addPathSegments("path-bool")
-                .addPathSegment(Boolean.toString(param));
+                .addPathSegment(PathSegments.validate(Boolean.toString(param)));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -841,7 +842,7 @@ public class RawParamsClient {
                 .newBuilder()
                 .addPathSegments("params")
                 .addPathSegments("path")
-                .addPathSegment(param);
+                .addPathSegment(PathSegments.validate(param));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
