@@ -3,6 +3,7 @@ export * from "./Endpoint.js";
 export * from "./EndpointExample.js";
 export * from "./EndpointLocation.js";
 export * from "./FileUploadRequestBody.js";
+export * from "./FileUploadRequestBodyFileProperty.js";
 export * from "./FileUploadRequestBodyProperty.js";
 export * from "./InlinedRequest.js";
 export * from "./InlinedRequestBody.js";

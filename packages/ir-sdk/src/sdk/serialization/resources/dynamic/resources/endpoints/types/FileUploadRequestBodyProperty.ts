@@ -3,16 +3,16 @@
 import * as FernIr from "../../../../../../api/index.js";
 import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
-import { NameAndWireValue } from "../../commons/types/NameAndWireValue.js";
 import { NamedParameter } from "../../types/types/NamedParameter.js";
+import { FileUploadRequestBodyFileProperty } from "./FileUploadRequestBodyFileProperty.js";
 
 export const FileUploadRequestBodyProperty: core.serialization.Schema<
     serializers.dynamic.FileUploadRequestBodyProperty.Raw,
     FernIr.dynamic.FileUploadRequestBodyProperty
 > = core.serialization
     .union("type", {
-        file: NameAndWireValue,
-        fileArray: NameAndWireValue,
+        file: FileUploadRequestBodyFileProperty,
+        fileArray: FileUploadRequestBodyFileProperty,
         bodyProperty: NamedParameter,
     })
     .transform<FernIr.dynamic.FileUploadRequestBodyProperty>({
@@ -37,11 +37,11 @@ export declare namespace FileUploadRequestBodyProperty {
         | FileUploadRequestBodyProperty.FileArray
         | FileUploadRequestBodyProperty.BodyProperty;
 
-    export interface File extends NameAndWireValue.Raw {
+    export interface File extends FileUploadRequestBodyFileProperty.Raw {
         type: "file";
     }
 
-    export interface FileArray extends NameAndWireValue.Raw {
+    export interface FileArray extends FileUploadRequestBodyFileProperty.Raw {
         type: "fileArray";
     }
 
