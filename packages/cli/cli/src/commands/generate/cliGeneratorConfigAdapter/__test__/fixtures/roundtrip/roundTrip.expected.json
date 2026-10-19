@@ -124,6 +124,13 @@
       "docker": {
         "translated": 0
       }
+    },
+    "cli-nested-component-refs": {
+      "diff": [],
+      "reason": "Lossless: migrate carries the CLI generation settings (@postman/sdk-config 0.11.0) and the auth schemes, and the translation writes them back.",
+      "docker": {
+        "translated": 0
+      }
     }
   }
 }

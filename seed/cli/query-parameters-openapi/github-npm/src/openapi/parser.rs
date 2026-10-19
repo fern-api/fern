@@ -2144,13 +2144,129 @@ fn convert_schema_property(obj: &OpenApiSchemaObject) -> JsonSchemaProperty {
     }
 }
 
+/// Map a local `$ref` to its key in the matching `components` map.
+///
+/// `#/components/schemas/Foo` → `Foo`. A pointer *into* a component
+/// (`#/components/schemas/Wrapper/properties/Model`) keeps its whole remainder
+/// (`Wrapper/properties/Model`): that is the key
+/// [`hoist_nested_component_schema_refs`] registers the target under.
+/// The nested remainder stays RFC 6901-escaped on purpose so it matches the
+/// hoister's key; only a single top-level name is decoded, to match the
+/// declared component name.
 fn strip_ref_prefix(ref_path: &str) -> String {
-    // Handles "#/components/schemas/Foo" and "#/components/parameters/Foo"
+    if let Some((_kind, name)) = ref_path
+        .strip_prefix("#/components/")
+        .and_then(|rest| rest.split_once('/'))
+    {
+        if name.contains('/') {
+            return name.to_string();
+        }
+        return decode_json_pointer_token(name);
+    }
     ref_path
         .rsplit('/')
         .next()
         .unwrap_or(ref_path)
         .to_string()
+}
+
+const COMPONENT_SCHEMAS_REF_PREFIX: &str = "#/components/schemas/";
+
+/// RFC 6901 token unescaping: `~1` → `/`, then `~0` → `~`.
+fn decode_json_pointer_token(token: &str) -> String {
+    token.replace("~1", "/").replace("~0", "~")
+}
+
+/// Register every schema reached through a JSON pointer *into* a component
+/// schema (`#/components/schemas/Wrapper/properties/Model`, or deeper through
+/// `items`, `allOf/0`, …) as its own entry in `components.schemas`, keyed by
+/// the pointer remainder that [`strip_ref_prefix`] returns for that `$ref`.
+///
+/// Everything downstream resolves refs with a flat lookup by component name,
+/// so without this such a ref was reduced to its last segment (`Model`), found
+/// nothing, and request-body validation rejected every body that used one.
+/// Component names may not contain `/`, so the keys cannot collide with a
+/// declared component. Runs on the raw value before deserialization so the
+/// hoisted copies get the same lowering as declared components.
+fn hoist_nested_component_schema_refs(spec: &mut serde_yaml::Value) {
+    let mut pointers = std::collections::BTreeSet::new();
+    collect_nested_component_schema_refs(spec, &mut pointers);
+    if pointers.is_empty() {
+        return;
+    }
+    let Some(schemas) = spec.get("components").and_then(|c| c.get("schemas")) else {
+        return;
+    };
+    let hoisted: Vec<(String, serde_yaml::Value)> = pointers
+        .into_iter()
+        .filter_map(|pointer| match resolve_json_pointer(schemas, &pointer) {
+            Some(target) => Some((pointer, target.clone())),
+            None => {
+                tracing::warn!("$ref '{COMPONENT_SCHEMAS_REF_PREFIX}{pointer}' does not resolve");
+                None
+            }
+        })
+        .collect();
+    let Some(schemas) = spec
+        .get_mut("components")
+        .and_then(|c| c.get_mut("schemas"))
+        .and_then(serde_yaml::Value::as_mapping_mut)
+    else {
+        return;
+    };
+    for (key, target) in hoisted {
+        schemas
+            .entry(serde_yaml::Value::String(key))
+            .or_insert(target);
+    }
+}
+
+/// Collect the remainder (`Wrapper/properties/Model`) of every
+/// `#/components/schemas/...` `$ref` that points below a top-level component.
+fn collect_nested_component_schema_refs(
+    value: &serde_yaml::Value,
+    out: &mut std::collections::BTreeSet<String>,
+) {
+    match value {
+        serde_yaml::Value::Mapping(map) => {
+            for (key, child) in map {
+                if let (Some("$ref"), serde_yaml::Value::String(target)) = (key.as_str(), child) {
+                    if let Some(rest) = target.strip_prefix(COMPONENT_SCHEMAS_REF_PREFIX) {
+                        if rest.contains('/') {
+                            out.insert(rest.to_string());
+                        }
+                    }
+                } else {
+                    collect_nested_component_schema_refs(child, out);
+                }
+            }
+        }
+        serde_yaml::Value::Sequence(items) => {
+            for item in items {
+                collect_nested_component_schema_refs(item, out);
+            }
+        }
+        serde_yaml::Value::Tagged(tagged) => {
+            collect_nested_component_schema_refs(&tagged.value, out)
+        }
+        _ => {}
+    }
+}
+
+/// Resolve a `/`-separated, RFC 6901-escaped pointer against `root`. Numeric
+/// tokens index into sequences (`allOf/0`).
+fn resolve_json_pointer<'a>(
+    root: &'a serde_yaml::Value,
+    pointer: &str,
+) -> Option<&'a serde_yaml::Value> {
+    pointer.split('/').try_fold(root, |current, token| {
+        let token = decode_json_pointer_token(token);
+        match current {
+            serde_yaml::Value::Mapping(map) => map.get(token.as_str()),
+            serde_yaml::Value::Sequence(items) => items.get(token.parse::<usize>().ok()?),
+            _ => None,
+        }
+    })
 }
 
 // ---------------------------------------------------------------------------
@@ -2793,9 +2909,10 @@ fn parse_spec_value(text: &str) -> Result<serde_yaml::Value, serde_yaml::Error> 
 /// the overrides path where a base spec and override YAML are deep-merged into
 /// a single `Value` before deserialization.
 pub fn load_openapi_spec_from_value(
-    value: serde_yaml::Value,
+    mut value: serde_yaml::Value,
     cli_name: &str,
 ) -> Result<RestDescription, CliError> {
+    hoist_nested_component_schema_refs(&mut value);
     let spec: OpenApiSpec = serde_yaml::from_value(value)
         .map_err(|e| CliError::Discovery(format!("Failed to parse OpenAPI spec: {e}")))?;
 
@@ -4827,6 +4944,125 @@ fn flatten_body_params_prefix(
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    const NESTED_COMPONENT_REFS_SPEC: &str = r##"
+openapi: 3.0.3
+info: { title: t, version: "1" }
+paths:
+  /orders:
+    post:
+      operationId: orders_create
+      x-fern-sdk-group-name: orders
+      x-fern-sdk-method-name: create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Models/properties/OrderRequest"
+      responses:
+        "200":
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Models/properties/Order"
+components:
+  schemas:
+    Models:
+      type: object
+      properties:
+        Address:
+          type: object
+          properties:
+            city: { type: string }
+          required: [city]
+        OrderRequest:
+          type: object
+          properties:
+            shipTo:
+              $ref: "#/components/schemas/Models/properties/Address"
+            lines:
+              type: array
+              items:
+                $ref: "#/components/schemas/Models/properties/Lines/items"
+            tagged:
+              $ref: "#/components/schemas/Models/properties/Tagged/allOf/0"
+            escaped:
+              $ref: "#/components/schemas/Models/properties/a~1b~0c"
+          required: [shipTo]
+        Order:
+          type: object
+          properties:
+            id: { type: string }
+        Lines:
+          type: array
+          items:
+            type: object
+            properties:
+              sku: { type: string }
+        Tagged:
+          allOf:
+            - type: object
+              properties:
+                tag: { type: string }
+        a/b~c:
+          type: string
+"##;
+
+    #[test]
+    fn test_strip_ref_prefix_keeps_the_pointer_into_a_component() {
+        assert_eq!(strip_ref_prefix("#/components/schemas/Foo"), "Foo");
+        assert_eq!(strip_ref_prefix("#/components/parameters/Foo"), "Foo");
+        assert_eq!(strip_ref_prefix("#/components/schemas/a~1b~0c"), "a/b~c");
+        assert_eq!(
+            strip_ref_prefix("#/components/schemas/Wrapper/properties/Model"),
+            "Wrapper/properties/Model"
+        );
+    }
+
+    #[test]
+    fn test_refs_into_nested_component_schemas_resolve() {
+        let doc = load_openapi_spec(NESTED_COMPONENT_REFS_SPEC, "t").unwrap();
+        let create = &doc.resources["orders"].methods["create"];
+        let body_ref = create
+            .request
+            .as_ref()
+            .and_then(|r| r.schema_ref.as_deref());
+        assert_eq!(body_ref, Some("Models/properties/OrderRequest"));
+        let response_ref = create
+            .response
+            .as_ref()
+            .and_then(|r| r.schema_ref.as_deref());
+        assert_eq!(response_ref, Some("Models/properties/Order"));
+
+        let body = &doc.schemas["Models/properties/OrderRequest"];
+        assert_eq!(
+            body.properties["shipTo"].schema_ref.as_deref(),
+            Some("Models/properties/Address")
+        );
+        assert_eq!(
+            doc.schemas["Models/properties/Address"].required,
+            vec!["city".to_string()]
+        );
+        assert!(doc.schemas.contains_key("Models/properties/Order"));
+        // Deeper pointers: through `items`, through an `allOf` index, and
+        // with RFC 6901 escapes in a token.
+        assert!(doc.schemas["Models/properties/Lines/items"]
+            .properties
+            .contains_key("sku"));
+        assert!(doc.schemas["Models/properties/Tagged/allOf/0"]
+            .properties
+            .contains_key("tag"));
+        assert_eq!(
+            doc.schemas["Models/properties/a~1b~0c"]
+                .schema_type
+                .as_deref(),
+            Some("string")
+        );
+        // Top-level components are untouched and nothing is hoisted for them.
+        assert!(doc.schemas.contains_key("Models"));
+        assert!(!doc.schemas.contains_key("OrderRequest"));
+    }
 
     #[test]
     fn test_convert_parameter_lowers_schema_min_max_into_method_parameter() {
