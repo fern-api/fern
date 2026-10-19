@@ -240,6 +240,18 @@ describe("validateCustomConfig — distribution", () => {
         });
     });
 
+    it.each(["auto", true, false] as const)("accepts githubAttestations: %s", (githubAttestations) => {
+        expect(validateCustomConfig({ distribution: { githubAttestations } })).toEqual({
+            distribution: { githubAttestations }
+        });
+    });
+
+    it.each(["yes", "false", 1, null])("rejects githubAttestations: %s", (githubAttestations) => {
+        expect(() => validateCustomConfig({ distribution: { githubAttestations } })).toThrow(
+            /customConfig\.distribution\.githubAttestations/
+        );
+    });
+
     it("accepts a scoop-only block", () => {
         expect(validateCustomConfig({ distribution: { scoop: { bucket: "acme/scoop-bucket" } } })).toEqual({
             distribution: { scoop: { bucket: "acme/scoop-bucket" } }
