@@ -1356,7 +1356,7 @@ async function convertNavigationTabConfiguration({
             child: {
                 type: "variants",
                 variants,
-                location: item.variantsLocation,
+                location: item.variantsLocation ?? undefined,
                 columnHeight: item.variantsColumnHeight ?? undefined,
                 menu: hasMenuStructure ? menu : undefined
             },

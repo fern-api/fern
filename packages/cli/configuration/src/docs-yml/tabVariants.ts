@@ -3,11 +3,11 @@ import type * as RawSchemas from "./schemas/index.js";
 export type RawTabVariantListItem = RawSchemas.TabVariantItem | RawSchemas.TabVariantGroupItem;
 
 export function isRawTabVariantGroup(item: RawSchemas.TabVariantItem): item is RawSchemas.TabVariantGroup {
-    return "group" in item && Array.isArray(item.variants);
+    return "group" in item;
 }
 
 export function isRawTabVariantLink(item: RawTabVariantListItem): item is RawSchemas.LinkConfiguration {
-    return "link" in item && "href" in item;
+    return "link" in item;
 }
 
 export interface RawTabVariantWithPath {

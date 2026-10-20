@@ -1030,7 +1030,7 @@ export const TabVariantItem = z.union([TabVariant, TabVariantGroup, LinkConfigur
 
 export const TabbedNavigationItemWithVariants = z.object({
     tab: TabId,
-    "variants-location": VariantsLocation.optional(),
+    "variants-location": VariantsLocation.nullable().optional(),
     "variants-column-height": VariantsColumnHeight.nullable().optional(),
     variants: z.array(TabVariantItem)
 });

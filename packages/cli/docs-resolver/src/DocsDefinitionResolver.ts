@@ -2012,6 +2012,8 @@ export class DocsDefinitionResolver {
                 `Tab "${tabTitle}" places its variants in the header tab, but header tabs are off (set \`layout.tabs-placement: header\`). Showing them in the sidebar instead.`
             );
         }
+        // Keyed by object identity: parseDocsConfiguration builds `variants` from the same TabVariant
+        // objects it puts in `menu`, so each menu entry finds its variant here.
         const variantIdByVariant = new Map(variants.map((variant, i) => [variant, variantNodes[i]?.variantId]));
         const toMenuEntry = (entry: docsYml.TabVariantMenuEntry): VariantMenuEntry[] => {
             switch (entry.type) {
