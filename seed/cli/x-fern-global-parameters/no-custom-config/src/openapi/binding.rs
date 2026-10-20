@@ -694,6 +694,30 @@ impl Binding for OpenApiBinding {
                     params_override,
                 )
             })?;
+            // In a terminal, ask for required inputs the user left out rather
+            // than failing on them. Skipped when any input is read from stdin
+            // (`--json -`, `@-`), which the prompts would otherwise consume.
+            if super::app::interactive_terminal() && !super::app::args_read_stdin(matched_args) {
+                let globals = super::app::build_global_parameter_overrides(
+                    matched_args,
+                    doc,
+                    method,
+                    &params,
+                )?;
+                let exempt: std::collections::HashSet<&str> =
+                    globals.iter().map(|g| g.target.as_str()).collect();
+                let missing =
+                    super::app::missing_required_params(matched_args, method, &params, &exempt);
+                if !missing.is_empty() {
+                    super::app::prompt_for_params(
+                        &missing,
+                        method,
+                        &mut params,
+                        &mut std::io::stdin().lock(),
+                        &mut std::io::stderr(),
+                    )?;
+                }
+            }
             // Collect multipart/form-data parts from CLI flags for operations
             // that declare a `multipart/form-data` body. `None` for all others.
             // Runs before `params` is serialized: multipart fields live in
