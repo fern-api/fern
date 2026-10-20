@@ -6,6 +6,8 @@ module Seed
       field :username, -> { String }, optional: false, nullable: false
 
       field :email, -> { String }, optional: false, nullable: false
+
+      field :content, -> { String }, optional: false, nullable: false, api_name: "Content"
     end
   end
 end
