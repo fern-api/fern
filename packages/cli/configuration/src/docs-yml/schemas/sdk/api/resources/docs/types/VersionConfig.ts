@@ -35,5 +35,15 @@ export interface VersionConfig extends FernDocsConfig.WithPermissions, FernDocsC
     audiences?: FernDocsConfig.Audience;
     /** If true, this version will be hidden from navigation, search, and indexing, but still accessible via direct URL. */
     hidden?: boolean;
+    /**
+     * If true, this version is the default version: it is served at the unversioned URLs
+     * (without the version slug) and is used for canonical URLs, the sitemap, search, and
+     * `llms.txt`. The order of the `versions` list only controls the order in the version
+     * switcher. At most one version in a `versions` list may set `default: true`, and the
+     * default version cannot be `hidden`. A default version may be built from the working
+     * tree (`path`) or from a git ref (`ref`). If no version sets `default`, the first
+     * version in the list is the default.
+     */
+    default?: boolean;
     announcement?: FernDocsConfig.AnnouncementConfig;
 }

@@ -760,6 +760,16 @@ types:
         type: optional<boolean>
         docs: |
           If true, this version will be hidden from navigation, search, and indexing, but still accessible via direct URL.
+      default:
+        type: optional<boolean>
+        docs: |
+          If true, this version is the default version: it is served at the unversioned URLs
+          (without the version slug) and is used for canonical URLs, the sitemap, search, and
+          `llms.txt`. The order of the `versions` list only controls the order in the version
+          switcher. At most one version in a `versions` list may set `default: true`, and the
+          default version cannot be `hidden`. A default version may be built from the working
+          tree (`path`) or from a git ref (`ref`). If no version sets `default`, the first
+          version in the list is the default.
       announcement: optional<AnnouncementConfig>
 
   Availability:
@@ -1219,6 +1229,15 @@ types:
         docs: |
           If set to true, response examples in the API Reference include a raw HTTP block
           showing the response status line and response headers alongside the body.
+
+          @default: false
+      require-analytics-consent:
+        type: optional<boolean>
+        docs: |
+          If set to true, Fern's built-in docs analytics (PostHog) stays off until visitor consent is given:
+          no script, cookies, local storage or events. Grant consent from a custom script (e.g. your consent
+          manager's callback) by setting `window.fernAnalyticsConsent = true` and dispatching
+          `new Event("fern-analytics-consent")` on `window`.
 
           @default: false
 

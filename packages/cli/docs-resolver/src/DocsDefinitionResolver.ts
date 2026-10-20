@@ -1051,6 +1051,22 @@ export class DocsDefinitionResolver {
         const markdownFilesToPathName: Record<AbsoluteFilePath, string> = {};
         const root = FernNavigation.migrate.FernNavigationV1ToLatest.create().root(initialRoot);
 
+        // Slugs of non-default versions. A page shared with the default version should resolve
+        // to the default version's unversioned slug, even when a non-default version is listed
+        // (and therefore collected) before it.
+        const nonDefaultVersionSlugs = new Set<string>();
+        FernNavigation.traverseDF(root, (node) => {
+            if (node.type === "version" && !node.default) {
+                nonDefaultVersionSlugs.add(node.slug);
+            }
+        });
+        // Assumes a version's slug is a leading-segment prefix of every page slug inside it
+        // (e.g. `plants/develop` contains `plants/develop/guides/watering`).
+        const isInNonDefaultVersion = (slug: string) => {
+            const segments = slug.split("/");
+            return segments.some((_, i) => nonDefaultVersionSlugs.has(segments.slice(0, i + 1).join("/")));
+        };
+
         // all the page slugs in the docs:
         const collector = FernNavigation.NodeCollector.collect(root);
         collector.slugMap.forEach((node, slug) => {
@@ -1064,9 +1080,12 @@ export class DocsDefinitionResolver {
             }
 
             const absoluteFilePath = join(this.docsWorkspace.absoluteFilePath, RelativeFilePath.of(pageId));
-            // Use ??= to preserve the first (default version) slug when multiple versions share the same MDX file.
-            // The NodeCollector processes the pruned default version first, so its slug (without version prefix) is kept.
-            markdownFilesToPathName[absoluteFilePath] ??= slug;
+            // Keep the first slug when multiple versions share the same MDX file, unless it belongs to a
+            // non-default version and this one does not (the default version's unversioned slug wins).
+            const existing = markdownFilesToPathName[absoluteFilePath];
+            if (existing == null || (isInNonDefaultVersion(existing) && !isInNonDefaultVersion(slug))) {
+                markdownFilesToPathName[absoluteFilePath] = slug;
+            }
         });
         return markdownFilesToPathName;
     }
@@ -1734,13 +1753,8 @@ export class DocsDefinitionResolver {
     ): Promise<FernNavigation.V1.VersionedNode> {
         const id = this.#idgen.get("versioned");
 
-        const defaultVersion = versioned.versions[0];
-        if (defaultVersion?.hidden === true) {
-            throw new CliError({
-                message: `The default version "${defaultVersion.version}" cannot be hidden. Please set a non-hidden version as the first version in your versions list, or remove the hidden flag from the default version.`,
-                code: CliError.Code.ConfigError
-            });
-        }
+        // `default: true` and hidden defaults are validated when docs.yml is parsed.
+        const defaultVersionIndex = getDefaultVersionIndex(versioned.versions);
 
         // Process versions in batches to reduce memory usage for customers with many API versions.
         // Each version generates a large IR and API definition, so processing all in parallel
@@ -1750,7 +1764,9 @@ export class DocsDefinitionResolver {
         for (let i = 0; i < versioned.versions.length; i += BATCH_SIZE) {
             const batch = versioned.versions.slice(i, i + BATCH_SIZE);
             const batchResults = await Promise.all(
-                batch.map((item, batchIdx) => this.toVersionNode(item, parentSlug, i + batchIdx === 0))
+                batch.map((item, batchIdx) =>
+                    this.toVersionNode(item, parentSlug, i + batchIdx === defaultVersionIndex)
+                )
             );
             children.push(...batchResults);
         }
@@ -3438,6 +3454,20 @@ export function convertThemeCodeBlocks(codeBlocks: docsYml.RawSchemas.CodeBlocks
         return {};
     }
     return { "code-blocks": { light: codeBlocks.light, dark: codeBlocks.dark } };
+}
+
+/**
+ * The version marked `default: true`, else the first version that is not hidden. docs.yml
+ * parsing has already rejected multiple or hidden defaults; the not-hidden fallback only
+ * matters when a local build (`fern check`, `fern docs dev`) skipped a git-ref-backed default.
+ */
+export function getDefaultVersionIndex(versions: readonly Pick<docsYml.VersionInfo, "default" | "hidden">[]): number {
+    const explicit = versions.findIndex((version) => version.default === true);
+    if (explicit !== -1) {
+        return explicit;
+    }
+    const firstVisible = versions.findIndex((version) => version.hidden !== true);
+    return firstVisible === -1 ? 0 : firstVisible;
 }
 
 function convertAvailability(
