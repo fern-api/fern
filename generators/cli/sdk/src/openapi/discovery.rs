@@ -1174,6 +1174,9 @@ pub struct MethodParameter {
     pub minimum: Option<f64>,
     /// Inclusive numeric upper bound. See [`Self::minimum`].
     pub maximum: Option<f64>,
+    /// JSON Schema `pattern` on the parameter's schema (ECMA-262 regex,
+    /// unanchored). Enforced on string values by the executor.
+    pub pattern: Option<String>,
     #[serde(default)]
     pub deprecated: bool,
     /// OpenAPI serialization style (form, deepObject, etc.)
@@ -1302,6 +1305,9 @@ pub struct JsonSchema {
     /// enforced. Mirrors [`JsonSchemaProperty::enum_values`].
     #[serde(rename = "enum")]
     pub enum_values: Option<Vec<String>>,
+    /// JSON Schema `pattern` for a string component. See
+    /// [`JsonSchemaProperty::pattern`].
+    pub pattern: Option<String>,
     #[serde(default)]
     pub required: Vec<String>,
     /// JSON Schema composition branches at the component-schema root. Mirrors
@@ -1350,6 +1356,9 @@ pub struct JsonSchemaProperty {
     pub default: Option<serde_json::Value>,
     #[serde(rename = "enum")]
     pub enum_values: Option<Vec<String>>,
+    /// JSON Schema `pattern` (ECMA-262 regex, unanchored). Enforced on
+    /// string values by the body validator.
+    pub pattern: Option<String>,
     /// Inclusive numeric lower bound. Lowered by the parser so the OpenAPI
     /// 3.0 / 3.1 `exclusiveMinimum` divergence is resolved before reaching
     /// the IR.

@@ -72,6 +72,9 @@ clap_complete = { version = "4", features = ["unstable-dynamic"] }
 clap_mangen = "0.2"
 hmac = "0.12"
 dotenvy = "0.15"
+# JSON Schema `pattern` is ECMA-262, and specs use lookaround (e.g.
+# `^(?!https?://localhost)`), which the `regex` crate does not support.
+fancy-regex = "0.14"
 futures-util = "0.3"
 httpdate = "1"
 libc = "0.2"
