@@ -11,6 +11,7 @@ public class Example0 {
         client.submitFormData(PostSubmitRequest.builder()
                 .username("johndoe")
                 .email("john@example.com")
+                .content("{\"key\":\"value\"}")
                 .build());
     }
 }

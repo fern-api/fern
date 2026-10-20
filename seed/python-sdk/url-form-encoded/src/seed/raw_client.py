@@ -22,7 +22,7 @@ class RawSeedApi:
         self._client_wrapper = client_wrapper
 
     def submit_form_data(
-        self, *, username: str, email: str, request_options: typing.Optional[RequestOptions] = None
+        self, *, username: str, email: str, content: str, request_options: typing.Optional[RequestOptions] = None
     ) -> HttpResponse[PostSubmitResponse]:
         """
         Parameters
@@ -32,6 +32,9 @@ class RawSeedApi:
 
         email : str
             The user's email address
+
+        content : str
+            A JSON document carried as a form field
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -47,6 +50,7 @@ class RawSeedApi:
             data={
                 "username": username,
                 "email": email,
+                "Content": content,
             },
             headers={
                 "content-type": "application/x-www-form-urlencoded",
@@ -131,7 +135,7 @@ class AsyncRawSeedApi:
         self._client_wrapper = client_wrapper
 
     async def submit_form_data(
-        self, *, username: str, email: str, request_options: typing.Optional[RequestOptions] = None
+        self, *, username: str, email: str, content: str, request_options: typing.Optional[RequestOptions] = None
     ) -> AsyncHttpResponse[PostSubmitResponse]:
         """
         Parameters
@@ -141,6 +145,9 @@ class AsyncRawSeedApi:
 
         email : str
             The user's email address
+
+        content : str
+            A JSON document carried as a form field
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -156,6 +163,7 @@ class AsyncRawSeedApi:
             data={
                 "username": username,
                 "email": email,
+                "Content": content,
             },
             headers={
                 "content-type": "application/x-www-form-urlencoded",

@@ -40,6 +40,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 //	request := &fern.PostSubmitRequest{
 //	    Username: "johndoe",
 //	    Email: "john@example.com",
+//	    Content: `{"key":"value"}`,
 //	}
 //	client.SubmitFormData(
 //	    context.TODO(),
