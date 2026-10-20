@@ -1,6 +1,5 @@
 export {
     type ApiFolderSelection,
-    hasApiConfiguration,
     isApiSelected,
     rootOwnsSdkConfig,
     selectApiFolders,
@@ -13,7 +12,6 @@ export {
     type ApiFolder,
     definitionDirectoryExists,
     detectProjectDir,
-    detectWorkspaceDir,
     docsConfigFilePath,
     findDocsConfigFile,
     findGeneratorsFile,
