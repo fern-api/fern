@@ -1,4 +1,4 @@
-import type { docsYml } from "@fern-api/configuration";
+import { docsYml } from "@fern-api/configuration";
 import { kebabCase } from "lodash-es";
 import { isAbsolute, relative, resolve } from "path";
 
@@ -45,7 +45,7 @@ export function findTabSlugPrefix({
         }
         const tabSlug = tab.skipSlug ? undefined : (tab.slug ?? kebabCase(tab.displayName));
         if ("variants" in item) {
-            for (const variant of item.variants) {
+            for (const { variant } of docsYml.flattenRawTabVariants(item.variants)) {
                 if (listsOutputDir(variant.layout, docsDirectoryPath, outputDir)) {
                     const variantSlug = variant.skipSlug ? undefined : (variant.slug ?? kebabCase(variant.title));
                     prefixes.add(joinSlugs(tabSlug, variantSlug));
