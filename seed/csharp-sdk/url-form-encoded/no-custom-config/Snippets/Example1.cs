@@ -12,7 +12,8 @@ public partial class Examples
         await client.SubmitFormDataAsync(
             new PostSubmitRequest {
                 Username = "username",
-                Email = "email"
+                Email = "email",
+                Content = "Content"
             }
         );
     }
