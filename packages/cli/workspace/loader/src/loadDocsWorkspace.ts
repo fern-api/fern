@@ -1,12 +1,12 @@
 import {
-    DOCS_CONFIGURATION_FILENAME,
     DocsConfigurationWithResolvedRedirects,
     docsYml,
     getRedirectsFilepaths,
     loadRedirects
 } from "@fern-api/configuration-loader";
 import { extractErrorMessage, sanitizeNullValues, validateAgainstJsonSchema } from "@fern-api/core-utils";
-import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
+import { docsConfigFilePath, findDocsConfigFile } from "@fern-api/project-structure";
 import { CliError, TaskContext } from "@fern-api/task-context";
 
 import { readFile } from "fs/promises";
@@ -22,8 +22,8 @@ export async function loadDocsWorkspace({
     fernDirectory: AbsoluteFilePath;
     context: TaskContext;
 }): Promise<DocsWorkspace | undefined> {
-    const docsConfigurationFile = join(fernDirectory, RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME));
-    if (!(await doesPathExist(docsConfigurationFile))) {
+    const docsConfigurationFile = await findDocsConfigFile(fernDirectory);
+    if (docsConfigurationFile == null) {
         return undefined;
     }
 
@@ -37,7 +37,7 @@ export async function loadDocsWorkspace({
             absoluteFilePath: fernDirectory,
             config: docsConfiguration,
             workspaceName: undefined,
-            absoluteFilepathToDocsConfig: join(fernDirectory, RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME))
+            absoluteFilepathToDocsConfig: docsConfigurationFile
         };
     }
     return undefined;
@@ -53,12 +53,8 @@ export async function loadDocsConfiguration({
     if (!(await doesPathExist(absolutePathToDocsDefinition))) {
         return undefined;
     }
-    const absolutePathOfConfiguration = join(
-        absolutePathToDocsDefinition,
-        RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME)
-    );
     return await loadRawDocsConfiguration({
-        absolutePathOfConfiguration,
+        absolutePathOfConfiguration: docsConfigFilePath(absolutePathToDocsDefinition),
         context
     });
 }

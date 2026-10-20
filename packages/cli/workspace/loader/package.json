@@ -41,6 +41,7 @@
     "@fern-api/github": "workspace:*",
     "@fern-api/lazy-fern-workspace": "workspace:*",
     "@fern-api/logger": "workspace:*",
+    "@fern-api/project-structure": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "chalk": "catalog:",
     "js-yaml": "catalog:",

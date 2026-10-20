@@ -34,7 +34,9 @@
   "dependencies": {
     "@fern-api/api-workspace-commons": "workspace:*",
     "@fern-api/configuration-loader": "workspace:*",
+    "@fern-api/core-utils": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
+    "@fern-api/project-structure": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
     "chalk": "catalog:"

@@ -254,7 +254,8 @@ export async function generateDocsWorkspace({
  * workspaces that have no generators file at all, so a project that still has a generators.yml (or the
  * renamed generators.legacy.yml) next to its sdk-config.yml is found by looking for the file itself.
  */
-async function projectUsesSdkConfig({
+// exported for tests
+export async function projectUsesSdkConfig({
     project,
     docsWorkspace
 }: {

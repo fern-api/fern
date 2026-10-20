@@ -6,22 +6,28 @@ import {
     DOCS_CONFIGURATION_FILENAME,
     FERN_DIRECTORY,
     GENERATORS_CONFIGURATION_FILENAME,
-    GENERATORS_CONFIGURATION_FILENAME_ALTERNATIVE,
     generatorsYml,
     getFernDirectory,
-    LEGACY_GENERATORS_CONFIGURATION_FILENAME,
     loadProjectConfig,
-    OPENAPI_DIRECTORY,
-    SDK_CONFIG_FILENAME
+    OPENAPI_DIRECTORY
 } from "@fern-api/configuration-loader";
-import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { assertNever } from "@fern-api/core-utils";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import {
+    ApiFolderSelection,
+    detectProjectDir,
+    getDocsApiSectionsWithInlineSpecs,
+    isSdkConfigOnly,
+    ProjectDir,
+    rootOwnsSdkConfig,
+    selectApiFolders,
+    shouldLoadApiWorkspaces,
+    WorkspaceDir
+} from "@fern-api/project-structure";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import { handleFailedWorkspaceParserResult, loadAPIWorkspace, loadDocsWorkspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
-import { readdir } from "fs/promises";
 
-import { getDocsApiSectionsWithInlineSpecs } from "./getDocsApiSectionsWithInlineSpecs.js";
-import { normalizeCommandLineApiWorkspace } from "./normalizeCommandLineApiWorkspace.js";
 import { Project, SdkConfigWorkspace } from "./Project.js";
 
 export declare namespace loadProject {
@@ -78,62 +84,34 @@ export async function loadProjectFromDirectory({
     skipApiWorkspaces = false,
     context
 }: loadProject.LoadProjectFromDirectoryArgs): Promise<Project> {
-    let apiWorkspaces: AbstractAPIWorkspace<unknown>[] = [];
-    const sdkConfigWorkspaces: SdkConfigWorkspace[] = [];
-
-    const [
-        apisExists,
-        defExists,
-        genExists,
-        genAltExists,
-        legacyGenExists,
-        sdkConfigExists,
-        openapiExists,
-        asyncapiExists
-    ] = await Promise.all([
-        doesPathExist(join(absolutePathToFernDirectory, RelativeFilePath.of(APIS_DIRECTORY))),
-        doesPathExist(join(absolutePathToFernDirectory, RelativeFilePath.of(DEFINITION_DIRECTORY))),
-        doesPathExist(join(absolutePathToFernDirectory, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME))),
-        doesPathExist(
-            join(absolutePathToFernDirectory, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME_ALTERNATIVE))
-        ),
-        doesPathExist(join(absolutePathToFernDirectory, RelativeFilePath.of(LEGACY_GENERATORS_CONFIGURATION_FILENAME))),
-        doesPathExist(join(absolutePathToFernDirectory, RelativeFilePath.of(SDK_CONFIG_FILENAME))),
-        doesPathExist(join(absolutePathToFernDirectory, RelativeFilePath.of(OPENAPI_DIRECTORY))),
-        doesPathExist(join(absolutePathToFernDirectory, RelativeFilePath.of(ASYNCAPI_DIRECTORY)))
-    ]);
-
+    const projectDir = await detectProjectDir(absolutePathToFernDirectory);
     const docsWorkspaces = await loadDocsWorkspace({ fernDirectory: absolutePathToFernDirectory, context });
+    const docsHaveInlineSpecs =
+        docsWorkspaces != null && getDocsApiSectionsWithInlineSpecs(docsWorkspaces.config.navigation).length > 0;
 
-    const hasApiConfiguration = apisExists || defExists || genExists || genAltExists || legacyGenExists;
-    // Without generators.yml, an openapi/ or asyncapi/ directory can only be consumed by docs.yml
-    // `specs`, so it must not be loaded as a (necessarily misconfigured) legacy API workspace.
-    const specDirectoryIsOnlyReferencedByDocs =
-        !hasApiConfiguration &&
-        docsWorkspaces != null &&
-        getDocsApiSectionsWithInlineSpecs(docsWorkspaces.config.navigation).length > 0;
-
-    if (
-        hasApiConfiguration ||
-        ((openapiExists || asyncapiExists) && !specDirectoryIsOnlyReferencedByDocs) ||
-        (skipApiWorkspaces && sdkConfigExists)
-    ) {
-        apiWorkspaces = await loadApis({
-            cliName,
-            fernDirectory: absolutePathToFernDirectory,
-            cliVersion,
-            context,
-            commandLineApiWorkspace,
-            defaultToAllApiWorkspaces,
-            sdkConfigWorkspaceCollector: sdkConfigWorkspaces,
-            skipLegacyWorkspaceLoading: skipApiWorkspaces
-        });
-    }
+    const loaded = shouldLoadApiWorkspaces({ project: projectDir, docsHaveInlineSpecs, skipApiWorkspaces })
+        ? await loadApiWorkspaces({
+              project: projectDir,
+              cliName,
+              cliVersion,
+              context,
+              commandLineApiWorkspace,
+              defaultToAllApiWorkspaces,
+              collectSdkConfigWorkspaces: true,
+              skipLegacyWorkspaceLoading: skipApiWorkspaces
+          })
+        : { apiWorkspaces: [], sdkConfigWorkspaces: [] };
+    const { apiWorkspaces } = loaded;
+    const sdkConfigWorkspaces = [...loaded.sdkConfigWorkspaces];
 
     if (
-        sdkConfigExists &&
-        commandLineApiWorkspace == null &&
-        (apisExists || (!skipApiWorkspaces && apiWorkspaces.length === 0 && sdkConfigWorkspaces.length === 0))
+        rootOwnsSdkConfig({
+            project: projectDir,
+            apiRequested: commandLineApiWorkspace != null,
+            skipApiWorkspaces,
+            loadedApiCount: apiWorkspaces.length,
+            sdkConfigOwnerCount: sdkConfigWorkspaces.length
+        })
     ) {
         sdkConfigWorkspaces.push({ absoluteFilePath: absolutePathToFernDirectory, workspaceName: undefined });
     }
@@ -143,7 +121,7 @@ export async function loadProjectFromDirectory({
         sdkConfigWorkspaces.length === 0 &&
         docsWorkspaces == null &&
         !skipApiWorkspaces &&
-        !sdkConfigExists
+        projectDir.root.sdkConfigFile == null
     ) {
         return context.failAndThrow(
             `No SDK specifications or docs specifications found. Please ensure one of the following .yml (not .yaml) files is present:\n` +
@@ -197,122 +175,141 @@ export async function loadApis({
     /** Discover selected API owners without parsing legacy specifications or generators. */
     skipLegacyWorkspaceLoading?: boolean;
 }): Promise<AbstractAPIWorkspace<unknown>[]> {
-    // Normalize `--api` input. `undefined` means no filter; a single string or an array of
-    // strings narrows to the named workspace(s). Passing `--api` multiple times produces an
-    // array (e.g. `fern generate --api foo --api bar`); callers that still take a single
-    // `--api` pass a single string.
-    const commandLineApiWorkspaceNames = normalizeCommandLineApiWorkspace(commandLineApiWorkspace);
-
-    const apisDirectory = join(fernDirectory, RelativeFilePath.of(APIS_DIRECTORY));
-    const apisDirectoryExists = await doesPathExist(apisDirectory);
-    if (apisDirectoryExists) {
-        const apiDirectoryContents = await readdir(apisDirectory, { withFileTypes: true });
-
-        const apiWorkspaceDirectoryNames = apiDirectoryContents.reduce<string[]>((all, item) => {
-            if (item.isDirectory()) {
-                all.push(item.name);
-            }
-            return all;
-        }, []);
-
-        if (commandLineApiWorkspaceNames != null) {
-            const missing = commandLineApiWorkspaceNames.filter((name) => !apiWorkspaceDirectoryNames.includes(name));
-            if (missing.length > 0) {
-                return context.failAndThrow(
-                    missing.length === 1
-                        ? "API does not exist: " + missing[0]
-                        : "APIs do not exist: " + missing.join(", "),
-                    undefined,
-                    { code: CliError.Code.ConfigError }
-                );
-            }
-        } else if (apiWorkspaceDirectoryNames.length === 0) {
-            return context.failAndThrow("No APIs found.", undefined, { code: CliError.Code.ConfigError });
-        } else if (apiWorkspaceDirectoryNames.length > 1 && !defaultToAllApiWorkspaces) {
-            let message = "There are multiple workspaces. You must specify one with --api:\n";
-            const longestWorkspaceName = Math.max(
-                ...apiWorkspaceDirectoryNames.map((workspaceName) => workspaceName.length)
-            );
-            message += apiWorkspaceDirectoryNames
-                .map((workspaceName) => {
-                    const suggestedCommand = `${cliName} ${process.argv.slice(2).join(" ")} --api ${workspaceName}`;
-                    return ` › ${chalk.bold(workspaceName.padEnd(longestWorkspaceName))}  ${chalk.dim(
-                        suggestedCommand
-                    )}`;
-                })
-                .join("\n");
-            return context.failAndThrow(message, undefined, { code: CliError.Code.ConfigError });
-        }
-
-        const apiWorkspaces: AbstractAPIWorkspace<unknown>[] = [];
-
-        const filteredWorkspaces =
-            commandLineApiWorkspaceNames != null
-                ? apiWorkspaceDirectoryNames.filter((api) => commandLineApiWorkspaceNames.includes(api))
-                : apiWorkspaceDirectoryNames;
-
-        await Promise.all(
-            filteredWorkspaces.map(async (workspaceDirectoryName) => {
-                const absolutePathToWorkspace = join(apisDirectory, RelativeFilePath.of(workspaceDirectoryName));
-                if (skipLegacyWorkspaceLoading) {
-                    sdkConfigWorkspaceCollector?.push({
-                        absoluteFilePath: absolutePathToWorkspace,
-                        workspaceName: workspaceDirectoryName
-                    });
-                    return;
-                }
-                if (sdkConfigWorkspaceCollector != null && (await isSdkConfigOnlyWorkspace(absolutePathToWorkspace))) {
-                    sdkConfigWorkspaceCollector.push({
-                        absoluteFilePath: absolutePathToWorkspace,
-                        workspaceName: workspaceDirectoryName
-                    });
-                    return;
-                }
-                const workspace = await loadAPIWorkspace({
-                    absolutePathToWorkspace,
-                    context,
-                    cliVersion,
-                    workspaceName: workspaceDirectoryName
-                });
-                if (workspace.didSucceed) {
-                    apiWorkspaces.push(workspace.workspace);
-                } else {
-                    handleFailedWorkspaceParserResult(workspace, context.logger);
-                    context.failAndThrow(undefined, undefined, { code: CliError.Code.ConfigError });
-                }
-            })
-        );
-
-        return apiWorkspaces;
-    }
-
-    if (skipLegacyWorkspaceLoading) {
-        sdkConfigWorkspaceCollector?.push({ absoluteFilePath: fernDirectory, workspaceName: undefined });
-        return [];
-    }
-
-    const workspace = await loadAPIWorkspace({
-        absolutePathToWorkspace: fernDirectory,
-        context,
+    const loaded = await loadApiWorkspaces({
+        project: await detectProjectDir(fernDirectory),
+        cliName,
         cliVersion,
-        workspaceName: undefined
+        context,
+        commandLineApiWorkspace,
+        defaultToAllApiWorkspaces,
+        collectSdkConfigWorkspaces: sdkConfigWorkspaceCollector != null,
+        skipLegacyWorkspaceLoading
     });
-    if (workspace.didSucceed) {
-        return [workspace.workspace];
-    } else {
-        handleFailedWorkspaceParserResult(workspace, context.logger);
-        return [];
-    }
+    sdkConfigWorkspaceCollector?.push(...loaded.sdkConfigWorkspaces);
+    return loaded.apiWorkspaces;
 }
 
-async function isSdkConfigOnlyWorkspace(absolutePathToWorkspace: AbsoluteFilePath): Promise<boolean> {
-    const [sdkConfigExists, generatorsYmlExists, generatorsYamlExists, legacyGeneratorsExists] = await Promise.all([
-        doesPathExist(join(absolutePathToWorkspace, RelativeFilePath.of(SDK_CONFIG_FILENAME))),
-        doesPathExist(join(absolutePathToWorkspace, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME))),
-        doesPathExist(
-            join(absolutePathToWorkspace, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME_ALTERNATIVE))
-        ),
-        doesPathExist(join(absolutePathToWorkspace, RelativeFilePath.of(LEGACY_GENERATORS_CONFIGURATION_FILENAME)))
-    ]);
-    return sdkConfigExists && !generatorsYmlExists && !generatorsYamlExists && !legacyGeneratorsExists;
+interface LoadedApiWorkspaces {
+    apiWorkspaces: AbstractAPIWorkspace<unknown>[];
+    sdkConfigWorkspaces: SdkConfigWorkspace[];
+}
+
+/** What loading one workspace folder produced: an API workspace, an SDK Config owner, or nothing. */
+interface LoadedFolder {
+    apiWorkspace?: AbstractAPIWorkspace<unknown>;
+    sdkConfigWorkspace?: SdkConfigWorkspace;
+}
+
+async function loadApiWorkspaces({
+    project,
+    cliName,
+    cliVersion,
+    context,
+    commandLineApiWorkspace,
+    defaultToAllApiWorkspaces,
+    collectSdkConfigWorkspaces,
+    skipLegacyWorkspaceLoading
+}: {
+    project: ProjectDir;
+    cliName: string;
+    cliVersion: string;
+    context: TaskContext;
+    commandLineApiWorkspace: string | string[] | undefined;
+    defaultToAllApiWorkspaces: boolean;
+    /** Whether a folder configured by an sdk-config.yml alone is an SDK Config owner instead of an API to load. */
+    collectSdkConfigWorkspaces: boolean;
+    skipLegacyWorkspaceLoading: boolean;
+}): Promise<LoadedApiWorkspaces> {
+    /**
+     * A folder in `apis/` must load, and is an SDK Config owner when an sdk-config.yml is all it has. The fern
+     * directory itself is optional, and is never classified that way: it is loaded, and a failure is only reported.
+     */
+    const load = async ({
+        dir,
+        workspaceName,
+        isApiFolder
+    }: {
+        dir: WorkspaceDir;
+        workspaceName: string | undefined;
+        isApiFolder: boolean;
+    }): Promise<LoadedFolder> => {
+        if (skipLegacyWorkspaceLoading || (isApiFolder && collectSdkConfigWorkspaces && isSdkConfigOnly(dir))) {
+            return { sdkConfigWorkspace: { absoluteFilePath: dir.path, workspaceName } };
+        }
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: dir.path,
+            context,
+            cliVersion,
+            workspaceName
+        });
+        if (workspace.didSucceed) {
+            return { apiWorkspace: workspace.workspace };
+        }
+        handleFailedWorkspaceParserResult(workspace, context.logger);
+        return isApiFolder ? context.failAndThrow(undefined, undefined, { code: CliError.Code.ConfigError }) : {};
+    };
+
+    let loadedFolders: LoadedFolder[];
+    if (project.apis == null) {
+        loadedFolders = [await load({ dir: project.root, workspaceName: undefined, isApiFolder: false })];
+    } else {
+        const selection = selectApiFolders({
+            available: project.apis.map((api) => api.name),
+            requested: commandLineApiWorkspace,
+            defaultToAll: defaultToAllApiWorkspaces
+        });
+        if (selection.type !== "selected") {
+            return failApiSelection({ selection, cliName, context });
+        }
+        const selectedNames = selection.names;
+        loadedFolders = await Promise.all(
+            project.apis
+                .filter((api) => selectedNames.includes(api.name))
+                .map((api) => load({ dir: api.dir, workspaceName: api.name, isApiFolder: true }))
+        );
+    }
+
+    return {
+        apiWorkspaces: loadedFolders.flatMap(({ apiWorkspace }) => (apiWorkspace != null ? [apiWorkspace] : [])),
+        sdkConfigWorkspaces: loadedFolders.flatMap(({ sdkConfigWorkspace }) =>
+            sdkConfigWorkspace != null ? [sdkConfigWorkspace] : []
+        )
+    };
+}
+
+function failApiSelection({
+    selection,
+    cliName,
+    context
+}: {
+    selection: Exclude<ApiFolderSelection, { type: "selected" }>;
+    cliName: string;
+    context: TaskContext;
+}): never {
+    switch (selection.type) {
+        case "unknown":
+            return context.failAndThrow(
+                selection.names.length === 1
+                    ? `API does not exist: ${selection.names[0]}`
+                    : `APIs do not exist: ${selection.names.join(", ")}`,
+                undefined,
+                { code: CliError.Code.ConfigError }
+            );
+        case "none-found":
+            return context.failAndThrow("No APIs found.", undefined, { code: CliError.Code.ConfigError });
+        case "ambiguous": {
+            const longestName = Math.max(...selection.available.map((name) => name.length));
+            const suggestions = selection.available.map((name) => {
+                const suggestedCommand = `${cliName} ${process.argv.slice(2).join(" ")} --api ${name}`;
+                return ` › ${chalk.bold(name.padEnd(longestName))}  ${chalk.dim(suggestedCommand)}`;
+            });
+            return context.failAndThrow(
+                `There are multiple workspaces. You must specify one with --api:\n${suggestions.join("\n")}`,
+                undefined,
+                { code: CliError.Code.ConfigError }
+            );
+        }
+        default:
+            assertNever(selection);
+    }
 }

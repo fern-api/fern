@@ -3,7 +3,7 @@ import { type docsYml } from "@fern-api/configuration";
 import { resolveFilepath } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
-import { getDocsApiSectionsWithInlineSpecs } from "@fern-api/project-loader";
+import { getDocsApiSectionsWithInlineSpecs } from "@fern-api/project-structure";
 
 function toSpec(spec: docsYml.RawSchemas.ApiSpecConfiguration, absoluteFilepathToDocsConfig: AbsoluteFilePath): Spec {
     const absoluteFilepath = resolveFilepath(spec.path, absoluteFilepathToDocsConfig);

@@ -1,5 +1,5 @@
-import { SDK_CONFIG_FILENAME } from "@fern-api/configuration";
-import { AbsoluteFilePath, dirname, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, basename, dirname } from "@fern-api/fs-utils";
+import { findReadableSdkConfigFile } from "@fern-api/project-structure";
 import type { SdkConfigV1 } from "@postman/sdk-config/sdk-config/v1";
 import { parseSdkConfigV1 } from "@postman/sdk-config/sdk-config/v1";
 import { readFile } from "fs/promises";
@@ -13,9 +13,6 @@ import yaml from "js-yaml";
  * A workspace mid-migration therefore has both active legacy generators and SDK Config targets.
  */
 export { SDK_CONFIG_FILENAME } from "@fern-api/configuration";
-
-/** `.yaml` is accepted on read only. The migration writes `.yml`, matching every other Fern file. */
-const SDK_CONFIG_FILENAMES: readonly string[] = [SDK_CONFIG_FILENAME, "sdk-config.yaml"];
 
 export declare namespace loadSdkConfig {
     interface Args {
@@ -44,37 +41,28 @@ export async function loadSdkConfig({ absolutePathToFernConfig }: loadSdkConfig.
     if (absolutePathToFernConfig == null) {
         return { type: "absent" };
     }
-    const fernDirectory = dirname(absolutePathToFernConfig);
+    const absolutePath = await findReadableSdkConfigFile(dirname(absolutePathToFernConfig));
+    if (absolutePath == null) {
+        return { type: "absent" };
+    }
+    const filename = basename(absolutePath);
 
-    for (const filename of SDK_CONFIG_FILENAMES) {
-        const absolutePath = join(fernDirectory, RelativeFilePath.of(filename));
-        if (!(await doesPathExist(absolutePath, "file"))) {
-            continue;
-        }
-
-        let document: unknown;
-        try {
-            document = yaml.load(await readFile(absolutePath, "utf8"));
-        } catch (error) {
-            return {
-                type: "invalid",
-                absolutePath,
-                message: `${filename} is not valid YAML: ${errorMessage(error)}`
-            };
-        }
-
-        try {
-            return { type: "loaded", sdkConfig: parseSdkConfigV1(document), absolutePath };
-        } catch (error) {
-            return {
-                type: "invalid",
-                absolutePath,
-                message: `${filename} is not a valid SDK Config: ${errorMessage(error)}`
-            };
-        }
+    let document: unknown;
+    try {
+        document = yaml.load(await readFile(absolutePath, "utf8"));
+    } catch (error) {
+        return { type: "invalid", absolutePath, message: `${filename} is not valid YAML: ${errorMessage(error)}` };
     }
 
-    return { type: "absent" };
+    try {
+        return { type: "loaded", sdkConfig: parseSdkConfigV1(document), absolutePath };
+    } catch (error) {
+        return {
+            type: "invalid",
+            absolutePath,
+            message: `${filename} is not a valid SDK Config: ${errorMessage(error)}`
+        };
+    }
 }
 
 function errorMessage(error: unknown): string {

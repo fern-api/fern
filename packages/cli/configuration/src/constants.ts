@@ -17,6 +17,8 @@ export const GENERATORS_CONFIGURATION_FILENAME_ALTERNATIVE = "generators.yaml";
  */
 export const LEGACY_GENERATORS_CONFIGURATION_FILENAME = "generators.legacy.yml";
 export const SDK_CONFIG_FILENAME = "sdk-config.yml";
+/** `.yaml` is accepted when reading an SDK Config for local generation only. Everything else looks for `.yml`. */
+export const SDK_CONFIG_FILENAME_ALTERNATIVE = "sdk-config.yaml";
 export const DEPENDENCIES_CONFIGURATION_FILENAME = "dependencies.yml";
 export const DOCS_CONFIGURATION_FILENAME = "docs.yml";
 export const PROJECT_CONFIG_FILENAME = "fern.config.json";

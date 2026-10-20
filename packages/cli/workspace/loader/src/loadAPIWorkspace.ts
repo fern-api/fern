@@ -6,7 +6,7 @@ import {
     loadGeneratorsConfiguration,
     OPENAPI_DIRECTORY
 } from "@fern-api/configuration-loader";
-import { AbsoluteFilePath, doesPathExist, isPathEmpty, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import {
     ConjureWorkspace,
     LazyFernWorkspace,
@@ -19,6 +19,11 @@ import path from "path";
 import { loadAPIChangelog } from "./loadAPIChangelog.js";
 import { resolveRemoteSpecs } from "./resolveRemoteSpecs.js";
 
+type Schema<Type extends generatorsYml.APIDefinitionLocation["schema"]["type"]> = Extract<
+    generatorsYml.APIDefinitionLocation["schema"],
+    { type: Type }
+>;
+
 export async function loadSingleNamespaceAPIWorkspace({
     absolutePathToWorkspace,
     namespace,
@@ -29,245 +34,197 @@ export async function loadSingleNamespaceAPIWorkspace({
     definitions: generatorsYml.APIDefinitionLocation[];
 }): Promise<Spec[] | WorkspaceLoader.Result> {
     const specs: Spec[] = [];
-
     for (const definition of definitions) {
-        // Handle both single override path and array of override paths
-        let absoluteFilepathToOverrides: AbsoluteFilePath | AbsoluteFilePath[] | undefined;
-        if (definition.overrides != null) {
-            if (Array.isArray(definition.overrides)) {
-                absoluteFilepathToOverrides = definition.overrides.map((override) =>
-                    join(absolutePathToWorkspace, RelativeFilePath.of(override))
-                );
-            } else {
-                absoluteFilepathToOverrides = join(absolutePathToWorkspace, RelativeFilePath.of(definition.overrides));
-            }
+        const spec = await loadSpec({ definition, absolutePathToWorkspace, namespace });
+        if (isFailedResult(spec)) {
+            return spec;
         }
-        const absoluteFilepathToOverlays =
-            definition.overlays != null
-                ? join(absolutePathToWorkspace, RelativeFilePath.of(definition.overlays))
-                : undefined;
-        if (definition.schema.type === "protobuf") {
-            // Resolved git sources produce absolute paths; use them directly
-            const absoluteFilepathToProtobufRoot: AbsoluteFilePath =
-                path.isAbsolute(definition.schema.root) && definition.resolvedAbsolutePath
-                    ? AbsoluteFilePath.of(definition.schema.root)
-                    : join(absolutePathToWorkspace, RelativeFilePath.of(definition.schema.root));
-            const relativeFilepathToProtobufRoot =
-                path.isAbsolute(definition.schema.root) && definition.resolvedAbsolutePath
-                    ? RelativeFilePath.of(path.basename(definition.schema.root))
-                    : RelativeFilePath.of(definition.schema.root);
-            if (!(await doesPathExist(absoluteFilepathToProtobufRoot))) {
-                return {
-                    didSucceed: false,
-                    failures: {
-                        [RelativeFilePath.of(definition.schema.root)]: {
-                            type: WorkspaceLoaderFailureType.FILE_MISSING
-                        }
-                    }
-                };
-            }
+        specs.push(spec);
+    }
+    return specs;
+}
 
-            // if the target is empty, don't specify a target because we are using 'strategy: all' from the root
-            const absoluteFilepathToTarget: AbsoluteFilePath | undefined =
-                definition.schema.target.length === 0
-                    ? undefined
-                    : path.isAbsolute(definition.schema.target) && definition.resolvedAbsolutePath
-                      ? AbsoluteFilePath.of(definition.schema.target)
-                      : join(absolutePathToWorkspace, RelativeFilePath.of(definition.schema.target));
-
-            if (absoluteFilepathToTarget != null) {
-                if (!(await doesPathExist(absoluteFilepathToTarget))) {
-                    const displayTarget =
-                        path.isAbsolute(definition.schema.target) && definition.resolvedAbsolutePath
-                            ? RelativeFilePath.of(path.basename(definition.schema.target))
-                            : RelativeFilePath.of(definition.schema.target);
-                    return {
-                        didSucceed: false,
-                        failures: {
-                            [displayTarget]: {
-                                type: WorkspaceLoaderFailureType.FILE_MISSING
-                            }
-                        }
-                    };
-                }
-            }
-
-            const apiSettings = getAPIDefinitionSettings(definition.settings);
-            specs.push({
-                type: "protobuf",
-                absoluteFilepathToProtobufRoot,
-                absoluteFilepathToProtobufTarget: absoluteFilepathToTarget,
-                absoluteFilepathToOverrides,
-                relativeFilepathToProtobufRoot,
-                dependencies: definition.schema.dependencies,
-                generateLocally: definition.schema.localGeneration,
-                fromOpenAPI: definition.schema.fromOpenAPI,
-                settings: {
-                    ...apiSettings,
-                    audiences: definition.audiences ?? []
-                }
-            });
-            continue;
-        }
-
-        if (definition.schema.type === "openrpc") {
-            const relativeFilepathToOpenRpc = RelativeFilePath.of(definition.schema.path);
-            const absoluteFilepathToOpenRpc = join(absolutePathToWorkspace, relativeFilepathToOpenRpc);
-            specs.push({
-                type: "openrpc",
-                absoluteFilepath: absoluteFilepathToOpenRpc,
-                absoluteFilepathToOverrides,
-                namespace
-            });
-            continue;
-        }
-
-        if (definition.schema.type === "graphql") {
-            const relativeFilepathToGraphQL = RelativeFilePath.of(definition.schema.path);
-            const absoluteFilepathToGraphQL = join(absolutePathToWorkspace, relativeFilepathToGraphQL);
-            if (!(await doesPathExist(absoluteFilepathToGraphQL))) {
-                return {
-                    didSucceed: false,
-                    failures: {
-                        [relativeFilepathToGraphQL]: {
-                            type: WorkspaceLoaderFailureType.FILE_MISSING
-                        }
-                    }
-                };
-            }
-            const absoluteFilepathToExamples =
-                definition.schema.examples != null
-                    ? join(absolutePathToWorkspace, RelativeFilePath.of(definition.schema.examples))
-                    : undefined;
-            if (
-                definition.schema.examples != null &&
-                absoluteFilepathToExamples != null &&
-                !(await doesPathExist(absoluteFilepathToExamples))
-            ) {
-                return {
-                    didSucceed: false,
-                    failures: {
-                        [RelativeFilePath.of(definition.schema.examples)]: {
-                            type: WorkspaceLoaderFailureType.FILE_MISSING
-                        }
-                    }
-                };
-            }
-            specs.push({
-                type: "graphql",
-                absoluteFilepath: absoluteFilepathToGraphQL,
-                absoluteFilepathToOverrides,
-                absoluteFilepathToExamples,
-                namespace
-            });
-            continue;
-        }
-
-        // Reject user-specified absolute paths (only allow absolute paths from git source resolution)
-        if (path.isAbsolute(definition.schema.path) && !definition.resolvedAbsolutePath) {
-            return {
-                didSucceed: false,
-                failures: {
-                    [RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME)]: {
-                        type: WorkspaceLoaderFailureType.ABSOLUTE_FILEPATH,
-                        filepath: definition.schema.path
-                    }
-                }
-            };
-        }
-
-        const absoluteFilepath: AbsoluteFilePath = path.isAbsolute(definition.schema.path)
-            ? AbsoluteFilePath.of(definition.schema.path)
-            : join(absolutePathToWorkspace, RelativeFilePath.of(definition.schema.path));
-
-        if (!(await doesPathExist(absoluteFilepath))) {
-            const relativeFilepath = path.isAbsolute(definition.schema.path)
-                ? RelativeFilePath.of(path.basename(definition.schema.path))
-                : RelativeFilePath.of(definition.schema.path);
-            return {
-                didSucceed: false,
-                failures: {
-                    [relativeFilepath]: {
-                        type: WorkspaceLoaderFailureType.FILE_MISSING
-                    }
-                }
-            };
-        }
-        // Check if override files exist
-        if (definition.overrides != null && absoluteFilepathToOverrides != null) {
-            const overridePaths = Array.isArray(absoluteFilepathToOverrides)
-                ? absoluteFilepathToOverrides
-                : [absoluteFilepathToOverrides];
-            const overrideRelativePaths = Array.isArray(definition.overrides)
-                ? definition.overrides
-                : [definition.overrides];
-
-            for (let i = 0; i < overridePaths.length; i++) {
-                const overridePath = overridePaths[i];
-                const relativeOverridePath = overrideRelativePaths[i];
-                if (overridePath != null && relativeOverridePath != null && !(await doesPathExist(overridePath))) {
-                    return {
-                        didSucceed: false,
-                        failures: {
-                            [RelativeFilePath.of(relativeOverridePath)]: {
-                                type: WorkspaceLoaderFailureType.FILE_MISSING
-                            }
-                        }
-                    };
-                }
-            }
-        }
-        if (
-            definition.overlays != null &&
-            absoluteFilepathToOverlays != null &&
-            !(await doesPathExist(absoluteFilepathToOverlays))
-        ) {
-            return {
-                didSucceed: false,
-                failures: {
-                    [RelativeFilePath.of(definition.overlays)]: {
-                        type: WorkspaceLoaderFailureType.FILE_MISSING
-                    }
-                }
-            };
-        }
-        const apiSettings = getAPIDefinitionSettings(definition.settings);
-        const errorResponses = apiSettings.errorResponses;
-        if (errorResponses != null && typeof errorResponses.schema === "string") {
-            const absoluteFilepathToErrorResponsesSchema = join(
+async function loadSpec({
+    definition,
+    absolutePathToWorkspace,
+    namespace
+}: {
+    definition: generatorsYml.APIDefinitionLocation;
+    absolutePathToWorkspace: AbsoluteFilePath;
+    namespace: string | undefined;
+}): Promise<Spec | WorkspaceLoader.FailedResult> {
+    const absoluteFilepathToOverrides = resolveOverrides(absolutePathToWorkspace, definition.overrides);
+    switch (definition.schema.type) {
+        case "protobuf":
+            return await loadProtobufSpec({
+                definition,
+                schema: definition.schema,
                 absolutePathToWorkspace,
-                RelativeFilePath.of(errorResponses.schema)
-            );
-            if (!(await doesPathExist(absoluteFilepathToErrorResponsesSchema))) {
-                return {
-                    didSucceed: false,
-                    failures: {
-                        [RelativeFilePath.of(errorResponses.schema)]: {
-                            type: WorkspaceLoaderFailureType.FILE_MISSING
-                        }
-                    }
-                };
-            }
-            apiSettings.errorResponses = { ...errorResponses, schema: absoluteFilepathToErrorResponsesSchema };
-        }
-        specs.push({
-            type: "openapi",
-            absoluteFilepath,
-            absoluteFilepathToOverrides,
-            absoluteFilepathToOverlays,
-            settings: {
-                ...apiSettings,
-                audiences: definition.audiences ?? []
-            },
-            source: {
-                type: definition.schema.sourceType ?? "openapi",
-                file: absoluteFilepath
-            },
-            namespace
-        });
+                absoluteFilepathToOverrides
+            });
+        case "openrpc":
+            return {
+                type: "openrpc",
+                absoluteFilepath: join(absolutePathToWorkspace, RelativeFilePath.of(definition.schema.path)),
+                absoluteFilepathToOverrides,
+                namespace
+            };
+        case "graphql":
+            return await loadGraphqlSpec({
+                schema: definition.schema,
+                absolutePathToWorkspace,
+                absoluteFilepathToOverrides,
+                namespace
+            });
+        default:
+            return await loadOpenApiSpec({
+                definition,
+                schema: definition.schema,
+                absolutePathToWorkspace,
+                absoluteFilepathToOverrides,
+                namespace
+            });
+    }
+}
+
+async function loadProtobufSpec({
+    definition,
+    schema,
+    absolutePathToWorkspace,
+    absoluteFilepathToOverrides
+}: {
+    definition: generatorsYml.APIDefinitionLocation;
+    schema: Schema<"protobuf">;
+    absolutePathToWorkspace: AbsoluteFilePath;
+    absoluteFilepathToOverrides: AbsoluteFilePath | AbsoluteFilePath[] | undefined;
+}): Promise<ProtobufSpec | WorkspaceLoader.FailedResult> {
+    const root = resolveSourcePath(absolutePathToWorkspace, schema.root, definition.resolvedAbsolutePath);
+    if (!(await doesPathExist(root.absolute))) {
+        // The key is not the basename here, so a missing root from a resolved git source (an absolute path) throws.
+        return missingFile(RelativeFilePath.of(schema.root));
     }
 
-    return specs;
+    // An empty target means 'strategy: all' from the root, so no target is specified.
+    const target =
+        schema.target.length === 0
+            ? undefined
+            : resolveSourcePath(absolutePathToWorkspace, schema.target, definition.resolvedAbsolutePath);
+    if (target != null && !(await doesPathExist(target.absolute))) {
+        return missingFile(target.relative);
+    }
+
+    return {
+        type: "protobuf",
+        absoluteFilepathToProtobufRoot: root.absolute,
+        absoluteFilepathToProtobufTarget: target?.absolute,
+        absoluteFilepathToOverrides,
+        relativeFilepathToProtobufRoot: root.relative,
+        dependencies: schema.dependencies,
+        generateLocally: schema.localGeneration,
+        fromOpenAPI: schema.fromOpenAPI,
+        settings: {
+            ...getAPIDefinitionSettings(definition.settings),
+            audiences: definition.audiences ?? []
+        }
+    };
+}
+
+async function loadGraphqlSpec({
+    schema,
+    absolutePathToWorkspace,
+    absoluteFilepathToOverrides,
+    namespace
+}: {
+    schema: Schema<"graphql">;
+    absolutePathToWorkspace: AbsoluteFilePath;
+    absoluteFilepathToOverrides: AbsoluteFilePath | AbsoluteFilePath[] | undefined;
+    namespace: string | undefined;
+}): Promise<Spec | WorkspaceLoader.FailedResult> {
+    const relativeFilepath = RelativeFilePath.of(schema.path);
+    const absoluteFilepath = join(absolutePathToWorkspace, relativeFilepath);
+    if (!(await doesPathExist(absoluteFilepath))) {
+        return missingFile(relativeFilepath);
+    }
+
+    let absoluteFilepathToExamples: AbsoluteFilePath | undefined;
+    if (schema.examples != null) {
+        const relativeFilepathToExamples = RelativeFilePath.of(schema.examples);
+        absoluteFilepathToExamples = join(absolutePathToWorkspace, relativeFilepathToExamples);
+        if (!(await doesPathExist(absoluteFilepathToExamples))) {
+            return missingFile(relativeFilepathToExamples);
+        }
+    }
+
+    return { type: "graphql", absoluteFilepath, absoluteFilepathToOverrides, absoluteFilepathToExamples, namespace };
+}
+
+async function loadOpenApiSpec({
+    definition,
+    schema,
+    absolutePathToWorkspace,
+    absoluteFilepathToOverrides,
+    namespace
+}: {
+    definition: generatorsYml.APIDefinitionLocation;
+    schema: Schema<"oss">;
+    absolutePathToWorkspace: AbsoluteFilePath;
+    absoluteFilepathToOverrides: AbsoluteFilePath | AbsoluteFilePath[] | undefined;
+    namespace: string | undefined;
+}): Promise<Spec | WorkspaceLoader.FailedResult> {
+    // Only a resolved git source may use an absolute path.
+    if (path.isAbsolute(schema.path) && !definition.resolvedAbsolutePath) {
+        return {
+            didSucceed: false,
+            failures: {
+                [RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME)]: {
+                    type: WorkspaceLoaderFailureType.ABSOLUTE_FILEPATH,
+                    filepath: schema.path
+                }
+            }
+        };
+    }
+
+    const spec = resolveSourcePath(absolutePathToWorkspace, schema.path, definition.resolvedAbsolutePath);
+    const absoluteFilepathToOverlays =
+        definition.overlays != null
+            ? join(absolutePathToWorkspace, RelativeFilePath.of(definition.overlays))
+            : undefined;
+    const apiSettings = getAPIDefinitionSettings(definition.settings);
+    const errorResponsesSchema =
+        typeof apiSettings.errorResponses?.schema === "string"
+            ? join(absolutePathToWorkspace, RelativeFilePath.of(apiSettings.errorResponses.schema))
+            : undefined;
+
+    // The files are checked in this order: the spec, its overrides, its overlays, then the error responses schema.
+    const filesToCheck: Array<{ absolute: AbsoluteFilePath; relative: RelativeFilePath } | undefined> = [
+        spec,
+        ...toArray(definition.overrides).map((override) => resolveSourcePath(absolutePathToWorkspace, override, false)),
+        definition.overlays != null && absoluteFilepathToOverlays != null
+            ? { absolute: absoluteFilepathToOverlays, relative: RelativeFilePath.of(definition.overlays) }
+            : undefined,
+        errorResponsesSchema != null && typeof apiSettings.errorResponses?.schema === "string"
+            ? { absolute: errorResponsesSchema, relative: RelativeFilePath.of(apiSettings.errorResponses.schema) }
+            : undefined
+    ];
+    for (const file of filesToCheck) {
+        if (file != null && !(await doesPathExist(file.absolute))) {
+            return missingFile(file.relative);
+        }
+    }
+
+    const settings =
+        apiSettings.errorResponses != null && errorResponsesSchema != null
+            ? { ...apiSettings, errorResponses: { ...apiSettings.errorResponses, schema: errorResponsesSchema } }
+            : apiSettings;
+    return {
+        type: "openapi",
+        absoluteFilepath: spec.absolute,
+        absoluteFilepathToOverrides,
+        absoluteFilepathToOverlays,
+        settings: { ...settings, audiences: definition.audiences ?? [] },
+        source: { type: schema.sourceType ?? "openapi", file: spec.absolute },
+        namespace
+    };
 }
 
 export async function loadAPIWorkspace({
@@ -293,7 +250,8 @@ export async function loadAPIWorkspace({
         loadAPIChangelog({ absolutePathToWorkspace }).catch(() => undefined)
     ]);
 
-    if (generatorsConfiguration?.api != null && generatorsConfiguration?.api.type === "conjure") {
+    const api = generatorsConfiguration?.api;
+    if (generatorsConfiguration != null && api?.type === "conjure") {
         return {
             didSucceed: true,
             workspace: new ConjureWorkspace({
@@ -303,132 +261,117 @@ export async function loadAPIWorkspace({
                 changelog,
                 cliVersion,
                 context,
-                relativePathToConjureDirectory: RelativeFilePath.of(generatorsConfiguration.api.pathToConjureDefinition)
+                relativePathToConjureDirectory: RelativeFilePath.of(api.pathToConjureDefinition)
             })
         };
     }
 
-    if (
-        generatorsConfiguration?.api != null &&
-        ((generatorsConfiguration.api.type === "singleNamespace" &&
-            generatorsConfiguration.api.definitions.length > 0) ||
-            generatorsConfiguration.api.type === "multiNamespace")
-    ) {
-        const specs: Spec[] = [];
-
-        if (generatorsConfiguration.api.type === "singleNamespace") {
-            const resolvedDefinitions = await resolveRemoteSpecs({
-                definitions: generatorsConfiguration.api.definitions,
-                context
-            });
-            const maybeSpecs = await loadSingleNamespaceAPIWorkspace({
-                absolutePathToWorkspace,
-                namespace: undefined,
-                definitions: resolvedDefinitions
-            });
-            if (!Array.isArray(maybeSpecs)) {
-                return maybeSpecs;
-            }
-            specs.push(...maybeSpecs);
-        } else {
-            const namespaceEntries = Object.entries(generatorsConfiguration.api.definitions);
-            const namespaceResults = await Promise.all(
-                namespaceEntries.map(async ([namespace, definitions]) => {
-                    const resolvedDefinitions = await resolveRemoteSpecs({
-                        definitions,
-                        context
-                    });
-                    return loadSingleNamespaceAPIWorkspace({
-                        absolutePathToWorkspace,
-                        namespace,
-                        definitions: resolvedDefinitions
-                    });
-                })
-            );
-            for (const maybeSpecs of namespaceResults) {
-                if (!Array.isArray(maybeSpecs)) {
-                    return maybeSpecs;
-                }
-                specs.push(...maybeSpecs);
-            }
-
-            if (generatorsConfiguration.api.rootDefinitions != null) {
-                const resolvedRootDefinitions = await resolveRemoteSpecs({
-                    definitions: generatorsConfiguration.api.rootDefinitions,
-                    context
-                });
-                const maybeRootSpecs = await loadSingleNamespaceAPIWorkspace({
-                    absolutePathToWorkspace,
-                    namespace: undefined,
-                    definitions: resolvedRootDefinitions
-                });
-                if (!Array.isArray(maybeRootSpecs)) {
-                    return maybeRootSpecs;
-                }
-                specs.push(...maybeRootSpecs);
-            }
+    if (generatorsConfiguration != null && api != null && declaresSpecs(api)) {
+        const specs = await loadDeclaredSpecs({ api, absolutePathToWorkspace, context });
+        if (!Array.isArray(specs)) {
+            return specs;
         }
-
-        const result = {
-            didSucceed: true as const,
-            workspace: new OSSWorkspace({
-                specs: specs.filter((spec) => {
-                    if (spec.type === "openrpc") {
-                        return false;
-                    }
-                    if (spec.type === "protobuf") {
-                        if (!spec.fromOpenAPI) {
-                            return false;
-                        }
-                    }
-                    return true;
-                }) as (OpenAPISpec | ProtobufSpec)[],
-                allSpecs: specs.filter((spec) => {
-                    if (spec.type === "protobuf") {
-                        if (spec.fromOpenAPI) {
-                            return false;
-                        }
-                    }
-                    return true;
-                }),
-                workspaceName,
-                absoluteFilePath: absolutePathToWorkspace,
-                generatorsConfiguration,
-                changelog,
-                cliVersion
-            })
-        };
-
+        const workspace = new OSSWorkspace({
+            specs: specs.filter(isParsedAsOpenApi) as (OpenAPISpec | ProtobufSpec)[],
+            allSpecs: specs.filter((spec) => !isProtobufFromOpenApi(spec)),
+            workspaceName,
+            absoluteFilePath: absolutePathToWorkspace,
+            generatorsConfiguration,
+            changelog,
+            cliVersion
+        });
         // Process GraphQL specs and populate workspace with operations and types
-        await result.workspace.processGraphQLSpecs(context);
-
-        return result;
+        await workspace.processGraphQLSpecs(context);
+        return { didSucceed: true, workspace };
     }
 
     if (await doesPathExist(join(absolutePathToWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY)))) {
-        const fernWorkspace = new LazyFernWorkspace({
-            absoluteFilePath: absolutePathToWorkspace,
-            generatorsConfiguration,
-            workspaceName,
-            changelog,
-            context,
-            cliVersion,
-            loadAPIWorkspace
-        });
-
         return {
             didSucceed: true,
-            workspace: fernWorkspace
+            workspace: new LazyFernWorkspace({
+                absoluteFilePath: absolutePathToWorkspace,
+                generatorsConfiguration,
+                workspaceName,
+                changelog,
+                context,
+                cliVersion,
+                loadAPIWorkspace
+            })
         };
     }
 
-    // check if directory is empty
-    if (await isPathEmpty(join(absolutePathToWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY)))) {
-        const apiFolderName = absolutePathToWorkspace.split("/").pop();
-        context.logger.warn(`Detected empty API definition: ${apiFolderName}. Remove to resolve error.`);
+    // There is no definition/ directory here, so it counts as empty.
+    const apiFolderName = absolutePathToWorkspace.split("/").pop();
+    context.logger.warn(`Detected empty API definition: ${apiFolderName}. Remove to resolve error.`);
+    context.logger.debug(`Workspace diagnostic: ${describeMissingApi(generatorsConfiguration)}`);
+
+    return {
+        didSucceed: false,
+        failures: {
+            [RelativeFilePath.of(OPENAPI_DIRECTORY)]: {
+                type: WorkspaceLoaderFailureType.MISCONFIGURED_DIRECTORY
+            }
+        }
+    };
+}
+
+type DeclaredSpecsApi = Extract<
+    NonNullable<generatorsYml.GeneratorsConfiguration["api"]>,
+    { type: "singleNamespace" | "multiNamespace" }
+>;
+
+function declaresSpecs(api: NonNullable<generatorsYml.GeneratorsConfiguration["api"]>): api is DeclaredSpecsApi {
+    return (api.type === "singleNamespace" && api.definitions.length > 0) || api.type === "multiNamespace";
+}
+
+/** Loads the specs of every namespace, or returns the failure of the first namespace that has one. */
+async function loadDeclaredSpecs({
+    api,
+    absolutePathToWorkspace,
+    context
+}: {
+    api: DeclaredSpecsApi;
+    absolutePathToWorkspace: AbsoluteFilePath;
+    context: TaskContext;
+}): Promise<Spec[] | WorkspaceLoader.Result> {
+    const loadNamespace = async (namespace: string | undefined, definitions: generatorsYml.APIDefinitionLocation[]) =>
+        await loadSingleNamespaceAPIWorkspace({
+            absolutePathToWorkspace,
+            namespace,
+            definitions: await resolveRemoteSpecs({ definitions, context })
+        });
+
+    if (api.type === "singleNamespace") {
+        return await loadNamespace(undefined, api.definitions);
     }
 
-    // Build a detailed diagnostic message so users know exactly what was checked
+    const namespaceResults = await Promise.all(
+        Object.entries(api.definitions).map(
+            async ([namespace, definitions]) => await loadNamespace(namespace, definitions)
+        )
+    );
+    const rootResults = api.rootDefinitions != null ? [await loadNamespace(undefined, api.rootDefinitions)] : [];
+
+    const specs: Spec[] = [];
+    for (const result of [...namespaceResults, ...rootResults]) {
+        if (!Array.isArray(result)) {
+            return result;
+        }
+        specs.push(...result);
+    }
+    return specs;
+}
+
+/** OpenRPC specs are not parsed as OpenAPI, and protobuf specs only are when they come from an OpenAPI spec. */
+function isParsedAsOpenApi(spec: Spec): boolean {
+    return spec.type !== "openrpc" && (spec.type !== "protobuf" || spec.fromOpenAPI);
+}
+
+function isProtobufFromOpenApi(spec: Spec): boolean {
+    return spec.type === "protobuf" && spec.fromOpenAPI;
+}
+
+function describeMissingApi(generatorsConfiguration: generatorsYml.GeneratorsConfiguration | undefined): string {
     const hints: string[] = [];
     if (generatorsConfiguration == null) {
         hints.push(`No ${GENERATORS_CONFIGURATION_FILENAME} was found.`);
@@ -439,20 +382,51 @@ export async function loadAPIWorkspace({
             `${GENERATORS_CONFIGURATION_FILENAME} has an "api" section but no valid API specs could be resolved from it.`
         );
     }
-    const defDirExists = await doesPathExist(join(absolutePathToWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY)));
-    if (!defDirExists) {
-        hints.push(`No "${DEFINITION_DIRECTORY}/" directory was found.`);
-    }
-    if (hints.length > 0) {
-        context.logger.debug(`Workspace diagnostic: ${hints.join(" ")}`);
-    }
+    hints.push(`No "${DEFINITION_DIRECTORY}/" directory was found.`);
+    return hints.join(" ");
+}
 
+function missingFile(filepath: RelativeFilePath): WorkspaceLoader.FailedResult {
+    return { didSucceed: false, failures: { [filepath]: { type: WorkspaceLoaderFailureType.FILE_MISSING } } };
+}
+
+function isFailedResult(value: Spec | WorkspaceLoader.FailedResult): value is WorkspaceLoader.FailedResult {
+    return "didSucceed" in value;
+}
+
+function toArray<T>(value: T | T[] | undefined): T[] {
+    if (value == null) {
+        return [];
+    }
+    return Array.isArray(value) ? value : [value];
+}
+
+/** Keeps a single override a single path and several overrides a list, as the specs expect. */
+function resolveOverrides(
+    absolutePathToWorkspace: AbsoluteFilePath,
+    overrides: string | string[] | undefined
+): AbsoluteFilePath | AbsoluteFilePath[] | undefined {
+    if (overrides == null) {
+        return undefined;
+    }
+    const toAbsolute = (override: string) => join(absolutePathToWorkspace, RelativeFilePath.of(override));
+    return Array.isArray(overrides) ? overrides.map(toAbsolute) : toAbsolute(overrides);
+}
+
+/**
+ * Resolves a path from a definition. A path from a resolved git source is absolute and used as it is, with its
+ * basename for messages. Any other path is relative to the workspace.
+ */
+function resolveSourcePath(
+    absolutePathToWorkspace: AbsoluteFilePath,
+    filepath: string,
+    isResolvedFromGit: boolean | undefined
+): { absolute: AbsoluteFilePath; relative: RelativeFilePath } {
+    if (path.isAbsolute(filepath) && isResolvedFromGit) {
+        return { absolute: AbsoluteFilePath.of(filepath), relative: RelativeFilePath.of(path.basename(filepath)) };
+    }
     return {
-        didSucceed: false,
-        failures: {
-            [RelativeFilePath.of(OPENAPI_DIRECTORY)]: {
-                type: WorkspaceLoaderFailureType.MISCONFIGURED_DIRECTORY
-            }
-        }
+        absolute: join(absolutePathToWorkspace, RelativeFilePath.of(filepath)),
+        relative: RelativeFilePath.of(filepath)
     };
 }

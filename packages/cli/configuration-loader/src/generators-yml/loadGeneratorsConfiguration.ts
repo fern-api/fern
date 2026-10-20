@@ -1,10 +1,7 @@
-import {
-    GENERATORS_CONFIGURATION_FILENAME,
-    GENERATORS_CONFIGURATION_FILENAME_ALTERNATIVE,
-    generatorsYml,
-    LEGACY_GENERATORS_CONFIGURATION_FILENAME
-} from "@fern-api/configuration";
-import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { generatorsYml, LEGACY_GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/configuration";
+import { assertNever } from "@fern-api/core-utils";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { findGeneratorsFile } from "@fern-api/project-structure";
 import { CliError, TaskContext } from "@fern-api/task-context";
 
 import { readFile } from "fs/promises";
@@ -122,29 +119,18 @@ export async function getPathToGeneratorsConfiguration({
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
 }): Promise<AbsoluteFilePath | undefined> {
-    const ymlPath = join(absolutePathToWorkspace, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME));
-    const yamlPath = join(absolutePathToWorkspace, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME_ALTERNATIVE));
-    const legacyPath = join(absolutePathToWorkspace, RelativeFilePath.of(LEGACY_GENERATORS_CONFIGURATION_FILENAME));
-
-    const [ymlExists, yamlExists, legacyExists] = await Promise.all([
-        doesPathExist(ymlPath),
-        doesPathExist(yamlPath),
-        doesPathExist(legacyPath)
-    ]);
-    if ((ymlExists || yamlExists) && legacyExists) {
-        throw new CliError({
-            message: `Found both ${ymlExists ? GENERATORS_CONFIGURATION_FILENAME : GENERATORS_CONFIGURATION_FILENAME_ALTERNATIVE} and ${LEGACY_GENERATORS_CONFIGURATION_FILENAME} in ${absolutePathToWorkspace}. Keep only one active legacy generators configuration.`,
-            code: CliError.Code.ConfigError
-        });
+    const generatorsFile = await findGeneratorsFile(absolutePathToWorkspace);
+    switch (generatorsFile.type) {
+        case "none":
+            return undefined;
+        case "found":
+            return generatorsFile.path;
+        case "conflict":
+            throw new CliError({
+                message: `Found both ${generatorsFile.activeName} and ${LEGACY_GENERATORS_CONFIGURATION_FILENAME} in ${absolutePathToWorkspace}. Keep only one active legacy generators configuration.`,
+                code: CliError.Code.ConfigError
+            });
+        default:
+            assertNever(generatorsFile);
     }
-    if (ymlExists) {
-        return ymlPath;
-    }
-    if (yamlExists) {
-        return yamlPath;
-    }
-    if (legacyExists) {
-        return legacyPath;
-    }
-    return undefined;
 }

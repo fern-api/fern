@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { normalizeCommandLineApiWorkspace } from "../normalizeCommandLineApiWorkspace.js";
+import { normalizeCommandLineApiWorkspace } from "../normalize-command-line-api-workspace.js";
 
 describe("normalizeCommandLineApiWorkspace", () => {
     it("returns undefined when no --api is passed", () => {

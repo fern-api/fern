@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Internal refactor of how the CLI discovers and loads a project. The decisions about which files a project
+    has (`generators.yml`, `sdk-config.yml`, `docs.yml`, `definition/`, `openapi/`, `apis/`) now live in one place,
+    the new `@fern-api/project-structure` package, instead of being repeated across the loaders and commands.
+    Behavior is unchanged.
+  type: chore
