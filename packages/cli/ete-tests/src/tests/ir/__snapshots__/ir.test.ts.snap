@@ -2055,6 +2055,7 @@ exports[`ir > {"name":"file-upload"} 1`] = `
                             },
                             {
                                 "type": "file",
+                                "isOptional": false,
                                 "wireValue": "file",
                                 "name": {
                                     "originalName": "file",
@@ -2078,6 +2079,7 @@ exports[`ir > {"name":"file-upload"} 1`] = `
                             },
                             {
                                 "type": "file",
+                                "isOptional": true,
                                 "wireValue": "optionalFile",
                                 "name": {
                                     "originalName": "optionalFile",

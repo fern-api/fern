@@ -1227,7 +1227,8 @@ export class DocsDefinitionResolver {
                           "language-switcher": this.parsedDocsConfig.theme.languageSwitcher,
                           "product-switcher": this.parsedDocsConfig.theme
                               .productSwitcher as DocsV1Write.DocsThemeConfig["product-switcher"],
-                          "site-switcher": convertThemeSiteSwitcher(this.parsedDocsConfig.theme.siteSwitcher)
+                          "site-switcher": convertThemeSiteSwitcher(this.parsedDocsConfig.theme.siteSwitcher),
+                          ...convertThemeCodeBlocks(this.parsedDocsConfig.theme.codeBlocks)
                       }
                     : undefined,
             // deprecated
@@ -3424,6 +3425,19 @@ export function convertThemeSiteSwitcher(
         labels: siteSwitcher.labels,
         "show-products": siteSwitcher.showProducts
     };
+}
+
+/**
+ * FDR `DocsThemeConfig["code-blocks"]`. Returned as a spreadable partial so the key is
+ * omitted entirely when docs.yml doesn't set `theme.code-blocks`.
+ */
+export function convertThemeCodeBlocks(codeBlocks: docsYml.RawSchemas.CodeBlocksThemeConfig | undefined): {
+    "code-blocks"?: { light?: string; dark?: string };
+} {
+    if (codeBlocks == null || (codeBlocks.light == null && codeBlocks.dark == null)) {
+        return {};
+    }
+    return { "code-blocks": { light: codeBlocks.light, dark: codeBlocks.dark } };
 }
 
 function convertAvailability(

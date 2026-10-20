@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.variables.core.BodyProperties;
 import com.seed.variables.core.ClientOptions;
 import com.seed.variables.core.ObjectMappers;
+import com.seed.variables.core.PathSegments;
 import com.seed.variables.core.RequestOptions;
 import com.seed.variables.core.RetryInterceptor;
 import com.seed.variables.core.SeedVariablesApiException;
@@ -39,7 +40,7 @@ public class AsyncRawServiceClient {
     public CompletableFuture<SeedVariablesHttpResponse<Void>> post(RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegment(clientOptions.rootVariable());
+                .addPathSegment(PathSegments.validate(clientOptions.rootVariable()));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);

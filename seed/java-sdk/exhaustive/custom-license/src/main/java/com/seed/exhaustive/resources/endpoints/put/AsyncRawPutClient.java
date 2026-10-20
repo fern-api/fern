@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.exhaustive.core.BodyProperties;
 import com.seed.exhaustive.core.ClientOptions;
 import com.seed.exhaustive.core.ObjectMappers;
+import com.seed.exhaustive.core.PathSegments;
 import com.seed.exhaustive.core.RequestOptions;
 import com.seed.exhaustive.core.RetryInterceptor;
 import com.seed.exhaustive.core.SeedExhaustiveApiException;
@@ -50,7 +51,7 @@ public class AsyncRawPutClient {
             String id, PutRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegment(id);
+                .addPathSegment(PathSegments.validate(id));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);

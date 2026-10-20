@@ -393,9 +393,15 @@ export class DynamicSnippetsConverter {
                 : { wireValue: key.wireValue, name: this.fullCasingsGenerator.generateName(key.name) };
         switch (fileProperty.type) {
             case "file":
-                return DynamicSnippets.FileUploadRequestBodyProperty.file(nameAndWireValue);
+                return DynamicSnippets.FileUploadRequestBodyProperty.file({
+                    ...nameAndWireValue,
+                    isOptional: fileProperty.isOptional
+                });
             case "fileArray":
-                return DynamicSnippets.FileUploadRequestBodyProperty.fileArray(nameAndWireValue);
+                return DynamicSnippets.FileUploadRequestBodyProperty.fileArray({
+                    ...nameAndWireValue,
+                    isOptional: fileProperty.isOptional
+                });
             default:
                 assertNever(fileProperty);
         }

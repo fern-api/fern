@@ -74,13 +74,18 @@ export interface CppGenerateResult {
     pageCount: number;
 }
 
+/**
+ * Leading underscores are dropped because folder-based navigation skips files and
+ * directories whose names start with `_`; the URL slug is unchanged either way.
+ */
 function sanitizeForFilename(name: string): string {
     for (const [symbol, safeName] of OPERATOR_SYMBOL_MAP) {
         if (name === symbol) {
             return safeName;
         }
     }
-    return name.replace(/[^a-zA-Z0-9_-]/g, "_");
+    const sanitized = name.replace(/[^a-zA-Z0-9_-]/g, "_");
+    return sanitized.replace(/^_+/, "") || (sanitized.length > 0 ? "underscore" : "");
 }
 
 /** Intermediate collected compound before page-key assignment. */
@@ -103,6 +108,8 @@ export function generateCpp(options: CppGenerateOptions): CppGenerateResult {
     const rootPrefix = ir.rootNamespace.path ? `${ir.rootNamespace.path}::` : "";
     const rootNsName = slug.includes("/") ? slug.split("/").pop() : slug;
     const repo = ir.metadata.packageName;
+
+    namespaceDirOverrides = buildNamespaceDirOverrides(ir.rootNamespace, rootNsName);
 
     // Stage 1: Collect all compounds from namespace tree
     const collected = collectCompounds(ir.rootNamespace, rootPrefix);
@@ -452,15 +459,66 @@ function categoryFolderForCompound(collected: CollectedCompound): string {
  *   ["thrust", "system", "cuda"] -> "thrust/namespaces/system/namespaces/cuda"
  */
 function namespacePathToFilesystem(nsParts: string[]): string {
-    const [first, ...rest] = nsParts;
-    if (first === undefined) {
-        return "";
-    }
-    const segments: string[] = [first];
-    for (const part of rest) {
-        segments.push("namespaces", part);
-    }
+    const segments: string[] = [];
+    nsParts.forEach((part, index) => {
+        if (index > 0) {
+            segments.push("namespaces");
+        }
+        segments.push(namespaceDirOverrides.get(nsParts.slice(0, index + 1).join("::")) ?? sanitizeForFilename(part));
+    });
     return segments.join("/");
+}
+
+/**
+ * Sibling namespaces whose names differ only in characters dropped by
+ * `sanitizeForFilename`/slugification (e.g. `detail` and `__detail`) would otherwise
+ * share one directory and overwrite each other's index pages. Keyed by the
+ * root-stripped namespace path (`a::b`), values are the directory segment to use
+ * for the last part; only colliding namespaces get an entry.
+ */
+let namespaceDirOverrides = new Map<string, string>();
+
+function buildNamespaceDirOverrides(root: CppNamespaceIr, rootNsName: string | undefined): Map<string, string> {
+    const overrides = new Map<string, string>();
+    const visit = (ns: CppNamespaceIr): void => {
+        const bySlug = new Map<string, CppNamespaceIr[]>();
+        for (const child of ns.namespaces) {
+            const slug = slugifySegment(sanitizeForFilename(child.name));
+            const existing = bySlug.get(slug);
+            if (existing) {
+                existing.push(child);
+            } else {
+                bySlug.set(slug, [child]);
+            }
+        }
+        const taken = new Set(bySlug.keys());
+        for (const siblings of bySlug.values()) {
+            if (siblings.length < 2) {
+                continue;
+            }
+            // The namespace whose name is already filesystem-safe keeps the plain directory.
+            const rank = (ns: CppNamespaceIr): number => (sanitizeForFilename(ns.name) === ns.name ? 0 : 1);
+            const sorted = [...siblings].sort(
+                (a, b) => rank(a) - rank(b) || (a.name < b.name ? -1 : a.name > b.name ? 1 : 0)
+            );
+            sorted.slice(1).forEach((child) => {
+                const base = sanitizeForFilename(child.name);
+                let n = 2;
+                while (taken.has(slugifySegment(`${base}-${n}`))) {
+                    n += 1;
+                }
+                taken.add(slugifySegment(`${base}-${n}`));
+                const allParts = child.path.split("::");
+                const parts = rootNsName != null && allParts[0] === rootNsName ? allParts.slice(1) : allParts;
+                overrides.set(parts.join("::"), `${base}-${n}`);
+            });
+        }
+        for (const child of ns.namespaces) {
+            visit(child);
+        }
+    };
+    visit(root);
+    return overrides;
 }
 
 // ---------------------------------------------------------------------------

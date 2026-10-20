@@ -6,6 +6,7 @@ package com.seed.alias;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.alias.core.ClientOptions;
 import com.seed.alias.core.ObjectMappers;
+import com.seed.alias.core.PathSegments;
 import com.seed.alias.core.RequestOptions;
 import com.seed.alias.core.RetryInterceptor;
 import com.seed.alias.core.SeedAliasApiException;
@@ -33,7 +34,7 @@ public class RawSeedAliasClient {
     public SeedAliasHttpResponse<Void> get(String typeId, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegment(typeId);
+                .addPathSegment(PathSegments.validate(typeId));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
