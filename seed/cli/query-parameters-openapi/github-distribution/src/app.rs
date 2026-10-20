@@ -1703,6 +1703,13 @@ impl CliApp {
                     .map_err(|e| CliError::Other(e.into()))?;
                 Ok(PipelineOutcome::Success)
             }
+            Ok(DispatchResult::ValueWithPipeline(value, pipeline)) => {
+                let transformed = self.hooks.run_transform_response(value, &op_path).await?;
+                pipeline
+                    .emit(out, &transformed, false, true)
+                    .map_err(|e| CliError::Other(e.into()))?;
+                Ok(PipelineOutcome::Success)
+            }
             Ok(DispatchResult::Record(value)) => {
                 let transformed = self.hooks.run_transform_response(value, &op_path).await?;
                 let pipeline = formatter::OutputPipeline::from_matches(&matches, &self.name)
@@ -1726,8 +1733,13 @@ impl CliApp {
                     match self.hooks.run_recover_error(err, &op_path).await {
                         Ok(value) => {
                             let pipeline =
-                                formatter::OutputPipeline::from_matches(&matches, &self.name)
-                                    .map_err(|e| CliError::Validation(e.to_string()))?;
+                                match self.bindings[binding_idx].output_pipeline(&matches) {
+                                    Some(pipeline) => pipeline,
+                                    None => formatter::OutputPipeline::from_matches(
+                                        &matches, &self.name,
+                                    )
+                                    .map_err(|e| CliError::Validation(e.to_string()))?,
+                                };
                             pipeline
                                 .emit(out, &value, false, true)
                                 .map_err(|e| CliError::Other(e.into()))?;
