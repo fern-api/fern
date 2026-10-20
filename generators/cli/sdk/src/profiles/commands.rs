@@ -2197,6 +2197,7 @@ async fn handle_remove(
     // the user can fix the cause and retry — rather than being left with a
     // live remote key and no local record of it.
     let mut revoke = matches.try_get_one::<bool>("revoke").ok().flatten() == Some(&true);
+    let mut prompted = false;
     // Guided CLIs offer to revoke a key the CLI provisioned. Only reached
     // after the interactive confirm above, so `--yes` keeps the key as before.
     if !revoke
@@ -2210,14 +2211,35 @@ async fn handle_remove(
             &mut std::io::stdin().lock(),
             &mut stderr,
         )?;
+        prompted = revoke;
     }
     if revoke {
-        revoke_remote_credential(ctx, store, &name).await?;
-        let _ = writeln!(
-            stderr,
-            "{}",
-            login::green("✓ Revoked the remote credential."),
-        );
+        match revoke_remote_credential(ctx, store, &name).await {
+            Ok(()) => {
+                let _ = writeln!(
+                    stderr,
+                    "{}",
+                    login::green("✓ Revoked the remote credential."),
+                );
+            }
+            // An explicit `--revoke` keeps the profile so the user can retry.
+            // After the prompt, removal goes ahead like it would without a key.
+            Err(err) if prompted => {
+                let key = entry
+                    .credential_parameters
+                    .values()
+                    .cloned()
+                    .collect::<Vec<_>>()
+                    .join(", ");
+                let _ = writeln!(stderr, "{err}");
+                let _ = writeln!(
+                    stderr,
+                    "Couldn't delete the API key `{key}` from the server; removing the profile anyway. \
+                     Delete the key from your account's console.",
+                );
+            }
+            Err(err) => return Err(err),
+        }
     }
 
     // Resolve before removal so we know which keyring account and token-cache
@@ -2458,9 +2480,19 @@ async fn revoke_remote_credential(
         )))
     };
     match stored {
-        Some((scheme, value)) => with_credential_value(ctx, &scheme, value, false, invoke).await,
-        None => invoke().await,
+        // Parent credentials in env win: an API like Twilio does not let a
+        // standard key delete keys, so the stored key is only the fallback.
+        Some((scheme, value)) if !parent_env_set(ctx, &scheme) => {
+            with_credential_value(ctx, &scheme, value, false, invoke).await
+        }
+        _ => invoke().await,
     }
+}
+
+fn parent_env_set(ctx: &ProfilesContext<'_>, scheme: &str) -> bool {
+    login::shadowing_env_vars(ctx.cli_name, scheme, ctx.auth_bindings)
+        .iter()
+        .any(|var| std::env::var_os(var).is_some_and(|value| !value.is_empty()))
 }
 
 // ── current ─────────────────────────────────────────────────────────────
