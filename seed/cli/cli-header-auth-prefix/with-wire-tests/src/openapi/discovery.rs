@@ -798,6 +798,10 @@ pub struct RestMethod {
     /// `x-fern-pagination`'s `next_*` / `results` paths.
     #[serde(default)]
     pub return_value: Option<String>,
+    /// Parsed `x-fern-cli-table` extension: the columns `table` output shows
+    /// for this operation. `None` keeps the generic every-field table.
+    #[serde(skip)]
+    pub table: Option<crate::table_columns::TableSpec>,
     /// Resolved `x-fern-streaming` extension. `None` means the operation
     /// returns a unary response and the executor reads/buffers the body
     /// normally. `Some(_)` opts the executor into incremental
