@@ -15,6 +15,7 @@
             "!**/*.d.ts",
             "!**/tsconfig.tsbuildinfo",
             "!**/node_modules/**",
+            "!.omo/**",
             "!packages/cli/ai/src/baml_client/**",
             "!packages/cli/api-importers/conjure/conjure-sdk/**",
             "!packages/cli/api-importers/openapi/openapi-ir/src/sdk/**",

@@ -135,3 +135,6 @@ seed/**/Library/Caches/
 # Transient cli-sdk checkout used by .github/workflows/sync-cli-sdk.yml.
 # It is a nested git clone; never let `git add -A` capture it as a gitlink.
 /_cli-sdk/
+
+# Local agent scratch state; never commit.
+/.omo/
