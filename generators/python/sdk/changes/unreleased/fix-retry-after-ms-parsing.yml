@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Respect the `retry-after-ms` response header when computing retry delays. The header value was
+    compared to `0` before being converted to a number, raising a `TypeError` that was silently
+    swallowed, so the client always fell back to `Retry-After` or exponential backoff.
+  type: fix
