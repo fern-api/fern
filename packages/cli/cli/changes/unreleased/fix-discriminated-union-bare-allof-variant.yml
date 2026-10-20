@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    The OpenAPI importer now keeps a discriminated union variant spelled as a bare `allOf` reference
+    to its base (`Variant: {allOf: [$ref: Base]}`, where `Base`'s discriminator mapping names `Variant`)
+    an object. Previously the single-element `allOf` short-circuit made it an alias of its own union,
+    so the IR emitted a `singleProperty` variant and generated SDKs expected the payload under a
+    `value` key that the wire format does not have. `{allOf: [$ref: X], nullable: true}` still
+    collapses to a reference to `X`.
+  type: fix
