@@ -8,6 +8,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.seed.trace.core.BodyProperties;
 import com.seed.trace.core.ClientOptions;
 import com.seed.trace.core.ObjectMappers;
+import com.seed.trace.core.PathSegments;
 import com.seed.trace.core.RequestOptions;
 import com.seed.trace.core.RetryInterceptor;
 import com.seed.trace.core.SeedTraceApiException;
@@ -49,7 +50,7 @@ public class RawSubmissionClient {
                 .newBuilder()
                 .addPathSegments("sessions")
                 .addPathSegments("create-session")
-                .addPathSegment(language.toString());
+                .addPathSegment(PathSegments.validate(language.toString()));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -111,7 +112,7 @@ public class RawSubmissionClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("sessions")
-                .addPathSegment(sessionId);
+                .addPathSegment(PathSegments.validate(sessionId));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -170,7 +171,7 @@ public class RawSubmissionClient {
                 .newBuilder()
                 .addPathSegments("sessions")
                 .addPathSegments("stop")
-                .addPathSegment(sessionId);
+                .addPathSegment(PathSegments.validate(sessionId));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);

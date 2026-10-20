@@ -26,6 +26,11 @@ pub enum DispatchResult {
     /// [`OutputPipeline::emit_record`](crate::formatter::OutputPipeline::emit_record)
     /// so `table` output never mistakes it for a list response.
     Record(serde_json::Value),
+    /// A decoded response value plus the output pipeline the binding
+    /// resolved for it (for example an operation's `x-fern-cli-table`
+    /// columns). Hooks run as for `Value`; the root `CliApp` formats with
+    /// this pipeline instead of rebuilding one from the matches.
+    ValueWithPipeline(serde_json::Value, crate::formatter::OutputPipeline),
     /// The binding already wrote output (streaming, file download, paged dry-run).
     /// The root `CliApp` skips its own formatting.
     Handled,
@@ -61,6 +66,16 @@ pub trait Binding: Send + Sync {
         sub_matches: &'a clap::ArgMatches,
         op_path: &'a [String],
     ) -> BoxFuture<'a, Result<DispatchResult, CliError>>;
+
+    /// Output settings for the matched operation, used to format a value
+    /// returned by a `recover_error` hook. `None` (the default) means the
+    /// global `--format` / `--query` settings.
+    fn output_pipeline(
+        &self,
+        _root_matches: &clap::ArgMatches,
+    ) -> Option<crate::formatter::OutputPipeline> {
+        None
+    }
 
     /// Return the embedded API spec(s) as a YAML string.
     ///

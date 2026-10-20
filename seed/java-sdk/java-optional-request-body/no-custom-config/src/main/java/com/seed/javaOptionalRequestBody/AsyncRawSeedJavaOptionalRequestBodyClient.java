@@ -9,6 +9,7 @@ import com.seed.javaOptionalRequestBody.core.BodyProperties;
 import com.seed.javaOptionalRequestBody.core.ClientOptions;
 import com.seed.javaOptionalRequestBody.core.MediaTypes;
 import com.seed.javaOptionalRequestBody.core.ObjectMappers;
+import com.seed.javaOptionalRequestBody.core.PathSegments;
 import com.seed.javaOptionalRequestBody.core.RequestOptions;
 import com.seed.javaOptionalRequestBody.core.RetryInterceptor;
 import com.seed.javaOptionalRequestBody.core.SeedJavaOptionalRequestBodyApiException;
@@ -69,7 +70,7 @@ public class AsyncRawSeedJavaOptionalRequestBodyClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("refunds")
-                .addPathSegment(id);
+                .addPathSegment(PathSegments.validate(id));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -373,7 +374,7 @@ public class AsyncRawSeedJavaOptionalRequestBodyClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("refunds")
-                .addPathSegment(id)
+                .addPathSegment(PathSegments.validate(id))
                 .addPathSegments("exact");
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
@@ -479,7 +480,7 @@ public class AsyncRawSeedJavaOptionalRequestBodyClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("refunds")
-                .addPathSegment(id)
+                .addPathSegment(PathSegments.validate(id))
                 .addPathSegments("required");
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {

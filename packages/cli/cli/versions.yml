@@ -1,4 +1,163 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.169.0
+  changelogEntry:
+    - summary: |
+        Docs versions accept `default: true`, so the version that owns the unversioned URLs no
+        longer has to be first in the `versions` list. The list order still sets the order in the
+        version switcher, so a `Develop` version can be listed first while a release such as
+        `3.3.0` serves `/` and every unversioned page, the sitemap, canonical URLs, and `llms.txt`:
+
+        ```yaml
+        versions:
+          - display-name: Develop
+            ref: develop
+            availability: preview
+          - display-name: 3.3.0
+            default: true
+            path: ./versions/latest.yml
+        ```
+
+        The flag works on site-level `versions` and on `products[].versions`, and a default
+        version can use either `path` or `ref`. Setting `default: true` on more than one version
+        in the same list, or on a version with `hidden: true`, is a configuration error. Without
+        the flag, the first version is still the default.
+      type: feat
+    - summary: |
+        Add `settings.require-analytics-consent` to docs.yml. When enabled, Fern's built-in
+        docs analytics (PostHog) stays off until the page sets `window.fernAnalyticsConsent = true`
+        and dispatches a `fern-analytics-consent` event, e.g. from a consent manager callback.
+      type: feat
+  createdAt: "2026-10-20"
+  irVersion: 67
+- version: 5.168.1
+  changelogEntry:
+    - summary: |
+        With `--version AUTO`, the Python SDK `User-Agent` header now gets the computed version instead
+        of keeping `0.0.0-fern-placeholder`. The IR version is now mapped per language (Python
+        `0.0.0.dev0`) like the generator config version, so the autoversion step replaces both.
+      type: fix
+  createdAt: "2026-10-19"
+  irVersion: 67
+- version: 5.168.0
+  changelogEntry:
+    - summary: |
+        `fern docs md generate` now parses library source locally with Docker by default, with no
+        Fern login required. Pass `--remote` to parse on Fern's servers instead.
+        `--local` is still accepted but no longer needed.
+      type: feat
+  createdAt: "2026-10-19"
+  irVersion: 67
+- version: 5.167.0
+  changelogEntry:
+    - summary: |
+        Add `theme.code-blocks` to docs.yml to choose the syntax-highlighting color scheme for
+        code blocks, with separate `light` and `dark` Shiki themes. Supported themes are
+        `github-dark`, `github-dark-default`, `github-dark-dimmed`, `github-dark-high-contrast`,
+        `github-light`, `github-light-default`, `github-light-high-contrast`,
+        `material-theme-darker`, `min-dark`, and `min-light`.
+      type: feat
+  createdAt: "2026-10-19"
+  irVersion: 67
+- version: 5.166.0
+  changelogEntry:
+    - summary: |
+        The dynamic IR now marks whether each file-upload property (`file` and `fileArray`) is optional,
+        so dynamic snippet generators can add placeholders for required files only.
+      type: feat
+  createdAt: "2026-10-19"
+  irVersion: 67
+- version: 5.165.0
+  changelogEntry:
+    - summary: |
+        Initialize new SDK projects with sdk-config.yml instead of generators.yml by default. Set FERN_USE_SDK_CONFIG=false to temporarily use the legacy initialization path.
+      type: feat
+  createdAt: "2026-10-19"
+  irVersion: 67
+- version: 5.164.1
+  changelogEntry:
+    - summary: |
+        C/C++ library docs: generated page and group filenames no longer start with `_`
+        (e.g. `__be16` is written to `typedefs/be16.mdx`), so `folder:` navigation includes them.
+        URLs are unchanged. `fern check` now warns when only some generated library folders
+        (e.g. `macros/`) are wired into navigation.
+      type: fix
+  createdAt: "2026-10-19"
+  irVersion: 67
+- version: 5.164.0
+  changelogEntry:
+    - summary: |
+        `fern generate --version AUTO` now works for an `sdk-config.yml` target that delivers to GitHub, so
+        Fern Autorelease can release SDK Config targets. sdk-gen-api generates with a placeholder version,
+        and Fiddle picks the semver bump, replaces the placeholder and writes the changelog, as it does for
+        `generators.yml` groups. The CLI prints the picked version, and each AUTO run starts a new build
+        instead of replaying an earlier one. `AUTO` with download or direct registry output still fails
+        before generation, because nothing would replace the placeholder.
+      type: feat
+  createdAt: "2026-10-19"
+  irVersion: 67
+- version: 5.163.1
+  changelogEntry:
+    - summary: |
+        `fern generate` now fails with a deprecation error when a Fern Definition workspace is routed to sdk-gen-api,
+        instead of the internal "composes no spec-bearing dependencies" error. sdk-gen-api generates from source specs,
+        so the error points to `fern export` for migrating the API to OpenAPI.
+      type: fix
+  createdAt: "2026-10-17"
+  irVersion: 67
+- version: 5.163.0
+  changelogEntry:
+    - summary: |
+        An sdk-config.yml `cli` target without `generatorVersion` now generates with the newest fern-cli-generator the
+        route can run, like an unpinned generator in generators.yml: the translated generator is written as
+        `version: latest`, which sdk-gen-api resolves through its generator version discovery, and Fiddle and `--local`
+        resolve to the newest published version. Previously it was pinned to 0.49.0, which predates the crate-name,
+        installer URL, npm publish and build-attestation fixes. The `CLI_TARGET_UNPOOLED_VERSION` warning is removed.
+      type: feat
+  createdAt: "2026-10-17"
+  irVersion: 67
+- version: 5.162.0
+  changelogEntry:
+    - summary: |
+        The sdk-config.yml `cli` target now writes `output.distribution.githubAttestations` (`auto`, `true` or `false`)
+        to fern-cli-generator's `config.distribution.githubAttestations`, so the generated release workflow can skip
+        build-provenance attestations on private repositories. Previously the field was dropped with a warning and the
+        workflow always attested. Generator versions before 0.54.3 ignore the key, so `auto` or `false` on those
+        versions warns with `CLI_TARGET_ATTESTATIONS_VERSION`.
+      type: feat
+  createdAt: "2026-10-16"
+  irVersion: 67
+- version: 5.161.1
+  changelogEntry:
+    - summary: |
+        Respect `github.workflows: false` in `generators.yml` when generation runs through sdk-gen-api.
+        The setting was dropped on that route, so generated `.github/workflows/*` files were still
+        committed. Requests that keep the default (`true`) are unchanged.
+      type: fix
+    - summary: |
+        Upgrade `@postman/sdk-config` to 0.14.0, which adds optional `output.github.workflows` to SDK Config.
+        `output.github.workflows: false` in `sdk-config.yml` is now sent to sdk-gen-api the same way as
+        the `generators.yml` setting. The SDK Config `cli` target accepts the field and ignores it with a
+        warning, like the other GitHub delivery settings its translated `generators.yml` does not write.
+      type: fix
+  createdAt: "2026-10-16"
+  irVersion: 67
+- version: 5.161.0
+  changelogEntry:
+    - summary: |
+        `fern generator list` and `fern generator get` now describe SDK Config targets from `sdk-config.yml`
+        alongside legacy generator groups, so they stay accurate after `fern sdk migrate`.
+
+        `fern generator list` output now nests each API under `groups` (legacy groups from `generators.yml` or
+        `generators.legacy.yml`) and `targets` (SDK Config targets with their language, generator, and version,
+        where an unpinned target reports `latest`). A language configured in both files appears in both sections.
+        The new `--targets` option filters SDK Config targets by language or target id.
+
+        `fern generator get --target <language>` reads an SDK Config target's version, language, or repository.
+        Missing selections now fail with the configuration files inspected, and a legacy selection that was
+        migrated points at its SDK Config target.
+      type: feat
+  createdAt: "2026-10-16"
+  irVersion: 67
 - version: 5.160.0
   changelogEntry:
     - summary: |

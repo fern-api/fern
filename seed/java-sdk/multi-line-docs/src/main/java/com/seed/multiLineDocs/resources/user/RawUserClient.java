@@ -8,6 +8,7 @@ import com.seed.multiLineDocs.core.BodyProperties;
 import com.seed.multiLineDocs.core.ClientOptions;
 import com.seed.multiLineDocs.core.MediaTypes;
 import com.seed.multiLineDocs.core.ObjectMappers;
+import com.seed.multiLineDocs.core.PathSegments;
 import com.seed.multiLineDocs.core.RequestOptions;
 import com.seed.multiLineDocs.core.RetryInterceptor;
 import com.seed.multiLineDocs.core.SeedMultiLineDocsApiException;
@@ -47,7 +48,7 @@ public class RawUserClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("users")
-                .addPathSegment(userId);
+                .addPathSegment(PathSegments.validate(userId));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);

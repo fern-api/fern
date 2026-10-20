@@ -593,7 +593,8 @@ impl Binding for OpenApiBinding {
 
     fn build_command(&self) -> Result<clap::Command, CliError> {
         let prepared = self.ensure_prepared()?;
-        let cli = commands::build_cli(&prepared.doc)
+        let placeholders = self.inner.completion_placeholders();
+        let cli = commands::build_cli_with_placeholders(&prepared.doc, &placeholders)
             .subcommand(crate::openapi::skill_emitter::generate_skills_command());
         let mut cli = self.inner.decorate_command(&prepared.doc, cli);
 
@@ -728,6 +729,30 @@ impl Binding for OpenApiBinding {
                     params_override,
                 )
             })?;
+            // In a terminal, ask for required inputs the user left out rather
+            // than failing on them. Skipped when any input is read from stdin
+            // (`--json -`, `@-`), which the prompts would otherwise consume.
+            if super::app::interactive_terminal() && !super::app::args_read_stdin(matched_args) {
+                let globals = super::app::build_global_parameter_overrides(
+                    matched_args,
+                    doc,
+                    method,
+                    &params,
+                )?;
+                let exempt: std::collections::HashSet<&str> =
+                    globals.iter().map(|g| g.target.as_str()).collect();
+                let missing =
+                    super::app::missing_required_params(matched_args, method, &params, &exempt);
+                if !missing.is_empty() {
+                    super::app::prompt_for_params(
+                        &missing,
+                        method,
+                        &mut params,
+                        &mut std::io::stdin().lock(),
+                        &mut std::io::stderr(),
+                    )?;
+                }
+            }
             // Collect multipart/form-data parts from CLI flags for operations
             // that declare a `multipart/form-data` body. `None` for all others.
             // Runs before `params` is serialized: multipart fields live in
@@ -881,11 +906,8 @@ impl Binding for OpenApiBinding {
                 output_path_buf.as_deref().and_then(|p| p.to_str())
             };
 
-            let mut pipeline = crate::formatter::OutputPipeline::from_matches(
-                root_matches,
-                &self.inner.name,
-            )
-            .map_err(|e| CliError::Validation(e.to_string()))?;
+            let mut pipeline =
+                operation_pipeline(root_matches, &self.inner.name, method, matched_args)?;
             pipeline.default_properties = self.default_properties_for(method);
 
             if pipeline.is_raw() && pagination.page_all {
@@ -935,10 +957,30 @@ impl Binding for OpenApiBinding {
 
             match result {
                 Some(value) if dry_run => Ok(DispatchResult::Record(value)),
+                Some(value) if method.table.is_some() => {
+                    Ok(DispatchResult::ValueWithPipeline(value, pipeline))
+                }
                 Some(value) => Ok(DispatchResult::Value(value)),
                 None => Ok(DispatchResult::Handled),
             }
         })
+    }
+
+    fn output_pipeline(
+        &self,
+        root_matches: &clap::ArgMatches,
+    ) -> Option<crate::formatter::OutputPipeline> {
+        let prepared = self.ensure_prepared().ok()?;
+        let resolve_from = match &self.command_namespace {
+            Some(ns) => root_matches
+                .subcommand_matches(ns.as_str())
+                .unwrap_or(root_matches),
+            None => root_matches,
+        };
+        let (method, matched_args) =
+            super::resolve_method_from_matches(&prepared.doc, resolve_from).ok()?;
+        method.table.as_ref()?;
+        operation_pipeline(root_matches, &self.inner.name, method, matched_args).ok()
     }
 
     fn binding_context(
@@ -1266,9 +1308,108 @@ fn prefix_schema_operations(value: serde_json::Value, namespace: &str) -> serde_
     }
 }
 
+/// Attach an operation's `x-fern-cli-table` columns to `pipeline`.
+///
+/// `--columns` asks for a table, so it switches the default format (JSON
+/// when piped, or `<NAME>_OUTPUT`) to `table`. It is rejected next to an
+/// explicit non-table `--format` or a `--query`, which already picks fields.
+/// The global output settings plus the operation's `x-fern-cli-table`
+/// columns and `--columns` selection.
+fn operation_pipeline(
+    root_matches: &clap::ArgMatches,
+    app_name: &str,
+    method: &super::discovery::RestMethod,
+    matched_args: &clap::ArgMatches,
+) -> Result<crate::formatter::OutputPipeline, CliError> {
+    let pipeline = crate::formatter::OutputPipeline::from_matches(root_matches, app_name)
+        .map_err(|e| CliError::Validation(e.to_string()))?;
+    match method.table.as_ref() {
+        Some(spec) => apply_table_spec(
+            pipeline,
+            spec,
+            matched_args
+                .try_get_one::<String>(commands::TABLE_COLUMNS_ARG_ID)
+                .ok()
+                .flatten()
+                .map(String::as_str),
+            root_matches.value_source("format") == Some(clap::parser::ValueSource::CommandLine),
+        ),
+        None => Ok(pipeline),
+    }
+}
+
+fn apply_table_spec(
+    mut pipeline: crate::formatter::OutputPipeline,
+    spec: &crate::table_columns::TableSpec,
+    selection: Option<&str>,
+    format_is_explicit: bool,
+) -> Result<crate::formatter::OutputPipeline, CliError> {
+    use crate::formatter::OutputFormat;
+    if selection.is_some() {
+        if pipeline.query.is_some() {
+            return Err(CliError::Validation(
+                "--columns can't be combined with --query; use one or the other".to_string(),
+            ));
+        }
+        if pipeline.format != OutputFormat::Table {
+            if format_is_explicit {
+                return Err(CliError::Validation(
+                    "--columns only applies to --format table".to_string(),
+                ));
+            }
+            pipeline.format = OutputFormat::Table;
+        }
+    }
+    let columns = spec.select(selection).map_err(CliError::Validation)?;
+    Ok(pipeline.with_table_columns(columns))
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    fn spec_with_tag(tag: &str, description: &str) -> String {
+        serde_json::json!({
+            "openapi": "3.0.0",
+            "info": { "title": "T", "version": "1" },
+            "tags": [{ "name": tag, "description": description }],
+            "paths": { "/things": { "get": {
+                "operationId": "listThings",
+                "tags": [tag],
+                "responses": { "200": { "description": "ok" } }
+            } } }
+        })
+        .to_string()
+    }
+
+    #[test]
+    fn top_level_completion_lists_unparsed_specs_by_prefix() {
+        let binding = || {
+            let mut b = OpenApiBinding::new()
+                .spec_under("alpha/v1", &spec_with_tag("Things", "All the things."))
+                .spec_under("beta", &spec_with_tag("Beta", "Beta products."));
+            b.set_cli_name("my-cli");
+            b
+        };
+        let full = binding().build_command().unwrap();
+        let _focus = crate::completions::set_completion_focus(crate::completions::CompletionFocus {
+            word: None,
+            outside_specs: false,
+        });
+        let fast = binding().build_command().unwrap();
+
+        let tops = |c: &clap::Command| -> Vec<(String, String)> {
+            c.get_subcommands()
+                .map(|s| (s.get_name().to_string(), s.get_about().map(|a| a.to_string()).unwrap_or_default()))
+                .collect()
+        };
+        assert_eq!(tops(&fast), tops(&full));
+        // `alpha` was listed from its prefix; `beta` has a matching tag, so
+        // its spec was parsed for the description.
+        let alpha = fast.find_subcommand("alpha").unwrap();
+        assert_eq!(alpha.get_subcommands().count(), 0);
+        assert!(fast.find_subcommand("beta").unwrap().get_subcommands().count() > 0);
+    }
 
     #[test]
     fn prefix_schema_operations_array() {

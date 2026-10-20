@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.oauthClientCredentialsWithVariables.core.BodyProperties;
 import com.seed.oauthClientCredentialsWithVariables.core.ClientOptions;
 import com.seed.oauthClientCredentialsWithVariables.core.ObjectMappers;
+import com.seed.oauthClientCredentialsWithVariables.core.PathSegments;
 import com.seed.oauthClientCredentialsWithVariables.core.RequestOptions;
 import com.seed.oauthClientCredentialsWithVariables.core.RetryInterceptor;
 import com.seed.oauthClientCredentialsWithVariables.core.SeedOauthClientCredentialsWithVariablesApiException;
@@ -36,7 +37,7 @@ public class RawServiceClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("service")
-                .addPathSegment(clientOptions.rootVariable());
+                .addPathSegment(PathSegments.validate(clientOptions.rootVariable()));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);

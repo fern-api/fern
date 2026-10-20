@@ -34,6 +34,12 @@ use super::provider::DynAuthProvider;
 pub trait AuthSchemeBuilder {
     /// Consume the builder and produce a `(scheme_name, SchemeBinding)` pair.
     fn into_binding(self) -> (String, SchemeBinding);
+
+    /// Human labels for the scheme's credential fields (`field`, `label`),
+    /// used when the CLI prompts for them. Empty means "use the field name".
+    fn credential_labels(&self) -> Vec<(String, String)> {
+        Vec::new()
+    }
 }
 
 // ---------------------------------------------------------------------------
@@ -181,6 +187,7 @@ pub struct BasicAuth {
     name: String,
     username: AuthCredentialSource,
     password: AuthCredentialSource,
+    labels: Vec<(String, String)>,
 }
 
 impl BasicAuth {
@@ -191,7 +198,20 @@ impl BasicAuth {
             name: name.into(),
             username: AuthCredentialSource::Missing,
             password: AuthCredentialSource::Missing,
+            labels: Vec::new(),
         }
+    }
+
+    /// Label shown when prompting for the username (e.g. `Account Sid`).
+    pub fn username_label(mut self, label: impl Into<String>) -> Self {
+        self.labels.push(("username".to_string(), label.into()));
+        self
+    }
+
+    /// Label shown when prompting for the password (e.g. `Auth Token`).
+    pub fn password_label(mut self, label: impl Into<String>) -> Self {
+        self.labels.push(("password".to_string(), label.into()));
+        self
     }
 
     /// Read the username from an environment variable.
@@ -240,6 +260,10 @@ impl AuthSchemeBuilder for BasicAuth {
                 password: self.password,
             },
         )
+    }
+
+    fn credential_labels(&self) -> Vec<(String, String)> {
+        self.labels.clone()
     }
 }
 
@@ -578,6 +602,21 @@ mod tests {
             binding,
             SchemeBinding::PrefixedToken { ref prefix, .. } if prefix == "Key"
         ));
+    }
+
+    #[test]
+    fn basic_auth_carries_prompt_labels() {
+        let builder = BasicAuth::new("accountSid_authToken")
+            .username_label("Account Sid")
+            .password_label("Auth Token");
+        assert_eq!(
+            builder.credential_labels(),
+            vec![
+                ("username".to_string(), "Account Sid".to_string()),
+                ("password".to_string(), "Auth Token".to_string()),
+            ]
+        );
+        assert!(BasicAuth::new("plain").credential_labels().is_empty());
     }
 
     #[test]

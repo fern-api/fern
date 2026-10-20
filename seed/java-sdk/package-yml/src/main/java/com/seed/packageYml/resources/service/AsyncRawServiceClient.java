@@ -6,6 +6,7 @@ package com.seed.packageYml.resources.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.packageYml.core.ClientOptions;
 import com.seed.packageYml.core.ObjectMappers;
+import com.seed.packageYml.core.PathSegments;
 import com.seed.packageYml.core.RequestOptions;
 import com.seed.packageYml.core.RetryInterceptor;
 import com.seed.packageYml.core.SeedPackageYmlApiException;
@@ -37,8 +38,8 @@ public class AsyncRawServiceClient {
     public CompletableFuture<SeedPackageYmlHttpResponse<Void>> nop(String nestedId, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegment(clientOptions.id())
-                .addPathSegment(nestedId);
+                .addPathSegment(PathSegments.validate(clientOptions.id()))
+                .addPathSegment(PathSegments.validate(nestedId));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);

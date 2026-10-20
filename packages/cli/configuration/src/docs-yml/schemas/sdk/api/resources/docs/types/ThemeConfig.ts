@@ -16,4 +16,10 @@ export interface ThemeConfig {
      * automatically at publish time; this only controls presentation.
      */
     siteSwitcher?: FernDocsConfig.SiteSwitcherThemeConfig;
+    /**
+     * Syntax-highlighting color schemes for code blocks, set separately
+     * for light and dark mode. Defaults to `min-light` and
+     * `material-theme-darker`.
+     */
+    codeBlocks?: FernDocsConfig.CodeBlocksThemeConfig;
 }

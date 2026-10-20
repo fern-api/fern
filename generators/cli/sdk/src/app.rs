@@ -236,7 +236,10 @@ impl CliApp {
     ///     .run()
     /// ```
     pub fn auth(mut self, builder: impl AuthSchemeBuilder) -> Self {
-        self.auth_bindings.push(builder.into_binding());
+        let labels = builder.credential_labels();
+        let (name, binding) = builder.into_binding();
+        crate::auth::login::register_field_labels(&name, labels);
+        self.auth_bindings.push((name, binding));
         self
     }
 
@@ -1019,6 +1022,28 @@ impl CliApp {
             ));
         }
 
+        // A TAB completion under one top-level command only needs that
+        // command's subtree, so bindings skip specs mounted elsewhere (the
+        // biggest part of a TAB's cost on many-spec CLIs).
+        let completion_focus = crate::completions::dynamic_completion_shell(&self.name)
+            .and_then(|shell| crate::completions::completion_focus_word(&shell, &args))
+            .map(|word| {
+                let outside_specs = word.as_ref().is_some_and(|word| {
+                    self.cli_commands
+                        .iter()
+                        .any(|cc| cc.path.first() == Some(word))
+                        || BUILTIN_TOP_LEVEL_COMMANDS.contains(&word.as_str())
+                        || self
+                            .profiles
+                            .as_ref()
+                            .is_some_and(|config| config.command_name == *word)
+                });
+                crate::completions::set_completion_focus(crate::completions::CompletionFocus {
+                    word,
+                    outside_specs,
+                })
+            });
+
         // 0. Validate auth bindings — hard error if a binding's spec
         // references a scheme not registered at root.
         self.validate_auth()?;
@@ -1412,6 +1437,10 @@ impl CliApp {
         // before completion/man generation so aliases appear in tab-
         // completion scripts and man pages reflect hidden/stability state.
         for op in &self.deferred_ops {
+            // A focused completion tree lacks commands from the specs it skipped.
+            if completion_focus.is_some() && !has_path(&cli, op_path(op)) {
+                continue;
+            }
             match op {
                 DeferredOp::Alias { path, alias } => {
                     cli = apply_alias(cli, path, alias);
@@ -1436,7 +1465,9 @@ impl CliApp {
         cli = crate::cli_args::apply_global_help_heading(cli);
 
         // 1f. Validate hook patterns against the command tree.
-        self.hooks.validate_patterns(&cli)?;
+        if completion_focus.is_none() {
+            self.hooks.validate_patterns(&cli)?;
+        }
 
         // 1g. Intercept `completion` and `man` before clap parses.
         if let Some(shell) = dynamic_completion {
@@ -1560,6 +1591,28 @@ impl CliApp {
                 Some("login" | "logout" | "status")
             );
             if builtin_sub || !spec_owns_auth {
+                if let (Some(config), Some(("login", login_matches))) =
+                    (&self.profiles, auth_matches.subcommand())
+                {
+                    if crate::profiles::commands::guided_auth_login_applies(config, login_matches) {
+                        crate::profiles::commands::guided_auth_login(
+                            config,
+                            &crate::profiles::commands::ProfilesContext {
+                                cli_name: &self.name,
+                                bindings: &self.bindings,
+                                revoke_op_path: config.revoke_op_path(),
+                                provision: config.provision_operation.clone(),
+                                command_name: &config.command_name,
+                                root_matches: &matches,
+                                auth_bindings: &self.auth_bindings,
+                                login_flows: &self.login_flows,
+                                vocabulary: &profiles_vocabulary,
+                            },
+                        )
+                        .await?;
+                        return Ok(PipelineOutcome::Success);
+                    }
+                }
                 crate::auth::login::dispatch_auth(
                     auth_matches,
                     &self.name,
@@ -1652,6 +1705,13 @@ impl CliApp {
                     .map_err(|e| CliError::Other(e.into()))?;
                 Ok(PipelineOutcome::Success)
             }
+            Ok(DispatchResult::ValueWithPipeline(value, pipeline)) => {
+                let transformed = self.hooks.run_transform_response(value, &op_path).await?;
+                pipeline
+                    .emit(out, &transformed, false, true)
+                    .map_err(|e| CliError::Other(e.into()))?;
+                Ok(PipelineOutcome::Success)
+            }
             Ok(DispatchResult::Record(value)) => {
                 let transformed = self.hooks.run_transform_response(value, &op_path).await?;
                 let pipeline = formatter::OutputPipeline::from_matches(&matches, &self.name)
@@ -1675,8 +1735,13 @@ impl CliApp {
                     match self.hooks.run_recover_error(err, &op_path).await {
                         Ok(value) => {
                             let pipeline =
-                                formatter::OutputPipeline::from_matches(&matches, &self.name)
-                                    .map_err(|e| CliError::Validation(e.to_string()))?;
+                                match self.bindings[binding_idx].output_pipeline(&matches) {
+                                    Some(pipeline) => pipeline,
+                                    None => formatter::OutputPipeline::from_matches(
+                                        &matches, &self.name,
+                                    )
+                                    .map_err(|e| CliError::Validation(e.to_string()))?,
+                                };
                             pipeline
                                 .emit(out, &value, false, true)
                                 .map_err(|e| CliError::Other(e.into()))?;
@@ -2056,6 +2121,29 @@ fn modify_at_path(
 }
 
 /// Apply a clap alias to the command at `path`.
+/// Top-level commands every CLI grafts besides the spec's own (`profiles` is
+/// configurable and checked separately).
+const BUILTIN_TOP_LEVEL_COMMANDS: &[&str] = &["auth", "completion", "man", "help"];
+
+fn has_path(cmd: &clap::Command, path: &[String]) -> bool {
+    match path.split_first() {
+        Some((head, rest)) => cmd
+            .find_subcommand(head)
+            .is_some_and(|sub| has_path(sub, rest)),
+        None => true,
+    }
+}
+
+fn op_path(op: &DeferredOp) -> &[String] {
+    match op {
+        DeferredOp::Alias { path, .. }
+        | DeferredOp::Hide { path }
+        | DeferredOp::Stability { path, .. }
+        | DeferredOp::Describe { path, .. }
+        | DeferredOp::HideGlobalFlags { path, .. } => path,
+    }
+}
+
 fn apply_alias(cli: clap::Command, path: &[String], alias: &str) -> clap::Command {
     let alias_owned = alias.to_string();
     modify_at_path(cli, path, &|c| c.visible_alias(alias_owned.clone()))

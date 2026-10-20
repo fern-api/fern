@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.seed.trace.core.ClientOptions;
 import com.seed.trace.core.ObjectMappers;
+import com.seed.trace.core.PathSegments;
 import com.seed.trace.core.RequestOptions;
 import com.seed.trace.core.RetryInterceptor;
 import com.seed.trace.core.SeedTraceApiException;
@@ -207,7 +208,7 @@ public class AsyncRawProblemClient {
                 .newBuilder()
                 .addPathSegments("problems-v2")
                 .addPathSegments("problem-info")
-                .addPathSegment(problemId);
+                .addPathSegment(PathSegments.validate(problemId));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -287,9 +288,9 @@ public class AsyncRawProblemClient {
                 .newBuilder()
                 .addPathSegments("problems-v2")
                 .addPathSegments("problem-info")
-                .addPathSegment(problemId)
+                .addPathSegment(PathSegments.validate(problemId))
                 .addPathSegments("version")
-                .addPathSegment(Integer.toString(problemVersion));
+                .addPathSegment(PathSegments.validate(Integer.toString(problemVersion)));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);

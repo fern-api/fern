@@ -159,7 +159,12 @@ export async function runPipeline(args: {
         extraDependencies: customConfig.extraDependencies,
         extraDevDependencies: customConfig.extraDevDependencies
     });
-    await patchDistWorkspaceToml({ outputDir, homebrew: distribution?.homebrew, binaryName });
+    await patchDistWorkspaceToml({
+        outputDir,
+        homebrew: distribution?.homebrew,
+        binaryName,
+        githubAttestations: distribution?.githubAttestations
+    });
     const customCommands = customConfig.customCommands !== false && irFilepath != null;
     await copySpecs({
         outputDir,
@@ -345,7 +350,8 @@ export async function runPipeline(args: {
                           description:
                               packageIdentity?.description ?? defaultCrateDescription(ir.apiDisplayName ?? binaryName)
                       }
-                    : undefined
+                    : undefined,
+            githubAttestations: distribution?.githubAttestations
         });
     }
 

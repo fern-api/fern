@@ -253,7 +253,7 @@ fn json(args: &[&str]) -> serde_json::Value {
 fn a_keyring_client_id_is_shown_by_list_show_and_current() {
     // `profiles set <name> OA_CLIENT_ID=…` writes the id to the keyring, not
     // to `oauth_client_id` in profiles.toml, so every reporting surface has
-    // to read it from there the way it reads a basic-auth username.
+    // to show the copy recorded alongside it, as it does a basic-auth username.
     with_clean_env(|| {
         run(&["oa", "profiles", "create", "prod", "--use"]);
         let (code, output) = run(&[

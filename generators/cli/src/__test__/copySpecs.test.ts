@@ -746,6 +746,35 @@ describe("copySpecs", () => {
         );
     });
 
+    it("emits the interactive provisioning options when configured", async () => {
+        const { specsDir, outputDir } = await scaffold();
+
+        await copySpecs({
+            outputDir,
+            binaryName: BIN,
+            authBindings: [],
+            globalParamBindings: [],
+            specsDir,
+            profilesCommandName: "profiles",
+            profilesProvisionOperation: {
+                operation: "core.keys.create",
+                credential: { username: "sid", password: "secret" },
+                flag: "new-key",
+                parameters: { FriendlyName: "{cli} for {user} on {host}" },
+                profileParameters: { AccountSid: "username" }
+            }
+        });
+
+        const main = await readFile(path.join(outputDir, BIN_DIR, "main.rs"), "utf-8");
+        expect(main).toContain(
+            '.provision_operation(ProvisionOperation::new("core.keys.create")' +
+                '.credential_field("username", "sid").credential_field("password", "secret")' +
+                '.flag("new-key")' +
+                '.parameter("FriendlyName", "{cli} for {user} on {host}")' +
+                '.profile_parameter("AccountSid", "username")))'
+        );
+    });
+
     it("omits .provision_operation(...) by default, so --provision is never registered", async () => {
         const { specsDir, outputDir } = await scaffold();
 

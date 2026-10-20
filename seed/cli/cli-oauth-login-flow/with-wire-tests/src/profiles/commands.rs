@@ -12,17 +12,18 @@
 
 use std::collections::{BTreeMap, BTreeSet};
 use std::io::{IsTerminal, Write};
+use std::sync::Arc;
 
 use clap::{Arg, ArgAction, ArgMatches, Command};
 
-use crate::auth::keyring_store::active_store;
+use crate::auth::keyring_store::{active_store, set_active_store, KeyringStore};
 use crate::auth::login::{self, DynLoginFlow};
 use crate::auth::oauth2::CLIENT_ID_FIELD;
 use crate::auth::{AuthCredentialSource, SchemeBinding};
 use crate::error::CliError;
 use crate::profiles::selection::{self, PROFILE_FLAG};
 use crate::profiles::store::{self, ProfileEntry, ProfileStore};
-use crate::profiles::ProfilesConfig;
+use crate::profiles::{keyring_account_for, ProfilesConfig};
 
 /// Names a profile may not take. `active` is a `profiles.toml` top-level key,
 /// and the rest would make `profiles use <name>` ambiguous with a
@@ -375,9 +376,14 @@ pub fn build_profiles_command(config: &ProfilesConfig, vocabulary: &Vocabulary) 
     // because `create` owns a handful of long names of its own.
     let mut create = create;
     if let Some(op) = &config.provision_operation {
+        let flag = op.flag_name();
+        let mut provision = Arg::new("provision").long(flag.to_string());
+        if flag != "provision" {
+            // The original spelling keeps working for existing scripts.
+            provision = provision.alias("provision");
+        }
         create = create.arg(
-            Arg::new("provision")
-                .long("provision")
+            provision
                 .action(ArgAction::SetTrue)
                 .conflicts_with_all(["with-token", "from-env"])
                 .help(format!(
@@ -486,7 +492,7 @@ fn create_owns_flag(kebab: &str) -> bool {
         kebab,
         "name" | "parent" | "set" | "server-var" | "base-url" | "default-format"
             | "retries"
-            | "credential" | "oauth-client-id" | "with-token" | "scheme" | "from-env" | "provision"
+            | "credential" | "oauth-client-id" | "with-token" | "scheme" | "from-env" | "provision" | "api-key"
             | "force" | "use" | "help"
     ) || kebab == PROFILE_FLAG
 }
@@ -584,12 +590,12 @@ pub async fn dispatch_profiles<W: Write>(
     let mut store = open_store(ctx.cli_name)?;
     match matches.subcommand() {
         Some(("create", m)) => handle_create(m, ctx, &mut store).await,
-        Some(("list" | "ls", m)) => handle_list(m, ctx, &store, out),
+        Some(("list" | "ls", m)) => handle_list(m, ctx, &mut store, out),
         Some(("use", m)) => handle_use(m, ctx, &mut store),
         Some(("set", m)) => handle_set(m, ctx, &mut store),
-        Some(("show", m)) => handle_show(m, ctx, &store, out),
+        Some(("show", m)) => handle_show(m, ctx, &mut store, out),
         Some(("remove" | "rm", m)) => handle_remove(m, ctx, &mut store).await,
-        Some(("current", m)) => handle_current(m, ctx, &store, out),
+        Some(("current", m)) => handle_current(m, ctx, &mut store, out),
         _ => Err(CliError::Validation(
             "profiles requires a subcommand: create, list, use, remove, or current".to_string(),
         )),
@@ -656,7 +662,21 @@ async fn handle_create(
             "profile `{name}` already exists. Pass --force to overwrite it."
         )));
     }
-    if provision
+    let mut provision = provision;
+    let typed = if guided_create_applies(matches, ctx) {
+        let typed = prompt_guided_credential(matches, ctx)?;
+        if ctx.provision.is_some() {
+            provision = confirm_default_yes(
+                "Create an API key for this profile?",
+                &mut std::io::stdin().lock(),
+                &mut std::io::stderr(),
+            )?;
+        }
+        Some(typed)
+    } else {
+        None
+    };
+    if (provision || typed.is_some())
         && existing
             .as_ref()
             .is_some_and(|entry| !entry.credential_parameters.is_empty())
@@ -763,7 +783,22 @@ async fn handle_create(
     //
     // An explicit `--credential` still wins: sharing a slot deliberately is a
     // supported thing to ask for.
-    if (matches.get_flag("with-token") || matches.get_flag("from-env") || provision)
+    if let (Some(typed), Some(op)) = (&typed, &ctx.provision) {
+        // `--set` wins over a value copied from the typed credential.
+        for (parameter, field) in &op.profile_parameters {
+            if let Some((_, value)) = typed.fields.iter().find(|(f, _)| f == field) {
+                entry
+                    .parameters
+                    .entry(parameter.clone())
+                    .or_insert_with(|| value.clone());
+            }
+        }
+    }
+
+    if (matches.get_flag("with-token")
+        || matches.get_flag("from-env")
+        || provision
+        || typed.is_some())
         && matches.get_one::<String>("credential").is_none()
     {
         entry.credential = Some(name.clone());
@@ -794,7 +829,9 @@ async fn handle_create(
         let fields = login::scheme_credential_fields(&scheme, ctx.auth_bindings);
         let stored = match (matches.get_flag("with-token"), fields) {
             (true, Some(fields)) => {
-                login::multi_field_keyring_value(&login::read_fields_from_stdin(&fields)?)?
+                login::multi_field_keyring_value(&login::read_fields_from_stdin(
+                    &scheme, &fields,
+                )?)?
             }
             (true, None) => login::read_token_from_stdin()?,
             (false, Some(fields)) => {
@@ -808,6 +845,11 @@ async fn handle_create(
                 .ok_or_else(|| login::from_env_error(ctx.cli_name, &scheme, "a credential"))?,
         };
         active_store().set(ctx.cli_name, &account, &stored)?;
+        store.record_credential(
+            resolved.credential.as_deref().unwrap_or(&name),
+            &scheme,
+            &stored,
+        );
         let _ = writeln!(
             stderr,
             "{}",
@@ -817,8 +859,42 @@ async fn handle_create(
             )),
         );
     }
+    if let (Some(typed), false) = (&typed, provision) {
+        let account = super::keyring_account_for(
+            &typed.scheme,
+            resolved.credential.as_deref().unwrap_or(&name),
+        );
+        active_store().set(ctx.cli_name, &account, &typed.stored()?)?;
+        let _ = writeln!(
+            stderr,
+            "{}",
+            login::green(&format!(
+                "✓ Stored credential for profile `{name}` (scheme {}) in {}",
+                typed.scheme,
+                active_store().backend_label(),
+            )),
+        );
+    }
     let minted = if provision {
-        let minted = provision_remote_credential(matches, ctx, &resolved).await?;
+        let minted = match &typed {
+            // The typed credential only authenticates the mint; it is never
+            // written to the keychain.
+            Some(typed) => {
+                with_typed_credential(ctx, typed, || {
+                    provision_remote_credential(Some(&typed.scheme), &name, ctx, &resolved)
+                })
+                .await?
+            }
+            None => {
+                provision_remote_credential(
+                    matches.get_one::<String>("scheme"),
+                    &name,
+                    ctx,
+                    &resolved,
+                )
+                .await?
+            }
+        };
         entry.credential_parameters = minted.credential_parameters.clone();
         Some(minted)
     } else {
@@ -849,6 +925,12 @@ async fn handle_create(
                     .unwrap_or_default(),
             ))
         })?;
+        store.record_credential(
+            resolved.credential.as_deref().unwrap_or(&name),
+            &scheme,
+            &minted.stored,
+        );
+        store.save()?;
         let _ = writeln!(
             stderr,
             "{}",
@@ -905,7 +987,10 @@ async fn handle_create(
     // Suppressed when a credential was just captured, when the profile
     // inherits one, and when env vars already supply it — in those cases
     // nothing is missing and the line would be noise.
-    let captured = matches.get_flag("with-token") || matches.get_flag("from-env") || provision;
+    let captured = matches.get_flag("with-token")
+        || matches.get_flag("from-env")
+        || provision
+        || typed.is_some();
     let inherits = entry.parent.is_some() || matches.get_one::<String>("credential").is_some();
     if !captured && !inherits && !any_env_credential(ctx) {
         let _ = writeln!(
@@ -1021,9 +1106,17 @@ pub(crate) fn credential_sources(
 fn handle_list<W: Write>(
     matches: &ArgMatches,
     ctx: &ProfilesContext<'_>,
-    store: &ProfileStore,
+    store: &mut ProfileStore,
     out: &mut W,
 ) -> Result<(), CliError> {
+    let credentials: Vec<String> = store
+        .entries()
+        .into_iter()
+        .filter_map(|entry| store::resolve(store, &entry.name).ok()?.credential)
+        .collect();
+    backfill_credential_records(ctx, store, credentials, Report::List);
+    let store: &ProfileStore = store;
+
     // Re-resolve rather than reading the installed global: the `profiles`
     // group is exempted from selection (so `use` / `remove` keep working when
     // `active` is stale), which means the global is empty here. Falling back
@@ -1065,8 +1158,8 @@ fn handle_list<W: Write>(
                 .credential
                 .as_ref()
                 .and_then(|credential| {
-                    stored_account(ctx, credential)
-                        .or_else(|| stored_oauth_client_id(ctx, credential))
+                    stored_account(ctx, store, credential)
+                        .or_else(|| stored_oauth_client_id(ctx, store, credential))
                 })
                 .or_else(|| resolved.oauth_client_id.clone());
             if let Some(account) = account {
@@ -1325,82 +1418,197 @@ fn insert_map(
     row.insert(key.to_string(), serde_json::Value::Object(nested));
 }
 
-/// The account identifier stored for `credential`, for the `ACCOUNT` column.
+/// The *username* half of the stored basic credential — `AC1234…` for a
+/// Twilio-shaped API — as recorded in `profiles.toml` when it was written.
+/// That is what a listing should answer ("which account is this profile?");
+/// the slot name usually just echoes the profile name.
 ///
-/// Reads the *username* half of a stored basic credential — `AC1234…` for a
-/// Twilio-shaped API. A username is not a secret, so surfacing it is safe, and
-/// it is what a user actually wants the listing to answer: "which account is
-/// this profile?" The `CREDENTIALS FROM` column can only answer "which slot",
-/// which is the same as the profile name in the common case and therefore
-/// tells them nothing.
-///
-/// Returns `None` — and the column disappears — when:
-/// - no scheme has a `username` field (bearer / API-key CLIs have no account)
-/// - nothing is stored yet for this profile
-/// - the keyring read fails or is locked
-///
-/// That last case is deliberate: `profiles list` must never error or block on
-/// a locked keychain just to render a column.
-fn stored_account(ctx: &ProfilesContext<'_>, credential: &str) -> Option<String> {
-    let basic = ctx
-        .auth_bindings
-        .iter()
-        .filter(|(_, binding)| matches!(binding, SchemeBinding::Basic { .. }))
-        .map(|(scheme, _)| scheme.as_str());
-    stored_keyring_field(ctx, credential, basic, "username")
+/// Read from the record, never the keychain: on macOS every keychain read by
+/// a binary not on the entry's access list prompts for the login password,
+/// once per profile, which made `profiles list` unusable. Basic schemes are
+/// tried in declaration order. `None` when nothing is recorded and the column
+/// is omitted.
+fn stored_account(ctx: &ProfilesContext<'_>, store: &ProfileStore, credential: &str) -> Option<String> {
+    recorded_field(store, credential, basic_schemes(ctx), |identity| identity.account.clone())
 }
 
-/// The OAuth2 client id stored in the keyring for `credential` — what
+/// The OAuth2 client id recorded for `credential` — what
 /// `profiles set <name> <CLIENT_ID_VAR>=…` and `auth login --with-token`
-/// write. A client id is public (RFC 6749 §2.2), so it is as safe to print
-/// as a basic-auth username. Same never-block rule as [`stored_account`].
-fn stored_oauth_client_id(ctx: &ProfilesContext<'_>, credential: &str) -> Option<String> {
-    let oauth = ctx
-        .auth_bindings
+/// write. Public (RFC 6749 §2.2), and read from the record for the same
+/// reason as [`stored_account`].
+fn stored_oauth_client_id(
+    ctx: &ProfilesContext<'_>,
+    store: &ProfileStore,
+    credential: &str,
+) -> Option<String> {
+    recorded_field(store, credential, oauth_schemes(ctx), |identity| {
+        identity.oauth_client_id.clone()
+    })
+}
+
+fn basic_schemes<'a>(ctx: &ProfilesContext<'a>) -> Vec<&'a str> {
+    ctx.auth_bindings
+        .iter()
+        .filter(|(_, binding)| matches!(binding, SchemeBinding::Basic { .. }))
+        .map(|(scheme, _)| scheme.as_str())
+        .collect()
+}
+
+fn oauth_schemes<'a>(ctx: &ProfilesContext<'a>) -> Vec<&'a str> {
+    ctx.auth_bindings
         .iter()
         .filter(|(scheme, _)| {
             login::scheme_credential_fields(scheme, ctx.auth_bindings)
                 .is_some_and(|fields| fields.contains(&CLIENT_ID_FIELD))
         })
-        .map(|(scheme, _)| scheme.as_str());
-    stored_keyring_field(ctx, credential, oauth, CLIENT_ID_FIELD)
+        .map(|(scheme, _)| scheme.as_str())
+        .collect()
 }
 
-/// The first non-empty `field` of a multi-field keyring entry stored under
-/// `credential` for any of `schemes`.
-fn stored_keyring_field<'a>(
-    ctx: &ProfilesContext<'_>,
+fn recorded_field(
+    store: &ProfileStore,
     credential: &str,
-    schemes: impl IntoIterator<Item = &'a str>,
-    field: &str,
+    schemes: Vec<&str>,
+    field: impl Fn(&store::StoredIdentity) -> Option<String>,
 ) -> Option<String> {
-    schemes.into_iter().find_map(|scheme| {
-        let account = super::keyring_account_for(scheme, credential);
-        let Ok(Some(raw)) = crate::auth::keyring_store::active_store().get(ctx.cli_name, &account)
-        else {
-            return None;
-        };
-        serde_json::from_str::<serde_json::Value>(&raw)
-            .ok()
-            .and_then(|v| v.get(field)?.as_str().map(str::to_string))
-            .filter(|value| !value.is_empty())
-    })
+    let record = store.credential_record(credential)?;
+    schemes
+        .into_iter()
+        .find_map(|scheme| record.schemes.get(scheme).and_then(&field))
 }
 
-/// Whether any scheme has a keyring entry under this profile's credential
-/// slot. A locked or failing keyring counts as "nothing stored", mirroring
-/// [`stored_account`]: reporting must never block on the keychain.
-fn profile_stores_a_credential(ctx: &ProfilesContext<'_>, profile: &store::ResolvedProfile) -> bool {
-    let Some(credential) = &profile.credential else {
-        return false;
-    };
-    ctx.auth_bindings.iter().any(|(scheme, _)| {
+/// Which report is being rendered, and so which keychain entries it read
+/// before `profiles.toml` kept a copy.
+#[derive(Clone, Copy, PartialEq, Eq)]
+enum Report {
+    /// The account, or the OAuth client id when there is none.
+    List,
+    /// The account and the OAuth client id.
+    Show,
+    /// As `Show`, plus whether any credential is stored at all.
+    Current,
+}
+
+/// Fill the record for `credentials` from the keychain where it cannot yet
+/// answer `report`: credentials stored by an older binary, before
+/// `profiles.toml` kept a copy.
+///
+/// Reads, in the same order and with the same early exits, only the entries
+/// `report` read before, so the first run after an upgrade prompts no more
+/// than any run did; each answer is recorded (an absent entry as `checked`),
+/// so later runs read nothing. A failed read (a refused prompt, a locked
+/// keychain) is left unrecorded and retried next time, as before.
+fn backfill_credential_records(
+    ctx: &ProfilesContext<'_>,
+    store: &mut ProfileStore,
+    credentials: impl IntoIterator<Item = String>,
+    report: Report,
+) {
+    let mut changed = false;
+    for credential in credentials {
+        let account = backfill_field(ctx, store, &credential, basic_schemes(ctx), &mut changed, |i| {
+            i.account.clone()
+        });
+        if account.is_none() || report != Report::List {
+            backfill_field(ctx, store, &credential, oauth_schemes(ctx), &mut changed, |i| {
+                i.oauth_client_id.clone()
+            });
+        }
+        if report == Report::Current {
+            backfill_any_stored(ctx, store, &credential, &mut changed);
+        }
+    }
+    // Only the copy is lost; the next report reads the keychain again.
+    if changed {
+        if let Err(e) = store.save() {
+            eprintln!("warning: could not update {}: {e}", store.path().display());
+        }
+    }
+}
+
+/// The first `field` stored for `schemes`, taken from the record and read
+/// from the keychain only for schemes the record knows nothing about.
+fn backfill_field(
+    ctx: &ProfilesContext<'_>,
+    store: &mut ProfileStore,
+    credential: &str,
+    schemes: Vec<&str>,
+    changed: &mut bool,
+    field: impl Fn(&store::StoredIdentity) -> Option<String>,
+) -> Option<String> {
+    for scheme in schemes {
+        let record = store.credential_record(credential).unwrap_or_default();
+        if let Some(identity) = record.schemes.get(scheme) {
+            match field(identity) {
+                Some(value) => return Some(value),
+                None => continue,
+            }
+        }
+        if record.checked.iter().any(|s| s == scheme) {
+            continue;
+        }
         let account = super::keyring_account_for(scheme, credential);
-        matches!(
-            crate::auth::keyring_store::active_store().get(ctx.cli_name, &account),
-            Ok(Some(_))
-        )
-    })
+        match active_store().get(ctx.cli_name, &account) {
+            Ok(Some(stored)) => {
+                store.record_credential(credential, scheme, &stored);
+                *changed = true;
+                let value = store
+                    .credential_record(credential)
+                    .and_then(|record| record.schemes.get(scheme).and_then(&field));
+                if value.is_some() {
+                    return value;
+                }
+            }
+            Ok(None) => {
+                store.mark_credential_absent(credential, scheme);
+                *changed = true;
+            }
+            Err(_) => {}
+        }
+    }
+    None
+}
+
+/// Make the record able to tell whether any scheme has an entry in
+/// `credential`, reading only until the first entry is found.
+fn backfill_any_stored(
+    ctx: &ProfilesContext<'_>,
+    store: &mut ProfileStore,
+    credential: &str,
+    changed: &mut bool,
+) {
+    for (scheme, _) in ctx.auth_bindings {
+        let record = store.credential_record(credential).unwrap_or_default();
+        if !record.schemes.is_empty() {
+            return;
+        }
+        if record.checked.contains(scheme) {
+            continue;
+        }
+        let account = super::keyring_account_for(scheme, credential);
+        match active_store().get(ctx.cli_name, &account) {
+            Ok(Some(stored)) => {
+                store.record_credential(credential, scheme, &stored);
+                *changed = true;
+                return;
+            }
+            Ok(None) => {
+                store.mark_credential_absent(credential, scheme);
+                *changed = true;
+            }
+            Err(_) => {}
+        }
+    }
+}
+
+/// Whether any scheme has a recorded keyring entry under this profile's
+/// credential slot.
+fn profile_stores_a_credential(store: &ProfileStore, profile: &store::ResolvedProfile) -> bool {
+    profile
+        .credential
+        .as_ref()
+        .and_then(|credential| store.credential_record(credential))
+        .is_some_and(|record| !record.schemes.is_empty())
 }
 
 /// Warn about a variable that is set, looks like one of this CLI's credential
@@ -1815,8 +2023,15 @@ fn handle_set(
     for (scheme, fields) in &pending {
         let account = super::keyring_account_for(scheme, &account_owner);
         // Merge with whatever is already stored so setting one half of a
-        // two-field credential does not discard the other.
-        let mut merged = existing_fields(ctx.cli_name, &account);
+        // two-field credential does not discard the other. Setting every
+        // half replaces the entry outright, so it skips the keychain read.
+        let complete = login::scheme_credential_fields(scheme, ctx.auth_bindings)
+            .is_some_and(|all| all.iter().all(|field| fields.contains_key(*field)));
+        let mut merged = if complete {
+            BTreeMap::new()
+        } else {
+            existing_fields(ctx.cli_name, &account)
+        };
         merged.extend(fields.clone());
         let pairs: Vec<(&str, String)> = merged
             .iter()
@@ -1824,10 +2039,12 @@ fn handle_set(
             .collect();
         let stored = login::multi_field_keyring_value(&pairs)?;
         active_store().set(ctx.cli_name, &account, &stored)?;
+        store.record_credential(&account_owner, scheme, &stored);
     }
     for (scheme, value) in &pending_single {
         let account = super::keyring_account_for(scheme, &account_owner);
         active_store().set(ctx.cli_name, &account, value)?;
+        store.record_credential(&account_owner, scheme, value);
     }
     store.save()?;
 
@@ -1960,6 +2177,14 @@ async fn handle_remove(
                  Pass --yes when stdin is not a terminal."
             )));
         }
+        if let Some(warning) = last_profile_warning(
+            ctx.provision.is_some(),
+            store.entries().len(),
+            ctx.cli_name,
+            ctx.command_name,
+        ) {
+            let _ = writeln!(stderr, "{warning}");
+        }
         let question = format!("Remove profile `{name}` and its stored credentials?");
         if !confirm(&question, &mut std::io::stdin().lock(), &mut stderr)? {
             let _ = writeln!(stderr, "Aborted.");
@@ -1971,13 +2196,51 @@ async fn handle_remove(
     // failed revoke then leaves the profile and its stored key intact, so
     // the user can fix the cause and retry — rather than being left with a
     // live remote key and no local record of it.
-    if matches.try_get_one::<bool>("revoke").ok().flatten() == Some(&true) {
-        revoke_remote_credential(ctx, store, &name).await?;
-        let _ = writeln!(
-            stderr,
-            "{}",
-            login::green("✓ Revoked the remote credential."),
-        );
+    let mut revoke = matches.try_get_one::<bool>("revoke").ok().flatten() == Some(&true);
+    let mut prompted = false;
+    // Guided CLIs offer to revoke a key the CLI provisioned. Only reached
+    // after the interactive confirm above, so `--yes` keeps the key as before.
+    if !revoke
+        && !matches.get_flag("yes")
+        && ctx.provision.is_some()
+        && ctx.revoke_op_path.is_some()
+        && !entry.credential_parameters.is_empty()
+    {
+        revoke = confirm_default_yes(
+            "Also delete this profile's API key from the server?",
+            &mut std::io::stdin().lock(),
+            &mut stderr,
+        )?;
+        prompted = revoke;
+    }
+    if revoke {
+        match revoke_remote_credential(ctx, store, &name).await {
+            Ok(()) => {
+                let _ = writeln!(
+                    stderr,
+                    "{}",
+                    login::green("✓ Revoked the remote credential."),
+                );
+            }
+            // An explicit `--revoke` keeps the profile so the user can retry.
+            // After the prompt, removal goes ahead like it would without a key.
+            Err(err) if prompted => {
+                // Only the revoke parameters (e.g. `Sid=SK…`), never the secret.
+                let key = entry
+                    .credential_parameters
+                    .iter()
+                    .map(|(parameter, value)| format!("{parameter}={value}"))
+                    .collect::<Vec<_>>()
+                    .join(", ");
+                let _ = writeln!(stderr, "{err}");
+                let _ = writeln!(
+                    stderr,
+                    "Couldn't delete the API key ({key}) from the server; removing the profile anyway. \
+                     Delete the key from your account's console.",
+                );
+            }
+            Err(err) => return Err(err),
+        }
     }
 
     // Resolve before removal so we know which keyring account and token-cache
@@ -1996,6 +2259,7 @@ async fn handle_remove(
             let account = super::keyring_account_for(scheme, &credential);
             active_store().delete(ctx.cli_name, &account)?;
         }
+        store.forget_credential(&credential);
         if let Some(cache) = crate::auth::TokenCache::for_cli_unprofiled(ctx.cli_name) {
             cache.purge_profile(&credential)?;
         }
@@ -2016,6 +2280,19 @@ async fn handle_remove(
         );
     }
     Ok(())
+}
+
+/// Twilio CLI-style heads-up before removing the only profile. Guided CLIs
+/// only, so other CLIs' confirm prompt is unchanged.
+fn last_profile_warning(
+    guided: bool,
+    profile_count: usize,
+    cli_name: &str,
+    command_name: &str,
+) -> Option<String> {
+    (guided && profile_count == 1).then(|| {
+        format!("This is your last profile. Run `{cli_name} {command_name} create` to create another one.")
+    })
 }
 
 /// What `profiles create --provision` minted: the keyring value to store,
@@ -2040,7 +2317,8 @@ struct MintedCredential {
 /// endpoint requires. Arguments are the profile's own parameters (`--set`,
 /// tenant-key flags), the same contract `--revoke` has.
 async fn provision_remote_credential(
-    matches: &ArgMatches,
+    explicit_scheme: Option<&String>,
+    profile_name: &str,
     ctx: &ProfilesContext<'_>,
     resolved: &store::ResolvedProfile,
 ) -> Result<MintedCredential, CliError> {
@@ -2049,18 +2327,19 @@ async fn provision_remote_credential(
             "--provision is not configured for this CLI.".to_string(),
         ));
     };
-    let scheme = login::resolve_scheme_for(
-        matches.get_one::<String>("scheme"),
-        ctx.auth_bindings,
-        ctx.login_flows,
-    )?;
+    let scheme = provision_scheme(explicit_scheme, op, ctx.auth_bindings, ctx.login_flows)?;
     let fields = login::scheme_credential_fields(&scheme, ctx.auth_bindings);
 
-    let params: serde_json::Map<String, serde_json::Value> = resolved
+    let mut params: serde_json::Map<String, serde_json::Value> = resolved
         .parameters
         .iter()
         .map(|(k, v)| (k.clone(), serde_json::Value::String(v.clone())))
         .collect();
+    for (parameter, template) in &op.parameters {
+        params.entry(parameter.clone()).or_insert_with(|| {
+            serde_json::Value::String(render_template(template, ctx.cli_name, profile_name))
+        });
+    }
     let params = serde_json::Value::Object(params);
     let op_path = op.op_path();
     let mut response = None;
@@ -2169,20 +2448,54 @@ async fn revoke_remote_credential(
     }
     let params = serde_json::Value::Object(params);
 
-    for binding in ctx.bindings {
-        // `Ok(None)` means "not my path" — keep looking, exactly as the
-        // `--schema` walk does.
-        if binding
-            .invoke_operation(op_path, &params, ctx.root_matches, Some(&resolved))
-            .await?
-            .is_some() {
-            return Ok(());
+    // The `profiles` group runs unprofiled, so the operation's auth would
+    // read the bare scheme account. Serve it this profile's stored key.
+    let credential = resolved
+        .credential
+        .clone()
+        .unwrap_or_else(|| name.to_string());
+    let mut stored = None;
+    for (scheme, _) in ctx.auth_bindings {
+        if let Some(value) =
+            active_store().get(ctx.cli_name, &keyring_account_for(scheme, &credential))?
+        {
+            stored = Some((scheme.clone(), value));
+            break;
         }
     }
-    Err(CliError::Validation(format!(
-        "--revoke: no operation `{}` found in this CLI.",
-        op_path.join(" "),
-    )))
+    let invoke = || async {
+        for binding in ctx.bindings {
+            // `Ok(None)` means "not my path" — keep looking, exactly as the
+            // `--schema` walk does.
+            if binding
+                .invoke_operation(op_path, &params, ctx.root_matches, Some(&resolved))
+                .await?
+                .is_some()
+            {
+                return Ok(());
+            }
+        }
+        Err(CliError::Validation(format!(
+            "--revoke: no operation `{}` found in this CLI.",
+            op_path.join(" "),
+        )))
+    };
+    match stored {
+        // Parent credentials in env win: an API like Twilio does not let a
+        // standard key delete keys, so the stored key is only the fallback.
+        Some((scheme, value)) if !parent_env_set(ctx, &scheme) => {
+            with_credential_value(ctx, &scheme, value, false, invoke).await
+        }
+        _ => invoke().await,
+    }
+}
+
+/// Every env var of the scheme is set, so env holds a complete parent
+/// credential. A partial one (only `TWILIO_ACCOUNT_SID`) keeps the stored key.
+fn parent_env_set(ctx: &ProfilesContext<'_>, scheme: &str) -> bool {
+    login::shadowing_env_vars(ctx.cli_name, scheme, ctx.auth_bindings)
+        .iter()
+        .all(|var| std::env::var_os(var).is_some_and(|value| !value.is_empty()))
 }
 
 // ── current ─────────────────────────────────────────────────────────────
@@ -2192,22 +2505,24 @@ async fn revoke_remote_credential(
 fn resolved_profile_fields(
     profile: &store::ResolvedProfile,
     ctx: &ProfilesContext<'_>,
+    store: &ProfileStore,
 ) -> serde_json::Map<String, serde_json::Value> {
     let mut map = serde_json::Map::new();
     map.insert("profile".into(), profile.name.clone().into());
     if let Some(credential) = &profile.credential {
-        if let Some(account) = stored_account(ctx, credential) {
+        if let Some(account) = stored_account(ctx, store, credential) {
             map.insert("account".into(), account.into());
         }
         if credential != &profile.name {
             map.insert("credentials_from".into(), credential.clone().into());
         }
     }
-    // Keyring before plaintext: the order the OAuth2 provider resolves them in.
+    // The keyring's id before the plaintext one: the order the OAuth2
+    // provider resolves them in.
     let client_id = profile
         .credential
         .as_ref()
-        .and_then(|credential| stored_oauth_client_id(ctx, credential))
+        .and_then(|credential| stored_oauth_client_id(ctx, store, credential))
         .or_else(|| profile.oauth_client_id.clone());
     if let Some(client_id) = client_id {
         map.insert("oauth_client_id".into(), client_id.into());
@@ -2267,7 +2582,7 @@ fn insert_settings(
 fn handle_show<W: Write>(
     matches: &ArgMatches,
     ctx: &ProfilesContext<'_>,
-    store: &ProfileStore,
+    store: &mut ProfileStore,
     out: &mut W,
 ) -> Result<(), CliError> {
     // The name is optional and falls back to whatever this invocation would
@@ -2297,10 +2612,12 @@ fn handle_show<W: Write>(
         return Err(store::unknown_profile(store, &name));
     }
     let resolved = store::resolve(store, &name)?;
+    backfill_credential_records(ctx, store, resolved.credential.clone(), Report::Show);
+    let store: &ProfileStore = store;
 
     let pipeline = crate::formatter::OutputPipeline::from_matches(matches, ctx.cli_name)
         .map_err(|e| CliError::Validation(e.to_string()))?;
-    let mut map = resolved_profile_fields(&resolved, ctx);
+    let mut map = resolved_profile_fields(&resolved, ctx, store);
     // Whether this is the profile commands would use by default — the one bit
     // of selection context that is meaningful for a profile you are merely
     // inspecting.
@@ -2320,7 +2637,7 @@ fn handle_show<W: Write>(
 fn handle_current<W: Write>(
     matches: &ArgMatches,
     ctx: &ProfilesContext<'_>,
-    store: &ProfileStore,
+    store: &mut ProfileStore,
     out: &mut W,
 ) -> Result<(), CliError> {
     let pipeline = crate::formatter::OutputPipeline::from_matches(matches, ctx.cli_name)
@@ -2330,11 +2647,16 @@ fn handle_current<W: Write>(
     // exempted from selection (so `profiles use` still works when `active`
     // is stale), which means the global is empty here.
     let selected = selection::resolve_selection_in(store, ctx.cli_name, &argv())?;
+    let credential = selected
+        .as_ref()
+        .and_then(|selection| selection.profile.credential.clone());
+    backfill_credential_records(ctx, store, credential, Report::Current);
+    let store: &ProfileStore = store;
 
     let payload = match &selected {
         Some(selection) => {
             let profile = &selection.profile;
-            let mut map = resolved_profile_fields(profile, ctx);
+            let mut map = resolved_profile_fields(profile, ctx, store);
             // `selected_by`, not `source`: this answers *why* this profile is in
             // play; precedence is the same for every source (`outranks_env`).
             map.insert("selected_by".into(), selection.source.label().into());
@@ -2342,7 +2664,7 @@ fn handle_current<W: Write>(
             // profile's stored credential; they are consulted only when the
             // profile has none stored. Name them only in that case, so the
             // field never contradicts `auth status` when the keyring wins.
-            if !profile_stores_a_credential(ctx, profile) {
+            if !profile_stores_a_credential(store, profile) {
                 if let Some(env_row) = env_pseudo_row(ctx) {
                     map.insert("credential_env_fallback".into(), env_row["variables"].clone());
                 }
@@ -2462,6 +2784,474 @@ fn similar_profile(name: &str, candidates: Vec<String>) -> Option<String> {
     })
 }
 
+// ── Interactive credential flow ─────────────────────────────────────────
+//
+// Only on CLIs with a provisioning operation, and only in a terminal: a
+// script or agent never sees a prompt, and every flag-driven path is
+// unchanged.
+
+/// A credential typed at the interactive prompts.
+struct TypedCredential {
+    scheme: String,
+    fields: Vec<(String, String)>,
+}
+
+impl TypedCredential {
+    /// The keyring value for this credential, in the scheme's stored shape.
+    fn stored(&self) -> Result<String, CliError> {
+        match self.fields.as_slice() {
+            [(field, value)] if field == "token" => Ok(value.clone()),
+            fields => {
+                let fields: Vec<(&str, String)> = fields
+                    .iter()
+                    .map(|(f, v)| (f.as_str(), v.clone()))
+                    .collect();
+                login::multi_field_keyring_value(&fields)
+            }
+        }
+    }
+}
+
+fn interactive_terminal() -> bool {
+    std::io::stdin().is_terminal() && std::io::stderr().is_terminal()
+}
+
+/// Whether a `profiles create` should prompt for its credential: the CLI
+/// can provision keys, it runs in a terminal, and no flag already says where
+/// the credential comes from.
+fn guided_create_applies(matches: &ArgMatches, ctx: &ProfilesContext<'_>) -> bool {
+    ctx.provision.is_some()
+        && interactive_terminal()
+        && !matches.get_flag("with-token")
+        && !matches.get_flag("from-env")
+        && matches.try_get_one::<bool>("provision").ok().flatten() != Some(&true)
+        && matches.get_one::<String>("credential").is_none()
+        && matches.get_one::<String>("parent").is_none()
+        && matches.get_one::<String>("oauth-client-id").is_none()
+}
+
+/// Whether `auth login` runs the interactive profile flow instead of the
+/// plain credential store. `--with-token`, `--from-env` and `--scheme` keep
+/// the original behavior.
+pub fn guided_auth_login_applies(config: &ProfilesConfig, login: &ArgMatches) -> bool {
+    config.provision_operation.is_some()
+        && interactive_terminal()
+        && !login.get_flag("with-token")
+        && !login.get_flag("from-env")
+        && login.try_get_one::<bool>("no-browser").ok().flatten() != Some(&true)
+        && login.get_one::<String>("scheme").is_none()
+}
+
+/// `auth login` on a CLI that provisions keys: ask for a profile name, then
+/// run the interactive `profiles create` and make the profile active.
+pub async fn guided_auth_login(
+    config: &ProfilesConfig,
+    ctx: &ProfilesContext<'_>,
+) -> Result<(), CliError> {
+    let mut store = open_store(ctx.cli_name)?;
+    let mut stderr = std::io::stderr();
+    let default = crate::profiles::active_name().unwrap_or_else(|| "default".to_string());
+    let name = prompt_line(
+        "Profile name",
+        Some(&default),
+        &mut std::io::stdin().lock(),
+        &mut stderr,
+    )?;
+    validate_profile_name(&name)?;
+    let mut args = vec![
+        config.command_name.clone(),
+        "create".to_string(),
+        name.clone(),
+        "--use".to_string(),
+    ];
+    if store.entry(&name).is_some() {
+        let question = format!("Profile `{name}` already exists. Overwrite it?");
+        if !confirm(&question, &mut std::io::stdin().lock(), &mut stderr)? {
+            let _ = writeln!(stderr, "Aborted.");
+            return Ok(());
+        }
+        args.push("--force".to_string());
+    }
+    let matches = build_profiles_command(config, ctx.vocabulary)
+        .try_get_matches_from(args)
+        .map_err(|e| CliError::Validation(e.to_string()))?;
+    match matches.subcommand() {
+        Some(("create", create)) => handle_create(create, ctx, &mut store).await,
+        _ => Err(CliError::Validation(
+            "auth login: could not start profile creation".to_string(),
+        )),
+    }
+}
+
+fn prompt_guided_credential(
+    matches: &ArgMatches,
+    ctx: &ProfilesContext<'_>,
+) -> Result<TypedCredential, CliError> {
+    let Some(op) = ctx.provision.as_ref() else {
+        return Err(CliError::Validation(
+            "no provisioning operation is configured for this CLI.".to_string(),
+        ));
+    };
+    let scheme = provision_scheme(
+        matches.get_one::<String>("scheme"),
+        op,
+        ctx.auth_bindings,
+        ctx.login_flows,
+    )?;
+    let fields: Vec<String> = login::scheme_credential_fields(&scheme, ctx.auth_bindings)
+        .map(|fields| fields.iter().map(|f| f.to_string()).collect())
+        .unwrap_or_else(|| vec!["token".to_string()]);
+    let mut stderr = std::io::stderr();
+    let mut values = Vec::with_capacity(fields.len());
+    for field in fields {
+        let label = login::field_label(&scheme, &field).unwrap_or_else(|| op.label_for(&field));
+        let value = if is_secret_field(&field) {
+            read_secret(&label, &mut std::io::stdin().lock(), &mut stderr)?
+        } else {
+            prompt_line(&label, None, &mut std::io::stdin().lock(), &mut stderr)?
+        };
+        if value.is_empty() {
+            return Err(CliError::Validation(format!("{label} is required.")));
+        }
+        values.push((field, value));
+    }
+    Ok(TypedCredential {
+        scheme,
+        fields: values,
+    })
+}
+
+/// The scheme a provisioned key belongs to. When the usual resolution is
+/// ambiguous (several schemes, no `--scheme`), pick the first scheme whose
+/// credential fields are the ones the provisioning response fills.
+fn provision_scheme(
+    explicit: Option<&String>,
+    op: &super::ProvisionOperation,
+    auth_bindings: &[(String, SchemeBinding)],
+    login_flows: &[DynLoginFlow],
+) -> Result<String, CliError> {
+    let err = match login::resolve_scheme_for(explicit, auth_bindings, login_flows) {
+        Ok(scheme) => return Ok(scheme),
+        Err(err) => err,
+    };
+    if explicit.is_some() || op.credential_fields.is_empty() {
+        return Err(err);
+    }
+    let mut wanted: Vec<&str> = op.credential_fields.iter().map(|(f, _)| f.as_str()).collect();
+    wanted.sort_unstable();
+    auth_bindings
+        .iter()
+        .find(|(name, _)| {
+            let mut fields =
+                login::scheme_credential_fields(name, auth_bindings).unwrap_or_else(|| vec!["token"]);
+            fields.sort_unstable();
+            fields == wanted
+        })
+        .map(|(name, _)| name.clone())
+        .ok_or(err)
+}
+
+pub(crate) fn is_secret_field(field: &str) -> bool {
+    let field = field.to_ascii_lowercase();
+    ["password", "secret", "token"]
+        .iter()
+        .any(|suffix| field.ends_with(suffix))
+}
+
+fn prompt_line(
+    label: &str,
+    default: Option<&str>,
+    input: &mut impl std::io::BufRead,
+    out: &mut impl Write,
+) -> Result<String, CliError> {
+    let _ = match default {
+        Some(default) => write!(out, "{label} [{default}]: "),
+        None => write!(out, "{label}: "),
+    };
+    let _ = out.flush();
+    let mut answer = String::new();
+    input
+        .read_line(&mut answer)
+        .map_err(|e| CliError::Other(e.into()))?;
+    let answer = answer.trim();
+    Ok(match (answer.is_empty(), default) {
+        (true, Some(default)) => default.to_string(),
+        _ => answer.to_string(),
+    })
+}
+
+/// Read one line from the terminal without echoing it.
+fn read_secret(
+    label: &str,
+    input: &mut impl std::io::BufRead,
+    out: &mut impl Write,
+) -> Result<String, CliError> {
+    let echo = EchoOff::new();
+    let hidden = echo.active();
+    let _ = write!(out, "{label}{}: ", if hidden { " (hidden)" } else { "" });
+    let _ = out.flush();
+    let mut line = String::new();
+    let read = input.read_line(&mut line);
+    drop(echo);
+    read.map_err(|e| CliError::Other(e.into()))?;
+    if hidden {
+        let _ = writeln!(out);
+    }
+    Ok(line.trim().to_string())
+}
+
+/// Turns terminal echo off for its lifetime on Unix; a no-op elsewhere.
+pub(crate) struct EchoOff {
+    #[cfg(unix)]
+    saved: Option<libc::termios>,
+}
+
+impl EchoOff {
+    pub(crate) fn new() -> Self {
+        #[cfg(unix)]
+        {
+            // SAFETY: `termios` is plain data; tcgetattr fills it before use
+            // and both calls only touch stdin's terminal attributes.
+            unsafe {
+                let mut attrs: libc::termios = std::mem::zeroed();
+                if libc::tcgetattr(libc::STDIN_FILENO, &mut attrs) != 0 {
+                    return Self { saved: None };
+                }
+                let saved = attrs;
+                attrs.c_lflag &= !libc::ECHO;
+                if libc::tcsetattr(libc::STDIN_FILENO, libc::TCSANOW, &attrs) != 0 {
+                    return Self { saved: None };
+                }
+                Self { saved: Some(saved) }
+            }
+        }
+        #[cfg(not(unix))]
+        {
+            Self {}
+        }
+    }
+
+    /// Whether echo was actually turned off (never on non-Unix terminals).
+    pub(crate) fn active(&self) -> bool {
+        #[cfg(unix)]
+        {
+            self.saved.is_some()
+        }
+        #[cfg(not(unix))]
+        {
+            false
+        }
+    }
+}
+
+impl Drop for EchoOff {
+    fn drop(&mut self) {
+        #[cfg(unix)]
+        if let Some(saved) = self.saved {
+            // SAFETY: restores the attributes read in `new`.
+            unsafe {
+                libc::tcsetattr(libc::STDIN_FILENO, libc::TCSANOW, &saved);
+            }
+        }
+    }
+}
+
+/// `[Y/n]`: Enter means yes, end of input means no.
+fn confirm_default_yes(
+    question: &str,
+    input: &mut impl std::io::BufRead,
+    out: &mut impl Write,
+) -> Result<bool, CliError> {
+    let _ = write!(out, "{question} [Y/n] ");
+    let _ = out.flush();
+    let mut answer = String::new();
+    let read = input
+        .read_line(&mut answer)
+        .map_err(|e| CliError::Other(e.into()))?;
+    if read == 0 {
+        return Ok(false);
+    }
+    Ok(!matches!(
+        answer.trim().to_ascii_lowercase().as_str(),
+        "n" | "no"
+    ))
+}
+
+/// Substitute `{cli}`, `{profile}`, `{user}` and `{host}` in a configured
+/// provisioning value, e.g. `{cli} for {user} on {host}`.
+fn render_template(template: &str, cli_name: &str, profile: &str) -> String {
+    let mut out = template
+        .replace("{cli}", cli_name)
+        .replace("{profile}", profile);
+    if out.contains("{user}") {
+        out = out.replace("{user}", &current_user());
+    }
+    if out.contains("{host}") {
+        out = out.replace("{host}", &short_hostname());
+    }
+    out
+}
+
+fn current_user() -> String {
+    std::env::var("USER")
+        .or_else(|_| std::env::var("USERNAME"))
+        .unwrap_or_else(|_| "unknown".to_string())
+}
+
+fn short_hostname() -> String {
+    #[cfg(unix)]
+    {
+        let mut buf = [0u8; 256];
+        // SAFETY: the buffer is valid for `buf.len()` bytes.
+        if unsafe { libc::gethostname(buf.as_mut_ptr().cast(), buf.len()) } == 0 {
+            let end = buf.iter().position(|&b| b == 0).unwrap_or(buf.len());
+            if let Ok(host) = std::str::from_utf8(&buf[..end]) {
+                if let Some(short) = host.split('.').next().filter(|h| !h.is_empty()) {
+                    return short.to_string();
+                }
+            }
+        }
+    }
+    std::env::var("COMPUTERNAME")
+        .or_else(|_| std::env::var("HOSTNAME"))
+        .unwrap_or_else(|_| "unknown".to_string())
+}
+
+/// Run `f` authenticated as `typed` instead of the caller's stored or env
+/// credential, without writing `typed` anywhere.
+///
+/// The auth chain is fixed at startup, so the override is applied where it
+/// reads: the keyring store answers `typed` for every scheme of the same
+/// shape, and the schemes' env vars are cleared for the call (they outrank
+/// the keyring when no profile is selected). Both are restored afterwards.
+async fn with_typed_credential<T, Fut>(
+    ctx: &ProfilesContext<'_>,
+    typed: &TypedCredential,
+    f: impl FnOnce() -> Fut,
+) -> Result<T, CliError>
+where
+    Fut: std::future::Future<Output = Result<T, CliError>>,
+{
+    with_credential_value(ctx, &typed.scheme, typed.stored()?, true, f).await
+}
+
+/// Run `f` with `value` answering keyring reads for `scheme` (and, with
+/// `same_shape`, every scheme shaped like it), with the env vars that would
+/// shadow it cleared.
+async fn with_credential_value<T, Fut>(
+    ctx: &ProfilesContext<'_>,
+    scheme: &str,
+    value: String,
+    same_shape: bool,
+    f: impl FnOnce() -> Fut,
+) -> Result<T, CliError>
+where
+    Fut: std::future::Future<Output = Result<T, CliError>>,
+{
+    let shape = login::scheme_credential_fields(scheme, ctx.auth_bindings);
+    let schemes: Vec<String> = ctx
+        .auth_bindings
+        .iter()
+        .filter(|(name, _)| {
+            name.as_str() == scheme
+                || (same_shape && login::scheme_credential_fields(name, ctx.auth_bindings) == shape)
+        })
+        .map(|(name, _)| name.clone())
+        .collect();
+    let previous = active_store();
+    set_active_store(Arc::new(TypedCredentialStore {
+        inner: Arc::clone(&previous),
+        schemes,
+        value,
+    }));
+    let saved: Vec<(String, Option<std::ffi::OsString>)> = ctx
+        .auth_bindings
+        .iter()
+        .flat_map(|(name, _)| login::shadowing_env_vars(ctx.cli_name, name, ctx.auth_bindings))
+        .map(|var| {
+            let value = std::env::var_os(&var);
+            (var, value)
+        })
+        .collect();
+    for (var, _) in &saved {
+        std::env::remove_var(var);
+    }
+    let _restore = CredentialOverrideGuard {
+        store: Some(previous),
+        env: saved,
+    };
+    f().await
+}
+
+/// Puts the keyring store and env vars back when the override ends, including
+/// on panic or when the future is dropped mid-request.
+struct CredentialOverrideGuard {
+    store: Option<Arc<dyn KeyringStore>>,
+    env: Vec<(String, Option<std::ffi::OsString>)>,
+}
+
+impl Drop for CredentialOverrideGuard {
+    fn drop(&mut self) {
+        for (var, value) in self.env.drain(..) {
+            match value {
+                Some(value) => std::env::set_var(&var, value),
+                None => std::env::remove_var(&var),
+            }
+        }
+        if let Some(store) = self.store.take() {
+            set_active_store(store);
+        }
+    }
+}
+
+/// A keyring view that answers one typed credential for the given schemes'
+/// accounts and defers everything else to the real store.
+struct TypedCredentialStore {
+    inner: Arc<dyn KeyringStore>,
+    schemes: Vec<String>,
+    value: String,
+}
+
+impl std::fmt::Debug for TypedCredentialStore {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("TypedCredentialStore")
+            .field("schemes", &self.schemes)
+            .finish_non_exhaustive()
+    }
+}
+
+impl TypedCredentialStore {
+    fn covers(&self, account: &str) -> bool {
+        self.schemes.iter().any(|scheme| {
+            account == scheme
+                || account
+                    .strip_prefix(scheme.as_str())
+                    .is_some_and(|rest| rest.starts_with('#'))
+        })
+    }
+}
+
+impl KeyringStore for TypedCredentialStore {
+    fn get(&self, service: &str, account: &str) -> Result<Option<String>, CliError> {
+        if self.covers(account) {
+            return Ok(Some(self.value.clone()));
+        }
+        self.inner.get(service, account)
+    }
+
+    fn set(&self, service: &str, account: &str, value: &str) -> Result<(), CliError> {
+        self.inner.set(service, account, value)
+    }
+
+    fn delete(&self, service: &str, account: &str) -> Result<(), CliError> {
+        self.inner.delete(service, account)
+    }
+
+    fn backend_label(&self) -> String {
+        self.inner.backend_label()
+    }
+}
+
 /// Ask a `[y/N]` question on `out` and read one line of `input`. Anything
 /// but `y`/`yes` (case-insensitive), including EOF, is a no.
 fn confirm(
@@ -2481,6 +3271,144 @@ fn confirm(
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    fn basic_binding() -> SchemeBinding {
+        SchemeBinding::Basic {
+            username: AuthCredentialSource::Missing,
+            password: AuthCredentialSource::Missing,
+        }
+    }
+
+    #[test]
+    fn provision_scheme_picks_the_scheme_the_key_fills_when_ambiguous() {
+        let bindings = vec![
+            ("bearer".to_string(), SchemeBinding::Token(AuthCredentialSource::Missing)),
+            ("accountSid_authToken".to_string(), basic_binding()),
+            ("other_basic".to_string(), basic_binding()),
+        ];
+        let op = super::super::ProvisionOperation::new("keys.create")
+            .credential_field("username", "sid")
+            .credential_field("password", "secret");
+        assert_eq!(
+            provision_scheme(None, &op, &bindings, &[]).unwrap(),
+            "accountSid_authToken"
+        );
+        let explicit = "other_basic".to_string();
+        assert_eq!(
+            provision_scheme(Some(&explicit), &op, &bindings, &[]).unwrap(),
+            "other_basic"
+        );
+        let token_op = super::super::ProvisionOperation::new("keys.create").credential_field("token", "key");
+        assert_eq!(provision_scheme(None, &token_op, &bindings, &[]).unwrap(), "bearer");
+        let no_match = super::super::ProvisionOperation::new("keys.create").credential_field("client_id", "id");
+        assert!(provision_scheme(None, &no_match, &bindings, &[]).is_err());
+    }
+
+    #[test]
+    fn confirm_default_yes_treats_enter_as_yes_and_eof_as_no() {
+        let mut out = Vec::new();
+        assert!(confirm_default_yes("q", &mut &b"\n"[..], &mut out).unwrap());
+        assert!(confirm_default_yes("q", &mut &b"Y\n"[..], &mut out).unwrap());
+        assert!(!confirm_default_yes("q", &mut &b"n\n"[..], &mut out).unwrap());
+        assert!(!confirm_default_yes("q", &mut &b"no\n"[..], &mut out).unwrap());
+        assert!(!confirm_default_yes("q", &mut &b""[..], &mut out).unwrap());
+    }
+
+    #[test]
+    fn prompt_line_falls_back_to_the_default() {
+        let mut out = Vec::new();
+        assert_eq!(
+            prompt_line("Profile name", Some("default"), &mut &b"\n"[..], &mut out).unwrap(),
+            "default"
+        );
+        assert_eq!(
+            prompt_line(
+                "Profile name",
+                Some("default"),
+                &mut &b" prod \n"[..],
+                &mut out
+            )
+            .unwrap(),
+            "prod"
+        );
+        assert_eq!(
+            String::from_utf8(out).unwrap(),
+            "Profile name [default]: Profile name [default]: "
+        );
+    }
+
+    #[test]
+    fn render_template_substitutes_known_placeholders() {
+        let rendered = render_template("{cli} for {user} on {host} ({profile})", "twilio", "prod");
+        assert!(rendered.starts_with("twilio for "), "{rendered}");
+        assert!(rendered.ends_with(" (prod)"), "{rendered}");
+        assert!(!rendered.contains('{'), "{rendered}");
+        assert_eq!(render_template("plain", "twilio", "prod"), "plain");
+    }
+
+    #[test]
+    fn typed_store_answers_only_the_covered_scheme_accounts() {
+        let inner = Arc::new(crate::auth::keyring_store::MockKeyringStore::new());
+        inner.set("cli", "other", "kept").unwrap();
+        let store = TypedCredentialStore {
+            inner: inner.clone(),
+            schemes: vec!["basic".to_string()],
+            value: "typed".to_string(),
+        };
+        assert_eq!(store.get("cli", "basic").unwrap().as_deref(), Some("typed"));
+        assert_eq!(
+            store.get("cli", "basic#prod").unwrap().as_deref(),
+            Some("typed")
+        );
+        assert_eq!(store.get("cli", "basicx").unwrap(), None);
+        assert_eq!(store.get("cli", "other").unwrap().as_deref(), Some("kept"));
+        assert!(
+            !format!("{store:?}").contains("typed"),
+            "Debug must not leak the secret"
+        );
+    }
+
+    #[test]
+    fn typed_credential_stores_basic_halves_as_json() {
+        let typed = TypedCredential {
+            scheme: "basic".to_string(),
+            fields: vec![
+                ("username".to_string(), "AC1".to_string()),
+                ("password".to_string(), "tok".to_string()),
+            ],
+        };
+        assert_eq!(
+            serde_json::from_str::<serde_json::Value>(&typed.stored().unwrap()).unwrap(),
+            serde_json::json!({ "username": "AC1", "password": "tok" })
+        );
+    }
+
+    #[test]
+    fn secret_fields_are_detected_by_name() {
+        assert!(is_secret_field("password"));
+        assert!(is_secret_field("client_secret"));
+        assert!(is_secret_field("token"));
+        assert!(!is_secret_field("username"));
+        assert!(!is_secret_field("client_id"));
+        assert!(!is_secret_field("tokenEndpoint"));
+        assert!(!is_secret_field("secret_name"));
+    }
+
+    #[test]
+    fn a_renamed_provision_flag_keeps_provision_as_an_alias() {
+        let config = ProfilesConfig::new().provision_operation(
+            crate::profiles::ProvisionOperation::new("keys.create").flag("api-key"),
+        );
+        let cmd = build_profiles_command(&config, &Vocabulary::default());
+        for flag in ["--api-key", "--provision"] {
+            let m = cmd
+                .clone()
+                .try_get_matches_from(["profiles", "create", "p", flag])
+                .unwrap();
+            let (_, create) = m.subcommand().unwrap();
+            assert!(create.get_flag("provision"), "{flag}");
+        }
+    }
 
     fn vocabulary() -> Vocabulary {
         let mut vocabulary = Vocabulary {
@@ -2828,6 +3756,16 @@ mod tests {
                 "Profile `sandbox` doesn't exist. Create it? [y/N] "
             );
         }
+    }
+
+    #[test]
+    fn last_profile_warning_only_for_the_only_profile_of_a_guided_cli() {
+        assert_eq!(
+            last_profile_warning(true, 1, "twilio", "profiles").as_deref(),
+            Some("This is your last profile. Run `twilio profiles create` to create another one.")
+        );
+        assert_eq!(last_profile_warning(true, 2, "twilio", "profiles"), None);
+        assert_eq!(last_profile_warning(false, 1, "twilio", "profiles"), None);
     }
 
     #[test]

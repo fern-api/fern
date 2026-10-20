@@ -46,6 +46,10 @@ export const DocsSettingsConfig: core.serialization.ObjectSchema<
         "show-headers-in-examples",
         core.serialization.boolean().optional(),
     ),
+    requireAnalyticsConsent: core.serialization.property(
+        "require-analytics-consent",
+        core.serialization.boolean().optional(),
+    ),
 });
 
 export declare namespace DocsSettingsConfig {
@@ -67,5 +71,6 @@ export declare namespace DocsSettingsConfig {
         "websocket-oneof-display"?: WebSocketOneofDisplay.Raw | null;
         embedding?: EmbeddingConfig.Raw | null;
         "show-headers-in-examples"?: boolean | null;
+        "require-analytics-consent"?: boolean | null;
     }
 }

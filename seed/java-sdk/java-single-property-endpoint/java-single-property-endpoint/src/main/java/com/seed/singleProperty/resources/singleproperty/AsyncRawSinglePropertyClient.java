@@ -6,6 +6,7 @@ package com.seed.singleProperty.resources.singleproperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.singleProperty.core.ClientOptions;
 import com.seed.singleProperty.core.ObjectMappers;
+import com.seed.singleProperty.core.PathSegments;
 import com.seed.singleProperty.core.QueryStringMapper;
 import com.seed.singleProperty.core.RequestOptions;
 import com.seed.singleProperty.core.RetryInterceptor;
@@ -48,7 +49,7 @@ public class AsyncRawSinglePropertyClient {
             String id, GetThingRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegment(id);
+                .addPathSegment(PathSegments.validate(id));
         if (request.getIncludeRemoteData().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl,

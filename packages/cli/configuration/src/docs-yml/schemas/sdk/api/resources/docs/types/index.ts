@@ -38,6 +38,8 @@ export * from "./ChangelogLayout.js";
 export * from "./CheckConfig.js";
 export * from "./CheckRuleSeverity.js";
 export * from "./CheckRulesConfig.js";
+export * from "./CodeBlocksThemeConfig.js";
+export * from "./CodeBlockTheme.js";
 export * from "./CollapsedStringValue.js";
 export * from "./CollapsedValue.js";
 export * from "./ColorConfig.js";

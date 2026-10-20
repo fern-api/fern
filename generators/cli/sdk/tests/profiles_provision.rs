@@ -65,6 +65,7 @@ fn app(provision: bool) -> CliApp {
     if provision {
         config = config.provision_operation(
             ProvisionOperation::new("keys.create")
+                .flag("api-key")
                 .credential_field("username", "sid")
                 .credential_field("password", "secret")
                 .revoke_parameter("Sid", "sid"),
@@ -136,7 +137,9 @@ fn provision_is_registered_and_names_the_operation_when_configured() {
     with_parent_env("https://unused.invalid", || {
         let (code, output) = run(true, &["pv", "profiles", "create", "--help"]);
         assert_eq!(code, 0, "{output}");
-        assert!(output.contains("--provision"), "{output}");
+        assert!(output.contains("--api-key"), "{output}");
+        // The original spelling stays accepted, but hidden.
+        assert!(!output.contains("--provision"), "{output}");
         assert!(
             output.contains("keys create"),
             "help should name the op: {output}"
@@ -257,6 +260,162 @@ async fn revoke_uses_the_recorded_key_id() {
                     .is_none(),
                 "the minted key must be purged locally too",
             );
+        });
+    })
+    .await
+    .unwrap();
+    drop(server);
+}
+
+// "SKnew:s3cret" in base64.
+const KEY_BASIC: &str = "Basic U0tuZXc6czNjcmV0";
+
+#[tokio::test]
+#[serial]
+async fn revoke_authenticates_with_the_profiles_stored_key() {
+    // `profiles` commands run unprofiled, so without the parent's env vars
+    // the revoke must still find the profile's own key in the keyring.
+    let server = MockServer::start().await;
+    Mock::given(method("POST"))
+        .and(path("/Accounts/ACparent/Keys"))
+        .respond_with(ResponseTemplate::new(201).set_body_json(serde_json::json!({
+            "sid": "SKnew",
+            "secret": "s3cret"
+        })))
+        .mount(&server)
+        .await;
+    Mock::given(method("DELETE"))
+        .and(path("/Accounts/ACparent/Keys/SKnew"))
+        .and(header("authorization", KEY_BASIC))
+        .respond_with(ResponseTemplate::new(204))
+        .expect(1)
+        .mount(&server)
+        .await;
+    let uri = server.uri();
+
+    tokio::task::spawn_blocking(move || {
+        with_parent_env(&uri, || {
+            let (code, output) = run(
+                true,
+                &[
+                    "pv",
+                    "profiles",
+                    "create",
+                    "prod",
+                    "--set",
+                    "AccountSid=ACparent",
+                    "--api-key",
+                ],
+            );
+            assert_eq!(code, 0, "{output}");
+            std::env::remove_var("PV_USERNAME");
+            std::env::remove_var("PV_PASSWORD");
+            let (code, output) = run(
+                true,
+                &["pv", "profiles", "remove", "prod", "--yes", "--revoke"],
+            );
+            assert_eq!(code, 0, "{output}");
+        });
+    })
+    .await
+    .unwrap();
+    drop(server);
+}
+
+#[tokio::test]
+#[serial]
+async fn revoke_ignores_a_partial_parent_credential_in_env() {
+    // Only the username in env is not a parent credential: the stored key
+    // still signs the revoke instead of a half-env, half-keyring mix.
+    let server = MockServer::start().await;
+    Mock::given(method("POST"))
+        .and(path("/Accounts/ACparent/Keys"))
+        .respond_with(ResponseTemplate::new(201).set_body_json(serde_json::json!({
+            "sid": "SKnew",
+            "secret": "s3cret"
+        })))
+        .mount(&server)
+        .await;
+    Mock::given(method("DELETE"))
+        .and(path("/Accounts/ACparent/Keys/SKnew"))
+        .and(header("authorization", KEY_BASIC))
+        .respond_with(ResponseTemplate::new(204))
+        .expect(1)
+        .mount(&server)
+        .await;
+    let uri = server.uri();
+
+    tokio::task::spawn_blocking(move || {
+        with_parent_env(&uri, || {
+            let (code, output) = run(
+                true,
+                &[
+                    "pv",
+                    "profiles",
+                    "create",
+                    "prod",
+                    "--set",
+                    "AccountSid=ACparent",
+                    "--api-key",
+                ],
+            );
+            assert_eq!(code, 0, "{output}");
+            std::env::remove_var("PV_PASSWORD");
+            let (code, output) = run(
+                true,
+                &["pv", "profiles", "remove", "prod", "--yes", "--revoke"],
+            );
+            assert_eq!(code, 0, "{output}");
+        });
+    })
+    .await
+    .unwrap();
+    drop(server);
+}
+
+#[tokio::test]
+#[serial]
+async fn revoke_prefers_the_parent_credentials_in_env() {
+    // Twilio rejects a standard key on its own Keys endpoint (70004), so
+    // parent credentials, when the user has them in env, sign the revoke.
+    let server = MockServer::start().await;
+    Mock::given(method("POST"))
+        .and(path("/Accounts/ACparent/Keys"))
+        .respond_with(ResponseTemplate::new(201).set_body_json(serde_json::json!({
+            "sid": "SKnew",
+            "secret": "s3cret"
+        })))
+        .mount(&server)
+        .await;
+    Mock::given(method("DELETE"))
+        .and(path("/Accounts/ACparent/Keys/SKnew"))
+        .and(header("authorization", PARENT_BASIC))
+        .respond_with(ResponseTemplate::new(204))
+        .expect(1)
+        .mount(&server)
+        .await;
+    let uri = server.uri();
+
+    tokio::task::spawn_blocking(move || {
+        with_parent_env(&uri, || {
+            let (code, output) = run(
+                true,
+                &[
+                    "pv",
+                    "profiles",
+                    "create",
+                    "prod",
+                    "--set",
+                    "AccountSid=ACparent",
+                    "--api-key",
+                ],
+            );
+            assert_eq!(code, 0, "{output}");
+            let (code, output) = run(
+                true,
+                &["pv", "profiles", "remove", "prod", "--yes", "--revoke"],
+            );
+            assert_eq!(code, 0, "{output}");
         });
     })
     .await

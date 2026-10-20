@@ -1262,6 +1262,17 @@
           ],
           "description": "If true, this version will be hidden from navigation, search, and indexing, but still accessible via direct URL."
         },
+        "default": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If true, this version is the default version: it is served at the unversioned URLs\n(without the version slug) and is used for canonical URLs, the sitemap, search, and\n`llms.txt`. The order of the `versions` list only controls the order in the version\nswitcher. At most one version in a `versions` list may set `default: true`, and the\ndefault version cannot be `hidden`. A default version may be built from the working\ntree (`path`) or from a git ref (`ref`). If no version sets `default`, the first\nversion in the list is the default."
+        },
         "announcement": {
           "oneOf": [
             {
@@ -7011,6 +7022,17 @@
             }
           ],
           "description": "If set to true, response examples in the API Reference include a raw HTTP block\nshowing the response status line and response headers alongside the body.\n\n@default: false"
+        },
+        "require-analytics-consent": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If set to true, Fern's built-in docs analytics (PostHog) stays off until visitor consent is given:\nno script, cookies, local storage or events. Grant consent from a custom script (e.g. your consent\nmanager's callback) by setting `window.fernAnalyticsConsent = true` and dispatching\n`new Event(\"fern-analytics-consent\")` on `window`.\n\n@default: false"
         }
       },
       "additionalProperties": false
@@ -7188,6 +7210,50 @@
       },
       "additionalProperties": false
     },
+    "docs.CodeBlockTheme": {
+      "type": "string",
+      "enum": [
+        "github-dark",
+        "github-dark-default",
+        "github-dark-dimmed",
+        "github-dark-high-contrast",
+        "github-light",
+        "github-light-default",
+        "github-light-high-contrast",
+        "material-theme-darker",
+        "min-dark",
+        "min-light"
+      ],
+      "description": "A supported Shiki syntax-highlighting theme (https://shiki.style/themes)."
+    },
+    "docs.CodeBlocksThemeConfig": {
+      "type": "object",
+      "properties": {
+        "light": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CodeBlockTheme"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Code block theme used in light mode. Defaults to `min-light`."
+        },
+        "dark": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CodeBlockTheme"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Code block theme used in dark mode. Defaults to `material-theme-darker`."
+        }
+      },
+      "additionalProperties": false
+    },
     "docs.ThemeConfig": {
       "type": "object",
       "properties": {
@@ -7271,6 +7337,17 @@
             }
           ],
           "description": "Header switcher listing the other docs sites published to the same\ndomain under different basepaths. Membership is discovered\nautomatically at publish time; this only controls presentation."
+        },
+        "code-blocks": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CodeBlocksThemeConfig"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Syntax-highlighting color schemes for code blocks, set separately\nfor light and dark mode. Defaults to `min-light` and\n`material-theme-darker`."
         }
       },
       "additionalProperties": false
