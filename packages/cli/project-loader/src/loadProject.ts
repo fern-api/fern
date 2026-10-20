@@ -20,6 +20,7 @@ import { handleFailedWorkspaceParserResult, loadAPIWorkspace, loadDocsWorkspace 
 import chalk from "chalk";
 import { readdir } from "fs/promises";
 
+import { getDocsApiSectionsWithInlineSpecs } from "./getDocsApiSectionsWithInlineSpecs.js";
 import { normalizeCommandLineApiWorkspace } from "./normalizeCommandLineApiWorkspace.js";
 import { Project, SdkConfigWorkspace } from "./Project.js";
 
@@ -102,14 +103,19 @@ export async function loadProjectFromDirectory({
         doesPathExist(join(absolutePathToFernDirectory, RelativeFilePath.of(ASYNCAPI_DIRECTORY)))
     ]);
 
+    const docsWorkspaces = await loadDocsWorkspace({ fernDirectory: absolutePathToFernDirectory, context });
+
+    const hasApiConfiguration = apisExists || defExists || genExists || genAltExists || legacyGenExists;
+    // Without generators.yml, an openapi/ or asyncapi/ directory can only be consumed by docs.yml
+    // `specs`, so it must not be loaded as a (necessarily misconfigured) legacy API workspace.
+    const specDirectoryIsOnlyReferencedByDocs =
+        !hasApiConfiguration &&
+        docsWorkspaces != null &&
+        getDocsApiSectionsWithInlineSpecs(docsWorkspaces.config.navigation).length > 0;
+
     if (
-        apisExists ||
-        defExists ||
-        genExists ||
-        genAltExists ||
-        legacyGenExists ||
-        openapiExists ||
-        asyncapiExists ||
+        hasApiConfiguration ||
+        ((openapiExists || asyncapiExists) && !specDirectoryIsOnlyReferencedByDocs) ||
         (skipApiWorkspaces && sdkConfigExists)
     ) {
         apiWorkspaces = await loadApis({
@@ -131,8 +137,6 @@ export async function loadProjectFromDirectory({
     ) {
         sdkConfigWorkspaces.push({ absoluteFilePath: absolutePathToFernDirectory, workspaceName: undefined });
     }
-
-    const docsWorkspaces = await loadDocsWorkspace({ fernDirectory: absolutePathToFernDirectory, context });
 
     if (
         apiWorkspaces.length === 0 &&

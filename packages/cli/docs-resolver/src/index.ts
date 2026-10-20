@@ -30,6 +30,7 @@ export {
 } from "./DocsDefinitionResolver.js";
 export { resolveThemeFileUrls, stitchGlobalTheme } from "./stitchGlobalTheme.js";
 export { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition.js";
+export { createInlineSpecOssWorkspaces } from "./utils/createInlineSpecOssWorkspaces.js";
 export { filterOssWorkspaces } from "./utils/filterOssWorkspaces.js";
 export { generateFdrFromOpenApiWorkspaceV3 } from "./utils/generateFdrFromOpenAPIWorkspaceV3.js";
 export { updateApiDefinitionIdInTree } from "./utils/resolveDescriptionLinks.js";

@@ -1,6 +1,6 @@
 import { collectAPIWorkspaceViolations } from "@fern-api/api-workspace-validator";
 import { DEFINITION_DIRECTORY, ROOT_API_FILENAME, SDK_CONFIG_FILENAME } from "@fern-api/configuration-loader";
-import { filterOssWorkspaces } from "@fern-api/docs-resolver";
+import { createInlineSpecOssWorkspaces, filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { LazyFernWorkspace, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { Project } from "@fern-api/project-loader";
@@ -65,7 +65,16 @@ export async function validateWorkspaces({
         const docsWorkspace = projectForValidation.docsWorkspaces;
         if (docsWorkspace != null) {
             const excludeRules = brokenLinks || errorOnBrokenLinks ? [] : ["valid-markdown-links"];
-            const ossWorkspaces = await filterOssWorkspaces(projectForValidation);
+            const projectOssWorkspaces = await filterOssWorkspaces(projectForValidation);
+            const ossWorkspaces =
+                projectOssWorkspaces.length > 0
+                    ? projectOssWorkspaces
+                    : createInlineSpecOssWorkspaces({
+                          navigation: docsWorkspace.config.navigation,
+                          absoluteFilepathToDocsConfig: docsWorkspace.absoluteFilepathToDocsConfig,
+                          absoluteFilePathToFernDirectory: docsWorkspace.absoluteFilePath,
+                          cliVersion: cliContext.environment.packageVersion
+                      });
 
             let collected: Awaited<ReturnType<typeof collectDocsWorkspaceViolations>> | undefined;
             await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
