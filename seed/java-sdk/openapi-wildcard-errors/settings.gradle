@@ -1,3 +1,0 @@
-rootProject.name = 'openapi-wildcard-errors'
-
-include 'sample-app'

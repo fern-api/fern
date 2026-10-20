@@ -1,4 +1,0 @@
-name: api-wide-base-path
-base-path: /test/{pathParam}
-path-parameters:
-  pathParam: string

@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="src/SeedErrorProperty.Test/SeedErrorProperty.Test.csproj" />
-  <Project Path="src/SeedErrorProperty/SeedErrorProperty.csproj" />
-</Solution>

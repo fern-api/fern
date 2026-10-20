@@ -1,8 +1,0 @@
-service:
-  auth: false
-  base-path: /
-  endpoints:
-    downloadFile:
-      path: ""
-      method: POST
-      response: file

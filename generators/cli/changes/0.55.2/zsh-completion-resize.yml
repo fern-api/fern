@@ -1,9 +1,0 @@
-# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
-
-- summary: |
-    zsh TAB completion no longer stacks copies of the prompt and list when the window is resized while a list
-    is open (macOS Terminal.app, iTerm2, tmux and other terminals that re-wrap lines on resize). The zsh
-    registration script now sets the `last-prompt` completion style to false for this CLI only, so zsh
-    prints the prompt again below the list instead of jumping back above it. Other commands' completion
-    and the user's own zsh settings are unchanged.
-  type: fix

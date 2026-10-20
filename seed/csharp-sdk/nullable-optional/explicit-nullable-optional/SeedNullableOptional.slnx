@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="src/SeedNullableOptional.Test/SeedNullableOptional.Test.csproj" />
-  <Project Path="src/SeedNullableOptional/SeedNullableOptional.csproj" />
-</Solution>

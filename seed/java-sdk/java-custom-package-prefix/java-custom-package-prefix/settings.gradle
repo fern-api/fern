@@ -1,3 +1,0 @@
-rootProject.name = 'java-custom-package-prefix'
-
-include 'sample-app'

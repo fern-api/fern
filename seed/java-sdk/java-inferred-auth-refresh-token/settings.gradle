@@ -1,3 +1,0 @@
-rootProject.name = 'java-inferred-auth-refresh-token'
-
-include 'sample-app'

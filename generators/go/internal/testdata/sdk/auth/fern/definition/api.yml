@@ -1,6 +1,0 @@
-name: api
-auth: custom
-auth-schemes:
-  custom:
-    header: X-API-Key
-    type: literal<"fern">

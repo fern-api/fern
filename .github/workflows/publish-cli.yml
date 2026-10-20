@@ -8,10 +8,8 @@ on:
       - "fern/**"
       - "guides/**"
       - ".vscode/**"
-      - "docker/seed/**"
       - "test-definitions/**"
       - "test-definitions-openapi/**"
-      - "seed/**"
   workflow_dispatch:
     inputs:
       version:

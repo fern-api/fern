@@ -4,6 +4,7 @@ import { join, posix } from "node:path";
 import YAML from "yaml";
 
 import { FIXTURES } from "../helpers.js";
+import { FIXTURE_CONFIGS } from "./fixtureConfigs.js";
 
 /** The fern repository root, from this file's fixtures folder. */
 export const REPO_ROOT = join(FIXTURES, "..", "..", "..", "..", "..", "..", "..", "..", "..");
@@ -23,15 +24,12 @@ export async function roundTripFixtures(): Promise<string[]> {
 
 /**
  * The fixture's original generators.yml: its test definition's `auth-schemes` and `api`, and one
- * `cli` group whose `config` is the first variant of the fixture in seed/cli/seed.yml (the same
+ * `cli` group whose `config` comes from FIXTURE_CONFIGS (the same
  * construction as the hosted bridge's fixtures).
  */
 export async function originalGeneratorsYml(fixture: string): Promise<Record<string, unknown>> {
     const definition = parseRecord(await readFile(join(TEST_DEFINITIONS, fixture, "generators.yml"), "utf8"));
-    const seed = parseRecord(await readFile(join(REPO_ROOT, "seed", "cli", "seed.yml"), "utf8"));
-    const variants = record(seed.fixtures)?.[fixture];
-    const first = Array.isArray(variants) ? record(variants[0]) : undefined;
-    const config = record(first?.customConfig);
+    const config = FIXTURE_CONFIGS[fixture];
     return {
         ...(definition["auth-schemes"] != null ? { "auth-schemes": definition["auth-schemes"] } : {}),
         api: definition.api,

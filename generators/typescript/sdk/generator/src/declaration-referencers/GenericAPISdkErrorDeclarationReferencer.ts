@@ -1,7 +1,0 @@
-import { AbstractSdkErrorDeclarationReferencer } from "./AbstractSdkErrorDeclarationReferencer.js";
-
-export class GenericAPISdkErrorDeclarationReferencer extends AbstractSdkErrorDeclarationReferencer {
-    public getExportedName(): string {
-        return this.namingOverride ?? `${this.namespaceExport}Error`;
-    }
-}

@@ -1,6 +1,5 @@
 {
   "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.17.1/.schema/devbox.schema.json",
-  "// NOTE": "DO NOT add dotnet to devbox. The C# generators require multiple .NET SDK versions, but devbox can only pin one version at a time. .NET must be installed separately or managed outside of devbox.",
   "packages": [
     "nodejs@24",
     "go@1.23.8",
@@ -35,16 +34,12 @@
       "if [ -f /usr/bin/xcrun ]; then mkdir -p \"$HOME/.local/bin\" && ln -sf /usr/bin/xcrun \"$HOME/.local/bin/xcrun\"; fi # Use system xcrun instead of nix xcbuild",
       "rustup default stable 2>/dev/null || true",
       "rustup component add rustfmt 2>/dev/null || true",
-      "bash scripts/setup-dotnet.sh 2>/dev/null || true",
-      "export DOTNET_ROOT=\"$HOME/.dotnet\"",
-      "export PATH=\"$HOME/.dotnet:$HOME/.dotnet/tools:$PATH\"",
       "echo 'Node.js:' $(node --version)",
       "echo 'pnpm:' $(pnpm --version 2>/dev/null || echo 'not available')",
       "echo 'Go:' $(go version)",
       "echo 'Python:' $(python --version)",
       "echo 'Java:' $(java --version 2>&1 | head -1)",
       "echo 'Gradle:' $(gradle --version 2>&1 | grep Gradle | head -1)",
-      "echo '.NET:' $(dotnet --version 2>/dev/null || echo 'not available (see CLAUDE.md for manual installation')",
       "echo 'Ruby:' $(ruby --version)",
       "echo 'PHP:' $(php --version 2>&1 | head -1)",
       "echo 'Rust:' $(rustc --version 2>/dev/null || echo 'not available')",

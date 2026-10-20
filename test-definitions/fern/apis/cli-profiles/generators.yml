@@ -1,9 +1,7 @@
 # yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
 #
-# The `profiles` opt-in fixture. The `config:` block lives in
-# `seed/cli/seed.yml` rather than here, because seed replaces this file's
-# `config:` wholesale with the `customConfig` it declares per fixture — a
-# block here would be silently dropped.
+# The `profiles` opt-in fixture. The round-trip test supplies its `config:`
+# from `cliGeneratorConfigAdapter/__test__/roundTrip/fixtureConfigs.ts`.
 #
 # What it snapshots: the emitted `main.rs` carries
 # `.profiles(ProfilesConfig::new())` and the `ProfilesConfig` import, and the

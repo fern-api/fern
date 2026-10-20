@@ -29,15 +29,13 @@
     "depcheck": "knip --config ../../knip.json --no-config-hints",
     "dist:cli": "node build.mjs",
     "env:prod": "env-cmd -r .env-cmdrc.cjs -e prod",
-    "generate": "fern generate --local",
     "test": "vitest --run",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --run -u"
   },
   "dependencies": {
     "@boundaryml/baml": "catalog:",
-    "@sentry/cli": "catalog:",
-    "minimatch": "catalog:"
+    "@sentry/cli": "catalog:"
   },
   "devDependencies": {
     "@fern-api/api-workspace-commons": "workspace:*",
@@ -64,12 +62,10 @@
     "ajv": "8.18.0",
     "ajv-formats": "catalog:",
     "chalk": "catalog:",
-    "console-table-printer": "catalog:",
     "find-up": "catalog:",
     "js-yaml": "catalog:",
     "lodash-es": "catalog:",
     "moment": "catalog:",
-    "pretty-ms": "catalog:",
     "semver": "^7.6.2",
     "tmp-promise": "catalog:",
     "tsup": "catalog:",

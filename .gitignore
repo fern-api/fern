@@ -23,19 +23,8 @@ tsconfig.tsbuildinfo
 packages/**/out
 
 # generators
-generators/**/build
-generators/**/lib
-generators/**/dist
-generators/**/tsconfig*tsbuildinfo
-seed/**/tsconfig*tsbuildinfo
-generators/**/out
-seed/**/gradlew
-seed/**/gradlew.bat
-seed/**/gradle
-generators/csharp/playground/**/obj/
 
 # don't ignore the ruby lib within the playground
-!generators/ruby/playground/lib
 
 # next
 .next
@@ -78,8 +67,6 @@ packages/**/generated
 .python-version
 
 # This file is too large to be included in the repository without LFS
-seed/python-sdk/trace/snippet-templates.json
-seed/python-sdk/**/output.prof
 .php-cs-fixer.cache
 
 # Cursor
@@ -106,28 +93,13 @@ docs/superpowers/
 .local
 
 # Seed build artifacts and caches
-seed/**/.gradle/
-seed/**/build/
-seed/**/bin/
-seed/**/obj/
-seed/**/target/
-seed/**/__pycache__/
-seed/**/.pytest_cache/
-seed/**/.mypy_cache/
-seed/**/.ruff_cache/
-seed/**/*.egg-info/
-seed/**/.golangci.yml
 
 # Seed remote-local test outputs, except for seed.yml files
-seed-remote-local/*
-!seed-remote-local/**/seed.yml
 
 # Test logs from test-remote-local.sh
 test-remote-local-logs-*/
 
 # macOS system dirs leaked by local Poetry/Python execution
-seed/**/Library/Application Support/
-seed/**/Library/Caches/
 
 # Devbox gradle properties
 /gradle.properties

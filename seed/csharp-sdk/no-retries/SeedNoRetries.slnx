@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="src/SeedNoRetries.Test/SeedNoRetries.Test.csproj" />
-  <Project Path="src/SeedNoRetries/SeedNoRetries.csproj" />
-</Solution>

@@ -21,7 +21,6 @@
     "**/build": true,
     "**/dist": true,
     "**/generated": true,
-    "**/seed-remote-local/**": true,
     "**/lib": true,
     "**/node_modules": true,
     "**/out": true,
@@ -32,9 +31,7 @@
     "**/*.tsbuildinfo": true,
     "**/*.egg-info": true,
     "pnpm-lock.yaml": true,
-    "test-remote-local-logs-*/**": true,
-    "seed/python-sdk/trace/snippet-templates.json": true,
-    "seed/**/*.prof": true
+    "test-remote-local-logs-*/**": true
   },
   "files.watcherExclude": {
     "**/.next": true,
@@ -52,9 +49,6 @@
     "**/.ruff_cache": true,
     "**/.gradle": true,
     "**/.php-cs-fixer.cache": true,
-    "seed/**": true,
-    "seed-remote-local/**": true,
-    "test-remote-local-logs-*/**": true,
     "**/__snapshots__/**": true,
     "**/__test__/**/output": true,
     "**/build": true,
@@ -76,10 +70,7 @@
     ".turbo": true,
     ".tsup": true,
     ".nx": true,
-    "pnpm-lock.yaml": true,
-    "seed/**/gradlew": true,
-    "seed/**/gradlew.bat": true,
-    "seed/**/gradle/**": true
+    "pnpm-lock.yaml": true
   },
   "files.exclude": {
     "**/.turbo": true,

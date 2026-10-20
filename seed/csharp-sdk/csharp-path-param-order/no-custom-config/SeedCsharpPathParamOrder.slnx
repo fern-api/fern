@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="src/SeedCsharpPathParamOrder.Test/SeedCsharpPathParamOrder.Test.csproj" />
-  <Project Path="src/SeedCsharpPathParamOrder/SeedCsharpPathParamOrder.csproj" />
-</Solution>

@@ -29,48 +29,11 @@ env:
   TURBO_DAEMON: "false"
 
 jobs:
-  # Detect whether this push only touched seed snapshot files.
-  # If so, skip all CI jobs — seed changes cannot break the build.
-  changes-filter:
-    runs-on: ubuntu-latest
-    outputs:
-      should-skip-ci: ${{ steps.check.outputs.should-skip }}
-    steps:
-      - name: Check if push only touches seed files
-        id: check
-        env:
-          COMMIT_MSG: ${{ github.event.head_commit.message }}
-        run: |
-          # Only consider skipping for pushes to main. PRs and dispatches always run CI.
-          if [[ "${{ github.event_name }}" != "push" || "${{ github.ref }}" != "refs/heads/main" ]]; then
-            echo "should-skip=false" >> $GITHUB_OUTPUT
-            exit 0
-          fi
-          # Fast path: if the commit message matches the seed update pattern, skip CI.
-          # Seed snapshot changes cannot break the build, so full CI is unnecessary.
-          FIRST_LINE=$(echo "$COMMIT_MSG" | head -1)
-          if echo "$FIRST_LINE" | grep -qP '^chore\(.+\): update .+-sdk seed|^chore\(.+\): update .+-model seed|^chore\(openapi\): update openapi seed|^chore\(seed\): update'; then
-            echo "should-skip=true" >> $GITHUB_OUTPUT
-            echo "Seed-only commit detected — skipping CI."
-          else
-            echo "should-skip=false" >> $GITHUB_OUTPUT
-          fi
-
   compile:
-    needs: [changes-filter]
-    if: needs.changes-filter.outputs.should-skip-ci != 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6
-        with:
-          sparse-checkout: |
-            /*
-            !seed
-            !seed-remote-local
-            packages/seed/**
-            docker/seed/**
-          sparse-checkout-cone-mode: false
 
       - name: Install
         uses: ./.github/actions/install
@@ -79,20 +42,10 @@ jobs:
         run: pnpm compile
 
   boundaries:
-    needs: [changes-filter]
-    if: needs.changes-filter.outputs.should-skip-ci != 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6
-        with:
-          sparse-checkout: |
-            /*
-            !seed
-            !seed-remote-local
-            packages/seed/**
-            docker/seed/**
-          sparse-checkout-cone-mode: false
 
       - name: Install
         uses: ./.github/actions/install
@@ -101,20 +54,10 @@ jobs:
         run: pnpm boundaries
 
   depcheck:
-    needs: [changes-filter]
-    if: needs.changes-filter.outputs.should-skip-ci != 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6
-        with:
-          sparse-checkout: |
-            /*
-            !seed
-            !seed-remote-local
-            packages/seed/**
-            docker/seed/**
-          sparse-checkout-cone-mode: false
 
       - name: Install
         uses: ./.github/actions/install
@@ -123,20 +66,10 @@ jobs:
         run: pnpm depcheck
 
   validate-cli-dependencies:
-    needs: [changes-filter]
-    if: needs.changes-filter.outputs.should-skip-ci != 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6
-        with:
-          sparse-checkout: |
-            /*
-            !seed
-            !seed-remote-local
-            packages/seed/**
-            docker/seed/**
-          sparse-checkout-cone-mode: false
 
       - name: Install
         uses: ./.github/actions/install
@@ -145,20 +78,10 @@ jobs:
         run: node scripts/validate-cli-dependencies.js
 
   lint:
-    needs: [changes-filter]
-    if: needs.changes-filter.outputs.should-skip-ci != 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6
-        with:
-          sparse-checkout: |
-            /*
-            !seed
-            !seed-remote-local
-            packages/seed/**
-            docker/seed/**
-          sparse-checkout-cone-mode: false
 
       - name: Install
         uses: ./.github/actions/install
@@ -181,20 +104,10 @@ jobs:
         run: git --no-pager diff --exit-code
 
   biome:
-    needs: [changes-filter]
-    if: needs.changes-filter.outputs.should-skip-ci != 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6
-        with:
-          sparse-checkout: |
-            /*
-            !seed
-            !seed-remote-local
-            packages/seed/**
-            docker/seed/**
-          sparse-checkout-cone-mode: false
 
       - name: Install
         uses: ./.github/actions/install
@@ -203,8 +116,7 @@ jobs:
         run: pnpm check:biome
 
   test:
-    needs: [changes-filter]
-    if: github.repository == 'fern-api/fern' && needs.changes-filter.outputs.should-skip-ci != 'true'
+    if: github.repository == 'fern-api/fern'
     runs-on: Test
     timeout-minutes: 25
     steps:
@@ -263,8 +175,7 @@ jobs:
         run: git --no-pager diff --exit-code
 
   test-ete:
-    needs: [changes-filter]
-    if: github.repository == 'fern-api/fern' && needs.changes-filter.outputs.should-skip-ci != 'true'
+    if: github.repository == 'fern-api/fern'
     runs-on: Test
     timeout-minutes: 25
     steps:
@@ -323,10 +234,10 @@ jobs:
       - name: Stop any stale turbo daemon
         run: pnpm turbo daemon stop || true
 
-      - name: Build CLIs (dev + seed)
+      - name: Build CLIs
         timeout-minutes: 10
         run: |
-          ./scripts/turbo-retry.sh pnpm turbo run dist:cli:dev dist:cli --filter=@fern-api/cli --filter=@fern-api/cli-v2 --filter=@fern-api/seed-cli
+          ./scripts/turbo-retry.sh pnpm turbo run dist:cli:dev dist:cli --filter=@fern-api/cli --filter=@fern-api/cli-v2
 
       - name: Pre-pull Docker images used by ETE tests
         run: docker compose -f packages/cli/ete-tests/docker-compose.yml pull
@@ -380,9 +291,8 @@ jobs:
         run: git --no-pager diff --exit-code
 
   live-test-dev:
-    needs: [changes-filter]
     environment: Fern Dev
-    if: github.ref == 'refs/heads/main' && github.repository == 'fern-api/fern' && needs.changes-filter.outputs.should-skip-ci != 'true'
+    if: github.ref == 'refs/heads/main' && github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -403,9 +313,8 @@ jobs:
           ./scripts/live-test.sh "$cli_path" "$FERN_ORG_TOKEN_DEV"
 
   generate-docs-test-windows:
-    needs: [changes-filter]
     environment: Fern Dev
-    if: github.ref == 'refs/heads/main' && github.repository == 'fern-api/fern' && needs.changes-filter.outputs.should-skip-ci != 'true'
+    if: github.ref == 'refs/heads/main' && github.repository == 'fern-api/fern'
     runs-on: windows-latest
     steps:
       - name: Checkout repo
@@ -440,9 +349,8 @@ jobs:
           }
 
   live-test-dev-windows:
-    needs: [changes-filter]
     environment: Fern Dev
-    if: github.ref == 'refs/heads/main' && github.repository == 'fern-api/fern' && needs.changes-filter.outputs.should-skip-ci != 'true'
+    if: github.ref == 'refs/heads/main' && github.repository == 'fern-api/fern'
     runs-on: windows-latest
     steps:
       - name: Checkout repo

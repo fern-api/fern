@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="src/SeedObject.Test/SeedObject.Test.csproj" />
-  <Project Path="src/SeedObject/SeedObject.csproj" />
-</Solution>
