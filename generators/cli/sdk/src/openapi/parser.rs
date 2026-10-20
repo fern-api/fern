@@ -4683,6 +4683,7 @@ fn flatten_body_params_prefix(
                                 description: prop
                                     .description
                                     .clone()
+                                    .or_else(|| resolved.description.clone())
                                     .or_else(|| inner.description.clone()),
                                 shorthand_field: sole_required_string_field(inner, component_schemas),
                                 nullable: composite_nullable,
@@ -12751,6 +12752,48 @@ paths:
         let reply_to = params.get("reply_to").expect("reply_to flag should be emitted");
         assert_eq!(reply_to.param_type.as_deref(), Some("object"));
         assert!(reply_to.nullable, "`nullable: true` on the wrapper keeps null");
+    }
+
+    #[test]
+    fn test_single_branch_one_of_component_keeps_wrapper_description() {
+        // `mapping: $ref Wrapper` where `Wrapper` is `oneOf: [$ref Inner]`: the
+        // flag's help comes from the schema the property points at, not the
+        // branch inside it, same as before the branch was unwrapped.
+        let schema: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: object
+            properties:
+              mapping:
+                $ref: '#/components/schemas/Wrapper'
+            "#,
+        )
+        .unwrap();
+        let wrapper: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: object
+            description: Where to map from.
+            oneOf:
+              - $ref: '#/components/schemas/Inner'
+            "#,
+        )
+        .unwrap();
+        let inner: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: object
+            description: Mapping from a dataset.
+            properties:
+              datasetId:
+                type: string
+            "#,
+        )
+        .unwrap();
+        let mut component_schemas = HashMap::new();
+        component_schemas.insert("Wrapper".to_string(), wrapper);
+        component_schemas.insert("Inner".to_string(), inner);
+        let params = flatten_body_params(&schema, &component_schemas, 0);
+        let mapping = params.get("mapping").expect("mapping flag should be emitted");
+        assert_eq!(mapping.description.as_deref(), Some("Where to map from."));
+        assert!(params.contains_key("mapping.datasetId"), "dotted leaf flag");
     }
 
     #[test]
