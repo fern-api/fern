@@ -23,6 +23,7 @@ export function getDocsInlineSpecPaths({
 export function isDirectoryReferencedBySpecs(directory: AbsoluteFilePath, specPaths: AbsoluteFilePath[]): boolean {
     return specPaths.some((specPath) => {
         const relativePath = path.relative(directory, specPath);
-        return !relativePath.startsWith("..") && !path.isAbsolute(relativePath);
+        // A file named like "..internal.yml" is inside the directory; only ".." and "../x" escape it.
+        return relativePath !== ".." && !relativePath.startsWith(`..${path.sep}`) && !path.isAbsolute(relativePath);
     });
 }
