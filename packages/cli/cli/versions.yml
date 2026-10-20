@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.170.2
+  changelogEntry:
+    - summary: |
+        Wait up to 18 minutes for an sdk-gen-api build so its 15-minute build timeout is reported first.
+        When the wait expires, the CLI checks the build status once more and fails with an internal
+        error instead of a network error if the build is still running. Failed targets now show the
+        sdk-gen-api error code with the message (for example, `FERN_BUILD_TIMEOUT: ...`).
+      type: fix
+  createdAt: "2026-10-20"
+  irVersion: 67
 - version: 5.170.1
   changelogEntry:
     - summary: |
