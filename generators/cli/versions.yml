@@ -1,4 +1,20 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.57.0
+  changelogEntry:
+    - summary: |
+        Add the `x-fern-cli-table` OpenAPI operation extension. It sets the
+        columns that `--format table` shows for that command: header, field
+        path (after `x-fern-sdk-return-value` extraction), order, alignment,
+        max width, `format: date`, and optional columns hidden by default.
+        Commands with the extension get a `--columns` flag (`--table-columns`
+        when the operation already has a `columns` parameter) to pick columns
+        (`name,stage`), add or remove them (`+description,-v`), or show every
+        field (`all`). `--query` and the JSON, YAML, CSV, JSONL and raw formats
+        are unchanged and keep the full response. Commands without the
+        extension print the same tables as before.
+      type: feat
+  createdAt: "2026-10-20"
+  irVersion: 67
 - version: 0.56.0
   changelogEntry:
     - summary: |
