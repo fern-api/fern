@@ -20,6 +20,7 @@ import { handleFailedWorkspaceParserResult, loadAPIWorkspace, loadDocsWorkspace 
 import chalk from "chalk";
 import { readdir } from "fs/promises";
 
+import { getDocsInlineSpecPaths, isDirectoryReferencedBySpecs } from "./getDocsInlineSpecPaths.js";
 import { normalizeCommandLineApiWorkspace } from "./normalizeCommandLineApiWorkspace.js";
 import { Project, SdkConfigWorkspace } from "./Project.js";
 
@@ -102,16 +103,33 @@ export async function loadProjectFromDirectory({
         doesPathExist(join(absolutePathToFernDirectory, RelativeFilePath.of(ASYNCAPI_DIRECTORY)))
     ]);
 
-    if (
-        apisExists ||
-        defExists ||
-        genExists ||
-        genAltExists ||
-        legacyGenExists ||
-        openapiExists ||
-        asyncapiExists ||
-        (skipApiWorkspaces && sdkConfigExists)
-    ) {
+    const docsWorkspaces = await loadDocsWorkspace({ fernDirectory: absolutePathToFernDirectory, context });
+
+    const hasApiConfiguration = apisExists || defExists || genExists || genAltExists || legacyGenExists;
+    // Without generators.yml, an openapi/ or asyncapi/ directory can only be consumed by docs.yml
+    // `specs`, so a directory that docs.yml references must not be loaded as a (necessarily
+    // misconfigured) legacy API workspace. A directory that docs.yml does not reference still is,
+    // so its misconfiguration keeps being reported.
+    const inlineSpecPaths =
+        !hasApiConfiguration && docsWorkspaces != null
+            ? getDocsInlineSpecPaths({
+                  navigation: docsWorkspaces.config.navigation,
+                  absoluteFilepathToDocsConfig: docsWorkspaces.absoluteFilepathToDocsConfig
+              })
+            : [];
+    const unreferencedSpecDirectoryExists =
+        (openapiExists &&
+            !isDirectoryReferencedBySpecs(
+                join(absolutePathToFernDirectory, RelativeFilePath.of(OPENAPI_DIRECTORY)),
+                inlineSpecPaths
+            )) ||
+        (asyncapiExists &&
+            !isDirectoryReferencedBySpecs(
+                join(absolutePathToFernDirectory, RelativeFilePath.of(ASYNCAPI_DIRECTORY)),
+                inlineSpecPaths
+            ));
+
+    if (hasApiConfiguration || unreferencedSpecDirectoryExists || (skipApiWorkspaces && sdkConfigExists)) {
         apiWorkspaces = await loadApis({
             cliName,
             fernDirectory: absolutePathToFernDirectory,
@@ -131,8 +149,6 @@ export async function loadProjectFromDirectory({
     ) {
         sdkConfigWorkspaces.push({ absoluteFilePath: absolutePathToFernDirectory, workspaceName: undefined });
     }
-
-    const docsWorkspaces = await loadDocsWorkspace({ fernDirectory: absolutePathToFernDirectory, context });
 
     if (
         apiWorkspaces.length === 0 &&
