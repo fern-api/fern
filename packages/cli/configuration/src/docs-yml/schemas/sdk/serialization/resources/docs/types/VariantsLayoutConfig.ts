@@ -4,24 +4,16 @@ import type * as FernDocsConfig from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { VariantsColumnHeight } from "./VariantsColumnHeight.js";
-import { VariantsLocation } from "./VariantsLocation.js";
-import { VariantsLocationLayoutConfig } from "./VariantsLocationLayoutConfig.js";
 
 export const VariantsLayoutConfig: core.serialization.ObjectSchema<
     serializers.VariantsLayoutConfig.Raw,
     FernDocsConfig.VariantsLayoutConfig
 > = core.serialization.object({
-    defaultLocation: core.serialization.property("default-location", VariantsLocation.optional()),
     defaultColumnHeight: core.serialization.property("default-column-height", VariantsColumnHeight.optional()),
-    tab: VariantsLocationLayoutConfig.optional(),
-    sidebar: VariantsLocationLayoutConfig.optional(),
 });
 
 export declare namespace VariantsLayoutConfig {
     export interface Raw {
-        "default-location"?: VariantsLocation.Raw | null;
         "default-column-height"?: VariantsColumnHeight.Raw | null;
-        tab?: VariantsLocationLayoutConfig.Raw | null;
-        sidebar?: VariantsLocationLayoutConfig.Raw | null;
     }
 }

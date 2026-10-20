@@ -1997,8 +1997,48 @@ export class DocsDefinitionResolver {
         contentSource?: docsYml.VersionContentSource
     ): Promise<FernNavigation.V1.SidebarRootNode> {
         const id = this.#idgen.get(`${prefix}/root`);
+        const varianted = await this.toVariantedNode({
+            id,
+            label: `Tab "${tabTitle}"`,
+            variants,
+            location,
+            columnHeight,
+            menu,
+            parentSlug,
+            contentSource
+        });
+        return {
+            type: "sidebarRoot",
+            id,
+            collapsed: undefined,
+            children: [varianted]
+        };
+    }
+
+    private async toVariantedNode({
+        id,
+        label,
+        variants,
+        location,
+        columnHeight,
+        menu,
+        parentSlug,
+        contentSource,
+        variantIdPrefix
+    }: {
+        id: FernNavigation.V1.NodeId;
+        label: string;
+        variants: docsYml.TabVariant[];
+        location: docsYml.VariantsLocation;
+        columnHeight: docsYml.VariantsColumnHeight | undefined;
+        menu: docsYml.TabVariantMenuItem[] | undefined;
+        parentSlug: FernNavigation.V1.SlugGenerator;
+        contentSource: docsYml.VersionContentSource | undefined;
+        /** Keeps variant IDs unique when several dropdown items have variants with the same title. */
+        variantIdPrefix?: string;
+    }): Promise<VariantedNodeWithMenu> {
         const variantNodes = await Promise.all(
-            variants.map((item) => this.toVariantNode(item, id, parentSlug, contentSource))
+            variants.map((item) => this.toVariantNode(item, id, parentSlug, contentSource, variantIdPrefix))
         );
         const layout = this.parsedDocsConfig.layout;
         const settings = docsYml.resolveVariantsSettings({
@@ -2009,7 +2049,7 @@ export class DocsDefinitionResolver {
         });
         if (settings.fellBackToSidebar) {
             this.taskContext.logger.warn(
-                `Tab "${tabTitle}" places its variants in the header tab, but header tabs are off (set \`layout.tabs-placement: header\`). Showing them in the sidebar instead.`
+                `${label} has a dropdown, but header tabs are off (set \`layout.tabs-placement: header\`). Showing its items in the sidebar instead.`
             );
         }
         // Keyed by object identity: parseDocsConfiguration builds `variants` from the same TabVariant
@@ -2035,7 +2075,7 @@ export class DocsDefinitionResolver {
                     assertNever(entry);
             }
         };
-        const varianted: VariantedNodeWithMenu = {
+        return {
             type: "varianted",
             id,
             collapsed: undefined,
@@ -2048,19 +2088,14 @@ export class DocsDefinitionResolver {
                     : toMenuEntry(item)
             )
         };
-        return {
-            type: "sidebarRoot",
-            id,
-            collapsed: undefined,
-            children: [varianted]
-        };
     }
 
     private async toVariantNode(
         item: docsYml.TabVariant,
         prefix: string,
         parentSlug: FernNavigation.V1.SlugGenerator,
-        contentSource?: docsYml.VersionContentSource
+        contentSource?: docsYml.VersionContentSource,
+        variantIdPrefix?: string
     ): Promise<FernNavigation.V1.VariantNode> {
         const id = this.#idgen.get(`${prefix}/variant/${item.slug ?? kebabCase(item.title)}`);
         const variantSlug = parentSlug.apply({
@@ -2071,11 +2106,28 @@ export class DocsDefinitionResolver {
             item.layout.map((item) => this.toVariantChild(item, id, variantSlug, contentSource))
         );
         const children = childrenWithNulls.filter((child): child is FernNavigation.V1.VariantChild => child != null);
+        if (item.nestedVariants != null) {
+            const nested = await this.toVariantedNode({
+                id: this.#idgen.get(`${id}/varianted`),
+                label: `Dropdown item "${item.title}"`,
+                variants: item.nestedVariants.variants,
+                location: "sidebar",
+                columnHeight: item.nestedVariants.columnHeight,
+                menu: item.nestedVariants.menu,
+                parentSlug: variantSlug,
+                contentSource,
+                variantIdPrefix: item.title
+            });
+            // @ts-expect-error The pinned fdr-sdk's VariantChild predates varianted nodes under a variant; remove after bumping it.
+            children.push(nested);
+        }
         return {
             type: "variant",
             id,
             collapsed: undefined,
-            variantId: FernNavigation.V1.VariantId(item.title),
+            variantId: FernNavigation.V1.VariantId(
+                variantIdPrefix != null ? `${variantIdPrefix}/${item.title}` : item.title
+            ),
             subtitle: item.subtitle ?? "",
             default: item.default ?? false,
             image: undefined,

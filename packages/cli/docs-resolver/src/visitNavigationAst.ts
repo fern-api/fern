@@ -48,10 +48,10 @@ export async function visitNavigationAst({
                             });
                         })
                     );
-                } else if (tabbedNavigationItemHasVariants(tab)) {
+                } else if (docsYml.isRawTabWithVariantLayouts(tab)) {
                     await Promise.all(
-                        docsYml.flattenRawTabVariants(tab.variants).flatMap(({ variant }) =>
-                            variant.layout.map(async (item: docsYml.RawSchemas.NavigationItem) => {
+                        docsYml.flattenRawTabLayouts(tab).flatMap(({ layout }) =>
+                            layout.map(async (item: docsYml.RawSchemas.NavigationItem) => {
                                 await visitNavigationItem({
                                     navigationItem: item,
                                     visitor,

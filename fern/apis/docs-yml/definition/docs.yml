@@ -840,6 +840,7 @@ types:
     union:
       - TabbedNavigationItemWithLayout
       - TabbedNavigationItemWithVariants
+      - TabbedNavigationItemWithDropdown
 
   TabbedNavigationItemWithLayout:
     properties:
@@ -851,22 +852,65 @@ types:
   TabbedNavigationItemWithVariants:
     properties:
       tab: TabId
-      variants-location:
-        type: optional<VariantsLocation>
-        docs: |
-          Where the variant selector renders. `tab` opens a menu from the header tab (requires header tabs);
-          `sidebar` shows a dropdown at the top of the sidebar. Overrides `layout.variants.default-location`.
       variants-column-height:
         type: optional<VariantsColumnHeight>
         docs: |
-          Maximum number of items per column in the variant menu. `no-limit` keeps a single column.
-          Overrides the `layout.variants` defaults.
-      variants: list<TabVariantItem>
+          Maximum number of items per column in the sidebar variant selector. `no-limit` keeps a single column.
+          Overrides `layout.variants.default-column-height`.
+      variants:
+        type: list<TabVariantItem>
+        docs: Variants shown in a selector at the top of the tab's sidebar.
 
-  VariantsLocation:
-    enum:
-      - tab
-      - sidebar
+  TabbedNavigationItemWithDropdown:
+    properties:
+      tab: TabId
+      dropdown-column-height:
+        type: optional<VariantsColumnHeight>
+        docs: |
+          Maximum number of items per column in the dropdown. `no-limit` keeps a single column.
+          Overrides `layout.dropdown.default-column-height`.
+      dropdown:
+        type: list<DropdownEntry>
+        docs: |
+          Items shown in a menu that opens from the header tab. Requires header tabs; with `tabs-placement: sidebar`
+          the items fall back to a selector at the top of the sidebar.
+
+  DropdownEntry:
+    discriminated: false
+    union:
+      - DropdownItem
+      - DropdownGroup
+      - LinkConfiguration
+
+  DropdownGroup:
+    properties:
+      group:
+        type: string
+        docs: Header shown above this group's items in the dropdown.
+      items: list<DropdownGroupItem>
+
+  DropdownGroupItem:
+    discriminated: false
+    union:
+      - DropdownItem
+      - LinkConfiguration
+
+  DropdownItem:
+    docs: A dropdown item has either a `layout` (one sidebar) or `variants` (a selector at the top of its sidebar).
+    extends: [WithPermissions, WithFeatureFlags]
+    properties:
+      title: string
+      subtitle: optional<string>
+      icon: optional<string>
+      layout: optional<list<NavigationItem>>
+      variants-column-height:
+        type: optional<VariantsColumnHeight>
+        docs: Maximum number of items per column in this item's variant selector. Overrides `layout.variants.default-column-height`.
+      variants: optional<list<TabVariantItem>>
+      slug: optional<string>
+      skip-slug: optional<boolean>
+      hidden: optional<boolean>
+      default: optional<boolean>
 
   VariantsColumnHeight:
     discriminated: false
@@ -1036,9 +1080,13 @@ types:
 
           Note: this setting is ignored when `disable-header` is set to true.
 
+      dropdown:
+        type: optional<DropdownLayoutConfig>
+        docs: Defaults for header tab dropdowns.
+
       variants:
         type: optional<VariantsLayoutConfig>
-        docs: Defaults for tab variant selectors.
+        docs: Defaults for sidebar variant selectors.
 
       tabs-placement:
         type: optional<TabsPlacement>
@@ -2084,27 +2132,17 @@ types:
       hidden: optional<boolean>
       availability: optional<Availability>
 
-  VariantsLayoutConfig:
+  DropdownLayoutConfig:
     properties:
-      default-location:
-        type: optional<VariantsLocation>
-        docs: |
-          Where variant selectors render when a tab doesn't set `variants-location`.
-
-          @default: `sidebar`
       default-column-height:
         type: optional<VariantsColumnHeight>
-        docs: Column height for all variant menus (sidebar or tab).
-      tab:
-        type: optional<VariantsLocationLayoutConfig>
-        docs: Defaults for variant menus located in the header tab. Overrides `default-column-height`.
-      sidebar:
-        type: optional<VariantsLocationLayoutConfig>
-        docs: Defaults for variant menus located in the sidebar. Overrides `default-column-height`.
+        docs: Column height for every header tab dropdown that doesn't set `dropdown-column-height`.
 
-  VariantsLocationLayoutConfig:
+  VariantsLayoutConfig:
     properties:
-      default-column-height: optional<VariantsColumnHeight>
+      default-column-height:
+        type: optional<VariantsColumnHeight>
+        docs: Column height for every sidebar variant selector that doesn't set `variants-column-height`.
 
   LinkConfiguration:
     properties:

@@ -3609,13 +3609,6 @@
       ],
       "additionalProperties": false
     },
-    "docs.VariantsLocation": {
-      "type": "string",
-      "enum": [
-        "tab",
-        "sidebar"
-      ]
-    },
     "docs.VariantsColumnHeightCount": {
       "type": "integer"
     },
@@ -3788,16 +3781,100 @@
         "tab": {
           "$ref": "#/definitions/docs.TabId"
         },
-        "variants-location": {
+        "variants-column-height": {
           "oneOf": [
             {
-              "$ref": "#/definitions/docs.VariantsLocation"
+              "$ref": "#/definitions/docs.VariantsColumnHeight"
             },
             {
               "type": "null"
             }
           ],
-          "description": "Where the variant selector renders. `tab` opens a menu from the header tab (requires header tabs);\n`sidebar` shows a dropdown at the top of the sidebar. Overrides `layout.variants.default-location`."
+          "description": "Maximum number of items per column in the sidebar variant selector. `no-limit` keeps a single column.\nOverrides `layout.variants.default-column-height`."
+        },
+        "variants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/docs.TabVariantItem"
+          },
+          "description": "Variants shown in a selector at the top of the tab's sidebar."
+        }
+      },
+      "required": [
+        "tab",
+        "variants"
+      ],
+      "additionalProperties": false
+    },
+    "docs.DropdownItem": {
+      "type": "object",
+      "properties": {
+        "viewers": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Role"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orphaned": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "When `orphaned` is set to `true`, the roles will not inherit from parents."
+        },
+        "feature-flag": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.FeatureFlagConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "title": {
+          "type": "string"
+        },
+        "subtitle": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "icon": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "layout": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/docs.NavigationItem"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
         },
         "variants-column-height": {
           "oneOf": [
@@ -3808,18 +3885,139 @@
               "type": "null"
             }
           ],
-          "description": "Maximum number of items per column in the variant menu. `no-limit` keeps a single column.\nOverrides the `layout.variants` defaults."
+          "description": "Maximum number of items per column in this item's variant selector. Overrides `layout.variants.default-column-height`."
         },
         "variants": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/docs.TabVariantItem"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "slug": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "skip-slug": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "hidden": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "default": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "title"
+      ],
+      "additionalProperties": false,
+      "description": "A dropdown item has either a `layout` (one sidebar) or `variants` (a selector at the top of its sidebar)."
+    },
+    "docs.DropdownGroupItem": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/docs.DropdownItem"
+        },
+        {
+          "$ref": "#/definitions/docs.LinkConfiguration"
+        }
+      ]
+    },
+    "docs.DropdownGroup": {
+      "type": "object",
+      "properties": {
+        "group": {
+          "type": "string",
+          "description": "Header shown above this group's items in the dropdown."
+        },
+        "items": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/docs.TabVariantItem"
+            "$ref": "#/definitions/docs.DropdownGroupItem"
           }
         }
       },
       "required": [
+        "group",
+        "items"
+      ],
+      "additionalProperties": false
+    },
+    "docs.DropdownEntry": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/docs.DropdownItem"
+        },
+        {
+          "$ref": "#/definitions/docs.DropdownGroup"
+        },
+        {
+          "$ref": "#/definitions/docs.LinkConfiguration"
+        }
+      ]
+    },
+    "docs.TabbedNavigationItemWithDropdown": {
+      "type": "object",
+      "properties": {
+        "tab": {
+          "$ref": "#/definitions/docs.TabId"
+        },
+        "dropdown-column-height": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.VariantsColumnHeight"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Maximum number of items per column in the dropdown. `no-limit` keeps a single column.\nOverrides `layout.dropdown.default-column-height`."
+        },
+        "dropdown": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/docs.DropdownEntry"
+          },
+          "description": "Items shown in a menu that opens from the header tab. Requires header tabs; with `tabs-placement: sidebar`\nthe items fall back to a selector at the top of the sidebar."
+        }
+      },
+      "required": [
         "tab",
-        "variants"
+        "dropdown"
       ],
       "additionalProperties": false
     },
@@ -3830,6 +4028,9 @@
         },
         {
           "$ref": "#/definitions/docs.TabbedNavigationItemWithVariants"
+        },
+        {
+          "$ref": "#/definitions/docs.TabbedNavigationItemWithDropdown"
         }
       ]
     },
@@ -6556,7 +6757,7 @@
         }
       ]
     },
-    "docs.VariantsLocationLayoutConfig": {
+    "docs.DropdownLayoutConfig": {
       "type": "object",
       "properties": {
         "default-column-height": {
@@ -6567,7 +6768,8 @@
             {
               "type": "null"
             }
-          ]
+          ],
+          "description": "Column height for every header tab dropdown that doesn't set `dropdown-column-height`."
         }
       },
       "additionalProperties": false
@@ -6575,17 +6777,6 @@
     "docs.VariantsLayoutConfig": {
       "type": "object",
       "properties": {
-        "default-location": {
-          "oneOf": [
-            {
-              "$ref": "#/definitions/docs.VariantsLocation"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "Where variant selectors render when a tab doesn't set `variants-location`.\n\n@default: `sidebar`"
-        },
         "default-column-height": {
           "oneOf": [
             {
@@ -6595,29 +6786,7 @@
               "type": "null"
             }
           ],
-          "description": "Column height for all variant menus (sidebar or tab)."
-        },
-        "tab": {
-          "oneOf": [
-            {
-              "$ref": "#/definitions/docs.VariantsLocationLayoutConfig"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "Defaults for variant menus located in the header tab. Overrides `default-column-height`."
-        },
-        "sidebar": {
-          "oneOf": [
-            {
-              "$ref": "#/definitions/docs.VariantsLocationLayoutConfig"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "Defaults for variant menus located in the sidebar. Overrides `default-column-height`."
+          "description": "Column height for every sidebar variant selector that doesn't set `variants-column-height`."
         }
       },
       "additionalProperties": false
@@ -6739,6 +6908,17 @@
           ],
           "description": "Sets the placement of the searchbar\n\n@default: `sidebar`\n\nNote: this setting is ignored when `disable-header` is set to true."
         },
+        "dropdown": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.DropdownLayoutConfig"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Defaults for header tab dropdowns."
+        },
         "variants": {
           "oneOf": [
             {
@@ -6748,7 +6928,7 @@
               "type": "null"
             }
           ],
-          "description": "Defaults for tab variant selectors."
+          "description": "Defaults for sidebar variant selectors."
         },
         "tabs-placement": {
           "oneOf": [

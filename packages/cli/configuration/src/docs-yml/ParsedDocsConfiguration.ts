@@ -366,9 +366,9 @@ export declare namespace TabbedNavigationChild {
         type: "variants";
         /** Every variant in menu order, groups flattened. */
         variants: TabVariant[];
-        /** `variants-location` as written on the tab; resolved against `layout.variants`. */
-        location: VariantsLocation | undefined;
-        /** `variants-column-height` as written on the tab; resolved against `layout.variants`. */
+        /** `tab` when written as `dropdown` (header tab menu), `sidebar` when written as `variants`. */
+        location: VariantsLocation;
+        /** `dropdown-column-height` or `variants-column-height` as written on the tab. */
         columnHeight: VariantsColumnHeight | undefined;
         /** Groups and links around the variants. Undefined when the list only holds variants. */
         menu: TabVariantMenuItem[] | undefined;
@@ -381,10 +381,10 @@ export type VariantsLocation = "tab" | "sidebar";
 export type VariantsColumnHeight = number | "no-limit";
 
 export interface VariantsLayout {
-    defaultLocation: VariantsLocation | undefined;
-    defaultColumnHeight: VariantsColumnHeight | undefined;
-    tabDefaultColumnHeight: VariantsColumnHeight | undefined;
-    sidebarDefaultColumnHeight: VariantsColumnHeight | undefined;
+    /** `layout.dropdown.default-column-height` */
+    dropdownDefaultColumnHeight: VariantsColumnHeight | undefined;
+    /** `layout.variants.default-column-height` */
+    variantsDefaultColumnHeight: VariantsColumnHeight | undefined;
 }
 
 export type TabVariantMenuEntry = TabVariantMenuEntry.Variant | TabVariantMenuEntry.Link;
@@ -421,8 +421,8 @@ export interface ResolvedVariantsSettings {
 }
 
 /**
- * Precedence: tab setting > `layout.variants.<location>.default-column-height` >
- * `layout.variants.default-column-height` > single column. `tab` placement needs header tabs.
+ * Precedence: the setting where the menu is used > `layout.dropdown.default-column-height` (header tab menus) or
+ * `layout.variants.default-column-height` (sidebar selectors) > single column. `tab` placement needs header tabs.
  */
 export function resolveVariantsSettings({
     location,
@@ -430,17 +430,16 @@ export function resolveVariantsSettings({
     layout,
     hasHeaderTabs
 }: {
-    location: VariantsLocation | undefined;
+    location: VariantsLocation;
     columnHeight: VariantsColumnHeight | undefined;
     layout: VariantsLayout | undefined;
     hasHeaderTabs: boolean;
 }): ResolvedVariantsSettings {
-    const requested = location ?? layout?.defaultLocation ?? "sidebar";
-    const fellBackToSidebar = requested === "tab" && !hasHeaderTabs;
-    const effectiveLocation: VariantsLocation = fellBackToSidebar ? "sidebar" : requested;
-    const locationDefault =
-        effectiveLocation === "tab" ? layout?.tabDefaultColumnHeight : layout?.sidebarDefaultColumnHeight;
-    const height = columnHeight ?? locationDefault ?? layout?.defaultColumnHeight;
+    const fellBackToSidebar = location === "tab" && !hasHeaderTabs;
+    const effectiveLocation: VariantsLocation = fellBackToSidebar ? "sidebar" : location;
+    const height =
+        columnHeight ??
+        (location === "tab" ? layout?.dropdownDefaultColumnHeight : layout?.variantsDefaultColumnHeight);
     return {
         location: effectiveLocation,
         columnHeight: typeof height === "number" && height > 0 ? Math.floor(height) : undefined,
@@ -459,6 +458,29 @@ export interface TabVariant
     skipUrlSlug: boolean | undefined;
     hidden: boolean | undefined;
     default: boolean | undefined;
+    /** A dropdown item with its own `variants`; `layout` is then empty. */
+    nestedVariants: NestedTabVariants | undefined;
+}
+
+export interface NestedTabVariants {
+    variants: TabVariant[];
+    columnHeight: VariantsColumnHeight | undefined;
+    menu: TabVariantMenuItem[] | undefined;
+}
+
+/** Every layout under these variants, including variants nested under dropdown items. */
+export function flattenTabVariantLayouts(variants: TabVariant[]): DocsNavigationItem[][] {
+    return variants.flatMap((variant) =>
+        variant.nestedVariants != null ? flattenTabVariantLayouts(variant.nestedVariants.variants) : [variant.layout]
+    );
+}
+
+/** These variants and every variant nested under them, outer first. */
+export function flattenNestedTabVariants(variants: TabVariant[]): TabVariant[] {
+    return variants.flatMap((variant) => [
+        variant,
+        ...(variant.nestedVariants != null ? flattenNestedTabVariants(variant.nestedVariants.variants) : [])
+    ]);
 }
 
 export type DocsNavigationItem =

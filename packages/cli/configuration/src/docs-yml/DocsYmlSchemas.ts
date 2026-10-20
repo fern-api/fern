@@ -348,19 +348,14 @@ export const BreadcrumbsConfig = z.object({
     "current-page": z.boolean().optional()
 });
 
-export const VariantsLocation = z.enum(["tab", "sidebar"]);
-
 export const VariantsColumnHeight = z.union([z.number().int().positive(), z.literal("no-limit")]);
 
-export const VariantsLocationLayoutConfig = z.object({
+export const DropdownLayoutConfig = z.object({
     "default-column-height": VariantsColumnHeight.nullable().optional()
 });
 
 export const VariantsLayoutConfig = z.object({
-    "default-location": VariantsLocation.optional(),
-    "default-column-height": VariantsColumnHeight.nullable().optional(),
-    tab: VariantsLocationLayoutConfig.optional(),
-    sidebar: VariantsLocationLayoutConfig.optional()
+    "default-column-height": VariantsColumnHeight.nullable().optional()
 });
 
 export const LayoutConfig = z.object({
@@ -369,6 +364,7 @@ export const LayoutConfig = z.object({
     "sidebar-width": z.string().optional(),
     "header-height": z.string().optional(),
     "searchbar-placement": SearchbarPlacement.optional(),
+    dropdown: DropdownLayoutConfig.optional(),
     variants: VariantsLayoutConfig.optional(),
     "tabs-placement": TabsPlacement.optional(),
     "switcher-placement": SwitcherPlacement.optional(),
@@ -1030,12 +1026,45 @@ export const TabVariantItem = z.union([TabVariant, TabVariantGroup, LinkConfigur
 
 export const TabbedNavigationItemWithVariants = z.object({
     tab: TabId,
-    "variants-location": VariantsLocation.nullable().optional(),
     "variants-column-height": VariantsColumnHeight.nullable().optional(),
     variants: z.array(TabVariantItem)
 });
 
-export const TabbedNavigationItem = z.union([TabbedNavigationItemWithLayout, TabbedNavigationItemWithVariants]);
+export const DropdownItem = WithPermissions.merge(WithFeatureFlags).merge(
+    z.object({
+        title: z.string(),
+        subtitle: z.string().optional(),
+        icon: z.string().optional(),
+        layout: z.array(NavigationItem).optional(),
+        "variants-column-height": VariantsColumnHeight.nullable().optional(),
+        variants: z.array(TabVariantItem).optional(),
+        slug: z.string().optional(),
+        "skip-slug": z.boolean().optional(),
+        hidden: z.boolean().optional(),
+        default: z.boolean().optional()
+    })
+);
+
+export const DropdownGroupItem = z.union([DropdownItem, LinkConfiguration]);
+
+export const DropdownGroup = z.object({
+    group: z.string(),
+    items: z.array(DropdownGroupItem)
+});
+
+export const DropdownEntry = z.union([DropdownItem, DropdownGroup, LinkConfiguration]);
+
+export const TabbedNavigationItemWithDropdown = z.object({
+    tab: TabId,
+    "dropdown-column-height": VariantsColumnHeight.nullable().optional(),
+    dropdown: z.array(DropdownEntry)
+});
+
+export const TabbedNavigationItem = z.union([
+    TabbedNavigationItemWithLayout,
+    TabbedNavigationItemWithVariants,
+    TabbedNavigationItemWithDropdown
+]);
 
 export const TabbedNavigationConfig = z.array(TabbedNavigationItem);
 

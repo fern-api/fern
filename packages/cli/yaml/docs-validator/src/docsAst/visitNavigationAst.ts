@@ -91,9 +91,9 @@ export async function visitNavigationAst({
                         });
                     }
                 );
-            } else if (tabbedNavigationItemHasVariants(tab)) {
-                const variantItems = docsYml.flattenRawTabVariants(tab.variants).flatMap(({ variant, path }) =>
-                    variant.layout.map((item: docsYml.RawSchemas.NavigationItem, itemIdx: number) => ({
+            } else if (docsYml.isRawTabWithVariantLayouts(tab)) {
+                const variantItems = docsYml.flattenRawTabLayouts(tab).flatMap(({ layout, path }) =>
+                    layout.map((item: docsYml.RawSchemas.NavigationItem, itemIdx: number) => ({
                         item,
                         variantPath: path,
                         itemIdx

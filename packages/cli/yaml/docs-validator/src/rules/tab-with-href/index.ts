@@ -27,7 +27,7 @@ export const TabWithHrefRule: Rule = {
                         }
 
                         const hasLayout = tabbedNavigationItemHasLayout(tabItem);
-                        const hasVariants = tabbedNavigationItemHasVariants(tabItem);
+                        const hasVariants = docsYml.isRawTabWithVariantLayouts(tabItem);
 
                         if (tabConfig.href != null && (hasLayout || hasVariants)) {
                             ruleViolations.push({
@@ -70,12 +70,4 @@ function tabbedNavigationItemHasLayout(
     layout: docsYml.RawSchemas.NavigationItem[];
 } {
     return "layout" in item && Array.isArray(item.layout);
-}
-
-function tabbedNavigationItemHasVariants(
-    item: docsYml.RawSchemas.TabbedNavigationItem
-): item is docsYml.RawSchemas.TabbedNavigationItemWithVariants & {
-    variants: docsYml.RawSchemas.TabVariantItem[];
-} {
-    return "variants" in item && Array.isArray(item.variants);
 }

@@ -3,16 +3,6 @@
 import type * as FernDocsConfig from "../../../index.js";
 
 export interface VariantsLayoutConfig {
-    /**
-     * Where variant selectors render when a tab doesn't set `variants-location`.
-     *
-     * @default: `sidebar`
-     */
-    defaultLocation?: FernDocsConfig.VariantsLocation;
-    /** Column height for all variant menus (sidebar or tab). */
+    /** Column height for every sidebar variant selector that doesn't set `variants-column-height`. */
     defaultColumnHeight?: FernDocsConfig.VariantsColumnHeight;
-    /** Defaults for variant menus located in the header tab. Overrides `default-column-height`. */
-    tab?: FernDocsConfig.VariantsLocationLayoutConfig;
-    /** Defaults for variant menus located in the sidebar. Overrides `default-column-height`. */
-    sidebar?: FernDocsConfig.VariantsLocationLayoutConfig;
 }

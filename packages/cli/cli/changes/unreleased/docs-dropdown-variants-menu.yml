@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    A tab can now have a `dropdown`: a menu that opens from the header tab. Its entries are items
+    (`title` plus either a `layout` or their own `variants`, whose selector sits at the top of that
+    item's sidebar), top-level `group` entries with a header and `items`, and external links
+    (`link` + `href`). Without header tabs, the dropdown falls back to a sidebar selector and
+    `fern check` warns. Tab `variants` lists also accept `group` entries and links. Split menus
+    into columns with `dropdown-column-height` and `variants-column-height` (an integer or
+    `no-limit`), with site-wide defaults in `layout.dropdown.default-column-height` and
+    `layout.variants.default-column-height`.
+  type: feat

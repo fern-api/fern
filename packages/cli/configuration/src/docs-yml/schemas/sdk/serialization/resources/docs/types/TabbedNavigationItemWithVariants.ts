@@ -6,14 +6,12 @@ import type * as serializers from "../../../index.js";
 import { TabId } from "./TabId.js";
 import { TabVariantItem } from "./TabVariantItem.js";
 import { VariantsColumnHeight } from "./VariantsColumnHeight.js";
-import { VariantsLocation } from "./VariantsLocation.js";
 
 export const TabbedNavigationItemWithVariants: core.serialization.ObjectSchema<
     serializers.TabbedNavigationItemWithVariants.Raw,
     FernDocsConfig.TabbedNavigationItemWithVariants
 > = core.serialization.object({
     tab: TabId,
-    variantsLocation: core.serialization.property("variants-location", VariantsLocation.optional()),
     variantsColumnHeight: core.serialization.property("variants-column-height", VariantsColumnHeight.optional()),
     variants: core.serialization.list(TabVariantItem),
 });
@@ -21,7 +19,6 @@ export const TabbedNavigationItemWithVariants: core.serialization.ObjectSchema<
 export declare namespace TabbedNavigationItemWithVariants {
     export interface Raw {
         tab: TabId.Raw;
-        "variants-location"?: VariantsLocation.Raw | null;
         "variants-column-height"?: VariantsColumnHeight.Raw | null;
         variants: TabVariantItem.Raw[];
     }

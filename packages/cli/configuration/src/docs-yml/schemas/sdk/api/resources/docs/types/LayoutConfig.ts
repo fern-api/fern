@@ -52,7 +52,9 @@ export interface LayoutConfig {
      * Note: this setting is ignored when `disable-header` is set to true.
      */
     searchbarPlacement?: FernDocsConfig.SearchbarPlacement;
-    /** Defaults for tab variant selectors. */
+    /** Defaults for header tab dropdowns. */
+    dropdown?: FernDocsConfig.DropdownLayoutConfig;
+    /** Defaults for sidebar variant selectors. */
     variants?: FernDocsConfig.VariantsLayoutConfig;
     /**
      * Set the placement of the tabs

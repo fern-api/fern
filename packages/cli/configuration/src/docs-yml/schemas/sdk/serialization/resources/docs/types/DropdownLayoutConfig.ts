@@ -5,14 +5,14 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { VariantsColumnHeight } from "./VariantsColumnHeight.js";
 
-export const VariantsLocationLayoutConfig: core.serialization.ObjectSchema<
-    serializers.VariantsLocationLayoutConfig.Raw,
-    FernDocsConfig.VariantsLocationLayoutConfig
+export const DropdownLayoutConfig: core.serialization.ObjectSchema<
+    serializers.DropdownLayoutConfig.Raw,
+    FernDocsConfig.DropdownLayoutConfig
 > = core.serialization.object({
     defaultColumnHeight: core.serialization.property("default-column-height", VariantsColumnHeight.optional()),
 });
 
-export declare namespace VariantsLocationLayoutConfig {
+export declare namespace DropdownLayoutConfig {
     export interface Raw {
         "default-column-height"?: VariantsColumnHeight.Raw | null;
     }

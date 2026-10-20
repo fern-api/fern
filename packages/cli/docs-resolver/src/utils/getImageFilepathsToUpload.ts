@@ -278,7 +278,12 @@ async function collectIconsFromNavigation({
                         );
                     } else if (tab.child.type === "variants" && tab.child.variants != null) {
                         await Promise.all(
-                            (tab.child.menu ?? [])
+                            [
+                                ...(tab.child.menu ?? []),
+                                ...docsYml
+                                    .flattenNestedTabVariants(tab.child.variants)
+                                    .flatMap((variant) => variant.nestedVariants?.menu ?? [])
+                            ]
                                 .flatMap((entry) => (entry.type === "group" ? entry.children : [entry]))
                                 .flatMap((entry) =>
                                     entry.type === "link" && entry.icon != null
@@ -287,7 +292,7 @@ async function collectIconsFromNavigation({
                                 )
                         );
                         await Promise.all(
-                            tab.child.variants.flatMap((variant) => {
+                            docsYml.flattenNestedTabVariants(tab.child.variants).flatMap((variant) => {
                                 const promises: Promise<void>[] = [];
                                 if (variant.icon != null) {
                                     promises.push(

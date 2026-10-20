@@ -58,8 +58,8 @@ export function visitNavigation({
                         visitDocsNavigationItem({ item, collector });
                     });
                 } else if (tab.child.type === "variants") {
-                    tab.child.variants.forEach((variant) => {
-                        variant.layout.forEach((item) => {
+                    docsYml.flattenTabVariantLayouts(tab.child.variants).forEach((layout) => {
+                        layout.forEach((item) => {
                             visitDocsNavigationItem({ item, collector });
                         });
                     });

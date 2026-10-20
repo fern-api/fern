@@ -190,19 +190,18 @@ function collectFromNavigation(
             if ("layout" in item && Array.isArray(item.layout)) {
                 out.push(...collectChangelogLocations(item.layout, next, tabAncestors));
             }
-            if ("variants" in item && Array.isArray(item.variants)) {
-                for (const { variant } of docsYml.flattenRawTabVariants(item.variants)) {
-                    const variantBreadcrumb = `${next} > variant "${variant.title}"`;
-                    const variantSegments = ancestorSlugSegments({
-                        slug: variant.slug,
-                        displayName: variant.title,
-                        skipSlug: variant.skipSlug
-                    });
+            if (docsYml.isRawTabWithVariantLayouts(item)) {
+                for (const { owners, layout } of docsYml.flattenRawTabLayouts(item)) {
+                    const variantBreadcrumb = [next, ...owners.map((owner) => `variant "${owner.title}"`)].join(" > ");
+                    const variantSegments = owners.flatMap((owner) =>
+                        ancestorSlugSegments({
+                            slug: owner.slug,
+                            displayName: owner.title,
+                            skipSlug: owner.skipSlug
+                        })
+                    );
                     out.push(
-                        ...collectChangelogLocations(variant.layout, variantBreadcrumb, [
-                            ...tabAncestors,
-                            ...variantSegments
-                        ])
+                        ...collectChangelogLocations(layout, variantBreadcrumb, [...tabAncestors, ...variantSegments])
                     );
                 }
             }

@@ -2,6 +2,4 @@
 
 import type * as FernDocsConfig from "../../../index.js";
 
-export interface VariantsLocationLayoutConfig {
-    defaultColumnHeight?: FernDocsConfig.VariantsColumnHeight;
-}
+export type DropdownGroupItem = FernDocsConfig.DropdownItem | FernDocsConfig.LinkConfiguration;
