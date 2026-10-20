@@ -436,6 +436,9 @@ impl Binding for OpenApiBinding {
                 Some(url) if root_matches.get_one::<String>("base-url").is_none() => Some(url),
                 _ => crate::cli_args::resolve_base_url_override(root_matches, &self.inner.name)?,
             };
+            let base_url =
+                self.inner
+                    .substitute_base_url_vars(base_url, &prepared.doc, root_matches, profile);
             // Strip the namespace prefix the same way `dispatch` does, so a
             // caller names the operation as it appears on the command line.
             let effective: &[String] = match &self.command_namespace {
@@ -573,7 +576,8 @@ impl Binding for OpenApiBinding {
 
     fn build_command(&self) -> Result<clap::Command, CliError> {
         let prepared = self.ensure_prepared()?;
-        let cli = commands::build_cli(&prepared.doc)
+        let placeholders = self.inner.completion_placeholders();
+        let cli = commands::build_cli_with_placeholders(&prepared.doc, &placeholders)
             .subcommand(crate::openapi::skill_emitter::generate_skills_command());
         let mut cli = self.inner.decorate_command(&prepared.doc, cli);
 
@@ -827,8 +831,12 @@ impl Binding for OpenApiBinding {
             )?;
 
             // --base-url flag wins; otherwise {NAME}_BASE_URL env var.
-            let base_url_override_owned =
-                crate::cli_args::resolve_base_url_override(root_matches, &self.inner.name)?;
+            let base_url_override_owned = self.inner.substitute_base_url_vars(
+                crate::cli_args::resolve_base_url_override(root_matches, &self.inner.name)?,
+                &prepared.doc,
+                root_matches,
+                None,
+            );
             let base_url_override = base_url_override_owned.as_deref();
 
             // --user-agent-suffix flag wins; otherwise {NAME}_USER_AGENT_SUFFIX
@@ -934,8 +942,12 @@ impl Binding for OpenApiBinding {
             .copied()
             .unwrap_or(false);
         let debug = matches.get_flag("debug");
-        let base_url_override =
-            crate::cli_args::resolve_base_url_override(matches, &self.inner.name)?;
+        let base_url_override = self.inner.substitute_base_url_vars(
+            crate::cli_args::resolve_base_url_override(matches, &self.inner.name)?,
+            &self.ensure_prepared()?.doc,
+            matches,
+            None,
+        );
         let http_config = entry.http_config.with_user_agent_suffix_override(
             crate::cli_args::resolve_user_agent_suffix_override(matches),
         );
@@ -964,8 +976,15 @@ impl Binding for OpenApiBinding {
             .copied()
             .unwrap_or(false);
         let debug = matches.get_flag("debug");
-        let base_url_override =
+        let prepared = self.ensure_prepared()?;
+        let raw_base_url_override =
             crate::cli_args::resolve_base_url_override(matches, &self.inner.name)?;
+        // Fill on top of what earlier bindings already resolved, so a binding
+        // whose spec lacks `{region}` can't put the literal template back.
+        let resolve_base_url = |partial: Option<String>| {
+            self.inner
+                .substitute_base_url_vars(partial, &prepared.doc, matches, None)
+        };
         let entry = super::app::BindingEntry {
             http_config: entry.http_config.with_user_agent_suffix_override(
                 crate::cli_args::resolve_user_agent_suffix_override(matches),
@@ -978,7 +997,8 @@ impl Binding for OpenApiBinding {
                     ctx.add_entry(entry);
                     ctx.debug = debug;
                     ctx.quiet = quiet;
-                    ctx.base_url_override = base_url_override;
+                    ctx.base_url_override =
+                        resolve_base_url(ctx.base_url_override.take().or(raw_base_url_override));
                     Ok(Some(ctx as Box<dyn std::any::Any + Send + Sync>))
                 }
                 Err(original) => {
@@ -991,7 +1011,7 @@ impl Binding for OpenApiBinding {
                         entry.global_headers,
                         entry.global_params,
                     ).with_quiet(quiet)
-                     .with_base_url_override(base_url_override)
+                     .with_base_url_override(resolve_base_url(raw_base_url_override))
                      .with_debug(debug);
                     let _ = original;
                     Ok(Some(Box::new(ctx)))
@@ -1005,7 +1025,7 @@ impl Binding for OpenApiBinding {
                     entry.global_headers,
                     entry.global_params,
                 ).with_quiet(quiet)
-                 .with_base_url_override(base_url_override)
+                 .with_base_url_override(resolve_base_url(raw_base_url_override))
                  .with_debug(debug);
                 Ok(Some(Box::new(ctx)))
             }
@@ -1238,6 +1258,49 @@ fn prefix_schema_operations(value: serde_json::Value, namespace: &str) -> serde_
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    fn spec_with_tag(tag: &str, description: &str) -> String {
+        serde_json::json!({
+            "openapi": "3.0.0",
+            "info": { "title": "T", "version": "1" },
+            "tags": [{ "name": tag, "description": description }],
+            "paths": { "/things": { "get": {
+                "operationId": "listThings",
+                "tags": [tag],
+                "responses": { "200": { "description": "ok" } }
+            } } }
+        })
+        .to_string()
+    }
+
+    #[test]
+    fn top_level_completion_lists_unparsed_specs_by_prefix() {
+        let binding = || {
+            let mut b = OpenApiBinding::new()
+                .spec_under("alpha/v1", &spec_with_tag("Things", "All the things."))
+                .spec_under("beta", &spec_with_tag("Beta", "Beta products."));
+            b.set_cli_name("my-cli");
+            b
+        };
+        let full = binding().build_command().unwrap();
+        let _focus = crate::completions::set_completion_focus(crate::completions::CompletionFocus {
+            word: None,
+            outside_specs: false,
+        });
+        let fast = binding().build_command().unwrap();
+
+        let tops = |c: &clap::Command| -> Vec<(String, String)> {
+            c.get_subcommands()
+                .map(|s| (s.get_name().to_string(), s.get_about().map(|a| a.to_string()).unwrap_or_default()))
+                .collect()
+        };
+        assert_eq!(tops(&fast), tops(&full));
+        // `alpha` was listed from its prefix; `beta` has a matching tag, so
+        // its spec was parsed for the description.
+        let alpha = fast.find_subcommand("alpha").unwrap();
+        assert_eq!(alpha.get_subcommands().count(), 0);
+        assert!(fast.find_subcommand("beta").unwrap().get_subcommands().count() > 0);
+    }
 
     #[test]
     fn prefix_schema_operations_array() {

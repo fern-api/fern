@@ -97,7 +97,7 @@ func (r *RawClient) Post(
 		}
 	}
 	if request.OptionalObjectType != nil {
-		if err := writer.WriteJSON("optional_object_type", string(*request.OptionalObjectType)); err != nil {
+		if err := writer.WriteField("optional_object_type", string(*request.OptionalObjectType)); err != nil {
 			return nil, err
 		}
 	}
@@ -488,7 +488,7 @@ func (r *RawClient) WithFormEncodedContainers(
 		}
 	}
 	if request.OptionalObjectType != nil {
-		if err := writer.WriteJSON("optional_object_type", string(*request.OptionalObjectType)); err != nil {
+		if err := writer.WriteField("optional_object_type", string(*request.OptionalObjectType)); err != nil {
 			return nil, err
 		}
 	}
@@ -832,7 +832,7 @@ func (r *RawClient) WithLiteralAndEnumTypes(
 		}
 	}
 	if request.OpenEnum != nil {
-		if err := writer.WriteJSON("open_enum", string(*request.OpenEnum)); err != nil {
+		if err := writer.WriteField("open_enum", string(*request.OpenEnum)); err != nil {
 			return nil, err
 		}
 	}

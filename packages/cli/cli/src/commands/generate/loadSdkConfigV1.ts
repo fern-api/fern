@@ -293,6 +293,7 @@ function toRequestedOutput(
         ...(output.github.branch == null ? {} : { branch: output.github.branch }),
         ...(output.github.mode == null ? {} : { mode: toRequestedGithubMode(output.github.mode) }),
         ...(output.github.reviewers == null ? {} : { reviewers: output.github.reviewers }),
+        ...(output.github.workflows === false ? { workflows: false } : {}),
         ...(output.publish == null
             ? {}
             : {

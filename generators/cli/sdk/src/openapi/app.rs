@@ -1012,6 +1012,37 @@ pub(crate) struct SpecEntry {
     overrides: Vec<String>,
 }
 
+impl SpecEntry {
+    /// Whether this spec's top-level group can be listed from its prefix
+    /// alone: a JSON spec with no overlays or overrides that has no tag, SDK
+    /// group or path's first segment the group's metadata could be looked up
+    /// by (any string, or first `/` segment of one, equal to the prefix up to
+    /// case and punctuation). Errs towards parsing.
+    fn listable_from_prefix(&self) -> bool {
+        let Some(top) = self.prefix_path.first() else {
+            return false;
+        };
+        if !self.overlays.is_empty()
+            || !self.overrides.is_empty()
+            || !self.yaml.trim_start().starts_with('{')
+        {
+            return false;
+        }
+        let key = crate::openapi::commands::tag_match_key(top);
+        let names_group = |s: &str| {
+            s.len() <= 4 * top.len() + 8
+                && s.chars()
+                    .filter(|c| c.is_alphanumeric())
+                    .flat_map(char::to_lowercase)
+                    .eq(key.chars())
+        };
+        key != "default"
+            && !self.yaml.split('"').any(|s| {
+                names_group(s) || s.trim_start_matches('/').split('/').next().is_some_and(names_group)
+            })
+    }
+}
+
 /// A server-URL template variable like `{store_hash}` in
 /// `https://api.bigcommerce.com/stores/{store_hash}/v3`. Resolved at runtime
 /// from a CLI flag (`--<name>`), an env var, or a built-in default — first
@@ -1416,6 +1447,58 @@ impl CliApp {
     }
 
     /// Build the merged `RestDescription` from all registered specs.
+    /// Every spec, except while building the tree for a TAB completion:
+    /// - under one top-level command, only unprefixed specs and those mounted
+    ///   under that command, since no other spec can add to its subtree
+    ///   (unrecognised words, e.g. an alias, keep every spec);
+    /// - for the top-level word itself, only the specs whose top-level group
+    ///   can't be listed from its prefix alone (see
+    ///   [`Self::completion_placeholders`]).
+    fn specs_to_build(&self) -> Vec<&SpecEntry> {
+        let all = || self.specs.iter().collect();
+        let Some(focus) = crate::completions::completion_focus() else {
+            return all();
+        };
+        if !self.audiences.is_empty() {
+            return all();
+        }
+        let Some(word) = focus.word.as_deref() else {
+            return self
+                .specs
+                .iter()
+                .filter(|e| !e.listable_from_prefix())
+                .collect();
+        };
+        let mounted_under_focus = |e: &SpecEntry| e.prefix_path.first().is_some_and(|p| p == word);
+        if !focus.outside_specs && !self.specs.iter().any(mounted_under_focus) {
+            return all();
+        }
+        self.specs
+            .iter()
+            .filter(|e| e.prefix_path.is_empty() || mounted_under_focus(e))
+            .collect()
+    }
+
+    /// Top-level groups to list without parsing their specs while completing
+    /// the top-level word: the prefixes of the specs [`Self::specs_to_build`]
+    /// skipped. Their `about` comes from the parsed specs' metadata, exactly
+    /// as it would in a full build.
+    pub(crate) fn completion_placeholders(&self) -> Vec<String> {
+        let top_level = crate::completions::completion_focus().is_some_and(|f| f.word.is_none());
+        if !top_level || !self.audiences.is_empty() {
+            return Vec::new();
+        }
+        let mut names: Vec<String> = self
+            .specs
+            .iter()
+            .filter(|e| e.listable_from_prefix())
+            .map(|e| e.prefix_path[0].clone())
+            .collect();
+        names.sort();
+        names.dedup();
+        names
+    }
+
     pub(crate) fn build_doc(&self) -> Result<RestDescription, CliError> {
         if self.specs.is_empty() {
             return Err(CliError::Discovery(
@@ -1425,7 +1508,7 @@ impl CliApp {
 
         let mut merged: Option<RestDescription> = None;
 
-        for entry in &self.specs {
+        for entry in self.specs_to_build() {
             // 1. Apply overlays (RFC 7396 style) first.
             let effective_yaml = crate::openapi::overlay::apply_overlays_to_spec(
                 &entry.yaml,
@@ -1485,7 +1568,8 @@ impl CliApp {
             }
         }
 
-        let mut doc = merged.expect("at least one spec was processed");
+        // Only a focused completion build can skip every spec.
+        let mut doc = merged.unwrap_or_default();
         if let Some(ref t) = self.title_override {
             doc.title = Some(t.clone());
         }
@@ -2220,6 +2304,40 @@ impl CliApp {
         matches: &clap::ArgMatches,
         profile: Option<&crate::profiles::ResolvedProfile>,
     ) {
+        let (subs, caller_pinned_any) = self.resolve_server_var_subs(doc, matches, profile);
+        if !caller_pinned_any {
+            apply_default_server_urls(doc);
+        }
+        apply_server_var_substitutions(doc, &subs);
+    }
+
+    /// Fill `{name}` server-variable placeholders in a caller-supplied base
+    /// URL (`--base-url`, `<NAME>_BASE_URL`, or a profile's base URL) from the
+    /// same ladder that resolves the spec's own server URLs, so
+    /// `--base-url https://api.stage-{region}.twilio.com` honours `--region`.
+    pub(crate) fn substitute_base_url_vars(
+        &self,
+        url: Option<String>,
+        doc: &RestDescription,
+        matches: &clap::ArgMatches,
+        profile: Option<&crate::profiles::ResolvedProfile>,
+    ) -> Option<String> {
+        let url = url?;
+        if !url.contains('{') {
+            return Some(url);
+        }
+        let (subs, _) = self.resolve_server_var_subs(doc, matches, profile);
+        Some(substitute_url_vars(&url, &subs))
+    }
+
+    /// Server-variable values (command line > profile > env var > spec
+    /// default), plus whether the caller or a profile pinned any of them.
+    fn resolve_server_var_subs(
+        &self,
+        doc: &RestDescription,
+        matches: &clap::ArgMatches,
+        profile: Option<&crate::profiles::ResolvedProfile>,
+    ) -> (std::collections::HashMap<String, String>, bool) {
         let profile_var = |name: &str| match profile {
             Some(p) => p.server_variables.get(name).cloned(),
             None => crate::profiles::server_variable(name),
@@ -2285,10 +2403,7 @@ impl CliApp {
             }
         }
 
-        if !caller_pinned_any {
-            apply_default_server_urls(doc);
-        }
-        apply_server_var_substitutions(doc, &subs);
+        (subs, caller_pinned_any)
     }
 
     /// Handle the `generate-skills` subcommand: validate the output
@@ -6291,6 +6406,42 @@ paths:
         assert_eq!(doc.servers[0].url, "https://api.twilio.com");
         let list = doc.resources["messages"].methods.get("list-message").unwrap();
         assert_eq!(list.root_url, "https://api.twilio.com");
+    }
+
+    #[test]
+    fn test_substitute_base_url_vars_fills_region_in_caller_base_url() {
+        // `--base-url https://api.stage-{region}.twilio.com` must not reach
+        // the request builder with a literal `{region}`.
+        let app = CliApp::new("t").spec(TWILIO_SHAPED_SPEC);
+        let doc = app.build_doc().unwrap();
+        let cli = app.decorate_command(&doc, crate::openapi::commands::build_cli(&doc));
+        let stage = Some("https://api.stage-{region}.twilio.com".to_string());
+
+        let pinned = cli
+            .clone()
+            .try_get_matches_from(["t", "--region", "ie1", "messages", "list-message"])
+            .unwrap();
+        assert_eq!(
+            app.substitute_base_url_vars(stage.clone(), &doc, &pinned, None).as_deref(),
+            Some("https://api.stage-ie1.twilio.com")
+        );
+
+        let defaulted = cli.try_get_matches_from(["t", "messages", "list-message"]).unwrap();
+        assert_eq!(
+            app.substitute_base_url_vars(stage, &doc, &defaulted, None).as_deref(),
+            Some("https://api.stage-us1.twilio.com")
+        );
+        assert_eq!(
+            app.substitute_base_url_vars(
+                Some("http://127.0.0.1:8080/{unknown}".to_string()),
+                &doc,
+                &defaulted,
+                None,
+            )
+            .as_deref(),
+            Some("http://127.0.0.1:8080/{unknown}")
+        );
+        assert_eq!(app.substitute_base_url_vars(None, &doc, &defaulted, None), None);
     }
 
     #[test]

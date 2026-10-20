@@ -490,7 +490,8 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     });
                 });
             } else {
-                const useSdkConfig = isSdkConfigInitEnabled();
+                const useFernDefinition = argv["fern-definition"] === true;
+                const useSdkConfig = isSdkConfigInitEnabled() && !useFernDefinition;
                 let absoluteOpenApiPath: AbsoluteFilePath | undefined = undefined;
                 let openApiUrl: string | undefined = undefined;
                 if (argv.openapi != null) {
@@ -523,7 +524,7 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                         context,
                         openApiPath: absoluteOpenApiPath,
                         openApiUrl,
-                        useFernDefinition: argv["fern-definition"] === true,
+                        useFernDefinition,
                         useSdkConfig,
                         includeDocs: argv.api == null
                     });
@@ -2226,10 +2227,15 @@ function addDocsMdGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCo
                     type: "string",
                     description: "Name of a specific library defined in docs.yml to generate docs for"
                 })
-                .option("local", {
+                .option("remote", {
                     boolean: true,
                     default: false,
-                    description: "Run the library parser(s) locally using Docker instead of Fern's servers"
+                    description: "Run the library parser(s) on Fern's servers instead of locally using Docker"
+                })
+                .option("local", {
+                    boolean: true,
+                    hidden: true,
+                    description: "Deprecated: local generation is the default"
                 }),
         async (argv) => {
             cliContext.instrumentPostHogEvent({
@@ -2245,7 +2251,7 @@ function addDocsMdGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCo
                 project,
                 cliContext,
                 library: argv.library,
-                local: argv.local
+                local: !argv.remote
             });
         }
     );

@@ -192,6 +192,13 @@ pub fn after_help_footer(binary_name: &str, doc: &RestDescription) -> String {
 
 /// Builds the full CLI command tree from an API description.
 pub fn build_cli(doc: &RestDescription) -> Command {
+    build_cli_with_placeholders(doc, &[])
+}
+
+/// [`build_cli`], plus a bare top-level group (name and `about` only) for each
+/// of `placeholders` not already in `doc`. Lists top-level commands on TAB
+/// without parsing the specs behind them.
+pub(crate) fn build_cli_with_placeholders(doc: &RestDescription, placeholders: &[String]) -> Command {
     let about_text = doc
         .title
         .clone()
@@ -255,10 +262,24 @@ pub fn build_cli(doc: &RestDescription) -> Command {
         );
 
     // Add resource subcommands
-    let mut resource_names: Vec<_> = doc.resources.keys().collect();
+    let mut resource_names: Vec<_> = doc.resources.keys().chain(placeholders).collect();
     resource_names.sort();
+    resource_names.dedup();
     for name in resource_names {
-        let resource = &doc.resources[name];
+        let Some(resource) = doc.resources.get(name) else {
+            let about = group_about_text_for_group(
+                name,
+                &doc.groups,
+                &doc.tag_descriptions,
+                &doc.group_tag_names,
+                &doc.group_tag_operation_counts,
+                &doc.group_operation_counts,
+                &doc.tag_group_names,
+                &doc.tag_description_order,
+            );
+            root = root.subcommand(Command::new(name.clone()).about(about).subcommand_required(true));
+            continue;
+        };
         if let Some(cmd) = build_resource_command(
             name,
             resource,
@@ -309,7 +330,7 @@ pub(crate) fn group_tag_description_for_group(
     })
 }
 
-fn tag_match_key(value: &str) -> String {
+pub(crate) fn tag_match_key(value: &str) -> String {
     value
         .chars()
         .filter(|c| c.is_alphanumeric())
