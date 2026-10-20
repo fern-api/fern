@@ -1089,20 +1089,6 @@
                       "tab": {
                         "type": "string"
                       },
-                      "variants-location": {
-                        "anyOf": [
-                          {
-                            "type": "string",
-                            "enum": [
-                              "tab",
-                              "sidebar"
-                            ]
-                          },
-                          {
-                            "type": "null"
-                          }
-                        ]
-                      },
                       "variants-column-height": {
                         "anyOf": [
                           {
@@ -1392,6 +1378,872 @@
                     "required": [
                       "tab",
                       "variants"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "tab": {
+                        "type": "string"
+                      },
+                      "dropdown-column-height": {
+                        "anyOf": [
+                          {
+                            "anyOf": [
+                              {
+                                "type": "integer",
+                                "exclusiveMinimum": 0,
+                                "maximum": 9007199254740991
+                              },
+                              {
+                                "type": "string",
+                                "const": "no-limit"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "dropdown": {
+                        "type": "array",
+                        "items": {
+                          "anyOf": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "viewers": {
+                                  "anyOf": [
+                                    {
+                                      "type": "string"
+                                    },
+                                    {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  ]
+                                },
+                                "orphaned": {
+                                  "type": "boolean"
+                                },
+                                "feature-flag": {
+                                  "anyOf": [
+                                    {
+                                      "type": "string"
+                                    },
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "flag": {
+                                          "type": "string"
+                                        },
+                                        "fallback-value": {},
+                                        "match": {}
+                                      },
+                                      "required": [
+                                        "flag"
+                                      ],
+                                      "additionalProperties": false
+                                    },
+                                    {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "object",
+                                        "properties": {
+                                          "flag": {
+                                            "type": "string"
+                                          },
+                                          "fallback-value": {},
+                                          "match": {}
+                                        },
+                                        "required": [
+                                          "flag"
+                                        ],
+                                        "additionalProperties": false
+                                      }
+                                    }
+                                  ]
+                                },
+                                "title": {
+                                  "type": "string"
+                                },
+                                "subtitle": {
+                                  "type": "string"
+                                },
+                                "icon": {
+                                  "type": "string"
+                                },
+                                "layout": {
+                                  "type": "array",
+                                  "items": {
+                                    "$ref": "#/$defs/__schema0"
+                                  }
+                                },
+                                "variants-column-height": {
+                                  "anyOf": [
+                                    {
+                                      "anyOf": [
+                                        {
+                                          "type": "integer",
+                                          "exclusiveMinimum": 0,
+                                          "maximum": 9007199254740991
+                                        },
+                                        {
+                                          "type": "string",
+                                          "const": "no-limit"
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "type": "null"
+                                    }
+                                  ]
+                                },
+                                "variants": {
+                                  "type": "array",
+                                  "items": {
+                                    "anyOf": [
+                                      {
+                                        "type": "object",
+                                        "properties": {
+                                          "viewers": {
+                                            "anyOf": [
+                                              {
+                                                "type": "string"
+                                              },
+                                              {
+                                                "type": "array",
+                                                "items": {
+                                                  "type": "string"
+                                                }
+                                              }
+                                            ]
+                                          },
+                                          "orphaned": {
+                                            "type": "boolean"
+                                          },
+                                          "feature-flag": {
+                                            "anyOf": [
+                                              {
+                                                "type": "string"
+                                              },
+                                              {
+                                                "type": "object",
+                                                "properties": {
+                                                  "flag": {
+                                                    "type": "string"
+                                                  },
+                                                  "fallback-value": {},
+                                                  "match": {}
+                                                },
+                                                "required": [
+                                                  "flag"
+                                                ],
+                                                "additionalProperties": false
+                                              },
+                                              {
+                                                "type": "array",
+                                                "items": {
+                                                  "type": "object",
+                                                  "properties": {
+                                                    "flag": {
+                                                      "type": "string"
+                                                    },
+                                                    "fallback-value": {},
+                                                    "match": {}
+                                                  },
+                                                  "required": [
+                                                    "flag"
+                                                  ],
+                                                  "additionalProperties": false
+                                                }
+                                              }
+                                            ]
+                                          },
+                                          "title": {
+                                            "type": "string"
+                                          },
+                                          "subtitle": {
+                                            "type": "string"
+                                          },
+                                          "icon": {
+                                            "type": "string"
+                                          },
+                                          "layout": {
+                                            "type": "array",
+                                            "items": {
+                                              "$ref": "#/$defs/__schema0"
+                                            }
+                                          },
+                                          "slug": {
+                                            "type": "string"
+                                          },
+                                          "skip-slug": {
+                                            "type": "boolean"
+                                          },
+                                          "hidden": {
+                                            "type": "boolean"
+                                          },
+                                          "default": {
+                                            "type": "boolean"
+                                          }
+                                        },
+                                        "required": [
+                                          "title",
+                                          "layout"
+                                        ],
+                                        "additionalProperties": false
+                                      },
+                                      {
+                                        "type": "object",
+                                        "properties": {
+                                          "group": {
+                                            "type": "string"
+                                          },
+                                          "variants": {
+                                            "type": "array",
+                                            "items": {
+                                              "anyOf": [
+                                                {
+                                                  "type": "object",
+                                                  "properties": {
+                                                    "viewers": {
+                                                      "anyOf": [
+                                                        {
+                                                          "type": "string"
+                                                        },
+                                                        {
+                                                          "type": "array",
+                                                          "items": {
+                                                            "type": "string"
+                                                          }
+                                                        }
+                                                      ]
+                                                    },
+                                                    "orphaned": {
+                                                      "type": "boolean"
+                                                    },
+                                                    "feature-flag": {
+                                                      "anyOf": [
+                                                        {
+                                                          "type": "string"
+                                                        },
+                                                        {
+                                                          "type": "object",
+                                                          "properties": {
+                                                            "flag": {
+                                                              "type": "string"
+                                                            },
+                                                            "fallback-value": {},
+                                                            "match": {}
+                                                          },
+                                                          "required": [
+                                                            "flag"
+                                                          ],
+                                                          "additionalProperties": false
+                                                        },
+                                                        {
+                                                          "type": "array",
+                                                          "items": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                              "flag": {
+                                                                "type": "string"
+                                                              },
+                                                              "fallback-value": {},
+                                                              "match": {}
+                                                            },
+                                                            "required": [
+                                                              "flag"
+                                                            ],
+                                                            "additionalProperties": false
+                                                          }
+                                                        }
+                                                      ]
+                                                    },
+                                                    "title": {
+                                                      "type": "string"
+                                                    },
+                                                    "subtitle": {
+                                                      "type": "string"
+                                                    },
+                                                    "icon": {
+                                                      "type": "string"
+                                                    },
+                                                    "layout": {
+                                                      "type": "array",
+                                                      "items": {
+                                                        "$ref": "#/$defs/__schema0"
+                                                      }
+                                                    },
+                                                    "slug": {
+                                                      "type": "string"
+                                                    },
+                                                    "skip-slug": {
+                                                      "type": "boolean"
+                                                    },
+                                                    "hidden": {
+                                                      "type": "boolean"
+                                                    },
+                                                    "default": {
+                                                      "type": "boolean"
+                                                    }
+                                                  },
+                                                  "required": [
+                                                    "title",
+                                                    "layout"
+                                                  ],
+                                                  "additionalProperties": false
+                                                },
+                                                {
+                                                  "type": "object",
+                                                  "properties": {
+                                                    "link": {
+                                                      "type": "string"
+                                                    },
+                                                    "href": {
+                                                      "type": "string"
+                                                    },
+                                                    "icon": {
+                                                      "type": "string"
+                                                    },
+                                                    "target": {
+                                                      "type": "string",
+                                                      "enum": [
+                                                        "_blank",
+                                                        "_self",
+                                                        "_parent",
+                                                        "_top"
+                                                      ]
+                                                    }
+                                                  },
+                                                  "required": [
+                                                    "link",
+                                                    "href"
+                                                  ],
+                                                  "additionalProperties": false
+                                                }
+                                              ]
+                                            }
+                                          }
+                                        },
+                                        "required": [
+                                          "group",
+                                          "variants"
+                                        ],
+                                        "additionalProperties": false
+                                      },
+                                      {
+                                        "type": "object",
+                                        "properties": {
+                                          "link": {
+                                            "type": "string"
+                                          },
+                                          "href": {
+                                            "type": "string"
+                                          },
+                                          "icon": {
+                                            "type": "string"
+                                          },
+                                          "target": {
+                                            "type": "string",
+                                            "enum": [
+                                              "_blank",
+                                              "_self",
+                                              "_parent",
+                                              "_top"
+                                            ]
+                                          }
+                                        },
+                                        "required": [
+                                          "link",
+                                          "href"
+                                        ],
+                                        "additionalProperties": false
+                                      }
+                                    ]
+                                  }
+                                },
+                                "slug": {
+                                  "type": "string"
+                                },
+                                "skip-slug": {
+                                  "type": "boolean"
+                                },
+                                "hidden": {
+                                  "type": "boolean"
+                                },
+                                "default": {
+                                  "type": "boolean"
+                                }
+                              },
+                              "required": [
+                                "title"
+                              ],
+                              "additionalProperties": false
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "group": {
+                                  "type": "string"
+                                },
+                                "items": {
+                                  "type": "array",
+                                  "items": {
+                                    "anyOf": [
+                                      {
+                                        "type": "object",
+                                        "properties": {
+                                          "viewers": {
+                                            "anyOf": [
+                                              {
+                                                "type": "string"
+                                              },
+                                              {
+                                                "type": "array",
+                                                "items": {
+                                                  "type": "string"
+                                                }
+                                              }
+                                            ]
+                                          },
+                                          "orphaned": {
+                                            "type": "boolean"
+                                          },
+                                          "feature-flag": {
+                                            "anyOf": [
+                                              {
+                                                "type": "string"
+                                              },
+                                              {
+                                                "type": "object",
+                                                "properties": {
+                                                  "flag": {
+                                                    "type": "string"
+                                                  },
+                                                  "fallback-value": {},
+                                                  "match": {}
+                                                },
+                                                "required": [
+                                                  "flag"
+                                                ],
+                                                "additionalProperties": false
+                                              },
+                                              {
+                                                "type": "array",
+                                                "items": {
+                                                  "type": "object",
+                                                  "properties": {
+                                                    "flag": {
+                                                      "type": "string"
+                                                    },
+                                                    "fallback-value": {},
+                                                    "match": {}
+                                                  },
+                                                  "required": [
+                                                    "flag"
+                                                  ],
+                                                  "additionalProperties": false
+                                                }
+                                              }
+                                            ]
+                                          },
+                                          "title": {
+                                            "type": "string"
+                                          },
+                                          "subtitle": {
+                                            "type": "string"
+                                          },
+                                          "icon": {
+                                            "type": "string"
+                                          },
+                                          "layout": {
+                                            "type": "array",
+                                            "items": {
+                                              "$ref": "#/$defs/__schema0"
+                                            }
+                                          },
+                                          "variants-column-height": {
+                                            "anyOf": [
+                                              {
+                                                "anyOf": [
+                                                  {
+                                                    "type": "integer",
+                                                    "exclusiveMinimum": 0,
+                                                    "maximum": 9007199254740991
+                                                  },
+                                                  {
+                                                    "type": "string",
+                                                    "const": "no-limit"
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "type": "null"
+                                              }
+                                            ]
+                                          },
+                                          "variants": {
+                                            "type": "array",
+                                            "items": {
+                                              "anyOf": [
+                                                {
+                                                  "type": "object",
+                                                  "properties": {
+                                                    "viewers": {
+                                                      "anyOf": [
+                                                        {
+                                                          "type": "string"
+                                                        },
+                                                        {
+                                                          "type": "array",
+                                                          "items": {
+                                                            "type": "string"
+                                                          }
+                                                        }
+                                                      ]
+                                                    },
+                                                    "orphaned": {
+                                                      "type": "boolean"
+                                                    },
+                                                    "feature-flag": {
+                                                      "anyOf": [
+                                                        {
+                                                          "type": "string"
+                                                        },
+                                                        {
+                                                          "type": "object",
+                                                          "properties": {
+                                                            "flag": {
+                                                              "type": "string"
+                                                            },
+                                                            "fallback-value": {},
+                                                            "match": {}
+                                                          },
+                                                          "required": [
+                                                            "flag"
+                                                          ],
+                                                          "additionalProperties": false
+                                                        },
+                                                        {
+                                                          "type": "array",
+                                                          "items": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                              "flag": {
+                                                                "type": "string"
+                                                              },
+                                                              "fallback-value": {},
+                                                              "match": {}
+                                                            },
+                                                            "required": [
+                                                              "flag"
+                                                            ],
+                                                            "additionalProperties": false
+                                                          }
+                                                        }
+                                                      ]
+                                                    },
+                                                    "title": {
+                                                      "type": "string"
+                                                    },
+                                                    "subtitle": {
+                                                      "type": "string"
+                                                    },
+                                                    "icon": {
+                                                      "type": "string"
+                                                    },
+                                                    "layout": {
+                                                      "type": "array",
+                                                      "items": {
+                                                        "$ref": "#/$defs/__schema0"
+                                                      }
+                                                    },
+                                                    "slug": {
+                                                      "type": "string"
+                                                    },
+                                                    "skip-slug": {
+                                                      "type": "boolean"
+                                                    },
+                                                    "hidden": {
+                                                      "type": "boolean"
+                                                    },
+                                                    "default": {
+                                                      "type": "boolean"
+                                                    }
+                                                  },
+                                                  "required": [
+                                                    "title",
+                                                    "layout"
+                                                  ],
+                                                  "additionalProperties": false
+                                                },
+                                                {
+                                                  "type": "object",
+                                                  "properties": {
+                                                    "group": {
+                                                      "type": "string"
+                                                    },
+                                                    "variants": {
+                                                      "type": "array",
+                                                      "items": {
+                                                        "anyOf": [
+                                                          {
+                                                            "type": "object",
+                                                            "properties": {
+                                                              "viewers": {
+                                                                "anyOf": [
+                                                                  {
+                                                                    "type": "string"
+                                                                  },
+                                                                  {
+                                                                    "type": "array",
+                                                                    "items": {
+                                                                      "type": "string"
+                                                                    }
+                                                                  }
+                                                                ]
+                                                              },
+                                                              "orphaned": {
+                                                                "type": "boolean"
+                                                              },
+                                                              "feature-flag": {
+                                                                "anyOf": [
+                                                                  {
+                                                                    "type": "string"
+                                                                  },
+                                                                  {
+                                                                    "type": "object",
+                                                                    "properties": {
+                                                                      "flag": {
+                                                                        "type": "string"
+                                                                      },
+                                                                      "fallback-value": {},
+                                                                      "match": {}
+                                                                    },
+                                                                    "required": [
+                                                                      "flag"
+                                                                    ],
+                                                                    "additionalProperties": false
+                                                                  },
+                                                                  {
+                                                                    "type": "array",
+                                                                    "items": {
+                                                                      "type": "object",
+                                                                      "properties": {
+                                                                        "flag": {
+                                                                          "type": "string"
+                                                                        },
+                                                                        "fallback-value": {},
+                                                                        "match": {}
+                                                                      },
+                                                                      "required": [
+                                                                        "flag"
+                                                                      ],
+                                                                      "additionalProperties": false
+                                                                    }
+                                                                  }
+                                                                ]
+                                                              },
+                                                              "title": {
+                                                                "type": "string"
+                                                              },
+                                                              "subtitle": {
+                                                                "type": "string"
+                                                              },
+                                                              "icon": {
+                                                                "type": "string"
+                                                              },
+                                                              "layout": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                  "$ref": "#/$defs/__schema0"
+                                                                }
+                                                              },
+                                                              "slug": {
+                                                                "type": "string"
+                                                              },
+                                                              "skip-slug": {
+                                                                "type": "boolean"
+                                                              },
+                                                              "hidden": {
+                                                                "type": "boolean"
+                                                              },
+                                                              "default": {
+                                                                "type": "boolean"
+                                                              }
+                                                            },
+                                                            "required": [
+                                                              "title",
+                                                              "layout"
+                                                            ],
+                                                            "additionalProperties": false
+                                                          },
+                                                          {
+                                                            "type": "object",
+                                                            "properties": {
+                                                              "link": {
+                                                                "type": "string"
+                                                              },
+                                                              "href": {
+                                                                "type": "string"
+                                                              },
+                                                              "icon": {
+                                                                "type": "string"
+                                                              },
+                                                              "target": {
+                                                                "type": "string",
+                                                                "enum": [
+                                                                  "_blank",
+                                                                  "_self",
+                                                                  "_parent",
+                                                                  "_top"
+                                                                ]
+                                                              }
+                                                            },
+                                                            "required": [
+                                                              "link",
+                                                              "href"
+                                                            ],
+                                                            "additionalProperties": false
+                                                          }
+                                                        ]
+                                                      }
+                                                    }
+                                                  },
+                                                  "required": [
+                                                    "group",
+                                                    "variants"
+                                                  ],
+                                                  "additionalProperties": false
+                                                },
+                                                {
+                                                  "type": "object",
+                                                  "properties": {
+                                                    "link": {
+                                                      "type": "string"
+                                                    },
+                                                    "href": {
+                                                      "type": "string"
+                                                    },
+                                                    "icon": {
+                                                      "type": "string"
+                                                    },
+                                                    "target": {
+                                                      "type": "string",
+                                                      "enum": [
+                                                        "_blank",
+                                                        "_self",
+                                                        "_parent",
+                                                        "_top"
+                                                      ]
+                                                    }
+                                                  },
+                                                  "required": [
+                                                    "link",
+                                                    "href"
+                                                  ],
+                                                  "additionalProperties": false
+                                                }
+                                              ]
+                                            }
+                                          },
+                                          "slug": {
+                                            "type": "string"
+                                          },
+                                          "skip-slug": {
+                                            "type": "boolean"
+                                          },
+                                          "hidden": {
+                                            "type": "boolean"
+                                          },
+                                          "default": {
+                                            "type": "boolean"
+                                          }
+                                        },
+                                        "required": [
+                                          "title"
+                                        ],
+                                        "additionalProperties": false
+                                      },
+                                      {
+                                        "type": "object",
+                                        "properties": {
+                                          "link": {
+                                            "type": "string"
+                                          },
+                                          "href": {
+                                            "type": "string"
+                                          },
+                                          "icon": {
+                                            "type": "string"
+                                          },
+                                          "target": {
+                                            "type": "string",
+                                            "enum": [
+                                              "_blank",
+                                              "_self",
+                                              "_parent",
+                                              "_top"
+                                            ]
+                                          }
+                                        },
+                                        "required": [
+                                          "link",
+                                          "href"
+                                        ],
+                                        "additionalProperties": false
+                                      }
+                                    ]
+                                  }
+                                }
+                              },
+                              "required": [
+                                "group",
+                                "items"
+                              ],
+                              "additionalProperties": false
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "link": {
+                                  "type": "string"
+                                },
+                                "href": {
+                                  "type": "string"
+                                },
+                                "icon": {
+                                  "type": "string"
+                                },
+                                "target": {
+                                  "type": "string",
+                                  "enum": [
+                                    "_blank",
+                                    "_self",
+                                    "_parent",
+                                    "_top"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "link",
+                                "href"
+                              ],
+                              "additionalProperties": false
+                            }
+                          ]
+                        }
+                      }
+                    },
+                    "required": [
+                      "tab",
+                      "dropdown"
                     ],
                     "additionalProperties": false
                   }
@@ -3102,16 +3954,9 @@
                 "sidebar"
               ]
             },
-            "variants": {
+            "dropdown": {
               "type": "object",
               "properties": {
-                "default-location": {
-                  "type": "string",
-                  "enum": [
-                    "tab",
-                    "sidebar"
-                  ]
-                },
                 "default-column-height": {
                   "anyOf": [
                     {
@@ -3131,58 +3976,32 @@
                       "type": "null"
                     }
                   ]
-                },
-                "tab": {
-                  "type": "object",
-                  "properties": {
-                    "default-column-height": {
+                }
+              },
+              "additionalProperties": false
+            },
+            "variants": {
+              "type": "object",
+              "properties": {
+                "default-column-height": {
+                  "anyOf": [
+                    {
                       "anyOf": [
                         {
-                          "anyOf": [
-                            {
-                              "type": "integer",
-                              "exclusiveMinimum": 0,
-                              "maximum": 9007199254740991
-                            },
-                            {
-                              "type": "string",
-                              "const": "no-limit"
-                            }
-                          ]
+                          "type": "integer",
+                          "exclusiveMinimum": 0,
+                          "maximum": 9007199254740991
                         },
                         {
-                          "type": "null"
+                          "type": "string",
+                          "const": "no-limit"
                         }
                       ]
+                    },
+                    {
+                      "type": "null"
                     }
-                  },
-                  "additionalProperties": false
-                },
-                "sidebar": {
-                  "type": "object",
-                  "properties": {
-                    "default-column-height": {
-                      "anyOf": [
-                        {
-                          "anyOf": [
-                            {
-                              "type": "integer",
-                              "exclusiveMinimum": 0,
-                              "maximum": 9007199254740991
-                            },
-                            {
-                              "type": "string",
-                              "const": "no-limit"
-                            }
-                          ]
-                        },
-                        {
-                          "type": "null"
-                        }
-                      ]
-                    }
-                  },
-                  "additionalProperties": false
+                  ]
                 }
               },
               "additionalProperties": false
