@@ -77,6 +77,27 @@ describe("loadProjectFromDirectory — docs.yml inline specs without generators.
         expect(errorSpy).not.toHaveBeenCalled();
     });
 
+    it("still reports an asyncapi/ directory that docs.yml does not reference", async () => {
+        const fernDirectory = await createFernDirectory(
+            [
+                "instances:",
+                "  - url: plants.docs.buildwithfern.com",
+                "navigation:",
+                "  - api: API Reference",
+                "    specs:",
+                "      - type: openapi",
+                "        path: openapi/openapi.yml",
+                ""
+            ].join("\n")
+        );
+        await mkdir(path.join(fernDirectory, "asyncapi"));
+        await writeFile(path.join(fernDirectory, "asyncapi", "asyncapi.yml"), "asyncapi: 2.6.0\n");
+
+        const { errorSpy } = await load(fernDirectory);
+
+        expect(errorSpy).toHaveBeenCalledWith(expect.stringContaining("No API definition found"));
+    });
+
     it("still reports the misconfigured openapi/ directory when docs.yml has no inline specs", async () => {
         const fernDirectory = await createFernDirectory(
             ["instances:", "  - url: plants.docs.buildwithfern.com", "navigation:", "  - api: API Reference", ""].join(
