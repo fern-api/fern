@@ -37,6 +37,24 @@ pub fn dynamic_completion_shell(bin_name: &str) -> Option<String> {
     Some(shell)
 }
 
+/// Escape `name` for use as a literal inside a single-quoted zsh pattern.
+fn zsh_pattern_literal(name: &str) -> String {
+    let mut out = String::with_capacity(name.len());
+    for c in name.chars() {
+        match c {
+            '\'' => out.push_str("'\\''"),
+            // zstyle does not treat `\:` as a literal colon; a bracket class does.
+            ':' => out.push_str("[:]"),
+            c if c.is_ascii_alphanumeric() || matches!(c, '-' | '_' | '.' | '+') => out.push(c),
+            c => {
+                out.push('\\');
+                out.push(c);
+            }
+        }
+    }
+    out
+}
+
 /// Write the shell registration script for dynamic completion.
 ///
 /// The script stays a few lines regardless of how many commands the CLI
@@ -64,6 +82,18 @@ pub fn write_registration(
         &mut buf,
     )?;
     if shell == "zsh" {
+        // Reprint the prompt below the TAB list instead of jumping back above
+        // it. With the default, resizing a terminal that re-wraps lines (macOS
+        // Terminal.app, iTerm2, tmux) while a list is open leaves a stacked
+        // copy of the prompt and list per resize. Scoped to this command, so
+        // other commands' completion is unchanged.
+        buf.extend_from_slice(
+            format!(
+                "\nzstyle ':completion:*:*:{}:*' last-prompt false\n",
+                zsh_pattern_literal(bin_name)
+            )
+            .as_bytes(),
+        );
         // Also complete on the first TAB when autoloaded from a file in
         // `$fpath` (any `_*` name) rather than sourced from `.zshrc`.
         // `compstate` only exists inside a completion widget.
@@ -785,11 +815,22 @@ mod tests {
             "{script}"
         );
         assert!(
+            script.contains("zstyle ':completion:*:*:my-cli:*' last-prompt false"),
+            "{script}"
+        );
+        assert!(
             script.contains(
                 "if [[ ${funcstack[1]-} == _* ]] && (( ${+compstate} )); then\n    _clap_dynamic_completer_my_cli \"$@\"\nfi"
             ),
             "{script}"
         );
+    }
+
+    #[test]
+    fn zsh_last_prompt_style_matches_bin_name_literally() {
+        assert_eq!(zsh_pattern_literal("my-cli_2.0+x"), "my-cli_2.0+x");
+        assert_eq!(zsh_pattern_literal("a*b:c"), "a\\*b[:]c");
+        assert_eq!(zsh_pattern_literal("it's"), "it'\\''s");
     }
 
     #[test]
