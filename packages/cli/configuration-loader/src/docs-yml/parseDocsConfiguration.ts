@@ -628,7 +628,8 @@ function convertSettingsConfig(
         disableAnalytics: settings.disableAnalytics ?? false,
         websocketOneofDisplay: settings.websocketOneofDisplay ?? undefined,
         embedding: settings.embedding,
-        showHeadersInExamples: settings.showHeadersInExamples ?? false
+        showHeadersInExamples: settings.showHeadersInExamples ?? false,
+        requireAnalyticsConsent: settings.requireAnalyticsConsent ?? false
     };
 }
 
@@ -837,6 +838,7 @@ async function loadWorkingTreeVersion({
         availability: version.availability,
         slug: version.slug,
         hidden: version.hidden,
+        default: version.default,
         viewers: parseRoles(version.viewers),
         orphaned: version.orphaned,
         featureFlags: convertFeatureFlag(version.featureFlag),
@@ -878,6 +880,7 @@ async function loadRefVersion({
         availability: version.availability,
         slug: version.slug,
         hidden: version.hidden,
+        default: version.default,
         viewers: parseRoles(version.viewers),
         orphaned: version.orphaned,
         featureFlags: convertFeatureFlag(version.featureFlag),
@@ -890,6 +893,34 @@ async function loadRefVersion({
             libraries: parseLibrariesConfiguration(contentRoot.rawLibraries)
         }
     };
+}
+
+/**
+ * Validated against the raw `versions` list, before git-ref-backed versions are skipped, so
+ * `fern check` and `fern docs dev` enforce the same default as a full publish.
+ */
+function assertValidDefaultVersion(versions: docsYml.RawSchemas.VersionConfig[]): void {
+    const defaults = versions.filter((version) => version.default === true);
+    // Covered end to end by fern-platform's fern-dev-tests/tests/version-default-flag.spec.ts.
+    if (defaults.length > 1) {
+        throw new CliError({
+            message:
+                `Only one version can set 'default: true', but ${defaults.length} do: ` +
+                `${defaults.map((version) => `'${version.displayName}'`).join(", ")}. ` +
+                "Remove 'default: true' from all but one version.",
+            code: CliError.Code.ConfigError
+        });
+    }
+    // Without an explicit default, the first version is the default.
+    const defaultVersion = defaults[0] ?? versions[0];
+    if (defaultVersion?.hidden === true) {
+        throw new CliError({
+            message:
+                `The default version '${defaultVersion.displayName}' cannot be hidden. ` +
+                "Remove 'hidden: true' from it, or set 'default: true' on a version that is not hidden.",
+            code: CliError.Code.ConfigError
+        });
+    }
 }
 
 async function getVersionedNavigationConfiguration({
@@ -908,6 +939,7 @@ async function getVersionedNavigationConfiguration({
     folderTitleSource?: docsYml.RawSchemas.TitleSource;
     buildRefVersions?: boolean;
 }): Promise<docsYml.VersionedDocsNavigation> {
+    assertValidDefaultVersion(versions);
     const versionedNavbars: docsYml.VersionInfo[] = [];
     for (const version of versions) {
         const ref = getVersionContentRef(version);
