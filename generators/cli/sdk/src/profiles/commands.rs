@@ -2490,10 +2490,12 @@ async fn revoke_remote_credential(
     }
 }
 
+/// Every env var of the scheme is set, so env holds a complete parent
+/// credential. A partial one (only `TWILIO_ACCOUNT_SID`) keeps the stored key.
 fn parent_env_set(ctx: &ProfilesContext<'_>, scheme: &str) -> bool {
     login::shadowing_env_vars(ctx.cli_name, scheme, ctx.auth_bindings)
         .iter()
-        .any(|var| std::env::var_os(var).is_some_and(|value| !value.is_empty()))
+        .all(|var| std::env::var_os(var).is_some_and(|value| !value.is_empty()))
 }
 
 // ── current ─────────────────────────────────────────────────────────────
