@@ -451,6 +451,9 @@ fn walk_details(
                 path.truncate(mark);
             }
         }
+        // A null field says nothing a reader can act on (`code: null`); the
+        // JSON envelope still carries it.
+        serde_json::Value::Null => {}
         other => {
             let text = scalar_text(other);
             // `seen` grows as we go, so a value repeated across sibling keys is
@@ -1498,6 +1501,30 @@ mod tests {
             "got: {lines:?}"
         );
         assert!(lines.iter().all(|l| !l.contains('"')), "got: {lines:?}");
+    }
+
+    #[test]
+    fn human_details_skip_null_fields() {
+        let body = r#"{"code":null,"message":null,"moreInfo":null,"status":400,"requestId":"RQ1"}"#;
+        let err = api_error_from_body(400, body);
+        let CliError::Api {
+            details: Some(details),
+            ..
+        } = &err
+        else {
+            panic!("expected details, got {err:?}");
+        };
+        assert_eq!(
+            details["code"],
+            serde_json::Value::Null,
+            "envelope keeps nulls"
+        );
+        let mut lines = detail_lines(details, MAX_DETAIL_LINES, &[]);
+        lines.sort();
+        assert_eq!(
+            lines,
+            vec!["requestId: RQ1".to_string(), "status: 400".to_string()]
+        );
     }
 
     #[test]
