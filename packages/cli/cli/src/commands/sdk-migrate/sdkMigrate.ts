@@ -1,13 +1,13 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
-import {
-    GENERATORS_CONFIGURATION_FILENAME,
-    type generatorsYml,
-    LEGACY_GENERATORS_CONFIGURATION_FILENAME,
-    SDK_CONFIG_FILENAME
-} from "@fern-api/configuration-loader";
+import { type generatorsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, cwd, dirname, doesPathExist, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import type { Project } from "@fern-api/project-loader";
+import {
+    GENERATORS_CONFIGURATION_FILENAME,
+    LEGACY_GENERATORS_CONFIGURATION_FILENAME,
+    SDK_CONFIG_FILENAME
+} from "@fern-api/project-structure";
 import { CliError } from "@fern-api/task-context";
 import { type FernConfigMappingDiagnostic, FernConfigMappingError } from "@postman/sdk-config/sdk-config/v1";
 

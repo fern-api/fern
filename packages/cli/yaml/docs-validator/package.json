@@ -49,6 +49,7 @@
     "@fern-api/logger": "workspace:*",
     "@fern-api/openapi-to-ir": "workspace:*",
     "@fern-api/project-loader": "workspace:*",
+    "@fern-api/project-structure": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/v3-importer-commons": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",

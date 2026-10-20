@@ -1,11 +1,5 @@
 import { getAPIDefinitionSettings, OpenAPISpec, ProtobufSpec, Spec } from "@fern-api/api-workspace-commons";
-import {
-    DEFINITION_DIRECTORY,
-    GENERATORS_CONFIGURATION_FILENAME,
-    generatorsYml,
-    loadGeneratorsConfiguration,
-    OPENAPI_DIRECTORY
-} from "@fern-api/configuration-loader";
+import { generatorsYml, loadGeneratorsConfiguration } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import {
     ConjureWorkspace,
@@ -14,6 +8,11 @@ import {
     WorkspaceLoader,
     WorkspaceLoaderFailureType
 } from "@fern-api/lazy-fern-workspace";
+import {
+    DEFINITION_DIRECTORY,
+    GENERATORS_CONFIGURATION_FILENAME,
+    OPENAPI_DIRECTORY
+} from "@fern-api/project-structure";
 import { TaskContext } from "@fern-api/task-context";
 import path from "path";
 import { loadAPIChangelog } from "./loadAPIChangelog.js";

@@ -15,7 +15,6 @@ import {
 } from "@fern-api/cli-v2";
 import {
     correctIncorrectDockerOrg,
-    GENERATORS_CONFIGURATION_FILENAME,
     generatorsYml,
     getFernDirectory,
     INCORRECT_DOCKER_ORG,
@@ -43,7 +42,7 @@ import {
 import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { askToLogin, getDashboardBaseUrl, login, logout } from "@fern-api/login";
 import { type Project } from "@fern-api/project-loader";
-import { isApiSelected } from "@fern-api/project-structure";
+import { GENERATORS_CONFIGURATION_FILENAME, isApiSelected } from "@fern-api/project-structure";
 import { protocGenFern } from "@fern-api/protoc-gen-fern";
 import {
     isDynamicIrWorkerThread,

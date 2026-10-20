@@ -1,9 +1,10 @@
-import { DOCS_CONFIGURATION_FILENAME, docsYml } from "@fern-api/configuration-loader";
+import { docsYml } from "@fern-api/configuration-loader";
 import { assertNever } from "@fern-api/core-utils";
 import { DocsV1Write } from "@fern-api/fdr-sdk";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { Logger } from "@fern-api/logger";
+import { DOCS_CONFIGURATION_FILENAME } from "@fern-api/project-structure";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace } from "@fern-api/workspace-loader";
 import {

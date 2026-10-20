@@ -42,6 +42,7 @@
     "@fern-api/logger": "workspace:*",
     "@fern-api/login": "workspace:*",
     "@fern-api/mintlify-importer": "workspace:*",
+    "@fern-api/project-structure": "workspace:*",
     "@fern-api/readme-importer": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",

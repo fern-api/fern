@@ -40,6 +40,7 @@
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/lazy-fern-workspace": "workspace:*",
     "@fern-api/logger": "workspace:*",
+    "@fern-api/project-structure": "workspace:*",
     "@fern-api/semver-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",

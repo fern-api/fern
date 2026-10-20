@@ -2,8 +2,10 @@ import { type OpenAPISpec, type Spec } from "@fern-api/api-workspace-commons";
 import { type docsYml } from "@fern-api/configuration";
 import { resolveFilepath } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
+import { type OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { getDocsApiSectionsWithInlineSpecs } from "@fern-api/project-structure";
+
+import { createDocsOssWorkspace } from "./createDocsOssWorkspace.js";
 
 function toSpec(spec: docsYml.RawSchemas.ApiSpecConfiguration, absoluteFilepathToDocsConfig: AbsoluteFilePath): Spec {
     const absoluteFilepath = resolveFilepath(spec.path, absoluteFilepathToDocsConfig);
@@ -46,13 +48,10 @@ export function createInlineSpecOssWorkspaces({
 }): OSSWorkspace[] {
     return getDocsApiSectionsWithInlineSpecs(navigation).map((section) => {
         const specs = (section.specs ?? []).map((spec) => toSpec(spec, absoluteFilepathToDocsConfig));
-        return new OSSWorkspace({
-            specs: specs.filter((spec): spec is OpenAPISpec => spec.type === "openapi"),
-            allSpecs: specs,
+        return createDocsOssWorkspace({
+            specs,
             workspaceName: section.apiName ?? undefined,
             absoluteFilePath: absoluteFilePathToFernDirectory,
-            generatorsConfiguration: undefined,
-            changelog: undefined,
             cliVersion
         });
     });

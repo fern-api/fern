@@ -1,6 +1,6 @@
-import { DOCS_CONFIGURATION_FILENAME } from "@fern-api/configuration-loader";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { DOCS_CONFIGURATION_FILENAME } from "@fern-api/project-structure";
 import { TaskContext } from "@fern-api/task-context";
 import { readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";

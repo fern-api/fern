@@ -1,8 +1,5 @@
-import {
-    correctIncorrectDockerOrg,
-    GENERATORS_CONFIGURATION_FILENAME,
-    INCORRECT_DOCKER_ORG
-} from "@fern-api/configuration-loader";
+import { correctIncorrectDockerOrg, INCORRECT_DOCKER_ORG } from "@fern-api/configuration-loader";
+import { GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/project-structure";
 import { CliError } from "@fern-api/task-context";
 import { FernRegistry } from "@fern-fern/generators-sdk";
 import { writeFile } from "fs/promises";

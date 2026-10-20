@@ -1,16 +1,18 @@
 import {
     DEFAULT_GROUP_NAME,
-    DEFINITION_DIRECTORY,
     GENERATOR_INVOCATIONS,
-    GENERATORS_CONFIGURATION_FILENAME,
     generatorsYml,
     getLatestGeneratorVersion,
-    ROOT_API_FILENAME,
-    SDK_CONFIG_FILENAME
+    ROOT_API_FILENAME
 } from "@fern-api/configuration-loader";
 import { formatDefinitionFile } from "@fern-api/fern-definition-formatter";
 import { RootApiFileSchema } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath, relative } from "@fern-api/fs-utils";
+import {
+    DEFINITION_DIRECTORY,
+    GENERATORS_CONFIGURATION_FILENAME,
+    SDK_CONFIG_FILENAME
+} from "@fern-api/project-structure";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import { loadOpenAPI } from "@fern-api/workspace-loader";
 import { type SdkConfigV1Document, validateSdkConfigV1 } from "@postman/sdk-config/sdk-config/v1";

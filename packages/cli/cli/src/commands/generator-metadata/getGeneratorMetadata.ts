@@ -1,12 +1,11 @@
 import {
     addDefaultDockerOrgIfNotPresent,
     generatorsYml,
-    loadGeneratorsConfiguration,
-    SDK_CONFIG_FILENAME
+    loadGeneratorsConfiguration
 } from "@fern-api/configuration-loader";
 import { assertNever } from "@fern-api/core-utils";
 import { Project } from "@fern-api/project-loader";
-import { isApiSelected } from "@fern-api/project-structure";
+import { isApiSelected, SDK_CONFIG_FILENAME } from "@fern-api/project-structure";
 import { CliError } from "@fern-api/task-context";
 
 import { CliContext } from "../../cli-context/CliContext.js";

@@ -5,15 +5,6 @@ import { parseSdkConfigV1 } from "@postman/sdk-config/sdk-config/v1";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 
-/**
- * The migrated external configuration, written by `fern sdk migrate` beside `fern.config.json`.
- *
- * `generators.yml` is not replaced in place: the migration renames it to the centrally configured
- * legacy filename, comments migrated declarations for rollback, and lands this file next to it.
- * A workspace mid-migration therefore has both active legacy generators and SDK Config targets.
- */
-export { SDK_CONFIG_FILENAME } from "@fern-api/configuration";
-
 export declare namespace loadSdkConfig {
     interface Args {
         /** Path to `fern.config.json`; its directory is the Fern configuration directory. */
@@ -28,6 +19,10 @@ export declare namespace loadSdkConfig {
 
 /**
  * Reads `sdk-config.yml` from the Fern configuration directory, if the workspace has been migrated.
+ *
+ * `fern sdk migrate` writes that file beside `fern.config.json`. `generators.yml` is not replaced in place: the
+ * migration renames it to the centrally configured legacy filename and comments migrated declarations for rollback.
+ * A workspace mid-migration therefore has both active legacy generators and SDK Config targets.
  *
  * Absence is a result rather than an error because it is the ordinary state of an unmigrated
  * workspace: the caller decides whether falling back to `generators.yml` is allowed, which depends

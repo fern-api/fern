@@ -1,16 +1,15 @@
+import { docsYml, FERN_DIRECTORY } from "@fern-api/configuration-loader";
+import { extractErrorMessage, titleCase } from "@fern-api/core-utils";
+import { AbsoluteFilePath, cwd, doesPathExist, isURL, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import {
     APIS_DIRECTORY,
     ASYNCAPI_DIRECTORY,
     DEFINITION_DIRECTORY,
     DOCS_CONFIGURATION_FILENAME,
-    docsYml,
-    FERN_DIRECTORY,
     GENERATORS_CONFIGURATION_FILENAME,
     GENERATORS_CONFIGURATION_FILENAME_ALTERNATIVE,
     OPENAPI_DIRECTORY
-} from "@fern-api/configuration-loader";
-import { extractErrorMessage, titleCase } from "@fern-api/core-utils";
-import { AbsoluteFilePath, cwd, doesPathExist, isURL, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
+} from "@fern-api/project-structure";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import { loadAPIWorkspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";

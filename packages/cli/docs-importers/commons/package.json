@@ -35,6 +35,7 @@
     "@fern-api/configuration": "workspace:*",
     "@fern-api/fdr-sdk": "catalog:",
     "@fern-api/fs-utils": "workspace:*",
+    "@fern-api/project-structure": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "js-yaml": "catalog:"
   },

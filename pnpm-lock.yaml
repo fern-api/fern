@@ -5259,6 +5259,9 @@ importers:
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../commons/fs-utils
+      '@fern-api/project-structure':
+        specifier: workspace:*
+        version: link:../../project-structure
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../../task-context
@@ -6623,6 +6626,9 @@ importers:
       '@fern-api/mintlify-importer':
         specifier: workspace:*
         version: link:../docs-importers/mintlify
+      '@fern-api/project-structure':
+        specifier: workspace:*
+        version: link:../project-structure
       '@fern-api/readme-importer':
         specifier: workspace:*
         version: link:../docs-importers/readme
@@ -7272,6 +7278,9 @@ importers:
       '@fern-api/openrpc-to-ir':
         specifier: workspace:*
         version: link:../../api-importers/openrpc-to-ir
+      '@fern-api/project-structure':
+        specifier: workspace:*
+        version: link:../../project-structure
       '@fern-api/semver-utils':
         specifier: workspace:*
         version: link:../../semver-utils
@@ -7509,6 +7518,9 @@ importers:
       '@fern-api/project-loader':
         specifier: workspace:*
         version: link:../../project-loader
+      '@fern-api/project-structure':
+        specifier: workspace:*
+        version: link:../../project-structure
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../../task-context
@@ -7636,6 +7648,9 @@ importers:
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../logger
+      '@fern-api/project-structure':
+        specifier: workspace:*
+        version: link:../../project-structure
       '@fern-api/semver-utils':
         specifier: workspace:*
         version: link:../../semver-utils

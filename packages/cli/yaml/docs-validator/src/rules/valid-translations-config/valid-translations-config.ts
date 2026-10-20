@@ -1,3 +1,4 @@
+import { DOCS_CONFIGURATION_FILENAME } from "@fern-api/project-structure";
 import { existsSync } from "fs";
 import { readdir, readFile } from "fs/promises";
 import path from "path";
@@ -258,7 +259,7 @@ function getLanguageLocationForLocale({
 export async function getTranslationsConfigLocations(
     absolutePathToFernDirectory: string
 ): Promise<TranslationsConfigLocations> {
-    const docsYmlPath = path.join(absolutePathToFernDirectory, "docs.yml");
+    const docsYmlPath = path.join(absolutePathToFernDirectory, DOCS_CONFIGURATION_FILENAME);
     const locations: TranslationsConfigLocations = {
         languagesLine: undefined,
         languageEntries: new Map(),

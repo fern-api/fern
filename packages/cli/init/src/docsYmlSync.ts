@@ -1,5 +1,6 @@
-import { APIS_DIRECTORY, DEFAULT_API_WORKSPACE_FOLDER_NAME } from "@fern-api/configuration-loader";
+import { DEFAULT_API_WORKSPACE_FOLDER_NAME } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { APIS_DIRECTORY } from "@fern-api/project-structure";
 import { TaskContext } from "@fern-api/task-context";
 import { rename } from "fs/promises";
 import path from "path";

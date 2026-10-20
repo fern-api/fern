@@ -1,6 +1,7 @@
-import { GENERATORS_CONFIGURATION_FILENAME, generatorsYml } from "@fern-api/configuration-loader";
+import { generatorsYml } from "@fern-api/configuration-loader";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
+import { GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/project-structure";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import { visitGeneratorsYamlAst } from "./ast/visitGeneratorsYamlAst.js";
 import { createGeneratorsYmlAstVisitorForRules } from "./createGeneratorsYmlAstVisitorForRules.js";

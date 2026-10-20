@@ -1,7 +1,8 @@
 import { AbstractAPIWorkspace, FernDefinition, FernWorkspace, type Spec } from "@fern-api/api-workspace-commons";
 import { generatorsYml } from "@fern-api/configuration";
-import { DEFINITION_DIRECTORY, loadDependenciesConfiguration } from "@fern-api/configuration-loader";
+import { loadDependenciesConfiguration } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { DEFINITION_DIRECTORY } from "@fern-api/project-structure";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import hash from "object-hash";
 

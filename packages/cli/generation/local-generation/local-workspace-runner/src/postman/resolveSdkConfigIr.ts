@@ -1,11 +1,12 @@
-import { type generatorsYml, LEGACY_GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/configuration";
+import { type generatorsYml } from "@fern-api/configuration";
 import type { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { LEGACY_GENERATORS_CONFIGURATION_FILENAME, SDK_CONFIG_FILENAME } from "@fern-api/project-structure";
 import type { SdkConfigIrV1 } from "@postman/sdk-config";
 
 import { onPremAdapterLanguage } from "../constants.js";
 import type { RawSpecsManifest } from "../rawSpecs.js";
 import { buildSdkConfigIrFromSdkConfig } from "./buildSdkConfigIrFromSdkConfig.js";
-import { loadSdkConfig, SDK_CONFIG_FILENAME } from "./loadSdkConfig.js";
+import { loadSdkConfig } from "./loadSdkConfig.js";
 
 type TargetLanguage = SdkConfigIrV1["target"]["language"];
 

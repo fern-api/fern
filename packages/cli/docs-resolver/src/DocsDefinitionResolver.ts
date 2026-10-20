@@ -92,6 +92,7 @@ import { collectWellKnownSkillsFiles } from "./utils/collectWellKnownSkillsFiles
 import { convertDocsAvailability } from "./utils/convertDocsAvailability.js";
 import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfigToFdr.js";
 import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition.js";
+import { createDocsOssWorkspace } from "./utils/createDocsOssWorkspace.js";
 import { collectFilesFromDocsConfig } from "./utils/getImageFilepathsToUpload.js";
 import { mapWithConcurrency } from "./utils/mapWithConcurrency.js";
 import { resolveLinksInObject, updateApiDefinitionIdInTree } from "./utils/resolveDescriptionLinks.js";
@@ -1393,19 +1394,12 @@ export class DocsDefinitionResolver {
                 namespace: spec.namespace
             } satisfies OpenAPISpec;
         });
-        // AsyncAPI is intentionally represented by OpenAPISpec with source.type="asyncapi",
-        // so the outer discriminant includes both OpenAPI and AsyncAPI sources here.
-        const openApiCompatibleSpecs = specs.filter((spec): spec is OpenAPISpec => spec.type === "openapi");
-        const workspace = new OSSWorkspace({
-            specs: openApiCompatibleSpecs,
-            allSpecs: specs,
+        return createDocsOssWorkspace({
+            specs,
             workspaceName: apiSection.apiName,
             absoluteFilePath: this.docsWorkspace.absoluteFilePath,
-            generatorsConfiguration: undefined,
-            changelog: undefined,
             cliVersion: this.cliVersion ?? "unknown"
         });
-        return workspace;
     }
 
     /**

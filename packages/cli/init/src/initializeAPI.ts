@@ -1,11 +1,11 @@
+import { DEFAULT_API_WORKSPACE_FOLDER_NAME } from "@fern-api/configuration-loader";
+import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import {
     APIS_DIRECTORY,
-    DEFAULT_API_WORKSPACE_FOLDER_NAME,
     DEFINITION_DIRECTORY,
     GENERATORS_CONFIGURATION_FILENAME,
     SDK_CONFIG_FILENAME
-} from "@fern-api/configuration-loader";
-import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+} from "@fern-api/project-structure";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import { mkdir } from "fs/promises";

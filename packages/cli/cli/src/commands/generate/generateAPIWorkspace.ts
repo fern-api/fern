@@ -1,9 +1,10 @@
 import { VisibilityFilter } from "@fern-api/api-workspace-commons";
 import { FernToken } from "@fern-api/auth";
-import { fernConfigJson, GENERATORS_CONFIGURATION_FILENAME, generatorsYml } from "@fern-api/configuration-loader";
+import { fernConfigJson, generatorsYml } from "@fern-api/configuration-loader";
 import { ContainerRunner } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
+import { GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/project-structure";
 import {
     AutomationRunOptions,
     type FernSdkConfigV1Payload,

@@ -1,12 +1,7 @@
-import {
-    DOCS_CONFIGURATION_FILENAME,
-    docsYml,
-    FERN_DIRECTORY,
-    GENERATORS_CONFIGURATION_FILENAME,
-    generatorsYml
-} from "@fern-api/configuration";
+import { docsYml, FERN_DIRECTORY, generatorsYml } from "@fern-api/configuration";
 import { FdrAPI as CjsFdrSdk } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { DOCS_CONFIGURATION_FILENAME, GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/project-structure";
 import { CliError } from "@fern-api/task-context";
 import { cp, mkdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";

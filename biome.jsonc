@@ -347,6 +347,66 @@
             }
         },
         {
+            // What a project's files and folders are called (generators.yml, sdk-config.yml, docs.yml, definition/,
+            // openapi/, asyncapi/, apis/) is read from @fern-api/project-structure, which also decides where they are
+            // and which of them is active. Importing the raw names from the configuration packages is how that logic
+            // used to get repeated, so it is only allowed where the names are defined and loaded, in the frozen CLI
+            // migrations, and in cli-v2.
+            "includes": [
+                "packages/cli/**/*.ts",
+                "!packages/cli/project-structure/**",
+                "!packages/cli/configuration/**",
+                "!packages/cli/configuration-loader/**",
+                "!packages/cli/cli-migrations/**",
+                "!packages/cli/cli-v2/**",
+                "!**/__test__/**",
+                "!**/*.test.ts"
+            ],
+            "linter": {
+                "rules": {
+                    "style": {
+                        "noRestrictedImports": {
+                            "level": "error",
+                            "options": {
+                                "paths": {
+                                    "@fern-api/configuration": {
+                                        "importNames": [
+                                            "APIS_DIRECTORY",
+                                            "ASYNCAPI_DIRECTORY",
+                                            "DEFINITION_DIRECTORY",
+                                            "DOCS_CONFIGURATION_FILENAME",
+                                            "GENERATORS_CONFIGURATION_FILENAME",
+                                            "GENERATORS_CONFIGURATION_FILENAME_ALTERNATIVE",
+                                            "LEGACY_GENERATORS_CONFIGURATION_FILENAME",
+                                            "OPENAPI_DIRECTORY",
+                                            "SDK_CONFIG_FILENAME",
+                                            "SDK_CONFIG_FILENAME_ALTERNATIVE"
+                                        ],
+                                        "message": "Import the names of a project's files and folders from @fern-api/project-structure."
+                                    },
+                                    "@fern-api/configuration-loader": {
+                                        "importNames": [
+                                            "APIS_DIRECTORY",
+                                            "ASYNCAPI_DIRECTORY",
+                                            "DEFINITION_DIRECTORY",
+                                            "DOCS_CONFIGURATION_FILENAME",
+                                            "GENERATORS_CONFIGURATION_FILENAME",
+                                            "GENERATORS_CONFIGURATION_FILENAME_ALTERNATIVE",
+                                            "LEGACY_GENERATORS_CONFIGURATION_FILENAME",
+                                            "OPENAPI_DIRECTORY",
+                                            "SDK_CONFIG_FILENAME",
+                                            "SDK_CONFIG_FILENAME_ALTERNATIVE"
+                                        ],
+                                        "message": "Import the names of a project's files and folders from @fern-api/project-structure."
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
             "includes": ["*.ts", "*.tsx", "*.mts", "*.cts"],
             "linter": {
                 "rules": {

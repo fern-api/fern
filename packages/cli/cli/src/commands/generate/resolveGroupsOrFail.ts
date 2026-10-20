@@ -1,8 +1,5 @@
-import {
-    DEFAULT_GROUP_GENERATORS_CONFIG_KEY,
-    GENERATORS_CONFIGURATION_FILENAME,
-    generatorsYml
-} from "@fern-api/configuration-loader";
+import { DEFAULT_GROUP_GENERATORS_CONFIG_KEY, generatorsYml } from "@fern-api/configuration-loader";
+import { GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/project-structure";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 
