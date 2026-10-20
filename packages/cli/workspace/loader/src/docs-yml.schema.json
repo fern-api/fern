@@ -7022,6 +7022,17 @@
             }
           ],
           "description": "If set to true, response examples in the API Reference include a raw HTTP block\nshowing the response status line and response headers alongside the body.\n\n@default: false"
+        },
+        "require-analytics-consent": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If set to true, Fern's built-in docs analytics (PostHog) stays off until visitor consent is given:\nno script, cookies, local storage or events. Grant consent from a custom script (e.g. your consent\nmanager's callback) by setting `window.fernAnalyticsConsent = true` and dispatching\n`new Event(\"fern-analytics-consent\")` on `window`.\n\n@default: false"
         }
       },
       "additionalProperties": false
