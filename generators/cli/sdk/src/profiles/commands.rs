@@ -2225,16 +2225,17 @@ async fn handle_remove(
             // An explicit `--revoke` keeps the profile so the user can retry.
             // After the prompt, removal goes ahead like it would without a key.
             Err(err) if prompted => {
+                // Only the revoke parameters (e.g. `Sid=SK…`), never the secret.
                 let key = entry
                     .credential_parameters
-                    .values()
-                    .cloned()
+                    .iter()
+                    .map(|(parameter, value)| format!("{parameter}={value}"))
                     .collect::<Vec<_>>()
                     .join(", ");
                 let _ = writeln!(stderr, "{err}");
                 let _ = writeln!(
                     stderr,
-                    "Couldn't delete the API key `{key}` from the server; removing the profile anyway. \
+                    "Couldn't delete the API key ({key}) from the server; removing the profile anyway. \
                      Delete the key from your account's console.",
                 );
             }
