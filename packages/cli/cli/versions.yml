@@ -1,4 +1,34 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.169.0
+  changelogEntry:
+    - summary: |
+        Docs versions accept `default: true`, so the version that owns the unversioned URLs no
+        longer has to be first in the `versions` list. The list order still sets the order in the
+        version switcher, so a `Develop` version can be listed first while a release such as
+        `3.3.0` serves `/` and every unversioned page, the sitemap, canonical URLs, and `llms.txt`:
+
+        ```yaml
+        versions:
+          - display-name: Develop
+            ref: develop
+            availability: preview
+          - display-name: 3.3.0
+            default: true
+            path: ./versions/latest.yml
+        ```
+
+        The flag works on site-level `versions` and on `products[].versions`, and a default
+        version can use either `path` or `ref`. Setting `default: true` on more than one version
+        in the same list, or on a version with `hidden: true`, is a configuration error. Without
+        the flag, the first version is still the default.
+      type: feat
+    - summary: |
+        Add `settings.require-analytics-consent` to docs.yml. When enabled, Fern's built-in
+        docs analytics (PostHog) stays off until the page sets `window.fernAnalyticsConsent = true`
+        and dispatches a `fern-analytics-consent` event, e.g. from a consent manager callback.
+      type: feat
+  createdAt: "2026-10-20"
+  irVersion: 67
 - version: 5.168.1
   changelogEntry:
     - summary: |
