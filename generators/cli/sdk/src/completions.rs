@@ -64,6 +64,14 @@ pub fn write_registration(
         &mut buf,
     )?;
     if shell == "zsh" {
+        // Reprint the prompt below the TAB list instead of jumping back above
+        // it. With the default, resizing a terminal that re-wraps lines (macOS
+        // Terminal.app, iTerm2, tmux) while a list is open leaves a stacked
+        // copy of the prompt and list per resize. Scoped to this command, so
+        // other commands' completion is unchanged.
+        buf.extend_from_slice(
+            format!("\nzstyle ':completion:*:*:{bin_name}:*' last-prompt false\n").as_bytes(),
+        );
         // Also complete on the first TAB when autoloaded from a file in
         // `$fpath` (any `_*` name) rather than sourced from `.zshrc`.
         // `compstate` only exists inside a completion widget.
@@ -782,6 +790,10 @@ mod tests {
         assert!(script.starts_with("#compdef my-cli"), "{script}");
         assert!(
             script.contains("compdef _clap_dynamic_completer_my_cli my-cli"),
+            "{script}"
+        );
+        assert!(
+            script.contains("zstyle ':completion:*:*:my-cli:*' last-prompt false"),
             "{script}"
         );
         assert!(
