@@ -109,7 +109,10 @@ export async function loadProjectFromDirectory({
     // Without generators.yml, an openapi/ or asyncapi/ directory can only be consumed by docs.yml
     // `specs`, so a directory that docs.yml references must not be loaded as a (necessarily
     // misconfigured) legacy API workspace. A directory that docs.yml does not reference still is,
-    // so its misconfiguration keeps being reported.
+    // so its misconfiguration keeps being reported. The legacy load is all-or-nothing for the fern
+    // directory: if one directory is referenced and the other is not, both are loaded and the
+    // error is reported once, which is intended because an unreferenced directory is a real
+    // misconfiguration.
     const inlineSpecPaths =
         !hasApiConfiguration && docsWorkspaces != null
             ? getDocsInlineSpecPaths({

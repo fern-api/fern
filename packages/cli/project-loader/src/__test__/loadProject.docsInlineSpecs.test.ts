@@ -77,7 +77,7 @@ describe("loadProjectFromDirectory — docs.yml inline specs without generators.
         expect(errorSpy).not.toHaveBeenCalled();
     });
 
-    it("still reports an asyncapi/ directory that docs.yml does not reference", async () => {
+    it("still reports an unreferenced asyncapi/ directory even when openapi/ is referenced by docs.yml", async () => {
         const fernDirectory = await createFernDirectory(
             [
                 "instances:",
