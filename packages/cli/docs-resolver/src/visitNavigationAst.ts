@@ -50,7 +50,7 @@ export async function visitNavigationAst({
                     );
                 } else if (tabbedNavigationItemHasVariants(tab)) {
                     await Promise.all(
-                        tab.variants.flatMap((variant) =>
+                        docsYml.flattenRawTabVariants(tab.variants).flatMap(({ variant }) =>
                             variant.layout.map(async (item: docsYml.RawSchemas.NavigationItem) => {
                                 await visitNavigationItem({
                                     navigationItem: item,
@@ -170,7 +170,7 @@ function tabbedNavigationItemHasLayout(
 function tabbedNavigationItemHasVariants(
     item: docsYml.RawSchemas.TabbedNavigationItem
 ): item is docsYml.RawSchemas.TabbedNavigationItemWithVariants & {
-    variants: docsYml.RawSchemas.TabVariant[];
+    variants: docsYml.RawSchemas.TabVariantItem[];
 } {
     return "variants" in item && Array.isArray(item.variants);
 }

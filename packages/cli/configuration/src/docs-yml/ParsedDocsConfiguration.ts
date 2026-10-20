@@ -98,6 +98,8 @@ export interface ParsedDocsConfiguration {
     colors: CjsFdrSdk.docs.v1.write.ColorsConfigV3 | undefined;
     typography: TypographyConfig | undefined;
     layout: CjsFdrSdk.docs.v1.commons.DocsLayoutConfig | undefined;
+    /* layout.variants defaults, resolved per tab by `resolveVariantsSettings` */
+    variantsLayout?: VariantsLayout;
     settings: ParsedDocsSettingsConfig | undefined;
     context7File: AbsoluteFilePath | undefined;
     llmsTxtFile: AbsoluteFilePath | undefined;
@@ -362,8 +364,88 @@ export declare namespace TabbedNavigationChild {
 
     export interface Variants {
         type: "variants";
+        /** Every variant in menu order, groups flattened. */
         variants: TabVariant[];
+        /** `variants-location` as written on the tab; resolved against `layout.variants`. */
+        location: VariantsLocation | undefined;
+        /** `variants-column-height` as written on the tab; resolved against `layout.variants`. */
+        columnHeight: VariantsColumnHeight | undefined;
+        /** Groups and links around the variants. Undefined when the list only holds variants. */
+        menu: TabVariantMenuItem[] | undefined;
     }
+}
+
+export type VariantsLocation = "tab" | "sidebar";
+
+/** `no-limit` keeps a single column; a number is the max items per column. */
+export type VariantsColumnHeight = number | "no-limit";
+
+export interface VariantsLayout {
+    defaultLocation: VariantsLocation | undefined;
+    defaultColumnHeight: VariantsColumnHeight | undefined;
+    tabDefaultColumnHeight: VariantsColumnHeight | undefined;
+    sidebarDefaultColumnHeight: VariantsColumnHeight | undefined;
+}
+
+export type TabVariantMenuEntry = TabVariantMenuEntry.Variant | TabVariantMenuEntry.Link;
+
+export declare namespace TabVariantMenuEntry {
+    export interface Variant {
+        type: "variant";
+        variant: TabVariant;
+    }
+
+    export interface Link {
+        type: "link";
+        title: string;
+        href: string;
+        icon: string | AbsoluteFilePath | undefined;
+        target: Target | undefined;
+    }
+}
+
+export interface TabVariantMenuGroup {
+    type: "group";
+    title: string;
+    children: TabVariantMenuEntry[];
+}
+
+export type TabVariantMenuItem = TabVariantMenuEntry | TabVariantMenuGroup;
+
+export interface ResolvedVariantsSettings {
+    location: VariantsLocation;
+    /** Max items per column; undefined means a single column. */
+    columnHeight: number | undefined;
+    /** True when `tab` was requested but the site has no header tabs, so it fell back to `sidebar`. */
+    fellBackToSidebar: boolean;
+}
+
+/**
+ * Precedence: tab setting > `layout.variants.<location>.default-column-height` >
+ * `layout.variants.default-column-height` > single column. `tab` placement needs header tabs.
+ */
+export function resolveVariantsSettings({
+    location,
+    columnHeight,
+    layout,
+    hasHeaderTabs
+}: {
+    location: VariantsLocation | undefined;
+    columnHeight: VariantsColumnHeight | undefined;
+    layout: VariantsLayout | undefined;
+    hasHeaderTabs: boolean;
+}): ResolvedVariantsSettings {
+    const requested = location ?? layout?.defaultLocation ?? "sidebar";
+    const fellBackToSidebar = requested === "tab" && !hasHeaderTabs;
+    const effectiveLocation: VariantsLocation = fellBackToSidebar ? "sidebar" : requested;
+    const locationDefault =
+        effectiveLocation === "tab" ? layout?.tabDefaultColumnHeight : layout?.sidebarDefaultColumnHeight;
+    const height = columnHeight ?? locationDefault ?? layout?.defaultColumnHeight;
+    return {
+        location: effectiveLocation,
+        columnHeight: typeof height === "number" && height > 0 ? Math.floor(height) : undefined,
+        fellBackToSidebar
+    };
 }
 
 export interface TabVariant

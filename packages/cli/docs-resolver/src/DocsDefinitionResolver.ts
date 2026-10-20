@@ -98,6 +98,24 @@ import { resolveLinksInObject, updateApiDefinitionIdInTree } from "./utils/resol
 import { visitNavigationAst } from "./visitNavigationAst.js";
 import { wrapWithHttps } from "./wrapWithHttps.js";
 
+// Variant selector fields from fern-platform's `VariantedNode`. Remove once the
+// published @fern-api/fdr-sdk includes them.
+type VariantMenuEntry =
+    | { type: "variant"; variantId: FernNavigation.V1.VariantId }
+    | {
+          type: "link";
+          title: string;
+          icon: string | undefined;
+          url: FernNavigation.V1.Url;
+          target: FernNavigation.V1.LinkTarget | undefined;
+      };
+type VariantMenuItem = VariantMenuEntry | { type: "group"; title: string; children: VariantMenuEntry[] };
+interface VariantedNodeWithMenu extends FernNavigation.V1.VariantedNode {
+    location?: "tab" | "sidebar";
+    columnHeight?: number;
+    menu?: VariantMenuItem[];
+}
+
 dayjs.extend(utc);
 
 export interface FilePathPair {
@@ -1973,25 +1991,66 @@ export class DocsDefinitionResolver {
 
     private async toSidebarRootNodeWithVariants(
         prefix: string,
-        items: docsYml.TabVariant[],
+        tabTitle: string,
+        { variants, location, columnHeight, menu }: docsYml.TabbedNavigationChild.Variants,
         parentSlug: FernNavigation.V1.SlugGenerator,
         contentSource?: docsYml.VersionContentSource
     ): Promise<FernNavigation.V1.SidebarRootNode> {
         const id = this.#idgen.get(`${prefix}/root`);
+        const variantNodes = await Promise.all(
+            variants.map((item) => this.toVariantNode(item, id, parentSlug, contentSource))
+        );
+        const layout = this.parsedDocsConfig.layout;
+        const settings = docsYml.resolveVariantsSettings({
+            location,
+            columnHeight,
+            layout: this.parsedDocsConfig.variantsLayout,
+            hasHeaderTabs: layout?.tabsPlacement === "HEADER" && layout.disableHeader !== true
+        });
+        if (settings.fellBackToSidebar) {
+            this.taskContext.logger.warn(
+                `Tab "${tabTitle}" places its variants in the header tab, but header tabs are off (set \`layout.tabs-placement: header\`). Showing them in the sidebar instead.`
+            );
+        }
+        const variantIdByVariant = new Map(variants.map((variant, i) => [variant, variantNodes[i]?.variantId]));
+        const toMenuEntry = (entry: docsYml.TabVariantMenuEntry): VariantMenuEntry[] => {
+            switch (entry.type) {
+                case "variant": {
+                    const variantId = variantIdByVariant.get(entry.variant);
+                    return variantId != null ? [{ type: "variant", variantId }] : [];
+                }
+                case "link":
+                    return [
+                        {
+                            type: "link",
+                            title: entry.title,
+                            icon: this.resolveIconFileId(entry.icon),
+                            url: FernNavigation.V1.Url(entry.href),
+                            target: entry.target
+                        }
+                    ];
+                default:
+                    assertNever(entry);
+            }
+        };
+        const varianted: VariantedNodeWithMenu = {
+            type: "varianted",
+            id,
+            collapsed: undefined,
+            children: variantNodes,
+            location: settings.location,
+            columnHeight: settings.columnHeight,
+            menu: menu?.flatMap((item): VariantMenuItem[] =>
+                item.type === "group"
+                    ? [{ type: "group", title: item.title, children: item.children.flatMap(toMenuEntry) }]
+                    : toMenuEntry(item)
+            )
+        };
         return {
             type: "sidebarRoot",
             id,
             collapsed: undefined,
-            children: [
-                {
-                    type: "varianted",
-                    id,
-                    collapsed: undefined,
-                    children: await Promise.all(
-                        items.map((item) => this.toVariantNode(item, id, parentSlug, contentSource))
-                    )
-                }
-            ]
+            children: [varianted]
         };
     }
 
@@ -2977,7 +3036,7 @@ export class DocsDefinitionResolver {
             link: ({ href, target }) => this.toTabLinkNode(item, href, target),
             layout: ({ layout }) => this.toTabNode(prefix, item, layout, parentSlug, contentSource),
             changelog: ({ changelog }) => this.toTabChangelogNode(item, changelog, parentSlug),
-            variants: ({ variants }) => this.toTabNodeWithVariants(prefix, item, variants, parentSlug, contentSource)
+            variants: (child) => this.toTabNodeWithVariants(prefix, item, child, parentSlug, contentSource)
         });
     }
 
@@ -3052,7 +3111,7 @@ export class DocsDefinitionResolver {
     private async toTabNodeWithVariants(
         prefix: string,
         item: docsYml.TabbedNavigation,
-        variants: docsYml.TabVariant[],
+        variants: docsYml.TabbedNavigationChild.Variants,
         parentSlug: FernNavigation.V1.SlugGenerator,
         contentSource?: docsYml.VersionContentSource
     ): Promise<FernNavigation.V1.TabNode> {
@@ -3073,7 +3132,7 @@ export class DocsDefinitionResolver {
             viewers: item.viewers,
             orphaned: item.orphaned,
             pointsTo: undefined,
-            child: await this.toSidebarRootNodeWithVariants(id, variants, slug, contentSource),
+            child: await this.toSidebarRootNodeWithVariants(id, item.title, variants, slug, contentSource),
             featureFlags: item.featureFlags
         };
     }

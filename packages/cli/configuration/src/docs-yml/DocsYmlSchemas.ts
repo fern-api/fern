@@ -348,12 +348,28 @@ export const BreadcrumbsConfig = z.object({
     "current-page": z.boolean().optional()
 });
 
+export const VariantsLocation = z.enum(["tab", "sidebar"]);
+
+export const VariantsColumnHeight = z.union([z.number().int().positive(), z.literal("no-limit")]);
+
+export const VariantsLocationLayoutConfig = z.object({
+    "default-column-height": VariantsColumnHeight.nullable().optional()
+});
+
+export const VariantsLayoutConfig = z.object({
+    "default-location": VariantsLocation.optional(),
+    "default-column-height": VariantsColumnHeight.nullable().optional(),
+    tab: VariantsLocationLayoutConfig.optional(),
+    sidebar: VariantsLocationLayoutConfig.optional()
+});
+
 export const LayoutConfig = z.object({
     "page-width": z.string().optional(),
     "content-width": z.string().optional(),
     "sidebar-width": z.string().optional(),
     "header-height": z.string().optional(),
     "searchbar-placement": SearchbarPlacement.optional(),
+    variants: VariantsLayoutConfig.optional(),
     "tabs-placement": TabsPlacement.optional(),
     "switcher-placement": SwitcherPlacement.optional(),
     "content-alignment": ContentAlignment.optional(),
@@ -1003,9 +1019,20 @@ export const TabbedNavigationItemWithLayout = z.object({
     layout: z.array(NavigationItem).optional()
 });
 
+export const TabVariantGroupItem = z.union([TabVariant, LinkConfiguration]);
+
+export const TabVariantGroup = z.object({
+    group: z.string(),
+    variants: z.array(TabVariantGroupItem)
+});
+
+export const TabVariantItem = z.union([TabVariant, TabVariantGroup, LinkConfiguration]);
+
 export const TabbedNavigationItemWithVariants = z.object({
     tab: TabId,
-    variants: z.array(TabVariant)
+    "variants-location": VariantsLocation.optional(),
+    "variants-column-height": VariantsColumnHeight.nullable().optional(),
+    variants: z.array(TabVariantItem)
 });
 
 export const TabbedNavigationItem = z.union([TabbedNavigationItemWithLayout, TabbedNavigationItemWithVariants]);

@@ -92,19 +92,19 @@ export async function visitNavigationAst({
                     }
                 );
             } else if (tabbedNavigationItemHasVariants(tab)) {
-                const variantItems = tab.variants.flatMap((variant, variantIdx) =>
+                const variantItems = docsYml.flattenRawTabVariants(tab.variants).flatMap(({ variant, path }) =>
                     variant.layout.map((item: docsYml.RawSchemas.NavigationItem, itemIdx: number) => ({
                         item,
-                        variantIdx,
+                        variantPath: path,
                         itemIdx
                     }))
                 );
-                await asyncPool(VALIDATION_CONCURRENCY, variantItems, async ({ item, variantIdx, itemIdx }) => {
+                await asyncPool(VALIDATION_CONCURRENCY, variantItems, async ({ item, variantPath, itemIdx }) => {
                     await visitNavigationItem({
                         absolutePathToFernFolder,
                         navigationItem: item,
                         visitor,
-                        nodePath: [...nodePath, `${tabIdx}`, "variants", `${variantIdx}`, "layout", `${itemIdx}`],
+                        nodePath: [...nodePath, `${tabIdx}`, ...variantPath, "layout", `${itemIdx}`],
                         absoluteFilepathToConfiguration,
                         apiWorkspaces,
                         context,
@@ -504,7 +504,7 @@ function tabbedNavigationItemHasLayout(
 function tabbedNavigationItemHasVariants(
     item: docsYml.RawSchemas.TabbedNavigationItem
 ): item is docsYml.RawSchemas.TabbedNavigationItemWithVariants & {
-    variants: docsYml.RawSchemas.TabVariant[];
+    variants: docsYml.RawSchemas.TabVariantItem[];
 } {
     return "variants" in item && Array.isArray(item.variants);
 }

@@ -4,5 +4,15 @@ import type * as FernDocsConfig from "../../../index.js";
 
 export interface TabbedNavigationItemWithVariants {
     tab: FernDocsConfig.TabId;
-    variants: FernDocsConfig.TabVariant[];
+    /**
+     * Where the variant selector renders. `tab` opens a menu from the header tab (requires header tabs);
+     * `sidebar` shows a dropdown at the top of the sidebar. Overrides `layout.variants.default-location`.
+     */
+    variantsLocation?: FernDocsConfig.VariantsLocation;
+    /**
+     * Maximum number of items per column in the variant menu. `no-limit` keeps a single column.
+     * Overrides the `layout.variants` defaults.
+     */
+    variantsColumnHeight?: FernDocsConfig.VariantsColumnHeight;
+    variants: FernDocsConfig.TabVariantItem[];
 }

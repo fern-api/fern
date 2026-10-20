@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Tab variants can now render as a menu under the header tab (`variants-location: tab`) instead of the
+    sidebar dropdown, and split into columns with `variants-column-height` (an integer or `no-limit`).
+    A tab's `variants` list also accepts `group` entries with a header and nested `variants`, and
+    external links (`link` + `href`). Set site-wide defaults with `layout.variants.default-location`,
+    `layout.variants.default-column-height`, and `layout.variants.<tab|sidebar>.default-column-height`.
+  type: feat

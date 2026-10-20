@@ -851,7 +851,48 @@ types:
   TabbedNavigationItemWithVariants:
     properties:
       tab: TabId
-      variants: list<TabVariant>
+      variants-location:
+        type: optional<VariantsLocation>
+        docs: |
+          Where the variant selector renders. `tab` opens a menu from the header tab (requires header tabs);
+          `sidebar` shows a dropdown at the top of the sidebar. Overrides `layout.variants.default-location`.
+      variants-column-height:
+        type: optional<VariantsColumnHeight>
+        docs: |
+          Maximum number of items per column in the variant menu. `no-limit` keeps a single column.
+          Overrides the `layout.variants` defaults.
+      variants: list<TabVariantItem>
+
+  VariantsLocation:
+    enum:
+      - tab
+      - sidebar
+
+  VariantsColumnHeight:
+    discriminated: false
+    union:
+      - integer
+      - literal<"no-limit">
+
+  TabVariantItem:
+    discriminated: false
+    union:
+      - TabVariant
+      - TabVariantGroup
+      - LinkConfiguration
+
+  TabVariantGroup:
+    properties:
+      group:
+        type: string
+        docs: Header shown above this group's variants in the variant menu.
+      variants: list<TabVariantGroupItem>
+
+  TabVariantGroupItem:
+    discriminated: false
+    union:
+      - TabVariant
+      - LinkConfiguration
 
   TabVariant:
     extends: [WithPermissions, WithFeatureFlags]
@@ -989,6 +1030,10 @@ types:
           @default: `sidebar`
 
           Note: this setting is ignored when `disable-header` is set to true.
+
+      variants:
+        type: optional<VariantsLayoutConfig>
+        docs: Defaults for tab variant selectors.
 
       tabs-placement:
         type: optional<TabsPlacement>
@@ -2033,6 +2078,28 @@ types:
       slug: optional<string>
       hidden: optional<boolean>
       availability: optional<Availability>
+
+  VariantsLayoutConfig:
+    properties:
+      default-location:
+        type: optional<VariantsLocation>
+        docs: |
+          Where variant selectors render when a tab doesn't set `variants-location`.
+
+          @default: `sidebar`
+      default-column-height:
+        type: optional<VariantsColumnHeight>
+        docs: Column height for all variant menus (sidebar or tab).
+      tab:
+        type: optional<VariantsLocationLayoutConfig>
+        docs: Defaults for variant menus located in the header tab. Overrides `default-column-height`.
+      sidebar:
+        type: optional<VariantsLocationLayoutConfig>
+        docs: Defaults for variant menus located in the sidebar. Overrides `default-column-height`.
+
+  VariantsLocationLayoutConfig:
+    properties:
+      default-column-height: optional<VariantsColumnHeight>
 
   LinkConfiguration:
     properties:

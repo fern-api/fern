@@ -279,6 +279,7 @@ export async function parseDocsConfiguration({
         colors: convertColorsConfiguration(colors, context),
         typography,
         layout: convertLayoutConfig(layout, tabsObj?.alignment, tabsObj?.placement),
+        variantsLayout: convertVariantsLayout(layout?.variants),
         settings: convertSettingsConfig(rawDocsConfiguration.settings, context),
         context7File,
         llmsTxtFile,
@@ -676,6 +677,20 @@ async function parseContext7File({
     }
 
     return absolutePath;
+}
+
+function convertVariantsLayout(
+    variants: docsYml.RawSchemas.VariantsLayoutConfig | undefined
+): docsYml.VariantsLayout | undefined {
+    if (variants == null) {
+        return undefined;
+    }
+    return {
+        defaultLocation: variants.defaultLocation,
+        defaultColumnHeight: variants.defaultColumnHeight ?? undefined,
+        tabDefaultColumnHeight: variants.tab?.defaultColumnHeight ?? undefined,
+        sidebarDefaultColumnHeight: variants.sidebar?.defaultColumnHeight ?? undefined
+    };
 }
 
 function convertLayoutConfig(
@@ -1271,34 +1286,67 @@ async function convertNavigationTabConfiguration({
     }
 
     if (tabbedNavigationItemHasVariants(item)) {
-        const variants: docsYml.TabVariant[] = await Promise.all(
-            item.variants.map(async (variant) => {
-                const layout = await Promise.all(
-                    variant.layout.map((layoutItem) =>
-                        convertNavigationItem({
-                            rawConfig: layoutItem,
-                            absolutePathToFernFolder,
-                            absolutePathToConfig,
-                            context,
-                            folderTitleSource
-                        })
-                    )
-                );
+        const convertVariant = async (variant: docsYml.RawSchemas.TabVariant): Promise<docsYml.TabVariant> => {
+            const layout = await Promise.all(
+                variant.layout.map((layoutItem) =>
+                    convertNavigationItem({
+                        rawConfig: layoutItem,
+                        absolutePathToFernFolder,
+                        absolutePathToConfig,
+                        context,
+                        folderTitleSource
+                    })
+                )
+            );
+            return {
+                title: variant.title,
+                subtitle: variant.subtitle,
+                icon: resolveIconPath(variant.icon, absolutePathToConfig),
+                layout,
+                slug: variant.slug,
+                skipUrlSlug: variant.skipSlug,
+                hidden: variant.hidden,
+                default: variant.default,
+                viewers: parseRoles(variant.viewers),
+                orphaned: variant.orphaned,
+                featureFlags: convertFeatureFlag(variant.featureFlag)
+            };
+        };
+        const convertEntry = async (entry: docsYml.RawTabVariantListItem): Promise<docsYml.TabVariantMenuEntry> => {
+            if (docsYml.isRawTabVariantLink(entry)) {
                 return {
-                    title: variant.title,
-                    subtitle: variant.subtitle,
-                    icon: resolveIconPath(variant.icon, absolutePathToConfig),
-                    layout,
-                    slug: variant.slug,
-                    skipUrlSlug: variant.skipSlug,
-                    hidden: variant.hidden,
-                    default: variant.default,
-                    viewers: parseRoles(variant.viewers),
-                    orphaned: variant.orphaned,
-                    featureFlags: convertFeatureFlag(variant.featureFlag)
+                    type: "link",
+                    title: entry.link,
+                    href: entry.href,
+                    icon: resolveIconPath(entry.icon, absolutePathToConfig),
+                    target: entry.target
                 };
+            }
+            // A group can't nest inside a group; the schema only allows variants and links there.
+            if ("group" in entry) {
+                throw new CliError({
+                    message: `Tab ${item.tab}: variant groups can't be nested inside other groups.`,
+                    code: CliError.Code.ConfigError
+                });
+            }
+            return { type: "variant", variant: await convertVariant(entry) };
+        };
+        const menu: docsYml.TabVariantMenuItem[] = await Promise.all(
+            item.variants.map(async (entry): Promise<docsYml.TabVariantMenuItem> => {
+                if (docsYml.isRawTabVariantGroup(entry)) {
+                    return {
+                        type: "group",
+                        title: entry.group,
+                        children: await Promise.all(entry.variants.map(convertEntry))
+                    };
+                }
+                return convertEntry(entry);
             })
         );
+        const variants = menu
+            .flatMap((entry) => (entry.type === "group" ? entry.children : [entry]))
+            .flatMap((entry) => (entry.type === "variant" ? [entry.variant] : []));
+        const hasMenuStructure = menu.some((entry) => entry.type !== "variant");
         return {
             title: tab.displayName,
             icon: resolveIconPath(tab.icon, absolutePathToConfig),
@@ -1307,7 +1355,10 @@ async function convertNavigationTabConfiguration({
             hidden: tab.hidden,
             child: {
                 type: "variants",
-                variants
+                variants,
+                location: item.variantsLocation,
+                columnHeight: item.variantsColumnHeight ?? undefined,
+                menu: hasMenuStructure ? menu : undefined
             },
             viewers: parseRoles(tab.viewers),
             orphaned: tab.orphaned,
@@ -1995,7 +2046,7 @@ function tabbedNavigationItemHasLayout(
 function tabbedNavigationItemHasVariants(
     item: docsYml.RawSchemas.TabbedNavigationItem
 ): item is docsYml.RawSchemas.TabbedNavigationItemWithVariants & {
-    variants: docsYml.RawSchemas.TabVariant[];
+    variants: docsYml.RawSchemas.TabVariantItem[];
 } {
     return "variants" in item && Array.isArray(item.variants);
 }

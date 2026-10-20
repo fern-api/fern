@@ -3609,6 +3609,23 @@
       ],
       "additionalProperties": false
     },
+    "docs.VariantsLocation": {
+      "type": "string",
+      "enum": [
+        "tab",
+        "sidebar"
+      ]
+    },
+    "docs.VariantsColumnHeight": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "const": "no-limit"
+        }
+      ]
+    },
     "docs.TabVariant": {
       "type": "object",
       "properties": {
@@ -3719,16 +3736,81 @@
       ],
       "additionalProperties": false
     },
+    "docs.TabVariantGroupItem": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/docs.TabVariant"
+        },
+        {
+          "$ref": "#/definitions/docs.LinkConfiguration"
+        }
+      ]
+    },
+    "docs.TabVariantGroup": {
+      "type": "object",
+      "properties": {
+        "group": {
+          "type": "string",
+          "description": "Header shown above this group's variants in the variant menu."
+        },
+        "variants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/docs.TabVariantGroupItem"
+          }
+        }
+      },
+      "required": [
+        "group",
+        "variants"
+      ],
+      "additionalProperties": false
+    },
+    "docs.TabVariantItem": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/docs.TabVariant"
+        },
+        {
+          "$ref": "#/definitions/docs.TabVariantGroup"
+        },
+        {
+          "$ref": "#/definitions/docs.LinkConfiguration"
+        }
+      ]
+    },
     "docs.TabbedNavigationItemWithVariants": {
       "type": "object",
       "properties": {
         "tab": {
           "$ref": "#/definitions/docs.TabId"
         },
+        "variants-location": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.VariantsLocation"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Where the variant selector renders. `tab` opens a menu from the header tab (requires header tabs);\n`sidebar` shows a dropdown at the top of the sidebar. Overrides `layout.variants.default-location`."
+        },
+        "variants-column-height": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.VariantsColumnHeight"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Maximum number of items per column in the variant menu. `no-limit` keeps a single column.\nOverrides the `layout.variants` defaults."
+        },
         "variants": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/docs.TabVariant"
+            "$ref": "#/definitions/docs.TabVariantItem"
           }
         }
       },
@@ -6471,6 +6553,72 @@
         }
       ]
     },
+    "docs.VariantsLocationLayoutConfig": {
+      "type": "object",
+      "properties": {
+        "default-column-height": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.VariantsColumnHeight"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "docs.VariantsLayoutConfig": {
+      "type": "object",
+      "properties": {
+        "default-location": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.VariantsLocation"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Where variant selectors render when a tab doesn't set `variants-location`.\n\n@default: `sidebar`"
+        },
+        "default-column-height": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.VariantsColumnHeight"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Column height for all variant menus (sidebar or tab)."
+        },
+        "tab": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.VariantsLocationLayoutConfig"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Defaults for variant menus located in the header tab. Overrides `default-column-height`."
+        },
+        "sidebar": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.VariantsLocationLayoutConfig"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Defaults for variant menus located in the sidebar. Overrides `default-column-height`."
+        }
+      },
+      "additionalProperties": false
+    },
     "docs.TabsPlacement": {
       "type": "string",
       "enum": [
@@ -6587,6 +6735,17 @@
             }
           ],
           "description": "Sets the placement of the searchbar\n\n@default: `sidebar`\n\nNote: this setting is ignored when `disable-header` is set to true."
+        },
+        "variants": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.VariantsLayoutConfig"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Defaults for tab variant selectors."
         },
         "tabs-placement": {
           "oneOf": [

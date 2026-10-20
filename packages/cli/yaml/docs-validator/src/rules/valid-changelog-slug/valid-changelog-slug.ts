@@ -191,7 +191,7 @@ function collectFromNavigation(
                 out.push(...collectChangelogLocations(item.layout, next, tabAncestors));
             }
             if ("variants" in item && Array.isArray(item.variants)) {
-                for (const variant of item.variants) {
+                for (const { variant } of docsYml.flattenRawTabVariants(item.variants)) {
                     const variantBreadcrumb = `${next} > variant "${variant.title}"`;
                     const variantSegments = ancestorSlugSegments({
                         slug: variant.slug,
