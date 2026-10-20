@@ -871,8 +871,13 @@ types:
   VariantsColumnHeight:
     discriminated: false
     union:
-      - integer
+      - VariantsColumnHeightCount
       - literal<"no-limit">
+
+  VariantsColumnHeightCount:
+    type: integer
+    validation:
+      min: 1
 
   TabVariantItem:
     discriminated: false

@@ -3616,10 +3616,13 @@
         "sidebar"
       ]
     },
+    "docs.VariantsColumnHeightCount": {
+      "type": "integer"
+    },
     "docs.VariantsColumnHeight": {
       "anyOf": [
         {
-          "type": "integer"
+          "$ref": "#/definitions/docs.VariantsColumnHeightCount"
         },
         {
           "const": "no-limit"

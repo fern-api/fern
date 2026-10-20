@@ -3,15 +3,13 @@
 import type * as FernDocsConfig from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { VariantsColumnHeightCount } from "./VariantsColumnHeightCount.js";
 
 export const VariantsColumnHeight: core.serialization.Schema<
     serializers.VariantsColumnHeight.Raw,
     FernDocsConfig.VariantsColumnHeight
-> = core.serialization.undiscriminatedUnion([
-    core.serialization.number(),
-    core.serialization.stringLiteral("no-limit"),
-]);
+> = core.serialization.undiscriminatedUnion([VariantsColumnHeightCount, core.serialization.stringLiteral("no-limit")]);
 
 export declare namespace VariantsColumnHeight {
-    export type Raw = number | "no-limit";
+    export type Raw = VariantsColumnHeightCount.Raw | "no-limit";
 }

@@ -166,6 +166,7 @@ export * from "./TranslationConfigObject.js";
 export * from "./TwitterCardSetting.js";
 export * from "./UntabbedNavigationConfig.js";
 export * from "./VariantsColumnHeight.js";
+export * from "./VariantsColumnHeightCount.js";
 export * from "./VariantsLayoutConfig.js";
 export * from "./VariantsLocation.js";
 export * from "./VariantsLocationLayoutConfig.js";
