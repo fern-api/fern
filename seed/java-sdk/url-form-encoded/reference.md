@@ -17,6 +17,7 @@ client.submitFormData(
         .builder()
         .username("johndoe")
         .email("john@example.com")
+        .content("{\"key\":\"value\"}")
         .build()
 );
 ```
@@ -42,6 +43,14 @@ client.submitFormData(
 <dd>
 
 **email:** `String` — The user's email address
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**content:** `String` — A JSON document carried as a form field
     
 </dd>
 </dl>

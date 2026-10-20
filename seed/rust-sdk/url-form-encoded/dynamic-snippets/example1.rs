@@ -12,6 +12,7 @@ async fn main() {
             &PostSubmitRequest {
                 username: "username".to_string(),
                 email: "email".to_string(),
+                content: "Content".to_string(),
             },
             None,
         )

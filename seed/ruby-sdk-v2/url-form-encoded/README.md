@@ -33,7 +33,8 @@ client = Seed::Client.new
 
 client.submit_form_data(
   username: "johndoe",
-  email: "john@example.com"
+  email: "john@example.com",
+  content: "{\"key\":\"value\"}"
 )
 ```
 

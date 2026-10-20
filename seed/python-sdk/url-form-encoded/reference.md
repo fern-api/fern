@@ -21,6 +21,7 @@ client = SeedApi(
 client.submit_form_data(
     username="johndoe",
     email="john@example.com",
+    content="{\"key\":\"value\"}",
 )
 
 ```
@@ -46,6 +47,14 @@ client.submit_form_data(
 <dd>
 
 **email:** `str` — The user's email address
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**content:** `str` — A JSON document carried as a form field
     
 </dd>
 </dl>
