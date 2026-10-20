@@ -3839,6 +3839,20 @@ describe("describeFernSdkGenApiIneligibility", () => {
             })
         ).toBe(expected);
     });
+
+    it("tells the user to pass --version when the SDK version is unresolved", () => {
+        expect(
+            describeFernSdkGenApiIneligibility({
+                candidate: {
+                    generatorInvocation: invocation(),
+                    sdkVersion: undefined,
+                    specsTarGzBuffer: Buffer.from("archive")
+                },
+                isSdkConfigTarget: false,
+                isPreview: false
+            })
+        ).toBe("the SDK version could not be resolved. Pass one with --version (for example, --version 1.0.0)");
+    });
 });
 
 describe("GitHub delivery result", () => {

@@ -998,7 +998,7 @@ export function describeFernSdkGenApiIneligibility({
 }): string {
     const { generatorInvocation, sdkVersion, specsTarGzBuffer, whitelabel } = candidate;
     if (sdkVersion == null) {
-        return "the SDK version could not be resolved";
+        return "the SDK version could not be resolved. Pass one with --version (for example, --version 1.0.0)";
     }
     if (whitelabel != null) {
         return "whitelabel generation has not yet moved from Fiddle to the shared pipeline";
