@@ -1,0 +1,7 @@
+navigation:
+  - section: Guides
+    contents:
+      - page: Getting started
+        path: ../pages/archive/getting-started.mdx
+      - page: Shared
+        path: ../pages/shared.mdx

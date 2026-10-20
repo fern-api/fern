@@ -1262,6 +1262,17 @@
           ],
           "description": "If true, this version will be hidden from navigation, search, and indexing, but still accessible via direct URL."
         },
+        "default": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If true, this version is the default version: it is served at the unversioned URLs\n(without the version slug) and is used for canonical URLs, the sitemap, search, and\n`llms.txt`. The order of the `versions` list only controls the order in the version\nswitcher. At most one version in a `versions` list may set `default: true`, and the\ndefault version cannot be `hidden`. A default version may be built from the working\ntree (`path`) or from a git ref (`ref`). If no version sets `default`, the first\nversion in the list is the default."
+        },
         "announcement": {
           "oneOf": [
             {
