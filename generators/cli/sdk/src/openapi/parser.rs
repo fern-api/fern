@@ -2104,6 +2104,8 @@ fn convert_schema_property(obj: &OpenApiSchemaObject) -> JsonSchemaProperty {
             // ref and rejected `null` with "Expected object". 121 body
             // properties on one customer's 3.0.1 spec.
             nullable: obj.is_nullable(),
+            // 3.1 allows `pattern` beside `$ref`; it narrows the component.
+            pattern: obj.pattern.clone(),
             ..Default::default()
         };
     }
@@ -4861,6 +4863,13 @@ mod tests {
         .unwrap();
         let schema = convert_schema_object(&obj);
         assert_eq!(schema.properties["smsUrl"].pattern.as_deref(), Some("^https://"));
+
+        let obj: OpenApiSchemaObject = serde_yaml::from_str(
+            "type: object\nproperties:\n  voiceUrl:\n    $ref: '#/components/schemas/Url'\n    pattern: ^https://\n",
+        )
+        .unwrap();
+        let schema = convert_schema_object(&obj);
+        assert_eq!(schema.properties["voiceUrl"].pattern.as_deref(), Some("^https://"));
     }
 
     #[test]

@@ -750,6 +750,11 @@ fn parse_and_validate_inputs(
         match location {
             Some("header") => {
                 let param_def = method.parameters.get(key);
+                // Headers are not type-checked (see `serialize_header_simple`),
+                // but a spec `pattern` is enforced like on path/query params.
+                if let Some(param) = param_def {
+                    validate_param_pattern(key, value, param)?;
+                }
                 let str_value = serialize_header_simple(value, param_def)?;
                 header_params.push((key.clone(), str_value));
             }
@@ -4320,6 +4325,8 @@ fn violates_pattern(pattern: &str, value: &str) -> bool {
         .get_or_init(Default::default)
         .lock()
         .unwrap_or_else(|poisoned| poisoned.into_inner());
+    // `Regex` is a cheap `Arc` clone; take it so the lock isn't held while
+    // matching.
     let compiled = cache
         .entry(pattern.to_string())
         .or_insert_with(|| match fancy_regex::Regex::new(pattern) {
@@ -4328,7 +4335,9 @@ fn violates_pattern(pattern: &str, value: &str) -> bool {
                 tracing::debug!("not enforcing unsupported pattern {pattern:?}: {err}");
                 None
             }
-        });
+        })
+        .clone();
+    drop(cache);
     match compiled {
         Some(re) => match re.is_match(value) {
             Ok(matched) => !matched,
@@ -4339,6 +4348,23 @@ fn violates_pattern(pattern: &str, value: &str) -> bool {
         },
         None => false,
     }
+}
+
+/// Enforce a non-body parameter's `pattern`. `pattern` only constrains
+/// strings, and a repeated param's schema is the array (an element pattern
+/// would live on `items`).
+fn validate_param_pattern(name: &str, value: &Value, param: &MethodParameter) -> Result<(), CliError> {
+    if let (Some(pattern), Value::String(raw), false) = (param.pattern.as_deref(), value, param.repeated) {
+        if violates_pattern(pattern, raw) {
+            let flag = crate::openapi::commands::resolve_param_flag_name(param, name)
+                .map(|f| format!("--{f}"))
+                .unwrap_or_else(|| format!("--params '{{\"{name}\": ...}}'"));
+            return Err(CliError::Validation(format!(
+                "Invalid value for {flag}: '{raw}' does not match the pattern {pattern:?}"
+            )));
+        }
+    }
+    Ok(())
 }
 
 fn validate_non_body_param_type(
@@ -4361,18 +4387,7 @@ fn validate_non_body_param_type(
     // `value_parser` would reject the `--labels '["a","b"]'` form, which is
     // valid input. Non-string elements are left alone, matching the body
     // validator's string-only enum check.
-    // `pattern` only constrains strings, and a repeated param's schema is the
-    // array (an element pattern would live on `items`).
-    if let (Some(pattern), Value::String(raw), false) = (param.pattern.as_deref(), value, param.repeated) {
-        if violates_pattern(pattern, raw) {
-            let flag = crate::openapi::commands::resolve_param_flag_name(param, name)
-                .map(|f| format!("--{f}"))
-                .unwrap_or_else(|| format!("--params '{{\"{name}\": ...}}'"));
-            return Err(CliError::Validation(format!(
-                "Invalid value for {flag}: '{raw}' does not match the pattern {pattern:?}"
-            )));
-        }
-    }
+    validate_param_pattern(name, value, param)?;
     if let Some(allowed) = param.item_enum_values.as_deref() {
         let elements: &[Value] = match value {
             Value::Array(items) => items,
@@ -4951,8 +4966,15 @@ fn validate_property(
         return;
     }
 
-    // 1. Resolve $ref if present
+    // 1. Resolve $ref if present. A `pattern` beside the `$ref` (OpenAPI 3.1)
+    // applies on top of the component's.
     if let Some(ref_name) = &prop_schema.schema_ref {
+        if let (Some(pattern), Value::String(s)) = (&prop_schema.pattern, value) {
+            if violates_pattern(pattern, s) {
+                errors.push(format!("{path}: Value '{s}' does not match the pattern {pattern:?}"));
+                return;
+            }
+        }
         validate_value(value, ref_name, doc, path, errors);
         return;
     }
@@ -5501,6 +5523,30 @@ mod tests {
         validate_non_body_param_type("sid", &json!("PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"), Some(&sid))
             .expect("a matching value must pass");
         validate_non_body_param_type("sid", &Value::Null, Some(&sid)).expect("null is not pattern-checked");
+        // Header params go through `validate_param_pattern` directly.
+        let header = MethodParameter { location: Some("header".to_string()), ..sid };
+        assert!(validate_param_pattern("x-sid", &json!("nope"), &header).is_err());
+        assert!(validate_param_pattern("x-sid", &json!("PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"), &header).is_ok());
+    }
+
+    #[test]
+    fn ref_site_pattern_on_body_property_is_enforced() {
+        let mut doc = RestDescription::default();
+        doc.schemas.insert(
+            "Url".to_string(),
+            JsonSchema { schema_type: Some("string".to_string()), ..Default::default() },
+        );
+        let prop = JsonSchemaProperty {
+            schema_ref: Some("Url".to_string()),
+            pattern: Some(NO_LOCALHOST.to_string()),
+            ..Default::default()
+        };
+        let mut errors = Vec::new();
+        validate_property(&json!("http://localhost:3000"), &prop, &doc, "$.voiceUrl", &mut errors);
+        assert_eq!(errors.len(), 1, "{errors:?}");
+        let mut errors = Vec::new();
+        validate_property(&json!("https://example.com"), &prop, &doc, "$.voiceUrl", &mut errors);
+        assert!(errors.is_empty(), "{errors:?}");
     }
 
     #[test]
