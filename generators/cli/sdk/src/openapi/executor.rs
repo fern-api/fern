@@ -4330,7 +4330,13 @@ fn violates_pattern(pattern: &str, value: &str) -> bool {
             }
         });
     match compiled {
-        Some(re) => matches!(re.is_match(value), Ok(false)),
+        Some(re) => match re.is_match(value) {
+            Ok(matched) => !matched,
+            Err(err) => {
+                tracing::debug!("not enforcing pattern {pattern:?}: {err}");
+                false
+            }
+        },
         None => false,
     }
 }
