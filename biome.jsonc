@@ -356,7 +356,6 @@
                 "packages/cli/**/*.ts",
                 "!packages/cli/project-structure/**",
                 "!packages/cli/configuration/**",
-                "!packages/cli/configuration-loader/**",
                 "!packages/cli/cli-migrations/**",
                 "!packages/cli/cli-v2/**",
                 "!**/__test__/**",
@@ -379,6 +378,7 @@
                                             "GENERATORS_CONFIGURATION_FILENAME_ALTERNATIVE",
                                             "LEGACY_GENERATORS_CONFIGURATION_FILENAME",
                                             "OPENAPI_DIRECTORY",
+                                            "ROOT_API_FILENAME",
                                             "SDK_CONFIG_FILENAME",
                                             "SDK_CONFIG_FILENAME_ALTERNATIVE"
                                         ],
@@ -394,6 +394,7 @@
                                             "GENERATORS_CONFIGURATION_FILENAME_ALTERNATIVE",
                                             "LEGACY_GENERATORS_CONFIGURATION_FILENAME",
                                             "OPENAPI_DIRECTORY",
+                                            "ROOT_API_FILENAME",
                                             "SDK_CONFIG_FILENAME",
                                             "SDK_CONFIG_FILENAME_ALTERNATIVE"
                                         ],

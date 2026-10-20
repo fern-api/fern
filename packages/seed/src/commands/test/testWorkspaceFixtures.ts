@@ -1,5 +1,6 @@
-import { APIS_DIRECTORY, FERN_DIRECTORY } from "@fern-api/configuration";
+import { FERN_DIRECTORY } from "@fern-api/configuration";
 import { CONSOLE_LOGGER } from "@fern-api/logger";
+import { APIS_DIRECTORY } from "@fern-api/project-structure";
 import fs from "fs";
 import { difference } from "lodash-es";
 import path from "path";

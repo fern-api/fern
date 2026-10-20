@@ -1,7 +1,7 @@
-import { generatorsYml, LEGACY_GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/configuration";
+import { generatorsYml } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { findGeneratorsFile } from "@fern-api/project-structure";
+import { findGeneratorsFile, LEGACY_GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/project-structure";
 import { CliError, TaskContext } from "@fern-api/task-context";
 
 import { readFile } from "fs/promises";

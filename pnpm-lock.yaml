@@ -8395,6 +8395,9 @@ importers:
       '@fern-api/login':
         specifier: workspace:*
         version: link:../cli/login
+      '@fern-api/project-structure':
+        specifier: workspace:*
+        version: link:../cli/project-structure
       '@fern-api/source-resolver':
         specifier: workspace:*
         version: link:../cli/generation/source-resolver

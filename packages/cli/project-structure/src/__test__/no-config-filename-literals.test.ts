@@ -30,7 +30,6 @@ const SKIPPED_DIRECTORIES = new Set([
     "ete-tests",
     "project-structure",
     "configuration",
-    "configuration-loader",
     "cli-migrations",
     "cli-v2"
 ]);

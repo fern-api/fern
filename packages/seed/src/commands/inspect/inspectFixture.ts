@@ -1,9 +1,10 @@
 import { AbstractAPIWorkspace, BaseOpenAPIWorkspace, FernDefinition } from "@fern-api/api-workspace-commons";
-import { APIS_DIRECTORY, DEFINITION_DIRECTORY, FERN_DIRECTORY, ROOT_API_FILENAME } from "@fern-api/configuration";
+import { FERN_DIRECTORY } from "@fern-api/configuration";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath, streamObjectToFile } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { LogLevel } from "@fern-api/logger";
+import { APIS_DIRECTORY, DEFINITION_DIRECTORY, ROOT_API_FILENAME } from "@fern-api/project-structure";
 import { SourceResolver } from "@fern-api/source-resolver";
 import { TaskContext } from "@fern-api/task-context";
 import { mkdir, writeFile } from "fs/promises";

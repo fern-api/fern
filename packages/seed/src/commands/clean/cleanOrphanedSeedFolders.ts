@@ -1,6 +1,7 @@
-import { APIS_DIRECTORY, FERN_DIRECTORY } from "@fern-api/configuration";
+import { FERN_DIRECTORY } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { CONSOLE_LOGGER } from "@fern-api/logger";
+import { APIS_DIRECTORY } from "@fern-api/project-structure";
 import { findUp } from "find-up";
 import fs from "fs";
 import { rm } from "fs/promises";

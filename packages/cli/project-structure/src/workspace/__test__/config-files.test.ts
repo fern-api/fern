@@ -1,8 +1,15 @@
 import path from "node:path";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { describe, expect, it } from "vitest";
 
 import { useTemporaryDirectories } from "../../__test__/fixtures.js";
-import { findDocsConfigFile, findGeneratorsFile, findReadableSdkConfigFile, findSdkConfigFile } from "../index.js";
+import {
+    findDocsConfigFile,
+    findGeneratorsFile,
+    findReadableSdkConfigFile,
+    findSdkConfigFile,
+    rootApiFilePath
+} from "../index.js";
 
 describe("findGeneratorsFile", () => {
     const createDirectory = useTemporaryDirectories();
@@ -124,5 +131,13 @@ describe("findDocsConfigFile", () => {
         const directory = await createDirectory({ "docs.yaml": "" });
 
         expect(await findDocsConfigFile(directory)).toBeUndefined();
+    });
+});
+
+describe("rootApiFilePath", () => {
+    it("is definition/api.yml inside the workspace, whether or not it exists", () => {
+        expect(rootApiFilePath(AbsoluteFilePath.of("/project/fern"))).toBe(
+            path.join("/project/fern", "definition", "api.yml")
+        );
     });
 });

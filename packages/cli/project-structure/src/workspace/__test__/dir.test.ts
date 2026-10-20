@@ -2,7 +2,7 @@ import path from "node:path";
 import { describe, expect, it } from "vitest";
 
 import { useTemporaryDirectories } from "../../__test__/fixtures.js";
-import { detectProjectDir, detectWorkspaceDir } from "../index.js";
+import { definitionDirectoryExists, detectProjectDir, detectWorkspaceDir } from "../index.js";
 
 describe("detectWorkspaceDir", () => {
     const createDirectory = useTemporaryDirectories();
@@ -52,6 +52,18 @@ describe("detectWorkspaceDir", () => {
         const directory = await createDirectory({ definition: "" });
 
         expect((await detectWorkspaceDir(directory)).hasDefinitionDirectory).toBe(true);
+    });
+});
+
+describe("definitionDirectoryExists", () => {
+    const createDirectory = useTemporaryDirectories();
+
+    it("is true when the folder has a definition/ directory", async () => {
+        expect(await definitionDirectoryExists(await createDirectory({ "definition/api.yml": "" }))).toBe(true);
+    });
+
+    it("is false when it does not", async () => {
+        expect(await definitionDirectoryExists(await createDirectory({ "openapi/spec.yml": "" }))).toBe(false);
     });
 });
 

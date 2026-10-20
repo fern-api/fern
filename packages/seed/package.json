@@ -50,6 +50,7 @@
     "@fern-api/local-workspace-runner": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-api/logging-execa": "workspace:*",
+    "@fern-api/project-structure": "workspace:*",
     "@fern-api/source-resolver": "workspace:*",
     "@fern-api/login": "workspace:*",
     "@fern-api/task-context": "workspace:*",

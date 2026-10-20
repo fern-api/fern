@@ -1,8 +1,10 @@
 import {
+    DEFINITION_DIRECTORY,
     DOCS_CONFIGURATION_FILENAME,
     GENERATORS_CONFIGURATION_FILENAME,
     GENERATORS_CONFIGURATION_FILENAME_ALTERNATIVE,
     LEGACY_GENERATORS_CONFIGURATION_FILENAME,
+    ROOT_API_FILENAME,
     SDK_CONFIG_FILENAME,
     SDK_CONFIG_FILENAME_ALTERNATIVE
 } from "@fern-api/configuration";
@@ -73,6 +75,11 @@ export function docsConfigFilePath(directory: AbsoluteFilePath): AbsoluteFilePat
 export async function findDocsConfigFile(directory: AbsoluteFilePath): Promise<AbsoluteFilePath | undefined> {
     const docsConfigFile = docsConfigFilePath(directory);
     return (await doesPathExist(docsConfigFile)) ? docsConfigFile : undefined;
+}
+
+/** Where `definition/api.yml`, the root file of a Fern definition, lives in a workspace, whether or not it exists. */
+export function rootApiFilePath(workspaceDirectory: AbsoluteFilePath): AbsoluteFilePath {
+    return join(workspaceDirectory, RelativeFilePath.of(DEFINITION_DIRECTORY), RelativeFilePath.of(ROOT_API_FILENAME));
 }
 
 function found(directory: AbsoluteFilePath, name: GeneratorsFileName): GeneratorsFile {

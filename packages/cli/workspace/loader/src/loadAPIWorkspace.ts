@@ -10,6 +10,7 @@ import {
 } from "@fern-api/lazy-fern-workspace";
 import {
     DEFINITION_DIRECTORY,
+    definitionDirectoryExists,
     GENERATORS_CONFIGURATION_FILENAME,
     OPENAPI_DIRECTORY
 } from "@fern-api/project-structure";
@@ -284,7 +285,7 @@ export async function loadAPIWorkspace({
         return { didSucceed: true, workspace };
     }
 
-    if (await doesPathExist(join(absolutePathToWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY)))) {
+    if (await definitionDirectoryExists(absolutePathToWorkspace)) {
         return {
             didSucceed: true,
             workspace: new LazyFernWorkspace({

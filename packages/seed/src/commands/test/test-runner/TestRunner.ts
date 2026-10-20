@@ -1,9 +1,10 @@
 import { FernWorkspace, type Spec } from "@fern-api/api-workspace-commons";
-import { APIS_DIRECTORY, FERN_DIRECTORY, GeneratorInvocation, generatorsYml } from "@fern-api/configuration";
+import { FERN_DIRECTORY, GeneratorInvocation, generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { generatorWantsSpecs } from "@fern-api/local-workspace-runner";
 import { LogLevel } from "@fern-api/logger";
+import { APIS_DIRECTORY } from "@fern-api/project-structure";
 import { TaskContext, TaskResult } from "@fern-api/task-context";
 import { getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation } from "@fern-api/workspace-loader";
 import path from "path";

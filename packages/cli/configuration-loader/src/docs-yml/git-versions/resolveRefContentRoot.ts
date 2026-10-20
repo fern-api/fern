@@ -1,6 +1,7 @@
-import { DOCS_CONFIGURATION_FILENAME, docsYml } from "@fern-api/configuration";
+import { docsYml } from "@fern-api/configuration";
 import { sanitizeNullValues } from "@fern-api/core-utils";
-import { AbsoluteFilePath, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath, resolve } from "@fern-api/fs-utils";
+import { docsConfigFilePath } from "@fern-api/project-structure";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
@@ -120,7 +121,7 @@ export async function resolveRefContentRoot({
     context: TaskContext;
 }): Promise<ResolvedRefContentRoot> {
     const refFernFolder = materialized.absolutePathToFernFolder;
-    const refDocsConfigPath = join(refFernFolder, RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME));
+    const refDocsConfigPath = docsConfigFilePath(refFernFolder);
 
     const refDocsConfig = docsYml.RawSchemas.Serializer.DocsConfiguration.parseOrThrow(
         await loadYamlFile(refDocsConfigPath, context)

@@ -11,6 +11,7 @@ export { anyDirectoryHasSdkConfig, hasGeneratorsFile, isSdkConfigOnly } from "./
 export {
     type ActiveGeneratorsFileName,
     type ApiFolder,
+    definitionDirectoryExists,
     detectProjectDir,
     detectWorkspaceDir,
     docsConfigFilePath,
@@ -21,6 +22,7 @@ export {
     type GeneratorsFile,
     type GeneratorsFileName,
     type ProjectDir,
+    rootApiFilePath,
     sdkConfigFilePath,
     type WorkspaceDir
 } from "./workspace/index.js";

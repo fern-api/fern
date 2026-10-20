@@ -1,10 +1,15 @@
 import { collectAPIWorkspaceViolations } from "@fern-api/api-workspace-validator";
-import { ROOT_API_FILENAME } from "@fern-api/configuration-loader";
 import { createInlineSpecOssWorkspaces, filterOssWorkspaces } from "@fern-api/docs-resolver";
-import { doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { doesPathExist } from "@fern-api/fs-utils";
 import { LazyFernWorkspace, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { Project } from "@fern-api/project-loader";
-import { DEFINITION_DIRECTORY, findSdkConfigFile, isApiSelected, sdkConfigFilePath } from "@fern-api/project-structure";
+import {
+    findSdkConfigFile,
+    isApiSelected,
+    ROOT_API_FILENAME,
+    rootApiFilePath,
+    sdkConfigFilePath
+} from "@fern-api/project-structure";
 import { CliError } from "@fern-api/task-context";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { type CreatedSdkConfigWorkspace, createSdkConfigWorkspace } from "../generate/createSdkConfigWorkspace.js";
@@ -123,12 +128,7 @@ export async function validateWorkspaces({
                 // If it doesn't exist, we want to log the error WITHOUT the [api]: prefix.
                 // All other errors (including dependency errors) should have the [api]: prefix.
                 if (workspace instanceof LazyFernWorkspace) {
-                    const absolutePathToApiYml = join(
-                        workspace.absoluteFilePath,
-                        RelativeFilePath.of(DEFINITION_DIRECTORY),
-                        RelativeFilePath.of(ROOT_API_FILENAME)
-                    );
-                    const apiYmlExists = await doesPathExist(absolutePathToApiYml);
+                    const apiYmlExists = await doesPathExist(rootApiFilePath(workspace.absoluteFilePath));
                     if (!apiYmlExists) {
                         abortReason = "missing api.yml";
                         // Log the missing file error without the [api]: prefix

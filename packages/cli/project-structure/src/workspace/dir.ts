@@ -29,12 +29,17 @@ export interface ProjectDir {
     readonly apis: readonly ApiFolder[] | undefined;
 }
 
+/** Whether a workspace has a `definition/` folder, which is what makes it a Fern definition. */
+export async function definitionDirectoryExists(path: AbsoluteFilePath): Promise<boolean> {
+    return await existsIn(path, DEFINITION_DIRECTORY);
+}
+
 export async function detectWorkspaceDir(path: AbsoluteFilePath): Promise<WorkspaceDir> {
     const [generatorsFile, sdkConfigFile, hasDefinitionDirectory, hasOpenapiDirectory, hasAsyncapiDirectory] =
         await Promise.all([
             findGeneratorsFile(path),
             findSdkConfigFile(path),
-            existsIn(path, DEFINITION_DIRECTORY),
+            definitionDirectoryExists(path),
             existsIn(path, OPENAPI_DIRECTORY),
             existsIn(path, ASYNCAPI_DIRECTORY)
         ]);

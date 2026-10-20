@@ -2,6 +2,7 @@ import { docsYml } from "@fern-api/configuration";
 import { assertNever, isPlainObject, sanitizeNullValues } from "@fern-api/core-utils";
 import { FdrAPI as CjsFdrSdk } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, dirname, doesPathExist, listFiles, RelativeFilePath, resolve } from "@fern-api/fs-utils";
+import { docsConfigFilePath } from "@fern-api/project-structure";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
@@ -2487,13 +2488,13 @@ async function resolveTranslationOverlayDocsYml({
     lang: string;
 }): Promise<{ overlayDocsYmlPath: AbsoluteFilePath; overlayDir: AbsoluteFilePath } | undefined> {
     const langDir = path.join(translationsRootDir, lang) as AbsoluteFilePath;
-    const directDocsYmlPath = path.join(langDir, "docs.yml") as AbsoluteFilePath;
+    const directDocsYmlPath = docsConfigFilePath(langDir);
     if (await doesPathExist(directDocsYmlPath)) {
         return { overlayDocsYmlPath: directDocsYmlPath, overlayDir: langDir };
     }
 
     const legacyFernDir = path.join(langDir, "fern") as AbsoluteFilePath;
-    const legacyDocsYmlPath = path.join(legacyFernDir, "docs.yml") as AbsoluteFilePath;
+    const legacyDocsYmlPath = docsConfigFilePath(legacyFernDir);
     if (await doesPathExist(legacyDocsYmlPath)) {
         return { overlayDocsYmlPath: legacyDocsYmlPath, overlayDir: legacyFernDir };
     }
