@@ -5,6 +5,7 @@ import {
 } from "@fern-api/configuration-loader";
 import { assertNever, Values } from "@fern-api/core-utils";
 import { Project } from "@fern-api/project-loader";
+import { isApiSelected } from "@fern-api/project-structure";
 import { CliError } from "@fern-api/task-context";
 import type { SdkConfigV1OutputConfig } from "@postman/sdk-config/sdk-config/v1";
 import { writeFile } from "fs/promises";
@@ -56,8 +57,8 @@ export async function getGeneratorList({
     excludedModes: Set<GenerationModeFilter> | undefined;
     includedModes: Set<GenerationModeFilter> | undefined;
 }): Promise<void> {
-    const isSelectedApi = (workspaceName: string | undefined): boolean =>
-        apiFilter == null || (workspaceName != null && apiFilter.has(workspaceName));
+    const requestedApis = apiFilter == null ? undefined : [...apiFilter];
+    const isSelectedApi = (workspaceName: string | undefined): boolean => isApiSelected(workspaceName, requestedApis);
     // Normalize the generator filter to add default Docker org prefix if not present
     const normalizedGeneratorFilter =
         generatorFilter != null ? new Set([...generatorFilter].map(addDefaultDockerOrgIfNotPresent)) : undefined;

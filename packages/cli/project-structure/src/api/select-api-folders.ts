@@ -9,6 +9,20 @@ export type ApiFolderSelection =
     /** `apis/` has several folders, no `--api` was given, and the caller does not default to all of them. */
     | { type: "ambiguous"; available: string[] };
 
+/** Whether `--api` selects a workspace. Without `--api` every workspace is selected, and one without a name is not. */
+export function isApiSelected(
+    workspaceName: string | undefined,
+    requested: string | readonly string[] | undefined
+): boolean {
+    if (requested == null) {
+        return true;
+    }
+    if (workspaceName == null) {
+        return false;
+    }
+    return typeof requested === "string" ? requested === workspaceName : requested.includes(workspaceName);
+}
+
 /** Decides which `apis/<name>` folders to load from the folders that exist and what `--api` asked for. */
 export function selectApiFolders({
     available,

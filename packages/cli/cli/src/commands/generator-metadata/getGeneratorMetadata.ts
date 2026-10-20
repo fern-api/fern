@@ -6,6 +6,7 @@ import {
 } from "@fern-api/configuration-loader";
 import { assertNever } from "@fern-api/core-utils";
 import { Project } from "@fern-api/project-loader";
+import { isApiSelected } from "@fern-api/project-structure";
 import { CliError } from "@fern-api/task-context";
 
 import { CliContext } from "../../cli-context/CliContext.js";
@@ -106,7 +107,7 @@ export async function getGeneratorMetadata({
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 // If the current API workspace is not in the specified APIs, skip it
-                if (!isSelectedApi(workspace.workspaceName, apiFilter)) {
+                if (!isApiSelected(workspace.workspaceName, apiFilter)) {
                     return;
                 }
 
@@ -236,12 +237,8 @@ function getSelectedSdkConfigSources({
     return loadSdkConfigTargets({
         project,
         cliContext,
-        isSelectedApi: (workspaceName) => isSelectedApi(workspaceName, apiFilter)
+        isSelectedApi: (workspaceName) => isApiSelected(workspaceName, apiFilter)
     });
-}
-
-function isSelectedApi(workspaceName: string | undefined, apiFilter: string | undefined): boolean {
-    return apiFilter == null || (workspaceName != null && apiFilter === workspaceName);
 }
 
 function forApi(apiFilter: string | undefined): string {

@@ -1,14 +1,14 @@
 import { createOrganizationIfDoesNotExist, FernToken, FernUserToken, getToken } from "@fern-api/auth";
-import { SDK_CONFIG_FILENAME } from "@fern-api/configuration-loader";
 import { createFdrService } from "@fern-api/core";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { Rules } from "@fern-api/docs-validator";
 import { FdrAPI } from "@fern-api/fdr-sdk";
-import { basename, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { basename } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
 import { type ValidationViolation, validateOSSWorkspace } from "@fern-api/oss-validator";
 import { Project } from "@fern-api/project-loader";
+import { anyDirectoryHasSdkConfig } from "@fern-api/project-structure";
 import { runRemoteGenerationForDocsWorkspace } from "@fern-api/remote-workspace-runner";
 import { CliError } from "@fern-api/task-context";
 import type { DocsWorkspace } from "@fern-api/workspace-loader";
@@ -265,14 +265,10 @@ export async function projectUsesSdkConfig({
     if ((project.sdkConfigWorkspaces?.length ?? 0) > 0) {
         return true;
     }
-    const directories = [
+    return await anyDirectoryHasSdkConfig([
         docsWorkspace.absoluteFilePath,
         ...project.apiWorkspaces.map((workspace) => workspace.absoluteFilePath)
-    ];
-    const exists = await Promise.all(
-        directories.map((directory) => doesPathExist(join(directory, RelativeFilePath.of(SDK_CONFIG_FILENAME))))
-    );
-    return exists.some(Boolean);
+    ]);
 }
 
 function getExcludeRules(brokenLinks: boolean, strictBrokenLinks: boolean): string[] {

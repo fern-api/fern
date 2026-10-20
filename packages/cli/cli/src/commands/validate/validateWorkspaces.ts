@@ -1,9 +1,10 @@
 import { collectAPIWorkspaceViolations } from "@fern-api/api-workspace-validator";
-import { DEFINITION_DIRECTORY, ROOT_API_FILENAME, SDK_CONFIG_FILENAME } from "@fern-api/configuration-loader";
+import { ROOT_API_FILENAME } from "@fern-api/configuration-loader";
 import { createInlineSpecOssWorkspaces, filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { LazyFernWorkspace, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { Project } from "@fern-api/project-loader";
+import { DEFINITION_DIRECTORY, findSdkConfigFile, isApiSelected, sdkConfigFilePath } from "@fern-api/project-structure";
 import { CliError } from "@fern-api/task-context";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { type CreatedSdkConfigWorkspace, createSdkConfigWorkspace } from "../generate/createSdkConfigWorkspace.js";
@@ -51,12 +52,9 @@ export async function validateWorkspaces({
     let hasAnyErrors = false;
     let abortReason: string | undefined;
 
-    const apiWorkspacesToValidate =
-        commandLineApiWorkspace != null
-            ? projectForValidation.apiWorkspaces.filter(
-                  (workspace) => workspace.workspaceName === commandLineApiWorkspace
-              )
-            : projectForValidation.apiWorkspaces;
+    const apiWorkspacesToValidate = projectForValidation.apiWorkspaces.filter((workspace) =>
+        isApiSelected(workspace.workspaceName, commandLineApiWorkspace)
+    );
 
     let hasErrors = false;
 
@@ -229,8 +227,8 @@ async function assertNoDirectRubyGemsPublishingInApiWorkspaceSdkConfigs(
     apiWorkspaces: Project["apiWorkspaces"]
 ): Promise<void> {
     for (const workspace of apiWorkspaces) {
-        const absolutePathToConfig = join(workspace.absoluteFilePath, RelativeFilePath.of(SDK_CONFIG_FILENAME));
-        if (await doesPathExist(absolutePathToConfig)) {
+        const absolutePathToConfig = await findSdkConfigFile(workspace.absoluteFilePath);
+        if (absolutePathToConfig != null) {
             assertNoSdkConfigDirectRubyGemsPublishing(await loadSdkConfigV1(absolutePathToConfig, true));
         }
     }
@@ -246,14 +244,12 @@ async function prepareSdkConfigWorkspacesForValidation({
     commandLineApiWorkspace: string | undefined;
 }): Promise<CreatedSdkConfigWorkspace[]> {
     await assertNoDirectRubyGemsPublishingInApiWorkspaceSdkConfigs(
-        commandLineApiWorkspace != null
-            ? project.apiWorkspaces.filter((workspace) => workspace.workspaceName === commandLineApiWorkspace)
-            : project.apiWorkspaces
+        project.apiWorkspaces.filter((workspace) => isApiSelected(workspace.workspaceName, commandLineApiWorkspace))
     );
     const prepared: CreatedSdkConfigWorkspace[] = [];
     try {
         for (const workspace of project.sdkConfigWorkspaces ?? []) {
-            const absolutePathToConfig = join(workspace.absoluteFilePath, RelativeFilePath.of(SDK_CONFIG_FILENAME));
+            const absolutePathToConfig = sdkConfigFilePath(workspace.absoluteFilePath);
             const loaded = await loadSdkConfigV1(absolutePathToConfig, true);
             assertNoSdkConfigDirectRubyGemsPublishing(loaded);
             prepared.push(

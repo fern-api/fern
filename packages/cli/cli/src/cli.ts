@@ -43,6 +43,7 @@ import {
 import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { askToLogin, getDashboardBaseUrl, login, logout } from "@fern-api/login";
 import { type Project } from "@fern-api/project-loader";
+import { isApiSelected } from "@fern-api/project-structure";
 import { protocGenFern } from "@fern-api/protoc-gen-fern";
 import {
     isDynamicIrWorkerThread,
@@ -1545,8 +1546,9 @@ function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
 
                 if (
                     argv.api != null &&
-                    !project.apiWorkspaces.some((workspace) => workspace.workspaceName === argv.api) &&
-                    !project.sdkConfigWorkspaces?.some((workspace) => workspace.workspaceName === argv.api)
+                    ![...project.apiWorkspaces, ...(project.sdkConfigWorkspaces ?? [])].some((workspace) =>
+                        isApiSelected(workspace.workspaceName, argv.api)
+                    )
                 ) {
                     cliContext.instrumentPostHogEvent({
                         command: "fern check",

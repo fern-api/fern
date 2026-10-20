@@ -1,6 +1,7 @@
 export {
     type ApiFolderSelection,
     hasApiConfiguration,
+    isApiSelected,
     rootOwnsSdkConfig,
     selectApiFolders,
     shouldLoadApiWorkspaces

@@ -1,6 +1,5 @@
-import { SDK_CONFIG_FILENAME } from "@fern-api/configuration-loader";
-import { doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
+import { findSdkConfigFile } from "@fern-api/project-structure";
 import { FERN_GENERATOR_LATEST_VERSION } from "@fern-api/remote-workspace-runner";
 import { CliError } from "@fern-api/task-context";
 import type { SdkConfigV1, SdkConfigV1OutputConfig } from "@postman/sdk-config/sdk-config/v1";
@@ -49,8 +48,8 @@ export async function loadSdkConfigTargets({
     const sources: SdkConfigTargetSource[] = [];
     const seenPaths = new Set<string>();
     for (const owner of owners) {
-        const absolutePathToSdkConfig = join(owner.absoluteFilePath, RelativeFilePath.of(SDK_CONFIG_FILENAME));
-        if (seenPaths.has(absolutePathToSdkConfig) || !(await doesPathExist(absolutePathToSdkConfig))) {
+        const absolutePathToSdkConfig = await findSdkConfigFile(owner.absoluteFilePath);
+        if (absolutePathToSdkConfig == null || seenPaths.has(absolutePathToSdkConfig)) {
             continue;
         }
         seenPaths.add(absolutePathToSdkConfig);

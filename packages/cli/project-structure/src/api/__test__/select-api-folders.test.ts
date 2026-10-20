@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { selectApiFolders } from "../select-api-folders.js";
+import { isApiSelected, selectApiFolders } from "../select-api-folders.js";
 
 describe("selectApiFolders", () => {
     it.each([
@@ -69,3 +69,29 @@ describe("selectApiFolders", () => {
 function toMutable(requested: string | readonly string[]): string | string[] {
     return typeof requested === "string" ? requested : [...requested];
 }
+
+describe("isApiSelected", () => {
+    it.each([
+        { name: "no --api selects a named workspace", workspaceName: "a", requested: undefined, expected: true },
+        {
+            name: "no --api selects an unnamed workspace",
+            workspaceName: undefined,
+            requested: undefined,
+            expected: true
+        },
+        { name: "a name that matches", workspaceName: "a", requested: "a", expected: true },
+        { name: "a name that does not match", workspaceName: "a", requested: "b", expected: false },
+        {
+            name: "an unnamed workspace is never selected by --api",
+            workspaceName: undefined,
+            requested: "a",
+            expected: false
+        },
+        { name: "a list that includes the name", workspaceName: "b", requested: ["a", "b"], expected: true },
+        { name: "a list that lacks the name", workspaceName: "c", requested: ["a", "b"], expected: false },
+        { name: "an empty list selects nothing", workspaceName: "a", requested: [], expected: false },
+        { name: "an unnamed workspace and a list", workspaceName: undefined, requested: ["a"], expected: false }
+    ])("$name", ({ workspaceName, requested, expected }) => {
+        expect(isApiSelected(workspaceName, requested)).toBe(expected);
+    });
+});

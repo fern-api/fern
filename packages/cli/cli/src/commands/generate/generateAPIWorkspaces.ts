@@ -1,10 +1,10 @@
 import path from "node:path";
 import { createOrganizationIfDoesNotExist, FernToken, getToken } from "@fern-api/auth";
-import { SDK_CONFIG_FILENAME } from "@fern-api/configuration-loader";
 import { ContainerRunner, Values } from "@fern-api/core-utils";
-import { AbsoluteFilePath, cwd, dirname, doesPathExist, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, cwd, dirname, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
+import { findReadableSdkConfigFile, findSdkConfigFile, SDK_CONFIG_FILENAME } from "@fern-api/project-structure";
 import {
     type AutomationRunOptions,
     type FernSdkConfigV1Payload,
@@ -35,9 +35,6 @@ export const GenerationMode = {
 } as const;
 
 export type GenerationMode = Values<typeof GenerationMode>;
-
-/** The files the local runner reads SDK Config from, in its lookup order. */
-const LOCAL_RUNNER_SDK_CONFIG_FILENAMES: readonly string[] = [SDK_CONFIG_FILENAME, "sdk-config.yaml"];
 
 interface WorkspaceGeneration {
     kind: "legacy" | "sdk-config";
@@ -395,8 +392,8 @@ async function prepareSdkConfigGenerations({
         candidates.push({ path: sdkConfigPath, owner: matchingOwner ?? sdkConfigWorkspaceOwners[0] });
     } else {
         for (const workspace of sdkConfigWorkspaceOwners) {
-            const defaultPath = join(workspace.absoluteFilePath, RelativeFilePath.of(SDK_CONFIG_FILENAME));
-            if (await doesPathExist(defaultPath)) {
+            const defaultPath = await findSdkConfigFile(workspace.absoluteFilePath);
+            if (defaultPath != null) {
                 candidates.push({ path: defaultPath, owner: workspace });
             } else if (targetNames != null) {
                 return cliContext.failAndThrow(
@@ -407,9 +404,8 @@ async function prepareSdkConfigGenerations({
             }
         }
         if (sdkConfigWorkspaceOwners.length === 0) {
-            const fernDirectory = dirname(project.config._absolutePath);
-            const defaultPath = join(fernDirectory, RelativeFilePath.of(SDK_CONFIG_FILENAME));
-            if (await doesPathExist(defaultPath)) {
+            const defaultPath = await findSdkConfigFile(dirname(project.config._absolutePath));
+            if (defaultPath != null) {
                 candidates.push({ path: defaultPath });
             }
         }
@@ -426,7 +422,7 @@ async function prepareSdkConfigGenerations({
     // any other selected file cannot reach it. Thread the explicit path through the runner to lift this.
     if (useLocalDocker && sdkConfigPath != null) {
         const selectedPath = path.resolve(cwd(), sdkConfigPath);
-        const localRunnerPath = await findLocalRunnerSdkConfig(path.dirname(selectedPath));
+        const localRunnerPath = await findReadableSdkConfigFile(AbsoluteFilePath.of(path.dirname(selectedPath)));
         if (selectedPath !== localRunnerPath) {
             return cliContext.failAndThrow(
                 `--local reads ${path.basename(localRunnerPath ?? SDK_CONFIG_FILENAME)} from the directory of --sdk-config, so it cannot use ${path.basename(selectedPath)}. Rename the file to ${SDK_CONFIG_FILENAME}, or remove --local.`,
@@ -564,16 +560,6 @@ async function prepareSdkConfigGenerations({
         await Promise.all(prepared.map(({ cleanup }) => cleanup()));
         return cliContext.failAndThrow(undefined, error, { code: CliError.Code.ConfigError });
     }
-}
-
-async function findLocalRunnerSdkConfig(directory: string): Promise<string | undefined> {
-    for (const filename of LOCAL_RUNNER_SDK_CONFIG_FILENAMES) {
-        const candidate = path.join(directory, filename);
-        if (await doesPathExist(AbsoluteFilePath.of(candidate), "file")) {
-            return candidate;
-        }
-    }
-    return undefined;
 }
 
 function resolveSourceRoot(

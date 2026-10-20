@@ -4543,6 +4543,9 @@ importers:
       '@fern-api/project-loader':
         specifier: workspace:*
         version: link:../project-loader
+      '@fern-api/project-structure':
+        specifier: workspace:*
+        version: link:../project-structure
       '@fern-api/protoc-gen-fern':
         specifier: workspace:*
         version: link:../generation/protoc-gen-fern

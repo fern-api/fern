@@ -101,6 +101,7 @@
     "@fern-api/oss-validator": "workspace:*",
     "@fern-api/posthog-manager": "workspace:*",
     "@fern-api/project-loader": "workspace:*",
+    "@fern-api/project-structure": "workspace:*",
     "@fern-api/protoc-gen-fern": "workspace:*",
     "@fern-api/register": "workspace:*",
     "@fern-api/remote-workspace-runner": "workspace:*",
