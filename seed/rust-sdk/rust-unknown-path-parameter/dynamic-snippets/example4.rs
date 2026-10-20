@@ -1,0 +1,13 @@
+use seed_rust_unknown_path_parameter::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        base_url: "https://api.fern.com".to_string(),
+        ..Default::default()
+    };
+    let client = RustUnknownPathParameterClient::new(config).expect("Failed to build client");
+    client
+        .get_by_alias_chain(&ResourceKey(ResourceId(serde_json::json!("abc"))), None)
+        .await;
+}
