@@ -43,11 +43,11 @@ require_relative "seed/service/types/list_resources_request"
 module Seed
   module Service
     module Types
-      autoload :Organization, File.join(__dir__, "seed/service/types/organization")
-      autoload :User, File.join(__dir__, "seed/service/types/user")
-      autoload :NestedUser, File.join(__dir__, "seed/service/types/nested_user")
-      autoload :ResourceStatus, File.join(__dir__, "seed/service/types/resource_status")
-      autoload :Resource, File.join(__dir__, "seed/service/types/resource")
+      autoload :Organization, ::File.join(__dir__, "seed/service/types/organization")
+      autoload :User, ::File.join(__dir__, "seed/service/types/user")
+      autoload :NestedUser, ::File.join(__dir__, "seed/service/types/nested_user")
+      autoload :ResourceStatus, ::File.join(__dir__, "seed/service/types/resource_status")
+      autoload :Resource, ::File.join(__dir__, "seed/service/types/resource")
     end
   end
 end

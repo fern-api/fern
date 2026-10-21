@@ -45,14 +45,13 @@ require_relative "seed/users/types/get_users_request"
 module Seed
   module Conversations
     module Types
-      autoload :OutboundCallConversationsResponse, File.join(__dir__, "seed/conversations/types/outbound_call_conversations_response")
+      autoload :OutboundCallConversationsResponse, ::File.join(__dir__, "seed/conversations/types/outbound_call_conversations_response")
     end
   end
 end
 
-
 module Seed
   module Types
-    autoload :User, File.join(__dir__, "seed/types/user")
+    autoload :User, ::File.join(__dir__, "seed/types/user")
   end
 end

@@ -43,21 +43,20 @@ module Seed
     module Level2
       module Types
         module Types
-          autoload :Address, File.join(__dir__, "seed/level1/level2/types/types/address")
-          autoload :Person, File.join(__dir__, "seed/level1/level2/types/types/person")
+          autoload :Address, ::File.join(__dir__, "seed/level1/level2/types/types/address")
+          autoload :Person, ::File.join(__dir__, "seed/level1/level2/types/types/person")
         end
       end
     end
   end
 end
 
-
 module Seed
   module Level1
     module Types
       module Types
-        autoload :Address, File.join(__dir__, "seed/level1/types/types/address")
-        autoload :Person, File.join(__dir__, "seed/level1/types/types/person")
+        autoload :Address, ::File.join(__dir__, "seed/level1/types/types/address")
+        autoload :Person, ::File.join(__dir__, "seed/level1/types/types/person")
       end
     end
   end

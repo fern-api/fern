@@ -50,16 +50,15 @@ require_relative "seed/user/types/get_user_specifics_request"
 module Seed
   module Organizations
     module Types
-      autoload :Organization, File.join(__dir__, "seed/organizations/types/organization")
+      autoload :Organization, ::File.join(__dir__, "seed/organizations/types/organization")
     end
   end
 end
 
-
 module Seed
   module User
     module Types
-      autoload :User, File.join(__dir__, "seed/user/types/user")
+      autoload :User, ::File.join(__dir__, "seed/user/types/user")
     end
   end
 end

@@ -43,8 +43,8 @@ require_relative "seed/dummy/types/generate_request"
 module Seed
   module Dummy
     module Types
-      autoload :RegularResponse, File.join(__dir__, "seed/dummy/types/regular_response")
-      autoload :StreamResponse, File.join(__dir__, "seed/dummy/types/stream_response")
+      autoload :RegularResponse, ::File.join(__dir__, "seed/dummy/types/regular_response")
+      autoload :StreamResponse, ::File.join(__dir__, "seed/dummy/types/stream_response")
     end
   end
 end

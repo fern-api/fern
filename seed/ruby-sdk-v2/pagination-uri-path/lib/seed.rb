@@ -42,9 +42,9 @@ require_relative "seed/users/client"
 module Seed
   module Users
     module Types
-      autoload :User, File.join(__dir__, "seed/users/types/user")
-      autoload :ListUsersURIPaginationResponse, File.join(__dir__, "seed/users/types/list_users_uri_pagination_response")
-      autoload :ListUsersPathPaginationResponse, File.join(__dir__, "seed/users/types/list_users_path_pagination_response")
+      autoload :User, ::File.join(__dir__, "seed/users/types/user")
+      autoload :ListUsersURIPaginationResponse, ::File.join(__dir__, "seed/users/types/list_users_uri_pagination_response")
+      autoload :ListUsersPathPaginationResponse, ::File.join(__dir__, "seed/users/types/list_users_path_pagination_response")
     end
   end
 end

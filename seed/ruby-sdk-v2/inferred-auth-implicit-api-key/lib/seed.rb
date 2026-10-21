@@ -49,7 +49,7 @@ require_relative "seed/internal/inferred_auth_provider"
 module Seed
   module Auth
     module Types
-      autoload :TokenResponse, File.join(__dir__, "seed/auth/types/token_response")
+      autoload :TokenResponse, ::File.join(__dir__, "seed/auth/types/token_response")
     end
   end
 end

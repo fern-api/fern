@@ -41,23 +41,22 @@ require_relative "seed/client"
 module Seed
   module RealtimeNoAuth
     module Types
-      autoload :NoAuthSendEvent, File.join(__dir__, "seed/realtime_no_auth/types/no_auth_send_event")
-      autoload :NoAuthReceiveEvent, File.join(__dir__, "seed/realtime_no_auth/types/no_auth_receive_event")
+      autoload :NoAuthSendEvent, ::File.join(__dir__, "seed/realtime_no_auth/types/no_auth_send_event")
+      autoload :NoAuthReceiveEvent, ::File.join(__dir__, "seed/realtime_no_auth/types/no_auth_receive_event")
     end
   end
 end
 
-
 module Seed
   module Realtime
     module Types
-      autoload :SendEvent, File.join(__dir__, "seed/realtime/types/send_event")
-      autoload :SendSnakeCase, File.join(__dir__, "seed/realtime/types/send_snake_case")
-      autoload :ReceiveEvent, File.join(__dir__, "seed/realtime/types/receive_event")
-      autoload :ReceiveSnakeCase, File.join(__dir__, "seed/realtime/types/receive_snake_case")
-      autoload :SendEvent2, File.join(__dir__, "seed/realtime/types/send_event2")
-      autoload :ReceiveEvent2, File.join(__dir__, "seed/realtime/types/receive_event2")
-      autoload :ReceiveEvent3, File.join(__dir__, "seed/realtime/types/receive_event3")
+      autoload :SendEvent, ::File.join(__dir__, "seed/realtime/types/send_event")
+      autoload :SendSnakeCase, ::File.join(__dir__, "seed/realtime/types/send_snake_case")
+      autoload :ReceiveEvent, ::File.join(__dir__, "seed/realtime/types/receive_event")
+      autoload :ReceiveSnakeCase, ::File.join(__dir__, "seed/realtime/types/receive_snake_case")
+      autoload :SendEvent2, ::File.join(__dir__, "seed/realtime/types/send_event2")
+      autoload :ReceiveEvent2, ::File.join(__dir__, "seed/realtime/types/receive_event2")
+      autoload :ReceiveEvent3, ::File.join(__dir__, "seed/realtime/types/receive_event3")
     end
   end
 end

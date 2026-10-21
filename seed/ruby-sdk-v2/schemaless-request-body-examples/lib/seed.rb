@@ -42,8 +42,8 @@ require_relative "seed/types/create_plant_with_schema_request"
 
 module Seed
   module Types
-    autoload :CreatePlantResponse, File.join(__dir__, "seed/types/create_plant_response")
-    autoload :UpdatePlantResponse, File.join(__dir__, "seed/types/update_plant_response")
-    autoload :CreatePlantWithSchemaResponse, File.join(__dir__, "seed/types/create_plant_with_schema_response")
+    autoload :CreatePlantResponse, ::File.join(__dir__, "seed/types/create_plant_response")
+    autoload :UpdatePlantResponse, ::File.join(__dir__, "seed/types/update_plant_response")
+    autoload :CreatePlantWithSchemaResponse, ::File.join(__dir__, "seed/types/create_plant_with_schema_response")
   end
 end

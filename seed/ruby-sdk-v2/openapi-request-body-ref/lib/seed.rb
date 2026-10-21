@@ -48,12 +48,12 @@ require_relative "seed/team_member/types/update_team_member_request"
 
 module Seed
   module Types
-    autoload :UpdateVendorRequestStatus, File.join(__dir__, "seed/types/update_vendor_request_status")
-    autoload :UpdateVendorRequest, File.join(__dir__, "seed/types/update_vendor_request")
-    autoload :VendorStatus, File.join(__dir__, "seed/types/vendor_status")
-    autoload :Vendor, File.join(__dir__, "seed/types/vendor")
-    autoload :CreateCatalogImageRequest, File.join(__dir__, "seed/types/create_catalog_image_request")
-    autoload :CatalogImage, File.join(__dir__, "seed/types/catalog_image")
-    autoload :TeamMember, File.join(__dir__, "seed/types/team_member")
+    autoload :UpdateVendorRequestStatus, ::File.join(__dir__, "seed/types/update_vendor_request_status")
+    autoload :UpdateVendorRequest, ::File.join(__dir__, "seed/types/update_vendor_request")
+    autoload :VendorStatus, ::File.join(__dir__, "seed/types/vendor_status")
+    autoload :Vendor, ::File.join(__dir__, "seed/types/vendor")
+    autoload :CreateCatalogImageRequest, ::File.join(__dir__, "seed/types/create_catalog_image_request")
+    autoload :CatalogImage, ::File.join(__dir__, "seed/types/catalog_image")
+    autoload :TeamMember, ::File.join(__dir__, "seed/types/team_member")
   end
 end

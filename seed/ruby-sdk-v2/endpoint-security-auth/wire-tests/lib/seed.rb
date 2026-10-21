@@ -48,16 +48,15 @@ require_relative "seed/internal/routing_auth_provider"
 module Seed
   module Auth
     module Types
-      autoload :TokenResponse, File.join(__dir__, "seed/auth/types/token_response")
+      autoload :TokenResponse, ::File.join(__dir__, "seed/auth/types/token_response")
     end
   end
 end
 
-
 module Seed
   module User
     module Types
-      autoload :User, File.join(__dir__, "seed/user/types/user")
+      autoload :User, ::File.join(__dir__, "seed/user/types/user")
     end
   end
 end

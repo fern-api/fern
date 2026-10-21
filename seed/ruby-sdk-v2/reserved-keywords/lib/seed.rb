@@ -43,14 +43,14 @@ require_relative "seed/package/types/test_request"
 module Seed
   module Package
     module Types
-      autoload :Package, File.join(__dir__, "seed/package/types/package")
-      autoload :Record, File.join(__dir__, "seed/package/types/record")
-      autoload :CustomSipHeader, File.join(__dir__, "seed/package/types/custom_sip_header")
-      autoload :SipHeaderAction, File.join(__dir__, "seed/package/types/sip_header_action")
-      autoload :BackupOverride, File.join(__dir__, "seed/package/types/backup_override")
-      autoload :BackupConfig, File.join(__dir__, "seed/package/types/backup_config")
-      autoload :KnownDependency, File.join(__dir__, "seed/package/types/known_dependency")
-      autoload :DependencyItem, File.join(__dir__, "seed/package/types/dependency_item")
+      autoload :Package, ::File.join(__dir__, "seed/package/types/package")
+      autoload :Record, ::File.join(__dir__, "seed/package/types/record")
+      autoload :CustomSipHeader, ::File.join(__dir__, "seed/package/types/custom_sip_header")
+      autoload :SipHeaderAction, ::File.join(__dir__, "seed/package/types/sip_header_action")
+      autoload :BackupOverride, ::File.join(__dir__, "seed/package/types/backup_override")
+      autoload :BackupConfig, ::File.join(__dir__, "seed/package/types/backup_config")
+      autoload :KnownDependency, ::File.join(__dir__, "seed/package/types/known_dependency")
+      autoload :DependencyItem, ::File.join(__dir__, "seed/package/types/dependency_item")
     end
   end
 end

@@ -42,8 +42,8 @@ require_relative "seed/environment"
 
 module Seed
   module Types
-    autoload :DocumentMetadata, File.join(__dir__, "seed/types/document_metadata")
-    autoload :DocumentUploadResult, File.join(__dir__, "seed/types/document_upload_result")
-    autoload :UploadDocumentResponse, File.join(__dir__, "seed/types/upload_document_response")
+    autoload :DocumentMetadata, ::File.join(__dir__, "seed/types/document_metadata")
+    autoload :DocumentUploadResult, ::File.join(__dir__, "seed/types/document_upload_result")
+    autoload :UploadDocumentResponse, ::File.join(__dir__, "seed/types/upload_document_response")
   end
 end

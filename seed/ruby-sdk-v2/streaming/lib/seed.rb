@@ -44,7 +44,7 @@ require_relative "seed/dummy/types/generateequest"
 module Seed
   module Dummy
     module Types
-      autoload :StreamResponse, File.join(__dir__, "seed/dummy/types/stream_response")
+      autoload :StreamResponse, ::File.join(__dir__, "seed/dummy/types/stream_response")
     end
   end
 end

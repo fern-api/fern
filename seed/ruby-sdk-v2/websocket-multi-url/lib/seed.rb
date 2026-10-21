@@ -42,8 +42,8 @@ require_relative "seed/environment"
 module Seed
   module Realtime
     module Types
-      autoload :SendEvent, File.join(__dir__, "seed/realtime/types/send_event")
-      autoload :ReceiveEvent, File.join(__dir__, "seed/realtime/types/receive_event")
+      autoload :SendEvent, ::File.join(__dir__, "seed/realtime/types/send_event")
+      autoload :ReceiveEvent, ::File.join(__dir__, "seed/realtime/types/receive_event")
     end
   end
 end

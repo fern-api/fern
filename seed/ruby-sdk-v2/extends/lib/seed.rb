@@ -41,9 +41,9 @@ require_relative "seed/types/inlined"
 
 module Seed
   module Types
-    autoload :Docs, File.join(__dir__, "seed/types/docs")
-    autoload :ExampleType, File.join(__dir__, "seed/types/example_type")
-    autoload :JSON_, File.join(__dir__, "seed/types/json")
-    autoload :NestedType, File.join(__dir__, "seed/types/nested_type")
+    autoload :Docs, ::File.join(__dir__, "seed/types/docs")
+    autoload :ExampleType, ::File.join(__dir__, "seed/types/example_type")
+    autoload :JSON_, ::File.join(__dir__, "seed/types/json")
+    autoload :NestedType, ::File.join(__dir__, "seed/types/nested_type")
   end
 end

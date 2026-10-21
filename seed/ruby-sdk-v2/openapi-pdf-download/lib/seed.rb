@@ -41,9 +41,9 @@ require_relative "seed/asset_report/client"
 
 module Seed
   module Types
-    autoload :AssetReportPdfGetRequest, File.join(__dir__, "seed/types/asset_report_pdf_get_request")
-    autoload :AssetReportGetResponse, File.join(__dir__, "seed/types/asset_report_get_response")
-    autoload :PlaidError, File.join(__dir__, "seed/types/plaid_error")
-    autoload :AssetReportPdfGetResponse, File.join(__dir__, "seed/types/asset_report_pdf_get_response")
+    autoload :AssetReportPdfGetRequest, ::File.join(__dir__, "seed/types/asset_report_pdf_get_request")
+    autoload :AssetReportGetResponse, ::File.join(__dir__, "seed/types/asset_report_get_response")
+    autoload :PlaidError, ::File.join(__dir__, "seed/types/plaid_error")
+    autoload :AssetReportPdfGetResponse, ::File.join(__dir__, "seed/types/asset_report_pdf_get_response")
   end
 end

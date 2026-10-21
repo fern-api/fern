@@ -42,9 +42,9 @@ require_relative "seed/service/client"
 module Seed
   module Service
     module Types
-      autoload :StoreRequest, File.join(__dir__, "seed/service/types/store_request")
-      autoload :ServiceRequest, File.join(__dir__, "seed/service/types/service_request")
-      autoload :StoreResponse, File.join(__dir__, "seed/service/types/store_response")
+      autoload :StoreRequest, ::File.join(__dir__, "seed/service/types/store_request")
+      autoload :ServiceRequest, ::File.join(__dir__, "seed/service/types/service_request")
+      autoload :StoreResponse, ::File.join(__dir__, "seed/service/types/store_response")
     end
   end
 end

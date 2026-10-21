@@ -42,7 +42,7 @@ require_relative "seed/property_based_error/client"
 module Seed
   module Errors
     module Types
-      autoload :PropertyBasedErrorTestBody, File.join(__dir__, "seed/errors/types/property_based_error_test_body")
+      autoload :PropertyBasedErrorTestBody, ::File.join(__dir__, "seed/errors/types/property_based_error_test_body")
     end
   end
 end

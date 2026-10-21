@@ -42,12 +42,12 @@ require_relative "seed/types/get_request"
 
 module Seed
   module Types
-    autoload :SmallInteger, File.join(__dir__, "seed/types/small_integer")
-    autoload :LargeInteger, File.join(__dir__, "seed/types/large_integer")
-    autoload :Double, File.join(__dir__, "seed/types/double")
-    autoload :Word, File.join(__dir__, "seed/types/word")
-    autoload :Sentence, File.join(__dir__, "seed/types/sentence")
-    autoload :Shape, File.join(__dir__, "seed/types/shape")
-    autoload :Type, File.join(__dir__, "seed/types/type")
+    autoload :SmallInteger, ::File.join(__dir__, "seed/types/small_integer")
+    autoload :LargeInteger, ::File.join(__dir__, "seed/types/large_integer")
+    autoload :Double, ::File.join(__dir__, "seed/types/double")
+    autoload :Word, ::File.join(__dir__, "seed/types/word")
+    autoload :Sentence, ::File.join(__dir__, "seed/types/sentence")
+    autoload :Shape, ::File.join(__dir__, "seed/types/shape")
+    autoload :Type, ::File.join(__dir__, "seed/types/type")
   end
 end

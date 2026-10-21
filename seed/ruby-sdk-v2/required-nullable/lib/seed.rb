@@ -42,6 +42,6 @@ require_relative "seed/types/update_foo_request"
 
 module Seed
   module Types
-    autoload :Foo, File.join(__dir__, "seed/types/foo")
+    autoload :Foo, ::File.join(__dir__, "seed/types/foo")
   end
 end

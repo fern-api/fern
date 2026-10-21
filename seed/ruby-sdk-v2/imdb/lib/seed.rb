@@ -43,7 +43,7 @@ require_relative "seed/imdb/types/get_movie_imdb_request"
 
 module Seed
   module Types
-    autoload :MovieID, File.join(__dir__, "seed/types/movie_id")
-    autoload :Movie, File.join(__dir__, "seed/types/movie")
+    autoload :MovieID, ::File.join(__dir__, "seed/types/movie_id")
+    autoload :Movie, ::File.join(__dir__, "seed/types/movie")
   end
 end

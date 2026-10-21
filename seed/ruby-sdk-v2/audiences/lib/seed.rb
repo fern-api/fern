@@ -49,62 +49,57 @@ require_relative "seed/environment"
 module Seed
   module Commons
     module Types
-      autoload :Imported, File.join(__dir__, "seed/commons/types/imported")
+      autoload :Imported, ::File.join(__dir__, "seed/commons/types/imported")
     end
   end
 end
-
 
 module Seed
   module FolderC
     module Common
       module Types
-        autoload :FolderCFoo, File.join(__dir__, "seed/folder_c/common/types/folder_c_foo")
+        autoload :FolderCFoo, ::File.join(__dir__, "seed/folder_c/common/types/folder_c_foo")
       end
     end
   end
 end
-
 
 module Seed
   module FolderB
     module Common
       module Types
-        autoload :Foo, File.join(__dir__, "seed/folder_b/common/types/foo")
+        autoload :Foo, ::File.join(__dir__, "seed/folder_b/common/types/foo")
       end
     end
   end
 end
-
 
 module Seed
   module FolderA
     module Service
       module Types
-        autoload :Response, File.join(__dir__, "seed/folder_a/service/types/response")
+        autoload :Response, ::File.join(__dir__, "seed/folder_a/service/types/response")
       end
     end
   end
 end
-
 
 module Seed
   module FolderD
     module Service
       module Types
-        autoload :Response, File.join(__dir__, "seed/folder_d/service/types/response")
+        autoload :Response, ::File.join(__dir__, "seed/folder_d/service/types/response")
       end
     end
   end
 end
 
-
 module Seed
   module Foo
     module Types
-      autoload :ImportingType, File.join(__dir__, "seed/foo/types/importing_type")
-      autoload :OptionalString, File.join(__dir__, "seed/foo/types/optional_string")
-      autoload :FilteredType, File.join(__dir__, "seed/foo/types/filtered_type")
+      autoload :ImportingType, ::File.join(__dir__, "seed/foo/types/importing_type")
+      autoload :OptionalString, ::File.join(__dir__, "seed/foo/types/optional_string")
+      autoload :FilteredType, ::File.join(__dir__, "seed/foo/types/filtered_type")
     end
   end
 end

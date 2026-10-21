@@ -42,8 +42,8 @@ require_relative "seed/user/client"
 module Seed
   module User
     module Types
-      autoload :UserID, File.join(__dir__, "seed/user/types/user_id")
-      autoload :User, File.join(__dir__, "seed/user/types/user")
+      autoload :UserID, ::File.join(__dir__, "seed/user/types/user_id")
+      autoload :User, ::File.join(__dir__, "seed/user/types/user")
     end
   end
 end

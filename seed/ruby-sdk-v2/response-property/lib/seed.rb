@@ -41,20 +41,19 @@ require_relative "seed/service/client"
 
 module Seed
   module Types
-    autoload :StringResponse, File.join(__dir__, "seed/types/string_response")
-    autoload :OptionalStringResponse, File.join(__dir__, "seed/types/optional_string_response")
-    autoload :WithMetadata, File.join(__dir__, "seed/types/with_metadata")
+    autoload :StringResponse, ::File.join(__dir__, "seed/types/string_response")
+    autoload :OptionalStringResponse, ::File.join(__dir__, "seed/types/optional_string_response")
+    autoload :WithMetadata, ::File.join(__dir__, "seed/types/with_metadata")
   end
 end
-
 
 module Seed
   module Service
     module Types
-      autoload :WithDocs, File.join(__dir__, "seed/service/types/with_docs")
-      autoload :OptionalWithDocs, File.join(__dir__, "seed/service/types/optional_with_docs")
-      autoload :Movie, File.join(__dir__, "seed/service/types/movie")
-      autoload :Response, File.join(__dir__, "seed/service/types/response")
+      autoload :WithDocs, ::File.join(__dir__, "seed/service/types/with_docs")
+      autoload :OptionalWithDocs, ::File.join(__dir__, "seed/service/types/optional_with_docs")
+      autoload :Movie, ::File.join(__dir__, "seed/service/types/movie")
+      autoload :Response, ::File.join(__dir__, "seed/service/types/response")
     end
   end
 end

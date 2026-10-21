@@ -48,7 +48,7 @@ module Seed
     module D
       module Types
         module Types
-          autoload :Foo, File.join(__dir__, "seed/a/d/types/types/foo")
+          autoload :Foo, ::File.join(__dir__, "seed/a/d/types/types/foo")
         end
       end
     end

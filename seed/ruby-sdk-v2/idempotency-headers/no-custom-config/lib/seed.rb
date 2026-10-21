@@ -43,7 +43,7 @@ require_relative "seed/payment/types/create_payment_request"
 module Seed
   module Payment
     module Types
-      autoload :Currency, File.join(__dir__, "seed/payment/types/currency")
+      autoload :Currency, ::File.join(__dir__, "seed/payment/types/currency")
     end
   end
 end

@@ -43,8 +43,8 @@ require_relative "seed/reporting/types/load_request"
 module Seed
   module Reporting
     module Types
-      autoload :LoadRequestCache, File.join(__dir__, "seed/reporting/types/load_request_cache")
-      autoload :LoadRequestStatus, File.join(__dir__, "seed/reporting/types/load_request_status")
+      autoload :LoadRequestCache, ::File.join(__dir__, "seed/reporting/types/load_request_cache")
+      autoload :LoadRequestStatus, ::File.join(__dir__, "seed/reporting/types/load_request_status")
     end
   end
 end

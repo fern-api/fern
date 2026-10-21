@@ -42,15 +42,14 @@ require_relative "seed/user/types/create_user_request"
 
 module Seed
   module Types
-    autoload :Failure, File.join(__dir__, "seed/types/failure")
+    autoload :Failure, ::File.join(__dir__, "seed/types/failure")
   end
 end
-
 
 module Seed
   module User
     module Types
-      autoload :User, File.join(__dir__, "seed/user/types/user")
+      autoload :User, ::File.join(__dir__, "seed/user/types/user")
     end
   end
 end

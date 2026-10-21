@@ -42,6 +42,6 @@ require_relative "seed/types/required_refund_request"
 
 module Seed
   module Types
-    autoload :RefundRequest, File.join(__dir__, "seed/types/refund_request")
+    autoload :RefundRequest, ::File.join(__dir__, "seed/types/refund_request")
   end
 end

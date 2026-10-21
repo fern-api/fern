@@ -41,8 +41,8 @@ require_relative "seed/types/inlined_child_request"
 
 module Seed
   module Types
-    autoload :Parent, File.join(__dir__, "seed/types/parent")
-    autoload :AliasType, File.join(__dir__, "seed/types/alias_type")
-    autoload :Child, File.join(__dir__, "seed/types/child")
+    autoload :Parent, ::File.join(__dir__, "seed/types/parent")
+    autoload :AliasType, ::File.join(__dir__, "seed/types/alias_type")
+    autoload :Child, ::File.join(__dir__, "seed/types/child")
   end
 end

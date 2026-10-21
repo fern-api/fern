@@ -40,8 +40,8 @@ require_relative "seed/client"
 
 module Seed
   module Types
-    autoload :PublicPayload, File.join(__dir__, "seed/types/public_payload")
-    autoload :PrivatePayload, File.join(__dir__, "seed/types/private_payload")
-    autoload :NoAudiencePayload, File.join(__dir__, "seed/types/no_audience_payload")
+    autoload :PublicPayload, ::File.join(__dir__, "seed/types/public_payload")
+    autoload :PrivatePayload, ::File.join(__dir__, "seed/types/private_payload")
+    autoload :NoAudiencePayload, ::File.join(__dir__, "seed/types/no_audience_payload")
   end
 end

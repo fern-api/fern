@@ -46,15 +46,15 @@ require_relative "seed/completions/types/stream_events_context_protocol_request"
 module Seed
   module Completions
     module Types
-      autoload :StreamedCompletion, File.join(__dir__, "seed/completions/types/streamed_completion")
-      autoload :CompletionEvent, File.join(__dir__, "seed/completions/types/completion_event")
-      autoload :EventEvent, File.join(__dir__, "seed/completions/types/event_event")
-      autoload :ErrorEvent, File.join(__dir__, "seed/completions/types/error_event")
-      autoload :StreamEventContextProtocol, File.join(__dir__, "seed/completions/types/stream_event_context_protocol")
-      autoload :GroupCreatedEvent, File.join(__dir__, "seed/completions/types/group_created_event")
-      autoload :GroupDeletedEvent, File.join(__dir__, "seed/completions/types/group_deleted_event")
-      autoload :StreamEventDiscriminantInData, File.join(__dir__, "seed/completions/types/stream_event_discriminant_in_data")
-      autoload :StreamEvent, File.join(__dir__, "seed/completions/types/stream_event")
+      autoload :StreamedCompletion, ::File.join(__dir__, "seed/completions/types/streamed_completion")
+      autoload :CompletionEvent, ::File.join(__dir__, "seed/completions/types/completion_event")
+      autoload :EventEvent, ::File.join(__dir__, "seed/completions/types/event_event")
+      autoload :ErrorEvent, ::File.join(__dir__, "seed/completions/types/error_event")
+      autoload :StreamEventContextProtocol, ::File.join(__dir__, "seed/completions/types/stream_event_context_protocol")
+      autoload :GroupCreatedEvent, ::File.join(__dir__, "seed/completions/types/group_created_event")
+      autoload :GroupDeletedEvent, ::File.join(__dir__, "seed/completions/types/group_deleted_event")
+      autoload :StreamEventDiscriminantInData, ::File.join(__dir__, "seed/completions/types/stream_event_discriminant_in_data")
+      autoload :StreamEvent, ::File.join(__dir__, "seed/completions/types/stream_event")
     end
   end
 end

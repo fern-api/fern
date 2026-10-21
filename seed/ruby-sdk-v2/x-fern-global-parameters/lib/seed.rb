@@ -44,15 +44,14 @@ require_relative "seed/products/types/get_products_request"
 module Seed
   module Products
     module Types
-      autoload :SearchProductsRequestConfig, File.join(__dir__, "seed/products/types/search_products_request_config")
-      autoload :SearchProductsResponse, File.join(__dir__, "seed/products/types/search_products_response")
+      autoload :SearchProductsRequestConfig, ::File.join(__dir__, "seed/products/types/search_products_request_config")
+      autoload :SearchProductsResponse, ::File.join(__dir__, "seed/products/types/search_products_response")
     end
   end
 end
 
-
 module Seed
   module Types
-    autoload :Product, File.join(__dir__, "seed/types/product")
+    autoload :Product, ::File.join(__dir__, "seed/types/product")
   end
 end

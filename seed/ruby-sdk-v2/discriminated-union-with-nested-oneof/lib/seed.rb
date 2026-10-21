@@ -40,14 +40,14 @@ require_relative "seed/client"
 
 module Seed
   module Types
-    autoload :AstNodeLlm, File.join(__dir__, "seed/types/ast_node_llm")
-    autoload :AstTextNode, File.join(__dir__, "seed/types/ast_text_node")
-    autoload :AstNullNode, File.join(__dir__, "seed/types/ast_null_node")
-    autoload :AstNode, File.join(__dir__, "seed/types/ast_node")
-    autoload :AstllmNodeWithSchemaType, File.join(__dir__, "seed/types/astllm_node_with_schema_type")
-    autoload :AstllmNodeWithSchema, File.join(__dir__, "seed/types/astllm_node_with_schema")
-    autoload :AstllmNodeWithPromptType, File.join(__dir__, "seed/types/astllm_node_with_prompt_type")
-    autoload :AstllmNodeWithPrompt, File.join(__dir__, "seed/types/astllm_node_with_prompt")
-    autoload :AstllmNode, File.join(__dir__, "seed/types/astllm_node")
+    autoload :AstNodeLlm, ::File.join(__dir__, "seed/types/ast_node_llm")
+    autoload :AstTextNode, ::File.join(__dir__, "seed/types/ast_text_node")
+    autoload :AstNullNode, ::File.join(__dir__, "seed/types/ast_null_node")
+    autoload :AstNode, ::File.join(__dir__, "seed/types/ast_node")
+    autoload :AstllmNodeWithSchemaType, ::File.join(__dir__, "seed/types/astllm_node_with_schema_type")
+    autoload :AstllmNodeWithSchema, ::File.join(__dir__, "seed/types/astllm_node_with_schema")
+    autoload :AstllmNodeWithPromptType, ::File.join(__dir__, "seed/types/astllm_node_with_prompt_type")
+    autoload :AstllmNodeWithPrompt, ::File.join(__dir__, "seed/types/astllm_node_with_prompt")
+    autoload :AstllmNode, ::File.join(__dir__, "seed/types/astllm_node")
   end
 end

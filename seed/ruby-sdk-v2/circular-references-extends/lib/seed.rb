@@ -41,17 +41,16 @@ require_relative "seed/client"
 module Seed
   module Common
     module Types
-      autoload :ChildType, File.join(__dir__, "seed/common/types/child_type")
-      autoload :BaseType, File.join(__dir__, "seed/common/types/base_type")
+      autoload :ChildType, ::File.join(__dir__, "seed/common/types/child_type")
+      autoload :BaseType, ::File.join(__dir__, "seed/common/types/base_type")
     end
   end
 end
 
-
 module Seed
   module Derived
     module Types
-      autoload :DerivedType, File.join(__dir__, "seed/derived/types/derived_type")
+      autoload :DerivedType, ::File.join(__dir__, "seed/derived/types/derived_type")
     end
   end
 end

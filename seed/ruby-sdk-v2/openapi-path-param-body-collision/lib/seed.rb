@@ -42,6 +42,6 @@ require_relative "seed/environment"
 
 module Seed
   module Types
-    autoload :UpdateProfileIdentifierResponse, File.join(__dir__, "seed/types/update_profile_identifier_response")
+    autoload :UpdateProfileIdentifierResponse, ::File.join(__dir__, "seed/types/update_profile_identifier_response")
   end
 end

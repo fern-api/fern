@@ -54,15 +54,15 @@ require_relative "seed/service/types/literal_enum_request"
 module Seed
   module Service
     module Types
-      autoload :ID, File.join(__dir__, "seed/service/types/id")
-      autoload :MyObjectWithOptional, File.join(__dir__, "seed/service/types/my_object_with_optional")
-      autoload :MyObject, File.join(__dir__, "seed/service/types/my_object")
-      autoload :MyAliasObject, File.join(__dir__, "seed/service/types/my_alias_object")
-      autoload :MyCollectionAliasObject, File.join(__dir__, "seed/service/types/my_collection_alias_object")
-      autoload :ObjectType, File.join(__dir__, "seed/service/types/object_type")
-      autoload :MyInlineType, File.join(__dir__, "seed/service/types/my_inline_type")
-      autoload :ModelType, File.join(__dir__, "seed/service/types/model_type")
-      autoload :OpenEnumType, File.join(__dir__, "seed/service/types/open_enum_type")
+      autoload :ID, ::File.join(__dir__, "seed/service/types/id")
+      autoload :MyObjectWithOptional, ::File.join(__dir__, "seed/service/types/my_object_with_optional")
+      autoload :MyObject, ::File.join(__dir__, "seed/service/types/my_object")
+      autoload :MyAliasObject, ::File.join(__dir__, "seed/service/types/my_alias_object")
+      autoload :MyCollectionAliasObject, ::File.join(__dir__, "seed/service/types/my_collection_alias_object")
+      autoload :ObjectType, ::File.join(__dir__, "seed/service/types/object_type")
+      autoload :MyInlineType, ::File.join(__dir__, "seed/service/types/my_inline_type")
+      autoload :ModelType, ::File.join(__dir__, "seed/service/types/model_type")
+      autoload :OpenEnumType, ::File.join(__dir__, "seed/service/types/open_enum_type")
     end
   end
 end

@@ -44,7 +44,7 @@ require_relative "seed/completions/types/stream_completion_request_non_resumable
 module Seed
   module Completions
     module Types
-      autoload :StreamedCompletion, File.join(__dir__, "seed/completions/types/streamed_completion")
+      autoload :StreamedCompletion, ::File.join(__dir__, "seed/completions/types/streamed_completion")
     end
   end
 end

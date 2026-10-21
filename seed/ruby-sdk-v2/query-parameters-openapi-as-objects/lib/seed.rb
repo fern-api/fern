@@ -41,10 +41,10 @@ require_relative "seed/types/search_request"
 
 module Seed
   module Types
-    autoload :User, File.join(__dir__, "seed/types/user")
-    autoload :NestedUser, File.join(__dir__, "seed/types/nested_user")
-    autoload :SearchRequestNeighbor, File.join(__dir__, "seed/types/search_request_neighbor")
-    autoload :SearchRequestNeighborRequired, File.join(__dir__, "seed/types/search_request_neighbor_required")
-    autoload :SearchResponse, File.join(__dir__, "seed/types/search_response")
+    autoload :User, ::File.join(__dir__, "seed/types/user")
+    autoload :NestedUser, ::File.join(__dir__, "seed/types/nested_user")
+    autoload :SearchRequestNeighbor, ::File.join(__dir__, "seed/types/search_request_neighbor")
+    autoload :SearchRequestNeighborRequired, ::File.join(__dir__, "seed/types/search_request_neighbor_required")
+    autoload :SearchResponse, ::File.join(__dir__, "seed/types/search_response")
   end
 end

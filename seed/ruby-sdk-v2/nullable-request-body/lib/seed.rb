@@ -42,6 +42,6 @@ require_relative "seed/test_group/types/test_method_name_test_group_request"
 
 module Seed
   module Types
-    autoload :PlainObject, File.join(__dir__, "seed/types/plain_object")
+    autoload :PlainObject, ::File.join(__dir__, "seed/types/plain_object")
   end
 end

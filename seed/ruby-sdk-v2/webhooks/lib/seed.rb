@@ -44,10 +44,10 @@ require_relative "seed/sms_status_webhooks_helper"
 
 module Seed
   module Types
-    autoload :UserCreatedPayload, File.join(__dir__, "seed/types/user_created_payload")
-    autoload :OrderCompletedPayload, File.join(__dir__, "seed/types/order_completed_payload")
-    autoload :PaymentNotificationPayload, File.join(__dir__, "seed/types/payment_notification_payload")
-    autoload :RefundProcessedPayload, File.join(__dir__, "seed/types/refund_processed_payload")
-    autoload :SmsStatusPayload, File.join(__dir__, "seed/types/sms_status_payload")
+    autoload :UserCreatedPayload, ::File.join(__dir__, "seed/types/user_created_payload")
+    autoload :OrderCompletedPayload, ::File.join(__dir__, "seed/types/order_completed_payload")
+    autoload :PaymentNotificationPayload, ::File.join(__dir__, "seed/types/payment_notification_payload")
+    autoload :RefundProcessedPayload, ::File.join(__dir__, "seed/types/refund_processed_payload")
+    autoload :SmsStatusPayload, ::File.join(__dir__, "seed/types/sms_status_payload")
   end
 end

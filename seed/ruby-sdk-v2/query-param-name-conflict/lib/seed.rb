@@ -41,6 +41,6 @@ require_relative "seed/types/bulk_update_tasks_request"
 
 module Seed
   module Types
-    autoload :BulkUpdateTasksResponse, File.join(__dir__, "seed/types/bulk_update_tasks_response")
+    autoload :BulkUpdateTasksResponse, ::File.join(__dir__, "seed/types/bulk_update_tasks_response")
   end
 end

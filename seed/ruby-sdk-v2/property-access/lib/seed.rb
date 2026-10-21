@@ -40,12 +40,12 @@ require_relative "seed/client"
 
 module Seed
   module Types
-    autoload :UserProfileVerification, File.join(__dir__, "seed/types/user_profile_verification")
-    autoload :UserProfile, File.join(__dir__, "seed/types/user_profile")
-    autoload :User, File.join(__dir__, "seed/types/user")
-    autoload :Admin, File.join(__dir__, "seed/types/admin")
-    autoload :UserOrAdmin, File.join(__dir__, "seed/types/user_or_admin")
-    autoload :Foo, File.join(__dir__, "seed/types/foo")
-    autoload :UserOrAdminDiscriminated, File.join(__dir__, "seed/types/user_or_admin_discriminated")
+    autoload :UserProfileVerification, ::File.join(__dir__, "seed/types/user_profile_verification")
+    autoload :UserProfile, ::File.join(__dir__, "seed/types/user_profile")
+    autoload :User, ::File.join(__dir__, "seed/types/user")
+    autoload :Admin, ::File.join(__dir__, "seed/types/admin")
+    autoload :UserOrAdmin, ::File.join(__dir__, "seed/types/user_or_admin")
+    autoload :Foo, ::File.join(__dir__, "seed/types/foo")
+    autoload :UserOrAdminDiscriminated, ::File.join(__dir__, "seed/types/user_or_admin_discriminated")
   end
 end

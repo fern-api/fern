@@ -42,7 +42,7 @@ require_relative "seed/retries/client"
 module Seed
   module Retries
     module Types
-      autoload :User, File.join(__dir__, "seed/retries/types/user")
+      autoload :User, ::File.join(__dir__, "seed/retries/types/user")
     end
   end
 end

@@ -42,6 +42,6 @@ require_relative "seed/environment"
 
 module Seed
   module Types
-    autoload :User, File.join(__dir__, "seed/types/user")
+    autoload :User, ::File.join(__dir__, "seed/types/user")
   end
 end

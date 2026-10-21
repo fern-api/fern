@@ -42,8 +42,8 @@ require_relative "seed/unknown/client"
 module Seed
   module Unknown
     module Types
-      autoload :MyAlias, File.join(__dir__, "seed/unknown/types/my_alias")
-      autoload :MyObject, File.join(__dir__, "seed/unknown/types/my_object")
+      autoload :MyAlias, ::File.join(__dir__, "seed/unknown/types/my_alias")
+      autoload :MyObject, ::File.join(__dir__, "seed/unknown/types/my_object")
     end
   end
 end

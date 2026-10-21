@@ -43,7 +43,7 @@ require_relative "seed/basic_auth/client"
 module Seed
   module Errors
     module Types
-      autoload :UnauthorizedRequestErrorBody, File.join(__dir__, "seed/errors/types/unauthorized_request_error_body")
+      autoload :UnauthorizedRequestErrorBody, ::File.join(__dir__, "seed/errors/types/unauthorized_request_error_body")
     end
   end
 end

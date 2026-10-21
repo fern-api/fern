@@ -40,7 +40,7 @@ require_relative "seed/client"
 
 module Seed
   module Types
-    autoload :Name, File.join(__dir__, "seed/types/name")
-    autoload :Type, File.join(__dir__, "seed/types/type")
+    autoload :Name, ::File.join(__dir__, "seed/types/name")
+    autoload :Type, ::File.join(__dir__, "seed/types/type")
   end
 end

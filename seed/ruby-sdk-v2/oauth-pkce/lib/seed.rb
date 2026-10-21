@@ -42,6 +42,6 @@ require_relative "seed/oauth/types/authorize_request"
 
 module Seed
   module Types
-    autoload :AuthorizeResponse, File.join(__dir__, "seed/types/authorize_response")
+    autoload :AuthorizeResponse, ::File.join(__dir__, "seed/types/authorize_response")
   end
 end

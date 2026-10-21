@@ -45,7 +45,7 @@ require_relative "seed/internal/oauth_provider"
 module Seed
   module Oauth
     module Types
-      autoload :GetTokenResponse, File.join(__dir__, "seed/oauth/types/get_token_response")
+      autoload :GetTokenResponse, ::File.join(__dir__, "seed/oauth/types/get_token_response")
     end
   end
 end

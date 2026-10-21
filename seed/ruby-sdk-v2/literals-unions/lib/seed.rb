@@ -41,8 +41,8 @@ require_relative "seed/client"
 module Seed
   module Literals
     module Types
-      autoload :LiteralString, File.join(__dir__, "seed/literals/types/literal_string")
-      autoload :UnionOverLiteral, File.join(__dir__, "seed/literals/types/union_over_literal")
+      autoload :LiteralString, ::File.join(__dir__, "seed/literals/types/literal_string")
+      autoload :UnionOverLiteral, ::File.join(__dir__, "seed/literals/types/union_over_literal")
     end
   end
 end

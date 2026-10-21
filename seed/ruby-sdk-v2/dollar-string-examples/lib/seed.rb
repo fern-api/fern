@@ -40,6 +40,6 @@ require_relative "seed/client"
 
 module Seed
   module Types
-    autoload :PaymentInfo, File.join(__dir__, "seed/types/payment_info")
+    autoload :PaymentInfo, ::File.join(__dir__, "seed/types/payment_info")
   end
 end

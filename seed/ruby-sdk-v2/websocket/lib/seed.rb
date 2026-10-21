@@ -42,25 +42,24 @@ require_relative "seed/status/client"
 module Seed
   module Realtime
     module Types
-      autoload :SendEvent, File.join(__dir__, "seed/realtime/types/send_event")
-      autoload :SendSnakeCase, File.join(__dir__, "seed/realtime/types/send_snake_case")
-      autoload :ReceiveEvent, File.join(__dir__, "seed/realtime/types/receive_event")
-      autoload :ReceiveSnakeCase, File.join(__dir__, "seed/realtime/types/receive_snake_case")
-      autoload :SendEvent2, File.join(__dir__, "seed/realtime/types/send_event2")
-      autoload :ReceiveEvent2, File.join(__dir__, "seed/realtime/types/receive_event2")
-      autoload :ReceiveEvent3, File.join(__dir__, "seed/realtime/types/receive_event3")
-      autoload :TranscriptEvent, File.join(__dir__, "seed/realtime/types/transcript_event")
-      autoload :FlushedEvent, File.join(__dir__, "seed/realtime/types/flushed_event")
-      autoload :ErrorEvent, File.join(__dir__, "seed/realtime/types/error_event")
+      autoload :SendEvent, ::File.join(__dir__, "seed/realtime/types/send_event")
+      autoload :SendSnakeCase, ::File.join(__dir__, "seed/realtime/types/send_snake_case")
+      autoload :ReceiveEvent, ::File.join(__dir__, "seed/realtime/types/receive_event")
+      autoload :ReceiveSnakeCase, ::File.join(__dir__, "seed/realtime/types/receive_snake_case")
+      autoload :SendEvent2, ::File.join(__dir__, "seed/realtime/types/send_event2")
+      autoload :ReceiveEvent2, ::File.join(__dir__, "seed/realtime/types/receive_event2")
+      autoload :ReceiveEvent3, ::File.join(__dir__, "seed/realtime/types/receive_event3")
+      autoload :TranscriptEvent, ::File.join(__dir__, "seed/realtime/types/transcript_event")
+      autoload :FlushedEvent, ::File.join(__dir__, "seed/realtime/types/flushed_event")
+      autoload :ErrorEvent, ::File.join(__dir__, "seed/realtime/types/error_event")
     end
   end
 end
 
-
 module Seed
   module Status
     module Types
-      autoload :StatusResponse, File.join(__dir__, "seed/status/types/status_response")
+      autoload :StatusResponse, ::File.join(__dir__, "seed/status/types/status_response")
     end
   end
 end

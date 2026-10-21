@@ -45,12 +45,12 @@ require_relative "seed/nullable/types/delete_user_request"
 module Seed
   module Nullable
     module Types
-      autoload :Email, File.join(__dir__, "seed/nullable/types/email")
-      autoload :UserID, File.join(__dir__, "seed/nullable/types/user_id")
-      autoload :WeirdNumber, File.join(__dir__, "seed/nullable/types/weird_number")
-      autoload :Status, File.join(__dir__, "seed/nullable/types/status")
-      autoload :Metadata, File.join(__dir__, "seed/nullable/types/metadata")
-      autoload :User, File.join(__dir__, "seed/nullable/types/user")
+      autoload :Email, ::File.join(__dir__, "seed/nullable/types/email")
+      autoload :UserID, ::File.join(__dir__, "seed/nullable/types/user_id")
+      autoload :WeirdNumber, ::File.join(__dir__, "seed/nullable/types/weird_number")
+      autoload :Status, ::File.join(__dir__, "seed/nullable/types/status")
+      autoload :Metadata, ::File.join(__dir__, "seed/nullable/types/metadata")
+      autoload :User, ::File.join(__dir__, "seed/nullable/types/user")
     end
   end
 end

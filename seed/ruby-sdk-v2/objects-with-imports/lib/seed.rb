@@ -42,36 +42,33 @@ module Seed
   module Commons
     module Metadata
       module Types
-        autoload :Metadata, File.join(__dir__, "seed/commons/metadata/types/metadata")
+        autoload :Metadata, ::File.join(__dir__, "seed/commons/metadata/types/metadata")
       end
     end
   end
 end
 
-
 module Seed
   module Types
-    autoload :Node, File.join(__dir__, "seed/types/node")
-    autoload :Tree, File.join(__dir__, "seed/types/tree")
+    autoload :Node, ::File.join(__dir__, "seed/types/node")
+    autoload :Tree, ::File.join(__dir__, "seed/types/tree")
   end
 end
-
 
 module Seed
   module File
     module Types
-      autoload :FileInfo, File.join(__dir__, "seed/file/types/file_info")
-      autoload :File, File.join(__dir__, "seed/file/types/file")
+      autoload :FileInfo, ::File.join(__dir__, "seed/file/types/file_info")
+      autoload :File, ::File.join(__dir__, "seed/file/types/file")
     end
   end
 end
-
 
 module Seed
   module File
     module Directory
       module Types
-        autoload :Directory, File.join(__dir__, "seed/file/directory/types/directory")
+        autoload :Directory, ::File.join(__dir__, "seed/file/directory/types/directory")
       end
     end
   end

@@ -42,17 +42,16 @@ require_relative "seed/simple/client"
 module Seed
   module Commons
     module Types
-      autoload :ErrorBody, File.join(__dir__, "seed/commons/types/error_body")
+      autoload :ErrorBody, ::File.join(__dir__, "seed/commons/types/error_body")
     end
   end
 end
 
-
 module Seed
   module Simple
     module Types
-      autoload :FooRequest, File.join(__dir__, "seed/simple/types/foo_request")
-      autoload :FooResponse, File.join(__dir__, "seed/simple/types/foo_response")
+      autoload :FooRequest, ::File.join(__dir__, "seed/simple/types/foo_request")
+      autoload :FooResponse, ::File.join(__dir__, "seed/simple/types/foo_response")
     end
   end
 end

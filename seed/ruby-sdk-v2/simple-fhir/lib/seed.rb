@@ -40,12 +40,12 @@ require_relative "seed/client"
 
 module Seed
   module Types
-    autoload :Script, File.join(__dir__, "seed/types/script")
-    autoload :Practitioner, File.join(__dir__, "seed/types/practitioner")
-    autoload :Patient, File.join(__dir__, "seed/types/patient")
-    autoload :Account, File.join(__dir__, "seed/types/account")
-    autoload :ResourceList, File.join(__dir__, "seed/types/resource_list")
-    autoload :BaseResource, File.join(__dir__, "seed/types/base_resource")
-    autoload :Memo, File.join(__dir__, "seed/types/memo")
+    autoload :Script, ::File.join(__dir__, "seed/types/script")
+    autoload :Practitioner, ::File.join(__dir__, "seed/types/practitioner")
+    autoload :Patient, ::File.join(__dir__, "seed/types/patient")
+    autoload :Account, ::File.join(__dir__, "seed/types/account")
+    autoload :ResourceList, ::File.join(__dir__, "seed/types/resource_list")
+    autoload :BaseResource, ::File.join(__dir__, "seed/types/base_resource")
+    autoload :Memo, ::File.join(__dir__, "seed/types/memo")
   end
 end

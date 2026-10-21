@@ -41,8 +41,8 @@ require_relative "seed/environment"
 
 module Seed
   module Types
-    autoload :NormalObject, File.join(__dir__, "seed/types/normal_object")
-    autoload :NullableObject, File.join(__dir__, "seed/types/nullable_object")
-    autoload :RootObject, File.join(__dir__, "seed/types/root_object")
+    autoload :NormalObject, ::File.join(__dir__, "seed/types/normal_object")
+    autoload :NullableObject, ::File.join(__dir__, "seed/types/nullable_object")
+    autoload :RootObject, ::File.join(__dir__, "seed/types/root_object")
   end
 end

@@ -41,6 +41,6 @@ require_relative "seed/types/test_get_request"
 
 module Seed
   module Types
-    autoload :TestGetResponse, File.join(__dir__, "seed/types/test_get_response")
+    autoload :TestGetResponse, ::File.join(__dir__, "seed/types/test_get_response")
   end
 end

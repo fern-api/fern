@@ -47,7 +47,7 @@ require_relative "seed/environment"
 module Seed
   module Auth
     module Types
-      autoload :AuthGetTokenResponse, File.join(__dir__, "seed/auth/types/auth_get_token_response")
+      autoload :AuthGetTokenResponse, ::File.join(__dir__, "seed/auth/types/auth_get_token_response")
     end
   end
 end

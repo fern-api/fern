@@ -51,16 +51,16 @@ require_relative "seed/service/types/get_client_request"
 module Seed
   module Types
     module Types
-      autoload :Resource, File.join(__dir__, "seed/types/types/resource")
-      autoload :SearchResponse, File.join(__dir__, "seed/types/types/search_response")
-      autoload :Identity, File.join(__dir__, "seed/types/types/identity")
-      autoload :User, File.join(__dir__, "seed/types/types/user")
-      autoload :PaginatedUserResponse, File.join(__dir__, "seed/types/types/paginated_user_response")
-      autoload :CreateUserRequest, File.join(__dir__, "seed/types/types/create_user_request")
-      autoload :UpdateUserRequest, File.join(__dir__, "seed/types/types/update_user_request")
-      autoload :Connection, File.join(__dir__, "seed/types/types/connection")
-      autoload :Client, File.join(__dir__, "seed/types/types/client")
-      autoload :PaginatedClientResponse, File.join(__dir__, "seed/types/types/paginated_client_response")
+      autoload :Resource, ::File.join(__dir__, "seed/types/types/resource")
+      autoload :SearchResponse, ::File.join(__dir__, "seed/types/types/search_response")
+      autoload :Identity, ::File.join(__dir__, "seed/types/types/identity")
+      autoload :User, ::File.join(__dir__, "seed/types/types/user")
+      autoload :PaginatedUserResponse, ::File.join(__dir__, "seed/types/types/paginated_user_response")
+      autoload :CreateUserRequest, ::File.join(__dir__, "seed/types/types/create_user_request")
+      autoload :UpdateUserRequest, ::File.join(__dir__, "seed/types/types/update_user_request")
+      autoload :Connection, ::File.join(__dir__, "seed/types/types/connection")
+      autoload :Client, ::File.join(__dir__, "seed/types/types/client")
+      autoload :PaginatedClientResponse, ::File.join(__dir__, "seed/types/types/paginated_client_response")
     end
   end
 end

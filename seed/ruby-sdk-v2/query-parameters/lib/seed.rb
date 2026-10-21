@@ -43,8 +43,8 @@ require_relative "seed/user/types/get_users_request"
 module Seed
   module User
     module Types
-      autoload :User, File.join(__dir__, "seed/user/types/user")
-      autoload :NestedUser, File.join(__dir__, "seed/user/types/nested_user")
+      autoload :User, ::File.join(__dir__, "seed/user/types/user")
+      autoload :NestedUser, ::File.join(__dir__, "seed/user/types/nested_user")
     end
   end
 end

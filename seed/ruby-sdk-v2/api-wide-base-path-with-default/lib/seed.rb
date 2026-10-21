@@ -41,6 +41,6 @@ require_relative "seed/widgets/client"
 
 module Seed
   module Types
-    autoload :Widget, File.join(__dir__, "seed/types/widget")
+    autoload :Widget, ::File.join(__dir__, "seed/types/widget")
   end
 end

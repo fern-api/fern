@@ -50,21 +50,20 @@ require_relative "seed/query_param/types/send_enum_list_as_query_param_request"
 
 module Seed
   module Types
-    autoload :Operand, File.join(__dir__, "seed/types/operand")
-    autoload :Color, File.join(__dir__, "seed/types/color")
-    autoload :ColorOrOperand, File.join(__dir__, "seed/types/color_or_operand")
-    autoload :ForwardCompatibleEnum, File.join(__dir__, "seed/types/forward_compatible_enum")
-    autoload :EnumWithSpecialCharacters, File.join(__dir__, "seed/types/enum_with_special_characters")
-    autoload :EnumWithCustom, File.join(__dir__, "seed/types/enum_with_custom")
-    autoload :SpecialEnum, File.join(__dir__, "seed/types/special_enum")
+    autoload :Operand, ::File.join(__dir__, "seed/types/operand")
+    autoload :Color, ::File.join(__dir__, "seed/types/color")
+    autoload :ColorOrOperand, ::File.join(__dir__, "seed/types/color_or_operand")
+    autoload :ForwardCompatibleEnum, ::File.join(__dir__, "seed/types/forward_compatible_enum")
+    autoload :EnumWithSpecialCharacters, ::File.join(__dir__, "seed/types/enum_with_special_characters")
+    autoload :EnumWithCustom, ::File.join(__dir__, "seed/types/enum_with_custom")
+    autoload :SpecialEnum, ::File.join(__dir__, "seed/types/special_enum")
   end
 end
-
 
 module Seed
   module Unknown
     module Types
-      autoload :Status, File.join(__dir__, "seed/unknown/types/status")
+      autoload :Status, ::File.join(__dir__, "seed/unknown/types/status")
     end
   end
 end

@@ -42,8 +42,8 @@ require_relative "seed/types/post_submit_request"
 
 module Seed
   module Types
-    autoload :PostSubmitResponse, File.join(__dir__, "seed/types/post_submit_response")
-    autoload :TokenRequest, File.join(__dir__, "seed/types/token_request")
-    autoload :TokenResponse, File.join(__dir__, "seed/types/token_response")
+    autoload :PostSubmitResponse, ::File.join(__dir__, "seed/types/post_submit_response")
+    autoload :TokenRequest, ::File.join(__dir__, "seed/types/token_request")
+    autoload :TokenResponse, ::File.join(__dir__, "seed/types/token_response")
   end
 end

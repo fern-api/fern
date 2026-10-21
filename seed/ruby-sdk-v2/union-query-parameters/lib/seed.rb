@@ -43,9 +43,9 @@ require_relative "seed/events/types/subscribe_events_request"
 module Seed
   module Events
     module Types
-      autoload :EventTypeEnum, File.join(__dir__, "seed/events/types/event_type_enum")
-      autoload :EventTypeParam, File.join(__dir__, "seed/events/types/event_type_param")
-      autoload :StringOrListParam, File.join(__dir__, "seed/events/types/string_or_list_param")
+      autoload :EventTypeEnum, ::File.join(__dir__, "seed/events/types/event_type_enum")
+      autoload :EventTypeParam, ::File.join(__dir__, "seed/events/types/event_type_param")
+      autoload :StringOrListParam, ::File.join(__dir__, "seed/events/types/string_or_list_param")
     end
   end
 end

@@ -42,6 +42,6 @@ require_relative "seed/file_upload_example/types/upload_file_request"
 
 module Seed
   module Types
-    autoload :FileID, File.join(__dir__, "seed/types/file_id")
+    autoload :FileID, ::File.join(__dir__, "seed/types/file_id")
   end
 end

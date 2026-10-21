@@ -42,8 +42,8 @@ require_relative "seed/clients/types/client_request"
 
 module Seed
   module Types
-    autoload :ClientWithID, File.join(__dir__, "seed/types/client_with_id")
-    autoload :ClientResponse, File.join(__dir__, "seed/types/client_response")
-    autoload :Client, File.join(__dir__, "seed/types/client")
+    autoload :ClientWithID, ::File.join(__dir__, "seed/types/client_with_id")
+    autoload :ClientResponse, ::File.join(__dir__, "seed/types/client_response")
+    autoload :Client, ::File.join(__dir__, "seed/types/client")
   end
 end

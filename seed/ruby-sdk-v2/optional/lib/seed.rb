@@ -42,9 +42,9 @@ require_relative "seed/optional/client"
 module Seed
   module Optional
     module Types
-      autoload :SendOptionalBodyRequest, File.join(__dir__, "seed/optional/types/send_optional_body_request")
-      autoload :DeployParams, File.join(__dir__, "seed/optional/types/deploy_params")
-      autoload :DeployResponse, File.join(__dir__, "seed/optional/types/deploy_response")
+      autoload :SendOptionalBodyRequest, ::File.join(__dir__, "seed/optional/types/send_optional_body_request")
+      autoload :DeployParams, ::File.join(__dir__, "seed/optional/types/deploy_params")
+      autoload :DeployResponse, ::File.join(__dir__, "seed/optional/types/deploy_response")
     end
   end
 end

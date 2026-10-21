@@ -43,6 +43,6 @@ require_relative "seed/contacts/types/get_contacts_request"
 
 module Seed
   module Types
-    autoload :Contact, File.join(__dir__, "seed/types/contact")
+    autoload :Contact, ::File.join(__dir__, "seed/types/contact")
   end
 end

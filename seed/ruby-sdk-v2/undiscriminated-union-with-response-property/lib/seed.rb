@@ -40,11 +40,11 @@ require_relative "seed/client"
 
 module Seed
   module Types
-    autoload :VariantA, File.join(__dir__, "seed/types/variant_a")
-    autoload :VariantB, File.join(__dir__, "seed/types/variant_b")
-    autoload :VariantC, File.join(__dir__, "seed/types/variant_c")
-    autoload :MyUnion, File.join(__dir__, "seed/types/my_union")
-    autoload :UnionResponse, File.join(__dir__, "seed/types/union_response")
-    autoload :UnionListResponse, File.join(__dir__, "seed/types/union_list_response")
+    autoload :VariantA, ::File.join(__dir__, "seed/types/variant_a")
+    autoload :VariantB, ::File.join(__dir__, "seed/types/variant_b")
+    autoload :VariantC, ::File.join(__dir__, "seed/types/variant_c")
+    autoload :MyUnion, ::File.join(__dir__, "seed/types/my_union")
+    autoload :UnionResponse, ::File.join(__dir__, "seed/types/union_response")
+    autoload :UnionListResponse, ::File.join(__dir__, "seed/types/union_list_response")
   end
 end

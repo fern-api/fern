@@ -41,6 +41,6 @@ require_relative "seed/service/client"
 
 module Seed
   module Types
-    autoload :EchoRequest, File.join(__dir__, "seed/types/echo_request")
+    autoload :EchoRequest, ::File.join(__dir__, "seed/types/echo_request")
   end
 end

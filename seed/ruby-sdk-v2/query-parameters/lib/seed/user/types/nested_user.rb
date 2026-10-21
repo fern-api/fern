@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "../../../seed"
+require_relative "../.."
 
 module Seed
   module User

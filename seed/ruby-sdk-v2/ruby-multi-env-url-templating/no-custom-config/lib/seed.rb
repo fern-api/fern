@@ -44,16 +44,15 @@ require_relative "seed/environment"
 module Seed
   module Auth
     module Types
-      autoload :GetTokenResponse, File.join(__dir__, "seed/auth/types/get_token_response")
+      autoload :GetTokenResponse, ::File.join(__dir__, "seed/auth/types/get_token_response")
     end
   end
 end
 
-
 module Seed
   module Core
     module Types
-      autoload :ListThingsResponse, File.join(__dir__, "seed/core/types/list_things_response")
+      autoload :ListThingsResponse, ::File.join(__dir__, "seed/core/types/list_things_response")
     end
   end
 end

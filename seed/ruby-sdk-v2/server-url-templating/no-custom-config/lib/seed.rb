@@ -43,7 +43,7 @@ require_relative "seed/environment"
 
 module Seed
   module Types
-    autoload :User, File.join(__dir__, "seed/types/user")
-    autoload :TokenResponse, File.join(__dir__, "seed/types/token_response")
+    autoload :User, ::File.join(__dir__, "seed/types/user")
+    autoload :TokenResponse, ::File.join(__dir__, "seed/types/token_response")
   end
 end

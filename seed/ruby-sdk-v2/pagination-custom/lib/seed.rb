@@ -43,7 +43,7 @@ require_relative "seed/users/types/list_with_custom_pager_request"
 
 module Seed
   module Types
-    autoload :Link, File.join(__dir__, "seed/types/link")
-    autoload :UsersListResponse, File.join(__dir__, "seed/types/users_list_response")
+    autoload :Link, ::File.join(__dir__, "seed/types/link")
+    autoload :UsersListResponse, ::File.join(__dir__, "seed/types/users_list_response")
   end
 end

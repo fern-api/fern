@@ -48,9 +48,9 @@ require_relative "seed/internal/inferred_auth_provider"
 module Seed
   module Auth
     module Types
-      autoload :GetTokenRequest, File.join(__dir__, "seed/auth/types/get_token_request")
-      autoload :RefreshTokenRequest, File.join(__dir__, "seed/auth/types/refresh_token_request")
-      autoload :TokenResponse, File.join(__dir__, "seed/auth/types/token_response")
+      autoload :GetTokenRequest, ::File.join(__dir__, "seed/auth/types/get_token_request")
+      autoload :RefreshTokenRequest, ::File.join(__dir__, "seed/auth/types/refresh_token_request")
+      autoload :TokenResponse, ::File.join(__dir__, "seed/auth/types/token_response")
     end
   end
 end

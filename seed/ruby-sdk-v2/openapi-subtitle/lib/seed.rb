@@ -41,6 +41,6 @@ require_relative "seed/types/get_plant_request"
 
 module Seed
   module Types
-    autoload :Plant, File.join(__dir__, "seed/types/plant")
+    autoload :Plant, ::File.join(__dir__, "seed/types/plant")
   end
 end

@@ -44,8 +44,8 @@ require_relative "seed/environment"
 
 module Seed
   module Types
-    autoload :Item, File.join(__dir__, "seed/types/item")
-    autoload :ItemNotFound, File.join(__dir__, "seed/types/item_not_found")
-    autoload :APIError, File.join(__dir__, "seed/types/api_error")
+    autoload :Item, ::File.join(__dir__, "seed/types/item")
+    autoload :ItemNotFound, ::File.join(__dir__, "seed/types/item_not_found")
+    autoload :APIError, ::File.join(__dir__, "seed/types/api_error")
   end
 end

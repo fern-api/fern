@@ -45,10 +45,10 @@ require_relative "seed/user/types/get_users_request"
 module Seed
   module User
     module Types
-      autoload :User, File.join(__dir__, "seed/user/types/user")
-      autoload :NestedUser, File.join(__dir__, "seed/user/types/nested_user")
-      autoload :CreateUsernameBody, File.join(__dir__, "seed/user/types/create_username_body")
-      autoload :CreateUsernameBodyOptionalProperties, File.join(__dir__, "seed/user/types/create_username_body_optional_properties")
+      autoload :User, ::File.join(__dir__, "seed/user/types/user")
+      autoload :NestedUser, ::File.join(__dir__, "seed/user/types/nested_user")
+      autoload :CreateUsernameBody, ::File.join(__dir__, "seed/user/types/create_username_body")
+      autoload :CreateUsernameBodyOptionalProperties, ::File.join(__dir__, "seed/user/types/create_username_body_optional_properties")
     end
   end
 end

@@ -44,18 +44,18 @@ require_relative "seed/client"
 
 module Seed
   module Types
-    autoload :BreakStrength, File.join(__dir__, "seed/types/break_strength")
-    autoload :Break, File.join(__dir__, "seed/types/break_")
-    autoload :Say, File.join(__dir__, "seed/types/say")
-    autoload :DialRecordItem, File.join(__dir__, "seed/types/dial_record_item")
-    autoload :Number, File.join(__dir__, "seed/types/number")
-    autoload :Dial, File.join(__dir__, "seed/types/dial")
-    autoload :Pause, File.join(__dir__, "seed/types/pause")
-    autoload :Hangup, File.join(__dir__, "seed/types/hangup")
-    autoload :Redirect, File.join(__dir__, "seed/types/redirect")
-    autoload :ResponseChildrenItem, File.join(__dir__, "seed/types/response_children_item")
-    autoload :Response, File.join(__dir__, "seed/types/response")
-    autoload :Wide, File.join(__dir__, "seed/types/wide")
-    autoload :PlainObject, File.join(__dir__, "seed/types/plain_object")
+    autoload :BreakStrength, ::File.join(__dir__, "seed/types/break_strength")
+    autoload :Break, ::File.join(__dir__, "seed/types/break_")
+    autoload :Say, ::File.join(__dir__, "seed/types/say")
+    autoload :DialRecordItem, ::File.join(__dir__, "seed/types/dial_record_item")
+    autoload :Number, ::File.join(__dir__, "seed/types/number")
+    autoload :Dial, ::File.join(__dir__, "seed/types/dial")
+    autoload :Pause, ::File.join(__dir__, "seed/types/pause")
+    autoload :Hangup, ::File.join(__dir__, "seed/types/hangup")
+    autoload :Redirect, ::File.join(__dir__, "seed/types/redirect")
+    autoload :ResponseChildrenItem, ::File.join(__dir__, "seed/types/response_children_item")
+    autoload :Response, ::File.join(__dir__, "seed/types/response")
+    autoload :Wide, ::File.join(__dir__, "seed/types/wide")
+    autoload :PlainObject, ::File.join(__dir__, "seed/types/plain_object")
   end
 end
