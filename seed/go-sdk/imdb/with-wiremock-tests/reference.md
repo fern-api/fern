@@ -31,9 +31,10 @@ request := &testPackageName.CreateMovieRequest{
     Title: "title",
     Rating: 1.1,
 }
-client.Imdb.CreateMovie(
-    context.TODO(),
-    request,
+client := client.NewIMDBClient(
+    option.WithToken(
+        "<token>",
+    ),
 )
 ```
 </dd>
@@ -85,9 +86,10 @@ client.Imdb.CreateMovie(
 request := &testPackageName.GetMovieImdbRequest{
     MovieID: "movieId",
 }
-client.Imdb.GetMovie(
-    context.TODO(),
-    request,
+client := client.NewIMDBClient(
+    option.WithToken(
+        "<token>",
+    ),
 )
 ```
 </dd>

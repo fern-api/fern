@@ -42,9 +42,10 @@ func NewClient(options *core.RequestOptions) *Client {
 //	    Title: "title",
 //	    Rating: 1.1,
 //	}
-//	client.Imdb.CreateMovie(
-//	    context.TODO(),
-//	    request,
+//	client := client.NewIMDBClient(
+//	    option.WithToken(
+//	        "<token>",
+//	    ),
 //	)
 func (c *Client) CreateMovie(
 	ctx context.Context,
@@ -67,9 +68,10 @@ func (c *Client) CreateMovie(
 //	request := &testPackageName.GetMovieImdbRequest{
 //	    MovieID: "movieId",
 //	}
-//	client.Imdb.GetMovie(
-//	    context.TODO(),
-//	    request,
+//	client := client.NewIMDBClient(
+//	    option.WithToken(
+//	        "<token>",
+//	    ),
 //	)
 func (c *Client) GetMovie(
 	ctx context.Context,
