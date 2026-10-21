@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "../.."
+require_relative "../../../seed"
 
 module Seed
   module Token
