@@ -44,7 +44,8 @@ internal static class XmlUtils
         bool indent = false
     )
     {
-        var xml = WithoutInvalidXmlChars(element).ToString(indent ? SaveOptions.None : SaveOptions.DisableFormatting);
+        var xml = WithoutInvalidXmlChars(element)
+            .ToString(indent ? SaveOptions.None : SaveOptions.DisableFormatting);
         var siblings = element.Annotation<SiblingComments>();
         if (siblings != null)
         {
