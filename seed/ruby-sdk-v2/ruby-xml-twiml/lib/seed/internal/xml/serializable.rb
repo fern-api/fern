@@ -368,7 +368,7 @@ module Seed
 
         # @param xml_declaration [Boolean] whether to prepend the declaration (`to_s(false)` omits it)
         # @return [String] the XML document
-        def to_s(xml_declaration = true)
+        def to_s(xml_declaration = true) # rubocop:disable Style/OptionalBooleanParameter
           to_xml(xml_declaration: xml_declaration)
         end
 
