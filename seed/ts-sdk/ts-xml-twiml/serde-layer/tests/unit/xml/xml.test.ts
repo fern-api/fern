@@ -42,7 +42,7 @@ describe("serializeXmlElement", () => {
             additionalChildren: [new XmlElement({ name: "Extra", attributes: { k: "v" } })],
         });
         expect(xml).toBe(
-            '<Say voice="Polly.Joanna" loop="2" events="a b" tags="c,d">Hello &lt;world&gt; &amp; &quot;friends&quot;<Tag>x</Tag><Tag>y</Tag><Extra k="v" /></Say>',
+            '<Say voice="Polly.Joanna" loop="2" events="a b" tags="c,d">Hello &lt;world&gt; &amp; "friends"<Tag>x</Tag><Tag>y</Tag><Extra k="v" /></Say>',
         );
     });
 

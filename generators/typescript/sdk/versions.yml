@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.107.4
+  changelogEntry:
+    - summary: |
+        XML (TwiML) child builder methods accept the element's text content as a string, so legacy-style calls
+        such as `response.dial("+15551234567")` and `response.say("hi")` produce `<Dial>+15551234567</Dial>`
+        instead of an empty element. Element text no longer escapes double quotes as `&quot;` (attributes still do),
+        matching the legacy TwiML output.
+      type: fix
+  createdAt: "2026-10-21"
+  irVersion: 67
 - version: 3.107.3
   changelogEntry:
     - summary: |
