@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.170.4
+  changelogEntry:
+    - summary: |
+        `fern sdk migrate` carries a Fern Python generator's `stream_abstraction` setting over to the target's
+        `generation.streamAbstraction` instead of reporting it as unsupported and dropping it. Bumps
+        `@postman/sdk-config` to 0.15.0.
+      type: fix
+  createdAt: "2026-10-21"
+  irVersion: 67
 - version: 5.170.3
   changelogEntry:
     - summary: |
