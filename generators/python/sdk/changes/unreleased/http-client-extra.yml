@@ -5,4 +5,4 @@
     declared as an optional dependency exposed under that extra (`pip install <pkg>[client]`), so a
     plain install of a package used for its models only (e.g. TwiML) does not pull in the HTTP stack.
     Off by default; existing SDKs are unchanged.
-  type: feat
+  type: fix
