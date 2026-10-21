@@ -79,6 +79,7 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     ignoreTags: undefined,
     respectParameterContent: undefined,
     respectPerSpecBasePath: undefined,
+    respectPerSpecBasePathV3: undefined,
     respectOperationIdWordBoundaries: undefined,
     namespacedErrors: undefined,
     errorResponses: undefined
@@ -202,6 +203,7 @@ export function parseOpenApiDefinitionSettingsSchema(
         ignoreTags: settings?.["ignore-tags"],
         respectParameterContent: settings?.["respect-parameter-content"],
         respectPerSpecBasePath: settings?.["respect-per-spec-base-path"],
+        respectPerSpecBasePathV3: settings?.["respect-per-spec-base-path-v3"],
         respectOperationIdWordBoundaries: settings?.["respect-operation-id-word-boundaries"],
         namespacedErrors: settings?.["namespaced-errors"],
         errorResponses: settings?.["error-responses"]

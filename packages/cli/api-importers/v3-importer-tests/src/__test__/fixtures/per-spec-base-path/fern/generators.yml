@@ -3,7 +3,9 @@ api:
     - openapi: ../plants.yml
       settings:
         respect-per-spec-base-path: true
+        respect-per-spec-base-path-v3: true
     - openapi: ../auth.yml
       namespace: auth
       settings:
         respect-per-spec-base-path: true
+        respect-per-spec-base-path-v3: true

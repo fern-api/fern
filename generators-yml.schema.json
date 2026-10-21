@@ -3027,6 +3027,20 @@
           ],
           "description": "If true, apply each OpenAPI document's plain `x-fern-base-path` to that document's endpoints.\nDefaults to false."
         },
+        "respect-per-spec-base-path-v3": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If true (and `respect-per-spec-base-path` is also true), the v3 OpenAPI parser, which builds the docs
+API Reference, applies each OpenAPI document's plain `x-fern-base-path` to that document's endpoints
+so it is kept when multiple specs are merged.
+Defaults to false."
+        },
         "respect-operation-id-word-boundaries": {
           "oneOf": [
             {
@@ -3774,6 +3788,20 @@
             }
           ],
           "description": "If true, apply each OpenAPI document's plain `x-fern-base-path` to that document's endpoints.\nDefaults to false."
+        },
+        "respect-per-spec-base-path-v3": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If true (and `respect-per-spec-base-path` is also true), the v3 OpenAPI parser, which builds the docs
+API Reference, applies each OpenAPI document's plain `x-fern-base-path` to that document's endpoints
+so it is kept when multiple specs are merged.
+Defaults to false."
         },
         "respect-operation-id-word-boundaries": {
           "oneOf": [

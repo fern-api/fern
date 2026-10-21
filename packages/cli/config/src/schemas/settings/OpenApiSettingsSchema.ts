@@ -146,6 +146,14 @@ export const OpenApiSettingsSchema = BaseApiSettingsSchema.extend({
     "respect-per-spec-base-path": z.boolean().optional(),
 
     /**
+     * If true (and `respect-per-spec-base-path` is also true), the v3 OpenAPI parser, which builds the docs
+     * API Reference, applies each OpenAPI document's plain `x-fern-base-path` to that document's endpoints
+     * so it is kept when multiple specs are merged.
+     * Defaults to false.
+     */
+    "respect-per-spec-base-path-v3": z.boolean().optional(),
+
+    /**
      * If true, operation ids are split on every word boundary (camelCase transitions and digits)
      * when deriving endpoint names, so a redundant tag prefix is stripped and the remaining words
      * are preserved (e.g. tag `sharing` + operation id `Sharing_ListFolderMembers` yields

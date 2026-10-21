@@ -211,6 +211,7 @@ export class LegacyApiSpecAdapter {
             ignoreTags: settings["ignore-tags"],
             respectParameterContent: settings["respect-parameter-content"],
             respectPerSpecBasePath: settings["respect-per-spec-base-path"],
+            respectPerSpecBasePathV3: settings["respect-per-spec-base-path-v3"],
             respectOperationIdWordBoundaries: settings["respect-operation-id-word-boundaries"],
             namespacedErrors: settings["namespaced-errors"],
             errorResponses: this.adaptErrorResponses(settings.errorResponses)
