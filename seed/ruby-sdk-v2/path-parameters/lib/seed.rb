@@ -53,9 +53,7 @@ module Seed
       autoload :Organization, ::File.join(__dir__, "seed/organizations/types/organization")
     end
   end
-end
 
-module Seed
   module User
     module Types
       autoload :User, ::File.join(__dir__, "seed/user/types/user")

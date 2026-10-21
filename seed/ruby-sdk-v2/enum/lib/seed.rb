@@ -58,9 +58,7 @@ module Seed
     autoload :EnumWithCustom, ::File.join(__dir__, "seed/types/enum_with_custom")
     autoload :SpecialEnum, ::File.join(__dir__, "seed/types/special_enum")
   end
-end
 
-module Seed
   module Unknown
     module Types
       autoload :Status, ::File.join(__dir__, "seed/unknown/types/status")

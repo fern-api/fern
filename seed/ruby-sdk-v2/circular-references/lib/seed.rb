@@ -43,17 +43,13 @@ module Seed
     autoload :RootType, ::File.join(__dir__, "seed/types/root_type")
     autoload :ImportingA, ::File.join(__dir__, "seed/types/importing_a")
   end
-end
 
-module Seed
   module A
     module Types
       autoload :A, ::File.join(__dir__, "seed/a/types/a")
     end
   end
-end
 
-module Seed
   module Ast
     module Types
       autoload :U, ::File.join(__dir__, "seed/ast/types/u")

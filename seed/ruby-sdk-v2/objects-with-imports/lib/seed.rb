@@ -46,26 +46,18 @@ module Seed
       end
     end
   end
-end
 
-module Seed
   module Types
     autoload :Node, ::File.join(__dir__, "seed/types/node")
     autoload :Tree, ::File.join(__dir__, "seed/types/tree")
   end
-end
 
-module Seed
   module File
     module Types
       autoload :FileInfo, ::File.join(__dir__, "seed/file/types/file_info")
       autoload :File, ::File.join(__dir__, "seed/file/types/file")
     end
-  end
-end
 
-module Seed
-  module File
     module Directory
       module Types
         autoload :Directory, ::File.join(__dir__, "seed/file/directory/types/directory")

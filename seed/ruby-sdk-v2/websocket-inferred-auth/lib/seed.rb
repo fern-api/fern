@@ -48,9 +48,7 @@ module Seed
       autoload :TokenResponse, ::File.join(__dir__, "seed/auth/types/token_response")
     end
   end
-end
 
-module Seed
   module Realtime
     module Types
       autoload :SendEvent, ::File.join(__dir__, "seed/realtime/types/send_event")

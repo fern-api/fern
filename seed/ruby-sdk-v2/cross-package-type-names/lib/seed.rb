@@ -50,9 +50,7 @@ module Seed
       autoload :Imported, ::File.join(__dir__, "seed/commons/types/imported")
     end
   end
-end
 
-module Seed
   module FolderC
     module Common
       module Types
@@ -60,9 +58,7 @@ module Seed
       end
     end
   end
-end
 
-module Seed
   module FolderB
     module Common
       module Types
@@ -70,9 +66,7 @@ module Seed
       end
     end
   end
-end
 
-module Seed
   module FolderA
     module Service
       module Types
@@ -80,9 +74,7 @@ module Seed
       end
     end
   end
-end
 
-module Seed
   module FolderD
     module Service
       module Types
@@ -90,9 +82,7 @@ module Seed
       end
     end
   end
-end
 
-module Seed
   module Foo
     module Types
       autoload :ImportingType, ::File.join(__dir__, "seed/foo/types/importing_type")

@@ -886,21 +886,52 @@ end`;
     }
 
     private renderAutoloads(autoloads: Map<string, string[]>): string {
-        const blocks: string[] = [];
+        const root: AutoloadModule = { children: new Map(), entries: [] };
         for (const [key, entries] of autoloads) {
-            const modules = key.split("::");
-            let block = "";
-            block += modules.map((moduleName, depth) => `${"  ".repeat(depth)}module ${moduleName}\n`).join("");
-            block += entries.map((entry) => `${"  ".repeat(modules.length)}${entry}\n`).join("");
-            block += modules.map((_, depth) => `${"  ".repeat(modules.length - 1 - depth)}end\n`).join("");
-            blocks.push(block.replace(/\n$/, ""));
+            let node = root;
+            for (const moduleName of key.split("::")) {
+                let child = node.children.get(moduleName);
+                if (child == null) {
+                    child = { children: new Map(), entries: [] };
+                    node.children.set(moduleName, child);
+                }
+                node = child;
+            }
+            node.entries.push(...entries);
+        }
+        const blocks: string[] = [];
+        for (const [moduleName, node] of root.children) {
+            blocks.push(this.renderAutoloadModule(moduleName, node, 0).join("\n"));
         }
         return blocks.length === 0 ? "" : `\n\n${blocks.join("\n\n")}`;
+    }
+
+    private renderAutoloadModule(moduleName: string, node: AutoloadModule, depth: number): string[] {
+        const indent = "  ".repeat(depth);
+        const lines = [`${indent}module ${moduleName}`];
+        for (const entry of node.entries) {
+            lines.push(`${indent}  ${entry}`);
+        }
+        let first = node.entries.length === 0;
+        for (const [childName, child] of node.children) {
+            if (!first) {
+                lines.push("");
+            }
+            first = false;
+            lines.push(...this.renderAutoloadModule(childName, child, depth + 1));
+        }
+        lines.push(`${indent}end`);
+        return lines;
     }
 
     public async writeFile(): Promise<void> {
         await writeFile(join(this.filePath, RelativeFilePath.of(this.fileName)), this.toString());
     }
+}
+
+interface AutoloadModule {
+    children: Map<string, AutoloadModule>;
+    entries: string[];
 }
 
 function dependsOn(a: FernIr.TypeDeclaration, b: FernIr.TypeDeclaration): boolean {

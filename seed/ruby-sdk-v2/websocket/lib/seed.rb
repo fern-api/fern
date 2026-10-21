@@ -54,9 +54,7 @@ module Seed
       autoload :ErrorEvent, ::File.join(__dir__, "seed/realtime/types/error_event")
     end
   end
-end
 
-module Seed
   module Status
     module Types
       autoload :StatusResponse, ::File.join(__dir__, "seed/status/types/status_response")

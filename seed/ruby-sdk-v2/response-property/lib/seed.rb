@@ -45,9 +45,7 @@ module Seed
     autoload :OptionalStringResponse, ::File.join(__dir__, "seed/types/optional_string_response")
     autoload :WithMetadata, ::File.join(__dir__, "seed/types/with_metadata")
   end
-end
 
-module Seed
   module Service
     module Types
       autoload :WithDocs, ::File.join(__dir__, "seed/service/types/with_docs")

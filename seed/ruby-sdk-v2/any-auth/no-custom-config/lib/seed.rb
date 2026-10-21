@@ -50,9 +50,7 @@ module Seed
       autoload :TokenResponse, ::File.join(__dir__, "seed/auth/types/token_response")
     end
   end
-end
 
-module Seed
   module User
     module Types
       autoload :User, ::File.join(__dir__, "seed/user/types/user")

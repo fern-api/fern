@@ -45,9 +45,7 @@ module Seed
       autoload :NoAuthReceiveEvent, ::File.join(__dir__, "seed/realtime_no_auth/types/no_auth_receive_event")
     end
   end
-end
 
-module Seed
   module Realtime
     module Types
       autoload :SendEvent, ::File.join(__dir__, "seed/realtime/types/send_event")

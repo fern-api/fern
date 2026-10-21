@@ -90,21 +90,36 @@ module Seed
         autoload :ObjectWithRequiredExtendedField, ::File.join(__dir__, "seed/types/object/types/object_with_required_extended_field")
       end
     end
-  end
-end
 
-module Seed
+    module Docs
+      module Types
+        autoload :ObjectWithDocs, ::File.join(__dir__, "seed/types/docs/types/object_with_docs")
+      end
+    end
+
+    module Enum
+      module Types
+        autoload :WeatherReport, ::File.join(__dir__, "seed/types/enum/types/weather_report")
+      end
+    end
+
+    module Union
+      module Types
+        autoload :Dog, ::File.join(__dir__, "seed/types/union/types/dog")
+        autoload :Cat, ::File.join(__dir__, "seed/types/union/types/cat")
+        autoload :Animal, ::File.join(__dir__, "seed/types/union/types/animal")
+        autoload :MixedType, ::File.join(__dir__, "seed/types/union/types/mixed_type")
+      end
+    end
+  end
+
   module Endpoints
     module Pagination
       module Types
         autoload :PaginatedResponse, ::File.join(__dir__, "seed/endpoints/pagination/types/paginated_response")
       end
     end
-  end
-end
 
-module Seed
-  module Endpoints
     module Put
       module Types
         autoload :ErrorCategory, ::File.join(__dir__, "seed/endpoints/put/types/error_category")
@@ -114,45 +129,10 @@ module Seed
       end
     end
   end
-end
 
-module Seed
   module GeneralErrors
     module Types
       autoload :BadObjectRequestInfo, ::File.join(__dir__, "seed/general_errors/types/bad_object_request_info")
-    end
-  end
-end
-
-module Seed
-  module Types
-    module Docs
-      module Types
-        autoload :ObjectWithDocs, ::File.join(__dir__, "seed/types/docs/types/object_with_docs")
-      end
-    end
-  end
-end
-
-module Seed
-  module Types
-    module Enum
-      module Types
-        autoload :WeatherReport, ::File.join(__dir__, "seed/types/enum/types/weather_report")
-      end
-    end
-  end
-end
-
-module Seed
-  module Types
-    module Union
-      module Types
-        autoload :Dog, ::File.join(__dir__, "seed/types/union/types/dog")
-        autoload :Cat, ::File.join(__dir__, "seed/types/union/types/cat")
-        autoload :Animal, ::File.join(__dir__, "seed/types/union/types/animal")
-        autoload :MixedType, ::File.join(__dir__, "seed/types/union/types/mixed_type")
-      end
     end
   end
 end

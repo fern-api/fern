@@ -55,34 +55,7 @@ module Seed
     autoload :Type, ::File.join(__dir__, "seed/types/type")
     autoload :Identifier, ::File.join(__dir__, "seed/types/identifier")
     autoload :TypeWithSingleCharPropertyEqualToTypeStartingLetter, ::File.join(__dir__, "seed/types/type_with_single_char_property_equal_to_type_starting_letter")
-  end
-end
 
-module Seed
-  module Commons
-    module Types
-      module Types
-        autoload :Tag, ::File.join(__dir__, "seed/commons/types/types/tag")
-        autoload :Metadata, ::File.join(__dir__, "seed/commons/types/types/metadata")
-        autoload :EventInfo, ::File.join(__dir__, "seed/commons/types/types/event_info")
-        autoload :Data, ::File.join(__dir__, "seed/commons/types/types/data")
-      end
-    end
-  end
-end
-
-module Seed
-  module File
-    module Service
-      module Types
-        autoload :Filename, ::File.join(__dir__, "seed/file/service/types/filename")
-      end
-    end
-  end
-end
-
-module Seed
-  module Types
     module Types
       autoload :MovieID, ::File.join(__dir__, "seed/types/types/movie_id")
       autoload :Movie, ::File.join(__dir__, "seed/types/types/movie")
@@ -109,6 +82,25 @@ module Seed
       autoload :BigEntity, ::File.join(__dir__, "seed/types/types/big_entity")
       autoload :CronJob, ::File.join(__dir__, "seed/types/types/cron_job")
       autoload :RefreshTokenRequest, ::File.join(__dir__, "seed/types/types/refresh_token_request")
+    end
+  end
+
+  module Commons
+    module Types
+      module Types
+        autoload :Tag, ::File.join(__dir__, "seed/commons/types/types/tag")
+        autoload :Metadata, ::File.join(__dir__, "seed/commons/types/types/metadata")
+        autoload :EventInfo, ::File.join(__dir__, "seed/commons/types/types/event_info")
+        autoload :Data, ::File.join(__dir__, "seed/commons/types/types/data")
+      end
+    end
+  end
+
+  module File
+    module Service
+      module Types
+        autoload :Filename, ::File.join(__dir__, "seed/file/service/types/filename")
+      end
     end
   end
 end

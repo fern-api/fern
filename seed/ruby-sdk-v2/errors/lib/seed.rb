@@ -45,9 +45,7 @@ module Seed
       autoload :ErrorBody, ::File.join(__dir__, "seed/commons/types/error_body")
     end
   end
-end
 
-module Seed
   module Simple
     module Types
       autoload :FooRequest, ::File.join(__dir__, "seed/simple/types/foo_request")

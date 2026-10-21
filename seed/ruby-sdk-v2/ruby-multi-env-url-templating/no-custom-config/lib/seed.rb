@@ -47,9 +47,7 @@ module Seed
       autoload :GetTokenResponse, ::File.join(__dir__, "seed/auth/types/get_token_response")
     end
   end
-end
 
-module Seed
   module Core
     module Types
       autoload :ListThingsResponse, ::File.join(__dir__, "seed/core/types/list_things_response")

@@ -76,9 +76,7 @@ module Seed
       autoload :BigUnion, ::File.join(__dir__, "seed/bigunion/types/big_union")
     end
   end
-end
 
-module Seed
   module Types
     module Types
       autoload :Foo, ::File.join(__dir__, "seed/types/types/foo")
@@ -102,9 +100,7 @@ module Seed
       autoload :UnionWithSameNumberTypes, ::File.join(__dir__, "seed/types/types/union_with_same_number_types")
     end
   end
-end
 
-module Seed
   module Union
     module Types
       autoload :GetShapeRequest, ::File.join(__dir__, "seed/union/types/get_shape_request")

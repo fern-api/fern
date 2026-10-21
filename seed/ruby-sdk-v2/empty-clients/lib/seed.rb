@@ -48,11 +48,7 @@ module Seed
         end
       end
     end
-  end
-end
 
-module Seed
-  module Level1
     module Types
       module Types
         autoload :Address, ::File.join(__dir__, "seed/level1/types/types/address")

@@ -62,9 +62,7 @@ module Seed
       autoload :Test, ::File.join(__dir__, "seed/admin/types/test")
     end
   end
-end
 
-module Seed
   module Commons
     module Types
       autoload :UserID, ::File.join(__dir__, "seed/commons/types/user_id")
@@ -95,27 +93,21 @@ module Seed
       autoload :Language, ::File.join(__dir__, "seed/commons/types/language")
     end
   end
-end
 
-module Seed
   module LangServer
     module Types
       autoload :LangServerRequest, ::File.join(__dir__, "seed/lang_server/types/lang_server_request")
       autoload :LangServerResponse, ::File.join(__dir__, "seed/lang_server/types/lang_server_response")
     end
   end
-end
 
-module Seed
   module Migration
     module Types
       autoload :MigrationStatus, ::File.join(__dir__, "seed/migration/types/migration_status")
       autoload :Migration, ::File.join(__dir__, "seed/migration/types/migration")
     end
   end
-end
 
-module Seed
   module Playlist
     module Types
       autoload :PlaylistID, ::File.join(__dir__, "seed/playlist/types/playlist_id")
@@ -126,9 +118,7 @@ module Seed
       autoload :ReservedKeywordEnum, ::File.join(__dir__, "seed/playlist/types/reserved_keyword_enum")
     end
   end
-end
 
-module Seed
   module Problem
     module Types
       autoload :ProblemDescriptionBoard, ::File.join(__dir__, "seed/problem/types/problem_description_board")
@@ -144,9 +134,7 @@ module Seed
       autoload :GetDefaultStarterFilesResponse, ::File.join(__dir__, "seed/problem/types/get_default_starter_files_response")
     end
   end
-end
 
-module Seed
   module Submission
     module Types
       autoload :SubmissionID, ::File.join(__dir__, "seed/submission/types/submission_id")
@@ -231,9 +219,7 @@ module Seed
       autoload :GetSubmissionStateResponse, ::File.join(__dir__, "seed/submission/types/get_submission_state_response")
     end
   end
-end
 
-module Seed
   module V2
     module Problem
       module Types
@@ -280,11 +266,7 @@ module Seed
         autoload :GetGeneratedTestCaseTemplateFileRequest, ::File.join(__dir__, "seed/v2/problem/types/get_generated_test_case_template_file_request")
       end
     end
-  end
-end
 
-module Seed
-  module V2
     module V3
       module Problem
         module Types

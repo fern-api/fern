@@ -50,9 +50,7 @@ module Seed
   module Types
     autoload :SendResponse, ::File.join(__dir__, "seed/types/send_response")
   end
-end
 
-module Seed
   module Inlined
     module Types
       autoload :SomeAliasedLiteral, ::File.join(__dir__, "seed/inlined/types/some_aliased_literal")
@@ -62,18 +60,14 @@ module Seed
       autoload :UndiscriminatedLiteral, ::File.join(__dir__, "seed/inlined/types/undiscriminated_literal")
     end
   end
-end
 
-module Seed
   module Query
     module Types
       autoload :AliasToPrompt, ::File.join(__dir__, "seed/query/types/alias_to_prompt")
       autoload :AliasToStream, ::File.join(__dir__, "seed/query/types/alias_to_stream")
     end
   end
-end
 
-module Seed
   module Reference
     module Types
       autoload :NestedObjectWithLiterals, ::File.join(__dir__, "seed/reference/types/nested_object_with_literals")

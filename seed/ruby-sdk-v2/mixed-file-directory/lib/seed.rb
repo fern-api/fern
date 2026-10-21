@@ -49,43 +49,29 @@ module Seed
   module Types
     autoload :ID, ::File.join(__dir__, "seed/types/id")
   end
-end
 
-module Seed
   module User
     module Types
       autoload :User, ::File.join(__dir__, "seed/user/types/user")
     end
-  end
-end
 
-module Seed
-  module Organization
-    module Types
-      autoload :Organization, ::File.join(__dir__, "seed/organization/types/organization")
-      autoload :CreateOrganizationRequest, ::File.join(__dir__, "seed/organization/types/create_organization_request")
-    end
-  end
-end
-
-module Seed
-  module User
     module Events
       module Types
         autoload :Event, ::File.join(__dir__, "seed/user/events/types/event")
       end
-    end
-  end
-end
 
-module Seed
-  module User
-    module Events
       module Metadata
         module Types
           autoload :Metadata, ::File.join(__dir__, "seed/user/events/metadata/types/metadata")
         end
       end
+    end
+  end
+
+  module Organization
+    module Types
+      autoload :Organization, ::File.join(__dir__, "seed/organization/types/organization")
+      autoload :CreateOrganizationRequest, ::File.join(__dir__, "seed/organization/types/create_organization_request")
     end
   end
 end

@@ -75,9 +75,7 @@ module Seed
     autoload :UsernamePage, ::File.join(__dir__, "seed/types/username_page")
     autoload :UsernameCursor, ::File.join(__dir__, "seed/types/username_cursor")
   end
-end
 
-module Seed
   module Complex
     module Types
       autoload :MultipleFilterSearchRequestOperator, ::File.join(__dir__, "seed/complex/types/multiple_filter_search_request_operator")
@@ -93,9 +91,7 @@ module Seed
       autoload :PaginatedConversationResponse, ::File.join(__dir__, "seed/complex/types/paginated_conversation_response")
     end
   end
-end
 
-module Seed
   module InlineUsers
     module InlineUsers
       module Types
@@ -118,9 +114,7 @@ module Seed
       end
     end
   end
-end
 
-module Seed
   module Users
     module Types
       autoload :Order, ::File.join(__dir__, "seed/users/types/order")

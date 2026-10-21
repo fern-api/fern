@@ -48,9 +48,7 @@ module Seed
       autoload :SearchProductsResponse, ::File.join(__dir__, "seed/products/types/search_products_response")
     end
   end
-end
 
-module Seed
   module Types
     autoload :Product, ::File.join(__dir__, "seed/types/product")
   end

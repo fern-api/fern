@@ -48,9 +48,7 @@ module Seed
       autoload :OutboundCallConversationsResponse, ::File.join(__dir__, "seed/conversations/types/outbound_call_conversations_response")
     end
   end
-end
 
-module Seed
   module Types
     autoload :User, ::File.join(__dir__, "seed/types/user")
   end
