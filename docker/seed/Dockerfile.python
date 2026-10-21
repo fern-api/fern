@@ -3,7 +3,8 @@ FROM alpine:3.23 AS wiremock-pull
 RUN apk add --no-cache curl && \
     ARCH=$(uname -m) && if [ "$ARCH" = "aarch64" ]; then ARCH="arm64"; fi && \
     curl -sL "https://github.com/google/go-containerregistry/releases/download/v0.21.2/go-containerregistry_Linux_${ARCH}.tar.gz" | tar xz -C /usr/local/bin crane && \
-    crane pull wiremock/wiremock:3.9.1 /wiremock.tar
+    PLATFORM_ARCH=$(if [ "$ARCH" = "arm64" ]; then echo arm64; else echo amd64; fi) && \
+    crane pull --platform "linux/${PLATFORM_ARCH}" wiremock/wiremock:3.9.1 /wiremock.tar
 
 # Stage 2: Rebuild containerd + runc + moby + docker CLI from source with
 # go1.26.4 so the embedded stdlib clears vulnerability scanners. The
