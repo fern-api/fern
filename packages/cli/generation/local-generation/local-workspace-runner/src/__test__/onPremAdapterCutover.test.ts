@@ -51,6 +51,14 @@ describe("isOnPremAdapter", () => {
         expect(isOnPremAdapter("fernapi/fern-go-sdk", "")).toBe(false);
     });
 
+    // Local image tags carry digits that are not a version: seed tags worktree builds
+    // `local-wt-<hash>`, and coercing the hash's first digit run would select the adapter at random.
+    it("treats a version that does not start with a number as Fern's own generator", () => {
+        expect(isOnPremAdapter("fernapi/fern-go-sdk", "local-wt-135be7df")).toBe(false);
+        expect(isOnPremAdapter("fernapi/fern-typescript-sdk", "local")).toBe(false);
+        expect(isOnPremAdapter("fernapi/fern-python-sdk", "sha-9f8e7d6")).toBe(false);
+    });
+
     it("accepts a partial version, which is unambiguous once coerced", () => {
         expect(isOnPremAdapter("fernapi/fern-python-sdk", "6")).toBe(true);
         expect(isOnPremAdapter("fernapi/fern-python-sdk", "v6.1")).toBe(true);

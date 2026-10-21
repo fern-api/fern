@@ -112,6 +112,9 @@ export function isOnPremAdapter(generatorName: string, version: string): boolean
     if (entry == null) {
         return false;
     }
+    if (!/^v?\d/.test(version)) {
+        return false;
+    }
     const parsed = semver.coerce(version);
     if (parsed == null) {
         return false;

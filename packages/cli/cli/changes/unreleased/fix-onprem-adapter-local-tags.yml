@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern generate --local` no longer mistakes a generator version that merely contains digits
+    (e.g. seed's worktree image tag `local-wt-135be7df`) for a post-cutover Postman adapter, which
+    refused to run with "configured by sdk-config.yml, which this workspace does not have". Only
+    versions that start with a number (optionally `v`-prefixed) are compared against the cutover.
+  type: fix
