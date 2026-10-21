@@ -189,9 +189,7 @@ client = Acme::Client.new
 
 client.service.post(
   file: StringIO.new("Hello, world!"),
-  file_list: [StringIO.new("First"), StringIO.new("Second")],
-  maybe_file: "/path/to/your/file",
-  maybe_file_list: ["/path/to/your/file"]
+  file_list: [StringIO.new("First"), StringIO.new("Second")]
 )
 "
 `;

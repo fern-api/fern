@@ -1052,6 +1052,9 @@ export class EndpointSnippetGenerator {
             switch (property.type) {
                 case "file": {
                     const fileValue = this.context.getSingleFileValue({ property, record });
+                    if (fileValue == null && property.isOptional === true) {
+                        break;
+                    }
                     args.push(
                         ruby.keywordArgument({
                             name: this.context.getPropertyName(property.name),
@@ -1065,11 +1068,15 @@ export class EndpointSnippetGenerator {
                 }
                 case "fileArray": {
                     const fileValues = this.context.getFileArrayValues({ property, record });
+                    const hasFileValues = fileValues != null && fileValues.length > 0;
+                    if (!hasFileValues && property.isOptional === true) {
+                        break;
+                    }
                     args.push(
                         ruby.keywordArgument({
                             name: this.context.getPropertyName(property.name),
                             value: ruby.TypeLiteral.list(
-                                fileValues != null && fileValues.length > 0
+                                hasFileValues
                                     ? fileValues.map((fileValue) => this.getInlineFileContent(fileValue))
                                     : [ruby.TypeLiteral.string(FILE_PLACEHOLDER_PATH)]
                             )
