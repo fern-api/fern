@@ -1816,6 +1816,55 @@ func fileInfoForType(rootPackageName string, fernFilepath *common.FernFilepath) 
 	}
 }
 
+// fileInfoForTypeDeclaration returns the file the given type declaration is
+// generated into, placing xml-encoded types in their own file.
+func fileInfoForTypeDeclaration(rootPackageName string, typeDeclaration *fernir.TypeDeclaration) fileInfo {
+	return fileInfoForXmlType(fileInfoForType(rootPackageName, typeDeclaration.Name.FernFilepath), typeDeclaration)
+}
+
+// fileInfoForXmlType routes an xml-encoded type declaration to its own file
+// (e.g. twimlvoice/say.go) in the same package as the given fileInfo. Types
+// that aren't xml-encoded, or whose filename would collide with a file the
+// generator writes for other purposes, keep the given fileInfo.
+func fileInfoForXmlType(info fileInfo, typeDeclaration *fernir.TypeDeclaration) fileInfo {
+	if typeDeclaration.Encoding == nil || typeDeclaration.Encoding.GetXml() == nil {
+		return info
+	}
+	if typeDeclaration.Name == nil || typeDeclaration.Name.Name == nil || typeDeclaration.Name.Name.SnakeCase == nil {
+		return info
+	}
+	basename := typeDeclaration.Name.Name.SnakeCase.UnsafeName
+	if basename == "" || strings.HasPrefix(basename, "_") || strings.HasSuffix(basename, "_test") {
+		return info
+	}
+	filename := basename + ".go"
+	if isReservedFilename(filename) || isReservedTypeFilename(filename) {
+		return info
+	}
+	return fileInfo{
+		filename:    filepath.Join(filepath.Dir(info.filename), filename),
+		packageName: info.packageName,
+	}
+}
+
+// reservedTypeFilenames are files that the generator writes alongside type
+// files in the same package, so a per-type file must never reuse them.
+var reservedTypeFilenames = map[string]struct{}{
+	sharedTypesFilename: struct{}{},
+	packageDocsFilename: struct{}{},
+	"client.go":         struct{}{},
+	"errors.go":         struct{}{},
+	"file_param.go":     struct{}{},
+	"optional.go":       struct{}{},
+	"environments.go":   struct{}{},
+	"pointer.go":        struct{}{},
+}
+
+func isReservedTypeFilename(filename string) bool {
+	_, ok := reservedTypeFilenames[filename]
+	return ok
+}
+
 func fileInfoForPackageDocs(fernFilepath *common.FernFilepath) *fileInfo {
 	packagePath := packagePathForDocs(fernFilepath)
 	return &fileInfo{
@@ -2009,7 +2058,7 @@ func fileInfoToTypes(
 		// to the file-per-type naming convention.
 		for _, typeId := range sortedMapKeys(irTypes) {
 			irType := irTypes[typeId]
-			fileInfo := fileInfoForType(rootPackageName, irType.Name.FernFilepath)
+			fileInfo := fileInfoForTypeDeclaration(rootPackageName, irType)
 			result[fileInfo] = append(
 				result[fileInfo],
 				&typeToGenerate{
@@ -2035,6 +2084,7 @@ func fileInfoToTypes(
 			if isReservedFilename(filepath.Base(fileInfo.filename)) {
 				fileInfo.filename = filepath.Join(filepath.Dir(fileInfo.filename), sharedTypesFilename)
 			}
+			fileInfo = fileInfoForXmlType(fileInfo, typeDeclaration)
 			result[fileInfo] = append(
 				result[fileInfo],
 				&typeToGenerate{
@@ -2065,6 +2115,7 @@ func fileInfoToTypes(
 				if shouldSetFileInfoToMatchService(typeDeclaration.Name.FernFilepath, service.Name.FernFilepath) {
 					fileInfo.filename = filepath.Join(filepath.Dir(fileInfo.filename), service.Name.FernFilepath.File.SnakeCase.UnsafeName+".go")
 				}
+				fileInfo = fileInfoForXmlType(fileInfo, typeDeclaration)
 				result[fileInfo] = append(
 					result[fileInfo],
 					&typeToGenerate{
