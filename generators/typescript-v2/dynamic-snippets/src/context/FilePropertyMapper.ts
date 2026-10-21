@@ -64,7 +64,7 @@ export class FilePropertyMapper {
     }): ts.TypeLiteral {
         const fileValue = this.context.getSingleFileValue({ property, record });
         if (fileValue == null) {
-            return this.context.getFilePlaceholder();
+            return property.isOptional === true ? ts.TypeLiteral.nop() : this.context.getFilePlaceholder();
         }
         return ts.TypeLiteral.blob(fileValue);
     }
@@ -77,8 +77,10 @@ export class FilePropertyMapper {
         record: Record<string, unknown>;
     }): ts.TypeLiteral {
         const fileValues = this.context.getFileArrayValues({ property, record });
-        if (fileValues == null) {
-            return ts.TypeLiteral.nop();
+        if (fileValues == null || fileValues.length === 0) {
+            return property.isOptional === true
+                ? ts.TypeLiteral.nop()
+                : ts.TypeLiteral.array({ values: [this.context.getFilePlaceholder()] });
         }
         return ts.TypeLiteral.array({ values: fileValues.map((value) => ts.TypeLiteral.blob(value)) });
     }

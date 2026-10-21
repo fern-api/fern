@@ -268,7 +268,6 @@ main();
 
 exports[`snippets > file-upload > 'POST /' 1`] = `
 "import { AcmeClient } from "acme";
-import * as fs from "fs";
 
 async function main() {
     const client = new AcmeClient();
@@ -278,7 +277,6 @@ async function main() {
             new Blob(["First"]),
             new Blob(["Second"]),
         ],
-        maybe_file: fs.createReadStream("/path/to/your/file"),
     });
 }
 main();
