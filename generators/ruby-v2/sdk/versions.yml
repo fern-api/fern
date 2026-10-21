@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.39.3
+  changelogEntry:
+    - summary: |
+        XML (TwiML) types accept the declaration flag positionally, like the legacy TwiML gem:
+        `response.to_s(false)` and `response.to_xml(false)` omit `<?xml ...?>`; the `xml_declaration:`
+        keyword still works.
+      type: fix
+  createdAt: "2026-10-21"
+  irVersion: 67
 - version: 1.39.2
   changelogEntry:
     - summary: |
