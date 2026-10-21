@@ -450,7 +450,8 @@ export class EndpointSnippetGenerator {
             return undefined;
         }
         return {
-            name: this.context.getPropertyNameFromNameAndWireValue(header.name),
+            // The SDK always names client header options in camelCase, whatever the serde setting.
+            name: header.name.name.camelCase.unsafeName,
             value: typeLiteral
         };
     }
