@@ -4,4 +4,7 @@
     The v3 OpenAPI parser now honors `respect-per-spec-base-path`. Each spec's plain
     `x-fern-base-path` is applied to that spec's endpoint paths, so it is no longer dropped
     when `generators.yml` lists more than one spec (for example in docs API Reference URLs).
+    Set the option on every spec that has a base path: a spec without it still uses the API-wide
+    base path, and only one spec's API-wide base path is kept when specs are merged. A base path
+    with path parameters keeps the API-wide behavior and now logs a warning.
   type: fix

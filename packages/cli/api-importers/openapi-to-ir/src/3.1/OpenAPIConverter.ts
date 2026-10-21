@@ -169,6 +169,15 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             return;
         }
 
+        if (this.context.settings.respectPerSpecBasePath && parsed.parameters.length > 0) {
+            this.context.errorCollector.collect({
+                message:
+                    "respect-per-spec-base-path only applies to an x-fern-base-path without path parameters; " +
+                    "this base path is used as the API-wide base path instead, which only one spec keeps when multiple specs are merged",
+                path: ["x-fern-base-path"]
+            });
+        }
+
         this.ir.basePath = constructHttpPath(parsed.path);
 
         for (const param of parsed.parameters) {
