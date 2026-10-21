@@ -130,7 +130,7 @@ export function serializeXmlElement({
     const body: string[] = [];
     const renderedText = joinScalars(text, textSeparator);
     if (renderedText != null) {
-        body.push(escapeXml(renderedText));
+        body.push(escapeXmlText(renderedText));
     }
     for (const child of children) {
         if (!markedWrappers.has(child.name)) {
@@ -140,7 +140,7 @@ export function serializeXmlElement({
     const renderedWrappers = new Set<string>();
     for (const item of orderedContent) {
         if (typeof item === "string") {
-            body.push(escapeXml(item));
+            body.push(escapeXmlText(item));
         } else if (isXmlWrapperFragment(item) && markedWrappers.has(localXmlName(item.name))) {
             const wrapperName = localXmlName(item.name);
             if (!renderedWrappers.has(wrapperName)) {
@@ -165,12 +165,14 @@ export function serializeXmlElement({
     return xmlDeclaration ? `${XML_DECLARATION}${element}` : element;
 }
 
+/** Escapes a value for use inside a double-quoted attribute. */
 export function escapeXml(value: string): string {
-    return value
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;");
+    return escapeXmlText(value).replace(/"/g, "&quot;");
+}
+
+/** Escapes a value for use as element text (quotes are left as-is, matching the legacy TwiML SDKs). */
+export function escapeXmlText(value: string): string {
+    return value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
 /** Converts an attribute or text value to its wire string, or undefined when unset. */
