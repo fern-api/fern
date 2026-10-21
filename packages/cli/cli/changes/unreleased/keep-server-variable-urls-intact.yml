@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Keep the `:` and `/` of an OpenAPI server variable default when resolving the environment URL,
+    so a server like `url: "{baseUrl}"` with `default: https://api.example.com` no longer becomes
+    `https%3A%2F%2Fapi.example.com`. Every occurrence of a variable in the server URL is now substituted.
+  type: fix
