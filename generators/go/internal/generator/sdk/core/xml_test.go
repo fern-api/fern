@@ -72,6 +72,11 @@ func TestParseXmlErrors(t *testing.T) {
 	assert.ErrorContains(t, err, "multiple root")
 }
 
+func TestXmlElementDropsInvalidChars(t *testing.T) {
+	element := NewXmlElement("Say").SetAttribute("voice", "man\x01").SetText("a\x00b\x1fc d")
+	assert.Equal(t, "<Say voice=\"man\">abc d</Say>", element.ToXml())
+}
+
 func TestXmlScalars(t *testing.T) {
 	for _, value := range []string{"true", "1"} {
 		parsed, err := ParseXmlBool(value)

@@ -20,7 +20,8 @@ from typing import (
 )
 from xml.dom import minidom
 from xml.parsers.expat import ExpatError
-from xml.sax.saxutils import escape, quoteattr
+from xml.sax.saxutils import escape as _sax_escape
+from xml.sax.saxutils import quoteattr as _sax_quoteattr
 
 import pydantic
 from .pydantic_utilities import IS_PYDANTIC_V2
@@ -94,6 +95,18 @@ class XmlComment:
 
     def __repr__(self) -> str:
         return f"XmlComment({self.text!r})"
+
+
+# Characters outside the XML 1.0 `Char` production (control characters, lone surrogates), which no XML parser accepts.
+_INVALID_XML_CHARS = re.compile("[^\u0009\u000A\u000D\u0020-\uD7FF\uE000-\uFFFD\U00010000-\U0010FFFF]")
+
+
+def escape(value: str) -> str:
+    return _sax_escape(_INVALID_XML_CHARS.sub("", value))
+
+
+def quoteattr(value: str) -> str:
+    return _sax_quoteattr(_INVALID_XML_CHARS.sub("", value))
 
 
 def serialize_xml_element(

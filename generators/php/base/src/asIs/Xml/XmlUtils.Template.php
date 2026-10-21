@@ -86,14 +86,14 @@ final class XmlUtils
             }
         }
         if ($element->text !== null) {
-            $node->appendChild($document->createTextNode($element->text));
+            $node->appendChild($document->createTextNode(self::stripInvalidXmlChars($element->text)));
         }
         foreach ($element->children as $child) {
             if ($child instanceof XmlText) {
-                $node->appendChild($document->createTextNode($child->text));
+                $node->appendChild($document->createTextNode(self::stripInvalidXmlChars($child->text)));
             } elseif ($child instanceof XmlComment) {
                 if ($child->placement === XmlComment::PLACEMENT_INSIDE) {
-                    $node->appendChild($document->createComment($child->xmlText()));
+                    $node->appendChild($document->createComment(self::stripInvalidXmlChars($child->xmlText())));
                 }
             } else {
                 self::toDom($document, $node, $child->toXmlElement());
@@ -114,13 +114,22 @@ final class XmlUtils
     ): void {
         foreach ($element->children as $child) {
             if ($child instanceof XmlComment && $child->placement === $placement) {
-                $parent->appendChild($document->createComment($child->xmlText()));
+                $parent->appendChild($document->createComment(self::stripInvalidXmlChars($child->xmlText())));
             }
         }
     }
 
+    /**
+     * Removes characters outside the XML 1.0 `Char` production (control characters), which no XML parser accepts.
+     */
+    private static function stripInvalidXmlChars(string $value): string
+    {
+        return preg_replace('/[^\x{9}\x{A}\x{D}\x{20}-\x{D7FF}\x{E000}-\x{FFFD}\x{10000}-\x{10FFFF}]/u', '', $value) ?? $value;
+    }
+
     private static function setDomAttribute(DOMElement $node, string $name, string $value): void
     {
+        $value = self::stripInvalidXmlChars($value);
         $colon = strpos($name, ':');
         if ($colon === false) {
             $node->setAttribute($name, $value);

@@ -23,6 +23,14 @@ public class XmlElementTests
     }
 
     [Test]
+    public void ToXml_DropsCharactersOutsideXml10()
+    {
+        var element = new XmlElement("Say", "a\0b\u001fc\td").SetAttribute("voice", "man\u0001");
+
+        Assert.That(element.ToXml(), Is.EqualTo("<Say voice=\"man\">abc\td</Say>"));
+    }
+
+    [Test]
     public void ToXml_WritesNamespaceAndPrefix()
     {
         var element = new XmlElement("Dial", "+15551234567", "https://www.twilio.com/twiml", "tw");

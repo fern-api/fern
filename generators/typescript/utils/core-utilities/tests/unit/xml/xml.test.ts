@@ -46,6 +46,15 @@ describe("serializeXmlElement", () => {
         );
     });
 
+    it("drops characters outside XML 1.0 from text and attributes", () => {
+        const xml = serializeXmlElement({
+            name: "Say",
+            attributes: [{ name: "voice", value: "man\u0001" }],
+            text: "a\u0000b\u001fc\td",
+        });
+        expect(xml).toBe('<Say voice="man">abc\td</Say>');
+    });
+
     it("self-closes empty elements and supports namespaces, wrappers and declarations", () => {
         expect(serializeXmlElement({ name: "Hangup" })).toBe("<Hangup />");
         expect(
