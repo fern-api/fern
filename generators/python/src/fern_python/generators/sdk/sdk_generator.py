@@ -2,7 +2,6 @@ import os
 import sys
 from typing import Literal, Optional, Sequence, Tuple, Union, cast
 
-import fern.ir.resources as ir_types
 from .client_generator.client_generator import ClientGenerator
 from .client_generator.generated_root_client import GeneratedRootClient, RootClient
 from .client_generator.inferred_auth_token_provider_generator import InferredAuthTokenProviderGenerator
@@ -22,9 +21,6 @@ from .environment_generators import (
 )
 from .error_generator.error_generator import ErrorGenerator
 from .v2.generator import PythonV2Generator
-from fern.generator_exec import GeneratorUpdate, LogLevel, LogUpdate, Snippets
-from fern.generator_exec.config import GeneratorConfig
-
 from fern_python.cli.abstract_generator import AbstractGenerator
 from fern_python.codegen import AST, Project
 from fern_python.codegen.ast.dependency.dependency import DependencyCompatibility
@@ -52,6 +48,10 @@ from fern_python.snippet import SnippetRegistry, SnippetWriter
 from fern_python.snippet.snippet_test_factory import SnippetTestFactory
 from fern_python.utils import resolve_name
 from fern_python.utils.build_snippet_writer import build_snippet_writer
+
+import fern.ir.resources as ir_types
+from fern.generator_exec import GeneratorUpdate, LogLevel, LogUpdate, Snippets
+from fern.generator_exec.config import GeneratorConfig
 
 
 class SdkGenerator(AbstractGenerator):
@@ -152,15 +152,21 @@ class SdkGenerator(AbstractGenerator):
                 dict.fromkeys(extras.get(custom_config.http_client_extra, []) + ["httpx"])
             )
             extras["aiohttp"] = list(dict.fromkeys(extras["aiohttp"] + ["httpx"]))
-            project.add_dependency(
-                dependency=AST.Dependency(
+            user_httpx = custom_config.extra_dependencies.get("httpx")
+            if user_httpx is None:
+                httpx_dependency = AST.Dependency(
                     name="httpx",
                     version="0.25.0" if custom_config.tcp_keepalive.enabled else HTTPX_MIN_VERSION,
                     compatibility=DependencyCompatibility.GREATER_THAN_OR_EQUAL,
                     optional=True,
-                ),
-                is_user_override=True,
-            )
+                )
+            elif isinstance(user_httpx, str):
+                httpx_dependency = AST.Dependency(name="httpx", version=user_httpx, optional=True)
+            else:
+                httpx_dependency = AST.Dependency(
+                    name="httpx", version=user_httpx.version, optional=True, python=user_httpx.python
+                )
+            project.add_dependency(dependency=httpx_dependency, is_user_override=True)
         project.add_extra(extras)
 
         # Add optional dependencies for aiohttp support.

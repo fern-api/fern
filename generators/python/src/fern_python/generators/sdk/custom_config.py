@@ -362,6 +362,22 @@ class SDKCustomConfig(pydantic.BaseModel):
         return cast(SDKCustomConfig, obj)
 
     @pydantic.model_validator(mode="after")
+    def validate_http_client_extra(self) -> "SDKCustomConfig":
+        if self.http_client_extra is None:
+            return self
+        if self.http_client_extra == "aiohttp":
+            raise ValueError(
+                "http_client_extra cannot be 'aiohttp': that extra is reserved for the aiohttp transport "
+                "(which already includes httpx when http_client_extra is set)."
+            )
+        if not self.lazy_imports:
+            raise ValueError(
+                "http_client_extra requires lazy_imports (the default): with eager imports the package "
+                "imports the HTTP client on `import <package>`, so a model-only install would fail."
+            )
+        return self
+
+    @pydantic.model_validator(mode="after")
     def propagate_use_inheritance_for_extended_models(self) -> "SDKCustomConfig":
         self.pydantic_config.use_inheritance_for_extended_models = self.use_inheritance_for_extended_models
         return self
