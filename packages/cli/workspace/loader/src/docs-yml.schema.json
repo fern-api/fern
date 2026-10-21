@@ -6770,6 +6770,17 @@
             }
           ],
           "description": "Column height for every header tab dropdown that doesn't set `dropdown-column-height`."
+        },
+        "interact-on-click-only": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "When true, header tab dropdowns open and close on click only, with no open animation.\nBy default they open on hover and close when the pointer leaves the tab and menu."
         }
       },
       "additionalProperties": false
