@@ -216,12 +216,8 @@ export abstract class AbstractRubyGeneratorContext<
      */
     public getRequireRelativePathToRootFile(typeId: FernIr.TypeId): string {
         const typeDirectory = join(AbsoluteFilePath.of("/"), this.getLocationForTypeId(typeId));
-        const rootFile = join(
-            AbsoluteFilePath.of("/"),
-            RelativeFilePath.of("lib"),
-            RelativeFilePath.of(this.getRootFolderName())
-        );
-        return relative(typeDirectory, rootFile);
+        const libDirectory = join(AbsoluteFilePath.of("/"), RelativeFilePath.of("lib"));
+        return join(relative(typeDirectory, libDirectory), RelativeFilePath.of(this.getRootFolderName()));
     }
 
     public abstract getModuleNamesForTypeId(typeId: FernIr.TypeId): string[];
