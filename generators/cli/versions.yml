@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.57.1
+  changelogEntry:
+    - summary: |
+        Saving or deleting a credential no longer reads the stored secret first. On macOS, `profiles remove`,
+        `auth logout`, and overwriting a saved credential used to read every keychain entry before changing
+        it, and each read could raise a password prompt. The CLI now updates or deletes the keychain item
+        directly, and it skips the Windows-only check for oversized entries on macOS and Linux.
+      type: fix
+  createdAt: "2026-10-21"
+  irVersion: 67
 - version: 0.57.0
   changelogEntry:
     - summary: |
