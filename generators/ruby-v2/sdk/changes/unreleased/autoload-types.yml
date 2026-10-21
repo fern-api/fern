@@ -5,4 +5,4 @@
     file eagerly, so `require "<gem>"` only loads the runtime and each type is read on first use.
     Type files also `require_relative` the root file, so a single type can be required directly
     (e.g. `require "<gem>/twiml_voice/types/voice_response"`) without a NameError.
-  type: feat
+  type: fix
