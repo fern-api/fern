@@ -3036,10 +3036,7 @@
               "type": "null"
             }
           ],
-          "description": "If true (and `respect-per-spec-base-path` is also true), the v3 OpenAPI parser, which builds the docs
-API Reference, applies each OpenAPI document's plain `x-fern-base-path` to that document's endpoints
-so it is kept when multiple specs are merged.
-Defaults to false."
+          "description": "If true (and `respect-per-spec-base-path` is also true), the v3 OpenAPI parser, which builds the docs\nAPI Reference, applies each OpenAPI document's plain `x-fern-base-path` to that document's endpoints\nso it is kept when multiple specs are merged.\nDefaults to false."
         },
         "respect-operation-id-word-boundaries": {
           "oneOf": [
@@ -3798,10 +3795,7 @@ Defaults to false."
               "type": "null"
             }
           ],
-          "description": "If true (and `respect-per-spec-base-path` is also true), the v3 OpenAPI parser, which builds the docs
-API Reference, applies each OpenAPI document's plain `x-fern-base-path` to that document's endpoints
-so it is kept when multiple specs are merged.
-Defaults to false."
+          "description": "If true (and `respect-per-spec-base-path` is also true), the v3 OpenAPI parser, which builds the docs\nAPI Reference, applies each OpenAPI document's plain `x-fern-base-path` to that document's endpoints\nso it is kept when multiple specs are merged.\nDefaults to false."
         },
         "respect-operation-id-word-boundaries": {
           "oneOf": [
