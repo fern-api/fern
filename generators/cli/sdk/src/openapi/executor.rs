@@ -750,6 +750,11 @@ fn parse_and_validate_inputs(
         match location {
             Some("header") => {
                 let param_def = method.parameters.get(key);
+                // Headers are not type-checked (see `serialize_header_simple`),
+                // but a spec `pattern` is enforced like on path/query params.
+                if let Some(param) = param_def {
+                    validate_param_pattern(key, value, param)?;
+                }
                 let str_value = serialize_header_simple(value, param_def)?;
                 header_params.push((key.clone(), str_value));
             }
@@ -4305,6 +4310,63 @@ fn is_boolean_literal(raw: &str) -> bool {
     )
 }
 
+/// Whether `value` fails a JSON Schema `pattern`.
+///
+/// `pattern` is an ECMA-262 regex that matches anywhere in the value unless
+/// the spec anchors it, so this is a search, not a full match. `fancy-regex`
+/// because specs use lookaround (`^(?!https?://localhost)`), which the
+/// `regex` crate rejects. A pattern the engine can't compile, or a match that
+/// hits the backtrack limit, is not enforced: the server stays the authority,
+/// and a spec quirk must not make a valid request impossible to send.
+fn violates_pattern(pattern: &str, value: &str) -> bool {
+    use std::sync::{Mutex, OnceLock};
+    static CACHE: OnceLock<Mutex<HashMap<String, Option<fancy_regex::Regex>>>> = OnceLock::new();
+    let mut cache = CACHE
+        .get_or_init(Default::default)
+        .lock()
+        .unwrap_or_else(|poisoned| poisoned.into_inner());
+    // `Regex` is a cheap `Arc` clone; take it so the lock isn't held while
+    // matching.
+    let compiled = cache
+        .entry(pattern.to_string())
+        .or_insert_with(|| match fancy_regex::Regex::new(pattern) {
+            Ok(re) => Some(re),
+            Err(err) => {
+                tracing::debug!("not enforcing unsupported pattern {pattern:?}: {err}");
+                None
+            }
+        })
+        .clone();
+    drop(cache);
+    match compiled {
+        Some(re) => match re.is_match(value) {
+            Ok(matched) => !matched,
+            Err(err) => {
+                tracing::debug!("not enforcing pattern {pattern:?}: {err}");
+                false
+            }
+        },
+        None => false,
+    }
+}
+
+/// Enforce a non-body parameter's `pattern`. `pattern` only constrains
+/// strings, and a repeated param's schema is the array (an element pattern
+/// would live on `items`).
+fn validate_param_pattern(name: &str, value: &Value, param: &MethodParameter) -> Result<(), CliError> {
+    if let (Some(pattern), Value::String(raw), false) = (param.pattern.as_deref(), value, param.repeated) {
+        if violates_pattern(pattern, raw) {
+            let flag = crate::openapi::commands::resolve_param_flag_name(param, name)
+                .map(|f| format!("--{f}"))
+                .unwrap_or_else(|| format!("--params '{{\"{name}\": ...}}'"));
+            return Err(CliError::Validation(format!(
+                "Invalid value for {flag}: '{raw}' does not match the pattern {pattern:?}"
+            )));
+        }
+    }
+    Ok(())
+}
+
 fn validate_non_body_param_type(
     name: &str,
     value: &Value,
@@ -4325,6 +4387,7 @@ fn validate_non_body_param_type(
     // `value_parser` would reject the `--labels '["a","b"]'` form, which is
     // valid input. Non-string elements are left alone, matching the body
     // validator's string-only enum check.
+    validate_param_pattern(name, value, param)?;
     if let Some(allowed) = param.item_enum_values.as_deref() {
         let elements: &[Value] = match value {
             Value::Array(items) => items,
@@ -4662,6 +4725,12 @@ fn validate_value(
             return;
         }
     }
+    if let (Some(pattern), Value::String(raw)) = (&schema.pattern, value) {
+        if violates_pattern(pattern, raw) {
+            errors.push(format!("{path}: Value '{raw}' does not match the pattern {pattern:?}"));
+            return;
+        }
+    }
     if expected_type == "array" {
         if let (Some(items), Value::Array(arr)) = (&schema.items, value) {
             for (index, item) in arr.iter().enumerate() {
@@ -4903,8 +4972,15 @@ fn validate_property(
         return;
     }
 
-    // 1. Resolve $ref if present
+    // 1. Resolve $ref if present. A `pattern` beside the `$ref` (OpenAPI 3.1)
+    // applies on top of the component's.
     if let Some(ref_name) = &prop_schema.schema_ref {
+        if let (Some(pattern), Value::String(s)) = (&prop_schema.pattern, value) {
+            if violates_pattern(pattern, s) {
+                errors.push(format!("{path}: Value '{s}' does not match the pattern {pattern:?}"));
+                return;
+            }
+        }
         validate_value(value, ref_name, doc, path, errors);
         return;
     }
@@ -4990,6 +5066,13 @@ fn validate_property(
                     "{path}: Value '{s}' is not a valid enum member. Valid options: {enum_values:?}"
                 ));
             }
+        }
+    }
+
+    // 6. Pattern validation
+    if let (Some(pattern), Value::String(s)) = (&prop_schema.pattern, value) {
+        if violates_pattern(pattern, s) {
+            errors.push(format!("{path}: Value '{s}' does not match the pattern {pattern:?}"));
         }
     }
 }
@@ -5433,6 +5516,93 @@ mod tests {
 
     fn enabled_cfg() -> RetriesConfig {
         RetriesConfig::default()
+    }
+
+    const NO_LOCALHOST: &str = r"^(?!https?://(localhost|127\.0\.0\.1)([:/?#]|$))";
+
+    #[test]
+    fn violates_pattern_searches_supports_lookaround_and_skips_bad_patterns() {
+        assert!(!violates_pattern("^AC[0-9a-fA-F]{32}$", "ACaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"));
+        assert!(violates_pattern("^AC[0-9a-fA-F]{32}$", "PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"));
+        // Unanchored patterns match anywhere, per JSON Schema.
+        assert!(!violates_pattern("[0-9]", "abc1"));
+        for local in ["http://127.0.0.1:3000/sms", "https://localhost/voice", "http://localhost"] {
+            assert!(violates_pattern(NO_LOCALHOST, local), "{local} must be rejected");
+        }
+        for public in ["https://example.com/sms", "https://localhost.example.com/x"] {
+            assert!(!violates_pattern(NO_LOCALHOST, public), "{public} must be accepted");
+        }
+        // An uncompilable pattern is not enforced rather than blocking every value.
+        assert!(!violates_pattern("(unclosed", "anything"));
+    }
+
+    #[test]
+    fn non_body_param_pattern_is_enforced_on_strings() {
+        let sid = MethodParameter {
+            param_type: Some("string".to_string()),
+            location: Some("path".to_string()),
+            pattern: Some("^PN[0-9a-fA-F]{32}$".to_string()),
+            ..Default::default()
+        };
+        let err = validate_non_body_param_type("sid", &json!("+15005550006"), Some(&sid))
+            .expect_err("a value outside the pattern must be rejected");
+        let msg = format!("{err}");
+        assert!(msg.contains("--sid") && msg.contains("does not match the pattern"), "{msg}");
+        validate_non_body_param_type("sid", &json!("PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"), Some(&sid))
+            .expect("a matching value must pass");
+        validate_non_body_param_type("sid", &Value::Null, Some(&sid)).expect("null is not pattern-checked");
+        // Header params go through `validate_param_pattern` directly.
+        let header = MethodParameter { location: Some("header".to_string()), ..sid };
+        assert!(validate_param_pattern("x-sid", &json!("nope"), &header).is_err());
+        assert!(validate_param_pattern("x-sid", &json!("PNaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"), &header).is_ok());
+    }
+
+    #[test]
+    fn ref_site_pattern_on_body_property_is_enforced() {
+        let mut doc = RestDescription::default();
+        doc.schemas.insert(
+            "Url".to_string(),
+            JsonSchema { schema_type: Some("string".to_string()), ..Default::default() },
+        );
+        let prop = JsonSchemaProperty {
+            schema_ref: Some("Url".to_string()),
+            pattern: Some(NO_LOCALHOST.to_string()),
+            ..Default::default()
+        };
+        let mut errors = Vec::new();
+        validate_property(&json!("http://localhost:3000"), &prop, &doc, "$.voiceUrl", &mut errors);
+        assert_eq!(errors.len(), 1, "{errors:?}");
+        let mut errors = Vec::new();
+        validate_property(&json!("https://example.com"), &prop, &doc, "$.voiceUrl", &mut errors);
+        assert!(errors.is_empty(), "{errors:?}");
+    }
+
+    #[test]
+    fn body_property_pattern_is_enforced_inline_and_through_ref() {
+        let url = JsonSchemaProperty {
+            prop_type: Some("string".to_string()),
+            pattern: Some(NO_LOCALHOST.to_string()),
+            ..Default::default()
+        };
+        let mut doc = RestDescription::default();
+        doc.schemas.insert(
+            "WebhookUrl".to_string(),
+            JsonSchema {
+                schema_type: Some("string".to_string()),
+                pattern: Some(NO_LOCALHOST.to_string()),
+                ..Default::default()
+            },
+        );
+        let via_ref = JsonSchemaProperty { schema_ref: Some("WebhookUrl".to_string()), ..Default::default() };
+        for prop in [&url, &via_ref] {
+            let mut errors = Vec::new();
+            validate_property(&json!("http://127.0.0.1:3000/sms"), prop, &doc, "$.smsUrl", &mut errors);
+            assert_eq!(errors.len(), 1, "{errors:?}");
+            assert!(errors[0].starts_with("$.smsUrl: Value 'http://127.0.0.1:3000/sms' does not match"), "{errors:?}");
+            let mut errors = Vec::new();
+            validate_property(&json!("https://example.com/sms"), prop, &doc, "$.smsUrl", &mut errors);
+            assert!(errors.is_empty(), "{errors:?}");
+        }
     }
 
     #[test]

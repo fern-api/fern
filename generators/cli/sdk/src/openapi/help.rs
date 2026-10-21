@@ -259,6 +259,9 @@ fn build_operation_schema(
         if let Some(max) = param.maximum.filter(|m| m.is_finite()) {
             prop["maximum"] = json!(max);
         }
+        if let Some(pattern) = &param.pattern {
+            prop["pattern"] = json!(pattern);
+        }
         if let Some(enums) = &param.enum_values {
             prop["enum"] = json!(enums);
             // When `x-fern-enum` overrides are present, expose the
@@ -749,6 +752,9 @@ fn render_property(
     }
     if let Some(m) = prop.exclusive_maximum.filter(|m| m.is_finite()) {
         out.insert("exclusiveMaximum".into(), json!(m));
+    }
+    if let Some(pattern) = &prop.pattern {
+        out.insert("pattern".into(), json!(pattern));
     }
     if prop.read_only {
         out.insert("readOnly".into(), json!(true));
