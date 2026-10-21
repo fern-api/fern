@@ -57,7 +57,7 @@ fixtures:
         includeLegacyClientOptions: true
 
 scripts:
-  - image: fernapi/go-seed
+  - image: fernapi/go-seed:2.0.0
     commands:
       build:
         - golangci-lint run --timeout=5m --allow-parallel-runners
