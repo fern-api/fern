@@ -56,6 +56,7 @@ import {
 import { getOriginalName } from "@fern-api/ir-utils";
 import { detectAirGappedMode, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { convertIrToFdrApi } from "@fern-api/register";
+import { addSdkGenApiSnippets, fetchSdkGenApiSnippets, getSdkGenApiSnippetLanguages } from "./sdkGenApiSnippets";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import axios from "axios";
@@ -513,6 +514,20 @@ export async function publishDocs({
                 context,
                 apiNameOverride: apiName
             });
+
+            const sdkGenSnippetLanguages = getSdkGenApiSnippetLanguages(snippetsConfig);
+            if (sdkGenSnippetLanguages.length > 0) {
+                addSdkGenApiSnippets({
+                    apiDefinition,
+                    snippetsByLanguage: await fetchSdkGenApiSnippets({
+                        organization,
+                        token,
+                        languages: sdkGenSnippetLanguages,
+                        context
+                    }),
+                    context
+                });
+            }
 
             // create dynamic IR + metadata for each generator language
             let dynamicIRsByLanguage: Record<string, DynamicIr> | undefined;
