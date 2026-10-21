@@ -38,7 +38,7 @@ function withoutResponseBody(
         ...ir,
         endpoints: {
             ...ir.endpoints,
-            [endpointId]: { ...endpoint, response: { type: "none" } }
+            [endpointId]: { ...endpoint, hasResponseBody: false }
         }
     };
 }
@@ -50,9 +50,7 @@ describe("response error handling", () => {
 
         expect(response.errors).toBeUndefined();
         expect(response.snippet).toContain("func do() error {");
-        expect(response.snippet).toContain(
-            '_, err := client.Imdb.GetMovie(\n\t\tcontext.TODO(),\n\t\trequest,\n\t)'
-        );
+        expect(response.snippet).toContain("_, err := client.Imdb.GetMovie(\n\t\tcontext.TODO(),\n\t\trequest,\n\t)");
         expect(response.snippet).toContain("if err != nil {\n\t\treturn err\n\t}\n\treturn nil\n}");
     });
 
@@ -65,7 +63,7 @@ describe("response error handling", () => {
         const response = await generator.generate(getMovie);
 
         expect(response.errors).toBeUndefined();
-        expect(response.snippet).toContain('err := client.Imdb.GetMovie(\n\t\tcontext.TODO(),\n\t\trequest,\n\t)');
+        expect(response.snippet).toContain("err := client.Imdb.GetMovie(\n\t\tcontext.TODO(),\n\t\trequest,\n\t)");
         expect(response.snippet).not.toContain("_, err :=");
         expect(response.snippet).toContain("if err != nil {\n\t\treturn err\n\t}\n\treturn nil\n}");
     });

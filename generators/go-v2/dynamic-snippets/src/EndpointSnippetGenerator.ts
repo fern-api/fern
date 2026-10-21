@@ -317,19 +317,8 @@ export class EndpointSnippetGenerator {
     }
 
     private endpointReturnsResponse({ endpoint }: { endpoint: FernIr.dynamic.Endpoint }): boolean {
-        switch (endpoint.response.type) {
-            case "json":
-            case "streaming":
-            case "streamParameter":
-            case "fileDownload":
-            case "text":
-            case "bytes":
-                return true;
-            case "none":
-                return false;
-            default:
-                assertNever(endpoint.response);
-        }
+        // `hasResponseBody` is absent in IRs older than 67.35.0; assume a response body in that case.
+        return endpoint.hasResponseBody !== false;
     }
 
     private getConstructorArgs({

@@ -4,6 +4,5 @@
     Generated Go snippets (docs snippets, `reference.md`, `snippet.json`) no longer discard the
     SDK call result. The snippet function now returns `error`, assigns `_, err := client.X(...)`
     (or `err := client.X(...)` for endpoints without a response body) and checks `if err != nil`.
-    Requires IR v68 (`dynamic.Response.none`) to tell the two method shapes apart.
+    Uses `hasResponseBody` from IR 67.35.0 to tell the two method shapes apart; older IRs get `_, err`.
   type: fix
-  irVersion: 68
