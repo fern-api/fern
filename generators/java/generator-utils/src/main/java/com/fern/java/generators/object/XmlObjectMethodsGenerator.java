@@ -24,8 +24,8 @@ import com.squareup.javapoet.TypeSpec;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -126,11 +126,11 @@ public final class XmlObjectMethodsGenerator {
         boolean hasFinalStage =
                 typeSpec.typeSpecs.stream().anyMatch(nested -> nested.name.equals(FINAL_STAGE_INTERFACE_NAME));
         generateTextBuilderFactory(typeSpec).ifPresent(builder::addMethod);
-        Map<String, TypeName> listAttributeItemTypes = getListAttributeItemTypes();
+        Set<String> listAttributeNames = getListAttributeNames();
         builder.typeSpecs.clear();
         for (TypeSpec nested : typeSpec.typeSpecs) {
             TypeSpec updated = withChildBuilderMethods(
-                    withListAttributeVarargs(withSetterJavadocs(nested), listAttributeItemTypes),
+                    withListAttributeVarargs(withSetterJavadocs(nested), listAttributeNames),
                     childBuilderMethods,
                     hasFinalStage);
             if (nested.name.equals(BUILDER_CLASS_NAME)) {
@@ -604,28 +604,32 @@ public final class XmlObjectMethodsGenerator {
                         .build());
     }
 
-    private Map<String, TypeName> getListAttributeItemTypes() {
-        Map<String, TypeName> itemTypes = new HashMap<>();
+    private Set<String> getListAttributeNames() {
+        Set<String> names = new HashSet<>();
         for (EnrichedObjectProperty property : properties) {
             PropertyShape shape = PropertyShape.of(property, typeDeclarations, generatorContext);
             if (shape.kind.getEnumValue() == XmlPropertyKind.Value.ATTRIBUTE && shape.list) {
-                itemTypes.put(property.fieldSpec().get().name, shape.itemTypeName);
+                names.add(property.fieldSpec().get().name);
             }
         }
-        return itemTypes;
+        return names;
     }
 
     /**
      * Adds a varargs overload next to every {@code List} setter of a list-valued attribute, so a single value or a few
      * values can be passed without building a list ({@code gather.input(GatherInputItem.DTMF)}).
      */
-    private static TypeSpec withListAttributeVarargs(TypeSpec nested, Map<String, TypeName> listAttributeItemTypes) {
+    private static TypeSpec withListAttributeVarargs(TypeSpec nested, Set<String> listAttributeNames) {
         List<MethodSpec> listSetters = nested.methodSpecs.stream()
-                .filter(method -> listAttributeItemTypes.containsKey(method.name)
+                .filter(method -> listAttributeNames.contains(method.name)
                         && method.parameters.size() == 1
                         && method.parameters.get(0).type instanceof ParameterizedTypeName
                         && ((ParameterizedTypeName) method.parameters.get(0).type)
                                 .rawType.equals(ClassName.get(List.class)))
+                .collect(Collectors.toMap(
+                        method -> method.name, method -> method, (first, second) -> first, LinkedHashMap::new))
+                .values()
+                .stream()
                 .collect(Collectors.toList());
         if (listSetters.isEmpty()) {
             return nested;
@@ -636,7 +640,10 @@ public final class XmlObjectMethodsGenerator {
                     .addJavadoc(setter.javadoc)
                     .addModifiers(setter.modifiers)
                     .addAnnotations(setter.annotations)
-                    .addParameter(ArrayTypeName.of(listAttributeItemTypes.get(setter.name)), setter.name)
+                    .addParameter(
+                            ArrayTypeName.of(
+                                    ((ParameterizedTypeName) setter.parameters.get(0).type).typeArguments.get(0)),
+                            setter.name)
                     .varargs()
                     .returns(setter.returnType);
             if (!setter.modifiers.contains(Modifier.ABSTRACT)) {
