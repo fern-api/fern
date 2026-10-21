@@ -98,7 +98,7 @@ class XmlComment:
 
 
 # Characters outside the XML 1.0 `Char` production (control characters, lone surrogates), which no XML parser accepts.
-_INVALID_XML_CHARS = re.compile("[^\u0009\u000A\u000D\u0020-\uD7FF\uE000-\uFFFD\U00010000-\U0010FFFF]")
+_INVALID_XML_CHARS = re.compile("[^\u0009\u000a\u000d\u0020-\ud7ff\ue000-\ufffd\U00010000-\U0010ffff]")
 
 
 def escape(value: str) -> str:
