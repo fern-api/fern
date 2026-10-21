@@ -68,7 +68,8 @@ def _parse_retry_after(response_headers: httpx.Headers) -> typing.Optional[float
         except ValueError:
             pass
         else:
-            return retry_after_ms_value / 1000 if retry_after_ms_value > 0 else 0
+            if 0 < retry_after_ms_value < float("inf"):
+                return retry_after_ms_value / 1000
 
     retry_after = response_headers.get("retry-after")
     if retry_after is None:
