@@ -817,13 +817,21 @@ class ModuleFile {
 
         const { sorted, cycles } = topologicalSortWithCycleDetection(filteredTypeDeclarations, dependsOn);
 
+        // Types are registered with `autoload` rather than required eagerly, so loading the
+        // gem only pays for the (small) runtime; each type file is read on first reference.
+        const autoloads = new Map<string, string[]>();
         sorted.forEach((typeDeclaration) => {
             const typeFilePath = join(
                 this.project.absolutePathToOutputDirectory,
                 this.context.getLocationForTypeId(typeDeclaration.name.typeId),
                 RelativeFilePath.of(this.context.getFileNameForTypeId(typeDeclaration.name.typeId))
             );
-            relativeImportPaths.add(relative(this.filePath, typeFilePath));
+            const classReference = this.context.getClassReferenceForTypeId(typeDeclaration.name.typeId);
+            const requirePath = relative(this.filePath, typeFilePath).replace(/\.rb$/, "");
+            const key = classReference.modules.join("::");
+            const entries = autoloads.get(key) ?? [];
+            entries.push(`autoload :${classReference.name}, File.join(__dir__, "${requirePath}")`);
+            autoloads.set(key, entries);
         });
 
         rubyFilePaths.forEach((filePath) => {
@@ -848,7 +856,8 @@ class ModuleFile {
             Array.from(relativeImportPaths)
                 .filter((importPath) => importPath.endsWith(".rb"))
                 .map((importPath) => `require_relative "${importPath.replaceAll(".rb", "")}"`)
-                .join("\n");
+                .join("\n") +
+            this.renderAutoloads(autoloads);
 
         // Add optional user require paths hook at the end (only if configured)
         // This allows users to add custom code (e.g., Sentry integration) without fernignoring generated files
@@ -871,6 +880,18 @@ end`;
         }
 
         return dedent`${contents}` + "\n";
+    }
+
+    private renderAutoloads(autoloads: Map<string, string[]>): string {
+        let rendered = "";
+        for (const [key, entries] of autoloads) {
+            const modules = key.split("::");
+            rendered += "\n\n";
+            rendered += modules.map((moduleName, depth) => `${"  ".repeat(depth)}module ${moduleName}\n`).join("");
+            rendered += entries.map((entry) => `${"  ".repeat(modules.length)}${entry}\n`).join("");
+            rendered += modules.map((_, depth) => `${"  ".repeat(modules.length - 1 - depth)}end\n`).join("");
+        }
+        return rendered.replace(/\n$/, "");
     }
 
     public async writeFile(): Promise<void> {

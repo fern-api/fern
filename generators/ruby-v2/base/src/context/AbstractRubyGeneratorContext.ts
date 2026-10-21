@@ -210,6 +210,15 @@ export abstract class AbstractRubyGeneratorContext<
 
     public abstract getFileNameForTypeId(typeId: FernIr.TypeId): string;
 
+    /**
+     * Returns the `require_relative` target that loads the gem's root file (`lib/<root>.rb`) from the
+     * file declaring the given type, so a type file can be required on its own.
+     */
+    public getRequireRelativePathToRootFile(typeId: FernIr.TypeId): string {
+        const depth = this.getLocationForTypeId(typeId).split("/").length - 1;
+        return `${"../".repeat(depth)}${this.getRootFolderName()}`;
+    }
+
     public abstract getModuleNamesForTypeId(typeId: FernIr.TypeId): string[];
 
     public abstract getModulesForTypeId(typeId: FernIr.TypeId): ruby.Module_[];
