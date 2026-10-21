@@ -8,4 +8,4 @@
     Every XML type gets a `<Type>Option` func type and one `With<Type><Attribute>(value)` option per
     attribute, so pointer-typed optional attributes no longer need `api.String(...)`/`&v`.
     Also adds a generic `Ptr[T any](v T) *T` helper next to the existing typed pointer helpers.
-  type: feat
+  type: fix
