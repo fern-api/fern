@@ -82,6 +82,11 @@ class SDKCustomConfig(pydantic.BaseModel):
     extra_dependencies: Dict[str, Union[str, DependencyCustomConfig]] = {}
     extra_dev_dependencies: Dict[str, Union[str, BaseDependencyCustomConfig]] = {}
     extras: Dict[str, List[str]] = {}
+    # When set, httpx (the HTTP client) is declared optional and exposed under the
+    # named extra (e.g. `http_client_extra: client` -> `pip install <pkg>[client]`), so a
+    # plain install of a package used for its models only (e.g. TwiML) does not pull in
+    # the HTTP stack. Off by default — the base install keeps httpx.
+    http_client_extra: Optional[str] = None
     skip_formatting: bool = False
     client: ClientConfiguration = ClientConfiguration()
     include_union_utils: bool = False

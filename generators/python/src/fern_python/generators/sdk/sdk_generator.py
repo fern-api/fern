@@ -2,6 +2,7 @@ import os
 import sys
 from typing import Literal, Optional, Sequence, Tuple, Union, cast
 
+import fern.ir.resources as ir_types
 from .client_generator.client_generator import ClientGenerator
 from .client_generator.generated_root_client import GeneratedRootClient, RootClient
 from .client_generator.inferred_auth_token_provider_generator import InferredAuthTokenProviderGenerator
@@ -21,12 +22,16 @@ from .environment_generators import (
 )
 from .error_generator.error_generator import ErrorGenerator
 from .v2.generator import PythonV2Generator
+from fern.generator_exec import GeneratorUpdate, LogLevel, LogUpdate, Snippets
+from fern.generator_exec.config import GeneratorConfig
+
 from fern_python.cli.abstract_generator import AbstractGenerator
 from fern_python.codegen import AST, Project
 from fern_python.codegen.ast.dependency.dependency import DependencyCompatibility
 from fern_python.codegen.filepath import Filepath
 from fern_python.codegen.module_manager import ModuleExport
 from fern_python.codegen.project import ProjectConfig
+from fern_python.external_dependencies.httpx import HTTPX_MIN_VERSION
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.generators.context.pydantic_generator_context import has_xml_types
 from fern_python.generators.pydantic_model.pydantic_model_generator import PydanticModelGenerator
@@ -47,10 +52,6 @@ from fern_python.snippet import SnippetRegistry, SnippetWriter
 from fern_python.snippet.snippet_test_factory import SnippetTestFactory
 from fern_python.utils import resolve_name
 from fern_python.utils.build_snippet_writer import build_snippet_writer
-
-import fern.ir.resources as ir_types
-from fern.generator_exec import GeneratorUpdate, LogLevel, LogUpdate, Snippets
-from fern.generator_exec.config import GeneratorConfig
 
 
 class SdkGenerator(AbstractGenerator):
@@ -145,6 +146,21 @@ class SdkGenerator(AbstractGenerator):
         aiohttp_deps = ["aiohttp", "httpx-aiohttp"]
         existing = extras.get("aiohttp", [])
         extras["aiohttp"] = list(dict.fromkeys(existing + aiohttp_deps))
+
+        if custom_config.http_client_extra is not None:
+            extras[custom_config.http_client_extra] = list(
+                dict.fromkeys(extras.get(custom_config.http_client_extra, []) + ["httpx"])
+            )
+            extras["aiohttp"] = list(dict.fromkeys(extras["aiohttp"] + ["httpx"]))
+            project.add_dependency(
+                dependency=AST.Dependency(
+                    name="httpx",
+                    version="0.25.0" if custom_config.tcp_keepalive.enabled else HTTPX_MIN_VERSION,
+                    compatibility=DependencyCompatibility.GREATER_THAN_OR_EQUAL,
+                    optional=True,
+                ),
+                is_user_override=True,
+            )
         project.add_extra(extras)
 
         # Add optional dependencies for aiohttp support.
@@ -161,7 +177,7 @@ class SdkGenerator(AbstractGenerator):
         # `socket_options=` on httpx.HTTPTransport/AsyncHTTPTransport (used for TCP
         # keepalive) was added in httpx>=0.25 / httpcore>=0.18. The generated SDK's
         # floor is otherwise httpx>=0.21.2, so bump it only when keepalive is opted in.
-        if custom_config.tcp_keepalive.enabled:
+        if custom_config.tcp_keepalive.enabled and custom_config.http_client_extra is None:
             project.add_dependency(
                 dependency=AST.Dependency(
                     name="httpx",
