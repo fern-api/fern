@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    XML (TwiML) types gain `asXML(bool $xmlDeclaration = true)` as an alias of `toXml()`, matching
+    the legacy TwiML SDK and `SimpleXMLElement::asXML()`.
+  type: fix
