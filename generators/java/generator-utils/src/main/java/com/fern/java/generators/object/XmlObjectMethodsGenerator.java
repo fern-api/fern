@@ -13,15 +13,18 @@ import com.fern.java.utils.JavaDocUtils;
 import com.fern.java.utils.KeyWordUtils;
 import com.fern.java.utils.NameUtils;
 import com.fern.java.utils.XmlTypeUtils;
+import com.squareup.javapoet.ArrayTypeName;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -122,9 +125,14 @@ public final class XmlObjectMethodsGenerator {
         List<MethodSpec> childBuilderMethods = generateChildBuilderMethods(typeSpec);
         boolean hasFinalStage =
                 typeSpec.typeSpecs.stream().anyMatch(nested -> nested.name.equals(FINAL_STAGE_INTERFACE_NAME));
+        generateTextBuilderFactory(typeSpec).ifPresent(builder::addMethod);
+        Map<String, TypeName> listAttributeItemTypes = getListAttributeItemTypes();
         builder.typeSpecs.clear();
         for (TypeSpec nested : typeSpec.typeSpecs) {
-            TypeSpec updated = withChildBuilderMethods(withSetterJavadocs(nested), childBuilderMethods, hasFinalStage);
+            TypeSpec updated = withChildBuilderMethods(
+                    withListAttributeVarargs(withSetterJavadocs(nested), listAttributeItemTypes),
+                    childBuilderMethods,
+                    hasFinalStage);
             if (nested.name.equals(BUILDER_CLASS_NAME)) {
                 updated = updated.toBuilder()
                         .addMethod(generateFromXmlString(builderClassName))
@@ -480,7 +488,11 @@ public final class XmlObjectMethodsGenerator {
             return Collections.emptyList();
         }
         Set<String> takenNames = new HashSet<>();
-        typeSpec.typeSpecs.forEach(nested -> nested.methodSpecs.forEach(method -> takenNames.add(method.name)));
+        Set<String> takenSignatures = new HashSet<>();
+        typeSpec.typeSpecs.forEach(nested -> nested.methodSpecs.forEach(method -> {
+            takenNames.add(method.name);
+            takenSignatures.add(signature(method.name, method.parameters));
+        }));
         List<MethodSpec> methods = new ArrayList<>();
         for (EnrichedObjectProperty property : properties) {
             PropertyShape shape = PropertyShape.of(property, typeDeclarations, generatorContext);
@@ -489,7 +501,8 @@ public final class XmlObjectMethodsGenerator {
             }
             String fieldName = property.fieldSpec().get().name;
             for (ChildVariant variant : shape.childVariants()) {
-                String methodName = KeyWordUtils.getKeyWordCompatibleMethodName(variant.camelCaseName);
+                String legacyName = KeyWordUtils.getKeyWordCompatibleMethodName(variant.camelCaseName);
+                String methodName = legacyName;
                 for (int suffix = 1; !takenNames.add(methodName); suffix++) {
                     methodName = "add" + variant.pascalCaseName + (suffix == 1 ? "" : suffix);
                 }
@@ -525,9 +538,113 @@ public final class XmlObjectMethodsGenerator {
                 }
                 method.addStatement("this.$L.add($T.element(item))", contentFieldName, xmlNodeClassName);
                 methods.add(method.addStatement("return this").build());
+                ParameterSpec parameter = ParameterSpec.builder(variant.typeName, variant.parameterName)
+                        .build();
+                if (!methodName.equals(legacyName)
+                        && takenSignatures.add(signature(legacyName, Collections.singletonList(parameter)))) {
+                    methods.add(MethodSpec.methodBuilder(legacyName)
+                            .addJavadoc(
+                                    "Appends a &lt;$L&gt; child element after any content added so far.\n",
+                                    variant.elementName)
+                            .addJavadoc(JavaDocUtils.getParameterJavadoc(
+                                    variant.parameterName, "the &lt;" + variant.elementName + "&gt; element to append"))
+                            .addJavadoc(JavaDocUtils.getReturnDocs("this builder"))
+                            .addModifiers(Modifier.PUBLIC)
+                            .addParameter(parameter)
+                            .returns(objectClassName.nestedClass(BUILDER_CLASS_NAME))
+                            .addStatement("return $L($L)", methodName, variant.parameterName)
+                            .build());
+                }
             }
         }
         return methods;
+    }
+
+    private static String signature(String name, List<ParameterSpec> parameters) {
+        return name
+                + parameters.stream()
+                        .map(parameter -> parameter.type.toString())
+                        .collect(Collectors.joining(",", "(", ")"));
+    }
+
+    /**
+     * {@code builder(text)} for types whose text content is required, so {@code Say.builder("hi")} reads like the
+     * legacy constructors; only generated when the text is the first stage of the staged builder.
+     */
+    private Optional<MethodSpec> generateTextBuilderFactory(TypeSpec typeSpec) {
+        Optional<String> textFieldName = properties.stream()
+                .filter(property -> {
+                    PropertyShape shape = PropertyShape.of(property, typeDeclarations, generatorContext);
+                    return shape.kind.getEnumValue() == XmlPropertyKind.Value.TEXT && !shape.optional;
+                })
+                .map(property -> property.fieldSpec().get().name)
+                .findFirst();
+        Optional<MethodSpec> factory = typeSpec.methodSpecs.stream()
+                .filter(method -> method.name.equals("builder")
+                        && method.parameters.isEmpty()
+                        && method.modifiers.contains(Modifier.STATIC))
+                .findFirst();
+        if (textFieldName.isEmpty() || factory.isEmpty() || !(factory.get().returnType instanceof ClassName)) {
+            return Optional.empty();
+        }
+        String firstStageName = ((ClassName) factory.get().returnType).simpleName();
+        return typeSpec.typeSpecs.stream()
+                .filter(nested -> nested.name.equals(firstStageName) && !nested.name.equals(BUILDER_CLASS_NAME))
+                .flatMap(nested -> nested.methodSpecs.stream())
+                .filter(method -> method.name.equals(textFieldName.get()) && method.parameters.size() == 1)
+                .findFirst()
+                .map(stageMethod -> MethodSpec.methodBuilder("builder")
+                        .addJavadoc("Starts a builder with the element's text content set.\n")
+                        .addJavadoc(JavaDocUtils.getParameterJavadoc(
+                                textFieldName.get(), "the text content of the element"))
+                        .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                        .addParameter(stageMethod.parameters.get(0).type, textFieldName.get())
+                        .returns(stageMethod.returnType)
+                        .addStatement("return builder().$L($L)", textFieldName.get(), textFieldName.get())
+                        .build());
+    }
+
+    private Map<String, TypeName> getListAttributeItemTypes() {
+        Map<String, TypeName> itemTypes = new HashMap<>();
+        for (EnrichedObjectProperty property : properties) {
+            PropertyShape shape = PropertyShape.of(property, typeDeclarations, generatorContext);
+            if (shape.kind.getEnumValue() == XmlPropertyKind.Value.ATTRIBUTE && shape.list) {
+                itemTypes.put(property.fieldSpec().get().name, shape.itemTypeName);
+            }
+        }
+        return itemTypes;
+    }
+
+    /**
+     * Adds a varargs overload next to every {@code List} setter of a list-valued attribute, so a single value or a few
+     * values can be passed without building a list ({@code gather.input(GatherInputItem.DTMF)}).
+     */
+    private static TypeSpec withListAttributeVarargs(TypeSpec nested, Map<String, TypeName> listAttributeItemTypes) {
+        List<MethodSpec> listSetters = nested.methodSpecs.stream()
+                .filter(method -> listAttributeItemTypes.containsKey(method.name)
+                        && method.parameters.size() == 1
+                        && method.parameters.get(0).type instanceof ParameterizedTypeName
+                        && ((ParameterizedTypeName) method.parameters.get(0).type)
+                                .rawType.equals(ClassName.get(List.class)))
+                .collect(Collectors.toList());
+        if (listSetters.isEmpty()) {
+            return nested;
+        }
+        TypeSpec.Builder builder = nested.toBuilder();
+        for (MethodSpec setter : listSetters) {
+            MethodSpec.Builder varargs = MethodSpec.methodBuilder(setter.name)
+                    .addJavadoc(setter.javadoc)
+                    .addModifiers(setter.modifiers)
+                    .addAnnotations(setter.annotations)
+                    .addParameter(ArrayTypeName.of(listAttributeItemTypes.get(setter.name)), setter.name)
+                    .varargs()
+                    .returns(setter.returnType);
+            if (!setter.modifiers.contains(Modifier.ABSTRACT)) {
+                varargs.addStatement("return $L($T.asList($L))", setter.name, Arrays.class, setter.name);
+            }
+            builder.addMethod(varargs.build());
+        }
+        return builder.build();
     }
 
     /**
