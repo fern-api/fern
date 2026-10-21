@@ -139,7 +139,7 @@ describe("dedupeUnionBaseProperties", () => {
           	client "github.com/acme/acme-go/client"
           )
 
-          func do() {
+          func do() error {
           	client := client.NewClient()
           	request := &acme.Shape{
           		Circle: &acme.Circle{
@@ -148,10 +148,14 @@ describe("dedupeUnionBaseProperties", () => {
           		Name: "name",
           		ID:   "id",
           	}
-          	client.Union.Update(
+          	_, err := client.Union.Update(
           		context.TODO(),
           		request,
           	)
+          	if err != nil {
+          		return err
+          	}
+          	return nil
           }
           "
         `);
@@ -172,7 +176,7 @@ describe("dedupeUnionBaseProperties", () => {
           	client "github.com/acme/acme-go/client"
           )
 
-          func do() {
+          func do() error {
           	client := client.NewClient()
           	request := &acme.Shape{
           		Circle: &acme.Circle{
@@ -181,10 +185,14 @@ describe("dedupeUnionBaseProperties", () => {
           		Name: "name",
           		ID:   "id",
           	}
-          	client.Union.Update(
+          	_, err := client.Union.Update(
           		context.TODO(),
           		request,
           	)
+          	if err != nil {
+          		return err
+          	}
+          	return nil
           }
           "
         `);
@@ -208,7 +216,7 @@ describe("dedupeUnionBaseProperties", () => {
           	client "github.com/acme/acme-go/client"
           )
 
-          func do() {
+          func do() error {
           	client := client.NewClient()
           	request := &acme.Shape{
           		Circle: &acme.Circle{
@@ -217,10 +225,14 @@ describe("dedupeUnionBaseProperties", () => {
           			ID:     "id",
           		},
           	}
-          	client.Union.Update(
+          	_, err := client.Union.Update(
           		context.TODO(),
           		request,
           	)
+          	if err != nil {
+          		return err
+          	}
+          	return nil
           }
           "
         `);
@@ -246,7 +258,7 @@ describe("dedupeUnionBaseProperties", () => {
           	client "github.com/acme/acme-go/client"
           )
 
-          func do() {
+          func do() error {
           	client := client.NewClient()
           	request := &acme.Shape{
           		Circle: &acme.Circle{
@@ -255,10 +267,14 @@ describe("dedupeUnionBaseProperties", () => {
           			ID:     "id",
           		},
           	}
-          	client.Union.Update(
+          	_, err := client.Union.Update(
           		context.TODO(),
           		request,
           	)
+          	if err != nil {
+          		return err
+          	}
+          	return nil
           }
           "
         `);
@@ -284,7 +300,7 @@ describe("dedupeUnionBaseProperties", () => {
           	client "github.com/acme/acme-go/client"
           )
 
-          func do() {
+          func do() error {
           	client := client.NewClient()
           	request := &acme.Shape{
           		Circle: &acme.Circle{
@@ -296,10 +312,14 @@ describe("dedupeUnionBaseProperties", () => {
           			"name",
           		),
           	}
-          	client.Union.Update(
+          	_, err := client.Union.Update(
           		context.TODO(),
           		request,
           	)
+          	if err != nil {
+          		return err
+          	}
+          	return nil
           }
           "
         `);
