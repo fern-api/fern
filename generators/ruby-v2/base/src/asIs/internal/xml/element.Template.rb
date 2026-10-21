@@ -79,7 +79,7 @@ module <%= gem_namespace %>
         # and either would otherwise end the comment early and turn the rest into markup, so both are spaced out.
         # @return [String]
         def xml_text
-          safe = value.gsub(/-(?=-)/, "- ")
+          safe = value.gsub(Utils::INVALID_XML_CHARS, "").gsub(/-(?=-)/, "- ")
           safe.end_with?("-") ? "#{safe} " : safe
         end
 

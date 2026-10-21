@@ -53,6 +53,8 @@ describe("serializeXmlElement", () => {
             text: "a\u0000b\u001fc\td",
         });
         expect(xml).toBe('<Say voice="man">abc\td</Say>');
+        expect(new XmlComment("c\u0001\u{1F600}").toXml()).toBe("<!--c\u{1F600}-->");
+        expect(serializeXmlElement({ name: "Say", text: "\u{1F600} \uD83D!" })).toBe("<Say>\u{1F600} !</Say>");
     });
 
     it("self-closes empty elements and supports namespaces, wrappers and declarations", () => {

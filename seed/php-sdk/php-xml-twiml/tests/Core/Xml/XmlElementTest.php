@@ -35,6 +35,11 @@ class XmlElementTest extends TestCase
     {
         $element = new XmlElement('Say', "a\x00b\x1fc\td", ['voice' => "man\x01"]);
         $this->assertSame("<Say voice=\"man\">abc\td</Say>", $element->toXml());
+
+        $element = new XmlElement('Say', "\u{1F600}", namespace: "urn:a\x01", prefix: 'tw');
+        $element->namespaceDeclarations['x'] = "urn:b\x01";
+        $element->addChild(XmlComment::before("c\x01"));
+        $this->assertSame('<!--c--><tw:Say xmlns:tw="urn:a" xmlns:x="urn:b">' . "\u{1F600}" . '</tw:Say>', $element->toXml());
     }
 
     public function testSerializesNamespacesAndPrefixes(): void

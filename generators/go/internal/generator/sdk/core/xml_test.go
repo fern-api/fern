@@ -75,6 +75,7 @@ func TestParseXmlErrors(t *testing.T) {
 func TestXmlElementDropsInvalidChars(t *testing.T) {
 	element := NewXmlElement("Say").SetAttribute("voice", "man\x01").SetText("a\x00b\x1fc d")
 	assert.Equal(t, "<Say voice=\"man\">abc d</Say>", element.ToXml())
+	assert.Equal(t, "<R><!--c\U0001F600--></R>", NewXmlElement("R").AddComment("c\x01\U0001F600").ToXml())
 }
 
 func TestXmlScalars(t *testing.T) {

@@ -226,12 +226,12 @@ public final class XmlWriter {
     public static String escape(String value) {
         StringBuilder escaped = new StringBuilder(value.length());
         for (int i = 0; i < value.length(); ) {
-            int c = value.codePointAt(i);
-            i += Character.charCount(c);
-            if (!isXmlChar(c)) {
+            int codePoint = value.codePointAt(i);
+            i += Character.charCount(codePoint);
+            if (!isXmlChar(codePoint)) {
                 continue;
             }
-            switch (c) {
+            switch (codePoint) {
                 case '&':
                     escaped.append("&amp;");
                     break;
@@ -245,10 +245,23 @@ public final class XmlWriter {
                     escaped.append("&quot;");
                     break;
                 default:
-                    escaped.appendCodePoint(c);
+                    escaped.appendCodePoint(codePoint);
             }
         }
         return escaped.toString();
+    }
+
+    /** Drops characters outside the XML 1.0 {@code Char} production without escaping markup. */
+    public static String stripInvalidXmlChars(String value) {
+        StringBuilder result = new StringBuilder(value.length());
+        for (int i = 0; i < value.length(); ) {
+            int codePoint = value.codePointAt(i);
+            i += Character.charCount(codePoint);
+            if (isXmlChar(codePoint)) {
+                result.appendCodePoint(codePoint);
+            }
+        }
+        return result.toString();
     }
 
     private static boolean isXmlChar(int codePoint) {

@@ -83,12 +83,13 @@ internal static class XmlUtils
                 builder?.Append(c);
                 continue;
             }
-            if (i + 1 < value.Length && XmlConvert.IsXmlSurrogatePair(value[i + 1], c))
+            if (char.IsHighSurrogate(c) && i + 1 < value.Length && char.IsLowSurrogate(value[i + 1]))
             {
                 builder?.Append(c).Append(value[i + 1]);
                 i++;
                 continue;
             }
+            // Lone surrogates, control characters and the noncharacters U+FFFE/U+FFFF are dropped.
             builder ??= new StringBuilder(value, 0, i, value.Length);
         }
         return builder?.ToString() ?? value;
@@ -130,7 +131,8 @@ internal static class XmlUtils
             return nodes.ToArray();
         }
 
-        private static string Render(XComment comment) => "<!--" + comment.Value + "-->";
+        private static string Render(XComment comment) =>
+            "<!--" + StripInvalidXmlChars(comment.Value) + "-->";
 
         internal string Wrap(string xml)
         {

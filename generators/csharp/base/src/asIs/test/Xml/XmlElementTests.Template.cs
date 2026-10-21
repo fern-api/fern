@@ -31,6 +31,15 @@ public class XmlElementTests
     }
 
     [Test]
+    public void ToXml_KeepsSupplementaryCharactersAndDropsLoneSurrogates()
+    {
+        var element = new XmlElement("Say", "\U0001F600 \uD83D!").SetAttribute("voice", "\U0001F600\uDE00");
+        element.Content.Add(XmlComment.Before("c\u0001\U0001F600"));
+
+        Assert.That(element.ToXml(), Is.EqualTo("<!--c\U0001F600--><Say voice=\"\U0001F600\">\U0001F600 !</Say>"));
+    }
+
+    [Test]
     public void ToXml_WritesNamespaceAndPrefix()
     {
         var element = new XmlElement("Dial", "+15551234567", "https://www.twilio.com/twiml", "tw");

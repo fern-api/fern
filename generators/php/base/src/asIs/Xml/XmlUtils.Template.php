@@ -54,7 +54,7 @@ final class XmlUtils
         $qualifiedName = $element->prefix !== null && $element->prefix !== ''
             ? "{$element->prefix}:{$element->name}"
             : $element->name;
-        $namespace = $element->namespace;
+        $namespace = $element->namespace === null ? null : self::stripInvalidXmlChars($element->namespace);
         $parentElement = $parent instanceof DOMElement ? $parent : null;
         if ($namespace === null && $element->prefix !== null && $parentElement !== null) {
             $namespace = $parentElement->lookupNamespaceURI($element->prefix);
@@ -70,6 +70,7 @@ final class XmlUtils
         $parent->appendChild($node);
 
         foreach ($element->namespaceDeclarations as $prefix => $uri) {
+            $uri = self::stripInvalidXmlChars($uri);
             $inherited = $parentElement?->lookupNamespaceURI($prefix === '' ? null : $prefix);
             if ($inherited !== $uri) {
                 $node->setAttributeNS(self::XMLNS_NAMESPACE_URI, $prefix === '' ? 'xmlns' : "xmlns:$prefix", $uri);

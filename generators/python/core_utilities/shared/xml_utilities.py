@@ -74,7 +74,7 @@ class XmlChild:
 def xml_comment_text(text: str) -> str:
     """Makes text safe to place inside a comment: XML forbids `--` within a comment and a trailing `-`,
     and either would otherwise end the comment early and turn the rest into markup."""
-    safe = re.sub(r"-(?=-)", "- ", text)
+    safe = re.sub(r"-(?=-)", "- ", _INVALID_XML_CHARS.sub("", text))
     return f"{safe} " if safe.endswith("-") else safe
 
 

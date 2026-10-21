@@ -20,6 +20,7 @@ describe <%= gem_namespace %>::Internal::Xml::Element do
       element = XmlTestElement.new("Say", text: "a\x00b\x1Fc\td", attributes: { "voice" => "man\x01" })
 
       assert_equal "<Say voice=\"man\">abc\td</Say>", element.to_xml
+      assert_equal "<!--c\u{1F600}-->", XmlTestComment.new("c\u0001\u{1F600}").to_s
     end
 
     it "self-closes empty elements and prepends the declaration on request" do
