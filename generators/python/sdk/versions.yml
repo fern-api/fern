@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.41.5
+  changelogEntry:
+    - summary: |
+        SSE retry directives now accept ASCII decimal digits only. Malformed values containing signs,
+        whitespace, underscores, or non-ASCII digits are ignored, preserving the last valid reconnect delay.
+      type: fix
+  createdAt: "2026-10-21"
+  irVersion: 67
 - version: 5.41.4
   changelogEntry:
     - summary: |

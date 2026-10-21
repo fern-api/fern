@@ -7,6 +7,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from typing import Any, AsyncIterator, Callable, Iterator, List, Optional, Sequence, cast
 from unittest.mock import AsyncMock, Mock
 
+import anyio
 import httpx
 import pytest
 
@@ -1728,3 +1729,50 @@ class TestSSEReconnectionEndToEnd:
 
         assert collected == ["event-1", "event-2", "event-3", "event-4", "event-5"]
         assert _DroppingSSEHandler.last_event_ids == [None, "2", "4"]
+
+
+_RETRY_FIELD_CASES = [
+    ("+1000", 5000),
+    ("-1000", 5000),
+    ("1_000", 5000),
+    (" 1000", 5000),
+    ("1000 ", 5000),
+    ("\t1000", 5000),
+    ("١٠٠٠", 5000),
+    ("", 5000),
+    ("1000", 1000),
+    ("001000", 1000),
+]
+
+
+@pytest.mark.parametrize("retry_field,expected_milliseconds", _RETRY_FIELD_CASES)
+def test_reconnect_ignores_malformed_retry_fields(
+    monkeypatch: pytest.MonkeyPatch, retry_field: str, expected_milliseconds: int
+) -> None:
+    delays: List[float] = []
+    monkeypatch.setattr(time, "sleep", delays.append)
+    first = _sse(f'retry: 5000\nretry: {retry_field}\nid: 1\ndata: {{"value": 1}}\n\n')
+    reconnect = _SyncReconnector([_sse("data: [DONE]\n\n")])
+
+    assert _collect_sync(_resumable_source(first, reconnect)) == ['{"value": 1}']
+    assert reconnect.calls == ["1"]
+    assert delays == [expected_milliseconds / 1000.0]
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("retry_field,expected_milliseconds", _RETRY_FIELD_CASES)
+async def test_reconnect_ignores_malformed_retry_fields_async(
+    monkeypatch: pytest.MonkeyPatch, retry_field: str, expected_milliseconds: int
+) -> None:
+    delays: List[float] = []
+
+    async def record_delay(delay: float) -> None:
+        delays.append(delay)
+
+    monkeypatch.setattr(anyio, "sleep", record_delay)
+    first = _sse(f'retry: 5000\nretry: {retry_field}\nid: 1\ndata: {{"value": 1}}\n\n')
+    reconnect = _AsyncReconnector([_sse("data: [DONE]\n\n")])
+
+    assert await _collect_async(_resumable_source(first, reconnect)) == ['{"value": 1}']
+    assert reconnect.calls == ["1"]
+    assert delays == [expected_milliseconds / 1000.0]
