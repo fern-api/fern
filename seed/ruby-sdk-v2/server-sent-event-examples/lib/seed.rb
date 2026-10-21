@@ -36,18 +36,25 @@ require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/connection_error"
-require_relative "seed/completions/types/streamed_completion"
-require_relative "seed/completions/types/completion_event"
-require_relative "seed/completions/types/event_event"
-require_relative "seed/completions/types/error_event"
-require_relative "seed/completions/types/stream_event_context_protocol"
-require_relative "seed/completions/types/group_created_event"
-require_relative "seed/completions/types/group_deleted_event"
-require_relative "seed/completions/types/stream_event_discriminant_in_data"
-require_relative "seed/completions/types/stream_event"
 require_relative "seed/client"
 require_relative "seed/completions/client"
 require_relative "seed/completions/types/stream_completion_request"
 require_relative "seed/completions/types/stream_events_request"
 require_relative "seed/completions/types/stream_events_discriminant_in_data_request"
 require_relative "seed/completions/types/stream_events_context_protocol_request"
+
+module Seed
+  module Completions
+    module Types
+      autoload :StreamedCompletion, File.join(__dir__, "seed/completions/types/streamed_completion")
+      autoload :CompletionEvent, File.join(__dir__, "seed/completions/types/completion_event")
+      autoload :EventEvent, File.join(__dir__, "seed/completions/types/event_event")
+      autoload :ErrorEvent, File.join(__dir__, "seed/completions/types/error_event")
+      autoload :StreamEventContextProtocol, File.join(__dir__, "seed/completions/types/stream_event_context_protocol")
+      autoload :GroupCreatedEvent, File.join(__dir__, "seed/completions/types/group_created_event")
+      autoload :GroupDeletedEvent, File.join(__dir__, "seed/completions/types/group_deleted_event")
+      autoload :StreamEventDiscriminantInData, File.join(__dir__, "seed/completions/types/stream_event_discriminant_in_data")
+      autoload :StreamEvent, File.join(__dir__, "seed/completions/types/stream_event")
+    end
+  end
+end

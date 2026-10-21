@@ -36,13 +36,18 @@ require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/connection_error"
-require_relative "seed/types/ast_node_llm"
-require_relative "seed/types/ast_text_node"
-require_relative "seed/types/ast_null_node"
-require_relative "seed/types/ast_node"
-require_relative "seed/types/astllm_node_with_schema_type"
-require_relative "seed/types/astllm_node_with_schema"
-require_relative "seed/types/astllm_node_with_prompt_type"
-require_relative "seed/types/astllm_node_with_prompt"
-require_relative "seed/types/astllm_node"
 require_relative "seed/client"
+
+module Seed
+  module Types
+    autoload :AstNodeLlm, File.join(__dir__, "seed/types/ast_node_llm")
+    autoload :AstTextNode, File.join(__dir__, "seed/types/ast_text_node")
+    autoload :AstNullNode, File.join(__dir__, "seed/types/ast_null_node")
+    autoload :AstNode, File.join(__dir__, "seed/types/ast_node")
+    autoload :AstllmNodeWithSchemaType, File.join(__dir__, "seed/types/astllm_node_with_schema_type")
+    autoload :AstllmNodeWithSchema, File.join(__dir__, "seed/types/astllm_node_with_schema")
+    autoload :AstllmNodeWithPromptType, File.join(__dir__, "seed/types/astllm_node_with_prompt_type")
+    autoload :AstllmNodeWithPrompt, File.join(__dir__, "seed/types/astllm_node_with_prompt")
+    autoload :AstllmNode, File.join(__dir__, "seed/types/astllm_node")
+  end
+end

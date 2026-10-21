@@ -36,8 +36,15 @@ require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/connection_error"
-require_relative "seed/reporting/types/load_request_cache"
-require_relative "seed/reporting/types/load_request_status"
 require_relative "seed/client"
 require_relative "seed/reporting/client"
 require_relative "seed/reporting/types/load_request"
+
+module Seed
+  module Reporting
+    module Types
+      autoload :LoadRequestCache, File.join(__dir__, "seed/reporting/types/load_request_cache")
+      autoload :LoadRequestStatus, File.join(__dir__, "seed/reporting/types/load_request_status")
+    end
+  end
+end

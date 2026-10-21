@@ -36,14 +36,21 @@ require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/connection_error"
-require_relative "seed/nullable/types/email"
-require_relative "seed/nullable/types/user_id"
-require_relative "seed/nullable/types/weird_number"
-require_relative "seed/nullable/types/status"
-require_relative "seed/nullable/types/metadata"
-require_relative "seed/nullable/types/user"
 require_relative "seed/client"
 require_relative "seed/nullable/client"
 require_relative "seed/nullable/types/get_users_request"
 require_relative "seed/nullable/types/create_user_request"
 require_relative "seed/nullable/types/delete_user_request"
+
+module Seed
+  module Nullable
+    module Types
+      autoload :Email, File.join(__dir__, "seed/nullable/types/email")
+      autoload :UserID, File.join(__dir__, "seed/nullable/types/user_id")
+      autoload :WeirdNumber, File.join(__dir__, "seed/nullable/types/weird_number")
+      autoload :Status, File.join(__dir__, "seed/nullable/types/status")
+      autoload :Metadata, File.join(__dir__, "seed/nullable/types/metadata")
+      autoload :User, File.join(__dir__, "seed/nullable/types/user")
+    end
+  end
+end

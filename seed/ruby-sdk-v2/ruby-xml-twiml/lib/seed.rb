@@ -40,17 +40,22 @@ require_relative "seed/internal/xml/element"
 require_relative "seed/internal/xml/utils"
 require_relative "seed/internal/xml/serializable"
 require_relative "seed/errors/connection_error"
-require_relative "seed/types/break_strength"
-require_relative "seed/types/break_"
-require_relative "seed/types/say"
-require_relative "seed/types/dial_record_item"
-require_relative "seed/types/number"
-require_relative "seed/types/dial"
-require_relative "seed/types/pause"
-require_relative "seed/types/hangup"
-require_relative "seed/types/redirect"
-require_relative "seed/types/response_children_item"
-require_relative "seed/types/response"
-require_relative "seed/types/wide"
-require_relative "seed/types/plain_object"
 require_relative "seed/client"
+
+module Seed
+  module Types
+    autoload :BreakStrength, File.join(__dir__, "seed/types/break_strength")
+    autoload :Break, File.join(__dir__, "seed/types/break_")
+    autoload :Say, File.join(__dir__, "seed/types/say")
+    autoload :DialRecordItem, File.join(__dir__, "seed/types/dial_record_item")
+    autoload :Number, File.join(__dir__, "seed/types/number")
+    autoload :Dial, File.join(__dir__, "seed/types/dial")
+    autoload :Pause, File.join(__dir__, "seed/types/pause")
+    autoload :Hangup, File.join(__dir__, "seed/types/hangup")
+    autoload :Redirect, File.join(__dir__, "seed/types/redirect")
+    autoload :ResponseChildrenItem, File.join(__dir__, "seed/types/response_children_item")
+    autoload :Response, File.join(__dir__, "seed/types/response")
+    autoload :Wide, File.join(__dir__, "seed/types/wide")
+    autoload :PlainObject, File.join(__dir__, "seed/types/plain_object")
+  end
+end

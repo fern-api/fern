@@ -36,6 +36,11 @@ require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/connection_error"
-require_relative "seed/types/echo_request"
 require_relative "seed/client"
 require_relative "seed/service/client"
+
+module Seed
+  module Types
+    autoload :EchoRequest, File.join(__dir__, "seed/types/echo_request")
+  end
+end

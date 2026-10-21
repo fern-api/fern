@@ -36,9 +36,24 @@ require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/connection_error"
-require_relative "seed/auth/types/get_token_response"
-require_relative "seed/core/types/list_things_response"
 require_relative "seed/client"
 require_relative "seed/auth/client"
 require_relative "seed/core/client"
 require_relative "seed/environment"
+
+module Seed
+  module Auth
+    module Types
+      autoload :GetTokenResponse, File.join(__dir__, "seed/auth/types/get_token_response")
+    end
+  end
+end
+
+
+module Seed
+  module Core
+    module Types
+      autoload :ListThingsResponse, File.join(__dir__, "seed/core/types/list_things_response")
+    end
+  end
+end

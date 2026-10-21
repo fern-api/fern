@@ -36,8 +36,6 @@ require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/connection_error"
-require_relative "seed/organizations/types/organization"
-require_relative "seed/user/types/user"
 require_relative "seed/client"
 require_relative "seed/organizations/client"
 require_relative "seed/organizations/types/get_organization_user_request"
@@ -48,3 +46,20 @@ require_relative "seed/user/types/update_user_request"
 require_relative "seed/user/types/search_users_request"
 require_relative "seed/user/types/get_user_metadata_request"
 require_relative "seed/user/types/get_user_specifics_request"
+
+module Seed
+  module Organizations
+    module Types
+      autoload :Organization, File.join(__dir__, "seed/organizations/types/organization")
+    end
+  end
+end
+
+
+module Seed
+  module User
+    module Types
+      autoload :User, File.join(__dir__, "seed/user/types/user")
+    end
+  end
+end

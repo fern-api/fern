@@ -36,9 +36,14 @@ require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/connection_error"
-require_relative "seed/types/asset_report_pdf_get_request"
-require_relative "seed/types/asset_report_get_response"
-require_relative "seed/types/plaid_error"
-require_relative "seed/types/asset_report_pdf_get_response"
 require_relative "seed/client"
 require_relative "seed/asset_report/client"
+
+module Seed
+  module Types
+    autoload :AssetReportPdfGetRequest, File.join(__dir__, "seed/types/asset_report_pdf_get_request")
+    autoload :AssetReportGetResponse, File.join(__dir__, "seed/types/asset_report_get_response")
+    autoload :PlaidError, File.join(__dir__, "seed/types/plaid_error")
+    autoload :AssetReportPdfGetResponse, File.join(__dir__, "seed/types/asset_report_pdf_get_response")
+  end
+end

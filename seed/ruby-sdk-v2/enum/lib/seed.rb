@@ -36,14 +36,6 @@ require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/connection_error"
-require_relative "seed/types/operand"
-require_relative "seed/types/color"
-require_relative "seed/types/color_or_operand"
-require_relative "seed/types/forward_compatible_enum"
-require_relative "seed/types/enum_with_special_characters"
-require_relative "seed/types/enum_with_custom"
-require_relative "seed/types/special_enum"
-require_relative "seed/unknown/types/status"
 require_relative "seed/client"
 require_relative "seed/headers/client"
 require_relative "seed/headers/types/send_enum_as_header_request"
@@ -55,3 +47,24 @@ require_relative "seed/path_param/client"
 require_relative "seed/query_param/client"
 require_relative "seed/query_param/types/send_enum_as_query_param_request"
 require_relative "seed/query_param/types/send_enum_list_as_query_param_request"
+
+module Seed
+  module Types
+    autoload :Operand, File.join(__dir__, "seed/types/operand")
+    autoload :Color, File.join(__dir__, "seed/types/color")
+    autoload :ColorOrOperand, File.join(__dir__, "seed/types/color_or_operand")
+    autoload :ForwardCompatibleEnum, File.join(__dir__, "seed/types/forward_compatible_enum")
+    autoload :EnumWithSpecialCharacters, File.join(__dir__, "seed/types/enum_with_special_characters")
+    autoload :EnumWithCustom, File.join(__dir__, "seed/types/enum_with_custom")
+    autoload :SpecialEnum, File.join(__dir__, "seed/types/special_enum")
+  end
+end
+
+
+module Seed
+  module Unknown
+    module Types
+      autoload :Status, File.join(__dir__, "seed/unknown/types/status")
+    end
+  end
+end

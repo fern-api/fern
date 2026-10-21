@@ -36,16 +36,31 @@ require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/connection_error"
-require_relative "seed/auth/types/token_response"
-require_relative "seed/realtime/types/send_event"
-require_relative "seed/realtime/types/send_snake_case"
-require_relative "seed/realtime/types/receive_event"
-require_relative "seed/realtime/types/receive_snake_case"
-require_relative "seed/realtime/types/send_event2"
-require_relative "seed/realtime/types/receive_event2"
-require_relative "seed/realtime/types/receive_event3"
 require_relative "seed/client"
 require_relative "seed/auth/client"
 require_relative "seed/auth/types/get_token_request"
 require_relative "seed/auth/types/refresh_token_request"
 require_relative "seed/internal/inferred_auth_provider"
+
+module Seed
+  module Auth
+    module Types
+      autoload :TokenResponse, File.join(__dir__, "seed/auth/types/token_response")
+    end
+  end
+end
+
+
+module Seed
+  module Realtime
+    module Types
+      autoload :SendEvent, File.join(__dir__, "seed/realtime/types/send_event")
+      autoload :SendSnakeCase, File.join(__dir__, "seed/realtime/types/send_snake_case")
+      autoload :ReceiveEvent, File.join(__dir__, "seed/realtime/types/receive_event")
+      autoload :ReceiveSnakeCase, File.join(__dir__, "seed/realtime/types/receive_snake_case")
+      autoload :SendEvent2, File.join(__dir__, "seed/realtime/types/send_event2")
+      autoload :ReceiveEvent2, File.join(__dir__, "seed/realtime/types/receive_event2")
+      autoload :ReceiveEvent3, File.join(__dir__, "seed/realtime/types/receive_event3")
+    end
+  end
+end

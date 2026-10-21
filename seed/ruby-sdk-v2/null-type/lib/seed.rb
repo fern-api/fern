@@ -36,10 +36,23 @@ require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/connection_error"
-require_relative "seed/conversations/types/outbound_call_conversations_response"
-require_relative "seed/types/user"
 require_relative "seed/client"
 require_relative "seed/conversations/client"
 require_relative "seed/conversations/types/outbound_call_conversations_request"
 require_relative "seed/users/client"
 require_relative "seed/users/types/get_users_request"
+
+module Seed
+  module Conversations
+    module Types
+      autoload :OutboundCallConversationsResponse, File.join(__dir__, "seed/conversations/types/outbound_call_conversations_response")
+    end
+  end
+end
+
+
+module Seed
+  module Types
+    autoload :User, File.join(__dir__, "seed/types/user")
+  end
+end

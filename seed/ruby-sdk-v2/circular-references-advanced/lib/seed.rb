@@ -36,24 +36,45 @@ require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/connection_error"
-require_relative "seed/types/root_type"
-require_relative "seed/a/types/a"
-require_relative "seed/types/importing_a"
-require_relative "seed/ast/types/berry"
-require_relative "seed/ast/types/fig"
-require_relative "seed/ast/types/acai"
-require_relative "seed/ast/types/dog"
-require_relative "seed/ast/types/cat"
-require_relative "seed/ast/types/fruit"
-require_relative "seed/ast/types/animal"
-require_relative "seed/ast/types/leaf_node"
-require_relative "seed/ast/types/branch_node"
-require_relative "seed/ast/types/node"
-require_relative "seed/ast/types/nodes_wrapper"
-require_relative "seed/ast/types/primitive_value"
-require_relative "seed/ast/types/object_value"
-require_relative "seed/ast/types/field_value"
-require_relative "seed/ast/types/container_value"
-require_relative "seed/ast/types/field_name"
-require_relative "seed/ast/types/object_field_value"
 require_relative "seed/client"
+
+module Seed
+  module Types
+    autoload :RootType, File.join(__dir__, "seed/types/root_type")
+    autoload :ImportingA, File.join(__dir__, "seed/types/importing_a")
+  end
+end
+
+
+module Seed
+  module A
+    module Types
+      autoload :A, File.join(__dir__, "seed/a/types/a")
+    end
+  end
+end
+
+
+module Seed
+  module Ast
+    module Types
+      autoload :Berry, File.join(__dir__, "seed/ast/types/berry")
+      autoload :Fig, File.join(__dir__, "seed/ast/types/fig")
+      autoload :Acai, File.join(__dir__, "seed/ast/types/acai")
+      autoload :Dog, File.join(__dir__, "seed/ast/types/dog")
+      autoload :Cat, File.join(__dir__, "seed/ast/types/cat")
+      autoload :Fruit, File.join(__dir__, "seed/ast/types/fruit")
+      autoload :Animal, File.join(__dir__, "seed/ast/types/animal")
+      autoload :LeafNode, File.join(__dir__, "seed/ast/types/leaf_node")
+      autoload :BranchNode, File.join(__dir__, "seed/ast/types/branch_node")
+      autoload :Node, File.join(__dir__, "seed/ast/types/node")
+      autoload :NodesWrapper, File.join(__dir__, "seed/ast/types/nodes_wrapper")
+      autoload :PrimitiveValue, File.join(__dir__, "seed/ast/types/primitive_value")
+      autoload :ObjectValue, File.join(__dir__, "seed/ast/types/object_value")
+      autoload :FieldValue, File.join(__dir__, "seed/ast/types/field_value")
+      autoload :ContainerValue, File.join(__dir__, "seed/ast/types/container_value")
+      autoload :FieldName, File.join(__dir__, "seed/ast/types/field_name")
+      autoload :ObjectFieldValue, File.join(__dir__, "seed/ast/types/object_field_value")
+    end
+  end
+end

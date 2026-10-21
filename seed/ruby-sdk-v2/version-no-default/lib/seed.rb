@@ -36,7 +36,14 @@ require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/connection_error"
-require_relative "seed/user/types/user_id"
-require_relative "seed/user/types/user"
 require_relative "seed/client"
 require_relative "seed/user/client"
+
+module Seed
+  module User
+    module Types
+      autoload :UserID, File.join(__dir__, "seed/user/types/user_id")
+      autoload :User, File.join(__dir__, "seed/user/types/user")
+    end
+  end
+end

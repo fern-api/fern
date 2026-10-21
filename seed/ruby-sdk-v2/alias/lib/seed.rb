@@ -36,7 +36,12 @@ require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/connection_error"
-require_relative "seed/types/type_id"
-require_relative "seed/types/type"
-require_relative "seed/types/object"
 require_relative "seed/client"
+
+module Seed
+  module Types
+    autoload :TypeID, File.join(__dir__, "seed/types/type_id")
+    autoload :Type, File.join(__dir__, "seed/types/type")
+    autoload :Object_, File.join(__dir__, "seed/types/object")
+  end
+end

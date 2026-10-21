@@ -36,12 +36,25 @@ require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/connection_error"
-require_relative "seed/types/string_response"
-require_relative "seed/types/optional_string_response"
-require_relative "seed/types/with_metadata"
-require_relative "seed/service/types/with_docs"
-require_relative "seed/service/types/optional_with_docs"
-require_relative "seed/service/types/movie"
-require_relative "seed/service/types/response"
 require_relative "seed/client"
 require_relative "seed/service/client"
+
+module Seed
+  module Types
+    autoload :StringResponse, File.join(__dir__, "seed/types/string_response")
+    autoload :OptionalStringResponse, File.join(__dir__, "seed/types/optional_string_response")
+    autoload :WithMetadata, File.join(__dir__, "seed/types/with_metadata")
+  end
+end
+
+
+module Seed
+  module Service
+    module Types
+      autoload :WithDocs, File.join(__dir__, "seed/service/types/with_docs")
+      autoload :OptionalWithDocs, File.join(__dir__, "seed/service/types/optional_with_docs")
+      autoload :Movie, File.join(__dir__, "seed/service/types/movie")
+      autoload :Response, File.join(__dir__, "seed/service/types/response")
+    end
+  end
+end

@@ -36,7 +36,6 @@ require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/connection_error"
-require_relative "seed/auth/types/token_response"
 require_relative "seed/client"
 require_relative "seed/auth/client"
 require_relative "seed/auth/types/get_token_request"
@@ -48,3 +47,11 @@ require_relative "seed/nested/api/client"
 require_relative "seed/service/client"
 require_relative "seed/simple/client"
 require_relative "seed/internal/oauth_provider"
+
+module Seed
+  module Auth
+    module Types
+      autoload :TokenResponse, File.join(__dir__, "seed/auth/types/token_response")
+    end
+  end
+end

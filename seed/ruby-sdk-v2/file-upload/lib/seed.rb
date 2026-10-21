@@ -36,15 +36,6 @@ require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/connection_error"
-require_relative "seed/service/types/id"
-require_relative "seed/service/types/my_object_with_optional"
-require_relative "seed/service/types/my_object"
-require_relative "seed/service/types/my_alias_object"
-require_relative "seed/service/types/my_collection_alias_object"
-require_relative "seed/service/types/object_type"
-require_relative "seed/service/types/my_inline_type"
-require_relative "seed/service/types/model_type"
-require_relative "seed/service/types/open_enum_type"
 require_relative "seed/client"
 require_relative "seed/service/client"
 require_relative "seed/service/types/my_request"
@@ -59,3 +50,19 @@ require_relative "seed/service/types/inline_type_request"
 require_relative "seed/service/types/with_json_property_request"
 require_relative "seed/service/types/with_ref_body_request"
 require_relative "seed/service/types/literal_enum_request"
+
+module Seed
+  module Service
+    module Types
+      autoload :ID, File.join(__dir__, "seed/service/types/id")
+      autoload :MyObjectWithOptional, File.join(__dir__, "seed/service/types/my_object_with_optional")
+      autoload :MyObject, File.join(__dir__, "seed/service/types/my_object")
+      autoload :MyAliasObject, File.join(__dir__, "seed/service/types/my_alias_object")
+      autoload :MyCollectionAliasObject, File.join(__dir__, "seed/service/types/my_collection_alias_object")
+      autoload :ObjectType, File.join(__dir__, "seed/service/types/object_type")
+      autoload :MyInlineType, File.join(__dir__, "seed/service/types/my_inline_type")
+      autoload :ModelType, File.join(__dir__, "seed/service/types/model_type")
+      autoload :OpenEnumType, File.join(__dir__, "seed/service/types/open_enum_type")
+    end
+  end
+end

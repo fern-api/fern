@@ -36,14 +36,21 @@ require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/connection_error"
-require_relative "seed/package/types/package"
-require_relative "seed/package/types/record"
-require_relative "seed/package/types/custom_sip_header"
-require_relative "seed/package/types/sip_header_action"
-require_relative "seed/package/types/backup_override"
-require_relative "seed/package/types/backup_config"
-require_relative "seed/package/types/known_dependency"
-require_relative "seed/package/types/dependency_item"
 require_relative "seed/client"
 require_relative "seed/package/client"
 require_relative "seed/package/types/test_request"
+
+module Seed
+  module Package
+    module Types
+      autoload :Package, File.join(__dir__, "seed/package/types/package")
+      autoload :Record, File.join(__dir__, "seed/package/types/record")
+      autoload :CustomSipHeader, File.join(__dir__, "seed/package/types/custom_sip_header")
+      autoload :SipHeaderAction, File.join(__dir__, "seed/package/types/sip_header_action")
+      autoload :BackupOverride, File.join(__dir__, "seed/package/types/backup_override")
+      autoload :BackupConfig, File.join(__dir__, "seed/package/types/backup_config")
+      autoload :KnownDependency, File.join(__dir__, "seed/package/types/known_dependency")
+      autoload :DependencyItem, File.join(__dir__, "seed/package/types/dependency_item")
+    end
+  end
+end

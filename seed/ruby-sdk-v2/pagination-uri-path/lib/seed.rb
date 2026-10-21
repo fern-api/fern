@@ -36,8 +36,15 @@ require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/connection_error"
-require_relative "seed/users/types/user"
-require_relative "seed/users/types/list_users_uri_pagination_response"
-require_relative "seed/users/types/list_users_path_pagination_response"
 require_relative "seed/client"
 require_relative "seed/users/client"
+
+module Seed
+  module Users
+    module Types
+      autoload :User, File.join(__dir__, "seed/users/types/user")
+      autoload :ListUsersURIPaginationResponse, File.join(__dir__, "seed/users/types/list_users_uri_pagination_response")
+      autoload :ListUsersPathPaginationResponse, File.join(__dir__, "seed/users/types/list_users_path_pagination_response")
+    end
+  end
+end

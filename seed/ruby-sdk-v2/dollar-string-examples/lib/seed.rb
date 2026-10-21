@@ -36,5 +36,10 @@ require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/connection_error"
-require_relative "seed/types/payment_info"
 require_relative "seed/client"
+
+module Seed
+  module Types
+    autoload :PaymentInfo, File.join(__dir__, "seed/types/payment_info")
+  end
+end

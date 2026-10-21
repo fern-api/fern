@@ -36,6 +36,11 @@ require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/connection_error"
-require_relative "seed/types/bulk_update_tasks_response"
 require_relative "seed/client"
 require_relative "seed/types/bulk_update_tasks_request"
+
+module Seed
+  module Types
+    autoload :BulkUpdateTasksResponse, File.join(__dir__, "seed/types/bulk_update_tasks_response")
+  end
+end
