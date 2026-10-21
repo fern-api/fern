@@ -894,7 +894,7 @@ func (t *typeVisitor) writeXmlChildBuilders(
 		t.writeXmlBuilderDocs(name, xmlName, docs)
 		t.writer.P("//")
 		t.writer.P("// The text is the element's content; options set its attributes, e.g.")
-		t.writer.P("// ", name, "(text, With", xmlShortTypeName(goType), "Attribute(value)).")
+		t.writer.P("// ", name, "(text, ", xmlOptionName(goType, "Attribute"), "(value)).")
 		t.writer.P("func (", receiver, " *", t.typeName, ") ", name, "(text ", text.value.goType, ", opts ...", optionType, ") *", t.typeName, " {")
 		if text.value.pointer {
 			t.writer.P("child := &", goType, "{", text.field, ": &text}")
@@ -904,7 +904,7 @@ func (t *typeVisitor) writeXmlChildBuilders(
 	} else {
 		t.writeXmlBuilderDocs(name, xmlName, docs)
 		t.writer.P("//")
-		t.writer.P("// Options set the element's attributes, e.g. ", name, "(With", xmlShortTypeName(goType), "Attribute(value)).")
+		t.writer.P("// Options set the element's attributes, e.g. ", name, "(", xmlOptionName(goType, "Attribute"), "(value)).")
 		t.writer.P("func (", receiver, " *", t.typeName, ") ", name, "(opts ...", optionType, ") *", t.typeName, " {")
 		t.writer.P("child := &", goType, "{}")
 	}
@@ -931,26 +931,32 @@ func (t *typeVisitor) writeXmlOptions(receiver string, properties []*xmlProperty
 			continue
 		}
 		value := property.value
-		name := "With" + t.typeName + property.field
-		t.writer.P("// ", name, " sets the ", property.xmlName, " attribute of the ", t.typeName, ".")
-		switch {
-		case value.list:
-			t.writer.P("func ", name, "(value ...", value.goType, ") ", optionType, " {")
-			t.writer.P("return func(", receiver, " *", t.typeName, ") {")
-			t.writer.P(receiver, ".", property.field, " = value")
-		case value.pointer:
-			t.writer.P("func ", name, "(value ", value.goType, ") ", optionType, " {")
-			t.writer.P("return func(", receiver, " *", t.typeName, ") {")
-			t.writer.P(receiver, ".", property.field, " = &value")
-		default:
-			t.writer.P("func ", name, "(value ", value.goType, ") ", optionType, " {")
-			t.writer.P("return func(", receiver, " *", t.typeName, ") {")
-			t.writer.P(receiver, ".", property.field, " = value")
+		name := xmlOptionName(t.typeName, property.field)
+		paramType := value.goType
+		if value.list {
+			paramType = "..." + value.goType
 		}
+		assigned := "value"
+		if value.pointer {
+			assigned = "&value"
+		}
+		t.writer.P("// ", name, " sets the ", property.xmlName, " attribute of the ", t.typeName, ".")
+		t.writer.P("func ", name, "(value ", paramType, ") ", optionType, " {")
+		t.writer.P("return func(", receiver, " *", t.typeName, ") {")
+		t.writer.P(receiver, ".", property.field, " = ", assigned)
 		t.writer.P("}")
 		t.writer.P("}")
 		t.writer.P()
 	}
+}
+
+// xmlOptionName returns the name of the functional option setting the given field of the
+// (possibly package-qualified) type, e.g. ("pkg.Say", "Voice") -> "pkg.WithSayVoice".
+func xmlOptionName(goType string, field string) string {
+	if index := strings.LastIndex(goType, "."); index >= 0 {
+		return goType[:index+1] + "With" + goType[index+1:] + field
+	}
+	return "With" + goType + field
 }
 
 // xmlShortTypeName returns the Go type name without its package qualifier.
