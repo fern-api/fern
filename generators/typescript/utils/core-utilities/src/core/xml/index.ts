@@ -44,6 +44,7 @@ export {
     type XmlSerializable,
     XML_DECLARATION,
     escapeXml,
+    escapeXmlText,
     extraXmlAttributes,
     formatXmlScalar,
     isXmlSerializable,

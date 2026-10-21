@@ -58,6 +58,7 @@ public class AsyncRawSeedApiClient {
             Map<String, Object> formParams = new LinkedHashMap<>();
             formParams.put("username", request.getUsername());
             formParams.put("email", request.getEmail());
+            formParams.put("Content", request.getContent());
             for (Map.Entry<String, Object> entry : BodyProperties.mergeFormParams(
                             formParams, requestOptions != null ? requestOptions.getBodyProperties() : null)
                     .entrySet()) {
@@ -87,7 +88,7 @@ public class AsyncRawSeedApiClient {
                     .build();
         }
         CompletableFuture<SeedApiHttpResponse<PostSubmitResponse>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -175,7 +176,7 @@ public class AsyncRawSeedApiClient {
                     .build();
         }
         CompletableFuture<SeedApiHttpResponse<TokenResponse>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {

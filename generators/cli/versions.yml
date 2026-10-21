@@ -1,4 +1,363 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.57.1
+  changelogEntry:
+    - summary: |
+        Saving or deleting a credential no longer reads the stored secret first. On macOS, `profiles remove`,
+        `auth logout`, and overwriting a saved credential used to read every keychain entry before changing
+        it, and each read could raise a password prompt. The CLI now updates or deletes the keychain item
+        directly, and it skips the Windows-only check for oversized entries on macOS and Linux.
+      type: fix
+  createdAt: "2026-10-21"
+  irVersion: 67
+- version: 0.57.0
+  changelogEntry:
+    - summary: |
+        Add the `x-fern-cli-table` OpenAPI operation extension. It sets the
+        columns that `--format table` shows for that command: header, field
+        path (after `x-fern-sdk-return-value` extraction), order, alignment,
+        max width, `format: date`, and optional columns hidden by default.
+        Commands with the extension get a `--columns` flag (`--table-columns`
+        when the operation already has a `columns` parameter) to pick columns
+        (`name,stage`), add or remove them (`+description,-v`), or show every
+        field (`all`). `--query` and the JSON, YAML, CSV, JSONL and raw formats
+        are unchanged and keep the full response. Commands without the
+        extension print the same tables as before.
+      type: feat
+  createdAt: "2026-10-20"
+  irVersion: 67
+- version: 0.56.0
+  changelogEntry:
+    - summary: |
+        A flag whose value is an object with exactly one required string property
+        (for example `EmailAddr: {email (required), name}`) now also accepts a
+        plain value for that property: `--from a@x.com` sends
+        `{"email":"a@x.com"}`, and on list flags `--to a@x.com,b@x.com` sends one
+        object per comma-separated entry. JSON input is unchanged.
+      type: feat
+    - summary: |
+        String values the spec marks `format: email` are checked before the
+        request is sent, so `--to 'NOT AN EMAIL'` fails locally with the field
+        path instead of reaching the API.
+      type: feat
+    - summary: |
+        When stdin and stderr are both terminals, the CLI prompts for required
+        inputs that were not supplied by a flag, `--params`, `--json`, a profile or
+        a global parameter. Scripts, CI and piped runs never prompt and keep the
+        existing "is missing" error.
+      type: feat
+    - summary: |
+        `@file` / `@data://` references inside repeated object flags (for example
+        `--attachments '{"content":"@data://a.txt","filename":"a.txt"}'`) are now
+        read like they are for single-value and `--json` input, and a missing file
+        fails before the request is sent. Previously the reference text was sent
+        as-is.
+      type: fix
+    - summary: |
+        Body properties and array items wrapped in a one-option `oneOf`/`anyOf`
+        (`oneOf: [$ref: Model]`) are now treated as the wrapped object, so their
+        flag accepts JSON and gets dot-notation leaf flags. Previously the JSON was
+        sent as a string and rejected with "Expected object".
+      type: fix
+    - summary: |
+        Null fields are no longer printed in human-readable API error details
+        (`code: null`) or as empty rows in single-object table output. JSON output
+        is unchanged.
+      type: fix
+  createdAt: "2026-10-20"
+  irVersion: 67
+- version: 0.55.2
+  changelogEntry:
+    - summary: |
+        zsh TAB completion no longer stacks copies of the prompt and list when the window is resized while a list
+        is open (macOS Terminal.app, iTerm2, tmux and other terminals that re-wrap lines on resize). The zsh
+        registration script now sets the `last-prompt` completion style to false for this CLI only, so zsh
+        prints the prompt again below the list instead of jumping back above it. Other commands' completion
+        and the user's own zsh settings are unchanged.
+      type: fix
+  createdAt: "2026-10-20"
+  irVersion: 67
+- version: 0.55.1
+  changelogEntry:
+    - summary: |
+        `profiles remove` signs the API-key revoke with the parent credentials from env when they are set,
+        and falls back to the profile's stored key only when they aren't. Twilio rejects a standard API key
+        on its Keys endpoint (error 70004), so revoking with the stored key failed there.
+        When the revoke fails after the interactive "Also delete this profile's API key" prompt, the profile
+        is still removed and the key's revoke parameters (e.g. `Sid=SK…`) are printed so it can be deleted from the console. An explicit
+        `--revoke` still stops on failure.
+      type: fix
+  createdAt: "2026-10-20"
+  irVersion: 67
+- version: 0.55.0
+  changelogEntry:
+    - summary: |
+        CLIs with `profiles.provisionOperation` configured get an interactive API-key flow in a terminal.
+        `auth login` asks for a profile name and the credential, offers to create an API key with it, and
+        saves and activates the profile. A bare `profiles create <name>` prompts the same way, and
+        `profiles remove` offers to revoke the profile's provisioned key after the existing confirmation,
+        and warns before removing the last profile.
+        The typed credential only authenticates the key creation; only the new key is stored. Scripts and
+        non-interactive runs, `auth login --with-token/--from-env/--scheme`, and CLIs without
+        `provisionOperation` are unchanged.
+      type: feat
+    - summary: |
+        `provisionOperation` accepts optional `flag` (rename `--provision`, e.g. to `--api-key`;
+        `--provision` keeps working as a hidden alias), `parameters` (extra request values
+        with `{cli}`, `{profile}`, `{user}` and `{host}` substituted, e.g. a Twilio `FriendlyName`)
+        and `profileParameters` (profile parameters copied from the typed credential).
+      type: feat
+    - summary: |
+        `profiles remove --revoke` now authenticates the revoke request with the profile's own stored
+        key. Previously it only worked when the parent credentials were also exported as env vars.
+      type: fix
+    - summary: |
+        `profiles create --provision` and the guided flow no longer require `--scheme` on CLIs that
+        declare several auth schemes: they use the first scheme whose credential fields the
+        provisioning response fills (e.g. the basic scheme for a `username`/`password` key).
+      type: fix
+    - summary: |
+        Credential prompts use the basic auth scheme's own field names: a scheme declaring
+        `username: {name: accountSid}` and `password: {name: authToken}` asks for "Account Sid" and
+        "Auth Token" (in the guided flow and `auth login --with-token`) instead of `username` / `password`.
+        Schemes using the default names are unchanged.
+        The `--with-token` prompts also take the value on the same line (`Account Sid: AC...`), and secret
+        fields (password / secret / token) are not echoed when typed in a terminal. Piped input is unchanged.
+      type: feat
+  createdAt: "2026-10-19"
+  irVersion: 67
+- version: 0.54.5
+  changelogEntry:
+    - summary: |
+        `profiles list`, `profiles show` and `profiles current` no longer read the OS keychain. On macOS each
+        keychain read by a binary that is not on the entry's access list asks for the login password, so
+        listing nine profiles could raise nine prompts. The ACCOUNT column (basic-auth username or OAuth
+        client id) and the "credential stored" check now come from a non-secret copy kept in
+        `[credentials.<slot>]` in `profiles.toml`, written whenever `profiles create`, `profiles set`,
+        `auth login` or an OAuth flow stores a credential and cleared by `profiles remove` / `auth logout`.
+        Only requests that need the secret read the keychain. `profiles set` also skips its keychain read
+        when every field of a multi-field credential is supplied. For a credential stored by an older version,
+        the first report after upgrading reads the same keychain entries it read before and records what it
+        finds, so the output is unchanged and later reports read nothing.
+      type: fix
+    - summary: |
+        A command now reads each OS keychain entry at most once. Choosing an auth scheme and then resolving
+        each field of the credential used to read the same entry several times per request (eight for a
+        Twilio API call), and on macOS each read can raise a password prompt. Values are kept in memory for
+        a few seconds; failed or denied reads are not kept, and the CLI's own writes and deletes update the
+        kept copy.
+      type: fix
+  createdAt: "2026-10-19"
+  irVersion: 67
+- version: 0.54.4
+  changelogEntry:
+    - summary: |
+        TAB completion under a top-level command (e.g. `<cli> core <TAB>`) now loads only the specs mounted under
+        that command (plus unprefixed ones) instead of every embedded spec, and skips specs entirely under custom or
+        built-in commands. Completing the first word (`<cli> <TAB>`) lists spec-mounted commands from their prefixes
+        and only parses specs whose metadata could describe the top-level group; custom and built-in commands are
+        listed as before. On a 60-spec CLI this cuts a TAB from ~0.25s to 0.01–0.05s under a command and to ~0.09s
+        for the first word. Normal command runs are unchanged.
+      type: fix
+    - summary: |
+        TAB completion now lists just the next commands. While choosing a subcommand, global flags and clap's
+        `help` subcommand are left out of the list until you type `-` (leaf commands still list their flags),
+        so `<cli> <group> <TAB>` no longer scrolls long flag descriptions under the commands. Each subcommand
+        is also listed under its real name: previously a command with visible aliases was shown only as its
+        alphabetically-first alias (e.g. `dev` instead of `start`). Aliases are still offered when their command's
+        real name doesn't match what was typed (`de<TAB>` offers `deploy`, `delete` and `dev`). Descriptions in
+        the list are cut to their first sentence (at most 50 characters) so they fit narrow terminals instead of
+        being cut off or wrapping; `--help` keeps the full text. A flag value that matches a subcommand name
+        (e.g. `<cli> serverless --profile list <TAB>`) is now read as the flag's value, as the command itself
+        parses it, instead of completing under that subcommand. Nothing changes outside completion.
+      type: fix
+  createdAt: "2026-10-16"
+  irVersion: 67
+- version: 0.54.3
+  changelogEntry:
+    - summary: |
+        Fix the generated release workflow failing every build on private repos.
+        GitHub Artifact Attestations need GitHub Enterprise Cloud on private
+        repos, and the attest step ran unconditionally, so no release was ever
+        cut. Add `distribution.githubAttestations` (`auto` | `true` | `false`,
+        default `auto`). `auto` skips the attest step on private repos; `true`
+        always attests (private repos on Enterprise Cloud); `false` drops the
+        step and its permission and sets `github-attestations = false` in
+        `dist-workspace.toml`.
+      type: fix
+  createdAt: "2026-10-16"
+  irVersion: 67
+- version: 0.54.2
+  changelogEntry:
+    - summary: |
+        Fill server-variable placeholders such as `{region}` in a caller-supplied base URL
+        (`--base-url`, `<NAME>_BASE_URL`, or a profile's base URL). Previously
+        `--base-url https://api.stage-{region}.twilio.com` sent the literal `{region}` and the
+        request failed with "builder error"; it now uses `--region`, the profile, the env var,
+        or the spec default, like the spec's own server URLs.
+      type: fix
+  createdAt: "2026-10-16"
+  irVersion: 67
+- version: 0.54.1
+  changelogEntry:
+    - summary: |
+        `--schema` now describes hand-written commands registered with `CliApp::command` / `command_under`
+        (including their typed variants). Previously `<cli> <custom-command> --schema` failed with
+        `discoveryError` (exit 4) because `--schema` is answered before custom commands are added to the
+        command tree, so agents using `--schema` for discovery could not see them even though `--help` worked.
+        A custom command's path now returns `{command, description, flags}` built from its clap definition
+        (aliases resolve, and a command that runs on its own but also has subcommands is described too), a
+        custom-only group returns its commands as an array, a spec group's array also lists the custom
+        commands under it, and root `--schema` gains a `customCommands` array when any are registered. A
+        custom command that replaces a spec operation on the same path now owns that path's schema, matching
+        what runs. Hidden custom commands are left out of listings but can still be described by path. Flag entries (here and in `builtinCommands`) now also carry `type: boolean` for switches, `enum`
+        for restricted values and `multiple` for repeatable flags, and short-only flags are reported as flags
+        rather than positional arguments.
+      type: fix
+  createdAt: "2026-10-15"
+  irVersion: 67
+- version: 0.54.0
+  changelogEntry:
+    - summary: |
+        GitHub-mode output now defaults the crate's `[package]` identity from the output repo, so the cargo-dist
+        shell and PowerShell installers download from the consumer's releases instead of 404ing against
+        `github.com/fern-api/cli-sdk`. Unless `packageIdentity` pins them, `repository` and `homepage` default to
+        the repo URL (previously only when Homebrew was configured) and `name` defaults to the binary name when it
+        is a valid crate name. Release assets and installers are therefore renamed from `fern-cli-sdk-*` to
+        `<binaryName>-*`; the README install commands, `Cargo.lock`, and the npm launcher's `homepage` follow the
+        same identity. Local-files and publish output are unchanged.
+      type: feat
+    - summary: |
+        The generated npm publish workflow now skips any platform or launcher
+        package whose version is already on the configured registry, so re-running
+        failed jobs after a partial release completes it instead of failing on the
+        packages that already published. A failed version check (other than a 404)
+        still fails the job. When `npm publish` fails with `EOTP`, the job now
+        prints an error explaining the fix: use a granular npm access token with
+        "Bypass 2FA" enabled, or configure npm trusted publishing (OIDC).
+      type: fix
+  createdAt: "2026-10-14"
+  irVersion: 67
+- version: 0.53.4
+  changelogEntry:
+    - summary: |
+        `extraDependencies` crates that the shipped `Cargo.lock` already resolves
+        (for example `sha1`) are now also listed under the root package in the
+        generated `Cargo.lock`, so regenerating no longer drops them from the
+        lockfile and `cargo build --locked` works without a lockfile refresh.
+      type: fix
+  createdAt: "2026-10-14"
+  irVersion: 67
+- version: 0.53.3
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.53.3 updates.
+      type: fix
+    - summary: |
+        Fix a compile error in generated type crates for multipart upload requests whose property
+        names don't round-trip through the old snake_case conversion (for example `file_0` or `URLPath`).
+      type: fix
+  createdAt: "2026-10-13"
+  irVersion: 67
+- version: 0.53.2
+  changelogEntry:
+    - summary: |
+        Header API-key schemes now send their configured prefix. An `auth-schemes` entry such as
+        `{ header: X-Api-Key, prefix: Key }` previously produced a CLI that sent the bare credential; it now
+        sends `X-Api-Key: Key <credential>` whether the key comes from the `--api-key` flag, the environment
+        variable, or the keyring entry `auth login` stores (which keeps holding the bare key). The prefix is
+        applied once, at request time, and schemes without a prefix are unchanged. The runtime gains
+        `ApiKeyAuth::prefix(...)`, `HeaderAuthProvider::with_prefix(...)`, and a
+        `SchemeBinding::PrefixedToken` variant; hand-written `custom.rs` code that matches `SchemeBinding`
+        exhaustively needs an arm for it.
+      type: fix
+  createdAt: "2026-10-13"
+  irVersion: 67
+- version: 0.53.1
+  changelogEntry:
+    - summary: |
+        `fern generate --version <v>` (and SDK Config's `sdkVersion`) is now stamped into the generated CLI for
+        local-file-system output. That output runs in `downloadFiles` mode, whose generator config carries no
+        version, so the root `Cargo.toml`, its `Cargo.lock` entry, and `<cli> --version` always reported `0.0.0`.
+        The generator now falls back to the IR's `generationMetadata.requestedVersion` (semver only; `AUTO` and
+        non-semver values are ignored). The embedded `<cli>-sdk` and `<cli>-types` crates (including split type
+        crates) now carry the same version, so the SDK's `X-Fern-SDK-Version` header matches the CLI instead of a
+        fixed `0.1.0`. With no version supplied, output is unchanged (`0.0.0` root and types, `0.1.0` SDK).
+      type: fix
+  createdAt: "2026-10-13"
+  irVersion: 67
+- version: 0.53.0
+  changelogEntry:
+    - summary: |
+        Publish `@fern-api/cli-dynamic-snippets`, a browser-compatible generator that renders CLI command
+        snippets in docs from the dynamic IR — the same path the SDK languages use. The CLI generator
+        release now also builds, tests, and publishes this companion npm package (consumed by the docs
+        platform's snippet renderer). No change to the generated CLI itself.
+      type: feat
+    - summary: |
+        Shell completion is now dynamic, so TAB no longer hangs on large CLIs. `<cli> completion <shell>` used to print
+        a static script containing the whole command tree (14MB for zsh on a ~13.7k-command CLI, which took zsh over a
+        minute to parse on the first TAB). It now prints a ~1KB script that asks the binary for the candidates of the
+        current word on each TAB (via `<CLI>_COMPLETE=<shell>`), so the script never goes stale after an upgrade. The
+        zsh script works both sourced from `.zshrc` and installed as `_<cli>` in `$fpath`. JSON specs are also parsed
+        with serde_json instead of the YAML parser, roughly halving startup on CLIs with many embedded specs.
+      type: fix
+  createdAt: "2026-10-13"
+  irVersion: 67
+- version: 0.52.1
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.53.2 updates.
+      type: fix
+  createdAt: "2026-10-12"
+  irVersion: 67
+- version: 0.52.0
+  changelogEntry:
+    - summary: |
+        A custom command may now declare its own `-p` even when profiles reserve `-p` for `--profile` globally
+        (e.g. Twilio's `serverless start -p <port>`). Clap previously refused to build the tree ("short option
+        names must be unique"); now the command gets a long-only `--profile` stand-in, and the pre-clap profile
+        scanner stops reading `-p` as a profile once argv has named that command — `cli -p acme serverless
+        start -p 9000` still selects profile `acme` and passes port `9000` through.
+      type: fix
+    - summary: |
+        Add `CliApp::describe(path, about)` to give a one-line description to the intermediate groups
+        `command_under` creates (they previously rendered with a blank description in `--help`), and
+        `CliApp::hide_global_flags(path, flags)` to hide named root globals such as `--dry-run`, `--query` or
+        `--spec` from the help of a custom subtree they do not apply to. Hidden flags remain accepted.
+      type: feat
+  createdAt: "2026-10-09"
+  irVersion: 67
+- version: 0.51.2
+  changelogEntry:
+    - summary: |
+        `profiles create --provision` and `profiles remove --revoke` now resolve the request URL the same way a
+        direct command does: `--base-url` is honored and the spec's `servers[].variables` / `x-fern-default-url`
+        are applied. Previously the provision/revoke call kept the raw server template (e.g.
+        `https://api.{region}.{city}.twilio.com`) and failed with an invalid URL unless `<NAME>_BASE_URL` or a
+        profile base URL was set.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 0.51.1
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.53.1 updates.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 0.51.0
+  changelogEntry:
+    - summary: |
+        Add `config.profiles.provisionOperation`, the create-side counterpart of `revokeOperation`. When set,
+        `profiles create` gains `--provision`, which calls the named operation (e.g. `iam.keys.create`) with the
+        credentials already in the caller's environment, maps the response onto the profile's credential
+        (`credential: { username: sid, password: secret }`) and stores it in the OS keychain without ever printing
+        the secret. `revokeParameters: { Sid: sid }` records the key's identity as `credential_parameters` on the
+        profile — consulted only by `profiles remove --revoke`, never as a request default — so a profile owns its
+        API key end to end: minted on create, revoked on remove.
+      type: feat
+  createdAt: "2026-10-08"
+  irVersion: 67
 - version: 0.50.0
   changelogEntry:
     - summary: |

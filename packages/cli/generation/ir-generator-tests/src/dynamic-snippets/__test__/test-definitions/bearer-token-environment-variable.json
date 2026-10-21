@@ -59,7 +59,8 @@
                         "safeName": "APIKey"
                     }
                 },
-                "wrapperProperty": null
+                "wrapperProperty": null,
+                "requirement": "ALL"
             },
             "declaration": {
                 "name": {

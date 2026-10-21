@@ -517,7 +517,6 @@ public final class Type {
 
         private List<Integer> ten = new ArrayList<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -867,6 +866,38 @@ public final class Type {
                     twentyfour,
                     twentyfive,
                     additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("one")
+                    || key.equalsIgnoreCase("two")
+                    || key.equalsIgnoreCase("three")
+                    || key.equalsIgnoreCase("four")
+                    || key.equalsIgnoreCase("five")
+                    || key.equalsIgnoreCase("six")
+                    || key.equalsIgnoreCase("seven")
+                    || key.equalsIgnoreCase("eight")
+                    || key.equalsIgnoreCase("nine")
+                    || key.equalsIgnoreCase("ten")
+                    || key.equalsIgnoreCase("eleven")
+                    || key.equalsIgnoreCase("twelve")
+                    || key.equalsIgnoreCase("thirteen")
+                    || key.equalsIgnoreCase("fourteen")
+                    || key.equalsIgnoreCase("fifteen")
+                    || key.equalsIgnoreCase("sixteen")
+                    || key.equalsIgnoreCase("seventeen")
+                    || key.equalsIgnoreCase("eighteen")
+                    || key.equalsIgnoreCase("nineteen")
+                    || key.equalsIgnoreCase("twenty")
+                    || key.equalsIgnoreCase("twentyone")
+                    || key.equalsIgnoreCase("twentytwo")
+                    || key.equalsIgnoreCase("twentythree")
+                    || key.equalsIgnoreCase("twentyfour")
+                    || key.equalsIgnoreCase("twentyfive")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

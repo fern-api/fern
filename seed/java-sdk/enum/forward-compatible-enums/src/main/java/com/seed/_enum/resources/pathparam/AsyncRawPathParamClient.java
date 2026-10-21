@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed._enum.core.BodyProperties;
 import com.seed._enum.core.ClientOptions;
 import com.seed._enum.core.ObjectMappers;
+import com.seed._enum.core.PathSegments;
 import com.seed._enum.core.RequestOptions;
 import com.seed._enum.core.RetryInterceptor;
 import com.seed._enum.core.SeedEnumApiException;
@@ -43,8 +44,8 @@ public class AsyncRawPathParamClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("path")
-                .addPathSegment(operand.toString())
-                .addPathSegment(operandOrColor.toString());
+                .addPathSegment(PathSegments.validate(operand.toString()))
+                .addPathSegment(PathSegments.validate(operandOrColor.toString()));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -73,7 +74,7 @@ public class AsyncRawPathParamClient {
                     .build();
         }
         CompletableFuture<SeedEnumHttpResponse<Void>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {

@@ -3,11 +3,13 @@ import tmp from "tmp-promise";
 
 import { runFernCli } from "../../utils/runFernCli.js";
 
+export const LEGACY_CONFIG_ENV = { FERN_USE_SDK_CONFIG: "false" };
+
 interface InitOptions {
     directory?: AbsoluteFilePath;
     env?: Record<string, string | undefined>;
     additionalArgs?: {
-        name: "--openapi" | "--mintlify" | "--log-level" | "--fern-definition";
+        name: "--api" | "--openapi" | "--mintlify" | "--log-level" | "--fern-definition";
         value?: string;
     }[];
     signal?: AbortSignal;

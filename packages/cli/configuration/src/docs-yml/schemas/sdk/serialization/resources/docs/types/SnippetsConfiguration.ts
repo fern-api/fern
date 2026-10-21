@@ -18,6 +18,7 @@ export const SnippetsConfiguration: core.serialization.ObjectSchema<
     php: SnippetLanguageConfiguration.optional(),
     swift: SnippetLanguageConfiguration.optional(),
     rust: SnippetLanguageConfiguration.optional(),
+    cli: SnippetLanguageConfiguration.optional(),
 });
 
 export declare namespace SnippetsConfiguration {
@@ -31,5 +32,6 @@ export declare namespace SnippetsConfiguration {
         php?: SnippetLanguageConfiguration.Raw | null;
         swift?: SnippetLanguageConfiguration.Raw | null;
         rust?: SnippetLanguageConfiguration.Raw | null;
+        cli?: SnippetLanguageConfiguration.Raw | null;
     }
 }

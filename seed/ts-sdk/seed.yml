@@ -435,10 +435,19 @@ fixtures:
     - outputFolder: always-send-auth
       customConfig:
         alwaysSendAuth: true
+    - outputFolder: flatten-any-auth-options
+      customConfig:
+        flattenAnyAuthOptions: true
     - outputFolder: always-send-auth-optional-auth
       customConfig:
         alwaysSendAuth: true
         optional-auth: true
+    - outputFolder: guard-process-env-access
+      customConfig:
+        guardProcessEnvAccess: true
+  ts-global-header-env:
+    - outputFolder: no-custom-config
+      customConfig: null
     - outputFolder: guard-process-env-access
       customConfig:
         guardProcessEnvAccess: true

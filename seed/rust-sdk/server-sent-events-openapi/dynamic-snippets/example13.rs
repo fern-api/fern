@@ -8,7 +8,7 @@ async fn main() {
     };
     let client = ApiClient::new(config).expect("Failed to build client");
     client
-        .stream_oas_spec_native(
+        .stream_data_context_with_envelope_schema(
             &StreamRequest {
                 query: Some("query".to_string()),
                 ..Default::default()

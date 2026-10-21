@@ -6001,6 +6001,7 @@
                             },
                             {
                                 "type": "file",
+                                "isOptional": true,
                                 "wireValue": "image_file",
                                 "name": {
                                     "originalName": "image_file",

@@ -341,7 +341,8 @@
                         "unsafeName": "Bearer",
                         "safeName": "Bearer"
                     }
-                }
+                },
+                "requirement": "ENDPOINT_SECURITY"
             },
             "declaration": {
                 "name": {
@@ -661,7 +662,8 @@
                         "unsafeName": "Bearer",
                         "safeName": "Bearer"
                     }
-                }
+                },
+                "requirement": "ENDPOINT_SECURITY"
             },
             "declaration": {
                 "name": {
@@ -782,7 +784,8 @@
                         "unsafeName": "Bearer",
                         "safeName": "Bearer"
                     }
-                }
+                },
+                "requirement": "ENDPOINT_SECURITY"
             },
             "declaration": {
                 "name": {
@@ -903,7 +906,8 @@
                         "unsafeName": "Bearer",
                         "safeName": "Bearer"
                     }
-                }
+                },
+                "requirement": "ENDPOINT_SECURITY"
             },
             "declaration": {
                 "name": {
@@ -1024,7 +1028,8 @@
                         "unsafeName": "Bearer",
                         "safeName": "Bearer"
                     }
-                }
+                },
+                "requirement": "ENDPOINT_SECURITY"
             },
             "declaration": {
                 "name": {
@@ -1145,7 +1150,8 @@
                         "unsafeName": "Bearer",
                         "safeName": "Bearer"
                     }
-                }
+                },
+                "requirement": "ENDPOINT_SECURITY"
             },
             "declaration": {
                 "name": {
@@ -1266,7 +1272,8 @@
                         "unsafeName": "Bearer",
                         "safeName": "Bearer"
                     }
-                }
+                },
+                "requirement": "ENDPOINT_SECURITY"
             },
             "declaration": {
                 "name": {
@@ -1387,7 +1394,8 @@
                         "unsafeName": "Bearer",
                         "safeName": "Bearer"
                     }
-                }
+                },
+                "requirement": "ENDPOINT_SECURITY"
             },
             "declaration": {
                 "name": {

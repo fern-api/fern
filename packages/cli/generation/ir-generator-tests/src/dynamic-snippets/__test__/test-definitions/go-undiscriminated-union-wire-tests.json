@@ -445,7 +445,8 @@
                         "safeName": "Token"
                     }
                 },
-                "wrapperProperty": null
+                "wrapperProperty": null,
+                "requirement": "ALL"
             },
             "declaration": {
                 "name": {

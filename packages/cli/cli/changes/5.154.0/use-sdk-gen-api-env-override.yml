@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Restore `FERN_USE_SDK_GEN_API` as a runtime override of the `use-sdk-gen-api` feature flag. `true` routes every
+    generator through sdk-gen-api and `false` keeps every generator off it (generation on Fiddle, generator upgrades on
+    FDR versions), without a flag request. Unset, or any other value, follows the flag. It is intended for tests and
+    debugging.
+  type: feat

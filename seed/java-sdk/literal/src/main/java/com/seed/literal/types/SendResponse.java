@@ -99,7 +99,6 @@ public final class SendResponse {
 
         private int status;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -128,6 +127,14 @@ public final class SendResponse {
         @java.lang.Override
         public SendResponse build() {
             return new SendResponse(message, status, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("message") || key.equalsIgnoreCase("status") || key.equalsIgnoreCase("success")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

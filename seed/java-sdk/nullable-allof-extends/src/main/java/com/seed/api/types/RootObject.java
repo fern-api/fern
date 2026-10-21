@@ -80,7 +80,6 @@ public final class RootObject implements INormalObject, INullableObject {
 
         private Optional<String> nullableField = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -115,6 +114,14 @@ public final class RootObject implements INormalObject, INullableObject {
 
         public RootObject build() {
             return new RootObject(normalField, nullableField, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("normalField") || key.equalsIgnoreCase("nullableField")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

@@ -195,7 +195,7 @@ describe("runLibraryDocsGeneration", () => {
         ).rejects.toThrow(/Library 'nonexistent' not found/);
     });
 
-    it("rejects 'path' input for remote generation (requires --local)", async () => {
+    it("rejects 'path' input for remote generation (requires local generation)", async () => {
         await expect(
             runLibraryDocsGeneration({
                 libraries: {
@@ -210,7 +210,7 @@ describe("runLibraryDocsGeneration", () => {
                 tokenValue: "tok",
                 context: makeContext()
             })
-        ).rejects.toThrow(/'path' input requires the --local flag/);
+        ).rejects.toThrow(/'path' input requires local generation/);
     });
 
     it("local mode: parses a 'path' input library without a token and generates (Python)", async () => {
@@ -238,6 +238,42 @@ describe("runLibraryDocsGeneration", () => {
         expect(String(call.sourcePath)).toBe("/tmp/docs/local-src");
         expect(PythonDocsGenerator.generate).toHaveBeenCalledWith(
             expect.objectContaining({ ir: mockPythonIr, slug: "my-sdk", title: "my-sdk" })
+        );
+    });
+
+    it("prefixes generated slugs with the tab the pages are listed under in docs.yml", async () => {
+        (LocalParserRunner.runLocalParser as Mock).mockResolvedValue({ ir: mockPythonIr });
+
+        await runLibraryDocsGeneration({
+            libraries: {
+                "my-sdk": {
+                    input: { path: "./local-src" } as unknown as docsYml.RawSchemas.LibraryInputConfiguration,
+                    output: { path: "./docs" },
+                    lang: "python"
+                }
+            },
+            docsDirectoryPath: DOCS_DIR,
+            orgId: "org",
+            context: makeContext(),
+            local: true,
+            docsConfig: {
+                tabs: { api: { displayName: "API Reference" } },
+                navigation: [
+                    {
+                        tab: "api",
+                        layout: [
+                            {
+                                section: "Python API Reference",
+                                contents: [{ page: "my_sdk", path: "./docs/my-sdk/my_sdk/index.mdx" }]
+                            }
+                        ]
+                    }
+                ]
+            }
+        });
+
+        expect(PythonDocsGenerator.generate).toHaveBeenCalledWith(
+            expect.objectContaining({ slug: "my-sdk", slugPrefix: "api-reference" })
         );
     });
 

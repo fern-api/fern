@@ -50,7 +50,6 @@ public final class GetWithInlinePath {
       ignoreUnknown = true
   )
   public static final class Builder {
-    @JsonAnySetter
     private Map<String, Object> additionalProperties = new HashMap<>();
 
     private Builder() {
@@ -62,6 +61,11 @@ public final class GetWithInlinePath {
 
     public GetWithInlinePath build() {
       return new GetWithInlinePath(additionalProperties);
+    }
+
+    @JsonAnySetter
+    private void putAdditionalPropertyFromJson(String key, Object value) {
+      this.additionalProperties.put(key, value);
     }
 
     public Builder additionalProperty(String key, Object value) {

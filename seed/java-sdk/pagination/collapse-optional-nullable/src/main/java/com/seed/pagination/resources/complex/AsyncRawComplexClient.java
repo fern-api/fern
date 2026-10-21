@@ -8,6 +8,7 @@ import com.seed.pagination.core.BodyProperties;
 import com.seed.pagination.core.ClientOptions;
 import com.seed.pagination.core.MediaTypes;
 import com.seed.pagination.core.ObjectMappers;
+import com.seed.pagination.core.PathSegments;
 import com.seed.pagination.core.RequestOptions;
 import com.seed.pagination.core.RetryInterceptor;
 import com.seed.pagination.core.SeedPaginationApiException;
@@ -51,7 +52,7 @@ public class AsyncRawComplexClient {
             String index, SearchRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegment(index)
+                .addPathSegment(PathSegments.validate(index))
                 .addPathSegments("conversations")
                 .addPathSegments("search");
         if (requestOptions != null) {
@@ -90,7 +91,7 @@ public class AsyncRawComplexClient {
         }
         CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<Conversation>>> future =
                 new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {

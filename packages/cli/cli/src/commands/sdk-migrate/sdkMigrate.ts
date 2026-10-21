@@ -2,6 +2,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import {
     GENERATORS_CONFIGURATION_FILENAME,
+    type generatorsYml,
     LEGACY_GENERATORS_CONFIGURATION_FILENAME,
     SDK_CONFIG_FILENAME
 } from "@fern-api/configuration-loader";
@@ -16,9 +17,12 @@ import { editLegacyGeneratorsConfiguration } from "./editLegacyGeneratorsConfigu
 import { loadCompatibleMigrationGroups } from "./loadCompatibleMigrationGroups.js";
 import { type MappingResult, mapFernGroupToSdkConfig } from "./mapFernGroupToSdkConfig.js";
 import { mergeSdkConfig } from "./mergeSdkConfig.js";
+import { migrateDocsConfiguration } from "./migrateDocsConfiguration.js";
 import {
     identifySourceDerivedApiFields,
+    type ResolvedMigrationSourceSpec,
     resolveMigrationPathParameterStyle,
+    resolveWorkspaceSourceSpecs,
     serializeMigrationSource
 } from "./projectMigrationSource.js";
 import { selectMigrationTarget } from "./selectMigrationTarget.js";
@@ -72,6 +76,11 @@ export async function sdkMigrate({
         });
     }
     const sourceBaseDirectory = dirname(outputPath).toString();
+    const apiName = fernWorkspace.definition.rootApiFile.contents.name;
+    const sdkName = resolveMigrationSdkName({
+        apiName,
+        organization: project.config.organization
+    });
 
     let mapped: MappingResult;
     try {
@@ -85,7 +94,8 @@ export async function sdkMigrate({
                 workspace,
                 groups,
                 definition: fernWorkspace.definition
-            })
+            }),
+            sdkName
         });
     } catch (error) {
         if (error instanceof FernConfigMappingError) {
@@ -112,6 +122,7 @@ export async function sdkMigrate({
     ]);
     const sdkConfigContents = mergeSdkConfig({
         existingContents: existingSdkConfig,
+        legacyPlaceholderSdkName: sdkName === apiName ? undefined : apiName,
         mapped,
         outputPath
     });
@@ -122,15 +133,24 @@ export async function sdkMigrate({
         selections
     });
 
+    const docsMigration = await migrateDocsConfiguration({
+        docsPath: project.docsWorkspaces?.absoluteFilepathToDocsConfig,
+        workspaceName: workspace.workspaceName,
+        isOnlyApiWorkspace: project.apiWorkspaces.length === 1,
+        sourceSpecs: resolveDocsSourceSpecs({ cliContext, group, sourceSpecs, workspace })
+    });
+
     if (args.dryRun) {
         printDryRun({
             cliContext,
+            docsPaths: docsMigration.edits.map((edit) => edit.path),
             existingSdkConfig,
             legacyGeneratorsPath,
             outputPath,
             selections,
             sourceGeneratorsPath
         });
+        printGeneratorVersionWarning(cliContext, group);
         return;
     }
 
@@ -145,7 +165,14 @@ export async function sdkMigrate({
                 contents: sdkConfigContents,
                 mode: await fileMode(outputPath),
                 path: outputPath
-            }
+            },
+            ...(await Promise.all(
+                docsMigration.edits.map(async (edit) => ({
+                    contents: edit.contents,
+                    mode: await fileMode(edit.path),
+                    path: edit.path
+                }))
+            ))
         ],
         remove: sourceGeneratorsPath === legacyGeneratorsPath ? [] : [sourceGeneratorsPath]
     });
@@ -154,7 +181,14 @@ export async function sdkMigrate({
     if (sourceGeneratorsPath !== legacyGeneratorsPath) {
         cliContext.stderr.info(`Renamed ${sourceGeneratorsPath} to ${legacyGeneratorsPath}`);
     }
+    if (docsMigration.updatedSections > 0) {
+        cliContext.stderr.info(
+            `Added specs to ${docsMigration.updatedSections} API reference section${docsMigration.updatedSections === 1 ? "" : "s"} in ${docsMigration.edits.map((edit) => edit.path).join(", ")}`
+        );
+    }
+    printGeneratorVersionWarning(cliContext, group);
     printRollbackInstructions({
+        docsPaths: docsMigration.edits.map((edit) => edit.path),
         cliContext,
         legacyGeneratorsPath,
         outputPath,
@@ -164,6 +198,51 @@ export async function sdkMigrate({
         ),
         selections
     });
+}
+
+/**
+ * Docs show the API itself, so they take the API's own specs. A generator can override its specs for its SDK only;
+ * those must never reach docs.yml.
+ */
+function resolveDocsSourceSpecs({
+    cliContext,
+    group,
+    sourceSpecs,
+    workspace
+}: {
+    cliContext: CliContext;
+    group: generatorsYml.GeneratorGroup;
+    sourceSpecs: ResolvedMigrationSourceSpec[];
+    workspace: Project["apiWorkspaces"][number];
+}): ResolvedMigrationSourceSpec[] {
+    try {
+        const workspaceSpecs = resolveWorkspaceSourceSpecs(workspace);
+        if (workspaceSpecs != null) {
+            return workspaceSpecs;
+        }
+    } catch (error) {
+        if (!(error instanceof CliError)) {
+            throw error;
+        }
+        cliContext.stderr.warn(`[warning] docs.yml was not updated: ${error.message}`);
+        return [];
+    }
+    // The API lists no specs of its own, so the SDK specs are the only source, unless a generator overrides them.
+    return group.generators.some((generator) => generator.apiOverride?.specs != null) ? [] : sourceSpecs;
+}
+
+function resolveMigrationSdkName({ apiName, organization }: { apiName: string; organization: string }): string {
+    return apiName.trim().toLowerCase() === "api" ? organization : apiName;
+}
+
+function printGeneratorVersionWarning(cliContext: CliContext, group: generatorsYml.GeneratorGroup): void {
+    const generators = group.generators.map((generator) => {
+        const name = generator.language ?? generator.name;
+        return `${name}@${generator.version}`;
+    });
+    cliContext.stderr.warn(
+        `[warning] [FERN_GENERATOR_VERSION_NOT_PRESERVED] SDK Config migration does not preserve legacy generator versions (${generators.join(", ")}). Generated targets use the latest compatible generators unless generatorVersion is set, which can change generated public APIs. Review the generated SDK before replacing an existing release.`
+    );
 }
 
 function resolveOutputPath(
@@ -213,6 +292,7 @@ function displayPathFromWorkspace(workspaceDirectory: AbsoluteFilePath, outputPa
 
 function printDryRun({
     cliContext,
+    docsPaths,
     existingSdkConfig,
     legacyGeneratorsPath,
     outputPath,
@@ -220,6 +300,7 @@ function printDryRun({
     sourceGeneratorsPath
 }: {
     cliContext: CliContext;
+    docsPaths: AbsoluteFilePath[];
     existingSdkConfig: string | undefined;
     legacyGeneratorsPath: AbsoluteFilePath;
     outputPath: AbsoluteFilePath;
@@ -231,6 +312,9 @@ function printDryRun({
         cliContext.stderr.info(`Would rename ${sourceGeneratorsPath} to ${legacyGeneratorsPath}.`);
     }
     cliContext.stderr.info(`${existingSdkConfig == null ? "Would create" : "Would update"} ${outputPath}.`);
+    for (const docsPath of docsPaths) {
+        cliContext.stderr.info(`Would add API specs to ${docsPath}.`);
+    }
     for (const selection of selections) {
         cliContext.stderr.info(
             selection.isEntireGroup
@@ -242,12 +326,14 @@ function printDryRun({
 
 function printRollbackInstructions({
     cliContext,
+    docsPaths,
     legacyGeneratorsPath,
     outputPath,
     rollbackGeneratorsPath,
     selections
 }: {
     cliContext: CliContext;
+    docsPaths: AbsoluteFilePath[];
     legacyGeneratorsPath: AbsoluteFilePath;
     outputPath: AbsoluteFilePath;
     rollbackGeneratorsPath: AbsoluteFilePath;
@@ -268,6 +354,11 @@ function printRollbackInstructions({
     cliContext.stderr.info(
         "3. Remove any active empty groups placeholder, then uncomment the preserved groups, generator invocations, default-group, and aliases."
     );
+    if (docsPaths.length > 0) {
+        cliContext.stderr.info(
+            `4. Optional: remove the specs added to API reference sections in ${docsPaths.join(", ")}. Docs then read the API from generators.yml again.`
+        );
+    }
 }
 
 function printDiagnostics(cliContext: CliContext, diagnostics: readonly FernConfigMappingDiagnostic[]): void {

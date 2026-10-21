@@ -13,14 +13,17 @@ const include = [
     "src/__test__/markUntranslatedNavNodesNoindex.test.ts",
     "src/__test__/translations-config.test.ts",
     "src/__test__/sidebar-title.test.ts",
+    "src/__test__/skip-api-references.test.ts",
     "src/__test__/product-landing-page.test.ts",
     "src/__test__/versioned-root-landing-page.test.ts",
+    "src/__test__/versionDefault.test.ts",
     "src/__test__/library-hardfail.test.ts",
     "src/__test__/direct-api-spec.test.ts",
     "src/__test__/graphql-type-navigation.test.ts",
     "src/__test__/convertThemeTabs.test.ts",
     "src/__test__/root-changelog.test.ts",
-    "src/__test__/stitchGlobalTheme.test.ts"
+    "src/__test__/stitchGlobalTheme.test.ts",
+    "src/__test__/sort-by-availability.test.ts"
 ];
 
 export default defineConfig({

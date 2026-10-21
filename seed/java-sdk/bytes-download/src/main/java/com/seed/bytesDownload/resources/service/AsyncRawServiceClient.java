@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.bytesDownload.core.BodyProperties;
 import com.seed.bytesDownload.core.ClientOptions;
 import com.seed.bytesDownload.core.ObjectMappers;
+import com.seed.bytesDownload.core.PathSegments;
 import com.seed.bytesDownload.core.RequestOptions;
 import com.seed.bytesDownload.core.RetryInterceptor;
 import com.seed.bytesDownload.core.SeedBytesDownloadApiException;
@@ -68,7 +69,7 @@ public class AsyncRawServiceClient {
                     .build();
         }
         CompletableFuture<SeedBytesDownloadHttpResponse<Void>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -112,7 +113,7 @@ public class AsyncRawServiceClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("download-content")
-                .addPathSegment(id);
+                .addPathSegment(PathSegments.validate(id));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -137,7 +138,7 @@ public class AsyncRawServiceClient {
                     .build();
         }
         CompletableFuture<SeedBytesDownloadHttpResponse<byte[]>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {

@@ -90,7 +90,6 @@ public final class NestedObjectWithLiterals {
     public static final class Builder implements StrPropStage, _FinalStage {
         private String strProp;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -111,6 +110,16 @@ public final class NestedObjectWithLiterals {
         @java.lang.Override
         public NestedObjectWithLiterals build() {
             return new NestedObjectWithLiterals(strProp, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("literal1")
+                    || key.equalsIgnoreCase("literal2")
+                    || key.equalsIgnoreCase("strProp")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

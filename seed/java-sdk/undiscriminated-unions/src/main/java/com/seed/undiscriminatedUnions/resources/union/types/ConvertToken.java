@@ -94,7 +94,6 @@ public final class ConvertToken {
 
         private String tokenId;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -123,6 +122,14 @@ public final class ConvertToken {
         @java.lang.Override
         public ConvertToken build() {
             return new ConvertToken(method, tokenId, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("method") || key.equalsIgnoreCase("tokenId")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

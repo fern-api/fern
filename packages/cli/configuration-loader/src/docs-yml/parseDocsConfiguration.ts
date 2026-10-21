@@ -12,7 +12,7 @@ import { convertColorsConfiguration } from "./convertColorsConfiguration.js";
 import { getAllPages, loadAllPages } from "./getAllPages.js";
 import { getVersionContentRef } from "./git-versions/getVersionContentRef.js";
 import { materializeGitRef } from "./git-versions/materializeGitRef.js";
-import { resolveRefContentRoot } from "./git-versions/resolveRefContentRoot.js";
+import { type RefVersionScope, resolveRefContentRoot } from "./git-versions/resolveRefContentRoot.js";
 import { buildNavigationForDirectory, getFrontmatterMetadata, nameToSlug, nameToTitle } from "./navigationUtils.js";
 import { resolveRedirects } from "./resolveRedirects.js";
 
@@ -583,7 +583,8 @@ function convertThemeConfig(
         footerNav: theme.footerNav ?? "default",
         languageSwitcher: theme.languageSwitcher ?? "default",
         productSwitcher: theme.productSwitcher ?? "default",
-        siteSwitcher: theme.siteSwitcher
+        siteSwitcher: theme.siteSwitcher,
+        codeBlocks: theme.codeBlocks
     };
 }
 
@@ -606,13 +607,13 @@ function convertSettingsConfig(
     // `search.default-filter-by-current-product`. Either one enables the behavior.
     const defaultFilterByCurrentProduct =
         (settings.search?.defaultFilterByCurrentProduct ?? false) || (settings.defaultSearchFilters ?? false);
-    const prioritizeCurrentProduct = settings.search?.prioritizeCurrentProduct ?? false;
 
     return {
         darkModeCode: settings.darkModeCode ?? false,
         defaultSearchFilters: defaultFilterByCurrentProduct,
         search: {
-            prioritizeCurrentProduct,
+            // Left undefined when unset so the docs renderer applies its default.
+            prioritizeCurrentProduct: settings.search?.prioritizeCurrentProduct,
             defaultFilterByCurrentProduct,
             externalSitemaps: undefined
         },
@@ -627,7 +628,8 @@ function convertSettingsConfig(
         disableAnalytics: settings.disableAnalytics ?? false,
         websocketOneofDisplay: settings.websocketOneofDisplay ?? undefined,
         embedding: settings.embedding,
-        showHeadersInExamples: settings.showHeadersInExamples ?? false
+        showHeadersInExamples: settings.showHeadersInExamples ?? false,
+        requireAnalyticsConsent: settings.requireAnalyticsConsent ?? false
     };
 }
 
@@ -742,6 +744,10 @@ function convertLayoutConfig(
         // `as unknown as` cast below until the published FDR SDK adds the field.
         showNavAvailabilityBadges: layout.showNavAvailabilityBadges,
         // Opt-in (default off, resolved by the fern-platform companion PR):
+        // when true webhook sidebar entries render without a method badge. Part
+        // of the `as unknown as` cast below until the published FDR SDK adds the field.
+        hideWebhookMethodBadges: layout.hideWebhookMethodBadges,
+        // Opt-in (default off, resolved by the fern-platform companion PR):
         // when `breadcrumbs.current-page` is true the current page is appended to
         // the breadcrumb trail as a non-clickable item. Part of the `as unknown as`
         // cast below until the published FDR SDK adds the field.
@@ -832,6 +838,7 @@ async function loadWorkingTreeVersion({
         availability: version.availability,
         slug: version.slug,
         hidden: version.hidden,
+        default: version.default,
         viewers: parseRoles(version.viewers),
         orphaned: version.orphaned,
         featureFlags: convertFeatureFlag(version.featureFlag),
@@ -843,19 +850,20 @@ async function loadWorkingTreeVersion({
 async function loadRefVersion({
     version,
     ref,
+    scope,
     absolutePathToFernFolder,
     context,
     folderTitleSource
 }: {
     version: docsYml.RawSchemas.VersionConfig;
     ref: string;
+    scope: RefVersionScope;
     absolutePathToFernFolder: AbsoluteFilePath;
     context: TaskContext;
     folderTitleSource?: docsYml.RawSchemas.TitleSource;
 }): Promise<docsYml.VersionInfo> {
     const materialized = await materializeGitRef({ ref, absolutePathToFernFolder, context });
-    const contentRoot = await resolveRefContentRoot({ materialized, context });
-
+    const contentRoot = await resolveRefContentRoot({ materialized, scope, context });
     const versionNavigation = await convertNavigationConfiguration({
         tabs: contentRoot.tabs,
         rawNavigationConfig: contentRoot.navigation,
@@ -872,6 +880,7 @@ async function loadRefVersion({
         availability: version.availability,
         slug: version.slug,
         hidden: version.hidden,
+        default: version.default,
         viewers: parseRoles(version.viewers),
         orphaned: version.orphaned,
         featureFlags: convertFeatureFlag(version.featureFlag),
@@ -886,20 +895,51 @@ async function loadRefVersion({
     };
 }
 
+/**
+ * Validated against the raw `versions` list, before git-ref-backed versions are skipped, so
+ * `fern check` and `fern docs dev` enforce the same default as a full publish.
+ */
+function assertValidDefaultVersion(versions: docsYml.RawSchemas.VersionConfig[]): void {
+    const defaults = versions.filter((version) => version.default === true);
+    // Covered end to end by fern-platform's fern-dev-tests/tests/version-default-flag.spec.ts.
+    if (defaults.length > 1) {
+        throw new CliError({
+            message:
+                `Only one version can set 'default: true', but ${defaults.length} do: ` +
+                `${defaults.map((version) => `'${version.displayName}'`).join(", ")}. ` +
+                "Remove 'default: true' from all but one version.",
+            code: CliError.Code.ConfigError
+        });
+    }
+    // Without an explicit default, the first version is the default.
+    const defaultVersion = defaults[0] ?? versions[0];
+    if (defaultVersion?.hidden === true) {
+        throw new CliError({
+            message:
+                `The default version '${defaultVersion.displayName}' cannot be hidden. ` +
+                "Remove 'hidden: true' from it, or set 'default: true' on a version that is not hidden.",
+            code: CliError.Code.ConfigError
+        });
+    }
+}
+
 async function getVersionedNavigationConfiguration({
     versions,
+    refScope,
     absolutePathToFernFolder,
     context,
     folderTitleSource,
     buildRefVersions = true
 }: {
     versions: docsYml.RawSchemas.VersionConfig[];
+    refScope: RefVersionScope;
     absolutePathToFernFolder: AbsoluteFilePath;
     context: TaskContext;
     parentSlug?: string;
     folderTitleSource?: docsYml.RawSchemas.TitleSource;
     buildRefVersions?: boolean;
 }): Promise<docsYml.VersionedDocsNavigation> {
+    assertValidDefaultVersion(versions);
     const versionedNavbars: docsYml.VersionInfo[] = [];
     for (const version of versions) {
         const ref = getVersionContentRef(version);
@@ -911,7 +951,7 @@ async function getVersionedNavigationConfiguration({
         }
 
         // A ref-backed version derives its content root from the ref itself
-        // (the ref's own `versions[0].path` or top-level `navigation:`), so a
+        // (the ref's own working-tree version or `navigation:`), so a
         // current-branch `path:` alongside `ref:` has no effect. Reject the
         // combination instead of silently ignoring `path:`. Runs regardless of
         // `buildRefVersions` so `fern check` surfaces it too.
@@ -931,7 +971,14 @@ async function getVersionedNavigationConfiguration({
         }
 
         versionedNavbars.push(
-            await loadRefVersion({ version, ref, absolutePathToFernFolder, context, folderTitleSource })
+            await loadRefVersion({
+                version,
+                ref,
+                scope: refScope,
+                absolutePathToFernFolder,
+                context,
+                folderTitleSource
+            })
         );
     }
     return {
@@ -1019,6 +1066,7 @@ async function getNavigationConfiguration({
                 if (product.versions != null && product.versions.length > 0) {
                     navigation = await getVersionedNavigationConfiguration({
                         versions: product.versions,
+                        refScope: { type: "product", displayName: product.displayName, slug: product.slug },
                         absolutePathToFernFolder,
                         context,
                         folderTitleSource,
@@ -1082,6 +1130,7 @@ async function getNavigationConfiguration({
     } else if (versions != null) {
         return await getVersionedNavigationConfiguration({
             versions,
+            refScope: { type: "site" },
             absolutePathToFernFolder,
             context,
             folderTitleSource,
@@ -1602,6 +1651,7 @@ async function convertNavigationItem({
             skipUrlSlug: rawConfig.skipSlug ?? false,
             flattened: rawConfig.flattened ?? false,
             alphabetized: rawConfig.alphabetized ?? false,
+            sortByAvailability: rawConfig.sortByAvailability,
             paginated: rawConfig.paginated ?? false,
             playground: rawConfig.playground,
             viewers: parseRoles(rawConfig.viewers),
@@ -1814,7 +1864,8 @@ function convertSnippetsConfiguration({
         ruby: rawConfig.ruby,
         csharp: rawConfig.csharp,
         php: rawConfig.php,
-        swift: rawConfig.swift
+        swift: rawConfig.swift,
+        cli: rawConfig.cli
     };
 }
 

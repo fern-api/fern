@@ -100,7 +100,6 @@ public final class TypeWithOptionalMap {
 
         private Map<String, Optional<String>> columnValues = new LinkedHashMap<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -146,6 +145,14 @@ public final class TypeWithOptionalMap {
         @java.lang.Override
         public TypeWithOptionalMap build() {
             return new TypeWithOptionalMap(key, columnValues, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("key") || key.equalsIgnoreCase("columnValues")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

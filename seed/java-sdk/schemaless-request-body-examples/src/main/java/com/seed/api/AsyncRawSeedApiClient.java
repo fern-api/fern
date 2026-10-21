@@ -8,6 +8,7 @@ import com.seed.api.core.BodyProperties;
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.MediaTypes;
 import com.seed.api.core.ObjectMappers;
+import com.seed.api.core.PathSegments;
 import com.seed.api.core.RequestOptions;
 import com.seed.api.core.RetryInterceptor;
 import com.seed.api.core.SeedApiApiException;
@@ -88,7 +89,7 @@ public class AsyncRawSeedApiClient {
                     .build();
         }
         CompletableFuture<SeedApiHttpResponse<CreatePlantResponse>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -141,7 +142,7 @@ public class AsyncRawSeedApiClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("plants")
-                .addPathSegment(plantId);
+                .addPathSegment(PathSegments.validate(plantId));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -177,7 +178,7 @@ public class AsyncRawSeedApiClient {
                     .build();
         }
         CompletableFuture<SeedApiHttpResponse<UpdatePlantResponse>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -280,7 +281,7 @@ public class AsyncRawSeedApiClient {
                     .build();
         }
         CompletableFuture<SeedApiHttpResponse<CreatePlantWithSchemaResponse>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {

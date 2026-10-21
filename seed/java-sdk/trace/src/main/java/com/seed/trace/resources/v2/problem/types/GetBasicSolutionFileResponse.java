@@ -69,7 +69,6 @@ public final class GetBasicSolutionFileResponse {
     public static final class Builder {
         private Map<Language, FileInfoV2> solutionFileByLanguage = new LinkedHashMap<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -102,6 +101,14 @@ public final class GetBasicSolutionFileResponse {
 
         public GetBasicSolutionFileResponse build() {
             return new GetBasicSolutionFileResponse(solutionFileByLanguage, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("solutionFileByLanguage")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

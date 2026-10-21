@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.seed.trace.core.ClientOptions;
 import com.seed.trace.core.ObjectMappers;
+import com.seed.trace.core.PathSegments;
 import com.seed.trace.core.RequestOptions;
 import com.seed.trace.core.RetryInterceptor;
 import com.seed.trace.core.SeedTraceApiException;
@@ -75,7 +76,7 @@ public class AsyncRawProblemClient {
                     .build();
         }
         CompletableFuture<SeedTraceHttpResponse<List<LightweightProblemInfoV2>>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -153,7 +154,7 @@ public class AsyncRawProblemClient {
                     .build();
         }
         CompletableFuture<SeedTraceHttpResponse<List<ProblemInfoV2>>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -207,7 +208,7 @@ public class AsyncRawProblemClient {
                 .newBuilder()
                 .addPathSegments("problems-v2")
                 .addPathSegments("problem-info")
-                .addPathSegment(problemId);
+                .addPathSegment(PathSegments.validate(problemId));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -233,7 +234,7 @@ public class AsyncRawProblemClient {
                     .build();
         }
         CompletableFuture<SeedTraceHttpResponse<ProblemInfoV2>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -287,9 +288,9 @@ public class AsyncRawProblemClient {
                 .newBuilder()
                 .addPathSegments("problems-v2")
                 .addPathSegments("problem-info")
-                .addPathSegment(problemId)
+                .addPathSegment(PathSegments.validate(problemId))
                 .addPathSegments("version")
-                .addPathSegment(Integer.toString(problemVersion));
+                .addPathSegment(PathSegments.validate(Integer.toString(problemVersion)));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -315,7 +316,7 @@ public class AsyncRawProblemClient {
                     .build();
         }
         CompletableFuture<SeedTraceHttpResponse<ProblemInfoV2>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {

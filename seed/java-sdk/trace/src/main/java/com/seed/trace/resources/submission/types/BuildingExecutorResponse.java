@@ -96,7 +96,6 @@ public final class BuildingExecutorResponse {
 
         private ExecutionSessionStatus status;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -125,6 +124,14 @@ public final class BuildingExecutorResponse {
         @java.lang.Override
         public BuildingExecutorResponse build() {
             return new BuildingExecutorResponse(submissionId, status, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("submissionId") || key.equalsIgnoreCase("status")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

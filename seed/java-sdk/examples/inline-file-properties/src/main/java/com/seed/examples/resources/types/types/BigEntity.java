@@ -228,7 +228,6 @@ public final class BigEntity {
 
         private Optional<Moment> moment = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -410,6 +409,26 @@ public final class BigEntity {
                     directory,
                     moment,
                     additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("castMember")
+                    || key.equalsIgnoreCase("extendedMovie")
+                    || key.equalsIgnoreCase("entity")
+                    || key.equalsIgnoreCase("metadata")
+                    || key.equalsIgnoreCase("commonMetadata")
+                    || key.equalsIgnoreCase("eventInfo")
+                    || key.equalsIgnoreCase("data")
+                    || key.equalsIgnoreCase("migration")
+                    || key.equalsIgnoreCase("exception")
+                    || key.equalsIgnoreCase("test")
+                    || key.equalsIgnoreCase("node")
+                    || key.equalsIgnoreCase("directory")
+                    || key.equalsIgnoreCase("moment")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

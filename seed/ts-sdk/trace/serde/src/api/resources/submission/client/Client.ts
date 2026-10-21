@@ -61,7 +61,7 @@ export class SubmissionClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/sessions/create-session/${core.url.encodePathParam(serializers.Language.jsonOrThrow(language, { omitUndefined: true }))}`,
+                `/sessions/create-session/${core.url.encodePathParam(serializers.Language.jsonOrThrow(language, { omitUndefined: true }), errors.SeedTraceError)}`,
             ),
             method: "POST",
             headers: _headers,
@@ -136,7 +136,7 @@ export class SubmissionClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/sessions/${core.url.encodePathParam(sessionId)}`,
+                `/sessions/${core.url.encodePathParam(sessionId, errors.SeedTraceError)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -206,7 +206,7 @@ export class SubmissionClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/sessions/stop/${core.url.encodePathParam(sessionId)}`,
+                `/sessions/stop/${core.url.encodePathParam(sessionId, errors.SeedTraceError)}`,
             ),
             method: "DELETE",
             headers: _headers,

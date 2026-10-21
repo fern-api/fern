@@ -56,7 +56,7 @@ export class UsersClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `users/${core.url.encodePathParam(request.id)}`,
+                `users/${core.url.encodePathParam(request.id, errors.SeedTsFlattenRequestAnyAuthError)}`,
             ),
             method: "PUT",
             headers: _headers,
@@ -125,7 +125,7 @@ export class UsersClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `users/${core.url.encodePathParam(id)}/profile`,
+                `users/${core.url.encodePathParam(id, errors.SeedTsFlattenRequestAnyAuthError)}/profile`,
             ),
             method: "PUT",
             headers: _headers,

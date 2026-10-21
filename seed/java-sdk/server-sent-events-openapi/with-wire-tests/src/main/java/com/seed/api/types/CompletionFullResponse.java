@@ -86,7 +86,6 @@ public final class CompletionFullResponse {
 
         private Optional<CompletionFullResponseFinishReason> finishReason = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -127,6 +126,14 @@ public final class CompletionFullResponse {
 
         public CompletionFullResponse build() {
             return new CompletionFullResponse(answer, finishReason, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("answer") || key.equalsIgnoreCase("finishReason")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

@@ -51,7 +51,7 @@ export class PathParamClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `path/${core.url.encodePathParam(serializers.Operand.jsonOrThrow(operand, { omitUndefined: true }))}/${core.url.encodePathParam(serializers.ColorOrOperand.jsonOrThrow(operandOrColor, { omitUndefined: true }))}`,
+                `path/${core.url.encodePathParam(serializers.Operand.jsonOrThrow(operand, { omitUndefined: true }), errors.SeedEnumError)}/${core.url.encodePathParam(serializers.ColorOrOperand.jsonOrThrow(operandOrColor, { omitUndefined: true }), errors.SeedEnumError)}`,
             ),
             method: "POST",
             headers: _headers,

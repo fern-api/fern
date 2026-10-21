@@ -10,6 +10,7 @@ import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.InputStreamRequestBody;
 import com.fern.sdk.core.MediaTypes;
 import com.fern.sdk.core.ObjectMappers;
+import com.fern.sdk.core.PathSegments;
 import com.fern.sdk.core.QueryStringMapper;
 import com.fern.sdk.core.RequestOptions;
 import com.fern.sdk.core.RetryInterceptor;
@@ -73,7 +74,7 @@ public class AsyncRawParamsClient {
     HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
       .addPathSegments("params")
       .addPathSegments("path")
-      .addPathSegment(param);if (requestOptions != null) {
+      .addPathSegment(PathSegments.validate(param));if (requestOptions != null) {
         requestOptions.getQueryParameters().forEach((_key, _value) -> {
           httpUrl.addQueryParameter(_key, _value);
         } );
@@ -92,7 +93,7 @@ public class AsyncRawParamsClient {
         okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
       }
       CompletableFuture<SeedExhaustiveHttpResponse<String>> future = new CompletableFuture<>();
-      Call okhttpCall = client.newCall(okhttpRequest);
+      RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
       okhttpCall.enqueue(new Callback() {
         @Override
         public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -158,7 +159,7 @@ public class AsyncRawParamsClient {
       HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
         .addPathSegments("params")
         .addPathSegments("path")
-        .addPathSegment(param);if (requestOptions != null) {
+        .addPathSegment(PathSegments.validate(param));if (requestOptions != null) {
           requestOptions.getQueryParameters().forEach((_key, _value) -> {
             httpUrl.addQueryParameter(_key, _value);
           } );
@@ -177,7 +178,7 @@ public class AsyncRawParamsClient {
           okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
         }
         CompletableFuture<SeedExhaustiveHttpResponse<String>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
           @Override
           public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -247,7 +248,7 @@ public class AsyncRawParamsClient {
             okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
           }
           CompletableFuture<SeedExhaustiveHttpResponse<Void>> future = new CompletableFuture<>();
-          Call okhttpCall = client.newCall(okhttpRequest);
+          RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
           okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -317,7 +318,7 @@ public class AsyncRawParamsClient {
               okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
             }
             CompletableFuture<SeedExhaustiveHttpResponse<Void>> future = new CompletableFuture<>();
-            Call okhttpCall = client.newCall(okhttpRequest);
+            RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
             okhttpCall.enqueue(new Callback() {
               @Override
               public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -368,7 +369,7 @@ public class AsyncRawParamsClient {
             HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
               .addPathSegments("params")
               .addPathSegments("path-query")
-              .addPathSegment(param);QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), false);
+              .addPathSegment(PathSegments.validate(param));QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), false);
               if (requestOptions != null) {
                 requestOptions.getQueryParameters().forEach((_key, _value) -> {
                   httpUrl.addQueryParameter(_key, _value);
@@ -387,7 +388,7 @@ public class AsyncRawParamsClient {
                 okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
               }
               CompletableFuture<SeedExhaustiveHttpResponse<Void>> future = new CompletableFuture<>();
-              Call okhttpCall = client.newCall(okhttpRequest);
+              RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
               okhttpCall.enqueue(new Callback() {
                 @Override
                 public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -438,7 +439,7 @@ public class AsyncRawParamsClient {
               HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
                 .addPathSegments("params")
                 .addPathSegments("path-query")
-                .addPathSegment(param);QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), false);
+                .addPathSegment(PathSegments.validate(param));QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), false);
                 if (requestOptions != null) {
                   requestOptions.getQueryParameters().forEach((_key, _value) -> {
                     httpUrl.addQueryParameter(_key, _value);
@@ -457,7 +458,7 @@ public class AsyncRawParamsClient {
                   okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
                 }
                 CompletableFuture<SeedExhaustiveHttpResponse<Void>> future = new CompletableFuture<>();
-                Call okhttpCall = client.newCall(okhttpRequest);
+                RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
                 okhttpCall.enqueue(new Callback() {
                   @Override
                   public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -508,7 +509,7 @@ public class AsyncRawParamsClient {
                 HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
                   .addPathSegments("params")
                   .addPathSegments("path")
-                  .addPathSegment(param);if (requestOptions != null) {
+                  .addPathSegment(PathSegments.validate(param));if (requestOptions != null) {
                     requestOptions.getQueryParameters().forEach((_key, _value) -> {
                       httpUrl.addQueryParameter(_key, _value);
                     } );
@@ -535,7 +536,7 @@ public class AsyncRawParamsClient {
                     okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
                   }
                   CompletableFuture<SeedExhaustiveHttpResponse<String>> future = new CompletableFuture<>();
-                  Call okhttpCall = client.newCall(okhttpRequest);
+                  RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
                   okhttpCall.enqueue(new Callback() {
                     @Override
                     public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -587,7 +588,7 @@ public class AsyncRawParamsClient {
                   HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
                     .addPathSegments("params")
                     .addPathSegments("path")
-                    .addPathSegment(param);if (requestOptions != null) {
+                    .addPathSegment(PathSegments.validate(param));if (requestOptions != null) {
                       requestOptions.getQueryParameters().forEach((_key, _value) -> {
                         httpUrl.addQueryParameter(_key, _value);
                       } );
@@ -614,7 +615,7 @@ public class AsyncRawParamsClient {
                       okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
                     }
                     CompletableFuture<SeedExhaustiveHttpResponse<String>> future = new CompletableFuture<>();
-                    Call okhttpCall = client.newCall(okhttpRequest);
+                    RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
                     okhttpCall.enqueue(new Callback() {
                       @Override
                       public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -665,7 +666,7 @@ public class AsyncRawParamsClient {
                     HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
                       .addPathSegments("params")
                       .addPathSegments("path")
-                      .addPathSegment(param);if (requestOptions != null) {
+                      .addPathSegment(PathSegments.validate(param));if (requestOptions != null) {
                         requestOptions.getQueryParameters().forEach((_key, _value) -> {
                           httpUrl.addQueryParameter(_key, _value);
                         } );
@@ -684,7 +685,7 @@ public class AsyncRawParamsClient {
                         okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
                       }
                       CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithRequiredField>> future = new CompletableFuture<>();
-                      Call okhttpCall = client.newCall(okhttpRequest);
+                      RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
                       okhttpCall.enqueue(new Callback() {
                         @Override
                         public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -796,7 +797,7 @@ public class AsyncRawParamsClient {
                           okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
                         }
                         CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithOptionalField>> future = new CompletableFuture<>();
-                        Call okhttpCall = client.newCall(okhttpRequest);
+                        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
                         okhttpCall.enqueue(new Callback() {
                           @Override
                           public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -892,7 +893,7 @@ public class AsyncRawParamsClient {
                             okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
                           }
                           CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithOptionalField>> future = new CompletableFuture<>();
-                          Call okhttpCall = client.newCall(okhttpRequest);
+                          RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
                           okhttpCall.enqueue(new Callback() {
                             @Override
                             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -943,7 +944,7 @@ public class AsyncRawParamsClient {
                           HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
                             .addPathSegments("params")
                             .addPathSegments("path-bool")
-                            .addPathSegment(Boolean.toString(param));if (requestOptions != null) {
+                            .addPathSegment(PathSegments.validate(Boolean.toString(param)));if (requestOptions != null) {
                               requestOptions.getQueryParameters().forEach((_key, _value) -> {
                                 httpUrl.addQueryParameter(_key, _value);
                               } );
@@ -962,7 +963,7 @@ public class AsyncRawParamsClient {
                               okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
                             }
                             CompletableFuture<SeedExhaustiveHttpResponse<String>> future = new CompletableFuture<>();
-                            Call okhttpCall = client.newCall(okhttpRequest);
+                            RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
                             okhttpCall.enqueue(new Callback() {
                               @Override
                               public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -1013,7 +1014,7 @@ public class AsyncRawParamsClient {
                             HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
                               .addPathSegments("params")
                               .addPathSegments("path")
-                              .addPathSegment(param);if (requestOptions != null) {
+                              .addPathSegment(PathSegments.validate(param));if (requestOptions != null) {
                                 requestOptions.getQueryParameters().forEach((_key, _value) -> {
                                   httpUrl.addQueryParameter(_key, _value);
                                 } );
@@ -1032,7 +1033,7 @@ public class AsyncRawParamsClient {
                                 okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
                               }
                               CompletableFuture<SeedExhaustiveHttpResponse<String>> future = new CompletableFuture<>();
-                              Call okhttpCall = client.newCall(okhttpRequest);
+                              RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
                               okhttpCall.enqueue(new Callback() {
                                 @Override
                                 public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {

@@ -141,7 +141,6 @@ public final class Response implements XmlSerializable {
     public static final class Builder {
         private Optional<List<ResponseChildrenItem>> children = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         @JsonIgnore
@@ -168,6 +167,14 @@ public final class Response implements XmlSerializable {
 
         public Response build() {
             return new Response(children, additionalProperties, content);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("children")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

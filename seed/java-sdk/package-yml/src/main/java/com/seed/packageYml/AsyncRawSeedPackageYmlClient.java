@@ -8,6 +8,7 @@ import com.seed.packageYml.core.BodyProperties;
 import com.seed.packageYml.core.ClientOptions;
 import com.seed.packageYml.core.MediaTypes;
 import com.seed.packageYml.core.ObjectMappers;
+import com.seed.packageYml.core.PathSegments;
 import com.seed.packageYml.core.RequestOptions;
 import com.seed.packageYml.core.RetryInterceptor;
 import com.seed.packageYml.core.SeedPackageYmlApiException;
@@ -42,7 +43,7 @@ public class AsyncRawSeedPackageYmlClient {
             EchoRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegment(clientOptions.id());
+                .addPathSegment(PathSegments.validate(clientOptions.id()));
 
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
@@ -79,7 +80,7 @@ public class AsyncRawSeedPackageYmlClient {
                     .build();
         }
         CompletableFuture<SeedPackageYmlHttpResponse<String>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {

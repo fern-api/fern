@@ -53,7 +53,7 @@ client = Seed::Client.new(
 
 ## Pagination
 
-List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items. You can also iterate page-by-page.
+List endpoints are paginated. A paginated method returns an iterator, not the response object: loop over it to get the items of every page, or call `pages` on it to get each page's full response, including fields besides the items. Each page is requested when it is needed, and an API error is raised where that request is sent.
 
 ```ruby
 require "seed"
@@ -90,6 +90,8 @@ begin
     result = client.users.list_with_custom_pager
 rescue Seed::Errors::TimeoutError
     puts "API didn't respond before our timeout elapsed"
+rescue Seed::Errors::ConnectionError => e
+    puts "Could not reach the API (connection refused, reset, DNS or TLS failure): #{e.message}"
 rescue Seed::Errors::ServiceUnavailableError
     puts "API returned status 503, is probably overloaded, try again later"
 rescue Seed::Errors::ServerError

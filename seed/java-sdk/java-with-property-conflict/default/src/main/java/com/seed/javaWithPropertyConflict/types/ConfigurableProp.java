@@ -157,7 +157,6 @@ public final class ConfigurableProp {
 
         private Optional<String> label = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -246,6 +245,17 @@ public final class ConfigurableProp {
         @java.lang.Override
         public ConfigurableProp build() {
             return new ConfigurableProp(name, label, withLabel, description, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("name")
+                    || key.equalsIgnoreCase("label")
+                    || key.equalsIgnoreCase("withLabel")
+                    || key.equalsIgnoreCase("description")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

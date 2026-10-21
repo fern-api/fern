@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    The SDK Config `cli` target accepts the fields added in `@postman/sdk-config` 0.13.0 instead of failing
+    with `CLI_TARGET_UNKNOWN_FIELD`. `apiImportSettings.inferDiscriminatedUnionBaseProperties` is written as
+    `infer-discriminated-union-base-properties`; `package.bugs` and `output.distribution.githubAttestations` are
+    ignored with a warning. The field coverage check now covers only the fields a `cli` target can carry, so a
+    new setting for another language no longer needs an entry.
+  type: fix

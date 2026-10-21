@@ -74,7 +74,6 @@ public final class ListUsersBodyCursorPaginationRequest {
     public static final class Builder {
         private Optional<WithCursor> pagination = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -101,6 +100,14 @@ public final class ListUsersBodyCursorPaginationRequest {
 
         public ListUsersBodyCursorPaginationRequest build() {
             return new ListUsersBodyCursorPaginationRequest(pagination, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("pagination")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

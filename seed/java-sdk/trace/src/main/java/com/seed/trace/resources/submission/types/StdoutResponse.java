@@ -95,7 +95,6 @@ public final class StdoutResponse {
 
         private String stdout;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -124,6 +123,14 @@ public final class StdoutResponse {
         @java.lang.Override
         public StdoutResponse build() {
             return new StdoutResponse(submissionId, stdout, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("submissionId") || key.equalsIgnoreCase("stdout")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

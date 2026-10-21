@@ -97,7 +97,6 @@ public final class ChildType implements IBaseType {
 
         private Optional<ChildType> childRef = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -132,6 +131,14 @@ public final class ChildType implements IBaseType {
         @java.lang.Override
         public ChildType build() {
             return new ChildType(childRef, childName, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("child_ref") || key.equalsIgnoreCase("child_name")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

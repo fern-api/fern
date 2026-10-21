@@ -101,7 +101,6 @@ public final class GetWithQuery {
 
     private int number;
 
-    @JsonAnySetter
     private Map<String, Object> additionalProperties = new HashMap<>();
 
     private Builder() {
@@ -131,6 +130,14 @@ public final class GetWithQuery {
     @java.lang.Override
     public GetWithQuery build() {
       return new GetWithQuery(query, number, additionalProperties);
+    }
+
+    @JsonAnySetter
+    private void putAdditionalPropertyFromJson(String key, Object value) {
+      if (key.equalsIgnoreCase("query") || key.equalsIgnoreCase("number")) {
+        return;
+      }
+      this.additionalProperties.put(key, value);
     }
 
     @java.lang.Override

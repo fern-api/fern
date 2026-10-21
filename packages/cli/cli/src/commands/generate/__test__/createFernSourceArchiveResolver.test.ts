@@ -116,6 +116,7 @@ describe("createFernSourceArchiveResolver", () => {
             cliVersion: "0.0.0",
             absoluteFilePath: AbsoluteFilePath.of("/tmp/combined")
         });
+        vi.spyOn(workspace, "composesSourceSpecs").mockResolvedValue(true);
         vi.spyOn(workspace, "getAllSpecsForGenerator").mockResolvedValue([usersSpec, paymentsSpec]);
         const group: generatorsYml.GeneratorGroup = {
             groupName: "test",
@@ -154,6 +155,48 @@ describe("createFernSourceArchiveResolver", () => {
                 generatorSelections: [{ generatorIndex: 0, specs: [usersSpec, paymentsSpec] }]
             })
         );
+    });
+
+    it("rejects a Fern Definition routed to sdk-gen-api as deprecated", async () => {
+        const context = createMockTaskContext();
+        const generatorInvocation = makeGenerator();
+        const workspace = new LazyFernWorkspace({
+            context,
+            generatorsConfiguration: undefined,
+            workspaceName: "imdb",
+            cliVersion: "0.0.0",
+            absoluteFilePath: AbsoluteFilePath.of("/tmp/imdb")
+        });
+        vi.spyOn(workspace, "composesSourceSpecs").mockResolvedValue(false);
+        const getAllSpecsForGenerator = vi.spyOn(workspace, "getAllSpecsForGenerator");
+        const group: generatorsYml.GeneratorGroup = {
+            groupName: "test",
+            audiences: { type: "all" },
+            generators: [generatorInvocation],
+            reviewers: undefined
+        };
+        const request: FernSourceArchiveRequest = {
+            generatorIndex: 0,
+            generatorInvocation,
+            sdkGenApiRoute: {
+                generatorId: generatorInvocation.name,
+                language: "typescript",
+                requestedVersion: generatorInvocation.version,
+                cutoverVersion: "4.0.0",
+                configKind: "legacy-fern",
+                payloadKind: "fern-runtime-bundle"
+            }
+        };
+
+        const resolution = await createFernSourceArchiveResolver({ workspace, context, group })([request]);
+
+        expect(resolution.sourceArchives).toEqual(new Map());
+        expect(resolution.errors.get(0)).toMatchObject({
+            message: expect.stringMatching(
+                /^Workspace imdb uses a Fern Definition, which is deprecated and not supported for SDK generation through sdk-gen-api\./
+            )
+        });
+        expect(getAllSpecsForGenerator).not.toHaveBeenCalled();
     });
 
     it("preserves the preparation error when archive outcomes violate the invariant", async () => {

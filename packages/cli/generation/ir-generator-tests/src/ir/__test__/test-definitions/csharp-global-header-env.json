@@ -328,7 +328,8 @@
                             "unsafeName": "Basic",
                             "safeName": "Basic"
                         }
-                    }
+                    },
+                    "requirement": "ANY"
                 },
                 "declaration": {
                     "name": {

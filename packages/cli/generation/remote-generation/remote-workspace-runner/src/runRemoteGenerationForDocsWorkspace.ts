@@ -27,6 +27,7 @@ export async function runRemoteGenerationForDocsWorkspace({
     organization,
     apiWorkspaces,
     ossWorkspaces,
+    usesSdkConfig,
     docsWorkspace,
     context,
     token,
@@ -44,6 +45,8 @@ export async function runRemoteGenerationForDocsWorkspace({
     organization: string;
     apiWorkspaces: AbstractAPIWorkspace<unknown>[];
     ossWorkspaces: OSSWorkspace[];
+    /** Whether the project configures SDKs in sdk-config.yml; only used to explain missing SDK snippets. */
+    usesSdkConfig?: boolean;
     docsWorkspace: DocsWorkspace;
     context: TaskContext;
     token: FernToken;
@@ -143,6 +146,7 @@ export async function runRemoteGenerationForDocsWorkspace({
                 context,
                 apiWorkspaces,
                 ossWorkspaces,
+                usesSdkConfig,
                 preview,
                 previewId,
                 editThisPage: maybeInstance.editThisPage,

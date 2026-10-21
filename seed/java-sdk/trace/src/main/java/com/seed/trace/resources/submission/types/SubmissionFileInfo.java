@@ -109,7 +109,6 @@ public final class SubmissionFileInfo {
 
         private String contents;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -146,6 +145,16 @@ public final class SubmissionFileInfo {
         @java.lang.Override
         public SubmissionFileInfo build() {
             return new SubmissionFileInfo(directory, filename, contents, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("directory")
+                    || key.equalsIgnoreCase("filename")
+                    || key.equalsIgnoreCase("contents")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

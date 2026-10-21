@@ -108,7 +108,6 @@ public final class TestCaseMetadata {
 
         private boolean hidden;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -145,6 +144,14 @@ public final class TestCaseMetadata {
         @java.lang.Override
         public TestCaseMetadata build() {
             return new TestCaseMetadata(id, name, hidden, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("id") || key.equalsIgnoreCase("name") || key.equalsIgnoreCase("hidden")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

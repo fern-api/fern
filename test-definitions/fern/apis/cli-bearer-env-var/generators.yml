@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+#
+# A bearer scheme declared under the name `bearer` with an explicit env var.
+# `bearer` is also the built-in shorthand, and the IR used to resolve the
+# reference to that shorthand and drop this declaration, so the CLI fell back to
+# `<BIN>_TOKEN`. The generated `main.rs` must read `BEARER_TOKEN`, and the wire
+# test seeds that variable, so a regression fails the authenticated case.
+auth-schemes:
+  bearer:
+    scheme: bearer
+    token:
+      env: BEARER_TOKEN
+api:
+  auth: bearer
+  specs:
+    - openapi: ./openapi.yml
+
+groups:
+  cli:
+    generators:
+      - name: fernapi/fern-cli-generator
+        version: latest
+        ir-version: latest

@@ -99,7 +99,7 @@ class SeedApi:
         return self._raw_client
 
     def submit_form_data(
-        self, *, username: str, email: str, request_options: typing.Optional[RequestOptions] = None
+        self, *, username: str, email: str, content: str, request_options: typing.Optional[RequestOptions] = None
     ) -> PostSubmitResponse:
         """
         Parameters
@@ -109,6 +109,9 @@ class SeedApi:
 
         email : str
             The user's email address
+
+        content : str
+            A JSON document carried as a form field
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -128,9 +131,12 @@ class SeedApi:
         client.submit_form_data(
             username="johndoe",
             email="john@example.com",
+            content='{"key":"value"}',
         )
         """
-        _response = self._raw_client.submit_form_data(username=username, email=email, request_options=request_options)
+        _response = self._raw_client.submit_form_data(
+            username=username, email=email, content=content, request_options=request_options
+        )
         return _response.data
 
     def get_token(
@@ -272,7 +278,7 @@ class AsyncSeedApi:
         return self._raw_client
 
     async def submit_form_data(
-        self, *, username: str, email: str, request_options: typing.Optional[RequestOptions] = None
+        self, *, username: str, email: str, content: str, request_options: typing.Optional[RequestOptions] = None
     ) -> PostSubmitResponse:
         """
         Parameters
@@ -282,6 +288,9 @@ class AsyncSeedApi:
 
         email : str
             The user's email address
+
+        content : str
+            A JSON document carried as a form field
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -306,13 +315,14 @@ class AsyncSeedApi:
             await client.submit_form_data(
                 username="johndoe",
                 email="john@example.com",
+                content='{"key":"value"}',
             )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.submit_form_data(
-            username=username, email=email, request_options=request_options
+            username=username, email=email, content=content, request_options=request_options
         )
         return _response.data
 

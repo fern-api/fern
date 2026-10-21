@@ -146,6 +146,18 @@ describe <%= gem_namespace %>::Internal::Xml::Element do
       assert_same second, content[2]
       assert_equal "tail", content[3].value
     end
+
+    it "content includes the leading text when requested" do
+      parsed = XmlTestUtils.parse_document("<Gather>Press a key, then <Say>one</Say></Gather>")
+      say = XmlTestElement.new("Say", text: "one")
+
+      assert_equal 1, XmlTestUtils.content(parsed, [[["Say"], [say]]], []).length
+      content = XmlTestUtils.content(parsed, [[["Say"], [say]]], [], include_text: true)
+
+      assert_equal 2, content.length
+      assert_equal "Press a key, then ", content[0].value
+      assert_same say, content[1]
+    end
   end
 
   describe "scalar parsing" do

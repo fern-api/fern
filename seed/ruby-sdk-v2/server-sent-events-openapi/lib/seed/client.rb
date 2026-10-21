@@ -187,6 +187,43 @@ module Seed
       raise error_class.new(response.body, code: code)
     end
 
+    # context=protocol where some variants use the envelope+data pattern and others use the flat allOf pattern. Envelope
+    # variants are parsed from {event, data}; flat variants are parsed from the data payload with the event discriminant
+    # injected.
+    #
+    # @param request_options [Hash]
+    # @param params [Seed::Types::StreamRequest]
+    # @option request_options [String] :base_url
+    # @option request_options [Hash{String => Object}] :additional_headers
+    # @option request_options [Hash{String => Object}] :additional_query_parameters
+    # @option request_options [Hash{String => Object}] :additional_body_parameters
+    # @option request_options [Integer] :timeout_in_seconds
+    #
+    # @example
+    #   client.stream_protocol_mixed_schema
+    #
+    # @return [untyped]
+    def stream_protocol_mixed_schema(request_options: {}, **params)
+      params = Seed::Internal::Types::Utils.normalize_keys(params)
+      request = Seed::Internal::JSON::Request.new(
+        base_url: request_options[:base_url],
+        method: "POST",
+        path: "stream/protocol-mixed-schema",
+        body: Seed::Types::StreamRequest.new(params).to_h,
+        request_options: request_options
+      )
+      begin
+        response = @client.send(request)
+      rescue Net::HTTPRequestTimeout
+        raise Seed::Errors::TimeoutError
+      end
+      code = response.code.to_i
+      return if code.between?(200, 299)
+
+      error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+      raise error_class.new(response.body, code: code)
+    end
+
     # Mismatched combination: context=data with the envelope+data schema pattern that is normally used with
     # context=protocol. Shows what happens when the discriminant is declared as data-level but the schema separates the
     # event field and data field into an envelope structure.

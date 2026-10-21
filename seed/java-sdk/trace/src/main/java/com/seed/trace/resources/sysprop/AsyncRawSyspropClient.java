@@ -8,6 +8,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.seed.trace.core.BodyProperties;
 import com.seed.trace.core.ClientOptions;
 import com.seed.trace.core.ObjectMappers;
+import com.seed.trace.core.PathSegments;
 import com.seed.trace.core.RequestOptions;
 import com.seed.trace.core.RetryInterceptor;
 import com.seed.trace.core.SeedTraceApiException;
@@ -45,8 +46,8 @@ public class AsyncRawSyspropClient {
                 .newBuilder()
                 .addPathSegments("sysprop")
                 .addPathSegments("num-warm-instances")
-                .addPathSegment(language.toString())
-                .addPathSegment(Integer.toString(numWarmInstances));
+                .addPathSegment(PathSegments.validate(language.toString()))
+                .addPathSegment(PathSegments.validate(Integer.toString(numWarmInstances)));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -75,7 +76,7 @@ public class AsyncRawSyspropClient {
                     .build();
         }
         CompletableFuture<SeedTraceHttpResponse<Void>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -145,7 +146,7 @@ public class AsyncRawSyspropClient {
                     .build();
         }
         CompletableFuture<SeedTraceHttpResponse<Map<Language, Integer>>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {

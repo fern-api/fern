@@ -1,4 +1,195 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.107.4
+  changelogEntry:
+    - summary: |
+        XML (TwiML) child builder methods accept the element's text content as a string, so legacy-style calls
+        such as `response.dial("+15551234567")` and `response.say("hi")` produce `<Dial>+15551234567</Dial>`
+        instead of an empty element. Element text no longer escapes double quotes as `&quot;` (attributes still do),
+        matching the legacy TwiML output.
+      type: fix
+  createdAt: "2026-10-21"
+  irVersion: 67
+- version: 3.107.3
+  changelogEntry:
+    - summary: |
+        `WebhooksHelper.verifyRequest` now parses `name=value` settings headers when
+        `webhook-signature.algorithm-header` sets `key-id-parameter`/`algorithm-parameter`
+        (e.g. Twilio's `X-Twilio-Webhooks-Signature-Settings: key=<id>,algorithm=HMAC_SHA256`),
+        so the key resolver receives the bare key ID instead of `key=<id>`. Requires IR 67.33.0.
+      type: fix
+  createdAt: "2026-10-16"
+  irVersion: 67
+- version: 3.107.2
+  changelogEntry:
+    - summary: |
+        With `flattenAnyAuthOptions` enabled, dynamic snippets now keep nested auth options for APIs that use
+        endpoint-level security, which matches the generated SDK. Only `auth: any` snippets are flattened.
+      type: fix
+  createdAt: "2026-10-15"
+  irVersion: 67
+- version: 3.107.1
+  changelogEntry:
+    - summary: |
+        Reject `.` and `..` as path parameter values. `encodeURIComponent` leaves dots unencoded, so URL resolution
+        removed these dot segments and sent the request, with its auth headers, to a different endpoint (for example,
+        `/users/{userId}/roles` with `userId: ".."` was sent to `/roles`). The SDK now throws its generic API error
+        (e.g. `MyClientError`) before the request is sent. SDKs generated with `neverThrowErrors` throw a plain `Error`.
+      type: fix
+  createdAt: "2026-10-15"
+  irVersion: 67
+- version: 3.107.0
+  changelogEntry:
+    - summary: |
+        Add the `flattenAnyAuthOptions` config option. When it is enabled and the API uses `auth: any`, each scheme's
+        client options are flat (e.g. `{ apiKey }`, `{ clientId, clientSecret }`, `{ token }`) instead of nested under the
+        scheme key (e.g. `{ apiKey: { apiKey } }`). This matches the Python SDK. Options with the same name, such as the
+        bearer `token` and the OAuth `token` override, are shared, and an OAuth `token` skips the client-credentials flow.
+        The default is `false`, so existing SDKs keep the nested shape.
+      type: feat
+    - summary: |
+        Fix `auth: any` SDKs ignoring an OAuth token override (`oauth: { token }`). Previously the OAuth provider was only
+        used when `clientId` and `clientSecret` were set, so a token by itself sent no `Authorization` header.
+      type: fix
+  createdAt: "2026-10-15"
+  irVersion: 67
+- version: 3.106.1
+  changelogEntry:
+    - summary: |
+        The generated API error's `requestId` getter now works without configuration for
+        APIs that return the request ID under a vendor-specific header: it reads
+        `X-Request-Id` and otherwise falls back to the first response header whose name
+        ends in `request-id` / `requestid` (e.g. `Twilio-Request-Id`, `x-amzn-RequestId`).
+        Removed the `requestIdHeader` config option introduced in 3.106.0.
+      type: fix
+  createdAt: "2026-10-13"
+  irVersion: 67
+- version: 3.106.0
+  changelogEntry:
+    - summary: |
+        The generated API error class's `requestId` getter now reads the canonical
+        `X-Request-Id` header (previously the lowercase `x-request-id`), matching the
+        casing of every other header the SDK emits. Added the `requestIdHeader`
+        config option so SDKs can point `requestId` at a different response header,
+        e.g. `requestIdHeader: Twilio-Request-Id`.
+      type: feat
+  createdAt: "2026-10-13"
+  irVersion: 67
+- version: 3.105.2
+  changelogEntry:
+    - summary: |
+        The generated `WebhooksHelper` now consumes `algorithm-header` from `api.settings.webhook-signature`:
+        a request-level `verifyRequest` helper reads the configured signature header first (missing or empty
+        fails early with "could not run: missing signature header"), then the algorithm-selection header
+        (e.g. `X-Twilio-Webhook-Signature-Settings: <key_id>;HMAC_SHA256`) to pick the HMAC algorithm from
+        the configured wire values and hand the key ID to an application-supplied secret resolver. When the
+        header is absent the configured default algorithm and the plain secret are used, so legacy
+        auth-token flows keep working. The lower-level `verifySignature` is unchanged and still returns
+        `false` without throwing.
+      type: fix
+  createdAt: "2026-10-13"
+  irVersion: 67
+- version: 3.105.1
+  changelogEntry:
+    - summary: |
+        `reference.md` is now generated for every output mode, matching the Go and Python generators. It was
+        previously skipped unless the CLI passed a snippet path (`local-file-system` output without
+        `snippets: path:` in generators.yml). `README.md` is unchanged and still requires snippets. Source-only output (`outputSourceFiles`, the default for local-file-system) now also includes the root `README.md`, `reference.md` and `CONTRIBUTING.md` when they were generated.
+      type: fix
+  createdAt: "2026-10-09"
+  irVersion: 67
+- version: 3.105.0
+  changelogEntry:
+    - summary: |
+        Support inferred bearer auth with `type: refresh-token`. The SDK always sends
+        `grant_type: "refresh_token"` to the get-token endpoint, and `grantType` is no longer
+        exposed as a client auth option. Users pass only the refresh token (and any other
+        non-literal token endpoint parameters).
+      type: feat
+    - summary: |
+        With `type: refresh-token`, inferred auth only exposes and sends the token endpoint parameters used by
+        the OAuth refresh token grant (`refresh_token`, `scope`, `client_id`, `client_secret`) plus any
+        required ones. Optional parameters of other grants on a shared token endpoint, such as `code`,
+        `code_verifier` and `redirect_uri`, are no longer auth options.
+      type: feat
+    - summary: |
+        Inferred auth with `type: refresh-token` now rotates the refresh token. When the token response returns a new
+        `refresh_token`, the provider uses it for the next refresh and calls the optional `onRefreshTokenRotated`
+        auth option with it so it can be persisted.
+      type: feat
+    - summary: |
+        Wire tests for inferred auth with `type: refresh-token` now mock the token request with the fixed
+        `grant_type` and only the parameters the provider sends. When that scheme is an alternative to another
+        scheme on the same token endpoint, the tests mock only the first scheme, so the two handlers no longer
+        shadow each other.
+      type: fix
+  createdAt: "2026-10-09"
+  irVersion: 67
+- version: 3.104.5
+  changelogEntry:
+    - summary: |
+        Paginated endpoints no longer modify the request object you pass in. Calling `getNextPage()`
+        used to write the next cursor or offset into your original request (including nested fields
+        such as `options.offset`), so reusing that object started from the wrong position. The pager
+        now sends an updated copy and leaves your request unchanged.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 3.104.4
+  changelogEntry:
+    - summary: |
+        SSE unions discriminated by the `event:` line (`x-fern-discriminator-context: protocol`) now parse
+        both variant styles: envelope variants (`{event, data: Payload}`) are built from the `data:` JSON,
+        and payload variants (the `data:` JSON itself) get the `event:` value injected as the discriminant.
+        The event name no longer has to be repeated inside the `data:` JSON.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 3.104.3
+  changelogEntry:
+    - summary: |
+        Malformed JSON no longer loses HTTP details. An error response labelled JSON whose body isn't valid
+        JSON (for example a `502` HTML page from a proxy) now throws the SDK's API error with the status code,
+        raw body and response headers, instead of a generic JSON parse error. Error responses with no
+        `Content-Type` now carry the raw text as the error body. A successful response with a JSON
+        `Content-Type` (`application/json`, `text/json` or `*+json`) and malformed JSON now throws the SDK's
+        API error too, instead of resolving the internal `{ ok: false, error: ... }` record as if it were the
+        endpoint's data. Successful non-JSON bodies, such as `200 OK` as `text/plain` on a void endpoint,
+        still resolve as before.
+      type: fix
+    - summary: |
+        Cancelling a request with `abortSignal` while the SDK is waiting to retry (for example after a
+        `429` with `Retry-After`) now stops the wait right away and does not send another request. Before,
+        the call stayed pending until the backoff finished. The backoff timer and abort listener are always
+        cleaned up.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 3.104.2
+  changelogEntry:
+    - summary: |
+        `timeoutInSeconds` now also covers reading the response body. Before, the timer stopped as soon as
+        headers arrived, so a response whose JSON body was slow to arrive could take far longer than the
+        timeout. Timeouts are also reported as the SDK's timeout error on every Node version (before, Node 20+
+        surfaced a generic `"timeout"` error and Node 18 a `TypeError: invalid_argument`), and the timeout timer
+        is cleared on every exit, including failed requests. An error status (4xx/5xx) whose body is slower than
+        the timeout now also returns the timeout error. Streaming, SSE and binary responses, and the passthrough
+        `client.fetch()` (which returns the raw response), still stop the timer when headers arrive. When
+        `client.fetch()` times out it now rejects like `fetch` does, with an `Error` whose `name` is `"TimeoutError"`;
+        before, it rejected with the bare string `"timeout"`.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 3.104.1
+  changelogEntry:
+    - summary: |
+        `guardProcessEnvAccess: true` now also guards the environment-variable fallback of global headers
+        (headers declared with `env`, e.g. `requestOptions?.version ?? this._options?.version ?? process.env?.["API_VERSION"]`).
+        Before, only auth and base-URL reads were guarded, so omitting an optional header option still threw
+        `ReferenceError: process is not defined` in browsers, Deno and Cloudflare Workers. Output is unchanged
+        when the option is off.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
 - version: 3.104.0
   changelogEntry:
     - summary: |

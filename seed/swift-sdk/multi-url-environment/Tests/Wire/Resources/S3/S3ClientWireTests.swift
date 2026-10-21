@@ -13,6 +13,7 @@ import MultiUrlEnvironment
             )
         )
         let client = MultiUrlEnvironmentClient(
+            baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )

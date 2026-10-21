@@ -70,7 +70,6 @@ public final class ListUsersOptionalDataRequest {
     public static final class Builder {
         private Optional<Integer> page = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -96,6 +95,14 @@ public final class ListUsersOptionalDataRequest {
 
         public ListUsersOptionalDataRequest build() {
             return new ListUsersOptionalDataRequest(page, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("page")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

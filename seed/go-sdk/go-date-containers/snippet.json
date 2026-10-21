@@ -10,6 +10,28 @@
                 "type": "go",
                 "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/go-date-containers/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Loans.GetLoan(\n\tcontext.TODO(),\n)\n"
             }
+        },
+        {
+            "id": {
+                "path": "/loans/by-date/{as_of}",
+                "method": "GET",
+                "identifier_override": "endpoint_loans.listLoansByDate"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-date-containers/fern\"\n\tfernclient \"github.com/go-date-containers/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Loans.ListLoansByDate(\n\tcontext.TODO(),\n\t\u0026fern.ListLoansByDateRequest{\n\t\tAsOf: fern.MustParseDate(\n\t\t\t\"2023-01-15\",\n\t\t),\n\t\tPage: \u0026fern.PageRequest{\n\t\t\tNumber: fern.Int(\n\t\t\t\t1,\n\t\t\t),\n\t\t\tSize: fern.Int(\n\t\t\t\t1,\n\t\t\t),\n\t\t},\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/loans/by-timestamp/{as_of}",
+                "method": "GET",
+                "identifier_override": "endpoint_loans.listLoansByTimestamp"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/go-date-containers/fern\"\n\tfernclient \"github.com/go-date-containers/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Loans.ListLoansByTimestamp(\n\tcontext.TODO(),\n\t\u0026fern.ListLoansByTimestampRequest{\n\t\tAsOf: fern.MustParseDateTime(\n\t\t\t\"2002-08-28T12:30:00Z\",\n\t\t),\n\t},\n)\n"
+            }
         }
     ]
 }

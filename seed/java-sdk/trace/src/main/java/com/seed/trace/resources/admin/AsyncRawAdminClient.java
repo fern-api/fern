@@ -8,6 +8,7 @@ import com.seed.trace.core.BodyProperties;
 import com.seed.trace.core.ClientOptions;
 import com.seed.trace.core.MediaTypes;
 import com.seed.trace.core.ObjectMappers;
+import com.seed.trace.core.PathSegments;
 import com.seed.trace.core.RequestOptions;
 import com.seed.trace.core.RetryInterceptor;
 import com.seed.trace.core.SeedTraceApiException;
@@ -53,7 +54,7 @@ public class AsyncRawAdminClient {
                 .newBuilder()
                 .addPathSegments("admin")
                 .addPathSegments("store-test-submission-status")
-                .addPathSegment(submissionId.toString());
+                .addPathSegment(PathSegments.validate(submissionId.toString()));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -88,7 +89,7 @@ public class AsyncRawAdminClient {
                     .build();
         }
         CompletableFuture<SeedTraceHttpResponse<Void>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -134,7 +135,7 @@ public class AsyncRawAdminClient {
                 .newBuilder()
                 .addPathSegments("admin")
                 .addPathSegments("store-test-submission-status-v2")
-                .addPathSegment(submissionId.toString());
+                .addPathSegment(PathSegments.validate(submissionId.toString()));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -169,7 +170,7 @@ public class AsyncRawAdminClient {
                     .build();
         }
         CompletableFuture<SeedTraceHttpResponse<Void>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -215,7 +216,7 @@ public class AsyncRawAdminClient {
                 .newBuilder()
                 .addPathSegments("admin")
                 .addPathSegments("store-workspace-submission-status")
-                .addPathSegment(submissionId.toString());
+                .addPathSegment(PathSegments.validate(submissionId.toString()));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -250,7 +251,7 @@ public class AsyncRawAdminClient {
                     .build();
         }
         CompletableFuture<SeedTraceHttpResponse<Void>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -296,7 +297,7 @@ public class AsyncRawAdminClient {
                 .newBuilder()
                 .addPathSegments("admin")
                 .addPathSegments("store-workspace-submission-status-v2")
-                .addPathSegment(submissionId.toString());
+                .addPathSegment(PathSegments.validate(submissionId.toString()));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -331,7 +332,7 @@ public class AsyncRawAdminClient {
                     .build();
         }
         CompletableFuture<SeedTraceHttpResponse<Void>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -377,9 +378,9 @@ public class AsyncRawAdminClient {
                 .newBuilder()
                 .addPathSegments("admin")
                 .addPathSegments("store-test-trace/submission")
-                .addPathSegment(submissionId.toString())
+                .addPathSegment(PathSegments.validate(submissionId.toString()))
                 .addPathSegments("testCase")
-                .addPathSegment(testCaseId);
+                .addPathSegment(PathSegments.validate(testCaseId));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -414,7 +415,7 @@ public class AsyncRawAdminClient {
                     .build();
         }
         CompletableFuture<SeedTraceHttpResponse<Void>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -460,9 +461,9 @@ public class AsyncRawAdminClient {
                 .newBuilder()
                 .addPathSegments("admin")
                 .addPathSegments("store-test-trace-v2/submission")
-                .addPathSegment(submissionId.toString())
+                .addPathSegment(PathSegments.validate(submissionId.toString()))
                 .addPathSegments("testCase")
-                .addPathSegment(testCaseId);
+                .addPathSegment(PathSegments.validate(testCaseId));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -497,7 +498,7 @@ public class AsyncRawAdminClient {
                     .build();
         }
         CompletableFuture<SeedTraceHttpResponse<Void>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -543,7 +544,7 @@ public class AsyncRawAdminClient {
                 .newBuilder()
                 .addPathSegments("admin")
                 .addPathSegments("store-workspace-trace/submission")
-                .addPathSegment(submissionId.toString());
+                .addPathSegment(PathSegments.validate(submissionId.toString()));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -578,7 +579,7 @@ public class AsyncRawAdminClient {
                     .build();
         }
         CompletableFuture<SeedTraceHttpResponse<Void>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -624,7 +625,7 @@ public class AsyncRawAdminClient {
                 .newBuilder()
                 .addPathSegments("admin")
                 .addPathSegments("store-workspace-trace-v2/submission")
-                .addPathSegment(submissionId.toString());
+                .addPathSegment(PathSegments.validate(submissionId.toString()));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -659,7 +660,7 @@ public class AsyncRawAdminClient {
                     .build();
         }
         CompletableFuture<SeedTraceHttpResponse<Void>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {

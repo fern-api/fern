@@ -81,7 +81,6 @@ public final class JustFileRequest {
     public static final class Builder implements FileStage, _FinalStage {
         private File file;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -102,6 +101,14 @@ public final class JustFileRequest {
         @java.lang.Override
         public JustFileRequest build() {
             return new JustFileRequest(file, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("file")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

@@ -3,11 +3,13 @@ import { AccentColorContrastRule } from "./rules/accent-color-contrast/index.js"
 import { AllRolesMustBeDeclaredRule } from "./rules/all-roles-must-be-declared/index.js";
 import { ApiSectionHasDefinitionRule } from "./rules/api-section-has-definition/index.js";
 import { FilepathsExistRule } from "./rules/filepaths-exist/index.js";
+import { LibraryFoldersInNavigationRule } from "./rules/library-folders-in-navigation/index.js";
 import { MissingRedirectsRule } from "./rules/missing-redirects/index.js";
 import { NavigationConflicts } from "./rules/navigation-conflicts/index.js";
 import { NoCircularRedirectsRule } from "./rules/no-circular-redirects/index.js";
 import { NoNonComponentRefsRule } from "./rules/no-non-component-refs/index.js";
 import { NoOpenApiV2InDocsRule } from "./rules/no-openapi-v2-in-docs/index.js";
+import { RobotsTxtOnInstanceUrlRequiresRobotsTxtRule } from "./rules/robots-txt-on-instance-url-requires-robots-txt/index.js";
 import { TranslationDirectoriesExistRule } from "./rules/translation-directories-exist/index.js";
 import { ValidChangelogSlugRule } from "./rules/valid-changelog-slug/index.js";
 import { ValidDocsEndpoints } from "./rules/valid-docs-endpoints/index.js";
@@ -42,11 +44,13 @@ const allRules = [
     ValidateProductFileRule,
     ValidInstanceUrlRule, // Validate instance URLs have valid subdomains
     ValidEmbeddingOriginsRule, // Validate settings.embedding.allowed-origins are well-formed CSP frame-ancestors sources
+    RobotsTxtOnInstanceUrlRequiresRobotsTxtRule, // Warn when experimental.robots-txt-on-instance-url is set without agents.robots-txt
     NoCircularRedirectsRule, // Detect circular redirect chains
     ValidTranslationsConfigRule,
     MissingRedirectsRule, // Check if any previously published URLs disappear without a redirect
     AccentColorContrastRule,
     ValidMarkdownLinks,
+    LibraryFoldersInNavigationRule, // Warn when only some generated library folders are wired into navigation
     ValidFileTypes,
     ValidDocsEndpoints,
     AllRolesMustBeDeclaredRule,

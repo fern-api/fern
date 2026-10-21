@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.seed.mixedCase.core.ClientOptions;
 import com.seed.mixedCase.core.ObjectMappers;
+import com.seed.mixedCase.core.PathSegments;
 import com.seed.mixedCase.core.QueryStringMapper;
 import com.seed.mixedCase.core.RequestOptions;
 import com.seed.mixedCase.core.RetryInterceptor;
@@ -44,7 +45,7 @@ public class AsyncRawServiceClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("resource")
-                .addPathSegment(resourceId);
+                .addPathSegment(PathSegments.validate(resourceId));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -70,7 +71,7 @@ public class AsyncRawServiceClient {
                     .build();
         }
         CompletableFuture<SeedMixedCaseHttpResponse<Resource>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -142,7 +143,7 @@ public class AsyncRawServiceClient {
                     .build();
         }
         CompletableFuture<SeedMixedCaseHttpResponse<List<Resource>>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {

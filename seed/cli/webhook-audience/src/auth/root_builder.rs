@@ -34,6 +34,12 @@ use super::provider::DynAuthProvider;
 pub trait AuthSchemeBuilder {
     /// Consume the builder and produce a `(scheme_name, SchemeBinding)` pair.
     fn into_binding(self) -> (String, SchemeBinding);
+
+    /// Human labels for the scheme's credential fields (`field`, `label`),
+    /// used when the CLI prompts for them. Empty means "use the field name".
+    fn credential_labels(&self) -> Vec<(String, String)> {
+        Vec::new()
+    }
 }
 
 // ---------------------------------------------------------------------------
@@ -103,6 +109,7 @@ impl AuthSchemeBuilder for BearerAuth {
 pub struct ApiKeyAuth {
     name: String,
     source: AuthCredentialSource,
+    prefix: Option<String>,
 }
 
 impl ApiKeyAuth {
@@ -112,7 +119,16 @@ impl ApiKeyAuth {
         Self {
             name: name.into(),
             source: AuthCredentialSource::Missing,
+            prefix: None,
         }
+    }
+
+    /// Send the key as `<prefix> <key>` (e.g. `prefix("Key")` →
+    /// `X-Api-Key: Key <key>`). Applies to every credential source, including
+    /// the keyring entry `auth login` stores, which holds the bare key.
+    pub fn prefix(mut self, prefix: impl Into<String>) -> Self {
+        self.prefix = Some(prefix.into());
+        self
     }
 
     /// Read the API key from an environment variable.
@@ -142,7 +158,20 @@ impl ApiKeyAuth {
 
 impl AuthSchemeBuilder for ApiKeyAuth {
     fn into_binding(self) -> (String, SchemeBinding) {
-        (self.name, SchemeBinding::Token(self.source))
+        let prefix = self
+            .prefix
+            .map(|prefix| prefix.trim().to_string())
+            .filter(|prefix| !prefix.is_empty());
+        match prefix {
+            Some(prefix) => (
+                self.name,
+                SchemeBinding::PrefixedToken {
+                    source: self.source,
+                    prefix,
+                },
+            ),
+            None => (self.name, SchemeBinding::Token(self.source)),
+        }
     }
 }
 
@@ -158,6 +187,7 @@ pub struct BasicAuth {
     name: String,
     username: AuthCredentialSource,
     password: AuthCredentialSource,
+    labels: Vec<(String, String)>,
 }
 
 impl BasicAuth {
@@ -168,7 +198,20 @@ impl BasicAuth {
             name: name.into(),
             username: AuthCredentialSource::Missing,
             password: AuthCredentialSource::Missing,
+            labels: Vec::new(),
         }
+    }
+
+    /// Label shown when prompting for the username (e.g. `Account Sid`).
+    pub fn username_label(mut self, label: impl Into<String>) -> Self {
+        self.labels.push(("username".to_string(), label.into()));
+        self
+    }
+
+    /// Label shown when prompting for the password (e.g. `Auth Token`).
+    pub fn password_label(mut self, label: impl Into<String>) -> Self {
+        self.labels.push(("password".to_string(), label.into()));
+        self
     }
 
     /// Read the username from an environment variable.
@@ -217,6 +260,10 @@ impl AuthSchemeBuilder for BasicAuth {
                 password: self.password,
             },
         )
+    }
+
+    fn credential_labels(&self) -> Vec<(String, String)> {
+        self.labels.clone()
     }
 }
 
@@ -514,6 +561,62 @@ mod tests {
         assert!(
             matches!(binding, SchemeBinding::Token(AuthCredentialSource::Env(ref e)) if e == "API_KEY")
         );
+    }
+
+    #[test]
+    fn api_key_auth_with_prefix_builds_prefixed_token_binding() {
+        let (name, binding) = ApiKeyAuth::new("apiKey")
+            .env("API_KEY")
+            .prefix("Key")
+            .into_binding();
+        assert_eq!(name, "apiKey");
+        assert!(matches!(
+            binding,
+            SchemeBinding::PrefixedToken { source: AuthCredentialSource::Env(ref e), ref prefix }
+                if e == "API_KEY" && prefix == "Key"
+        ));
+    }
+
+    #[test]
+    fn api_key_auth_with_empty_prefix_builds_token_binding() {
+        let (_, binding) = ApiKeyAuth::new("apiKey").env("API_KEY").prefix("").into_binding();
+        assert!(matches!(binding, SchemeBinding::Token(_)));
+    }
+
+    #[test]
+    fn api_key_auth_with_whitespace_only_prefix_builds_token_binding() {
+        let (_, binding) = ApiKeyAuth::new("apiKey")
+            .env("API_KEY")
+            .prefix(" \t ")
+            .into_binding();
+        assert!(matches!(binding, SchemeBinding::Token(_)));
+    }
+
+    #[test]
+    fn api_key_auth_trims_padded_prefix() {
+        let (_, binding) = ApiKeyAuth::new("apiKey")
+            .env("API_KEY")
+            .prefix("  Key ")
+            .into_binding();
+        assert!(matches!(
+            binding,
+            SchemeBinding::PrefixedToken { ref prefix, .. } if prefix == "Key"
+        ));
+    }
+
+    #[test]
+    fn basic_auth_carries_prompt_labels() {
+        let builder = BasicAuth::new("accountSid_authToken")
+            .username_label("Account Sid")
+            .password_label("Auth Token");
+        assert_eq!(
+            builder.credential_labels(),
+            vec![
+                ("username".to_string(), "Account Sid".to_string()),
+                ("password".to_string(), "Auth Token".to_string()),
+            ]
+        );
+        assert!(BasicAuth::new("plain").credential_labels().is_empty());
     }
 
     #[test]

@@ -94,7 +94,6 @@ public final class SmsStatusPayload {
 
         private String status;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -123,6 +122,14 @@ public final class SmsStatusPayload {
         @java.lang.Override
         public SmsStatusPayload build() {
             return new SmsStatusPayload(messageSid, status, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("messageSid") || key.equalsIgnoreCase("status")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

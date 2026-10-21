@@ -81,7 +81,6 @@ public final class WithDocs implements IWithDocs {
     public static final class Builder implements DocsStage, _FinalStage {
         private String docs;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -102,6 +101,14 @@ public final class WithDocs implements IWithDocs {
         @java.lang.Override
         public WithDocs build() {
             return new WithDocs(docs, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("docs")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

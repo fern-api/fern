@@ -270,6 +270,26 @@ config:
     guardProcessEnvAccess: true
 ```
 
+#### ✨ `flattenAnyAuthOptions`
+
+**Type:** boolean
+
+**Default:** `false`
+
+By default, when the API uses `auth: any`, each scheme's client options are nested under the scheme key
+(e.g. `{ apiKey: { apiKey } }`, `{ oauth: { clientId, clientSecret } }`).
+
+If `flattenAnyAuthOptions` is enabled, the options are flat, the same shape as a single-scheme SDK and as the
+Python SDK (e.g. `{ apiKey }`, `{ clientId, clientSecret }`, `{ token }`). Options with the same name are shared
+between schemes; for example, a `token` is used as both the bearer token and the OAuth token override, and when it
+is set the OAuth client-credentials flow is skipped. The flag only applies to `auth: any`; APIs using endpoint-level security keep nested options.
+
+```yaml
+# generators.yml
+config:
+    flattenAnyAuthOptions: true
+```
+
 #### ✨ `websocketHandlerMode`
 
 **Type:** `"replace" | "accumulate"`

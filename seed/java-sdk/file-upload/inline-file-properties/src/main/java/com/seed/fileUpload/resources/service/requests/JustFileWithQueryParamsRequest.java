@@ -180,7 +180,6 @@ public final class JustFileWithQueryParamsRequest {
 
         private List<String> listOfStrings = new ArrayList<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -295,6 +294,19 @@ public final class JustFileWithQueryParamsRequest {
                     integer,
                     maybeInteger,
                     additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("file")
+                    || key.equalsIgnoreCase("listOfStrings")
+                    || key.equalsIgnoreCase("optionalListOfStrings")
+                    || key.equalsIgnoreCase("maybeString")
+                    || key.equalsIgnoreCase("integer")
+                    || key.equalsIgnoreCase("maybeInteger")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

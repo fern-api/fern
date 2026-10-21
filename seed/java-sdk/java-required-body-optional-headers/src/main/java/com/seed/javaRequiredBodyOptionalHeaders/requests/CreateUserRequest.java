@@ -104,7 +104,6 @@ public final class CreateUserRequest {
 
         private Optional<String> xCorrelationId = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -145,6 +144,14 @@ public final class CreateUserRequest {
         @java.lang.Override
         public CreateUserRequest build() {
             return new CreateUserRequest(xCorrelationId, body, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("body")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

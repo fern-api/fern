@@ -6,6 +6,7 @@ package com.seed.examples.resources.file.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.examples.core.ClientOptions;
 import com.seed.examples.core.ObjectMappers;
+import com.seed.examples.core.PathSegments;
 import com.seed.examples.core.RequestOptions;
 import com.seed.examples.core.RetryInterceptor;
 import com.seed.examples.core.SeedExamplesApiException;
@@ -48,7 +49,7 @@ public class AsyncRawServiceClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("file")
-                .addPathSegment(filename);
+                .addPathSegment(PathSegments.validate(filename));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -75,7 +76,7 @@ public class AsyncRawServiceClient {
                     .build();
         }
         CompletableFuture<SeedExamplesHttpResponse<File>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {

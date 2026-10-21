@@ -179,10 +179,13 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
             CodeBlock.Builder httpResponseBuilder,
             Consumer<CodeBlock.Builder> onResponseWriter,
             Consumer<CodeBlock.Builder> onFailureWriter) {
+        ClassName retryInterceptorClassName =
+                clientGeneratorContext.getPoetClassNameFactory().getRetryInterceptorClassName();
         httpResponseBuilder.addStatement(
-                "$T $L = $N.newCall($L)",
-                Call.class,
+                "$T $L = $T.newAsyncCall($N, $L)",
+                retryInterceptorClassName.nestedClass("AsyncCall"),
                 OKHTTP_CALL,
+                retryInterceptorClassName,
                 variables.getDefaultedClientName(),
                 variables.getOkhttpRequestName());
         httpResponseBuilder.add("$L.enqueue(new $T() {\n", OKHTTP_CALL, Callback.class);

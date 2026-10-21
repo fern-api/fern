@@ -8,7 +8,8 @@ class EndpointsPrimitiveWireTest < WireMockTestCase
 
     @client = Seed::MyClient.new(
       token: "<token>",
-      base_url: WIREMOCK_BASE_URL
+      base_url: WIREMOCK_BASE_URL,
+      max_retries: 0
     )
   end
 
@@ -43,7 +44,7 @@ class EndpointsPrimitiveWireTest < WireMockTestCase
   def test_endpoints_primitive_get_and_return_int_with_wiremock
     test_id = "endpoints.primitive.get_and_return_int.0"
 
-    @client.endpoints.primitive.get_and_return_int(
+    result = @client.endpoints.primitive.get_and_return_int(
       request: 1,
       request_options: {
         additional_headers: {
@@ -60,6 +61,13 @@ class EndpointsPrimitiveWireTest < WireMockTestCase
       expected: 1
     )
 
+    verify_response_numbers(
+      actual: result,
+      expected: {
+        "" => 1
+      }
+    )
+
     verify_request_body(
       test_id: test_id,
       method: "POST",
@@ -71,7 +79,7 @@ class EndpointsPrimitiveWireTest < WireMockTestCase
   def test_endpoints_primitive_get_and_return_long_with_wiremock
     test_id = "endpoints.primitive.get_and_return_long.0"
 
-    @client.endpoints.primitive.get_and_return_long(
+    result = @client.endpoints.primitive.get_and_return_long(
       request: 1000000,
       request_options: {
         additional_headers: {
@@ -88,6 +96,13 @@ class EndpointsPrimitiveWireTest < WireMockTestCase
       expected: 1
     )
 
+    verify_response_numbers(
+      actual: result,
+      expected: {
+        "" => 1000000
+      }
+    )
+
     verify_request_body(
       test_id: test_id,
       method: "POST",
@@ -99,7 +114,7 @@ class EndpointsPrimitiveWireTest < WireMockTestCase
   def test_endpoints_primitive_get_and_return_double_with_wiremock
     test_id = "endpoints.primitive.get_and_return_double.0"
 
-    @client.endpoints.primitive.get_and_return_double(
+    result = @client.endpoints.primitive.get_and_return_double(
       request: 1.1,
       request_options: {
         additional_headers: {
@@ -114,6 +129,13 @@ class EndpointsPrimitiveWireTest < WireMockTestCase
       url_path: "/primitive/double",
       query_params: nil,
       expected: 1
+    )
+
+    verify_response_numbers(
+      actual: result,
+      expected: {
+        "" => 1.1
+      }
     )
   end
 

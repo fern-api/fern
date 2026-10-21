@@ -586,21 +586,35 @@ export class XmlObjectGenerator<Context extends BaseContext> {
         const element = accessProperty("this.elements", property.key);
         const append = property.isList ? `${element} = [...(${element} ?? []), builder];` : `${element} = builder;`;
         const summary = `Adds a \`<${childXml.name}>\` child${property.isList ? "" : " (replacing any existing one)"} after any content added so far and returns its builder.`;
+        const textKey = this.getTextPropertyKey(childType);
+        const fieldsType = `Partial<${childRef}.${FIELDS_INTERFACE}>`;
+        const fieldsDoc =
+            textKey != null
+                ? `fields the \`<${childXml.name}>\` text content, or its initial attributes and children`
+                : `fields initial \`<${childXml.name}>\` attributes and children`;
+        const fieldsExpression =
+            textKey != null ? `typeof fields === "string" ? { ${getPropertyKey(textKey)}: fields } : fields` : "fields";
         return {
             name,
             docs: [
                 {
                     description: childType.docs != null ? `${summary}\n\n${childType.docs}` : summary,
                     tags: [
-                        { tagName: "param", text: `fields initial \`<${childXml.name}>\` attributes and children` },
+                        { tagName: "param", text: fieldsDoc },
                         { tagName: "returns", text: `the \`${childRef}.${BUILDER_CLASS}\` appended to this element` }
                     ]
                 }
             ],
-            parameters: [{ name: "fields", type: `Partial<${childRef}.${FIELDS_INTERFACE}>`, hasQuestionToken: true }],
+            parameters: [
+                {
+                    name: "fields",
+                    type: textKey != null ? `string | ${fieldsType}` : fieldsType,
+                    hasQuestionToken: true
+                }
+            ],
             returnType: `${childRef}.${BUILDER_CLASS}`,
             statements: [
-                `const builder = new ${childRef}.${BUILDER_CLASS}(fields);`,
+                `const builder = new ${childRef}.${BUILDER_CLASS}(${fieldsExpression});`,
                 append,
                 ...(contentName != null ? [`this.${contentName}.push(builder);`] : []),
                 "return builder;"
@@ -683,6 +697,17 @@ export class XmlObjectGenerator<Context extends BaseContext> {
             return [property.wireName];
         }
         return property.childTypes.map((childType) => this.getChildElementName(childType));
+    }
+
+    /** The fields key of the child's text property, when the child element carries text content. */
+    private getTextPropertyKey(childType: FernIr.TypeDeclaration): string | undefined {
+        if (childType.shape.type !== "object") {
+            return undefined;
+        }
+        const text = [...childType.shape.properties, ...(childType.shape.extendedProperties ?? [])].find(
+            (irProperty) => getXmlPropertyKind(irProperty) === "TEXT"
+        );
+        return text != null ? this.getPropertyKey(text) : undefined;
     }
 
     private getChildElementName(childType: FernIr.TypeDeclaration): string {

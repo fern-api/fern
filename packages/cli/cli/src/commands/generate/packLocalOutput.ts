@@ -102,6 +102,7 @@ export async function packLocalOutputForGroup({
             });
             if (packOnly) {
                 if (artifactProduced) {
+                    await copyDocsIntoDist({ outputPath, context });
                     await removeEverythingExceptDist({ outputPath, context });
                 } else {
                     context.logger.warn(
@@ -306,6 +307,15 @@ async function packOutputForLanguage({
             return true;
         }
         case "rust": {
+            // fern-rust-model emits bare modules with no crate manifest, so there is nothing for
+            // cargo to package; only crates (fern-rust-sdk output) produce a .crate artifact.
+            if (!(await doesPathExist(join(outputPath, RelativeFilePath.of("Cargo.toml"))))) {
+                context.logger.warn(
+                    "No Cargo.toml found in the Rust output (e.g. fern-rust-model output), so there is no crate to package. " +
+                        "Share the output directory itself, or include the modules in your own crate."
+                );
+                return false;
+            }
             await mkdir(distDir, { recursive: true });
             await run([["cargo", "package", "--allow-dirty", "--no-verify"]]);
             const packageDir = join(outputPath, RelativeFilePath.of("target/package"));
@@ -330,6 +340,11 @@ async function packOutputForLanguage({
             context.logger.warn(
                 "Swift SDKs are distributed as source packages (Swift Package Manager), so there is no package artifact to build. " +
                     "Share the output directory itself, or reference it as a local package dependency."
+            );
+            return false;
+        case "cli":
+            context.logger.warn(
+                "CLI SDKs are distributed as installable binaries (npm/curl install script), so there is no package artifact to build."
             );
             return false;
         default:
@@ -480,6 +495,32 @@ async function zipDirectory({
         zip.outputStream.on("error", reject);
         zip.outputStream.pipe(createWriteStream(zipPath)).on("close", resolve).on("error", reject);
     });
+}
+
+/** Root-level docs generators emit alongside the SDK source that should outlive --package-only cleanup. */
+const DOC_FILES_TO_KEEP_IN_DIST = ["README.md", "reference.md"];
+
+/**
+ * Copies the generated README.md and reference.md into fern-dist/ so --package-only keeps them for
+ * every language, not just those whose package format bundles root files (e.g. gems, Go source zips).
+ */
+async function copyDocsIntoDist({
+    outputPath,
+    context
+}: {
+    outputPath: AbsoluteFilePath;
+    context: TaskContext;
+}): Promise<void> {
+    const distDir = join(outputPath, RelativeFilePath.of(PACK_OUTPUT_DIRECTORY));
+    for (const filename of DOC_FILES_TO_KEEP_IN_DIST) {
+        const source = join(outputPath, RelativeFilePath.of(filename));
+        if (!(await doesPathExist(source))) {
+            continue;
+        }
+        await mkdir(distDir, { recursive: true });
+        await copyFile(source, join(distDir, RelativeFilePath.of(filename)));
+        context.logger.debug(`Copied ${filename} into ${PACK_OUTPUT_DIRECTORY}/.`);
+    }
 }
 
 /**

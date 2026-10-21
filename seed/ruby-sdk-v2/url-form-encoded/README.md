@@ -33,7 +33,8 @@ client = Seed::Client.new
 
 client.submit_form_data(
   username: "johndoe",
-  email: "john@example.com"
+  email: "john@example.com",
+  content: "{\"key\":\"value\"}"
 )
 ```
 
@@ -65,6 +66,8 @@ begin
     result = client.submit_form_data
 rescue Seed::Errors::TimeoutError
     puts "API didn't respond before our timeout elapsed"
+rescue Seed::Errors::ConnectionError => e
+    puts "Could not reach the API (connection refused, reset, DNS or TLS failure): #{e.message}"
 rescue Seed::Errors::ServiceUnavailableError
     puts "API returned status 503, is probably overloaded, try again later"
 rescue Seed::Errors::ServerError

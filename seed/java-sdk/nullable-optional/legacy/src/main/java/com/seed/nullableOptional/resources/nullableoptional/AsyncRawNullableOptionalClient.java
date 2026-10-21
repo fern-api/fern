@@ -9,6 +9,7 @@ import com.seed.nullableOptional.core.BodyProperties;
 import com.seed.nullableOptional.core.ClientOptions;
 import com.seed.nullableOptional.core.MediaTypes;
 import com.seed.nullableOptional.core.ObjectMappers;
+import com.seed.nullableOptional.core.PathSegments;
 import com.seed.nullableOptional.core.QueryStringMapper;
 import com.seed.nullableOptional.core.RequestOptions;
 import com.seed.nullableOptional.core.RetryInterceptor;
@@ -67,7 +68,7 @@ public class AsyncRawNullableOptionalClient {
                 .newBuilder()
                 .addPathSegments("api")
                 .addPathSegments("users")
-                .addPathSegment(userId);
+                .addPathSegment(PathSegments.validate(userId));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -93,7 +94,7 @@ public class AsyncRawNullableOptionalClient {
                     .build();
         }
         CompletableFuture<SeedNullableOptionalHttpResponse<UserResponse>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -182,7 +183,7 @@ public class AsyncRawNullableOptionalClient {
                     .build();
         }
         CompletableFuture<SeedNullableOptionalHttpResponse<UserResponse>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -252,7 +253,7 @@ public class AsyncRawNullableOptionalClient {
                 .newBuilder()
                 .addPathSegments("api")
                 .addPathSegments("users")
-                .addPathSegment(userId);
+                .addPathSegment(PathSegments.validate(userId));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -288,7 +289,7 @@ public class AsyncRawNullableOptionalClient {
                     .build();
         }
         CompletableFuture<SeedNullableOptionalHttpResponse<UserResponse>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -398,7 +399,7 @@ public class AsyncRawNullableOptionalClient {
                     .build();
         }
         CompletableFuture<SeedNullableOptionalHttpResponse<List<UserResponse>>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -493,7 +494,7 @@ public class AsyncRawNullableOptionalClient {
                     .build();
         }
         CompletableFuture<SeedNullableOptionalHttpResponse<List<UserResponse>>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -585,7 +586,7 @@ public class AsyncRawNullableOptionalClient {
                     .build();
         }
         CompletableFuture<SeedNullableOptionalHttpResponse<ComplexProfile>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -640,7 +641,7 @@ public class AsyncRawNullableOptionalClient {
                 .newBuilder()
                 .addPathSegments("api")
                 .addPathSegments("profiles/complex")
-                .addPathSegment(profileId);
+                .addPathSegment(PathSegments.validate(profileId));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -666,7 +667,7 @@ public class AsyncRawNullableOptionalClient {
                     .build();
         }
         CompletableFuture<SeedNullableOptionalHttpResponse<ComplexProfile>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -739,7 +740,7 @@ public class AsyncRawNullableOptionalClient {
                 .newBuilder()
                 .addPathSegments("api")
                 .addPathSegments("profiles/complex")
-                .addPathSegment(profileId);
+                .addPathSegment(PathSegments.validate(profileId));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -775,7 +776,7 @@ public class AsyncRawNullableOptionalClient {
                     .build();
         }
         CompletableFuture<SeedNullableOptionalHttpResponse<ComplexProfile>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -867,7 +868,7 @@ public class AsyncRawNullableOptionalClient {
         }
         CompletableFuture<SeedNullableOptionalHttpResponse<DeserializationTestResponse>> future =
                 new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -961,7 +962,7 @@ public class AsyncRawNullableOptionalClient {
                     .build();
         }
         CompletableFuture<SeedNullableOptionalHttpResponse<List<UserResponse>>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -1018,7 +1019,7 @@ public class AsyncRawNullableOptionalClient {
                 .newBuilder()
                 .addPathSegments("api")
                 .addPathSegments("users")
-                .addPathSegment(userId)
+                .addPathSegment(PathSegments.validate(userId))
                 .addPathSegments("notifications");
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
@@ -1046,7 +1047,7 @@ public class AsyncRawNullableOptionalClient {
         }
         CompletableFuture<SeedNullableOptionalHttpResponse<Optional<NotificationMethod>>> future =
                 new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -1103,7 +1104,7 @@ public class AsyncRawNullableOptionalClient {
                 .newBuilder()
                 .addPathSegments("api")
                 .addPathSegments("users")
-                .addPathSegment(userId)
+                .addPathSegment(PathSegments.validate(userId))
                 .addPathSegments("tags");
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
@@ -1140,7 +1141,7 @@ public class AsyncRawNullableOptionalClient {
                     .build();
         }
         CompletableFuture<SeedNullableOptionalHttpResponse<List<String>>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -1233,7 +1234,7 @@ public class AsyncRawNullableOptionalClient {
         }
         CompletableFuture<SeedNullableOptionalHttpResponse<Optional<List<SearchResult>>>> future =
                 new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {

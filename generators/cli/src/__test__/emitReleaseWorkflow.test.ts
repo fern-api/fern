@@ -53,6 +53,37 @@ describe("constructReleaseWorkflowYaml", () => {
         expect(yaml.match(/run: \$\{\{ matrix\.install_dist\.run \}\}/g)).toHaveLength(2);
     });
 
+    // GitHub only supports attestations on private repos with Enterprise
+    // Cloud; elsewhere the unguarded step failed every build leg.
+    describe("githubAttestations", () => {
+        const GUARD = "if: ${{ !github.event.repository.private }}";
+
+        it("defaults to auto: skips the attest step on private repos", () => {
+            const yaml = constructReleaseWorkflowYaml({});
+            expect(yaml).toBe(constructReleaseWorkflowYaml({ githubAttestations: "auto" }));
+            expect(yaml).toContain(
+                `- name: Attest\n        ${GUARD}\n        uses: actions/attest-build-provenance@v3`
+            );
+            expect(yaml).toContain('"attestations": "write"');
+        });
+
+        it("true: always attests, unguarded", () => {
+            const yaml = constructReleaseWorkflowYaml({ githubAttestations: true });
+            expect(yaml).toContain("- name: Attest\n        uses: actions/attest-build-provenance@v3");
+            expect(yaml).not.toContain(GUARD);
+            expect(yaml).toContain('"attestations": "write"');
+        });
+
+        it("false: drops the step and its permission", () => {
+            const yaml = constructReleaseWorkflowYaml({ githubAttestations: false });
+            expect(yaml).not.toContain("attest-build-provenance");
+            expect(yaml).not.toContain("- name: Attest");
+            expect(yaml).not.toContain('"attestations"');
+            expect(yaml).toContain('"id-token": "write"');
+            expect(yaml).toContain("- id: cargo-dist");
+        });
+    });
+
     it("emits no homebrew job when no distribution is configured", () => {
         const yaml = constructReleaseWorkflowYaml({});
         expect(yaml).not.toContain("publish-homebrew-formula");

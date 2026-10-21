@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Publish `@fern-api/cli-dynamic-snippets`, a browser-compatible generator that renders CLI command
+    snippets in docs from the dynamic IR — the same path the SDK languages use. The CLI generator
+    release now also builds, tests, and publishes this companion npm package (consumed by the docs
+    platform's snippet renderer). No change to the generated CLI itself.
+  type: feat

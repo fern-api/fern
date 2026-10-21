@@ -10,32 +10,32 @@ public class DialXmlTest
     public void FromXml_ToXml_RoundTrips()
     {
         var xml =
-            "<tw:Dial xmlns:tw=\"https://www.twilio.com/twiml\" statusCallbackEvent=\"statusCallbackEvent statusCallbackEvent-2\" record=\"record-from-answer record-from-ringing\">text<Numbers><Number /></Numbers></tw:Dial>";
+            "<tw:Dial xmlns:tw=\"https://www.twilio.com/twiml\" record=\"record-from-answer record-from-ringing\" statusCallbackEvent=\"statusCallbackEvent statusCallbackEvent-2\">text<Numbers><Number /></Numbers></tw:Dial>";
         var parsed = global::SeedApi.Dial.FromXml(xml);
-        Assert.That(parsed.Number, Is.EqualTo("text"), "Number");
-        Assert.That(
-            parsed.StatusCallbackEvent,
-            Is.EqualTo(new[] { "statusCallbackEvent", "statusCallbackEvent-2" }),
-            "StatusCallbackEvent"
-        );
         Assert.That(
             parsed.Record,
             Is.EqualTo(
                 new[]
                 {
-                    new global::SeedApi.DialRecordItem("record-from-answer"),
-                    new global::SeedApi.DialRecordItem("record-from-ringing"),
+                    new DialRecordItem("record-from-answer"),
+                    new DialRecordItem("record-from-ringing"),
                 }
             ),
             "Record"
         );
+        Assert.That(
+            parsed.StatusCallbackEvent,
+            Is.EqualTo(new[] { "statusCallbackEvent", "statusCallbackEvent-2" }),
+            "StatusCallbackEvent"
+        );
+        Assert.That(parsed.Number, Is.EqualTo("text"), "Number");
         var serialized = parsed.ToXml(false);
-        Assert.That(serialized, Does.Contain(">text<"));
+        Assert.That(serialized, Does.Contain("record=\"record-from-answer record-from-ringing\""));
         Assert.That(
             serialized,
             Does.Contain("statusCallbackEvent=\"statusCallbackEvent statusCallbackEvent-2\"")
         );
-        Assert.That(serialized, Does.Contain("record=\"record-from-answer record-from-ringing\""));
+        Assert.That(serialized, Does.Contain(">text<"));
         Assert.That(
             global::SeedApi.Dial.FromXml(serialized).ToXml(false),
             Is.EqualTo(serialized),
@@ -63,33 +63,24 @@ public class DialXmlTest
     [NUnit.Framework.Test]
     public void ToXml_EscapesSpecialCharacters()
     {
-        var model = new global::SeedApi.Dial { Number = "a & b < c > d \"q\" 'r'" };
+        var model = new Dial { Number = "a & b < c > d \"q\" 'r'" };
         var serialized = model.ToXml(false);
         Assert.That(serialized, Does.Not.Contain("a & b"));
         Assert.That(serialized, Does.Not.Contain("< c"));
-        Assert.That(
-            global::SeedApi.Dial.FromXml(serialized).Number,
-            Is.EqualTo("a & b < c > d \"q\" 'r'")
-        );
+        Assert.That(global::SeedApi.Dial.FromXml(serialized).Number, Is.EqualTo("a & b < c > d \"q\" 'r'"));
     }
 
     [NUnit.Framework.Test]
     public void FromXml_RejectsWrongRootElement()
     {
-        Assert.That(
-            () => global::SeedApi.Dial.FromXml("<NotThetw:Dial />"),
-            Throws.ArgumentException
-        );
+        Assert.That(() => global::SeedApi.Dial.FromXml("<NotThetw:Dial />"), Throws.ArgumentException);
     }
 
     [NUnit.Framework.Test]
     public void FromXml_RejectsMalformedXml()
     {
         Assert.That(
-            () =>
-                global::SeedApi.Dial.FromXml(
-                    "<tw:Dial xmlns:tw=\"https://www.twilio.com/twiml\"><unclosed>"
-                ),
+            () => global::SeedApi.Dial.FromXml("<tw:Dial xmlns:tw=\"https://www.twilio.com/twiml\"><unclosed>"),
             Throws.ArgumentException
         );
     }

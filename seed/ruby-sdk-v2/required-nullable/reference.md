@@ -133,7 +133,7 @@ client.update_foo(
 <dl>
 <dd>
 
-**nullable_number:** `Integer` — Can be explicitly set to null to clear the value
+**nullable_number:** `Float` — Can be explicitly set to null to clear the value
     
 </dd>
 </dl>

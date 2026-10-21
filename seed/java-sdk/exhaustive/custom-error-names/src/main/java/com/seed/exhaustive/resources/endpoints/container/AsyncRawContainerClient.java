@@ -86,7 +86,7 @@ public class AsyncRawContainerClient {
                     .build();
         }
         CompletableFuture<SeedExhaustiveHttpResponse<List<String>>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -170,7 +170,7 @@ public class AsyncRawContainerClient {
                     .build();
         }
         CompletableFuture<SeedExhaustiveHttpResponse<List<ObjectWithRequiredField>>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -253,7 +253,7 @@ public class AsyncRawContainerClient {
                     .build();
         }
         CompletableFuture<SeedExhaustiveHttpResponse<Set<String>>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -337,7 +337,7 @@ public class AsyncRawContainerClient {
                     .build();
         }
         CompletableFuture<SeedExhaustiveHttpResponse<Set<ObjectWithRequiredField>>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -421,7 +421,7 @@ public class AsyncRawContainerClient {
                     .build();
         }
         CompletableFuture<SeedExhaustiveHttpResponse<Map<String, String>>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -506,7 +506,7 @@ public class AsyncRawContainerClient {
         }
         CompletableFuture<SeedExhaustiveHttpResponse<Map<String, ObjectWithRequiredField>>> future =
                 new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -591,7 +591,7 @@ public class AsyncRawContainerClient {
                     .build();
         }
         CompletableFuture<SeedExhaustiveHttpResponse<Map<String, MixedType>>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -677,7 +677,7 @@ public class AsyncRawContainerClient {
         }
         CompletableFuture<SeedExhaustiveHttpResponse<Map<Integer, ObjectWithRequiredField>>> future =
                 new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -776,7 +776,7 @@ public class AsyncRawContainerClient {
         }
         CompletableFuture<SeedExhaustiveHttpResponse<Optional<ObjectWithRequiredField>>> future =
                 new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {

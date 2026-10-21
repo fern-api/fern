@@ -110,7 +110,6 @@ public final class CursorPages {
 
         private Optional<Integer> totalPages = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -169,6 +168,18 @@ public final class CursorPages {
 
         public CursorPages build() {
             return new CursorPages(next, page, perPage, totalPages, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("next")
+                    || key.equalsIgnoreCase("page")
+                    || key.equalsIgnoreCase("per_page")
+                    || key.equalsIgnoreCase("total_pages")
+                    || key.equalsIgnoreCase("type")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

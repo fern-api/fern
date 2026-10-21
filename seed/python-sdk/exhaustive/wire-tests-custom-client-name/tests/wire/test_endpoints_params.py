@@ -1,4 +1,8 @@
+import pytest
 from .conftest import get_client, verify_request_count
+
+from seed.core.jsonable_encoder import jsonable_encoder
+from seed.general_errors import BadRequestBody
 
 
 def test_endpoints_params_get_with_path() -> None:
@@ -115,4 +119,17 @@ def test_endpoints_params_get_with_path_and_errors() -> None:
     client.endpoints.params.get_with_path_and_errors(
         param="param",
     )
+    verify_request_count(test_id, "GET", "/params/path/param", None, 1)
+
+
+def test_endpoints_params_get_with_path_and_errors_throws_bad_request_body() -> None:
+    """Test getWithPathAndErrors endpoint error response (BadRequestBody) with WireMock"""
+    test_id = "endpoints.params.get_with_path_and_errors.1"
+    client = get_client(test_id)
+    with pytest.raises(BadRequestBody) as exc_info:
+        client.endpoints.params.get_with_path_and_errors(
+            param="param",
+        )
+    assert exc_info.value.status_code == 400
+    assert jsonable_encoder(exc_info.value.body) == {"message": "message"}
     verify_request_count(test_id, "GET", "/params/path/param", None, 1)

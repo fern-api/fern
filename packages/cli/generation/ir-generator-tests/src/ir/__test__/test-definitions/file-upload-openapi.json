@@ -536,6 +536,7 @@
                             },
                             {
                                 "type": "file",
+                                "isOptional": true,
                                 "wireValue": "file",
                                 "name": {
                                     "originalName": "file",

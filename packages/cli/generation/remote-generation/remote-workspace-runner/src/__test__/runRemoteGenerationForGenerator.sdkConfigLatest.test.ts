@@ -381,7 +381,7 @@ describe("runRemoteGenerationForGenerator synthesized SDK Config latest", () => 
 function prepareRoute(generatorInvocation: generatorsYml.GeneratorInvocation) {
     return prepareFernSdkGenApiRoutes({
         generators: [generatorInvocation],
-        enabled: true,
+        isSdkGenApiEnabled: () => true,
         requireEnvVars: true,
         isPreview: false
     });

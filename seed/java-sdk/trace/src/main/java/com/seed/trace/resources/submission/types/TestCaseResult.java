@@ -115,7 +115,6 @@ public final class TestCaseResult {
 
         private boolean passed;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -152,6 +151,16 @@ public final class TestCaseResult {
         @java.lang.Override
         public TestCaseResult build() {
             return new TestCaseResult(expectedResult, actualResult, passed, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("expectedResult")
+                    || key.equalsIgnoreCase("actualResult")
+                    || key.equalsIgnoreCase("passed")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

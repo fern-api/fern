@@ -7,6 +7,7 @@ package com.test.sdk.resources.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.test.sdk.core.ClientOptions;
 import com.test.sdk.core.ObjectMappers;
+import com.test.sdk.core.PathSegments;
 import com.test.sdk.core.RequestOptions;
 import com.test.sdk.core.RetryInterceptor;
 import com.test.sdk.core.SeedApiApiException;
@@ -44,7 +45,7 @@ public class AsyncRawServiceClient {
     HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
       .addPathSegments("users")
 
-      .addPathSegment(userId);if (requestOptions != null) {
+      .addPathSegment(PathSegments.validate(userId));if (requestOptions != null) {
         requestOptions.getQueryParameters().forEach((_key, _value) -> {
           httpUrl.addQueryParameter(_key, _value);
         } );
@@ -63,7 +64,7 @@ public class AsyncRawServiceClient {
         okhttpRequest = okhttpRequest.newBuilder().tag(RetryInterceptor.MaxRetriesOverride.class, new RetryInterceptor.MaxRetriesOverride(requestOptions.getMaxRetries().get())).build();
       }
       CompletableFuture<SeedApiHttpResponse<User>> future = new CompletableFuture<>();
-      Call okhttpCall = client.newCall(okhttpRequest);
+      RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
       okhttpCall.enqueue(new Callback() {
         @Override
         public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {

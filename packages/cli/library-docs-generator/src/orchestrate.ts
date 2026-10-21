@@ -11,6 +11,7 @@ import { generateCpp } from "./CppDocsGenerator.js";
 import { type LocalParserConfig, runLocalParser } from "./LocalParserRunner.js";
 import { generate } from "./PythonDocsGenerator.js";
 import type { CppLibraryDocsIr } from "./types/CppLibraryDocsIr.js";
+import { findTabSlugPrefix } from "./utils/navigationSlugPrefix.js";
 
 const POLL_INTERVAL_MS = 3000;
 const POLL_TIMEOUT_MS = 3 * 60 * 1000; // 3 minutes
@@ -143,7 +144,8 @@ export async function runLibraryDocsGeneration({
     tokenValue,
     context,
     wrapStep = defaultWrapStep,
-    local = false
+    local = false,
+    docsConfig
 }: {
     libraries: Record<string, docsYml.RawSchemas.LibraryConfiguration | undefined>;
     /** Optional library name to filter to a single entry. */
@@ -157,6 +159,8 @@ export async function runLibraryDocsGeneration({
     wrapStep?: StepWrapper;
     /** Run parser Docker images locally instead of using Fern's servers. */
     local?: boolean;
+    /** docs.yml navigation, used to find the tab generated pages are listed under. */
+    docsConfig?: Pick<docsYml.RawSchemas.DocsConfiguration, "navigation" | "tabs">;
 }): Promise<{ successful: number }> {
     if (Object.keys(libraries).length === 0) {
         throw new CliError({
@@ -184,7 +188,7 @@ export async function runLibraryDocsGeneration({
             throw new CliError({
                 message:
                     "Authentication is required for remote library docs generation.\n\n" +
-                    "  Run 'fern login', or pass --local to parse libraries locally with Docker.",
+                    "  Run 'fern login', or drop --remote to parse libraries locally with Docker.",
                 code: CliError.Code.AuthError
             });
         }
@@ -207,7 +211,8 @@ export async function runLibraryDocsGeneration({
                 docsDirectoryPath,
                 orgId,
                 wrapStep,
-                local
+                local,
+                docsConfig
             });
         })
     );
@@ -240,7 +245,8 @@ async function generateSingleLibrary({
     docsDirectoryPath,
     orgId,
     wrapStep,
-    local
+    local,
+    docsConfig
 }: {
     client: LibraryDocsClient | undefined;
     context: TaskContext;
@@ -250,6 +256,7 @@ async function generateSingleLibrary({
     orgId: string;
     wrapStep: StepWrapper;
     local: boolean;
+    docsConfig: Pick<docsYml.RawSchemas.DocsConfiguration, "navigation" | "tabs"> | undefined;
 }): Promise<void> {
     const resolvedOutputPath = resolve(docsDirectoryPath, config.output.path);
 
@@ -318,7 +325,7 @@ async function generateSingleLibrary({
         // Unreachable in practice (runLibraryDocsGeneration constructs a client for the remote
         // path), but keeps the nullable `client` honest without a non-null assertion.
         throw new CliError({
-            message: `Library '${name}': authentication is required for remote generation. Re-run with --local or run 'fern login'.`,
+            message: `Library '${name}': authentication is required for remote generation. Re-run without --remote or run 'fern login'.`,
             code: CliError.Code.AuthError
         });
     }
@@ -340,11 +347,22 @@ async function generateSingleLibrary({
         );
     } else {
         const pythonIr = ir as FdrAPI.libraryDocs.PythonLibraryDocsIr;
+        const { slugPrefix, conflictingPrefixes } =
+            docsConfig != null
+                ? findTabSlugPrefix({ docsConfig, docsDirectoryPath, outputDir: resolvedOutputPath })
+                : { slugPrefix: undefined, conflictingPrefixes: undefined };
+        if (conflictingPrefixes != null) {
+            context.logger.warn(
+                `Library '${name}': pages are listed under tabs with different slugs (${conflictingPrefixes.join(", ")}); ` +
+                    "generated page slugs are not prefixed with a tab."
+            );
+        }
         const generateResult = generate({
             ir: pythonIr,
             outputDir: resolvedOutputPath,
             slug: name,
-            title: name
+            title: name,
+            slugPrefix
         });
         context.logger.info(
             chalk.green(`Library '${name}': generated ${generateResult.pageCount} pages at ${resolvedOutputPath}`)
@@ -379,7 +397,7 @@ async function generateIrRemotely({
 }): Promise<unknown> {
     if (!isGitLibraryInput(config.input)) {
         throw new CliError({
-            message: `Library '${name}': 'path' input requires the --local flag. Use 'git' input for remote generation.`,
+            message: `Library '${name}': 'path' input requires local generation. Drop --remote, or use 'git' input for remote generation.`,
             code: CliError.Code.ConfigError
         });
     }

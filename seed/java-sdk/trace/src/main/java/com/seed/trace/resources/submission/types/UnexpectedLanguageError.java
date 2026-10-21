@@ -96,7 +96,6 @@ public final class UnexpectedLanguageError {
 
         private Language actualLanguage;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -125,6 +124,14 @@ public final class UnexpectedLanguageError {
         @java.lang.Override
         public UnexpectedLanguageError build() {
             return new UnexpectedLanguageError(expectedLanguage, actualLanguage, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("expectedLanguage") || key.equalsIgnoreCase("actualLanguage")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

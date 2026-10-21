@@ -210,6 +210,17 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
             encoding: verification.encoding,
             signaturePrefix: verification.signaturePrefix,
             signatureHeaderName: getWireValue(verification.signatureHeaderName),
+            algorithmHeader:
+                verification.algorithmHeader == null
+                    ? null
+                    : {
+                          headerName: getWireValue(verification.algorithmHeader.headerName),
+                          keyIdDelimiter: verification.algorithmHeader.keyIdDelimiter ?? null,
+                          algorithms: verification.algorithmHeader.algorithms.map((option) => [
+                              option.wireValue,
+                              option.algorithm
+                          ])
+                      },
             timestamp:
                 verification.timestamp != null
                     ? {
@@ -435,12 +446,12 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
             } catch (e) {
                 throw GeneratorError.internalError(`Failed to generate README.md: ${extractErrorMessage(e)}`);
             }
+        }
 
-            try {
-                await this.generateReference({ context });
-            } catch (e) {
-                throw GeneratorError.internalError(`Failed to generate reference.md: ${extractErrorMessage(e)}`);
-            }
+        try {
+            await this.generateReference({ context });
+        } catch (e) {
+            throw GeneratorError.internalError(`Failed to generate reference.md: ${extractErrorMessage(e)}`);
         }
 
         if (!context.config.whitelabel) {

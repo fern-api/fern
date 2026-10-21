@@ -8,6 +8,7 @@ import com.seed.objectsWithImports.core.BodyProperties;
 import com.seed.objectsWithImports.core.ClientOptions;
 import com.seed.objectsWithImports.core.MediaTypes;
 import com.seed.objectsWithImports.core.ObjectMappers;
+import com.seed.objectsWithImports.core.PathSegments;
 import com.seed.objectsWithImports.core.RequestOptions;
 import com.seed.objectsWithImports.core.RetryInterceptor;
 import com.seed.objectsWithImports.core.SeedObjectsWithImportsApiException;
@@ -96,7 +97,7 @@ public class AsyncRawOptionalClient {
                     .build();
         }
         CompletableFuture<SeedObjectsWithImportsHttpResponse<String>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -192,7 +193,7 @@ public class AsyncRawOptionalClient {
                     .build();
         }
         CompletableFuture<SeedObjectsWithImportsHttpResponse<String>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -267,9 +268,9 @@ public class AsyncRawOptionalClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("deploy")
-                .addPathSegment(actionId)
+                .addPathSegment(PathSegments.validate(actionId))
                 .addPathSegments("versions")
-                .addPathSegment(id);
+                .addPathSegment(PathSegments.validate(id));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -309,7 +310,7 @@ public class AsyncRawOptionalClient {
                     .build();
         }
         CompletableFuture<SeedObjectsWithImportsHttpResponse<DeployResponse>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {

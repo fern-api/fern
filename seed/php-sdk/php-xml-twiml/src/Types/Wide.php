@@ -712,7 +712,7 @@ class Wide extends XmlSerializableType
         ]);
         $result->setAdditionalAttributes(XmlUtils::additionalAttributes($element, ['attr1', 'attr2', 'attr3', 'attr4', 'attr5', 'attr6', 'attr7', 'attr8', 'attr9', 'attr10', 'attr11', 'attr12', 'attr13', 'attr14', 'attr15', 'attr16', 'attr17', 'attr18', 'attr19', 'attr20', 'attr21', 'attr22', 'attr23', 'attr24', 'attr25', 'attr26', 'attr27', 'attr28', 'attr29', 'attr30', 'attr31', 'attr32', 'attr33', 'attr34', 'attr35', 'attr36', 'attr37', 'attr38', 'attr39', 'attr40', 'attr41', 'attr42', 'attr43', 'attr44', 'attr45', 'attr46', 'attr47', 'attr48', 'attr49', 'attr50', 'attr51', 'attr52', 'attr53', 'attr54', 'attr55', 'attr56', 'attr57', 'attr58', 'attr59', 'attr60', 'attr61', 'attr62', 'attr63', 'attr64']));
         $result->setAdditionalChildren(XmlUtils::additionalChildren($element, ['Pause']));
-        $result->setContent(XmlUtils::content($element, [[['Pause'], $result->children ?? []]], $result->getAdditionalChildren()));
+        $result->setContent(XmlUtils::content($element, [[['Pause'], $result->children ?? []]], $result->getAdditionalChildren(), [], true));
         return $result;
     }
 

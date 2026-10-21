@@ -27,8 +27,10 @@ func MarshalJSONWithExtraProperties(marshaler interface{}, extraProperties map[s
 		return nil, err
 	}
 	for _, key := range keys {
-		if _, ok := extraProperties[key]; ok {
-			return nil, fmt.Errorf("cannot add extra property %q because it is already defined on the type", key)
+		for extraKey := range extraProperties {
+			if strings.EqualFold(extraKey, key) {
+				return nil, fmt.Errorf("cannot add extra property %q because it is already defined on the type", extraKey)
+			}
 		}
 	}
 	extraBytes, err := json.Marshal(extraProperties)
@@ -64,15 +66,24 @@ func ExtractExtraProperties(bytes []byte, value interface{}, exclude ...string) 
 	if err := json.Unmarshal(bytes, &extraProperties); err != nil {
 		return nil, err
 	}
+	declaredKeys := append([]string(nil), exclude...)
 	for i := 0; i < val.Type().NumField(); i++ {
 		key := jsonKey(val.Type().Field(i))
 		if key == "" || key == "-" {
 			continue
 		}
-		delete(extraProperties, key)
+		declaredKeys = append(declaredKeys, key)
 	}
-	for _, key := range exclude {
-		delete(extraProperties, key)
+	// Keys that match a declared key case-insensitively are dropped too: JSON
+	// decoders such as encoding/json match keys case-insensitively, so
+	// re-emitting them would let them override the declared field downstream.
+	for key := range extraProperties {
+		for _, declaredKey := range declaredKeys {
+			if strings.EqualFold(key, declaredKey) {
+				delete(extraProperties, key)
+				break
+			}
+		}
 	}
 	if len(extraProperties) == 0 {
 		return nil, nil

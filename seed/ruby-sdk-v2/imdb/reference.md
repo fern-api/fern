@@ -53,7 +53,7 @@ client.imdb.create_movie(
 <dl>
 <dd>
 
-**rating:** `Integer` 
+**rating:** `Float` 
     
 </dd>
 </dl>

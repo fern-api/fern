@@ -12,6 +12,7 @@ import (
 var (
 	postSubmitRequestFieldUsername = big.NewInt(1 << 0)
 	postSubmitRequestFieldEmail    = big.NewInt(1 << 1)
+	postSubmitRequestFieldContent  = big.NewInt(1 << 2)
 )
 
 type PostSubmitRequest struct {
@@ -19,6 +20,8 @@ type PostSubmitRequest struct {
 	Username string `json:"username" url:"-"`
 	// The user's email address
 	Email string `json:"email" url:"-"`
+	// A JSON document carried as a form field
+	Content string `json:"Content" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -45,6 +48,13 @@ func (p *PostSubmitRequest) SetUsername(username string) {
 func (p *PostSubmitRequest) SetEmail(email string) {
 	p.Email = email
 	p.require(postSubmitRequestFieldEmail)
+}
+
+// SetContent sets the Content field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PostSubmitRequest) SetContent(content string) {
+	p.Content = content
+	p.require(postSubmitRequestFieldContent)
 }
 
 func (p *PostSubmitRequest) UnmarshalJSON(data []byte) error {

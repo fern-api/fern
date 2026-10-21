@@ -13,7 +13,8 @@ module Seed
     # @example
     #   client.submit_form_data(
     #     username: "johndoe",
-    #     email: "john@example.com"
+    #     email: "john@example.com",
+    #     content: "{\"key\":\"value\"}"
     #   )
     #
     # @return [Seed::Types::PostSubmitResponse]

@@ -76,7 +76,7 @@ export class PlaylistClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/v2/playlist/${core.url.encodePathParam(serviceParam)}/create`,
+                `/v2/playlist/${core.url.encodePathParam(serviceParam, errors.SeedTraceError)}/create`,
             ),
             method: "POST",
             headers: _headers,
@@ -183,7 +183,7 @@ export class PlaylistClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/v2/playlist/${core.url.encodePathParam(serviceParam)}/all`,
+                `/v2/playlist/${core.url.encodePathParam(serviceParam, errors.SeedTraceError)}/all`,
             ),
             method: "GET",
             headers: _headers,
@@ -267,7 +267,7 @@ export class PlaylistClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/v2/playlist/${core.url.encodePathParam(serviceParam)}/${core.url.encodePathParam(serializers.PlaylistId.jsonOrThrow(playlistId, { omitUndefined: true }))}`,
+                `/v2/playlist/${core.url.encodePathParam(serviceParam, errors.SeedTraceError)}/${core.url.encodePathParam(serializers.PlaylistId.jsonOrThrow(playlistId, { omitUndefined: true }), errors.SeedTraceError)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -372,7 +372,7 @@ export class PlaylistClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/v2/playlist/${core.url.encodePathParam(serviceParam)}/${core.url.encodePathParam(serializers.PlaylistId.jsonOrThrow(playlistId, { omitUndefined: true }))}`,
+                `/v2/playlist/${core.url.encodePathParam(serviceParam, errors.SeedTraceError)}/${core.url.encodePathParam(serializers.PlaylistId.jsonOrThrow(playlistId, { omitUndefined: true }), errors.SeedTraceError)}`,
             ),
             method: "PUT",
             headers: _headers,
@@ -475,7 +475,7 @@ export class PlaylistClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/v2/playlist/${core.url.encodePathParam(serviceParam)}/${core.url.encodePathParam(serializers.PlaylistId.jsonOrThrow(playlist_id, { omitUndefined: true }))}`,
+                `/v2/playlist/${core.url.encodePathParam(serviceParam, errors.SeedTraceError)}/${core.url.encodePathParam(serializers.PlaylistId.jsonOrThrow(playlist_id, { omitUndefined: true }), errors.SeedTraceError)}`,
             ),
             method: "DELETE",
             headers: _headers,

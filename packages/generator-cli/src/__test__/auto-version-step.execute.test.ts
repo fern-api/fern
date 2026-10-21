@@ -1140,6 +1140,38 @@ describe("AutoVersionStep.execute() — FAI service path with a multi-chunk diff
         expect(result.analysisWarning).toBeUndefined();
     });
 
+    it("folds per-chunk PR descriptions and changelog entries under a single heading on the chunked retry", async () => {
+        let chunkCalls = 0;
+        mockFetch.mockImplementation(async () => {
+            if (mockFetch.mock.calls.length === 1) {
+                return failedResponse;
+            }
+            chunkCalls++;
+            return okResponse({
+                message: "feat!: remove legacy API",
+                version_bump: "MAJOR",
+                changelog_entry: `### Breaking Changes\n\n- Removed method ${chunkCalls}`,
+                pr_description: `### Breaking Changes\n\n- Removed method ${chunkCalls}\n\n### Added\n\n- Added thing ${chunkCalls}`,
+                version_bump_reason: "Public method removed."
+            });
+        });
+
+        const { step, context } = makeStepAndContext();
+        const result = await step.execute(context);
+
+        expect(chunkCalls).toBeGreaterThan(1);
+        expect(result.versionBump).toBe("MAJOR");
+        const headings = (text: string | undefined, heading: string) =>
+            (text ?? "").split("\n").filter((line) => line === heading).length;
+        expect(headings(result.prDescription, "### Breaking Changes")).toBe(1);
+        expect(headings(result.prDescription, "### Added")).toBe(1);
+        expect(headings(result.changelogEntry, "### Breaking Changes")).toBe(1);
+        for (let i = 1; i <= chunkCalls; i++) {
+            expect(result.prDescription).toContain(`- Removed method ${i}`);
+            expect(result.prDescription).toContain(`- Added thing ${i}`);
+        }
+    });
+
     it("retries chunk-by-chunk when the full-diff request fails and keeps the highest bump", async () => {
         mockFetch.mockImplementation(async (_url: string, init: RequestInit) => {
             if (mockFetch.mock.calls.length === 1) {
@@ -1401,10 +1433,29 @@ describe("AutoVersionStep.execute() — FAI service path (fernToken, no ai confi
         const [url, init] = mockFetch.mock.calls[0] as [string, RequestInit];
         expect(url).toBe("https://fai.buildwithfern.com/sdks/analyze-commit-diff");
         expect((init.headers as Record<string, string>).Authorization).toBe("Bearer fern-token-123");
+        expect(init.headers as Record<string, string>).not.toHaveProperty("X-Fern-Org-Id");
         const body = JSON.parse(init.body as string) as Record<string, unknown>;
         expect(typeof body.diff).toBe("string");
         expect(body.language).toBe("typescript");
         expect(body.previous_version).toBe("1.0.0");
+    });
+
+    it("names the customer's org to FAI when faiOrgId is set", async () => {
+        mockFetch.mockResolvedValue({
+            ok: true,
+            json: async () => ({ message: "feat: add newFeature helper", version_bump: "MINOR" })
+        });
+        const step = new AutoVersionStep(repo.repoPath, makeLogger(), { ...faiConfig, faiOrgId: "acme" });
+        const prepared = fakePreparedReplay({
+            outputDir: repo.repoPath,
+            previousGenerationSha: repo.previousSha,
+            currentGenerationSha: repo.currentSha
+        });
+
+        await step.execute(makeContext(prepared));
+
+        const [, init] = mockFetch.mock.calls[0] as [string, RequestInit];
+        expect((init.headers as Record<string, string>)["X-Fern-Org-Id"]).toBe("acme");
     });
 
     it("treats NO_CHANGE from FAI as a no-bump rewrite to previousVersion", async () => {

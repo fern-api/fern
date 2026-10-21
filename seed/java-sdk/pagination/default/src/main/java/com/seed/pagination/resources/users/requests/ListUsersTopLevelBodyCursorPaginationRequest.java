@@ -86,7 +86,6 @@ public final class ListUsersTopLevelBodyCursorPaginationRequest {
 
         private Optional<String> filter = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -128,6 +127,14 @@ public final class ListUsersTopLevelBodyCursorPaginationRequest {
 
         public ListUsersTopLevelBodyCursorPaginationRequest build() {
             return new ListUsersTopLevelBodyCursorPaginationRequest(cursor, filter, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("cursor") || key.equalsIgnoreCase("filter")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

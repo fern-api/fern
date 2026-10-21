@@ -65,6 +65,12 @@ impl ApiClient {
                 None,
             )
             .await
+            .map(|stream| {
+                stream.with_event_discriminator(
+                    "event",
+                    &["string_data", "number_data", "object_data"],
+                )
+            })
     }
 
     /// Same as endpoint 1, but the object data payload contains its own "event" property, which collides with the SSE envelope's "event" discriminator field. Tests whether generators correctly separate the protocol-level discriminant from the data-level field when context=protocol is specified.
@@ -113,6 +119,12 @@ impl ApiClient {
                 None,
             )
             .await
+            .map(|stream| {
+                stream.with_event_discriminator(
+                    "event",
+                    &["string_data", "number_data", "object_data"],
+                )
+            })
     }
 
     /// x-fern-discriminator-context is explicitly set to "data" (the default value). Each variant uses allOf to extend a payload schema and adds the "event" discriminant property at the same level. There is no "data" wrapper. The discriminant and payload fields coexist in a single flat object. This matches the real-world pattern used by customers with context=data.
@@ -257,6 +269,56 @@ impl ApiClient {
                 None,
             )
             .await
+            .map(|stream| stream.with_event_discriminator("event", &[]))
+    }
+
+    /// context=protocol where some variants use the envelope+data pattern and others use the flat allOf pattern. Envelope variants are parsed from {event, data}; flat variants are parsed from the data payload with the event discriminant injected.
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// Server-Sent Events stream (use StreamExt from the prelude to iterate)
+    ///
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use server_sent_events_openapi_sdk::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ServerSentEventsOpenapiClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .stream_protocol_mixed_schema(
+    ///             &StreamRequest {
+    ///                 ..Default::default()
+    ///             },
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
+    pub async fn stream_protocol_mixed_schema(
+        &self,
+        request: &StreamRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<SseStream<StreamProtocolMixedSchemaResponse>, ApiError> {
+        self.http_client
+            .execute_sse_request(
+                Method::POST,
+                "stream/protocol-mixed-schema",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+                None,
+            )
+            .await
+            .map(|stream| stream.with_event_discriminator("event", &["object_data"]))
     }
 
     /// Mismatched combination: context=data with the envelope+data schema pattern that is normally used with context=protocol. Shows what happens when the discriminant is declared as data-level but the schema separates the event field and data field into an envelope structure.

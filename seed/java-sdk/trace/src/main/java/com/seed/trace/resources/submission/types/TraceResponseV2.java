@@ -190,7 +190,6 @@ public final class TraceResponseV2 {
 
         private Optional<DebugVariableValue> returnValue = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -285,6 +284,20 @@ public final class TraceResponseV2 {
                     stack,
                     stdout,
                     additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("submissionId")
+                    || key.equalsIgnoreCase("lineNumber")
+                    || key.equalsIgnoreCase("file")
+                    || key.equalsIgnoreCase("returnValue")
+                    || key.equalsIgnoreCase("expressionLocation")
+                    || key.equalsIgnoreCase("stack")
+                    || key.equalsIgnoreCase("stdout")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

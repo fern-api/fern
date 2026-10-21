@@ -62,7 +62,7 @@ export class ComplexClient {
                     url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
-                        `${core.url.encodePathParam(index)}/conversations/search`,
+                        `${core.url.encodePathParam(index, errors.SeedPaginationError)}/conversations/search`,
                     ),
                     method: "POST",
                     headers: _headers,

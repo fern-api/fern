@@ -110,4 +110,29 @@ describe("loadRawGeneratorsConfiguration", () => {
         expect(errorOutput).toContain('Values starting with "@"');
         expect(errorOutput).toContain("must be wrapped in quotes");
     });
+
+    it("accepts playground-docs on api auth-schemes", async () => {
+        const authSchemes = {
+            oAuth: {
+                scheme: "oauth",
+                type: "client-credentials",
+                "playground-docs": "OAuth playground docs",
+                "get-token": { endpoint: "POST /token" }
+            },
+            bearerAuth: { scheme: "bearer", "playground-docs": "Bearer playground docs" },
+            basicAuth: { scheme: "basic", "playground-docs": "Basic playground docs" },
+            apiKey: { header: "X-API-Key", "playground-docs": "Header playground docs" }
+        };
+        await fs.writeFile(
+            path.join(tmpDir, "generators.yml"),
+            yaml.dump({ api: { specs: [{ openapi: "openapi.yml" }], auth: "oAuth", "auth-schemes": authSchemes } })
+        );
+
+        const result = await loadRawGeneratorsConfiguration({
+            absolutePathToWorkspace: AbsoluteFilePath.of(tmpDir),
+            context: mockContext
+        });
+
+        expect(result?.api).toMatchObject({ "auth-schemes": authSchemes });
+    });
 });

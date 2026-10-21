@@ -9,6 +9,7 @@ import com.seed.trace.core.BodyProperties;
 import com.seed.trace.core.ClientOptions;
 import com.seed.trace.core.MediaTypes;
 import com.seed.trace.core.ObjectMappers;
+import com.seed.trace.core.PathSegments;
 import com.seed.trace.core.QueryStringMapper;
 import com.seed.trace.core.RequestOptions;
 import com.seed.trace.core.RetryInterceptor;
@@ -57,7 +58,7 @@ public class AsyncRawPlaylistClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/playlist")
-                .addPathSegment(Integer.toString(serviceParam))
+                .addPathSegment(PathSegments.validate(Integer.toString(serviceParam)))
                 .addPathSegments("create");
         QueryStringMapper.addQueryParameter(httpUrl, "datetime", request.getDatetime(), false);
         if (request.getOptionalDatetime().isPresent()) {
@@ -99,7 +100,7 @@ public class AsyncRawPlaylistClient {
                     .build();
         }
         CompletableFuture<SeedTraceHttpResponse<Playlist>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -151,7 +152,7 @@ public class AsyncRawPlaylistClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/playlist")
-                .addPathSegment(Integer.toString(serviceParam))
+                .addPathSegment(PathSegments.validate(Integer.toString(serviceParam)))
                 .addPathSegments("all");
         if (request.getLimit().isPresent()) {
             QueryStringMapper.addQueryParameter(
@@ -192,7 +193,7 @@ public class AsyncRawPlaylistClient {
                     .build();
         }
         CompletableFuture<SeedTraceHttpResponse<List<Playlist>>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -245,8 +246,8 @@ public class AsyncRawPlaylistClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/playlist")
-                .addPathSegment(Integer.toString(serviceParam))
-                .addPathSegment(playlistId);
+                .addPathSegment(PathSegments.validate(Integer.toString(serviceParam)))
+                .addPathSegment(PathSegments.validate(playlistId));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -272,7 +273,7 @@ public class AsyncRawPlaylistClient {
                     .build();
         }
         CompletableFuture<SeedTraceHttpResponse<Playlist>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -343,8 +344,8 @@ public class AsyncRawPlaylistClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/playlist")
-                .addPathSegment(Integer.toString(serviceParam))
-                .addPathSegment(playlistId);
+                .addPathSegment(PathSegments.validate(Integer.toString(serviceParam)))
+                .addPathSegment(PathSegments.validate(playlistId));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -384,7 +385,7 @@ public class AsyncRawPlaylistClient {
                     .build();
         }
         CompletableFuture<SeedTraceHttpResponse<Optional<Playlist>>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -437,8 +438,8 @@ public class AsyncRawPlaylistClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v2/playlist")
-                .addPathSegment(Integer.toString(serviceParam))
-                .addPathSegment(playlistId);
+                .addPathSegment(PathSegments.validate(Integer.toString(serviceParam)))
+                .addPathSegment(PathSegments.validate(playlistId));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -466,7 +467,7 @@ public class AsyncRawPlaylistClient {
                     .build();
         }
         CompletableFuture<SeedTraceHttpResponse<Void>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {

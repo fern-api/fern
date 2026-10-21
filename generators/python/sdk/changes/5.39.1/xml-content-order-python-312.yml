@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    XML (TwiML) fluent child methods (`response.say(...)`, `gather.play(...)`, ...) keep document order on
+    Python 3.12+. The ordered content list is a pydantic private attribute, and the `runtime_checkable`
+    Protocol used to find it stopped matching on 3.12 (where `isinstance` uses `inspect.getattr_static`),
+    so children appended by the fluent methods were ordered after text and `add_child(...)` elements, e.g.
+    `r.say("a"); r.add_child(XmlElement("Custom")); r.say("b")` rendered `<Custom/><Say>a</Say><Say>b</Say>`.
+  type: fix

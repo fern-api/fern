@@ -30,4 +30,10 @@ export interface HmacSignatureVerification {
      * about whether the signed URL carried a port and how its query string was encoded.
      */
     notificationUrlNormalization: FernIr.WebhookNotificationUrlNormalization | undefined;
+    /**
+     * When present, the HMAC algorithm is selected per request from this header and
+     * `algorithm` is only the default used when the header is absent. Generators expose the
+     * header's wire values (e.g. HMAC_SHA1, HMAC_SHA256) as the verifier's algorithm enum.
+     */
+    algorithmHeader: FernIr.WebhookAlgorithmHeader | undefined;
 }

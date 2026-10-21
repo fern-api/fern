@@ -110,7 +110,6 @@ public final class RuleType {
 
         private Optional<String> description = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -153,6 +152,14 @@ public final class RuleType {
         @java.lang.Override
         public RuleType build() {
             return new RuleType(id, name, description, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("id") || key.equalsIgnoreCase("name") || key.equalsIgnoreCase("description")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

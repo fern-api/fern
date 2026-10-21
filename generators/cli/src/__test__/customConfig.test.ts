@@ -240,6 +240,18 @@ describe("validateCustomConfig — distribution", () => {
         });
     });
 
+    it.each(["auto", true, false] as const)("accepts githubAttestations: %s", (githubAttestations) => {
+        expect(validateCustomConfig({ distribution: { githubAttestations } })).toEqual({
+            distribution: { githubAttestations }
+        });
+    });
+
+    it.each(["yes", "false", 1, null])("rejects githubAttestations: %s", (githubAttestations) => {
+        expect(() => validateCustomConfig({ distribution: { githubAttestations } })).toThrow(
+            /customConfig\.distribution\.githubAttestations/
+        );
+    });
+
     it("accepts a scoop-only block", () => {
         expect(validateCustomConfig({ distribution: { scoop: { bucket: "acme/scoop-bucket" } } })).toEqual({
             distribution: { scoop: { bucket: "acme/scoop-bucket" } }
@@ -480,6 +492,93 @@ describe("validateCustomConfig — profiles", () => {
         expect(() => validateCustomConfig({ profiles: { enabled: true, revokeOperation: 42 } })).toThrow(
             /expected a string/
         );
+    });
+
+    it("accepts a provisionOperation with a credential mapping", () => {
+        expect(
+            validateCustomConfig({
+                profiles: {
+                    enabled: true,
+                    provisionOperation: {
+                        operation: "iam.keys.create",
+                        credential: { username: "sid", password: "secret" },
+                        revokeParameters: { Sid: "sid" }
+                    }
+                }
+            }).profiles?.provisionOperation
+        ).toEqual({
+            operation: "iam.keys.create",
+            credential: { username: "sid", password: "secret" },
+            revokeParameters: { Sid: "sid" }
+        });
+    });
+
+    it("accepts the interactive provisionOperation fields", () => {
+        expect(
+            validateCustomConfig({
+                profiles: {
+                    enabled: true,
+                    provisionOperation: {
+                        operation: "core.keys.create",
+                        credential: { username: "sid", password: "secret" },
+                        flag: "api-key",
+                        parameters: { FriendlyName: "{cli} for {user} on {host}" },
+                        profileParameters: { AccountSid: "username" }
+                    }
+                }
+            }).profiles?.provisionOperation
+        ).toEqual({
+            operation: "core.keys.create",
+            credential: { username: "sid", password: "secret" },
+            flag: "api-key",
+            parameters: { FriendlyName: "{cli} for {user} on {host}" },
+            profileParameters: { AccountSid: "username" }
+        });
+    });
+
+    it("rejects an invalid provisionOperation flag or unsafe text", () => {
+        const base = { operation: "core.keys.create", credential: { token: "secret" } };
+        expect(() =>
+            validateCustomConfig({ profiles: { enabled: true, provisionOperation: { ...base, flag: "--api-key" } } })
+        ).toThrow(/provisionOperation.flag/);
+        expect(() =>
+            validateCustomConfig({
+                profiles: { enabled: true, provisionOperation: { ...base, parameters: { FriendlyName: 'a"b' } } }
+            })
+        ).toThrow(/provisionOperation.parameters.FriendlyName/);
+    });
+
+    it("rejects a provisionOperation without a credential mapping", () => {
+        expect(() =>
+            validateCustomConfig({ profiles: { enabled: true, provisionOperation: { operation: "iam.keys.create" } } })
+        ).toThrow(/provisionOperation.credential/);
+        expect(() =>
+            validateCustomConfig({
+                profiles: { enabled: true, provisionOperation: { operation: "iam.keys.create", credential: {} } }
+            })
+        ).toThrow(/at least one credential field/);
+    });
+
+    it("rejects a provisionOperation whose operation is not a dotted command path", () => {
+        expect(() =>
+            validateCustomConfig({
+                profiles: {
+                    enabled: true,
+                    provisionOperation: { operation: "keyscreate", credential: { token: "secret" } }
+                }
+            })
+        ).toThrow(/provisionOperation.operation/);
+    });
+
+    it("rejects provisionOperation field names that cannot be interpolated", () => {
+        expect(() =>
+            validateCustomConfig({
+                profiles: {
+                    enabled: true,
+                    provisionOperation: { operation: "iam.keys.create", credential: { username: 'sid"' } }
+                }
+            })
+        ).toThrow(/provisionOperation.credential/);
     });
 
     it("keeps `profiles` itself selectable — it is the default", () => {

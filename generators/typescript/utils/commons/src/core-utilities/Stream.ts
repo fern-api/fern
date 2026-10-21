@@ -35,6 +35,7 @@ export declare namespace Stream {
         type: "sse";
         streamTerminator?: ts.Expression;
         eventDiscriminator?: ts.Expression;
+        envelopeEvents?: ts.Expression;
         resumable?: ts.Expression;
     }
 
@@ -101,6 +102,14 @@ export class StreamImpl extends CoreUtility implements Stream {
                                 ts.factory.createPropertyAssignment(
                                     ts.factory.createIdentifier("eventDiscriminator"),
                                     eventShape.eventDiscriminator
+                                )
+                            );
+                        }
+                        if (eventShape.envelopeEvents != null) {
+                            eventShapeProperties.push(
+                                ts.factory.createPropertyAssignment(
+                                    ts.factory.createIdentifier("envelopeEvents"),
+                                    eventShape.envelopeEvents
                                 )
                             );
                         }

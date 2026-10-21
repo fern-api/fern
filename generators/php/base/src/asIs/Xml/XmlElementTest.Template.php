@@ -189,6 +189,18 @@ class XmlElementTest extends TestCase
         $this->assertSame('tail', $content[3]->text);
     }
 
+    public function testContentIncludesLeadingTextWhenRequested(): void
+    {
+        $parsed = XmlElement::fromXml('<Gather>Press a key, then <Say>one</Say></Gather>');
+        $say = new XmlElement('Say', 'one');
+        $this->assertCount(1, XmlUtils::content($parsed, [[['Say'], [$say]]], []));
+        $content = XmlUtils::content($parsed, [[['Say'], [$say]]], [], [], true);
+        $this->assertCount(2, $content);
+        $this->assertInstanceOf(XmlText::class, $content[0]);
+        $this->assertSame('Press a key, then ', $content[0]->text);
+        $this->assertSame($say, $content[1]);
+    }
+
     public function testCommentsKeepTheirPositionInContent(): void
     {
         $element = (new XmlElement('Response'))

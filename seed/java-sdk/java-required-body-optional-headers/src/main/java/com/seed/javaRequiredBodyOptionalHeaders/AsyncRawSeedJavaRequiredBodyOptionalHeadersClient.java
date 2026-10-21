@@ -9,6 +9,7 @@ import com.seed.javaRequiredBodyOptionalHeaders.core.BodyProperties;
 import com.seed.javaRequiredBodyOptionalHeaders.core.ClientOptions;
 import com.seed.javaRequiredBodyOptionalHeaders.core.MediaTypes;
 import com.seed.javaRequiredBodyOptionalHeaders.core.ObjectMappers;
+import com.seed.javaRequiredBodyOptionalHeaders.core.PathSegments;
 import com.seed.javaRequiredBodyOptionalHeaders.core.QueryStringMapper;
 import com.seed.javaRequiredBodyOptionalHeaders.core.RequestOptions;
 import com.seed.javaRequiredBodyOptionalHeaders.core.RetryInterceptor;
@@ -116,7 +117,7 @@ public class AsyncRawSeedJavaRequiredBodyOptionalHeadersClient {
                     .build();
         }
         CompletableFuture<SeedJavaRequiredBodyOptionalHeadersHttpResponse<User>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -187,7 +188,7 @@ public class AsyncRawSeedJavaRequiredBodyOptionalHeadersClient {
                 .newBuilder()
                 .addPathSegments("api")
                 .addPathSegments("users")
-                .addPathSegment(userId);
+                .addPathSegment(PathSegments.validate(userId));
         if (request.getDryRun().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "dryRun", request.getDryRun().get(), false);
@@ -227,7 +228,7 @@ public class AsyncRawSeedJavaRequiredBodyOptionalHeadersClient {
                     .build();
         }
         CompletableFuture<SeedJavaRequiredBodyOptionalHeadersHttpResponse<User>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -342,7 +343,7 @@ public class AsyncRawSeedJavaRequiredBodyOptionalHeadersClient {
                     .build();
         }
         CompletableFuture<SeedJavaRequiredBodyOptionalHeadersHttpResponse<User>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -433,7 +434,7 @@ public class AsyncRawSeedJavaRequiredBodyOptionalHeadersClient {
                     .build();
         }
         CompletableFuture<SeedJavaRequiredBodyOptionalHeadersHttpResponse<User>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -524,7 +525,7 @@ public class AsyncRawSeedJavaRequiredBodyOptionalHeadersClient {
                     .build();
         }
         CompletableFuture<SeedJavaRequiredBodyOptionalHeadersHttpResponse<User>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -624,7 +625,7 @@ public class AsyncRawSeedJavaRequiredBodyOptionalHeadersClient {
         }
         CompletableFuture<SeedJavaRequiredBodyOptionalHeadersHttpResponse<List<User>>> future =
                 new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -719,7 +720,7 @@ public class AsyncRawSeedJavaRequiredBodyOptionalHeadersClient {
                     .build();
         }
         CompletableFuture<SeedJavaRequiredBodyOptionalHeadersHttpResponse<User>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {

@@ -1,4 +1,68 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.30.6
+  changelogEntry:
+    - summary: |
+        Requests whose path contains a `.` or `..` segment (including `%2e` forms) now throw an
+        `InvalidArgumentException` before being sent. A path parameter value of `.` or `..` could
+        otherwise change which endpoint the request was sent to, with or without
+        `encode-path-params`.
+      type: fix
+  createdAt: "2026-10-19"
+  irVersion: 67
+- version: 2.30.5
+  changelogEntry:
+    - summary: |
+        `WebhooksHelper.verifyRequest` now parses `name=value` settings headers when
+        `webhook-signature.algorithm-header` sets `key-id-parameter`/`algorithm-parameter`
+        (e.g. Twilio's `X-Twilio-Webhooks-Signature-Settings: key=<id>,algorithm=HMAC_SHA256`),
+        so the key resolver receives the bare key ID instead of `key=<id>`. Requires IR 67.33.0.
+      type: fix
+  createdAt: "2026-10-16"
+  irVersion: 67
+- version: 2.30.4
+  changelogEntry:
+    - summary: |
+        The generated `WebhooksHelper` now consumes `algorithm-header` from `api.settings.webhook-signature`:
+        a request-level `verifyRequest` helper reads the configured signature header first (missing or empty
+        fails early with "could not run: missing signature header"), then the algorithm-selection header
+        (e.g. `X-Twilio-Webhook-Signature-Settings: <key_id>;HMAC_SHA256`) to pick the HMAC algorithm from
+        the configured wire values and hand the key ID to an application-supplied secret resolver. When the
+        header is absent the configured default algorithm and the plain secret are used, so legacy
+        auth-token flows keep working. The lower-level `verifySignature` is unchanged and still returns
+        `false` without throwing.
+      type: fix
+  createdAt: "2026-10-13"
+  irVersion: 67
+- version: 2.30.3
+  changelogEntry:
+    - summary: |
+        Fix the generated `OAuthTokenProvider` so that it compiles under phpstan (level max) when the
+        token endpoint's `access_token` / `expires_in` response properties are optional or nullable
+        (e.g. OpenAPI specs that do not list them as `required`). The provider now throws the SDK's
+        base exception when the response carries no access token, and only computes `expiresAt` when
+        `expires_in` is present.
+      type: fix
+  createdAt: "2026-10-13"
+  irVersion: 67
+- version: 2.30.2
+  changelogEntry:
+    - summary: |
+        `reference.md` is now generated for every output mode, matching the Go and Python generators. It was
+        previously skipped unless the CLI passed a snippet path (`local-file-system` output without
+        `snippets: path:` in generators.yml). `README.md` is unchanged and still requires snippets.
+      type: fix
+  createdAt: "2026-10-09"
+  irVersion: 67
+- version: 2.30.1
+  changelogEntry:
+    - summary: |
+        Parsing an XML (TwiML) element without a text property keeps the text before its first child in the
+        ordered content, so `Gather::fromXml('<Gather>Press a key, then <Say>one</Say></Gather>')` round-trips
+        instead of dropping `Press a key, then `. Types with a text property (e.g. `Say`) are unchanged: that
+        text is still the property's value.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
 - version: 2.30.0
   changelogEntry:
     - summary: |

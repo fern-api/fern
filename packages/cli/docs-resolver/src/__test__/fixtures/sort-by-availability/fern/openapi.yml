@@ -1,0 +1,102 @@
+openapi: 3.0.0
+info:
+  title: Plant Store
+  version: 1.0.0
+paths:
+  /plants:
+    get:
+      operationId: listPlants
+      summary: List plants
+      tags:
+        - plants
+      responses:
+        "200":
+          description: OK
+    post:
+      operationId: createPlant
+      summary: Create plant
+      tags:
+        - plants
+      x-fern-availability: generally-available
+      responses:
+        "200":
+          description: OK
+  /plants/water:
+    post:
+      operationId: waterPlant
+      summary: Water plant
+      tags:
+        - plants
+      x-fern-availability: deprecated
+      responses:
+        "200":
+          description: OK
+  /plants/repot:
+    post:
+      operationId: repotPlant
+      summary: Repot plant
+      tags:
+        - plants
+      x-fern-availability: beta
+      responses:
+        "200":
+          description: OK
+  /plants/prune:
+    post:
+      operationId: prunePlant
+      summary: Prune plant
+      tags:
+        - plants
+      x-fern-availability: alpha
+      responses:
+        "200":
+          description: OK
+  /plants/graft:
+    post:
+      operationId: graftPlant
+      summary: Graft plant
+      tags:
+        - plants
+      x-fern-availability: beta
+      responses:
+        "200":
+          description: OK
+  /plants/mist:
+    post:
+      operationId: mistPlant
+      summary: Mist plant
+      tags:
+        - plants
+      x-fern-availability: preview
+      responses:
+        "200":
+          description: OK
+  /plants/fertilize:
+    post:
+      operationId: fertilizePlant
+      summary: Fertilize plant
+      tags:
+        - plants
+      x-fern-availability: legacy
+      responses:
+        "200":
+          description: OK
+  /plants/harvest:
+    post:
+      operationId: harvestPlant
+      summary: Harvest plant
+      tags:
+        - plants
+      responses:
+        "200":
+          description: OK
+  /plants/compost:
+    post:
+      operationId: compostPlant
+      summary: Compost plant
+      tags:
+        - plants
+      x-fern-availability: deprecated
+      responses:
+        "200":
+          description: OK

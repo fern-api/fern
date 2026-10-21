@@ -7,10 +7,12 @@ import type { MappingResult } from "./mapFernGroupToSdkConfig.js";
 
 export function mergeSdkConfig({
     existingContents,
+    legacyPlaceholderSdkName,
     mapped,
     outputPath
 }: {
     existingContents: string | undefined;
+    legacyPlaceholderSdkName?: string;
     mapped: MappingResult;
     outputPath: string;
 }): string {
@@ -33,7 +35,11 @@ export function mergeSdkConfig({
     }
 
     const existingRoot = withoutTargets(existing);
-    const migratedRoot = withoutTargets(mapped.sdkConfig);
+    const migratedRoot = withoutTargets(
+        existing.sdkName === legacyPlaceholderSdkName
+            ? { ...mapped.sdkConfig, sdkName: existing.sdkName }
+            : mapped.sdkConfig
+    );
     const rootConflicts = findRootConflicts(existingRoot, migratedRoot);
     if (rootConflicts.length > 0) {
         throw configError(

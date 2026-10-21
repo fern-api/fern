@@ -107,6 +107,7 @@ function inferredScheme(headerNames: string[]): FernIr.AuthScheme {
         tokenEndpoint: {
             endpoint: { endpointId: "endpoint_auth.getToken", serviceId: "service_auth", subpackageId: undefined },
             expiryProperty: undefined,
+            grantType: undefined,
             authenticatedRequestHeaders: headerNames.map((headerName) => ({
                 headerName,
                 valuePrefix: undefined,

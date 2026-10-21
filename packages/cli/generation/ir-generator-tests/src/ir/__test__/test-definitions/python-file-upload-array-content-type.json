@@ -264,6 +264,7 @@
                         "properties": [
                             {
                                 "type": "fileArray",
+                                "isOptional": false,
                                 "wireValue": "file",
                                 "name": {
                                     "originalName": "file",
@@ -287,6 +288,7 @@
                             },
                             {
                                 "type": "fileArray",
+                                "isOptional": true,
                                 "wireValue": "optional_files",
                                 "name": {
                                     "originalName": "optional_files",
@@ -310,6 +312,7 @@
                             },
                             {
                                 "type": "file",
+                                "isOptional": false,
                                 "wireValue": "single_file",
                                 "name": {
                                     "originalName": "single_file",

@@ -309,7 +309,8 @@
                             },
                             "valuePrefix": "Bearer "
                         }
-                    ]
+                    ],
+                    "grantType": null
                 },
                 "key": "InferredAuth",
                 "playgroundDocs": null,
@@ -1981,7 +1982,8 @@
                             "unsafeName": "Bearer",
                             "safeName": "Bearer"
                         }
-                    }
+                    },
+                    "requirement": "ANY"
                 },
                 "declaration": {
                     "name": {
@@ -2301,7 +2303,8 @@
                             "unsafeName": "Bearer",
                             "safeName": "Bearer"
                         }
-                    }
+                    },
+                    "requirement": "ANY"
                 },
                 "declaration": {
                     "name": {
@@ -2422,7 +2425,8 @@
                             "unsafeName": "Bearer",
                             "safeName": "Bearer"
                         }
-                    }
+                    },
+                    "requirement": "ANY"
                 },
                 "declaration": {
                     "name": {

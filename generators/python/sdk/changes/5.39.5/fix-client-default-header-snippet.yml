@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix the root client docstring example for global headers and root path parameters
+    that have a `client-default`. The example now passes the default as a keyword
+    argument (e.g. `version="2024-01-01"`) instead of a bare positional value, which
+    was a `SyntaxError` when it followed another keyword argument.
+  type: fix

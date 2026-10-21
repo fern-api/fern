@@ -96,7 +96,6 @@ public final class TestSubmissionUpdate {
 
         private TestSubmissionUpdateInfo updateInfo;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -125,6 +124,14 @@ public final class TestSubmissionUpdate {
         @java.lang.Override
         public TestSubmissionUpdate build() {
             return new TestSubmissionUpdate(updateTime, updateInfo, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("updateTime") || key.equalsIgnoreCase("updateInfo")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

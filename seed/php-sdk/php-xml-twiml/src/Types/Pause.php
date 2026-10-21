@@ -69,7 +69,7 @@ class Pause extends XmlSerializableType
         ]);
         $result->setAdditionalAttributes(XmlUtils::additionalAttributes($element, ['length']));
         $result->setAdditionalChildren(XmlUtils::additionalChildren($element, []));
-        $result->setContent(XmlUtils::content($element, [], $result->getAdditionalChildren()));
+        $result->setContent(XmlUtils::content($element, [], $result->getAdditionalChildren(), [], true));
         return $result;
     }
 

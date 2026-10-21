@@ -122,7 +122,6 @@ public final class NullableStreamRequest {
 
         private Optional<Boolean> stream = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -184,6 +183,14 @@ public final class NullableStreamRequest {
         @java.lang.Override
         public NullableStreamRequest build() {
             return new NullableStreamRequest(query, stream, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("query") || key.equalsIgnoreCase("stream")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

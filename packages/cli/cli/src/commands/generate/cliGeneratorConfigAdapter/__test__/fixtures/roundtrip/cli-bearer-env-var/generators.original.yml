@@ -1,0 +1,20 @@
+auth-schemes:
+  bearer:
+    scheme: bearer
+    token:
+      env: BEARER_TOKEN
+api:
+  auth: bearer
+  specs:
+    - openapi: ./openapi.yml
+groups:
+  cli:
+    generators:
+      - name: fernapi/fern-cli-generator
+        version: 0.49.0
+        output:
+          location: local-file-system
+          path: ../out
+        config:
+          binaryName: bearer-env-cli
+          generateWireTests: true

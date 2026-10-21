@@ -181,7 +181,6 @@ public final class PaginatedClientResponse {
 
         private Optional<Integer> total = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -287,6 +286,18 @@ public final class PaginatedClientResponse {
         @java.lang.Override
         public PaginatedClientResponse build() {
             return new PaginatedClientResponse(start, limit, length, total, clients, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("start")
+                    || key.equalsIgnoreCase("limit")
+                    || key.equalsIgnoreCase("length")
+                    || key.equalsIgnoreCase("total")
+                    || key.equalsIgnoreCase("clients")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

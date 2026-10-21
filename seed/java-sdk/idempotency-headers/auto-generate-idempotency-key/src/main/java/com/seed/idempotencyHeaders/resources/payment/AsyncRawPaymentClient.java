@@ -10,6 +10,7 @@ import com.seed.idempotencyHeaders.core.IdempotencyUtils;
 import com.seed.idempotencyHeaders.core.IdempotentRequestOptions;
 import com.seed.idempotencyHeaders.core.MediaTypes;
 import com.seed.idempotencyHeaders.core.ObjectMappers;
+import com.seed.idempotencyHeaders.core.PathSegments;
 import com.seed.idempotencyHeaders.core.RequestOptions;
 import com.seed.idempotencyHeaders.core.RetryInterceptor;
 import com.seed.idempotencyHeaders.core.SeedIdempotencyHeadersApiException;
@@ -82,7 +83,7 @@ public class AsyncRawPaymentClient {
                     .build();
         }
         CompletableFuture<SeedIdempotencyHeadersHttpResponse<UUID>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -129,7 +130,7 @@ public class AsyncRawPaymentClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("payment")
-                .addPathSegment(paymentId);
+                .addPathSegment(PathSegments.validate(paymentId));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -157,7 +158,7 @@ public class AsyncRawPaymentClient {
                     .build();
         }
         CompletableFuture<SeedIdempotencyHeadersHttpResponse<Void>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {

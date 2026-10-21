@@ -2,8 +2,7 @@ require "seed"
 
 client = Seed::Client.new(base_url: "https://api.fern.com")
 
-client.stream_x_fern_streaming_shared_schema_stream(
-  prompt: "prompt",
-  model: "model",
-  stream: true
+client.stream_x_fern_streaming_condition(
+  query: "query",
+  stream: false
 )

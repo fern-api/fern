@@ -3,6 +3,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { isEqualToMatcher, WireMock, WireMockStubMapping } from "@fern-api/mock-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { WireTestExampleSelector } from "./WireTestExampleSelector.js";
 
 /**
  * Generates setup files for wire testing, specifically docker-compose configuration
@@ -11,10 +12,16 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 export class WireTestSetupGenerator {
     private readonly context: SdkGeneratorContext;
     private readonly ir: FernIr.IntermediateRepresentation;
+    private readonly exampleSelector: WireTestExampleSelector;
 
-    constructor(context: SdkGeneratorContext, ir: FernIr.IntermediateRepresentation) {
+    constructor(
+        context: SdkGeneratorContext,
+        ir: FernIr.IntermediateRepresentation,
+        exampleSelector: WireTestExampleSelector
+    ) {
         this.context = context;
         this.ir = ir;
+        this.exampleSelector = exampleSelector;
     }
 
     /**
@@ -28,12 +35,49 @@ export class WireTestSetupGenerator {
         this.generateWireHelper();
     }
 
-    public static getWiremockConfigContent(ir: FernIr.IntermediateRepresentation) {
+    /**
+     * Converts the IR to WireMock stubs. Besides the default per-endpoint mappings, every example covered by a
+     * wire test gets a mapping that only matches requests carrying that test's `X-Test-Id` header.
+     */
+    public static getWiremockConfigContent(
+        ir: FernIr.IntermediateRepresentation,
+        exampleSelector: WireTestExampleSelector
+    ): WireMockStubMapping {
         // ir-sdk versions may differ between ruby-v2-sdk and mock-utils. The newer IR only adds
         // optional fields and OAuth configuration variants that WireMock ignores, but the added
         // union variants stop the two IntermediateRepresentations from overlapping structurally,
         // so the assertion has to go through `unknown`.
-        return new WireMock().convertToWireMock(ir as unknown as Parameters<WireMock["convertToWireMock"]>[0]);
+        const stubMapping = new WireMock().convertToWireMock(
+            ir as unknown as Parameters<WireMock["convertToWireMock"]>[0],
+            {
+                getExampleTestId: ({ example }) => exampleSelector.getExampleTestId(example)
+            }
+        );
+        WireTestSetupGenerator.applySuccessStatusCodes(stubMapping, exampleSelector);
+        return stubMapping;
+    }
+
+    /**
+     * Per-example success mappings serve the endpoint's declared success status, without a body for
+     * 204/205 responses.
+     */
+    private static applySuccessStatusCodes(
+        stubMapping: WireMockStubMapping,
+        exampleSelector: WireTestExampleSelector
+    ): void {
+        for (const mapping of stubMapping.mappings) {
+            const testId = getTestIdMatcher(mapping);
+            const selected = testId != null ? exampleSelector.getByTestId(testId) : undefined;
+            if (selected == null || selected.example.expectedError != null) {
+                continue;
+            }
+            const status = exampleSelector.getSuccessStatusCode(selected.endpoint);
+            mapping.response.status = status;
+            if (status === 204 || status === 205) {
+                delete mapping.response.body;
+                delete mapping.response.base64Body;
+            }
+        }
     }
 
     /**
@@ -68,7 +112,7 @@ export class WireTestSetupGenerator {
     }
 
     private generateWireMockConfigFile(): void {
-        const wireMockConfigContent = WireTestSetupGenerator.getWiremockConfigContent(this.ir);
+        const wireMockConfigContent = WireTestSetupGenerator.getWiremockConfigContent(this.ir, this.exampleSelector);
 
         // mock-utils generates datetime values using Date.toISOString() which always includes
         // ".000Z" milliseconds. Ruby's DateTime/Time ISO 8601 serialization omits fractional
@@ -363,6 +407,76 @@ class WireMockTestCase < Minitest::Test
 
     assert_equal expected_value, actual_header, "Expected Authorization header '#{expected_value}', got '#{actual_header}'"
   end
+
+  # Verifies that numbers in the captured JSON request body equal the values passed to the SDK,
+  # so a decimal that is truncated or rounded on the way out fails the test.
+  #
+  # @param test_id [String] The test ID used to filter requests
+  # @param method [String] The HTTP method (GET, POST, etc.)
+  # @param url_path [String] The URL path to match
+  # @param expected [Hash{String => Numeric}] JSON Pointer (RFC 6901) => expected number
+  def verify_request_body_numbers(test_id:, method:, url_path:, expected:)
+    admin_url = ENV["WIREMOCK_URL"] ? "#{ENV["WIREMOCK_URL"]}/__admin" : WIREMOCK_ADMIN_URL
+    uri = URI("#{admin_url}/requests/find")
+    http = Net::HTTP.new(uri.host, uri.port)
+    post_request = Net::HTTP::Post.new(uri.path, { "Content-Type" => "application/json" })
+
+    request_body = { "method" => method, "urlPath" => url_path }
+    request_body["headers"] = { "X-Test-Id" => { "equalTo" => test_id } }
+
+    post_request.body = request_body.to_json
+    response = http.request(post_request)
+
+    assert_equal "200", response.code, "WireMock request lookup failed for test_id #{test_id}: #{response.body}"
+    requests = JSON.parse(response.body)["requests"] || []
+
+    refute_empty requests, "No requests found for test_id #{test_id}"
+    body = requests.first["body"]
+    begin
+      document = JSON.parse(body)
+    rescue JSON::ParserError
+      flunk "Expected a JSON request body for test_id #{test_id}, got #{body.inspect}"
+    end
+
+    assert_json_numbers(expected, document, "request body for test_id #{test_id}")
+  end
+
+  # Verifies that numbers in the mocked JSON response decode unchanged into the SDK result,
+  # so a decimal that is truncated or rounded on the way in fails the test.
+  #
+  # @param actual [Object] The value returned by the SDK method
+  # @param expected [Hash{String => Numeric}] JSON Pointer (RFC 6901) => expected number
+  def verify_response_numbers(actual:, expected:)
+    assert_json_numbers(expected, wire_json(actual), "response")
+  end
+
+  def assert_json_numbers(expected, document, label)
+    expected.each do |pointer, value|
+      actual = json_pointer_get(document, pointer)
+
+      assert_kind_of Numeric, actual, "Expected a number at #{pointer} in #{label}, got #{actual.inspect}"
+      assert_equal value, actual, "Expected #{value.inspect} at #{pointer} in #{label}, got #{actual.inspect}"
+    end
+  end
+
+  def json_pointer_get(document, pointer)
+    pointer.split("/", -1).drop(1).reduce(document) do |node, token|
+      key = token.gsub(/~[01]/, "~0" => "~", "~1" => "/")
+      case node
+      when ::Array then node[Integer(key, 10)]
+      when ::Hash then node[key]
+      end
+    end
+  end
+
+  def wire_json(value)
+    case value
+    when ::Array then value.map { |item| wire_json(item) }
+    when ::Hash then value.to_h { |key, item| [key.to_s, wire_json(item)] }
+    when nil, ::String, ::Numeric, true, false then value
+    else value.respond_to?(:to_h) ? wire_json(value.to_h) : value
+    end
+  end
 ${endpointSecurityHelper}end
 `;
     }
@@ -473,4 +587,9 @@ if ENV["RUN_WIRE_TESTS"] == "true" && File.exist?(WIREMOCK_COMPOSE_FILE) && !ENV
 end
 `;
     }
+}
+
+/** The `X-Test-Id` a per-example mapping matches on, if any. */
+export function getTestIdMatcher(mapping: WireMockStubMapping["mappings"][number]): string | undefined {
+    return mapping.request.headers?.["X-Test-Id"]?.equalTo;
 }

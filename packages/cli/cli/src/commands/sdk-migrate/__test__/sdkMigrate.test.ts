@@ -21,6 +21,7 @@ import {
     type ResolvedMigrationSourceSpec,
     resolveMigrationPathParameterStyle,
     resolveMigrationSourceSpecs,
+    resolveWorkspaceSourceSpecs,
     serializeMigrationSource
 } from "../projectMigrationSource.js";
 import { selectMigrationTarget } from "../selectMigrationTarget.js";
@@ -35,6 +36,7 @@ describe("SDK Config migration", () => {
 
         expect(result.sdkConfig).toMatchObject({
             schemaVersion: "sdk-config/v1",
+            sdkName: "migration-api",
             api: {
                 audiences: [],
                 baseUrl: "https://api.example.com",
@@ -63,6 +65,65 @@ describe("SDK Config migration", () => {
         expect(result.sdkConfig.generation).toBeUndefined();
     });
 
+    it("uses an explicitly resolved SDK name", () => {
+        const result = mapFernGroupToSdkConfig({
+            fernWorkspace: { definition: createDefinition() },
+            group: createGroup([createGenerator("fernapi/fern-typescript-sdk", "typescript", "3.63.3")]),
+            source: createSource(),
+            sdkName: "acme"
+        });
+
+        expect(result.sdkConfig.sdkName).toBe("acme");
+    });
+
+    it("omits downloadSnippets synthesized for local output", () => {
+        const generator = createGenerator("fernapi/fern-php-sdk", "php", "2.16.0");
+        generator.raw = {
+            name: "fernapi/fern-php-sdk",
+            version: "2.16.0",
+            output: { location: "local-file-system", path: "./generated" }
+        };
+        generator.outputMode = FernFiddle.OutputMode.downloadFiles({ downloadSnippets: true });
+
+        const result = mapFernGroupToSdkConfig({
+            fernWorkspace: { definition: createDefinition() },
+            group: createGroup([generator]),
+            source: createSource()
+        });
+
+        expect(result.sdkConfig.targets[0]?.output).toEqual({ delivery: "files", path: "./generated" });
+        expect(result.sdkConfig.docs).toBeUndefined();
+        expect(result.diagnostics).not.toEqual(
+            expect.arrayContaining([
+                expect.objectContaining({ path: ["group", "generators", 0, "outputMode", "downloadSnippets"] })
+            ])
+        );
+    });
+
+    it("preserves explicitly configured snippets for migration", () => {
+        const generator = createGenerator("fernapi/fern-php-sdk", "php", "2.16.0");
+        generator.raw = {
+            name: "fernapi/fern-php-sdk",
+            version: "2.16.0",
+            output: { location: "local-file-system", path: "./generated" },
+            snippets: { path: "./snippets.json" }
+        };
+        generator.outputMode = FernFiddle.OutputMode.downloadFiles({ downloadSnippets: true });
+
+        const result = mapFernGroupToSdkConfig({
+            fernWorkspace: { definition: createDefinition() },
+            group: createGroup([generator]),
+            source: createSource()
+        });
+
+        expect(result.sdkConfig.docs).toEqual({ snippets: { enabled: true } });
+        expect(result.diagnostics).not.toEqual(
+            expect.arrayContaining([
+                expect.objectContaining({ path: ["group", "generators", 0, "outputMode", "downloadSnippets"] })
+            ])
+        );
+    });
+
     it("preserves exact publish credential environment expressions and omits literal secrets", () => {
         const safe = createGenerator("fernapi/fern-typescript-sdk", "typescript", "3.63.3");
         safe.outputMode = FernFiddle.OutputMode.publishV2(
@@ -89,12 +150,50 @@ describe("SDK Config migration", () => {
         });
 
         expect(result.sdkConfig.targets[0]?.output?.publish).toMatchObject({ token: "${NPM_TOKEN}" });
-        expect(result.sdkConfig.targets[1]?.output?.publish).not.toHaveProperty("username");
+        expect(result.sdkConfig.targets[1]?.output?.publish).toMatchObject({ username: "__token__" });
         expect(result.sdkConfig.targets[1]?.output?.publish).not.toHaveProperty("password");
         expect(JSON.stringify(result.sdkConfig)).not.toContain("literal-secret");
         expect(result.diagnostics).toEqual(
             expect.arrayContaining([
-                expect.objectContaining({ code: "FERN_PUBLISH_CREDENTIAL_REQUIRES_ENVIRONMENT_VARIABLE" })
+                expect.objectContaining({
+                    code: "FERN_PUBLISH_CREDENTIAL_REQUIRES_ENVIRONMENT_VARIABLE",
+                    path: ["targets", "1", "output", "publish", "password"]
+                })
+            ])
+        );
+        expect(result.diagnostics).not.toEqual(
+            expect.arrayContaining([
+                expect.objectContaining({ path: ["targets", "1", "output", "publish", "username"] })
+            ])
+        );
+    });
+
+    it("omits literal Maven usernames because they can be tokens", () => {
+        const generator = createGenerator("fernapi/fern-java-sdk", "java", "3.0.0");
+        generator.outputMode = FernFiddle.OutputMode.publishV2(
+            FernFiddle.PublishOutputModeV2.mavenOverride({
+                registryUrl: "https://central.sonatype.com",
+                coordinate: "com.acme:sdk",
+                username: "literal-user-token",
+                password: "${MAVEN_PASSWORD}"
+            })
+        );
+
+        const result = mapFernGroupToSdkConfig({
+            fernWorkspace: { definition: createDefinition() },
+            group: createGroup([generator]),
+            source: createSource()
+        });
+
+        expect(result.sdkConfig.targets[0]?.output?.publish).not.toHaveProperty("username");
+        expect(JSON.stringify(result.sdkConfig)).not.toContain("literal-user-token");
+        expect(result.diagnostics).toEqual(
+            expect.arrayContaining([
+                expect.objectContaining({
+                    code: "FERN_PUBLISH_CREDENTIAL_REQUIRES_ENVIRONMENT_VARIABLE",
+                    path: ["targets", "0", "output", "publish", "username"],
+                    reason: expect.stringContaining("Sonatype user tokens")
+                })
             ])
         );
     });
@@ -637,6 +736,39 @@ describe("SDK Config migration", () => {
             }
         });
         expect(spec?.hasLegacyOnlyDocsImportSettings).toBe(true);
+    });
+
+    it("resolves the API's own specs for docs, ignoring a generator's spec override", () => {
+        const generator = createGenerator("fernapi/fern-typescript-sdk", "typescript", "3.63.3");
+        generator.apiOverride = { specs: [{ openapi: "./internal.yml" }] };
+        const workspace = {
+            absoluteFilePath: AbsoluteFilePath.of("/tmp/fern"),
+            allSpecs: [createWorkspaceOpenApiSpec("Public", AbsoluteFilePath.of("/tmp/fern/public.yml"))],
+            generatorsConfiguration: {
+                api: {
+                    type: "multiNamespace",
+                    definitions: {
+                        Public: [createConfiguredOpenApiDefinition("public.yml", false)]
+                    },
+                    rootDefinitions: undefined
+                }
+            }
+        } as unknown as AbstractAPIWorkspace<unknown>;
+
+        expect(resolveWorkspaceSourceSpecs(workspace)?.map((spec) => spec.absolutePath)).toEqual([
+            "/tmp/fern/public.yml"
+        ]);
+        expect(
+            resolveMigrationSourceSpecs({ workspace, fernWorkspace: {} as FernWorkspace, generator }).map(
+                (spec) => spec.absolutePath
+            )
+        ).toEqual(["/tmp/fern/internal.yml"]);
+    });
+
+    it("has no workspace specs for docs when the API lists none of its own", () => {
+        expect(
+            resolveWorkspaceSourceSpecs({ absoluteFilePath: AbsoluteFilePath.of("/tmp/fern") } as never)
+        ).toBeUndefined();
     });
 
     it("rejects git-backed API specifications instead of serializing temporary clone paths", () => {

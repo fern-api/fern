@@ -182,7 +182,7 @@ fn decorate_with_source_hint(err: CliError, hints: &[String]) -> CliError {
 }
 
 /// Deduplicate strings while preserving first-seen order.
-fn dedup_preserve_order(items: Vec<String>) -> Vec<String> {
+pub(crate) fn dedup_preserve_order(items: Vec<String>) -> Vec<String> {
     let mut seen = std::collections::HashSet::new();
     items
         .into_iter()

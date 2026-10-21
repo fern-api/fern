@@ -1210,26 +1210,26 @@ export class WireTestGenerator {
             }
         }
 
-        const queryParamEntries: string[] = [];
+        // Flatten each example value the same way the Go SDK's internal/query.go encodes
+        // it: object and map fields become nested keys (e.g. "filter[page]") and list
+        // items repeat the key.
+        const queryValues = new Map<string, string[]>();
         for (const [paramName, paramValue] of Object.entries(dynamicEndpointExample.queryParameters)) {
-            if (paramValue != null) {
-                const key = JSON.stringify(paramName);
-                if (Array.isArray(paramValue) && paramValue.length > 1) {
-                    const items = paramValue.map((v: unknown) => JSON.stringify(String(v)));
-                    queryParamEntries.push(`${key}: []string{${items.join(", ")}}`);
-                } else {
-                    let stringValue = String(paramValue);
-                    // Normalize datetime values to always include milliseconds, matching the
-                    // Go SDK's RFC3339Milli format ("2006-01-02T15:04:05.000Z07:00").
-                    if (datetimeQueryParams.has(paramName)) {
-                        const date = new Date(stringValue);
-                        if (!isNaN(date.getTime())) {
-                            stringValue = date.toISOString();
-                        }
-                    }
-                    const value = JSON.stringify(stringValue);
-                    queryParamEntries.push(`${key}: ${value}`);
-                }
+            this.flattenQueryParamValue({
+                key: paramName,
+                value: paramValue,
+                queryValues,
+                normalizeDatetime: datetimeQueryParams.has(paramName)
+            });
+        }
+
+        const queryParamEntries: string[] = [];
+        for (const [key, values] of queryValues) {
+            if (values.length > 1) {
+                const items = values.map((v) => JSON.stringify(v));
+                queryParamEntries.push(`${JSON.stringify(key)}: []string{${items.join(", ")}}`);
+            } else if (values.length === 1) {
+                queryParamEntries.push(`${JSON.stringify(key)}: ${JSON.stringify(values[0])}`);
             }
         }
 
@@ -1238,6 +1238,54 @@ export class WireTestGenerator {
         }
 
         return `map[string]interface{}{${queryParamEntries.join(", ")}}`;
+    }
+
+    private flattenQueryParamValue({
+        key,
+        value,
+        queryValues,
+        normalizeDatetime
+    }: {
+        key: string;
+        value: unknown;
+        queryValues: Map<string, string[]>;
+        normalizeDatetime: boolean;
+    }): void {
+        if (value == null) {
+            return;
+        }
+        if (Array.isArray(value)) {
+            for (const item of value) {
+                this.flattenQueryParamValue({ key, value: item, queryValues, normalizeDatetime });
+            }
+            return;
+        }
+        if (isQueryParamObject(value)) {
+            for (const [nestedKey, nestedValue] of Object.entries(value)) {
+                this.flattenQueryParamValue({
+                    key: `${key}[${nestedKey}]`,
+                    value: nestedValue,
+                    queryValues,
+                    normalizeDatetime: false
+                });
+            }
+            return;
+        }
+        let stringValue = String(value);
+        // Normalize datetime values to always include milliseconds, matching the
+        // Go SDK's RFC3339Milli format ("2006-01-02T15:04:05.000Z07:00").
+        if (normalizeDatetime) {
+            const date = new Date(stringValue);
+            if (!isNaN(date.getTime())) {
+                stringValue = date.toISOString();
+            }
+        }
+        const existing = queryValues.get(key);
+        if (existing != null) {
+            existing.push(stringValue);
+        } else {
+            queryValues.set(key, [stringValue]);
+        }
     }
 
     private getDynamicEndpointExample(endpoint: FernIr.HttpEndpoint): FernIr.dynamic.EndpointExample | null {
@@ -1402,4 +1450,8 @@ export class WireTestGenerator {
         }
         return false;
     }
+}
+
+function isQueryParamObject(value: unknown): value is Record<string, unknown> {
+    return typeof value === "object" && value !== null && !Array.isArray(value);
 }

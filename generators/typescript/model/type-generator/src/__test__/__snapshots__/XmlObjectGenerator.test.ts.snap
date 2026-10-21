@@ -290,11 +290,11 @@ export namespace Dial {
 
         /**
          * Adds a \`<Number>\` child after any content added so far and returns its builder.
-         * @param fields initial \`<Number>\` attributes and children
+         * @param fields the \`<Number>\` text content, or its initial attributes and children
          * @returns the \`Number.Builder\` appended to this element
          */
-        addNumber(fields?: Partial<Number.Fields>): Number.Builder {
-            const builder = new Number.Builder(fields);
+        addNumber(fields?: string | Partial<Number.Fields>): Number.Builder {
+            const builder = new Number.Builder(typeof fields === "string" ? { phone_number: fields } : fields);
             this.elements.numbers = [...(this.elements.numbers ?? []), builder];
             return builder;
         }

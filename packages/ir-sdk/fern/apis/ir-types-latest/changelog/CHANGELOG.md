@@ -5,6 +5,41 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v67.34.0] - 2026-10-19
+
+- Add `dynamic.FileUploadRequestBodyFileProperty.isOptional` (optional `boolean`) to the `file` and
+  `fileArray` variants of `dynamic.FileUploadRequestBodyProperty`, so dynamic snippet generators can
+  tell required files from optional ones. Populated from `FilePropertySingle.isOptional` /
+  `FilePropertyArray.isOptional`.
+
+## [v67.33.0] - 2026-10-16
+
+- Add optional `WebhookAlgorithmHeader.keyIdParameter` / `algorithmParameter` so verifiers can parse
+  `<name>=<value>` settings headers (Twilio's `key=<id>,algorithm=HMAC_SHA256`) and hand the bare key
+  ID to the caller.
+
+## [v67.32.0] - 2026-10-15
+
+- Add `dynamic.BaseAuth.requirement` (optional `dynamic.AuthRequirement`: `ALL` / `ANY` /
+  `ENDPOINT_SECURITY`): the API's auth requirement. Lets dynamic snippet generators tell `auth: any`
+  apart from endpoint-level security, since both set `wrapperProperty`.
+
+## [v67.30.0] - 2026-10-06
+
+- Add `InferredAuthSchemeTokenEndpoint.grantType` (optional `InferredAuthGrantType`): a token endpoint
+  request property and the fixed value the SDK sends for it instead of exposing it as a client option.
+  Populated with `grant_type` / `refresh_token` when an inferred bearer auth scheme sets
+  `type: refresh-token`.
+
+## [v67.31.0] - 2026-10-05
+
+- Add `HmacSignatureVerification.algorithmHeader` (optional `WebhookAlgorithmHeader`): a request
+  header whose value selects the HMAC algorithm per request (optionally prefixed by a key ID,
+  e.g. Twilio's `X-Twilio-Webhook-Signature-Settings: <key_id>;HMAC_SHA256`). Populated from
+  `algorithm-header` on an HMAC `webhook-signature` block (definition file, webhook, or
+  `api.settings.webhook-signature`). Generators expose the configured wire values as the
+  verifier's algorithm enum and surface the key ID so callers can resolve the secret.
+
 ## [v67.29.0] - 2026-10-05
 
 - Add `VariableDeclaration.envVar` (optional `string`): the name of an environment variable the

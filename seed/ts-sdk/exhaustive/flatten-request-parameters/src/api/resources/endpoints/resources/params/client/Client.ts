@@ -52,7 +52,7 @@ export class ParamsClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/params/path/${core.url.encodePathParam(param)}`,
+                `/params/path/${core.url.encodePathParam(param, errors.SeedExhaustiveError)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -114,7 +114,7 @@ export class ParamsClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/params/path/${core.url.encodePathParam(param)}`,
+                `/params/path/${core.url.encodePathParam(param, errors.SeedExhaustiveError)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -324,7 +324,7 @@ export class ParamsClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/params/path-query/${core.url.encodePathParam(param)}`,
+                `/params/path-query/${core.url.encodePathParam(param, errors.SeedExhaustiveError)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -394,7 +394,7 @@ export class ParamsClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/params/path-query/${core.url.encodePathParam(param)}`,
+                `/params/path-query/${core.url.encodePathParam(param, errors.SeedExhaustiveError)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -460,7 +460,7 @@ export class ParamsClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/params/path/${core.url.encodePathParam(param)}`,
+                `/params/path/${core.url.encodePathParam(param, errors.SeedExhaustiveError)}`,
             ),
             method: "PUT",
             headers: _headers,
@@ -526,7 +526,7 @@ export class ParamsClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/params/path/${core.url.encodePathParam(param)}`,
+                `/params/path/${core.url.encodePathParam(param, errors.SeedExhaustiveError)}`,
             ),
             method: "PUT",
             headers: _headers,
@@ -594,7 +594,7 @@ export class ParamsClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/params/path/${core.url.encodePathParam(param)}`,
+                `/params/path/${core.url.encodePathParam(param, errors.SeedExhaustiveError)}`,
             ),
             method: "POST",
             headers: _headers,
@@ -809,7 +809,7 @@ export class ParamsClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/params/path-bool/${core.url.encodePathParam(param)}`,
+                `/params/path-bool/${core.url.encodePathParam(param, errors.SeedExhaustiveError)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -869,7 +869,7 @@ export class ParamsClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/params/path/${core.url.encodePathParam(param)}`,
+                `/params/path/${core.url.encodePathParam(param, errors.SeedExhaustiveError)}`,
             ),
             method: "GET",
             headers: _headers,

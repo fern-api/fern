@@ -80,7 +80,6 @@ public final class OtherAliasPropertyType {
     public static final class Builder implements PropStage, _FinalStage {
         private String prop;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -101,6 +100,14 @@ public final class OtherAliasPropertyType {
         @java.lang.Override
         public OtherAliasPropertyType build() {
             return new OtherAliasPropertyType(prop, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("prop")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

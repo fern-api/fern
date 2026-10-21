@@ -6,6 +6,7 @@ package com.seed.examples.resources.health.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.examples.core.ClientOptions;
 import com.seed.examples.core.ObjectMappers;
+import com.seed.examples.core.PathSegments;
 import com.seed.examples.core.RequestOptions;
 import com.seed.examples.core.RetryInterceptor;
 import com.seed.examples.core.SeedExamplesApiException;
@@ -44,7 +45,7 @@ public class AsyncRawServiceClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("check")
-                .addPathSegment(id);
+                .addPathSegment(PathSegments.validate(id));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -69,7 +70,7 @@ public class AsyncRawServiceClient {
                     .build();
         }
         CompletableFuture<SeedExamplesHttpResponse<Void>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -143,7 +144,7 @@ public class AsyncRawServiceClient {
                     .build();
         }
         CompletableFuture<SeedExamplesHttpResponse<Boolean>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {

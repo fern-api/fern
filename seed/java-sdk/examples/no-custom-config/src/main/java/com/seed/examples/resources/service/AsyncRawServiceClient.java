@@ -8,6 +8,7 @@ import com.seed.examples.core.BodyProperties;
 import com.seed.examples.core.ClientOptions;
 import com.seed.examples.core.MediaTypes;
 import com.seed.examples.core.ObjectMappers;
+import com.seed.examples.core.PathSegments;
 import com.seed.examples.core.QueryStringMapper;
 import com.seed.examples.core.RequestOptions;
 import com.seed.examples.core.RetryInterceptor;
@@ -48,7 +49,7 @@ public class AsyncRawServiceClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("movie")
-                .addPathSegment(movieId);
+                .addPathSegment(PathSegments.validate(movieId));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -74,7 +75,7 @@ public class AsyncRawServiceClient {
                     .build();
         }
         CompletableFuture<SeedExamplesHttpResponse<Movie>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -154,7 +155,7 @@ public class AsyncRawServiceClient {
                     .build();
         }
         CompletableFuture<SeedExamplesHttpResponse<String>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -232,7 +233,7 @@ public class AsyncRawServiceClient {
                     .build();
         }
         CompletableFuture<SeedExamplesHttpResponse<Metadata>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -324,7 +325,7 @@ public class AsyncRawServiceClient {
         }
         CompletableFuture<SeedExamplesHttpResponse<com.seed.examples.resources.types.types.Response>> future =
                 new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -417,7 +418,7 @@ public class AsyncRawServiceClient {
                     .build();
         }
         CompletableFuture<SeedExamplesHttpResponse<Void>> future = new CompletableFuture<>();
-        Call okhttpCall = client.newCall(okhttpRequest);
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
         okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {

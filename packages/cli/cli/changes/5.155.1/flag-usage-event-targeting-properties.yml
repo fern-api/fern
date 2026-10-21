@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Feature flag usage events (`$feature_flag_called`) now carry the properties the flag was
+    evaluated with (`org`, `environment`, `generator`, `language`) plus the CLI `version`, and are
+    sent once per generator instead of once per org, so PostHog can break flag usage down by
+    generator, language, and release environment.
+  type: fix

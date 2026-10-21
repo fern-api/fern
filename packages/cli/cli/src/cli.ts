@@ -44,7 +44,11 @@ import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { askToLogin, getDashboardBaseUrl, login, logout } from "@fern-api/login";
 import { type Project } from "@fern-api/project-loader";
 import { protocGenFern } from "@fern-api/protoc-gen-fern";
-import { isFernSdkGenApiEnabled } from "@fern-api/remote-workspace-runner";
+import {
+    isDynamicIrWorkerThread,
+    registerDynamicIrWorkerEntrypoint,
+    runDynamicIrWorkerThread
+} from "@fern-api/remote-workspace-runner";
 import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
 import getPort from "get-port";
@@ -102,7 +106,7 @@ import { resolveSpecsForWorkspaces } from "./commands/resolve-specs/resolveSpecs
 import { sdkDiffCommand } from "./commands/sdk-diff/sdkDiffCommand.js";
 import { sdkMigrate } from "./commands/sdk-migrate/sdkMigrate.js";
 import type { SdkPreviewResult, SdkPreviewSuccess } from "./commands/sdk-preview/sdkPreview.js";
-import { sdkPreview } from "./commands/sdk-preview/sdkPreview.js";
+import { sdkPreview, toSerializableSdkPreviewResult } from "./commands/sdk-preview/sdkPreview.js";
 import { selfUpdate } from "./commands/self-update/selfUpdate.js";
 import { testOutput } from "./commands/test/testOutput.js";
 import { generateToken } from "./commands/token/token.js";
@@ -118,6 +122,7 @@ import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion.js";
 import { resolveGroupGithubConfig } from "./resolveGroupGithubConfig.js";
 import { RUNTIME } from "./runtime.js";
 import { installProcessHandlers } from "./telemetry/processHandlers.js";
+import { isSdkConfigInitEnabled } from "./utils/isSdkConfigInitEnabled.js";
 import { getInvokedCommandName, isVersionRedirectionExempt } from "./utils/versionRedirection.js";
 
 // Node 26+ on Linux enables io_uring in libuv, which has a busy-loop bug that
@@ -146,7 +151,12 @@ if (process.env.UV_THREADPOOL_SIZE == null) {
     process.env.UV_THREADPOOL_SIZE = "8";
 }
 
-void runCli();
+if (isDynamicIrWorkerThread()) {
+    runDynamicIrWorkerThread();
+} else {
+    registerDynamicIrWorkerEntrypoint(typeof __filename === "string" ? __filename : undefined);
+    void runCli();
+}
 
 async function runCli() {
     // Shell completion must be fast and side-effect-free. When the shell
@@ -465,7 +475,9 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     await initializeDocs({
                         organization: argv.organization,
                         versionOfCli: await getLatestVersionOfCli({ cliEnvironment: cliContext.environment }),
-                        taskContext: context
+                        taskContext: context,
+                        openApi: argv.openapi,
+                        useSdkConfig: isSdkConfigInitEnabled()
                     });
                 });
             } else if (argv.mintlify != null) {
@@ -478,7 +490,8 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     });
                 });
             } else {
-                const useSdkConfig = isFernSdkGenApiEnabled();
+                const useFernDefinition = argv["fern-definition"] === true;
+                const useSdkConfig = isSdkConfigInitEnabled() && !useFernDefinition;
                 let absoluteOpenApiPath: AbsoluteFilePath | undefined = undefined;
                 let openApiUrl: string | undefined = undefined;
                 if (argv.openapi != null) {
@@ -511,8 +524,9 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                         context,
                         openApiPath: absoluteOpenApiPath,
                         openApiUrl,
-                        useFernDefinition: argv["fern-definition"] === true,
-                        useSdkConfig
+                        useFernDefinition,
+                        useSdkConfig,
+                        includeDocs: argv.api == null
                     });
                 });
             }
@@ -795,7 +809,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     boolean: true,
                     default: false,
                     description:
-                        "Run legacy generator groups locally using Docker (SDK Config targets require remote generation)"
+                        "Run the generator(s) locally using Docker. SDK Config targets run on the on-prem generator."
                 })
                 .option("keepDocker", {
                     boolean: true,
@@ -2213,10 +2227,15 @@ function addDocsMdGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCo
                     type: "string",
                     description: "Name of a specific library defined in docs.yml to generate docs for"
                 })
-                .option("local", {
+                .option("remote", {
                     boolean: true,
                     default: false,
-                    description: "Run the library parser(s) locally using Docker instead of Fern's servers"
+                    description: "Run the library parser(s) on Fern's servers instead of locally using Docker"
+                })
+                .option("local", {
+                    boolean: true,
+                    hidden: true,
+                    description: "Deprecated: local generation is the default"
                 }),
         async (argv) => {
             cliContext.instrumentPostHogEvent({
@@ -2232,7 +2251,7 @@ function addDocsMdGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCo
                 project,
                 cliContext,
                 library: argv.library,
-                local: argv.local
+                local: !argv.remote
             });
         }
     );
@@ -2391,12 +2410,19 @@ function addDocsDevCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                 .option("beta", {
                     boolean: true,
                     default: false,
-                    description: "Run the app router development server"
+                    hidden: true,
+                    description: "Deprecated alias for --legacy"
                 })
                 .option("legacy", {
                     boolean: true,
                     default: false,
-                    description: "Run the legacy development server"
+                    description: "Run the legacy Next.js docs preview server instead of the default Astro one"
+                })
+                .option("astro", {
+                    boolean: true,
+                    default: false,
+                    hidden: true,
+                    description: "No-op: Astro is now the default docs preview server"
                 })
                 .option("backend-port", {
                     number: true,
@@ -2412,12 +2438,32 @@ function addDocsDevCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                     default: false,
                     description:
                         "Include OpenAPI elements marked `x-twilio.docsVisibility: private` in the previewed API reference. By default only `public` elements are shown; `hidden` elements are always excluded."
+                })
+                .option("skip-api", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Skip building API reference sections for a much faster preview. Endpoint and schema pages are left out; overview and hand-written pages in API sections are kept."
+                })
+                .option("skip-validation", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Skip validating the docs while previewing, so the preview is ready sooner on large sites. Docs errors will not be reported."
                 }),
         async (argv) => {
             if (argv.beta) {
                 cliContext.logger.warn(
-                    "--beta flag now accesses the same functionality as default and will be deprecated in a future release"
+                    "--beta is deprecated and is now an alias for --legacy (the Next.js docs preview server). Use --legacy instead."
                 );
+            }
+            const legacy = argv.legacy || argv.beta;
+            if (legacy && argv.astro) {
+                throw new CliError({
+                    message:
+                        "--astro and --legacy cannot be used together. Astro is the default; pass --legacy for Next.js.",
+                    code: CliError.Code.ConfigError
+                });
             }
 
             let port: number;
@@ -2455,10 +2501,12 @@ function addDocsDevCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                 port,
                 bundlePath,
                 brokenLinks: argv.brokenLinks,
-                legacyPreview: argv.legacy,
+                legacy,
                 backendPort,
                 forceDownload: argv.forceDownload,
-                includePrivate: argv.private
+                includePrivate: argv.private,
+                skipApi: argv.skipApi,
+                skipValidation: argv.skipValidation
             });
         }
     );
@@ -3433,7 +3481,7 @@ function writeSdkPreviewOutput({
     cliContext: CliContext;
 }): void {
     if (json) {
-        process.stdout.write(JSON.stringify(result, null, 2) + "\n");
+        process.stdout.write(JSON.stringify(toSerializableSdkPreviewResult(result), null, 2) + "\n");
         if (result.status === "error") {
             process.exitCode = 1;
         }
@@ -3441,6 +3489,10 @@ function writeSdkPreviewOutput({
     }
 
     if (result.status === "error") {
+        if (result.messageAlreadyLogged === true) {
+            process.exitCode = 1;
+            return;
+        }
         return cliContext.failAndThrow(
             result.message,
             undefined,

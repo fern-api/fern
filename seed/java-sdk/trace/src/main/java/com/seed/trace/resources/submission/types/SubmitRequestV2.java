@@ -176,7 +176,6 @@ public final class SubmitRequestV2 {
 
         private List<SubmissionFileInfo> submissionFiles = new ArrayList<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -267,6 +266,19 @@ public final class SubmitRequestV2 {
         public SubmitRequestV2 build() {
             return new SubmitRequestV2(
                     submissionId, language, submissionFiles, problemId, problemVersion, userId, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("submissionId")
+                    || key.equalsIgnoreCase("language")
+                    || key.equalsIgnoreCase("submissionFiles")
+                    || key.equalsIgnoreCase("problemId")
+                    || key.equalsIgnoreCase("problemVersion")
+                    || key.equalsIgnoreCase("userId")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

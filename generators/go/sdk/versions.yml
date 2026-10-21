@@ -1,4 +1,82 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.70.7
+  changelogEntry:
+    - summary: |
+        Multipart form requests now send enum fields as plain form values (`DUE_DILIGENCE`)
+        instead of JSON-encoded strings (`"DUE_DILIGENCE"`), matching the other SDKs.
+        Lists of enums are sent the same way, one plain part per value.
+      type: fix
+  createdAt: "2026-10-16"
+  irVersion: 67
+- version: 1.70.6
+  changelogEntry:
+    - summary: |
+        `WebhooksHelper.verifyRequest` now parses `name=value` settings headers when
+        `webhook-signature.algorithm-header` sets `key-id-parameter`/`algorithm-parameter`
+        (e.g. Twilio's `X-Twilio-Webhooks-Signature-Settings: key=<id>,algorithm=HMAC_SHA256`),
+        so the key resolver receives the bare key ID instead of `key=<id>`. Requires IR 67.33.0.
+      type: fix
+  createdAt: "2026-10-16"
+  irVersion: 67
+- version: 1.70.5
+  changelogEntry:
+    - summary: |
+        Format `date` and `date-time` path parameters before encoding them into the request URL.
+        Previously a `date` path parameter was sent as Go's default `time.Time` string
+        (e.g. `/schedule-by-date/2023-01-15%2000:00:00%20+0000%20UTC`) instead of `2023-01-15`.
+      type: fix
+    - summary: |
+        Generated wire tests now expect object, map, and list query parameters in the same
+        `key[field]=value` form the SDK sends, instead of comparing against `"[object Object]"`.
+      type: fix
+  createdAt: "2026-10-14"
+  irVersion: 67
+- version: 1.70.4
+  changelogEntry:
+    - summary: |
+        The generated `WebhooksHelper` now consumes `algorithm-header` from `api.settings.webhook-signature`:
+        a request-level `verifyRequest` helper reads the configured signature header first (missing or empty
+        fails early with "could not run: missing signature header"), then the algorithm-selection header
+        (e.g. `X-Twilio-Webhook-Signature-Settings: <key_id>;HMAC_SHA256`) to pick the HMAC algorithm from
+        the configured wire values and hand the key ID to an application-supplied secret resolver. When the
+        header is absent the configured default algorithm and the plain secret are used, so legacy
+        auth-token flows keep working. Following `VerifySignature`, the Go helper reports these early
+        failures as `(false, error)` rather than logging. `VerifySignatureWithAlgorithm` additionally accepts
+        the configured wire values alongside the generic algorithm names.
+      type: fix
+  createdAt: "2026-10-13"
+  irVersion: 67
+- version: 1.70.3
+  changelogEntry:
+    - summary: |
+        Unknown JSON keys that match a declared field's wire name case-insensitively (e.g. `VALUE` next to a
+        declared `value`) are no longer kept in `ExtraProperties` when decoding, so they are not re-emitted
+        after the declared field on encode. Case-insensitive, last-wins decoders such as Go's `encoding/json`
+        would otherwise read the re-emitted key instead of the declared field. `MarshalJSONWithExtraProperties`
+        now also rejects extra properties that collide case-insensitively with a declared key. Unknown keys
+        that don't collide (e.g. `brand_new_field`) are still preserved and round-tripped.
+      type: fix
+  createdAt: "2026-10-12"
+  irVersion: 67
+- version: 1.70.2
+  changelogEntry:
+    - summary: |
+        SSE unions discriminated by the `event:` line (`x-fern-discriminator-context: protocol`) now parse
+        both variant styles: envelope variants (`{event, data: Payload}`) are built from the `data:` JSON,
+        and payload variants (the `data:` JSON itself) get the `event:` value injected as the discriminant.
+        The event name no longer has to be repeated inside the `data:` JSON.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 1.70.1
+  changelogEntry:
+    - summary: |
+        Fix uncompilable streaming methods when `errorCodes: per-endpoint` is set and the endpoint declares no
+        specific error responses. The streaming call no longer references the global `ErrorCodes` variable, which
+        is not generated in per-endpoint mode.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
 - version: 1.70.0
   changelogEntry:
     - summary: |

@@ -400,7 +400,7 @@ export class ObjectClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/object/get-and-return-nested-with-required-field/${core.url.encodePathParam(string)}`,
+                `/object/get-and-return-nested-with-required-field/${core.url.encodePathParam(string, errors.SeedExhaustiveError)}`,
             ),
             method: "POST",
             headers: _headers,

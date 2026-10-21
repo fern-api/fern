@@ -9,9 +9,15 @@ public partial class Examples
             }
         );
 
-        await client.ValidateUnionRequestAsync(
-            new UnionStreamRequestBase {
-                Prompt = "prompt"
+        await client.StreamXFernStreamingUnionAsync(
+            new StreamXFernStreamingUnionRequest(
+                new UnionStreamMessageVariant {
+                    StreamResponse = false,
+                    Prompt = "prompt",
+                    Message = "message"
+                }
+            ) {
+                StreamResponse = false,
             }
         );
     }

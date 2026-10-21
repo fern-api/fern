@@ -90,10 +90,41 @@ pub struct ProfileEntry {
     pub parameters: BTreeMap<String, String>,
     /// Default values for `servers[].variables` entries.
     pub server_variables: BTreeMap<String, String>,
+    /// Identity of the remote credential `profiles create --provision`
+    /// minted (e.g. the key SID), keyed by the parameter name the revoke
+    /// operation takes. Read only by `profiles remove --revoke`; never a
+    /// request default, so a key named `Sid` cannot leak into every
+    /// command that has a `Sid` parameter.
+    pub credential_parameters: BTreeMap<String, String>,
     /// Transport settings that the `<NAME>_TIMEOUT_SECS` / `_PROXY` /
     /// `_CA_BUNDLE` / `_INSECURE` / user-agent-suffix env vars otherwise
     /// supply. Env still wins; these fill in when it is unset.
     pub transport: TransportSettings,
+}
+
+/// What `profiles list` / `show` / `current` display about the credentials
+/// in one keyring slot, copied out of each secret when it is written.
+///
+/// Lives in `[credentials.<slot>]`, keyed by the keyring slot rather than the
+/// profile, so profiles sharing a slot agree. Nothing here is a secret: a
+/// basic-auth username (`AC…`) and an OAuth client id (RFC 6749 §2.2) are
+/// both public identifiers. Keeping a copy means reporting never reads the
+/// OS keychain, which on macOS prompts once per entry for a binary that is
+/// not on the entry's access list.
+#[derive(Debug, Clone, Default, PartialEq, Eq)]
+pub struct CredentialRecord {
+    /// Every scheme with a keyring entry in this slot, with its identifiers.
+    pub schemes: BTreeMap<String, StoredIdentity>,
+    /// Schemes whose keyring entry was looked up and found absent, so the
+    /// lookup is not repeated.
+    pub checked: Vec<String>,
+}
+
+/// The public identifiers inside one stored credential.
+#[derive(Debug, Clone, Default, PartialEq, Eq)]
+pub struct StoredIdentity {
+    pub account: Option<String>,
+    pub oauth_client_id: Option<String>,
 }
 
 /// Per-profile defaults for the transport knobs [`crate::http::HttpConfig`]
@@ -212,6 +243,7 @@ impl ProfileStore {
             format: str_field(table, "format"),
             parameters: map_field(table, "parameters"),
             server_variables: map_field(table, "server_variables"),
+            credential_parameters: map_field(table, "credential_parameters"),
             transport: TransportSettings {
                 timeout_secs: u64_field(table, "timeout_secs"),
                 proxy: str_field(table, "proxy"),
@@ -228,6 +260,46 @@ impl ProfileStore {
             .into_iter()
             .filter_map(|name| self.entry(&name))
             .collect()
+    }
+
+    /// The display copy of what is stored in keyring slot `credential`.
+    pub fn credential_record(&self, credential: &str) -> Option<CredentialRecord> {
+        let table = self
+            .doc
+            .get("credentials")?
+            .as_table()?
+            .get(credential)?
+            .as_table_like()?;
+        let checked = table
+            .get("checked")
+            .and_then(Item::as_array)
+            .map(|array| {
+                array
+                    .iter()
+                    .filter_map(|value| value.as_str().map(str::to_string))
+                    .collect()
+            })
+            .unwrap_or_default();
+        let schemes = table
+            .get("schemes")
+            .and_then(Item::as_table_like)
+            .map(|schemes| {
+                schemes
+                    .iter()
+                    .filter_map(|(scheme, item)| {
+                        let identity = item.as_table_like()?;
+                        Some((
+                            scheme.to_string(),
+                            StoredIdentity {
+                                account: str_field(identity, "account"),
+                                oauth_client_id: str_field(identity, "oauth_client_id"),
+                            },
+                        ))
+                    })
+                    .collect()
+            })
+            .unwrap_or_default();
+        Some(CredentialRecord { schemes, checked })
     }
 
     // ── Mutation ────────────────────────────────────────────────────────
@@ -278,6 +350,7 @@ impl ProfileStore {
         set_str(table, "format", entry.format.as_deref());
         set_map(table, "parameters", &entry.parameters);
         set_map(table, "server_variables", &entry.server_variables);
+        set_map(table, "credential_parameters", &entry.credential_parameters);
         set_u64(table, "timeout_secs", entry.transport.timeout_secs);
         set_str(table, "proxy", entry.transport.proxy.as_deref());
         set_str(table, "ca_bundle", entry.transport.ca_bundle.as_deref());
@@ -308,6 +381,78 @@ impl ProfileStore {
     pub fn set_active(&mut self, name: &str) {
         self.ensure_version();
         self.doc["active"] = toml_edit::value(name);
+    }
+
+    /// Note that `scheme`'s entry in slot `credential` now holds `stored`,
+    /// copying out its public identifiers (`username`, `client_id`).
+    pub fn record_credential(&mut self, credential: &str, scheme: &str, stored: &str) {
+        let fields: BTreeMap<String, String> = serde_json::from_str(stored).unwrap_or_default();
+        let field = |key: &str| fields.get(key).filter(|v| !v.is_empty()).cloned();
+        let identity = StoredIdentity {
+            account: field("username"),
+            oauth_client_id: field(crate::auth::oauth2::CLIENT_ID_FIELD),
+        };
+        let mut record = self.credential_record(credential).unwrap_or_default();
+        record.checked.retain(|s| s != scheme);
+        record.schemes.insert(scheme.to_string(), identity);
+        self.write_credential_record(credential, &record);
+    }
+
+    /// Note that slot `credential` has no keyring entry for `scheme`.
+    pub fn mark_credential_absent(&mut self, credential: &str, scheme: &str) {
+        let mut record = self.credential_record(credential).unwrap_or_default();
+        record.schemes.remove(scheme);
+        if !record.checked.iter().any(|s| s == scheme) {
+            record.checked.push(scheme.to_string());
+        }
+        self.write_credential_record(credential, &record);
+    }
+
+    /// Drop the record for every scheme in slot `credential`, so a profile
+    /// later created on the same slot is looked up afresh.
+    pub fn forget_credential(&mut self, credential: &str) {
+        self.write_credential_record(credential, &CredentialRecord::default());
+    }
+
+    fn write_credential_record(&mut self, credential: &str, record: &CredentialRecord) {
+        if record.schemes.is_empty() && record.checked.is_empty() {
+            if let Some(table) = self.doc.get_mut("credentials").and_then(Item::as_table_mut) {
+                table.remove(credential);
+                if table.is_empty() {
+                    self.doc.remove("credentials");
+                }
+            }
+            return;
+        }
+        self.ensure_version();
+        if self.doc.get("credentials").and_then(Item::as_table).is_none() {
+            let mut table = Table::new();
+            table.set_implicit(true);
+            self.doc.insert("credentials", Item::Table(table));
+        }
+        let credentials = self.doc["credentials"]
+            .as_table_mut()
+            .expect("credentials table was just installed");
+        let mut table = Table::new();
+        if !record.checked.is_empty() {
+            let mut checked = toml_edit::Array::new();
+            for scheme in &record.checked {
+                checked.push(scheme.as_str());
+            }
+            table["checked"] = toml_edit::value(checked);
+        }
+        if !record.schemes.is_empty() {
+            let mut schemes = Table::new();
+            schemes.set_implicit(true);
+            for (scheme, identity) in &record.schemes {
+                let mut entry = Table::new();
+                set_str(&mut entry, "account", identity.account.as_deref());
+                set_str(&mut entry, "oauth_client_id", identity.oauth_client_id.as_deref());
+                schemes.insert(scheme, Item::Table(entry));
+            }
+            table.insert("schemes", Item::Table(schemes));
+        }
+        credentials.insert(credential, Item::Table(table));
     }
 
     /// Drop `active`, so resolution falls through to "no profile".
@@ -559,6 +704,10 @@ pub fn resolve(store: &ProfileStore, name: &str) -> Result<ResolvedProfile, CliE
     resolved.format = chain
         .first()
         .and_then(|entry| entry.format.clone());
+    resolved.credential_parameters = chain
+        .first()
+        .map(|entry| entry.credential_parameters.clone())
+        .unwrap_or_default();
 
     // A profile with no explicit `credential` anywhere in its chain keys its
     // keyring slot by the name of the chain's *root* — not its own.
@@ -596,6 +745,9 @@ pub struct ResolvedProfile {
     pub format: Option<String>,
     pub parameters: BTreeMap<String, String>,
     pub server_variables: BTreeMap<String, String>,
+    /// **Not** inherited: the key `--provision` minted belongs to the profile
+    /// that minted it, and only that profile's `--revoke` may delete it.
+    pub credential_parameters: BTreeMap<String, String>,
     /// Inherited like `retries`: transport describes the network the
     /// profile talks to, which a subaccount shares with its parent.
     pub transport: TransportSettings,
@@ -779,6 +931,31 @@ AccountSid = "AC99"
     }
 
     #[test]
+    fn credential_records_are_kept_per_scheme() {
+        let dir = tempfile::tempdir().unwrap();
+        let path = dir.path().join("profiles.toml");
+        let mut store = ProfileStore::at_path(path.clone());
+        store.record_credential("prod", "primary", r#"{"username":"AC1","password":"p"}"#);
+        store.record_credential("prod", "secondary", r#"{"username":"AC2","password":"p"}"#);
+        store.mark_credential_absent("prod", "bearer");
+        store.save().unwrap();
+
+        let record = ProfileStore::at_path(path.clone()).credential_record("prod").unwrap();
+        assert_eq!(record.schemes["primary"].account.as_deref(), Some("AC1"));
+        assert_eq!(record.schemes["secondary"].account.as_deref(), Some("AC2"));
+        assert_eq!(record.checked, vec!["bearer".to_string()]);
+
+        // Logging one scheme out drops its username, not the other's.
+        store.mark_credential_absent("prod", "secondary");
+        let record = store.credential_record("prod").unwrap();
+        assert!(!record.schemes.contains_key("secondary"));
+        assert_eq!(record.schemes["primary"].account.as_deref(), Some("AC1"));
+
+        store.forget_credential("prod");
+        assert!(store.credential_record("prod").is_none());
+    }
+
+    #[test]
     fn round_trip_preserves_comments_and_unknown_keys() {
         // The compatibility guarantee: an older binary editing a file a newer
         // one wrote must not drop `future_field`, and must not eat the comment.
@@ -822,6 +999,7 @@ AccountSid = "AC99"
                 ("edge".to_string(), "sydney".to_string()),
             ]
             .into(),
+            credential_parameters: [("Sid".to_string(), "SK11".to_string())].into(),
             transport: TransportSettings {
                 timeout_secs: Some(30),
                 proxy: Some("http://proxy.internal:3128".to_string()),

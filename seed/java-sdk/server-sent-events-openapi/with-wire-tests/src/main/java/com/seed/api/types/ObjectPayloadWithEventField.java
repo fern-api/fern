@@ -115,7 +115,6 @@ public final class ObjectPayloadWithEventField {
 
         private String event;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -156,6 +155,14 @@ public final class ObjectPayloadWithEventField {
         @java.lang.Override
         public ObjectPayloadWithEventField build() {
             return new ObjectPayloadWithEventField(id, name, event, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("id") || key.equalsIgnoreCase("name") || key.equalsIgnoreCase("event")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

@@ -20,8 +20,8 @@ const ETAG_FILENAME = "etag";
 // Progress bar label alignment - pad labels to the longest one for consistent bar positioning
 const PROGRESS_LABEL_WIDTH = "Downloading docs bundle".length;
 const formatProgressLabel = (label: string): string => label.padEnd(PROGRESS_LABEL_WIDTH, " ");
-const PREVIEW_FOLDER_NAME = "preview";
 const APP_PREVIEW_FOLDER_NAME = "app-preview";
+const ASTRO_PREVIEW_FOLDER_NAME = "astro-preview";
 const BUNDLE_FOLDER_NAME = "bundle";
 const NEXT_BUNDLE_FOLDER_NAME = ".next";
 const STANDALONE_FOLDER_NAME = "standalone";
@@ -31,6 +31,16 @@ const LOCAL_STORAGE_FOLDER = process.env.LOCAL_STORAGE_FOLDER ?? ".fern";
 const INSTRUMENTATION_PATH = "packages/fern-docs/bundle/.next/server/instrumentation.js";
 const COREPACK_MISSING_KEYID_ERROR_MESSAGE = 'Cannot find matching keyid: {"signatures":';
 const PNPM_IGNORED_BUILDS_ERROR = "ERR_PNPM_IGNORED_BUILDS";
+
+/**
+ * Which downloadable preview bundle a cache path or download refers to:
+ * the Next app-router bundle (default, `fern docs dev --legacy`) or the
+ * prebuilt Astro preview-SSR server (`astro`, the `fern docs dev` default).
+ */
+export interface BundleFlavor {
+    astro?: boolean;
+    cacheDir?: AbsoluteFilePath;
+}
 
 interface SymlinkEntry {
     path: string;
@@ -88,7 +98,8 @@ function resolveWindowsSymlinks(
     outputDir: string,
     symlinks: SymlinkEntry[],
     logger: Logger,
-    onProgress?: (resolved: number, total: number) => void
+    onProgress?: (resolved: number, total: number) => void,
+    nodeModulesRelativePath: string = path.join("standalone", "node_modules")
 ): void {
     if (symlinks.length === 0) {
         return;
@@ -102,7 +113,7 @@ function resolveWindowsSymlinks(
     let fallbackUsed = 0;
     let alreadyExisted = 0;
 
-    const rootPnpmStore = path.join(outputDir, "standalone", "node_modules", ".pnpm");
+    const rootPnpmStore = path.join(outputDir, nodeModulesRelativePath, ".pnpm");
 
     for (const { path: symlinkPath, linkname } of symlinks) {
         const fullSymlinkPath = path.join(outputDir, symlinkPath);
@@ -186,8 +197,11 @@ function resolveWindowsSymlinks(
     // On Windows the .pnpm directory names can be extremely long (peer-dep hashes) which
     // may cause extraction or junction creation to fail silently. When a critical package
     // is missing, scan the .pnpm store for a matching directory and copy it directly.
-    const standaloneNM = path.join(outputDir, "standalone", "node_modules");
-    const criticalDeps = ["next", "react", "react-dom", "styled-jsx"];
+    const standaloneNM = path.join(outputDir, nodeModulesRelativePath);
+    const criticalDeps =
+        nodeModulesRelativePath === "node_modules"
+            ? ["react", "react-dom"]
+            : ["next", "react", "react-dom", "styled-jsx"];
     for (const dep of criticalDeps) {
         const depPath = path.join(standaloneNM, dep);
         if (existsSync(depPath)) {
@@ -244,64 +258,34 @@ export function getLocalStorageFolder(cacheDir?: AbsoluteFilePath): AbsoluteFile
     return join(AbsoluteFilePath.of(homedir()), RelativeFilePath.of(LOCAL_STORAGE_FOLDER));
 }
 
-export function getPathToPreviewFolder({
-    app = false,
-    cacheDir
-}: {
-    app?: boolean;
-    cacheDir?: AbsoluteFilePath;
-}): AbsoluteFilePath {
+export function getPathToPreviewFolder({ astro = false, cacheDir }: BundleFlavor): AbsoluteFilePath {
     return join(
         getLocalStorageFolder(cacheDir),
-        RelativeFilePath.of(app ? APP_PREVIEW_FOLDER_NAME : PREVIEW_FOLDER_NAME)
+        RelativeFilePath.of(astro ? ASTRO_PREVIEW_FOLDER_NAME : APP_PREVIEW_FOLDER_NAME)
     );
 }
 
-export function getPathToBundleFolder({
-    app = false,
-    cacheDir
-}: {
-    app?: boolean;
-    cacheDir?: AbsoluteFilePath;
-}): AbsoluteFilePath {
+export function getPathToBundleFolder({ astro = false, cacheDir }: BundleFlavor): AbsoluteFilePath {
     return join(
-        getPathToPreviewFolder({ app, cacheDir }),
-        RelativeFilePath.of(app ? NEXT_BUNDLE_FOLDER_NAME : BUNDLE_FOLDER_NAME)
+        getPathToPreviewFolder({ astro, cacheDir }),
+        RelativeFilePath.of(astro ? BUNDLE_FOLDER_NAME : NEXT_BUNDLE_FOLDER_NAME)
     );
 }
 
-export function getPathToStandaloneFolder({
-    app = false,
-    cacheDir
-}: {
-    app?: boolean;
-    cacheDir?: AbsoluteFilePath;
-}): AbsoluteFilePath {
-    return join(getPathToBundleFolder({ app, cacheDir }), RelativeFilePath.of(STANDALONE_FOLDER_NAME));
+export function getPathToStandaloneFolder({ cacheDir }: { cacheDir?: AbsoluteFilePath }): AbsoluteFilePath {
+    return join(getPathToBundleFolder({ cacheDir }), RelativeFilePath.of(STANDALONE_FOLDER_NAME));
 }
 
-export function getPathToInstrumentationJs({
-    app = false,
-    cacheDir
-}: {
-    app?: boolean;
-    cacheDir?: AbsoluteFilePath;
-}): AbsoluteFilePath {
-    return join(getPathToStandaloneFolder({ app, cacheDir }), RelativeFilePath.of(INSTRUMENTATION_PATH));
+export function getPathToInstrumentationJs({ cacheDir }: { cacheDir?: AbsoluteFilePath }): AbsoluteFilePath {
+    return join(getPathToStandaloneFolder({ cacheDir }), RelativeFilePath.of(INSTRUMENTATION_PATH));
 }
 
 function contactFernSupportError(errorMessage: string): Error {
     return new Error(`${errorMessage}. Please reach out to support@buildwithfern.com.`);
 }
 
-export function getPathToEtagFile({
-    app = false,
-    cacheDir
-}: {
-    app?: boolean;
-    cacheDir?: AbsoluteFilePath;
-}): AbsoluteFilePath {
-    return join(getPathToPreviewFolder({ app, cacheDir }), RelativeFilePath.of(ETAG_FILENAME));
+export function getPathToEtagFile({ astro = false, cacheDir }: BundleFlavor): AbsoluteFilePath {
+    return join(getPathToPreviewFolder({ astro, cacheDir }), RelativeFilePath.of(ETAG_FILENAME));
 }
 
 export declare namespace DownloadLocalBundle {
@@ -320,17 +304,17 @@ export async function downloadBundle({
     bucketUrl,
     logger,
     preferCached,
-    app = false,
+    astro = false,
     tryTar = false,
     cacheDir
 }: {
     bucketUrl: string;
     logger: Logger;
     preferCached: boolean;
-    app?: boolean;
     tryTar?: boolean;
-    cacheDir?: AbsoluteFilePath;
-}): Promise<DownloadLocalBundle.Result> {
+} & BundleFlavor): Promise<DownloadLocalBundle.Result> {
+    // The Astro bundle ships prebuilt with every platform's esbuild binary, so it
+    // only needs the download/extract half of the app-router flow.
     logger.debug("Setting up docs preview bundle...");
     const response = await fetch(bucketUrl);
     if (!response.ok) {
@@ -344,7 +328,7 @@ export async function downloadBundle({
     const eTag = parsedResponse?.ListBucketResult?.Contents?.[0]?.ETag?.[0];
     const key = parsedResponse?.ListBucketResult?.Contents?.[0]?.Key?.[0];
 
-    const eTagFilepath = getPathToEtagFile({ app, cacheDir });
+    const eTagFilepath = getPathToEtagFile({ astro, cacheDir });
     if (preferCached) {
         const currentETagExists = await doesPathExist(eTagFilepath);
         let currentETag = undefined;
@@ -360,11 +344,9 @@ export async function downloadBundle({
             };
         } else {
             logger.debug("ETag is different. Downloading latest preview bundle");
-            if (app) {
-                logger.info(
-                    "Setting up docs preview bundle...\nPlease wait while the installation completes. This may take a few minutes depending on your connection speed."
-                );
-            }
+            logger.info(
+                "Setting up docs preview bundle...\nPlease wait while the installation completes. This may take a few minutes depending on your connection speed."
+            );
         }
     }
 
@@ -397,7 +379,7 @@ export async function downloadBundle({
         const totalBytes = contentLength ? parseInt(contentLength, 10) : 0;
 
         let progressBar: cliProgress.SingleBar | undefined;
-        if (app && totalBytes > 0) {
+        if (totalBytes > 0) {
             progressBar = new cliProgress.SingleBar({
                 format: `${DOCS_PREFIX} ${formatProgressLabel("Downloading docs bundle")} [{bar}] {percentage}% | {value}/{total} MB`,
                 barCompleteChar: "\u2588",
@@ -405,7 +387,7 @@ export async function downloadBundle({
                 hideCursor: true
             });
             progressBar.start(Math.ceil(totalBytes / (1024 * 1024)), 0);
-        } else if (app) {
+        } else {
             logger.info(`${DOCS_PREFIX} Downloading docs bundle...`);
         }
 
@@ -438,7 +420,7 @@ export async function downloadBundle({
         await writeFile(outputZipPath, new Uint8Array(nodeBuffer));
         logger.debug(`Wrote ${tryTar ? "output.tar.gz" : "output.zip"} to ${outputZipPath}`);
 
-        const absolutePathToPreviewFolder = getPathToPreviewFolder({ app, cacheDir });
+        const absolutePathToPreviewFolder = getPathToPreviewFolder({ astro, cacheDir });
         if (await doesPathExist(absolutePathToPreviewFolder)) {
             const oldBundlePath = AbsoluteFilePath.of(`${absolutePathToPreviewFolder}-old-${Date.now()}`);
             logger.debug(`Moving previously cached bundle to: ${oldBundlePath}`);
@@ -451,32 +433,30 @@ export async function downloadBundle({
         }
         await mkdir(absolutePathToPreviewFolder, { recursive: true });
 
-        const absolutePathToBundleFolder = getPathToBundleFolder({ app, cacheDir });
+        const absolutePathToBundleFolder = getPathToBundleFolder({ astro, cacheDir });
         await mkdir(absolutePathToBundleFolder, { recursive: true });
         logger.debug(`Decompressing bundle from ${outputZipPath} to ${absolutePathToBundleFolder}`);
 
         let unzipProgressBar: cliProgress.SingleBar | undefined;
         let unzipInterval: NodeJS.Timeout | undefined;
 
-        if (app) {
-            unzipProgressBar = new cliProgress.SingleBar({
-                format: `${DOCS_PREFIX} ${formatProgressLabel("Unzipping docs bundle")} [{bar}] {percentage}%`,
-                barCompleteChar: "\u2588",
-                barIncompleteChar: "\u2591",
-                hideCursor: true
-            });
-            unzipProgressBar.start(100, 0);
+        unzipProgressBar = new cliProgress.SingleBar({
+            format: `${DOCS_PREFIX} ${formatProgressLabel("Unzipping docs bundle")} [{bar}] {percentage}%`,
+            barCompleteChar: "\u2588",
+            barIncompleteChar: "\u2591",
+            hideCursor: true
+        });
+        unzipProgressBar.start(100, 0);
 
-            const UNZIP_DURATION_MS = PLATFORM_IS_WINDOWS ? 60000 : 30000;
-            const startTime = Date.now();
-            unzipInterval = setInterval(() => {
-                const elapsed = Date.now() - startTime;
-                const t = Math.min(elapsed / UNZIP_DURATION_MS, 1);
-                const p = 1 - Math.pow(1 - t, 3);
-                const percentage = Math.min(99, Math.floor(p * 100));
-                unzipProgressBar?.update(percentage);
-            }, 50);
-        }
+        const UNZIP_DURATION_MS = PLATFORM_IS_WINDOWS ? 60000 : 30000;
+        const startTime = Date.now();
+        unzipInterval = setInterval(() => {
+            const elapsed = Date.now() - startTime;
+            const t = Math.min(elapsed / UNZIP_DURATION_MS, 1);
+            const p = 1 - Math.pow(1 - t, 3);
+            const percentage = Math.min(99, Math.floor(p * 100));
+            unzipProgressBar?.update(percentage);
+        }, 50);
 
         if (PLATFORM_IS_WINDOWS) {
             assertLongPathsEnabled(logger);
@@ -512,20 +492,19 @@ export async function downloadBundle({
         // Resolve symlinks via NTFS junctions on Windows
         if (PLATFORM_IS_WINDOWS && collectedSymlinks.length > 0) {
             let symlinkProgressBar: cliProgress.SingleBar | undefined;
-            if (app) {
-                symlinkProgressBar = new cliProgress.SingleBar({
-                    format: `${DOCS_PREFIX} ${formatProgressLabel("Patching symlinks")} [{bar}] {percentage}% | {value}/{total}`,
-                    barCompleteChar: "\u2588",
-                    barIncompleteChar: "\u2591",
-                    hideCursor: true
-                });
-                symlinkProgressBar.start(collectedSymlinks.length, 0);
-            }
+            symlinkProgressBar = new cliProgress.SingleBar({
+                format: `${DOCS_PREFIX} ${formatProgressLabel("Patching symlinks")} [{bar}] {percentage}% | {value}/{total}`,
+                barCompleteChar: "\u2588",
+                barIncompleteChar: "\u2591",
+                hideCursor: true
+            });
+            symlinkProgressBar.start(collectedSymlinks.length, 0);
             resolveWindowsSymlinks(
                 absolutePathToBundleFolder,
                 collectedSymlinks,
                 logger,
-                symlinkProgressBar ? (resolved, total) => symlinkProgressBar?.update(resolved) : undefined
+                symlinkProgressBar ? (resolved, total) => symlinkProgressBar?.update(resolved) : undefined,
+                astro ? "node_modules" : undefined
             );
             if (symlinkProgressBar) {
                 symlinkProgressBar.update(collectedSymlinks.length);
@@ -537,7 +516,7 @@ export async function downloadBundle({
         await writeFile(eTagFilepath, eTag);
         logger.debug(`Downloaded bundle to ${absolutePathToBundleFolder}`);
 
-        if (app) {
+        if (!astro) {
             // check if pnpm exists
             logger.debug("Checking if pnpm is installed");
             try {
@@ -639,7 +618,7 @@ export async function downloadBundle({
             }
 
             if (PLATFORM_IS_WINDOWS) {
-                const absPathToInstrumentationJs = getPathToInstrumentationJs({ app, cacheDir });
+                const absPathToInstrumentationJs = getPathToInstrumentationJs({ cacheDir });
                 if (await doesPathExist(absPathToInstrumentationJs)) {
                     logger.debug(`Removing instrumentation.js at ${absPathToInstrumentationJs}`);
                     await rm(absPathToInstrumentationJs);
@@ -654,7 +633,7 @@ export async function downloadBundle({
         logger.error(`Error: ${error}`);
 
         // remove incomplete bundle
-        const absolutePathToPreviewFolder = getPathToPreviewFolder({ app, cacheDir });
+        const absolutePathToPreviewFolder = getPathToPreviewFolder({ astro, cacheDir });
         if (await doesPathExist(absolutePathToPreviewFolder)) {
             await rm(absolutePathToPreviewFolder, { recursive: true });
         }

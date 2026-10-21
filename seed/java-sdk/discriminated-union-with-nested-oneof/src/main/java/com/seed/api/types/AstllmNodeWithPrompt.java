@@ -109,7 +109,6 @@ public final class AstllmNodeWithPrompt {
 
         private String prompt;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -146,6 +145,14 @@ public final class AstllmNodeWithPrompt {
         @java.lang.Override
         public AstllmNodeWithPrompt build() {
             return new AstllmNodeWithPrompt(type, model, prompt, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("type") || key.equalsIgnoreCase("model") || key.equalsIgnoreCase("prompt")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

@@ -14,7 +14,7 @@ async fn main() {
             &UsersListWithDoubleOffsetPaginationQueryRequest {
                 page: Some(1.1),
                 per_page: Some(1.1),
-                order: Some(Order::Asc),
+                order: Some(Order2::Asc),
                 starting_after: Some("starting_after".to_string()),
                 ..Default::default()
             },

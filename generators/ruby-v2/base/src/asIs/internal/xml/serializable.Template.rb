@@ -55,6 +55,17 @@ module <%= gem_namespace %>
         end
 
         module ClassMethods
+          # XML attribute names are case-sensitive, so an extra key such as `VOICE` is a distinct attribute from a
+          # declared `voice` and is kept.
+          #
+          # @api private
+          #
+          # @param _key [Symbol, String]
+          # @return [Boolean]
+          def drop_extra_key?(_key)
+            false
+          end
+
           # @return [String] the element name
           attr_reader :xml_name
           # @return [String, nil] the element namespace URI
@@ -146,7 +157,9 @@ module <%= gem_namespace %>
                       end
               [property.object_types.map(&:xml_name), nodes]
             end
-            model.content = Utils.content(element, typed, model.additional_children, wrappers.keys)
+            has_text = xml_properties.any? { |property| property.kind == :text }
+            model.content = Utils.content(element, typed, model.additional_children, wrappers.keys,
+                                          include_text: !has_text)
             model
           end
 

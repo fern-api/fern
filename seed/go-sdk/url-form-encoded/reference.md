@@ -15,6 +15,7 @@
 request := &fern.PostSubmitRequest{
     Username: "johndoe",
     Email: "john@example.com",
+    Content: `{"key":"value"}`,
 }
 client.SubmitFormData(
     context.TODO(),
@@ -43,6 +44,14 @@ client.SubmitFormData(
 <dd>
 
 **email:** `string` — The user's email address
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**content:** `string` — A JSON document carried as a form field
     
 </dd>
 </dl>

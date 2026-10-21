@@ -272,9 +272,11 @@ final class XmlUtils
      *   children parsed from elements with those names, in document order.
      * @param list<XmlNode> $additional
      * @param list<string> $wrapperNames
+     * @param bool $includeText Whether the element's text (character data before its first child) is part
+     *   of the content. False for types with a text property, which holds that text instead.
      * @return list<XmlNode|XmlText|XmlComment>
      */
-    public static function content(XmlElement $element, array $typed, array $additional, array $wrapperNames = []): array
+    public static function content(XmlElement $element, array $typed, array $additional, array $wrapperNames = [], bool $includeText = false): array
     {
         $byName = [];
         foreach ($typed as $index => [$names, $nodes]) {
@@ -288,6 +290,9 @@ final class XmlUtils
             $additionalIds[spl_object_id($node)] = true;
         }
         $result = [];
+        if ($includeText && $element->text !== null) {
+            $result[] = new XmlText($element->text);
+        }
         foreach ($element->children as $child) {
             if ($child instanceof XmlText || $child instanceof XmlComment) {
                 $result[] = $child;

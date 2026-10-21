@@ -9,6 +9,7 @@ export * from "./BearerAuthScheme.js";
 export * from "./EnvironmentVariable.js";
 export * from "./HeaderAuthScheme.js";
 export * from "./InferredAuthenticatedRequestHeader.js";
+export * from "./InferredAuthGrantType.js";
 export * from "./InferredAuthScheme.js";
 export * from "./InferredAuthSchemeTokenEndpoint.js";
 export * from "./OAuthAccessTokenRequestProperties.js";

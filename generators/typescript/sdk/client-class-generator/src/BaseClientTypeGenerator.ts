@@ -4,7 +4,7 @@ import type { FernIr } from "@fern-fern/ir-sdk";
 import { getParameterNameForRootPathParameter, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
 import type { FileContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
-import { emitEnvVarValue } from "./auth-provider/processEnvAccess.js";
+import { createEnvVarValueExpression, emitEnvVarValue } from "./auth-provider/processEnvAccess.js";
 import { getClientDefaultValue, getLiteralValueForHeader, typeContainsNullable } from "./endpoints/utils/index.js";
 import type { GeneratedHeader } from "./GeneratedHeader.js";
 import { hasEnvVarFallback } from "./sdkVariables.js";
@@ -963,16 +963,7 @@ function withNoOpAuthProvider<T extends BaseClientOptions = BaseClientOptions>(
         ];
 
         if (envVar != null) {
-            operands.push(
-                ts.factory.createElementAccessChain(
-                    ts.factory.createPropertyAccessExpression(
-                        ts.factory.createIdentifier("process"),
-                        ts.factory.createIdentifier("env")
-                    ),
-                    ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                    ts.factory.createStringLiteral(envVar)
-                )
-            );
+            operands.push(createEnvVarValueExpression({ envVar, guarded: this.guardProcessEnvAccess }));
         }
 
         let wrapWithToString = false;

@@ -361,7 +361,8 @@
                         "unsafeName": "OAuth",
                         "safeName": "OAuth"
                     }
-                }
+                },
+                "requirement": "ENDPOINT_SECURITY"
             },
             "declaration": {
                 "name": {
@@ -770,7 +771,8 @@
                         "unsafeName": "OAuth",
                         "safeName": "OAuth"
                     }
-                }
+                },
+                "requirement": "ENDPOINT_SECURITY"
             },
             "declaration": {
                 "name": {
@@ -911,7 +913,8 @@
                         "unsafeName": "OAuth",
                         "safeName": "OAuth"
                     }
-                }
+                },
+                "requirement": "ENDPOINT_SECURITY"
             },
             "declaration": {
                 "name": {
@@ -1052,7 +1055,8 @@
                         "unsafeName": "OAuth",
                         "safeName": "OAuth"
                     }
-                }
+                },
+                "requirement": "ENDPOINT_SECURITY"
             },
             "declaration": {
                 "name": {
@@ -1193,7 +1197,8 @@
                         "unsafeName": "OAuth",
                         "safeName": "OAuth"
                     }
-                }
+                },
+                "requirement": "ENDPOINT_SECURITY"
             },
             "declaration": {
                 "name": {
@@ -1334,7 +1339,8 @@
                         "unsafeName": "OAuth",
                         "safeName": "OAuth"
                     }
-                }
+                },
+                "requirement": "ENDPOINT_SECURITY"
             },
             "declaration": {
                 "name": {
