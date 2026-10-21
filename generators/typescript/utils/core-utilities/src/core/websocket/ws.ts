@@ -19,6 +19,49 @@ const getGlobalWebSocket = (): WebSocket | undefined => {
  */
 const isWebSocket = (w: any) => typeof w !== "undefined" && !!w && w.CLOSING === 2;
 
+const MAX_HANDSHAKE_REJECTION_BODY_LENGTH = 1000;
+
+type EmitterListener = (...args: unknown[]) => void;
+
+interface EventEmitterLike {
+    on(event: string, listener: EmitterListener): unknown;
+    removeListener(event: string, listener: EmitterListener): unknown;
+}
+
+interface HandshakeResponse {
+    statusCode?: number;
+    setEncoding?: (encoding: string) => unknown;
+    on?: (event: string, listener: EmitterListener) => unknown;
+    destroy?: () => unknown;
+}
+
+/**
+ * The `ws` package (used in Node) is an EventEmitter. Browser WebSockets are not, so handshake
+ * rejection details are only available in Node.
+ */
+const isEventEmitterLike = (value: unknown): value is EventEmitterLike =>
+    typeof value === "object" &&
+    value != null &&
+    "on" in value &&
+    typeof value.on === "function" &&
+    "removeListener" in value &&
+    typeof value.removeListener === "function";
+
+const isHandshakeResponse = (value: unknown): value is HandshakeResponse => typeof value === "object" && value != null;
+
+const formatHandshakeRejection = (statusCode: number | undefined, body: string): string => {
+    const detail = body.trim();
+    const message = `Unexpected server response: ${statusCode}`;
+    if (detail.length === 0) {
+        return message;
+    }
+    const truncated =
+        detail.length > MAX_HANDSHAKE_REJECTION_BODY_LENGTH
+            ? `${detail.slice(0, MAX_HANDSHAKE_REJECTION_BODY_LENGTH)}...`
+            : detail;
+    return `${message} (${truncated})`;
+};
+
 export type Event = Events.Event;
 export type ErrorEvent = Events.ErrorEvent;
 export type CloseEvent = Events.CloseEvent;
@@ -98,6 +141,7 @@ export class ReconnectingWebSocket {
     private _closeCalled = false;
     private _messageQueue: ReconnectingWebSocket.Message[] = [];
     private _openWaiters = new Set<() => void>();
+    private _handshakeRejectionSource?: EventEmitterLike;
 
     private readonly _url: ReconnectingWebSocket.UrlProvider;
     private readonly _protocols?: string | string[];
@@ -653,6 +697,8 @@ export class ReconnectingWebSocket {
         this._ws.removeEventListener("message", this._handleMessage);
         // @ts-ignore
         this._ws.removeEventListener("error", this._handleError);
+        this._handshakeRejectionSource?.removeListener("unexpected-response", this._handleUnexpectedResponse);
+        this._handshakeRejectionSource = undefined;
     }
 
     private _addListeners() {
@@ -665,7 +711,51 @@ export class ReconnectingWebSocket {
         this._ws.addEventListener("message", this._handleMessage);
         // @ts-ignore
         this._ws.addEventListener("error", this._handleError);
+        if (isEventEmitterLike(this._ws)) {
+            this._handshakeRejectionSource = this._ws;
+            this._ws.on("unexpected-response", this._handleUnexpectedResponse);
+        }
     }
+
+    /**
+     * When the server rejects the handshake (non-101 response), `ws` only exposes the response through
+     * its `unexpected-response` event; without a listener it discards the response and errors with a bare
+     * `Unexpected server response: <status>`. Read the body so the reason reaches `error` listeners and
+     * `waitForOpen()`. Registering the listener means `ws` no longer aborts the handshake itself, so the
+     * normal error path tears the socket down (and applies the usual retry policy).
+     */
+    private _handleUnexpectedResponse = (_request: unknown, response: unknown) => {
+        const source = this._handshakeRejectionSource;
+        clearTimeout(this._connectTimeout);
+        const res = isHandshakeResponse(response) ? response : undefined;
+        let body = "";
+        let settled = false;
+        const finish = () => {
+            if (settled) {
+                return;
+            }
+            settled = true;
+            res?.destroy?.();
+            if (this._closeCalled || source == null || source !== this._handshakeRejectionSource) {
+                return;
+            }
+            this._debug("handshake rejected", res?.statusCode);
+            this._handleError(new Events.ErrorEvent(new Error(formatHandshakeRejection(res?.statusCode, body)), this));
+        };
+        if (typeof res?.on !== "function") {
+            finish();
+            return;
+        }
+        res.setEncoding?.("utf8");
+        res.on("data", (chunk: unknown) => {
+            if (body.length <= MAX_HANDSHAKE_REJECTION_BODY_LENGTH) {
+                body += String(chunk);
+            }
+        });
+        res.on("end", finish);
+        res.on("close", finish);
+        res.on("error", finish);
+    };
 
     private _clearTimeouts() {
         clearTimeout(this._connectTimeout);

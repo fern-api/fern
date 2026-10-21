@@ -503,3 +503,166 @@ describe("ReconnectingWebSocket waitForOpen", () => {
         expect(await settleState(waiting)).toBe("rejected");
     });
 });
+
+type EmitterListener = (...args: unknown[]) => void;
+
+class FakeEmitterWebSocket extends FakeWebSocket {
+    public emitterListeners: Record<string, EmitterListener[]> = {};
+
+    public on(type: string, listener: EmitterListener): void {
+        (this.emitterListeners[type] ??= []).push(listener);
+    }
+
+    public removeListener(type: string, listener: EmitterListener): void {
+        this.emitterListeners[type] = (this.emitterListeners[type] ?? []).filter((l) => l !== listener);
+    }
+
+    public simulateUnexpectedResponse(response: FakeIncomingMessage): void {
+        for (const listener of [...(this.emitterListeners["unexpected-response"] ?? [])]) {
+            listener({}, response);
+        }
+    }
+}
+
+class FakeIncomingMessage {
+    public destroyed = false;
+    private readonly streamListeners: Record<string, EmitterListener[]> = {};
+
+    constructor(
+        public readonly statusCode: number,
+        private readonly body = "",
+    ) {}
+
+    public setEncoding(_encoding: string): void {}
+
+    public on(type: string, listener: EmitterListener): this {
+        (this.streamListeners[type] ??= []).push(listener);
+        return this;
+    }
+
+    public destroy(): void {
+        this.destroyed = true;
+    }
+
+    public flush(): void {
+        if (this.body) {
+            this.streamListeners.data?.forEach((l) => l(this.body));
+        }
+        this.streamListeners.end?.forEach((l) => l());
+        this.streamListeners.close?.forEach((l) => l());
+    }
+}
+
+describe("ReconnectingWebSocket rejected handshake", () => {
+    let socket: ReconnectingWebSocket | undefined;
+
+    beforeEach(() => {
+        FakeWebSocket.instances = [];
+    });
+
+    afterEach(() => {
+        socket?.close();
+        socket = undefined;
+    });
+
+    const createEmitterSocket = (options: ReconnectingWebSocket.Options = {}): ReconnectingWebSocket =>
+        new ReconnectingWebSocket({
+            url: "ws://localhost/test",
+            options: {
+                WebSocket: FakeEmitterWebSocket,
+                minReconnectionDelay: 0,
+                maxReconnectionDelay: 0,
+                ...options,
+            },
+        });
+
+    const latestEmitterSocket = (): FakeEmitterWebSocket =>
+        FakeWebSocket.instances[FakeWebSocket.instances.length - 1] as FakeEmitterWebSocket;
+
+    it("includes the response body in the error", async () => {
+        socket = createEmitterSocket({ maxRetries: 1 });
+        await flush();
+        const onError = jest.fn();
+        socket.addEventListener("error", onError);
+        const waiting = socket.waitForOpen().catch((error: unknown) => error);
+
+        const response = new FakeIncomingMessage(400, '{"err_msg":"Unknown query parameters: foo"}');
+        latestEmitterSocket().simulateUnexpectedResponse(response);
+        response.flush();
+        await flush();
+
+        expect(onError).toHaveBeenCalledTimes(1);
+        expect(onError.mock.calls[0]?.[0]).toMatchObject({
+            message: 'Unexpected server response: 400 ({"err_msg":"Unknown query parameters: foo"})',
+        });
+        expect(await waiting).toMatchObject({
+            message: 'Unexpected server response: 400 ({"err_msg":"Unknown query parameters: foo"})',
+        });
+        expect(response.destroyed).toBe(true);
+    });
+
+    it("reports the status alone when the response has no body", async () => {
+        socket = createEmitterSocket({ maxRetries: 1 });
+        await flush();
+        const onError = jest.fn();
+        socket.addEventListener("error", onError);
+
+        const response = new FakeIncomingMessage(503);
+        latestEmitterSocket().simulateUnexpectedResponse(response);
+        response.flush();
+        await flush();
+
+        expect(onError).toHaveBeenCalledTimes(1);
+        expect(onError.mock.calls[0]?.[0]).toMatchObject({ message: "Unexpected server response: 503" });
+    });
+
+    it("truncates long response bodies", async () => {
+        socket = createEmitterSocket({ maxRetries: 1 });
+        await flush();
+        const onError = jest.fn();
+        socket.addEventListener("error", onError);
+
+        const response = new FakeIncomingMessage(400, "x".repeat(5000));
+        latestEmitterSocket().simulateUnexpectedResponse(response);
+        response.flush();
+        await flush();
+
+        const message = (onError.mock.calls[0]?.[0] as ErrorEvent).message;
+        expect(message).toBe(`Unexpected server response: 400 (${"x".repeat(1000)}...)`);
+    });
+
+    it("keeps the retry policy and stops listening on the replaced socket", async () => {
+        socket = createEmitterSocket({ maxRetries: 3 });
+        await flush();
+        const onError = jest.fn();
+        socket.addEventListener("error", onError);
+        const first = latestEmitterSocket();
+
+        const response = new FakeIncomingMessage(500, "internal error");
+        first.simulateUnexpectedResponse(response);
+        response.flush();
+        await flush();
+
+        expect(onError).toHaveBeenCalledTimes(1);
+        expect(first.closeCalls).toHaveLength(1);
+        expect(FakeWebSocket.instances).toHaveLength(2);
+        expect(first.emitterListeners["unexpected-response"]).toHaveLength(0);
+        expect(latestEmitterSocket().emitterListeners["unexpected-response"]).toHaveLength(1);
+    });
+
+    it("does not emit a rejection error after close() is called", async () => {
+        socket = createEmitterSocket({ maxRetries: 1 });
+        await flush();
+        const onError = jest.fn();
+        socket.addEventListener("error", onError);
+
+        const response = new FakeIncomingMessage(400, "bad request");
+        latestEmitterSocket().simulateUnexpectedResponse(response);
+        socket.close();
+        response.flush();
+        await flush();
+
+        expect(onError).not.toHaveBeenCalled();
+        expect(response.destroyed).toBe(true);
+    });
+});

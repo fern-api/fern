@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    In Node, a rejected WebSocket handshake (a non-101 response) now includes the server's response
+    body in the error. Callers see `Unexpected server response: 400 (<body>)` instead of only
+    `Unexpected server response: 400`, so a bad query parameter or an auth failure can be told
+    apart from other errors. The error reaches `error` listeners and `waitForOpen()`. Retry
+    behavior does not change, and browser WebSockets are unaffected.
+  type: fix
