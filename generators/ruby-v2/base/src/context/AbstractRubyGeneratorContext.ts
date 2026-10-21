@@ -5,7 +5,7 @@ import {
     GeneratorNotificationService,
     getPackageName
 } from "@fern-api/browser-compatible-base-generator";
-import { RelativeFilePath } from "@fern-api/path-utils";
+import { AbsoluteFilePath, RelativeFilePath, join, relative } from "@fern-api/path-utils";
 import { BaseRubyCustomConfigSchema, ruby } from "@fern-api/ruby-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { upperFirst } from "lodash-es";
@@ -215,8 +215,13 @@ export abstract class AbstractRubyGeneratorContext<
      * file declaring the given type, so a type file can be required on its own.
      */
     public getRequireRelativePathToRootFile(typeId: FernIr.TypeId): string {
-        const depth = this.getLocationForTypeId(typeId).split("/").length - 1;
-        return `${"../".repeat(depth)}${this.getRootFolderName()}`;
+        const typeDirectory = join(AbsoluteFilePath.of("/"), this.getLocationForTypeId(typeId));
+        const rootFile = join(
+            AbsoluteFilePath.of("/"),
+            RelativeFilePath.of("lib"),
+            RelativeFilePath.of(this.getRootFolderName())
+        );
+        return relative(typeDirectory, rootFile);
     }
 
     public abstract getModuleNamesForTypeId(typeId: FernIr.TypeId): string[];

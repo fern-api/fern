@@ -832,7 +832,7 @@ class ModuleFile {
             const requirePath = relative(this.filePath, typeFilePath).replace(/\.rb$/, "");
             const key = classReference.modules.join("::");
             const entries = autoloads.get(key) ?? [];
-            entries.push(`autoload :${classReference.name}, File.join(__dir__, "${requirePath}")`);
+            entries.push(`autoload :${classReference.name}, ::File.join(__dir__, "${requirePath}")`);
             autoloads.set(key, entries);
         });
 
@@ -886,15 +886,16 @@ end`;
     }
 
     private renderAutoloads(autoloads: Map<string, string[]>): string {
-        let rendered = "";
+        const blocks: string[] = [];
         for (const [key, entries] of autoloads) {
             const modules = key.split("::");
-            rendered += "\n\n";
-            rendered += modules.map((moduleName, depth) => `${"  ".repeat(depth)}module ${moduleName}\n`).join("");
-            rendered += entries.map((entry) => `${"  ".repeat(modules.length)}${entry}\n`).join("");
-            rendered += modules.map((_, depth) => `${"  ".repeat(modules.length - 1 - depth)}end\n`).join("");
+            let block = "";
+            block += modules.map((moduleName, depth) => `${"  ".repeat(depth)}module ${moduleName}\n`).join("");
+            block += entries.map((entry) => `${"  ".repeat(modules.length)}${entry}\n`).join("");
+            block += modules.map((_, depth) => `${"  ".repeat(modules.length - 1 - depth)}end\n`).join("");
+            blocks.push(block.replace(/\n$/, ""));
         }
-        return rendered.replace(/\n$/, "");
+        return blocks.length === 0 ? "" : `\n\n${blocks.join("\n\n")}`;
     }
 
     public async writeFile(): Promise<void> {
