@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Generated Go snippets (docs snippets, `reference.md`, `snippet.json`) no longer discard the
+    SDK call result. The snippet function now returns `error`, assigns `_, err := client.X(...)`
+    (or `err := client.X(...)` for endpoints without a response body) and checks `if err != nil`.
+    Requires IR 67.35.0 for the `none` response variant; older IRs fall back to `_, err`.
+  type: fix
