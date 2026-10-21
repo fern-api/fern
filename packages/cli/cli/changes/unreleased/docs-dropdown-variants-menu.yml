@@ -8,5 +8,6 @@
     `fern check` warns. Tab `variants` lists also accept `group` entries and links. Split menus
     into columns with `dropdown-column-height` and `variants-column-height` (an integer or
     `no-limit`), with site-wide defaults in `layout.dropdown.default-column-height` and
-    `layout.variants.default-column-height`.
+    `layout.variants.default-column-height`. Dropdowns open on hover; set
+    `layout.dropdown.interact-on-click-only: true` to open them on click only, with no animation.
   type: feat

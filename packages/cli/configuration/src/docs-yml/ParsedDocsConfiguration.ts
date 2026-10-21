@@ -383,6 +383,8 @@ export type VariantsColumnHeight = number | "no-limit";
 export interface VariantsLayout {
     /** `layout.dropdown.default-column-height` */
     dropdownDefaultColumnHeight: VariantsColumnHeight | undefined;
+    /** `layout.dropdown.interact-on-click-only` */
+    dropdownInteractOnClickOnly: boolean | undefined;
     /** `layout.variants.default-column-height` */
     variantsDefaultColumnHeight: VariantsColumnHeight | undefined;
 }
@@ -418,6 +420,8 @@ export interface ResolvedVariantsSettings {
     columnHeight: number | undefined;
     /** True when `tab` was requested but the site has no header tabs, so it fell back to `sidebar`. */
     fellBackToSidebar: boolean;
+    /** Header tab menus only: true opens on click with no animation instead of on hover. */
+    interactOnClickOnly: true | undefined;
 }
 
 /**
@@ -443,7 +447,9 @@ export function resolveVariantsSettings({
     return {
         location: effectiveLocation,
         columnHeight: typeof height === "number" && height > 0 ? Math.floor(height) : undefined,
-        fellBackToSidebar
+        fellBackToSidebar,
+        interactOnClickOnly:
+            effectiveLocation === "tab" && layout?.dropdownInteractOnClickOnly === true ? true : undefined
     };
 }
 

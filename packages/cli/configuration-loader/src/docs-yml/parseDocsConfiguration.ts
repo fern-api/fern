@@ -688,6 +688,7 @@ function convertVariantsLayout(
 
     return {
         dropdownDefaultColumnHeight: layout.dropdown?.defaultColumnHeight ?? undefined,
+        dropdownInteractOnClickOnly: layout.dropdown?.interactOnClickOnly ?? undefined,
         variantsDefaultColumnHeight: layout.variants?.defaultColumnHeight ?? undefined
     };
 }

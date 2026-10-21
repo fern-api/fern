@@ -3976,6 +3976,9 @@
                       "type": "null"
                     }
                   ]
+                },
+                "interact-on-click-only": {
+                  "type": "boolean"
                 }
               },
               "additionalProperties": false

@@ -2137,6 +2137,11 @@ types:
       default-column-height:
         type: optional<VariantsColumnHeight>
         docs: Column height for every header tab dropdown that doesn't set `dropdown-column-height`.
+      interact-on-click-only:
+        type: optional<boolean>
+        docs: |
+          When true, header tab dropdowns open and close on click only, with no open animation.
+          By default they open on hover and close when the pointer leaves the tab and menu.
 
   VariantsLayoutConfig:
     properties:

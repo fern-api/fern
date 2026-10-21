@@ -5,6 +5,7 @@ import { flattenRawTabLayouts, flattenRawTabVariants } from "../tabVariants.js";
 
 const layout: VariantsLayout = {
     dropdownDefaultColumnHeight: 4,
+    dropdownInteractOnClickOnly: undefined,
     variantsDefaultColumnHeight: 8
 };
 
@@ -33,6 +34,20 @@ describe("resolveVariantsSettings", () => {
         expect(
             resolveVariantsSettings({ location: "tab", columnHeight: undefined, layout, hasHeaderTabs: false })
         ).toEqual({ location: "sidebar", columnHeight: 4, fellBackToSidebar: true });
+    });
+
+    it("sets interactOnClickOnly only for header tab menus when the layout asks for it", () => {
+        const clickOnly: VariantsLayout = { ...layout, dropdownInteractOnClickOnly: true };
+        const resolve = (location: "tab" | "sidebar", hasHeaderTabs: boolean) =>
+            resolveVariantsSettings({ location, columnHeight: undefined, layout: clickOnly, hasHeaderTabs })
+                .interactOnClickOnly;
+        expect(resolve("tab", true)).toBe(true);
+        expect(resolve("sidebar", true)).toBeUndefined();
+        expect(resolve("tab", false)).toBeUndefined();
+        expect(
+            resolveVariantsSettings({ location: "tab", columnHeight: undefined, layout, hasHeaderTabs: true })
+                .interactOnClickOnly
+        ).toBeUndefined();
     });
 });
 

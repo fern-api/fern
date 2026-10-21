@@ -351,7 +351,8 @@ export const BreadcrumbsConfig = z.object({
 export const VariantsColumnHeight = z.union([z.number().int().positive(), z.literal("no-limit")]);
 
 export const DropdownLayoutConfig = z.object({
-    "default-column-height": VariantsColumnHeight.nullable().optional()
+    "default-column-height": VariantsColumnHeight.nullable().optional(),
+    "interact-on-click-only": z.boolean().optional()
 });
 
 export const VariantsLayoutConfig = z.object({

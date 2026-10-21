@@ -10,10 +10,12 @@ export const DropdownLayoutConfig: core.serialization.ObjectSchema<
     FernDocsConfig.DropdownLayoutConfig
 > = core.serialization.object({
     defaultColumnHeight: core.serialization.property("default-column-height", VariantsColumnHeight.optional()),
+    interactOnClickOnly: core.serialization.property("interact-on-click-only", core.serialization.boolean().optional()),
 });
 
 export declare namespace DropdownLayoutConfig {
     export interface Raw {
         "default-column-height"?: VariantsColumnHeight.Raw | null;
+        "interact-on-click-only"?: boolean | null;
     }
 }
