@@ -281,7 +281,7 @@ function parseRemoveDiscriminantsFromSchemas(
  * Merges API-wide `api.settings` with a spec's own settings and records whether `error-responses`
  * is shared across specs (inherited from `api.settings`) or specific to this spec.
  */
-function mergeApiAndSpecSettings(
+export function mergeApiAndSpecSettings(
     apiSettings: generatorsYml.APIDefinitionSettings,
     specSettings: generatorsYml.APIDefinitionSettings
 ): generatorsYml.APIDefinitionSettings {

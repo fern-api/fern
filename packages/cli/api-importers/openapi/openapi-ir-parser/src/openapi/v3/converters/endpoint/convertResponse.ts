@@ -425,6 +425,7 @@ function markErrorSchemas({
         const errorKey = isWildcardStatusCode ? statusCode.toUpperCase() : parsedStatusCode.toString();
         const isShared =
             sharedErrorSchemaName != null &&
+            responseNamespace == null &&
             mediaObject?.schema != null &&
             isReferenceObject(mediaObject.schema) &&
             getSchemaIdFromReference(mediaObject.schema) === sharedErrorSchemaName;
