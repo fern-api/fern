@@ -10,7 +10,7 @@ export interface UrlUtils {
         _invoke: (args: ts.Expression[]) => ts.CallExpression;
     };
     encodePathParam: {
-        _invoke: (arg: ts.Expression) => ts.CallExpression;
+        _invoke: (arg: ts.Expression, invalidPathParameterError?: ts.Expression) => ts.CallExpression;
     };
     queryBuilder: {
         _invoke: () => ts.CallExpression;
@@ -43,8 +43,12 @@ export class UrlUtilsImpl extends CoreUtility implements UrlUtils {
     public readonly encodePathParam = {
         _invoke: this.withExportedName(
             "encodePathParam",
-            (encodePathParam) => (arg: ts.Expression) =>
-                ts.factory.createCallExpression(encodePathParam.getExpression(), undefined, [arg])
+            (encodePathParam) => (arg: ts.Expression, invalidPathParameterError?: ts.Expression) =>
+                ts.factory.createCallExpression(
+                    encodePathParam.getExpression(),
+                    undefined,
+                    invalidPathParameterError != null ? [arg, invalidPathParameterError] : [arg]
+                )
         )
     };
     public readonly queryBuilder = {

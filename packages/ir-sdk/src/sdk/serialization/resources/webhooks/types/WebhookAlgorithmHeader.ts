@@ -12,6 +12,8 @@ export const WebhookAlgorithmHeader: core.serialization.ObjectSchema<
 > = core.serialization.objectWithoutOptionalProperties({
     headerName: NameAndWireValueOrString,
     keyIdDelimiter: core.serialization.string().optional(),
+    keyIdParameter: core.serialization.string().optional(),
+    algorithmParameter: core.serialization.string().optional(),
     algorithms: core.serialization.list(WebhookAlgorithmOption),
 });
 
@@ -19,6 +21,8 @@ export declare namespace WebhookAlgorithmHeader {
     export interface Raw {
         headerName: NameAndWireValueOrString.Raw;
         keyIdDelimiter?: string | null;
+        keyIdParameter?: string | null;
+        algorithmParameter?: string | null;
         algorithms: WebhookAlgorithmOption.Raw[];
     }
 }

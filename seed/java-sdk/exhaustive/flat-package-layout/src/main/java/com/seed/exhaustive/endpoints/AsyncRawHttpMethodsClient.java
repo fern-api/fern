@@ -8,6 +8,7 @@ import com.seed.exhaustive.core.BodyProperties;
 import com.seed.exhaustive.core.ClientOptions;
 import com.seed.exhaustive.core.MediaTypes;
 import com.seed.exhaustive.core.ObjectMappers;
+import com.seed.exhaustive.core.PathSegments;
 import com.seed.exhaustive.core.RequestOptions;
 import com.seed.exhaustive.core.RetryInterceptor;
 import com.seed.exhaustive.core.SeedExhaustiveApiException;
@@ -43,7 +44,7 @@ public class AsyncRawHttpMethodsClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("http-methods")
-                .addPathSegment(id);
+                .addPathSegment(PathSegments.validate(id));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -199,7 +200,7 @@ public class AsyncRawHttpMethodsClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("http-methods")
-                .addPathSegment(id);
+                .addPathSegment(PathSegments.validate(id));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -292,7 +293,7 @@ public class AsyncRawHttpMethodsClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("http-methods")
-                .addPathSegment(id);
+                .addPathSegment(PathSegments.validate(id));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -374,7 +375,7 @@ public class AsyncRawHttpMethodsClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("http-methods")
-                .addPathSegment(id);
+                .addPathSegment(PathSegments.validate(id));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);

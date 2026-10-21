@@ -20,11 +20,11 @@ export interface GenerateLibraryDocsOptions {
  * Generate library documentation from source code.
  *
  * Loads the docs workspace and delegates to the shared orchestrator in
- * `@fern-api/library-docs-generator`. By default it authenticates with FDR,
- * starts server-side parsing, polls for completion, downloads the resulting IR
- * from S3, and runs the local MDX generator. With `local`, it skips
+ * `@fern-api/library-docs-generator`. With `local` (the CLI default; `--remote` turns it off), it skips
  * authentication and runs the parser Docker images directly on the user's
- * machine.
+ * machine. Otherwise it authenticates with FDR, starts server-side parsing,
+ * polls for completion, downloads the resulting IR from S3, and runs the local
+ * MDX generator.
  */
 export async function generateLibraryDocs({
     project,

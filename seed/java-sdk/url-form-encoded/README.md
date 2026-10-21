@@ -70,6 +70,7 @@ public class Example {
                 .builder()
                 .username("johndoe")
                 .email("john@example.com")
+                .content("{\"key\":\"value\"}")
                 .build()
         );
     }

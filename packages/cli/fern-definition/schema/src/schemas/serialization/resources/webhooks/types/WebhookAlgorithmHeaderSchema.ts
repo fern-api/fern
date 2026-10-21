@@ -11,6 +11,8 @@ export const WebhookAlgorithmHeaderSchema: core.serialization.ObjectSchema<
 > = core.serialization.object({
     header: core.serialization.string(),
     "key-id-delimiter": core.serialization.string().optional(),
+    "key-id-parameter": core.serialization.string().optional(),
+    "algorithm-parameter": core.serialization.string().optional(),
     algorithms: core.serialization.record(core.serialization.string(), WebhookSignatureAlgorithmSchema),
 });
 
@@ -18,6 +20,8 @@ export declare namespace WebhookAlgorithmHeaderSchema {
     export interface Raw {
         header: string;
         "key-id-delimiter"?: string | null;
+        "key-id-parameter"?: string | null;
+        "algorithm-parameter"?: string | null;
         algorithms: Record<string, WebhookSignatureAlgorithmSchema.Raw>;
     }
 }

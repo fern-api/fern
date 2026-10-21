@@ -1433,10 +1433,29 @@ describe("AutoVersionStep.execute() — FAI service path (fernToken, no ai confi
         const [url, init] = mockFetch.mock.calls[0] as [string, RequestInit];
         expect(url).toBe("https://fai.buildwithfern.com/sdks/analyze-commit-diff");
         expect((init.headers as Record<string, string>).Authorization).toBe("Bearer fern-token-123");
+        expect(init.headers as Record<string, string>).not.toHaveProperty("X-Fern-Org-Id");
         const body = JSON.parse(init.body as string) as Record<string, unknown>;
         expect(typeof body.diff).toBe("string");
         expect(body.language).toBe("typescript");
         expect(body.previous_version).toBe("1.0.0");
+    });
+
+    it("names the customer's org to FAI when faiOrgId is set", async () => {
+        mockFetch.mockResolvedValue({
+            ok: true,
+            json: async () => ({ message: "feat: add newFeature helper", version_bump: "MINOR" })
+        });
+        const step = new AutoVersionStep(repo.repoPath, makeLogger(), { ...faiConfig, faiOrgId: "acme" });
+        const prepared = fakePreparedReplay({
+            outputDir: repo.repoPath,
+            previousGenerationSha: repo.previousSha,
+            currentGenerationSha: repo.currentSha
+        });
+
+        await step.execute(makeContext(prepared));
+
+        const [, init] = mockFetch.mock.calls[0] as [string, RequestInit];
+        expect((init.headers as Record<string, string>)["X-Fern-Org-Id"]).toBe("acme");
     });
 
     it("treats NO_CHANGE from FAI as a no-bump rewrite to previousVersion", async () => {

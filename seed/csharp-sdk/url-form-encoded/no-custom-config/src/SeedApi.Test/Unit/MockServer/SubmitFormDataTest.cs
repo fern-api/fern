@@ -29,6 +29,7 @@ public class SubmitFormDataTest : BaseMockServerTest
                         new WireMock.Matchers.FormUrlEncodedMatcher([
                             "username=username",
                             "email=email",
+                            "Content=Content",
                         ])
                     )
             )
@@ -40,7 +41,12 @@ public class SubmitFormDataTest : BaseMockServerTest
             );
 
         var response = await Client.SubmitFormDataAsync(
-            new PostSubmitRequest { Username = "username", Email = "email" }
+            new PostSubmitRequest
+            {
+                Username = "username",
+                Email = "email",
+                Content = "Content",
+            }
         );
         JsonAssert.AreEqual(response, mockResponse);
     }
@@ -66,6 +72,7 @@ public class SubmitFormDataTest : BaseMockServerTest
                         new WireMock.Matchers.FormUrlEncodedMatcher([
                             "username=johndoe",
                             "email=john@example.com",
+                            "Content={\"key\":\"value\"}",
                         ])
                     )
             )
@@ -77,7 +84,12 @@ public class SubmitFormDataTest : BaseMockServerTest
             );
 
         var response = await Client.SubmitFormDataAsync(
-            new PostSubmitRequest { Username = "johndoe", Email = "john@example.com" }
+            new PostSubmitRequest
+            {
+                Username = "johndoe",
+                Email = "john@example.com",
+                Content = "{\"key\":\"value\"}",
+            }
         );
         JsonAssert.AreEqual(response, mockResponse);
     }

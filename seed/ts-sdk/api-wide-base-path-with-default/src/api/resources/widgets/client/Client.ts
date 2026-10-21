@@ -50,7 +50,7 @@ export class WidgetsClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/${core.url.encodePathParam(this._options.apiVersion ?? "v1beta")}/widgets`,
+                `/${core.url.encodePathParam(this._options.apiVersion ?? "v1beta", errors.SeedApiError)}/widgets`,
             ),
             method: "POST",
             headers: _headers,

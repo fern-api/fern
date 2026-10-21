@@ -22,7 +22,8 @@ import Testing
             _ = try await client.submitFormData(
                 request: .init(
                     username: "johndoe",
-                    email: "john@example.com"
+                    email: "john@example.com",
+                    content: "{\"key\":\"value\"}"
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -58,7 +59,8 @@ import Testing
             _ = try await client.submitFormData(
                 request: .init(
                     username: "johndoe",
-                    email: "john@example.com"
+                    email: "john@example.com",
+                    content: "{\"key\":\"value\"}"
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -94,7 +96,8 @@ import Testing
             _ = try await client.submitFormData(
                 request: .init(
                     username: "johndoe",
-                    email: "john@example.com"
+                    email: "john@example.com",
+                    content: "{\"key\":\"value\"}"
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -132,7 +135,8 @@ import Testing
             _ = try await client.submitFormData(
                 request: .init(
                     username: "johndoe",
-                    email: "john@example.com"
+                    email: "john@example.com",
+                    content: "{\"key\":\"value\"}"
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -168,7 +172,8 @@ import Testing
             _ = try await client.submitFormData(
                 request: .init(
                     username: "johndoe",
-                    email: "john@example.com"
+                    email: "john@example.com",
+                    content: "{\"key\":\"value\"}"
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -206,7 +211,8 @@ import Testing
             _ = try await client.submitFormData(
                 request: .init(
                     username: "johndoe",
-                    email: "john@example.com"
+                    email: "john@example.com",
+                    content: "{\"key\":\"value\"}"
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )
@@ -242,7 +248,8 @@ import Testing
             _ = try await client.submitFormData(
                 request: .init(
                     username: "johndoe",
-                    email: "john@example.com"
+                    email: "john@example.com",
+                    content: "{\"key\":\"value\"}"
                 ),
                 requestOptions: RequestOptions(additionalHeaders: stub.headers)
             )

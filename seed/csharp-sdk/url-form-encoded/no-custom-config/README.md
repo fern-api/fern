@@ -47,7 +47,12 @@ using SeedApi;
 
 var client = new SeedApiClient();
 await client.SubmitFormDataAsync(
-    new PostSubmitRequest { Username = "johndoe", Email = "john@example.com" }
+    new PostSubmitRequest
+    {
+        Username = "johndoe",
+        Email = "john@example.com",
+        Content = "{\"key\":\"value\"}",
+    }
 );
 ```
 

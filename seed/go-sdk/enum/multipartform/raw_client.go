@@ -49,21 +49,21 @@ func (r *RawClient) MultipartForm(
 		options.ToHeader(),
 	)
 	writer := internal.NewMultipartWriter()
-	if err := writer.WriteJSON("color", string(request.Color)); err != nil {
+	if err := writer.WriteField("color", string(request.Color)); err != nil {
 		return nil, err
 	}
 	if request.MaybeColor != nil {
-		if err := writer.WriteJSON("maybeColor", string(*request.MaybeColor)); err != nil {
+		if err := writer.WriteField("maybeColor", string(*request.MaybeColor)); err != nil {
 			return nil, err
 		}
 	}
 	for _, part := range request.ColorList {
-		if err := writer.WriteJSON("colorList", part); err != nil {
+		if err := writer.WriteField("colorList", string(part)); err != nil {
 			return nil, err
 		}
 	}
 	for _, part := range request.MaybeColorList {
-		if err := writer.WriteJSON("maybeColorList", part); err != nil {
+		if err := writer.WriteField("maybeColorList", string(part)); err != nil {
 			return nil, err
 		}
 	}

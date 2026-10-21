@@ -1,4 +1,5 @@
 export * from "./Auth.js";
+export * from "./AuthRequirement.js";
 export * from "./AuthValues.js";
 export * from "./BaseAuth.js";
 export * from "./BasicAuth.js";

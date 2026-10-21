@@ -7,11 +7,11 @@ describe("SDK Config initialization environment configuration", () => {
         vi.unstubAllEnvs();
     });
 
-    it("is disabled by default", () => {
+    it("is enabled by default", () => {
         vi.stubEnv("FERN_USE_SDK_CONFIG", undefined);
         vi.stubEnv("DEFAULT_USE_SDK_CONFIG", undefined);
 
-        expect(isSdkConfigInitEnabled()).toBe(false);
+        expect(isSdkConfigInitEnabled()).toBe(true);
     });
 
     it("uses the baked default when no runtime override is present", () => {
@@ -24,6 +24,13 @@ describe("SDK Config initialization environment configuration", () => {
     it("lets the runtime flag override the baked default", () => {
         vi.stubEnv("FERN_USE_SDK_CONFIG", "false");
         vi.stubEnv("DEFAULT_USE_SDK_CONFIG", "true");
+
+        expect(isSdkConfigInitEnabled()).toBe(false);
+    });
+
+    it("lets the runtime flag disable the source default", () => {
+        vi.stubEnv("FERN_USE_SDK_CONFIG", "false");
+        vi.stubEnv("DEFAULT_USE_SDK_CONFIG", undefined);
 
         expect(isSdkConfigInitEnabled()).toBe(false);
     });

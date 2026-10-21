@@ -10,6 +10,7 @@ import com.fern.sdk.core.BodyProperties;
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.MediaTypes;
 import com.fern.sdk.core.ObjectMappers;
+import com.fern.sdk.core.PathSegments;
 import com.fern.sdk.core.RequestOptions;
 import com.fern.sdk.core.RetryInterceptor;
 import com.fern.sdk.core.SeedExhaustiveApiException;
@@ -364,7 +365,7 @@ public class AsyncRawObjectClient {
             HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
               .addPathSegments("object")
               .addPathSegments("get-and-return-nested-with-required-field")
-              .addPathSegment(string);if (requestOptions != null) {
+              .addPathSegment(PathSegments.validate(string));if (requestOptions != null) {
                 requestOptions.getQueryParameters().forEach((_key, _value) -> {
                   httpUrl.addQueryParameter(_key, _value);
                 } );

@@ -1156,7 +1156,8 @@ export class AutoVersionStep extends BaseStep {
             method: "POST",
             headers: {
                 Authorization: `Bearer ${this.config.fernToken}`,
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                ...(this.config.faiOrgId != null ? { "X-Fern-Org-Id": this.config.faiOrgId } : {})
             },
             body: JSON.stringify({
                 diff: cleanedDiff,

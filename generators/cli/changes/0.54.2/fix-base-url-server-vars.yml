@@ -1,0 +1,7 @@
+- summary: |
+    Fill server-variable placeholders such as `{region}` in a caller-supplied base URL
+    (`--base-url`, `<NAME>_BASE_URL`, or a profile's base URL). Previously
+    `--base-url https://api.stage-{region}.twilio.com` sent the literal `{region}` and the
+    request failed with "builder error"; it now uses `--region`, the profile, the env var,
+    or the spec default, like the spec's own server URLs.
+  type: fix

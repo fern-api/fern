@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Initialize new SDK projects with sdk-config.yml instead of generators.yml by default. Set FERN_USE_SDK_CONFIG=false to temporarily use the legacy initialization path.
+  type: feat

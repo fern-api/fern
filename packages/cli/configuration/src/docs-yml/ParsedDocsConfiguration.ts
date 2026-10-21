@@ -53,6 +53,7 @@ interface ParsedDocsSettingsConfig extends Omit<CjsFdrSdk.docs.v1.commons.DocsSe
     websocketOneofDisplay: "flat" | "grouped" | undefined;
     embedding: EmbeddingConfig | undefined;
     showHeadersInExamples: boolean | undefined;
+    requireAnalyticsConsent: boolean | undefined;
     search:
         | {
               prioritizeCurrentProduct: boolean | undefined;
@@ -260,6 +261,11 @@ export interface VersionInfo
     availability: VersionAvailability | undefined;
     slug: string | undefined;
     hidden: boolean | undefined;
+    /**
+     * Set from `default: true` in docs.yml. The default version owns the unversioned URLs.
+     * When no version in a `versions` list sets it, the first version is the default.
+     */
+    default: boolean | undefined;
     announcement: AnnouncementConfig | undefined;
     /**
      * Present when this version's content is built from a git ref rather than the

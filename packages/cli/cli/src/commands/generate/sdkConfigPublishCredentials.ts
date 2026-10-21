@@ -1,5 +1,8 @@
 import { replaceEnvVariables } from "@fern-api/core-utils";
-import type { FernSdkGenApiPublishCredentialSource } from "@fern-api/remote-workspace-runner/direct-publish-credentials";
+import {
+    type FernSdkGenApiPublishCredentialSource,
+    parseSecretNameExpression
+} from "@fern-api/remote-workspace-runner/direct-publish-credentials";
 
 interface CredentialFields {
     token?: unknown;
@@ -14,21 +17,27 @@ export function sanitizeSdkConfigPublishCredentials(
 ): {
     sanitizedInput: unknown;
     credentials: Array<FernSdkGenApiPublishCredentialSource | undefined>;
+    /** Per target, the repository secret a NuGet release workflow reads its API key from. */
+    apiKeySecretNames: Array<string | undefined>;
 } {
     if (!isRecord(input) || !Array.isArray(input.targets)) {
-        return { sanitizedInput: input, credentials: [] };
+        return { sanitizedInput: input, credentials: [], apiKeySecretNames: [] };
     }
     const rootOutput = sanitizeOutput(input.output, isRootOutputInheritedOnlyByCliTargets(input.targets));
     const sanitizedTargets = input.targets.map((target) => {
         if (!isRecord(target)) {
-            return { target, credential: undefined };
+            return { target, credential: undefined, apiKeySecretName: undefined };
         }
         const sanitized = sanitizeOutput(target.output, isCliTarget(target));
         const targetOutput = isRecord(target) ? target.output : undefined;
         const output = targetOutput ?? input.output;
         return {
             target: sanitized.output === target.output ? target : { ...target, output: sanitized.output },
-            credential: isPreview ? undefined : extractPublishCredential(output)
+            credential: isPreview ? undefined : extractPublishCredential(output),
+            // A preview downloads files instead of publishing, so the secret name is discarded
+            // anyway. Reading it would only add a way for a preview to fail; schema validation
+            // still rejects a literal key on a real run, with a better message than this throws.
+            apiKeySecretName: isPreview ? undefined : extractApiKeySecretName(output)
         };
     });
     return {
@@ -37,7 +46,8 @@ export function sanitizeSdkConfigPublishCredentials(
             ...(rootOutput.output === input.output ? {} : { output: rootOutput.output }),
             targets: sanitizedTargets.map(({ target }) => target)
         },
-        credentials: sanitizedTargets.map(({ credential }) => credential)
+        credentials: sanitizedTargets.map(({ credential }) => credential),
+        apiKeySecretNames: sanitizedTargets.map(({ apiKeySecretName }) => apiKeySecretName)
     };
 }
 
@@ -70,6 +80,33 @@ function isRootOutputInheritedOnlyByCliTargets(targets: unknown[]): boolean {
     const inheritingTargets = targets.filter((target) => !isRecord(target) || target.output == null);
     const isInheritedAtAll = inheritingTargets.length > 0;
     return isInheritedAtAll && inheritingTargets.every(isCliTarget);
+}
+
+/**
+ * A NuGet `apiKey` names the repository secret the generated release workflow reads, so it is
+ * forwarded as a name and never resolved. Anything else could be a literal key and is rejected.
+ */
+const API_KEY_SECRET_REGISTRIES = new Set(["nuget", "rubygems"]);
+
+function extractApiKeySecretName(output: unknown): string | undefined {
+    if (!isRecord(output) || !isRecord(output.publish) || typeof output.publish.registry !== "string") {
+        return undefined;
+    }
+    const { registry, apiKey, trustedPublishing } = output.publish;
+    if (!API_KEY_SECRET_REGISTRIES.has(registry) || apiKey == null) {
+        return undefined;
+    }
+    // The schema enforces this too, but it never sees the apiKey: sanitizeOutput removes it first.
+    if (trustedPublishing === true) {
+        throw new Error(`output.publish for ${registry}: apiKey must be omitted when trustedPublishing is true`);
+    }
+    const secretName = typeof apiKey === "string" ? parseSecretNameExpression(apiKey) : undefined;
+    if (secretName == null) {
+        throw new Error(
+            `output.publish.apiKey for ${registry} must be an environment expression naming a repository secret, such as \${NUGET_API_KEY}`
+        );
+    }
+    return secretName;
 }
 
 // The cli target publishes to npm from its generated GitHub workflow, which supports trusted publishing; direct

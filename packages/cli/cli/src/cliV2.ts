@@ -12,7 +12,10 @@ import { getGeneratorUpgradeMessage } from "./cli-context/upgrade-utils/getFernU
 import { getProjectGeneratorUpgrades } from "./cli-context/upgrade-utils/getGeneratorVersions.js";
 import { GlobalCliOptions, loadProjectAndRegisterWorkspacesWithContext } from "./cliCommons.js";
 import { GenerationModeFilter, getGeneratorList } from "./commands/generator-list/getGeneratorList.js";
-import { getGeneratorMetadata } from "./commands/generator-metadata/getGeneratorMetadata.js";
+import {
+    getSelectedGeneratorMetadata,
+    resolveGeneratorGetSelection
+} from "./commands/generator-metadata/getGeneratorMetadata.js";
 import { getOrganization } from "./commands/organization/getOrganization.js";
 import { upgradeGenerator } from "./commands/upgrade/upgradeGenerator.js";
 
@@ -86,6 +89,12 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                             description:
                                 "The groups to include generators from, if group is not specified, the all generators of the specified type will be listed."
                         })
+                        .option("targets", {
+                            type: "array",
+                            string: true,
+                            description:
+                                "The SDK Config targets to include, by language or target id (e.g. `java-1`). Without --groups, legacy groups are omitted."
+                        })
                         .option("apis", {
                             type: "array",
                             string: true,
@@ -123,6 +132,7 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                         }),
                         generatorFilter: argv.generators ? new Set(argv.generators) : undefined,
                         groupFilter: argv.groups ? new Set(argv.groups) : undefined,
+                        targetFilter: argv.targets ? new Set(argv.targets) : undefined,
                         apiFilter: argv.apis ? new Set(argv.apis) : undefined,
                         apiKeyFallback: argv.apiFallback,
                         cliContext,
@@ -253,13 +263,17 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                         })
                         .option("generator", {
                             string: true,
-                            demandOption: true,
-                            description: "The name of the generator to get, ex: `fern-typescript-node-sdk`."
+                            description:
+                                "The name of the generator to get, ex: `fern-typescript-node-sdk`. Requires --group."
                         })
                         .option("group", {
                             string: true,
-                            demandOption: true,
-                            description: "The group in which the generator is located."
+                            description: "The group in which the generator is located. Requires --generator."
+                        })
+                        .option("target", {
+                            string: true,
+                            description:
+                                "The SDK Config target to get, by language (ex: `java`) or target id when a language repeats (ex: `java-1`). Use instead of --group and --generator."
                         })
                         .option("api", {
                             string: true,
@@ -281,21 +295,30 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                             description: "Get repository for the generator invocation, if one is specified."
                         }),
                 async (argv) => {
-                    const correctedGetGenerator = warnAndCorrectIncorrectDockerOrgV2(argv.generator, cliContext);
+                    const correctedGetGenerator =
+                        argv.generator != null
+                            ? warnAndCorrectIncorrectDockerOrgV2(argv.generator, cliContext)
+                            : undefined;
                     cliContext.instrumentPostHogEvent({
                         command: "fern generator get",
                         properties: {
                             generator: correctedGetGenerator,
+                            target: argv.target,
                             version: argv.version,
                             api: argv.api,
                             group: argv.group,
                             includeMajor: argv.includeMajor
                         }
                     });
-                    const generator = await getGeneratorMetadata({
+                    const selection = resolveGeneratorGetSelection({
                         cliContext,
-                        generatorFilter: correctedGetGenerator,
-                        groupFilter: argv.group,
+                        target: argv.target,
+                        group: argv.group,
+                        generator: correctedGetGenerator
+                    });
+                    const generator = await getSelectedGeneratorMetadata({
+                        cliContext,
+                        selection,
                         apiFilter: argv.api,
                         project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                             commandLineApiWorkspace: argv.api,
@@ -303,22 +326,13 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                         })
                     });
 
-                    interface GeneratorMetadata {
+                    interface GeneratorMetadataOutput {
                         version?: string;
                         language?: string;
                         repository?: string;
                     }
 
-                    if (generator == null) {
-                        const maybeApiFilter = argv.api ? ` for API ${argv.api}` : "";
-                        cliContext.failAndThrow(
-                            `Generator ${argv.generator}, in group ${argv.group}${maybeApiFilter} was not found.`,
-                            undefined,
-                            { code: CliError.Code.ConfigError }
-                        );
-                    }
-
-                    const generatorMetadata: GeneratorMetadata = {};
+                    const generatorMetadata: GeneratorMetadataOutput = {};
                     if (argv.version) {
                         generatorMetadata.version = generator.version;
                         if (argv.output == null) {
@@ -336,27 +350,21 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                             }
                         } else {
                             cliContext.logger.warn(
-                                `Language information is not available for generator ${generator.name} in group ${argv.group}`
+                                `Language information is not available for ${generator.description}`
                             );
                         }
                     }
 
                     if (argv.repository) {
-                        const repository =
-                            generator.outputMode.type === "github"
-                                ? generator.outputMode.repo
-                                : generator.outputMode.type === "githubV2"
-                                  ? generator.outputMode.githubV2.repo
-                                  : undefined;
-                        if (repository != null) {
-                            generatorMetadata.repository = repository;
+                        if (generator.repository != null) {
+                            generatorMetadata.repository = generator.repository;
                             if (argv.output == null) {
                                 process.stdout.write(generatorMetadata.repository);
                                 return;
                             }
                         } else {
                             cliContext.logger.warn(
-                                `Repository information is not available for generator ${generator.name} in group ${argv.group}`
+                                `Repository information is not available for ${generator.description}`
                             );
                         }
                     }

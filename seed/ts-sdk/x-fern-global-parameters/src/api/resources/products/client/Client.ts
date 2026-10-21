@@ -51,7 +51,7 @@ export class ProductsClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `v1/products/${core.url.encodePathParam(regionId)}/search`,
+                `v1/products/${core.url.encodePathParam(regionId, errors.SeedApiError)}/search`,
             ),
             method: "POST",
             headers: _headers,
@@ -115,7 +115,7 @@ export class ProductsClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `v1/products/${core.url.encodePathParam(regionId)}/${core.url.encodePathParam(productId)}`,
+                `v1/products/${core.url.encodePathParam(regionId, errors.SeedApiError)}/${core.url.encodePathParam(productId, errors.SeedApiError)}`,
             ),
             method: "GET",
             headers: _headers,

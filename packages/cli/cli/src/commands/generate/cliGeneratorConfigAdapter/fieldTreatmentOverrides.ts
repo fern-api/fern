@@ -86,7 +86,7 @@ const DISTRIBUTION_FIELDS: Record<string, FieldTreatment> = Object.fromEntries(
         path,
         {
             treatment: "Map",
-            note: "`config.distribution`; *SecretName fields are written to the generator's secret-name keys unchanged."
+            note: "`config.distribution`; *SecretName fields are written to the generator's secret-name keys unchanged, and githubAttestations as-is."
         }
     ])
 );
@@ -123,7 +123,7 @@ export const FIELD_TREATMENT_OVERRIDES: Record<string, FieldTreatment> = {
     },
     "target.generatorVersion": {
         treatment: "Map",
-        note: "Any version fern-cli-generator's versions.yml lists; 0.49.0 by default."
+        note: "An exact fern-cli-generator version; unset, the generator is written as `version: latest`."
     },
     "target.sdkVersion": { treatment: "Ignore", note: "Passed to the generation as its version." },
     "target.apiName": { treatment: "Ignore", note: "Set for validation; the Fern CLI names the workspace." }
@@ -152,8 +152,8 @@ export const LOCAL_FIELD_ADDITIONS: Record<string, FieldTreatment> = {
         treatment: "Warn",
         note: "Not written: fern-cli-generator's packageIdentity has no bugs field."
     },
-    "output.distribution.githubAttestations": {
+    "output.github.workflows": {
         treatment: "Warn",
-        note: "Not written: fern-cli-generator's release workflow always attests build provenance."
+        note: "Not written: the translated github output block has repository, mode and branch only."
     }
 };

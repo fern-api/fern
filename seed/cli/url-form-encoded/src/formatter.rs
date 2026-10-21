@@ -50,6 +50,13 @@ pub struct OutputPipeline {
     pub quiet: bool,
     /// Optional JMESPath expression applied to every response before formatting.
     pub query: Option<String>,
+    /// Columns from the operation's `x-fern-cli-table` extension. Used only
+    /// for `table` output without `--query`; `None` keeps the generic table.
+    pub table_columns: Option<Vec<crate::table_columns::TableColumn>>,
+    /// Widths shared by the pages of a streamed `--page-all` table that uses
+    /// `table_columns`.
+    #[doc(hidden)]
+    pub table_page_widths: crate::table_columns::PageWidths,
 }
 
 impl OutputPipeline {
@@ -121,7 +128,44 @@ impl OutputPipeline {
             color_mode: ColorMode::Auto,
             quiet,
             query,
+            table_columns: None,
+            table_page_widths: Default::default(),
         })
+    }
+
+    /// Render `table` output with these columns instead of every field.
+    pub fn with_table_columns(
+        mut self,
+        columns: Option<Vec<crate::table_columns::TableColumn>>,
+    ) -> Self {
+        self.table_columns = columns;
+        self
+    }
+
+    fn render(&self, value: &Value, paginated: bool, is_first_page: bool) -> String {
+        if let (OutputFormat::Table, None, Some(columns)) =
+            (&self.format, &self.query, &self.table_columns)
+        {
+            let emit_header = !paginated || is_first_page;
+            let rendered = if paginated {
+                self.table_page_widths.with(|widths| {
+                    if is_first_page {
+                        *widths = None;
+                    }
+                    crate::table_columns::render(value, columns, emit_header, Some(widths))
+                })
+            } else {
+                crate::table_columns::render(value, columns, emit_header, None)
+            };
+            if let Some(rendered) = rendered {
+                return rendered;
+            }
+        }
+        if paginated {
+            format_value_paginated(value, &self.format, is_first_page)
+        } else {
+            format_value(value, &self.format)
+        }
     }
 
     /// Whether the pipeline is in raw mode (bypass formatting).
@@ -157,11 +201,7 @@ impl OutputPipeline {
             }
             None => value,
         };
-        let rendered = if paginated {
-            format_value_paginated(effective, &self.format, is_first_page)
-        } else {
-            format_value(effective, &self.format)
-        };
+        let rendered = self.render(effective, paginated, is_first_page);
         writeln!(out, "{rendered}")?;
         Ok(())
     }
@@ -210,11 +250,7 @@ impl OutputPipeline {
         if self.quiet {
             return Ok(());
         }
-        let rendered = if paginated {
-            format_value_paginated(value, &self.format, is_first_page)
-        } else {
-            format_value(value, &self.format)
-        };
+        let rendered = self.render(value, paginated, is_first_page);
         writeln!(out, "{rendered}")?;
         Ok(())
     }
@@ -460,7 +496,7 @@ fn format_jsonl_array(arr: &[Value]) -> String {
 /// Extract a "data array" from a typical API list response.
 /// APIs often return lists as `{ "collection": [...], "pagination": {...} }`
 /// where the array key varies by resource type.
-fn extract_items(value: &Value) -> Option<(&str, &Vec<Value>)> {
+pub(crate) fn extract_items(value: &Value) -> Option<(&str, &Vec<Value>)> {
     if let Value::Object(obj) = value {
         for (key, val) in obj {
             if key == "nextPageToken" || key == "kind" || key.starts_with('_') {
@@ -539,9 +575,16 @@ fn as_name_value_pairs(arr: &[Value]) -> Option<Vec<(&str, &Value)>> {
 ///
 /// Nested objects become `parent.child` key names so that `--format table` can
 /// render them as individual columns instead of raw JSON blobs.
-fn flatten_object(obj: &serde_json::Map<String, Value>, prefix: &str) -> Vec<(String, String)> {
+fn flatten_object(
+    obj: &serde_json::Map<String, Value>,
+    prefix: &str,
+    skip_nulls: bool,
+) -> Vec<(String, String)> {
     let mut out = Vec::new();
     for (key, val) in obj {
+        if skip_nulls && val.is_null() {
+            continue;
+        }
         let full_key = if prefix.is_empty() {
             key.clone()
         } else {
@@ -549,7 +592,7 @@ fn flatten_object(obj: &serde_json::Map<String, Value>, prefix: &str) -> Vec<(St
         };
         match val {
             Value::Object(nested) => {
-                out.extend(flatten_object(nested, &full_key));
+                out.extend(flatten_object(nested, &full_key, skip_nulls));
             }
             _ => {
                 out.push((full_key, value_to_cell(val)));
@@ -573,9 +616,10 @@ fn format_table_page(value: &Value, emit_header: bool) -> String {
     } else if let Value::Array(arr) = value {
         format_array_as_table(arr, emit_header)
     } else if let Value::Object(obj) = value {
-        // Single object: key/value table — flatten nested objects first
+        // Single object: key/value table — flatten nested objects first.
+        // Null fields would render as a key with no value, so they're skipped.
         let mut output = String::new();
-        let flat = flatten_object(obj, "");
+        let flat = flatten_object(obj, "", true);
         let max_key_len = flat.iter().map(|(k, _)| k.len()).max().unwrap_or(0);
         for (key, val_str) in &flat {
             let _ = writeln!(output, "{key:max_key_len$}  {val_str}");
@@ -595,7 +639,7 @@ fn format_array_as_table(arr: &[Value], emit_header: bool) -> String {
     let flat_rows: Vec<Vec<(String, String)>> = arr
         .iter()
         .map(|item| match item {
-            Value::Object(obj) => flatten_object(obj, ""),
+            Value::Object(obj) => flatten_object(obj, "", false),
             _ => vec![(String::new(), value_to_cell(item))],
         })
         .collect();
@@ -862,7 +906,7 @@ fn csv_escape(s: &str) -> String {
     }
 }
 
-fn value_to_cell(value: &Value) -> String {
+pub(crate) fn value_to_cell(value: &Value) -> String {
     match value {
         Value::Null => String::new(),
         Value::String(s) => s.clone(),
@@ -966,6 +1010,20 @@ mod tests {
     }
 
     #[test]
+    fn test_format_table_single_object_skips_null_fields() {
+        let val = json!({
+            "operationId": "op_1",
+            "statusUrl": null,
+            "links": {"self": "/x", "next": null}
+        });
+        let output = format_value(&val, &OutputFormat::Table);
+        assert!(output.contains("op_1"));
+        assert!(output.contains("links.self"));
+        assert!(!output.contains("statusUrl"), "{output}");
+        assert!(!output.contains("links.next"), "{output}");
+    }
+
+    #[test]
     fn emit_record_table_keeps_every_field_of_a_request_preview() {
         // Regression: a dry-run preview has a non-empty `headers` array, which
         // the list heuristic used to pick as "the items" — rendering a single
@@ -980,6 +1038,8 @@ mod tests {
             "auth": {"credentials": "resolved"},
         });
         let pipeline = OutputPipeline {
+            table_columns: None,
+            table_page_widths: Default::default(),
             format: OutputFormat::Table,
             color_mode: ColorMode::Never,
             quiet: false,
@@ -1010,6 +1070,8 @@ mod tests {
     fn emit_record_non_table_formats_are_unchanged() {
         let val = json!({"headers": [["X-A", "1"]], "url": "u"});
         let pipeline = OutputPipeline {
+            table_columns: None,
+            table_page_widths: Default::default(),
             format: OutputFormat::Json,
             color_mode: ColorMode::Never,
             quiet: false,
@@ -1027,6 +1089,8 @@ mod tests {
     fn emit_record_respects_quiet_and_query() {
         let val = json!({"headers": [["X-A", "1"]], "url": "u"});
         let quiet = OutputPipeline {
+            table_columns: None,
+            table_page_widths: Default::default(),
             format: OutputFormat::Table,
             color_mode: ColorMode::Never,
             quiet: true,
@@ -1037,6 +1101,8 @@ mod tests {
         assert!(out.is_empty());
 
         let queried = OutputPipeline {
+            table_columns: None,
+            table_page_widths: Default::default(),
             format: OutputFormat::Table,
             color_mode: ColorMode::Never,
             quiet: false,
@@ -1678,6 +1744,8 @@ mod tests {
     #[test]
     fn pipeline_emit_single_page_json_is_pretty_with_trailing_newline() {
         let pipeline = OutputPipeline {
+            table_columns: None,
+            table_page_widths: Default::default(),
             format: OutputFormat::Json,
             color_mode: ColorMode::Never,
             quiet: false,
@@ -1696,6 +1764,8 @@ mod tests {
     #[test]
     fn pipeline_emit_paginated_json_is_compact_one_line() {
         let pipeline = OutputPipeline {
+            table_columns: None,
+            table_page_widths: Default::default(),
             format: OutputFormat::Json,
             color_mode: ColorMode::Never,
             quiet: false,
@@ -1716,6 +1786,8 @@ mod tests {
     #[test]
     fn pipeline_emit_quiet_suppresses_output() {
         let pipeline = OutputPipeline {
+            table_columns: None,
+            table_page_widths: Default::default(),
             format: OutputFormat::Json,
             color_mode: ColorMode::Never,
             quiet: true,
@@ -1758,6 +1830,8 @@ mod tests {
     #[test]
     fn pipeline_emit_with_query_projects_value() {
         let pipeline = OutputPipeline {
+            table_columns: None,
+            table_page_widths: Default::default(),
             format: OutputFormat::Json,
             color_mode: ColorMode::Never,
             quiet: false,
@@ -1774,6 +1848,8 @@ mod tests {
     #[test]
     fn pipeline_apply_query_streaming_suppresses_null() {
         let pipeline = OutputPipeline {
+            table_columns: None,
+            table_page_widths: Default::default(),
             format: OutputFormat::Json,
             color_mode: ColorMode::Never,
             quiet: false,
@@ -1787,6 +1863,8 @@ mod tests {
     #[test]
     fn pipeline_apply_query_streaming_passes_non_null() {
         let pipeline = OutputPipeline {
+            table_columns: None,
+            table_page_widths: Default::default(),
             format: OutputFormat::Json,
             color_mode: ColorMode::Never,
             quiet: false,
@@ -1811,6 +1889,8 @@ mod tests {
     #[test]
     fn is_raw_returns_true_for_raw_format() {
         let pipeline = OutputPipeline {
+            table_columns: None,
+            table_page_widths: Default::default(),
             format: OutputFormat::Raw,
             color_mode: ColorMode::Never,
             quiet: false,
@@ -1823,6 +1903,8 @@ mod tests {
     fn is_raw_returns_false_for_other_formats() {
         for fmt in [OutputFormat::Json, OutputFormat::Table, OutputFormat::Yaml, OutputFormat::Csv, OutputFormat::Jsonl, OutputFormat::Http] {
             let pipeline = OutputPipeline {
+                table_columns: None,
+                table_page_widths: Default::default(),
                 format: fmt,
                 color_mode: ColorMode::Never,
                 quiet: false,
@@ -1945,6 +2027,8 @@ mod tests {
     #[test]
     fn pipeline_emit_jsonl_flattens_array() {
         let pipeline = OutputPipeline {
+            table_columns: None,
+            table_page_widths: Default::default(),
             format: OutputFormat::Jsonl,
             color_mode: ColorMode::Never,
             quiet: false,
@@ -1972,6 +2056,8 @@ mod tests {
     #[test]
     fn is_http_returns_true_for_http_format() {
         let pipeline = OutputPipeline {
+            table_columns: None,
+            table_page_widths: Default::default(),
             format: OutputFormat::Http,
             color_mode: ColorMode::Never,
             quiet: false,
@@ -1984,6 +2070,8 @@ mod tests {
     fn is_http_returns_false_for_other_formats() {
         for fmt in [OutputFormat::Json, OutputFormat::Table, OutputFormat::Yaml, OutputFormat::Csv, OutputFormat::Raw, OutputFormat::Jsonl] {
             let pipeline = OutputPipeline {
+                table_columns: None,
+                table_page_widths: Default::default(),
                 format: fmt,
                 color_mode: ColorMode::Never,
                 quiet: false,

@@ -112,7 +112,7 @@ export class ContactsClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `contacts/${core.url.encodePathParam(id)}`,
+                `contacts/${core.url.encodePathParam(id, errors.SeedApiError)}`,
             ),
             method: "GET",
             headers: _headers,

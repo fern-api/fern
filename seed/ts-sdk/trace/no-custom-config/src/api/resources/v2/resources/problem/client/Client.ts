@@ -181,7 +181,7 @@ export class ProblemClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/problems-v2/problem-info/${core.url.encodePathParam(problemId)}`,
+                `/problems-v2/problem-info/${core.url.encodePathParam(problemId, errors.SeedTraceError)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -252,7 +252,7 @@ export class ProblemClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/problems-v2/problem-info/${core.url.encodePathParam(problemId)}/version/${core.url.encodePathParam(problemVersion)}`,
+                `/problems-v2/problem-info/${core.url.encodePathParam(problemId, errors.SeedTraceError)}/version/${core.url.encodePathParam(problemVersion, errors.SeedTraceError)}`,
             ),
             method: "GET",
             headers: _headers,

@@ -3,6 +3,8 @@ import tmp from "tmp-promise";
 
 import { runFernCli } from "../../utils/runFernCli.js";
 
+export const LEGACY_CONFIG_ENV = { FERN_USE_SDK_CONFIG: "false" };
+
 interface InitOptions {
     directory?: AbsoluteFilePath;
     env?: Record<string, string | undefined>;
