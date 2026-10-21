@@ -165,6 +165,13 @@ export function serializeXmlElement({
     return xmlDeclaration ? `${XML_DECLARATION}${element}` : element;
 }
 
+/** Characters outside the XML 1.0 `Char` production (control characters, lone surrogates), which no XML parser accepts. */
+const INVALID_XML_CHARS = /[^\u0009\u000A\u000D\u0020-\uD7FF\uE000-\uFFFD\u{10000}-\u{10FFFF}]/gu;
+
+export function stripInvalidXmlChars(value: string): string {
+    return value.replace(INVALID_XML_CHARS, "");
+}
+
 /** Escapes a value for use inside a double-quoted attribute. */
 export function escapeXml(value: string): string {
     return escapeXmlText(value).replace(/"/g, "&quot;");
@@ -172,7 +179,7 @@ export function escapeXml(value: string): string {
 
 /** Escapes a value for use as element text (quotes are left as-is, matching the legacy TwiML SDKs). */
 export function escapeXmlText(value: string): string {
-    return value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    return stripInvalidXmlChars(value).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
 /** Converts an attribute or text value to its wire string, or undefined when unset. */
