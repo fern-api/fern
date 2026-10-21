@@ -1,6 +1,7 @@
 package generator
 
 import (
+	"sort"
 	"testing"
 
 	"github.com/fern-api/fern-go/internal/fern/ir"
@@ -68,7 +69,7 @@ func TestFileInfoForTypeDeclarationXmlLayout(t *testing.T) {
 		},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
-			assert.Equal(t, tc.want, fileInfoForTypeDeclaration("acme", tc.declaration))
+			assert.Equal(t, tc.want, fileInfoForTypeDeclaration("acme", tc.declaration, nil))
 		})
 	}
 }
@@ -89,16 +90,54 @@ func TestFileInfoToTypesXmlLayout(t *testing.T) {
 	for _, info := range []*ir.ServiceTypeReferenceInfo{nil, referenceInfo} {
 		result, err := fileInfoToTypes("acme", types, nil, info, false, false, false, false)
 		assert.NoError(t, err)
-		got := map[string][]string{}
-		for fileInfo, typesToGenerate := range result {
-			for _, typeToGenerate := range typesToGenerate {
-				got[fileInfo.filename] = append(got[fileInfo.filename], typeToGenerate.ID)
-			}
-		}
 		assert.Equal(t, map[string][]string{
 			"twimlvoice/say.go":   {"type_Say"},
 			"twimlvoice/pause.go": {"type_Pause"},
 			"twimlvoice/types.go": {"type_SayVoice"},
-		}, got)
+		}, typeIdsByFilename(result))
 	}
+}
+
+func TestFileInfoToTypesXmlLayoutServiceFileCollision(t *testing.T) {
+	say := xmlLayoutTypeDeclaration("Say", "say", []string{"twimlVoice"}, true)
+	pause := xmlLayoutTypeDeclaration("Pause", "pause", []string{"twimlVoice"}, true)
+	types := map[common.TypeId]*ir.TypeDeclaration{
+		say.Name.TypeId:   say,
+		pause.Name.TypeId: pause,
+	}
+	services := map[ir.ServiceId]*ir.HttpService{
+		"service_twimlVoice/say": {
+			Name: &ir.DeclaredServiceName{
+				FernFilepath: &common.FernFilepath{
+					PackagePath: []*common.Name{{CamelCase: &common.SafeAndUnsafeString{UnsafeName: "twimlVoice", SafeName: "twimlVoice"}}},
+					File:        &common.Name{SnakeCase: &common.SafeAndUnsafeString{UnsafeName: "say", SafeName: "say"}},
+				},
+			},
+		},
+	}
+	referenceInfo := &ir.ServiceTypeReferenceInfo{
+		SharedTypes:                  []common.TypeId{say.Name.TypeId, pause.Name.TypeId},
+		TypesReferencedOnlyByService: map[ir.ServiceId][]common.TypeId{},
+	}
+	for _, info := range []*ir.ServiceTypeReferenceInfo{nil, referenceInfo} {
+		result, err := fileInfoToTypes("acme", types, services, info, false, false, false, false)
+		assert.NoError(t, err)
+		assert.Equal(t, map[string][]string{
+			"twimlvoice/pause.go": {"type_Pause"},
+			"twimlvoice/types.go": {"type_Say"},
+		}, typeIdsByFilename(result))
+	}
+}
+
+func typeIdsByFilename(result map[fileInfo][]*typeToGenerate) map[string][]string {
+	got := map[string][]string{}
+	for fileInfo, typesToGenerate := range result {
+		for _, typeToGenerate := range typesToGenerate {
+			got[fileInfo.filename] = append(got[fileInfo.filename], typeToGenerate.ID)
+		}
+	}
+	for _, ids := range got {
+		sort.Strings(ids)
+	}
+	return got
 }
