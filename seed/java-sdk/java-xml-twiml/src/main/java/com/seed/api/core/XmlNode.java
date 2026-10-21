@@ -101,7 +101,7 @@ public final class XmlNode {
      * and either would otherwise end the comment early and turn the rest into markup.
      */
     public static String commentText(String text) {
-        String safe = text.replaceAll("-(?=-)", "- ");
+        String safe = XmlWriter.stripInvalidXmlChars(text).replaceAll("-(?=-)", "- ");
         return safe.endsWith("-") ? safe + " " : safe;
     }
 

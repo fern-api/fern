@@ -1,4 +1,21 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.32.6
+  changelogEntry:
+    - summary: |
+        XML (TwiML) serialization drops characters outside the XML 1.0 `Char` production (e.g. `\u0001`) from text and attribute values instead of emitting XML that no parser accepts.
+      type: fix
+  createdAt: "2026-10-21"
+  irVersion: 67
+- version: 4.32.5
+  changelogEntry:
+    - summary: |
+        XML (TwiML) builders gain a varargs overload for list-valued attributes (`gather.input(GatherInputItem.DTMF,
+        GatherInputItem.SPEECH)`), a static `builder(text)` factory for types whose text content is required
+        (`Body.builder("hello")`), and typed child overloads under the legacy name when only the text setter used it
+        (`dial.number(Number)` next to `dial.number(String)`; `addNumber(Number)` is kept).
+      type: fix
+  createdAt: "2026-10-21"
+  irVersion: 67
 - version: 4.32.4
   changelogEntry:
     - summary: |
