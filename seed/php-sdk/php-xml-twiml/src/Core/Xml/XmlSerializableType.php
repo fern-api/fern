@@ -38,6 +38,16 @@ abstract class XmlSerializableType extends JsonSerializableType implements XmlNo
     }
 
     /**
+     * Alias of `toXml()`, matching `SimpleXMLElement::asXML()`.
+     *
+     * @param bool $xmlDeclaration Whether to prepend the `<?xml ...?>` declaration.
+     */
+    public function asXML(bool $xmlDeclaration = true): string
+    {
+        return $this->toXml($xmlDeclaration);
+    }
+
+    /**
      * @return array<string, string> XML attributes that are not part of the typed model.
      */
     public function getAdditionalAttributes(): array

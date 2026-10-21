@@ -61,6 +61,13 @@ def test_empty_element_is_self_closing() -> None:
     assert serialize_xml_element(name="Hangup") == "<Hangup />"
 
 
+def test_characters_outside_xml_1_0_are_dropped() -> None:
+    xml = serialize_xml_element(
+        name="Say", attributes=[XmlAttribute(name="voice", value="man\x01")], text="a\x00b\x1fc\td"
+    )
+    assert xml == '<Say voice="man">abc\td</Say>'
+
+
 def test_attributes_skip_none_and_render_scalars() -> None:
     xml = serialize_xml_element(
         name="Say",
