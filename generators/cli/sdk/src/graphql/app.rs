@@ -299,6 +299,7 @@ impl AppContext {
             query: None,
             table_columns: None,
             table_page_widths: Default::default(),
+            default_properties: Vec::new(),
         };
 
         // Programmatic execution from custom command handlers honors the

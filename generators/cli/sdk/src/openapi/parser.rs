@@ -243,6 +243,24 @@ struct OpenApiSpec {
     x_fern_groups: Option<HashMap<String, RawFernGroup>>,
 }
 
+/// `x-twilio.defaultOutputProperties`: the response fields Twilio's CLI
+/// shows by default. Non-string entries are skipped; `None` when the
+/// extension or the key is absent so an operation can fall back to its
+/// path item.
+fn twilio_default_output_properties(ext: Option<&serde_yaml::Value>) -> Option<Vec<String>> {
+    let serde_yaml::Value::Sequence(entries) = ext?.get("defaultOutputProperties")? else {
+        return None;
+    };
+    Some(
+        entries
+            .iter()
+            .filter_map(|e| e.as_str())
+            .map(|e| e.trim().to_string())
+            .filter(|e| !e.is_empty())
+            .collect(),
+    )
+}
+
 /// Deserialize document-root OpenAPI tags into the normalized metadata used
 /// by the CLI help surface. Some real-world specs contain primitive entries
 /// in this array, so malformed entries are skipped rather than rejecting the
@@ -528,6 +546,10 @@ struct OpenApiPathItem {
     delete: Option<OpenApiOperation>,
     #[serde(default)]
     parameters: Vec<OpenApiParamOrRef>,
+    /// Twilio's `x-twilio` vendor extension. Only `defaultOutputProperties`
+    /// is read (see [`twilio_default_output_properties`]).
+    #[serde(default, rename = "x-twilio")]
+    x_twilio: Option<serde_yaml::Value>,
 }
 
 #[derive(Debug, Deserialize, Default)]
@@ -555,6 +577,9 @@ struct OpenApiOperation {
     x_fern_sdk_group_name: Option<Vec<String>>,
     #[serde(rename = "x-fern-sdk-method-name")]
     x_fern_sdk_method_name: Option<String>,
+    /// Twilio's `x-twilio` vendor extension; overrides the path item's.
+    #[serde(default, rename = "x-twilio")]
+    x_twilio: Option<serde_yaml::Value>,
     /// Operation-level security override. `Some(vec![])` is meaningful — it
     /// explicitly opts the operation out of the spec-level default, marking
     /// it anonymous. `None` means "inherit the spec default".
@@ -3336,6 +3361,11 @@ pub fn load_openapi_spec_from_value(
                 audiences,
                 has_binary_response,
                 global_parameter_opt_ins,
+                default_output_properties: twilio_default_output_properties(
+                    operation.x_twilio.as_ref(),
+                )
+                .or_else(|| twilio_default_output_properties(path_item.x_twilio.as_ref()))
+                .unwrap_or_default(),
                 ..Default::default()
             };
 
@@ -11504,6 +11534,47 @@ paths:
         let doc = parse_op_with_extra("      x-fern-audiences: []");
         let m = first_method(&doc, "things", "list");
         assert!(m.audiences.is_empty());
+    }
+
+    #[test]
+    fn test_x_twilio_default_output_properties_operation_and_path_level() {
+        let yaml = r#"
+openapi: "3.0.0"
+info: { title: T, version: "1.0" }
+servers: [{ url: "https://x.com" }]
+paths:
+  /things:
+    x-twilio:
+      defaultOutputProperties: [sid, date_sent]
+      location: list
+    get:
+      x-fern-sdk-group-name: ["things"]
+      x-fern-sdk-method-name: list
+      responses: { "200": { description: ok } }
+    post:
+      x-fern-sdk-group-name: ["things"]
+      x-fern-sdk-method-name: create
+      x-twilio:
+        defaultOutputProperties: [sid, status]
+      responses: { "200": { description: ok } }
+  /others:
+    get:
+      x-fern-sdk-group-name: ["others"]
+      x-fern-sdk-method-name: list
+      x-twilio:
+        defaultOutputProperties: not-a-list
+      responses: { "200": { description: ok } }
+"#;
+        let doc = load_openapi_spec(yaml, "t").unwrap();
+        assert_eq!(
+            first_method(&doc, "things", "list").default_output_properties,
+            vec!["sid".to_string(), "date_sent".to_string()],
+        );
+        assert_eq!(
+            first_method(&doc, "things", "create").default_output_properties,
+            vec!["sid".to_string(), "status".to_string()],
+        );
+        assert!(first_method(&doc, "others", "list").default_output_properties.is_empty());
     }
 
     #[test]

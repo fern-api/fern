@@ -86,6 +86,8 @@ export async function copySpecs(args: {
     customCommands?: boolean;
     /** When set, emit `.command_namespace("<rootGroup>")` on the OpenApiBinding chain. */
     rootGroup?: string;
+    /** When true, emit `.default_output_properties(true)` on the OpenApiBinding chain. */
+    defaultOutputProperties?: boolean;
     /**
      * When set, emit `.user_agent_suffix_flag("<name>")` on the CliApp
      * chain so the generated CLI exposes the consumer suffix under this
@@ -119,6 +121,7 @@ export async function copySpecs(args: {
         specsDir,
         customCommands,
         rootGroup,
+        defaultOutputProperties,
         userAgentSuffixFlag,
         profilesCommandName,
         profilesRevokeOperation,
@@ -154,6 +157,7 @@ export async function copySpecs(args: {
             globalParamBindings,
             customCommands: customCommands ?? false,
             rootGroup,
+            defaultOutputProperties,
             userAgentSuffixFlag,
             profilesCommandName,
             profilesRevokeOperation,
@@ -250,6 +254,7 @@ function renderMainRs(args: {
     globalParamBindings: DetectedGlobalParam[];
     customCommands: boolean;
     rootGroup?: string;
+    defaultOutputProperties?: boolean;
     userAgentSuffixFlag?: string;
     profilesCommandName?: string;
     profilesRevokeOperation?: string;
@@ -263,6 +268,7 @@ function renderMainRs(args: {
         globalParamBindings,
         customCommands,
         rootGroup,
+        defaultOutputProperties,
         userAgentSuffixFlag,
         profilesCommandName,
         profilesRevokeOperation,
@@ -412,6 +418,9 @@ function renderMainRs(args: {
     }
     if (rootGroup != null) {
         lines.push(`                .command_namespace("${rootGroup}")`);
+    }
+    if (defaultOutputProperties === true) {
+        lines.push("                .default_output_properties(true)");
     }
     // Close the binding
     lines.push("        );");

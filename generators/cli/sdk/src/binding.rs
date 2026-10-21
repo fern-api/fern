@@ -116,6 +116,12 @@ pub trait Binding: Send + Sync {
         Ok(None)
     }
 
+    /// Response fields `table` output shows by default for the operation
+    /// `root_matches` dispatches to. Empty (the default) = every field.
+    fn output_properties_for(&self, _root_matches: &clap::ArgMatches) -> Vec<String> {
+        Vec::new()
+    }
+
     /// Return a type-erased binding context for use by CLI-level custom
     /// command handlers. `matches` are the full parse result (needed
     /// to resolve global flags like server vars and global headers).

@@ -1115,6 +1115,10 @@ pub struct CliApp {
     /// from the spec's `x-fern-global-parameters` extension, letting the
     /// TypeScript codegen layer supply the authoritative set from the IR.
     pub(crate) builder_global_parameters: Vec<GlobalParameter>,
+    /// When true, table output of an operation that declares
+    /// `x-twilio.defaultOutputProperties` shows only those fields.
+    /// Configured via [`Self::default_output_properties`].
+    pub(crate) default_output_properties: bool,
 }
 
 #[allow(dead_code)] // Methods available for binding wrappers to delegate to.
@@ -1135,6 +1139,7 @@ impl CliApp {
             idempotency_header_envs: HashMap::new(),
             audiences: Vec::new(),
             builder_global_parameters: Vec::new(),
+            default_output_properties: false,
         }
     }
 
@@ -1172,6 +1177,15 @@ impl CliApp {
             .map(|s| s.trim().to_string())
             .filter(|s| !s.is_empty())
             .collect();
+        self
+    }
+
+    /// Limit default table output to the fields an operation lists in
+    /// `x-twilio.defaultOutputProperties`, like Twilio's own CLI. Other
+    /// formats (`json`, `yaml`, …) and `--query` still see the full
+    /// response; operations without the extension are unaffected.
+    pub fn default_output_properties(mut self, enabled: bool) -> Self {
+        self.default_output_properties = enabled;
         self
     }
 
@@ -2703,6 +2717,7 @@ impl AppContext {
             query: None,
             table_columns: None,
             table_page_widths: Default::default(),
+            default_properties: Vec::new(),
         };
         let extra_headers = self.extra_headers_for_entry(entry, method, params_json)?;
         let filtered_global_params = self.extra_global_params_for_entry(entry, method, params_json);
