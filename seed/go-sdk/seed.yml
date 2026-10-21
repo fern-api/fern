@@ -385,8 +385,11 @@ fixtures:
       customConfig:
         enableWireTests: true
   go-xml-twiml:
-    - outputFolder: .
+    - outputFolder: no-custom-config
       customConfig: null
+    - outputFolder: xml-text-first-builders
+      customConfig:
+        xmlTextFirstBuilders: true
   exhaustive:
     - outputFolder: no-custom-config
       customConfig:
