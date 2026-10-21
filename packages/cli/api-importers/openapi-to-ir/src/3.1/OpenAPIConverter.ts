@@ -160,13 +160,9 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             return;
         }
 
-        // With respect-per-spec-base-path(-v3), a plain base path belongs to this spec's endpoints rather
+        // With respect-per-spec-base-path, a plain base path belongs to this spec's endpoints rather
         // than the whole API, so it survives merging with other specs.
-        if (
-            this.context.settings.respectPerSpecBasePath &&
-            this.context.settings.respectPerSpecBasePathV3 &&
-            parsed.parameters.length === 0
-        ) {
+        if (this.context.settings.respectPerSpecBasePath && parsed.parameters.length === 0) {
             if (!parsed.pathsIncludeBasePath) {
                 this.context.perSpecBasePath = parsed.path.replace(/\/+$/, "");
             }

@@ -117,7 +117,6 @@
     "ignoreTags": false,
     "respectParameterContent": false,
     "respectPerSpecBasePath": false,
-    "respectPerSpecBasePathV3": false,
     "respectOperationIdWordBoundaries": false,
     "namespacedErrors": false
   }

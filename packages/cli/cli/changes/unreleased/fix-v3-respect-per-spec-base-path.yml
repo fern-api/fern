@@ -1,8 +1,7 @@
 # yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
 
 - summary: |
-    Add the opt-in `respect-per-spec-base-path-v3` OpenAPI setting. When set together with
-    `respect-per-spec-base-path`, the v3 OpenAPI parser applies each spec's plain `x-fern-base-path`
-    to that spec's endpoint paths, so it is no longer dropped when `generators.yml` lists more than
-    one spec (for example in docs API Reference URLs). Without the new setting, behavior is unchanged.
-  type: feat
+    The v3 OpenAPI parser now honors `respect-per-spec-base-path`. Each spec's plain
+    `x-fern-base-path` is applied to that spec's endpoint paths, so it is no longer dropped
+    when `generators.yml` lists more than one spec (for example in docs API Reference URLs).
+  type: fix

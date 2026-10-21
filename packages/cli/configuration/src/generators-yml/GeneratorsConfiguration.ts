@@ -107,7 +107,6 @@ export interface APIDefinitionSettings {
     ignoreTags: boolean | undefined;
     respectParameterContent: boolean | undefined;
     respectPerSpecBasePath: boolean | undefined;
-    respectPerSpecBasePathV3: boolean | undefined;
     respectOperationIdWordBoundaries: boolean | undefined;
     namespacedErrors: boolean | undefined;
     errorResponses: OpenApiErrorResponsesSchema | undefined;

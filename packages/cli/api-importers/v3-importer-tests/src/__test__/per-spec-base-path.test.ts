@@ -1,7 +1,6 @@
 /**
- * `respect-per-spec-base-path` + `respect-per-spec-base-path-v3` with multiple specs: each spec's plain
- * `x-fern-base-path` must apply to its own endpoints instead of being dropped when the specs are merged.
- * Without `respect-per-spec-base-path-v3` the v3 parser keeps its previous behavior.
+ * `respect-per-spec-base-path` with multiple specs: each spec's plain `x-fern-base-path` must
+ * apply to its own endpoints instead of being dropped when the specs are merged.
  */
 
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
@@ -56,15 +55,15 @@ function getEndpointPaths(ir: IR): string[] {
 }
 
 describe("respect-per-spec-base-path", () => {
-    it("with respect-per-spec-base-path-v3, keeps each spec's base path on its own endpoints", async () => {
+    it("keeps each spec's base path on its own endpoints", async () => {
         const ir = await loadIr("per-spec-base-path");
 
         expect(getEndpointPaths(ir)).toEqual(["/api/v1/plants", "/oauth/token"]);
         expect(ir.basePath ?? undefined).toBeUndefined();
     }, 60_000);
 
-    it("keeps the previous behavior without respect-per-spec-base-path-v3", async () => {
-        const ir = await loadIr("per-spec-base-path-v3-off");
+    it("keeps the previous behavior without respect-per-spec-base-path", async () => {
+        const ir = await loadIr("per-spec-base-path-off");
 
         expect(getEndpointPaths(ir)).toEqual(["/plants", "/token"]);
         // Only one spec's base path survives the merge as the API-wide base path.

@@ -89,11 +89,11 @@
           "idempotent": false,
           "method": "GET",
           "path": {
-            "head": "/api/v1/plants",
+            "head": "/oauth/plants",
             "parts": []
           },
           "fullPath": {
-            "head": "api/v1/plants",
+            "head": "oauth/plants",
             "parts": []
           },
           "pathParameters": [],
@@ -235,7 +235,7 @@
         },
         "location": {
           "method": "GET",
-          "path": "/api/v1/plants"
+          "path": "/oauth/plants"
         },
         "request": {
           "pathParameters": [],

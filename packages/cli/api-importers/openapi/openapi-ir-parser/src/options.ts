@@ -214,13 +214,6 @@ export interface ParseOpenAPIOptions {
     respectPerSpecBasePath: boolean;
 
     /**
-     * If true (with `respectPerSpecBasePath`), the v3 parser applies each document's plain
-     * `x-fern-base-path` to that document's endpoints instead of the API-wide base path.
-     * Defaults to false.
-     */
-    respectPerSpecBasePathV3: boolean;
-
-    /**
      * If true, operation ids are tokenized on every word boundary (camelCase transitions and digits)
      * when deriving endpoint names, so that a redundant tag prefix is stripped and the remaining words
      * are preserved (e.g. tag `sharing` + `Sharing_ListFolderMembers` -> `listFolderMembers`).
@@ -294,7 +287,6 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     ignoreTags: false,
     respectParameterContent: false,
     respectPerSpecBasePath: false,
-    respectPerSpecBasePathV3: false,
     respectOperationIdWordBoundaries: false,
     namespacedErrors: false,
     errorResponses: undefined
