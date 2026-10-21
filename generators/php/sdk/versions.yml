@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.30.8
+  changelogEntry:
+    - summary: |
+        XML (TwiML) serialization drops characters outside the XML 1.0 `Char` production (e.g. `\x01`) from text and attribute values, consistently across SDK languages.
+      type: fix
+  createdAt: "2026-10-21"
+  irVersion: 67
 - version: 2.30.7
   changelogEntry:
     - summary: |
