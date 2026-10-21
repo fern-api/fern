@@ -1846,6 +1846,9 @@ func fileInfoForXmlType(
 	if basename == "" || strings.HasPrefix(basename, "_") || strings.HasSuffix(basename, "_test") {
 		return info
 	}
+	if hasGoBuildConstraintSuffix(basename) {
+		return info
+	}
 	filename := basename + ".go"
 	if isReservedFilename(filename) || isReservedTypeFilename(filename) {
 		return info
@@ -1877,7 +1880,9 @@ var reservedTypeFilenames = map[string]struct{}{
 	sharedTypesFilename: {},
 	packageDocsFilename: {},
 	"client.go":         {},
+	"raw_client.go":     {},
 	"errors.go":         {},
+	"error_codes.go":    {},
 	"file_param.go":     {},
 	"optional.go":       {},
 	"environments.go":   {},
@@ -1886,6 +1891,32 @@ var reservedTypeFilenames = map[string]struct{}{
 
 func isReservedTypeFilename(filename string) bool {
 	_, ok := reservedTypeFilenames[filename]
+	return ok
+}
+
+// goBuildConstraintSuffixes are the GOOS and GOARCH values that the Go tool
+// treats as implicit build constraints when they appear as a `_<value>`
+// suffix of a filename (e.g. foo_linux.go, foo_arm64.go, foo_linux_arm64.go).
+var goBuildConstraintSuffixes = map[string]struct{}{
+	// GOOS
+	"aix": {}, "android": {}, "darwin": {}, "dragonfly": {}, "freebsd": {}, "hurd": {}, "illumos": {},
+	"ios": {}, "js": {}, "linux": {}, "nacl": {}, "netbsd": {}, "openbsd": {}, "plan9": {}, "solaris": {},
+	"wasip1": {}, "windows": {}, "zos": {},
+	// GOARCH
+	"386": {}, "amd64": {}, "amd64p32": {}, "arm": {}, "armbe": {}, "arm64": {}, "arm64be": {}, "loong64": {},
+	"mips": {}, "mipsle": {}, "mips64": {}, "mips64le": {}, "mips64p32": {}, "mips64p32le": {}, "ppc": {},
+	"ppc64": {}, "ppc64le": {}, "riscv": {}, "riscv64": {}, "s390": {}, "s390x": {}, "sparc": {}, "sparc64": {},
+	"wasm": {},
+}
+
+// hasGoBuildConstraintSuffix reports whether a file named <basename>.go would
+// only be compiled for a particular GOOS/GOARCH.
+func hasGoBuildConstraintSuffix(basename string) bool {
+	index := strings.LastIndex(basename, "_")
+	if index < 0 {
+		return false
+	}
+	_, ok := goBuildConstraintSuffixes[basename[index+1:]]
 	return ok
 }
 

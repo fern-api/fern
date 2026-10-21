@@ -67,6 +67,26 @@ func TestFileInfoForTypeDeclarationXmlLayout(t *testing.T) {
 			declaration: xmlLayoutTypeDeclaration("LoadTest", "load_test", nil, true),
 			want:        fileInfo{filename: "types.go", packageName: "acme"},
 		},
+		{
+			name:        "xml type whose file would carry a GOOS build constraint stays in the shared types file",
+			declaration: xmlLayoutTypeDeclaration("FooLinux", "foo_linux", nil, true),
+			want:        fileInfo{filename: "types.go", packageName: "acme"},
+		},
+		{
+			name:        "xml type whose file would carry a GOARCH build constraint stays in the shared types file",
+			declaration: xmlLayoutTypeDeclaration("TargetArm64", "target_arm64", []string{"twimlVoice"}, true),
+			want:        fileInfo{filename: "twimlvoice/types.go", packageName: "twimlvoice"},
+		},
+		{
+			name:        "xml type named like the raw client file stays in the shared types file",
+			declaration: xmlLayoutTypeDeclaration("RawClient", "raw_client", nil, true),
+			want:        fileInfo{filename: "types.go", packageName: "acme"},
+		},
+		{
+			name:        "xml type whose name merely contains a GOOS value gets its own file",
+			declaration: xmlLayoutTypeDeclaration("LinuxHost", "linux_host", nil, true),
+			want:        fileInfo{filename: "linux_host.go", packageName: "acme"},
+		},
 	} {
 		t.Run(tc.name, func(t *testing.T) {
 			assert.Equal(t, tc.want, fileInfoForTypeDeclaration("acme", tc.declaration, nil))
