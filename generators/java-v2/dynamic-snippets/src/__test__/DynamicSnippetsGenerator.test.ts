@@ -262,18 +262,20 @@ describe("snippets (file properties as positional parameters)", () => {
         const response = await generator.generate(buildRequest("/"));
         expect(response.errors).toBeUndefined();
         expect(response.snippet).toMatchSnapshot();
-        expect(response.snippet).not.toContain("null");
+        expect(response.snippet).not.toMatch(/\bnull\b/);
     });
 
     test("an optional file alone gets Optional.empty()", async () => {
         const generator = buildDynamicSnippetsGenerator({ irFilepath: fileUploadIrFilepath, config });
         const response = await generator.generate(buildRequest("/optional-args"));
+        expect(response.errors).toBeUndefined();
         expect(response.snippet).toContain("Optional.empty()");
         expect(response.snippet).not.toContain("new File(");
     });
 
     test("files stay null when the IR doesn't set isOptional", async () => {
         const response = await buildLegacyGenerator().generate(buildRequest("/"));
+        expect(response.errors).toBeUndefined();
         expect(response.snippet).toMatchSnapshot();
         expect(response.snippet).not.toContain("new File(");
         expect(response.snippet).not.toContain("Optional.empty()");

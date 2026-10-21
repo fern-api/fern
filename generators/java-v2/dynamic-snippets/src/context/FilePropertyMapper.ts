@@ -108,7 +108,11 @@ export class FilePropertyMapper {
      * parameter. IR from older CLIs doesn't set `isOptional`, so the parameter type is unknown and
      * the file is left as a nop (rendered as `null`, which is assignable to both).
      */
-    private getMissingFileArgument(property: { isOptional?: boolean }): java.TypeLiteral {
+    private getMissingFileArgument(
+        property:
+            | FernIr.dynamic.FileUploadRequestBodyProperty.File
+            | FernIr.dynamic.FileUploadRequestBodyProperty.FileArray
+    ): java.TypeLiteral {
         switch (property.isOptional) {
             case true:
                 return java.TypeLiteral.reference(
