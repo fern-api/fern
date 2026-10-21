@@ -34,6 +34,7 @@ const RESERVED_METHOD_NAMES = [
     "toJson",
     "jsonSerialize",
     "toXml",
+    "asXML",
     "toXmlElement",
     "fromXml",
     "fromXmlElement",
