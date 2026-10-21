@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.92.5
+  changelogEntry:
+    - summary: |
+        XML (TwiML) fluent child builders now take the element's text content as the first parameter, before
+        attributes, so legacy-style calls such as `response.Say("hi")` and `response.Dial("+15551234567")`
+        compile and set the content instead of an attribute. `ToXml(xmlDeclaration, indent)` adds an indented
+        output option.
+      type: fix
+  createdAt: "2026-10-21"
+  irVersion: 67
 - version: 2.92.4
   changelogEntry:
     - summary: |
