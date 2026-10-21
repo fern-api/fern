@@ -1,6 +1,9 @@
-import { DynamicSnippetsTestRunner } from "@fern-api/browser-compatible-base-generator";
+import { DynamicSnippetsTestRunner, Style } from "@fern-api/browser-compatible-base-generator";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { AbsoluteFilePath, join } from "@fern-api/path-utils";
+import { readFileSync } from "fs";
+
+import { DynamicSnippetsGenerator } from "../DynamicSnippetsGenerator.js";
 
 import { buildDynamicSnippetsGenerator } from "./utils/buildDynamicSnippetsGenerator.js";
 import { buildGeneratorConfig } from "./utils/buildGeneratorConfig.js";
@@ -223,5 +226,56 @@ describe("snippets (inline type naming)", () => {
         // Without inlineTypeIds, the flat declaration name is used
         expect(snippet).toContain("RequestTypeInlineType1");
         expect(snippet).not.toContain("PostRootRequest.Bar");
+    });
+});
+
+/**
+ * Without `inline-file-properties`, each file is a positional `File` (required) or `Optional<File>`
+ * (optional) SDK parameter, so a file missing from the example needs a value of the right type.
+ */
+describe("snippets (file properties as positional parameters)", () => {
+    const fileUploadIrFilepath = AbsoluteFilePath.of(join(DYNAMIC_IR_TEST_DEFINITIONS_DIRECTORY, "file-upload.json"));
+    const config = buildGeneratorConfig({ customConfig: { "inline-file-properties": false } });
+
+    function buildRequest(path: string): FernIr.dynamic.EndpointSnippetRequest {
+        return {
+            endpoint: { method: "POST", path },
+            baseURL: undefined,
+            environment: undefined,
+            auth: undefined,
+            pathParameters: undefined,
+            queryParameters: undefined,
+            headers: undefined,
+            requestBody: {}
+        };
+    }
+
+    function buildLegacyGenerator(): DynamicSnippetsGenerator {
+        const ir = JSON.parse(readFileSync(fileUploadIrFilepath, "utf-8"), (key, value) =>
+            key === "isOptional" ? undefined : value
+        );
+        return new DynamicSnippetsGenerator({ ir, config, options: { style: Style.Concise } });
+    }
+
+    test("required files get a placeholder and optional files get Optional.empty()", async () => {
+        const generator = buildDynamicSnippetsGenerator({ irFilepath: fileUploadIrFilepath, config });
+        const response = await generator.generate(buildRequest("/"));
+        expect(response.errors).toBeUndefined();
+        expect(response.snippet).toMatchSnapshot();
+        expect(response.snippet).not.toContain("null");
+    });
+
+    test("an optional file alone gets Optional.empty()", async () => {
+        const generator = buildDynamicSnippetsGenerator({ irFilepath: fileUploadIrFilepath, config });
+        const response = await generator.generate(buildRequest("/optional-args"));
+        expect(response.snippet).toContain("Optional.empty()");
+        expect(response.snippet).not.toContain("new File(");
+    });
+
+    test("files stay null when the IR doesn't set isOptional", async () => {
+        const response = await buildLegacyGenerator().generate(buildRequest("/"));
+        expect(response.snippet).toMatchSnapshot();
+        expect(response.snippet).not.toContain("new File(");
+        expect(response.snippet).not.toContain("Optional.empty()");
     });
 });
