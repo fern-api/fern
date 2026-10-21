@@ -106,6 +106,27 @@ describe("docs site scaffolding", () => {
         }
     });
 
+    it("adds one API Reference entry per API when the project has several", async () => {
+        const dir = await tempRepo();
+        const fernDir = path.join(dir, "fern");
+        for (const api of ["users", "payments"]) {
+            await mkdir(path.join(fernDir, "apis", api), { recursive: true });
+            await writeFile(path.join(fernDir, "apis", api, "generators.yml"), "api: {}\n");
+        }
+        await scaffoldDocsSite({ dir, org: "acme", choices: defaultDocsSiteChoices("acme") });
+
+        const apiNavigation = arrayField(await readDocsConfig(dir), "navigation").find(
+            (item) => isRecord(item) && item.tab === "API Reference"
+        );
+        if (!isRecord(apiNavigation)) {
+            throw new Error("API Reference navigation was not written.");
+        }
+        expect(arrayField(apiNavigation, "layout").filter((item) => isRecord(item) && "api" in item)).toEqual([
+            { api: "Payments", "api-name": "payments" },
+            { api: "Users", "api-name": "users" }
+        ]);
+    });
+
     it("does not overwrite customer files and reports paths it skipped", async () => {
         const dir = await tempRepo();
         const fernDir = path.join(dir, "fern");
@@ -116,8 +137,8 @@ describe("docs site scaffolding", () => {
         await writeFile(welcomePage, "customer content");
         await writeFile(configPath, '{"organization":"original"}\n');
         await writeFile(path.join(fernDir, "docs", "assets", "onboarding-theme.css"), "customer css");
+        // Skipped files are reported in the result (the wizard summarizes them) rather than logged.
         const log = vi.spyOn(console, "log").mockImplementation(() => undefined);
-
         let result: Awaited<ReturnType<typeof scaffoldDocsSite>>;
         try {
             result = await scaffoldDocsSite({
@@ -125,7 +146,7 @@ describe("docs site scaffolding", () => {
                 org: "acme",
                 choices: { ...defaultDocsSiteChoices("acme"), buttonShape: "sharp" }
             });
-            expect(log).toHaveBeenCalledWith("fern/docs/pages/welcome.mdx already exists, skipping");
+            expect(log).not.toHaveBeenCalled();
         } finally {
             log.mockRestore();
         }

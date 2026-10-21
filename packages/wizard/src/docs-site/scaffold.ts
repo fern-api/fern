@@ -1,5 +1,3 @@
-// biome-ignore-all lint/suspicious/noConsole: CLI reports existing files that are preserved.
-
 import type { Dirent } from "fs";
 import { access, copyFile, mkdir, readdir, readFile, stat, writeFile } from "fs/promises";
 import path from "path";
@@ -43,6 +41,7 @@ export async function scaffoldDocsSite({
     const skippedFiles = new Set<string>();
     const existingApi =
         (await pathExists(path.join(fernDir, "generators.yml"))) || (await isDirectory(path.join(fernDir, "apis")));
+    const apiNames = await listApiNames(fernDir);
     const copyOptions: CopyOptions = {
         protectedFiles,
         writtenFiles,
@@ -72,10 +71,20 @@ export async function scaffoldDocsSite({
         deepMergePlainObjects(baseConfig, await readYamlObject(partialPath));
     }
 
-    customizeConfig(baseConfig, choices, existingApi);
-    const logoPath = choices.logoPath;
-    if (logoPath !== undefined) {
-        await applyLogo(fernDir, dir, logoPath, baseConfig, protectedFiles, writtenFiles, skippedFiles);
+    customizeConfig(baseConfig, choices, existingApi, apiNames);
+    const assetFiles = { protectedFiles, writtenFiles, skippedFiles };
+    if (choices.logoPath !== undefined) {
+        const light = await copyBrandAsset(fernDir, dir, choices.logoPath, "logo-light", assetFiles);
+        const dark =
+            choices.darkLogoPath === undefined
+                ? light
+                : await copyBrandAsset(fernDir, dir, choices.darkLogoPath, "logo-dark", assetFiles);
+        const logo = getOrCreateObject(baseConfig, "logo");
+        logo.light = light;
+        logo.dark = dark;
+    }
+    if (choices.faviconPath !== undefined) {
+        baseConfig.favicon = await copyBrandAsset(fernDir, dir, choices.faviconPath, "favicon", assetFiles);
     }
 
     if (choices.typography !== undefined || choices.buttonShape !== undefined) {
@@ -245,7 +254,12 @@ function deepMergePlainObjects(target: PlainObject, source: PlainObject): PlainO
     return target;
 }
 
-function customizeConfig(config: PlainObject, choices: DocsSiteChoices, existingApi: boolean): void {
+function customizeConfig(
+    config: PlainObject,
+    choices: DocsSiteChoices,
+    existingApi: boolean,
+    apiNames: string[]
+): void {
     const instances = Array.isArray(config.instances) ? config.instances : [];
     const firstInstance = isPlainObject(instances[0]) ? instances[0] : {};
     firstInstance.url = `${choices.subdomain}.docs.buildwithfern.com`;
@@ -274,7 +288,7 @@ function customizeConfig(config: PlainObject, choices: DocsSiteChoices, existing
             config.navigation = config.navigation.filter((item) => !isTab(item, "API Reference"));
         }
     } else if (existingApi) {
-        replacePlantStoreApi(config);
+        replacePlantStoreApi(config, apiNames);
     }
 
     if (!choices.features.includes("changelog")) {
@@ -292,30 +306,25 @@ function customizeConfig(config: PlainObject, choices: DocsSiteChoices, existing
     }
 }
 
-async function applyLogo(
+/** Copies a brand image into fern/docs/assets/ and returns its path relative to docs.yml. */
+async function copyBrandAsset(
     fernDir: string,
     repoDir: string,
-    logoPath: string,
-    config: PlainObject,
-    protectedFiles: Set<string>,
-    writtenFiles: Set<string>,
-    skippedFiles: Set<string>
-): Promise<void> {
-    const sourcePath = path.isAbsolute(logoPath) ? logoPath : path.resolve(repoDir, logoPath);
-    const extension = path.extname(sourcePath) || ".svg";
-    const relativePath = `docs/assets/logo-light${extension}`;
-    const portablePath = relativePath;
-    if (protectedFiles.has(portablePath)) {
-        recordSkipped(`fern/${portablePath}`, skippedFiles);
+    sourceFile: string,
+    name: string,
+    files: { protectedFiles: Set<string>; writtenFiles: Set<string>; skippedFiles: Set<string> }
+): Promise<string> {
+    const sourcePath = path.isAbsolute(sourceFile) ? sourceFile : path.resolve(repoDir, sourceFile);
+    const relativePath = `docs/assets/${name}${path.extname(sourcePath) || ".svg"}`;
+    if (files.protectedFiles.has(relativePath)) {
+        recordSkipped(`fern/${relativePath}`, files.skippedFiles);
     } else {
         const targetPath = path.join(fernDir, relativePath);
         await mkdir(path.dirname(targetPath), { recursive: true });
         await copyFile(sourcePath, targetPath);
-        recordWritten(portablePath, writtenFiles);
+        recordWritten(relativePath, files.writtenFiles);
     }
-    const logo = getOrCreateObject(config, "logo");
-    logo.light = relativePath;
-    logo.dark = relativePath;
+    return relativePath;
 }
 
 async function applyThemeCss(
@@ -413,18 +422,48 @@ function removeChangelogReferences(value: unknown): unknown {
     return value;
 }
 
-function replacePlantStoreApi(config: PlainObject): void {
+/**
+ * Points the API Reference at the project's API. A project with several APIs under fern/apis/ gets one
+ * entry per API, since an entry without `api-name` can't tell them apart.
+ */
+function replacePlantStoreApi(config: PlainObject, apiNames: string[]): void {
     if (!Array.isArray(config.navigation)) {
         return;
     }
+    const entries =
+        apiNames.length > 1
+            ? apiNames.map((name) => ({ api: toTitle(name), "api-name": name }))
+            : [{ api: "API Reference" }];
     for (const item of config.navigation) {
         if (!isTab(item, "API Reference") || !Array.isArray(item.layout)) {
             continue;
         }
-        item.layout = item.layout.map((entry) =>
-            isPlainObject(entry) && entry.api === "Plant Store API" ? { api: "API Reference" } : entry
+        item.layout = item.layout.flatMap((entry) =>
+            isPlainObject(entry) && entry.api === "Plant Store API" ? entries : [entry]
         );
     }
+}
+
+/** The API folders under fern/apis/, which `api-name` refers to. */
+async function listApiNames(fernDir: string): Promise<string[]> {
+    try {
+        const entries = await readdir(path.join(fernDir, "apis"), { withFileTypes: true });
+        return entries
+            .filter((entry) => entry.isDirectory())
+            .map((entry) => entry.name)
+            .sort();
+    } catch {
+        // No fern/apis/ folder: a single-API project.
+        return [];
+    }
+}
+
+function toTitle(name: string): string {
+    return name
+        .split(/[-_\s]+/)
+        .filter((word) => word.length > 0)
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ");
 }
 
 function isTab(value: unknown, tabName: string): value is PlainObject & { tab: string } {
@@ -457,7 +496,6 @@ function isPlainObject(value: unknown): value is PlainObject {
 function recordSkipped(file: string, skippedFiles: Set<string>): void {
     if (!skippedFiles.has(file)) {
         skippedFiles.add(file);
-        console.log(`${file} already exists, skipping`);
     }
 }
 

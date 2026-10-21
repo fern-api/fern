@@ -1,4 +1,3 @@
-// biome-ignore-all lint/suspicious/noConsole: Handoff writes report progress for interactive users.
 import { access, appendFile, mkdir, readFile, writeFile } from "fs/promises";
 import path from "path";
 import type { Detection } from "../types";
@@ -26,7 +25,15 @@ export function agentHandoffFiles(detection: Detection): string[] {
     return files.length > 0 ? files : ["AGENTS.md"];
 }
 
-export async function writeAgentHandoff(dir: string, detection: Detection): Promise<void> {
+export interface HandoffResult {
+    /** Files created or appended to, relative to the repository. */
+    written: string[];
+    /** Files left alone because they already contain Fern instructions. */
+    skipped: string[];
+}
+
+export async function writeAgentHandoff(dir: string, detection: Detection): Promise<HandoffResult> {
+    const result: HandoffResult = { written: [], skipped: [] };
     if (detection.agents.includes("claude-code")) {
         await writeIfMissing(
             dir,
@@ -36,7 +43,8 @@ name: fern
 description: Set up and use Fern docs and SDKs
 ---
 
-${HANDOFF_BODY}`
+${HANDOFF_BODY}`,
+            result
         );
     }
     if (detection.agents.includes("cursor")) {
@@ -48,7 +56,8 @@ description: Fern docs and SDK setup
 alwaysApply: false
 ---
 
-${HANDOFF_BODY}`
+${HANDOFF_BODY}`,
+            result
         );
     }
     if (!detection.agents.includes("claude-code") && !detection.agents.includes("cursor")) {
@@ -56,25 +65,27 @@ ${HANDOFF_BODY}`
         if (await exists(agentsPath)) {
             const existing = await readFile(agentsPath, "utf8");
             if (existing.includes("## Fern")) {
-                console.log("AGENTS.md already exists, skipping");
+                result.skipped.push("AGENTS.md");
             } else {
                 await appendFile(agentsPath, `\n## Fern\n\n${HANDOFF_BODY}`);
-                console.log("Appended Fern handoff to AGENTS.md");
+                result.written.push("AGENTS.md");
             }
         } else {
-            await writeIfMissing(dir, agentsPath, `## Fern\n\n${HANDOFF_BODY}`);
+            await writeIfMissing(dir, agentsPath, `## Fern\n\n${HANDOFF_BODY}`, result);
         }
     }
+    return result;
 }
 
-async function writeIfMissing(dir: string, filePath: string, contents: string): Promise<void> {
+async function writeIfMissing(dir: string, filePath: string, contents: string, result: HandoffResult): Promise<void> {
+    const relativePath = path.relative(dir, filePath);
     if (await exists(filePath)) {
-        console.log(`${path.relative(dir, filePath)} already exists, skipping`);
+        result.skipped.push(relativePath);
         return;
     }
     await mkdir(path.dirname(filePath), { recursive: true });
     await writeFile(filePath, contents);
-    console.log(`Wrote ${path.relative(dir, filePath)}`);
+    result.written.push(relativePath);
 }
 
 async function exists(filePath: string): Promise<boolean> {

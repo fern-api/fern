@@ -13,6 +13,7 @@ await main();
 
 async function main() {
     const outDirAbs = path.join(__dirname, "dist");
+    const version = process.argv[2] || packageJson.version;
     await rm(outDirAbs, { recursive: true, force: true });
 
     await tsup.build({
@@ -24,7 +25,10 @@ async function main() {
         outDir: path.join(outDirAbs, "dist"),
         clean: true,
         entry: ["src/cli.ts"],
-        noExternal: [/.*/]
+        noExternal: [/.*/],
+        // Baked in so `fern-wizard --version` reports this release, not the npm_package_version of
+        // whatever project npx runs it from.
+        env: { WIZARD_VERSION: version }
     });
 
     await mkdir(path.join(outDirAbs, "bin"), { recursive: true });
@@ -37,7 +41,7 @@ async function main() {
         JSON.stringify(
             {
                 name: packageJson.name,
-                version: process.argv[2] || packageJson.version,
+                version,
                 description: packageJson.description,
                 repository: packageJson.repository,
                 type: packageJson.type,

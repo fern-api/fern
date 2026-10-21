@@ -2,13 +2,16 @@ import { describe, expect, it, vi } from "vitest";
 import { defaultDocsSiteChoices, layoutFromFlag } from "../docs-site/options";
 import type { Detection, WizardFlags } from "../types";
 import {
+    defaultProducts,
     docsInitArgs,
     fernRunner,
+    findSpec,
     installCommand,
+    parsePublishedUrl,
     pickDefaultSpec,
     planActions,
+    planSteps,
     shouldOfferDocsSkill,
-    shouldSelectDocsSkill,
     validateFlags
 } from "../wizard";
 
@@ -41,15 +44,81 @@ describe("action planning", () => {
             "init-api",
             "init-docs",
             "docs-skills",
-            "agent-handoff",
-            "cli-interest"
+            "publish-docs",
+            "generate-sdks",
+            "agent-handoff"
         ]);
-        expect(actions.find((action) => action.id === "cli-interest")?.selectedByDefault).toBe(false);
+    });
+
+    it("groups actions into CLI setup, coding agent, and skills steps", () => {
+        const steps = planSteps(planActions({ ...baseDetection, agents: ["cursor"] }, flags).actions);
+        expect(steps.map((step) => [step.title, step.actions.map((action) => action.id)])).toEqual([
+            ["Set up Fern", ["install-cli", "init-api", "init-docs"]],
+            ["Teach your coding agent", ["agent-handoff", "agent-mcp"]],
+            ["Add skills", ["docs-skills"]],
+            ["Preview and publish your docs", ["publish-docs"]],
+            ["Generate your SDKs", ["generate-sdks"]]
+        ]);
+    });
+
+    it("offers SDK generation only when SDKs were chosen", () => {
+        const ids = (products: Array<"sdks" | "docs">) =>
+            planActions(baseDetection, flags, products).actions.map((action) => action.id);
+        expect(ids(["sdks"])).toContain("generate-sdks");
+        expect(ids(["docs"])).not.toContain("generate-sdks");
+    });
+
+    it("offers preview and publishing only when there are docs", () => {
+        const ids = (products: Array<"sdks" | "docs">) =>
+            planActions(baseDetection, flags, products).actions.map((action) => action.id);
+        expect(ids(["docs"])).toContain("publish-docs");
+        expect(ids(["sdks"])).not.toContain("publish-docs");
+        expect(
+            planActions({ ...baseDetection, fernProject: { exists: true, docsConfigExists: true } }, flags, [
+                "docs"
+            ]).actions.map((action) => action.id)
+        ).toContain("publish-docs");
+    });
+
+    it("reads the link fern prints after publishing docs", () => {
+        expect(parsePublishedUrl("[docs]: Published docs to https://acme-preview-1a2b.docs.buildwithfern.com\n")).toBe(
+            "https://acme-preview-1a2b.docs.buildwithfern.com"
+        );
+        expect(parsePublishedUrl("Published docs to https://acme.docs.buildwithfern.com.")).toBe(
+            "https://acme.docs.buildwithfern.com"
+        );
+        expect(parsePublishedUrl("Validation complete")).toBeUndefined();
+    });
+
+    it("only plans what the chosen products need", () => {
+        const sdksOnly = planActions(baseDetection, flags, ["sdks"]).actions.map((action) => action.id);
+        expect(sdksOnly).toContain("init-api");
+        expect(sdksOnly).not.toContain("init-docs");
+        expect(sdksOnly).not.toContain("docs-skills");
+
+        // Docs alone still wire up an existing spec, but skip the starter project when there is none.
+        const docsWithSpec = planActions(baseDetection, flags, ["docs"]).actions.map((action) => action.id);
+        expect(docsWithSpec).toEqual(expect.arrayContaining(["init-api", "init-docs", "docs-skills"]));
+        const docsWithoutSpec = planActions({ ...baseDetection, apiSpecs: [] }, flags, ["docs"]).actions.map(
+            (action) => action.id
+        );
+        expect(docsWithoutSpec).not.toContain("init-api");
+
+        // Nothing chosen: just the CLI and the coding-agent handoff.
+        expect(planSteps(planActions(baseDetection, flags, []).actions).map((step) => step.id)).toEqual([
+            "cli-setup",
+            "agent"
+        ]);
+    });
+
+    it("preselects SDK generation only when there is an OpenAPI spec", () => {
+        expect(defaultProducts(baseDetection)).toEqual(["sdks", "docs"]);
+        expect(defaultProducts({ ...baseDetection, apiSpecs: [] })).toEqual(["docs"]);
     });
 
     it("plans a template docs site by default and keeps Mintlify imports on fern init", () => {
         const template = planActions(baseDetection, flags).actions.find((action) => action.id === "init-docs");
-        expect(template?.title).toBe("Create a docs site from a template");
+        expect(template?.title).toBe("Create your docs site");
         expect(template?.description).toBe(
             "Copies Fern's docs starter into fern/ with the layout, branding, and features you pick next (same options as the dashboard onboarding)."
         );
@@ -107,28 +176,13 @@ describe("action planning", () => {
         }
     });
 
-    it("selects the docs-writing skill only when docs setup is selected or already exists", () => {
-        const actions = planActions(baseDetection, flags).actions;
-        const skill = actions.filter((action) => action.id === "docs-skills");
-        const initDocs = actions.filter((action) => action.id === "init-docs");
-
-        expect(shouldSelectDocsSkill(skill, baseDetection)).toBe(false);
-        expect(shouldSelectDocsSkill([...skill, ...initDocs], baseDetection)).toBe(true);
-        expect(
-            shouldSelectDocsSkill(skill, {
-                ...baseDetection,
-                fernProject: { exists: true, docsConfigExists: true }
-            })
-        ).toBe(true);
-    });
-
     it("does not print notes while planning actions", () => {
         const log = vi.spyOn(console, "log").mockImplementation(() => undefined);
         const result = planActions(
             { ...baseDetection, fernProject: { exists: true }, apiSpecs: [{ path: "event.yml", format: "asyncapi" }] },
             flags
         );
-        expect(result.notes).toEqual(["Existing Fern project detected at fern/ — skipping init"]);
+        expect(result.notes).toEqual(["Existing Fern project found in fern/, so no new project is needed"]);
         expect(log).not.toHaveBeenCalled();
         log.mockRestore();
     });
@@ -146,7 +200,7 @@ describe("action planning", () => {
             { ...flags, org: "acme" }
         ).actions;
         const initApi = actions.find((action) => action.id === "init-api");
-        expect(initApi?.title).toBe("Create a Fern project from your API spec");
+        expect(initApi?.title).toBe("Create a Fern project from openapi.yaml");
         expect(initApi?.description).toContain("openapi.yaml");
         expect(initApi?.commands).toEqual(["fern init --openapi openapi.yaml --org acme"]);
     });
@@ -221,6 +275,25 @@ describe("action planning", () => {
         });
     });
 
+    it("finds the spec named with --spec, relative to the repository or absolute", () => {
+        const specs = [
+            { path: "specs/admin/openapi.json", format: "openapi" as const },
+            { path: "specs/public/openapi.yaml", format: "openapi" as const }
+        ];
+        expect(findSpec(specs, "/repo", "specs/public/openapi.yaml")).toEqual(specs[1]);
+        expect(findSpec(specs, "/repo", "./specs/admin/openapi.json")).toEqual(specs[0]);
+        expect(findSpec(specs, "/repo", "/repo/specs/admin/openapi.json")).toEqual(specs[0]);
+        expect(findSpec(specs, "/repo", "missing.yaml")).toBeUndefined();
+    });
+
+    it("leaves out the MCP step with --skip-mcp", () => {
+        const detection: Detection = { ...baseDetection, agents: ["cursor"] };
+        const ids = (skipMcp: boolean) =>
+            planActions(detection, { ...flags, skipMcp }).actions.map((action) => action.id);
+        expect(ids(false)).toContain("agent-mcp");
+        expect(ids(true)).not.toContain("agent-mcp");
+    });
+
     it("rejects --yes initialization without an organization", () => {
         const realRunFlags = { ...flags, dryRun: false };
         expect(validateFlags(planActions(baseDetection, realRunFlags).actions, realRunFlags)).toBe(
@@ -229,6 +302,8 @@ describe("action planning", () => {
         expect(
             validateFlags(planActions(baseDetection, { ...flags, dryRun: true }).actions, { ...flags, dryRun: true })
         ).toBeUndefined();
+        // An existing project's fern.config.json already names the organization.
+        expect(validateFlags(planActions(baseDetection, realRunFlags).actions, realRunFlags, "acme")).toBeUndefined();
     });
 
     it("uses global installation without package.json and package-manager runners otherwise", () => {

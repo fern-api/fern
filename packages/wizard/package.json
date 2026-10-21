@@ -17,6 +17,7 @@
   "files": ["bin", "dist", "lib"],
   "license": "MIT",
   "dependencies": {
+    "@fern-api/cli-art": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "chalk": "catalog:",
     "inquirer": "^9.2.15",

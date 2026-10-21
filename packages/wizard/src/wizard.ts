@@ -1,29 +1,74 @@
 // biome-ignore-all lint/suspicious/noConsole: CLI output is intentionally written to stdout.
-import { stat } from "fs/promises";
+import { assertNever } from "@fern-api/core-utils";
+import chalk from "chalk";
+import { readFile, stat, writeFile } from "fs/promises";
 import inquirer from "inquirer";
 import path from "path";
+import { pathToFileURL } from "url";
+import { parse as parseYaml } from "yaml";
 import { detectRepository } from "./detect";
 import { isFernCliInstalled } from "./detect/package-manager";
 import {
-    BUTTON_SHAPES,
-    DOCS_FEATURES,
-    type DocsSiteChoices,
-    defaultDocsSiteChoices,
-    LAYOUTS,
-    TYPOGRAPHY_OPTIONS
-} from "./docs-site/options";
+    type Availability,
+    type AvailabilityChecker,
+    createAvailabilityChecker,
+    DOCS_DOMAIN,
+    findUsableName,
+    isValidName
+} from "./docs-site/availability";
+import { readFernToken } from "./docs-site/brand";
+import { applyBrand, chooseBrand, toSubdomain } from "./docs-site/brand-flow";
+import { pickAvailableName } from "./docs-site/name-picker";
+import { type DocsSiteChoices, defaultDocsSiteChoices } from "./docs-site/options";
 import { promptDocsSiteChoices } from "./docs-site/prompt";
 import { scaffoldDocsSite } from "./docs-site/scaffold";
-import { recommend } from "./recommend";
 import { showSplash } from "./splash";
-import { type Command, formatCommand, runCommand } from "./steps/commands";
+import {
+    type Command,
+    CommandFailedError,
+    formatCommand,
+    openInBrowser,
+    runCommand,
+    runCommandQuietly
+} from "./steps/commands";
 import { agentHandoffFiles, writeAgentHandoff } from "./steps/handoff";
-import type { ActionId, ActionPlan, ActionPlanResult, Agent, ApiSpec, Detection, WizardFlags } from "./types";
-import { formatAction, printNextSteps, printPlan, printRecommendations } from "./ui";
-
-interface ActionAnswers {
-    actionIds: ActionId[];
-}
+import {
+    ensureSdkGroup,
+    isDockerRunning,
+    listApis,
+    pathExists,
+    readConfiguredSdks,
+    readOrganization,
+    SDK_LANGUAGES,
+    type SdkLanguage
+} from "./steps/sdks";
+import type {
+    ActionId,
+    ActionPlan,
+    ActionPlanResult,
+    Agent,
+    ApiSpec,
+    Detection,
+    Product,
+    PublishResult,
+    SetupStep,
+    StepId,
+    WizardFlags
+} from "./types";
+import {
+    billingUrl,
+    dashboardUrl,
+    hyperlink,
+    printDetail,
+    printDone,
+    printFailed,
+    printNextSteps,
+    printPlan,
+    printSkipped,
+    printStepHeader,
+    printStepPreview,
+    withStatus
+} from "./ui";
 
 interface SpecAnswers {
     specPath: string;
@@ -41,9 +86,50 @@ const DOCS_SKILL_PATHS: Record<DocsSkillTarget, string> = {
 
 const ORG_PLACEHOLDER = "<your-org>";
 
-export function planActions(detection: Detection, flags: WizardFlags): ActionPlanResult {
+const ALL_PRODUCTS: Product[] = ["sdks", "docs"];
+
+const STEPS: Array<{ id: StepId; title: string; question: string; actions: ActionId[] }> = [
+    {
+        id: "cli-setup",
+        title: "Set up Fern",
+        question: "Set up Fern in this repo?",
+        actions: ["install-cli", "init-api", "init-docs"]
+    },
+    {
+        id: "agent",
+        title: "Teach your coding agent",
+        question: "Teach your coding agent about Fern?",
+        actions: ["agent-handoff", "agent-mcp"]
+    },
+    {
+        id: "skills",
+        title: "Add skills",
+        question: "Add Fern's docs-writing skill for your coding agent?",
+        actions: ["docs-skills"]
+    },
+    {
+        id: "publish",
+        title: "Preview and publish your docs",
+        question: "Create a preview link for your docs?",
+        actions: ["publish-docs"]
+    },
+    {
+        id: "generate",
+        title: "Generate your SDKs",
+        question: "Generate SDKs now?",
+        actions: ["generate-sdks"]
+    }
+];
+
+export function planActions(
+    detection: Detection,
+    flags: WizardFlags,
+    products: Product[] = ALL_PRODUCTS
+): ActionPlanResult {
     const actions: ActionPlan[] = [];
     const notes: string[] = [];
+    const wantsSdks = products.includes("sdks");
+    const wantsDocs = products.includes("docs");
     if (detection.fernCliVersion === null && !flags.skipInstall) {
         actions.push({
             id: "install-cli",
@@ -56,21 +142,24 @@ export function planActions(detection: Detection, flags: WizardFlags): ActionPla
             selectedByDefault: true
         });
     }
+    // API docs alone only need `fern init` when there is a spec to wire into the API reference;
+    // otherwise the docs template creates the project itself.
+    const wantsApiProject = wantsSdks || (wantsDocs && getOpenApiSpecs(detection.apiSpecs).length > 0);
     if (detection.fernProject.exists) {
-        notes.push("Existing Fern project detected at fern/ — skipping init");
-    } else {
+        notes.push("Existing Fern project found in fern/, so no new project is needed");
+    } else if (wantsApiProject) {
         const initApi = planInitApi(detection, flags, notes);
         if (initApi !== undefined) {
             actions.push(initApi);
         }
     }
-    if (!detection.fernProject.docsConfigExists) {
+    if (wantsDocs && !detection.fernProject.docsConfigExists) {
         const mintJson = findMintJson(detection);
         actions.push({
             id: "init-docs",
             ...(mintJson === undefined
                 ? {
-                      title: "Create a docs site from a template",
+                      title: "Create your docs site",
                       description:
                           "Copies Fern's docs starter into fern/ with the layout, branding, and features you pick next (same options as the dashboard onboarding)."
                   }
@@ -86,33 +175,71 @@ export function planActions(detection: Detection, flags: WizardFlags): ActionPla
             selectedByDefault: true
         });
     }
-    const docsInitializationOffered = !detection.fernProject.docsConfigExists;
+    const docsInitializationOffered = wantsDocs && !detection.fernProject.docsConfigExists;
     const docsSiteAlreadyExists = detection.fernProject.docsConfigExists === true;
     if (shouldOfferDocsSkill(docsInitializationOffered, docsSiteAlreadyExists, detection.docsSkillInstalled)) {
         actions.push(docsSkillAction(detection));
     }
-    if (detection.agents.length > 0) {
+    if (detection.agents.length > 0 && flags.skipMcp !== true) {
         actions.push(agentMcpAction(detection, flags));
+    }
+    if (wantsDocs && (detection.fernProject.docsConfigExists === true || docsInitializationOffered)) {
+        actions.push({
+            id: "publish-docs",
+            title: "Create a preview link, then choose whether to publish",
+            description:
+                "Builds a shareable preview of your docs, then asks before publishing your public site and adding it to your Fern Dashboard.",
+            commands: [
+                displayFernCommand(detection, flags, ["generate", "--docs", "--preview"]),
+                displayFernCommand(detection, flags, ["generate", "--docs"])
+            ],
+            files: [],
+            selectedByDefault: true
+        });
+    }
+    if (wantsSdks && (detection.fernProject.exists || actions.some((action) => action.id === "init-api"))) {
+        actions.push({
+            id: "generate-sdks",
+            title: "Pick your SDK languages, then generate them into sdks/",
+            description: "Adds a generator for each language you pick and generates the SDKs into this repository.",
+            commands: [displayFernCommand(detection, flags, ["generate"])],
+            files: ["sdks/"],
+            selectedByDefault: true
+        });
     }
     actions.push({
         id: "agent-handoff",
-        title: "Teach your coding agent about Fern",
+        title: handoffTitle(detection),
         description: "Writes Fern setup instructions your agent picks up automatically. Existing files are left alone.",
         commands: [],
         files: agentHandoffFiles(detection),
         selectedByDefault: true
     });
-    if (detection.apiSpecs.length > 0) {
-        actions.push({
-            id: "cli-interest",
-            title: "Interested in a generated CLI for your API?",
-            description: "Prints the early-access quickstart and demo links. Changes nothing.",
-            commands: [],
-            files: [],
-            selectedByDefault: false
-        });
-    }
     return { actions, notes };
+}
+
+/** Names the agents that will get Fern instructions, e.g. "Claude Code and Cursor". */
+function handoffTitle(detection: Detection): string {
+    const agents = detection.agents.filter((agent) => agent === "claude-code" || agent === "cursor");
+    if (agents.length === 0) {
+        return "Add Fern instructions to AGENTS.md";
+    }
+    return `Write Fern instructions for ${agents.map((agent) => AGENT_NAMES[agent]).join(" and ")}`;
+}
+
+/** Groups planned actions into the wizard's steps, dropping steps with nothing to do. */
+export function planSteps(actions: ActionPlan[]): SetupStep[] {
+    return STEPS.map((step) => ({
+        id: step.id,
+        title: step.title,
+        question: step.question,
+        actions: step.actions.flatMap((id) => actions.filter((action) => action.id === id))
+    })).filter((step) => step.actions.length > 0);
+}
+
+/** SDK generation needs an OpenAPI spec to start from, so it is only preselected when one exists. */
+export function defaultProducts(detection: Detection): Product[] {
+    return getOpenApiSpecs(detection.apiSpecs).length > 0 ? ["sdks", "docs"] : ["docs"];
 }
 
 export function shouldOfferDocsSkill(
@@ -121,10 +248,6 @@ export function shouldOfferDocsSkill(
     skillAlreadyInstalled: boolean
 ): boolean {
     return !skillAlreadyInstalled && (docsInitializationOffered || docsSiteAlreadyExists);
-}
-
-export function shouldSelectDocsSkill(selected: ActionPlan[], detection: Detection): boolean {
-    return detection.fernProject.docsConfigExists === true || selected.some((action) => action.id === "init-docs");
 }
 
 function docsSkillTargets(detection: Detection): DocsSkillTarget[] {
@@ -148,7 +271,7 @@ function docsSkillAction(detection: Detection): ActionPlan {
     });
     return {
         id: "docs-skills",
-        title: "Add Fern's docs-writing skill to this repo",
+        title: "Add the fern-docs skill",
         description:
             "Installs the fern-docs skill from fern-api/skills so your coding agent follows Fern's conventions for docs.yml, navigation, components, changelogs, redirects, and access control. Commit the files so your team gets it too.",
         commands: [command],
@@ -160,7 +283,7 @@ function docsSkillAction(detection: Detection): ActionPlan {
 function agentMcpAction(detection: Detection, flags: WizardFlags): ActionPlan {
     return {
         id: "agent-mcp",
-        title: "Connect your coding agents to Fern",
+        title: "Connect Fern's MCP server to your coding agents",
         description:
             "Signs you in to Fern, then adds the Fern MCP server to the Claude Code, Cursor, or Codex config in your home directory (for example ~/.cursor/mcp.json).",
         commands: [
@@ -179,7 +302,10 @@ function planInitApi(detection: Detection, flags: WizardFlags, notes: string[]):
         const spec = openApiSpecs.length === 1 || flags.yes ? pickDefaultSpec(openApiSpecs) : undefined;
         return {
             id: "init-api",
-            title: "Create a Fern project from your API spec",
+            title:
+                spec === undefined
+                    ? "Create a Fern project from your API spec"
+                    : `Create a Fern project from ${spec.path}`,
             description: `Creates fern/ with fern.config.json and generators.yml pointing at ${spec?.path ?? "the spec you pick next"}.`,
             commands: [
                 displayFernCommand(detection, flags, [
@@ -245,251 +371,725 @@ export async function runWizard(flags: WizardFlags): Promise<number> {
         return 1;
     }
 
-    const detection = await showSplash(dir, detectRepository(dir));
-    const recommendations = recommend(detection);
-    printRecommendations(recommendations);
-    const planned = planActions(detection, flags);
-    for (const note of planned.notes) {
-        console.log(note);
+    const detected = await showSplash(dir, detectRepository(dir), flags.splash);
+    const spec = flags.spec === undefined ? undefined : findSpec(detected.apiSpecs, dir, flags.spec);
+    if (flags.spec !== undefined && spec === undefined) {
+        const found = detected.apiSpecs.map((candidate) => candidate.path).join(", ") || "none";
+        console.error(`No API spec found at ${flags.spec}. Specs found: ${found}`);
+        return 1;
     }
-    const actions = planned.actions;
-    let selected = flags.yes
-        ? actions.filter((action) => action.selectedByDefault)
-        : await chooseActions(actions, detection, flags);
-    const shouldSelectSkill = shouldSelectDocsSkill(selected, detection);
-    if (!shouldSelectSkill) {
-        selected = selected.filter((action) => action.id !== "docs-skills");
-    }
-    const validationError = validateFlags(selected, flags);
+    // --spec narrows the run to that spec, so nothing asks which one to use.
+    const detection = spec === undefined ? detected : { ...detected, apiSpecs: [spec] };
+    const products = flags.products ?? (flags.yes ? defaultProducts(detection) : await chooseProducts(detection));
+    const planned = planActions(detection, flags, products);
+    // Publishing and generating SDKs need a person to make choices, so non-interactive runs stop short of them.
+    const steps = planSteps(planned.actions).filter(
+        (step) => !(flags.yes && (step.id === "publish" || step.id === "generate"))
+    );
+    // An existing Fern project already names its organization.
+    const projectOrg = await readOrganization(dir);
+    const validationError = validateFlags(planned.actions, flags, projectOrg);
     if (validationError !== undefined) {
         console.error(validationError);
         return 1;
     }
-    const effectiveFlags =
-        selected.some((action) => action.id === "init-api" || action.id === "init-docs") &&
-        flags.org === undefined &&
-        !flags.yes
-            ? { ...flags, org: await promptForOrganization() }
-            : flags;
-
-    if (effectiveFlags.org !== flags.org) {
-        const refreshedActions = planActions(detection, effectiveFlags).actions;
-        selected = selected.map((action) => {
-            const refreshed = refreshedActions.find((candidate) => candidate.id === action.id);
-            return refreshed === undefined ? action : { ...refreshed, description: action.description };
-        });
-    }
-
-    let docsSiteChoices: DocsSiteChoices | undefined;
-    if (selected.some((action) => action.id === "init-docs") && findMintJson(detection) === undefined) {
-        const org = effectiveFlags.org ?? ORG_PLACEHOLDER;
-        const defaults = defaultDocsSiteChoices(org, effectiveFlags.template);
-        const choices = effectiveFlags.yes ? defaults : await promptDocsSiteChoices(defaults, dir);
-        docsSiteChoices = choices;
-        selected = selected.map((action) =>
-            action.id === "init-docs" ? { ...action, description: summarizeDocsSiteChoices(choices) } : action
-        );
-    }
-
-    if (!flags.yes && shouldSelectSkill) {
-        const skillAction = actions.find((action) => action.id === "docs-skills");
-        if (skillAction !== undefined) {
-            const answer = await inquirer.prompt<{ addDocsSkill: boolean }>([
-                {
-                    type: "confirm",
-                    name: "addDocsSkill",
-                    message: "Add Fern's standard docs-writing skill (fern-docs) to this repo for your coding agent?",
-                    default: true
-                }
-            ]);
-            if (answer.addDocsSkill) {
-                selected.push(skillAction);
-            }
-        }
-    }
-
-    selected = orderActions(selected);
     if (flags.dryRun) {
-        printPlan(selected);
+        printPlan(steps, planned.notes);
         return 0;
     }
 
+    let org = projectOrg ?? flags.org;
     let failed = false;
-    let cliInterest = false;
+    let orgTaken = false;
     let scaffoldedDocsSite: DocsSiteChoices | undefined;
-    for (const action of selected) {
-        try {
-            if (action.id === "cli-interest") {
-                cliInterest = true;
-                console.log(
-                    "\nThe CLI generator is early access. Learn more at https://buildwithfern.com/learn/cli-generator/get-started/quickstart"
+    const published: PublishResult = {};
+    for (const [index, step] of steps.entries()) {
+        printStepHeader(index + 1, steps.length, step.title);
+        if (step.id === "cli-setup") {
+            for (const note of planned.notes) {
+                printSkipped(note);
+            }
+        }
+        printStepPreview(step.actions.filter((action) => action.id !== "agent-mcp"));
+        if (!flags.yes && !(await confirm(step.question))) {
+            printSkipped("Skipped");
+            continue;
+        }
+
+        let docsSiteChoices: DocsSiteChoices | undefined;
+        if (step.id === "cli-setup") {
+            const buildsDocsSite =
+                step.actions.some((action) => action.id === "init-docs") && findMintJson(detection) === undefined;
+            // Look up the brand first so the docs site, and the suggested org name, come pre-filled.
+            const brand =
+                buildsDocsSite && !flags.skipBrand
+                    ? await chooseBrand({
+                          dir,
+                          org,
+                          query: flags.brand,
+                          yes: flags.yes,
+                          login: () => runFernCommand(["login"], dir, detection)
+                      })
+                    : undefined;
+            const needsOrg = step.actions.some((action) => action.id === "init-api" || action.id === "init-docs");
+            // The brand lookup already offered to sign in; otherwise offer it here so the org name is
+            // checked and created now, not when publishing in a later step.
+            const offeredSignIn = buildsDocsSite && !flags.skipBrand;
+            if (needsOrg && !flags.yes && !offeredSignIn && (await readFernToken()) === undefined) {
+                if (await confirm("Sign in to Fern to check and reserve your organization name?")) {
+                    await runFernCommand(["login"], dir, detection);
+                }
+            }
+            const token = await readFernToken();
+            const availability = token === undefined ? undefined : createAvailabilityChecker(token);
+            if (needsOrg && org === undefined) {
+                const brandSlug = brand?.brand.slug === undefined ? undefined : toSubdomain(brand.brand.slug);
+                const typed = await promptForOrganization(brandSlug);
+                org =
+                    availability === undefined
+                        ? typed
+                        : await pickAvailableName({
+                              name: typed,
+                              noun: "organization name",
+                              check: (name) => availability.organization(name),
+                              reserve: (name) => reserveOrganization(name, availability)
+                          });
+            } else if (needsOrg && org !== undefined && availability !== undefined) {
+                if (projectOrg !== undefined && flags.org !== undefined && flags.org !== projectOrg) {
+                    printSkipped(`Using the organization ${projectOrg} from fern/fern.config.json instead of --org`);
+                }
+                if (!(await reserveOrganization(org, availability))) {
+                    if (projectOrg === undefined || flags.yes) {
+                        failed = true;
+                        orgTaken = true;
+                        printFailed(
+                            projectOrg === undefined
+                                ? `The Fern organization "${org}" belongs to another team. Re-run with a different --org, like "${org}-docs".`
+                                : `fern/fern.config.json uses the Fern organization "${org}", which belongs to another team. Change "organization" there, then re-run.`
+                        );
+                        continue;
+                    }
+                    org = await switchProjectOrganization(dir, org, availability);
+                }
+            }
+            if (buildsDocsSite) {
+                const defaults = applyBrand(defaultDocsSiteChoices(org ?? ORG_PLACEHOLDER, flags.template), brand);
+                const chosen =
+                    flags.yes || !(await confirmCustomize()) ? defaults : await promptDocsSiteChoices(defaults, dir);
+                docsSiteChoices =
+                    availability === undefined
+                        ? chosen
+                        : await withFreeDocsUrl(chosen, availability, { interactive: !flags.yes, org });
+            }
+        }
+
+        for (const action of step.actions) {
+            if (action.id === "agent-mcp" && !flags.yes && !(await confirm(mcpQuestion(detection)))) {
+                continue;
+            }
+            try {
+                await runAction(
+                    action,
+                    dir,
+                    detection,
+                    { ...flags, org },
+                    docsSiteChoices ?? scaffoldedDocsSite,
+                    published
                 );
-                console.log("Book a demo: https://buildwithfern.com/book-demo?type=cli");
-            } else if (action.id === "agent-handoff") {
-                await writeAgentHandoff(dir, detection);
-            } else {
-                await executeAction(action.id, dir, detection, effectiveFlags, docsSiteChoices);
                 if (action.id === "init-docs" && docsSiteChoices !== undefined) {
                     scaffoldedDocsSite = docsSiteChoices;
                 }
+            } catch (error) {
+                failed = true;
+                printFailed(`${action.title} failed: ${error instanceof Error ? error.message : String(error)}`);
             }
-        } catch (error) {
-            failed = true;
-            console.error(`Step failed (${action.id}): ${error instanceof Error ? error.message : String(error)}`);
         }
     }
-    printNextSteps(cliInterest, scaffoldedDocsSite);
+    printNextSteps(products, {
+        organization: orgTaken ? undefined : await readOrganization(dir),
+        docsUrl: await docsSiteUrl(dir, scaffoldedDocsSite),
+        ...published
+    });
     return failed ? 1 : 0;
 }
 
-function summarizeDocsSiteChoices(choices: DocsSiteChoices): string {
-    const layout = LAYOUTS.find((option) => option.id === choices.layout);
-    const features = DOCS_FEATURES.filter((feature) => choices.features.includes(feature.id)).map(
-        (feature) => feature.label
-    );
-    const details = [
-        `${layout?.label ?? "Stacked"} layout`,
-        `${choices.subdomain}.docs.buildwithfern.com`,
-        features.length > 0 ? features.join(", ") : "No features",
-        ...(choices.typography === undefined
-            ? []
-            : [
-                  `${TYPOGRAPHY_OPTIONS.find((option) => option.id === choices.typography)?.label ?? "Custom"} typography`
-              ]),
-        ...(choices.buttonShape === undefined
-            ? []
-            : [`${BUTTON_SHAPES.find((option) => option.id === choices.buttonShape)?.label ?? "Custom"} buttons`]),
-        ...(choices.primaryColor === undefined ? [] : [choices.primaryColor])
-    ];
-    return details.join(" · ");
+async function chooseProducts(detection: Detection): Promise<Product[]> {
+    const preselected = defaultProducts(detection);
+    const answer = await inquirer.prompt<{ products: Product[] }>([
+        {
+            type: "checkbox",
+            name: "products",
+            message: "What do you want to set up?",
+            choices: [
+                { name: "SDK generation", value: "sdks", checked: preselected.includes("sdks") },
+                { name: "API docs", value: "docs", checked: preselected.includes("docs") }
+            ]
+        }
+    ]);
+    return answer.products;
 }
 
-function orderActions(actions: ActionPlan[]): ActionPlan[] {
-    const order: ActionId[] = [
-        "install-cli",
-        "init-api",
-        "init-docs",
-        "docs-skills",
-        "agent-mcp",
-        "agent-handoff",
-        "cli-interest"
-    ];
-    return [...actions].sort((left, right) => order.indexOf(left.id) - order.indexOf(right.id));
+async function confirm(message: string): Promise<boolean> {
+    const answer = await inquirer.prompt<{ proceed: boolean }>([
+        { type: "confirm", name: "proceed", message, default: true }
+    ]);
+    return answer.proceed;
 }
 
-export function validateFlags(selected: ActionPlan[], flags: WizardFlags): string | undefined {
+function mcpQuestion(detection: Detection): string {
+    const names = detection.agents.map((agent) => AGENT_NAMES[agent]).join(", ");
+    return `Also connect Fern's MCP server to ${names}? This signs you in to Fern.`;
+}
+
+const AGENT_NAMES: Record<Agent, string> = {
+    "claude-code": "Claude Code",
+    cursor: "Cursor",
+    codex: "Codex",
+    vscode: "VS Code",
+    windsurf: "Windsurf"
+};
+
+/** Runs one action quietly and prints a one-line result. */
+async function runAction(
+    action: ActionPlan,
+    dir: string,
+    detection: Detection,
+    flags: WizardFlags,
+    docsSiteChoices: DocsSiteChoices | undefined,
+    published: PublishResult
+): Promise<void> {
+    switch (action.id) {
+        case "install-cli":
+            await withStatus("Installing the Fern CLI", () => runCommandQuietly(installCommand(detection), dir));
+            if (!detection.hasPackageJson) {
+                detection.fernCliVersion = await isFernCliInstalled(dir);
+            }
+            printDone("Installed the Fern CLI");
+            return;
+        case "init-api": {
+            // planActions only offers init-api when there is an OpenAPI spec or nothing to import at all.
+            const spec = await chooseSpec(getOpenApiSpecs(detection.apiSpecs), flags.yes);
+            const args =
+                spec === undefined
+                    ? ["init", ...orgArgs(flags.org)]
+                    : ["init", "--openapi", spec.path, ...orgArgs(flags.org)];
+            await withStatus("Creating your Fern project", () => runCommandQuietly(fernRunner(detection, args), dir));
+            printDone(
+                spec === undefined ? "Created a starter Fern project in fern/" : `Created fern/ from ${spec.path}`
+            );
+            return;
+        }
+        case "init-docs": {
+            const mintJson = findMintJson(detection);
+            if (mintJson !== undefined) {
+                await withStatus("Importing your Mintlify docs", () =>
+                    runCommandQuietly(fernRunner(detection, docsInitArgs(mintJson, flags.org)), dir)
+                );
+                printDone(`Imported your Mintlify docs from ${mintJson}`);
+                return;
+            }
+            if (docsSiteChoices === undefined) {
+                throw new Error("Docs site choices are missing.");
+            }
+            const choices = docsSiteChoices;
+            const result = await withStatus("Building your docs site", () =>
+                scaffoldDocsSite({ dir, org: flags.org ?? ORG_PLACEHOLDER, choices })
+            );
+            printDone(`Created your docs site in fern/ (${result.written.length} files)`);
+            return;
+        }
+        case "docs-skills":
+            await withStatus("Adding the fern-docs skill", () => runCommandQuietly(docsSkillCommand(detection), dir));
+            printDone(
+                `Added the fern-docs skill (${action.files.filter((file) => file !== "skills-lock.json").join(", ")})`
+            );
+            return;
+        case "agent-handoff": {
+            const result = await writeAgentHandoff(dir, detection);
+            if (result.written.length > 0) {
+                printDone(`Wrote ${result.written.join(", ")}`);
+            }
+            if (result.skipped.length > 0) {
+                printSkipped(
+                    `${result.skipped.join(", ")} already ${result.skipped.length === 1 ? "has" : "have"} Fern instructions`
+                );
+            }
+            return;
+        }
+        case "agent-mcp":
+            if (flags.yes && (await readFernToken()) === undefined) {
+                // Signing in opens a browser and waits, which a non-interactive run can't do.
+                printSkipped(
+                    "Not signed in to Fern, so the MCP server wasn't connected. Run `fern login`, then `fern mcp install`."
+                );
+                return;
+            }
+            // Signing in may open a browser and wait for it, so it keeps the terminal.
+            await runFernCommand(["login"], dir, detection);
+            await withStatus("Connecting Fern's MCP server", () =>
+                runCommandQuietly(fernRunner(detection, ["mcp", "install"]), dir)
+            );
+            printDone("Connected Fern's MCP server to your coding agents");
+            return;
+        case "publish-docs":
+            await previewAndPublish(dir, detection, docsSiteChoices, published);
+            return;
+        case "generate-sdks":
+            await generateSdks(dir, detection, published);
+            return;
+        default:
+            assertNever(action.id);
+    }
+}
+
+export function validateFlags(selected: ActionPlan[], flags: WizardFlags, projectOrg?: string): string | undefined {
     const needsOrganization = selected.some((action) => action.id === "init-api" || action.id === "init-docs");
-    if (needsOrganization && flags.yes && flags.org === undefined && !flags.dryRun) {
+    if (needsOrganization && flags.yes && flags.org === undefined && projectOrg === undefined && !flags.dryRun) {
         return "--yes requires --org <name> when initializing a Fern project";
     }
     return undefined;
 }
 
-async function promptForOrganization(): Promise<string> {
+async function promptForOrganization(suggestion: string | undefined): Promise<string> {
     const answer = await inquirer.prompt<{ organization: string }>([
         {
             type: "input",
             name: "organization",
             message: "Fern organization name (used for fern.config.json)",
-            validate: (input: string) => input.trim().length > 0 || "Organization name cannot be empty"
+            default: suggestion,
+            validate: (input: string) =>
+                isValidName(input.trim()) || "Use lowercase letters, numbers, and hyphens (not at the start or end)."
         }
     ]);
     return answer.organization.trim();
 }
 
-async function chooseActions(actions: ActionPlan[], detection: Detection, flags: WizardFlags): Promise<ActionPlan[]> {
-    const visibleActions = actions.filter((action) => action.id !== "docs-skills");
-    const answer = await inquirer.prompt<ActionAnswers>([
-        {
-            type: "checkbox",
-            name: "actionIds",
-            message: "Choose what to set up",
-            // Each choice spans several lines; show them all instead of paginating mid-choice.
-            pageSize: 40,
-            loop: false,
-            choices: visibleActions.map((action) => ({
-                // Continuation lines line up with the title after inquirer's "❯◉ " prefix; the trailing
-                // newline leaves a blank line between steps.
-                name: `${formatAction(action, "   ")}\n`,
-                short: action.title,
-                value: action.id,
-                checked: action.selectedByDefault
-            }))
-        }
-    ]);
-    if (answer.actionIds.includes("agent-mcp") || detection.agents.length > 0) {
-        return visibleActions.filter((action) => answer.actionIds.includes(action.id));
+/**
+ * Creates the organization now if it's free, so a name another team owns is caught before setup
+ * continues. Returns false only when another team owns it.
+ */
+async function reserveOrganization(name: string, availability: AvailabilityChecker): Promise<boolean> {
+    const result = await withStatus(`Checking the organization name ${name}`, () =>
+        availability.claimOrganization(name)
+    );
+    switch (result) {
+        case "created":
+            printDone(`Created the Fern organization ${name}`);
+            return true;
+        case "mine":
+            printDone(`Using your Fern organization ${name}`);
+            return true;
+        case "taken":
+            return false;
+        case "unknown":
+            printSkipped(`Couldn't create the Fern organization ${name} yet; Fern will try again when you publish`);
+            return true;
+        default:
+            assertNever(result);
     }
-    const optIn = await inquirer.prompt<{ installMcp: boolean }>([
+}
+
+/**
+ * Keeps the chosen docs URL if it's free (or already the user's). Otherwise the user picks from free
+ * alternatives (the organization name first), or, without prompts, a free one is chosen like the
+ * Dashboard does.
+ */
+async function withFreeDocsUrl(
+    choices: DocsSiteChoices,
+    availability: AvailabilityChecker,
+    { interactive, org }: { interactive: boolean; org: string | undefined }
+): Promise<DocsSiteChoices> {
+    if (interactive) {
+        const subdomain = await pickAvailableName({
+            name: choices.subdomain,
+            noun: "docs URL",
+            check: (name) => availability.docsUrl(name),
+            display: (name) => `${name}.${DOCS_DOMAIN}`,
+            preferred: org === undefined ? [] : [org]
+        });
+        return { ...choices, subdomain };
+    }
+    const usable = await findUsableName(choices.subdomain, (name) => availability.docsUrl(name));
+    if (!usable.changed) {
+        return choices;
+    }
+    printSkipped(
+        `${choices.subdomain}.${DOCS_DOMAIN} belongs to another team, so your docs will use ${usable.name}.${DOCS_DOMAIN}`
+    );
+    return { ...choices, subdomain: usable.name };
+}
+
+/** The brand fills in the docs site; the detailed template questions are optional. */
+async function confirmCustomize(): Promise<boolean> {
+    const answer = await inquirer.prompt<{ customize: boolean }>([
         {
             type: "confirm",
-            name: "installMcp",
-            message:
-                "Connect a coding agent (Claude Code, Cursor, or Codex) to Fern? This runs `fern login` and `fern mcp install`.",
+            name: "customize",
+            message: "Customize the docs site (title, URL, layout, colors, fonts, features)?",
             default: false
         }
     ]);
-    return optIn.installMcp
-        ? [...visibleActions.filter((action) => answer.actionIds.includes(action.id)), agentMcpAction(detection, flags)]
-        : visibleActions.filter((action) => answer.actionIds.includes(action.id));
+    return answer.customize;
 }
 
-async function executeAction(
-    id: Exclude<ActionId, "agent-handoff" | "cli-interest">,
+/**
+ * Publishes a preview of the docs and shows its link, then asks before publishing the public site.
+ * `fern generate --docs` creates the Fern organization if it doesn't exist yet.
+ */
+async function previewAndPublish(
     dir: string,
     detection: Detection,
-    flags: WizardFlags,
-    docsSiteChoices?: DocsSiteChoices
+    docsSiteChoices: DocsSiteChoices | undefined,
+    published: PublishResult
 ): Promise<void> {
-    if (id === "install-cli") {
-        await runCommand(installCommand(detection), dir);
-        if (!detection.hasPackageJson) {
-            detection.fernCliVersion = await isFernCliInstalled(dir);
+    if ((await readFernToken()) === undefined) {
+        // Signing in may open a browser and wait for it, so it keeps the terminal.
+        await runFernCommand(["login"], dir, detection);
+    }
+    await checkProjectOrganization(dir);
+    const previewOutput = await withStatus("Building a preview of your docs (this can take a minute)", () =>
+        runFernQuietly(["generate", "--docs", "--preview", "--no-prompt"], dir, detection)
+    );
+    const previewUrl = parsePublishedUrl(previewOutput);
+    published.previewUrl = previewUrl;
+    printDone(previewUrl === undefined ? "Built a preview of your docs" : `Preview ready: ${chalk.cyan(previewUrl)}`);
+
+    const siteUrl = await ensureFreeDocsUrl(dir, await docsSiteUrl(dir, docsSiteChoices));
+    const dashboard = dashboardUrl(await readOrganization(dir));
+    const publish = await inquirer.prompt<{ publish: boolean }>([
+        {
+            type: "confirm",
+            name: "publish",
+            message: `Publish your docs to ${siteUrl ?? "your docs site"}? They'll be public and appear in your Fern Dashboard.`,
+            default: false
         }
+    ]);
+    if (!publish.publish) {
+        printSkipped("Not published. Run `fern generate --docs` when you're ready to add them to your Fern Dashboard.");
         return;
     }
-    if (id === "init-api") {
-        // planActions only offers init-api when there is an OpenAPI spec or nothing to import at all.
-        const spec = await chooseSpec(getOpenApiSpecs(detection.apiSpecs), flags.yes);
-        await runFernCommand(
-            spec === undefined
-                ? ["init", ...orgArgs(flags.org)]
-                : ["init", "--openapi", spec.path, ...orgArgs(flags.org)],
-            dir,
-            detection
+    let publishOutput: string;
+    let fallbackUrl = siteUrl;
+    try {
+        publishOutput = await withStatus("Publishing your docs", () =>
+            runFernQuietly(["generate", "--docs", "--no-prompt"], dir, detection)
+        );
+    } catch (error) {
+        const takenDomain = error instanceof PublishFailedError ? error.takenDomain : undefined;
+        if (takenDomain === undefined) {
+            throw error;
+        }
+        // Someone else owns this docs URL: let the user pick another, update docs.yml, and try again.
+        printFailed(`${takenDomain} belongs to another team on Fern`);
+        const subdomain = await promptForDocsUrl(takenDomain);
+        await setDocsUrl(dir, takenDomain, `${subdomain}.${DOCS_DOMAIN}`);
+        publishOutput = await withStatus("Publishing your docs", () =>
+            runFernQuietly(["generate", "--docs", "--no-prompt"], dir, detection)
+        );
+        fallbackUrl = `https://${subdomain}.${DOCS_DOMAIN}`;
+    }
+    published.publishedUrl = parsePublishedUrl(publishOutput) ?? fallbackUrl;
+    printDone(`Published to ${chalk.cyan(published.publishedUrl ?? "your docs site")}`);
+    printDone(`Added to your Fern Dashboard: ${chalk.cyan(dashboard)}`);
+}
+
+async function promptForDocsUrl(takenDomain: string): Promise<string> {
+    const token = await readFernToken();
+    const taken = takenDomain.replace(`.${DOCS_DOMAIN}`, "");
+    const availability = token === undefined ? undefined : createAvailabilityChecker(token);
+    // The publish just proved this URL is taken, even if the registry hadn't caught up.
+    const check = async (name: string): Promise<Availability> =>
+        name === taken ? "taken" : (availability?.docsUrl(name) ?? "unknown");
+    return pickAvailableName({ name: taken, noun: "docs URL", check, display: (name) => `${name}.${DOCS_DOMAIN}` });
+}
+
+/** Lets the user pick SDK languages, adds their generators, and generates the SDKs into this repository. */
+async function generateSdks(dir: string, detection: Detection, results: PublishResult): Promise<void> {
+    const apis = await listApis(dir);
+    if (apis.length > 1) {
+        printSkipped(
+            `This project has several APIs (${apis.join(", ")}). Add SDKs to one with \`fern add <generator> --api <name>\`, then run \`fern generate --api <name>\`.`
         );
         return;
     }
-    if (id === "init-docs") {
-        const mintJson = findMintJson(detection);
-        if (mintJson === undefined) {
-            if (docsSiteChoices === undefined) {
-                throw new Error("Docs site choices are missing.");
-            }
-            await scaffoldDocsSite({ dir, org: flags.org ?? ORG_PLACEHOLDER, choices: docsSiteChoices });
-        } else {
-            await runFernCommand(docsInitArgs(mintJson, flags.org), dir, detection);
+    await checkProjectOrganization(dir);
+    const group = await ensureSdkGroup(dir);
+    const groupArgs = group === undefined ? [] : ["--group", group];
+    const configured = await readConfiguredSdks(dir);
+    const configuredGenerators = new Set(configured.map((sdk) => sdk.language.generator));
+    const answer = await inquirer.prompt<{ generators: string[] }>([
+        {
+            type: "checkbox",
+            name: "generators",
+            message: "Which SDKs do you want?",
+            pageSize: SDK_LANGUAGES.length + 1,
+            choices: SDK_LANGUAGES.map((language) => ({
+                name: language.free ? language.label : `${language.label} ${chalk.dim("(Enterprise plan)")}`,
+                value: language.generator,
+                // Languages already in generators.yml are always generated, so they can't be unchecked here.
+                ...(configuredGenerators.has(language.generator)
+                    ? { checked: true, disabled: "already set up" }
+                    : { checked: configured.length === 0 && language.generator === "fern-typescript-sdk" })
+            }))
         }
+    ]);
+    const added = SDK_LANGUAGES.filter(
+        (language) => answer.generators.includes(language.generator) && !configuredGenerators.has(language.generator)
+    );
+    const enterprise = added.filter((language) => !language.free);
+    const includeEnterprise =
+        enterprise.length === 0 || (await continueWithEnterpriseLanguages(enterprise, await readOrganization(dir)));
+    for (const language of added) {
+        if (language.free || includeEnterprise) {
+            await withStatus(`Adding the ${language.label} SDK`, () =>
+                runFernQuietly(["add", language.generator, ...groupArgs], dir, detection)
+            );
+        }
+    }
+
+    const sdks = await readConfiguredSdks(dir);
+    if (sdks.length === 0) {
+        printSkipped("No SDKs to generate");
         return;
     }
-    if (id === "docs-skills") {
-        await runCommand(docsSkillCommand(detection), dir);
+    // Docker generates on this machine; without it, Fern generates the SDKs on its servers.
+    const local = await isDockerRunning();
+    const names = sdks.map((sdk) => sdk.language.label).join(", ");
+    try {
+        await withStatus(
+            `Generating ${names} ${local ? "with Docker" : "on Fern's servers"} (this can take a few minutes)`,
+            () =>
+                runFernQuietly(["generate", ...groupArgs, ...(local ? ["--local"] : []), "--no-prompt"], dir, detection)
+        );
+    } catch (error) {
+        if (!local && error instanceof Error) {
+            throw new Error(
+                `${error.message}\nTo generate on this machine instead, start Docker and run \`fern generate --local\`.`
+            );
+        }
+        throw error;
+    }
+
+    const generated: Array<{ label: string; path: string }> = [];
+    for (const sdk of sdks) {
+        if (sdk.outputPath !== undefined && (await pathExists(sdk.outputPath))) {
+            const relative = path.relative(dir, sdk.outputPath) || ".";
+            generated.push({ label: sdk.language.label, path: relative });
+            printDone(
+                `${sdk.language.label} SDK  ${chalk.cyan(hyperlink(relative, pathToFileURL(sdk.outputPath).href))}`
+            );
+        } else {
+            printSkipped(`${sdk.language.label} SDK wasn't written to this repository; check fern/generators.yml`);
+        }
+    }
+    results.generatedSdks = generated;
+}
+
+/**
+ * The Free plan includes TypeScript and Python SDKs; other languages need the Enterprise plan. Sends
+ * the user to the billing page in the Fern Dashboard to upgrade, unless their organization already has
+ * it. Returns whether to set up the Enterprise languages now.
+ */
+async function continueWithEnterpriseLanguages(
+    languages: SdkLanguage[],
+    organization: string | undefined
+): Promise<boolean> {
+    const names = languages.map((language) => language.label).join(", ");
+    const them = languages.length === 1 ? "it" : "them";
+    const billing = billingUrl(organization);
+    const answer = await inquirer.prompt<{ choice: "upgrade" | "enterprise" | "skip" }>([
+        {
+            type: "list",
+            name: "choice",
+            message: `${names} ${languages.length === 1 ? "SDK needs" : "SDKs need"} the Enterprise plan (TypeScript and Python are free). What next?`,
+            choices: [
+                { name: "Upgrade in the Fern Dashboard (opens the billing page)", value: "upgrade" },
+                { name: `My organization already has Enterprise: set up ${names}`, value: "enterprise" },
+                { name: `Skip ${names} for now`, value: "skip" }
+            ]
+        }
+    ]);
+    switch (answer.choice) {
+        case "enterprise":
+            return true;
+        case "skip":
+            printSkipped(`Skipped ${names}. Upgrade at ${billing} to add ${them} later.`);
+            return false;
+        case "upgrade": {
+            if (await openInBrowser(billing)) {
+                printDone(`Opened the billing page: ${chalk.cyan(billing)}`);
+            } else {
+                printDetail(`Open this page to upgrade: ${chalk.cyan(billing)}`);
+            }
+            if (await confirm(`Finished upgrading? Set up ${names} now?`)) {
+                return true;
+            }
+            printSkipped(
+                `Skipped ${names}. After upgrading, add ${them} with ${languages.map((language) => `\`fern add ${language.generator}\``).join(", ")}.`
+            );
+            return false;
+        }
+        default:
+            assertNever(answer.choice);
+    }
+}
+
+/**
+ * Before publishing or generating, makes sure the organization in fern/fern.config.json is the user's,
+ * creating it if it's free. When another team owns it, the user picks a different one.
+ */
+async function checkProjectOrganization(dir: string): Promise<void> {
+    const token = await readFernToken();
+    const organization = await readOrganization(dir);
+    if (token === undefined || organization === undefined) {
         return;
     }
-    let firstError: unknown;
+    const availability = createAvailabilityChecker(token);
+    const result = await availability.claimOrganization(organization);
+    switch (result) {
+        case "mine":
+        case "unknown":
+            // Already the user's, or Fern can't say; `fern generate` reports any problem itself.
+            return;
+        case "created":
+            printDone(`Created the Fern organization ${organization}`);
+            return;
+        case "taken":
+            await switchProjectOrganization(dir, organization, availability);
+            return;
+        default:
+            assertNever(result);
+    }
+}
+
+/** Lets the user replace an organization another team owns, and updates fern/fern.config.json. */
+async function switchProjectOrganization(
+    dir: string,
+    taken: string,
+    availability: AvailabilityChecker
+): Promise<string> {
+    const organization = await pickAvailableName({
+        name: taken,
+        noun: "organization name",
+        check: (name) => availability.organization(name),
+        reserve: (name) => reserveOrganization(name, availability)
+    });
+    await setProjectOrganization(dir, organization);
+    printDone(`Updated fern/fern.config.json to use ${organization}`);
+    return organization;
+}
+
+/** Switches an existing project to a different organization. */
+async function setProjectOrganization(dir: string, organization: string): Promise<void> {
+    const configPath = path.join(dir, "fern", "fern.config.json");
+    const config: unknown = JSON.parse(await readFile(configPath, "utf8"));
+    if (typeof config !== "object" || config === null || Array.isArray(config)) {
+        throw new Error("fern/fern.config.json isn't a JSON object.");
+    }
+    await writeFile(configPath, `${JSON.stringify({ ...config, organization }, null, 4)}\n`);
+}
+
+/** Points docs.yml's instance at a new URL. */
+async function setDocsUrl(dir: string, from: string, to: string): Promise<void> {
+    const docsPath = path.join(dir, "fern", "docs.yml");
+    const contents = await readFile(docsPath, "utf8");
+    await writeFile(docsPath, contents.split(from).join(to));
+}
+
+/** A failed `fern generate --docs`, reduced to the lines that explain why. */
+class PublishFailedError extends Error {
+    constructor(
+        message: string,
+        /** Set when the docs URL belongs to another organization. */
+        public readonly takenDomain: string | undefined
+    ) {
+        super(message);
+    }
+}
+
+/** Runs a fern command quietly; on failure, reports only the lines that explain it. */
+async function runFernQuietly(args: string[], dir: string, detection: Detection): Promise<string> {
     try {
-        await runFernCommand(["login"], dir, detection);
+        return await runCommandQuietly(fernRunner(detection, args), dir);
     } catch (error) {
-        firstError = error;
+        if (!(error instanceof CommandFailedError)) {
+            throw error;
+        }
+        const takenDomain = error.output.match(/domains belong to another organization:\s*(\S+)/)?.[1];
+        throw new PublishFailedError(summarizeFailure(error.output), takenDomain);
     }
+}
+
+/**
+ * The few lines of fern's output that explain a failure, without the warnings and progress
+ * messages that surround them.
+ */
+export function summarizeFailure(output: string): string {
+    const lines = output
+        .split("\n")
+        .map((line) => line.trim())
+        .filter((line) => line.length > 0 && !/\[warning\]/i.test(line))
+        .filter((line) =>
+            /error|fail|denied|forbidden|unauthori[sz]ed|belong|not found|invalid|must|cannot/i.test(line)
+        );
+    const unique = [...new Set(lines.map((line) => line.replace(/^\[[^\]]+\]:\s*/, "")))];
+    if (unique.length === 0) {
+        return output.trim().split("\n").at(-1) ?? "fern exited with an error";
+    }
+    return unique.slice(-3).join("\n");
+}
+
+/** The link `fern generate --docs` prints after "Published docs to". */
+export function parsePublishedUrl(output: string): string | undefined {
+    return output.match(/Published docs to (https?:\/\/\S+)/)?.[1]?.replace(/[.,)]+$/, "");
+}
+
+/** The public docs URL, from the template choices or the first instance in fern/docs.yml. */
+/** The docs site's URL from fern/docs.yml (which may have changed since setup), else the chosen one. */
+async function docsSiteUrl(dir: string, docsSiteChoices: DocsSiteChoices | undefined): Promise<string | undefined> {
+    const chosen = docsSiteChoices === undefined ? undefined : `https://${docsSiteChoices.subdomain}.${DOCS_DOMAIN}`;
     try {
-        await runFernCommand(["mcp", "install"], dir, detection);
-    } catch (error) {
-        firstError ??= error;
+        const docsConfig: unknown = parseYaml(await readFile(path.join(dir, "fern", "docs.yml"), "utf8"));
+        const instances = isRecord(docsConfig) && Array.isArray(docsConfig.instances) ? docsConfig.instances : [];
+        const first: unknown = instances[0];
+        const url = isRecord(first) && typeof first.url === "string" ? first.url : undefined;
+        return url === undefined ? chosen : url.startsWith("http") ? url : `https://${url}`;
+    } catch {
+        // No docs.yml yet.
+        return chosen;
     }
-    if (firstError !== undefined) {
-        throw firstError;
+}
+
+/**
+ * Before publishing, makes sure no other team owns the docs URL in fern/docs.yml (for example after
+ * switching organizations). If one does, the user picks a free URL and docs.yml is updated.
+ */
+async function ensureFreeDocsUrl(dir: string, siteUrl: string | undefined): Promise<string | undefined> {
+    const host = siteUrl?.replace(/^https?:\/\//, "").replace(/\/.*$/, "");
+    const token = await readFernToken();
+    if (host === undefined || !host.endsWith(`.${DOCS_DOMAIN}`) || token === undefined) {
+        return siteUrl;
     }
+    const availability = createAvailabilityChecker(token);
+    const subdomain = host.slice(0, -`.${DOCS_DOMAIN}`.length);
+    if ((await availability.docsUrl(subdomain)) !== "taken") {
+        return siteUrl;
+    }
+    const organization = await readOrganization(dir);
+    const next = await pickAvailableName({
+        name: subdomain,
+        noun: "docs URL",
+        check: (name) => availability.docsUrl(name),
+        display: (name) => `${name}.${DOCS_DOMAIN}`,
+        preferred: organization === undefined ? [] : [organization]
+    });
+    await setDocsUrl(dir, host, `${next}.${DOCS_DOMAIN}`);
+    printDone(`Updated fern/docs.yml to use ${next}.${DOCS_DOMAIN}`);
+    return `https://${next}.${DOCS_DOMAIN}`;
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+    return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
 function docsSkillCommand(detection: Detection): Command {
@@ -521,6 +1121,12 @@ async function chooseSpec(specs: ApiSpec[], yes: boolean): Promise<ApiSpec | und
         }
     ]);
     return specs.find((spec) => spec.path === answer.specPath);
+}
+
+/** The detected spec at a path given relative to the repository (or absolute). */
+export function findSpec(specs: ApiSpec[], dir: string, specPath: string): ApiSpec | undefined {
+    const wanted = path.relative(dir, path.resolve(dir, specPath));
+    return specs.find((spec) => path.normalize(spec.path) === wanted);
 }
 
 export function pickDefaultSpec(specs: ApiSpec[]): ApiSpec | undefined {

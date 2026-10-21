@@ -65,7 +65,11 @@ export interface DocsSiteChoices {
     subdomain: string;
     layout: LayoutId;
     primaryColor?: string;
+    /** Logo for light backgrounds; also used in dark mode unless `darkLogoPath` is set. */
     logoPath?: string;
+    /** Logo for dark backgrounds (for example a white wordmark). */
+    darkLogoPath?: string;
+    faviconPath?: string;
     typography?: TypographyStyle;
     buttonShape?: ButtonShape;
     features: DocsFeature[];

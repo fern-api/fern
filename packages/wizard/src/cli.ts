@@ -1,42 +1,49 @@
 #!/usr/bin/env node
-// biome-ignore-all lint/suspicious/noConsole: CLI reports failures to stderr.
+// biome-ignore-all lint/suspicious/noConsole: CLI prints help and reports failures to stderr.
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
-import { LAYOUTS, layoutFromFlag } from "./docs-site/options";
+import { CLI_OPTIONS, HELP_TEXT, PRODUCTS, SPLASH_STYLES } from "./cli-options";
+import { layoutFromFlag } from "./docs-site/options";
 import type { WizardFlags } from "./types";
 import { runWizard } from "./wizard";
 
-const VERSION = process.env.npm_package_version ?? "0.1.0";
+// Set at build time (see build.mjs).
+const VERSION = process.env.WIZARD_VERSION ?? "0.0.0-dev";
 
 void yargs(hideBin(process.argv))
     .scriptName("fern-wizard")
-    .usage("$0 [options]")
-    .option("dir", { type: "string", default: process.cwd(), describe: "Repository directory" })
-    .option("yes", { type: "boolean", default: false, describe: "Accept defaults without prompting" })
-    .option("dry-run", {
-        type: "boolean",
-        default: false,
-        describe: "Print the plan without writing or running commands"
-    })
-    .option("skip-install", { type: "boolean", default: false, describe: "Skip Fern CLI installation" })
-    .option("org", { type: "string", describe: "Fern organization" })
-    .option("template", {
-        type: "string",
-        choices: LAYOUTS.map((layout) => layout.flag),
-        describe: "Docs starter layout"
-    })
+    // Turn off yargs' generated help before declaring the wizard's own --help.
+    .help(false)
+    .options(CLI_OPTIONS)
     .version(VERSION)
-    .help()
     .strict()
+    .fail((message, error) => {
+        console.error(error?.message ?? message);
+        console.error("Run fern-wizard --help to see the options.");
+        process.exit(1);
+    })
     .parseAsync()
     .then(async (argv) => {
+        if (argv.help) {
+            console.log(HELP_TEXT);
+            return;
+        }
         const flags: WizardFlags = {
             dir: argv.dir,
             yes: argv.yes,
             dryRun: argv.dryRun,
             skipInstall: argv.skipInstall,
             org: argv.org,
-            template: layoutFromFlag(argv.template)
+            template: layoutFromFlag(argv.template),
+            splash: SPLASH_STYLES.find((style) => style === argv.splash),
+            brand: argv.brand,
+            skipBrand: argv.skipBrand,
+            products:
+                argv.products === undefined
+                    ? undefined
+                    : PRODUCTS.filter((product) => argv.products?.includes(product)),
+            spec: argv.spec,
+            skipMcp: argv.skipMcp
         };
         const exitCode = await runWizard(flags);
         if (exitCode !== 0) {
