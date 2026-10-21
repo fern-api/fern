@@ -544,6 +544,10 @@ class FakeIncomingMessage {
         this.destroyed = true;
     }
 
+    public push(chunk: string): void {
+        this.streamListeners.data?.forEach((l) => l(chunk));
+    }
+
     public flush(): void {
         if (this.body) {
             this.streamListeners.data?.forEach((l) => l(this.body));
@@ -629,6 +633,43 @@ describe("ReconnectingWebSocket rejected handshake", () => {
 
         const message = (onError.mock.calls[0]?.[0] as ErrorEvent).message;
         expect(message).toBe(`Unexpected server response: 400 (${"x".repeat(1000)}...)`);
+    });
+
+    it("stops reading once the body exceeds the cap", async () => {
+        socket = createEmitterSocket({ maxRetries: 1 });
+        await flush();
+        const onError = jest.fn();
+        socket.addEventListener("error", onError);
+
+        const response = new FakeIncomingMessage(400);
+        latestEmitterSocket().simulateUnexpectedResponse(response);
+        response.push("y".repeat(600));
+        expect(response.destroyed).toBe(false);
+        response.push("y".repeat(600));
+        await flush();
+
+        expect(response.destroyed).toBe(true);
+        expect(onError).toHaveBeenCalledTimes(1);
+        expect((onError.mock.calls[0]?.[0] as ErrorEvent).message).toBe(
+            `Unexpected server response: 400 (${"y".repeat(1000)}...)`,
+        );
+    });
+
+    it("reports the partial body when the response never finishes", async () => {
+        socket = createEmitterSocket({ maxRetries: 1, connectionTimeout: 100 });
+        await flush();
+        const onError = jest.fn();
+        socket.addEventListener("error", onError);
+        const waiting = socket.waitForOpen().catch((error: unknown) => error);
+
+        const response = new FakeIncomingMessage(400);
+        latestEmitterSocket().simulateUnexpectedResponse(response);
+        response.push("partial");
+        await new Promise((resolve) => setTimeout(resolve, 150));
+
+        expect(onError).toHaveBeenCalledTimes(1);
+        expect(await waiting).toMatchObject({ message: "Unexpected server response: 400 (partial)" });
+        expect(response.destroyed).toBe(true);
     });
 
     it("keeps the retry policy and stops listening on the replaced socket", async () => {

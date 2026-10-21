@@ -51,7 +51,7 @@ const isHandshakeResponse = (value: unknown): value is HandshakeResponse => type
 
 const formatHandshakeRejection = (statusCode: number | undefined, body: string): string => {
     const detail = body.trim();
-    const message = `Unexpected server response: ${statusCode}`;
+    const message = `Unexpected server response: ${statusCode ?? "unknown status"}`;
     if (detail.length === 0) {
         return message;
     }
@@ -142,6 +142,7 @@ export class ReconnectingWebSocket {
     private _messageQueue: ReconnectingWebSocket.Message[] = [];
     private _openWaiters = new Set<() => void>();
     private _handshakeRejectionSource?: EventEmitterLike;
+    private _finishHandshakeRejection?: () => void;
 
     private readonly _url: ReconnectingWebSocket.UrlProvider;
     private readonly _protocols?: string | string[];
@@ -577,6 +578,10 @@ export class ReconnectingWebSocket {
 
     private _handleTimeout() {
         this._debug("timeout event");
+        if (this._finishHandshakeRejection != null) {
+            this._finishHandshakeRejection();
+            return;
+        }
         this._handleError(new Events.ErrorEvent(Error("TIMEOUT"), this));
     }
 
@@ -699,6 +704,7 @@ export class ReconnectingWebSocket {
         this._ws.removeEventListener("error", this._handleError);
         this._handshakeRejectionSource?.removeListener("unexpected-response", this._handleUnexpectedResponse);
         this._handshakeRejectionSource = undefined;
+        this._finishHandshakeRejection = undefined;
     }
 
     private _addListeners() {
@@ -722,12 +728,12 @@ export class ReconnectingWebSocket {
      * its `unexpected-response` event; without a listener it discards the response and errors with a bare
      * `Unexpected server response: <status>`. Read the body so the reason reaches `error` listeners and
      * `waitForOpen()`. Registering the listener means `ws` no longer aborts the handshake itself, so the
-     * normal error path tears the socket down (and applies the usual retry policy).
+     * normal error path tears the socket down (and applies the usual retry policy). The connection timeout
+     * keeps running while the body is read, so a body that never finishes is reported with what arrived.
      */
-    private _handleUnexpectedResponse = (_request: unknown, response: unknown) => {
+    private _handleUnexpectedResponse = (_request: unknown, rawResponse: unknown) => {
         const source = this._handshakeRejectionSource;
-        clearTimeout(this._connectTimeout);
-        const res = isHandshakeResponse(response) ? response : undefined;
+        const response = isHandshakeResponse(rawResponse) ? rawResponse : undefined;
         let body = "";
         let settled = false;
         const finish = () => {
@@ -735,26 +741,34 @@ export class ReconnectingWebSocket {
                 return;
             }
             settled = true;
-            res?.destroy?.();
+            if (this._finishHandshakeRejection === finish) {
+                this._finishHandshakeRejection = undefined;
+            }
+            response?.destroy?.();
             if (this._closeCalled || source == null || source !== this._handshakeRejectionSource) {
                 return;
             }
-            this._debug("handshake rejected", res?.statusCode);
-            this._handleError(new Events.ErrorEvent(new Error(formatHandshakeRejection(res?.statusCode, body)), this));
+            this._debug("handshake rejected", response?.statusCode);
+            this._handleError(
+                new Events.ErrorEvent(new Error(formatHandshakeRejection(response?.statusCode, body)), this),
+            );
         };
-        if (typeof res?.on !== "function") {
+        if (typeof response?.on !== "function") {
             finish();
             return;
         }
-        res.setEncoding?.("utf8");
-        res.on("data", (chunk: unknown) => {
-            if (body.length <= MAX_HANDSHAKE_REJECTION_BODY_LENGTH) {
-                body += String(chunk);
+        this._finishHandshakeRejection = finish;
+        response.setEncoding?.("utf8");
+        response.on("data", (chunk: unknown) => {
+            body += String(chunk);
+            if (body.length > MAX_HANDSHAKE_REJECTION_BODY_LENGTH) {
+                body = body.slice(0, MAX_HANDSHAKE_REJECTION_BODY_LENGTH + 1);
+                finish();
             }
         });
-        res.on("end", finish);
-        res.on("close", finish);
-        res.on("error", finish);
+        response.on("end", finish);
+        response.on("close", finish);
+        response.on("error", finish);
     };
 
     private _clearTimeouts() {
