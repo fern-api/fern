@@ -523,6 +523,7 @@ dependencies = [
  "reqwest",
  "schemaless_request_body_examples_api_sdk",
  "secrecy",
+ "security-framework 3.7.0",
  "serde_json_path",
  "serde_json",
  "serde_qs",
