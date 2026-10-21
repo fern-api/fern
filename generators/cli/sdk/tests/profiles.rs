@@ -384,9 +384,9 @@ fn the_profile_flag_beats_the_profile_env_var() {
 }
 
 #[test]
-fn base_url_env_var_beats_the_profile() {
-    // CI exports the env var; a developer's stored profile must not
-    // redirect the pipeline.
+fn the_active_profile_base_url_beats_the_env_var() {
+    // A selected profile's stored value wins however it was selected; the
+    // env var only fills in when the profile has none.
     let sandbox = Sandbox::new();
     sandbox.run(&[
         "profiles", "create", "prod", "--base-url", "https://profile.example", "--use",
@@ -403,7 +403,7 @@ fn base_url_env_var_beats_the_profile() {
         &["users", "list", "--dry-run", "--format", "json"],
         &[("OPENAPI_FIXTURE_BASE_URL", "https://env.example")],
     );
-    assert_eq!(json(&from_env)["url"], "https://env.example/users");
+    assert_eq!(json(&from_env)["url"], "https://profile.example/users");
 
     // And the flag beats both.
     let from_flag = sandbox.run_with_env(
@@ -416,7 +416,7 @@ fn base_url_env_var_beats_the_profile() {
     assert_eq!(json(&from_flag)["url"], "https://flag.example/users");
 }
 
-// ── `-p` outranks env; ambient profiles do not ──────────────────────────
+// ── A selected profile outranks env, however it was selected ────────────
 
 /// The credential sources `auth status` reports for the first scheme, in
 /// resolution order.
@@ -430,31 +430,26 @@ fn credential_source_order(output: &Output) -> Vec<String> {
 }
 
 #[test]
-fn an_explicit_profile_flag_reorders_the_credential_chain_above_env() {
-    // Twilio's shipping CLI documents `-p` > env vars > active profile, and
-    // it is the rule every other flag here follows: explicit beats ambient.
-    // Env used to beat *every* profile, however it was chosen.
+fn a_selected_profile_reorders_the_credential_chain_above_env() {
+    // Whether the profile is active or named with `-p`, its keyring entry
+    // is consulted before the env var; env stays a rung, just a lower one.
     let sandbox = Sandbox::new();
     sandbox.run(&["profiles", "create", "prod", "--use"]);
 
-    // Ambient (active) — the env var is consulted first.
-    let ambient = credential_source_order(&sandbox.run(&["auth", "status", "--format", "json"]));
-    assert!(
-        ambient[0].contains("env var"),
-        "an ambient profile must not displace env: {ambient:?}",
-    );
-
-    // Explicit `-p` — the profile's keyring entry moves to the front.
+    let active = credential_source_order(&sandbox.run(&["auth", "status", "--format", "json"]));
     let explicit =
         credential_source_order(&sandbox.run(&["auth", "status", "--format", "json", "-p", "prod"]));
-    assert!(
-        explicit[0].contains("keyring entry") && explicit[0].contains("#prod"),
-        "-p should put the profile's credential first: {explicit:?}",
-    );
-    assert!(
-        explicit.iter().any(|s| s.contains("env var")),
-        "the env var must still be a rung, just a lower one: {explicit:?}",
-    );
+    for (label, order) in [("active", &active), ("-p", &explicit)] {
+        assert!(
+            order[0].contains("keyring entry") && order[0].contains("#prod"),
+            "{label}: the profile's credential should come first: {order:?}",
+        );
+        assert!(
+            order.iter().any(|s| s.contains("env var")),
+            "{label}: the env var must still be a rung: {order:?}",
+        );
+    }
+    assert_eq!(active, explicit, "selection mechanism must not change the order");
 }
 
 #[test]
@@ -473,19 +468,12 @@ fn an_explicit_profile_flag_outranks_the_base_url_env_var() {
 }
 
 #[test]
-fn an_ambient_profile_still_loses_to_the_base_url_env_var() {
-    // The CI-safety half: a profile chosen days ago must not override the
-    // environment the pipeline is running in.
+fn a_profile_selected_by_env_var_also_outranks_the_base_url_env_var() {
+    // `<BIN>_PROFILE` selects a profile just like `-p` and `profiles use`
+    // do, and the selected profile's stored base URL wins the same way.
     let sandbox = Sandbox::new();
-    sandbox.run(&["profiles", "create", "prod", "--base-url", "https://profile.example", "--use"]);
+    sandbox.run(&["profiles", "create", "prod", "--base-url", "https://profile.example"]);
 
-    let active = sandbox.run_with_env(
-        &["users", "list", "--dry-run", "--format", "json"],
-        &[("OPENAPI_FIXTURE_BASE_URL", "https://env.example")],
-    );
-    assert_eq!(json(&active)["url"], "https://env.example/users");
-
-    // Same for a profile selected through <BIN>_PROFILE — also ambient.
     let via_env = sandbox.run_with_env(
         &["users", "list", "--dry-run", "--format", "json"],
         &[
@@ -493,7 +481,18 @@ fn an_ambient_profile_still_loses_to_the_base_url_env_var() {
             ("OPENAPI_FIXTURE_BASE_URL", "https://env.example"),
         ],
     );
-    assert_eq!(json(&via_env)["url"], "https://env.example/users");
+    assert_eq!(json(&via_env)["url"], "https://profile.example/users");
+
+    // A profile that stores no base URL falls back to the env var.
+    sandbox.run(&["profiles", "create", "bare"]);
+    let fallback = sandbox.run_with_env(
+        &["users", "list", "--dry-run", "--format", "json"],
+        &[
+            ("OPENAPI_FIXTURE_PROFILE", "bare"),
+            ("OPENAPI_FIXTURE_BASE_URL", "https://env.example"),
+        ],
+    );
+    assert_eq!(json(&fallback)["url"], "https://env.example/users");
 }
 
 #[test]
@@ -543,14 +542,14 @@ fn an_sdk_variable_follows_the_same_precedence_ladder() {
     sandbox.run(&["profiles", "create", "prod", "--set", "gardenId=g-profile", "--use"]);
     let url = |o: &Output| json(o)["url"].as_str().unwrap_or_default().to_string();
 
-    // Ambient profile loses to the env var…
-    let ambient = sandbox.run_with_env(
+    // The active profile beats the env var…
+    let active = sandbox.run_with_env(
         &["zones", "list", "--dry-run", "--format", "json"],
         &[("GARDEN_ID", "g-env")],
     );
-    assert!(url(&ambient).contains("/gardens/g-env/"), "{}", url(&ambient));
+    assert!(url(&active).contains("/gardens/g-profile/"), "{}", url(&active));
 
-    // …but an explicitly named profile beats it…
+    // …so does an explicitly named one…
     let explicit = sandbox.run_with_env(
         &["zones", "list", "--dry-run", "--format", "json", "-p", "prod"],
         &[("GARDEN_ID", "g-env")],
@@ -662,15 +661,15 @@ fn a_profile_default_format_applies_when_nothing_else_asks() {
         stdout(&output),
     );
 
-    // And the env var still outranks it.
+    // The active profile's format beats the env var.
     let from_env = sandbox.run_with_env(
         &["users", "list", "--dry-run"],
         &[("OPENAPI_FIXTURE_OUTPUT", "json")],
     );
     assert_ok(&from_env, "users list with OPENAPI_FIXTURE_OUTPUT=json");
     assert!(
-        serde_json::from_str::<serde_json::Value>(&stdout(&from_env)).is_ok(),
-        "the env var must outrank the profile: {}",
+        serde_json::from_str::<serde_json::Value>(&stdout(&from_env)).is_err(),
+        "the profile must outrank the env var: {}",
         stdout(&from_env),
     );
 }
@@ -815,22 +814,17 @@ fn a_malformed_profiles_file_does_not_brick_the_cli() {
 }
 
 #[test]
-fn capturing_from_env_warns_that_the_source_var_still_shadows_it() {
-    // `--from-env` reads the variable, so without the warning the user is
-    // told the capture succeeded and never learns that the very variable
-    // they captured from keeps winning over the copy. `auth login
-    // --with-token` and `profiles use` both warn; this path must too.
+fn capturing_from_env_does_not_warn_about_shadowing() {
+    // The copy lives under the profile, and a selected profile's credential
+    // outranks the env var it was captured from (ADR-0011) — so the old
+    // "will shadow" warning would be false.
     let sandbox = Sandbox::new();
     let output = sandbox.run_with_env(
         &["profiles", "create", "captured", "--from-env"],
         &[("OPENAPI_FIXTURE_API_KEY", "shell-key")],
     );
     assert_ok(&output, "profiles create --from-env");
-    assert!(
-        stderr(&output).contains("will shadow the keyring entry"),
-        "expected a shadow warning on stderr, got: {}",
-        stderr(&output),
-    );
+    assert!(!stderr(&output).contains("shadow"), "{}", stderr(&output));
 }
 
 #[test]
@@ -1297,6 +1291,60 @@ fn show_inspects_a_named_profile_without_selecting_it() {
     // The active profile is unchanged — `show` reads, it does not select.
     let current = sandbox.run(&["profiles", "current", "--format", "json"]);
     assert_eq!(json(&current)["profile"], "test_1");
+}
+
+#[test]
+fn show_and_current_report_the_oauth_client_id() {
+    // The client id is public (RFC 6749 §2.2); the single-profile views must
+    // answer "which client is this?" by name.
+    let sandbox = Sandbox::new();
+    sandbox.run(&[
+        "profiles", "create", "prod", "--oauth-client-id", "public-client-id", "--use",
+    ]);
+
+    let shown = json(&sandbox.run(&["profiles", "show", "prod", "--format", "json"]));
+    assert_eq!(shown["oauth_client_id"], "public-client-id", "{shown:#?}");
+
+    let current = json(&sandbox.run(&["profiles", "current", "--format", "json"]));
+    assert_eq!(current["oauth_client_id"], "public-client-id", "{current:#?}");
+}
+
+#[test]
+fn list_folds_the_oauth_client_id_into_the_account_column() {
+    // A profile authenticates as one thing, so `list` has one identifier
+    // column: the stored basic-auth username when there is one, else the
+    // OAuth client id. Two mostly-empty columns told the reader less.
+    let sandbox = Sandbox::new();
+    sandbox.run(&[
+        "profiles", "create", "oauth", "--oauth-client-id", "OQpublicclientid1234567890",
+    ]);
+
+    let rows = json(&sandbox.run(&["profiles", "list", "--format", "json"]));
+    let row = rows
+        .as_array()
+        .and_then(|rows| rows.iter().find(|r| r["profile"] == "oauth"))
+        .unwrap_or_else(|| panic!("{rows:#?}"));
+    assert_eq!(row["account"], "OQpublicclientid1234567890", "{row:#?}");
+    assert!(row.get("oauth_client_id").is_none(), "{row:#?}");
+}
+
+#[test]
+fn show_prints_identity_fields_in_a_fixed_order() {
+    // `profile`, `active`, then whichever identifier the profile has — the
+    // same layout whether that identifier is a basic-auth account or an
+    // OAuth client id, rather than alphabetical key order.
+    let sandbox = Sandbox::new();
+    sandbox.run(&["profiles", "create", "oauth", "--oauth-client-id", "public-client-id"]);
+    sandbox.run(&["profiles", "set", "oauth", "OPENAPI_FIXTURE_RETRIES=3"]);
+
+    let output = sandbox.run(&["profiles", "show", "oauth", "--human"]);
+    assert_ok(&output, "profiles show");
+    let text = stdout(&output);
+    let keys: Vec<&str> = text
+        .lines()
+        .filter_map(|line| line.split_whitespace().next())
+        .collect();
+    assert_eq!(keys, ["profile", "active", "oauth_client_id", "retries"], "{text}");
 }
 
 #[test]

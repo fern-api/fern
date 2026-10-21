@@ -4,6 +4,7 @@ import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import * as errors from "../../../../errors/index.js";
 import { RealtimeSocket } from "./Socket.js";
 
 export declare namespace RealtimeClient {
@@ -22,12 +23,14 @@ export declare namespace RealtimeClient {
         headers?: Record<string, string>;
         /** Enable debug mode on the websocket. Defaults to false. */
         debug?: boolean;
-        /** Number of reconnect attempts. Defaults to 30. */
+        /** Maximum number of times to automatically reconnect after the connection closes unexpectedly. Defaults to 30. Set to 0 to disable reconnecting. */
         reconnectAttempts?: number;
         /** The timeout for establishing the WebSocket connection in seconds. */
         connectionTimeoutInSeconds?: number;
         /** A signal to abort the WebSocket connection. */
         abortSignal?: AbortSignal;
+        /** Decides whether a server close event should trigger a reconnect. Not consulted for connection errors, timeouts, or internal closes. Return false to treat the close as terminal. Defaults to reconnecting on any server close code other than 1000. */
+        shouldReconnect?: (event: core.CloseEvent) => boolean;
     }
 }
 
@@ -51,6 +54,7 @@ export class RealtimeClient {
             reconnectAttempts,
             connectionTimeoutInSeconds,
             abortSignal,
+            shouldReconnect,
         } = args;
         const _queryParams: Record<string, unknown> = {
             model,
@@ -62,7 +66,7 @@ export class RealtimeClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/realtime/${core.url.encodePathParam(sessionId)}`,
+                `/realtime/${core.url.encodePathParam(sessionId, errors.SeedWebsocketError)}`,
             ),
             protocols: protocols ?? [],
             queryParameters: { ..._queryParams, ...queryParams },
@@ -71,6 +75,7 @@ export class RealtimeClient {
                 debug: debug ?? false,
                 maxRetries: reconnectAttempts ?? 30,
                 connectionTimeout: connectionTimeoutInSeconds != null ? connectionTimeoutInSeconds * 1000 : undefined,
+                shouldReconnect,
             },
             abortSignal: abortSignal,
         });

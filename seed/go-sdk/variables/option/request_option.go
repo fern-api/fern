@@ -94,3 +94,11 @@ func WithoutStreamReconnection() *core.WithoutStreamReconnectionOption {
 func WithoutRetries() *core.WithoutRetriesOption {
 	return &core.WithoutRetriesOption{}
 }
+
+// WithRootVariable sets the "rootVariable" SDK variable, which is
+// substituted into every endpoint path that references it.
+func WithRootVariable(rootVariable string) *core.RootVariableOption {
+	return &core.RootVariableOption{
+		RootVariable: rootVariable,
+	}
+}

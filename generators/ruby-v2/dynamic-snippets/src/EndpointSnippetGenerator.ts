@@ -1,7 +1,7 @@
 import { AbstractFormatter, Options, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import { ruby } from "@fern-api/ruby-ast";
+import { getSdkVariableOptionNames, ruby } from "@fern-api/ruby-ast";
 
 import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext.js";
 
@@ -341,6 +341,8 @@ export class EndpointSnippetGenerator {
             builderArgs.push(...baseUrlArgs);
         }
 
+        builderArgs.push(...this.getRootClientSdkVariableArgs({ endpoint, snippet }));
+
         // Headers
         this.context.errors.scope("Headers");
         if (this.context.ir.headers != null && snippet.headers != null) {
@@ -351,6 +353,86 @@ export class EndpointSnippetGenerator {
         this.context.errors.unscope();
 
         return builderArgs;
+    }
+
+    /**
+     * Path parameters bound to an SDK variable are configured once on the root client
+     * (`Client.new(<variable>: ...)`) rather than passed to the endpoint method. When the
+     * snippet carries no value, the keyword is omitted so the client falls back to the
+     * variable's environment variable.
+     */
+
+    /** Keywords the root client already uses for credentials and global headers (mirrors the SDK generator). */
+    private getSdkVariableReservedOptionNames(endpoint: FernIr.dynamic.Endpoint): string[] {
+        const names: string[] = [];
+        for (const header of this.context.ir.headers ?? []) {
+            names.push(header.name.name.snakeCase.safeName);
+        }
+        const auth = endpoint.auth;
+        switch (auth?.type) {
+            case "basic":
+                names.push(auth.username.snakeCase.safeName, auth.password.snakeCase.safeName);
+                break;
+            case "bearer":
+                names.push(auth.token.snakeCase.safeName);
+                break;
+            case "header":
+                names.push(auth.header.name.name.snakeCase.safeName);
+                break;
+            case "oauth":
+                names.push(auth.clientId.snakeCase.safeName, auth.clientSecret.snakeCase.safeName);
+                break;
+            default:
+                break;
+        }
+        return names;
+    }
+    private getRootClientSdkVariableArgs({
+        endpoint,
+        snippet
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): ruby.KeywordArgument[] {
+        const pathParameterValues = snippet.pathParameters ?? {};
+        const boundParameters = [
+            ...(this.context.ir.pathParameters ?? []),
+            ...(endpoint.request.pathParameters ?? [])
+        ].filter((parameter) => parameter.variable != null && pathParameterValues[parameter.name.wireValue] != null);
+        if (boundParameters.length === 0) {
+            return [];
+        }
+        const variables = this.context.ir.variables ?? [];
+        const optionNames = getSdkVariableOptionNames(
+            variables.map((variable) => this.context.getPropertyName(variable.name)),
+            this.getSdkVariableReservedOptionNames(endpoint)
+        );
+        const args: ruby.KeywordArgument[] = [];
+        const seen = new Set<string>();
+        this.context.errors.scope("PathParameters");
+        const instances = this.context.associateByWireValue({
+            parameters: boundParameters,
+            values: pathParameterValues,
+            ignoreMissingParameters: true
+        });
+        const instancesByWireValue = new Map(instances.map((instance) => [instance.name.wireValue, instance]));
+        for (const parameter of boundParameters) {
+            const instance = instancesByWireValue.get(parameter.name.wireValue);
+            const variableId = parameter.variable;
+            if (instance == null || variableId == null || seen.has(variableId)) {
+                continue;
+            }
+            seen.add(variableId);
+            const variableIndex = variables.findIndex((candidate) => candidate.id === variableId);
+            const optionName = optionNames[variableIndex] ?? this.context.getPropertyName(parameter.name.name);
+            const value = this.context.dynamicTypeLiteralMapper.convert(instance);
+            if (ruby.TypeLiteral.isNop(value)) {
+                continue;
+            }
+            args.push(ruby.keywordArgument({ name: optionName, value }));
+        }
+        this.context.errors.unscope();
+        return args;
     }
 
     private callMethod({
@@ -513,7 +595,9 @@ export class EndpointSnippetGenerator {
         // Generated Ruby SDKs surface both root-level and endpoint-level path parameters
         // as keyword arguments on the endpoint method (via `**params`), so merge them here
         // in IR / URL order before rendering.
-        const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
+        const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])].filter(
+            (parameter) => parameter.variable == null
+        );
         args.push(
             ...this.getNamedParameterArgs({
                 kind: "PathParameters",
@@ -675,7 +759,9 @@ export class EndpointSnippetGenerator {
         // Add path parameters as keyword arguments (Ruby SDK uses **params).
         // Merge root-level and endpoint-level path params in IR / URL order so
         // root-level parameters (e.g. tenant_id) are not dropped from the call.
-        const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
+        const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])].filter(
+            (parameter) => parameter.variable == null
+        );
         args.push(
             ...this.getNamedParameterArgs({
                 kind: "PathParameters",

@@ -7,17 +7,45 @@ import type {
     FernSdkGenApiPackageConfig,
     FernSdkGenApiRequestedOutput
 } from "@fern-api/remote-workspace-runner";
+import {
+    SDK_CONFIG_DIRECT_RUBYGEMS_PUBLISHING_UNSUPPORTED_MESSAGE,
+    validateFernSdkGenApiPublishTargets
+} from "@fern-api/remote-workspace-runner/direct-publish-credentials";
 import { parseSdkConfigV1, type SdkConfigV1, validateSdkConfigV1 } from "@postman/sdk-config/sdk-config/v1";
 import YAML from "yaml";
+
+import { getDuplicateTargetLanguageIndexes } from "./getDuplicateTargetLanguageIndexes.js";
+import { getSdkConfigGeneratorName } from "./sdkConfigGeneratorName.js";
+import {
+    extractSdkConfigGithubNpmTokens,
+    resolveSdkConfigPublishCredential,
+    sanitizeSdkConfigPublishCredentials
+} from "./sdkConfigPublishCredentials.js";
 
 export interface LoadedSdkConfigV1 {
     absolutePath: string;
     config: SdkConfigV1;
     payload: FernSdkConfigV1Payload;
+    /** Unresolved npm `token` per `config.targets` entry with GitHub delivery; never in `config` or `payload`. */
+    githubNpmTokens: Array<string | undefined>;
 }
 
+export interface SdkConfigGeneratorSelection {
+    generatorName?: string;
+    generatorIndex?: number;
+    targetNames?: never;
+}
+
+type SdkConfigTargetSelection =
+    | SdkConfigGeneratorSelection
+    | { targetNames: string[]; generatorName?: never; generatorIndex?: never };
+
 /** Reads and validates a customer SDK Config YAML or JSON document for SDK Generation API transport. */
-export async function loadSdkConfigV1(configPath: string): Promise<LoadedSdkConfigV1> {
+export async function loadSdkConfigV1(
+    configPath: string,
+    isPreview = false,
+    selection: SdkConfigTargetSelection = {}
+): Promise<LoadedSdkConfigV1> {
     const absolutePath = resolve(cwd(), configPath);
     const body = await readFile(absolutePath);
     let input: unknown;
@@ -30,47 +58,105 @@ export async function loadSdkConfigV1(configPath: string): Promise<LoadedSdkConf
     }
 
     try {
-        const document = validateSdkConfigV1(input);
-        const parsed = parseSdkConfigV1(document);
+        const { sanitizedInput, credentials, apiKeySecretNames } = sanitizeSdkConfigPublishCredentials(
+            input,
+            isPreview
+        );
+        const githubNpmTokens = extractSdkConfigGithubNpmTokens(input);
+        const { document, parsed } = validateAndParseSdkConfigV1(sanitizedInput);
+        if (
+            document.targets.length !== credentials.length ||
+            parsed.targets.length !== credentials.length ||
+            githubNpmTokens.length !== credentials.length
+        ) {
+            throw new Error("SDK Config v1 target count changed during validation");
+        }
+        const targetIndexes = getTargetIndexes(parsed, selection.targetNames);
+        const duplicateTargetLanguageIndexes = getDuplicateTargetLanguageIndexes(parsed.targets);
+        const selectedTargetIndexes = isPreview
+            ? new Set<number>()
+            : selection.targetNames != null
+              ? new Set(targetIndexes)
+              : getGeneratorSelectedTargetIndexes(parsed, selection);
+        const payload: FernSdkConfigV1Payload = {
+            sdkName: parsed.sdkName,
+            sdkVersion: parsed.sdkVersion,
+            ...(parsed.apiVersion != null ? { apiVersion: parsed.apiVersion } : {}),
+            ...(parsed.api.audiences != null ? { audiences: parsed.api.audiences } : {}),
+            ...(parsed.client.pathParameterStyle != null
+                ? { clientPathParameterStyle: parsed.client.pathParameterStyle }
+                : {}),
+            targets: targetIndexes.map((index) => {
+                const target = parsed.targets[index];
+                if (target == null) {
+                    throw new Error(`SDK Config v1 target ${index} is missing after validation`);
+                }
+                const documentTarget = document.targets[index];
+                if (documentTarget == null) {
+                    throw new Error(`SDK Config v1 target ${index} is missing after validation`);
+                }
+                const output = target.output ?? parsed.output;
+                const duplicateTargetLanguageIndex = duplicateTargetLanguageIndexes[index];
+                return {
+                    body: Buffer.from(`${JSON.stringify({ ...document, targets: [documentTarget] })}\n`),
+                    language: target.language,
+                    ...(target.generatorVersion != null ? { generatorVersion: target.generatorVersion } : {}),
+                    ...(target.sdkName != null ? { sdkName: target.sdkName } : {}),
+                    ...(target.sdkVersion != null ? { sdkVersion: target.sdkVersion } : {}),
+                    ...(target.client?.pathParameterStyle != null
+                        ? { clientPathParameterStyle: target.client.pathParameterStyle }
+                        : {}),
+                    requestedOutput: toRequestedOutput(output, isPreview, apiKeySecretNames[index]),
+                    ...(output?.delivery === "zip"
+                        ? {
+                              absolutePathToLocalOutputArchive: AbsoluteFilePath.of(
+                                  resolve(
+                                      dirname(absolutePath),
+                                      output.fileName ??
+                                          `generated/${target.language}${duplicateTargetLanguageIndex == null ? "" : `-${duplicateTargetLanguageIndex}`}.zip`
+                                  )
+                              )
+                          }
+                        : {}),
+                    package: { ...parsed.package, ...target.package } satisfies FernSdkGenApiPackageConfig,
+                    ...(credentials[index] == null || !selectedTargetIndexes.has(index)
+                        ? {}
+                        : { publishCredential: resolveSdkConfigPublishCredential(credentials[index]) })
+                };
+            })
+        };
+        validateFernSdkGenApiPublishTargets(
+            payload.targets.flatMap((target, payloadIndex) =>
+                selectedTargetIndexes.has(targetIndexes[payloadIndex] ?? -1)
+                    ? [
+                          {
+                              publicationRequested:
+                                  target.requestedOutput?.type === "publish" ||
+                                  (target.requestedOutput?.type === "github" && target.requestedOutput.publish != null),
+                              credentialsRequired: target.requestedOutput?.type === "publish",
+                              ...publicationValidationMetadata(target.requestedOutput),
+                              ...(target.publishCredential == null
+                                  ? {}
+                                  : { publishCredential: target.publishCredential })
+                          }
+                      ]
+                    : []
+            )
+        );
         return {
             absolutePath,
-            config: parsed,
-            payload: {
-                // The SDK Generation API wire contract is JSON even though the customer-facing
-                // document convention is YAML.
-                body: Buffer.from(`${JSON.stringify(document)}\n`),
-                sdkName: parsed.sdkName,
-                sdkVersion: parsed.sdkVersion,
-                ...(parsed.apiVersion != null ? { apiVersion: parsed.apiVersion } : {}),
-                ...(parsed.api.audiences != null ? { audiences: parsed.api.audiences } : {}),
-                ...(parsed.client.pathParameterStyle != null
-                    ? { clientPathParameterStyle: parsed.client.pathParameterStyle }
-                    : {}),
-                targets: parsed.targets.map((target) => {
-                    const output = target.output ?? parsed.output;
-                    return {
-                        language: target.language,
-                        ...(target.generatorVersion != null ? { generatorVersion: target.generatorVersion } : {}),
-                        ...(target.sdkName != null ? { sdkName: target.sdkName } : {}),
-                        ...(target.sdkVersion != null ? { sdkVersion: target.sdkVersion } : {}),
-                        ...(target.client?.pathParameterStyle != null
-                            ? { clientPathParameterStyle: target.client.pathParameterStyle }
-                            : {}),
-                        requestedOutput: toRequestedOutput(output),
-                        ...(output?.delivery === "zip"
-                            ? {
-                                  absolutePathToLocalOutputArchive: AbsoluteFilePath.of(
-                                      resolve(
-                                          dirname(absolutePath),
-                                          output.fileName ?? `generated/${target.language}.zip`
-                                      )
-                                  )
-                              }
-                            : {}),
-                        package: { ...parsed.package, ...target.package } satisfies FernSdkGenApiPackageConfig
-                    };
+            config: {
+                ...parsed,
+                targets: targetIndexes.map((index) => {
+                    const target = parsed.targets[index];
+                    if (target == null) {
+                        throw new Error(`SDK Config v1 target ${index} is missing after validation`);
+                    }
+                    return target;
                 })
-            }
+            },
+            payload,
+            githubNpmTokens: targetIndexes.map((index) => githubNpmTokens[index])
         };
     } catch (error) {
         throw new Error(
@@ -80,9 +166,125 @@ export async function loadSdkConfigV1(configPath: string): Promise<LoadedSdkConf
     }
 }
 
-function toRequestedOutput(output: SdkConfigV1["output"]): FernSdkGenApiRequestedOutput {
-    if (output == null || output.delivery === "files" || output.delivery === "zip") {
+/**
+ * `fern check` loads SDK Config in preview mode (no credentials are resolved), which skips the publish-target
+ * validation `fern generate` runs. Flag direct RubyGems publishing explicitly so the check fails before a
+ * generation run would.
+ */
+export function assertNoSdkConfigDirectRubyGemsPublishing({ absolutePath, config }: LoadedSdkConfigV1): void {
+    config.targets.forEach((target, index) => {
+        const output = target.output ?? config.output;
+        if (output != null && output.delivery !== "github" && output.publish?.registry === "rubygems") {
+            throw new Error(
+                `SDK Config v1 at ${absolutePath} failed validation: target ${index} (${target.language}): ${SDK_CONFIG_DIRECT_RUBYGEMS_PUBLISHING_UNSUPPORTED_MESSAGE}`
+            );
+        }
+    });
+}
+
+export function getGeneratorSelectedTargetIndexes(
+    config: SdkConfigV1,
+    selection: SdkConfigGeneratorSelection
+): Set<number> {
+    if (selection.generatorIndex != null) {
+        if (selection.generatorIndex < 0 || selection.generatorIndex >= config.targets.length) {
+            throw new Error(
+                `Generator index ${selection.generatorIndex} is out of range for SDK Config v1 targets (expected 0-${config.targets.length - 1})`
+            );
+        }
+        return new Set([selection.generatorIndex]);
+    }
+    if (selection.generatorName != null) {
+        return new Set(
+            config.targets.flatMap((target, index) =>
+                getSdkConfigGeneratorName(target.language) === selection.generatorName ? [index] : []
+            )
+        );
+    }
+    return new Set(config.targets.map((_, index) => index));
+}
+
+function getTargetIndexes(config: SdkConfigV1, targetNames: string[] | undefined): number[] {
+    if (targetNames == null || targetNames.length === 0) {
+        return config.targets.map((_, index) => index);
+    }
+    const requested = [...new Set(targetNames)];
+    const available = config.targets.map((target) => target.language);
+    const missing = requested.filter((name) => !available.some((language) => language === name));
+    if (missing.length > 0) {
+        throw new Error(
+            `SDK Config target${missing.length === 1 ? "" : "s"} ${missing.map((name) => `'${name}'`).join(", ")} not found. Available targets: ${available.join(", ")}`
+        );
+    }
+    return config.targets.flatMap((target, index) => (requested.includes(target.language) ? [index] : []));
+}
+
+function validateAndParseSdkConfigV1(input: unknown): {
+    document: ReturnType<typeof validateSdkConfigV1>;
+    parsed: SdkConfigV1;
+} {
+    if (!isRecord(input) || !Array.isArray(input.targets)) {
+        const document = validateSdkConfigV1(input);
+        return { document, parsed: parseSdkConfigV1(document) };
+    }
+    const documents = input.targets.map((target) => validateSdkConfigV1({ ...input, targets: [target] }));
+    const parsedDocuments = documents.map((document) => parseSdkConfigV1(document));
+    const firstDocument = documents[0];
+    const firstParsed = parsedDocuments[0];
+    if (firstDocument == null || firstParsed == null) {
+        const document = validateSdkConfigV1(input);
+        return { document, parsed: parseSdkConfigV1(document) };
+    }
+    const documentTargets = documents.map((document, index) => requireSingleTarget(document.targets, index));
+    const parsedTargets = parsedDocuments.map((document, index) => requireSingleTarget(document.targets, index));
+    return {
+        document: {
+            ...firstDocument,
+            targets: documentTargets
+        },
+        parsed: {
+            ...firstParsed,
+            targets: parsedTargets
+        }
+    };
+}
+
+function requireSingleTarget<T>(targets: T[], index: number): T {
+    const target = targets[0];
+    if (targets.length !== 1 || target == null) {
+        throw new Error(`SDK Config v1 target ${index} did not survive validation exactly once`);
+    }
+    return target;
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+    return typeof value === "object" && value != null && !Array.isArray(value);
+}
+
+function publicationValidationMetadata(requestedOutput: FernSdkGenApiRequestedOutput | undefined): {
+    publishRegistry?: string;
+    publishUrl?: string;
+} {
+    const publish =
+        requestedOutput?.type === "publish" || requestedOutput?.type === "github" ? requestedOutput.publish : undefined;
+    return publish == null
+        ? {}
+        : {
+              publishRegistry: publish.registry,
+              ...(publish.url == null ? {} : { publishUrl: publish.url })
+          };
+}
+
+function toRequestedOutput(
+    output: SdkConfigV1["output"],
+    isPreview: boolean,
+    apiKeySecretName: string | undefined
+): FernSdkGenApiRequestedOutput {
+    if (isPreview) {
         return { type: "download" };
+    }
+    if (output == null || output.delivery === "files" || output.delivery === "zip") {
+        return output?.publish == null ? { type: "download" } : { type: "publish", publish: output.publish };
     }
     return {
         type: "github",
@@ -91,7 +293,15 @@ function toRequestedOutput(output: SdkConfigV1["output"]): FernSdkGenApiRequeste
         ...(output.github.branch == null ? {} : { branch: output.github.branch }),
         ...(output.github.mode == null ? {} : { mode: toRequestedGithubMode(output.github.mode) }),
         ...(output.github.reviewers == null ? {} : { reviewers: output.github.reviewers }),
-        ...(output.publish == null ? {} : { publish: output.publish })
+        ...(output.github.workflows === false ? { workflows: false } : {}),
+        ...(output.publish == null
+            ? {}
+            : {
+                  publish: {
+                      ...output.publish,
+                      ...(apiKeySecretName == null ? {} : { apiKeyEnvironmentVariable: apiKeySecretName })
+                  }
+              })
     };
 }
 

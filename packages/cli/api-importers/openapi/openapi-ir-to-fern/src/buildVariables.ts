@@ -7,7 +7,7 @@ import { getNamespaceFromGroup } from "./utils/getNamespaceFromGroup.js";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference.js";
 
 export function buildVariables(context: OpenApiIrConverterContext): void {
-    for (const [variable, variableSchema] of Object.entries(context.ir.variables)) {
+    for (const [variable, { schema: variableSchema, envVar }] of Object.entries(context.ir.variables)) {
         const namespace =
             variableSchema.groupName != null ? getNamespaceFromGroup(variableSchema.groupName) : undefined;
         const typeReference = buildTypeReference({
@@ -21,7 +21,8 @@ export function buildVariables(context: OpenApiIrConverterContext): void {
             name: variable,
             schema: {
                 type: getTypeFromTypeReference(typeReference),
-                docs: variableSchema.description ?? undefined
+                docs: variableSchema.description ?? undefined,
+                env: envVar
             }
         });
     }

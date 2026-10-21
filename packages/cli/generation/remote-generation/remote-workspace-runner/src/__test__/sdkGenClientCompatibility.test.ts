@@ -6,6 +6,7 @@ import {
     GeneratorConfigCompatibilityError,
     type GeneratorLanguage,
     getGeneratorLanguage,
+    selectUnpinnedGeneratorConfigRoute,
     selectUnpinnedSdkConfigRoute,
     validateGeneratorConfigCompatibility
 } from "../sdk-gen-client/index.js";
@@ -205,9 +206,39 @@ describe("validateGeneratorConfigCompatibility", () => {
             generatorId: "fernapi/fern-typescript-sdk",
             language: "typescript",
             cutoverVersion: "4.0.0",
+            versionSource: "sdk-config-omitted",
             configKind: "sdk-config-v1",
             payloadKind: "sdk-config-v1"
         });
+    });
+
+    it("routes an unpinned Fern target to the runtime bundle", () => {
+        expect(
+            selectUnpinnedGeneratorConfigRoute({
+                generatorId: "fernapi/fern-typescript-sdk",
+                language: "typescript",
+                configKind: "legacy-fern",
+                versionSource: "fern-latest"
+            })
+        ).toEqual({
+            generatorId: "fernapi/fern-typescript-sdk",
+            language: "typescript",
+            cutoverVersion: "4.0.0",
+            versionSource: "fern-latest",
+            configKind: "legacy-fern",
+            payloadKind: "fern-runtime-bundle"
+        });
+    });
+
+    it("rejects an SDK Config omission source on a legacy Fern route", () => {
+        expect(() =>
+            selectUnpinnedGeneratorConfigRoute({
+                generatorId: "fernapi/fern-typescript-sdk",
+                language: "typescript",
+                configKind: "legacy-fern",
+                versionSource: "sdk-config-omitted"
+            })
+        ).toThrow("Legacy Fern unpinned routes must use fern-latest");
     });
 });
 

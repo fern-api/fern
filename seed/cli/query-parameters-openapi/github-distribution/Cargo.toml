@@ -1,5 +1,5 @@
 [package]
-name = "fern-cli-sdk"
+name = "query-parameters-api"
 version = "1.0.0"
 edition = "2021"
 description = "CLI for the Query Parameters API"
@@ -51,7 +51,7 @@ anyhow = "1"
 base64 = "0.22"
 bytes = "1"
 clap = { version = "4", features = ["derive", "string", "env"] }
-clap_complete = "4"
+clap_complete = { version = "4", features = ["unstable-dynamic"] }
 clap_mangen = "0.2"
 hmac = "0.12"
 dotenvy = "0.15"

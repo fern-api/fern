@@ -7,6 +7,15 @@ namespace SeedApi;
 public record PlantPost
 {
     /// <summary>
+    /// The common name of the plant.
+    /// </summary>
+    [JsonPropertyName("commonName")]
+    public required string CommonName { get; set; }
+
+    [JsonPropertyName("wateringFrequency")]
+    public required PlantBaseWateringFrequency WateringFrequency { get; set; }
+
+    /// <summary>
     /// Required sun exposure level.
     /// </summary>
     [JsonPropertyName("sunExposure")]
@@ -23,15 +32,6 @@ public record PlantPost
     /// </summary>
     [JsonPropertyName("soilType")]
     public string? SoilType { get; set; }
-
-    /// <summary>
-    /// The common name of the plant.
-    /// </summary>
-    [JsonPropertyName("commonName")]
-    public string? CommonName { get; set; }
-
-    [JsonPropertyName("wateringFrequency")]
-    public PlantBaseWateringFrequency? WateringFrequency { get; set; }
 
     /// <summary>
     /// The botanical species name.

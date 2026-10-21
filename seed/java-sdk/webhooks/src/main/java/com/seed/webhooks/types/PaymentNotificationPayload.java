@@ -109,7 +109,6 @@ public final class PaymentNotificationPayload {
 
         private String status;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -146,6 +145,14 @@ public final class PaymentNotificationPayload {
         @java.lang.Override
         public PaymentNotificationPayload build() {
             return new PaymentNotificationPayload(paymentId, amount, status, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("paymentId") || key.equalsIgnoreCase("amount") || key.equalsIgnoreCase("status")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

@@ -5,7 +5,8 @@ import type * as GeneratorsYml from "../../../../../index.js";
 export interface HeaderAuthSchemeSchema
     extends GeneratorsYml.fernDefinition.WithEnvironmentVariable,
         GeneratorsYml.fernDefinition.WithName,
-        GeneratorsYml.fernDefinition.WithDocsSchema {
+        GeneratorsYml.fernDefinition.WithDocsSchema,
+        GeneratorsYml.fernDefinition.WithPlaygroundDocsSchema {
     header: string;
     /** Defaults to string */
     type?: string;

@@ -38,14 +38,9 @@ internal partial class RawClient(ClientOptions clientOptions)
         CancellationToken cancellationToken = default
     )
     {
-        // Apply the request timeout.
-        using var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-        var timeout = request.Options?.Timeout ?? Options.Timeout;
-        cts.CancelAfter(timeout);
-
         var httpRequest = await CreateHttpRequestAsync(request).ConfigureAwait(false);
         // Send the request.
-        return await SendWithRetriesAsync(httpRequest, request.Options, cts.Token<% if (hasRetriesDisabledEndpoints) { %>, request.RetriesDisabled<% } %>)
+        return await SendWithRetriesAsync(httpRequest, request.Options, cancellationToken<% if (hasRetriesDisabledEndpoints) { %>, request.RetriesDisabled<% } %>)
             .ConfigureAwait(false);
     }
 
@@ -56,13 +51,8 @@ internal partial class RawClient(ClientOptions clientOptions)
         bool retriesDisabled = false<% } %>
     )
     {
-        // Apply the request timeout.
-        using var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-        var timeout = options?.Timeout ?? Options.Timeout;
-        cts.CancelAfter(timeout);
-
         // Send the request.
-        return await SendWithRetriesAsync(request, options, cts.Token<% if (hasRetriesDisabledEndpoints) { %>, retriesDisabled<% } %>).ConfigureAwait(false);
+        return await SendWithRetriesAsync(request, options, cancellationToken<% if (hasRetriesDisabledEndpoints) { %>, retriesDisabled<% } %>).ConfigureAwait(false);
     }
 
     private static async global::System.Threading.Tasks.Task<HttpRequestMessage> CloneRequestAsync(
@@ -139,6 +129,8 @@ internal partial class RawClient(ClientOptions clientOptions)
     /// <summary>
     /// Sends the request with retries, unless the request content is not retryable,
     /// such as stream requests and multipart form data with stream content.
+    /// Each attempt gets its own timeout, and if a retry attempt fails after an earlier
+    /// attempt already produced a response, that earlier response is returned instead.
     /// </summary>
     private async global::System.Threading.Tasks.Task<global::<%= namespace%>.ApiResponse> SendWithRetriesAsync(
         HttpRequestMessage request,
@@ -148,14 +140,13 @@ internal partial class RawClient(ClientOptions clientOptions)
     )
     {
         var httpClient = options?.HttpClient ?? Options.HttpClient;
+        var timeout = options?.Timeout ?? Options.Timeout;
         var maxRetries = <% if (hasRetriesDisabledEndpoints) { %>retriesDisabled ? 0 : <% } %>Math.Max(0, options?.MaxRetries ?? Options.MaxRetries);
         var isRetryableContent = IsRetryableContent(request);
 
         if (!isRetryableContent || maxRetries == 0)
         {
-            var response = await httpClient
-                .SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
-                .ConfigureAwait(false);
+            var response = await SendWithTimeoutAsync(httpClient, request, timeout, cancellationToken).ConfigureAwait(false);
             return new global::<%= namespace%>.ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
         }
 
@@ -166,14 +157,29 @@ internal partial class RawClient(ClientOptions clientOptions)
         {
             if (attempt > 0)
             {
+                await BufferResponseAsync(retryResponse!).ConfigureAwait(false);
                 var delayMs = GetRetryDelayFromHeaders(retryResponse!, attempt - 1);
                 await SystemTask.Delay(delayMs, cancellationToken).ConfigureAwait(false);
             }
 
-            using var attemptRequest = await CloneRequestAsync(request, cancellationToken).ConfigureAwait(false);
-            retryResponse = await httpClient
-                .SendAsync(attemptRequest, HttpCompletionOption.ResponseHeadersRead, cancellationToken)
-                .ConfigureAwait(false);
+            HttpResponseMessage attemptResponse;
+            try
+            {
+                using var attemptRequest = await CloneRequestAsync(request, cancellationToken).ConfigureAwait(false);
+                attemptResponse = await SendWithTimeoutAsync(httpClient, attemptRequest, timeout, cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (HttpRequestException) when (retryResponse != null)
+            {
+                break;
+            }
+            catch (OperationCanceledException) when (retryResponse != null && !cancellationToken.IsCancellationRequested)
+            {
+                break;
+            }
+
+            retryResponse?.Dispose();
+            retryResponse = attemptResponse;
 
             if (!ShouldRetry(retryResponse))
             {
@@ -182,6 +188,37 @@ internal partial class RawClient(ClientOptions clientOptions)
         }
 
         return new global::<%= namespace%>.ApiResponse { StatusCode = (int)retryResponse!.StatusCode, Raw = retryResponse };
+    }
+
+    /// <summary>
+    /// Sends a single request attempt with its own timeout, so that backoff delays and
+    /// earlier attempts do not consume the timeout budget of later attempts.
+    /// </summary>
+    private static async global::System.Threading.Tasks.Task<HttpResponseMessage> SendWithTimeoutAsync(
+        HttpClient httpClient,
+        HttpRequestMessage request,
+        TimeSpan timeout,
+        CancellationToken cancellationToken
+    )
+    {
+        using var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+        cts.CancelAfter(timeout);
+        return await httpClient
+            .SendAsync(request, HttpCompletionOption.ResponseHeadersRead, cts.Token)
+            .ConfigureAwait(false);
+    }
+
+    /// <summary>
+    /// Buffers the response content so the response we already have survives if a later attempt fails.
+    /// </summary>
+    private static async global::System.Threading.Tasks.Task BufferResponseAsync(HttpResponseMessage response)
+    {
+        try
+        {
+            await response.Content.LoadIntoBufferAsync().ConfigureAwait(false);
+        }
+        catch (HttpRequestException) { }
+        catch (global::System.IO.IOException) { }
     }
 
     private static bool ShouldRetry(HttpResponseMessage response)

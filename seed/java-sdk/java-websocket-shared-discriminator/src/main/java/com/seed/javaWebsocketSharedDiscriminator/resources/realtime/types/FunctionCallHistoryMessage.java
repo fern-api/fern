@@ -73,7 +73,6 @@ public final class FunctionCallHistoryMessage {
     public static final class Builder {
         private List<FunctionCall> functionCalls = new ArrayList<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -106,6 +105,14 @@ public final class FunctionCallHistoryMessage {
 
         public FunctionCallHistoryMessage build() {
             return new FunctionCallHistoryMessage(functionCalls, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("type") || key.equalsIgnoreCase("function_calls")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

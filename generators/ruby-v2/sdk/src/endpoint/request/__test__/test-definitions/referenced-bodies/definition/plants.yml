@@ -1,0 +1,130 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  Plant:
+    properties:
+      name: string
+      wateringSchedule: optional<string>
+  PlantAlias: Plant
+  Tags: list<string>
+  Season:
+    enum:
+      - SPRING
+      - SUMMER
+
+service:
+  auth: false
+  base-path: /plants
+  endpoints:
+    createPlant:
+      method: POST
+      path: ""
+      request: Plant
+    createPlantFromAlias:
+      method: POST
+      path: /alias
+      request: PlantAlias
+    updatePlant:
+      method: PUT
+      path: /{plantId}
+      path-parameters:
+        plantId: string
+      request: Plant
+    createPlantsBatch:
+      method: POST
+      path: /batch
+      request: list<Plant>
+    tagPlant:
+      method: POST
+      path: /{plantId}/tags
+      path-parameters:
+        plantId: string
+      request: list<string>
+    setTags:
+      method: POST
+      path: /tags
+      request: Tags
+    setUniqueTags:
+      method: POST
+      path: /unique-tags
+      request: set<string>
+    setOptionalPlants:
+      method: POST
+      path: /optional
+      request: optional<list<Plant>>
+    setOptionalPlant:
+      method: POST
+      path: /optional-plant
+      request: optional<Plant>
+    setNullablePlant:
+      method: POST
+      path: /nullable-plant
+      request: nullable<PlantAlias>
+    setPlantsByRoom:
+      method: POST
+      path: /by-room
+      request: map<string, Plant>
+    setOptionalPlantsByRoom:
+      method: POST
+      path: /optional-by-room
+      request: optional<map<string, optional<Plant>>>
+    setPlantGroups:
+      method: POST
+      path: /groups
+      request: list<map<string, Plant>>
+    setUniquePlants:
+      method: POST
+      path: /unique-plants
+      request: set<Plant>
+    setOptionalTags:
+      method: POST
+      path: /optional-tags
+      request: optional<list<string>>
+    rename:
+      method: POST
+      path: /rename
+      request: string
+    setSeason:
+      method: POST
+      path: /season
+      request: Season
+    setMetadata:
+      method: POST
+      path: /metadata
+      request: map<string, string>
+    tagPlantWithHeaders:
+      method: POST
+      path: /{plantId}/tagged
+      path-parameters:
+        plantId: string
+      request:
+        name: TagPlantWithHeadersRequest
+        headers:
+          X-Trace-Id: string
+        query-parameters:
+          dryRun: optional<boolean>
+        body: list<Plant>
+    renameWithHeaders:
+      method: POST
+      path: /rename-with-headers
+      request:
+        name: RenameWithHeadersRequest
+        headers:
+          X-Trace-Id: string
+        body: string
+    createPlantWithHeaders:
+      method: POST
+      path: /with-headers
+      request:
+        name: CreatePlantWithHeadersRequest
+        headers:
+          X-Trace-Id: string
+        body: Plant
+    renameOptionalWithHeaders:
+      method: POST
+      path: /rename-optional-with-headers
+      request:
+        name: RenameOptionalWithHeadersRequest
+        headers:
+          X-Trace-Id: string
+        body: optional<string>

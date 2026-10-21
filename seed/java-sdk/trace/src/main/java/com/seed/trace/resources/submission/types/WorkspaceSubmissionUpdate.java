@@ -98,7 +98,6 @@ public final class WorkspaceSubmissionUpdate {
 
         private WorkspaceSubmissionUpdateInfo updateInfo;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -127,6 +126,14 @@ public final class WorkspaceSubmissionUpdate {
         @java.lang.Override
         public WorkspaceSubmissionUpdate build() {
             return new WorkspaceSubmissionUpdate(updateTime, updateInfo, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("updateTime") || key.equalsIgnoreCase("updateInfo")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

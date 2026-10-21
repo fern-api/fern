@@ -44,6 +44,8 @@
     "@fern-api/mintlify-importer": "workspace:*",
     "@fern-api/readme-importer": "workspace:*",
     "@fern-api/task-context": "workspace:*",
+    "@fern-api/workspace-loader": "workspace:*",
+    "@postman/sdk-config": "catalog:",
     "axios": "catalog:",
     "chalk": "catalog:",
     "fs-extra": "catalog:",

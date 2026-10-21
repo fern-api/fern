@@ -5,6 +5,7 @@ package com.seed.javaOptionalRequestBody;
 
 import com.seed.javaOptionalRequestBody.core.ClientOptions;
 import com.seed.javaOptionalRequestBody.core.RequestOptions;
+import com.seed.javaOptionalRequestBody.core.SeedJavaOptionalRequestBodyHttpResponse;
 import com.seed.javaOptionalRequestBody.requests.RefundWithHeaderRequest;
 import com.seed.javaOptionalRequestBody.types.ExactRefundRequest;
 import com.seed.javaOptionalRequestBody.types.Refund;
@@ -12,7 +13,7 @@ import com.seed.javaOptionalRequestBody.types.RefundRequest;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-public class AsyncSeedJavaOptionalRequestBodyClient {
+public class AsyncSeedJavaOptionalRequestBodyClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final AsyncRawSeedJavaOptionalRequestBodyClient rawClient;
@@ -33,91 +34,194 @@ public class AsyncSeedJavaOptionalRequestBodyClient {
      * Refund a payment, optionally with a partial amount.
      */
     public CompletableFuture<Refund> refund(String id) {
-        return this.rawClient.refund(id).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaOptionalRequestBodyHttpResponse<Refund>> rawFuture = this.rawClient.refund(id);
+        CompletableFuture<Refund> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Refund a payment, optionally with a partial amount.
      */
     public CompletableFuture<Refund> refund(String id, RequestOptions requestOptions) {
-        return this.rawClient.refund(id, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaOptionalRequestBodyHttpResponse<Refund>> rawFuture =
+                this.rawClient.refund(id, requestOptions);
+        CompletableFuture<Refund> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Refund a payment, optionally with a partial amount.
      */
     public CompletableFuture<Refund> refund(String id, RefundRequest request) {
-        return this.rawClient.refund(id, request).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaOptionalRequestBodyHttpResponse<Refund>> rawFuture =
+                this.rawClient.refund(id, request);
+        CompletableFuture<Refund> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Refund a payment, optionally with a partial amount.
      */
     public CompletableFuture<Refund> refund(String id, RefundRequest request, RequestOptions requestOptions) {
-        return this.rawClient.refund(id, request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaOptionalRequestBodyHttpResponse<Refund>> rawFuture =
+                this.rawClient.refund(id, request, requestOptions);
+        CompletableFuture<Refund> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Refund every payment, optionally with a partial amount.
      */
     public CompletableFuture<List<Refund>> bulkRefund() {
-        return this.rawClient.bulkRefund().thenApply(response -> response.body());
+        CompletableFuture<SeedJavaOptionalRequestBodyHttpResponse<List<Refund>>> rawFuture =
+                this.rawClient.bulkRefund();
+        CompletableFuture<List<Refund>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Refund every payment, optionally with a partial amount.
      */
     public CompletableFuture<List<Refund>> bulkRefund(RequestOptions requestOptions) {
-        return this.rawClient.bulkRefund(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaOptionalRequestBodyHttpResponse<List<Refund>>> rawFuture =
+                this.rawClient.bulkRefund(requestOptions);
+        CompletableFuture<List<Refund>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Refund every payment, optionally with a partial amount.
      */
     public CompletableFuture<List<Refund>> bulkRefund(RefundRequest request) {
-        return this.rawClient.bulkRefund(request).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaOptionalRequestBodyHttpResponse<List<Refund>>> rawFuture =
+                this.rawClient.bulkRefund(request);
+        CompletableFuture<List<Refund>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Refund every payment, optionally with a partial amount.
      */
     public CompletableFuture<List<Refund>> bulkRefund(RefundRequest request, RequestOptions requestOptions) {
-        return this.rawClient.bulkRefund(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaOptionalRequestBodyHttpResponse<List<Refund>>> rawFuture =
+                this.rawClient.bulkRefund(request, requestOptions);
+        CompletableFuture<List<Refund>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Refund a payment, passing the body alongside a header.
      */
     public CompletableFuture<Refund> refundWithHeader(RefundRequest body) {
-        return this.rawClient.refundWithHeader(body).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaOptionalRequestBodyHttpResponse<Refund>> rawFuture =
+                this.rawClient.refundWithHeader(body);
+        CompletableFuture<Refund> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Refund a payment, passing the body alongside a header.
      */
     public CompletableFuture<Refund> refundWithHeader(RefundRequest body, RequestOptions requestOptions) {
-        return this.rawClient.refundWithHeader(body, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaOptionalRequestBodyHttpResponse<Refund>> rawFuture =
+                this.rawClient.refundWithHeader(body, requestOptions);
+        CompletableFuture<Refund> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Refund a payment, passing the body alongside a header.
      */
     public CompletableFuture<Refund> refundWithHeader(RefundWithHeaderRequest request) {
-        return this.rawClient.refundWithHeader(request).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaOptionalRequestBodyHttpResponse<Refund>> rawFuture =
+                this.rawClient.refundWithHeader(request);
+        CompletableFuture<Refund> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Refund a payment, passing the body alongside a header.
      */
     public CompletableFuture<Refund> refundWithHeader(RefundWithHeaderRequest request, RequestOptions requestOptions) {
-        return this.rawClient.refundWithHeader(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaOptionalRequestBodyHttpResponse<Refund>> rawFuture =
+                this.rawClient.refundWithHeader(request, requestOptions);
+        CompletableFuture<Refund> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Refund a payment, optionally with an exact amount.
      */
     public CompletableFuture<Refund> refundExactAmount(String id, ExactRefundRequest request) {
-        return this.rawClient.refundExactAmount(id, request).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaOptionalRequestBodyHttpResponse<Refund>> rawFuture =
+                this.rawClient.refundExactAmount(id, request);
+        CompletableFuture<Refund> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -125,35 +229,85 @@ public class AsyncSeedJavaOptionalRequestBodyClient {
      */
     public CompletableFuture<Refund> refundExactAmount(
             String id, ExactRefundRequest request, RequestOptions requestOptions) {
-        return this.rawClient.refundExactAmount(id, request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaOptionalRequestBodyHttpResponse<Refund>> rawFuture =
+                this.rawClient.refundExactAmount(id, request, requestOptions);
+        CompletableFuture<Refund> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Refund a payment, always with an amount.
      */
     public CompletableFuture<Refund> requiredRefund(String id) {
-        return this.rawClient.requiredRefund(id).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaOptionalRequestBodyHttpResponse<Refund>> rawFuture =
+                this.rawClient.requiredRefund(id);
+        CompletableFuture<Refund> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Refund a payment, always with an amount.
      */
     public CompletableFuture<Refund> requiredRefund(String id, RequestOptions requestOptions) {
-        return this.rawClient.requiredRefund(id, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaOptionalRequestBodyHttpResponse<Refund>> rawFuture =
+                this.rawClient.requiredRefund(id, requestOptions);
+        CompletableFuture<Refund> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Refund a payment, always with an amount.
      */
     public CompletableFuture<Refund> requiredRefund(String id, RefundRequest request) {
-        return this.rawClient.requiredRefund(id, request).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaOptionalRequestBodyHttpResponse<Refund>> rawFuture =
+                this.rawClient.requiredRefund(id, request);
+        CompletableFuture<Refund> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Refund a payment, always with an amount.
      */
     public CompletableFuture<Refund> requiredRefund(String id, RefundRequest request, RequestOptions requestOptions) {
-        return this.rawClient.requiredRefund(id, request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaOptionalRequestBodyHttpResponse<Refund>> rawFuture =
+                this.rawClient.requiredRefund(id, request, requestOptions);
+        CompletableFuture<Refund> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedJavaOptionalRequestBodyClientBuilder builder() {

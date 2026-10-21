@@ -4,6 +4,26 @@ import { getTextOfTsNode } from "@fern-typescript/commons";
 import { FileContext } from "@fern-typescript/contexts";
 import { Scope, ts } from "ts-morph";
 
+type HelperParameter = { name: string; type: string; optional?: boolean };
+
+const MISSING_SIGNATURE_MESSAGE = "Webhook signature verification could not run: missing signature header";
+const VERIFICATION_FAILED_MESSAGE = "Webhook signature verification failed: signature mismatch";
+
+const HMAC_ALGORITHM_TYPE = '"sha1" | "sha256" | "sha384" | "sha512"';
+const UNSUPPORTED_ALGORITHM_MESSAGE = "Webhook signature verification could not run: unsupported algorithm";
+const UNRESOLVED_KEY_MESSAGE = "Webhook signature verification could not run: signing key could not be resolved";
+const MISSING_KEY_ID_MESSAGE = "Webhook signature verification could not run: settings header is missing the key ID";
+const HEADER_LOOKUP_FUNCTION = `function getHeader(headers: Record<string, string | string[] | undefined>, name: string): string | undefined {
+    const lower = name.toLowerCase();
+    for (const key of Object.keys(headers)) {
+        if (key.toLowerCase() === lower) {
+            const value = headers[key];
+            return Array.isArray(value) ? value[0] : value;
+        }
+    }
+    return undefined;
+}`;
+
 interface MethodBodyResult {
     fileConstants: string[];
     body: string;
@@ -34,7 +54,134 @@ export class WebhooksHelperGenerator {
     private writeHmacClass(context: FileContext, config: FernIr.HmacSignatureVerification): void {
         const parameters = this.buildHmacParameters(config);
         const result = this.buildHmacMethodBody(context, config);
-        this.writeClass(context, parameters, result, this.buildJsDoc(config));
+        if (config.algorithmHeader != null) {
+            const entries = config.algorithmHeader.algorithms
+                .map((option) => `${JSON.stringify(option.wireValue)}: "${this.mapHmacAlgorithm(option.algorithm)}"`)
+                .join(", ");
+            result.fileConstants.unshift(`const HMAC_ALGORITHMS = { ${entries} } as const;`, HEADER_LOOKUP_FUNCTION);
+        }
+        this.writeClass(context, parameters, result, this.buildJsDoc(config), this.buildVerifyRequestMethod(config));
+    }
+
+    /**
+     * The type of the optional `algorithm` argument. When an algorithm header is configured,
+     * callers (and the generated `verifyRequest`) pass the provider's own wire values
+     * (e.g. `"HMAC_SHA256"`), which are mapped to the underlying digest via `HMAC_ALGORITHMS`.
+     */
+    private getAlgorithmType(config: FernIr.HmacSignatureVerification): string {
+        if (config.algorithmHeader == null) {
+            return HMAC_ALGORITHM_TYPE;
+        }
+        return config.algorithmHeader.algorithms.map((option) => JSON.stringify(option.wireValue)).join(" | ");
+    }
+
+    private getAlgorithmExpression(config: FernIr.HmacSignatureVerification): string {
+        const fallback = `"${this.mapHmacAlgorithm(config.algorithm)}"`;
+        if (config.algorithmHeader == null) {
+            return `algorithm ?? ${fallback}`;
+        }
+        return `algorithm != null ? (HMAC_ALGORITHMS[algorithm] ?? algorithm) : ${fallback}`;
+    }
+
+    /**
+     * Emits `verifyRequest`, a request-level wrapper that reads the signature header and the
+     * algorithm-selection header itself. The algorithm header carries
+     * `<key-id><delimiter><algorithm>` (Twilio: `X-Twilio-Webhook-Signature-Settings: <sid>;HMAC_SHA256`);
+     * the key id is handed to the caller-supplied resolver because the SDK never holds secrets.
+     * When the header is absent the configured default algorithm is used and the resolver is
+     * invoked with `undefined` (the legacy single-secret path).
+     */
+    private buildVerifyRequestMethod(
+        config: FernIr.HmacSignatureVerification
+    ): { parameters: HelperParameter[]; body: string } | undefined {
+        const algorithmHeader = config.algorithmHeader;
+        if (algorithmHeader == null) {
+            return undefined;
+        }
+        const requestBodyType =
+            config.payloadFormat.bodySort != null ? "string | Record<string, string | string[]>" : "string";
+        const parameters: HelperParameter[] = [
+            { name: "headers", type: "Record<string, string | string[] | undefined>" },
+            { name: "requestBody", type: requestBodyType }
+        ];
+        const payloadParams: HelperParameter[] = [];
+        this.addPayloadParameters(payloadParams, config.payloadFormat);
+        parameters.push(...payloadParams);
+        parameters.push({
+            name: "signatureKey",
+            type: "string | ((keyId: string | undefined) => string | undefined | Promise<string | undefined>)"
+        });
+
+        const lines: string[] = [];
+        lines.push(
+            `const signatureHeader = getHeader(headers, ${JSON.stringify(getWireValue(config.signatureHeaderName))});`,
+            'if (signatureHeader == null || signatureHeader === "") {',
+            `    console.warn(${JSON.stringify(MISSING_SIGNATURE_MESSAGE)});`,
+            "    return false;",
+            "}"
+        );
+        if (config.timestamp != null) {
+            lines.push(
+                `const timestampHeader = getHeader(headers, ${JSON.stringify(getWireValue(config.timestamp.headerName))}) ?? "";`
+            );
+        }
+        lines.push(
+            `const settingsHeader = getHeader(headers, ${JSON.stringify(getWireValue(algorithmHeader.headerName))});`,
+            "let keyId: string | undefined;",
+            "let algorithm: keyof typeof HMAC_ALGORITHMS | undefined;",
+            'if (settingsHeader != null && settingsHeader !== "") {'
+        );
+        if (algorithmHeader.algorithmParameter != null) {
+            const delimiter = JSON.stringify(algorithmHeader.keyIdDelimiter ?? ",");
+            lines.push(
+                "    const settingsParts: Record<string, string> = {};",
+                `    for (const part of settingsHeader.split(${delimiter})) {`,
+                '        const separatorIndex = part.indexOf("=");',
+                "        if (separatorIndex < 0) {",
+                "            continue;",
+                "        }",
+                "        settingsParts[part.slice(0, separatorIndex).trim()] = part.slice(separatorIndex + 1).trim();",
+                "    }",
+                `    const algorithmValue = settingsParts[${JSON.stringify(algorithmHeader.algorithmParameter)}] ?? "";`
+            );
+            if (algorithmHeader.keyIdParameter != null) {
+                lines.push(
+                    `    keyId = settingsParts[${JSON.stringify(algorithmHeader.keyIdParameter)}];`,
+                    '    if (keyId == null || keyId === "") {',
+                    `        console.warn(${JSON.stringify(MISSING_KEY_ID_MESSAGE)});`,
+                    "        return false;",
+                    "    }"
+                );
+            }
+        } else if (algorithmHeader.keyIdDelimiter != null) {
+            lines.push(
+                `    const delimiterIndex = settingsHeader.lastIndexOf(${JSON.stringify(algorithmHeader.keyIdDelimiter)});`,
+                `    const algorithmValue = delimiterIndex >= 0 ? settingsHeader.slice(delimiterIndex + ${algorithmHeader.keyIdDelimiter.length}) : settingsHeader;`,
+                "    keyId = delimiterIndex >= 0 ? settingsHeader.slice(0, delimiterIndex) : undefined;"
+            );
+        } else {
+            lines.push("    const algorithmValue = settingsHeader;");
+        }
+        lines.push(
+            "    if (!Object.prototype.hasOwnProperty.call(HMAC_ALGORITHMS, algorithmValue)) {",
+            `        console.warn(${JSON.stringify(UNSUPPORTED_ALGORITHM_MESSAGE)});`,
+            "        return false;",
+            "    }",
+            "    algorithm = algorithmValue as keyof typeof HMAC_ALGORITHMS;",
+            "}",
+            'const resolvedKey = typeof signatureKey === "function" ? await signatureKey(keyId) : signatureKey;',
+            'if (resolvedKey == null || resolvedKey === "") {',
+            `    console.warn(${JSON.stringify(UNRESOLVED_KEY_MESSAGE)});`,
+            "    return false;",
+            "}"
+        );
+        const args = ["requestBody", "signatureHeader", "resolvedKey", ...payloadParams.map((p) => p.name)];
+        if (config.timestamp != null) {
+            args.push("timestampHeader");
+        }
+        args.push("algorithm");
+        lines.push(`return ${this.className}.verifySignature(${args.join(", ")});`);
+        return { parameters, body: lines.join("\n") };
     }
 
     private writeAsymmetricClass(context: FileContext, config: FernIr.AsymmetricKeySignatureVerification): void {
@@ -45,9 +192,10 @@ export class WebhooksHelperGenerator {
 
     private writeClass(
         context: FileContext,
-        parameters: Array<{ name: string; type: string }>,
+        parameters: HelperParameter[],
         result: MethodBodyResult,
-        jsDoc: string
+        jsDoc: string,
+        verifyRequest?: { parameters: HelperParameter[]; body: string }
     ): void {
         for (const constant of result.fileConstants) {
             context.sourceFile.addStatements(constant);
@@ -68,19 +216,37 @@ export class WebhooksHelperGenerator {
                     scope: Scope.Public,
                     parameters: parameters.map((p) => ({
                         name: p.name,
-                        type: p.type
+                        type: p.type,
+                        hasQuestionToken: p.optional
                     })),
                     returnType: "Promise<boolean>",
                     statements: result.body
-                }
+                },
+                ...(verifyRequest != null
+                    ? [
+                          {
+                              name: "verifyRequest",
+                              isStatic: true,
+                              isAsync: true,
+                              scope: Scope.Public,
+                              parameters: verifyRequest.parameters.map((p) => ({
+                                  name: p.name,
+                                  type: p.type,
+                                  hasQuestionToken: p.optional
+                              })),
+                              returnType: "Promise<boolean>",
+                              statements: verifyRequest.body
+                          }
+                      ]
+                    : [])
             ]
         });
     }
 
-    private buildHmacParameters(config: FernIr.HmacSignatureVerification): Array<{ name: string; type: string }> {
+    private buildHmacParameters(config: FernIr.HmacSignatureVerification): HelperParameter[] {
         const requestBodyType =
             config.payloadFormat.bodySort != null ? "string | Record<string, string | string[]>" : "string";
-        const params: Array<{ name: string; type: string }> = [
+        const params: HelperParameter[] = [
             { name: "requestBody", type: requestBodyType },
             { name: "signatureHeader", type: "string" },
             { name: "signatureKey", type: "string" }
@@ -89,16 +255,15 @@ export class WebhooksHelperGenerator {
         if (config.timestamp != null) {
             params.push({ name: "timestampHeader", type: "string" });
         }
+        params.push({ name: "algorithm", type: this.getAlgorithmType(config), optional: true });
         return params;
     }
 
-    private buildAsymmetricParameters(
-        config: FernIr.AsymmetricKeySignatureVerification
-    ): Array<{ name: string; type: string }> {
+    private buildAsymmetricParameters(config: FernIr.AsymmetricKeySignatureVerification): HelperParameter[] {
         const payloadFormat = config.payloadFormat;
         const hasBodySort = payloadFormat?.bodySort != null;
         const requestBodyType = hasBodySort ? "string | Record<string, string | string[]>" : "string";
-        const params: Array<{ name: string; type: string }> = [
+        const params: HelperParameter[] = [
             { name: "requestBody", type: requestBodyType },
             { name: "signatureHeader", type: "string" }
         ];
@@ -126,10 +291,7 @@ export class WebhooksHelperGenerator {
         return params;
     }
 
-    private addPayloadParameters(
-        params: Array<{ name: string; type: string }>,
-        payloadFormat: FernIr.WebhookPayloadFormat
-    ): void {
+    private addPayloadParameters(params: HelperParameter[], payloadFormat: FernIr.WebhookPayloadFormat): void {
         for (const component of payloadFormat.components) {
             switch (component) {
                 case "NOTIFICATION_URL":
@@ -151,7 +313,11 @@ export class WebhooksHelperGenerator {
         // Input validation. A verification helper returns a boolean and never throws,
         // so missing inputs fail closed with `false` rather than raising.
         lines.push(
-            "if (requestBody == null || signatureHeader == null || signatureKey == null) {",
+            'if (signatureHeader == null || signatureHeader === "") {',
+            `    console.warn(${JSON.stringify(MISSING_SIGNATURE_MESSAGE)});`,
+            "    return false;",
+            "}",
+            "if (requestBody == null || signatureKey == null) {",
             "    return false;",
             "}"
         );
@@ -196,14 +362,16 @@ export class WebhooksHelperGenerator {
 
         // HMAC computation
         lines.push("");
-        const algorithm = this.mapHmacAlgorithm(config.algorithm);
         const encoding = this.mapEncoding(config.encoding);
 
         const argsExpr = ts.factory.createObjectLiteralExpression(
             [
                 ts.factory.createPropertyAssignment("payload", ts.factory.createIdentifier("payload")),
                 ts.factory.createPropertyAssignment("secret", ts.factory.createIdentifier("signatureKey")),
-                ts.factory.createPropertyAssignment("algorithm", ts.factory.createStringLiteral(algorithm)),
+                ts.factory.createPropertyAssignment(
+                    "algorithm",
+                    ts.factory.createIdentifier(this.getAlgorithmExpression(config))
+                ),
                 ts.factory.createPropertyAssignment("encoding", ts.factory.createStringLiteral(encoding))
             ],
             false
@@ -217,7 +385,9 @@ export class WebhooksHelperGenerator {
             ts.factory.createIdentifier(sigIdentifier),
             ts.factory.createIdentifier("expected")
         );
-        lines.push(`return ${getTextOfTsNode(compareCall)};`);
+        lines.push(`const valid = ${getTextOfTsNode(compareCall)};`);
+        lines.push("if (!valid) {", `    console.warn(${JSON.stringify(VERIFICATION_FAILED_MESSAGE)});`, "}");
+        lines.push("return valid;");
 
         return { fileConstants, body: lines.join("\n") };
     }
@@ -495,7 +665,12 @@ export class WebhooksHelperGenerator {
             ts.factory.createIdentifier("expectedBodyHash"),
             ts.factory.createIdentifier("transmittedBodyHash")
         );
-        lines.push(`    if (!(${getTextOfTsNode(compareCall)})) {`, "        return false;", "    }");
+        lines.push(
+            `    if (!(${getTextOfTsNode(compareCall)})) {`,
+            `        console.warn(${JSON.stringify(VERIFICATION_FAILED_MESSAGE)});`,
+            "        return false;",
+            "    }"
+        );
         lines.push("    payload = notificationUrl;");
 
         // Classic form path: URL + sorted/deduped form params, no body-hash check.
@@ -521,7 +696,6 @@ export class WebhooksHelperGenerator {
         sigIdentifier: string,
         normalization: FernIr.WebhookNotificationUrlNormalization
     ): void {
-        const algorithm = this.mapHmacAlgorithm(config.algorithm);
         const encoding = this.mapEncoding(config.encoding);
         const binding = config.bodyHashBinding;
         const hasBodySort = config.payloadFormat.bodySort != null;
@@ -564,7 +738,12 @@ export class WebhooksHelperGenerator {
                 ts.factory.createIdentifier("expectedBodyHash"),
                 ts.factory.createIdentifier("transmittedBodyHash")
             );
-            lines.push(`    if (!(${getTextOfTsNode(bodyCompare)})) {`, "        return false;", "    }");
+            lines.push(
+                `    if (!(${getTextOfTsNode(bodyCompare)})) {`,
+                `        console.warn(${JSON.stringify(VERIFICATION_FAILED_MESSAGE)});`,
+                "        return false;",
+                "    }"
+            );
             lines.push("}");
         }
 
@@ -606,7 +785,10 @@ export class WebhooksHelperGenerator {
             [
                 ts.factory.createPropertyAssignment("payload", ts.factory.createIdentifier("payload")),
                 ts.factory.createPropertyAssignment("secret", ts.factory.createIdentifier("signatureKey")),
-                ts.factory.createPropertyAssignment("algorithm", ts.factory.createStringLiteral(algorithm)),
+                ts.factory.createPropertyAssignment(
+                    "algorithm",
+                    ts.factory.createIdentifier(this.getAlgorithmExpression(config))
+                ),
                 ts.factory.createPropertyAssignment("encoding", ts.factory.createStringLiteral(encoding))
             ],
             false
@@ -619,6 +801,7 @@ export class WebhooksHelperGenerator {
         );
         lines.push(`    if (${getTextOfTsNode(compare)}) {`, "        return true;", "    }");
         lines.push("}");
+        lines.push(`console.warn(${JSON.stringify(VERIFICATION_FAILED_MESSAGE)});`);
         lines.push("return false;");
     }
 

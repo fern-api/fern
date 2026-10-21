@@ -16,4 +16,13 @@ export interface SdkConfig {
      * identically by every generator so behavior is consistent across languages.
      */
     idempotencyKeyGeneration: FernIr.IdempotencyKeyGeneration | undefined;
+    /**
+     * API-wide webhook signature scheme, configured once in `generators.yml`
+     * (`api.settings.webhook-signature`) rather than in the API definition.
+     * When present, generators emit the shared webhook verification helper
+     * from this scheme even if the definition models no webhooks, and use it
+     * as the default for any modeled webhook that does not declare its own
+     * `signatureVerification`.
+     */
+    webhookSignatureVerification: FernIr.WebhookSignatureVerification | undefined;
 }

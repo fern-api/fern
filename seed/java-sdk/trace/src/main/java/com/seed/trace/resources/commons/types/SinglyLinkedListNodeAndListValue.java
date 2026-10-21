@@ -95,7 +95,6 @@ public final class SinglyLinkedListNodeAndListValue {
 
         private SinglyLinkedListValue fullList;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -124,6 +123,14 @@ public final class SinglyLinkedListNodeAndListValue {
         @java.lang.Override
         public SinglyLinkedListNodeAndListValue build() {
             return new SinglyLinkedListNodeAndListValue(nodeId, fullList, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("nodeId") || key.equalsIgnoreCase("fullList")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

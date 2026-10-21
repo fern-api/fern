@@ -557,8 +557,11 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                     customConfig.gradleCentralDependencyManagement());
         }
         ICustomConfig.OutputDirectory outputDirectoryMode = customConfig.outputDirectory();
+        // Full projects are standalone Gradle projects, so sources must live at their full package path.
+        boolean stripPackagePrefix = !publishResult.generateFullProject();
+        Optional<String> writePackagePrefix = stripPackagePrefix ? customConfig.packagePrefix() : Optional.empty();
         generatedFiles.forEach(generatedFile ->
-                generatedFile.write(outputDirectory, true, customConfig.packagePrefix(), outputDirectoryMode));
+                generatedFile.write(outputDirectory, stripPackagePrefix, writePackagePrefix, outputDirectoryMode));
         copyLicenseFile(generatorConfig);
         if (publishResult.generateFullProject()) {
             copyGradleWrapperFromResources(outputDirectory, customConfig.gradleDistributionUrl());

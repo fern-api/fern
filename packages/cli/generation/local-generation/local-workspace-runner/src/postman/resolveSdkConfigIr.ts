@@ -1,4 +1,4 @@
-import type { generatorsYml } from "@fern-api/configuration";
+import { type generatorsYml, LEGACY_GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/configuration";
 import type { AbsoluteFilePath } from "@fern-api/fs-utils";
 import type { SdkConfigIrV1 } from "@postman/sdk-config";
 
@@ -14,6 +14,8 @@ export declare namespace resolveSdkConfigIr {
         generatorInvocation: generatorsYml.GeneratorInvocation;
         /** Path to `fern.config.json`; `sdk-config.yml` sits beside it. */
         absolutePathToFernConfig: AbsoluteFilePath | undefined;
+        /** Fern API identity from the selected workspace definition. */
+        apiName: string;
         organization: string;
         /** Directory the adapter writes the SDK into, in the coordinates the adapter will see. */
         outputPath: string;
@@ -38,6 +40,7 @@ export declare namespace resolveSdkConfigIr {
 export async function resolveSdkConfigIr({
     generatorInvocation,
     absolutePathToFernConfig,
+    apiName,
     organization,
     outputPath,
     rawSpecsManifest
@@ -63,6 +66,7 @@ export async function resolveSdkConfigIr({
                 sdkConfig: loaded.sdkConfig,
                 language: language as TargetLanguage,
                 generatorName: generatorInvocation.name,
+                apiName,
                 organization,
                 outputPath,
                 rawSpecsManifest
@@ -79,7 +83,8 @@ function migrationRequiredMessage(generatorInvocation: generatorsYml.GeneratorIn
         `${generatorInvocation.name}@${generatorInvocation.version} is configured by ${SDK_CONFIG_FILENAME}, ` +
         `which this workspace does not have. Migrate your generator configuration:\n\n` +
         `    fern sdk migrate\n\n` +
-        `That writes ${SDK_CONFIG_FILENAME} and archives your generators.yml as generators.archived.yml. ` +
-        `Your other generators keep running from generators.yml either way.`
+        `That writes ${SDK_CONFIG_FILENAME}, renames generators.yml to ${LEGACY_GENERATORS_CONFIGURATION_FILENAME}, ` +
+        `and preserves the migrated configuration as rollback comments. Your unmigrated generators keep running ` +
+        `from ${LEGACY_GENERATORS_CONFIGURATION_FILENAME}.`
     );
 }

@@ -29,10 +29,10 @@ function definition(): FernDefinition {
     };
 }
 
-function mcpInvocation(): generatorsYml.GeneratorInvocation {
+function mcpInvocation(version = "0.1.0"): generatorsYml.GeneratorInvocation {
     return {
         name: "fernapi/fern-mcp-server",
-        version: "0.1.0",
+        version,
         language: "mcp",
         config: { serverName: "weather" },
         keywords: [],
@@ -43,13 +43,21 @@ function mcpInvocation(): generatorsYml.GeneratorInvocation {
     } as unknown as generatorsYml.GeneratorInvocation;
 }
 
-function archive(specIndexes: number[]): FernSdkGenApiSourceArchive {
+function archive(
+    specIndexes: number[],
+    apiImportSettings?: FernSdkGenApiSourceArchive["manifest"]["specs"][number]["apiImportSettings"]
+): FernSdkGenApiSourceArchive {
     return {
         buffer: Buffer.alloc(0),
         specIndexes,
         manifest: {
             specs: [
-                { type: "openapi", specPath: "/fern/specs/openapi_0.json", namespace: "weather" },
+                {
+                    type: "openapi",
+                    specPath: "/fern/specs/openapi_0.json",
+                    namespace: "weather",
+                    apiImportSettings
+                },
                 { type: "protobuf", specPath: "/fern/specs/proto" }
             ]
         }
@@ -90,8 +98,7 @@ describe("prepareFernSdkGenApiSdkConfigPayload", () => {
             { id: "source-0", type: "openapi", path: "fern/specs/openapi_0.json", namespace: "weather" }
         ]);
         expect(sdkConfig.targets.map((target) => target.language)).toEqual(["mcp"]);
-        // Root `generation` is required by sdk-config 0.3.0 consumers even when empty.
-        expect(payload.body.toString("utf8")).toContain('"generation":');
+        expect(payload.body.toString("utf8")).not.toContain('"generation":');
         expect(mapFernGroupToSdkConfig).toHaveBeenCalledWith(
             expect.objectContaining({
                 group: expect.objectContaining({
@@ -110,6 +117,97 @@ describe("prepareFernSdkGenApiSdkConfigPayload", () => {
                 }
             })
         );
+    });
+
+    it("preserves active customer fields without materializing their defaults", () => {
+        const mapFernGroupToSdkConfig = vi.fn(
+            ({ source }: Parameters<MapFernGroupToSdkConfig>[0]): SdkConfigMappingResult => ({
+                diagnostics: [],
+                sdkConfig: validateSdkConfigV1({
+                    schemaVersion: "sdk-config/v1",
+                    sdkName: "weather",
+                    source,
+                    generation: { buildAllModels: true },
+                    targets: [{ language: "mcp", output: { delivery: "files" } }]
+                })
+            })
+        );
+        const payload = prepareFernSdkGenApiSdkConfigPayload({
+            workspace: { definition: definition() },
+            generatorInvocation: mcpInvocation(),
+            audiences: { type: "all" },
+            sourceArchive: archive([0]),
+            mapFernGroupToSdkConfig
+        });
+
+        expect(JSON.parse(payload.body.toString("utf8"))).toMatchObject({
+            generation: { buildAllModels: true }
+        });
+    });
+
+    it("passes generators.yml replay settings through to the SDK Config mapper", () => {
+        const mapFernGroupToSdkConfig = vi.fn(
+            ({ replay, source }: Parameters<MapFernGroupToSdkConfig>[0]): SdkConfigMappingResult => ({
+                diagnostics: [],
+                sdkConfig: validateSdkConfigV1({
+                    schemaVersion: "sdk-config/v1",
+                    sdkName: "weather",
+                    source,
+                    ...(replay == null ? {} : { replay }),
+                    targets: [{ language: "mcp", output: { delivery: "files" } }]
+                })
+            })
+        );
+
+        const payload = prepareFernSdkGenApiSdkConfigPayload({
+            workspace: { definition: definition() },
+            generatorInvocation: mcpInvocation(),
+            audiences: { type: "all" },
+            replay: { enabled: true },
+            sourceArchive: archive([0]),
+            mapFernGroupToSdkConfig
+        });
+
+        expect(mapFernGroupToSdkConfig).toHaveBeenCalledWith(expect.objectContaining({ replay: { enabled: true } }));
+        expect(JSON.parse(payload.body.toString("utf8"))).toMatchObject({ replay: { enabled: true } });
+    });
+
+    it("synthesizes an unpinned MCP payload without serializing latest", () => {
+        const payload = prepareFernSdkGenApiSdkConfigPayload({
+            workspace: { definition: definition() },
+            generatorInvocation: mcpInvocation("latest"),
+            audiences: { type: "all" },
+            sourceArchive: archive([0]),
+            mapFernGroupToSdkConfig: mappingCallback()
+        });
+
+        expect(payload.payloadKind).toBe("sdk-config-v1");
+        expect(JSON.parse(payload.body.toString("utf8"))).toMatchObject({
+            targets: [{ language: "mcp" }]
+        });
+        expect(payload.body.toString("utf8")).not.toContain('"latest"');
+    });
+
+    it("preserves supported import settings in the SDK Config payload", () => {
+        const apiImportSettings = {
+            respectReadonlySchemas: true,
+            discriminatedUnionV2: true,
+            undiscriminatedUnionsWithLiterals: true,
+            inlineAllOfSchemas: true,
+            resolveSchemaCollisions: true,
+            asyncApiMessageNaming: "v2" as const
+        };
+        const payload = prepareFernSdkGenApiSdkConfigPayload({
+            workspace: { definition: definition() },
+            generatorInvocation: mcpInvocation(),
+            audiences: { type: "all" },
+            sourceArchive: archive([0], apiImportSettings),
+            mapFernGroupToSdkConfig: mappingCallback()
+        });
+
+        expect(JSON.parse(payload.body.toString("utf8"))).toMatchObject({
+            source: { specs: [{ apiImportSettings }] }
+        });
     });
 
     it("refuses source types SDK Config generation cannot represent", () => {

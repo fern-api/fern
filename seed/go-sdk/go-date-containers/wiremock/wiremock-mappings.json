@@ -26,9 +26,71 @@
         }
       },
       "postServeActions": []
+    },
+    {
+      "id": "40120d0a-e388-4ccd-b60c-e0443d86aee9",
+      "name": "listLoansByDate - default",
+      "request": {
+        "urlPathTemplate": "/loans/by-date/{as_of}",
+        "method": "GET",
+        "pathParameters": {
+          "as_of": {
+            "equalTo": "2023-01-15"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "[\n  {\n    \"disbursement_dates\": [\n      \"2023-01-15\",\n      \"2023-01-15\"\n    ],\n    \"unique_dates\": [\n      \"2023-01-15\",\n      \"2023-01-15\"\n    ],\n    \"dates_by_label\": {\n      \"dates_by_label\": \"2023-01-15\"\n    },\n    \"optional_dates\": [\n      \"2023-01-15\",\n      \"2023-01-15\"\n    ],\n    \"aliased_dates\": [\n      \"2023-01-15\",\n      \"2023-01-15\"\n    ],\n    \"timestamps\": [\n      \"2024-01-15T09:30:00Z\",\n      \"2024-01-15T09:30:00Z\"\n    ],\n    \"unique_timestamps\": [\n      \"2024-01-15T09:30:00Z\",\n      \"2024-01-15T09:30:00Z\"\n    ],\n    \"timestamps_by_label\": {\n      \"timestamps_by_label\": \"2024-01-15T09:30:00Z\"\n    },\n    \"aliased_timestamps\": [\n      \"2024-01-15T09:30:00Z\",\n      \"2024-01-15T09:30:00Z\"\n    ]\n  },\n  {\n    \"disbursement_dates\": [\n      \"2023-01-15\",\n      \"2023-01-15\"\n    ],\n    \"unique_dates\": [\n      \"2023-01-15\",\n      \"2023-01-15\"\n    ],\n    \"dates_by_label\": {\n      \"dates_by_label\": \"2023-01-15\"\n    },\n    \"optional_dates\": [\n      \"2023-01-15\",\n      \"2023-01-15\"\n    ],\n    \"aliased_dates\": [\n      \"2023-01-15\",\n      \"2023-01-15\"\n    ],\n    \"timestamps\": [\n      \"2024-01-15T09:30:00Z\",\n      \"2024-01-15T09:30:00Z\"\n    ],\n    \"unique_timestamps\": [\n      \"2024-01-15T09:30:00Z\",\n      \"2024-01-15T09:30:00Z\"\n    ],\n    \"timestamps_by_label\": {\n      \"timestamps_by_label\": \"2024-01-15T09:30:00Z\"\n    },\n    \"aliased_timestamps\": [\n      \"2024-01-15T09:30:00Z\",\n      \"2024-01-15T09:30:00Z\"\n    ]\n  }\n]",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "40120d0a-e388-4ccd-b60c-e0443d86aee9",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
+      "id": "9fbf4ca2-24ea-4a1d-9d57-2bc08f7547fe",
+      "name": "listLoansByTimestamp - default",
+      "request": {
+        "urlPathTemplate": "/loans/by-timestamp/{as_of}",
+        "method": "GET",
+        "pathParameters": {
+          "as_of": {
+            "equalTo": "2002-08-28T12:30:00Z"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "[\n  {\n    \"disbursement_dates\": [\n      \"2023-01-15\"\n    ],\n    \"unique_dates\": [\n      \"2023-01-15\"\n    ],\n    \"dates_by_label\": {\n      \"key\": \"2023-01-15\"\n    },\n    \"optional_dates\": [\n      \"2023-01-15\"\n    ],\n    \"aliased_dates\": [\n      \"2023-01-15\"\n    ],\n    \"timestamps\": [\n      \"2024-01-15T09:30:00Z\"\n    ],\n    \"unique_timestamps\": [\n      \"2024-01-15T09:30:00Z\"\n    ],\n    \"timestamps_by_label\": {\n      \"key\": \"2024-01-15T09:30:00Z\"\n    },\n    \"aliased_timestamps\": [\n      \"2024-01-15T09:30:00Z\"\n    ]\n  }\n]",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "9fbf4ca2-24ea-4a1d-9d57-2bc08f7547fe",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
     }
   ],
   "meta": {
-    "total": 1
+    "total": 3
   }
 }

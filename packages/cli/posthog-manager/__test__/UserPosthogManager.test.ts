@@ -17,7 +17,8 @@ vi.mock("@fern-api/cli-telemetry", () => ({
 }));
 
 vi.mock("@fern-api/core", () => ({
-    createVenusService: vi.fn()
+    createVenusService: vi.fn(),
+    detectCodingAgent: () => undefined
 }));
 
 vi.mock("@fern-api/fs-utils", () => ({
@@ -80,6 +81,40 @@ describe("UserPosthogManager", () => {
         );
         expect(mockWriteFile).not.toHaveBeenCalled();
         expect(mockReadFile).not.toHaveBeenCalled();
+    });
+
+    it("tags every event with the CLI release environment, which event properties cannot override", async () => {
+        vi.stubEnv("FERN_CLI_RELEASE_ENVIRONMENT", "pre-prod");
+        try {
+            const manager = new UserPosthogManager({ token: undefined, posthogApiKey: "test-api-key" });
+
+            await manager.sendEvent({ command: "check", properties: { cliReleaseEnvironment: "prod" } });
+
+            expect(mockCapture).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    properties: expect.objectContaining({ cliReleaseEnvironment: "pre-prod" })
+                })
+            );
+        } finally {
+            vi.unstubAllEnvs();
+        }
+    });
+
+    it("tags automation events with the CLI release environment", () => {
+        vi.stubEnv("FERN_CLI_RELEASE_ENVIRONMENT", "beta");
+        try {
+            const manager = new UserPosthogManager({ token: undefined, posthogApiKey: "test-api-key" });
+
+            manager.sendAutomationEvent({ distinctId: "run-1", event: "generation_failed", properties: {} });
+
+            expect(mockCapture).toHaveBeenCalledWith({
+                distinctId: "run-1",
+                event: "generation_failed",
+                properties: { cliReleaseEnvironment: "beta" }
+            });
+        } finally {
+            vi.unstubAllEnvs();
+        }
     });
 
     it("reuses the in-memory fallback after a storage failure", async () => {

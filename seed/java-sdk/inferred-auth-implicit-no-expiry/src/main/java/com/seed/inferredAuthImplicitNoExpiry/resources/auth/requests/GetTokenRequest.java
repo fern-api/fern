@@ -143,7 +143,6 @@ public final class GetTokenRequest {
 
         private Optional<String> scope = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -193,6 +192,18 @@ public final class GetTokenRequest {
         @java.lang.Override
         public GetTokenRequest build() {
             return new GetTokenRequest(xApiKey, clientId, clientSecret, scope, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("client_id")
+                    || key.equalsIgnoreCase("client_secret")
+                    || key.equalsIgnoreCase("audience")
+                    || key.equalsIgnoreCase("grant_type")
+                    || key.equalsIgnoreCase("scope")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

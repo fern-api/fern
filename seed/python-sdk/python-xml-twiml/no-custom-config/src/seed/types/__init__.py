@@ -13,6 +13,7 @@ if typing.TYPE_CHECKING:
     from .number import Number
     from .pause import Pause
     from .plain_object import PlainObject
+    from .redirect import Redirect
     from .response import Response
     from .response_children_item import ResponseChildrenItem
     from .say import Say
@@ -24,6 +25,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Number": ".number",
     "Pause": ".pause",
     "PlainObject": ".plain_object",
+    "Redirect": ".redirect",
     "Response": ".response",
     "ResponseChildrenItem": ".response_children_item",
     "Say": ".say",
@@ -59,6 +61,7 @@ __all__ = [
     "Number",
     "Pause",
     "PlainObject",
+    "Redirect",
     "Response",
     "ResponseChildrenItem",
     "Say",

@@ -6,12 +6,26 @@ import {
     type IdentifiableSource,
     type Spec
 } from "@fern-api/api-workspace-commons";
-import { generatorsYml } from "@fern-api/configuration-loader";
+import { docsYml, generatorsYml } from "@fern-api/configuration-loader";
 import { CliError } from "@fern-api/task-context";
 import type { SdkConfigV1SourceConfig, SdkConfigV1SourceSpec } from "@postman/sdk-config/sdk-config/v1";
 import path from "path";
 
 const DEFAULT_PATH_PARAMETER_STYLE = getOpenAPISettings().inlinePathParameters ? "inline" : "wrapped";
+const DOCS_IMPORT_SETTING_KEY_PAIRS = [
+    ["typeDatesAsStrings", "type-dates-as-strings"],
+    ["useBytesForBinaryResponse", "use-bytes-for-binary-response"],
+    ["respectParameterContent", "respect-parameter-content"],
+    ["respectOperationIdWordBoundaries", "respect-operation-id-word-boundaries"],
+    ["inferForwardCompatible", "infer-forward-compatible"],
+    ["preserveOneOfInAllOf", "preserve-one-of-in-all-of"],
+    ["anyOfSiblingPropertiesAsObject", "any-of-sibling-properties-as-object"],
+    ["errorResponses", "error-responses"]
+] as const satisfies ReadonlyArray<
+    readonly [keyof generatorsYml.APIDefinitionSettings, keyof generatorsYml.OpenApiSettingsSchema]
+>;
+const DOCS_IMPORT_SETTING_KEYS = new Set(DOCS_IMPORT_SETTING_KEY_PAIRS.map(([key]) => key));
+const RAW_DOCS_IMPORT_SETTING_KEYS = new Set(DOCS_IMPORT_SETTING_KEY_PAIRS.map(([, key]) => key));
 
 export interface ResolvedMigrationSourceSpec {
     absolutePath: string;
@@ -20,7 +34,8 @@ export interface ResolvedMigrationSourceSpec {
     apiImportSettings?: SdkConfigV1SourceSpec["apiImportSettings"];
     clientPathParameterStyle?: "inline" | "wrapped";
     clientPathParameterStyleExplicit?: boolean;
-    hasCustomApiSettings?: boolean;
+    docsImportSettings?: docsYml.RawSchemas.ApiSpecImportSettings;
+    hasLegacyOnlyDocsImportSettings?: boolean;
     idHint?: string;
     name?: string;
     namespace?: string;
@@ -77,6 +92,33 @@ export function identifySourceDerivedApiFields({
     };
 }
 
+/**
+ * The specs of the API itself (the top-level `api:` section of generators.yml), ignoring any generator-level
+ * override. Returns undefined when the workspace does not list specs of its own.
+ */
+export function resolveWorkspaceSourceSpecs(
+    workspace: AbstractAPIWorkspace<unknown>
+): ResolvedMigrationSourceSpec[] | undefined {
+    if (!hasNonEmptySpecs(workspace)) {
+        return undefined;
+    }
+    const configuredDefinitions = getConfiguredDefinitions(workspace.generatorsConfiguration?.api);
+    return workspace.allSpecs.map((spec) => {
+        const configuredDefinition = findConfiguredDefinition(
+            workspace.absoluteFilePath.toString(),
+            spec,
+            configuredDefinitions
+        );
+        if (configuredDefinition?.location.gitSource != null) {
+            throw new CliError({
+                message: `fern sdk migrate cannot create durable local paths for git-backed API specification '${configuredDefinition.location.gitSource.path}' from '${configuredDefinition.location.gitSource.repo}'. Move the specification into the project or migrate this configuration manually.`,
+                code: CliError.Code.ConfigError
+            });
+        }
+        return resolveWorkspaceSpec(spec, configuredDefinition?.location.settings);
+    });
+}
+
 export function resolveMigrationSourceSpecs({
     workspace,
     fernWorkspace,
@@ -89,22 +131,9 @@ export function resolveMigrationSourceSpecs({
     if (generator.apiOverride?.specs != null) {
         return resolveGeneratorSpecOverrides(workspace.absoluteFilePath, generator.apiOverride.specs);
     }
-    if (hasSpecs(workspace)) {
-        const configuredDefinitions = getConfiguredDefinitions(workspace.generatorsConfiguration?.api);
-        return workspace.allSpecs.map((spec) => {
-            const configuredDefinition = findConfiguredDefinition(
-                workspace.absoluteFilePath.toString(),
-                spec,
-                configuredDefinitions
-            );
-            if (configuredDefinition?.location.gitSource != null) {
-                throw new CliError({
-                    message: `fern sdk migrate cannot create durable local paths for git-backed API specification '${configuredDefinition.location.gitSource.path}' from '${configuredDefinition.location.gitSource.repo}'. Move the specification into the project or migrate this configuration manually.`,
-                    code: CliError.Code.ConfigError
-                });
-            }
-            return resolveWorkspaceSpec(spec, configuredDefinition?.location.settings);
-        });
+    const workspaceSpecs = resolveWorkspaceSourceSpecs(workspace);
+    if (workspaceSpecs != null) {
+        return workspaceSpecs;
     }
     if (fernWorkspace.sources.length > 0) {
         return fernWorkspace.sources.map(resolveIdentifiableSource);
@@ -237,10 +266,10 @@ function hoistSharedApiImportSettings(specs: SdkConfigV1SourceSpec[]): SdkConfig
     };
 }
 
-function hasSpecs(workspace: AbstractAPIWorkspace<unknown>): workspace is AbstractAPIWorkspace<unknown> & {
+function hasNonEmptySpecs(workspace: AbstractAPIWorkspace<unknown>): workspace is AbstractAPIWorkspace<unknown> & {
     allSpecs: Spec[];
 } {
-    return "allSpecs" in workspace && Array.isArray(workspace.allSpecs);
+    return "allSpecs" in workspace && Array.isArray(workspace.allSpecs) && workspace.allSpecs.length > 0;
 }
 
 function resolveWorkspaceSpec(
@@ -257,7 +286,8 @@ function resolveWorkspaceSpec(
                 absoluteOverlayPaths: spec.absoluteFilepathToOverlays == null ? [] : [spec.absoluteFilepathToOverlays],
                 absoluteOverridePaths: normalizePaths(spec.absoluteFilepathToOverrides),
                 apiImportSettings: projectFernApiImportSettings(settings),
-                hasCustomApiSettings: hasDefinedSettings(settings),
+                docsImportSettings: projectFernDocsImportSettings(settings, spec.settings?.errorResponses),
+                hasLegacyOnlyDocsImportSettings: hasSettingsOutsideDocsAllowlist(settings, DOCS_IMPORT_SETTING_KEYS),
                 ...(spec.source.type !== "openapi"
                     ? {}
                     : {
@@ -397,7 +427,11 @@ function resolveGeneratorSpecOverrides(
                 path.resolve(workspacePath, override)
             ),
             apiImportSettings: projectRawApiImportSettings(spec.settings),
-            hasCustomApiSettings: hasDefinedSettings(spec.settings),
+            docsImportSettings: projectRawDocsImportSettings(spec.settings, workspacePath),
+            hasLegacyOnlyDocsImportSettings: hasSettingsOutsideDocsAllowlist(
+                spec.settings,
+                RAW_DOCS_IMPORT_SETTING_KEYS
+            ),
             clientPathParameterStyle:
                 spec.settings?.["inline-path-parameters"] == null
                     ? DEFAULT_PATH_PARAMETER_STYLE
@@ -412,12 +446,17 @@ function resolveGeneratorSpecOverrides(
     });
 }
 
-function hasDefinedSettings(settings: object | undefined): boolean {
+function normalizePaths(value: string | string[] | undefined): string[] {
+    return value == null ? [] : Array.isArray(value) ? value : [value];
+}
+
+function hasSettingsOutsideDocsAllowlist(settings: object | undefined, allowlist: Set<string>): boolean {
     return (
         settings != null &&
         Object.entries(settings).some(
             ([key, value]) =>
                 value !== undefined &&
+                !allowlist.has(key) &&
                 !(
                     key === "removeDiscriminantsFromSchemas" &&
                     value === generatorsYml.RemoveDiscriminantsFromSchemas.Always
@@ -426,8 +465,75 @@ function hasDefinedSettings(settings: object | undefined): boolean {
     );
 }
 
-function normalizePaths(value: string | string[] | undefined): string[] {
-    return value == null ? [] : Array.isArray(value) ? value : [value];
+function projectFernDocsImportSettings(
+    settings: generatorsYml.APIDefinitionSettings | undefined,
+    resolvedErrorResponses: generatorsYml.OpenApiErrorResponsesSchema | undefined
+): docsYml.RawSchemas.ApiSpecImportSettings | undefined {
+    if (settings == null) {
+        return undefined;
+    }
+    return omitUndefinedDocsImportSettings({
+        typeDatesAsStrings: settings.typeDatesAsStrings,
+        useBytesForBinaryResponse: settings.useBytesForBinaryResponse,
+        respectParameterContent: settings.respectParameterContent,
+        respectOperationIdWordBoundaries: settings.respectOperationIdWordBoundaries,
+        inferForwardCompatible: settings.inferForwardCompatible,
+        preserveOneOfInAllOf: settings.preserveOneOfInAllOf,
+        anyOfSiblingPropertiesAsObject: settings.anyOfSiblingPropertiesAsObject,
+        errorResponses: projectDocsErrorResponses(resolvedErrorResponses ?? settings.errorResponses)
+    });
+}
+
+function projectRawDocsImportSettings(
+    settings: generatorsYml.OpenApiSettingsSchema | undefined,
+    workspacePath: string
+): docsYml.RawSchemas.ApiSpecImportSettings | undefined {
+    if (settings == null) {
+        return undefined;
+    }
+    const errorResponses = settings["error-responses"];
+    return omitUndefinedDocsImportSettings({
+        typeDatesAsStrings: settings["type-dates-as-strings"],
+        useBytesForBinaryResponse: settings["use-bytes-for-binary-response"],
+        respectParameterContent: settings["respect-parameter-content"],
+        respectOperationIdWordBoundaries: settings["respect-operation-id-word-boundaries"],
+        inferForwardCompatible: settings["infer-forward-compatible"],
+        preserveOneOfInAllOf: settings["preserve-one-of-in-all-of"],
+        anyOfSiblingPropertiesAsObject: settings["any-of-sibling-properties-as-object"],
+        errorResponses: projectDocsErrorResponses(errorResponses, workspacePath)
+    });
+}
+
+function projectDocsErrorResponses(
+    errorResponses: generatorsYml.OpenApiErrorResponsesSchema | undefined,
+    workspacePath?: string
+): docsYml.RawSchemas.ApiSpecErrorResponses | undefined {
+    if (errorResponses == null) {
+        return undefined;
+    }
+    return {
+        schema:
+            workspacePath != null && typeof errorResponses.schema === "string"
+                ? path.resolve(workspacePath, errorResponses.schema)
+                : errorResponses.schema,
+        ...(errorResponses.name == null ? {} : { name: errorResponses.name }),
+        ...(errorResponses["apply-to"] == null ? {} : { applyTo: errorResponses["apply-to"] }),
+        ...(errorResponses.ensure == null
+            ? {}
+            : {
+                  ensure: errorResponses.ensure.map((entry) => ({
+                      statusCode: entry["status-code"],
+                      ...(entry.methods == null ? {} : { methods: entry.methods })
+                  }))
+              })
+    };
+}
+
+function omitUndefinedDocsImportSettings(
+    settings: docsYml.RawSchemas.ApiSpecImportSettings
+): docsYml.RawSchemas.ApiSpecImportSettings | undefined {
+    const defined = Object.fromEntries(Object.entries(settings).filter(([, value]) => value !== undefined));
+    return Object.keys(defined).length === 0 ? undefined : (defined as docsYml.RawSchemas.ApiSpecImportSettings);
 }
 
 function normalizeRawPaths(value: generatorsYml.OverridesSchema | undefined): string[] {
@@ -447,6 +553,9 @@ function projectFernApiImportSettings(
     if (settings == null) {
         return undefined;
     }
+    // generators.yml exposes one preference for literal unions. Fern's authoritative settings adapter expands
+    // that field into both importer flags, so migration must emit both to preserve existing generation behavior.
+    // There is no independently configurable discriminatedUnionV2 field in the generators.yml schema.
     const projected = {
         respectNullableSchemas: settings.respectNullableSchemas,
         titleAsSchemaName: settings.shouldUseTitleAsName,
@@ -461,6 +570,12 @@ function projectFernApiImportSettings(
         groupMultiApiEnvironments: settings.groupMultiApiEnvironments,
         ignoreTags: settings.ignoreTags,
         disambiguateRequestNames: settings.disambiguateRequestNames,
+        respectReadonlySchemas: settings.respectReadonlySchemas,
+        discriminatedUnionV2: settings.shouldUseUndiscriminatedUnionsWithLiterals,
+        undiscriminatedUnionsWithLiterals: settings.shouldUseUndiscriminatedUnionsWithLiterals,
+        inlineAllOfSchemas: settings.inlineAllOfSchemas,
+        resolveSchemaCollisions: settings.resolveSchemaCollisions,
+        asyncApiMessageNaming: settings.asyncApiMessageNaming,
         defaultIntegerFormat: settings.defaultIntegerFormat
     };
     const defined = Object.fromEntries(Object.entries(projected).filter(([, value]) => value !== undefined));
@@ -473,6 +588,8 @@ function projectRawApiImportSettings(
     if (settings == null) {
         return undefined;
     }
+    // Keep this raw projection aligned with getAPIDefinitionSettings, which intentionally maps
+    // prefer-undiscriminated-unions-with-literals to both importer flags.
     return {
         ...(settings["respect-nullable-schemas"] == null
             ? {}
@@ -513,6 +630,19 @@ function projectRawApiImportSettings(
         ...(settings["disambiguate-request-names"] == null
             ? {}
             : { disambiguateRequestNames: settings["disambiguate-request-names"] }),
+        ...(settings["respect-readonly-schemas"] == null
+            ? {}
+            : { respectReadonlySchemas: settings["respect-readonly-schemas"] }),
+        ...(settings["prefer-undiscriminated-unions-with-literals"] == null
+            ? {}
+            : {
+                  discriminatedUnionV2: settings["prefer-undiscriminated-unions-with-literals"],
+                  undiscriminatedUnionsWithLiterals: settings["prefer-undiscriminated-unions-with-literals"]
+              }),
+        ...(settings["inline-all-of-schemas"] == null ? {} : { inlineAllOfSchemas: settings["inline-all-of-schemas"] }),
+        ...(settings["resolve-schema-collisions"] == null
+            ? {}
+            : { resolveSchemaCollisions: settings["resolve-schema-collisions"] }),
         ...(settings["default-integer-format"] == null
             ? {}
             : { defaultIntegerFormat: settings["default-integer-format"] })

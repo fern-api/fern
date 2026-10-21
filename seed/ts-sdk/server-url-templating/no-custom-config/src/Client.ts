@@ -105,7 +105,7 @@ export class SeedApiClient {
                         (await core.Supplier.get(this._options.environment)) ??
                         environments.SeedApiEnvironment.RegionalApiServer
                     ).base,
-                `users/${core.url.encodePathParam(userId)}`,
+                `users/${core.url.encodePathParam(userId, errors.SeedApiError)}`,
             ),
             method: "GET",
             headers: _headers,

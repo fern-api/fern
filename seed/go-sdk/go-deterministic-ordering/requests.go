@@ -21,10 +21,12 @@ type PutRequest struct {
 }
 
 func (p *PutRequest) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -48,10 +50,12 @@ type CreateRequestB struct {
 }
 
 func (c *CreateRequestB) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetDescription sets the Description field and marks it as non-optional;
@@ -103,10 +107,12 @@ type CreateRequestA struct {
 }
 
 func (c *CreateRequestA) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -158,10 +164,12 @@ type CreateRequestC struct {
 }
 
 func (c *CreateRequestC) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetLabel sets the Label field and marks it as non-optional;
@@ -213,10 +221,12 @@ type GetRequestC struct {
 }
 
 func (g *GetRequestC) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -247,10 +257,12 @@ type GetRequestA struct {
 }
 
 func (g *GetRequestA) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -281,10 +293,12 @@ type GetRequestB struct {
 }
 
 func (g *GetRequestB) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -315,10 +329,12 @@ type GetWithMultipleQuery struct {
 }
 
 func (g *GetWithMultipleQuery) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetQuery sets the Query field and marks it as non-optional;
@@ -350,10 +366,12 @@ type ReqWithHeaders struct {
 }
 
 func (r *ReqWithHeaders) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
 	}
-	r.explicitFields.Or(r.explicitFields, field)
+	next.Or(next, field)
+	r.explicitFields = next
 }
 
 // SetXTestServiceHeader sets the XTestServiceHeader field and marks it as non-optional;
@@ -395,10 +413,12 @@ type GetWithInlinePath struct {
 }
 
 func (g *GetWithInlinePath) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetParam sets the Param field and marks it as non-optional;
@@ -422,10 +442,12 @@ type GetWithInlinePathAndQuery struct {
 }
 
 func (g *GetWithInlinePathAndQuery) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetParam sets the Param field and marks it as non-optional;
@@ -454,10 +476,12 @@ type GetWithPathAndQuery struct {
 }
 
 func (g *GetWithPathAndQuery) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetQuery sets the Query field and marks it as non-optional;
@@ -481,10 +505,12 @@ type GetWithQuery struct {
 }
 
 func (g *GetWithQuery) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetQuery sets the Query field and marks it as non-optional;
@@ -515,10 +541,12 @@ type ListRequestC struct {
 }
 
 func (l *ListRequestC) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetOffset sets the Offset field and marks it as non-optional;
@@ -549,10 +577,12 @@ type ListRequestB struct {
 }
 
 func (l *ListRequestB) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetCursor sets the Cursor field and marks it as non-optional;
@@ -583,10 +613,12 @@ type ListRequestA struct {
 }
 
 func (l *ListRequestA) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetPage sets the Page field and marks it as non-optional;
@@ -619,10 +651,12 @@ type ListItemsRequest struct {
 }
 
 func (l *ListItemsRequest) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetCursor sets the Cursor field and marks it as non-optional;
@@ -652,10 +686,12 @@ type ModifyResourceAtInlinedPath struct {
 }
 
 func (m *ModifyResourceAtInlinedPath) require(field *big.Int) {
-	if m.explicitFields == nil {
-		m.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if m.explicitFields != nil {
+		next.Set(m.explicitFields)
 	}
-	m.explicitFields.Or(m.explicitFields, field)
+	next.Or(next, field)
+	m.explicitFields = next
 }
 
 // SetParam sets the Param field and marks it as non-optional;
@@ -694,10 +730,12 @@ type PostWithObjectBody struct {
 }
 
 func (p *PostWithObjectBody) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetFieldString sets the FieldString field and marks it as non-optional;

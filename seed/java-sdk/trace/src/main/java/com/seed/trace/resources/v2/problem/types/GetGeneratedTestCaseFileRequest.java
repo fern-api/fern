@@ -97,7 +97,6 @@ public final class GetGeneratedTestCaseFileRequest {
 
         private Optional<TestCaseTemplate> template = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -132,6 +131,14 @@ public final class GetGeneratedTestCaseFileRequest {
         @java.lang.Override
         public GetGeneratedTestCaseFileRequest build() {
             return new GetGeneratedTestCaseFileRequest(template, testCase, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("template") || key.equalsIgnoreCase("testCase")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

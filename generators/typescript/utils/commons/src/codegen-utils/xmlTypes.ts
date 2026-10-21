@@ -121,31 +121,6 @@ export function getXmlChildObjectTypes(
 }
 
 /**
- * Type ids of xml-encoded objects that appear as child elements of another xml-encoded object.
- * Any xml-encoded object not in this set is a document root.
- */
-export function getXmlChildTypeIds(
-    types: Iterable<FernIr.TypeDeclaration>,
-    getTypeDeclaration: GetTypeDeclaration
-): Set<FernIr.TypeId> {
-    const childTypeIds = new Set<FernIr.TypeId>();
-    for (const type of types) {
-        if (type.shape.type !== "object" || getXmlEncoding(type) == null) {
-            continue;
-        }
-        for (const property of type.shape.properties) {
-            if (getXmlPropertyKind(property) !== "ELEMENT") {
-                continue;
-            }
-            for (const child of getXmlChildObjectTypes(property.valueType, getTypeDeclaration)) {
-                childTypeIds.add(child.name.typeId);
-            }
-        }
-    }
-    return childTypeIds;
-}
-
-/**
  * Whether a type is xml-encoded or (transitively) references an xml-encoded type. Such types
  * are carried by generated xml classes rather than plain interfaces, so no json schema is
  * generated for them.

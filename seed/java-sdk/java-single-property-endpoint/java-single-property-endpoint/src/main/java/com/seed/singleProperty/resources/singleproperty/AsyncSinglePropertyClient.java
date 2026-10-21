@@ -5,6 +5,7 @@ package com.seed.singleProperty.resources.singleproperty;
 
 import com.seed.singleProperty.core.ClientOptions;
 import com.seed.singleProperty.core.RequestOptions;
+import com.seed.singleProperty.core.SeedSinglePropertyHttpResponse;
 import com.seed.singleProperty.resources.singleproperty.requests.GetThingRequest;
 import java.util.concurrent.CompletableFuture;
 
@@ -26,18 +27,48 @@ public class AsyncSinglePropertyClient {
     }
 
     public CompletableFuture<String> doThing(String id) {
-        return this.rawClient.doThing(id).thenApply(response -> response.body());
+        CompletableFuture<SeedSinglePropertyHttpResponse<String>> rawFuture = this.rawClient.doThing(id);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> doThing(String id, RequestOptions requestOptions) {
-        return this.rawClient.doThing(id, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedSinglePropertyHttpResponse<String>> rawFuture =
+                this.rawClient.doThing(id, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> doThing(String id, GetThingRequest request) {
-        return this.rawClient.doThing(id, request).thenApply(response -> response.body());
+        CompletableFuture<SeedSinglePropertyHttpResponse<String>> rawFuture = this.rawClient.doThing(id, request);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> doThing(String id, GetThingRequest request, RequestOptions requestOptions) {
-        return this.rawClient.doThing(id, request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedSinglePropertyHttpResponse<String>> rawFuture =
+                this.rawClient.doThing(id, request, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

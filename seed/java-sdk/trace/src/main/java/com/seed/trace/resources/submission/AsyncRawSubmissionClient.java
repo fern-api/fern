@@ -5,8 +5,10 @@ package com.seed.trace.resources.submission;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.seed.trace.core.BodyProperties;
 import com.seed.trace.core.ClientOptions;
 import com.seed.trace.core.ObjectMappers;
+import com.seed.trace.core.PathSegments;
 import com.seed.trace.core.RequestOptions;
 import com.seed.trace.core.RetryInterceptor;
 import com.seed.trace.core.SeedTraceApiException;
@@ -53,7 +55,7 @@ public class AsyncRawSubmissionClient {
                 .newBuilder()
                 .addPathSegments("sessions")
                 .addPathSegments("create-session")
-                .addPathSegment(language.toString());
+                .addPathSegment(PathSegments.validate(language.toString()));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -61,7 +63,11 @@ public class AsyncRawSubmissionClient {
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
-                .method("POST", RequestBody.create("", null))
+                .method(
+                        "POST",
+                        BodyProperties.toRequestBody(
+                                requestOptions != null ? requestOptions.getBodyProperties() : null,
+                                RequestBody.create("", null)))
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json")
                 .build();
@@ -79,7 +85,8 @@ public class AsyncRawSubmissionClient {
                     .build();
         }
         CompletableFuture<SeedTraceHttpResponse<ExecutionSessionResponse>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -107,6 +114,11 @@ public class AsyncRawSubmissionClient {
                 future.completeExceptionally(new SeedTraceException("Network error executing HTTP request", e));
             }
         });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
+            }
+        });
         return future;
     }
 
@@ -126,7 +138,7 @@ public class AsyncRawSubmissionClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("sessions")
-                .addPathSegment(sessionId);
+                .addPathSegment(PathSegments.validate(sessionId));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -152,7 +164,8 @@ public class AsyncRawSubmissionClient {
                     .build();
         }
         CompletableFuture<SeedTraceHttpResponse<Optional<ExecutionSessionResponse>>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -181,6 +194,11 @@ public class AsyncRawSubmissionClient {
                 future.completeExceptionally(new SeedTraceException("Network error executing HTTP request", e));
             }
         });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
+            }
+        });
         return future;
     }
 
@@ -200,7 +218,7 @@ public class AsyncRawSubmissionClient {
                 .newBuilder()
                 .addPathSegments("sessions")
                 .addPathSegments("stop")
-                .addPathSegment(sessionId);
+                .addPathSegment(PathSegments.validate(sessionId));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -208,7 +226,10 @@ public class AsyncRawSubmissionClient {
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
-                .method("DELETE", null)
+                .method(
+                        "DELETE",
+                        BodyProperties.toRequestBody(
+                                requestOptions != null ? requestOptions.getBodyProperties() : null, null))
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .build();
         OkHttpClient client = clientOptions.httpClient();
@@ -225,7 +246,8 @@ public class AsyncRawSubmissionClient {
                     .build();
         }
         CompletableFuture<SeedTraceHttpResponse<Void>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -249,6 +271,11 @@ public class AsyncRawSubmissionClient {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(new SeedTraceException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;
@@ -289,7 +316,8 @@ public class AsyncRawSubmissionClient {
                     .build();
         }
         CompletableFuture<SeedTraceHttpResponse<GetExecutionSessionStateResponse>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -316,6 +344,11 @@ public class AsyncRawSubmissionClient {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(new SeedTraceException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;

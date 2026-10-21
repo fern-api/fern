@@ -5,6 +5,7 @@ package com.seed.api.resources.folder.service;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
+import com.seed.api.core.SeedApiHttpResponse;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncServiceClient {
@@ -25,18 +26,46 @@ public class AsyncServiceClient {
     }
 
     public CompletableFuture<Void> endpoint() {
-        return this.rawClient.endpoint().thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Void>> rawFuture = this.rawClient.endpoint();
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> endpoint(RequestOptions requestOptions) {
-        return this.rawClient.endpoint(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Void>> rawFuture = this.rawClient.endpoint(requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> unknownRequest(Object request) {
-        return this.rawClient.unknownRequest(request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Void>> rawFuture = this.rawClient.unknownRequest(request);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> unknownRequest(Object request, RequestOptions requestOptions) {
-        return this.rawClient.unknownRequest(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Void>> rawFuture = this.rawClient.unknownRequest(request, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

@@ -138,7 +138,6 @@ public final class TestSubmissionState {
 
         private List<TestCase> defaultTestCases = new ArrayList<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -217,6 +216,17 @@ public final class TestSubmissionState {
         @java.lang.Override
         public TestSubmissionState build() {
             return new TestSubmissionState(problemId, defaultTestCases, customTestCases, status, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("problemId")
+                    || key.equalsIgnoreCase("defaultTestCases")
+                    || key.equalsIgnoreCase("customTestCases")
+                    || key.equalsIgnoreCase("status")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

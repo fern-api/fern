@@ -5,6 +5,7 @@ package com.seed.javaGlobalHeaderEnv.resources.service;
 
 import com.seed.javaGlobalHeaderEnv.core.ClientOptions;
 import com.seed.javaGlobalHeaderEnv.core.RequestOptions;
+import com.seed.javaGlobalHeaderEnv.core.SeedJavaGlobalHeaderEnvHttpResponse;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncServiceClient {
@@ -28,13 +29,28 @@ public class AsyncServiceClient {
      * GET request with a version header
      */
     public CompletableFuture<String> getWithApiVersion() {
-        return this.rawClient.getWithApiVersion().thenApply(response -> response.body());
+        CompletableFuture<SeedJavaGlobalHeaderEnvHttpResponse<String>> rawFuture = this.rawClient.getWithApiVersion();
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * GET request with a version header
      */
     public CompletableFuture<String> getWithApiVersion(RequestOptions requestOptions) {
-        return this.rawClient.getWithApiVersion(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaGlobalHeaderEnvHttpResponse<String>> rawFuture =
+                this.rawClient.getWithApiVersion(requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

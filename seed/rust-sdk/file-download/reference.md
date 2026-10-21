@@ -34,3 +34,37 @@ async fn main() {
 </dl>
 </details>
 
+<details><summary><code>client.service.<a href="/src/api/resources/service/client.rs">download_file</a>() -> Result&lt;Vec&lt;u8&gt;, ApiError&gt;</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```rust
+use seed_file_download::prelude::*;
+
+#[tokio::main]
+async fn main() {
+    let config = ClientConfig {
+        ..Default::default()
+    };
+    let client = FileDownloadClient::new(config).expect("Failed to build client");
+    client.service.download_file(None).await;
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+

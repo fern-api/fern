@@ -41,6 +41,7 @@ function hmacConfig(overrides: HmacConfigOverrides = {}): FernIr.HmacSignatureVe
         timestamp: overrides.timestamp,
         bodyHashBinding: overrides.bodyHashBinding,
         notificationUrlNormalization: overrides.notificationUrlNormalization,
+        algorithmHeader: undefined,
         payloadFormat: {
             components: overrides.components ?? ["BODY"],
             delimiter: overrides.delimiter ?? ".",
@@ -59,9 +60,10 @@ describe("WebhooksHelperGenerator", () => {
     describe("no-throw behavior", () => {
         it("returns false on missing required inputs rather than raising", () => {
             const body = render(hmacConfig());
-            expect(body).toContain(
-                "return false if request_body.nil? || signature_header.nil? || signature_header.empty? || signature_key.nil? || signature_key.empty?"
-            );
+            expect(body).toContain("if signature_header.nil? || signature_header.empty?");
+            expect(body).toContain('warn("Webhook signature verification could not run: missing signature header")');
+            expect(body).toContain('warn("Webhook signature verification failed: signature mismatch") unless valid');
+            expect(body).toContain("return false if request_body.nil? || signature_key.nil? || signature_key.empty?");
             expect(body).not.toContain("raise");
         });
 
@@ -158,8 +160,7 @@ describe("WebhooksHelperGenerator", () => {
             // JSON path: signs the URL only and compares the recomputed body hash.
             expect(body).toContain("expected_body_hash = Internal::WebhookBodyHash.compute_hash(");
             expect(body).toContain(
-                "return false unless Internal::WebhookSignature.timing_safe_equal(expected_body_hash, " +
-                    "transmitted_body_hash)"
+                "unless Internal::WebhookSignature.timing_safe_equal(expected_body_hash, " + "transmitted_body_hash)"
             );
             expect(body).toContain("notification_url");
         });
@@ -240,5 +241,43 @@ describe("WebhooksHelperGenerator", () => {
             const body = render(hmacConfig({ signaturePrefix: "sha256=" }));
             expect(body).toContain("signature_header.start_with?(SIGNATURE_PREFIX)");
         });
+    });
+});
+
+describe("WebhooksHelperGenerator verify_request", () => {
+    const algorithmHeader: FernIr.WebhookAlgorithmHeader = {
+        headerName: createWireValue("X-Twilio-Webhook-Signature-Settings"),
+        keyIdDelimiter: ";",
+        keyIdParameter: undefined,
+        algorithmParameter: undefined,
+        algorithms: [
+            { wireValue: "HMAC_SHA1", algorithm: "SHA1" },
+            { wireValue: "HMAC_SHA256", algorithm: "SHA256" }
+        ]
+    };
+    const config = hmacConfig({ algorithm: "SHA1", encoding: "BASE64", components: ["NOTIFICATION_URL", "BODY"] });
+
+    it("reads the signature header first and fails closed when it is missing", () => {
+        const body = WebhooksHelperGenerator.renderVerifyRequestBody(config, algorithmHeader);
+        expect(body.indexOf('casecmp?("X-Signature")')).toBeLessThan(
+            body.indexOf('casecmp?("X-Twilio-Webhook-Signature-Settings")')
+        );
+        expect(body).toContain("Webhook signature verification could not run: missing signature header");
+    });
+
+    it("parses <key_id>;<algorithm>, rejects unknown algorithms and resolves the key", () => {
+        const body = WebhooksHelperGenerator.renderVerifyRequestBody(config, algorithmHeader);
+        expect(body).toContain('settings_header.to_s.rpartition(";")');
+        expect(body).toContain("unless HMAC_ALGORITHMS.key?(algorithm_value)");
+        expect(body).toContain("Webhook signature verification could not run: unsupported algorithm");
+        expect(body).toContain("signature_key.respond_to?(:call) ? signature_key.call(key_id) : signature_key");
+        expect(body).toContain("Webhook signature verification could not run: signing key could not be resolved");
+        expect(body).toContain("notification_url: notification_url,");
+        expect(body).toContain("algorithm: algorithm");
+    });
+
+    it("maps configured wire values onto the generic algorithm in verify_signature", () => {
+        const body = render({ ...config, algorithmHeader });
+        expect(body).toContain('algorithm.nil? ? "sha1" : HMAC_ALGORITHMS.fetch(algorithm, algorithm)');
     });
 });

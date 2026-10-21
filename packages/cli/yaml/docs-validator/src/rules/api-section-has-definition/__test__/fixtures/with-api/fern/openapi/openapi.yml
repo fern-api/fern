@@ -1,0 +1,12 @@
+openapi: 3.0.0
+info:
+  title: Test API
+  version: 1.0.0
+paths:
+  /health:
+    get:
+      operationId: getHealth
+      responses:
+        "200":
+          description: OK
+

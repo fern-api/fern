@@ -1,0 +1,6 @@
+- summary: |
+    The CLI now sends an `X-Fern-Agent` header on every FDR, Venus and Fiddle request
+    (and tags its own telemetry events with `agent`) when run from a coding agent
+    (Claude Code, Cursor, Codex, Devin, Gemini CLI), so agent-driven usage such as
+    docs publishes can be measured separately from human usage.
+  type: internal

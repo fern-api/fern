@@ -110,6 +110,7 @@ async fn main() {
                 nullable_text: Some("nullable_text".to_string()),
                 nullable_number: Some(1.1),
                 non_nullable_text: Some("non_nullable_text".to_string()),
+                required_nullable_text: Some("required_nullable_text".to_string()),
                 ..Default::default()
             },
             Some(RequestOptions::new().additional_header("X-Idempotency-Key", "X-Idempotency-Key")),
@@ -155,6 +156,14 @@ async fn main() {
 <dd>
 
 **non_nullable_text:** `Option<String>` — Regular non-nullable field
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**required_nullable_text:** `Option<String>` — Must be sent, but may be null to clear the value
     
 </dd>
 </dl>

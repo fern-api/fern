@@ -119,6 +119,12 @@ describe("collectRawSpecs", () => {
                             pathParameterOrder: "spec-order",
                             ignoreTags: true,
                             disambiguateRequestNames: false,
+                            respectReadonlySchemas: true,
+                            discriminatedUnionV2: true,
+                            shouldUseUndiscriminatedUnionsWithLiterals: true,
+                            inlineAllOfSchemas: true,
+                            resolveSchemaCollisions: true,
+                            asyncApiNaming: "v2",
                             defaultIntegerFormat: "int64"
                         }
                     })
@@ -137,10 +143,16 @@ describe("collectRawSpecs", () => {
             respectNullableSchemas: false,
             titleAsSchemaName: true,
             pathParameterOrder: "spec-order",
+            ignoreTags: true,
+            disambiguateRequestNames: false,
+            respectReadonlySchemas: true,
+            discriminatedUnionV2: true,
+            undiscriminatedUnionsWithLiterals: true,
+            inlineAllOfSchemas: true,
+            resolveSchemaCollisions: true,
+            asyncApiMessageNaming: "v2",
             defaultIntegerFormat: "int64"
         });
-        expect(manifest.specs[0]?.apiImportSettings).not.toHaveProperty("ignoreTags");
-        expect(manifest.specs[0]?.apiImportSettings).not.toHaveProperty("disambiguateRequestNames");
 
         const content = await readFile(path.join(outputDir, "openapi0.json"), "utf-8");
         const parsed = JSON.parse(content);
@@ -487,16 +499,24 @@ describe("collectRawSpecs", () => {
         );
     });
 
-    it("rejects effective import settings that SDK Config cannot preserve", () => {
+    it("accepts every effective import setting represented by SDK Config", () => {
         const spec = {
             ...openApiSpec(path.join(sourceDir, "api", "readonly.yaml")),
-            settings: getOpenAPISettings({ overrides: { respectReadonlySchemas: true } })
+            settings: getOpenAPISettings({
+                overrides: {
+                    ignoreTags: true,
+                    disambiguateRequestNames: true,
+                    respectReadonlySchemas: true,
+                    discriminatedUnionV2: true,
+                    shouldUseUndiscriminatedUnionsWithLiterals: true,
+                    inlineAllOfSchemas: true,
+                    resolveSchemaCollisions: true,
+                    asyncApiNaming: "v2"
+                }
+            })
         };
 
-        expect(() => validateSdkConfigImportSettings([spec])).toThrow(
-            "cannot preserve effective OpenAPI import setting respectReadonlySchemas=true"
-        );
-        expect(() => validateSdkConfigImportSettings([spec])).toThrow("use a pre-cutover generator version");
+        expect(() => validateSdkConfigImportSettings([spec])).not.toThrow();
     });
 
     it("accepts an empty default audience filter for SDK Config", () => {

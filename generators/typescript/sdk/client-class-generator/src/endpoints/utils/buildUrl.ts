@@ -105,7 +105,10 @@ export function buildUrl({
             }
 
             return ts.factory.createTemplateSpan(
-                context.coreUtilities.urlUtils.encodePathParam._invoke(referenceToPathParameterValue),
+                context.coreUtilities.urlUtils.encodePathParam._invoke(
+                    referenceToPathParameterValue,
+                    generatedClientClass.getReferenceToInvalidPathParameterError(context)
+                ),
                 index === endpoint.fullPath.parts.length - 1
                     ? ts.factory.createTemplateTail(collapseSlashes(part.tail))
                     : ts.factory.createTemplateMiddle(collapseSlashes(part.tail))

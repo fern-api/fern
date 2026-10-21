@@ -68,7 +68,6 @@ public final class UserOptionalListContainer {
     public static final class Builder {
         private Optional<List<User>> users = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -91,6 +90,14 @@ public final class UserOptionalListContainer {
 
         public UserOptionalListContainer build() {
             return new UserOptionalListContainer(users, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("users")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

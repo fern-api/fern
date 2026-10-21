@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Every multi-URL environment now embeds its URLs: `impl Default for <Env>Urls` per
+    environment and a constructor per environment (`Environment::staging()`), so selecting a
+    non-default environment no longer means retyping URLs from `generators.yml`. The README
+    environments snippet of a multi-URL SDK sets `environment` through that constructor instead
+    of `Environment::Production.url()`, which does not compile against a tuple variant.
+  type: feat

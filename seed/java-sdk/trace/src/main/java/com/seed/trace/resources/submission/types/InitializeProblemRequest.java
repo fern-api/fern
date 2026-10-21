@@ -97,7 +97,6 @@ public final class InitializeProblemRequest {
 
         private Optional<Integer> problemVersion = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -132,6 +131,14 @@ public final class InitializeProblemRequest {
         @java.lang.Override
         public InitializeProblemRequest build() {
             return new InitializeProblemRequest(problemId, problemVersion, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("problemId") || key.equalsIgnoreCase("problemVersion")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

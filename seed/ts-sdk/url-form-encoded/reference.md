@@ -14,7 +14,8 @@
 ```typescript
 await client.submitFormData({
     username: "johndoe",
-    email: "john@example.com"
+    email: "john@example.com",
+    Content: "{\"key\":\"value\"}"
 });
 
 ```

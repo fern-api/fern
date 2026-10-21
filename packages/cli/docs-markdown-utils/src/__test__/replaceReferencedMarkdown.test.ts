@@ -214,6 +214,105 @@ describe("replaceReferencedMarkdown", () => {
         `);
     });
 
+    it("should substitute variables whose values contain angle brackets", async () => {
+        const markdown = `
+            <Markdown src="test.md" returnType="Promise<void>" single='Map<string, number>' expr={"Array<T>"} />
+        `;
+
+        const { markdown: result } = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            markdownLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/test.md")) {
+                    return "`run(): {{returnType}}`, {{single}}, {{expr}}";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`
+            \`run(): Promise<void>\`, Map<string, number>, Array<T>
+        `);
+    });
+
+    it("should replace each tag separately when tags with angle-bracket values share a line", async () => {
+        const markdown = `<Markdown src="a.md" t="A<B>" /> and <Markdown src="b.md" t="C<D>" />`;
+
+        const { markdown: result } = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            markdownLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/a.md")) {
+                    return "first {{t}}";
+                }
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/b.md")) {
+                    return "second {{t}}";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe("first A<B> and second C<D>");
+    });
+
+    it("should keep the other quote style inside a quoted value", async () => {
+        const markdown = `<Markdown src="test.md" a="Map<'key', string>" b='Record<"id", number>' />`;
+
+        const { markdown: result } = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            markdownLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/test.md")) {
+                    return "{{a}} | {{b}}";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`Map<'key', string> | Record<"id", number>`);
+    });
+
+    it("should handle escaped quotes and nested braces inside expression values", async () => {
+        const markdown = String.raw`<Markdown src="test.md" label={'Bob\'s'} obj={{ a: 1 }} />`;
+
+        const { markdown: result } = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            markdownLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/test.md")) {
+                    return "Welcome {{label}}";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe("Welcome Bob's");
+    });
+
+    it("should leave an unterminated tag untouched without hanging", async () => {
+        const markdown = `<Markdown src="test.md" ${"a ".repeat(50_000)}`;
+        const markdownLoader = vi.fn().mockResolvedValue("test content");
+
+        const { markdown: result } = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            markdownLoader
+        });
+
+        expect(result).toBe(markdown);
+        expect(markdownLoader).not.toHaveBeenCalled();
+    });
+
     it("should leave unreplaced variables as-is when no matching prop exists", async () => {
         const markdown = `
             <Markdown src="test.md" plan="pro" />

@@ -117,6 +117,10 @@ fixtures:
         allow_user_agent_app_info: true
       outputFolder: include-platform-headers-app-info
     - customConfig:
+        include_platform_headers: true
+        user_agent_only: true
+      outputFolder: user-agent-only
+    - customConfig:
         additional_init_exports:
           - from: types.types
             imports:
@@ -185,10 +189,17 @@ fixtures:
     - customConfig:
         enable_wire_tests: true
       outputFolder: .
+  errors:
+    - customConfig:
+        enable_wire_tests: true
+      outputFolder: .
   exhaustive:
     - customConfig:
         enable_wire_tests: true
       outputFolder: no-custom-config
+    - license:
+        custom: LICENSE
+      outputFolder: custom-license
     - customConfig:
         runtime_version: true
       outputFolder: runtime-version
@@ -377,6 +388,10 @@ fixtures:
     - customConfig:
         auto-generate-idempotency-key: true
       outputFolder: auto-generate-idempotency-key
+  inferred-auth-implicit:
+    - customConfig:
+        enable_wire_tests: true
+      outputFolder: .
   file-upload:
     - customConfig: null
       outputFolder: no-custom-config
@@ -524,6 +539,12 @@ fixtures:
   python-oauth-token-optional:
     - customConfig: null
       outputFolder: no-custom-config
+  python-inferred-auth-refresh-token:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        omit_unset_inferred_auth_params: true
+      outputFolder: omit-unset-inferred-auth-params
   oauth-pkce:
     - customConfig:
         enable_wire_tests: true
@@ -543,6 +564,9 @@ fixtures:
         pydantic_config:
           positional_single_property_constructors: true
       outputFolder: with-positional-constructors
+  python-file-upload-array-content-type:
+    - customConfig: null
+      outputFolder: no-custom-config
   python-optional-request-body:
     - customConfig: null
       outputFolder: no-custom-config

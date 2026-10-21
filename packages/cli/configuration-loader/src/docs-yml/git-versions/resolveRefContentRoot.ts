@@ -5,7 +5,15 @@ import { CliError, TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 
+import { getVersionContentRef } from "./getVersionContentRef.js";
 import { MaterializedGitRef } from "./materializeGitRef.js";
+
+/**
+ * Where in the current branch's docs.yml a ref-backed version is declared: at the site
+ * level (`versions:`) or under a product (`products[].versions:`). The same product is
+ * located in the ref's docs.yml to find the version's content.
+ */
+export type RefVersionScope = { type: "site" } | { type: "product"; displayName: string; slug: string | undefined };
 
 /**
  * The content root selected for a git-ref-backed version: the navigation to build
@@ -58,18 +66,64 @@ async function readVersionFile({
 }
 
 /**
- * Selects the content root for a ref-backed version, in order:
- * 1. the ref's docs.yml `versions[0].path` (the default version at the ref),
- * 2. else the ref's top-level `navigation`.
+ * The version at the ref built from its own working tree (a `path:` entry, not another `ref:`):
+ * the one marked `default: true` if it has a `path`, else the first such entry.
+ */
+function getWorkingTreeVersionPath(versions: docsYml.RawSchemas.VersionConfig[] | undefined): string | undefined {
+    const workingTreeVersions = versions?.filter(
+        (version) => getVersionContentRef(version) == null && version.path != null
+    );
+    return (workingTreeVersions?.find((version) => version.default === true) ?? workingTreeVersions?.[0])?.path;
+}
+
+function isInternalProduct(product: docsYml.RawSchemas.ProductConfig): product is docsYml.RawSchemas.InternalProduct {
+    return "path" in product;
+}
+
+/**
+ * Finds the product at the ref that corresponds to a product on the current branch:
+ * a product with the same slug if there is one, else the first with the same display name
+ * whose slug does not conflict.
+ * Only internal products carry a slug, so an external product can only match by display name.
+ */
+function findProductAtRef(
+    products: docsYml.RawSchemas.ProductConfig[],
+    scope: { displayName: string; slug: string | undefined }
+): docsYml.RawSchemas.ProductConfig | undefined {
+    if (scope.slug != null) {
+        const bySlug = products.find((product) => isInternalProduct(product) && product.slug === scope.slug);
+        if (bySlug != null) {
+            return bySlug;
+        }
+    }
+    // Two different slugs mean two different products, even if their display names match.
+    return products.find(
+        (product) =>
+            product.displayName === scope.displayName &&
+            (scope.slug == null || !isInternalProduct(product) || product.slug == null)
+    );
+}
+
+/**
+ * Locates the pages to build for a ref-backed version by reading the docs.yml committed
+ * at the ref (`materialized`), in the scope the version is declared in on the current branch:
+ * - `site`: the entry in the ref docs.yml's `versions` list that has a `path` (entries with
+ *   a `ref` are skipped), preferring the one marked `default: true`, else the first; if none,
+ *   the ref docs.yml's top-level `navigation`.
+ * - `product`: the product in the ref docs.yml with the same `slug` (or, when either side
+ *   has no `slug`, the same `displayName`), then the same rule on that product's `versions`;
+ *   if none, the `navigation` in that product's file.
  *
- * The ref's own `versions` list is never recursed into beyond reading `versions[0].path`;
- * it is a stale snapshot pointing at even older refs.
+ * Entries with a `ref` in the ref's docs.yml are ignored: only the docs.yml being built
+ * decides which versions are published.
  */
 export async function resolveRefContentRoot({
     materialized,
+    scope,
     context
 }: {
     materialized: MaterializedGitRef;
+    scope: RefVersionScope;
     context: TaskContext;
 }): Promise<ResolvedRefContentRoot> {
     const refFernFolder = materialized.absolutePathToFernFolder;
@@ -80,10 +134,54 @@ export async function resolveRefContentRoot({
     );
     const rawLibraries = refDocsConfig.libraries;
 
-    const firstVersionPath = refDocsConfig.versions?.[0]?.path;
-    if (firstVersionPath != null) {
+    const describeRef = `git ref '${materialized.ref}' (${materialized.sha})`;
+
+    // A ref from before the site adopted `products:` has no product to match, so its site-level
+    // content root is used instead.
+    const refProducts = refDocsConfig.products ?? [];
+    if (scope.type === "product" && refProducts.length > 0) {
+        const product = findProductAtRef(refProducts, scope);
+        if (product == null) {
+            const available = refProducts.map((p) => `'${p.displayName}'`).join(", ");
+            throw new CliError({
+                message:
+                    `Could not find product '${scope.displayName}' in the docs.yml at ${describeRef}. ` +
+                    `Products at the ref: ${available}. ` +
+                    "Give the product the same slug on both branches to match it independently of its display name.",
+                code: CliError.Code.ConfigError
+            });
+        }
+        if (!isInternalProduct(product)) {
+            throw new CliError({
+                message: `Product '${scope.displayName}' is an external link at ${describeRef}, so it has no content to build.`,
+                code: CliError.Code.ConfigError
+            });
+        }
+        const productVersionPath = getWorkingTreeVersionPath(product.versions);
+        if (productVersionPath != null) {
+            return readVersionFile({
+                absoluteFilepathToConfig: resolve(refFernFolder, RelativeFilePath.of(productVersionPath)),
+                rawLibraries,
+                context
+            });
+        }
+        const absoluteFilepathToProductFile = resolve(refFernFolder, RelativeFilePath.of(product.path));
+        const productFile = docsYml.RawSchemas.Serializer.ProductFileConfig.parseOrThrow(
+            await loadYamlFile(absoluteFilepathToProductFile, context)
+        );
+        return {
+            tabs: productFile.tabs,
+            landingPage: productFile.landingPage,
+            navigation: productFile.navigation,
+            absoluteFilepathToConfig: absoluteFilepathToProductFile,
+            rawLibraries
+        };
+    }
+
+    const siteVersionPath = getWorkingTreeVersionPath(refDocsConfig.versions);
+    if (siteVersionPath != null) {
         return readVersionFile({
-            absoluteFilepathToConfig: resolve(refFernFolder, RelativeFilePath.of(firstVersionPath)),
+            absoluteFilepathToConfig: resolve(refFernFolder, RelativeFilePath.of(siteVersionPath)),
             rawLibraries,
             context
         });
@@ -101,8 +199,8 @@ export async function resolveRefContentRoot({
 
     throw new CliError({
         message:
-            `Could not determine the content root for git ref '${materialized.ref}' (${materialized.sha}). ` +
-            "Ensure the ref's docs.yml declares a default version or top-level navigation.",
+            `Could not determine the content root for ${describeRef}. ` +
+            "Ensure the ref's docs.yml declares a version built from its working tree (`path:`) or a top-level navigation.",
         code: CliError.Code.ConfigError
     });
 }

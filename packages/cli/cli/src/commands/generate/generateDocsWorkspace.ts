@@ -1,15 +1,17 @@
 import { createOrganizationIfDoesNotExist, FernToken, FernUserToken, getToken } from "@fern-api/auth";
+import { SDK_CONFIG_FILENAME } from "@fern-api/configuration-loader";
 import { createFdrService } from "@fern-api/core";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { Rules } from "@fern-api/docs-validator";
 import { FdrAPI } from "@fern-api/fdr-sdk";
-import { basename } from "@fern-api/fs-utils";
+import { basename, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
 import { type ValidationViolation, validateOSSWorkspace } from "@fern-api/oss-validator";
 import { Project } from "@fern-api/project-loader";
 import { runRemoteGenerationForDocsWorkspace } from "@fern-api/remote-workspace-runner";
 import { CliError } from "@fern-api/task-context";
+import type { DocsWorkspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { detectCISource, detectDeployerAuthor, isCI } from "../../utils/environment.js";
@@ -75,7 +77,8 @@ export async function generateDocsWorkspace({
     strictBrokenLinks,
     disableTemplates,
     noPrompt,
-    skipUpload
+    skipUpload,
+    includePrivate = false
 }: {
     project: Project;
     cliContext: CliContext;
@@ -88,6 +91,8 @@ export async function generateDocsWorkspace({
     disableTemplates: boolean | undefined;
     noPrompt?: boolean;
     skipUpload: boolean | undefined;
+    /** Include `x-twilio.docsVisibility: private` elements in the published API reference. */
+    includePrivate?: boolean;
 }): Promise<void> {
     const docsWorkspace = project.docsWorkspaces;
     if (docsWorkspace == null) {
@@ -140,8 +145,8 @@ export async function generateDocsWorkspace({
         }
     }
 
-    // When --id is provided and we're not in CI and not --force, check if the preview already exists
-    if (previewId != null && !isCI() && !force) {
+    // When --id is provided and we're not in CI, --force, or --no-prompt, check if the preview already exists
+    if (previewId != null && !isCI() && !force && !noPrompt) {
         const expectedDomain = buildPreviewDomain({ orgId: project.config.organization, previewId });
         const fdr = createFdrService({ token: token.value });
 
@@ -170,6 +175,12 @@ export async function generateDocsWorkspace({
     });
 
     await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
+        // `valid-markdown-links` and the publish below each resolve the full docs definition;
+        // build each API's IR once and share it.
+        for (const ossWorkspace of await filterOssWorkspaces(project)) {
+            ossWorkspace.enableResultCaching();
+        }
+
         await validateDocsWorkspaceAndLogIssues({
             workspace: docsWorkspace,
             context,
@@ -219,6 +230,7 @@ export async function generateDocsWorkspace({
             organization: project.config.organization,
             apiWorkspaces: project.apiWorkspaces,
             ossWorkspaces,
+            usesSdkConfig: await projectUsesSdkConfig({ project, docsWorkspace }),
             docsWorkspace,
             context,
             token,
@@ -229,15 +241,42 @@ export async function generateDocsWorkspace({
             skipUpload,
             cliVersion: cliContext.environment.packageVersion,
             ciSource: detectCISource(),
-            deployerAuthor: detectDeployerAuthor()
+            deployerAuthor: detectDeployerAuthor(),
+            docsVisibility: includePrivate ? "private" : "public"
         });
         const generationTime = performance.now() - generationStart;
         context.logger.debug(`Remote docs generation completed in ${generationTime.toFixed(0)}ms`);
     });
 }
 
+/**
+ * Whether the project configures SDKs in an sdk-config.yml. `project.sdkConfigWorkspaces` only lists
+ * workspaces that have no generators file at all, so a project that still has a generators.yml (or the
+ * renamed generators.legacy.yml) next to its sdk-config.yml is found by looking for the file itself.
+ */
+async function projectUsesSdkConfig({
+    project,
+    docsWorkspace
+}: {
+    project: Project;
+    docsWorkspace: DocsWorkspace;
+}): Promise<boolean> {
+    if ((project.sdkConfigWorkspaces?.length ?? 0) > 0) {
+        return true;
+    }
+    const directories = [
+        docsWorkspace.absoluteFilePath,
+        ...project.apiWorkspaces.map((workspace) => workspace.absoluteFilePath)
+    ];
+    const exists = await Promise.all(
+        directories.map((directory) => doesPathExist(join(directory, RelativeFilePath.of(SDK_CONFIG_FILENAME))))
+    );
+    return exists.some(Boolean);
+}
+
 function getExcludeRules(brokenLinks: boolean, strictBrokenLinks: boolean): string[] {
-    const excludeRules: string[] = [];
+    // publishDocs runs missing-redirects on the docs it resolves, so the navigation is built once.
+    const excludeRules: string[] = [Rules.MissingRedirectsRule.name];
     if (!brokenLinks && !strictBrokenLinks) {
         excludeRules.push(Rules.ValidMarkdownLinks.name);
     }

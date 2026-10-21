@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern generate --docs` now fails when a rule configured as `error` in `docs.yml` `check.rules`
+    (e.g. `broken-links: error`) reports a violation, matching the behavior of `fern check`.
+    Previously the violation was logged but docs were still published.
+  type: fix

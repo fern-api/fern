@@ -4,7 +4,7 @@ module Seed
   module Union
     module Types
       class Square < Internal::Types::Model
-        field :length, -> { Integer }, optional: false, nullable: false
+        field :length, -> { Float }, optional: false, nullable: false
       end
     end
   end

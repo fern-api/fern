@@ -9,7 +9,7 @@ import com.seed.websocketBearerAuth.resources.realtime.RealtimeClient;
 import com.seed.websocketBearerAuth.resources.realtimenoauth.RealtimeNoAuthClient;
 import java.util.function.Supplier;
 
-public class SeedWebsocketBearerAuthClient {
+public class SeedWebsocketBearerAuthClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<RealtimeNoAuthClient> realtimeNoAuthClient;
@@ -28,6 +28,16 @@ public class SeedWebsocketBearerAuthClient {
 
     public RealtimeClient realtime() {
         return this.realtimeClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedWebsocketBearerAuthClientBuilder builder() {

@@ -20,6 +20,8 @@ export interface SingleEndpointSnippet {
     exampleIdentifier: string | undefined;
     imports: string | undefined;
     endpointCall: string;
+    /** The example the snippet was generated from. */
+    example: ExampleEndpointCall;
 }
 
 export class EndpointSnippetsGenerator extends WithGeneration {
@@ -208,7 +210,8 @@ export class EndpointSnippetsGenerator extends WithGeneration {
         return {
             imports: formattedAstNodeSnippet.imports,
             endpointCall: formattedAstNodeSnippet.body,
-            exampleIdentifier: example.name != null ? getOriginalName(example.name) : undefined
+            exampleIdentifier: example.name != null ? getOriginalName(example.name) : undefined,
+            example
         };
     }
 }

@@ -82,6 +82,14 @@ public class WrappedRequestEndpointWriterVariableNameContext extends AbstractEnd
                 .build());
     }
 
+    @Override
+    public Optional<GeneratedWrappedRequest.FileUploadRequestBodyGetters> fileUploadRequestBodyGetters() {
+        return generatedWrappedRequest
+                .requestBodyGetter()
+                .filter(GeneratedWrappedRequest.FileUploadRequestBodyGetters.class::isInstance)
+                .map(GeneratedWrappedRequest.FileUploadRequestBodyGetters.class::cast);
+    }
+
     public static String getFilePropertyParameterName(
             ClientGeneratorContext clientGeneratorContext, FileProperty fileProperty) {
         if (clientGeneratorContext.getCustomConfig().inlineFileProperties()) {

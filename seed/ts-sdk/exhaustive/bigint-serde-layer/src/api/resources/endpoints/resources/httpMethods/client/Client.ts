@@ -51,7 +51,7 @@ export class HttpMethodsClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/http-methods/${core.url.encodePathParam(id)}`,
+                `/http-methods/${core.url.encodePathParam(id, errors.SeedExhaustiveError)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -203,7 +203,7 @@ export class HttpMethodsClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/http-methods/${core.url.encodePathParam(id)}`,
+                `/http-methods/${core.url.encodePathParam(id, errors.SeedExhaustiveError)}`,
             ),
             method: "PUT",
             headers: _headers,
@@ -299,7 +299,7 @@ export class HttpMethodsClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/http-methods/${core.url.encodePathParam(id)}`,
+                `/http-methods/${core.url.encodePathParam(id, errors.SeedExhaustiveError)}`,
             ),
             method: "PATCH",
             headers: _headers,
@@ -376,7 +376,7 @@ export class HttpMethodsClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/http-methods/${core.url.encodePathParam(id)}`,
+                `/http-methods/${core.url.encodePathParam(id, errors.SeedExhaustiveError)}`,
             ),
             method: "DELETE",
             headers: _headers,

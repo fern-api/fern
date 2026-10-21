@@ -1,0 +1,26 @@
+schemaVersion: sdk-config/v1
+sdkName: api
+source:
+  specs:
+    - id: openapi
+      type: openapi
+      path: ./openapi.yml
+api:
+  auth:
+    schemes:
+      - id: bearer
+        type: bearer
+        environmentVariable: BEARER_TOKEN
+    requirements:
+      - schemes:
+          - bearer
+generation:
+  wireTests:
+    enabled: true
+targets:
+  - language: cli
+    output:
+      delivery: files
+      path: ../out
+    generation:
+      binaryName: bearer-env-cli

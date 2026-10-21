@@ -4,9 +4,11 @@
 package com.seed.api;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.api.core.BodyProperties;
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.MediaTypes;
 import com.seed.api.core.ObjectMappers;
+import com.seed.api.core.PathSegments;
 import com.seed.api.core.RequestOptions;
 import com.seed.api.core.RetryInterceptor;
 import com.seed.api.core.SeedApiApiException;
@@ -44,7 +46,7 @@ public class AsyncRawSeedApiClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("postWithNullableNamedRequestBodyType")
-                .addPathSegment(pathId);
+                .addPathSegment(PathSegments.validate(pathId));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -53,7 +55,9 @@ public class AsyncRawSeedApiClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request.getBody(), requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedApiException("Failed to serialize request", e);
         }
@@ -78,7 +82,8 @@ public class AsyncRawSeedApiClient {
                     .build();
         }
         CompletableFuture<SeedApiHttpResponse<ResponseBody>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (okhttp3.ResponseBody responseBody = response.body()) {
@@ -105,6 +110,11 @@ public class AsyncRawSeedApiClient {
                 future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
             }
         });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
+            }
+        });
         return future;
     }
 
@@ -129,7 +139,7 @@ public class AsyncRawSeedApiClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("postWithNonNullableNamedRequestBodyType")
-                .addPathSegment(pathId);
+                .addPathSegment(PathSegments.validate(pathId));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -138,7 +148,9 @@ public class AsyncRawSeedApiClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedApiException("Failed to serialize request", e);
         }
@@ -163,7 +175,8 @@ public class AsyncRawSeedApiClient {
                     .build();
         }
         CompletableFuture<SeedApiHttpResponse<ResponseBody>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (okhttp3.ResponseBody responseBody = response.body()) {
@@ -188,6 +201,11 @@ public class AsyncRawSeedApiClient {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;

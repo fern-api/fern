@@ -5,6 +5,7 @@ package com.seed._enum.resources.multipartform;
 
 import com.seed._enum.core.ClientOptions;
 import com.seed._enum.core.RequestOptions;
+import com.seed._enum.core.SeedEnumHttpResponse;
 import com.seed._enum.resources.multipartform.requests.MultipartFormRequest;
 import java.util.concurrent.CompletableFuture;
 
@@ -26,10 +27,24 @@ public class AsyncMultipartFormClient {
     }
 
     public CompletableFuture<Void> multipartForm(MultipartFormRequest request) {
-        return this.rawClient.multipartForm(request).thenApply(response -> response.body());
+        CompletableFuture<SeedEnumHttpResponse<Void>> rawFuture = this.rawClient.multipartForm(request);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> multipartForm(MultipartFormRequest request, RequestOptions requestOptions) {
-        return this.rawClient.multipartForm(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedEnumHttpResponse<Void>> rawFuture = this.rawClient.multipartForm(request, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

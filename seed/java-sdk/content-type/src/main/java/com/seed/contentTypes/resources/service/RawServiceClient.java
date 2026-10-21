@@ -4,9 +4,11 @@
 package com.seed.contentTypes.resources.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.contentTypes.core.BodyProperties;
 import com.seed.contentTypes.core.ClientOptions;
 import com.seed.contentTypes.core.MediaTypes;
 import com.seed.contentTypes.core.ObjectMappers;
+import com.seed.contentTypes.core.PathSegments;
 import com.seed.contentTypes.core.RequestOptions;
 import com.seed.contentTypes.core.RetryInterceptor;
 import com.seed.contentTypes.core.SeedContentTypesApiException;
@@ -50,7 +52,8 @@ public class RawServiceClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request),
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
                     MediaType.parse("application/merge-patch+json"));
         } catch (JsonProcessingException e) {
             throw new SeedContentTypesException("Failed to serialize request", e);
@@ -139,7 +142,7 @@ public class RawServiceClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("complex")
-                .addPathSegment(id);
+                .addPathSegment(PathSegments.validate(id));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -148,7 +151,8 @@ public class RawServiceClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request),
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
                     MediaType.parse("application/merge-patch+json"));
         } catch (JsonProcessingException e) {
             throw new SeedContentTypesException("Failed to serialize request", e);
@@ -205,7 +209,7 @@ public class RawServiceClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("named-mixed")
-                .addPathSegment(id);
+                .addPathSegment(PathSegments.validate(id));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -214,7 +218,8 @@ public class RawServiceClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request),
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
                     MediaType.parse("application/merge-patch+json"));
         } catch (JsonProcessingException e) {
             throw new SeedContentTypesException("Failed to serialize request", e);
@@ -287,7 +292,8 @@ public class RawServiceClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request),
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
                     MediaType.parse("application/merge-patch+json"));
         } catch (JsonProcessingException e) {
             throw new SeedContentTypesException("Failed to serialize request", e);
@@ -356,7 +362,7 @@ public class RawServiceClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("regular")
-                .addPathSegment(id);
+                .addPathSegment(PathSegments.validate(id));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -365,7 +371,9 @@ public class RawServiceClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedContentTypesException("Failed to serialize request", e);
         }

@@ -23,10 +23,12 @@ type AuthGetTokenRequest struct {
 }
 
 func (a *AuthGetTokenRequest) require(field *big.Int) {
-	if a.explicitFields == nil {
-		a.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if a.explicitFields != nil {
+		next.Set(a.explicitFields)
 	}
-	a.explicitFields.Or(a.explicitFields, field)
+	next.Or(next, field)
+	a.explicitFields = next
 }
 
 // SetClientID sets the ClientID field and marks it as non-optional;
@@ -93,10 +95,12 @@ func (a *AuthGetTokenResponse) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *AuthGetTokenResponse) require(field *big.Int) {
-	if a.explicitFields == nil {
-		a.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if a.explicitFields != nil {
+		next.Set(a.explicitFields)
 	}
-	a.explicitFields.Or(a.explicitFields, field)
+	next.Or(next, field)
+	a.explicitFields = next
 }
 
 // SetAccessToken sets the AccessToken field and marks it as non-optional;

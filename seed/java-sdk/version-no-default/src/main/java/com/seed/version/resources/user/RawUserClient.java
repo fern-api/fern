@@ -6,6 +6,7 @@ package com.seed.version.resources.user;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.version.core.ClientOptions;
 import com.seed.version.core.ObjectMappers;
+import com.seed.version.core.PathSegments;
 import com.seed.version.core.RequestOptions;
 import com.seed.version.core.RetryInterceptor;
 import com.seed.version.core.SeedVersionApiException;
@@ -35,7 +36,7 @@ public class RawUserClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("users")
-                .addPathSegment(userId);
+                .addPathSegment(PathSegments.validate(userId));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);

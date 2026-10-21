@@ -8,10 +8,8 @@ enum Example21 {
             token: "<token>"
         )
 
-        _ = try await client.users.listWithOffsetStepPagination(
-            page: 1,
-            limit: 1,
-            order: .asc
-        )
+        _ = try await client.users.listWithBodyOffsetPagination(request: .init(pagination: WithPageType(
+            page: 1
+        )))
     }
 }

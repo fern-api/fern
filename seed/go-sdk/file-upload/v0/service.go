@@ -23,10 +23,12 @@ type JustFileWithOptionalQueryParamsRequest struct {
 }
 
 func (j *JustFileWithOptionalQueryParamsRequest) require(field *big.Int) {
-	if j.explicitFields == nil {
-		j.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if j.explicitFields != nil {
+		next.Set(j.explicitFields)
 	}
-	j.explicitFields.Or(j.explicitFields, field)
+	next.Or(next, field)
+	j.explicitFields = next
 }
 
 // SetMaybeString sets the MaybeString field and marks it as non-optional;
@@ -84,10 +86,12 @@ type JustFileWithQueryParamsRequest struct {
 }
 
 func (j *JustFileWithQueryParamsRequest) require(field *big.Int) {
-	if j.explicitFields == nil {
-		j.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if j.explicitFields != nil {
+		next.Set(j.explicitFields)
 	}
-	j.explicitFields.Or(j.explicitFields, field)
+	next.Or(next, field)
+	j.explicitFields = next
 }
 
 // SetMaybeString sets the MaybeString field and marks it as non-optional;
@@ -154,10 +158,12 @@ type OptionalArgsRequest struct {
 }
 
 func (o *OptionalArgsRequest) require(field *big.Int) {
-	if o.explicitFields == nil {
-		o.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if o.explicitFields != nil {
+		next.Set(o.explicitFields)
 	}
-	o.explicitFields.Or(o.explicitFields, field)
+	next.Or(next, field)
+	o.explicitFields = next
 }
 
 type MyRequest struct {
@@ -178,10 +184,12 @@ type MyRequest struct {
 }
 
 func (m *MyRequest) require(field *big.Int) {
-	if m.explicitFields == nil {
-		m.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if m.explicitFields != nil {
+		next.Set(m.explicitFields)
 	}
-	m.explicitFields.Or(m.explicitFields, field)
+	next.Or(next, field)
+	m.explicitFields = next
 }
 
 type ID = string
@@ -221,10 +229,12 @@ func (m *MyInlineType) GetExtraProperties() map[string]interface{} {
 }
 
 func (m *MyInlineType) require(field *big.Int) {
-	if m.explicitFields == nil {
-		m.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if m.explicitFields != nil {
+		next.Set(m.explicitFields)
 	}
-	m.explicitFields.Or(m.explicitFields, field)
+	next.Or(next, field)
+	m.explicitFields = next
 }
 
 // SetBar sets the Bar field and marks it as non-optional;
@@ -305,10 +315,12 @@ func (m *MyObject) GetExtraProperties() map[string]interface{} {
 }
 
 func (m *MyObject) require(field *big.Int) {
-	if m.explicitFields == nil {
-		m.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if m.explicitFields != nil {
+		next.Set(m.explicitFields)
 	}
-	m.explicitFields.Or(m.explicitFields, field)
+	next.Or(next, field)
+	m.explicitFields = next
 }
 
 // SetFoo sets the Foo field and marks it as non-optional;
@@ -398,10 +410,12 @@ func (m *MyObjectWithOptional) GetExtraProperties() map[string]interface{} {
 }
 
 func (m *MyObjectWithOptional) require(field *big.Int) {
-	if m.explicitFields == nil {
-		m.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if m.explicitFields != nil {
+		next.Set(m.explicitFields)
 	}
-	m.explicitFields.Or(m.explicitFields, field)
+	next.Or(next, field)
+	m.explicitFields = next
 }
 
 // SetProp sets the Prop field and marks it as non-optional;
@@ -517,10 +531,12 @@ type WithContentTypeRequest struct {
 }
 
 func (w *WithContentTypeRequest) require(field *big.Int) {
-	if w.explicitFields == nil {
-		w.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if w.explicitFields != nil {
+		next.Set(w.explicitFields)
 	}
-	w.explicitFields.Or(w.explicitFields, field)
+	next.Or(next, field)
+	w.explicitFields = next
 }
 
 type MyOtherRequest struct {
@@ -542,10 +558,12 @@ type MyOtherRequest struct {
 }
 
 func (m *MyOtherRequest) require(field *big.Int) {
-	if m.explicitFields == nil {
-		m.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if m.explicitFields != nil {
+		next.Set(m.explicitFields)
 	}
-	m.explicitFields.Or(m.explicitFields, field)
+	next.Or(next, field)
+	m.explicitFields = next
 }
 
 type WithFormEncodingRequest struct {
@@ -557,10 +575,12 @@ type WithFormEncodingRequest struct {
 }
 
 func (w *WithFormEncodingRequest) require(field *big.Int) {
-	if w.explicitFields == nil {
-		w.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if w.explicitFields != nil {
+		next.Set(w.explicitFields)
 	}
-	w.explicitFields.Or(w.explicitFields, field)
+	next.Or(next, field)
+	w.explicitFields = next
 }
 
 type InlineTypeRequest struct {
@@ -571,10 +591,12 @@ type InlineTypeRequest struct {
 }
 
 func (i *InlineTypeRequest) require(field *big.Int) {
-	if i.explicitFields == nil {
-		i.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if i.explicitFields != nil {
+		next.Set(i.explicitFields)
 	}
-	i.explicitFields.Or(i.explicitFields, field)
+	next.Or(next, field)
+	i.explicitFields = next
 }
 
 type WithJSONPropertyRequest struct {
@@ -585,10 +607,12 @@ type WithJSONPropertyRequest struct {
 }
 
 func (w *WithJSONPropertyRequest) require(field *big.Int) {
-	if w.explicitFields == nil {
-		w.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if w.explicitFields != nil {
+		next.Set(w.explicitFields)
 	}
-	w.explicitFields.Or(w.explicitFields, field)
+	next.Or(next, field)
+	w.explicitFields = next
 }
 
 type LiteralEnumRequest struct {
@@ -601,10 +625,12 @@ type LiteralEnumRequest struct {
 }
 
 func (l *LiteralEnumRequest) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 type WithRefBodyRequest struct {
@@ -615,8 +641,10 @@ type WithRefBodyRequest struct {
 }
 
 func (w *WithRefBodyRequest) require(field *big.Int) {
-	if w.explicitFields == nil {
-		w.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if w.explicitFields != nil {
+		next.Set(w.explicitFields)
 	}
-	w.explicitFields.Or(w.explicitFields, field)
+	next.Or(next, field)
+	w.explicitFields = next
 }

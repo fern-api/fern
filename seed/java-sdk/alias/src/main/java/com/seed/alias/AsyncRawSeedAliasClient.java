@@ -6,6 +6,7 @@ package com.seed.alias;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.alias.core.ClientOptions;
 import com.seed.alias.core.ObjectMappers;
+import com.seed.alias.core.PathSegments;
 import com.seed.alias.core.RequestOptions;
 import com.seed.alias.core.RetryInterceptor;
 import com.seed.alias.core.SeedAliasApiException;
@@ -37,7 +38,7 @@ public class AsyncRawSeedAliasClient {
     public CompletableFuture<SeedAliasHttpResponse<Void>> get(String typeId, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegment(typeId);
+                .addPathSegment(PathSegments.validate(typeId));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -62,7 +63,8 @@ public class AsyncRawSeedAliasClient {
                     .build();
         }
         CompletableFuture<SeedAliasHttpResponse<Void>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -86,6 +88,11 @@ public class AsyncRawSeedAliasClient {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(new SeedAliasException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;

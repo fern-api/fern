@@ -148,7 +148,14 @@ export abstract class AbstractPhpGeneratorContext<
 
     public getCoreXmlAsIsFiles(): string[] {
         return this.hasXmlTypes()
-            ? [AsIsFiles.XmlNode, AsIsFiles.XmlElement, AsIsFiles.XmlSerializableType, AsIsFiles.XmlUtils]
+            ? [
+                  AsIsFiles.XmlNode,
+                  AsIsFiles.XmlText,
+                  AsIsFiles.XmlComment,
+                  AsIsFiles.XmlElement,
+                  AsIsFiles.XmlSerializableType,
+                  AsIsFiles.XmlUtils
+              ]
             : [];
     }
 

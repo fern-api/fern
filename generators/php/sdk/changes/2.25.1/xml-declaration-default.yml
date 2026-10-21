@@ -1,0 +1,5 @@
+- summary: |
+    XML-encoded (TwiML) types now include the `<?xml version="1.0" encoding="UTF-8"?>`
+    declaration by default when serialized to XML; pass the declaration flag as `false`
+    to omit it. Nested child elements and raw `XmlElement`s are still written without it.
+  type: fix

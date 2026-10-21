@@ -94,7 +94,6 @@ public final class GetTokenResponse {
 
         private int expiresIn;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -123,6 +122,14 @@ public final class GetTokenResponse {
         @java.lang.Override
         public GetTokenResponse build() {
             return new GetTokenResponse(accessToken, expiresIn, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("access_token") || key.equalsIgnoreCase("expires_in")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

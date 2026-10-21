@@ -95,7 +95,6 @@ public final class WithFormEncodingRequest {
 
         private MyObject bar;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -124,6 +123,14 @@ public final class WithFormEncodingRequest {
         @java.lang.Override
         public WithFormEncodingRequest build() {
             return new WithFormEncodingRequest(foo, bar, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("foo") || key.equalsIgnoreCase("bar")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

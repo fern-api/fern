@@ -4,8 +4,10 @@ from .abstract_paginator import PaginationSnippetConfig, Paginator
 from fern_python.codegen import AST
 from fern_python.generators.sdk.client_generator.request_properties import (
     request_property_to_name,
+    retrieve_pagination_default,
 )
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
+from fern_python.utils.name_resolver import resolve_name
 
 import fern.ir.resources as ir_types
 
@@ -58,28 +60,54 @@ class OffsetPagination(Paginator):
 
     def write_get_next_body(self, *, writer: AST.NodeWriter) -> None:
         page_parameter_name = request_property_to_name(self.offset.page.property)
+        property_path = self.offset.page.property_path or []
+        # For a nested page property (e.g. `options.offset`) the parameter to rewrite is the
+        # root of the path; otherwise it is the page property itself.
+        rewritten_parameter_name = (
+            resolve_name(property_path[0].name).snake_case.safe_name if property_path else page_parameter_name
+        )
         writer.write(f"self.{self._config.endpoint_name}(")
         for parameter in self._config.parameters:
-            # Assume the paging mechanism is a direct parameter (e.g. not nested)
-            if parameter.name == page_parameter_name:
-                # Assume the offset parameter is an integer
-                writer.write(f"{parameter.name} + {self.get_step()}")
-            elif parameter.name == page_parameter_name:
-                # Assume the offset parameter is an integer
-                writer.write(f"{parameter.name} + {self.get_step()}")
+            if parameter.name == rewritten_parameter_name:
+                self._write_next_page_value(writer=writer, parameter=parameter)
             else:
                 writer.write(parameter.name)
             writer.write(", ")
 
-        for parameter in self._config.named_parameters:
-            if parameter.name == page_parameter_name:
-                # Here we assume the offset parameter is an integer
-                writer.write(f"{parameter.name}={parameter.name} + {self.get_step()}")
+        for named_parameter in self._config.named_parameters:
+            writer.write(f"{named_parameter.name}=")
+            if named_parameter.name == rewritten_parameter_name:
+                self._write_next_page_value(writer=writer, parameter=named_parameter)
             else:
-                writer.write(f"{parameter.name}={parameter.name}")
+                writer.write(named_parameter.name)
             writer.write(", ")
         writer.write(")")
         writer.write_line("")
+
+    def _write_next_page_value(self, *, writer: AST.NodeWriter, parameter: AST.FunctionParameter) -> None:
+        parameter_name = parameter.name
+        property_path = self.offset.page.property_path or []
+        if not property_path:
+            # The offset parameter is normalized to an integer before the request is made.
+            writer.write(f"{parameter_name} + {self.get_step()}")
+            return
+        nested_keys = [resolve_name(item.name).snake_case.safe_name for item in property_path[1:]]
+        nested_keys.append(request_property_to_name(self.offset.page.property))
+        keys_literal = "[" + ", ".join(f'"{key}"' for key in nested_keys) + "]"
+        default = retrieve_pagination_default(self.offset.page.property.get_as_union().value_type)
+        writer.write_node(
+            AST.Expression(self._context.core_utilities.get_reference_to_pagination_helper("with_nested_page_value"))
+        )
+        writer.write(f"({parameter_name}, {keys_literal}, ")
+        writer.write_node(
+            AST.Expression(self._context.core_utilities.get_reference_to_pagination_helper("get_nested_page_value"))
+        )
+        writer.write(f"({parameter_name}, {keys_literal}, {default}) + {self.get_step()}")
+        if parameter.type_hint is not None:
+            # Lets the helper build an omitted container through its model so field aliases apply.
+            writer.write(", ")
+            writer.write_node(parameter.type_hint)
+        writer.write(")")
 
     def get_step(self) -> str:
         if self.offset.step is not None and self._context.custom_config.offset_semantics == "item-index":

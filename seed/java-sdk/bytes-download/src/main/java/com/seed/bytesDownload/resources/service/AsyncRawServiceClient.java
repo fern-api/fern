@@ -4,8 +4,10 @@
 package com.seed.bytesDownload.resources.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.bytesDownload.core.BodyProperties;
 import com.seed.bytesDownload.core.ClientOptions;
 import com.seed.bytesDownload.core.ObjectMappers;
+import com.seed.bytesDownload.core.PathSegments;
 import com.seed.bytesDownload.core.RequestOptions;
 import com.seed.bytesDownload.core.RetryInterceptor;
 import com.seed.bytesDownload.core.SeedBytesDownloadApiException;
@@ -46,7 +48,11 @@ public class AsyncRawServiceClient {
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
-                .method("POST", RequestBody.create("", null))
+                .method(
+                        "POST",
+                        BodyProperties.toRequestBody(
+                                requestOptions != null ? requestOptions.getBodyProperties() : null,
+                                RequestBody.create("", null)))
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .build();
         OkHttpClient client = clientOptions.httpClient();
@@ -63,7 +69,8 @@ public class AsyncRawServiceClient {
                     .build();
         }
         CompletableFuture<SeedBytesDownloadHttpResponse<Void>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -90,6 +97,11 @@ public class AsyncRawServiceClient {
                 future.completeExceptionally(new SeedBytesDownloadException("Network error executing HTTP request", e));
             }
         });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
+            }
+        });
         return future;
     }
 
@@ -101,7 +113,7 @@ public class AsyncRawServiceClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("download-content")
-                .addPathSegment(id);
+                .addPathSegment(PathSegments.validate(id));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -126,7 +138,8 @@ public class AsyncRawServiceClient {
                     .build();
         }
         CompletableFuture<SeedBytesDownloadHttpResponse<byte[]>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -152,6 +165,11 @@ public class AsyncRawServiceClient {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(new SeedBytesDownloadException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;

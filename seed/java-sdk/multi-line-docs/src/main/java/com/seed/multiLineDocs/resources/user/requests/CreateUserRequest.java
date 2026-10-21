@@ -112,7 +112,6 @@ public final class CreateUserRequest {
 
         private Optional<Integer> age = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -161,6 +160,14 @@ public final class CreateUserRequest {
         @java.lang.Override
         public CreateUserRequest build() {
             return new CreateUserRequest(name, age, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("name") || key.equalsIgnoreCase("age")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

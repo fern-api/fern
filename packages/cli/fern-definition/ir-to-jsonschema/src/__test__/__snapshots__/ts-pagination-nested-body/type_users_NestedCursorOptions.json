@@ -1,0 +1,34 @@
+{
+  "type": "object",
+  "properties": {
+    "pagination": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/users.CursorOptions"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "users.CursorOptions": {
+      "type": "object",
+      "properties": {
+        "cursor": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

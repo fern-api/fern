@@ -9,7 +9,7 @@ import com.seed.oauthClientCredentialsReference.resources.auth.AsyncAuthClient;
 import com.seed.oauthClientCredentialsReference.resources.simple.AsyncSimpleClient;
 import java.util.function.Supplier;
 
-public class AsyncSeedOauthClientCredentialsReferenceClient {
+public class AsyncSeedOauthClientCredentialsReferenceClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AsyncAuthClient> authClient;
@@ -28,6 +28,16 @@ public class AsyncSeedOauthClientCredentialsReferenceClient {
 
     public AsyncSimpleClient simple() {
         return this.simpleClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     /**

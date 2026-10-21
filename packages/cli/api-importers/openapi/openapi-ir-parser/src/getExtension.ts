@@ -6,6 +6,7 @@ import { OpenAPIExtension } from "./openapi/v3/extensions/extensions.js";
 import { FernOpenAPIExtension } from "./openapi/v3/extensions/fernExtensions.js";
 import { TypedExtensionId } from "./openapi/v3/extensions/id.js";
 import { ReadmeOpenAPIExtension } from "./openapi/v3/extensions/readmeExtensions.js";
+import { TwilioOpenAPIExtension } from "./openapi/v3/extensions/twilioExtensions.js";
 
 type Extension<T> =
     | FernOpenAPIExtension
@@ -13,6 +14,7 @@ type Extension<T> =
     | OpenAPIExtension
     | OpenAPIExtension[]
     | ReadmeOpenAPIExtension
+    | TwilioOpenAPIExtension
     | TypedExtensionId<T>;
 
 /**

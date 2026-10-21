@@ -28,6 +28,7 @@ const SETTINGS_KEY_MAP: Record<string, string> = {
     "object-query-parameters": "objectQueryParameters",
     "respect-readonly-schemas": "respectReadonlySchemas",
     "namespaced-errors": "namespacedErrors",
+    "error-responses": "errorResponses",
     "use-read-variant-for-responses": "useReadVariantForResponses",
     "respect-forward-compatible-enums": "respectForwardCompatibleEnums",
     "respect-optional-request-body": "respectOptionalRequestBody",
@@ -138,6 +139,10 @@ export function convertOpenApiSpecSettings(legacySettings: Record<string, unknow
             settings["resolveAliases"] = value;
             continue;
         }
+        if (key === "error-responses" && isErrorResponsesSchema(value)) {
+            settings["errorResponses"] = convertErrorResponsesSettings(value);
+            continue;
+        }
         if (key === "path-parameter-order" && typeof value === "string") {
             settings[newKey] = PATH_PARAMETER_ORDER_MAP[value] ?? value;
             continue;
@@ -153,6 +158,29 @@ export function convertOpenApiSpecSettings(legacySettings: Record<string, unknow
         settings[newKey] = value;
     }
     return { settings: settings as schemas.OpenApiSettingsSchema, warnings };
+}
+
+function isErrorResponsesSchema(value: unknown): value is generatorsYml.OpenApiErrorResponsesSchema {
+    return typeof value === "object" && value !== null && "schema" in value;
+}
+
+function convertErrorResponsesSettings(
+    errorResponses: generatorsYml.OpenApiErrorResponsesSchema
+): schemas.OpenApiErrorResponsesSchema {
+    const result: schemas.OpenApiErrorResponsesSchema = { schema: errorResponses.schema };
+    if (errorResponses.name != null) {
+        result.name = errorResponses.name;
+    }
+    if (errorResponses["apply-to"] != null) {
+        result.applyTo = errorResponses["apply-to"];
+    }
+    if (errorResponses.ensure != null) {
+        result.ensure = errorResponses.ensure.map((ensure) => ({
+            statusCode: ensure["status-code"],
+            ...(ensure.methods != null ? { methods: ensure.methods } : {})
+        }));
+    }
+    return result;
 }
 
 function convertExampleGenerationSettings(exampleGen: Record<string, unknown>): Record<string, unknown> {

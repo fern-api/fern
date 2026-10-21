@@ -81,7 +81,6 @@ public final class PaginatedResponse {
 
         private Optional<String> next = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -126,6 +125,14 @@ public final class PaginatedResponse {
 
         public PaginatedResponse build() {
             return new PaginatedResponse(items, next, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("items") || key.equalsIgnoreCase("next")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

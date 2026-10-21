@@ -154,7 +154,6 @@ public final class User implements IUser {
 
         private UserProfile profile;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -215,6 +214,17 @@ public final class User implements IUser {
         @java.lang.Override
         public User build() {
             return new User(id, email, password, profile, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("id")
+                    || key.equalsIgnoreCase("email")
+                    || key.equalsIgnoreCase("password")
+                    || key.equalsIgnoreCase("profile")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

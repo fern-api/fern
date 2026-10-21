@@ -1,0 +1,131 @@
+openapi: 3.1.0
+info:
+  title: Sibling oneOf required constraint
+  version: 1.0.0
+paths:
+  /inbound/routes:
+    post:
+      operationId: listRoutes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InboundRoutesRequest"
+      responses:
+        "200":
+          description: OK
+  /inbound/add-route:
+    post:
+      operationId: addRoute
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InboundAddRouteRequest"
+      responses:
+        "200":
+          description: OK
+components:
+  schemas:
+    ApiKey:
+      type: object
+      properties:
+        key:
+          type: string
+      required:
+        - key
+    InboundRoutesRequest:
+      allOf:
+        - $ref: "#/components/schemas/ApiKey"
+        - type: object
+          properties:
+            domain:
+              type: string
+            phone:
+              type: string
+          oneOf:
+            - required: [domain]
+            - required: [phone]
+          additionalProperties: false
+    InboundAddRouteRequest:
+      allOf:
+        - $ref: "#/components/schemas/ApiKey"
+        - type: object
+          properties:
+            domain:
+              type: string
+            phone:
+              type: string
+            pattern:
+              type: string
+            url:
+              type: string
+          oneOf:
+            - required: [domain, pattern, url]
+            - required: [phone, url]
+          additionalProperties: false
+    # A standalone schema with the same constraint.
+    Contact:
+      type: object
+      properties:
+        email:
+          type: string
+        phone:
+          type: string
+      oneOf:
+        - required: [email]
+        - required: [phone]
+    # Sibling oneOf whose branches narrow a property: still a genuine union.
+    Shape:
+      type: object
+      properties:
+        kind:
+          type: string
+        size:
+          type: number
+      oneOf:
+        - properties:
+            kind:
+              enum: [circle]
+          required: [kind]
+        - properties:
+            kind:
+              enum: [square]
+          required: [kind]
+    # A single presence branch: `a` is simply required.
+    SingleBranch:
+      type: object
+      properties:
+        a:
+          type: string
+        b:
+          type: string
+      oneOf:
+        - required: [a]
+    # A branch with any other constraint keyword is not a presence constraint.
+    WithNot:
+      type: object
+      properties:
+        a:
+          type: string
+        b:
+          type: string
+      oneOf:
+        - required: [a]
+          not:
+            required: [b]
+        - required: [b]
+    # An explicit x-fern-discriminated keeps the union.
+    ExplicitlyDiscriminated:
+      type: object
+      x-fern-discriminated: true
+      properties:
+        a:
+          type: string
+        b:
+          type: string
+      oneOf:
+        - required: [a]
+        - required: [b]

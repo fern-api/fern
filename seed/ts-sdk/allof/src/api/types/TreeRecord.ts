@@ -2,7 +2,15 @@
 
 import type * as SeedApi from "../index.js";
 
-export interface TreeRecord extends SeedApi.TreeBase {
+export interface TreeRecord extends SeedApi.TreeIdentifiable {
+    /** Display name of the tree. */
+    treeName: string;
+    /** The species of tree. */
+    treeSpecies: string;
     /** Date the tree was planted. */
     plantedDate?: string | undefined;
+    /** Height of the tree in feet. */
+    heightInFeet?: number | undefined;
+    /** A description of the tree. */
+    treeDescription?: string | undefined;
 }

@@ -5,10 +5,11 @@ package com.seed.api;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
+import com.seed.api.core.SeedApiHttpResponse;
 import com.seed.api.types.Account;
 import java.util.concurrent.CompletableFuture;
 
-public class AsyncSeedApiClient {
+public class AsyncSeedApiClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final AsyncRawSeedApiClient rawClient;
@@ -26,11 +27,36 @@ public class AsyncSeedApiClient {
     }
 
     public CompletableFuture<Account> getAccount(String accountId) {
-        return this.rawClient.getAccount(accountId).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Account>> rawFuture = this.rawClient.getAccount(accountId);
+        CompletableFuture<Account> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Account> getAccount(String accountId, RequestOptions requestOptions) {
-        return this.rawClient.getAccount(accountId, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Account>> rawFuture =
+                this.rawClient.getAccount(accountId, requestOptions);
+        CompletableFuture<Account> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedApiClientBuilder builder() {

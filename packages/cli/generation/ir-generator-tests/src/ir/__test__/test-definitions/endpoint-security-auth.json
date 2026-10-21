@@ -309,7 +309,8 @@
                             },
                             "valuePrefix": "Bearer "
                         }
-                    ]
+                    ],
+                    "grantType": null
                 },
                 "key": "InferredAuth",
                 "playgroundDocs": null,
@@ -3509,7 +3510,8 @@
                             "unsafeName": "Bearer",
                             "safeName": "Bearer"
                         }
-                    }
+                    },
+                    "requirement": "ENDPOINT_SECURITY"
                 },
                 "declaration": {
                     "name": {
@@ -3829,7 +3831,8 @@
                             "unsafeName": "Bearer",
                             "safeName": "Bearer"
                         }
-                    }
+                    },
+                    "requirement": "ENDPOINT_SECURITY"
                 },
                 "declaration": {
                     "name": {
@@ -3950,7 +3953,8 @@
                             "unsafeName": "Bearer",
                             "safeName": "Bearer"
                         }
-                    }
+                    },
+                    "requirement": "ENDPOINT_SECURITY"
                 },
                 "declaration": {
                     "name": {
@@ -4071,7 +4075,8 @@
                             "unsafeName": "Bearer",
                             "safeName": "Bearer"
                         }
-                    }
+                    },
+                    "requirement": "ENDPOINT_SECURITY"
                 },
                 "declaration": {
                     "name": {
@@ -4192,7 +4197,8 @@
                             "unsafeName": "Bearer",
                             "safeName": "Bearer"
                         }
-                    }
+                    },
+                    "requirement": "ENDPOINT_SECURITY"
                 },
                 "declaration": {
                     "name": {
@@ -4313,7 +4319,8 @@
                             "unsafeName": "Bearer",
                             "safeName": "Bearer"
                         }
-                    }
+                    },
+                    "requirement": "ENDPOINT_SECURITY"
                 },
                 "declaration": {
                     "name": {
@@ -4434,7 +4441,8 @@
                             "unsafeName": "Bearer",
                             "safeName": "Bearer"
                         }
-                    }
+                    },
+                    "requirement": "ENDPOINT_SECURITY"
                 },
                 "declaration": {
                     "name": {
@@ -4555,7 +4563,8 @@
                             "unsafeName": "Bearer",
                             "safeName": "Bearer"
                         }
-                    }
+                    },
+                    "requirement": "ENDPOINT_SECURITY"
                 },
                 "declaration": {
                     "name": {
@@ -4726,6 +4735,7 @@
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
         "idempotencyKeyGeneration": null,
+        "webhookSignatureVerification": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",

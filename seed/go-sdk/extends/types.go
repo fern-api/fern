@@ -23,10 +23,12 @@ type Inlined struct {
 }
 
 func (i *Inlined) require(field *big.Int) {
-	if i.explicitFields == nil {
-		i.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if i.explicitFields != nil {
+		next.Set(i.explicitFields)
 	}
-	i.explicitFields.Or(i.explicitFields, field)
+	next.Or(next, field)
+	i.explicitFields = next
 }
 
 // SetUnique sets the Unique field and marks it as non-optional;
@@ -86,10 +88,12 @@ func (d *Docs) GetExtraProperties() map[string]interface{} {
 }
 
 func (d *Docs) require(field *big.Int) {
-	if d.explicitFields == nil {
-		d.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if d.explicitFields != nil {
+		next.Set(d.explicitFields)
 	}
-	d.explicitFields.Or(d.explicitFields, field)
+	next.Or(next, field)
+	d.explicitFields = next
 }
 
 // SetDocs sets the Docs field and marks it as non-optional;
@@ -179,10 +183,12 @@ func (e *ExampleType) GetExtraProperties() map[string]interface{} {
 }
 
 func (e *ExampleType) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetDocs sets the Docs field and marks it as non-optional;
@@ -279,10 +285,12 @@ func (j *JSON) GetExtraProperties() map[string]interface{} {
 }
 
 func (j *JSON) require(field *big.Int) {
-	if j.explicitFields == nil {
-		j.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if j.explicitFields != nil {
+		next.Set(j.explicitFields)
 	}
-	j.explicitFields.Or(j.explicitFields, field)
+	next.Or(next, field)
+	j.explicitFields = next
 }
 
 // SetDocs sets the Docs field and marks it as non-optional;
@@ -388,10 +396,12 @@ func (n *NestedType) GetExtraProperties() map[string]interface{} {
 }
 
 func (n *NestedType) require(field *big.Int) {
-	if n.explicitFields == nil {
-		n.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if n.explicitFields != nil {
+		next.Set(n.explicitFields)
 	}
-	n.explicitFields.Or(n.explicitFields, field)
+	next.Or(next, field)
+	n.explicitFields = next
 }
 
 // SetDocs sets the Docs field and marks it as non-optional;

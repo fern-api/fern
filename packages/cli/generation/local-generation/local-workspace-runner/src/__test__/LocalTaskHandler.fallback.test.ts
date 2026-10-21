@@ -158,7 +158,8 @@ vi.mock("decompress", () => ({
 // Mock tmp-promise
 vi.mock("tmp-promise", () => ({
     default: {
-        dir: vi.fn().mockResolvedValue({ path: "/tmp/test" })
+        dir: vi.fn().mockResolvedValue({ path: "/tmp/test" }),
+        setGracefulCleanup: vi.fn()
     }
 }));
 

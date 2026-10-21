@@ -5,6 +5,7 @@ package com.seed.deepCursorPath.resources.deepcursorpath;
 
 import com.seed.deepCursorPath.core.ClientOptions;
 import com.seed.deepCursorPath.core.RequestOptions;
+import com.seed.deepCursorPath.core.SeedDeepCursorPathHttpResponse;
 import com.seed.deepCursorPath.core.pagination.SyncPagingIterable;
 import com.seed.deepCursorPath.resources.deepcursorpath.types.A;
 import com.seed.deepCursorPath.resources.deepcursorpath.types.InlineA;
@@ -29,43 +30,123 @@ public class AsyncDeepCursorPathClient {
     }
 
     public CompletableFuture<SyncPagingIterable<String>> doThing() {
-        return this.rawClient.doThing().thenApply(response -> response.body());
+        CompletableFuture<SeedDeepCursorPathHttpResponse<SyncPagingIterable<String>>> rawFuture =
+                this.rawClient.doThing();
+        CompletableFuture<SyncPagingIterable<String>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<String>> doThing(RequestOptions requestOptions) {
-        return this.rawClient.doThing(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedDeepCursorPathHttpResponse<SyncPagingIterable<String>>> rawFuture =
+                this.rawClient.doThing(requestOptions);
+        CompletableFuture<SyncPagingIterable<String>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<String>> doThing(A request) {
-        return this.rawClient.doThing(request).thenApply(response -> response.body());
+        CompletableFuture<SeedDeepCursorPathHttpResponse<SyncPagingIterable<String>>> rawFuture =
+                this.rawClient.doThing(request);
+        CompletableFuture<SyncPagingIterable<String>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<String>> doThing(A request, RequestOptions requestOptions) {
-        return this.rawClient.doThing(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedDeepCursorPathHttpResponse<SyncPagingIterable<String>>> rawFuture =
+                this.rawClient.doThing(request, requestOptions);
+        CompletableFuture<SyncPagingIterable<String>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<String>> doThingRequired(MainRequired request) {
-        return this.rawClient.doThingRequired(request).thenApply(response -> response.body());
+        CompletableFuture<SeedDeepCursorPathHttpResponse<SyncPagingIterable<String>>> rawFuture =
+                this.rawClient.doThingRequired(request);
+        CompletableFuture<SyncPagingIterable<String>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<String>> doThingRequired(
             MainRequired request, RequestOptions requestOptions) {
-        return this.rawClient.doThingRequired(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedDeepCursorPathHttpResponse<SyncPagingIterable<String>>> rawFuture =
+                this.rawClient.doThingRequired(request, requestOptions);
+        CompletableFuture<SyncPagingIterable<String>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<String>> doThingInline() {
-        return this.rawClient.doThingInline().thenApply(response -> response.body());
+        CompletableFuture<SeedDeepCursorPathHttpResponse<SyncPagingIterable<String>>> rawFuture =
+                this.rawClient.doThingInline();
+        CompletableFuture<SyncPagingIterable<String>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<String>> doThingInline(RequestOptions requestOptions) {
-        return this.rawClient.doThingInline(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedDeepCursorPathHttpResponse<SyncPagingIterable<String>>> rawFuture =
+                this.rawClient.doThingInline(requestOptions);
+        CompletableFuture<SyncPagingIterable<String>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<String>> doThingInline(InlineA request) {
-        return this.rawClient.doThingInline(request).thenApply(response -> response.body());
+        CompletableFuture<SeedDeepCursorPathHttpResponse<SyncPagingIterable<String>>> rawFuture =
+                this.rawClient.doThingInline(request);
+        CompletableFuture<SyncPagingIterable<String>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<String>> doThingInline(InlineA request, RequestOptions requestOptions) {
-        return this.rawClient.doThingInline(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedDeepCursorPathHttpResponse<SyncPagingIterable<String>>> rawFuture =
+                this.rawClient.doThingInline(request, requestOptions);
+        CompletableFuture<SyncPagingIterable<String>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

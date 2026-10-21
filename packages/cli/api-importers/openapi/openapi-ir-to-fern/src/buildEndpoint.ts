@@ -1,7 +1,15 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { assertNever, MediaType } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
-import { Endpoint, EndpointExample, Request, RetriesConfiguration, Schema, SchemaId } from "@fern-api/openapi-ir";
+import {
+    Endpoint,
+    EndpointExample,
+    ObjectProperty,
+    Request,
+    RetriesConfiguration,
+    Schema,
+    SchemaId
+} from "@fern-api/openapi-ir";
 import { RelativeFilePath } from "@fern-api/path-utils";
 import { CliError } from "@fern-api/task-context";
 import { buildEndpointExample } from "./buildEndpointExample.js";
@@ -9,13 +17,14 @@ import { ERROR_DECLARATIONS_FILENAME, EXTERNAL_AUDIENCE } from "./buildFernDefin
 import { buildHeader } from "./buildHeader.js";
 import { buildPathParameter } from "./buildPathParameter.js";
 import { buildQueryParameter } from "./buildQueryParameter.js";
-import { getProperties, getSchemaIdOfResolvedType } from "./buildTypeDeclaration.js";
+import { getAllParentSchemasToInline, getProperties, getSchemaIdOfResolvedType } from "./buildTypeDeclaration.js";
 import { buildTypeReference } from "./buildTypeReference.js";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext.js";
 import { State } from "./State.js";
 import { convertAvailability } from "./utils/convertAvailability.js";
 import { convertFullExample } from "./utils/convertFullExample.js";
 import { convertSdkGroupNameToFile, resolveLocationWithNamespace } from "./utils/convertSdkGroupName.js";
+import { convertXmlPropertyToEncodingSchema } from "./utils/convertToEncodingSchema.js";
 import { convertToHttpMethod } from "./utils/convertToHttpMethod.js";
 import { convertToSourceSchema } from "./utils/convertToSourceSchema.js";
 import { getGroupNameForSchema } from "./utils/getGroupNameForSchema.js";
@@ -463,7 +472,7 @@ export function buildEndpoint({
         }
 
         const errorDeclaration: RawSchemas.ErrorDeclarationSchema = {
-            "status-code": parseInt(statusCode)
+            "status-code": httpError.isWildcardStatusCode === true ? statusCode : parseInt(statusCode)
         };
 
         const errorNamespace = getErrorNamespace({
@@ -491,7 +500,7 @@ export function buildEndpoint({
         context.builder.addError(errorDeclarationFile, {
             name: errorName,
             schema: context.isErrorUnknownSchema({
-                statusCode: parseInt(statusCode),
+                statusCode,
                 namespace: httpError.namespace
             })
                 ? { ...errorDeclaration, type: "unknown" }
@@ -764,81 +773,6 @@ function getRequest({
             }
         }
 
-        const properties = Object.fromEntries(
-            resolvedSchema.properties
-                .filter((property) => {
-                    if (property.readonly == null) {
-                        return true;
-                    }
-                    const writeEndpoint = isWriteMethod(endpoint.method);
-                    if (writeEndpoint && property.readonly) {
-                        return false;
-                    }
-                    return true;
-                })
-                .map((property) => {
-                    // Use the declaration file from the source allOf schema if the property comes from one,
-                    // otherwise use the endpoint's declaration file.
-                    const propDeclarationFile = propertyToDeclarationFile.get(property.key) ?? declarationFile;
-                    const propertyTypeReference = buildTypeReference({
-                        schema: property.schema,
-                        fileContainingReference: declarationFile,
-                        declarationFile: propDeclarationFile,
-                        context,
-                        namespace,
-                        declarationDepth: 1 // 1 level deep for request body properties
-                    });
-
-                    // TODO: clean up conditional logic
-                    const name = property.nameOverride ?? property.key;
-                    const availability = convertAvailability(property.availability);
-                    if (!usedNames.has(name) && property.audiences.length <= 0) {
-                        usedNames.add(name);
-                        if (property.nameOverride != null) {
-                            return [
-                                property.key,
-                                {
-                                    type: getTypeFromTypeReference(propertyTypeReference),
-                                    docs: getDocsFromTypeReference(propertyTypeReference),
-                                    name: property.nameOverride,
-                                    availability
-                                }
-                            ];
-                        }
-                        return [
-                            property.key,
-                            availability
-                                ? {
-                                      ...(typeof propertyTypeReference === "string"
-                                          ? { type: propertyTypeReference }
-                                          : propertyTypeReference),
-                                      availability
-                                  }
-                                : propertyTypeReference
-                        ];
-                    }
-
-                    const typeReference: RawSchemas.ObjectPropertySchema = {
-                        type: getTypeFromTypeReference(propertyTypeReference),
-                        docs: getDocsFromTypeReference(propertyTypeReference)
-                    };
-
-                    if (usedNames.has(name)) {
-                        typeReference.name = property.generatedName;
-                    }
-
-                    if (property.audiences.length > 0) {
-                        typeReference.audiences = property.audiences;
-                    }
-
-                    if (availability != null) {
-                        typeReference.availability = availability;
-                    }
-
-                    usedNames.add(name);
-                    return [property.key, typeReference];
-                })
-        );
         // Determine which schemas need to be inlined due to property conflicts
         const schemasToInline = new Set<SchemaId>();
         const propertiesToSetToUnknown = new Set<string>();
@@ -849,6 +783,104 @@ function getRequest({
             }
         }
 
+        const writeEndpoint = isWriteMethod(endpoint.method) === true;
+        const shouldSkipProperty = (property: ObjectProperty): boolean => writeEndpoint && property.readonly === true;
+
+        for (const property of resolvedSchema.properties) {
+            if (shouldSkipProperty(property)) {
+                continue;
+            }
+            const conflicts = Object.entries(property.conflict);
+            if (conflicts.every(([_, conflict]) => !conflict.differentSchema)) {
+                continue;
+            }
+            for (const [schemaId] of conflicts) {
+                for (const schemaToInline of getAllParentSchemasToInline({
+                    property: property.key,
+                    schemaId,
+                    context,
+                    namespace
+                })) {
+                    schemasToInline.add(schemaToInline);
+                }
+            }
+        }
+
+        const buildRequestBodyProperty = (
+            property: ObjectProperty,
+            propDeclarationFile: RelativeFilePath
+        ): RawSchemas.ObjectPropertySchema => {
+            const propertyTypeReference = buildTypeReference({
+                schema: property.schema,
+                fileContainingReference: declarationFile,
+                declarationFile: propDeclarationFile,
+                context,
+                namespace,
+                declarationDepth: 1 // 1 level deep for request body properties
+            });
+
+            const encoding = property.xml != null ? convertXmlPropertyToEncodingSchema(property.xml) : undefined;
+            const withEncoding = (schema: RawSchemas.ObjectPropertySchema): RawSchemas.ObjectPropertySchema =>
+                encoding == null ? schema : { ...(typeof schema === "string" ? { type: schema } : schema), encoding };
+
+            // TODO: clean up conditional logic
+            const name = property.nameOverride ?? property.key;
+            const availability = convertAvailability(property.availability);
+            if (!usedNames.has(name) && property.audiences.length <= 0) {
+                usedNames.add(name);
+                if (property.nameOverride != null) {
+                    return withEncoding({
+                        type: getTypeFromTypeReference(propertyTypeReference),
+                        docs: getDocsFromTypeReference(propertyTypeReference),
+                        name: property.nameOverride,
+                        availability
+                    });
+                }
+                return withEncoding(
+                    availability
+                        ? {
+                              ...(typeof propertyTypeReference === "string"
+                                  ? { type: propertyTypeReference }
+                                  : propertyTypeReference),
+                              availability
+                          }
+                        : propertyTypeReference
+                );
+            }
+
+            const typeReference: RawSchemas.ObjectPropertySchema = {
+                type: getTypeFromTypeReference(propertyTypeReference),
+                docs: getDocsFromTypeReference(propertyTypeReference)
+            };
+
+            if (usedNames.has(name)) {
+                typeReference.name = property.generatedName;
+            }
+
+            if (property.audiences.length > 0) {
+                typeReference.audiences = property.audiences;
+            }
+
+            if (availability != null) {
+                typeReference.availability = availability;
+            }
+
+            usedNames.add(name);
+            return withEncoding(typeReference);
+        };
+
+        const properties: Record<string, RawSchemas.ObjectPropertySchema> = {};
+        for (const property of resolvedSchema.properties) {
+            if (shouldSkipProperty(property)) {
+                continue;
+            }
+            // Use the declaration file from the source allOf schema if the property comes from one,
+            // otherwise use the endpoint's declaration file.
+            properties[property.key] = buildRequestBodyProperty(
+                property,
+                propertyToDeclarationFile.get(property.key) ?? declarationFile
+            );
+        }
         // Build extended schemas, skipping those that need to be inlined
         const extendedSchemas: string[] = [];
         for (const referencedSchema of resolvedSchema.allOf) {
@@ -886,20 +918,20 @@ function getRequest({
                     ? convertSdkGroupNameToFile(getGroupNameForSchema(inlinedSchema))
                     : declarationFile;
             for (const propertyToInline of inlinedSchemaPropertyInfo.properties) {
-                if (properties[propertyToInline.key] == null) {
-                    if (propertiesToSetToUnknown.has(propertyToInline.key)) {
-                        properties[propertyToInline.key] = "unknown";
-                    } else {
-                        properties[propertyToInline.key] = buildTypeReference({
-                            schema: propertyToInline.schema,
-                            fileContainingReference: declarationFile,
-                            declarationFile: inlinedSchemaDeclarationFile,
-                            context,
-                            namespace,
-                            declarationDepth: 1
-                        });
-                    }
+                if (properties[propertyToInline.key] != null) {
+                    continue;
                 }
+                if (shouldSkipProperty(propertyToInline)) {
+                    continue;
+                }
+                if (propertiesToSetToUnknown.has(propertyToInline.key)) {
+                    properties[propertyToInline.key] = "unknown";
+                    continue;
+                }
+                properties[propertyToInline.key] = buildRequestBodyProperty(
+                    propertyToInline,
+                    inlinedSchemaDeclarationFile
+                );
             }
             // Also extend from any non-conflicting parents of the inlined schema
             for (const extendedSchema of inlinedSchemaPropertyInfo.allOf) {

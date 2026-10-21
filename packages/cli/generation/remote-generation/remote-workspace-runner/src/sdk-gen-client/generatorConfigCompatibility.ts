@@ -43,11 +43,21 @@ export type GenerationConfigRoute =
           configKind: GenerationConfigKind;
           payloadKind: GenerationPayloadKind;
       })
-    | (GenerationConfigRouteBase & {
-          requestedVersion?: never;
-          configKind: "sdk-config-v1";
-          payloadKind: "sdk-config-v1";
-      });
+    | (GenerationConfigRouteBase &
+          (
+              | {
+                    requestedVersion?: never;
+                    versionSource: "fern-latest";
+                    configKind: "legacy-fern";
+                    payloadKind: "fern-runtime-bundle";
+                }
+              | {
+                    requestedVersion?: never;
+                    versionSource: "fern-latest" | "sdk-config-omitted";
+                    configKind: "sdk-config-v1";
+                    payloadKind: "sdk-config-v1";
+                }
+          ));
 
 export type GeneratorConfigCompatibilityErrorCode =
     | "UNKNOWN_GENERATOR"
@@ -191,11 +201,16 @@ export function selectGeneratorConfigRoute(input: SelectGeneratorConfigRouteInpu
     };
 }
 
-/** Selects SDK Config v1 for an unpinned target without applying a version cutover. */
-export function selectUnpinnedSdkConfigRoute({
+/** Selects the supplied config flavor for an unpinned target without applying a version cutover. */
+export function selectUnpinnedGeneratorConfigRoute({
     generatorId,
-    language
-}: Omit<SelectGeneratorConfigRouteInput, "requestedVersion">): GenerationConfigRoute {
+    language,
+    configKind,
+    versionSource
+}: Omit<SelectGeneratorConfigRouteInput, "requestedVersion"> & {
+    configKind: GenerationConfigKind;
+    versionSource: "fern-latest" | "sdk-config-omitted";
+}): GenerationConfigRoute {
     const policy = getGeneratorPolicy(generatorId);
     if (policy === undefined) {
         throw compatibilityError(
@@ -223,13 +238,24 @@ export function selectUnpinnedSdkConfigRoute({
             }
         );
     }
-    return {
-        generatorId,
-        language,
-        cutoverVersion: policy.cutoverVersion,
+    const base = { generatorId, language, cutoverVersion: policy.cutoverVersion };
+    if (configKind === "legacy-fern") {
+        if (versionSource !== "fern-latest") {
+            throw new Error("Legacy Fern unpinned routes must use fern-latest as their version source");
+        }
+        return { ...base, versionSource, configKind, payloadKind: "fern-runtime-bundle" };
+    }
+    return { ...base, versionSource, configKind, payloadKind: "sdk-config-v1" };
+}
+
+export function selectUnpinnedSdkConfigRoute(
+    input: Omit<SelectGeneratorConfigRouteInput, "requestedVersion">
+): GenerationConfigRoute {
+    return selectUnpinnedGeneratorConfigRoute({
+        ...input,
         configKind: "sdk-config-v1",
-        payloadKind: "sdk-config-v1"
-    };
+        versionSource: "sdk-config-omitted"
+    });
 }
 
 function compatibilityError(

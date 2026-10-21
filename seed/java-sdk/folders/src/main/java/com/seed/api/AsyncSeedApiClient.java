@@ -5,13 +5,14 @@ package com.seed.api;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
+import com.seed.api.core.SeedApiHttpResponse;
 import com.seed.api.core.Suppliers;
 import com.seed.api.resources.a.AsyncAClient;
 import com.seed.api.resources.folder.AsyncFolderClient;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 
-public class AsyncSeedApiClient {
+public class AsyncSeedApiClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final AsyncRawSeedApiClient rawClient;
@@ -35,11 +36,25 @@ public class AsyncSeedApiClient {
     }
 
     public CompletableFuture<Void> foo() {
-        return this.rawClient.foo().thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Void>> rawFuture = this.rawClient.foo();
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> foo(RequestOptions requestOptions) {
-        return this.rawClient.foo(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Void>> rawFuture = this.rawClient.foo(requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public AsyncAClient a() {
@@ -48,6 +63,16 @@ public class AsyncSeedApiClient {
 
     public AsyncFolderClient folder() {
         return this.folderClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedApiClientBuilder builder() {

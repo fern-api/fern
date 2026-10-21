@@ -48,6 +48,15 @@ def test__stream_protocol_with_flat_schema() -> None:
     verify_request_count(test_id, "POST", "/stream/protocol-with-flat-schema", None, 1)
 
 
+def test__stream_protocol_mixed_schema() -> None:
+    """Test streamProtocolMixedSchema endpoint with WireMock"""
+    test_id = "stream_protocol_mixed_schema.0"
+    client = get_client(test_id)
+    for _ in client.stream_protocol_mixed_schema():
+        pass
+    verify_request_count(test_id, "POST", "/stream/protocol-mixed-schema", None, 1)
+
+
 def test__stream_data_context_with_envelope_schema() -> None:
     """Test streamDataContextWithEnvelopeSchema endpoint with WireMock"""
     test_id = "stream_data_context_with_envelope_schema.0"

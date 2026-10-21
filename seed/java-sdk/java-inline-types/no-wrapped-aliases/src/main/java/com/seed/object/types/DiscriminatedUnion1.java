@@ -399,7 +399,6 @@ public final class DiscriminatedUnion1 {
 
             private ReferenceType ref;
 
-            @JsonAnySetter
             private Map<String, Object> additionalProperties = new HashMap<>();
 
             private Builder() {}
@@ -448,6 +447,14 @@ public final class DiscriminatedUnion1 {
             @java.lang.Override
             public Type1 build() {
                 return new Type1(foo, bar, ref, additionalProperties);
+            }
+
+            @JsonAnySetter
+            private void putAdditionalPropertyFromJson(String key, Object value) {
+                if (key.equalsIgnoreCase("foo") || key.equalsIgnoreCase("bar") || key.equalsIgnoreCase("ref")) {
+                    return;
+                }
+                this.additionalProperties.put(key, value);
             }
 
             @java.lang.Override
@@ -553,7 +560,6 @@ public final class DiscriminatedUnion1 {
 
                 private ReferenceType ref;
 
-                @JsonAnySetter
                 private Map<String, Object> additionalProperties = new HashMap<>();
 
                 private Builder() {}
@@ -590,6 +596,14 @@ public final class DiscriminatedUnion1 {
                 @java.lang.Override
                 public Bar build() {
                     return new Bar(foo, ref, additionalProperties);
+                }
+
+                @JsonAnySetter
+                private void putAdditionalPropertyFromJson(String key, Object value) {
+                    if (key.equalsIgnoreCase("foo") || key.equalsIgnoreCase("ref")) {
+                        return;
+                    }
+                    this.additionalProperties.put(key, value);
                 }
 
                 @java.lang.Override
@@ -697,7 +711,6 @@ public final class DiscriminatedUnion1 {
 
             private ReferenceType ref;
 
-            @JsonAnySetter
             private Map<String, Object> additionalProperties = new HashMap<>();
 
             private Builder() {}
@@ -734,6 +747,14 @@ public final class DiscriminatedUnion1 {
             @java.lang.Override
             public Type2 build() {
                 return new Type2(baz, ref, additionalProperties);
+            }
+
+            @JsonAnySetter
+            private void putAdditionalPropertyFromJson(String key, Object value) {
+                if (key.equalsIgnoreCase("baz") || key.equalsIgnoreCase("ref")) {
+                    return;
+                }
+                this.additionalProperties.put(key, value);
             }
 
             @java.lang.Override

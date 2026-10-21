@@ -5,6 +5,7 @@ package com.seed.singleUrlEnvironmentDefault.resources.dummy;
 
 import com.seed.singleUrlEnvironmentDefault.core.ClientOptions;
 import com.seed.singleUrlEnvironmentDefault.core.RequestOptions;
+import com.seed.singleUrlEnvironmentDefault.core.SeedSingleUrlEnvironmentDefaultHttpResponse;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncDummyClient {
@@ -25,10 +26,25 @@ public class AsyncDummyClient {
     }
 
     public CompletableFuture<String> getDummy() {
-        return this.rawClient.getDummy().thenApply(response -> response.body());
+        CompletableFuture<SeedSingleUrlEnvironmentDefaultHttpResponse<String>> rawFuture = this.rawClient.getDummy();
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> getDummy(RequestOptions requestOptions) {
-        return this.rawClient.getDummy(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedSingleUrlEnvironmentDefaultHttpResponse<String>> rawFuture =
+                this.rawClient.getDummy(requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

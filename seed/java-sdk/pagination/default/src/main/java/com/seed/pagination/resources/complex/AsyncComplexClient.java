@@ -5,6 +5,7 @@ package com.seed.pagination.resources.complex;
 
 import com.seed.pagination.core.ClientOptions;
 import com.seed.pagination.core.RequestOptions;
+import com.seed.pagination.core.SeedPaginationHttpResponse;
 import com.seed.pagination.core.pagination.SyncPagingIterable;
 import com.seed.pagination.resources.complex.types.Conversation;
 import com.seed.pagination.resources.complex.types.SearchRequest;
@@ -28,11 +29,27 @@ public class AsyncComplexClient {
     }
 
     public CompletableFuture<SyncPagingIterable<Conversation>> search(String index, SearchRequest request) {
-        return this.rawClient.search(index, request).thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<Conversation>>> rawFuture =
+                this.rawClient.search(index, request);
+        CompletableFuture<SyncPagingIterable<Conversation>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<SyncPagingIterable<Conversation>> search(
             String index, SearchRequest request, RequestOptions requestOptions) {
-        return this.rawClient.search(index, request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedPaginationHttpResponse<SyncPagingIterable<Conversation>>> rawFuture =
+                this.rawClient.search(index, request, requestOptions);
+        CompletableFuture<SyncPagingIterable<Conversation>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

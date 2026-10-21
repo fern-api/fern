@@ -30,6 +30,13 @@ func (p *PlaylistIDNotFoundError) Unwrap() error {
 	return p.APIError
 }
 
+func (p *PlaylistIDNotFoundError) GetBody() *PlaylistIDNotFoundErrorBody {
+	if p == nil {
+		return nil
+	}
+	return p.Body
+}
+
 type UnauthorizedError struct {
 	*core.APIError
 }

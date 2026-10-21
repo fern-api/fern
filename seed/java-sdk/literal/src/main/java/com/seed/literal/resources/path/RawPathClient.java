@@ -4,8 +4,10 @@
 package com.seed.literal.resources.path;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.literal.core.BodyProperties;
 import com.seed.literal.core.ClientOptions;
 import com.seed.literal.core.ObjectMappers;
+import com.seed.literal.core.PathSegments;
 import com.seed.literal.core.RequestOptions;
 import com.seed.literal.core.RetryInterceptor;
 import com.seed.literal.core.SeedLiteralApiException;
@@ -36,7 +38,7 @@ public class RawPathClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("path")
-                .addPathSegment(id);
+                .addPathSegment(PathSegments.validate(id));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -44,7 +46,11 @@ public class RawPathClient {
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
-                .method("POST", RequestBody.create("", null))
+                .method(
+                        "POST",
+                        BodyProperties.toRequestBody(
+                                requestOptions != null ? requestOptions.getBodyProperties() : null,
+                                RequestBody.create("", null)))
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json")
                 .build();

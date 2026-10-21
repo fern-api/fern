@@ -4,6 +4,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { isEqualToMatcher, WireMock, WireMockStubMapping } from "@fern-api/mock-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { WireTestExampleSelector } from "./WireTestExampleSelector.js";
 
 /**
  * Generates setup files for wire testing, specifically docker-compose configuration
@@ -13,9 +14,16 @@ export class WireTestSetupGenerator {
     private readonly context: SdkGeneratorContext;
     private readonly ir: FernIr.IntermediateRepresentation;
 
-    constructor(context: SdkGeneratorContext, ir: FernIr.IntermediateRepresentation) {
+    private readonly exampleSelector: WireTestExampleSelector;
+
+    constructor(
+        context: SdkGeneratorContext,
+        ir: FernIr.IntermediateRepresentation,
+        exampleSelector: WireTestExampleSelector
+    ) {
         this.context = context;
         this.ir = ir;
+        this.exampleSelector = exampleSelector;
     }
 
     /**
@@ -30,12 +38,50 @@ export class WireTestSetupGenerator {
         this.generatePytestPluginFile();
     }
 
-    public static getWiremockConfigContent(ir: FernIr.IntermediateRepresentation) {
+    public static getWiremockConfigContent(
+        ir: FernIr.IntermediateRepresentation,
+        exampleSelector?: WireTestExampleSelector
+    ): WireMockStubMapping {
         // ir-sdk versions may differ between python-sdk and mock-utils. The newer IR only adds
         // optional fields and OAuth configuration variants that WireMock ignores, but the added
         // union variants stop the two IntermediateRepresentations from overlapping structurally,
         // so the assertion has to go through `unknown`.
-        return new WireMock().convertToWireMock(ir as unknown as Parameters<WireMock["convertToWireMock"]>[0]);
+        // Bodyless error examples are stubbed with a placeholder body (`""` or `{}`) that fails the typed
+        // error's validation, so serve them without a body; the client then raises the base ApiError.
+        const bodylessErrorTestIds = new Set<string>();
+        const stubMapping = new WireMock().convertToWireMock(
+            ir as unknown as Parameters<WireMock["convertToWireMock"]>[0],
+            exampleSelector != null
+                ? {
+                      getExampleTestId: ({ service, endpoint, example }) => {
+                          const testId = exampleSelector.getTestId(
+                              service as unknown as FernIr.HttpService,
+                              endpoint as unknown as FernIr.HttpEndpoint,
+                              example as unknown as FernIr.ExampleEndpointCall
+                          );
+                          if (
+                              testId != null &&
+                              example.response.type === "error" &&
+                              example.response.body?.jsonExample == null
+                          ) {
+                              bodylessErrorTestIds.add(testId);
+                          }
+                          return testId;
+                      }
+                  }
+                : {}
+        );
+        for (const mapping of stubMapping.mappings) {
+            const testId = mapping.request.headers?.["X-Test-Id"]?.equalTo;
+            if (
+                mapping.response.status === 204 ||
+                mapping.response.status === 205 ||
+                (testId != null && bodylessErrorTestIds.has(testId))
+            ) {
+                delete mapping.response.body;
+            }
+        }
+        return stubMapping;
     }
 
     /**
@@ -152,7 +198,7 @@ export class WireTestSetupGenerator {
     }
 
     private generateWireMockConfigFile(): void {
-        const wireMockConfigContent = WireTestSetupGenerator.getWiremockConfigContent(this.ir);
+        const wireMockConfigContent = WireTestSetupGenerator.getWiremockConfigContent(this.ir, this.exampleSelector);
 
         // mock-utils always generates datetime values using Date.toISOString() which includes
         // ".000Z". We need to normalize these based on the datetime_milliseconds config and
@@ -245,6 +291,9 @@ export class WireTestSetupGenerator {
         const clientImport = this.getClientImport();
         const clientConstructorParams = this.buildClientConstructorParams();
         const environmentSetup = this.buildEnvironmentSetup();
+        // Disable retries so error examples (e.g. 429/5xx) are asserted on the first response.
+        // The generated client renames the kwarg when another constructor parameter is named max_retries.
+        const maxRetriesParamName = /^\s*max_retries=/m.test(clientConstructorParams) ? "_max_retries" : "max_retries";
         // The per-endpoint auth-header assertion helper (and its `re`/`List` imports) is
         // only used by endpoint-security wire tests, so it is emitted only in that mode to
         // avoid introducing an unused helper into every other fixture's conftest.
@@ -304,12 +353,14 @@ def get_client(test_id: str) -> ${clientClassName}:
         return ${clientClassName}(
             ${environmentSetup.paramDynamic},
             headers=test_headers,
+            ${maxRetriesParamName}=0,
 ${clientConstructorParams}
         )
 
     return ${clientClassName}(
         ${environmentSetup.paramDynamic},
         httpx_client=httpx.Client(headers=test_headers),
+        ${maxRetriesParamName}=0,
 ${clientConstructorParams}
     )
 
@@ -807,11 +858,66 @@ def pytest_unconfigure(config: pytest.Config) -> None:
                 break;
 
             case "inferred":
-                // Inferred auth - use api_key instead of _token_getter_override
-                params.push(`        api_key="test_api_key",`);
+                params.push(...this.getInferredAuthParams(scheme));
                 break;
         }
 
         return params;
+    }
+
+    /**
+     * The inferred auth client constructor takes the token endpoint's non-literal headers and
+     * body properties, so pass a fake value for each required one.
+     */
+    private getInferredAuthParams(scheme: FernIr.InferredAuthScheme): string[] {
+        // The Python root client only takes inferred auth credentials when inferred is the sole scheme.
+        if (this.ir.auth.schemes.length !== 1) {
+            return [];
+        }
+        const tokenEndpointRef = scheme.tokenEndpoint.endpoint;
+        const endpoint = this.ir.services[tokenEndpointRef.serviceId]?.endpoints.find(
+            (e) => e.id === tokenEndpointRef.endpointId
+        );
+        if (endpoint == null) {
+            return [];
+        }
+
+        const properties: { name: FernIr.NameAndWireValueOrString; valueType: FernIr.TypeReference }[] = [
+            ...endpoint.headers
+        ];
+        const requestBody = endpoint.requestBody;
+        if (requestBody?.type === "inlinedRequestBody") {
+            properties.push(...requestBody.properties);
+        } else if (requestBody?.type === "reference" && requestBody.requestBodyType.type === "named") {
+            const shape = this.resolveAliasedShape(requestBody.requestBodyType.typeId);
+            if (shape?.type === "object") {
+                properties.push(...(shape.extendedProperties ?? []), ...shape.properties);
+            }
+        }
+
+        return properties
+            .filter((property) => this.isRequiredNonLiteral(property.valueType))
+            .map((property) => {
+                const paramName = this.context.caseConverter.snakeSafe(getNameFromWireValue(property.name));
+                return `        ${paramName}="test_${paramName}",`;
+            });
+    }
+
+    private resolveAliasedShape(typeId: FernIr.TypeId): FernIr.Type | undefined {
+        const visited = new Set<FernIr.TypeId>();
+        let shape = this.ir.types[typeId]?.shape;
+        while (shape?.type === "alias" && shape.aliasOf.type === "named" && !visited.has(shape.aliasOf.typeId)) {
+            visited.add(shape.aliasOf.typeId);
+            shape = this.ir.types[shape.aliasOf.typeId]?.shape;
+        }
+        return shape;
+    }
+
+    private isRequiredNonLiteral(typeReference: FernIr.TypeReference): boolean {
+        if (typeReference.type !== "container") {
+            return true;
+        }
+        const containerType = typeReference.container.type;
+        return containerType !== "optional" && containerType !== "literal";
     }
 }

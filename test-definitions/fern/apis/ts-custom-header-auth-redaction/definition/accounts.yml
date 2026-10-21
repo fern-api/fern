@@ -1,0 +1,27 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+service:
+  auth: true
+  base-path: /accounts
+  endpoints:
+    get:
+      docs: Retrieve the accounts linked to an access token.
+      path: /get
+      method: POST
+      request:
+        name: AccountsGetRequest
+        body:
+          properties:
+            access_token: string
+      response: AccountsGetResponse
+      examples:
+        - request:
+            access_token: access-sandbox-1
+          response:
+            body:
+              request_id: request-1
+
+types:
+  AccountsGetResponse:
+    properties:
+      request_id: string

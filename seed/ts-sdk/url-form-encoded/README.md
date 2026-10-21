@@ -44,7 +44,8 @@ import { SeedApiClient } from "@fern/url-form-encoded";
 const client = new SeedApiClient({ baseUrl: "YOUR_BASE_URL" });
 await client.submitFormData({
     username: "johndoe",
-    email: "john@example.com"
+    email: "john@example.com",
+    Content: "{\"key\":\"value\"}"
 });
 ```
 

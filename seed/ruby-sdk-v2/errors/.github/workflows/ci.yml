@@ -41,7 +41,7 @@ jobs:
         run: bundle install
 
       - name: Run Tests
-        run: bundle exec rake test
+        run: RUN_WIRE_TESTS=true bundle exec rake test
 
   publish:
     name: Publish to RubyGems.org

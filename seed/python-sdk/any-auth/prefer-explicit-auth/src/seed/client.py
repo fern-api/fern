@@ -88,7 +88,7 @@ class SeedAnyAuth:
         self,
         *,
         base_url: str,
-        api_key: typing.Optional[str] = os.getenv("MY_API_KEY"),
+        api_key: typing.Optional[str] = None,
         username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
@@ -107,7 +107,7 @@ class SeedAnyAuth:
         self,
         *,
         base_url: str,
-        api_key: typing.Optional[str] = os.getenv("MY_API_KEY"),
+        api_key: typing.Optional[str] = None,
         username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
@@ -124,7 +124,7 @@ class SeedAnyAuth:
         self,
         *,
         base_url: str,
-        api_key: typing.Optional[str] = os.getenv("MY_API_KEY"),
+        api_key: typing.Optional[str] = None,
         username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
@@ -142,6 +142,7 @@ class SeedAnyAuth:
     ):
         _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
         _defaulted_max_retries = max_retries if max_retries is not None else 2
+        api_key = api_key if api_key is not None else os.getenv("MY_API_KEY")
         _explicit_oauth_auth = client_id is not None or client_secret is not None
         _explicit_basic_auth = username is not None or password is not None
         username = username if username is not None else os.getenv("MY_USERNAME")
@@ -299,6 +300,9 @@ class AsyncSeedAnyAuth:
     token : typing.Union[str, typing.Callable[[], str]]
         Authenticate by providing a pre-generated bearer token, or a callable that returns one. In this mode, OAuth client credentials are not required.
 
+    async_token : typing.Optional[typing.Callable[[], typing.Awaitable[str]]]
+        An async callable that returns a bearer token. Use this when token acquisition involves async I/O (e.g., refreshing tokens via an async HTTP client). When provided, this is used instead of the synchronous token for async requests.
+
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
 
@@ -336,7 +340,7 @@ class AsyncSeedAnyAuth:
         self,
         *,
         base_url: str,
-        api_key: typing.Optional[str] = os.getenv("MY_API_KEY"),
+        api_key: typing.Optional[str] = None,
         username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
@@ -355,7 +359,7 @@ class AsyncSeedAnyAuth:
         self,
         *,
         base_url: str,
-        api_key: typing.Optional[str] = os.getenv("MY_API_KEY"),
+        api_key: typing.Optional[str] = None,
         username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
@@ -368,14 +372,33 @@ class AsyncSeedAnyAuth:
         logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
         token: typing.Union[str, typing.Callable[[], str]],
     ): ...
+    @typing.overload
     def __init__(
         self,
         *,
         base_url: str,
-        api_key: typing.Optional[str] = os.getenv("MY_API_KEY"),
+        api_key: typing.Optional[str] = None,
         username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         headers: typing.Optional[typing.Dict[str, str]] = None,
+        timeout: typing.Optional[float] = None,
+        max_retries: typing.Optional[int] = None,
+        stream_reconnection_enabled: typing.Optional[bool] = None,
+        max_stream_reconnection_attempts: typing.Optional[int] = None,
+        follow_redirects: typing.Optional[bool] = True,
+        httpx_client: typing.Optional[httpx.AsyncClient] = None,
+        logging: typing.Optional[typing.Union[LogConfig, Logger]] = None,
+        async_token: typing.Callable[[], typing.Awaitable[str]],
+    ): ...
+    def __init__(
+        self,
+        *,
+        base_url: str,
+        api_key: typing.Optional[str] = None,
+        username: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
+        password: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
+        headers: typing.Optional[typing.Dict[str, str]] = None,
+        async_token: typing.Optional[typing.Callable[[], typing.Awaitable[str]]] = None,
         client_id: typing.Optional[str] = None,
         client_secret: typing.Optional[str] = None,
         token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
@@ -390,13 +413,14 @@ class AsyncSeedAnyAuth:
     ):
         _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
         _defaulted_max_retries = max_retries if max_retries is not None else 2
+        api_key = api_key if api_key is not None else os.getenv("MY_API_KEY")
         _explicit_oauth_auth = client_id is not None or client_secret is not None
         _explicit_basic_auth = username is not None or password is not None
         username = username if username is not None else os.getenv("MY_USERNAME")
         password = password if password is not None else os.getenv("MY_PASSWORD")
         client_id = client_id if client_id is not None else os.getenv("MY_CLIENT_ID")
         client_secret = client_secret if client_secret is not None else os.getenv("MY_CLIENT_SECRET")
-        if token is not None:
+        if token is not None or async_token is not None:
             self._client_wrapper = AsyncClientWrapper(
                 base_url=base_url,
                 api_key=api_key,
@@ -412,6 +436,7 @@ class AsyncSeedAnyAuth:
                 max_stream_reconnection_attempts=max_stream_reconnection_attempts,
                 logging=logging,
                 token=_token_getter_override if _token_getter_override is not None else token,
+                async_token=async_token,
             )
         elif client_id is not None and client_secret is not None and (_explicit_oauth_auth or not _explicit_basic_auth):
             oauth_token_provider = AsyncOAuthTokenProvider(

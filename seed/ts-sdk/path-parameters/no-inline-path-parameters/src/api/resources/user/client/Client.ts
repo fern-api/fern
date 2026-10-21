@@ -51,7 +51,7 @@ export class UserClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/${core.url.encodePathParam(this._options.tenant_id)}/user/${core.url.encodePathParam(user_id)}`,
+                `/${core.url.encodePathParam(this._options.tenant_id, errors.SeedPathParametersError)}/user/${core.url.encodePathParam(user_id, errors.SeedPathParametersError)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -106,7 +106,7 @@ export class UserClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/${core.url.encodePathParam(this._options.tenant_id)}/user/`,
+                `/${core.url.encodePathParam(this._options.tenant_id, errors.SeedPathParametersError)}/user/`,
             ),
             method: "POST",
             headers: _headers,
@@ -170,7 +170,7 @@ export class UserClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/${core.url.encodePathParam(this._options.tenant_id)}/user/${core.url.encodePathParam(user_id)}`,
+                `/${core.url.encodePathParam(this._options.tenant_id, errors.SeedPathParametersError)}/user/${core.url.encodePathParam(user_id, errors.SeedPathParametersError)}`,
             ),
             method: "PATCH",
             headers: _headers,
@@ -234,7 +234,7 @@ export class UserClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/${core.url.encodePathParam(this._options.tenant_id)}/user/${core.url.encodePathParam(user_id)}/search`,
+                `/${core.url.encodePathParam(this._options.tenant_id, errors.SeedPathParametersError)}/user/${core.url.encodePathParam(user_id, errors.SeedPathParametersError)}/search`,
             ),
             method: "GET",
             headers: _headers,
@@ -303,7 +303,7 @@ export class UserClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/${core.url.encodePathParam(this._options.tenant_id)}/user/${core.url.encodePathParam(user_id)}/metadata/v${core.url.encodePathParam(version)}`,
+                `/${core.url.encodePathParam(this._options.tenant_id, errors.SeedPathParametersError)}/user/${core.url.encodePathParam(user_id, errors.SeedPathParametersError)}/metadata/v${core.url.encodePathParam(version, errors.SeedPathParametersError)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -373,7 +373,7 @@ export class UserClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/${core.url.encodePathParam(this._options.tenant_id)}/user/${core.url.encodePathParam(user_id)}/specifics/${core.url.encodePathParam(version)}/${core.url.encodePathParam(thought)}`,
+                `/${core.url.encodePathParam(this._options.tenant_id, errors.SeedPathParametersError)}/user/${core.url.encodePathParam(user_id, errors.SeedPathParametersError)}/specifics/${core.url.encodePathParam(version, errors.SeedPathParametersError)}/${core.url.encodePathParam(thought, errors.SeedPathParametersError)}`,
             ),
             method: "GET",
             headers: _headers,

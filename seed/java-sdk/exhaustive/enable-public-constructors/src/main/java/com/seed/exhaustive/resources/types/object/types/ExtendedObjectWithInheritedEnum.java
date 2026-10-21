@@ -119,7 +119,6 @@ public final class ExtendedObjectWithInheritedEnum implements IObjectWithInherit
 
         private Optional<String> optionalDescription = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -163,6 +162,16 @@ public final class ExtendedObjectWithInheritedEnum implements IObjectWithInherit
         public ExtendedObjectWithInheritedEnum build() {
             return new ExtendedObjectWithInheritedEnum(
                     requiredEnum, requiredString, optionalDescription, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("requiredEnum")
+                    || key.equalsIgnoreCase("requiredString")
+                    || key.equalsIgnoreCase("optionalDescription")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

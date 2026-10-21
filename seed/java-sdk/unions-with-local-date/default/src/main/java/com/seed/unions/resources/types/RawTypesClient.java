@@ -4,9 +4,11 @@
 package com.seed.unions.resources.types;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.unions.core.BodyProperties;
 import com.seed.unions.core.ClientOptions;
 import com.seed.unions.core.MediaTypes;
 import com.seed.unions.core.ObjectMappers;
+import com.seed.unions.core.PathSegments;
 import com.seed.unions.core.RequestOptions;
 import com.seed.unions.core.RetryInterceptor;
 import com.seed.unions.core.SeedUnionsApiException;
@@ -37,7 +39,7 @@ public class RawTypesClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("time")
-                .addPathSegment(id);
+                .addPathSegment(PathSegments.validate(id));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -95,7 +97,9 @@ public class RawTypesClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedUnionsException("Failed to serialize request", e);
         }

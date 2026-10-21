@@ -5,13 +5,14 @@ package com.seed.packageYml;
 
 import com.seed.packageYml.core.ClientOptions;
 import com.seed.packageYml.core.RequestOptions;
+import com.seed.packageYml.core.SeedPackageYmlHttpResponse;
 import com.seed.packageYml.core.Suppliers;
 import com.seed.packageYml.resources.service.AsyncServiceClient;
 import com.seed.packageYml.types.EchoRequest;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 
-public class AsyncSeedPackageYmlClient {
+public class AsyncSeedPackageYmlClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final AsyncRawSeedPackageYmlClient rawClient;
@@ -32,15 +33,39 @@ public class AsyncSeedPackageYmlClient {
     }
 
     public CompletableFuture<String> echo(EchoRequest request) {
-        return this.rawClient.echo(request).thenApply(response -> response.body());
+        CompletableFuture<SeedPackageYmlHttpResponse<String>> rawFuture = this.rawClient.echo(request);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> echo(EchoRequest request, RequestOptions requestOptions) {
-        return this.rawClient.echo(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedPackageYmlHttpResponse<String>> rawFuture = this.rawClient.echo(request, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public AsyncServiceClient service() {
         return this.serviceClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedPackageYmlClientBuilder builder() {

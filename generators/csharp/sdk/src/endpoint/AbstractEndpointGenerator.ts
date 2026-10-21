@@ -1,4 +1,4 @@
-import { GeneratorError, getOriginalName } from "@fern-api/base-generator";
+import { GeneratorError, getOriginalName, NamedArgument } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { ast, is, WithGeneration } from "@fern-api/csharp-codegen";
 import { ExampleGenerator } from "@fern-api/fern-csharp-model";
@@ -217,6 +217,12 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
         const pathParameterReferences: Record<string, string> = {};
         const includePathParametersInEndpointSignature = this.includePathParametersInEndpointSignature({ endpoint });
         for (const pathParam of endpoint.allPathParameters) {
+            const sdkVariable = this.context.getSdkVariableForPathParameter(pathParam);
+            if (sdkVariable != null) {
+                pathParameterReferences[getOriginalName(pathParam.name)] =
+                    this.context.getSdkVariableValueExpression(sdkVariable);
+                continue;
+            }
             const parameterName = this.getPathParameterName({
                 pathParameter: pathParam,
                 includePathParametersInEndpointSignature,
@@ -430,6 +436,9 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
         const requiredArguments: (ast.CodeBlock | ast.ClassInstantiation)[] = [];
         const optionalArguments: (ast.CodeBlock | ast.ClassInstantiation)[] = [];
         for (const pathParameter of endpoint.allPathParameters) {
+            if (this.context.getSdkVariableForPathParameter(pathParameter) != null) {
+                continue;
+            }
             const exampleValue = exampleValuesByName.get(getOriginalName(pathParameter.name));
             if (exampleValue == null) {
                 continue;
@@ -445,6 +454,48 @@ export abstract class AbstractEndpointGenerator extends WithGeneration {
             }
         }
         return { requiredArguments, optionalArguments };
+    }
+
+    /**
+     * Returns the ClientOptions assignments an example needs for the SDK variables bound to
+     * the endpoint's path parameters, since those values are configured on the client rather
+     * than passed to the endpoint method.
+     */
+    public getSdkVariableClientOptionArguments({
+        endpoint,
+        example,
+        parseDatetimes
+    }: {
+        endpoint: HttpEndpoint;
+        example: ExampleEndpointCall;
+        parseDatetimes: boolean;
+    }): NamedArgument[] {
+        const exampleValuesByName = new Map<string, ExampleTypeReference>(
+            [...example.rootPathParameters, ...example.servicePathParameters, ...example.endpointPathParameters].map(
+                (pathParameter) => [getOriginalName(pathParameter.name), pathParameter.value]
+            )
+        );
+        const args: NamedArgument[] = [];
+        const seen = new Set<string>();
+        for (const pathParameter of endpoint.allPathParameters) {
+            const sdkVariable = this.context.getSdkVariableForPathParameter(pathParameter);
+            if (sdkVariable == null || seen.has(sdkVariable.variable.id)) {
+                continue;
+            }
+            const exampleValue = exampleValuesByName.get(getOriginalName(pathParameter.name));
+            if (exampleValue == null) {
+                continue;
+            }
+            seen.add(sdkVariable.variable.id);
+            args.push({
+                name: sdkVariable.optionName,
+                assignment: this.exampleGenerator.getSnippetForTypeReference({
+                    exampleTypeReference: exampleValue,
+                    parseDatetimes
+                })
+            });
+        }
+        return args;
     }
 
     private getJustRequestBodySnippet(

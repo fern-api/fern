@@ -94,7 +94,6 @@ public final class TokenRequest {
 
         private String clientSecret;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -123,6 +122,14 @@ public final class TokenRequest {
         @java.lang.Override
         public TokenRequest build() {
             return new TokenRequest(clientId, clientSecret, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("client_id") || key.equalsIgnoreCase("client_secret")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

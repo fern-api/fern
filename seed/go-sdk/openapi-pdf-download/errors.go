@@ -31,6 +31,13 @@ func (b *BadRequestError) Unwrap() error {
 	return b.APIError
 }
 
+func (b *BadRequestError) GetBody() *PlaidError {
+	if b == nil {
+		return nil
+	}
+	return b.Body
+}
+
 // Internal server error
 type InternalServerError struct {
 	*core.APIError
@@ -53,4 +60,11 @@ func (i *InternalServerError) MarshalJSON() ([]byte, error) {
 
 func (i *InternalServerError) Unwrap() error {
 	return i.APIError
+}
+
+func (i *InternalServerError) GetBody() *PlaidError {
+	if i == nil {
+		return nil
+	}
+	return i.Body
 }

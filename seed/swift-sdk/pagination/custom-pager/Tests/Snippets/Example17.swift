@@ -9,8 +9,8 @@ enum Example17 {
         )
 
         _ = try await client.users.listWithTopLevelBodyCursorPagination(request: .init(
-            cursor: "cursor",
-            filter: "filter"
+            cursor: "initial_cursor",
+            filter: "active"
         ))
     }
 }

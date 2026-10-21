@@ -4,9 +4,11 @@
 package com.seed.examples.resources.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.examples.core.BodyProperties;
 import com.seed.examples.core.ClientOptions;
 import com.seed.examples.core.MediaTypes;
 import com.seed.examples.core.ObjectMappers;
+import com.seed.examples.core.PathSegments;
 import com.seed.examples.core.QueryStringMapper;
 import com.seed.examples.core.RequestOptions;
 import com.seed.examples.core.RetryInterceptor;
@@ -43,7 +45,7 @@ public class RawServiceClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("movie")
-                .addPathSegment(movieId);
+                .addPathSegment(PathSegments.validate(movieId));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -101,7 +103,9 @@ public class RawServiceClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedExamplesException("Failed to serialize request", e);
         }
@@ -226,7 +230,9 @@ public class RawServiceClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedExamplesException("Failed to serialize request", e);
         }
@@ -294,9 +300,12 @@ public class RawServiceClient {
         RequestBody body;
         try {
             body = RequestBody.create("", null);
-            if (request.isPresent()) {
+            if (request.isPresent()
+                    || BodyProperties.isPresent(requestOptions != null ? requestOptions.getBodyProperties() : null)) {
                 body = RequestBody.create(
-                        ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                        ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                                request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                        MediaTypes.APPLICATION_JSON);
             }
         } catch (JsonProcessingException e) {
             throw new SeedExamplesException("Failed to serialize request", e);

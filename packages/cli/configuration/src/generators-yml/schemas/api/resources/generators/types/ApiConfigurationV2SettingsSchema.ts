@@ -32,4 +32,25 @@ export interface ApiConfigurationV2SettingsSchema
      * value for that generator.
      */
     "auto-generate-idempotency-key"?: unknown;
+    /**
+     * Webhook signature scheme for the whole API, declared once here instead of in the
+     * API definition. Every generator in this API emits a shared webhook verification
+     * helper (e.g. `WebhooksHelper.verifySignature`) built from this scheme, even when
+     * the spec models no webhooks. Uses the same shape as a webhook's `signature` block
+     * in a Fern definition:
+     * ```yaml
+     * api:
+     *   settings:
+     *     webhook-signature:
+     *       type: hmac
+     *       header: X-Twilio-Signature
+     *       algorithm: sha1
+     *       encoding: base64
+     *       payload-format:
+     *         components: [notification-url, body]
+     *         delimiter: ""
+     *         body-sort: alphabetical
+     * ```
+     */
+    "webhook-signature"?: unknown;
 }

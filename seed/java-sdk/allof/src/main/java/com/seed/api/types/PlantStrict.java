@@ -129,7 +129,6 @@ public final class PlantStrict implements IPlantStrict {
 
         private String genus;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -178,6 +177,14 @@ public final class PlantStrict implements IPlantStrict {
         @java.lang.Override
         public PlantStrict build() {
             return new PlantStrict(species, family, genus, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("species") || key.equalsIgnoreCase("family") || key.equalsIgnoreCase("genus")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

@@ -129,7 +129,6 @@ public final class BinaryTreeNodeValue {
 
         private Optional<String> right = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -186,6 +185,17 @@ public final class BinaryTreeNodeValue {
         @java.lang.Override
         public BinaryTreeNodeValue build() {
             return new BinaryTreeNodeValue(nodeId, val, right, left, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("nodeId")
+                    || key.equalsIgnoreCase("val")
+                    || key.equalsIgnoreCase("right")
+                    || key.equalsIgnoreCase("left")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

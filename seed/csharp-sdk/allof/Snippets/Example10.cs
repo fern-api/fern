@@ -14,6 +14,8 @@ public partial class Examples
                 Species = "species",
                 Family = "family",
                 Genus = "genus",
+                CommonName = "commonName",
+                WateringFrequency = PlantBaseWateringFrequency.Daily,
                 SunExposure = PlantPostSunExposure.Full
             }
         );

@@ -1,0 +1,5 @@
+# Docs-only API workspace: referenced by docs.yml via `api-name`, has no SDK generator groups.
+# SDKs for this org are generated from the sibling `voice` workspace.
+api:
+  specs:
+    - openapi: openapi.yml

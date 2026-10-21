@@ -9,13 +9,13 @@ import (
 	big "math/big"
 )
 
-// A request to obtain an OAuth token.
 var (
 	getTokenRequestFieldClientID     = big.NewInt(1 << 0)
 	getTokenRequestFieldClientSecret = big.NewInt(1 << 1)
 	getTokenRequestFieldScope        = big.NewInt(1 << 2)
 )
 
+// A request to obtain an OAuth token.
 type GetTokenRequest struct {
 	ClientID     string  `json:"client_id" url:"client_id"`
 	ClientSecret string  `json:"client_secret" url:"client_secret"`
@@ -67,10 +67,12 @@ func (g *GetTokenRequest) GetExtraProperties() map[string]interface{} {
 }
 
 func (g *GetTokenRequest) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetClientID sets the ClientID field and marks it as non-optional;
@@ -154,7 +156,6 @@ func (g *GetTokenRequest) String() string {
 	return fmt.Sprintf("%#v", g)
 }
 
-// A request to refresh an OAuth token.
 var (
 	refreshTokenRequestFieldClientID     = big.NewInt(1 << 0)
 	refreshTokenRequestFieldClientSecret = big.NewInt(1 << 1)
@@ -162,6 +163,7 @@ var (
 	refreshTokenRequestFieldScope        = big.NewInt(1 << 3)
 )
 
+// A request to refresh an OAuth token.
 type RefreshTokenRequest struct {
 	ClientID     string  `json:"client_id" url:"client_id"`
 	ClientSecret string  `json:"client_secret" url:"client_secret"`
@@ -221,10 +223,12 @@ func (r *RefreshTokenRequest) GetExtraProperties() map[string]interface{} {
 }
 
 func (r *RefreshTokenRequest) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
 	}
-	r.explicitFields.Or(r.explicitFields, field)
+	next.Or(next, field)
+	r.explicitFields = next
 }
 
 // SetClientID sets the ClientID field and marks it as non-optional;
@@ -315,13 +319,13 @@ func (r *RefreshTokenRequest) String() string {
 	return fmt.Sprintf("%#v", r)
 }
 
-// An OAuth token response.
 var (
 	tokenResponseFieldAccessToken  = big.NewInt(1 << 0)
 	tokenResponseFieldExpiresIn    = big.NewInt(1 << 1)
 	tokenResponseFieldRefreshToken = big.NewInt(1 << 2)
 )
 
+// An OAuth token response.
 type TokenResponse struct {
 	AccessToken  string  `json:"access_token" url:"access_token"`
 	ExpiresIn    int     `json:"expires_in" url:"expires_in"`
@@ -363,10 +367,12 @@ func (t *TokenResponse) GetExtraProperties() map[string]interface{} {
 }
 
 func (t *TokenResponse) require(field *big.Int) {
-	if t.explicitFields == nil {
-		t.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if t.explicitFields != nil {
+		next.Set(t.explicitFields)
 	}
-	t.explicitFields.Or(t.explicitFields, field)
+	next.Or(next, field)
+	t.explicitFields = next
 }
 
 // SetAccessToken sets the AccessToken field and marks it as non-optional;

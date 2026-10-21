@@ -3,6 +3,7 @@
  */
 package com.seed.websocketMultiUrl.core;
 
+import java.util.function.BooleanSupplier;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.WebSocket;
@@ -15,17 +16,38 @@ import okhttp3.WebSocketListener;
 public final class OkHttpWebSocketFactory implements WebSocketFactory {
     private final OkHttpClient okHttpClient;
 
+    private final BooleanSupplier closedCheck;
+
     /**
      * Creates a new OkHttpWebSocketFactory with the specified OkHttpClient.
      *
      * @param okHttpClient The OkHttpClient instance to use for creating WebSockets
      */
     public OkHttpWebSocketFactory(OkHttpClient okHttpClient) {
-        this.okHttpClient = okHttpClient;
+        this(okHttpClient, () -> false);
     }
 
+    /**
+     * Creates a new OkHttpWebSocketFactory that refuses to open WebSockets once the owning
+     * client has been closed.
+     *
+     * @param okHttpClient The OkHttpClient instance to use for creating WebSockets
+     * @param closedCheck Returns true once the owning client has been closed (e.g.
+     *     {@code clientOptions::isClosed})
+     */
+    public OkHttpWebSocketFactory(OkHttpClient okHttpClient, BooleanSupplier closedCheck) {
+        this.okHttpClient = okHttpClient;
+        this.closedCheck = closedCheck;
+    }
+
+    /**
+     * @throws IllegalStateException if the owning client has been closed
+     */
     @Override
     public WebSocket create(Request request, WebSocketListener listener) {
+        if (closedCheck.getAsBoolean()) {
+            throw new IllegalStateException("root client has been closed");
+        }
         return okHttpClient.newWebSocket(request, listener);
     }
 }

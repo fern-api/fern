@@ -6,11 +6,14 @@ import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 export function generateFields({
     typeDeclaration,
     properties,
-    context
+    context,
+    documentFields = false
 }: {
     typeDeclaration?: FernIr.TypeDeclaration;
     properties: FernIr.ObjectProperty[];
     context: ModelGeneratorContext;
+    /* Whether to render each property's docs as a comment above its `field` declaration */
+    documentFields?: boolean;
 }): ruby.AstNode[] {
     return properties.map((prop, index) => {
         const fieldName = context.caseConverter.snakeSafe(prop.name);
@@ -23,10 +26,15 @@ export function generateFields({
             isCircular = propertyTypeDeclaration?.referencedTypes.has(typeDeclaration.name.typeId) ?? false;
         }
 
-        const isOptional = prop.valueType.type === "container" && prop.valueType.container.type === "optional";
-        const isNullable = prop.valueType.type === "container" && prop.valueType.container.type === "nullable";
+        const isOptional = hasWrapper(prop.valueType, "optional");
+        const isNullable = hasWrapper(prop.valueType, "nullable");
+
+        const docs = documentFields ? prop.docs?.trim() : undefined;
 
         return ruby.codeblock((writer) => {
+            if (docs != null && docs !== "") {
+                ruby.comment({ docs }).write(writer);
+            }
             writer.write(`field :${fieldName}, `);
             writer.write("-> { ");
             rubyType.write(writer);
@@ -37,4 +45,25 @@ export function generateFields({
             }
         });
     });
+}
+
+/**
+ * Whether the type is `optional`/`nullable`, including through the other wrapper, so that
+ * `optional<nullable<T>>` is both optional and nullable.
+ */
+function hasWrapper(typeReference: FernIr.TypeReference, wrapper: "optional" | "nullable"): boolean {
+    if (typeReference.type !== "container") {
+        return false;
+    }
+    const container = typeReference.container;
+    if (container.type === wrapper) {
+        return true;
+    }
+    if (container.type === "optional") {
+        return hasWrapper(container.optional, wrapper);
+    }
+    if (container.type === "nullable") {
+        return hasWrapper(container.nullable, wrapper);
+    }
+    return false;
 }

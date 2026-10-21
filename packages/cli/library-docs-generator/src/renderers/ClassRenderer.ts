@@ -16,6 +16,7 @@ import {
     extractLinksFromTypes,
     formatSignatureMultiline,
     getModulePath,
+    getPublicPath,
     getTypeDisplay,
     getTypePathForSignature,
     linkTypeInfo,
@@ -34,7 +35,7 @@ interface ClassSignature {
 /**
  * Build class signature and collect type strings for link extraction in one pass.
  */
-function buildClassSignature(cls: FdrAPI.libraryDocs.PythonClassIr): ClassSignature {
+function buildClassSignature(cls: FdrAPI.libraryDocs.PythonClassIr, ctx: RenderContext): ClassSignature {
     const params: SignatureParam[] = [];
     const typeStrings: string[] = [];
 
@@ -46,7 +47,7 @@ function buildClassSignature(cls: FdrAPI.libraryDocs.PythonClassIr): ClassSignat
         params.push({ name: param.name, type, defaultValue: param.default ?? undefined });
     }
 
-    const code = formatSignatureMultiline(`class ${cls.path}`, params);
+    const code = formatSignatureMultiline(`class ${getPublicPath(cls.path, ctx)}`, params);
     return { code, typeStrings };
 }
 
@@ -166,7 +167,7 @@ export function renderClassDetailed(cls: FdrAPI.libraryDocs.PythonClassIr, ctx: 
         case "TYPEDDICT":
             return renderTypedDictDetailed(cls, ctx);
         case "ENUM":
-            return renderEnumDetailed(cls);
+            return renderEnumDetailed(cls, ctx);
         default:
             return renderRegularClassDetailed(cls, ctx);
     }
@@ -183,7 +184,7 @@ function renderRegularClassDetailed(cls: FdrAPI.libraryDocs.PythonClassIr, ctx: 
     lines.push(`<Anchor id="${generateAnchorId(cls.path)}">`, "");
 
     // Signature with links (extracted from constructor param types only)
-    const { code, typeStrings } = buildClassSignature(cls);
+    const { code, typeStrings } = buildClassSignature(cls, ctx);
     const links = extractLinksFromTypes(typeStrings, ctx, currentModulePath);
     lines.push(renderCodeBlockWithLinks(code, links), "</Anchor>", "");
 
@@ -204,7 +205,10 @@ function renderRegularClassDetailed(cls: FdrAPI.libraryDocs.PythonClassIr, ctx: 
 
     // Docstring
     if (cls.docstring) {
-        const docMdx = renderDocstring(cls.docstring, buildParamAnnotations(cls));
+        const docMdx = renderDocstring(cls.docstring, buildParamAnnotations(cls), undefined, {
+            ctx,
+            currentModulePath
+        });
         if (docMdx) {
             lines.push(docMdx, "");
         }
@@ -240,11 +244,11 @@ function renderRegularClassDetailed(cls: FdrAPI.libraryDocs.PythonClassIr, ctx: 
 /**
  * Render a TypedDict class.
  */
-function renderTypedDictDetailed(cls: FdrAPI.libraryDocs.PythonClassIr, _ctx: RenderContext): string {
+function renderTypedDictDetailed(cls: FdrAPI.libraryDocs.PythonClassIr, ctx: RenderContext): string {
     const lines: string[] = [];
 
     lines.push(`<Anchor id="${generateAnchorId(cls.path)}">`, "");
-    lines.push(renderCodeBlockWithLinks(`class ${cls.path}`, {}), "</Anchor>", "");
+    lines.push(renderCodeBlockWithLinks(`class ${getPublicPath(cls.path, ctx)}`, {}), "</Anchor>", "");
 
     lines.push("<Indent>", "");
     lines.push("**Bases:** `typing.TypedDict`", "");
@@ -276,11 +280,11 @@ function renderTypedDictDetailed(cls: FdrAPI.libraryDocs.PythonClassIr, _ctx: Re
 /**
  * Render an Enum class.
  */
-function renderEnumDetailed(cls: FdrAPI.libraryDocs.PythonClassIr): string {
+function renderEnumDetailed(cls: FdrAPI.libraryDocs.PythonClassIr, ctx: RenderContext): string {
     const lines: string[] = [];
 
     lines.push(`<Anchor id="${generateAnchorId(cls.path)}">`, "");
-    lines.push(renderCodeBlockWithLinks(`class ${cls.path}`, {}), "</Anchor>", "");
+    lines.push(renderCodeBlockWithLinks(`class ${getPublicPath(cls.path, ctx)}`, {}), "</Anchor>", "");
 
     lines.push("<Indent>", "");
     lines.push("**Bases:** `enum.Enum`", "");

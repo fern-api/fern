@@ -9,6 +9,7 @@ public partial class SeedVariablesClient : ISeedVariablesClient
     public SeedVariablesClient(ClientOptions? clientOptions = null)
     {
         clientOptions ??= new ClientOptions();
+        clientOptions.RootVariable ??= Environment.GetEnvironmentVariable("ROOT_VARIABLE");
         var platformHeaders = new Headers(
             new Dictionary<string, string>()
             {

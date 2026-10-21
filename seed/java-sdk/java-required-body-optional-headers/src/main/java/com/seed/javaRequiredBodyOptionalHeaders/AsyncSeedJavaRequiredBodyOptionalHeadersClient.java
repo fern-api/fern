@@ -5,6 +5,7 @@ package com.seed.javaRequiredBodyOptionalHeaders;
 
 import com.seed.javaRequiredBodyOptionalHeaders.core.ClientOptions;
 import com.seed.javaRequiredBodyOptionalHeaders.core.RequestOptions;
+import com.seed.javaRequiredBodyOptionalHeaders.core.SeedJavaRequiredBodyOptionalHeadersHttpResponse;
 import com.seed.javaRequiredBodyOptionalHeaders.requests.CreateUserInlinedRequest;
 import com.seed.javaRequiredBodyOptionalHeaders.requests.CreateUserRequest;
 import com.seed.javaRequiredBodyOptionalHeaders.requests.CreateUserWithOptionsRequest;
@@ -17,7 +18,7 @@ import com.seed.javaRequiredBodyOptionalHeaders.types.UserData;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-public class AsyncSeedJavaRequiredBodyOptionalHeadersClient {
+public class AsyncSeedJavaRequiredBodyOptionalHeadersClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final AsyncRawSeedJavaRequiredBodyOptionalHeadersClient rawClient;
@@ -38,77 +39,165 @@ public class AsyncSeedJavaRequiredBodyOptionalHeadersClient {
      * Create a new user. Has required body and optional header.
      */
     public CompletableFuture<User> createUser(UserData body) {
-        return this.rawClient.createUser(body).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaRequiredBodyOptionalHeadersHttpResponse<User>> rawFuture =
+                this.rawClient.createUser(body);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Create a new user. Has required body and optional header.
      */
     public CompletableFuture<User> createUser(UserData body, RequestOptions requestOptions) {
-        return this.rawClient.createUser(body, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaRequiredBodyOptionalHeadersHttpResponse<User>> rawFuture =
+                this.rawClient.createUser(body, requestOptions);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Create a new user. Has required body and optional header.
      */
     public CompletableFuture<User> createUser(CreateUserRequest request) {
-        return this.rawClient.createUser(request).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaRequiredBodyOptionalHeadersHttpResponse<User>> rawFuture =
+                this.rawClient.createUser(request);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Create a new user. Has required body and optional header.
      */
     public CompletableFuture<User> createUser(CreateUserRequest request, RequestOptions requestOptions) {
-        return this.rawClient.createUser(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaRequiredBodyOptionalHeadersHttpResponse<User>> rawFuture =
+                this.rawClient.createUser(request, requestOptions);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Update an existing user. Has required body and optional query param.
      */
     public CompletableFuture<User> updateUser(String userId, UserData body) {
-        return this.rawClient.updateUser(userId, body).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaRequiredBodyOptionalHeadersHttpResponse<User>> rawFuture =
+                this.rawClient.updateUser(userId, body);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Update an existing user. Has required body and optional query param.
      */
     public CompletableFuture<User> updateUser(String userId, UserData body, RequestOptions requestOptions) {
-        return this.rawClient.updateUser(userId, body, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaRequiredBodyOptionalHeadersHttpResponse<User>> rawFuture =
+                this.rawClient.updateUser(userId, body, requestOptions);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Update an existing user. Has required body and optional query param.
      */
     public CompletableFuture<User> updateUser(String userId, UpdateUserRequest request) {
-        return this.rawClient.updateUser(userId, request).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaRequiredBodyOptionalHeadersHttpResponse<User>> rawFuture =
+                this.rawClient.updateUser(userId, request);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Update an existing user. Has required body and optional query param.
      */
     public CompletableFuture<User> updateUser(String userId, UpdateUserRequest request, RequestOptions requestOptions) {
-        return this.rawClient.updateUser(userId, request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaRequiredBodyOptionalHeadersHttpResponse<User>> rawFuture =
+                this.rawClient.updateUser(userId, request, requestOptions);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Create a user with optional header and query param.
      */
     public CompletableFuture<User> createUserWithOptions(UserData body) {
-        return this.rawClient.createUserWithOptions(body).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaRequiredBodyOptionalHeadersHttpResponse<User>> rawFuture =
+                this.rawClient.createUserWithOptions(body);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Create a user with optional header and query param.
      */
     public CompletableFuture<User> createUserWithOptions(UserData body, RequestOptions requestOptions) {
-        return this.rawClient.createUserWithOptions(body, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaRequiredBodyOptionalHeadersHttpResponse<User>> rawFuture =
+                this.rawClient.createUserWithOptions(body, requestOptions);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Create a user with optional header and query param.
      */
     public CompletableFuture<User> createUserWithOptions(CreateUserWithOptionsRequest request) {
-        return this.rawClient.createUserWithOptions(request).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaRequiredBodyOptionalHeadersHttpResponse<User>> rawFuture =
+                this.rawClient.createUserWithOptions(request);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -116,14 +205,30 @@ public class AsyncSeedJavaRequiredBodyOptionalHeadersClient {
      */
     public CompletableFuture<User> createUserWithOptions(
             CreateUserWithOptionsRequest request, RequestOptions requestOptions) {
-        return this.rawClient.createUserWithOptions(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaRequiredBodyOptionalHeadersHttpResponse<User>> rawFuture =
+                this.rawClient.createUserWithOptions(request, requestOptions);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Create a user with required header.
      */
     public CompletableFuture<User> createUserWithRequiredHeader(CreateUserWithRequiredHeaderRequest request) {
-        return this.rawClient.createUserWithRequiredHeader(request).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaRequiredBodyOptionalHeadersHttpResponse<User>> rawFuture =
+                this.rawClient.createUserWithRequiredHeader(request);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -131,16 +236,30 @@ public class AsyncSeedJavaRequiredBodyOptionalHeadersClient {
      */
     public CompletableFuture<User> createUserWithRequiredHeader(
             CreateUserWithRequiredHeaderRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .createUserWithRequiredHeader(request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedJavaRequiredBodyOptionalHeadersHttpResponse<User>> rawFuture =
+                this.rawClient.createUserWithRequiredHeader(request, requestOptions);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Create a user with required query param.
      */
     public CompletableFuture<User> createUserWithRequiredQuery(CreateUserWithRequiredQueryRequest request) {
-        return this.rawClient.createUserWithRequiredQuery(request).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaRequiredBodyOptionalHeadersHttpResponse<User>> rawFuture =
+                this.rawClient.createUserWithRequiredQuery(request);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -148,51 +267,115 @@ public class AsyncSeedJavaRequiredBodyOptionalHeadersClient {
      */
     public CompletableFuture<User> createUserWithRequiredQuery(
             CreateUserWithRequiredQueryRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .createUserWithRequiredQuery(request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedJavaRequiredBodyOptionalHeadersHttpResponse<User>> rawFuture =
+                this.rawClient.createUserWithRequiredQuery(request, requestOptions);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Get all users with optional filtering.
      */
     public CompletableFuture<List<User>> getUsers() {
-        return this.rawClient.getUsers().thenApply(response -> response.body());
+        CompletableFuture<SeedJavaRequiredBodyOptionalHeadersHttpResponse<List<User>>> rawFuture =
+                this.rawClient.getUsers();
+        CompletableFuture<List<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Get all users with optional filtering.
      */
     public CompletableFuture<List<User>> getUsers(RequestOptions requestOptions) {
-        return this.rawClient.getUsers(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaRequiredBodyOptionalHeadersHttpResponse<List<User>>> rawFuture =
+                this.rawClient.getUsers(requestOptions);
+        CompletableFuture<List<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Get all users with optional filtering.
      */
     public CompletableFuture<List<User>> getUsers(GetUsersRequest request) {
-        return this.rawClient.getUsers(request).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaRequiredBodyOptionalHeadersHttpResponse<List<User>>> rawFuture =
+                this.rawClient.getUsers(request);
+        CompletableFuture<List<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Get all users with optional filtering.
      */
     public CompletableFuture<List<User>> getUsers(GetUsersRequest request, RequestOptions requestOptions) {
-        return this.rawClient.getUsers(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaRequiredBodyOptionalHeadersHttpResponse<List<User>>> rawFuture =
+                this.rawClient.getUsers(request, requestOptions);
+        CompletableFuture<List<User>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Create a user with inlined body and optional header.
      */
     public CompletableFuture<User> createUserInlined(CreateUserInlinedRequest request) {
-        return this.rawClient.createUserInlined(request).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaRequiredBodyOptionalHeadersHttpResponse<User>> rawFuture =
+                this.rawClient.createUserInlined(request);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Create a user with inlined body and optional header.
      */
     public CompletableFuture<User> createUserInlined(CreateUserInlinedRequest request, RequestOptions requestOptions) {
-        return this.rawClient.createUserInlined(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaRequiredBodyOptionalHeadersHttpResponse<User>> rawFuture =
+                this.rawClient.createUserInlined(request, requestOptions);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedJavaRequiredBodyOptionalHeadersClientBuilder builder() {

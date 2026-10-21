@@ -81,7 +81,6 @@ public final class StreamEventsContextProtocolRequest {
     public static final class Builder implements QueryStage, _FinalStage {
         private String query;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -102,6 +101,14 @@ public final class StreamEventsContextProtocolRequest {
         @java.lang.Override
         public StreamEventsContextProtocolRequest build() {
             return new StreamEventsContextProtocolRequest(query, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("query")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

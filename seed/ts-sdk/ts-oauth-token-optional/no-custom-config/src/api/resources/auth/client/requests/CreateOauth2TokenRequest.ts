@@ -4,8 +4,7 @@
  * @example
  *     {
  *         client_id: "my_oauth_app_123",
- *         client_secret: "sk_live_abcdef123456789",
- *         grant_type: "client_credentials"
+ *         client_secret: "sk_live_abcdef123456789"
  *     }
  */
 export interface CreateOauth2TokenRequest {

@@ -50,8 +50,9 @@ export interface WireTestCase {
     /**
      * Auth-header matchers the mock must match on, so a request missing its
      * credential header fails. Derived from the `mock-utils` mapping's auth
-     * headers: `regex` for presence-only schemes (bearer/header → `.+`),
-     * `equalTo` for the exact Basic value.
+     * headers: `regex` for presence-only bearer schemes (`Bearer .+`), and
+     * `equalTo` for the exact Basic value and header API-key value (including
+     * any configured prefix).
      */
     headerMatchers: Array<{ name: string; equalTo?: string; matches?: string }>;
     /**
@@ -282,6 +283,13 @@ export function buildWireTestManifest(
          */
         loginFlowSchemes?: string[];
         /**
+         * The exact value each header API-key scheme sends with the seeded
+         * credential (`<prefix> <credential>`, or the bare credential). Turns
+         * `mock-utils`' presence-only `.+` matcher for that header into an exact
+         * one, so a dropped or doubled prefix fails the case.
+         */
+        headerAuthValues?: Array<{ headerName: string; value: string }>;
+        /**
          * Per-route required-request-body contracts read from the mounted
          * OpenAPI specs. Used to repair example bodies that omit a property the
          * spec marks required — see {@link reconcileRequiredBodyProperties} for
@@ -305,6 +313,9 @@ export function buildWireTestManifest(
     // the auth layer — so a wire-test case for them would resolve to a
     // subcommand clap rejects. Skip them.
     const authEndpointIds = collectOAuthEndpointIds(ir);
+    const exactAuthHeaders = new Map(
+        (options.headerAuthValues ?? []).map(({ headerName, value }) => [headerName.toLowerCase(), value])
+    );
 
     const cases: WireTestCase[] = [];
     const usedIds = new Set<string>();
@@ -326,6 +337,7 @@ export function buildWireTestManifest(
             endpoint,
             example,
             authHeaderNames,
+            exactAuthHeaders,
             usedIds,
             requiredBodyContracts: options.requiredBodyContracts
         });
@@ -434,10 +446,11 @@ function buildCase(args: {
     endpoint: FernIr.HttpEndpoint;
     example: FernIr.ExampleEndpointCall;
     authHeaderNames: Set<string>;
+    exactAuthHeaders: Map<string, string>;
     usedIds: Set<string>;
     requiredBodyContracts?: RequiredBodyContracts;
 }): WireTestCase | null {
-    const { mapping, endpoint, example, authHeaderNames, usedIds, requiredBodyContracts } = args;
+    const { mapping, endpoint, example, authHeaderNames, exactAuthHeaders, usedIds, requiredBodyContracts } = args;
 
     const params: Record<string, unknown> = {};
 
@@ -497,7 +510,7 @@ function buildCase(args: {
         params,
         body,
         queryMatchers: extractQueryMatchers(mapping),
-        headerMatchers: extractHeaderMatchers(mapping),
+        headerMatchers: extractHeaderMatchers(mapping, exactAuthHeaders),
         requiresAuth: endpoint.auth,
         ...(multipartFields != null ? { multipartFields } : {}),
         ...(specFilledBodyProperties.length > 0 ? { specFilledBodyProperties } : {}),
@@ -620,11 +633,20 @@ function extractQueryMatchers(mapping: WireMockMapping): Array<{ name: string; v
     return matchers;
 }
 
-/** Pull the auth-header matchers (`equalTo` exact, or `matches` regex) off the mapping. */
-function extractHeaderMatchers(mapping: WireMockMapping): Array<{ name: string; equalTo?: string; matches?: string }> {
+/**
+ * Pull the auth-header matchers (`equalTo` exact, or `matches` regex) off the
+ * mapping, pinning header API-key schemes to the exact value the CLI sends.
+ */
+function extractHeaderMatchers(
+    mapping: WireMockMapping,
+    exactAuthHeaders: Map<string, string>
+): Array<{ name: string; equalTo?: string; matches?: string }> {
     const matchers: Array<{ name: string; equalTo?: string; matches?: string }> = [];
     for (const [name, matcher] of Object.entries(mapping.request.headers ?? {})) {
-        if (matcher.equalTo != null) {
+        const exact = exactAuthHeaders.get(name.toLowerCase());
+        if (exact != null) {
+            matchers.push({ name, equalTo: exact });
+        } else if (matcher.equalTo != null) {
             matchers.push({ name, equalTo: matcher.equalTo });
         } else if (matcher.matches != null) {
             matchers.push({ name, matches: matcher.matches });

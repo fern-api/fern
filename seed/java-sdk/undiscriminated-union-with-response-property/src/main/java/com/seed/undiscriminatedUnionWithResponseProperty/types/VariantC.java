@@ -84,7 +84,6 @@ public final class VariantC {
     public static final class Builder implements ValueCStage, _FinalStage {
         private boolean valueC;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -105,6 +104,14 @@ public final class VariantC {
         @java.lang.Override
         public VariantC build() {
             return new VariantC(valueC, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("type") || key.equalsIgnoreCase("valueC")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

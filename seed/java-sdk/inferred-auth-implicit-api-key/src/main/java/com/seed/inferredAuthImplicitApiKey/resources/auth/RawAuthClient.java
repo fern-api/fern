@@ -4,6 +4,7 @@
 package com.seed.inferredAuthImplicitApiKey.resources.auth;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.inferredAuthImplicitApiKey.core.BodyProperties;
 import com.seed.inferredAuthImplicitApiKey.core.ClientOptions;
 import com.seed.inferredAuthImplicitApiKey.core.ObjectMappers;
 import com.seed.inferredAuthImplicitApiKey.core.RequestOptions;
@@ -45,7 +46,11 @@ public class RawAuthClient {
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
-                .method("POST", RequestBody.create("", null))
+                .method(
+                        "POST",
+                        BodyProperties.toRequestBody(
+                                requestOptions != null ? requestOptions.getBodyProperties() : null,
+                                RequestBody.create("", null)))
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json");
         _requestBuilder.addHeader("X-Api-Key", request.getApiKey());

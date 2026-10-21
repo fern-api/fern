@@ -6,7 +6,9 @@ enum Example12 {
         let client = ApiClient(baseURL: "https://api.fern.com")
 
         _ = try await client.createTree(request: TreeRecord(
-            id: "id"
+            id: "id",
+            treeName: "treeName",
+            treeSpecies: "treeSpecies"
         ))
     }
 }

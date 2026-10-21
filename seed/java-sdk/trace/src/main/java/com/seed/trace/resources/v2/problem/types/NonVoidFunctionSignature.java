@@ -101,7 +101,6 @@ public final class NonVoidFunctionSignature {
 
         private List<Parameter> parameters = new ArrayList<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -147,6 +146,14 @@ public final class NonVoidFunctionSignature {
         @java.lang.Override
         public NonVoidFunctionSignature build() {
             return new NonVoidFunctionSignature(parameters, returnType, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("parameters") || key.equalsIgnoreCase("returnType")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

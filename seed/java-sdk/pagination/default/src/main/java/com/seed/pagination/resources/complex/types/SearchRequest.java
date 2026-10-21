@@ -99,7 +99,6 @@ public final class SearchRequest {
 
         private Optional<StartingAfterPaging> pagination = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -134,6 +133,14 @@ public final class SearchRequest {
         @java.lang.Override
         public SearchRequest build() {
             return new SearchRequest(pagination, query, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("pagination") || key.equalsIgnoreCase("query")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

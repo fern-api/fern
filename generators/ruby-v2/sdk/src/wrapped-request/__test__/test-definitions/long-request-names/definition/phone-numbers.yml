@@ -1,0 +1,37 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+service:
+  auth: false
+  base-path: /accounts/{accountSid}/incoming-phone-numbers
+  path-parameters:
+    accountSid: string
+  endpoints:
+    listAssignedAddOnExtensions:
+      method: GET
+      path: /{resourceSid}/assigned-add-ons/{assignedAddOnSid}/extensions
+      path-parameters:
+        resourceSid: string
+        assignedAddOnSid: string
+      request:
+        name: GetAccountsAccountSidIncomingPhoneNumbersResourceSidAssignedAddOnsAssignedAddOnSidExtensionsJsonRequest
+        query-parameters:
+          pageSize: optional<integer>
+    listAssignedAddOnExtensionsPaged:
+      method: GET
+      path: /{resourceSid}/assigned-add-ons/{assignedAddOnSid}/extensions/paged
+      path-parameters:
+        resourceSid: string
+        assignedAddOnSid: string
+      request:
+        name: GetAccountsAccountSidIncomingPhoneNumbersResourceSidAssignedAddOnsAssignedAddOnSidExtensionsJsonPagedRequest
+        query-parameters:
+          pageSize: optional<integer>
+    get:
+      method: GET
+      path: /{sid}
+      path-parameters:
+        sid: string
+      request:
+        name: GetIncomingPhoneNumberRequest
+        query-parameters:
+          pageSize: optional<integer>

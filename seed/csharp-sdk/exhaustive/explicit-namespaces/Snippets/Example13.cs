@@ -11,9 +11,8 @@ public partial class Examples
             }
         );
 
-        await client.Endpoints.HttpMethods.TestPutAsync(
-            id: "id",
-            request: new ObjectWithRequiredField {
+        await client.Endpoints.HttpMethods.TestPostAsync(
+            new ObjectWithRequiredField {
                 String = "string"
             }
         );

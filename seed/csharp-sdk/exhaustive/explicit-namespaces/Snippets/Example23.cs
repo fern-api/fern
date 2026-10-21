@@ -15,7 +15,7 @@ public partial class Examples
             new ObjectWithUnknownField {
                 Unknown = new Dictionary<string, object>()
                 {
-                    ["key"] = "value",
+                    ["$ref"] = "https://example.com/schema",
                 }
 
             }

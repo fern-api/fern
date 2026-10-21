@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `option.WithBodyProperties` now overrides generated request fields that share the same wire-format key
+    instead of returning a `cannot add extra property` error, so you can force or replace any JSON or form URL
+    encoded request body property. The generated README documents the option in a new "Additional Body
+    Properties" section, including that it isn't applied to multipart file upload or raw byte requests.
+  type: fix

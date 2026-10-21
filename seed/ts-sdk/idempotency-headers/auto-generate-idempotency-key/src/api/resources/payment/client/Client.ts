@@ -120,7 +120,7 @@ export class PaymentClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/payment/${core.url.encodePathParam(paymentId)}`,
+                `/payment/${core.url.encodePathParam(paymentId, errors.SeedIdempotencyHeadersError)}`,
             ),
             method: "DELETE",
             headers: _headers,

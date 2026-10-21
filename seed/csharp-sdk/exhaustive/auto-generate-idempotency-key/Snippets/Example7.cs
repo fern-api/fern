@@ -11,9 +11,11 @@ public partial class Examples
             }
         );
 
-        await client.Endpoints.Container.GetAndReturnOptionalAsync(
-            new ObjectWithRequiredField {
-                String = "string"
+        await client.Endpoints.Container.GetAndReturnMapOfIntegerToObjectAsync(
+            new Dictionary<int, ObjectWithRequiredField>(){
+                [1] = new ObjectWithRequiredField {
+                    String = "string"
+                },
             }
         );
     }

@@ -1,0 +1,8 @@
+instances:
+  - url: https://fern.docs.buildwithfern.com
+title: Fern | Documentation
+navigation:
+  - api: Plants API
+    api-name: plants
+  - api: Gardens API
+    api-name: gardens

@@ -417,9 +417,28 @@ impl Binding for OpenApiBinding {
         &'a self,
         op_path: &'a [String],
         params: &'a serde_json::Value,
+        root_matches: &'a clap::ArgMatches,
+        profile: Option<&'a crate::profiles::ResolvedProfile>,
     ) -> BoxFuture<'a, Result<Option<serde_json::Value>, CliError>> {
         Box::pin(async move {
             let prepared = self.ensure_prepared()?;
+            let mut doc_owned;
+            let doc = if self.inner.needs_server_var_resolution(&prepared.doc) {
+                doc_owned = prepared.doc.clone();
+                self.inner
+                    .apply_server_vars_for(&mut doc_owned, root_matches, profile);
+                &doc_owned
+            } else {
+                &prepared.doc
+            };
+            // Same rung order as a selected profile: flag > profile > env.
+            let base_url = match profile.and_then(|p| p.base_url.clone()) {
+                Some(url) if root_matches.get_one::<String>("base-url").is_none() => Some(url),
+                _ => crate::cli_args::resolve_base_url_override(root_matches, &self.inner.name)?,
+            };
+            let base_url =
+                self.inner
+                    .substitute_base_url_vars(base_url, &prepared.doc, root_matches, profile);
             // Strip the namespace prefix the same way `dispatch` does, so a
             // caller names the operation as it appears on the command line.
             let effective: &[String] = match &self.command_namespace {
@@ -427,7 +446,7 @@ impl Binding for OpenApiBinding {
                 Some(_) if !op_path.is_empty() => return Ok(None),
                 _ => op_path,
             };
-            let Some(method) = resolve_method_by_path(&prepared.doc, effective) else {
+            let Some(method) = resolve_method_by_path(doc, effective) else {
                 // Not ours — the caller tries the next binding.
                 return Ok(None);
             };
@@ -447,7 +466,7 @@ impl Binding for OpenApiBinding {
                 ..Default::default()
             };
             executor::execute_method(
-                &prepared.doc,
+                doc,
                 method,
                 params_json,
                 None,
@@ -460,7 +479,7 @@ impl Binding for OpenApiBinding {
                 &executor::PaginationConfig::default(),
                 &pipeline,
                 true,
-                crate::cli_args::resolve_base_url_override_for(&self.inner.name)?.as_deref(),
+                base_url.as_deref(),
                 &prepared.http_config,
                 false,
                 false,
@@ -470,6 +489,10 @@ impl Binding for OpenApiBinding {
                 &[],
             )
             .await
+            // A bodiless success (`204` on a delete) is still a success:
+            // `None` is reserved for "not my path", so it must not leak
+            // through here or the caller would try the next binding.
+            .map(|value| Some(value.unwrap_or(serde_json::Value::Null)))
         })
     }
 
@@ -553,7 +576,8 @@ impl Binding for OpenApiBinding {
 
     fn build_command(&self) -> Result<clap::Command, CliError> {
         let prepared = self.ensure_prepared()?;
-        let cli = commands::build_cli(&prepared.doc)
+        let placeholders = self.inner.completion_placeholders();
+        let cli = commands::build_cli_with_placeholders(&prepared.doc, &placeholders)
             .subcommand(crate::openapi::skill_emitter::generate_skills_command());
         let mut cli = self.inner.decorate_command(&prepared.doc, cli);
 
@@ -670,6 +694,30 @@ impl Binding for OpenApiBinding {
                     params_override,
                 )
             })?;
+            // In a terminal, ask for required inputs the user left out rather
+            // than failing on them. Skipped when any input is read from stdin
+            // (`--json -`, `@-`), which the prompts would otherwise consume.
+            if super::app::interactive_terminal() && !super::app::args_read_stdin(matched_args) {
+                let globals = super::app::build_global_parameter_overrides(
+                    matched_args,
+                    doc,
+                    method,
+                    &params,
+                )?;
+                let exempt: std::collections::HashSet<&str> =
+                    globals.iter().map(|g| g.target.as_str()).collect();
+                let missing =
+                    super::app::missing_required_params(matched_args, method, &params, &exempt);
+                if !missing.is_empty() {
+                    super::app::prompt_for_params(
+                        &missing,
+                        method,
+                        &mut params,
+                        &mut std::io::stdin().lock(),
+                        &mut std::io::stderr(),
+                    )?;
+                }
+            }
             // Collect multipart/form-data parts from CLI flags for operations
             // that declare a `multipart/form-data` body. `None` for all others.
             // Runs before `params` is serialized: multipart fields live in
@@ -700,13 +748,14 @@ impl Binding for OpenApiBinding {
             // `default_value` because the flag is registered per operation, in
             // `build_resource_command`, which has no access to the CLI name
             // needed for `<PREFIX>_RETRIES`. Same precedence either way:
-            // flag > env > profile > whatever the spec declared.
+            // flag > selected profile > env > whatever the spec declared.
             crate::openapi::discovery::set_retries_override(
                 matched_args
                     .try_get_one::<u32>("retries")
                     .ok()
                     .flatten()
                     .copied()
+                    .or_else(crate::profiles::retries)
                     .or_else(|| {
                         std::env::var(format!(
                             "{}_RETRIES",
@@ -714,8 +763,7 @@ impl Binding for OpenApiBinding {
                         ))
                         .ok()
                         .and_then(|raw| raw.trim().parse::<u32>().ok())
-                    })
-                    .or_else(crate::profiles::retries),
+                    }),
             );
             let no_stream = matched_args
                 .try_get_one::<bool>("no-stream")
@@ -783,8 +831,12 @@ impl Binding for OpenApiBinding {
             )?;
 
             // --base-url flag wins; otherwise {NAME}_BASE_URL env var.
-            let base_url_override_owned =
-                crate::cli_args::resolve_base_url_override(root_matches, &self.inner.name)?;
+            let base_url_override_owned = self.inner.substitute_base_url_vars(
+                crate::cli_args::resolve_base_url_override(root_matches, &self.inner.name)?,
+                &prepared.doc,
+                root_matches,
+                None,
+            );
             let base_url_override = base_url_override_owned.as_deref();
 
             // --user-agent-suffix flag wins; otherwise {NAME}_USER_AGENT_SUFFIX
@@ -819,11 +871,8 @@ impl Binding for OpenApiBinding {
                 output_path_buf.as_deref().and_then(|p| p.to_str())
             };
 
-            let pipeline = crate::formatter::OutputPipeline::from_matches(
-                root_matches,
-                &self.inner.name,
-            )
-            .map_err(|e| CliError::Validation(e.to_string()))?;
+            let pipeline =
+                operation_pipeline(root_matches, &self.inner.name, method, matched_args)?;
 
             if pipeline.is_raw() && pagination.page_all {
                 return Err(CliError::Validation(
@@ -871,10 +920,31 @@ impl Binding for OpenApiBinding {
             .await?;
 
             match result {
+                Some(value) if dry_run => Ok(DispatchResult::Record(value)),
+                Some(value) if method.table.is_some() => {
+                    Ok(DispatchResult::ValueWithPipeline(value, pipeline))
+                }
                 Some(value) => Ok(DispatchResult::Value(value)),
                 None => Ok(DispatchResult::Handled),
             }
         })
+    }
+
+    fn output_pipeline(
+        &self,
+        root_matches: &clap::ArgMatches,
+    ) -> Option<crate::formatter::OutputPipeline> {
+        let prepared = self.ensure_prepared().ok()?;
+        let resolve_from = match &self.command_namespace {
+            Some(ns) => root_matches
+                .subcommand_matches(ns.as_str())
+                .unwrap_or(root_matches),
+            None => root_matches,
+        };
+        let (method, matched_args) =
+            super::resolve_method_from_matches(&prepared.doc, resolve_from).ok()?;
+        method.table.as_ref()?;
+        operation_pipeline(root_matches, &self.inner.name, method, matched_args).ok()
     }
 
     fn binding_context(
@@ -889,8 +959,12 @@ impl Binding for OpenApiBinding {
             .copied()
             .unwrap_or(false);
         let debug = matches.get_flag("debug");
-        let base_url_override =
-            crate::cli_args::resolve_base_url_override(matches, &self.inner.name)?;
+        let base_url_override = self.inner.substitute_base_url_vars(
+            crate::cli_args::resolve_base_url_override(matches, &self.inner.name)?,
+            &self.ensure_prepared()?.doc,
+            matches,
+            None,
+        );
         let http_config = entry.http_config.with_user_agent_suffix_override(
             crate::cli_args::resolve_user_agent_suffix_override(matches),
         );
@@ -919,8 +993,15 @@ impl Binding for OpenApiBinding {
             .copied()
             .unwrap_or(false);
         let debug = matches.get_flag("debug");
-        let base_url_override =
+        let prepared = self.ensure_prepared()?;
+        let raw_base_url_override =
             crate::cli_args::resolve_base_url_override(matches, &self.inner.name)?;
+        // Fill on top of what earlier bindings already resolved, so a binding
+        // whose spec lacks `{region}` can't put the literal template back.
+        let resolve_base_url = |partial: Option<String>| {
+            self.inner
+                .substitute_base_url_vars(partial, &prepared.doc, matches, None)
+        };
         let entry = super::app::BindingEntry {
             http_config: entry.http_config.with_user_agent_suffix_override(
                 crate::cli_args::resolve_user_agent_suffix_override(matches),
@@ -933,7 +1014,8 @@ impl Binding for OpenApiBinding {
                     ctx.add_entry(entry);
                     ctx.debug = debug;
                     ctx.quiet = quiet;
-                    ctx.base_url_override = base_url_override;
+                    ctx.base_url_override =
+                        resolve_base_url(ctx.base_url_override.take().or(raw_base_url_override));
                     Ok(Some(ctx as Box<dyn std::any::Any + Send + Sync>))
                 }
                 Err(original) => {
@@ -946,7 +1028,7 @@ impl Binding for OpenApiBinding {
                         entry.global_headers,
                         entry.global_params,
                     ).with_quiet(quiet)
-                     .with_base_url_override(base_url_override)
+                     .with_base_url_override(resolve_base_url(raw_base_url_override))
                      .with_debug(debug);
                     let _ = original;
                     Ok(Some(Box::new(ctx)))
@@ -960,7 +1042,7 @@ impl Binding for OpenApiBinding {
                     entry.global_headers,
                     entry.global_params,
                 ).with_quiet(quiet)
-                 .with_base_url_override(base_url_override)
+                 .with_base_url_override(resolve_base_url(raw_base_url_override))
                  .with_debug(debug);
                 Ok(Some(Box::new(ctx)))
             }
@@ -1190,9 +1272,108 @@ fn prefix_schema_operations(value: serde_json::Value, namespace: &str) -> serde_
     }
 }
 
+/// Attach an operation's `x-fern-cli-table` columns to `pipeline`.
+///
+/// `--columns` asks for a table, so it switches the default format (JSON
+/// when piped, or `<NAME>_OUTPUT`) to `table`. It is rejected next to an
+/// explicit non-table `--format` or a `--query`, which already picks fields.
+/// The global output settings plus the operation's `x-fern-cli-table`
+/// columns and `--columns` selection.
+fn operation_pipeline(
+    root_matches: &clap::ArgMatches,
+    app_name: &str,
+    method: &super::discovery::RestMethod,
+    matched_args: &clap::ArgMatches,
+) -> Result<crate::formatter::OutputPipeline, CliError> {
+    let pipeline = crate::formatter::OutputPipeline::from_matches(root_matches, app_name)
+        .map_err(|e| CliError::Validation(e.to_string()))?;
+    match method.table.as_ref() {
+        Some(spec) => apply_table_spec(
+            pipeline,
+            spec,
+            matched_args
+                .try_get_one::<String>(commands::TABLE_COLUMNS_ARG_ID)
+                .ok()
+                .flatten()
+                .map(String::as_str),
+            root_matches.value_source("format") == Some(clap::parser::ValueSource::CommandLine),
+        ),
+        None => Ok(pipeline),
+    }
+}
+
+fn apply_table_spec(
+    mut pipeline: crate::formatter::OutputPipeline,
+    spec: &crate::table_columns::TableSpec,
+    selection: Option<&str>,
+    format_is_explicit: bool,
+) -> Result<crate::formatter::OutputPipeline, CliError> {
+    use crate::formatter::OutputFormat;
+    if selection.is_some() {
+        if pipeline.query.is_some() {
+            return Err(CliError::Validation(
+                "--columns can't be combined with --query; use one or the other".to_string(),
+            ));
+        }
+        if pipeline.format != OutputFormat::Table {
+            if format_is_explicit {
+                return Err(CliError::Validation(
+                    "--columns only applies to --format table".to_string(),
+                ));
+            }
+            pipeline.format = OutputFormat::Table;
+        }
+    }
+    let columns = spec.select(selection).map_err(CliError::Validation)?;
+    Ok(pipeline.with_table_columns(columns))
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    fn spec_with_tag(tag: &str, description: &str) -> String {
+        serde_json::json!({
+            "openapi": "3.0.0",
+            "info": { "title": "T", "version": "1" },
+            "tags": [{ "name": tag, "description": description }],
+            "paths": { "/things": { "get": {
+                "operationId": "listThings",
+                "tags": [tag],
+                "responses": { "200": { "description": "ok" } }
+            } } }
+        })
+        .to_string()
+    }
+
+    #[test]
+    fn top_level_completion_lists_unparsed_specs_by_prefix() {
+        let binding = || {
+            let mut b = OpenApiBinding::new()
+                .spec_under("alpha/v1", &spec_with_tag("Things", "All the things."))
+                .spec_under("beta", &spec_with_tag("Beta", "Beta products."));
+            b.set_cli_name("my-cli");
+            b
+        };
+        let full = binding().build_command().unwrap();
+        let _focus = crate::completions::set_completion_focus(crate::completions::CompletionFocus {
+            word: None,
+            outside_specs: false,
+        });
+        let fast = binding().build_command().unwrap();
+
+        let tops = |c: &clap::Command| -> Vec<(String, String)> {
+            c.get_subcommands()
+                .map(|s| (s.get_name().to_string(), s.get_about().map(|a| a.to_string()).unwrap_or_default()))
+                .collect()
+        };
+        assert_eq!(tops(&fast), tops(&full));
+        // `alpha` was listed from its prefix; `beta` has a matching tag, so
+        // its spec was parsed for the description.
+        let alpha = fast.find_subcommand("alpha").unwrap();
+        assert_eq!(alpha.get_subcommands().count(), 0);
+        assert!(fast.find_subcommand("beta").unwrap().get_subcommands().count() > 0);
+    }
 
     #[test]
     fn prefix_schema_operations_array() {

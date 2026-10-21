@@ -12,6 +12,7 @@ import { writeFile } from "fs/promises";
 
 import { CliContext } from "../../../cli-context/CliContext.js";
 import { loadProjectAndRegisterWorkspacesWithContext } from "../../../cliCommons.js";
+import { createSdkGenApiTokenProvider } from "../../upgrade/getSdkGenApiGeneratorVersions.js";
 import { upgrade } from "../../upgrade/upgrade.js";
 import { loadAndUpdateGenerators } from "../../upgrade/upgradeGenerator.js";
 
@@ -207,6 +208,8 @@ async function upgradeGeneratorsForAllWorkspaces({
     const generators: GeneratorUpgradeEntry[] = [];
     const skippedMajor: SkippedMajorEntry[] = [];
     const alreadyUpToDate: AlreadyUpToDateEntry[] = [];
+    // Lazy: only generators the `use-sdk-gen-api` flag routes through sdk-gen-api trigger a login.
+    const getSdkGenApiToken = createSdkGenApiTokenProvider(cliContext);
 
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
@@ -219,7 +222,9 @@ async function upgradeGeneratorsForAllWorkspaces({
                     includeMajor,
                     skipAutoreleaseDisabled: false,
                     channel: undefined,
-                    cliVersion: cliContext.environment.packageVersion
+                    cliVersion: cliContext.environment.packageVersion,
+                    organization: project.config.organization,
+                    getSdkGenApiToken
                 });
 
                 const absolutePathToGeneratorsConfiguration = await getPathToGeneratorsConfiguration({

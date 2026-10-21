@@ -759,7 +759,6 @@ public final class Client {
 
         private Optional<String> tenant = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -1415,6 +1414,43 @@ public final class Client {
                     clientMetadata,
                     mobile,
                     additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("client_id")
+                    || key.equalsIgnoreCase("tenant")
+                    || key.equalsIgnoreCase("name")
+                    || key.equalsIgnoreCase("description")
+                    || key.equalsIgnoreCase("global")
+                    || key.equalsIgnoreCase("client_secret")
+                    || key.equalsIgnoreCase("app_type")
+                    || key.equalsIgnoreCase("logo_uri")
+                    || key.equalsIgnoreCase("is_first_party")
+                    || key.equalsIgnoreCase("oidc_conformant")
+                    || key.equalsIgnoreCase("callbacks")
+                    || key.equalsIgnoreCase("allowed_origins")
+                    || key.equalsIgnoreCase("web_origins")
+                    || key.equalsIgnoreCase("grant_types")
+                    || key.equalsIgnoreCase("jwt_configuration")
+                    || key.equalsIgnoreCase("signing_keys")
+                    || key.equalsIgnoreCase("encryption_key")
+                    || key.equalsIgnoreCase("sso")
+                    || key.equalsIgnoreCase("sso_disabled")
+                    || key.equalsIgnoreCase("cross_origin_auth")
+                    || key.equalsIgnoreCase("cross_origin_loc")
+                    || key.equalsIgnoreCase("custom_login_page_on")
+                    || key.equalsIgnoreCase("custom_login_page")
+                    || key.equalsIgnoreCase("custom_login_page_preview")
+                    || key.equalsIgnoreCase("form_template")
+                    || key.equalsIgnoreCase("is_heroku_app")
+                    || key.equalsIgnoreCase("addons")
+                    || key.equalsIgnoreCase("token_endpoint_auth_method")
+                    || key.equalsIgnoreCase("client_metadata")
+                    || key.equalsIgnoreCase("mobile")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

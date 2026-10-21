@@ -48,7 +48,7 @@ export class ServiceClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/movie/${core.url.encodePathParam(movieId)}`,
+                `/movie/${core.url.encodePathParam(movieId, errors.SeedExamplesError)}`,
             ),
             method: "GET",
             headers: _headers,

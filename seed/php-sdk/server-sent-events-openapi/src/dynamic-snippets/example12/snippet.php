@@ -10,6 +10,6 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->streamOasSpecNative(
+$client->streamDataContextWithEnvelopeSchema(
     new StreamRequest([]),
 );

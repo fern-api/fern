@@ -95,7 +95,6 @@ public final class ErroredResponse {
 
         private ErrorInfo errorInfo;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -124,6 +123,14 @@ public final class ErroredResponse {
         @java.lang.Override
         public ErroredResponse build() {
             return new ErroredResponse(submissionId, errorInfo, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("submissionId") || key.equalsIgnoreCase("errorInfo")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

@@ -8,6 +8,11 @@ import { GeneratorsYmlFileAstNodeTypes } from "./ast/GeneratorsYmlAstVisitor.js"
 export interface Rule {
     name: string;
     DISABLE_RULE?: boolean;
+    /**
+     * Only run by `fern check`. Commands that validate the workspace as part of generation skip these
+     * rules, because they can depend on flags (such as `--preview` or `--local`) that the rule cannot see.
+     */
+    checkOnly?: boolean;
     create: (context: RuleContext) => Promise<RuleVisitors>;
 }
 

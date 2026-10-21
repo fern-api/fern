@@ -1,0 +1,76 @@
+openapi: 3.0.0
+info:
+  title: allOf inlined parent metadata
+  version: 1.0.0
+  description: |
+    A child branch that requires a parent-defined property forces the parent to be
+    inlined. Property metadata on the inlined parent (readOnly, x-fern-property-name,
+    x-fern-audiences, deprecated, xml) must survive inlining, and readOnly properties
+    must stay out of write request bodies.
+servers:
+  - url: https://api.example.com
+paths:
+  /plants:
+    post:
+      operationId: createPlant
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PlantCreate"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlantDetails"
+components:
+  schemas:
+    PlantMetadata:
+      type: object
+      x-fern-encoding:
+        xml:
+          name: PlantMetadata
+      properties:
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        nickname:
+          type: string
+          nullable: true
+        legacy_tag:
+          type: string
+          x-fern-property-name: legacyTag
+          deprecated: true
+        internal_notes:
+          type: string
+          x-fern-audiences:
+            - internal
+        label:
+          type: string
+          xml:
+            name: Label
+            attribute: true
+    PlantCreate:
+      allOf:
+        - $ref: "#/components/schemas/PlantMetadata"
+        - type: object
+          properties:
+            species:
+              type: string
+          required:
+            - nickname
+            - species
+    PlantDetails:
+      allOf:
+        - $ref: "#/components/schemas/PlantMetadata"
+        - type: object
+          properties:
+            id:
+              type: string
+          required:
+            - id
+            - nickname

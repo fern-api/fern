@@ -6154,6 +6154,7 @@ docs: Transcript related operations
                 "docs": "Send messages to the WebSocket",
                 "type": "sendMessage",
               },
+              "docs": "Send messages to the WebSocket",
               "origin": "client",
             },
             "subscribe": {
@@ -6161,6 +6162,7 @@ docs: Transcript related operations
                 "docs": "Receive messages from the WebSocket",
                 "type": "receiveMessage",
               },
+              "docs": "Receive messages from the WebSocket",
               "origin": "server",
             },
           },
@@ -6259,11 +6261,13 @@ The parameter should map to a JSON encoded list of strings.
       body:
         type: sendMessage
         docs: Send messages to the WebSocket
+      docs: Send messages to the WebSocket
     subscribe:
       origin: server
       body:
         type: receiveMessage
         docs: Receive messages from the WebSocket
+      docs: Receive messages from the WebSocket
   examples:
     - messages:
         - type: publish

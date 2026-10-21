@@ -94,7 +94,6 @@ public final class SendEvent {
 
         private int priority;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -123,6 +122,14 @@ public final class SendEvent {
         @java.lang.Override
         public SendEvent build() {
             return new SendEvent(text, priority, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("text") || key.equalsIgnoreCase("priority")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

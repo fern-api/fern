@@ -8,5 +8,6 @@
     "strong",
     "x-strong"
   ],
+  "description": "Set a pause based on strength",
   "definitions": {}
 }

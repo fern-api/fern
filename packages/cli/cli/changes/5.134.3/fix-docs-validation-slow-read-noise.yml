@@ -1,0 +1,9 @@
+- summary: |
+    Docs validation no longer logs a "Slow file read" debug line for every markdown page when many
+    files are read concurrently (the timing included threadpool queue time, not disk speed). It now
+    logs one summary per validation run and only flags reads that are outliers relative to the batch.
+  type: fix
+- summary: |
+    The CLI now defaults `UV_THREADPOOL_SIZE` to 8 (from Node's default of 4) so concurrent file
+    reads spend less time queued behind the libuv threadpool. Set the variable explicitly to override.
+  type: fix

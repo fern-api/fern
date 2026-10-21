@@ -735,6 +735,19 @@ types:
           A git ref—branch, tag, or commit SHA—whose committed content is built for this
           version. Branches are mutable and resolve to their latest commit on the remote;
           tags and commit SHAs are immutable.
+
+          The CLI checks out the ref and reads the docs.yml committed there to locate the
+          pages to build:
+          - For a version listed under top-level `versions`, it uses the ref's docs.yml
+            `versions` list and takes the first entry that has a `path` (skipping entries
+            that have a `ref`). If the ref's docs.yml has no such entry, it uses the ref's
+            top-level `navigation`.
+          - For a version listed under `products[].versions`, it finds the product with the
+            same `slug` (or, when either side has no `slug`, the same `display-name`) in the
+            ref's docs.yml and applies the same rule to that product's `versions` list,
+            falling back to the `navigation` in that product's file.
+          Entries with a `ref` in the ref's docs.yml are ignored: only the docs.yml being
+          built determines which versions are published.
       slug:
         type: optional<string>
         docs: The "slug" is this version's basePath. If not set, the slug will be generated from the display-name.
@@ -747,10 +760,45 @@ types:
         type: optional<boolean>
         docs: |
           If true, this version will be hidden from navigation, search, and indexing, but still accessible via direct URL.
+      default:
+        type: optional<boolean>
+        docs: |
+          If true, this version is the default version: it is served at the unversioned URLs
+          (without the version slug) and is used for canonical URLs, the sitemap, search, and
+          `llms.txt`. The order of the `versions` list only controls the order in the version
+          switcher. At most one version in a `versions` list may set `default: true`, and the
+          default version cannot be `hidden`. A default version may be built from the working
+          tree (`path`) or from a git ref (`ref`). If no version sets `default`, the first
+          version in the list is the default.
       announcement: optional<AnnouncementConfig>
 
   Availability:
     enum:
+      - name: Stable
+        value: stable
+      - name: GenerallyAvailable
+        value: generally-available
+      - name: InDevelopment
+        value: in-development
+      - name: PreRelease
+        value: pre-release
+      - name: Deprecated
+        value: deprecated
+      - name: Beta
+        value: beta
+      - name: Alpha
+        value: alpha
+      - name: Preview
+        value: preview
+      - name: Legacy
+        value: legacy
+
+  SortByAvailabilityValue:
+    docs: |
+      An availability to sort by, or `unset` for items without an availability.
+    enum:
+      - name: Unset
+        value: unset
       - name: Stable
         value: stable
       - name: GenerallyAvailable
@@ -1053,6 +1101,13 @@ types:
           are rendered inline next to navigation items in the sidebar. Defaults to false. The page-header
           availability badge is unaffected by this setting.
 
+      hide-webhook-method-badges:
+        type: optional<boolean>
+        availability: in-development
+        docs: |
+          If `hide-webhook-method-badges` is set to true, webhook entries in the sidebar render without
+          an HTTP method badge (e.g. `POST`). Defaults to false. The webhook page itself is unaffected.
+
       breadcrumbs:
         type: optional<BreadcrumbsConfig>
         availability: in-development
@@ -1176,6 +1231,15 @@ types:
           showing the response status line and response headers alongside the body.
 
           @default: false
+      require-analytics-consent:
+        type: optional<boolean>
+        docs: |
+          If set to true, Fern's built-in docs analytics (PostHog) stays off until visitor consent is given:
+          no script, cookies, local storage or events. Grant consent from a custom script (e.g. your consent
+          manager's callback) by setting `window.fernAnalyticsConsent = true` and dispatching
+          `new Event("fern-analytics-consent")` on `window`.
+
+          @default: false
 
   SearchSettingsConfig:
     properties:
@@ -1184,9 +1248,10 @@ types:
         docs: |
           If set to true, search results from the current product/version are
           boosted in Algolia's ranking (via `optionalFilters`) without excluding
-          results from other products/versions.
+          results from other products/versions. Set to false to rank all
+          products/versions equally.
 
-          @default: false
+          @default: true
       default-filter-by-current-product:
         type: optional<boolean>
         docs: |
@@ -1206,6 +1271,69 @@ types:
       footer-nav: optional<FooterNavThemeConfig>
       language-switcher: optional<LanguageSwitcherThemeConfig>
       product-switcher: optional<ProductSwitcherThemeConfig>
+      site-switcher:
+        type: optional<SiteSwitcherThemeConfig>
+        docs: |
+          Header switcher listing the other docs sites published to the same
+          domain under different basepaths. Membership is discovered
+          automatically at publish time; this only controls presentation.
+      code-blocks:
+        type: optional<CodeBlocksThemeConfig>
+        docs: |
+          Syntax-highlighting color schemes for code blocks, set separately
+          for light and dark mode. Defaults to `min-light` and
+          `material-theme-darker`.
+
+  CodeBlocksThemeConfig:
+    properties:
+      light:
+        type: optional<CodeBlockTheme>
+        docs: Code block theme used in light mode. Defaults to `min-light`.
+      dark:
+        type: optional<CodeBlockTheme>
+        docs: Code block theme used in dark mode. Defaults to `material-theme-darker`.
+
+  CodeBlockTheme:
+    docs: A supported Shiki syntax-highlighting theme (https://shiki.style/themes).
+    enum:
+      - value: github-dark
+        name: github_dark
+      - value: github-dark-default
+        name: github_dark_default
+      - value: github-dark-dimmed
+        name: github_dark_dimmed
+      - value: github-dark-high-contrast
+        name: github_dark_high_contrast
+      - value: github-light
+        name: github_light
+      - value: github-light-default
+        name: github_light_default
+      - value: github-light-high-contrast
+        name: github_light_high_contrast
+      - value: material-theme-darker
+        name: material_theme_darker
+      - value: min-dark
+        name: min_dark
+      - value: min-light
+        name: min_light
+
+  SiteSwitcherThemeConfig:
+    properties:
+      enabled:
+        type: optional<boolean>
+        docs: Render the site switcher. Defaults to false.
+      order:
+        type: optional<list<string>>
+        docs: Basepaths to pin first, in this order. Remaining sites follow alphabetically.
+      hide:
+        type: optional<list<string>>
+        docs: Basepaths to omit, including any sites nested beneath them.
+      labels:
+        type: optional<map<string, string>>
+        docs: Display label overrides keyed by basepath.
+      show-products:
+        type: optional<boolean>
+        docs: List each site's products indented beneath it. Defaults to false.
 
   ProductSwitcherThemeConfig:
     enum:
@@ -1580,6 +1708,58 @@ types:
       - asyncapi
       - graphql
 
+  ApiSpecErrorResponseHttpMethod:
+    enum:
+      - get
+      - post
+      - put
+      - patch
+      - delete
+      - head
+      - options
+      - trace
+
+  ApiSpecErrorResponseEnsure:
+    properties:
+      status-code:
+        type: integer
+        docs: The 4xx/5xx status code to add when an operation does not declare it.
+        validation:
+          min: 400
+          max: 599
+      methods: optional<list<ApiSpecErrorResponseHttpMethod>>
+
+  ApiSpecErrorResponses:
+    properties:
+      schema: ApiSpecErrorResponseSchemaSource
+      name: optional<string>
+      apply-to:
+        type: optional<ApiSpecErrorResponseApplyTo>
+      ensure: optional<list<ApiSpecErrorResponseEnsure>>
+
+  ApiSpecErrorResponseSchemaSource:
+    discriminated: false
+    union:
+      - string
+      - map<string, unknown>
+
+  ApiSpecErrorResponseApplyTo:
+    enum:
+      - all
+      - untyped
+
+  ApiSpecImportSettings:
+    docs: Import settings that affect the API definition rendered by Fern Docs.
+    properties:
+      type-dates-as-strings: optional<boolean>
+      use-bytes-for-binary-response: optional<boolean>
+      respect-parameter-content: optional<boolean>
+      respect-operation-id-word-boundaries: optional<boolean>
+      infer-forward-compatible: optional<boolean>
+      preserve-one-of-in-all-of: optional<boolean>
+      any-of-sibling-properties-as-object: optional<boolean>
+      error-responses: optional<ApiSpecErrorResponses>
+
   ApiSpecConfiguration:
     docs: A source API specification referenced directly by docs.yml.
     properties:
@@ -1594,6 +1774,9 @@ types:
       overrides:
         type: optional<list<string>>
         docs: Paths to Fern override documents, relative to docs.yml.
+      settings:
+        type: optional<ApiSpecImportSettings>
+        docs: Import settings that affect the rendered API reference.
 
   ApiReferenceConfiguration:
     extends: [WithPermissions, WithFeatureFlags]
@@ -1639,6 +1822,15 @@ types:
         type: optional<boolean>
         docs: |
           If `alphabetized` is set to true, packages and endpoints will be sorted alphabetically, unless explicitly ordered in the `layout` object.
+      sort-by-availability:
+        type: optional<list<SortByAvailabilityValue>>
+        docs: |
+          Sorts packages and endpoints by availability, unless explicitly ordered in the `layout` object.
+          Listed availabilities come first, in the order provided. Use `unset` for items without an availability.
+          Unlisted availabilities follow in the default order:
+          `unset`, `generally-available`, `alpha`, `beta`, `preview`, `legacy`, `deprecated`.
+          `stable` is treated as `generally-available`, and `in-development` and `pre-release` are treated as `beta`.
+          Items with the same availability keep their existing order (alphabetical when `alphabetized` is true).
       flattened:
         type: optional<boolean>
         docs: |
@@ -1720,6 +1912,12 @@ types:
           Path to a Doxyfile for C++ library documentation, relative to the fern/ directory.
           When provided, the backend uses this Doxyfile instead of auto-generating one.
           Only valid when lang is cpp.
+      include-undocumented-macros:
+        type: optional<boolean>
+        docs: |
+          Also generate pages for `#define`s that have no Doxygen comment.
+          By default only documented macros are rendered. Include guards are never
+          emitted (Doxygen drops them). Only valid when lang is cpp.
 
   LibraryConfiguration:
     docs: |
@@ -1887,6 +2085,7 @@ types:
       php: optional<SnippetLanguageConfiguration>
       swift: optional<SnippetLanguageConfiguration>
       rust: optional<SnippetLanguageConfiguration>
+      cli: optional<SnippetLanguageConfiguration>
 
   ColorsConfiguration:
     properties:
@@ -2456,11 +2655,33 @@ types:
         type: optional<boolean>
         docs: |
           Deprecated: Use `multi-source: true` on the instance instead. When enabled, docs registration uses a basepath-aware S3 key format, allowing multiple independent doc sites to be hosted under the same custom domain with different basepaths.
-      external-sitemaps:
-        type: optional<list<string>>
+      robots-txt-on-instance-url:
+        type: optional<boolean>
         availability: pre-release
         docs: |
-          Experimental flag: a list of absolute URLs pointing to external sitemaps (`sitemap.xml`). Their pages are fetched and indexed in search alongside this site's documentation (tagged to the same domain), but are flagged as third-party so they rank below all first-party documentation.
+          Experimental flag: when set to `true`, the custom robots.txt configured in `agents.robots-txt` is also served on the site's Fern instance URL (`<site>.docs.buildwithfern.com`), not only on custom domains. Pages on the instance URL keep the `X-Robots-Tag: noindex, nofollow` header, so search engines still won't index them. Has no effect without a custom robots.txt. Only the static docs renderer needs this flag: the Next.js renderer already serves a custom robots.txt on the instance URL.
+      external-sitemaps:
+        type: optional<list<ExternalSitemap>>
+        availability: pre-release
+        docs: |
+          Experimental flag: a list of external sitemaps (`sitemap.xml`), each either an absolute URL or an object with `url` and an optional `locale`. Their pages are fetched and indexed in search alongside this site's documentation (tagged to the same domain), but are flagged as third-party so they rank below all first-party documentation. Each URL is routed to the search index of the site locale it belongs to (detected from `hreflang` or a leading locale path segment, defaulting to the site's default language); set `locale` to pin every URL in a sitemap to one of the site's locales instead.
+
+  ExternalSitemap:
+    discriminated: false
+    union:
+      - string
+      - ExternalSitemapConfig
+
+  ExternalSitemapConfig:
+    properties:
+      url:
+        type: string
+        docs: Absolute URL of the external sitemap (`sitemap.xml` or sitemap index).
+      locale:
+        type: optional<string>
+        docs: |
+          Locale to index every URL in this sitemap into (e.g. `en`, `nl`, `ja-JP`). Must match the
+          site's default language or one of its `translations`. Overrides per-URL language detection.
 
   PlaygroundSettings:
     properties:

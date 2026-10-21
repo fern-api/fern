@@ -114,7 +114,6 @@ public final class MapResponseValue {
 
         private Optional<MapResponseValueNested> nested = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -157,6 +156,14 @@ public final class MapResponseValue {
         @java.lang.Override
         public MapResponseValue build() {
             return new MapResponseValue(name, description, nested, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("name") || key.equalsIgnoreCase("description") || key.equalsIgnoreCase("nested")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

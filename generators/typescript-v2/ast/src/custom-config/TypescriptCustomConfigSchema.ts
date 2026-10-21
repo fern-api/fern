@@ -63,6 +63,7 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     packagePath: z.optional(z.string()),
     omitFernHeaders: z.optional(z.boolean()),
     includePlatformHeaders: z.optional(z.boolean()),
+    userAgentOnly: z.optional(z.boolean()),
     allowUserAgentAppInfo: z.optional(z.boolean()),
     useDefaultRequestParameterValues: z.optional(z.boolean()),
     packageManager: z.optional(z.enum(["pnpm", "yarn"])),
@@ -121,6 +122,10 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     // defined` in runtimes without a Node `process` global (browsers, Cloudflare
     // Workers, Deno). Node behavior is unchanged.
     guardProcessEnvAccess: z.optional(z.boolean()),
+    // When true and the API uses `auth: any`, each scheme's options are spread flat onto the client
+    // options (e.g. `{ apiKey }`, `{ clientId, clientSecret }`, `{ token }`) instead of nested under the
+    // scheme key (e.g. `{ apiKey: { apiKey } }`). Options with the same name are shared between schemes.
+    flattenAnyAuthOptions: z.optional(z.boolean()),
     generateReactQueryHooks: z.optional(z.boolean()),
     // Controls how generated WebSocket socket classes store handlers registered via `on()`.
     // `replace` (default): a second `on()` for the same event replaces the previous handler.

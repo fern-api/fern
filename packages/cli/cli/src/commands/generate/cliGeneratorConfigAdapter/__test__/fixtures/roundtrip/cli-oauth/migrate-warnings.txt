@@ -1,0 +1,1 @@
+[warning] [FERN_API_AUTH_FIELD_UNSUPPORTED] auth-schemes.OAuth2.token-prefix: Fern auth scheme 'OAuth2' was migrated without token-prefix: SDK Config v1 tokenPrefix must be non-empty, so an empty prefix falls back to the consumer default.; SDK Config: api.auth.schemes.0; Review api.auth.schemes.0 ('OAuth2') and confirm the generated SDK does not depend on token-prefix.

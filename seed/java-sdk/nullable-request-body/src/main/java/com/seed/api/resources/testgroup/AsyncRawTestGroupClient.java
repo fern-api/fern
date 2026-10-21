@@ -4,9 +4,11 @@
 package com.seed.api.resources.testgroup;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.api.core.BodyProperties;
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.MediaTypes;
 import com.seed.api.core.ObjectMappers;
+import com.seed.api.core.PathSegments;
 import com.seed.api.core.QueryStringMapper;
 import com.seed.api.core.RequestOptions;
 import com.seed.api.core.RetryInterceptor;
@@ -70,7 +72,7 @@ public class AsyncRawTestGroupClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("optional-request-body")
-                .addPathSegment(pathParam);
+                .addPathSegment(PathSegments.validate(pathParam));
         if (request.getQueryParamObject().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "query_param_object", request.getQueryParamObject().get(), false);
@@ -90,7 +92,9 @@ public class AsyncRawTestGroupClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request.getBody(), requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -115,7 +119,8 @@ public class AsyncRawTestGroupClient {
                     .build();
         }
         CompletableFuture<SeedApiHttpResponse<Object>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -150,6 +155,11 @@ public class AsyncRawTestGroupClient {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;

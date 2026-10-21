@@ -5,6 +5,7 @@ import { Document, getParseOptions } from "@fern-api/openapi-ir-parser";
 import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 
+import { applyErrorResponsesSettings } from "../utils/applyErrorResponsesSettings.js";
 import { convertOpenAPIV2ToV3 } from "../utils/convertOpenAPIV2ToV3.js";
 import { loadAsyncAPI } from "../utils/loadAsyncAPI.js";
 import { loadOpenAPI } from "../utils/loadOpenAPI.js";
@@ -57,7 +58,7 @@ export class OpenAPILoader {
                     if (isOpenAPIV3(openAPI)) {
                         return {
                             type: "openapi",
-                            value: openAPI,
+                            value: await applyErrorResponsesSettings({ document: openAPI, settings: spec.settings }),
                             source,
                             namespace: spec.namespace,
                             settings: getParseOptions({ options: spec.settings })
@@ -70,7 +71,10 @@ export class OpenAPILoader {
                         const convertedOpenAPI = await convertOpenAPIV2ToV3(openAPI, { context });
                         return {
                             type: "openapi",
-                            value: convertedOpenAPI,
+                            value: await applyErrorResponsesSettings({
+                                document: convertedOpenAPI,
+                                settings: spec.settings
+                            }),
                             source,
                             namespace: spec.namespace,
                             settings: getParseOptions({ options: spec.settings })

@@ -307,6 +307,50 @@ impl ContainerClient {
     ///     client
     ///         .endpoints
     ///         .container
+    ///         .get_and_return_map_of_integer_to_object(
+    ///             &HashMap::from([(
+    ///                 1,
+    ///                 ObjectWithRequiredField {
+    ///                     string: "string".to_string(),
+    ///                     ..Default::default()
+    ///                 },
+    ///             )]),
+    ///             None,
+    ///         )
+    ///         .await;
+    /// }
+    /// ```
+    pub async fn get_and_return_map_of_integer_to_object(
+        &self,
+        request: &HashMap<i64, ObjectWithRequiredField>,
+        options: Option<RequestOptions>,
+    ) -> Result<HashMap<i64, ObjectWithRequiredField>, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::POST,
+                "/container/map-integer-to-object",
+                Some(serde_json::to_value(request).map_err(ApiError::Serialization)?),
+                None,
+                options,
+            )
+            .await
+    }
+
+    /// # Examples
+    ///
+    /// ```no_run
+    /// use seed_exhaustive::prelude::*;
+    ///
+    /// #[tokio::main]
+    /// async fn main() {
+    ///     let config = ClientConfig {
+    ///         token: Some("<token>".to_string()),
+    ///         ..Default::default()
+    ///     };
+    ///     let client = ExhaustiveClient::new(config).expect("Failed to build client");
+    ///     client
+    ///         .endpoints
+    ///         .container
     ///         .get_and_return_optional(
     ///             &Some(ObjectWithRequiredField {
     ///                 string: "string".to_string(),

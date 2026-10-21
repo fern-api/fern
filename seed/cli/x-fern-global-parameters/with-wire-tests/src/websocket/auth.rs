@@ -214,7 +214,11 @@ fn append_query_param(url: &mut String, key: &str, value: &str) {
 /// Wrap `source` so its resolved value gets `prefix` prepended.
 /// `AuthCredentialSource` derives `Clone`, so the move-closure can keep
 /// re-resolving each request without consuming the original source.
-fn prefix_source(source: AuthCredentialSource, prefix: &'static str) -> AuthCredentialSource {
+pub(crate) fn prefix_source(
+    source: AuthCredentialSource,
+    prefix: impl Into<String>,
+) -> AuthCredentialSource {
+    let prefix = prefix.into();
     AuthCredentialSource::closure(move || {
         source
             .resolve()

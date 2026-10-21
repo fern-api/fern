@@ -81,7 +81,6 @@ public final class CreateCatalogImageBody {
     public static final class Builder implements RequestStage, _FinalStage {
         private CreateCatalogImageRequest request;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -102,6 +101,14 @@ public final class CreateCatalogImageBody {
         @java.lang.Override
         public CreateCatalogImageBody build() {
             return new CreateCatalogImageBody(request, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("request")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

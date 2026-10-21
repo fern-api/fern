@@ -86,7 +86,7 @@ client.CreateRule(
 <dl>
 <dd>
 
-**executionContext:** `*fern.RuleCreateRequestExecutionContext` — Execution context for the rule, excluding the prod environment.
+**executionContext:** `fern.RuleCreateRequestExecutionContext` — Execution context for the rule, excluding the prod environment.
     
 </dd>
 </dl>
@@ -264,7 +264,7 @@ client.CreatePlant(
 <dl>
 <dd>
 
-**wateringFrequency:** `*fern.PlantPostWateringFrequency` 
+**wateringFrequency:** `fern.PlantPostWateringFrequency` 
     
 </dd>
 </dl>
@@ -272,7 +272,7 @@ client.CreatePlant(
 <dl>
 <dd>
 
-**sunExposure:** `*fern.PlantPostSunExposure` — Required sun exposure level.
+**sunExposure:** `fern.PlantPostSunExposure` — Required sun exposure level.
     
 </dd>
 </dl>

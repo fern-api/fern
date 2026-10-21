@@ -345,11 +345,9 @@ async fn run_device_code(
                 ok.refresh_token.as_deref(),
                 ok.expires_in,
             );
-            active_store().set(
-                cli_name,
-                &crate::profiles::keyring_account(scheme),
-                &bundle.to_keyring_value()?,
-            )?;
+            let stored = bundle.to_keyring_value()?;
+            active_store().set(cli_name, &crate::profiles::keyring_account(scheme), &stored)?;
+            crate::profiles::note_stored_credential(cli_name, scheme, &stored);
             {
                 let mut err = std::io::stderr().lock();
                 let _ = writeln!(
@@ -849,11 +847,13 @@ async fn exchange_code_and_store(
         ok.refresh_token.as_deref(),
         ok.expires_in,
     );
+    let stored = bundle.to_keyring_value()?;
     active_store().set(
         &ctx.cli_name,
         &crate::profiles::keyring_account(&flow.scheme),
-        &bundle.to_keyring_value()?,
+        &stored,
     )?;
+    crate::profiles::note_stored_credential(&ctx.cli_name, &flow.scheme, &stored);
     Ok(())
 }
 
@@ -1774,11 +1774,11 @@ mod tests {
     }
 
     /// The end-to-end shape of the bug: a CLI offering env-backed basic auth
-    /// first and an OAuth login flow second. Under `--profile` the stored login
-    /// token must win; under ambient selection spec order still does.
+    /// first and an OAuth login flow second. Whenever a profile is in play
+    /// the stored login token must win; unprofiled, spec order does.
     #[tokio::test(flavor = "multi_thread")]
     #[serial]
-    async fn named_profile_prefers_login_token_over_env_scheme() {
+    async fn a_profile_prefers_login_token_over_env_scheme() {
         use crate::auth::compose::AnyAuthProvider;
         use crate::auth::credential::AuthCredentialSource;
         use crate::auth::provider::EndpointAuthMetadata;
@@ -1810,19 +1810,20 @@ mod tests {
             guard
         };
 
-        {
-            let _flag = state(SelectionSource::Flag);
+        for source in [
+            SelectionSource::Flag,
+            SelectionSource::Env,
+            SelectionSource::Active,
+        ] {
+            let _state = state(source);
             let out = composed()
                 .apply(req(), &EndpointAuthMetadata::unspecified())
                 .unwrap();
-            assert_eq!(auth_header(out).as_deref(), Some("Bearer tok"));
-        }
-        {
-            let _active = state(SelectionSource::Active);
-            let out = composed()
-                .apply(req(), &EndpointAuthMetadata::unspecified())
-                .unwrap();
-            assert!(auth_header(out).unwrap().starts_with("Basic "));
+            assert_eq!(
+                auth_header(out).as_deref(),
+                Some("Bearer tok"),
+                "{source:?}"
+            );
         }
     }
 

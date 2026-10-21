@@ -78,7 +78,6 @@ public final class CreatePlantWithSchemaRequest {
 
         private Optional<String> species = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -113,6 +112,14 @@ public final class CreatePlantWithSchemaRequest {
 
         public CreatePlantWithSchemaRequest build() {
             return new CreatePlantWithSchemaRequest(name, species, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("name") || key.equalsIgnoreCase("species")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

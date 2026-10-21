@@ -233,7 +233,6 @@ public final class RuleResponse implements IAuditInfo {
 
         private Optional<String> createdBy = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -377,6 +376,21 @@ public final class RuleResponse implements IAuditInfo {
                     status,
                     executionContext,
                     additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("createdBy")
+                    || key.equalsIgnoreCase("createdDateTime")
+                    || key.equalsIgnoreCase("modifiedBy")
+                    || key.equalsIgnoreCase("modifiedDateTime")
+                    || key.equalsIgnoreCase("id")
+                    || key.equalsIgnoreCase("name")
+                    || key.equalsIgnoreCase("status")
+                    || key.equalsIgnoreCase("executionContext")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

@@ -25,13 +25,13 @@ describe <%= gem_namespace %>::Internal::Http::RawClient do
     end
 
     it "retries on retryable 5xx statuses" do
-      [500, 502, 503, 504, 521, 522, 524].each do |status|
+      {{RETRYABLE_5XX_STATUSES}}.each do |status|
         assert client.should_retry?(make_response(status), 0), "expected retry for status #{status}"
       end
     end
 
     it "does not retry on non-retryable 5xx statuses" do
-      [501, 505, 510, 599].each do |status|
+      {{NON_RETRYABLE_5XX_STATUSES}}.each do |status|
         refute client.should_retry?(make_response(status), 0), "expected no retry for status #{status}"
       end
     end
@@ -192,4 +192,203 @@ describe <%= gem_namespace %>::Internal::Http::RawClient do
       refute_includes client_with(["x-api-version"]).protected_header_keys, "X-Api-Version"
     end
   end
-end
+
+  describe "transport failures" do
+    def transport_request(port)
+      <%= gem_namespace %>::Internal::JSON::Request.new(
+        base_url: "http://127.0.0.1:#{port}",
+        method: "GET",
+        path: "/test"
+      )
+    end
+
+    # Starts a server that handles each connection with the given block and counts connections.
+    def with_server(handler)
+      server = TCPServer.new("127.0.0.1", 0)
+      connections = 0
+      server_thread = Thread.new do
+        loop do
+          socket = server.accept
+          connections += 1
+          handler.call(socket)
+        rescue IOError, SystemCallError
+          break
+        end
+      end
+      yield server.addr[1], -> { connections }
+    ensure
+      server_thread&.kill
+      server&.close
+    end
+
+    def read_request_head(socket)
+      loop do
+        line = socket.gets
+        break if line.nil? || line == "\r\n"
+      end
+    end
+
+    it "raises ConnectionError with the original cause when the connection is refused" do
+      closed = TCPServer.new("127.0.0.1", 0)
+      port = closed.addr[1]
+      closed.close
+      client = <%= gem_namespace %>::Internal::Http::RawClient.new(base_url: "http://127.0.0.1:#{port}", max_retries: 2)
+
+      error = assert_raises(<%= gem_namespace %>::Errors::ConnectionError) { client.send(transport_request(port)) }
+
+      assert_kind_of <%= gem_namespace %>::Errors::ApiError, error
+      assert_kind_of Errno::ECONNREFUSED, error.cause
+    end
+
+    it "raises ConnectionError without retrying when the server closes the connection without answering" do
+      handler = ->(socket) do
+        read_request_head(socket)
+        socket.close
+      end
+      with_server(handler) do |port, connections|
+        client = <%= gem_namespace %>::Internal::Http::RawClient.new(base_url: "http://127.0.0.1:#{port}", max_retries: 2)
+
+        error = assert_raises(<%= gem_namespace %>::Errors::ConnectionError) { client.send(transport_request(port)) }
+
+        assert_kind_of EOFError, error.cause
+        assert_equal 1, connections.call
+      end
+    end
+
+    it "raises ConnectionError when the TLS handshake fails" do
+      handler = ->(socket) do
+        socket.write("not a TLS server\r\n\r\n")
+        socket.close
+      end
+      with_server(handler) do |port, _connections|
+        client = <%= gem_namespace %>::Internal::Http::RawClient.new(base_url: "https://127.0.0.1:#{port}", max_retries: 0)
+        request = <%= gem_namespace %>::Internal::JSON::Request.new(
+          base_url: "https://127.0.0.1:#{port}",
+          method: "GET",
+          path: "/test"
+        )
+
+        error = assert_raises(<%= gem_namespace %>::Errors::ConnectionError) { client.send(request) }
+
+        assert_kind_of OpenSSL::SSL::SSLError, error.cause
+      end
+    end
+
+    it "still raises TimeoutError when the server does not answer in time" do
+      handler = ->(socket) do
+        read_request_head(socket)
+        sleep 2
+        socket.close
+      end
+      with_server(handler) do |port, _connections|
+        client = <%= gem_namespace %>::Internal::Http::RawClient.new(
+          base_url: "http://127.0.0.1:#{port}",
+          max_retries: 0,
+          timeout: 0.2
+        )
+
+        error = assert_raises(<%= gem_namespace %>::Errors::TimeoutError) { client.send(transport_request(port)) }
+
+        assert_kind_of Net::ReadTimeout, error.cause
+      end
+    end
+  end
+<% if (allowCustomHttpClient) { %>
+  # A transport that records every request it receives and answers with canned
+  # responses, standing in for a caller-supplied `http_client`.
+  class RecordingHttpClient
+    attr_reader :calls
+
+    def initialize(*responses)
+      @responses = responses
+      @calls = []
+    end
+
+    def request(url, http_request)
+      @calls << [url, http_request]
+      @responses.shift
+    end
+  end
+
+  # Builds a Net::HTTPResponse without a socket. This leans on net/http's `@body` /
+  # `@read` instance variables, which `Net::HTTPResponse#body` consults once a
+  # response has been read.
+  def canned_response(status_code, body: "{}")
+    response = Net::HTTPResponse::CODE_TO_OBJ.fetch(status_code.to_s).new("1.1", status_code.to_s, "")
+    response.instance_variable_set(:@body, body)
+    response.instance_variable_set(:@read, true)
+    response
+  end
+
+  describe "custom http_client" do
+    def build_request(port)
+      <%= gem_namespace %>::Internal::JSON::Request.new(
+        base_url: "http://127.0.0.1:#{port}",
+        path: "/items",
+        method: "POST",
+        headers: { "X-Custom" => "yes" },
+        body: { "name" => "widget" }
+      )
+    end
+
+    it "routes requests through the supplied http_client instead of Net::HTTP" do
+      http_client = RecordingHttpClient.new(canned_response(200, body: '{"ok":true}'))
+      client = <%= gem_namespace %>::Internal::Http::RawClient.new(
+        base_url: "http://127.0.0.1:1",
+        max_retries: 0,
+        http_client: http_client
+      )
+
+      response = client.send(build_request(1))
+
+      assert_equal "200", response.code
+      assert_equal '{"ok":true}', response.body
+      assert_equal 1, http_client.calls.length
+      url, http_request = http_client.calls.first
+
+      assert_kind_of URI::Generic, url
+      assert_equal "/items", url.path
+      assert_kind_of Net::HTTPGenericRequest, http_request
+      assert_equal "POST", http_request.method
+      assert_equal "yes", http_request["X-Custom"]
+<% if (!omitFernHeaders && !userAgentOnly) { %>      assert_equal "Ruby", http_request["X-Fern-Language"]
+<% } else { %>      assert_nil http_request["X-Fern-Language"]
+<% } %>      assert_equal '{"name":"widget"}', http_request.body
+    end
+
+    it "retries through the custom http_client" do
+      http_client = RecordingHttpClient.new(canned_response(503), canned_response(200))
+      client = <%= gem_namespace %>::Internal::Http::RawClient.new(
+        base_url: "http://127.0.0.1:1",
+        max_retries: 1,
+        http_client: http_client
+      )
+
+      response = client.send(build_request(1))
+
+      assert_equal "200", response.code
+      assert_equal 2, http_client.calls.length
+    end
+
+    it "falls back to Net::HTTP when no http_client is given" do
+      server = TCPServer.new("127.0.0.1", 0)
+      port = server.addr[1]
+      server_thread = Thread.new do
+        socket = server.accept
+        loop do
+          line = socket.gets
+          break if line.nil? || line == "\r\n"
+        end
+        socket.write("HTTP/1.1 204 No Content\r\nContent-Length: 0\r\n\r\n")
+        socket.close
+      end
+
+      client = <%= gem_namespace %>::Internal::Http::RawClient.new(base_url: "http://127.0.0.1:#{port}", max_retries: 0)
+      response = client.send(build_request(port))
+      server_thread.join
+      server.close
+
+      assert_equal "204", response.code
+    end
+  end
+<% } %>end

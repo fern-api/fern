@@ -94,6 +94,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             packagePath: parsed?.packagePath,
             omitFernHeaders: parsed?.omitFernHeaders ?? false,
             includePlatformHeaders: parsed?.includePlatformHeaders ?? false,
+            userAgentOnly: parsed?.userAgentOnly ?? false,
             allowUserAgentAppInfo: parsed?.allowUserAgentAppInfo ?? false,
             useDefaultRequestParameterValues: parsed?.useDefaultRequestParameterValues ?? false,
             packageManager: parsed?.packageManager ?? "pnpm",
@@ -116,6 +117,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             alwaysSendAuth: parsed?.alwaysSendAuth ?? false,
             optionalAuth: parsed?.["optional-auth"] ?? false,
             guardProcessEnvAccess: parsed?.guardProcessEnvAccess ?? false,
+            flattenAnyAuthOptions: parsed?.flattenAnyAuthOptions ?? false,
             websocketHandlerMode: parsed?.websocketHandlerMode ?? "replace",
             maxRetries: parsed?.maxRetries,
             retryStatusCodes: parsed?.retryStatusCodes ?? "legacy",
@@ -282,6 +284,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 packagePath: customConfig.packagePath,
                 omitFernHeaders: customConfig.omitFernHeaders ?? false,
                 includePlatformHeaders: customConfig.includePlatformHeaders ?? false,
+                userAgentOnly: customConfig.userAgentOnly ?? false,
                 allowUserAgentAppInfo: customConfig.allowUserAgentAppInfo ?? false,
                 useDefaultRequestParameterValues: customConfig.useDefaultRequestParameterValues ?? false,
                 packageManager: customConfig.packageManager,
@@ -305,6 +308,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 alwaysSendAuth: customConfig.alwaysSendAuth,
                 optionalAuth: customConfig.optionalAuth,
                 guardProcessEnvAccess: customConfig.guardProcessEnvAccess,
+                flattenAnyAuthOptions: customConfig.flattenAnyAuthOptions,
                 websocketHandlerMode: customConfig.websocketHandlerMode,
                 generateReactQueryHooks: customConfig.generateReactQueryHooks
             }

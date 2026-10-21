@@ -68,7 +68,6 @@ public final class PutResponse {
     public static final class Builder {
         private Optional<List<Error>> errors = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -91,6 +90,14 @@ public final class PutResponse {
 
         public PutResponse build() {
             return new PutResponse(errors, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("errors")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

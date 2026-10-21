@@ -94,7 +94,6 @@ public final class GroupDeletedEvent {
 
         private String groupId;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -123,6 +122,14 @@ public final class GroupDeletedEvent {
         @java.lang.Override
         public GroupDeletedEvent build() {
             return new GroupDeletedEvent(offset, groupId, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("offset") || key.equalsIgnoreCase("group_id")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

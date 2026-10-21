@@ -61,6 +61,15 @@ export abstract class AbstractEndpointGenerator {
             ...endpoint.pathParameters
         ]) {
             const parameterName = this.context.getParameterName(pathParam.name);
+            const sdkVariable = this.context.getSdkVariableForPathParameter(pathParam);
+            if (sdkVariable != null) {
+                // Bound to an SDK variable: resolved from the client's options, not a method argument.
+                pathParameterReferences[getOriginalName(pathParam.name)] = this.renderPathParameterReference({
+                    pathParameter: pathParam,
+                    reference: this.context.getSdkVariableOptionAccess(sdkVariable)
+                });
+                continue;
+            }
             pathParameterReferences[getOriginalName(pathParam.name)] = this.accessPathParameterValue({
                 pathParameter: pathParam,
                 sdkRequest: endpoint.sdkRequest,
@@ -134,6 +143,16 @@ export abstract class AbstractEndpointGenerator {
                       requestParameterName: sdkRequest.requestParameterName,
                       propertyName: pathParameter.name
                   });
+        return this.renderPathParameterReference({ pathParameter, reference });
+    }
+
+    private renderPathParameterReference({
+        pathParameter,
+        reference
+    }: {
+        pathParameter: FernIr.PathParameter;
+        reference: string;
+    }): string {
         if (this.isBooleanPathParameter(pathParameter)) {
             // PHP coerces a bool to "1"/"" when interpolated into a string, so a boolean path
             // parameter must be rendered explicitly as "true"/"false" to produce a valid URL.

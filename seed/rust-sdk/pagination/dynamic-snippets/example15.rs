@@ -11,8 +11,8 @@ async fn main() {
     client
         .users
         .list_with_body_cursor_pagination(
-            &ListUsersBodyCursorPaginationRequest {
-                pagination: Some(WithCursor {
+            &ListUsersBodyCursorPaginationRequest2 {
+                pagination: Some(WithCursor2 {
                     cursor: Some("cursor".to_string()),
                     ..Default::default()
                 }),

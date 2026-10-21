@@ -26,6 +26,7 @@ func newHeaderTestWriter(types map[common.TypeId]*ir.TypeDeclaration) *fileWrite
 		true,  // serverURLVariables
 		false, // exportAllRequestsAtRoot
 		false, // omitEmptyRequestWrappers
+		false, // legacyNullableAliasPointers
 		userAgentConfig{},
 		UnionVersionUnspecified,
 		"",
@@ -97,6 +98,7 @@ func requestOptionsSourceForHeaders(t *testing.T, headers []*ir.HttpHeader, type
 		"",              // sdkVersion
 		nil,             // environmentsConfig
 		nil,             // inferredParams
+		nil,             // variables
 	); err != nil {
 		t.Fatalf("WriteRequestOptionsDefinition returned error: %v", err)
 	}

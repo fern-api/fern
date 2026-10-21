@@ -42,6 +42,7 @@ import { getGeneratorConfig, getLicensePathFromConfig } from "./getGeneratorConf
 import { getIntermediateRepresentation } from "./getIntermediateRepresentation.js";
 import { LocalTaskHandler } from "./LocalTaskHandler.js";
 import { resolveSdkConfigIr } from "./postman/resolveSdkConfigIr.js";
+import { serializeSdkConfigIrForGenerator } from "./postman/serializeSdkConfigIrForGenerator.js";
 import { collectRawSpecs, type RawSpecsManifest } from "./rawSpecs.js";
 
 export interface GeneratorRunResponse {
@@ -144,8 +145,15 @@ export async function writeFilesToDiskAndRunGenerator({
     // When version is AUTO, pass the magic placeholder to the IR so that any
     // version strings embedded in generated code (e.g., User-Agent header) use
     // the safe placeholder that will be correctly replaced post-generation.
+    // The placeholder is mapped per language (e.g. Python "0.0.0.dev0") so that it matches the
+    // version passed in the generator config, which is the one AutoVersionStep replaces.
+    const generatorLanguage =
+        generatorInvocation.language ?? extractLanguageFromGeneratorName(generatorInvocation.name);
     const irVersion = version ?? outputVersionOverride;
-    const effectiveIrVersion = irVersion != null && isAutoVersion(irVersion) ? MAGIC_VERSION : irVersion;
+    const effectiveIrVersion =
+        irVersion != null && isAutoVersion(irVersion)
+            ? mapMagicVersionForLanguage(MAGIC_VERSION, generatorLanguage)
+            : irVersion;
     const { latest, migrated } = await getIntermediateRepresentation({
         workspace,
         audiences,
@@ -221,8 +229,6 @@ export async function writeFilesToDiskAndRunGenerator({
 
     // Map the magic version to language-specific format before passing to generator.
     // E.g., Go gets "v0.0.0-fern-placeholder", Python gets "0.0.0.dev0" (PEP 440 compatible).
-    const generatorLanguage =
-        generatorInvocation.language ?? extractLanguageFromGeneratorName(generatorInvocation.name);
     const mappedVersion = version != null ? mapMagicVersionForLanguage(version, generatorLanguage) : version;
     // When outputVersionOverride is AUTO, substitute the magic version constant so the
     // generator produces code with a safe placeholder ("0.0.0-fern-placeholder") instead
@@ -315,6 +321,7 @@ export async function writeFilesToDiskAndRunGenerator({
         const built = await resolveSdkConfigIr({
             generatorInvocation,
             absolutePathToFernConfig,
+            apiName: workspace.definition.rootApiFile.contents.name,
             organization,
             outputPath: paths.outputDirectory,
             rawSpecsManifest
@@ -325,7 +332,7 @@ export async function writeFilesToDiskAndRunGenerator({
         for (const warning of built.warnings) {
             context.logger.warn(warning);
         }
-        await writeFile(absolutePathToWriteConfigJson, JSON.stringify(built.sdkConfigIr, undefined, 4));
+        await writeFile(absolutePathToWriteConfigJson, serializeSdkConfigIrForGenerator(built.sdkConfigIr));
         context.logger.debug(`Wrote SDK Config IR for ${generatorInvocation.name} to ${absolutePathToWriteConfigJson}`);
     }
 

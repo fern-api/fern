@@ -6,9 +6,10 @@ module Seed
     # @param base_url [String, nil]
     # @param x_random_header [String, nil]
     # @param max_retries [Integer]
+    # @param timeout [Numeric]
     #
     # @return [void]
-    def initialize(token:, base_url: nil, x_random_header: nil, max_retries: 2)
+    def initialize(token:, base_url: nil, x_random_header: nil, max_retries: 2, timeout: 60)
       headers = {
         "User-Agent" => "fern_trace/0.0.1",
         "X-Fern-Language" => "Ruby",
@@ -19,7 +20,8 @@ module Seed
         base_url: base_url || Seed::Environment::PROD,
         headers: headers,
         overridable_headers: %w[X-Random-Header],
-        max_retries: max_retries
+        max_retries: max_retries,
+        timeout: timeout
       )
     end
 

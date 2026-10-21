@@ -2,17 +2,23 @@
 
 exports[`fern generator list > fern generator list 1`] = `
 "FERN_DEFAULT:
-  local:
-    - fernapi/fern-typescript-sdk"
+  groups:
+    local:
+      - fernapi/fern-typescript-sdk
+  targets: {}"
 `;
 
 exports[`fern generator list > fern generator list with exclude 1`] = `
 "FERN_DEFAULT:
-  local: []"
+  groups:
+    local: []
+  targets: {}"
 `;
 
 exports[`fern generator list > fern generator list with include 1`] = `
 "FERN_DEFAULT:
-  local:
-    - fernapi/fern-typescript-sdk"
+  groups:
+    local:
+      - fernapi/fern-typescript-sdk
+  targets: {}"
 `;

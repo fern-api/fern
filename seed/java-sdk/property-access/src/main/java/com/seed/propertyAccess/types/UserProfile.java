@@ -127,7 +127,6 @@ public final class UserProfile {
 
         private String ssn;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -176,6 +175,14 @@ public final class UserProfile {
         @java.lang.Override
         public UserProfile build() {
             return new UserProfile(name, verification, ssn, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("name") || key.equalsIgnoreCase("verification") || key.equalsIgnoreCase("ssn")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

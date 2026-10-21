@@ -1,0 +1,20 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    A flag whose value is an object with exactly one required string property
+    (for example `EmailAddr: {email (required), name}`) now also accepts a
+    plain value for that property: `--from a@x.com` sends
+    `{"email":"a@x.com"}`, and on list flags `--to a@x.com,b@x.com` sends one
+    object per comma-separated entry. JSON input is unchanged.
+  type: feat
+- summary: |
+    String values the spec marks `format: email` are checked before the
+    request is sent, so `--to 'NOT AN EMAIL'` fails locally with the field
+    path instead of reaching the API.
+  type: feat
+- summary: |
+    When stdin and stderr are both terminals, the CLI prompts for required
+    inputs that were not supplied by a flag, `--params`, `--json`, a profile or
+    a global parameter. Scripts, CI and piped runs never prompt and keep the
+    existing "is missing" error.
+  type: feat

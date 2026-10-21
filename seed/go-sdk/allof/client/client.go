@@ -149,6 +149,8 @@ func (c *Client) GetOrganization(
 //	    Species: "species",
 //	    Family: "family",
 //	    Genus: "genus",
+//	    CommonName: "commonName",
+//	    WateringFrequency: fern.PlantBaseWateringFrequencyDaily,
 //	    SunExposure: fern.PlantPostSunExposureFull,
 //	}
 //	client.CreatePlant(
@@ -177,6 +179,8 @@ func (c *Client) CreatePlant(
 //
 //	request := &fern.TreeRecord{
 //	    ID: "id",
+//	    TreeName: "treeName",
+//	    TreeSpecies: "treeSpecies",
 //	}
 //	client.CreateTree(
 //	    context.TODO(),

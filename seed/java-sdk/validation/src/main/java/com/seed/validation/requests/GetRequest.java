@@ -108,7 +108,6 @@ public final class GetRequest {
 
         private String name;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -145,6 +144,14 @@ public final class GetRequest {
         @java.lang.Override
         public GetRequest build() {
             return new GetRequest(decimal, even, name, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("decimal") || key.equalsIgnoreCase("even") || key.equalsIgnoreCase("name")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

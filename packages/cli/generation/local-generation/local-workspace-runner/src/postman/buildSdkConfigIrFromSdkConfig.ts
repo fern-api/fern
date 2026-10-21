@@ -17,6 +17,8 @@ export declare namespace buildSdkConfigIrFromSdkConfig {
         /** The language this generator invocation produces, derived from the generator name. */
         language: TargetLanguage;
         generatorName: string;
+        /** Fern API identity from the selected workspace definition. */
+        apiName: string;
         organization: string;
         /** Directory the adapter writes the SDK into, in the coordinates the adapter will see. */
         outputPath: string;
@@ -51,6 +53,7 @@ export function buildSdkConfigIrFromSdkConfig({
     sdkConfig,
     language,
     generatorName,
+    apiName,
     organization,
     outputPath,
     rawSpecsManifest
@@ -86,6 +89,7 @@ export function buildSdkConfigIrFromSdkConfig({
             sourceOrigin: "fern",
             sdkName: target.sdkName ?? sdkConfig.sdkName,
             sdkVersion: target.sdkVersion ?? sdkConfig.sdkVersion,
+            apiName,
             organization,
             ...(target.generatorVersion != null ? { generatorVersion: target.generatorVersion } : {}),
             ...(sdkConfig.apiVersion != null ? { apiVersion: sdkConfig.apiVersion } : {})

@@ -111,9 +111,18 @@ types:
 
   FileUploadRequestBodyProperty:
     union:
-      file: commons.NameAndWireValue
-      fileArray: commons.NameAndWireValue
+      file: FileUploadRequestBodyFileProperty
+      fileArray: FileUploadRequestBodyFileProperty
       bodyProperty: types.NamedParameter
+
+  FileUploadRequestBodyFileProperty:
+    extends: commons.NameAndWireValue
+    properties:
+      isOptional:
+        type: optional<boolean>
+        docs: |
+          Whether the file (or file list) may be omitted from the request. Unset in IR produced
+          by older CLI versions; consumers should treat an unset value as required.
 
   EndpointExample:
     extends:

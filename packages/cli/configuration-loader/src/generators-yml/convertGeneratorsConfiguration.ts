@@ -80,7 +80,8 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     respectParameterContent: undefined,
     respectPerSpecBasePath: undefined,
     respectOperationIdWordBoundaries: undefined,
-    namespacedErrors: undefined
+    namespacedErrors: undefined,
+    errorResponses: undefined
 };
 
 export async function convertGeneratorsConfiguration({
@@ -105,6 +106,10 @@ export async function convertGeneratorsConfiguration({
         apiConfiguration != null && generatorsYml.isApiConfigurationV2Schema(apiConfiguration)
             ? apiConfiguration.settings?.["auto-generate-idempotency-key"]
             : undefined;
+    const globalWebhookSignature =
+        apiConfiguration != null && generatorsYml.isApiConfigurationV2Schema(apiConfiguration)
+            ? apiConfiguration.settings?.["webhook-signature"]
+            : undefined;
     return {
         absolutePathToConfiguration: absolutePathToGeneratorsConfiguration,
         api: parsedApiConfiguration,
@@ -124,6 +129,7 @@ export async function convertGeneratorsConfiguration({
                               maybeTopLevelReviewers: rawGeneratorsConfiguration.reviewers,
                               maybeRootAutomation: rawGeneratorsConfiguration.automation,
                               globalIdempotencyKeyGeneration,
+                              globalWebhookSignature,
                               readme,
                               context
                           })
@@ -197,7 +203,8 @@ export function parseOpenApiDefinitionSettingsSchema(
         respectParameterContent: settings?.["respect-parameter-content"],
         respectPerSpecBasePath: settings?.["respect-per-spec-base-path"],
         respectOperationIdWordBoundaries: settings?.["respect-operation-id-word-boundaries"],
-        namespacedErrors: settings?.["namespaced-errors"]
+        namespacedErrors: settings?.["namespaced-errors"],
+        errorResponses: settings?.["error-responses"]
     };
 }
 
@@ -235,8 +242,15 @@ export function parseBaseApiDefinitionSettingsSchema(
         pathParameterOrder: settings?.["path-parameter-order"],
         resolveSchemaCollisions: settings?.["resolve-schema-collisions"],
         inferForwardCompatible: settings?.["infer-forward-compatible"],
-        coerceConstsTo: settings?.["coerce-consts-to"]
+        coerceConstsTo: settings?.["coerce-consts-to"],
+        errorResponses: hasErrorResponsesSetting(settings) ? settings["error-responses"] : undefined
     };
+}
+
+function hasErrorResponsesSetting(
+    settings: AnySpecSettingsSchema | undefined
+): settings is generatorsYml.OpenApiSettingsSchema {
+    return settings != null && "error-responses" in settings;
 }
 
 function parseRemoveDiscriminantsFromSchemas(
@@ -624,6 +638,7 @@ async function convertGroup({
     maybeTopLevelReviewers,
     maybeRootAutomation,
     globalIdempotencyKeyGeneration,
+    globalWebhookSignature,
     readme,
     context
 }: {
@@ -634,6 +649,7 @@ async function convertGroup({
     maybeTopLevelReviewers: generatorsYml.ReviewersSchema | undefined;
     maybeRootAutomation: generatorsYml.AutomationSchema | undefined;
     globalIdempotencyKeyGeneration: unknown;
+    globalWebhookSignature: unknown;
     readme: generatorsYml.ReadmeSchema | undefined;
     context: TaskContext;
 }): Promise<generatorsYml.GeneratorGroup> {
@@ -654,6 +670,7 @@ async function convertGroup({
                     maybeRootAutomation,
                     maybeGroupAutomation: group.automation,
                     globalIdempotencyKeyGeneration,
+                    globalWebhookSignature,
                     readme,
                     context
                 })
@@ -741,6 +758,7 @@ async function convertGenerator({
     maybeRootAutomation,
     maybeGroupAutomation,
     globalIdempotencyKeyGeneration,
+    globalWebhookSignature,
     readme,
     context
 }: {
@@ -753,6 +771,7 @@ async function convertGenerator({
     maybeRootAutomation: generatorsYml.AutomationSchema | undefined;
     maybeGroupAutomation: generatorsYml.AutomationSchema | undefined;
     globalIdempotencyKeyGeneration: unknown;
+    globalWebhookSignature: unknown;
     readme: generatorsYml.ReadmeSchema | undefined;
     context: TaskContext;
 }): Promise<generatorsYml.GeneratorInvocation> {
@@ -764,6 +783,7 @@ async function convertGenerator({
     return {
         raw: generator,
         idempotencyKeyGenerationConfig: perGeneratorIdempotencyKeyGeneration ?? globalIdempotencyKeyGeneration,
+        webhookSignatureConfig: globalWebhookSignature,
         automation: generatorsYml.resolveAutomationConfig({
             rootAutomation: maybeRootAutomation,
             groupAutomation: maybeGroupAutomation,
@@ -1016,8 +1036,11 @@ async function convertOutputMode({
     switch (generator.output.location) {
         case "local-file-system":
         case "fern-hosted":
+            // Always request snippets for filesystem output: generators only emit README.md/reference.md
+            // when given a snippet path (as `--local` always does). The snippet JSON is only written to
+            // disk when `snippets.path` is configured.
             return FernFiddle.OutputMode.downloadFiles({
-                downloadSnippets
+                downloadSnippets: true
             });
         case "npm":
             return FernFiddle.OutputMode.publishV2(
@@ -1058,7 +1081,7 @@ async function convertOutputMode({
             return FernFiddle.OutputMode.publishV2(
                 FernFiddle.remoteGen.PublishOutputModeV2.pypiOverride({
                     registryUrl: generator.output.url ?? "https://upload.pypi.org/legacy/",
-                    username: generator.output.token != null ? "__token__" : (generator.output.password ?? ""),
+                    username: generator.output.token != null ? "__token__" : (generator.output.username ?? ""),
                     password: generator.output.token ?? generator.output.password ?? "",
                     coordinate: generator.output["package-name"],
                     downloadSnippets,
@@ -1224,6 +1247,11 @@ function getGithubPublishInfo(
 }
 
 function getLanguageFromGeneratorName(generatorName: string) {
+    // Checked first and matched specifically so a custom name like `acme/go-cli-generator` is not
+    // mis-resolved as CLI (or Go).
+    if (generatorName.includes("fern-cli-generator")) {
+        return generatorsYml.GenerationLanguage.CLI;
+    }
     if (generatorName.includes("csharp")) {
         return generatorsYml.GenerationLanguage.CSHARP;
     }
@@ -1242,6 +1270,9 @@ function getLanguageFromGeneratorName(generatorName: string) {
     if (generatorName.includes("ruby")) {
         return generatorsYml.GenerationLanguage.RUBY;
     }
+    if (generatorName.includes("rust")) {
+        return generatorsYml.GenerationLanguage.RUST;
+    }
     if (generatorName.includes("swift")) {
         return generatorsYml.GenerationLanguage.SWIFT;
     }
@@ -1251,13 +1282,21 @@ function getLanguageFromGeneratorName(generatorName: string) {
     return undefined;
 }
 
-function getMavenRegistryUrl(maven: generatorsYml.MavenOutputLocationSchema) {
-    if (maven.url != null) {
-        return maven.url;
-    }
-    return maven.signature != null
-        ? "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
-        : "https://s01.oss.sonatype.org/content/repositories/releases/";
+/**
+ * Default Maven upload URL when `url` is not configured. Sonatype retired OSSRH (oss.sonatype.org,
+ * s01.oss.sonatype.org) in June 2025; Maven Central publishing now goes through the Central Portal. This is the
+ * Portal's OSSRH Staging API compatibility endpoint, which accepts Maven-style uploads authenticated with a Central
+ * Portal user token. Uploads must then be handed to the Portal (`POST /manual/upload/defaultRepository/<namespace>`),
+ * which the sdk-gen-api publisher does automatically for this host. Releases to Maven Central also require signed
+ * artifacts, so the same default is used whether or not a signature is configured. An unsigned upload with no `url`
+ * stays staged and never reaches Central; `generatorsYml.isUnsignedMavenPublishingWithoutUrl` detects that shape so
+ * `fern check` and `fern generate` warn about it.
+ */
+export const DEFAULT_MAVEN_REGISTRY_URL =
+    "https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/";
+
+function getMavenRegistryUrl(maven: generatorsYml.MavenOutputLocationSchema): string {
+    return maven.url ?? DEFAULT_MAVEN_REGISTRY_URL;
 }
 
 function getGithubLicenseSchema(

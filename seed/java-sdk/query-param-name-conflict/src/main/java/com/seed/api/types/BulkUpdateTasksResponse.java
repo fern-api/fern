@@ -67,7 +67,6 @@ public final class BulkUpdateTasksResponse {
     public static final class Builder {
         private Optional<Integer> updatedCount = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -90,6 +89,14 @@ public final class BulkUpdateTasksResponse {
 
         public BulkUpdateTasksResponse build() {
             return new BulkUpdateTasksResponse(updatedCount, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("updated_count")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

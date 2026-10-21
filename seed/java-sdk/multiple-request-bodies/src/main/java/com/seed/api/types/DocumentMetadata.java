@@ -106,7 +106,6 @@ public final class DocumentMetadata {
 
         private Optional<String> title = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -165,6 +164,17 @@ public final class DocumentMetadata {
 
         public DocumentMetadata build() {
             return new DocumentMetadata(author, id, tags, title, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("author")
+                    || key.equalsIgnoreCase("id")
+                    || key.equalsIgnoreCase("tags")
+                    || key.equalsIgnoreCase("title")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

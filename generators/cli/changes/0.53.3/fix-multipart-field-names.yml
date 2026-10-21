@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix a compile error in generated type crates for multipart upload requests whose property
+    names don't round-trip through the old snake_case conversion (for example `file_0` or `URLPath`).
+  type: fix

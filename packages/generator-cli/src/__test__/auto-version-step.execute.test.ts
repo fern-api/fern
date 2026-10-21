@@ -25,6 +25,7 @@ vi.mock("@fern-api/cli-ai", () => ({
     VersionBump: { MAJOR: "MAJOR", MINOR: "MINOR", PATCH: "PATCH", NO_CHANGE: "NO_CHANGE" }
 }));
 
+import { MAX_AI_DIFF_BYTES, MAX_CHUNKS } from "../autoversion/VersionUtils";
 import type { PipelineLogger } from "../pipeline/PipelineLogger";
 import { AutoVersionStep } from "../pipeline/steps/AutoVersionStep";
 import type { AutoVersionStepConfig, PipelineContext } from "../pipeline/types";
@@ -82,6 +83,8 @@ async function setupTwoGenerations(
         featureFile?: { path: string; content: string };
         /** Optional bytes of filler content to inflate the diff for chunking tests. */
         fillerKB?: number;
+        /** Number of separate filler files to spread `fillerKB` across (default 1); chunkDiff never splits a file. */
+        fillerFiles?: number;
     } = {}
 ): Promise<TwoGenerations> {
     const previousVersion = opts.previousVersion ?? "1.0.0";
@@ -120,8 +123,13 @@ async function setupTwoGenerations(
         writeFileSync(featurePath, opts.featureFile.content);
     }
     if (opts.fillerKB && opts.fillerKB > 0) {
-        const filler = "// filler line keeps cleanDiffForAI happy\n".repeat(opts.fillerKB * 20);
-        writeFileSync(join(repoPath, "src/filler.ts"), filler);
+        const fillerFiles = opts.fillerFiles ?? 1;
+        const filler = "// filler line keeps cleanDiffForAI happy\n".repeat(
+            Math.ceil((opts.fillerKB * 20) / fillerFiles)
+        );
+        for (let i = 0; i < fillerFiles; i++) {
+            writeFileSync(join(repoPath, `src/filler${i === 0 ? "" : i}.ts`), filler);
+        }
     }
     gitExec(["add", "."], repoPath);
     gitExec(["commit", "-m", "[fern-generated] Current SDK (placeholder)"], repoPath);
@@ -1075,6 +1083,221 @@ describe("AutoVersionStep.execute() — large-diff chunking", () => {
     });
 });
 
+describe("AutoVersionStep.execute() — FAI service path with a multi-chunk diff", () => {
+    let repo: TwoGenerations;
+    const mockFetch = vi.fn();
+
+    const faiConfig: AutoVersionStepConfig = {
+        enabled: true,
+        language: "typescript",
+        fernToken: "fern-token-123"
+    };
+
+    function okResponse(body: Record<string, unknown>) {
+        return { ok: true, json: async () => body };
+    }
+    const failedResponse = { ok: false, status: 502, text: async () => "upstream timeout" };
+
+    beforeEach(async () => {
+        mockFetch.mockReset();
+        vi.stubGlobal("fetch", mockFetch);
+        repo = await setupTwoGenerations({
+            previousVersion: "2.0.0",
+            featureFile: {
+                path: "src/bigFeature.ts",
+                content: "export function bigFeature() {}\n"
+            },
+            fillerKB: 80
+        });
+    });
+
+    afterEach(async () => {
+        vi.unstubAllGlobals();
+        await repo.cleanup();
+    });
+
+    function makeStepAndContext() {
+        const step = new AutoVersionStep(repo.repoPath, makeLogger(), faiConfig);
+        const prepared = fakePreparedReplay({
+            outputDir: repo.repoPath,
+            previousGenerationSha: repo.previousSha,
+            currentGenerationSha: repo.currentSha
+        });
+        return { step, context: makeContext(prepared) };
+    }
+
+    it("sends the whole diff in one request when it succeeds", async () => {
+        mockFetch.mockResolvedValue(
+            okResponse({ message: "feat: big feature", version_bump: "MINOR", changelog_entry: "### Added\n- big" })
+        );
+
+        const { step, context } = makeStepAndContext();
+        const result = await step.execute(context);
+
+        expect(mockFetch).toHaveBeenCalledTimes(1);
+        expect(result.versionBump).toBe("MINOR");
+        expect(result.version).toBe("2.1.0");
+        expect(result.analysisWarning).toBeUndefined();
+    });
+
+    it("folds per-chunk PR descriptions and changelog entries under a single heading on the chunked retry", async () => {
+        let chunkCalls = 0;
+        mockFetch.mockImplementation(async () => {
+            if (mockFetch.mock.calls.length === 1) {
+                return failedResponse;
+            }
+            chunkCalls++;
+            return okResponse({
+                message: "feat!: remove legacy API",
+                version_bump: "MAJOR",
+                changelog_entry: `### Breaking Changes\n\n- Removed method ${chunkCalls}`,
+                pr_description: `### Breaking Changes\n\n- Removed method ${chunkCalls}\n\n### Added\n\n- Added thing ${chunkCalls}`,
+                version_bump_reason: "Public method removed."
+            });
+        });
+
+        const { step, context } = makeStepAndContext();
+        const result = await step.execute(context);
+
+        expect(chunkCalls).toBeGreaterThan(1);
+        expect(result.versionBump).toBe("MAJOR");
+        const headings = (text: string | undefined, heading: string) =>
+            (text ?? "").split("\n").filter((line) => line === heading).length;
+        expect(headings(result.prDescription, "### Breaking Changes")).toBe(1);
+        expect(headings(result.prDescription, "### Added")).toBe(1);
+        expect(headings(result.changelogEntry, "### Breaking Changes")).toBe(1);
+        for (let i = 1; i <= chunkCalls; i++) {
+            expect(result.prDescription).toContain(`- Removed method ${i}`);
+            expect(result.prDescription).toContain(`- Added thing ${i}`);
+        }
+    });
+
+    it("retries chunk-by-chunk when the full-diff request fails and keeps the highest bump", async () => {
+        mockFetch.mockImplementation(async (_url: string, init: RequestInit) => {
+            if (mockFetch.mock.calls.length === 1) {
+                return failedResponse;
+            }
+            const body = JSON.parse(init.body as string) as { diff: string };
+            if (body.diff.includes("bigFeature")) {
+                return okResponse({
+                    message: "feat!: remove legacy API",
+                    version_bump: "MAJOR",
+                    changelog_entry: "### Breaking Changes\n- Removed legacy API",
+                    version_bump_reason: "Public method removed."
+                });
+            }
+            return okResponse({ message: "chore: regen", version_bump: "PATCH" });
+        });
+
+        const { step, context } = makeStepAndContext();
+        const result = await step.execute(context);
+
+        expect(mockFetch.mock.calls.length).toBeGreaterThan(2);
+        const firstBody = JSON.parse((mockFetch.mock.calls[0] as [string, RequestInit])[1].body as string) as {
+            diff: string;
+        };
+        for (const call of mockFetch.mock.calls.slice(1) as Array<[string, RequestInit]>) {
+            const body = JSON.parse(call[1].body as string) as { diff: string };
+            expect(body.diff.length).toBeLessThan(firstBody.diff.length);
+        }
+        expect(result.success).toBe(true);
+        expect(result.versionBump).toBe("MAJOR");
+        expect(result.version).toBe("3.0.0");
+        expect(result.changelogEntry).toContain("Removed legacy API");
+        expect(result.commitMessage).toContain("feat!: remove legacy API");
+        expect(result.analysisWarning).toBeUndefined();
+        expect(readFileSync(join(repo.repoPath, "changelog.md"), "utf-8")).toContain("## [3.0.0]");
+    });
+
+    it("tolerates individual chunk failures as long as one chunk succeeds, but flags the partial coverage", async () => {
+        mockFetch.mockImplementation(async (_url: string, init: RequestInit) => {
+            if (mockFetch.mock.calls.length === 1) {
+                return failedResponse;
+            }
+            const body = JSON.parse(init.body as string) as { diff: string };
+            if (body.diff.includes("bigFeature")) {
+                return okResponse({
+                    message: "feat: add bigFeature",
+                    version_bump: "MINOR",
+                    changelog_entry: "### Added\n- bigFeature()"
+                });
+            }
+            return failedResponse;
+        });
+
+        const { step, context } = makeStepAndContext();
+        const result = await step.execute(context);
+
+        expect(result.versionBump).toBe("MINOR");
+        expect(result.version).toBe("2.1.0");
+        expect(result.changelogEntry).toContain("bigFeature()");
+        expect(result.analysisWarning).toMatch(/\d+ of \d+ FAI chunk requests failed/);
+    });
+
+    it("flags a NO_CHANGE result when some chunks failed and the rest reported NO_CHANGE", async () => {
+        mockFetch.mockImplementation(async (_url: string, init: RequestInit) => {
+            if (mockFetch.mock.calls.length === 1) {
+                return failedResponse;
+            }
+            const body = JSON.parse(init.body as string) as { diff: string };
+            if (body.diff.includes("bigFeature")) {
+                return failedResponse;
+            }
+            return okResponse({ message: "chore: nothing", version_bump: "NO_CHANGE" });
+        });
+
+        const { step, context } = makeStepAndContext();
+        const result = await step.execute(context);
+
+        expect(result.success).toBe(true);
+        expect(result.versionBump).toBe("NO_CHANGE");
+        expect(result.version).toBe("2.0.0");
+        expect(result.analysisWarning).toMatch(/FAI chunk requests failed/);
+    });
+
+    it("falls back to PATCH with analysisWarning when every chunk request fails too", async () => {
+        mockFetch.mockResolvedValue(failedResponse);
+
+        const { step, context } = makeStepAndContext();
+        const result = await step.execute(context);
+
+        expect(mockFetch.mock.calls.length).toBeGreaterThan(2);
+        expect(result.success).toBe(true);
+        expect(result.versionBump).toBe("PATCH");
+        expect(result.version).toBe("2.0.1");
+        expect(result.commitMessage).toContain("SDK regeneration");
+        expect(result.changelogEntry).toBeUndefined();
+        expect(result.analysisWarning).toContain("FAI analysis failed");
+        expect(result.analysisWarning).toContain("chunk requests failed");
+    });
+
+    it("flags chunks dropped by the chunk cap during the chunked retry", async () => {
+        await repo.cleanup();
+        repo = await setupTwoGenerations({
+            previousVersion: "2.0.0",
+            featureFile: {
+                path: "src/bigFeature.ts",
+                content: "export function bigFeature() {}\n"
+            },
+            fillerKB: (MAX_CHUNKS + 5) * (MAX_AI_DIFF_BYTES / 1024),
+            fillerFiles: MAX_CHUNKS + 5
+        });
+        mockFetch.mockImplementation(async () => {
+            if (mockFetch.mock.calls.length === 1) {
+                return failedResponse;
+            }
+            return okResponse({ message: "chore: regen", version_bump: "PATCH" });
+        });
+
+        const { step, context } = makeStepAndContext();
+        const result = await step.execute(context);
+
+        expect(mockFetch).toHaveBeenCalledTimes(MAX_CHUNKS + 1);
+        expect(result.versionBump).toBe("PATCH");
+        expect(result.analysisWarning).toMatch(/\d+ of \d+ diff chunks were not analyzed \(capped at \d+\)/);
+    });
+});
+
 describe("AutoVersionStep.execute() — Go v2+ module suffix", () => {
     let tmpDir: tmp.DirectoryResult;
     let repoPath: string;
@@ -1210,10 +1433,29 @@ describe("AutoVersionStep.execute() — FAI service path (fernToken, no ai confi
         const [url, init] = mockFetch.mock.calls[0] as [string, RequestInit];
         expect(url).toBe("https://fai.buildwithfern.com/sdks/analyze-commit-diff");
         expect((init.headers as Record<string, string>).Authorization).toBe("Bearer fern-token-123");
+        expect(init.headers as Record<string, string>).not.toHaveProperty("X-Fern-Org-Id");
         const body = JSON.parse(init.body as string) as Record<string, unknown>;
         expect(typeof body.diff).toBe("string");
         expect(body.language).toBe("typescript");
         expect(body.previous_version).toBe("1.0.0");
+    });
+
+    it("names the customer's org to FAI when faiOrgId is set", async () => {
+        mockFetch.mockResolvedValue({
+            ok: true,
+            json: async () => ({ message: "feat: add newFeature helper", version_bump: "MINOR" })
+        });
+        const step = new AutoVersionStep(repo.repoPath, makeLogger(), { ...faiConfig, faiOrgId: "acme" });
+        const prepared = fakePreparedReplay({
+            outputDir: repo.repoPath,
+            previousGenerationSha: repo.previousSha,
+            currentGenerationSha: repo.currentSha
+        });
+
+        await step.execute(makeContext(prepared));
+
+        const [, init] = mockFetch.mock.calls[0] as [string, RequestInit];
+        expect((init.headers as Record<string, string>)["X-Fern-Org-Id"]).toBe("acme");
     });
 
     it("treats NO_CHANGE from FAI as a no-bump rewrite to previousVersion", async () => {
@@ -1245,6 +1487,22 @@ describe("AutoVersionStep.execute() — FAI service path (fernToken, no ai confi
         expect(result.versionBump).toBe("PATCH");
         expect(result.commitMessage).toContain("SDK regeneration");
         expect(result.changelogEntry).toBeUndefined();
+        expect(result.analysisWarning).toContain("status 500");
+        // Small diff fits in one chunk, so there is nothing to retry chunk-by-chunk.
+        expect(mockFetch).toHaveBeenCalledTimes(1);
+    });
+
+    it("does not set analysisWarning when the FAI service succeeds", async () => {
+        mockFetch.mockResolvedValue({
+            ok: true,
+            json: async () => ({ message: "fix: tweak", version_bump: "PATCH" })
+        });
+
+        const { step, context } = makeStepAndContext();
+        const result = await step.execute(context);
+
+        expect(result.versionBump).toBe("PATCH");
+        expect(result.analysisWarning).toBeUndefined();
     });
 
     it("falls back to PATCH when FAI returns malformed optional fields", async () => {

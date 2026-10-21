@@ -279,13 +279,37 @@ fn list_shows_the_stored_account_not_the_slot_name() {
         let prod = rows.iter().find(|r| r["profile"] == "prod").expect("prod");
         let acme = rows.iter().find(|r| r["profile"] == "acme").expect("acme");
 
-        // Truncated, so the column cannot dominate the row.
-        assert_eq!(prod["account"], "AC11111111\u{2026}", "{prod:#?}");
-        assert_eq!(acme["account"], "AC99999999\u{2026}", "{acme:#?}");
+        // The full identifier: a listing is where you copy it from.
+        assert_eq!(prod["account"], "AC1111111111111111", "{prod:#?}");
+        assert_eq!(acme["account"], "AC9999999999999999", "{acme:#?}");
 
         // And neither names a slot — each owns its own.
         assert!(prod.get("credentials_from").is_none(), "{prod:#?}");
         assert!(acme.get("credentials_from").is_none(), "{acme:#?}");
+    });
+}
+
+#[test]
+#[serial]
+fn show_prints_the_full_stored_account() {
+    // `show` is one profile at a time and the point of asking is to read
+    // the whole identifier.
+    with_clean_env(|_home| {
+        std::env::set_var("BSC_USERNAME", "AC56534d6b579feeba83f0563ca7fa7075");
+        std::env::set_var("BSC_PASSWORD", "prodtok");
+        run(&["bsc", "profiles", "create", "prod", "--from-env", "--use"]);
+        std::env::remove_var("BSC_USERNAME");
+        std::env::remove_var("BSC_PASSWORD");
+
+        let (code, output) = run(&["bsc", "profiles", "show", "prod", "--format", "json"]);
+        assert_eq!(code, 0, "{output}");
+        let shown: serde_json::Value = serde_json::from_str(&output).expect("json");
+        assert_eq!(shown["account"], "AC56534d6b579feeba83f0563ca7fa7075", "{shown:#?}");
+
+        let (code, output) = run(&["bsc", "profiles", "current", "--format", "json"]);
+        assert_eq!(code, 0, "{output}");
+        let current: serde_json::Value = serde_json::from_str(&output).expect("json");
+        assert_eq!(current["account"], "AC56534d6b579feeba83f0563ca7fa7075", "{current:#?}");
     });
 }
 
@@ -301,5 +325,172 @@ fn a_profile_with_nothing_stored_has_no_account_column() {
         let rows: serde_json::Value = serde_json::from_str(&output).expect("json");
         let row = &rows.as_array().expect("array")[0];
         assert!(row.get("account").is_none(), "{row:#?}");
+    });
+}
+
+/// The test's file store, counting reads: on macOS every keychain read by a
+/// binary not on the entry's access list prompts for the login password.
+#[derive(Debug)]
+struct CountingStore {
+    inner: fern_cli_sdk::auth::FileKeyringStore,
+    reads: std::sync::Arc<std::sync::atomic::AtomicUsize>,
+}
+
+impl fern_cli_sdk::auth::KeyringStore for CountingStore {
+    fn get(
+        &self,
+        service: &str,
+        account: &str,
+    ) -> Result<Option<String>, fern_cli_sdk::error::CliError> {
+        self.reads.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
+        self.inner.get(service, account)
+    }
+    fn set(
+        &self,
+        service: &str,
+        account: &str,
+        value: &str,
+    ) -> Result<(), fern_cli_sdk::error::CliError> {
+        self.inner.set(service, account, value)
+    }
+    fn delete(&self, service: &str, account: &str) -> Result<(), fern_cli_sdk::error::CliError> {
+        self.inner.delete(service, account)
+    }
+    fn backend_label(&self) -> String {
+        self.inner.backend_label()
+    }
+}
+
+fn count_reads(home: &std::path::Path) -> std::sync::Arc<std::sync::atomic::AtomicUsize> {
+    let reads = std::sync::Arc::new(std::sync::atomic::AtomicUsize::new(0));
+    fern_cli_sdk::auth::set_active_store(std::sync::Arc::new(CountingStore {
+        inner: fern_cli_sdk::auth::FileKeyringStore::at_root(home.to_path_buf()),
+        reads: reads.clone(),
+    }));
+    reads
+}
+
+fn take(reads: &std::sync::atomic::AtomicUsize) -> usize {
+    reads.swap(0, std::sync::atomic::Ordering::SeqCst)
+}
+
+#[test]
+#[serial]
+fn profile_reports_never_read_the_keychain() {
+    with_clean_env(|home| {
+        let reads = count_reads(home);
+        run(&["bsc", "profiles", "create", "prod", "--use"]);
+        let (code, output) = run(&[
+            "bsc", "profiles", "set", "prod", "BSC_USERNAME=AC1111", "BSC_PASSWORD=tok",
+        ]);
+        assert_eq!(code, 0, "{output}");
+        assert_eq!(take(&reads), 0, "setting both halves needs no merge read");
+
+        let rows: serde_json::Value =
+            serde_json::from_str(&run(&["bsc", "profiles", "list", "--format", "json"]).1)
+                .expect("json");
+        assert_eq!(rows[0]["account"], "AC1111", "{rows:#?}");
+        let shown: serde_json::Value =
+            serde_json::from_str(&run(&["bsc", "profiles", "show", "--format", "json"]).1)
+                .expect("json");
+        assert_eq!(shown["account"], "AC1111", "{shown:#?}");
+        let current: serde_json::Value =
+            serde_json::from_str(&run(&["bsc", "profiles", "current", "--format", "json"]).1)
+                .expect("json");
+        assert_eq!(current["account"], "AC1111", "{current:#?}");
+        assert!(current.get("credential_env_fallback").is_none(), "{current:#?}");
+        assert_eq!(take(&reads), 0, "list / show / current must not read the keychain");
+
+        // Resolving the credential for a request still reads it.
+        assert!(logged_in(Some("prod")));
+        assert!(take(&reads) > 0);
+    });
+}
+
+fn count_cached_reads(home: &std::path::Path) -> std::sync::Arc<std::sync::atomic::AtomicUsize> {
+    let reads = std::sync::Arc::new(std::sync::atomic::AtomicUsize::new(0));
+    fern_cli_sdk::auth::set_active_store(std::sync::Arc::new(
+        fern_cli_sdk::auth::CachingKeyringStore::new(CountingStore {
+            inner: fern_cli_sdk::auth::FileKeyringStore::at_root(home.to_path_buf()),
+            reads: reads.clone(),
+        }),
+    ));
+    reads
+}
+
+#[test]
+#[serial]
+fn a_request_reads_the_keychain_entry_once() {
+    // Selection probes the scheme, then the request resolves the username
+    // and the password: three lookups of one entry. The cache makes that one
+    // keychain read, with the same request going out.
+    with_clean_env(|home| {
+        run(&["bsc", "profiles", "create", "prod", "--use"]);
+        store_basic("prod", "AC3333", "tok");
+        let request = ["bsc", "messages", "list", "--account-sid", "AC3333", "--dry-run"];
+
+        let reads = count_reads(home);
+        let (code, uncached) = run(&request);
+        assert_eq!(code, 0, "{uncached}");
+        assert!(take(&reads) > 1, "the uncached path reads once per lookup");
+
+        let reads = count_cached_reads(home);
+        let (code, cached) = run(&request);
+        assert_eq!(code, 0, "{cached}");
+        assert_eq!(take(&reads), 1);
+        assert_eq!(cached, uncached);
+    });
+}
+
+#[test]
+#[serial]
+fn a_credential_stored_by_an_older_binary_is_read_once() {
+    // An entry written before `profiles.toml` kept a copy: the first listing
+    // reads the keychain as it always did and records the account, so later
+    // listings show the same thing without reading it.
+    with_clean_env(|home| {
+        run(&["bsc", "profiles", "create", "prod", "--use"]);
+        store_basic("prod", "AC2222", "tok");
+        let reads = count_reads(home);
+
+        for expected_reads in [true, false] {
+            let rows: serde_json::Value =
+                serde_json::from_str(&run(&["bsc", "profiles", "list", "--format", "json"]).1)
+                    .expect("json");
+            assert_eq!(rows[0]["account"], "AC2222", "{rows:#?}");
+            assert_eq!(take(&reads) > 0, expected_reads);
+        }
+    });
+}
+
+#[test]
+#[serial]
+fn removing_a_profile_forgets_its_recorded_account() {
+    with_clean_env(|_home| {
+        run(&["bsc", "profiles", "create", "prod", "--use"]);
+        run(&["bsc", "profiles", "set", "prod", "BSC_USERNAME=AC3333", "BSC_PASSWORD=tok"]);
+        let (code, output) = run(&["bsc", "profiles", "remove", "prod", "--yes"]);
+        assert_eq!(code, 0, "{output}");
+
+        run(&["bsc", "profiles", "create", "prod", "--use"]);
+        let rows: serde_json::Value =
+            serde_json::from_str(&run(&["bsc", "profiles", "list", "--format", "json"]).1)
+                .expect("json");
+        assert!(rows[0].get("account").is_none(), "{rows:#?}");
+        assert!(!logged_in(Some("prod")));
+    });
+}
+
+#[test]
+#[serial]
+fn an_empty_profile_is_looked_up_once() {
+    with_clean_env(|home| {
+        run(&["bsc", "profiles", "create", "empty", "--use"]);
+        let reads = count_reads(home);
+        for expected_reads in [true, false] {
+            let (code, output) = run(&["bsc", "profiles", "list", "--format", "json"]);
+            assert_eq!(code, 0, "{output}");
+            assert_eq!(take(&reads) > 0, expected_reads);
+        }
     });
 }

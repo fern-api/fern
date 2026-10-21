@@ -1,9 +1,10 @@
+import { generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { expect, vi } from "vitest";
 
-import { convertGeneratorsConfiguration } from "../convertGeneratorsConfiguration.js";
+import { convertGeneratorsConfiguration, DEFAULT_MAVEN_REGISTRY_URL } from "../convertGeneratorsConfiguration.js";
 
 describe("convertGeneratorsConfiguration", () => {
     it("local-file-system allows absolute download path", async () => {
@@ -30,6 +31,65 @@ describe("convertGeneratorsConfiguration", () => {
         });
 
         expect(converted.groups[0]?.generators[0]?.absolutePathToLocalOutput).toEqual("/path/to/output");
+    });
+
+    it.each([
+        ["fernapi/fern-rust-sdk", generatorsYml.GenerationLanguage.RUST],
+        ["fernapi/fern-rust-model", generatorsYml.GenerationLanguage.RUST],
+        ["fernapi/fern-swift-sdk", generatorsYml.GenerationLanguage.SWIFT],
+        ["fernapi/fern-go-sdk", generatorsYml.GenerationLanguage.GO]
+    ])("infers the language of %s", async (name, expectedLanguage) => {
+        const context = createMockTaskContext();
+        const converted = await convertGeneratorsConfiguration({
+            absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+            rawGeneratorsConfiguration: {
+                groups: {
+                    group1: {
+                        generators: [
+                            {
+                                name,
+                                version: "0.0.1",
+                                output: {
+                                    location: "local-file-system",
+                                    path: "/path/to/output"
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            context
+        });
+
+        expect(converted.groups[0]?.generators[0]?.language).toEqual(expectedLanguage);
+    });
+
+    it("local-file-system always requests snippets so generators emit README.md/reference.md", async () => {
+        const context = createMockTaskContext();
+        const converted = await convertGeneratorsConfiguration({
+            absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+            rawGeneratorsConfiguration: {
+                groups: {
+                    group1: {
+                        generators: [
+                            {
+                                name: "generator-name",
+                                version: "0.0.1",
+                                output: {
+                                    location: "local-file-system",
+                                    path: "/path/to/output"
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            context
+        });
+        const invocation = converted.groups[0]?.generators[0];
+        expect(invocation?.outputMode.type).toEqual("downloadFiles");
+        expect(invocation?.outputMode.type === "downloadFiles" && invocation.outputMode.downloadSnippets).toBe(true);
+        expect(invocation?.absolutePathToLocalSnippets).toBeUndefined();
     });
 
     it("local-file-system resolves relative download path", async () => {
@@ -236,6 +296,124 @@ describe("convertGeneratorsConfiguration", () => {
         expect(publishInfo.registryUrl).toEqual("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/");
     });
 
+    it.each([
+        ["signed", { signature: { keyId: "keyId", password: "password", secretKey: "secretKey" } }],
+        ["unsigned", {}]
+    ])("defaults the %s Maven URL to the Central Portal OSSRH Staging API", async (_name, signature) => {
+        const mavenOutput = {
+            location: "maven" as const,
+            coordinate: "com.test:sdk",
+            username: "username",
+            password: "password",
+            ...signature
+        };
+        const converted = await convertGeneratorsConfiguration({
+            absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of(__filename),
+            rawGeneratorsConfiguration: {
+                groups: {
+                    github: {
+                        generators: [
+                            {
+                                name: "fernapi/fern-java-sdk",
+                                version: "0.8.8-rc0",
+                                output: mavenOutput,
+                                github: { repository: "fern-api/github-app-test" }
+                            }
+                        ]
+                    },
+                    direct: {
+                        generators: [{ name: "fernapi/fern-java-sdk", version: "0.8.8-rc0", output: mavenOutput }]
+                    }
+                }
+            },
+            context: createMockTaskContext()
+        });
+
+        const githubOutput = converted.groups.find((group) => group.groupName === "github")?.generators[0]?.outputMode;
+        expect.assert(githubOutput?.type === "githubV2");
+        expect.assert(githubOutput.githubV2.publishInfo?.type === "maven");
+        expect(githubOutput.githubV2.publishInfo.registryUrl).toEqual(DEFAULT_MAVEN_REGISTRY_URL);
+
+        const directOutput = converted.groups.find((group) => group.groupName === "direct")?.generators[0]?.outputMode;
+        expect.assert(directOutput?.type === "publishV2");
+        expect.assert(directOutput.publishV2.type === "mavenOverride");
+        expect(directOutput.publishV2.mavenOverride?.registryUrl).toEqual(DEFAULT_MAVEN_REGISTRY_URL);
+        expect(DEFAULT_MAVEN_REGISTRY_URL).toBe(
+            "https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/"
+        );
+    });
+
+    it("direct RubyGems detection agrees with the converted output mode", async () => {
+        const rubygemsOutput = { location: "rubygems" as const, "package-name": "acme", "api-key": "key" };
+        const invocations: generatorsYml.GeneratorInvocationSchema[] = [
+            { name: "fernapi/fern-ruby-sdk", version: "1.0.0", output: rubygemsOutput },
+            {
+                name: "fernapi/fern-ruby-sdk",
+                version: "1.0.0",
+                output: rubygemsOutput,
+                github: { repository: "acme/acme-ruby" }
+            },
+            {
+                name: "fernapi/fern-typescript-sdk",
+                version: "1.0.0",
+                output: { location: "npm", "package-name": "acme" }
+            }
+        ];
+        const converted = await convertGeneratorsConfiguration({
+            absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of(__filename),
+            rawGeneratorsConfiguration: { groups: { all: { generators: invocations } } },
+            context: createMockTaskContext()
+        });
+
+        const generators = converted.groups[0]?.generators ?? [];
+        expect(generators).toHaveLength(invocations.length);
+        const results = generators.map((generator, index) => {
+            const raw = invocations[index];
+            expect.assert(raw != null);
+            const { outputMode } = generator;
+            // Mirrors isDirectRubyGemsOutputMode in remote-workspace-runner's runRemoteGenerationForAPIWorkspace.ts.
+            const convertedIsDirect =
+                outputMode.type === "publishV2" && outputMode.publishV2.type === "rubyGemsOverride";
+            expect(convertedIsDirect).toBe(generatorsYml.isDirectRubyGemsPublishing(raw));
+            return convertedIsDirect;
+        });
+        expect(results).toEqual([true, false, false]);
+    });
+
+    it("unsigned Maven detection matches outputs that fall back to the default URL without a signature", async () => {
+        const base = { location: "maven" as const, coordinate: "com.acme:acme-java" };
+        const signature = { keyId: "kid", password: "pw", secretKey: "key" };
+        const outputs = [base, { ...base, signature }, { ...base, url: "https://maven.acme.com/releases" }];
+        const invocations: generatorsYml.GeneratorInvocationSchema[] = outputs.flatMap((output) => [
+            { name: "fernapi/fern-java-sdk", version: "1.0.0", output },
+            { name: "fernapi/fern-java-sdk", version: "1.0.0", output, github: { repository: "acme/acme-java" } }
+        ]);
+        const converted = await convertGeneratorsConfiguration({
+            absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of(__filename),
+            rawGeneratorsConfiguration: { groups: { all: { generators: invocations } } },
+            context: createMockTaskContext()
+        });
+
+        const generators = converted.groups[0]?.generators ?? [];
+        expect(generators).toHaveLength(invocations.length);
+        const results = generators.map((generator, index) => {
+            const raw = invocations[index];
+            expect.assert(raw != null);
+            const { outputMode } = generator;
+            const maven =
+                outputMode.type === "publishV2" && outputMode.publishV2.type === "mavenOverride"
+                    ? outputMode.publishV2.mavenOverride
+                    : outputMode.type === "githubV2" && outputMode.githubV2.publishInfo?.type === "maven"
+                      ? outputMode.githubV2.publishInfo
+                      : undefined;
+            expect.assert(maven != null);
+            const unsignedDefault = maven.registryUrl === DEFAULT_MAVEN_REGISTRY_URL && maven.signature == null;
+            expect(unsignedDefault).toBe(generatorsYml.isUnsignedMavenPublishingWithoutUrl(raw));
+            return unsignedDefault;
+        });
+        expect(results).toEqual([true, true, false, false, false, false]);
+    });
+
     it("License Metadata", async () => {
         const context = createMockTaskContext();
         const converted = await convertGeneratorsConfiguration({
@@ -356,6 +534,56 @@ describe("convertGeneratorsConfiguration", () => {
                 output.githubV2.publishInfo.pypiMetadata?.documentationLink === "https://test.com" &&
                 output.githubV2.publishInfo.pypiMetadata?.description === "test that's low level"
         ).toEqual(true);
+    });
+
+    it("maps PyPI credentials", async () => {
+        const converted = await convertGeneratorsConfiguration({
+            absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of(__filename),
+            rawGeneratorsConfiguration: {
+                groups: {
+                    python: {
+                        generators: [
+                            {
+                                name: "fernapi/fern-python-sdk",
+                                version: "0.0.1",
+                                output: {
+                                    location: "pypi",
+                                    "package-name": "with-credentials",
+                                    username: "pypi-user",
+                                    password: "pypi-password"
+                                }
+                            },
+                            {
+                                name: "fernapi/fern-python-sdk",
+                                version: "0.0.1",
+                                output: {
+                                    location: "pypi",
+                                    "package-name": "with-token",
+                                    token: "pypi-token"
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            context: createMockTaskContext()
+        });
+
+        const credentialsOutput = converted.groups[0]?.generators[0]?.outputMode;
+        const credentials =
+            credentialsOutput?.type === "publishV2" && credentialsOutput.publishV2.type === "pypiOverride"
+                ? credentialsOutput.publishV2.pypiOverride
+                : undefined;
+        expect(credentials?.username).toBe("pypi-user");
+        expect(credentials?.password).toBe("pypi-password");
+
+        const tokenOutput = converted.groups[0]?.generators[1]?.outputMode;
+        const tokenCredentials =
+            tokenOutput?.type === "publishV2" && tokenOutput.publishV2.type === "pypiOverride"
+                ? tokenOutput.publishV2.pypiOverride
+                : undefined;
+        expect(tokenCredentials?.username).toBe("__token__");
+        expect(tokenCredentials?.password).toBe("pypi-token");
     });
 
     it("logs deprecation warnings for deprecated generators yml configuration", async () => {
@@ -551,6 +779,30 @@ describe("convertGeneratorsConfiguration", () => {
             expect(converted.api.definitions[0]?.settings?.shouldUseIdiomaticRequestNames).toBe(false);
             expect(converted.api.definitions[1]?.settings?.shouldUseTitleAsName).toBe(true);
             expect(converted.api.definitions[1]?.settings?.shouldUseIdiomaticRequestNames).toBe(false);
+        });
+
+        it("api-level error-responses are inherited by every spec", async () => {
+            const context = createMockTaskContext();
+            const errorResponses = {
+                schema: "errors/problem_details.yml",
+                name: "ServiceError",
+                "apply-to": "all" as const,
+                ensure: [{ "status-code": 422, methods: ["post" as const] }]
+            };
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    api: {
+                        settings: { "error-responses": errorResponses },
+                        specs: [{ openapi: "path/to/spec1.yml" }, { openapi: "path/to/spec2.yml" }]
+                    }
+                },
+                context
+            });
+
+            expect.assert(converted.api?.type === "singleNamespace");
+            expect(converted.api.definitions[0]?.settings?.errorResponses).toEqual(errorResponses);
+            expect(converted.api.definitions[1]?.settings?.errorResponses).toEqual(errorResponses);
         });
 
         it("spec settings override api-level settings", async () => {
@@ -801,6 +1053,56 @@ describe("convertGeneratorsConfiguration", () => {
             });
 
             expect(converted.groups[0]?.generators[0]?.name).toEqual("fernapi/fern-typescript-sdk");
+        });
+
+        it("resolves the CLI generator to the CLI generation language", async () => {
+            const context = createMockTaskContext();
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    groups: {
+                        group1: {
+                            generators: [
+                                {
+                                    name: "fernapi/fern-cli-generator",
+                                    version: "0.0.1",
+                                    output: {
+                                        location: "local-file-system",
+                                        path: "/path/to/output"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                context
+            });
+
+            expect(converted.groups[0]?.generators[0]?.name).toEqual("fernapi/fern-cli-generator");
+            expect(converted.groups[0]?.generators[0]?.language).toEqual(generatorsYml.GenerationLanguage.CLI);
+        });
+
+        it("does not resolve a non-Fern *-cli-generator to the CLI language", async () => {
+            const context = createMockTaskContext();
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    groups: {
+                        group1: {
+                            generators: [
+                                {
+                                    name: "acme/go-cli-generator",
+                                    version: "0.0.1",
+                                    output: { location: "local-file-system", path: "/path/to/output" }
+                                }
+                            ]
+                        }
+                    }
+                },
+                context
+            });
+
+            expect(converted.groups[0]?.generators[0]?.language).not.toEqual(generatorsYml.GenerationLanguage.CLI);
         });
 
         it("preserves full generator names with fernapi/ prefix", async () => {

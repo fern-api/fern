@@ -32,6 +32,10 @@
 //! token. Reads stay marker-aware on every platform, so a chunked entry is
 //! always reassembled correctly wherever it is encountered.
 //!
+//! [`CachingKeyringStore`] sits on top of that and remembers each entry it
+//! reads for a few seconds, so one command asking for the same credential
+//! several times reads the keychain once.
+//!
 //! ## Entry shape
 //!
 //! Keyed by `(service=<cli_name>, account=<scheme_name>)`. The value is an
@@ -39,8 +43,10 @@
 //! serialises a JSON token bundle; for `--with-token` the caller stores
 //! the raw token. This module is storage; it does not parse what it stores.
 
+use std::collections::HashMap;
 use std::path::PathBuf;
-use std::sync::{Arc, OnceLock, RwLock};
+use std::sync::{Arc, Mutex, OnceLock, RwLock};
+use std::time::{Duration, Instant};
 
 use crate::auth::oauth_common::{atomic_write, config_dir};
 use crate::error::CliError;
@@ -440,6 +446,117 @@ impl<S: KeyringStore> KeyringStore for ChunkedKeyringStore<S> {
 }
 
 // ---------------------------------------------------------------------------
+// Read cache
+// ---------------------------------------------------------------------------
+
+/// Keeps each entry read from `inner` in memory for a short time, so the
+/// repeated lookups one command makes (selection probing every scheme, then
+/// the request resolving each field) read the OS keychain once instead of
+/// once per lookup. On macOS every read can raise a password prompt.
+///
+/// Only successful reads are kept: a failed or denied read is retried on the
+/// next lookup. `set` and `delete` update the cached copy, so a later lookup
+/// in the same process never sees a stale value. Entries expire after
+/// [`Self::DEFAULT_TTL`], which bounds how long a long-running command can
+/// miss a change made by another process.
+type CachedEntries = HashMap<(String, String), (Instant, Option<String>)>;
+
+pub struct CachingKeyringStore<S: KeyringStore> {
+    inner: S,
+    ttl: Duration,
+    entries: Mutex<CachedEntries>,
+}
+
+impl<S: KeyringStore> CachingKeyringStore<S> {
+    pub const DEFAULT_TTL: Duration = Duration::from_secs(10);
+
+    pub fn new(inner: S) -> Self {
+        Self::with_ttl(inner, Self::DEFAULT_TTL)
+    }
+
+    pub fn with_ttl(inner: S, ttl: Duration) -> Self {
+        Self {
+            inner,
+            ttl,
+            entries: Mutex::new(HashMap::new()),
+        }
+    }
+
+    fn key(service: &str, account: &str) -> (String, String) {
+        (service.to_string(), account.to_string())
+    }
+
+    fn entries(&self) -> std::sync::MutexGuard<'_, CachedEntries> {
+        self.entries
+            .lock()
+            .unwrap_or_else(|poisoned| poisoned.into_inner())
+    }
+
+    fn remember(&self, service: &str, account: &str, value: Option<String>) {
+        self.entries()
+            .insert(Self::key(service, account), (Instant::now(), value));
+    }
+
+    fn forget(&self, service: &str, account: &str) {
+        self.entries().remove(&Self::key(service, account));
+    }
+}
+
+// Hand-written so cached secrets never reach a log line.
+impl<S: KeyringStore> std::fmt::Debug for CachingKeyringStore<S> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("CachingKeyringStore")
+            .field("inner", &self.inner)
+            .field("ttl", &self.ttl)
+            .field("cached_entries", &self.entries().len())
+            .finish()
+    }
+}
+
+impl<S: KeyringStore> KeyringStore for CachingKeyringStore<S> {
+    fn get(&self, service: &str, account: &str) -> Result<Option<String>, CliError> {
+        if let Some((read_at, value)) = self.entries().get(&Self::key(service, account)) {
+            if read_at.elapsed() < self.ttl {
+                return Ok(value.clone());
+            }
+        }
+        let value = self.inner.get(service, account)?;
+        self.remember(service, account, value.clone());
+        Ok(value)
+    }
+
+    fn set(&self, service: &str, account: &str, value: &str) -> Result<(), CliError> {
+        match self.inner.set(service, account, value) {
+            Ok(()) => {
+                self.remember(service, account, Some(value.to_string()));
+                Ok(())
+            }
+            Err(e) => {
+                self.forget(service, account);
+                Err(e)
+            }
+        }
+    }
+
+    fn delete(&self, service: &str, account: &str) -> Result<(), CliError> {
+        match self.inner.delete(service, account) {
+            Ok(()) => {
+                self.remember(service, account, None);
+                Ok(())
+            }
+            Err(e) => {
+                self.forget(service, account);
+                Err(e)
+            }
+        }
+    }
+
+    fn backend_label(&self) -> String {
+        self.inner.backend_label()
+    }
+}
+
+// ---------------------------------------------------------------------------
 // Auto-pick + process-global handle
 // ---------------------------------------------------------------------------
 
@@ -464,7 +581,9 @@ pub fn auto_store() -> Arc<dyn KeyringStore> {
     {
         if OsKeyringStore::probe().is_ok() {
             tracing::debug!("Using OS keyring backend for credential storage");
-            return Arc::new(ChunkedKeyringStore::for_platform(OsKeyringStore));
+            return Arc::new(CachingKeyringStore::new(ChunkedKeyringStore::for_platform(
+                OsKeyringStore,
+            )));
         }
     }
     tracing::debug!("OS keyring unavailable; falling back to file backend");
@@ -680,6 +799,103 @@ mod tests {
 
     fn value_of_utf16_units(units: usize) -> String {
         "x".repeat(units)
+    }
+
+    /// Counts `get` calls and can be told to fail them.
+    #[derive(Debug, Default)]
+    struct CountingMock {
+        inner: MockKeyringStore,
+        reads: std::sync::atomic::AtomicUsize,
+        fail_reads: std::sync::atomic::AtomicBool,
+    }
+
+    impl CountingMock {
+        fn reads(&self) -> usize {
+            self.reads.load(std::sync::atomic::Ordering::SeqCst)
+        }
+    }
+
+    impl KeyringStore for Arc<CountingMock> {
+        fn get(&self, service: &str, account: &str) -> Result<Option<String>, CliError> {
+            self.reads.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
+            if self.fail_reads.load(std::sync::atomic::Ordering::SeqCst) {
+                return Err(CliError::Auth("keyring get failed: User denied access".into()));
+            }
+            self.inner.get(service, account)
+        }
+        fn set(&self, service: &str, account: &str, value: &str) -> Result<(), CliError> {
+            self.inner.set(service, account, value)
+        }
+        fn delete(&self, service: &str, account: &str) -> Result<(), CliError> {
+            self.inner.delete(service, account)
+        }
+        fn backend_label(&self) -> String {
+            self.inner.backend_label()
+        }
+    }
+
+    #[test]
+    fn caching_store_reads_each_entry_once() {
+        let mock = Arc::new(CountingMock::default());
+        mock.inner.set("svc", "acct", "secret").unwrap();
+        let store = CachingKeyringStore::new(mock.clone());
+
+        for _ in 0..8 {
+            assert_eq!(store.get("svc", "acct").unwrap().as_deref(), Some("secret"));
+            assert_eq!(store.get("svc", "missing").unwrap(), None);
+        }
+        assert_eq!(mock.reads(), 2, "one read per entry, present or absent");
+    }
+
+    #[test]
+    fn caching_store_retries_a_failed_read() {
+        let mock = Arc::new(CountingMock::default());
+        mock.inner.set("svc", "acct", "secret").unwrap();
+        mock.fail_reads.store(true, std::sync::atomic::Ordering::SeqCst);
+        let store = CachingKeyringStore::new(mock.clone());
+
+        assert!(store.get("svc", "acct").is_err());
+        assert!(store.get("svc", "acct").is_err());
+        mock.fail_reads.store(false, std::sync::atomic::Ordering::SeqCst);
+        assert_eq!(store.get("svc", "acct").unwrap().as_deref(), Some("secret"));
+        assert_eq!(mock.reads(), 3, "a denied read is not remembered");
+    }
+
+    #[test]
+    fn caching_store_sees_its_own_writes_and_deletes() {
+        let mock = Arc::new(CountingMock::default());
+        mock.inner.set("svc", "acct", "old").unwrap();
+        let store = CachingKeyringStore::new(mock.clone());
+        assert_eq!(store.get("svc", "acct").unwrap().as_deref(), Some("old"));
+
+        store.set("svc", "acct", "new").unwrap();
+        assert_eq!(store.get("svc", "acct").unwrap().as_deref(), Some("new"));
+        store.delete("svc", "acct").unwrap();
+        assert_eq!(store.get("svc", "acct").unwrap(), None);
+        assert_eq!(mock.inner.get("svc", "acct").unwrap(), None);
+        assert_eq!(mock.reads(), 1);
+    }
+
+    #[test]
+    fn caching_store_rereads_after_the_ttl() {
+        let mock = Arc::new(CountingMock::default());
+        mock.inner.set("svc", "acct", "old").unwrap();
+        let store = CachingKeyringStore::with_ttl(mock.clone(), Duration::ZERO);
+        assert_eq!(store.get("svc", "acct").unwrap().as_deref(), Some("old"));
+
+        // Another process rewrites the entry.
+        mock.inner.set("svc", "acct", "new").unwrap();
+        assert_eq!(store.get("svc", "acct").unwrap().as_deref(), Some("new"));
+        assert_eq!(mock.reads(), 2);
+    }
+
+    #[test]
+    fn caching_store_debug_omits_cached_values() {
+        let dir = tempfile::tempdir().unwrap();
+        let store = CachingKeyringStore::new(FileKeyringStore::at_root(dir.path().to_path_buf()));
+        store.set("svc", "acct", "super-secret-token").unwrap();
+        assert_eq!(store.get("svc", "acct").unwrap().as_deref(), Some("super-secret-token"));
+        assert!(!format!("{store:?}").contains("super-secret-token"));
     }
 
     #[test]

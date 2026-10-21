@@ -700,6 +700,17 @@
             }
           ],
           "description": "Path to a Doxyfile for C++ library documentation, relative to the fern/ directory.\nWhen provided, the backend uses this Doxyfile instead of auto-generating one.\nOnly valid when lang is cpp."
+        },
+        "include-undocumented-macros": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Also generate pages for `#define`s that have no Doxygen comment.\nBy default only documented macros are rendered. Include guards are never\nemitted (Doxygen drops them). Only valid when lang is cpp."
         }
       },
       "additionalProperties": false,
@@ -1206,7 +1217,7 @@
               "type": "null"
             }
           ],
-          "description": "A git ref—branch, tag, or commit SHA—whose committed content is built for this\nversion. Branches are mutable and resolve to their latest commit on the remote;\ntags and commit SHAs are immutable."
+          "description": "A git ref—branch, tag, or commit SHA—whose committed content is built for this\nversion. Branches are mutable and resolve to their latest commit on the remote;\ntags and commit SHAs are immutable.\n\nThe CLI checks out the ref and reads the docs.yml committed there to locate the\npages to build:\n- For a version listed under top-level `versions`, it uses the ref's docs.yml\n  `versions` list and takes the first entry that has a `path` (skipping entries\n  that have a `ref`). If the ref's docs.yml has no such entry, it uses the ref's\n  top-level `navigation`.\n- For a version listed under `products[].versions`, it finds the product with the\n  same `slug` (or, when either side has no `slug`, the same `display-name`) in the\n  ref's docs.yml and applies the same rule to that product's `versions` list,\n  falling back to the `navigation` in that product's file.\nEntries with a `ref` in the ref's docs.yml are ignored: only the docs.yml being\nbuilt determines which versions are published."
         },
         "slug": {
           "oneOf": [
@@ -1250,6 +1261,17 @@
             }
           ],
           "description": "If true, this version will be hidden from navigation, search, and indexing, but still accessible via direct URL."
+        },
+        "default": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If true, this version is the default version: it is served at the unversioned URLs\n(without the version slug) and is used for canonical URLs, the sitemap, search, and\n`llms.txt`. The order of the `versions` list only controls the order in the version\nswitcher. At most one version in a `versions` list may set `default: true`, and the\ndefault version cannot be `hidden`. A default version may be built from the working\ntree (`path`) or from a git ref (`ref`). If no version sets `default`, the first\nversion in the list is the default."
         },
         "announcement": {
           "oneOf": [
@@ -1875,6 +1897,204 @@
         "graphql"
       ]
     },
+    "docs.ApiSpecErrorResponseSchemaSource": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "object",
+              "array",
+              "null"
+            ]
+          }
+        }
+      ]
+    },
+    "docs.ApiSpecErrorResponseApplyTo": {
+      "type": "string",
+      "enum": [
+        "all",
+        "untyped"
+      ]
+    },
+    "docs.ApiSpecErrorResponseHttpMethod": {
+      "type": "string",
+      "enum": [
+        "get",
+        "post",
+        "put",
+        "patch",
+        "delete",
+        "head",
+        "options",
+        "trace"
+      ]
+    },
+    "docs.ApiSpecErrorResponseEnsure": {
+      "type": "object",
+      "properties": {
+        "status-code": {
+          "type": "integer",
+          "description": "The 4xx/5xx status code to add when an operation does not declare it."
+        },
+        "methods": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/docs.ApiSpecErrorResponseHttpMethod"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "status-code"
+      ],
+      "additionalProperties": false
+    },
+    "docs.ApiSpecErrorResponses": {
+      "type": "object",
+      "properties": {
+        "schema": {
+          "$ref": "#/definitions/docs.ApiSpecErrorResponseSchemaSource"
+        },
+        "name": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "apply-to": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ApiSpecErrorResponseApplyTo"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ensure": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/docs.ApiSpecErrorResponseEnsure"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "schema"
+      ],
+      "additionalProperties": false
+    },
+    "docs.ApiSpecImportSettings": {
+      "type": "object",
+      "properties": {
+        "type-dates-as-strings": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "use-bytes-for-binary-response": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "respect-parameter-content": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "respect-operation-id-word-boundaries": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "infer-forward-compatible": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "preserve-one-of-in-all-of": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "any-of-sibling-properties-as-object": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "error-responses": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ApiSpecErrorResponses"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false,
+      "description": "Import settings that affect the API definition rendered by Fern Docs."
+    },
     "docs.ApiSpecConfiguration": {
       "type": "object",
       "properties": {
@@ -1919,6 +2139,17 @@
             }
           ],
           "description": "Paths to Fern override documents, relative to docs.yml."
+        },
+        "settings": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ApiSpecImportSettings"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Import settings that affect the rendered API reference."
         }
       },
       "required": [
@@ -2039,6 +2270,16 @@
           ]
         },
         "rust": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.SnippetLanguageConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "cli": {
           "oneOf": [
             {
               "$ref": "#/definitions/docs.SnippetLanguageConfiguration"
@@ -2715,6 +2956,22 @@
       ],
       "description": "Use the `layout` object to customize the order that your API endpoints\nare displayed in the docs site."
     },
+    "docs.SortByAvailabilityValue": {
+      "type": "string",
+      "enum": [
+        "unset",
+        "stable",
+        "generally-available",
+        "in-development",
+        "pre-release",
+        "deprecated",
+        "beta",
+        "alpha",
+        "preview",
+        "legacy"
+      ],
+      "description": "An availability to sort by, or `unset` for items without an availability."
+    },
     "docs.ApiReferenceConfiguration": {
       "type": "object",
       "properties": {
@@ -2936,6 +3193,20 @@
             }
           ],
           "description": "If `alphabetized` is set to true, packages and endpoints will be sorted alphabetically, unless explicitly ordered in the `layout` object."
+        },
+        "sort-by-availability": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/docs.SortByAvailabilityValue"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Sorts packages and endpoints by availability, unless explicitly ordered in the `layout` object.\nListed availabilities come first, in the order provided. Use `unset` for items without an availability.\nUnlisted availabilities follow in the default order:\n`unset`, `generally-available`, `alpha`, `beta`, `preview`, `legacy`, `deprecated`.\n`stable` is treated as `generally-available`, and `in-development` and `pre-release` are treated as `beta`.\nItems with the same availability keep their existing order (alphabetical when `alphabetized` is true)."
         },
         "flattened": {
           "oneOf": [
@@ -4703,6 +4974,40 @@
       },
       "additionalProperties": false
     },
+    "docs.ExternalSitemapConfig": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "Absolute URL of the external sitemap (`sitemap.xml` or sitemap index)."
+        },
+        "locale": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Locale to index every URL in this sitemap into (e.g. `en`, `nl`, `ja-JP`). Must match the\nsite's default language or one of its `translations`. Overrides per-URL language detection."
+        }
+      },
+      "required": [
+        "url"
+      ],
+      "additionalProperties": false
+    },
+    "docs.ExternalSitemap": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/docs.ExternalSitemapConfig"
+        }
+      ]
+    },
     "docs.ExperimentalConfig": {
       "type": "object",
       "properties": {
@@ -4808,19 +5113,30 @@
           ],
           "description": "Deprecated: Use `multi-source: true` on the instance instead. When enabled, docs registration uses a basepath-aware S3 key format, allowing multiple independent doc sites to be hosted under the same custom domain with different basepaths."
         },
+        "robots-txt-on-instance-url": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Experimental flag: when set to `true`, the custom robots.txt configured in `agents.robots-txt` is also served on the site's Fern instance URL (`<site>.docs.buildwithfern.com`), not only on custom domains. Pages on the instance URL keep the `X-Robots-Tag: noindex, nofollow` header, so search engines still won't index them. Has no effect without a custom robots.txt. Only the static docs renderer needs this flag: the Next.js renderer already serves a custom robots.txt on the instance URL."
+        },
         "external-sitemaps": {
           "oneOf": [
             {
               "type": "array",
               "items": {
-                "type": "string"
+                "$ref": "#/definitions/docs.ExternalSitemap"
               }
             },
             {
               "type": "null"
             }
           ],
-          "description": "Experimental flag: a list of absolute URLs pointing to external sitemaps (`sitemap.xml`). Their pages are fetched and indexed in search alongside this site's documentation (tagged to the same domain), but are flagged as third-party so they rank below all first-party documentation."
+          "description": "Experimental flag: a list of external sitemaps (`sitemap.xml`), each either an absolute URL or an object with `url` and an optional `locale`. Their pages are fetched and indexed in search alongside this site's documentation (tagged to the same domain), but are flagged as third-party so they rank below all first-party documentation. Each URL is routed to the search index of the site locale it belongs to (detected from `hreflang` or a leading locale path segment, defaulting to the site's default language); set `locale` to pin every URL in a sitemap to one of the site's locales instead."
         }
       },
       "additionalProperties": false
@@ -6415,6 +6731,17 @@
           ],
           "description": "If `show-nav-availability-badges` is set to true, availability badges (Beta, Deprecated, etc.)\nare rendered inline next to navigation items in the sidebar. Defaults to false. The page-header\navailability badge is unaffected by this setting."
         },
+        "hide-webhook-method-badges": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If `hide-webhook-method-badges` is set to true, webhook entries in the sidebar render without\nan HTTP method badge (e.g. `POST`). Defaults to false. The webhook page itself is unaffected."
+        },
         "breadcrumbs": {
           "oneOf": [
             {
@@ -6441,7 +6768,7 @@
               "type": "null"
             }
           ],
-          "description": "If set to true, search results from the current product/version are\nboosted in Algolia's ranking (via `optionalFilters`) without excluding\nresults from other products/versions.\n\n@default: false"
+          "description": "If set to true, search results from the current product/version are\nboosted in Algolia's ranking (via `optionalFilters`) without excluding\nresults from other products/versions. Set to false to rank all\nproducts/versions equally.\n\n@default: true"
         },
         "default-filter-by-current-product": {
           "oneOf": [
@@ -6695,6 +7022,17 @@
             }
           ],
           "description": "If set to true, response examples in the API Reference include a raw HTTP block\nshowing the response status line and response headers alongside the body.\n\n@default: false"
+        },
+        "require-analytics-consent": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If set to true, Fern's built-in docs analytics (PostHog) stays off until visitor consent is given:\nno script, cookies, local storage or events. Grant consent from a custom script (e.g. your consent\nmanager's callback) by setting `window.fernAnalyticsConsent = true` and dispatching\n`new Event(\"fern-analytics-consent\")` on `window`.\n\n@default: false"
         }
       },
       "additionalProperties": false
@@ -6802,6 +7140,120 @@
         "tabs"
       ]
     },
+    "docs.SiteSwitcherThemeConfig": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Render the site switcher. Defaults to false."
+        },
+        "order": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Basepaths to pin first, in this order. Remaining sites follow alphabetically."
+        },
+        "hide": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Basepaths to omit, including any sites nested beneath them."
+        },
+        "labels": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Display label overrides keyed by basepath."
+        },
+        "show-products": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "List each site's products indented beneath it. Defaults to false."
+        }
+      },
+      "additionalProperties": false
+    },
+    "docs.CodeBlockTheme": {
+      "type": "string",
+      "enum": [
+        "github-dark",
+        "github-dark-default",
+        "github-dark-dimmed",
+        "github-dark-high-contrast",
+        "github-light",
+        "github-light-default",
+        "github-light-high-contrast",
+        "material-theme-darker",
+        "min-dark",
+        "min-light"
+      ],
+      "description": "A supported Shiki syntax-highlighting theme (https://shiki.style/themes)."
+    },
+    "docs.CodeBlocksThemeConfig": {
+      "type": "object",
+      "properties": {
+        "light": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CodeBlockTheme"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Code block theme used in light mode. Defaults to `min-light`."
+        },
+        "dark": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CodeBlockTheme"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Code block theme used in dark mode. Defaults to `material-theme-darker`."
+        }
+      },
+      "additionalProperties": false
+    },
     "docs.ThemeConfig": {
       "type": "object",
       "properties": {
@@ -6874,6 +7326,28 @@
               "type": "null"
             }
           ]
+        },
+        "site-switcher": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.SiteSwitcherThemeConfig"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Header switcher listing the other docs sites published to the same\ndomain under different basepaths. Membership is discovered\nautomatically at publish time; this only controls presentation."
+        },
+        "code-blocks": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.CodeBlocksThemeConfig"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Syntax-highlighting color schemes for code blocks, set separately\nfor light and dark mode. Defaults to `min-light` and\n`material-theme-darker`."
         }
       },
       "additionalProperties": false

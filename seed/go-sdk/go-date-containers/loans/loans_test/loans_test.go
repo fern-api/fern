@@ -10,6 +10,7 @@ import (
 	os "os"
 	testing "testing"
 
+	fern "github.com/go-date-containers/fern"
 	client "github.com/go-date-containers/fern/client"
 	option "github.com/go-date-containers/fern/option"
 	require "github.com/stretchr/testify/require"
@@ -95,4 +96,66 @@ func TestLoansGetLoanWithWireMock(
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
 	VerifyRequestCount(t, "TestLoansGetLoanWithWireMock", "GET", "/loan", nil, 1)
+}
+
+func TestLoansListLoansByDateWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewClient(
+		option.WithBaseURL(WireMockBaseURL),
+	)
+	request := &fern.ListLoansByDateRequest{
+		AsOf: fern.MustParseDate(
+			"2023-01-15",
+		),
+		Page: &fern.PageRequest{
+			Number: fern.Int(
+				1,
+			),
+			Size: fern.Int(
+				1,
+			),
+		},
+	}
+	_, invocationErr := client.Loans.ListLoansByDate(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestLoansListLoansByDateWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestLoansListLoansByDateWithWireMock", "GET", "/loans/by-date/2023-01-15", map[string]interface{}{"page[number]": "1", "page[size]": "1"}, 1)
+}
+
+func TestLoansListLoansByTimestampWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewClient(
+		option.WithBaseURL(WireMockBaseURL),
+	)
+	request := &fern.ListLoansByTimestampRequest{
+		AsOf: fern.MustParseDateTime(
+			"2002-08-28T12:30:00Z",
+		),
+	}
+	_, invocationErr := client.Loans.ListLoansByTimestamp(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestLoansListLoansByTimestampWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestLoansListLoansByTimestampWithWireMock", "GET", "/loans/by-timestamp/2002-08-28T12:30:00Z", nil, 1)
 }

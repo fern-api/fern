@@ -1,0 +1,224 @@
+openapi: 3.0.1
+info:
+  title: Twilio-like Fixture API
+  version: 1.0.0
+  description: Minimal Twilio-shaped spec for exercising CLI-snippet injection (path params, .json suffix, form body, query).
+paths:
+  /2010-04-01/Accounts/{AccountSid}/Messages.json:
+    post:
+      operationId: createMessage
+      tags: [messages]
+      parameters:
+        - name: AccountSid
+          in: path
+          required: true
+          schema: { type: string }
+          example: AC0000000000000000000000000000
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required: [To]
+              properties:
+                To: { type: string, example: "+15558675310" }
+                From: { type: string, example: "+15017122661" }
+                Body: { type: string, example: "Hello from Fern" }
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sid: { type: string }
+    get:
+      operationId: listMessages
+      tags: [messages]
+      parameters:
+        - name: AccountSid
+          in: path
+          required: true
+          schema: { type: string }
+          example: AC0000000000000000000000000000
+        - name: PageSize
+          in: query
+          required: false
+          schema: { type: integer }
+          example: 20
+        - name: "DateCreated<"
+          in: query
+          required: false
+          x-fern-parameter-name: dateCreatedBefore
+          schema: { type: string }
+          example: "2024-01-01"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  messages: { type: array, items: { type: object } }
+  /2010-04-01/Accounts/{AccountSid}/Calls.json:
+    post:
+      operationId: createCall
+      tags: [calls]
+      parameters:
+        - name: AccountSid
+          in: path
+          required: true
+          schema: { type: string }
+          example: AC0000000000000000000000000000
+        - name: X-Custom-Header
+          in: header
+          required: false
+          schema: { type: string }
+          example: custom-value
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required: [To]
+              properties:
+                To: { type: string, example: "+15558675310" }
+                # Collides with the built-in --json flag; the runtime mangles it to --json-param.
+                json: { type: string, example: "raw" }
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sid: { type: string }
+  /2010-04-01/Accounts/{AccountSid}/Calls/Stream.json:
+    post:
+      operationId: createCallStream
+      tags: [calls]
+      parameters:
+        - name: AccountSid
+          in: path
+          required: true
+          schema: { type: string }
+          example: AC0000000000000000000000000000
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required: [To]
+              properties:
+                To: { type: string, example: "+15558675310" }
+                # Literal dotted wire name: the runtime mis-nests the dot, so the whole body goes via --json.
+                "Parameter1.Name": { type: string, example: "foo" }
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  sid: { type: string }
+  /Chat/v1/Messages:
+    post:
+      operationId: sendChatMessage
+      x-fern-sdk-group-name: [chat, v1]
+      x-fern-sdk-method-name: send
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [Body]
+              properties:
+                Body: { type: string, example: "hi" }
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema: { type: object, properties: { sid: { type: string } } }
+  /2010-04-01/Accounts/{AccountSid}/Addresses.json:
+    post:
+      operationId: createAddress
+      tags: [addresses]
+      parameters:
+        - name: AccountSid
+          in: path
+          required: true
+          schema: { type: string }
+          example: AC0000000000000000000000000000
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [CustomerName]
+              properties:
+                CustomerName: { type: string, example: "Ada" }
+                # Nested object body field: the runtime exposes dotted flags; this port routes it to --params.
+                Address:
+                  type: object
+                  properties:
+                    City: { type: string, example: "SF" }
+                    Zip: { type: string, example: "94105" }
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema: { type: object, properties: { sid: { type: string } } }
+  /2010-04-01/Accounts/{AccountSid}/Media.json:
+    post:
+      operationId: uploadMedia
+      tags: [media]
+      parameters:
+        - name: AccountSid
+          in: path
+          required: true
+          schema: { type: string }
+          example: AC0000000000000000000000000000
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [File]
+              properties:
+                File: { type: string, format: binary }
+                # Reserved multipart field name: the runtime gives it no flag (reachable only via --params).
+                output: { type: string, example: "meta" }
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema: { type: object, properties: { sid: { type: string } } }
+  /Diagnostics:
+    get:
+      operationId: listDiagnostics
+      tags: [diagnostics]
+      parameters:
+        - name: "日本語"
+          in: query
+          required: false
+          schema: { type: string }
+          example: unicode-value
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema: { type: object, properties: { ok: { type: boolean } } }

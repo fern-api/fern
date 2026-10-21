@@ -1,4 +1,4 @@
-import { getOriginalName, getWireValue, GeneratorError } from "@fern-api/base-generator";
+import { GeneratorError, getOriginalName, getSseEnvelopeEventNames, getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { escapeRustKeyword, RustFile } from "@fern-api/rust-base";
@@ -219,8 +219,6 @@ export class SubClientGenerator {
         const hasQueryParams = this.hasQueryParameters();
         const hasEndpoints = this.hasEndpoints();
         const typeAnalysis = this.analyzeRequiredImports();
-        const hasSubClients = this.hasSubClients();
-        const endpointsUseCustomTypes = this.endpointsUseCustomTypes();
         const hasBinaryEndpoints = this.hasBinaryEndpoints();
         const hasSseEndpoints = this.hasSseEndpoints();
         const hasJsonStreamingEndpoints = this.hasJsonStreamingEndpoints();
@@ -314,9 +312,9 @@ export class SubClientGenerator {
             );
         }
 
-        // Add crate::api imports if we have sub-clients OR if endpoints use custom types OR query request types
-        const hasQueryRequestTypes = this.hasQueryRequestTypes();
-        if (hasSubClients || endpointsUseCustomTypes || hasQueryRequestTypes) {
+        // Sub-client types are re-exported by the containing mod.rs, so only endpoint
+        // types (custom types and generated query request types) need crate::api.
+        if (this.needsApiTypesImport()) {
             imports.push(
                 new UseStatement({
                     path: "crate::api",
@@ -426,8 +424,8 @@ export class SubClientGenerator {
         return endpoints.length > 0;
     }
 
-    private hasSubClients(): boolean {
-        return this.clientGeneratorContext.subClients.length > 0;
+    public needsApiTypesImport(): boolean {
+        return this.endpointsUseCustomTypes() || this.hasQueryRequestTypes();
     }
 
     private endpointsUseCustomTypes(): boolean {
@@ -499,8 +497,17 @@ export class SubClientGenerator {
             fileDownload: () => false,
             text: () => false,
             bytes: () => false,
-            streaming: () => false,
+            streaming: (streaming) => this.streamingResponseUsesCustomTypes(streaming),
             streamParameter: () => false,
+            _other: () => false
+        });
+    }
+
+    private streamingResponseUsesCustomTypes(streaming: FernIr.StreamingResponse): boolean {
+        return streaming._visit({
+            json: (jsonChunk) => this.isCustomType(jsonChunk.payload),
+            sse: (sseChunk) => this.isCustomType(sseChunk.payload),
+            text: () => false,
             _other: () => false
         });
     }
@@ -913,6 +920,7 @@ export class SubClientGenerator {
         let executeMethod = "execute_request";
         let typeParameter = "";
         let executeArgs = "";
+        let sseEventDiscriminatorSuffix = "";
 
         const isBytesRequest = this.isBytesEndpoint(endpoint);
 
@@ -982,6 +990,7 @@ export class SubClientGenerator {
                 executeMethod = "execute_sse_request";
                 const terminator = this.getSseTerminator(endpoint);
                 executeArgs += `\n            ${terminator},`;
+                sseEventDiscriminatorSuffix = this.getSseEventDiscriminatorSuffix(endpoint);
             } else if (responseType === "json") {
                 // JSON streaming needs explicit type parameter for inference
                 const innerType = this.getInnerResponseType(endpoint);
@@ -1000,16 +1009,14 @@ export class SubClientGenerator {
         let body: string;
 
         if (urlMethodName && supportsBaseUrlOverride) {
-            // Multi-URL: resolve base URL at call time from environment
-            const baseUrlResolution =
-                `let base_url = self.http_client.config().environment.as_ref()\n` +
-                `            .map_or(self.http_client.base_url(), |env| env.${urlMethodName}());\n`;
+            // Multi-URL: resolve the URL at call time; an explicit base_url wins over the environment
+            const baseUrlResolution = `let base_url = self.http_client.config().service_url(|environment| environment.${urlMethodName}());\n`;
             body = `${requestOptionsPrelude}${baseUrlResolution}        self.http_client.${executeMethod}_with_base_url${typeParameter}(
             base_url,${executeArgs}
         ).await`;
         } else {
             body = `${requestOptionsPrelude}self.http_client.${executeMethod}${typeParameter}(${executeArgs}
-        ).await`;
+        ).await${sseEventDiscriminatorSuffix}`;
         }
 
         return {
@@ -2002,6 +2009,35 @@ export class SubClientGenerator {
         return (endpoint.requestBody?.contentType ?? "").toLowerCase().includes("x-www-form-urlencoded");
     }
 
+    /**
+     * For protocol-discriminated SSE unions, the discriminant travels on the SSE `event:` line, so the
+     * stream must be told to expose it to deserialization.
+     */
+    private getSseEventDiscriminatorSuffix(endpoint: FernIr.HttpEndpoint): string {
+        const body = endpoint.response?.body;
+        if (body?.type !== "streaming" || body.value.type !== "sse" || body.value.payload.type !== "named") {
+            return "";
+        }
+        const union = this.context.ir.types[body.value.payload.typeId]?.shape;
+        if (union?.type !== "union" || union.discriminatorContext !== FernIr.UnionDiscriminatorContext.Protocol) {
+            return "";
+        }
+        const envelopeEvents = getSseEnvelopeEventNames({
+            union,
+            getObjectPropertyWireValues: (variant) => {
+                const variantShape = this.context.ir.types[variant.typeId]?.shape;
+                if (variantShape?.type !== "object") {
+                    return undefined;
+                }
+                return [...(variantShape.extendedProperties ?? []), ...variantShape.properties].map((property) =>
+                    getWireValue(property.name)
+                );
+            }
+        });
+        const envelopeEventsLiteral = envelopeEvents.map((event) => JSON.stringify(event)).join(", ");
+        return `\n        .map(|stream| stream.with_event_discriminator(${JSON.stringify(getWireValue(union.discriminant))}, &[${envelopeEventsLiteral}]))`;
+    }
+
     private getSseTerminator(endpoint: FernIr.HttpEndpoint): string {
         if (!endpoint.response?.body) {
             return "None";
@@ -2696,7 +2732,7 @@ export class SubClientGenerator {
                 streaming: (streaming) => {
                     return streaming._visit({
                         json: () => "Complete JSON response (fetched at once, not streaming)",
-                        sse: () => "Server-Sent Events stream (use futures::StreamExt to iterate)",
+                        sse: () => "Server-Sent Events stream (use StreamExt from the prelude to iterate)",
                         text: () => "Text streaming response",
                         _other: () => "Streaming response"
                     });

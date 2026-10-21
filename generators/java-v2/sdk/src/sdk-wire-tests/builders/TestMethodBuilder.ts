@@ -8,7 +8,7 @@ import { TestResourceWriter } from "../resources/TestResourceWriter.js";
 import { HeaderValidator } from "../validators/HeaderValidator.js";
 import { JsonValidator } from "../validators/JsonValidator.js";
 import { PaginationValidator } from "../validators/PaginationValidator.js";
-import { TestClassBuilder } from "./TestClassBuilder.js";
+import { getWireTestJavaNames, TestClassBuilder } from "./TestClassBuilder.js";
 
 /**
  * Builder for generating individual test methods in wire tests.
@@ -21,6 +21,7 @@ export class TestMethodBuilder {
     private readonly testClassBuilder: TestClassBuilder;
     private resourceWriter: TestResourceWriter | undefined;
     private currentTestClassName: string | undefined;
+    private javaNames = getWireTestJavaNames(undefined);
 
     constructor(private readonly context: SdkGeneratorContext) {
         this.headerValidator = new HeaderValidator();
@@ -38,6 +39,13 @@ export class TestMethodBuilder {
     }
 
     /**
+     * Sets the imports of the current test class, used to avoid simple-name clashes with API types.
+     */
+    public setTestClassImports(imports: Set<string>): void {
+        this.javaNames = getWireTestJavaNames(imports);
+    }
+
+    /**
      * Sets the current test class name for resource file naming.
      */
     public setCurrentTestClassName(className: string): void {
@@ -45,15 +53,26 @@ export class TestMethodBuilder {
     }
 
     /**
+     * The default test method name for an endpoint, used for its first example.
+     */
+    public getTestMethodName(endpoint: FernIr.HttpEndpoint): string {
+        return `test${this.toJavaMethodName(this.context.caseConverter.pascalSafe(endpoint.name))}`;
+    }
+
+    /**
      * Creates a test method for an endpoint with mock setup and validation.
+     * Error examples assert that the call throws `exceptionClassReference` with the example's status and body.
      */
     public createTestMethod(
         endpoint: FernIr.HttpEndpoint,
         snippet: string,
-        testExample: WireTestExample
+        testExample: WireTestExample,
+        options: { testMethodName?: string; exceptionClassReference?: string } = {}
     ): (writer: Writer) => void {
         return (writer) => {
-            const testMethodName = `test${this.toJavaMethodName(this.context.caseConverter.pascalSafe(endpoint.name))}`;
+            const testMethodName = options.testMethodName ?? this.getTestMethodName(endpoint);
+            const expectedError = testExample.expectedError;
+            const exceptionClassReference = options.exceptionClassReference ?? expectedError?.className;
             const methodCall = this.snippetExtractor.extractMethodCall(snippet);
 
             // If we can't extract a method call, this endpoint should have been filtered out upstream
@@ -64,8 +83,8 @@ export class TestMethodBuilder {
                 );
             }
 
-            writer.writeLine("@Test");
-            writer.writeLine(`public void ${testMethodName}() throws Exception {`);
+            writer.writeLine(this.javaNames.testAnnotation);
+            writer.writeLine(`public void ${testMethodName}() throws ${this.javaNames.exceptionType} {`);
             writer.indent();
 
             // For OAuth APIs, we need to enqueue an OAuth token response FIRST
@@ -101,9 +120,15 @@ export class TestMethodBuilder {
                   }) as typeof rawResponseJson)
                 : rawResponseJson;
 
-            const mockResponseBody = expectedResponseJson
-                ? JSON.stringify(expectedResponseJson)
-                : this.generateMockResponseForEndpoint(endpoint);
+            let mockResponseBody: string;
+            if (expectedError != null) {
+                mockResponseBody = expectedResponseJson != null ? JSON.stringify(expectedResponseJson) : "{}";
+            } else {
+                mockResponseBody = expectedResponseJson
+                    ? JSON.stringify(expectedResponseJson)
+                    : this.generateMockResponseForEndpoint(endpoint);
+            }
+            const isBodilessStatus = responseStatusCode === 204 || responseStatusCode === 205;
 
             // Pre-register response resource file if needed - used for both mock setup and validation
             // to avoid creating duplicate files with identical content
@@ -124,18 +149,27 @@ export class TestMethodBuilder {
 
             writer.writeLine("server.enqueue(new MockResponse()");
             writer.indent();
-            writer.writeLine(`.setResponseCode(${responseStatusCode})`);
 
-            if (responseResourcePath) {
+            if (isBodilessStatus) {
+                writer.writeLine(`.setResponseCode(${responseStatusCode}));`);
+            } else if (responseResourcePath) {
+                writer.writeLine(`.setResponseCode(${responseStatusCode})`);
                 writer.addImport(`${this.context.getRootPackageName()}.TestResources`);
                 writer.writeLine(`.setBody(TestResources.loadResource("${responseResourcePath}")));`);
             } else {
+                writer.writeLine(`.setResponseCode(${responseStatusCode})`);
                 writer.writeLine(`.setBody(${JSON.stringify(mockResponseBody)}));`);
             }
             writer.dedent();
 
             const hasResponseBody = endpoint.response?.body != null;
-            if (hasResponseBody) {
+            if (expectedError != null && exceptionClassReference != null) {
+                writer.writeLine(
+                    `${exceptionClassReference} exception = Assertions.assertThrows(${exceptionClassReference}.class, () -> ${
+                        methodCall.endsWith(";") ? methodCall.slice(0, -1) : methodCall
+                    });`
+                );
+            } else if (hasResponseBody) {
                 const returnType = this.getEndpointReturnType(endpoint);
                 writer.writeLine(
                     `${returnType} response = ${methodCall.endsWith(";") ? methodCall.slice(0, -1) : methodCall};`
@@ -231,7 +265,29 @@ export class TestMethodBuilder {
                 }
             }
 
-            if (hasResponseBody && expectedResponseJson && responseStatusCode < 400) {
+            if (expectedError != null) {
+                writer.writeLine("");
+                writer.writeLine("// Validate error response");
+                writer.writeLine(
+                    `Assertions.assertEquals(${expectedError.statusCode}, exception.statusCode(), "Error status code does not match expected");`
+                );
+                if (expectedResponseJson != null) {
+                    writer.writeLine("String actualErrorJson = objectMapper.writeValueAsString(exception.body());");
+                    if (responseResourcePath) {
+                        writer.addImport(`${this.context.getRootPackageName()}.TestResources`);
+                        writer.writeLine(
+                            `String expectedErrorBody = TestResources.loadResource("${responseResourcePath}");`
+                        );
+                    } else {
+                        this.jsonValidator.formatMultilineJson(writer, "expectedErrorBody", expectedResponseJson);
+                    }
+                    writer.writeLine("JsonNode actualErrorNode = objectMapper.readTree(actualErrorJson);");
+                    writer.writeLine("JsonNode expectedErrorNode = objectMapper.readTree(expectedErrorBody);");
+                    writer.writeLine(
+                        'Assertions.assertTrue(jsonEquals(expectedErrorNode, actualErrorNode), "Error body does not match expected");'
+                    );
+                }
+            } else if (hasResponseBody && expectedResponseJson && responseStatusCode < 400) {
                 writer.writeLine("");
                 writer.writeLine("// Validate response body");
                 writer.writeLine('Assertions.assertNotNull(response, "Response should not be null");');

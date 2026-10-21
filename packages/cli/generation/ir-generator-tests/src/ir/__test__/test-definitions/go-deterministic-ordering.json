@@ -37197,7 +37197,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -37348,7 +37349,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -37499,7 +37501,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -37650,7 +37653,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -37801,7 +37805,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -37956,7 +37961,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -38111,7 +38117,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -38266,7 +38273,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -38417,7 +38425,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -38565,7 +38574,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -38713,7 +38723,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -39027,7 +39038,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -39342,7 +39354,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -39659,7 +39672,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -39973,7 +39987,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -40288,7 +40303,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -40605,7 +40621,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -40919,7 +40936,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -41234,7 +41252,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -41551,7 +41570,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -41699,7 +41719,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -41872,7 +41893,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -42020,7 +42042,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -42199,7 +42222,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -42378,7 +42402,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -42551,7 +42576,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -42699,7 +42725,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -42847,7 +42874,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -42995,7 +43023,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -43143,7 +43172,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -43322,7 +43352,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -43473,7 +43504,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -43621,7 +43653,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -43769,7 +43802,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -44086,7 +44120,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -44259,7 +44294,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -44540,7 +44576,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -44851,7 +44888,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -45168,7 +45206,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -45480,7 +45519,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -45792,7 +45832,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -45971,7 +46012,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -46280,7 +46322,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -46455,7 +46498,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -46603,7 +46647,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -46751,7 +46796,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -46899,7 +46945,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -47047,7 +47094,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -47195,7 +47243,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -47343,7 +47392,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -47491,7 +47541,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -47639,7 +47690,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -47787,7 +47839,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -48068,7 +48121,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -48216,7 +48270,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -48358,7 +48413,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -48500,7 +48556,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -48642,7 +48699,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -48784,7 +48842,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -49050,7 +49109,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -49158,7 +49218,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -49261,7 +49322,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -49364,7 +49426,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -50294,6 +50357,7 @@
         "hasPaginatedEndpoints": true,
         "hasFileDownloadEndpoints": false,
         "idempotencyKeyGeneration": null,
+        "webhookSignatureVerification": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",

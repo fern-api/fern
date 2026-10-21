@@ -111,7 +111,6 @@ public final class PaymentInfo {
 
         private Optional<String> description = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -154,6 +153,16 @@ public final class PaymentInfo {
         @java.lang.Override
         public PaymentInfo build() {
             return new PaymentInfo(amount, currency, description, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("amount")
+                    || key.equalsIgnoreCase("currency")
+                    || key.equalsIgnoreCase("description")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

@@ -5,11 +5,21 @@ package com.seed.javaWithPropertyConflict;
 
 import com.seed.javaWithPropertyConflict.core.ClientOptions;
 
-public class SeedJavaWithPropertyConflictClient {
+public class SeedJavaWithPropertyConflictClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     public SeedJavaWithPropertyConflictClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedJavaWithPropertyConflictClientBuilder builder() {

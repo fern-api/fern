@@ -4,6 +4,7 @@
 package com.seed.aliasExtends;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.aliasExtends.core.BodyProperties;
 import com.seed.aliasExtends.core.ClientOptions;
 import com.seed.aliasExtends.core.MediaTypes;
 import com.seed.aliasExtends.core.ObjectMappers;
@@ -52,7 +53,9 @@ public class AsyncRawSeedAliasExtendsClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedAliasExtendsException("Failed to serialize request", e);
         }
@@ -76,7 +79,8 @@ public class AsyncRawSeedAliasExtendsClient {
                     .build();
         }
         CompletableFuture<SeedAliasExtendsHttpResponse<Void>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -101,6 +105,11 @@ public class AsyncRawSeedAliasExtendsClient {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(new SeedAliasExtendsException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;

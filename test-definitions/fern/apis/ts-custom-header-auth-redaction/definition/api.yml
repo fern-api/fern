@@ -1,0 +1,17 @@
+name: ts-custom-header-auth-redaction
+auth: PartnerSecret
+auth-schemes:
+  PartnerSecret:
+    header: PARTNER-SECRET
+    name: secret
+    type: string
+    env: PARTNER_SECRET
+headers:
+  PARTNER-CLIENT-ID:
+    name: clientId
+    type: optional<string>
+    env: PARTNER_CLIENT_ID
+  Partner-Version:
+    name: version
+    type: optional<string>
+    env: PARTNER_VERSION

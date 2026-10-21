@@ -4,7 +4,8 @@
  * @example
  *     {
  *         username: "johndoe",
- *         email: "john@example.com"
+ *         email: "john@example.com",
+ *         Content: "{\"key\":\"value\"}"
  *     }
  */
 export interface PostSubmitRequest {
@@ -12,4 +13,6 @@ export interface PostSubmitRequest {
     username: string;
     /** The user's email address */
     email: string;
+    /** A JSON document carried as a form field */
+    Content: string;
 }

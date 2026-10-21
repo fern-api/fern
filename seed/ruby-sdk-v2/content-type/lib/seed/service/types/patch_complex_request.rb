@@ -16,15 +16,15 @@ module Seed
 
         field :tags, -> { Internal::Types::Array[String] }, optional: true, nullable: false
 
-        field :email, -> { String }, optional: true, nullable: false
+        field :email, -> { String }, optional: true, nullable: true
 
-        field :nickname, -> { String }, optional: true, nullable: false
+        field :nickname, -> { String }, optional: true, nullable: true
 
-        field :bio, -> { String }, optional: true, nullable: false
+        field :bio, -> { String }, optional: true, nullable: true
 
-        field :profile_image_url, -> { String }, optional: true, nullable: false, api_name: "profileImageUrl"
+        field :profile_image_url, -> { String }, optional: true, nullable: true, api_name: "profileImageUrl"
 
-        field :settings, -> { Internal::Types::Hash[String, Object] }, optional: true, nullable: false
+        field :settings, -> { Internal::Types::Hash[String, Object] }, optional: true, nullable: true
       end
     end
   end

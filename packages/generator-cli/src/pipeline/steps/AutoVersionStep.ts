@@ -52,6 +52,7 @@ type VersionBumpLabel = "MAJOR" | "MINOR" | "PATCH" | "NO_CHANGE";
  * Falls back to a PATCH bump with a neutral commit message when:
  *  - The cleaned diff exceeds MAX_RAW_DIFF_BYTES.
  *  - The FAI call throws (network error, rate limit, malformed response, …).
+ * In both cases the result carries `analysisWarning` so GithubStep can flag the PR.
  */
 export class AutoVersionStep extends BaseStep {
     readonly name = "autoVersion";
@@ -208,45 +209,27 @@ export class AutoVersionStep extends BaseStep {
         }
 
         if (cleanedBytes > MAX_RAW_DIFF_BYTES) {
-            this.logger.warn(
-                `AutoVersionStep: diff too large for FAI (${formatSizeKB(cleanedBytes)}KB, ` +
-                    `limit ${formatSizeKB(MAX_RAW_DIFF_BYTES)}KB). Falling back to PATCH.`
-            );
+            const warning =
+                `diff too large for FAI (${formatSizeKB(cleanedBytes)}KB, ` +
+                `limit ${formatSizeKB(MAX_RAW_DIFF_BYTES)}KB)`;
+            this.logger.warn(`AutoVersionStep: ${warning}. Falling back to PATCH.`);
             return await this.finalizeWithBump({
                 service,
                 language,
                 mappedMagicVersion,
                 previousVersion,
-                analysis: { versionBump: "PATCH", message: this.brandMessage("SDK regeneration") }
+                analysis: this.fallbackPatchAnalysis(),
+                analysisWarning: warning
             });
         }
 
-        let analysis: FAIAnalysis | null;
-        try {
-            if (this.config.ai == null && this.config.fernToken != null) {
-                // No BAML provider config (the remote-generation / fiddle path) — call the
-                // FAI service with the fern token instead. FAI chunks internally, so send
-                // the full cleaned diff in one request.
-                analysis = await this.analyzeViaFaiService(cleanedDiff, language, previousVersion);
-            } else {
-                const chunks = service.chunkDiff(cleanedDiff, MAX_AI_DIFF_BYTES);
-                const cappedChunks = chunks.slice(0, MAX_CHUNKS);
-                const skippedChunks = chunks.length - cappedChunks.length;
-                if (chunks.length > 1) {
-                    this.logger.info(
-                        `AutoVersionStep: split diff into ${chunks.length} chunks` +
-                            (skippedChunks > 0 ? ` (capped at ${MAX_CHUNKS}, skipping ${skippedChunks})` : "")
-                    );
-                }
-                analysis =
-                    cappedChunks.length <= 1
-                        ? await this.analyzeSingle(cleanedDiff, language, previousVersion)
-                        : await this.analyzeChunks(cappedChunks, language, previousVersion);
-            }
-        } catch (error) {
-            this.logger.warn(`AutoVersionStep: FAI analysis failed (${String(error)}); falling back to PATCH bump.`);
-            analysis = { versionBump: "PATCH", message: this.brandMessage("SDK regeneration") };
-        }
+        const { analysis, analysisWarning } = await this.analyze({
+            service,
+            cleanedDiff,
+            language,
+            previousVersion,
+            label: "AutoVersionStep"
+        });
 
         if (analysis == null) {
             this.logger.info(`AutoVersionStep: FAI returned NO_CHANGE; rewriting placeholder to ${previousVersion}.`);
@@ -255,7 +238,8 @@ export class AutoVersionStep extends BaseStep {
                 language,
                 mappedMagicVersion,
                 previousVersion,
-                reason: "FAI returned NO_CHANGE"
+                reason: "FAI returned NO_CHANGE",
+                analysisWarning
             });
         }
 
@@ -264,7 +248,8 @@ export class AutoVersionStep extends BaseStep {
             language,
             mappedMagicVersion,
             previousVersion,
-            analysis
+            analysis,
+            analysisWarning
         });
     }
 
@@ -323,43 +308,27 @@ export class AutoVersionStep extends BaseStep {
         }
 
         if (cleanedBytes > MAX_RAW_DIFF_BYTES) {
-            this.logger.warn(
-                `AutoVersionStep (non-replay): diff too large (${formatSizeKB(cleanedBytes)}KB). Falling back to PATCH.`
-            );
+            const warning =
+                `diff too large for FAI (${formatSizeKB(cleanedBytes)}KB, ` +
+                `limit ${formatSizeKB(MAX_RAW_DIFF_BYTES)}KB)`;
+            this.logger.warn(`AutoVersionStep (non-replay): ${warning}. Falling back to PATCH.`);
             return await this.finalizeWithBumpNonReplay({
                 service,
                 language,
                 mappedMagicVersion,
                 previousVersion,
-                analysis: { versionBump: "PATCH", message: this.brandMessage("SDK regeneration") }
+                analysis: this.fallbackPatchAnalysis(),
+                analysisWarning: warning
             });
         }
 
-        let analysis: FAIAnalysis | null;
-        try {
-            if (this.config.ai == null && this.config.fernToken != null) {
-                analysis = await this.analyzeViaFaiService(cleanedDiff, language, previousVersion);
-            } else {
-                const chunks = service.chunkDiff(cleanedDiff, MAX_AI_DIFF_BYTES);
-                const cappedChunks = chunks.slice(0, MAX_CHUNKS);
-                const skippedChunks = chunks.length - cappedChunks.length;
-                if (chunks.length > 1) {
-                    this.logger.info(
-                        `AutoVersionStep (non-replay): split diff into ${chunks.length} chunks` +
-                            (skippedChunks > 0 ? ` (capped at ${MAX_CHUNKS}, skipping ${skippedChunks})` : "")
-                    );
-                }
-                analysis =
-                    cappedChunks.length <= 1
-                        ? await this.analyzeSingle(cleanedDiff, language, previousVersion)
-                        : await this.analyzeChunks(cappedChunks, language, previousVersion);
-            }
-        } catch (error) {
-            this.logger.warn(
-                `AutoVersionStep (non-replay): FAI analysis failed (${String(error)}); falling back to PATCH bump.`
-            );
-            analysis = { versionBump: "PATCH", message: this.brandMessage("SDK regeneration") };
-        }
+        const { analysis, analysisWarning } = await this.analyze({
+            service,
+            cleanedDiff,
+            language,
+            previousVersion,
+            label: "AutoVersionStep (non-replay)"
+        });
 
         if (analysis == null) {
             this.logger.info(
@@ -370,7 +339,8 @@ export class AutoVersionStep extends BaseStep {
                 language,
                 mappedMagicVersion,
                 previousVersion,
-                reason: "FAI returned NO_CHANGE"
+                reason: "FAI returned NO_CHANGE",
+                analysisWarning
             });
         }
 
@@ -379,8 +349,88 @@ export class AutoVersionStep extends BaseStep {
             language,
             mappedMagicVersion,
             previousVersion,
-            analysis
+            analysis,
+            analysisWarning
         });
+    }
+
+    private fallbackPatchAnalysis(): FAIAnalysis {
+        return { versionBump: "PATCH", message: this.brandMessage("SDK regeneration") };
+    }
+
+    /**
+     * Runs FAI analysis over the cleaned diff. Never throws: when analysis cannot be
+     * obtained at all, returns a PATCH fallback together with an `analysisWarning`
+     * describing why, so callers can surface it in the step result / PR body instead
+     * of shipping a silent PATCH for what may be a breaking change.
+     */
+    private async analyze(params: {
+        service: AutoVersioningService;
+        cleanedDiff: string;
+        language: string;
+        previousVersion: string;
+        label: string;
+    }): Promise<{ analysis: FAIAnalysis | null; analysisWarning?: string }> {
+        const { service, cleanedDiff, language, previousVersion, label } = params;
+        const chunks = service.chunkDiff(cleanedDiff, MAX_AI_DIFF_BYTES);
+        const cappedChunks = chunks.slice(0, MAX_CHUNKS);
+        const skippedChunks = chunks.length - cappedChunks.length;
+        const logSplit = () => {
+            if (chunks.length > 1) {
+                this.logger.info(
+                    `${label}: split diff into ${chunks.length} chunks` +
+                        (skippedChunks > 0 ? ` (capped at ${MAX_CHUNKS}, skipping ${skippedChunks})` : "")
+                );
+            }
+        };
+
+        try {
+            if (this.config.ai == null && this.config.fernToken != null) {
+                // No BAML provider config (the remote-generation / fiddle path) — call the
+                // FAI service with the fern token. FAI chunks internally, so send the full
+                // cleaned diff in one request first; if that single large request fails,
+                // retry chunk-by-chunk so one timeout/5xx can't discard the whole analysis.
+                try {
+                    return { analysis: await this.analyzeViaFaiService(cleanedDiff, language, previousVersion) };
+                } catch (error) {
+                    if (cappedChunks.length <= 1) {
+                        throw error;
+                    }
+                    this.logger.warn(
+                        `${label}: FAI analysis of the full diff failed (${String(error)}); retrying in ${cappedChunks.length} chunks.`
+                    );
+                    logSplit();
+                    const chunked = await this.analyzeChunksViaFaiService(
+                        cappedChunks,
+                        language,
+                        previousVersion,
+                        label
+                    );
+                    const warnings = [chunked.analysisWarning];
+                    if (skippedChunks > 0) {
+                        warnings.push(
+                            `${skippedChunks} of ${chunks.length} diff chunks were not analyzed (capped at ${MAX_CHUNKS})`
+                        );
+                    }
+                    const analysisWarning = warnings.filter(hasText).join("; ");
+                    return {
+                        analysis: chunked.analysis,
+                        analysisWarning: analysisWarning.length > 0 ? analysisWarning : undefined
+                    };
+                }
+            }
+            logSplit();
+            return {
+                analysis:
+                    cappedChunks.length <= 1
+                        ? await this.analyzeSingle(cleanedDiff, language, previousVersion)
+                        : await this.analyzeChunks(cappedChunks, language, previousVersion)
+            };
+        } catch (error) {
+            const warning = `FAI analysis failed (${String(error)})`;
+            this.logger.warn(`${label}: ${warning}; falling back to PATCH bump.`);
+            return { analysis: this.fallbackPatchAnalysis(), analysisWarning: warning };
+        }
     }
 
     /**
@@ -398,8 +448,9 @@ export class AutoVersionStep extends BaseStep {
         mappedMagicVersion: string;
         previousVersion: string;
         reason: string;
+        analysisWarning?: string;
     }): Promise<AutoVersionStepResult> {
-        const { service, language, mappedMagicVersion, previousVersion, reason } = params;
+        const { service, language, mappedMagicVersion, previousVersion, reason, analysisWarning } = params;
 
         // `previousVersion` flows into the same `bash -c` + single-quoted sed
         // expression that `handleFirstGeneration` guards against with
@@ -429,7 +480,8 @@ export class AutoVersionStep extends BaseStep {
             previousVersion,
             versionBump: "NO_CHANGE",
             commitMessage,
-            commitSha
+            commitSha,
+            analysisWarning
         };
     }
 
@@ -439,8 +491,9 @@ export class AutoVersionStep extends BaseStep {
         mappedMagicVersion: string;
         previousVersion: string;
         analysis: FAIAnalysis;
+        analysisWarning?: string;
     }): Promise<AutoVersionStepResult> {
-        const { service, language, mappedMagicVersion, previousVersion } = params;
+        const { service, language, mappedMagicVersion, previousVersion, analysisWarning } = params;
         const analysis = this.withChangelogFallback(params.analysis);
 
         const newVersion = incrementVersion(previousVersion, analysis.versionBump as VersionBumpEnum);
@@ -467,6 +520,7 @@ export class AutoVersionStep extends BaseStep {
             versionBump: analysis.versionBump as VersionBumpLabel,
             prDescription: analysis.prDescription,
             versionBumpReason: analysis.versionBumpReason,
+            analysisWarning,
             commitSha
         };
     }
@@ -481,8 +535,9 @@ export class AutoVersionStep extends BaseStep {
         mappedMagicVersion: string;
         previousVersion: string;
         reason: string;
+        analysisWarning?: string;
     }): Promise<AutoVersionStepResult> {
-        const { service, language, mappedMagicVersion, previousVersion, reason } = params;
+        const { service, language, mappedMagicVersion, previousVersion, reason, analysisWarning } = params;
 
         if (!isValidSemver(previousVersion)) {
             const errorMessage =
@@ -504,7 +559,8 @@ export class AutoVersionStep extends BaseStep {
             version: previousVersion,
             previousVersion,
             versionBump: "NO_CHANGE",
-            commitMessage
+            commitMessage,
+            analysisWarning
         };
     }
 
@@ -518,8 +574,9 @@ export class AutoVersionStep extends BaseStep {
         mappedMagicVersion: string;
         previousVersion: string;
         analysis: FAIAnalysis;
+        analysisWarning?: string;
     }): Promise<AutoVersionStepResult> {
-        const { service, language, mappedMagicVersion, previousVersion } = params;
+        const { service, language, mappedMagicVersion, previousVersion, analysisWarning } = params;
         const analysis = this.withChangelogFallback(params.analysis);
 
         const newVersion = incrementVersion(previousVersion, analysis.versionBump as VersionBumpEnum);
@@ -545,7 +602,8 @@ export class AutoVersionStep extends BaseStep {
             previousVersion,
             versionBump: analysis.versionBump as VersionBumpLabel,
             prDescription: analysis.prDescription,
-            versionBumpReason: analysis.versionBumpReason
+            versionBumpReason: analysis.versionBumpReason,
+            analysisWarning
         };
     }
 
@@ -1009,6 +1067,80 @@ export class AutoVersionStep extends BaseStep {
     }
 
     /**
+     * Chunked retry for the hosted FAI path. Each chunk is analyzed independently;
+     * chunks whose request fails are skipped as long as at least one chunk succeeds,
+     * and the partial coverage is reported via `analysisWarning` so the PR is flagged
+     * and never automerged. Results are aggregated with the same max-bump rule as the
+     * BAML path; entries are joined rather than consolidated (no hosted rollup endpoint).
+     */
+    private async analyzeChunksViaFaiService(
+        chunks: string[],
+        language: string,
+        previousVersion: string,
+        label: string
+    ): Promise<{ analysis: FAIAnalysis | null; analysisWarning?: string }> {
+        const chunkAnalyses: ChunkAnalysis[] = [];
+        let attemptedChunks = 0;
+        let failedChunks = 0;
+        let lastError: unknown;
+        for (let i = 0; i < chunks.length; i++) {
+            const chunk = chunks[i];
+            if (!chunk) {
+                continue;
+            }
+            attemptedChunks++;
+            let analysis: FAIAnalysis | null;
+            try {
+                analysis = await this.analyzeViaFaiService(chunk, language, previousVersion);
+            } catch (error) {
+                failedChunks++;
+                lastError = error;
+                this.logger.warn(
+                    `${label}: FAI analysis of chunk ${i + 1}/${chunks.length} failed (${String(error)}).`
+                );
+                continue;
+            }
+            if (analysis == null) {
+                continue;
+            }
+            chunkAnalyses.push(analysis);
+        }
+        if (failedChunks > 0 && failedChunks === attemptedChunks) {
+            throw new Error(`all ${attemptedChunks} FAI chunk requests failed; last error: ${String(lastError)}`);
+        }
+        const analysisWarning =
+            failedChunks > 0
+                ? `${failedChunks} of ${attemptedChunks} FAI chunk requests failed; last error: ${String(lastError)}`
+                : undefined;
+        if (chunkAnalyses.length === 0) {
+            return { analysis: null, analysisWarning };
+        }
+        const { bestBump, bestMessage, bestVersionBumpReason, changelogEntries, usedBumpReasonAsEntry } =
+            aggregateChunkAnalyses(chunkAnalyses);
+        if (usedBumpReasonAsEntry) {
+            this.logger.warn(
+                `${label}: no chunk produced a changelog entry for the ${bestBump} bump; using its version bump reason instead.`
+            );
+        }
+        if (analysisWarning != null) {
+            this.logger.warn(`${label}: ${analysisWarning}; the ${bestBump} bump is based on the remaining chunks.`);
+        }
+        const prDescriptions = chunkAnalyses
+            .filter((analysis) => analysis.versionBump === bestBump && hasText(analysis.prDescription))
+            .map((analysis) => analysis.prDescription?.trim() ?? "");
+        return {
+            analysis: {
+                versionBump: bestBump,
+                message: bestMessage,
+                changelogEntry: changelogEntries.length > 0 ? mergeMarkdownSections(changelogEntries) : undefined,
+                prDescription: prDescriptions.length > 0 ? mergeMarkdownSections(prDescriptions) : undefined,
+                versionBumpReason: bestVersionBumpReason
+            },
+            analysisWarning
+        };
+    }
+
+    /**
      * Calls the hosted FAI service (`/sdks/analyze-commit-diff`) with the fern token.
      * Used when no BAML `ai` config is supplied (remote generation via fiddle). FAI
      * handles chunking, parallelism, and retries server-side. Returns null on
@@ -1024,7 +1156,8 @@ export class AutoVersionStep extends BaseStep {
             method: "POST",
             headers: {
                 Authorization: `Bearer ${this.config.fernToken}`,
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                ...(this.config.faiOrgId != null ? { "X-Fern-Org-Id": this.config.faiOrgId } : {})
             },
             body: JSON.stringify({
                 diff: cleanedDiff,
@@ -1036,7 +1169,10 @@ export class AutoVersionStep extends BaseStep {
         });
         if (!response.ok) {
             const body = await response.text().catch(() => "");
-            throw new Error(`FAI analyze-commit-diff failed with status ${response.status}: ${body.slice(0, 500)}`);
+            if (body.length > 0) {
+                this.logger.debug(`AutoVersionStep: FAI analyze-commit-diff response body: ${body.slice(0, 500)}`);
+            }
+            throw new Error(`FAI analyze-commit-diff failed with status ${response.status}`);
         }
         const parsed: unknown = await response.json();
         if (!isFaiAnalyzeResponse(parsed)) {
@@ -1104,6 +1240,8 @@ interface ChunkAnalysis {
     versionBump: string;
     message: string;
     changelogEntry?: string;
+    /** Only populated on the hosted-FAI chunk path; the BAML path gets its PR description from ConsolidateChangelog. */
+    prDescription?: string;
     versionBumpReason?: string;
 }
 
@@ -1149,6 +1287,154 @@ export function aggregateChunkAnalyses(chunkAnalyses: ChunkAnalysis[]): Aggregat
     }
 
     return { bestBump, bestMessage, bestVersionBumpReason, changelogEntries, usedBumpReasonAsEntry };
+}
+
+const MARKDOWN_HEADING = /^(#{1,6})\s+(.+?)\s*#*\s*$/;
+const MARKDOWN_FENCE = /^\s*(`{3,}|~{3,})(.*)$/;
+const MARKDOWN_LIST_ITEM = /^\s*(?:[-*+]|\d+[.)])\s/;
+
+interface ParsedMarkdownSection {
+    /** Heading line without trailing `#`s, e.g. `### Breaking Changes`. */
+    heading: string;
+    level: number;
+    /** Text between this heading and the next heading of any level. */
+    body: string;
+    children: ParsedMarkdownSection[];
+}
+
+interface MergedMarkdownSection {
+    heading: string;
+    bodies: string[];
+    children: Map<string, MergedMarkdownSection>;
+}
+
+/** Splits markdown into `intro` (text before the first heading) and a heading tree. Headings inside code fences are ignored. */
+function parseMarkdownSections(text: string): { intro: string; sections: ParsedMarkdownSection[] } {
+    const sections: ParsedMarkdownSection[] = [];
+    const stack: ParsedMarkdownSection[] = [];
+    let intro = "";
+    let current: ParsedMarkdownSection | undefined;
+    let fence: string | undefined;
+    let buffer: string[] = [];
+    const closeBody = () => {
+        const body = buffer.join("\n").trim();
+        buffer = [];
+        if (current != null) {
+            current.body = body;
+        } else {
+            intro = body;
+        }
+    };
+    for (const line of text.trim().split("\n")) {
+        const fenceMatch = MARKDOWN_FENCE.exec(line);
+        if (fenceMatch != null) {
+            const marker = fenceMatch[1] ?? "";
+            if (fence == null) {
+                fence = marker;
+            } else if (marker[0] === fence[0] && marker.length >= fence.length && (fenceMatch[2] ?? "").trim() === "") {
+                fence = undefined;
+            }
+        }
+        const match = fence == null ? MARKDOWN_HEADING.exec(line) : null;
+        if (match == null) {
+            buffer.push(line);
+            continue;
+        }
+        closeBody();
+        const level = match[1]?.length ?? 1;
+        const section: ParsedMarkdownSection = {
+            heading: `${match[1]} ${match[2]?.trim()}`,
+            level,
+            body: "",
+            children: []
+        };
+        while (stack.length > 0 && (stack[stack.length - 1]?.level ?? 0) >= level) {
+            stack.pop();
+        }
+        const parent = stack[stack.length - 1];
+        (parent != null ? parent.children : sections).push(section);
+        stack.push(section);
+        current = section;
+    }
+    closeBody();
+    return { intro, sections };
+}
+
+function mergeParsedSections(
+    target: Map<string, MergedMarkdownSection>,
+    parsed: ParsedMarkdownSection[],
+    intro: string
+): void {
+    parsed.forEach((section, index) => {
+        const key = `${section.level} ${section.heading.toLowerCase().replace(/\s+/g, " ")}`;
+        let node = target.get(key);
+        if (node == null) {
+            node = { heading: section.heading, bodies: [], children: new Map() };
+            target.set(key, node);
+        }
+        // A chunk's text before its first heading stays attached to that chunk's first section.
+        if (index === 0 && hasText(intro)) {
+            node.bodies.push(intro);
+        }
+        if (section.body.length > 0) {
+            node.bodies.push(section.body);
+        }
+        mergeParsedSections(node.children, section.children, "");
+    });
+}
+
+function renderMergedSection(node: MergedMarkdownSection): string {
+    return [
+        node.heading,
+        ...(node.bodies.length > 0 ? [joinSectionBodies(node.bodies)] : []),
+        ...[...node.children.values()].map(renderMergedSection)
+    ].join("\n\n");
+}
+
+/**
+ * Joins per-chunk markdown (changelog entries / PR descriptions) into one document, folding
+ * sections that share a heading (same level and text, case-insensitive, under the same parent)
+ * under a single header so a multi-chunk analysis reads as one `### Breaking Changes` list instead
+ * of one per chunk. Heading hierarchy is preserved (an empty `## Breaking Changes` keeps its
+ * `###` children). Headings inside fenced code blocks are ignored. Text before a chunk's first
+ * heading stays with that chunk's first section; chunks with no headings stay in chunk order.
+ * Section order follows first appearance.
+ */
+export function mergeMarkdownSections(texts: string[]): string {
+    const order: Array<string | MergedMarkdownSection> = [];
+    const roots = new Map<string, MergedMarkdownSection>();
+    for (const text of texts) {
+        const { intro, sections } = parseMarkdownSections(text);
+        if (sections.length === 0) {
+            if (hasText(intro)) {
+                order.push(intro);
+            }
+            continue;
+        }
+        mergeParsedSections(roots, sections, intro);
+        for (const node of roots.values()) {
+            if (!order.includes(node)) {
+                order.push(node);
+            }
+        }
+    }
+    return order.map((item) => (typeof item === "string" ? item : renderMergedSection(item))).join("\n\n");
+}
+
+/** Adjacent list bodies stay one tight list; anything else (paragraphs, code) is separated by a blank line. */
+function joinSectionBodies(bodies: string[]): string {
+    let joined = "";
+    for (const body of bodies) {
+        if (joined.length === 0) {
+            joined = body;
+            continue;
+        }
+        const lastLine = joined.slice(joined.lastIndexOf("\n") + 1);
+        const firstLine = body.slice(0, body.indexOf("\n") === -1 ? body.length : body.indexOf("\n"));
+        const bothLists = MARKDOWN_LIST_ITEM.test(lastLine) && MARKDOWN_LIST_ITEM.test(firstLine);
+        joined += `${bothLists ? "\n" : "\n\n"}${body}`;
+    }
+    return joined;
 }
 
 function hasText(value: string | undefined): value is string {

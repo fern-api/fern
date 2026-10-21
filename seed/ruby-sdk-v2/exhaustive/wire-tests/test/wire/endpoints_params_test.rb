@@ -8,7 +8,8 @@ class EndpointsParamsWireTest < WireMockTestCase
 
     @client = Seed::MyClient.new(
       token: "<token>",
-      base_url: WIREMOCK_BASE_URL
+      base_url: WIREMOCK_BASE_URL,
+      max_retries: 0
     )
   end
 
@@ -162,6 +163,13 @@ class EndpointsParamsWireTest < WireMockTestCase
       query_params: nil,
       expected: 1
     )
+
+    verify_request_body(
+      test_id: test_id,
+      method: "PUT",
+      url_path: "/params/path/param",
+      expected_body: JSON.parse('"string"')
+    )
   end
 
   def test_endpoints_params_modify_with_inline_path_with_wiremock
@@ -183,6 +191,13 @@ class EndpointsParamsWireTest < WireMockTestCase
       url_path: "/params/path/param",
       query_params: nil,
       expected: 1
+    )
+
+    verify_request_body(
+      test_id: test_id,
+      method: "PUT",
+      url_path: "/params/path/param",
+      expected_body: JSON.parse('"string"')
     )
   end
 
@@ -210,7 +225,7 @@ class EndpointsParamsWireTest < WireMockTestCase
   def test_endpoints_params_create_with_body_and_query_with_wiremock
     test_id = "endpoints.params.create_with_body_and_query.0"
 
-    @client.endpoints.params.create_with_body_and_query(
+    result = @client.endpoints.params.create_with_body_and_query(
       fields: "_fields",
       string: "string",
       request_options: {
@@ -226,6 +241,15 @@ class EndpointsParamsWireTest < WireMockTestCase
       url_path: "/params/body-and-query",
       query_params: nil,
       expected: 1
+    )
+
+    verify_response_numbers(
+      actual: result,
+      expected: {
+        "/integer" => 1,
+        "/long" => 1000000,
+        "/double" => 1.1
+      }
     )
   end
 
@@ -261,6 +285,32 @@ class EndpointsParamsWireTest < WireMockTestCase
         }
       }
     )
+
+    verify_request_count(
+      test_id: test_id,
+      method: "GET",
+      url_path: "/params/path/param",
+      query_params: nil,
+      expected: 1
+    )
+  end
+
+  def test_endpoints_params_get_with_path_and_errors_throws_bad_request_body_with_wiremock
+    test_id = "endpoints.params.get_with_path_and_errors.1"
+
+    error = assert_raises(Seed::Errors::ClientError) do
+      @client.endpoints.params.get_with_path(
+        param: "param",
+        request_options: {
+          additional_headers: {
+            "X-Test-Id" => "endpoints.params.get_with_path_and_errors.1"
+          }
+        }
+      )
+    end
+
+    assert_equal 400, error.code
+    assert_equal JSON.parse('{"message":"message"}'), JSON.parse(error.message)
 
     verify_request_count(
       test_id: test_id,

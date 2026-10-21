@@ -27,10 +27,8 @@ export declare namespace collectOnPremSourceSpecs {
  * Projects the pre-processed raw specs manifest onto the IR's source specs, in the coordinates the
  * adapter will see.
  *
- * Rejects what the adapter cannot consume rather than passing it through. The container reads
- * `source.specs[0]` and ignores the rest (`requirePrimarySpec`), so a multi-spec workspace would
- * otherwise generate an SDK covering one spec and exit zero -- a silently wrong SDK, which is worse
- * than a refusal naming the specs involved.
+ * Rejects what the adapter cannot consume rather than passing it through. Supported sources remain
+ * in manifest order because that is the generator's precedence contract for multi-spec composition.
  */
 export function collectOnPremSourceSpecs(
     manifest: RawSpecsManifest | undefined,
@@ -58,23 +56,13 @@ export function collectOnPremSourceSpecs(
         };
     }
 
-    if (entries.length > 1) {
-        const described = entries.map((entry) => entry.specPath).join(", ");
-        return {
-            success: false,
-            message:
-                `Generator "${context.generatorName}" received ${entries.length} API specs (${described}), and the ` +
-                "Postman adapter generates from a single spec. Generating would silently cover only the first one. " +
-                "Reduce the workspace to one spec for this generator."
-        };
-    }
-
     const specs = entries.map(
         (entry): SourceSpec => ({
             specUrl: entry.specPath,
             // Checked above; the filter guarantees a mapping exists for every remaining entry.
             specType: ON_PREM_SPEC_TYPE_BY_FERN_TYPE[entry.type] as SourceSpecType,
-            ...(entry.namespace != null ? { namespace: entry.namespace } : {})
+            ...(entry.namespace != null ? { namespace: entry.namespace } : {}),
+            ...(entry.apiImportSettings != null ? { apiImportSettings: entry.apiImportSettings } : {})
         })
     );
 

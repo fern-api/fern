@@ -14,10 +14,10 @@ public class Example27 {
         client.endpoints().object().getAndReturnWithMixedRequiredAndOptionalFields(
             ObjectWithMixedRequiredAndOptionalFields
                 .builder()
-                .requiredString("requiredString")
-                .requiredInteger(1)
-                .requiredLong(1000000L)
-                .optionalString("optionalString")
+                .requiredString("hello")
+                .requiredInteger(0)
+                .requiredLong(0L)
+                .optionalString("world")
                 .build()
         );
     }

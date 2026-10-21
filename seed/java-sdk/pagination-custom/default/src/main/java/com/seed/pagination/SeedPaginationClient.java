@@ -8,7 +8,7 @@ import com.seed.pagination.core.Suppliers;
 import com.seed.pagination.resources.users.UsersClient;
 import java.util.function.Supplier;
 
-public class SeedPaginationClient {
+public class SeedPaginationClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<UsersClient> usersClient;
@@ -20,6 +20,16 @@ public class SeedPaginationClient {
 
     public UsersClient users() {
         return this.usersClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedPaginationClientBuilder builder() {

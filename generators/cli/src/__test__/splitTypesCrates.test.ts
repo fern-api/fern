@@ -60,7 +60,8 @@ describe("splitTypesCrates", () => {
             typesOutputDir,
             typesCrateName: "acme-types",
             plan,
-            needsReqwest: false
+            needsReqwest: false,
+            version: "2.3.4"
         });
 
         expect(result).toEqual({
@@ -126,6 +127,11 @@ describe("splitTypesCrates", () => {
         expect(facadeLib).toContain("pub use acme_types_core::prelude;");
         const facadeCargoToml = await readFile(path.join(typesOutputDir, "Cargo.toml"), "utf-8");
         expect(facadeCargoToml).not.toContain("serde");
+
+        // Every crate in the split carries the generation's version.
+        expect(facadeCargoToml).toContain('version = "2.3.4"');
+        expect(coreCargoToml).toContain('version = "2.3.4"');
+        expect(await readFile(path.join(leafDir, "Cargo.toml"), "utf-8")).toContain('version = "2.3.4"');
     });
 
     it("assigns each generated module to exactly one crate", async () => {
@@ -149,7 +155,8 @@ describe("splitTypesCrates", () => {
                     { key: "v2", typeIds: ["type_v2:B"], endpointIds: [] }
                 ]
             },
-            needsReqwest: false
+            needsReqwest: false,
+            version: "0.0.0"
         });
 
         // Core is emitted even with nothing shared to put in it: it is where

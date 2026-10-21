@@ -172,6 +172,44 @@ describe("validateCustomConfig", () => {
         expect(validateCustomConfig({ packageIdentity })).toEqual({ packageIdentity });
     });
 
+    it("accepts extraDependencies as version strings or dependency tables", () => {
+        const extraDependencies = {
+            "google-cloud-auth": "1.16",
+            "google-cloud-iam-credentials-v1": { version: "1.12", features: ["default"], defaultFeatures: false }
+        };
+        const extraDevDependencies = { mockall: "0.11" };
+        expect(validateCustomConfig({ extraDependencies, extraDevDependencies })).toEqual({
+            extraDependencies,
+            extraDevDependencies
+        });
+    });
+
+    it("throws on malformed extraDependencies", () => {
+        expect(() => validateCustomConfig({ extraDependencies: { "bad crate!": "1" } })).toThrow(
+            /not a valid cargo crate name/
+        );
+        expect(() => validateCustomConfig({ extraDependencies: { tokio: "" } })).toThrow(/must not be empty/);
+        expect(() => validateCustomConfig({ extraDependencies: { tokio: 1 } })).toThrow(
+            /expected a version string or a dependency table, got number/
+        );
+        expect(() => validateCustomConfig({ extraDependencies: { tokio: { features: ["full"] } } })).toThrow(
+            /at least one of `version`, `path`, or `git`/
+        );
+        expect(() =>
+            validateCustomConfig({ extraDevDependencies: { tokio: { version: "1", features: "full" } } })
+        ).toThrow(/extraDevDependencies.tokio.features: expected an array of strings/);
+        expect(() =>
+            validateCustomConfig({ extraDependencies: { tokio: { version: "1", defaultfeatures: false } } })
+        ).toThrow(/extraDependencies.tokio: unknown field\(s\) `defaultfeatures`/);
+        expect(() => validateCustomConfig({ extraDependencies: ["tokio"] })).toThrow(/expected an object, got array/);
+        expect(() =>
+            validateCustomConfig({ extraDevDependencies: { mockall: { version: "0.11", optional: true } } })
+        ).toThrow(/extraDevDependencies.mockall.optional: cargo does not allow optional dev-dependencies/);
+        expect(validateCustomConfig({ extraDependencies: { mockall: { version: "0.11", optional: true } } })).toEqual({
+            extraDependencies: { mockall: { version: "0.11", optional: true } }
+        });
+    });
+
     it("throws on a packageIdentity name that cargo would reject", () => {
         expect(() => validateCustomConfig({ packageIdentity: { name: "agent mail!" } })).toThrow(
             /not a valid cargo crate name/
@@ -200,6 +238,18 @@ describe("validateCustomConfig — distribution", () => {
         expect(validateCustomConfig({ distribution: { homebrew: { tap: "acme/homebrew-tap" } } })).toEqual({
             distribution: { homebrew: { tap: "acme/homebrew-tap" } }
         });
+    });
+
+    it.each(["auto", true, false] as const)("accepts githubAttestations: %s", (githubAttestations) => {
+        expect(validateCustomConfig({ distribution: { githubAttestations } })).toEqual({
+            distribution: { githubAttestations }
+        });
+    });
+
+    it.each(["yes", "false", 1, null])("rejects githubAttestations: %s", (githubAttestations) => {
+        expect(() => validateCustomConfig({ distribution: { githubAttestations } })).toThrow(
+            /customConfig\.distribution\.githubAttestations/
+        );
     });
 
     it("accepts a scoop-only block", () => {
@@ -442,6 +492,93 @@ describe("validateCustomConfig — profiles", () => {
         expect(() => validateCustomConfig({ profiles: { enabled: true, revokeOperation: 42 } })).toThrow(
             /expected a string/
         );
+    });
+
+    it("accepts a provisionOperation with a credential mapping", () => {
+        expect(
+            validateCustomConfig({
+                profiles: {
+                    enabled: true,
+                    provisionOperation: {
+                        operation: "iam.keys.create",
+                        credential: { username: "sid", password: "secret" },
+                        revokeParameters: { Sid: "sid" }
+                    }
+                }
+            }).profiles?.provisionOperation
+        ).toEqual({
+            operation: "iam.keys.create",
+            credential: { username: "sid", password: "secret" },
+            revokeParameters: { Sid: "sid" }
+        });
+    });
+
+    it("accepts the interactive provisionOperation fields", () => {
+        expect(
+            validateCustomConfig({
+                profiles: {
+                    enabled: true,
+                    provisionOperation: {
+                        operation: "core.keys.create",
+                        credential: { username: "sid", password: "secret" },
+                        flag: "api-key",
+                        parameters: { FriendlyName: "{cli} for {user} on {host}" },
+                        profileParameters: { AccountSid: "username" }
+                    }
+                }
+            }).profiles?.provisionOperation
+        ).toEqual({
+            operation: "core.keys.create",
+            credential: { username: "sid", password: "secret" },
+            flag: "api-key",
+            parameters: { FriendlyName: "{cli} for {user} on {host}" },
+            profileParameters: { AccountSid: "username" }
+        });
+    });
+
+    it("rejects an invalid provisionOperation flag or unsafe text", () => {
+        const base = { operation: "core.keys.create", credential: { token: "secret" } };
+        expect(() =>
+            validateCustomConfig({ profiles: { enabled: true, provisionOperation: { ...base, flag: "--api-key" } } })
+        ).toThrow(/provisionOperation.flag/);
+        expect(() =>
+            validateCustomConfig({
+                profiles: { enabled: true, provisionOperation: { ...base, parameters: { FriendlyName: 'a"b' } } }
+            })
+        ).toThrow(/provisionOperation.parameters.FriendlyName/);
+    });
+
+    it("rejects a provisionOperation without a credential mapping", () => {
+        expect(() =>
+            validateCustomConfig({ profiles: { enabled: true, provisionOperation: { operation: "iam.keys.create" } } })
+        ).toThrow(/provisionOperation.credential/);
+        expect(() =>
+            validateCustomConfig({
+                profiles: { enabled: true, provisionOperation: { operation: "iam.keys.create", credential: {} } }
+            })
+        ).toThrow(/at least one credential field/);
+    });
+
+    it("rejects a provisionOperation whose operation is not a dotted command path", () => {
+        expect(() =>
+            validateCustomConfig({
+                profiles: {
+                    enabled: true,
+                    provisionOperation: { operation: "keyscreate", credential: { token: "secret" } }
+                }
+            })
+        ).toThrow(/provisionOperation.operation/);
+    });
+
+    it("rejects provisionOperation field names that cannot be interpolated", () => {
+        expect(() =>
+            validateCustomConfig({
+                profiles: {
+                    enabled: true,
+                    provisionOperation: { operation: "iam.keys.create", credential: { username: 'sid"' } }
+                }
+            })
+        ).toThrow(/provisionOperation.credential/);
     });
 
     it("keeps `profiles` itself selectable — it is the default", () => {

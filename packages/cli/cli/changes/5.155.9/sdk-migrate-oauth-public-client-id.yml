@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern sdk migrate` now migrates OAuth `authorization-code` schemes instead of omitting them. The
+    literal `client-id` becomes the public `flows[].clientId`, alongside `authorizationUrl`,
+    `tokenUrl`, `refreshUrl`, and scopes. A scheme without a literal `client-id` (including one that
+    sets only `client-id-env`) is still omitted with a diagnostic, and settings SDK Config cannot hold
+    yet, such as `redirect-uri` and `pkce`, are reported.
+  type: fix

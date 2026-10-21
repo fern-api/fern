@@ -4,9 +4,11 @@
 package com.seed.api;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.api.core.BodyProperties;
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.MediaTypes;
 import com.seed.api.core.ObjectMappers;
+import com.seed.api.core.PathSegments;
 import com.seed.api.core.RequestOptions;
 import com.seed.api.core.RetryInterceptor;
 import com.seed.api.core.SeedApiApiException;
@@ -39,7 +41,7 @@ public class RawSeedApiClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("refunds")
-                .addPathSegment(id);
+                .addPathSegment(PathSegments.validate(id));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -48,7 +50,9 @@ public class RawSeedApiClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request.getBody(), requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedApiException("Failed to serialize request", e);
         }
@@ -96,7 +100,7 @@ public class RawSeedApiClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("refunds")
-                .addPathSegment(id)
+                .addPathSegment(PathSegments.validate(id))
                 .addPathSegments("required");
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
@@ -106,7 +110,9 @@ public class RawSeedApiClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request.getBody(), requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedApiException("Failed to serialize request", e);
         }
@@ -169,7 +175,9 @@ public class RawSeedApiClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedApiException("Failed to serialize request", e);
         }

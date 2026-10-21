@@ -7,20 +7,23 @@ import typing
 import pydantic
 from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..core.xml_utilities import (
-    XmlChild,
+    XmlComment,
+    XmlContent,
     XmlElement,
     XmlNode,
     append_xml_child,
     build_xml_model,
     extra_xml_attributes,
+    order_xml_content,
     parse_xml,
     serialize_xml_element,
-    xml_children,
-    xml_unknown_children,
+    xml_content,
+    xml_content_items,
 )
 from .dial import Dial
 from .hangup import Hangup
 from .pause import Pause
+from .redirect import Redirect
 from .response_children_item import ResponseChildrenItem
 from .say import Say
 
@@ -31,53 +34,106 @@ class Response(UniversalBaseModel):
     """
 
     children: typing.Optional[typing.List[ResponseChildrenItem]] = None
-    _additional_children: typing.List[XmlElement] = pydantic.PrivateAttr(default_factory=list)
+    _content: typing.List[XmlContent] = pydantic.PrivateAttr(default_factory=list)
+    _comments_before: typing.List[XmlComment] = pydantic.PrivateAttr(default_factory=list)
+    _comments_after: typing.List[XmlComment] = pydantic.PrivateAttr(default_factory=list)
 
-    def to_xml(self, *, xml_declaration: bool = False) -> str:
+    def to_xml(self, *, xml_declaration: bool = True) -> str:
         """
-        Serializes this object as a `<Response>` XML element.
+        Serializes this object as a `<Response>` XML element, prefixed with the XML declaration unless `xml_declaration` is False.
         """
         return serialize_xml_element(
             name="Response",
             attributes=[
                 *extra_xml_attributes(self),
             ],
-            children=[
-                XmlChild(name="children", value=self.children),
-            ],
-            additional_children=self._additional_children,
+            children=[],
+            content=order_xml_content(self._content, self.children),
+            comments_before=self._comments_before,
+            comments_after=self._comments_after,
             xml_declaration=xml_declaration,
         )
 
     def __str__(self) -> str:
-        return self.to_xml(xml_declaration=True)
+        return self.to_xml()
+
+    def __init__(
+        self, *, children: typing.Optional[typing.List[ResponseChildrenItem]] = None, **extra_attributes: str
+    ) -> None:
+        """
+        Parameters
+        ----------
+        children : typing.Optional[typing.List[ResponseChildrenItem]]
+
+        **extra_attributes : str
+            Additional XML attributes not declared in the API definition.
+        """
+        super().__init__(**dict(children=children), **extra_attributes)
+        self._content.extend(order_xml_content([], self.children))
 
     @classmethod
     def from_xml(cls, xml: typing.Union[str, XmlNode]) -> Response:
         """
         Parses a `<Response>` XML element from a document string or a parsed node.
 
-        Raises `ValueError` for malformed XML, an unexpected root element or invalid values. Unknown attributes are kept as extra attributes and unknown child elements are preserved.
+        Raises `ValueError` for malformed XML, an unexpected root element or invalid values. Unknown attributes are kept as extra attributes; text segments and child elements (declared or not) are preserved in document order.
         """
         node = parse_xml(xml, "Response")
+        content = xml_content(node, {"Say": Say, "Dial": Dial, "Pause": Pause, "Hangup": Hangup, "Redirect": Redirect})
         model = build_xml_model(
             cls,
             dict(
-                children=xml_children(
-                    node, {"Say": Say, "Dial": Dial, "Pause": Pause, "Hangup": Hangup}, optional=True
+                children=xml_content_items(
+                    content,
+                    (
+                        Say,
+                        Dial,
+                        Pause,
+                        Hangup,
+                        Redirect,
+                    ),
+                    optional=True,
                 ),
             ),
             node,
             (),
         )
-        model._additional_children.extend(xml_unknown_children(node, {"Say", "Dial", "Pause", "Hangup"}))
+        model._content[:] = content
         return model
 
     def add_child(self, child: XmlElement) -> Response:
         """
-        Appends an arbitrary child element (one the schema does not define) and returns this element.
+        Appends an arbitrary child element (one the schema does not define) after the content added so far and returns this element.
         """
-        self._additional_children.append(child)
+        self._content.append(child)
+        return self
+
+    def add_text(self, text: str) -> Response:
+        """
+        Appends a text segment after the children added so far and returns this element, so text and child elements can be interleaved.
+        """
+        self._content.append(text)
+        return self
+
+    def comment(self, text: str) -> Response:
+        """
+        Appends an XML comment (`<!--text-->`) inside this element, after the content added so far, and returns this element.
+        """
+        self._content.append(XmlComment(text))
+        return self
+
+    def comment_before(self, text: str) -> Response:
+        """
+        Adds an XML comment rendered immediately before this element (as a sibling in its parent, or before the root element) and returns this element.
+        """
+        self._comments_before.append(XmlComment(text))
+        return self
+
+    def comment_after(self, text: str) -> Response:
+        """
+        Adds an XML comment rendered immediately after this element (as a sibling in its parent, or after the root element) and returns this element.
+        """
+        self._comments_after.append(XmlComment(text))
         return self
 
     def append(self, child: ResponseChildrenItem) -> Response:
@@ -97,6 +153,22 @@ class Response(UniversalBaseModel):
     ) -> Say:
         """
         Appends a `<Say>` child element and returns it.
+
+        <Say> TwiML Verb
+
+        Parameters
+        ----------
+        message : typing.Optional[str]
+            Message to say
+
+        voice : typing.Optional[str]
+            Voice to use
+
+        loop : typing.Optional[int]
+            Times to loop message
+
+        **extra_attributes : str
+            Additional XML attributes not declared in the API definition.
         """
         child = Say(message=message, voice=voice, loop=loop, children=None, **extra_attributes)
         append_xml_child(self, "children", child)
@@ -111,6 +183,15 @@ class Response(UniversalBaseModel):
     ) -> Dial:
         """
         Appends a `<Dial>` child element and returns it.
+
+        Parameters
+        ----------
+        number : typing.Optional[str]
+
+        status_callback_event : typing.Optional[typing.List[str]]
+
+        **extra_attributes : str
+            Additional XML attributes not declared in the API definition.
         """
         child = Dial(number=number, status_callback_event=status_callback_event, numbers=None, **extra_attributes)
         append_xml_child(self, "children", child)
@@ -121,6 +202,13 @@ class Response(UniversalBaseModel):
         Appends a `<Pause>` child element and returns it.
 
         XML element without an explicit xml.name; falls back to the schema name.
+
+        Parameters
+        ----------
+        length : typing.Optional[int]
+
+        **extra_attributes : str
+            Additional XML attributes not declared in the API definition.
         """
         child = Pause(length=length, **extra_attributes)
         append_xml_child(self, "children", child)
@@ -134,6 +222,34 @@ class Response(UniversalBaseModel):
         append_xml_child(self, "children", child)
         return child
 
+    def redirect(
+        self,
+        url: str,
+        *,
+        method: str,
+        kind: typing.Optional[typing.Literal["redirect"]] = None,
+        **extra_attributes: str,
+    ) -> Redirect:
+        """
+        Appends a `<Redirect>` child element and returns it.
+
+        Text element with a required attribute.
+
+        Parameters
+        ----------
+        url : str
+
+        method : str
+
+        kind : typing.Optional[typing.Literal["redirect"]]
+
+        **extra_attributes : str
+            Additional XML attributes not declared in the API definition.
+        """
+        child = Redirect(url=url, method=method, kind=kind, **extra_attributes)
+        append_xml_child(self, "children", child)
+        return child
+
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
     else:
@@ -141,4 +257,5 @@ class Response(UniversalBaseModel):
         class Config:
             frozen = True
             smart_union = True
+            copy_on_model_validation = "none"
             extra = pydantic.Extra.allow

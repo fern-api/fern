@@ -17,6 +17,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static EXCEPTION_HANDLING_FEATURE_ID: FernGeneratorCli.FeatureId = "EXCEPTION_HANDLING";
     private static BASE_URL_FEATURE_ID: FernGeneratorCli.FeatureId = "BASE_URL";
     private static CUSTOM_HEADERS_FEATURE_ID: FernGeneratorCli.FeatureId = "CUSTOM_HEADERS";
+    private static ADDITIONAL_BODY_PROPERTIES_FEATURE_ID: FernGeneratorCli.FeatureId = "ADDITIONAL_BODY_PROPERTIES";
     private static RAW_RESPONSE_FEATURE_ID: FernGeneratorCli.FeatureId = "ACCESS_RAW_RESPONSE_DATA";
     private static WEBSOCKET_FEATURE_ID: FernGeneratorCli.FeatureId = "WEBSOCKET";
     private static AUTHENTICATION_FEATURE_ID: FernGeneratorCli.FeatureId = "AUTHENTICATION";
@@ -85,6 +86,9 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             [FernGeneratorCli.StructuredFeatureId.Retries]: { renderer: this.renderRetriesSnippet.bind(this) },
             [FernGeneratorCli.StructuredFeatureId.Timeouts]: { renderer: this.renderTimeoutsSnippet.bind(this) },
             [ReadmeSnippetBuilder.CUSTOM_HEADERS_FEATURE_ID]: { renderer: this.renderCustomHeadersSnippet.bind(this) },
+            [ReadmeSnippetBuilder.ADDITIONAL_BODY_PROPERTIES_FEATURE_ID]: {
+                renderer: this.renderAdditionalBodyPropertiesSnippet.bind(this)
+            },
             [ReadmeSnippetBuilder.RAW_RESPONSE_FEATURE_ID]: { renderer: this.renderRawResponseSnippet.bind(this) },
             [ReadmeSnippetBuilder.WEBSOCKET_FEATURE_ID]: {
                 renderer: this.renderWebSocketSnippet.bind(this),
@@ -269,10 +273,11 @@ ${clientClassName} client = ${clientClassName}.builder()
             throw GeneratorError.internalError("Could not get default environment ID for README snippet");
         }
 
+        const environmentConstantName = this.getEnvironmentConstantName(defaultEnvironmentId);
         const productionEnvironment = java.codeblock((writer) => {
             writer.writeNode(this.context.getEnvironmentClassReference());
             writer.write(".");
-            writer.write(defaultEnvironmentId);
+            writer.write(environmentConstantName);
         });
 
         const clientInitialization = java.TypeLiteral.builder({
@@ -497,6 +502,29 @@ ${clientClassName} client = ${clientClassName}.builder()
         });
 
         return this.renderSnippet(snippet);
+    }
+
+    private renderAdditionalBodyPropertiesSnippet(endpoint: EndpointWithFilepath): string {
+        const requestOptionsInitialization = java.TypeLiteral.builder({
+            classReference: this.context.getRequestOptionsClassReference(),
+            parameters: [
+                {
+                    name: "addBodyProperty",
+                    value: java.TypeLiteral.raw(java.codeblock('"extra_field", "extra-value"'))
+                }
+            ]
+        });
+
+        const endpointMethodInvocation = this.getMethodCall(endpoint, [
+            ReadmeSnippetBuilder.ELLIPSES,
+            requestOptionsInitialization
+        ]);
+
+        return this.renderSnippet(
+            java.codeblock((writer) => {
+                writer.writeNodeStatement(endpointMethodInvocation);
+            })
+        );
     }
 
     private renderRawResponseSnippet(endpoint: EndpointWithFilepath): string {
@@ -828,6 +856,16 @@ ${clientClassName} client = ${clientClassName}.builder()
             this.context.ir.environments?.defaultEnvironment ??
             this.context.ir.environments.environments.environments[0]?.id
         );
+    }
+
+    private getEnvironmentConstantName(environmentId: string): string {
+        const environment = this.context.ir.environments?.environments.environments.find(
+            (env: { id: string }) => env.id === environmentId
+        );
+        if (environment == null) {
+            return environmentId;
+        }
+        return this.context.caseConverter.screamingSnakeSafe(environment.name);
     }
 
     private getRootPackageClientName(): string {

@@ -143,7 +143,6 @@ public final class Script implements IBaseResource {
 
         private List<ResourceList> relatedResources = new ArrayList<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -205,6 +204,18 @@ public final class Script implements IBaseResource {
         @java.lang.Override
         public Script build() {
             return new Script(id, relatedResources, memo, name, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("id")
+                    || key.equalsIgnoreCase("related_resources")
+                    || key.equalsIgnoreCase("memo")
+                    || key.equalsIgnoreCase("resource_type")
+                    || key.equalsIgnoreCase("name")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

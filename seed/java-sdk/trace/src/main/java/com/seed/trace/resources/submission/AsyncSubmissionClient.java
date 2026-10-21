@@ -5,6 +5,7 @@ package com.seed.trace.resources.submission;
 
 import com.seed.trace.core.ClientOptions;
 import com.seed.trace.core.RequestOptions;
+import com.seed.trace.core.SeedTraceHttpResponse;
 import com.seed.trace.resources.commons.types.Language;
 import com.seed.trace.resources.submission.types.ExecutionSessionResponse;
 import com.seed.trace.resources.submission.types.GetExecutionSessionStateResponse;
@@ -32,7 +33,15 @@ public class AsyncSubmissionClient {
      * Returns sessionId and execution server URL for session. Spins up server.
      */
     public CompletableFuture<ExecutionSessionResponse> createExecutionSession(Language language) {
-        return this.rawClient.createExecutionSession(language).thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<ExecutionSessionResponse>> rawFuture =
+                this.rawClient.createExecutionSession(language);
+        CompletableFuture<ExecutionSessionResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -40,14 +49,30 @@ public class AsyncSubmissionClient {
      */
     public CompletableFuture<ExecutionSessionResponse> createExecutionSession(
             Language language, RequestOptions requestOptions) {
-        return this.rawClient.createExecutionSession(language, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<ExecutionSessionResponse>> rawFuture =
+                this.rawClient.createExecutionSession(language, requestOptions);
+        CompletableFuture<ExecutionSessionResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Returns execution server URL for session. Returns empty if session isn't registered.
      */
     public CompletableFuture<Optional<ExecutionSessionResponse>> getExecutionSession(String sessionId) {
-        return this.rawClient.getExecutionSession(sessionId).thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<Optional<ExecutionSessionResponse>>> rawFuture =
+                this.rawClient.getExecutionSession(sessionId);
+        CompletableFuture<Optional<ExecutionSessionResponse>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -55,29 +80,68 @@ public class AsyncSubmissionClient {
      */
     public CompletableFuture<Optional<ExecutionSessionResponse>> getExecutionSession(
             String sessionId, RequestOptions requestOptions) {
-        return this.rawClient.getExecutionSession(sessionId, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<Optional<ExecutionSessionResponse>>> rawFuture =
+                this.rawClient.getExecutionSession(sessionId, requestOptions);
+        CompletableFuture<Optional<ExecutionSessionResponse>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Stops execution session.
      */
     public CompletableFuture<Void> stopExecutionSession(String sessionId) {
-        return this.rawClient.stopExecutionSession(sessionId).thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<Void>> rawFuture = this.rawClient.stopExecutionSession(sessionId);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Stops execution session.
      */
     public CompletableFuture<Void> stopExecutionSession(String sessionId, RequestOptions requestOptions) {
-        return this.rawClient.stopExecutionSession(sessionId, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<Void>> rawFuture =
+                this.rawClient.stopExecutionSession(sessionId, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<GetExecutionSessionStateResponse> getExecutionSessionsState() {
-        return this.rawClient.getExecutionSessionsState().thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<GetExecutionSessionStateResponse>> rawFuture =
+                this.rawClient.getExecutionSessionsState();
+        CompletableFuture<GetExecutionSessionStateResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<GetExecutionSessionStateResponse> getExecutionSessionsState(
             RequestOptions requestOptions) {
-        return this.rawClient.getExecutionSessionsState(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<GetExecutionSessionStateResponse>> rawFuture =
+                this.rawClient.getExecutionSessionsState(requestOptions);
+        CompletableFuture<GetExecutionSessionStateResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

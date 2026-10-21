@@ -89,7 +89,7 @@ export class InternalFilesGenerator {
         const errorsByNamespace = new Map<string, FernIr.ErrorDeclaration[]>();
         // Track seen status codes per namespace to avoid duplicates when multiple
         // services in the same namespace reference the same error.
-        const seenStatusCodesByNamespace = new Map<string, Set<number>>();
+        const seenStatusCodesByNamespace = new Map<string, Set<string>>();
 
         for (const service of Object.values(this.context.ir.services)) {
             const serviceLocation = this.context.getPackageLocation(service.name.fernFilepath);
@@ -97,15 +97,19 @@ export class InternalFilesGenerator {
 
             let seenStatusCodes = seenStatusCodesByNamespace.get(serviceImportPath);
             if (seenStatusCodes == null) {
-                seenStatusCodes = new Set<number>();
+                seenStatusCodes = new Set<string>();
                 seenStatusCodesByNamespace.set(serviceImportPath, seenStatusCodes);
             }
 
             for (const endpoint of service.endpoints) {
                 for (const responseError of endpoint.errors) {
                     const errorDeclaration = this.context.ir.errors[responseError.error.errorId];
-                    if (errorDeclaration != null && !seenStatusCodes.has(errorDeclaration.statusCode)) {
-                        seenStatusCodes.add(errorDeclaration.statusCode);
+                    if (errorDeclaration == null) {
+                        continue;
+                    }
+                    const statusCodeKey = getStatusCodeKey(errorDeclaration);
+                    if (!seenStatusCodes.has(statusCodeKey)) {
+                        seenStatusCodes.add(statusCodeKey);
                         if (!errorsByNamespace.has(serviceImportPath)) {
                             errorsByNamespace.set(serviceImportPath, []);
                         }
@@ -137,7 +141,7 @@ export class InternalFilesGenerator {
                             importPath: this.context.getLocationForErrorId(errorDeclaration.name.errorId).importPath
                         });
                         return {
-                            name: errorDeclaration.statusCode.toString(),
+                            name: this.context.getErrorCodesKey({ errorDeclaration, writer }),
                             value: go.TypeInstantiation.reference(
                                 go.func({
                                     parameters: [
@@ -183,4 +187,10 @@ export class InternalFilesGenerator {
             customConfig: this.context.customConfig
         });
     }
+}
+
+function getStatusCodeKey(errorDeclaration: FernIr.ErrorDeclaration): string {
+    return errorDeclaration.isWildcardStatusCode === true
+        ? `${Math.floor(errorDeclaration.statusCode / 100)}XX`
+        : errorDeclaration.statusCode.toString();
 }

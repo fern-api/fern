@@ -39,10 +39,12 @@ func (b *Bar) GetExtraProperties() map[string]interface{} {
 }
 
 func (b *Bar) require(field *big.Int) {
-	if b.explicitFields == nil {
-		b.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if b.explicitFields != nil {
+		next.Set(b.explicitFields)
 	}
-	b.explicitFields.Or(b.explicitFields, field)
+	next.Or(next, field)
+	b.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -123,10 +125,12 @@ func (f *Foo) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *Foo) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -216,10 +220,12 @@ func (f *FooExtended) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *FooExtended) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;

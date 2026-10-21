@@ -68,7 +68,6 @@ public final class ContainerObject {
     public static final class Builder {
         private List<NestedObjectWithLiterals> nestedObjects = new ArrayList<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -101,6 +100,14 @@ public final class ContainerObject {
 
         public ContainerObject build() {
             return new ContainerObject(nestedObjects, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("nestedObjects")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

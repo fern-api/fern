@@ -4313,6 +4313,7 @@
                             },
                             {
                                 "type": "file",
+                                "isOptional": false,
                                 "wireValue": "file",
                                 "name": {
                                     "originalName": "file",
@@ -4336,6 +4337,7 @@
                             },
                             {
                                 "type": "fileArray",
+                                "isOptional": false,
                                 "wireValue": "file_list",
                                 "name": {
                                     "originalName": "file_list",
@@ -4359,6 +4361,7 @@
                             },
                             {
                                 "type": "file",
+                                "isOptional": true,
                                 "wireValue": "maybe_file",
                                 "name": {
                                     "originalName": "maybe_file",
@@ -4382,6 +4385,7 @@
                             },
                             {
                                 "type": "fileArray",
+                                "isOptional": true,
                                 "wireValue": "maybe_file_list",
                                 "name": {
                                     "originalName": "maybe_file_list",
@@ -4861,6 +4865,7 @@
                         "properties": [
                             {
                                 "type": "file",
+                                "isOptional": false,
                                 "wireValue": "file",
                                 "name": {
                                     "originalName": "file",
@@ -5204,6 +5209,7 @@
                         "properties": [
                             {
                                 "type": "file",
+                                "isOptional": false,
                                 "wireValue": "file",
                                 "name": {
                                     "originalName": "file",
@@ -5448,6 +5454,7 @@
                         "properties": [
                             {
                                 "type": "file",
+                                "isOptional": false,
                                 "wireValue": "file",
                                 "name": {
                                     "originalName": "file",
@@ -5625,6 +5632,7 @@
                         "properties": [
                             {
                                 "type": "file",
+                                "isOptional": false,
                                 "wireValue": "file",
                                 "name": {
                                     "originalName": "file",
@@ -5898,6 +5906,7 @@
                         "properties": [
                             {
                                 "type": "file",
+                                "isOptional": false,
                                 "wireValue": "file",
                                 "name": {
                                     "originalName": "file",
@@ -6202,6 +6211,7 @@
                             },
                             {
                                 "type": "file",
+                                "isOptional": false,
                                 "wireValue": "file",
                                 "name": {
                                     "originalName": "file",
@@ -6225,6 +6235,7 @@
                             },
                             {
                                 "type": "fileArray",
+                                "isOptional": false,
                                 "wireValue": "file_list",
                                 "name": {
                                     "originalName": "file_list",
@@ -6248,6 +6259,7 @@
                             },
                             {
                                 "type": "file",
+                                "isOptional": true,
                                 "wireValue": "maybe_file",
                                 "name": {
                                     "originalName": "maybe_file",
@@ -6271,6 +6283,7 @@
                             },
                             {
                                 "type": "fileArray",
+                                "isOptional": true,
                                 "wireValue": "maybe_file_list",
                                 "name": {
                                     "originalName": "maybe_file_list",
@@ -6784,6 +6797,7 @@
                         "properties": [
                             {
                                 "type": "file",
+                                "isOptional": true,
                                 "wireValue": "image_file",
                                 "name": {
                                     "originalName": "image_file",
@@ -6994,6 +7008,7 @@
                         "properties": [
                             {
                                 "type": "file",
+                                "isOptional": false,
                                 "wireValue": "file",
                                 "name": {
                                     "originalName": "file",
@@ -7202,6 +7217,7 @@
                         "properties": [
                             {
                                 "type": "file",
+                                "isOptional": false,
                                 "wireValue": "file",
                                 "name": {
                                     "originalName": "file",
@@ -7413,6 +7429,7 @@
                         "properties": [
                             {
                                 "type": "file",
+                                "isOptional": true,
                                 "wireValue": "image_file",
                                 "name": {
                                     "originalName": "image_file",
@@ -7702,6 +7719,7 @@
                         "properties": [
                             {
                                 "type": "file",
+                                "isOptional": false,
                                 "wireValue": "file",
                                 "name": {
                                     "originalName": "file",
@@ -7911,6 +7929,7 @@
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
         "idempotencyKeyGeneration": null,
+        "webhookSignatureVerification": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",

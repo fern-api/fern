@@ -8,10 +8,15 @@ import type * as SeedApi from "../../index.js";
  *         species: "species",
  *         family: "family",
  *         genus: "genus",
+ *         commonName: "commonName",
+ *         wateringFrequency: "daily",
  *         sunExposure: "full"
  *     }
  */
-export interface PlantPost extends SeedApi.PlantBase {
+export interface PlantPost extends SeedApi.PlantStrict {
+    /** The common name of the plant. */
+    commonName: string;
+    wateringFrequency: PlantPost.WateringFrequency;
     /** Required sun exposure level. */
     sunExposure: PlantPost.SunExposure;
     /** Date the plant was planted. */
@@ -21,6 +26,13 @@ export interface PlantPost extends SeedApi.PlantBase {
 }
 
 export namespace PlantPost {
+    export const WateringFrequency = {
+        Daily: "daily",
+        Weekly: "weekly",
+        Biweekly: "biweekly",
+        Monthly: "monthly",
+    } as const;
+    export type WateringFrequency = (typeof WateringFrequency)[keyof typeof WateringFrequency];
     /** Required sun exposure level. */
     export const SunExposure = {
         Full: "full",

@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix uncompilable streaming methods when `errorCodes: per-endpoint` is set and the endpoint declares no
+    specific error responses. The streaming call no longer references the global `ErrorCodes` variable, which
+    is not generated in per-endpoint mode.
+  type: fix

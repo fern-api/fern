@@ -12,6 +12,7 @@
 //! - [`core`] - Core utilities and infrastructure
 //! - [`error`] - Error types and handling
 //! - [`prelude`] - Common imports for convenience
+//! - [`webhooks`] - Webhook signature verification helpers
 
 pub mod api;
 pub mod client;
@@ -19,6 +20,7 @@ pub mod config;
 pub mod core;
 pub mod error;
 pub mod prelude;
+pub mod webhooks;
 
 pub use api::*;
 pub use client::*;

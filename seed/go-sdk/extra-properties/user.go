@@ -33,10 +33,12 @@ func (c *CreateUserRequest) Version() string {
 }
 
 func (c *CreateUserRequest) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -109,10 +111,12 @@ func (u *User) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *User) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;

@@ -80,7 +80,6 @@ public final class UsernameCursor {
     public static final class Builder implements CursorStage, _FinalStage {
         private UsernamePage cursor;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -101,6 +100,14 @@ public final class UsernameCursor {
         @java.lang.Override
         public UsernameCursor build() {
             return new UsernameCursor(cursor, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("cursor")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

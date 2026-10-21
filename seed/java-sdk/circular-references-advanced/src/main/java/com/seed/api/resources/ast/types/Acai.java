@@ -81,7 +81,6 @@ public final class Acai implements IBerry {
     public static final class Builder implements AnimalStage, _FinalStage {
         private Animal animal;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -102,6 +101,14 @@ public final class Acai implements IBerry {
         @java.lang.Override
         public Acai build() {
             return new Acai(animal, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("animal")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

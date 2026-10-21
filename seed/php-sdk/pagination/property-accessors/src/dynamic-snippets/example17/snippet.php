@@ -13,7 +13,7 @@ $client = new SeedClient(
 );
 $client->users->listWithTopLevelBodyCursorPagination(
     new ListUsersTopLevelBodyCursorPaginationRequest([
-        'cursor' => 'cursor',
-        'filter' => 'filter',
+        'cursor' => 'initial_cursor',
+        'filter' => 'active',
     ]),
 );

@@ -10,4 +10,16 @@ export interface ThemeConfig {
     footerNav?: FernDocsConfig.FooterNavThemeConfig;
     languageSwitcher?: FernDocsConfig.LanguageSwitcherThemeConfig;
     productSwitcher?: FernDocsConfig.ProductSwitcherThemeConfig;
+    /**
+     * Header switcher listing the other docs sites published to the same
+     * domain under different basepaths. Membership is discovered
+     * automatically at publish time; this only controls presentation.
+     */
+    siteSwitcher?: FernDocsConfig.SiteSwitcherThemeConfig;
+    /**
+     * Syntax-highlighting color schemes for code blocks, set separately
+     * for light and dark mode. Defaults to `min-light` and
+     * `material-theme-darker`.
+     */
+    codeBlocks?: FernDocsConfig.CodeBlocksThemeConfig;
 }

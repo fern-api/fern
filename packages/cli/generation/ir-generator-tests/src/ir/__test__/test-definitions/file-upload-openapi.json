@@ -536,6 +536,7 @@
                             },
                             {
                                 "type": "file",
+                                "isOptional": true,
                                 "wireValue": "file",
                                 "name": {
                                     "originalName": "file",
@@ -635,6 +636,7 @@
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
         "idempotencyKeyGeneration": null,
+        "webhookSignatureVerification": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",

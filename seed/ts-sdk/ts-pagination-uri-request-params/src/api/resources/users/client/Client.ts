@@ -95,7 +95,7 @@ export class UsersClient {
                     url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
-                        `/accounts/${core.url.encodePathParam(account_id)}/uri`,
+                        `/accounts/${core.url.encodePathParam(account_id, errors.SeedTsPaginationUriRequestParamsError)}/uri`,
                     ),
                     method: "GET",
                     headers: _headers,
@@ -217,7 +217,10 @@ export class UsersClient {
                     requestOptions?.headers,
                 );
                 const _response = await core.fetcher({
-                    url: core.url.join(_baseUrl, `/accounts/${core.url.encodePathParam(account_id)}/path`),
+                    url: core.url.join(
+                        _baseUrl,
+                        `/accounts/${core.url.encodePathParam(account_id, errors.SeedTsPaginationUriRequestParamsError)}/path`,
+                    ),
                     method: "GET",
                     headers: _headers,
                     queryString: core.url
@@ -333,7 +336,7 @@ export class UsersClient {
                     url: core.url.join(
                         (await core.Supplier.get(this._options.baseUrl)) ??
                             (await core.Supplier.get(this._options.environment)),
-                        `/accounts/${core.url.encodePathParam(account_id)}/search`,
+                        `/accounts/${core.url.encodePathParam(account_id, errors.SeedTsPaginationUriRequestParamsError)}/search`,
                     ),
                     method: "POST",
                     headers: _headers,

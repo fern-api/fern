@@ -201,7 +201,6 @@ public final class TreeRecord {
 
         private Optional<String> treeDescription = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -314,6 +313,19 @@ public final class TreeRecord {
         public TreeRecord build() {
             return new TreeRecord(
                     id, treeName, treeDescription, treeSpecies, heightInFeet, plantedDate, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("id")
+                    || key.equalsIgnoreCase("treeName")
+                    || key.equalsIgnoreCase("treeDescription")
+                    || key.equalsIgnoreCase("treeSpecies")
+                    || key.equalsIgnoreCase("heightInFeet")
+                    || key.equalsIgnoreCase("plantedDate")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

@@ -37,7 +37,7 @@ class BaseClientWrapper:
         self._max_stream_reconnection_attempts = max_stream_reconnection_attempts
         self._logging = logging
 
-    def get_headers(self) -> typing.Dict[str, str]:
+    def get_headers(self, *, include_token: bool = True) -> typing.Dict[str, str]:
         import platform
 
         headers: typing.Dict[str, str] = {
@@ -55,9 +55,10 @@ class BaseClientWrapper:
             headers["Authorization"] = httpx.BasicAuth(username, password)._auth_header
         if self.api_key is not None:
             headers["X-API-Key"] = self.api_key
-        token = self._get_token()
-        if token is not None:
-            headers["Authorization"] = f"Bearer {token}"
+        if include_token:
+            token = self._get_token()
+            if token is not None:
+                headers["Authorization"] = f"Bearer {token}"
         if self._auth_headers is not None:
             headers.update(self._auth_headers())
         return headers
@@ -188,7 +189,7 @@ class AsyncClientWrapper(BaseClientWrapper):
         )
 
     async def async_get_headers(self) -> typing.Dict[str, str]:
-        headers = self.get_headers()
+        headers = self.get_headers(include_token=self._async_token is None)
         if self._async_token is not None:
             token = await self._async_token()
             headers["Authorization"] = f"Bearer {token}"

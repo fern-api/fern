@@ -1,3 +1,4 @@
+import { VisibilityFilter } from "@fern-api/api-workspace-commons";
 import { FernToken } from "@fern-api/auth";
 import { replaceEnvVariables } from "@fern-api/core-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
@@ -26,6 +27,7 @@ export async function runRemoteGenerationForDocsWorkspace({
     organization,
     apiWorkspaces,
     ossWorkspaces,
+    usesSdkConfig,
     docsWorkspace,
     context,
     token,
@@ -37,11 +39,14 @@ export async function runRemoteGenerationForDocsWorkspace({
     cliVersion,
     ciSource,
     deployerAuthor,
-    loginCommand
+    loginCommand,
+    docsVisibility
 }: {
     organization: string;
     apiWorkspaces: AbstractAPIWorkspace<unknown>[];
     ossWorkspaces: OSSWorkspace[];
+    /** Whether the project configures SDKs in sdk-config.yml; only used to explain missing SDK snippets. */
+    usesSdkConfig?: boolean;
     docsWorkspace: DocsWorkspace;
     context: TaskContext;
     token: FernToken;
@@ -58,6 +63,8 @@ export async function runRemoteGenerationForDocsWorkspace({
      * 'fern auth login' for CLI v2). Defaults to 'fern login'.
      */
     loginCommand?: string;
+    /** Which `x-twilio.docsVisibility` tiers to publish; defaults to `public`. */
+    docsVisibility?: VisibilityFilter;
 }): Promise<string | undefined> {
     // Substitute templated environment variables:
     // If substitute-env-vars is enabled, we'll attempt to read and replace the templated
@@ -139,13 +146,12 @@ export async function runRemoteGenerationForDocsWorkspace({
                 context,
                 apiWorkspaces,
                 ossWorkspaces,
+                usesSdkConfig,
                 preview,
                 previewId,
                 editThisPage: maybeInstance.editThisPage,
                 disableTemplates,
                 skipUpload,
-                withAiExamples:
-                    docsWorkspace.config.aiExamples?.enabled ?? docsWorkspace.config.experimental?.aiExamples ?? true,
                 excludeApis: docsWorkspace.config.experimental?.excludeApis ?? false,
                 targetAudiences: maybeInstance.audiences
                     ? Array.isArray(maybeInstance.audiences)
@@ -157,7 +163,8 @@ export async function runRemoteGenerationForDocsWorkspace({
                 ciSource,
                 deployerAuthor,
                 loginCommand,
-                multiSource: maybeInstance.multiSource ?? false
+                multiSource: maybeInstance.multiSource ?? false,
+                docsVisibility
             });
 
         for (let attempt = 0; ; attempt++) {

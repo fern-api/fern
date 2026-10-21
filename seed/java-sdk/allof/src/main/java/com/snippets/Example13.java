@@ -10,11 +10,11 @@ public class Example13 {
 
         client.createTree(TreeRecord.builder()
                 .id("id")
-                .treeSpecies("treeSpecies")
-                .heightInFeet(1.1)
                 .treeName("treeName")
-                .treeDescription("treeDescription")
+                .treeSpecies("treeSpecies")
                 .plantedDate("2023-01-15")
+                .heightInFeet(1.1)
+                .treeDescription("treeDescription")
                 .build());
     }
 }

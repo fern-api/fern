@@ -34,6 +34,7 @@ type RequestOptions struct {
 	ClientID                   string
 	ClientSecret               string
 	Token                      string
+	RootVariable               string
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
@@ -160,6 +161,15 @@ type WithoutRetriesOption struct{}
 
 func (w *WithoutRetriesOption) applyRequestOptions(opts *RequestOptions) {
 	opts.DisableRetries = true
+}
+
+// RootVariableOption implements the RequestOption interface.
+type RootVariableOption struct {
+	RootVariable string
+}
+
+func (r *RootVariableOption) applyRequestOptions(opts *RequestOptions) {
+	opts.RootVariable = r.RootVariable
 }
 
 // ClientIDOption implements the RequestOption interface.

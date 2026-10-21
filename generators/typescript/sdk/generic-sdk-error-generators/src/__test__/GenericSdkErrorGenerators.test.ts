@@ -74,6 +74,15 @@ describe("GeneratedGenericAPISdkErrorImpl", () => {
             impl.writeToFile(context);
             expect(context.sourceFile.getFullText()).toMatchSnapshot();
         });
+
+        it("reads requestId from X-Request-Id and falls back to any *request-id header", () => {
+            const impl = createImpl();
+            const context = createMockFileContext();
+            impl.writeToFile(context);
+            const text = context.sourceFile.getFullText();
+            expect(text).toContain('headers.get("X-Request-Id")');
+            expect(text).toContain("/request[-_]?id$/i.test(name)");
+        });
     });
 
     describe("build", () => {

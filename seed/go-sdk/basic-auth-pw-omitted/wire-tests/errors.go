@@ -42,3 +42,10 @@ func (u *UnauthorizedRequest) MarshalJSON() ([]byte, error) {
 func (u *UnauthorizedRequest) Unwrap() error {
 	return u.APIError
 }
+
+func (u *UnauthorizedRequest) GetBody() *UnauthorizedRequestErrorBody {
+	if u == nil {
+		return nil
+	}
+	return u.Body
+}

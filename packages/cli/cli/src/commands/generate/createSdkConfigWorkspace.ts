@@ -5,28 +5,17 @@ import { getOpenAPISettings, type OpenAPISpec, type Spec } from "@fern-api/api-w
 import { generatorsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { bundleRemoteOpenAPI, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
+import { getOnPremAdapterForLanguage, isOnPremAdapter } from "@fern-api/local-workspace-runner";
 import { resolveSdkConfigGeneratorVersion } from "@fern-api/remote-workspace-runner";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import type { SdkConfigV1, SdkConfigV1SourceSpec } from "@postman/sdk-config/sdk-config/v1";
 
+import { getDuplicateTargetLanguageIndexes } from "./getDuplicateTargetLanguageIndexes.js";
+import { getSdkConfigGeneratorName } from "./sdkConfigGeneratorName.js";
+
 const SDK_CONFIG_GROUP = "sdk-config";
 const DEFAULT_LOCAL_OUTPUT_DIRECTORY = "generated";
-
-const GENERATOR_BY_LANGUAGE: Record<string, string> = {
-    typescript: "fernapi/fern-typescript-sdk",
-    python: "fernapi/fern-python-sdk",
-    java: "fernapi/fern-java-sdk",
-    kotlin: "fernapi/fern-kotlin-sdk",
-    go: "fernapi/fern-go-sdk",
-    csharp: "fernapi/fern-csharp-sdk",
-    php: "fernapi/fern-php-sdk",
-    ruby: "fernapi/fern-ruby-sdk-v2",
-    rust: "fernapi/fern-rust-sdk",
-    swift: "fernapi/fern-swift-sdk",
-    cli: "fernapi/fern-cli-generator",
-    mcp: "fernapi/fern-mcp-server"
-};
 
 export interface CreatedSdkConfigWorkspace {
     workspace: OSSWorkspace;
@@ -36,15 +25,23 @@ export interface CreatedSdkConfigWorkspace {
 export async function createSdkConfigWorkspace({
     sdkConfig,
     absolutePathToConfig,
+    sourceRoot,
     cliVersion,
+    workspaceName,
+    local = false,
     context
 }: {
     sdkConfig: SdkConfigV1;
     absolutePathToConfig: string;
+    sourceRoot?: string;
     cliVersion: string;
+    workspaceName?: string;
+    /** Run targets with local Docker, on the on-prem adapter, instead of through sdk-gen-api. */
+    local?: boolean;
     context: TaskContext;
 }): Promise<CreatedSdkConfigWorkspace> {
     const configDirectory = path.dirname(absolutePathToConfig);
+    const sourceDirectory = path.resolve(sourceRoot ?? configDirectory);
     const temporaryDirectories: string[] = [];
     const cleanup = async () => {
         await Promise.all(
@@ -54,7 +51,18 @@ export async function createSdkConfigWorkspace({
     try {
         const specs: Spec[] = [];
         for (const spec of sdkConfig.source.specs) {
-            specs.push(await createSpec({ spec, sdkConfig, configDirectory, context, temporaryDirectories }));
+            specs.push(await createSpec({ spec, sdkConfig, sourceDirectory, context, temporaryDirectories }));
+        }
+        const duplicateTargetLanguageIndexes = getDuplicateTargetLanguageIndexes(sdkConfig.targets);
+        // ponytail: the local runner picks a target by language, so a repeated language would run the
+        // first target's settings twice. Thread the target index into resolveSdkConfigIr to lift this.
+        const duplicateIndex = duplicateTargetLanguageIndexes.findIndex((index) => index != null);
+        if (local && duplicateIndex !== -1) {
+            return context.failAndThrow(
+                `--local runs one SDK Config target per language, but more than one '${sdkConfig.targets[duplicateIndex]?.language}' target is selected. Select a single target, or remove --local.`,
+                undefined,
+                { code: CliError.Code.ConfigError }
+            );
         }
         const group: generatorsYml.GeneratorGroup = {
             groupName: SDK_CONFIG_GROUP,
@@ -62,21 +70,19 @@ export async function createSdkConfigWorkspace({
                 sdkConfig.api.audiences == null
                     ? { type: "all" }
                     : { type: "select", audiences: sdkConfig.api.audiences },
-            generators: sdkConfig.targets.map((target) => {
-                const name = GENERATOR_BY_LANGUAGE[target.language];
-                if (name == null) {
-                    return context.failAndThrow(
-                        `SDK Config target language '${target.language}' is not supported by the Fern remote generation bridge`,
-                        undefined,
-                        { code: CliError.Code.ConfigError }
-                    );
-                }
+            generators: sdkConfig.targets.map((target, targetIndex) => {
+                const { name, version } = local
+                    ? resolveLocalGenerator(target, context)
+                    : resolveRemoteGenerator(target, context);
                 return createGeneratorInvocation({
                     name,
-                    version: resolveSdkConfigGeneratorVersion(target.generatorVersion),
+                    version,
                     language: target.language,
                     output: target.output ?? sdkConfig.output,
-                    configDirectory
+                    configDirectory,
+                    local,
+                    sdkConfigTargetIndex: targetIndex,
+                    duplicateTargetLanguageIndex: duplicateTargetLanguageIndexes[targetIndex]
                 });
             }),
             reviewers: undefined
@@ -98,7 +104,7 @@ export async function createSdkConfigWorkspace({
             allSpecs: specs,
             specs: specs.filter((spec): spec is OpenAPISpec => spec.type === "openapi"),
             generatorsConfiguration,
-            workspaceName: undefined,
+            workspaceName,
             cliVersion,
             absoluteFilePath: AbsoluteFilePath.of(configDirectory)
         });
@@ -110,21 +116,65 @@ export async function createSdkConfigWorkspace({
     }
 }
 
+type SdkConfigTarget = SdkConfigV1["targets"][number];
+
+function resolveRemoteGenerator(target: SdkConfigTarget, context: TaskContext): { name: string; version: string } {
+    const name = getSdkConfigGeneratorName(target.language);
+    if (name == null) {
+        return context.failAndThrow(
+            `SDK Config target language '${target.language}' is not supported by the Fern remote generation bridge`,
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
+    }
+    return { name, version: resolveSdkConfigGeneratorVersion(target.generatorVersion) };
+}
+
+function resolveLocalGenerator(target: SdkConfigTarget, context: TaskContext): { name: string; version: string } {
+    const adapter = getOnPremAdapterForLanguage(target.language);
+    if (adapter == null) {
+        return context.failAndThrow(
+            `SDK Config target '${target.language}' cannot run with --local because no local generator exists for it. Remove --local to generate it remotely.`,
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
+    }
+    // ponytail: an unpinned target runs the adapter's cutover release locally, where the remote route
+    // resolves the newest one. Resolve the newest published tag here if that gap starts to matter.
+    const version = target.generatorVersion ?? adapter.cutover;
+    if (!isOnPremAdapter(adapter.name, version)) {
+        return context.failAndThrow(
+            `SDK Config target '${target.language}' pins generatorVersion ${version}, but SDK Config support starts at ${adapter.cutover}. Use ${adapter.cutover} or later.`,
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
+    }
+    return { name: adapter.name, version };
+}
+
 function createGeneratorInvocation({
     name,
     version,
     language,
     output,
-    configDirectory
+    configDirectory,
+    local,
+    sdkConfigTargetIndex,
+    duplicateTargetLanguageIndex
 }: {
     name: string;
     version: string;
     language: string;
     output: SdkConfigV1["output"];
     configDirectory: string;
+    local: boolean;
+    sdkConfigTargetIndex: number;
+    duplicateTargetLanguageIndex: number | undefined;
 }): generatorsYml.GeneratorInvocation {
+    const filesPath = output?.delivery === "files" ? output.path : undefined;
     return {
         name,
+        sdkConfigTargetIndex,
         version,
         config: {},
         outputMode: FernFiddle.remoteGen.OutputMode.downloadFiles({}),
@@ -132,11 +182,16 @@ function createGeneratorInvocation({
         containerImage: undefined,
         irVersionOverride: undefined,
         // SDK Config permits files delivery without a path. Keep those outputs separated by
-        // language under a stable directory next to sdk-config.yml.
+        // language under a stable directory next to sdk-config.yml. A local run always generates into
+        // a directory, whatever delivery the target asks for; the adapter warns about the substitution.
         absolutePathToLocalOutput:
-            output?.delivery === "files"
+            output?.delivery === "files" || local
                 ? AbsoluteFilePath.of(
-                      path.resolve(configDirectory, output.path ?? `${DEFAULT_LOCAL_OUTPUT_DIRECTORY}/${language}`)
+                      path.resolve(
+                          configDirectory,
+                          filesPath ??
+                              `${DEFAULT_LOCAL_OUTPUT_DIRECTORY}/${language}${duplicateTargetLanguageIndex == null ? "" : `-${duplicateTargetLanguageIndex}`}`
+                      )
                   )
                 : undefined,
         absolutePathToLocalSnippets: undefined,
@@ -154,13 +209,13 @@ function createGeneratorInvocation({
 async function createSpec({
     spec,
     sdkConfig,
-    configDirectory,
+    sourceDirectory,
     context,
     temporaryDirectories
 }: {
     spec: SdkConfigV1SourceSpec;
     sdkConfig: SdkConfigV1;
-    configDirectory: string;
+    sourceDirectory: string;
     context: TaskContext;
     temporaryDirectories: string[];
 }): Promise<Spec> {
@@ -171,8 +226,8 @@ async function createSpec({
             { code: CliError.Code.ConfigError }
         );
     }
-    const absoluteFilepath = await resolveSourcePath(spec, configDirectory, context, temporaryDirectories);
-    const absoluteFilepathToOverrides = spec.overrides?.map((value) => resolveTransformPath(value, configDirectory));
+    const absoluteFilepath = await resolveSourcePath(spec, sourceDirectory, context, temporaryDirectories);
+    const absoluteFilepathToOverrides = spec.overrides?.map((value) => resolveTransformPath(value, sourceDirectory));
     if (spec.type === "graphql") {
         return {
             type: "graphql",
@@ -189,13 +244,15 @@ async function createSpec({
         absoluteFilepath,
         absoluteFilepathToOverrides,
         absoluteFilepathToOverlays:
-            spec.overlays?.[0] == null ? undefined : resolveTransformPath(spec.overlays[0], configDirectory),
+            spec.overlays?.[0] == null ? undefined : resolveTransformPath(spec.overlays[0], sourceDirectory),
         namespace: spec.namespace,
         settings: getOpenAPISettings({
             overrides: {
                 ...settings,
                 useTitlesAsName: settings.titleAsSchemaName,
-                shouldUseIdiomaticRequestNames: settings.idiomaticRequestNames
+                shouldUseIdiomaticRequestNames: settings.idiomaticRequestNames,
+                shouldUseUndiscriminatedUnionsWithLiterals: settings.undiscriminatedUnionsWithLiterals,
+                asyncApiNaming: settings.asyncApiMessageNaming
             }
         }),
         source: {
@@ -207,12 +264,12 @@ async function createSpec({
 
 async function resolveSourcePath(
     spec: SdkConfigV1SourceSpec,
-    configDirectory: string,
+    sourceDirectory: string,
     context: TaskContext,
     temporaryDirectories: string[]
 ): Promise<AbsoluteFilePath> {
     if ("path" in spec) {
-        return AbsoluteFilePath.of(path.resolve(configDirectory, spec.path));
+        return AbsoluteFilePath.of(path.resolve(sourceDirectory, spec.path));
     }
     if (spec.type !== "openapi") {
         return context.failAndThrow(
@@ -240,8 +297,8 @@ async function resolveSourcePath(
     return AbsoluteFilePath.of(absolutePath);
 }
 
-function resolveTransformPath(value: string, configDirectory: string): AbsoluteFilePath {
-    return AbsoluteFilePath.of(path.resolve(configDirectory, value));
+function resolveTransformPath(value: string, sourceDirectory: string): AbsoluteFilePath {
+    return AbsoluteFilePath.of(path.resolve(sourceDirectory, value));
 }
 
 function sanitizeFilename(value: string): string {

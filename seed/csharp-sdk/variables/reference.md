@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.Service.<a href="/src/SeedVariables/Service/ServiceClient.cs">PostAsync</a>(endpointParam) -> WithRawResponseTask</code></summary>
+<details><summary><code>client.Service.<a href="/src/SeedVariables/Service/ServiceClient.cs">PostAsync</a>() -> WithRawResponseTask</code></summary>
 <dl>
 <dd>
 
@@ -13,23 +13,8 @@
 <dd>
 
 ```csharp
-await client.Service.PostAsync("endpointParam");
+await client.Service.PostAsync();
 ```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**endpointParam:** `string` 
-    
 </dd>
 </dl>
 </dd>

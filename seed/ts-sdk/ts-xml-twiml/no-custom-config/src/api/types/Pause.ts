@@ -9,13 +9,18 @@ export class Pause implements core.xml.XmlSerializable {
     length?: number;
     /** Attributes not declared in the API definition. */
     additionalAttributes: Record<string, string>;
-    /** Child elements not declared in the API definition. */
-    additionalChildren: core.xml.XmlElement[];
+    /** Ordered content of the element: text segments, comments and child elements (typed children and children not declared in the API definition) in the order they appear. */
+    content: core.xml.XmlContent[];
 
     constructor(fields: Pause.Fields = {}) {
         this.length = fields.length;
         this.additionalAttributes = fields.additionalAttributes ?? {};
-        this.additionalChildren = fields.additionalChildren ?? [];
+        this.content = core.xml.xmlInitialContent(fields.content, fields.additionalChildren);
+    }
+
+    /** Child elements not declared in the API definition, derived from the ordered content (a fresh array on each access; add children through `content` or the builder). */
+    get additionalChildren(): core.xml.XmlElement[] {
+        return this.content.filter((item): item is core.xml.XmlElement => item instanceof core.xml.XmlElement);
     }
 
     static builder(fields: Pause.Fields = {}): Pause.Builder {
@@ -25,14 +30,16 @@ export class Pause implements core.xml.XmlSerializable {
     /** Parses a `<Pause>` element. */
     static fromXml(xml: string | core.xml.XmlNode): Pause {
         const node = core.xml.parseXml(xml, "Pause");
+        const content = core.xml.xmlContent(node);
         return new Pause({
             length: core.xml.xmlScalar(core.xml.xmlAttribute(node, "length"), core.xml.xmlInteger, "Pause.length"),
             additionalAttributes: core.xml.xmlExtraAttributes(node, ["length"]),
-            additionalChildren: core.xml.xmlUnknownChildren(node, []),
+            content,
         });
     }
 
-    toXml(): string {
+    /** Serializes this value as a `<Pause>` element, prefixed with the XML declaration unless `xmlDeclaration` is `false`. */
+    toXml(xmlDeclaration: boolean = true): string {
         return core.xml.serializeXmlElement({
             name: "Pause",
             attributes: [
@@ -40,7 +47,8 @@ export class Pause implements core.xml.XmlSerializable {
                 ...core.xml.extraXmlAttributes(this.additionalAttributes),
             ],
             children: [],
-            additionalChildren: this.additionalChildren,
+            content: core.xml.orderXmlContent(this.content),
+            xmlDeclaration,
         });
     }
 
@@ -54,13 +62,19 @@ export namespace Pause {
         length?: number;
         additionalAttributes?: Record<string, string>;
         additionalChildren?: core.xml.XmlElement[];
+        content?: core.xml.XmlContent[];
     }
 
     export class Builder implements core.xml.XmlBuilder<Pause> {
         private readonly fields: Partial<Pause.Fields>;
+        private content: core.xml.XmlContent[];
+        /** Comments added with `commentBefore`/`commentAfter`, rendered around this element. */
+        readonly siblingComments: core.xml.XmlSiblingComments = new core.xml.XmlSiblingComments();
 
         constructor(fields: Partial<Pause.Fields> = {}) {
-            this.fields = { ...fields };
+            const { content, additionalChildren, ...rest } = fields;
+            this.fields = rest;
+            this.content = core.xml.xmlInitialContent(content, additionalChildren);
         }
 
         /** Parses a `<Pause>` element into a builder. */
@@ -79,18 +93,43 @@ export namespace Pause {
             return this;
         }
 
-        /** Appends a child element that is not declared in the API definition. */
+        /** Appends a child element that is not declared in the API definition, after any content added so far. */
         addChild(child: core.xml.XmlElement): this {
-            this.fields.additionalChildren = [...(this.fields.additionalChildren ?? []), child];
+            this.content.push(child);
+            return this;
+        }
+
+        /** Appends a text segment after any content added so far, so text can be interleaved with child elements. */
+        addText(text: string): this {
+            this.content.push(text);
+            return this;
+        }
+
+        /** Appends an XML comment (`<!--text-->`) inside this element, after any content added so far. */
+        comment(text: string): this {
+            this.content.push(new core.xml.XmlComment(text));
+            return this;
+        }
+
+        /** Adds an XML comment rendered immediately before this element: as a sibling in the parent it is added to, or before the root element. */
+        commentBefore(text: string): this {
+            this.siblingComments.before.push(new core.xml.XmlComment(text));
+            return this;
+        }
+
+        /** Adds an XML comment rendered immediately after this element: as a sibling in the parent it is added to, or after the root element. */
+        commentAfter(text: string): this {
+            this.siblingComments.after.push(new core.xml.XmlComment(text));
             return this;
         }
 
         build(): Pause {
-            return new Pause({ ...this.fields });
+            const built = core.xml.xmlBuildContent(this.content);
+            return new Pause({ ...this.fields, content: built.content });
         }
 
-        toXml(): string {
-            return this.build().toXml();
+        toXml(xmlDeclaration: boolean = true): string {
+            return this.siblingComments.wrap(this.build().toXml(xmlDeclaration));
         }
 
         toString(): string {

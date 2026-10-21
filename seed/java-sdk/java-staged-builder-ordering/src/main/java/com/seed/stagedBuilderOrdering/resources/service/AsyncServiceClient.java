@@ -5,6 +5,7 @@ package com.seed.stagedBuilderOrdering.resources.service;
 
 import com.seed.stagedBuilderOrdering.core.ClientOptions;
 import com.seed.stagedBuilderOrdering.core.RequestOptions;
+import com.seed.stagedBuilderOrdering.core.SeedStagedBuilderOrderingHttpResponse;
 import com.seed.stagedBuilderOrdering.resources.types.types.ComplexStaged;
 import com.seed.stagedBuilderOrdering.resources.types.types.MediumStaged;
 import com.seed.stagedBuilderOrdering.resources.types.types.MixedStaged;
@@ -30,42 +31,122 @@ public class AsyncServiceClient {
     }
 
     public CompletableFuture<String> createSimple(SimpleStaged request) {
-        return this.rawClient.createSimple(request).thenApply(response -> response.body());
+        CompletableFuture<SeedStagedBuilderOrderingHttpResponse<String>> rawFuture =
+                this.rawClient.createSimple(request);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> createSimple(SimpleStaged request, RequestOptions requestOptions) {
-        return this.rawClient.createSimple(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedStagedBuilderOrderingHttpResponse<String>> rawFuture =
+                this.rawClient.createSimple(request, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> createMedium(MediumStaged request) {
-        return this.rawClient.createMedium(request).thenApply(response -> response.body());
+        CompletableFuture<SeedStagedBuilderOrderingHttpResponse<String>> rawFuture =
+                this.rawClient.createMedium(request);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> createMedium(MediumStaged request, RequestOptions requestOptions) {
-        return this.rawClient.createMedium(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedStagedBuilderOrderingHttpResponse<String>> rawFuture =
+                this.rawClient.createMedium(request, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> createComplex(ComplexStaged request) {
-        return this.rawClient.createComplex(request).thenApply(response -> response.body());
+        CompletableFuture<SeedStagedBuilderOrderingHttpResponse<String>> rawFuture =
+                this.rawClient.createComplex(request);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> createComplex(ComplexStaged request, RequestOptions requestOptions) {
-        return this.rawClient.createComplex(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedStagedBuilderOrderingHttpResponse<String>> rawFuture =
+                this.rawClient.createComplex(request, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> createMixed(MixedStaged request) {
-        return this.rawClient.createMixed(request).thenApply(response -> response.body());
+        CompletableFuture<SeedStagedBuilderOrderingHttpResponse<String>> rawFuture =
+                this.rawClient.createMixed(request);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> createMixed(MixedStaged request, RequestOptions requestOptions) {
-        return this.rawClient.createMixed(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedStagedBuilderOrderingHttpResponse<String>> rawFuture =
+                this.rawClient.createMixed(request, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> createParent(Parent request) {
-        return this.rawClient.createParent(request).thenApply(response -> response.body());
+        CompletableFuture<SeedStagedBuilderOrderingHttpResponse<String>> rawFuture =
+                this.rawClient.createParent(request);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> createParent(Parent request, RequestOptions requestOptions) {
-        return this.rawClient.createParent(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedStagedBuilderOrderingHttpResponse<String>> rawFuture =
+                this.rawClient.createParent(request, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

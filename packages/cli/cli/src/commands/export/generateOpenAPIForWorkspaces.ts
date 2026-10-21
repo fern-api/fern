@@ -1,4 +1,5 @@
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
+import { Audiences } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, dirname } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { Project } from "@fern-api/project-loader";
@@ -12,12 +13,14 @@ export async function generateOpenAPIForWorkspaces({
     project,
     cliContext,
     outputPath,
-    indent
+    indent,
+    audiences
 }: {
     project: Project;
     cliContext: CliContext;
     outputPath: AbsoluteFilePath;
     indent: number;
+    audiences: Audiences;
 }): Promise<void> {
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
@@ -25,7 +28,7 @@ export async function generateOpenAPIForWorkspaces({
                 const fernWorkspace = await workspace.toFernWorkspace({ context });
                 const ir = generateIntermediateRepresentation({
                     workspace: fernWorkspace,
-                    audiences: { type: "all" },
+                    audiences,
                     generationLanguage: undefined,
                     keywords: undefined,
                     smartCasing: false,
