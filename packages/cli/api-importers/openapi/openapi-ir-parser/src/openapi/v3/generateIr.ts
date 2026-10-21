@@ -135,7 +135,7 @@ export function generateIr({
     // The API-wide `error-responses` body is declared in the root package, so it is converted without
     // this spec's namespace (which would otherwise be prepended to its group name).
     const rootContext =
-        sharedErrorSchemaName != null
+        sharedErrorSchemaName != null && openApi.components?.schemas?.[sharedErrorSchemaName] != null
             ? new OpenAPIV3ParserContext({
                   document: openApi,
                   taskContext,
