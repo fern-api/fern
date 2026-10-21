@@ -326,7 +326,7 @@ export class EndpointSnippetsGenerator {
     }
 }
 
-const CLIENT_METHOD_CALL_START_REGEX = /^(?:(?:_|\w+)(?:,\s*(?:_|\w+))*\s*:?=\s*)?client\./;
+const CLIENT_METHOD_CALL_START_REGEX = /^(?:(?:_|\w+)(?:,\s*(?:_|\w+))*\s*:?=\s*)?client\.(?!NewClient\b)/;
 
 function isClientMethodCallStart(trimmedLine: string): boolean {
     return CLIENT_METHOD_CALL_START_REGEX.test(trimmedLine);
