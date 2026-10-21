@@ -820,12 +820,14 @@ class ModuleFile {
         // Types are registered with `autoload` rather than required eagerly, so loading the
         // gem only pays for the (small) runtime; each type file is read on first reference.
         const autoloads = new Map<string, string[]>();
+        const typeFilePaths = new Set<AbsoluteFilePath>();
         sorted.forEach((typeDeclaration) => {
             const typeFilePath = join(
                 this.project.absolutePathToOutputDirectory,
                 this.context.getLocationForTypeId(typeDeclaration.name.typeId),
                 RelativeFilePath.of(this.context.getFileNameForTypeId(typeDeclaration.name.typeId))
             );
+            typeFilePaths.add(typeFilePath);
             const classReference = this.context.getClassReferenceForTypeId(typeDeclaration.name.typeId);
             const requirePath = relative(this.filePath, typeFilePath).replace(/\.rb$/, "");
             const key = classReference.modules.join("::");
@@ -840,6 +842,7 @@ class ModuleFile {
             // The barrel lives in lib/, so test paths resolve to ../test/wire/…
             const relativePath = relative(this.filePath, filePath);
             if (
+                typeFilePaths.has(filePath) ||
                 relativePath.startsWith("spec/") ||
                 relativePath.startsWith("test/") ||
                 relativePath.startsWith("../test/") ||
@@ -856,8 +859,8 @@ class ModuleFile {
             Array.from(relativeImportPaths)
                 .filter((importPath) => importPath.endsWith(".rb"))
                 .map((importPath) => `require_relative "${importPath.replaceAll(".rb", "")}"`)
-                .join("\n") +
-            this.renderAutoloads(autoloads);
+                .join("\n");
+        const autoloadContents = this.renderAutoloads(autoloads);
 
         // Add optional user require paths hook at the end (only if configured)
         // This allows users to add custom code (e.g., Sentry integration) without fernignoring generated files
@@ -876,10 +879,10 @@ class ModuleFile {
   require_relative relative_path if File.exist?(absolute_path)
 end`;
 
-            return dedent`${contents}` + requirePathsHook + "\n";
+            return dedent`${contents}` + autoloadContents + requirePathsHook + "\n";
         }
 
-        return dedent`${contents}` + "\n";
+        return dedent`${contents}` + autoloadContents + "\n";
     }
 
     private renderAutoloads(autoloads: Map<string, string[]>): string {
