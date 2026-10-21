@@ -167,6 +167,17 @@ class SdkGenerator(AbstractGenerator):
                     name="httpx", version=user_httpx.version, optional=True, python=user_httpx.python
                 )
             project.add_dependency(dependency=httpx_dependency, is_user_override=True)
+            # Dev installs (`poetry install`) skip optional dependencies, so the generated
+            # tests and type checks still need httpx from the dev group.
+            project.add_dev_dependency(
+                dependency=AST.Dependency(
+                    name="httpx",
+                    version=httpx_dependency.version,
+                    compatibility=httpx_dependency.compatibility,
+                    python=httpx_dependency.python,
+                ),
+                is_user_override=True,
+            )
         project.add_extra(extras)
 
         # Add optional dependencies for aiohttp support.
