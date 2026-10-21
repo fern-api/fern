@@ -31,6 +31,12 @@ class XmlElementTest extends TestCase
         $this->assertStringStartsWith('<?xml version="1.0" encoding="UTF-8"?>', $element->toXml(xmlDeclaration: true));
     }
 
+    public function testDropsCharactersOutsideXml10(): void
+    {
+        $element = new XmlElement('Say', "a\x00b\x1fc\td", ['voice' => "man\x01"]);
+        $this->assertSame("<Say voice=\"man\">abc\td</Say>", $element->toXml());
+    }
+
     public function testSerializesNamespacesAndPrefixes(): void
     {
         $element = new XmlElement('Dial', '+15551234567', namespace: 'https://www.twilio.com/twiml', prefix: 'tw');

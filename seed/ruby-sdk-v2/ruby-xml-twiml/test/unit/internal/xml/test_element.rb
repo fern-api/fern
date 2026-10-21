@@ -16,6 +16,12 @@ describe Seed::Internal::Xml::Element do
       assert_equal "<Say voice=\"man\" note=\"x&quot;y\">a &lt; b &amp; \"c\"<break time=\"1s\"/></Say>", element.to_xml
     end
 
+    it "drops characters that are not valid in XML 1.0" do
+      element = XmlTestElement.new("Say", text: "a\x00b\x1Fc\td", attributes: { "voice" => "man\x01" })
+
+      assert_equal "<Say voice=\"man\">abc\td</Say>", element.to_xml
+    end
+
     it "self-closes empty elements and prepends the declaration on request" do
       assert_equal "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Hangup/>", XmlTestElement.new("Hangup").to_xml(xml_declaration: true)
     end

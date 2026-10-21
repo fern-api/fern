@@ -165,8 +165,16 @@ export function serializeXmlElement({
     return xmlDeclaration ? `${XML_DECLARATION}${element}` : element;
 }
 
+/** Characters outside the XML 1.0 `Char` production (control characters, lone surrogates), which no XML parser accepts. */
+const INVALID_XML_CHARS = /[^\u0009\u000A\u000D\u0020-\uD7FF\uE000-\uFFFD\u{10000}-\u{10FFFF}]/gu;
+
 export function escapeXml(value: string): string {
-    return value.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    return value
+        .replace(INVALID_XML_CHARS, "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
 }
 
 /** Converts an attribute or text value to its wire string, or undefined when unset. */
