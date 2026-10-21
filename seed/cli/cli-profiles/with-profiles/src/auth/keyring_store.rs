@@ -108,20 +108,30 @@ impl KeyringStore for OsKeyringStore {
     }
 
     fn set(&self, service: &str, account: &str, value: &str) -> Result<(), CliError> {
-        let entry = keyring::Entry::new(service, account)
-            .map_err(|e| CliError::Auth(format!("keyring open failed: {e}")))?;
-        entry
-            .set_password(value)
-            .map_err(|e| CliError::Auth(format!("keyring set failed: {e}")))
+        #[cfg(target_os = "macos")]
+        return macos_keychain::set(service, account, value);
+        #[cfg(not(target_os = "macos"))]
+        {
+            let entry = keyring::Entry::new(service, account)
+                .map_err(|e| CliError::Auth(format!("keyring open failed: {e}")))?;
+            entry
+                .set_password(value)
+                .map_err(|e| CliError::Auth(format!("keyring set failed: {e}")))
+        }
     }
 
     fn delete(&self, service: &str, account: &str) -> Result<(), CliError> {
-        let entry = keyring::Entry::new(service, account)
-            .map_err(|e| CliError::Auth(format!("keyring open failed: {e}")))?;
-        match entry.delete_credential() {
-            Ok(()) => Ok(()),
-            Err(keyring::Error::NoEntry) => Ok(()),
-            Err(e) => Err(CliError::Auth(format!("keyring delete failed: {e}"))),
+        #[cfg(target_os = "macos")]
+        return macos_keychain::delete(service, account);
+        #[cfg(not(target_os = "macos"))]
+        {
+            let entry = keyring::Entry::new(service, account)
+                .map_err(|e| CliError::Auth(format!("keyring open failed: {e}")))?;
+            match entry.delete_credential() {
+                Ok(()) => Ok(()),
+                Err(keyring::Error::NoEntry) => Ok(()),
+                Err(e) => Err(CliError::Auth(format!("keyring delete failed: {e}"))),
+            }
         }
     }
 
@@ -132,6 +142,33 @@ impl KeyringStore for OsKeyringStore {
         return "Windows Credential Manager".to_string();
         #[cfg(not(any(target_os = "macos", target_os = "windows")))]
         return "secret-service (Linux)".to_string();
+    }
+}
+
+/// Keychain writes and deletes that never read the stored secret.
+///
+/// `keyring` looks an item up with its password data before overwriting or
+/// deleting it, and macOS asks the user to approve that read like any other.
+/// `SecItemUpdate` / `SecItemDelete` match the same item (generic password,
+/// service + account) without fetching its data.
+#[cfg(target_os = "macos")]
+mod macos_keychain {
+    use crate::error::CliError;
+    use security_framework::passwords;
+
+    const ERR_SEC_ITEM_NOT_FOUND: i32 = -25300;
+
+    pub(super) fn set(service: &str, account: &str, value: &str) -> Result<(), CliError> {
+        passwords::set_generic_password(service, account, value.as_bytes())
+            .map_err(|e| CliError::Auth(format!("keyring set failed: {e}")))
+    }
+
+    pub(super) fn delete(service: &str, account: &str) -> Result<(), CliError> {
+        match passwords::delete_generic_password(service, account) {
+            Ok(()) => Ok(()),
+            Err(e) if e.code() == ERR_SEC_ITEM_NOT_FOUND => Ok(()),
+            Err(e) => Err(CliError::Auth(format!("keyring delete failed: {e}"))),
+        }
     }
 }
 
@@ -277,6 +314,11 @@ pub struct ChunkedKeyringStore<S: KeyringStore> {
     /// Whether oversized values are split on write. Reads reassemble
     /// chunked entries regardless of this flag.
     chunk_writes: bool,
+    /// Whether chunk entries can exist here, so `set` and `delete` must
+    /// read the primary entry first to find and remove them. Off where no
+    /// build has ever written chunks: that read is a keychain access (and,
+    /// on macOS, a password prompt) with nothing to find.
+    reap_chunks: bool,
 }
 
 impl<S: KeyringStore> ChunkedKeyringStore<S> {
@@ -291,13 +333,19 @@ impl<S: KeyringStore> ChunkedKeyringStore<S> {
     /// cannot strand a credential behind a marker the old build can't read.
     /// Reads stay marker-aware either way.
     pub fn for_platform(inner: S) -> Self {
-        Self::with_chunk_writes(inner, cfg!(target_os = "windows"))
+        let chunking = cfg!(target_os = "windows");
+        Self {
+            inner,
+            chunk_writes: chunking,
+            reap_chunks: chunking,
+        }
     }
 
     fn with_chunk_writes(inner: S, chunk_writes: bool) -> Self {
         Self {
             inner,
             chunk_writes,
+            reap_chunks: true,
         }
     }
 
@@ -322,6 +370,9 @@ impl<S: KeyringStore> ChunkedKeyringStore<S> {
     /// Chunk count recorded in the primary entry, or 0 if it is absent or
     /// holds a plain value. Used to reap chunks the new value doesn't use.
     fn stored_chunk_count(&self, service: &str, account: &str) -> Result<usize, CliError> {
+        if !self.reap_chunks {
+            return Ok(0);
+        }
         Ok(self
             .inner
             .get(service, account)?
@@ -1095,6 +1146,25 @@ mod tests {
 
         assert_eq!(mock.snapshot().len(), 1, "stale chunks must be removed");
         assert_eq!(plain.get("svc", "acct").unwrap().as_deref(), Some(big.as_str()));
+    }
+
+    #[cfg(not(target_os = "windows"))]
+    #[test]
+    fn platform_chunked_store_writes_and_deletes_without_reading() {
+        let counting = Arc::new(CountingMock {
+            inner: MockKeyringStore::new(),
+            reads: Default::default(),
+            fail_reads: Default::default(),
+        });
+        let store = ChunkedKeyringStore::for_platform(counting.clone());
+
+        store.set("svc", "acct", "tok").unwrap();
+        store.set("svc", "acct", "tok2").unwrap();
+        store.delete("svc", "acct").unwrap();
+        store.delete("svc", "missing").unwrap();
+
+        assert_eq!(counting.reads(), 0, "set/delete must not read the secret back");
+        assert!(counting.inner.snapshot().is_empty());
     }
 
     #[test]
