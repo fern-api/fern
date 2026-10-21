@@ -5,7 +5,7 @@ import {
     GeneratorNotificationService,
     getPackageName
 } from "@fern-api/browser-compatible-base-generator";
-import { AbsoluteFilePath, RelativeFilePath, join, relative } from "@fern-api/path-utils";
+import { AbsoluteFilePath, join, RelativeFilePath, relative } from "@fern-api/path-utils";
 import { BaseRubyCustomConfigSchema, ruby } from "@fern-api/ruby-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { upperFirst } from "lodash-es";
