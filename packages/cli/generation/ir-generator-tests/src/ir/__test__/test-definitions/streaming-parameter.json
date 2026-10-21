@@ -1246,6 +1246,7 @@
                 "response": {
                     "type": "streamParameter"
                 },
+                "hasResponseBody": true,
                 "examples": null
             }
         },

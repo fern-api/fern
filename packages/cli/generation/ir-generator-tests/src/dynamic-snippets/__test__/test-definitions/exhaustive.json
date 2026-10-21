@@ -5387,6 +5387,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/container.getAndReturnListOfObjects": {
@@ -5539,6 +5540,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/container.getAndReturnSetOfPrimitives": {
@@ -5691,6 +5693,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/container.getAndReturnSetOfObjects": {
@@ -5843,6 +5846,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/container.getAndReturnMapPrimToPrim": {
@@ -5999,6 +6003,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/container.getAndReturnMapOfPrimToObject": {
@@ -6155,6 +6160,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/container.getAndReturnMapOfPrimToUndiscriminatedUnion": {
@@ -6311,6 +6317,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/container.getAndReturnMapOfIntegerToObject": {
@@ -6467,6 +6474,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/container.getAndReturnOptional": {
@@ -6619,6 +6627,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/content-type.postJsonPatchContentType": {
@@ -6768,6 +6777,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": false,
             "examples": null
         },
         "endpoint_endpoints/content-type.postJsonPatchContentWithCharsetType": {
@@ -6917,6 +6927,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": false,
             "examples": null
         },
         "endpoint_endpoints/enum.getAndReturnEnum": {
@@ -7066,6 +7077,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/http-methods.testGet": {
@@ -7240,6 +7252,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/http-methods.testPost": {
@@ -7389,6 +7402,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/http-methods.testPut": {
@@ -7569,6 +7583,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/http-methods.testPatch": {
@@ -7749,6 +7764,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/http-methods.testDelete": {
@@ -7923,6 +7939,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/object.getAndReturnWithOptionalField": {
@@ -8072,6 +8089,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/object.getAndReturnWithRequiredField": {
@@ -8221,6 +8239,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/object.getAndReturnWithMapOfMap": {
@@ -8370,6 +8389,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/object.getAndReturnNestedWithOptionalField": {
@@ -8519,6 +8539,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/object.getAndReturnNestedWithRequiredField": {
@@ -8699,6 +8720,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/object.getAndReturnNestedWithRequiredFieldAsList": {
@@ -8851,6 +8873,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/object.getAndReturnWithUnknownField": {
@@ -9000,6 +9023,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/object.getAndReturnWithDocumentedUnknownType": {
@@ -9149,6 +9173,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/object.getAndReturnMapOfDocumentedUnknownType": {
@@ -9298,6 +9323,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/object.getAndReturnWithMixedRequiredAndOptionalFields": {
@@ -9447,6 +9473,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/object.getAndReturnWithRequiredNestedObject": {
@@ -9596,6 +9623,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/object.getAndReturnWithDatetimeLikeString": {
@@ -9745,6 +9773,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/pagination.listItems": {
@@ -10063,6 +10092,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/params.getWithPath": {
@@ -10237,6 +10267,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/params.getWithInlinePath": {
@@ -10519,6 +10550,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/params.getWithQuery": {
@@ -10831,6 +10863,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": false,
             "examples": null
         },
         "endpoint_endpoints/params.getWithAllowMultipleQuery": {
@@ -11149,6 +11182,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": false,
             "examples": null
         },
         "endpoint_endpoints/params.getWithPathAndQuery": {
@@ -11462,6 +11496,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": false,
             "examples": null
         },
         "endpoint_endpoints/params.getWithInlinePathAndQuery": {
@@ -11775,6 +11810,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": false,
             "examples": null
         },
         "endpoint_endpoints/params.modifyWithPath": {
@@ -11955,6 +11991,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/params.modifyWithInlinePath": {
@@ -12265,6 +12302,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/params.uploadWithPath": {
@@ -12441,6 +12479,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/params.createWithBodyAndQuery": {
@@ -12754,6 +12793,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/params.uploadBytesWithQuery": {
@@ -13063,6 +13103,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/params.getWithBooleanPath": {
@@ -13237,6 +13278,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/params.getWithPathAndErrors": {
@@ -13411,6 +13453,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/primitive.getAndReturnString": {
@@ -13560,6 +13603,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/primitive.getAndReturnInt": {
@@ -13709,6 +13753,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/primitive.getAndReturnLong": {
@@ -13858,6 +13903,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/primitive.getAndReturnDouble": {
@@ -14007,6 +14053,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/primitive.getAndReturnBool": {
@@ -14156,6 +14203,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/primitive.getAndReturnDatetime": {
@@ -14305,6 +14353,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/primitive.getAndReturnDate": {
@@ -14454,6 +14503,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/primitive.getAndReturnUUID": {
@@ -14603,6 +14653,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/primitive.getAndReturnBase64": {
@@ -14752,6 +14803,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/put.add": {
@@ -15034,6 +15086,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/union.getAndReturnUnion": {
@@ -15183,6 +15236,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/urls.withMixedCase": {
@@ -15326,6 +15380,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/urls.noEndingSlash": {
@@ -15469,6 +15524,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/urls.withEndingSlash": {
@@ -15612,6 +15668,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_endpoints/urls.withUnderscores": {
@@ -15755,6 +15812,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_inlined-requests.postWithObjectBodyandResponse": {
@@ -16022,6 +16080,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_inlined-requests.postWithArrayBodyAndHeaders": {
@@ -16260,6 +16319,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_no-auth.postWithNoAuth": {
@@ -16369,6 +16429,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_no-req-body.getWithNoRequestBody": {
@@ -16473,6 +16534,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_no-req-body.postWithNoRequestBody": {
@@ -16577,6 +16639,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_req-with-headers.getWithCustomHeader": {
@@ -16839,6 +16902,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": false,
             "examples": null
         }
     },

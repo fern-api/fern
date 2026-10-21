@@ -8,5 +8,12 @@ export interface Endpoint {
     location: FernIr.dynamic.EndpointLocation;
     request: FernIr.dynamic.Request;
     response: FernIr.dynamic.Response;
+    /**
+     * Whether the endpoint returns a response body. `false` for endpoints with no
+     * response body (e.g. a 204 delete), which some SDKs surface in the method
+     * signature (e.g. Go returns only `error`). Absent in IRs produced before
+     * 67.35.0, in which case a response body should be assumed.
+     */
+    hasResponseBody: boolean | undefined;
     examples: FernIr.dynamic.EndpointExample[] | undefined;
 }
