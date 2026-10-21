@@ -429,7 +429,7 @@ func isNilXmlNode(node XmlNode) bool {
 	}
 	value := reflect.ValueOf(node)
 	switch value.Kind() {
-	case reflect.Ptr, reflect.Interface, reflect.Map, reflect.Slice, reflect.Func, reflect.Chan:
+	case reflect.Pointer, reflect.Interface, reflect.Map, reflect.Slice, reflect.Func, reflect.Chan:
 		return value.IsNil()
 	}
 	return false
