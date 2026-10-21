@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    The dynamic IR now sets `requirement` (`ALL`, `ANY` or `ENDPOINT_SECURITY`) on each endpoint's auth, so
+    dynamic snippet generators can tell `auth: any` apart from endpoint-level security.
+  type: feat

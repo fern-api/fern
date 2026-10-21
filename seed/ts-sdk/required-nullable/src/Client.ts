@@ -133,7 +133,7 @@ export class SeedApiClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `foo/${core.url.encodePathParam(id)}`,
+                `foo/${core.url.encodePathParam(id, errors.SeedApiError)}`,
             ),
             method: "PATCH",
             headers: _headers,

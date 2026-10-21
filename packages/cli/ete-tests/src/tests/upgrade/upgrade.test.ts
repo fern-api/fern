@@ -4,7 +4,7 @@ import { readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 
 import { runFernCli } from "../../utils/runFernCli.js";
-import { init } from "../init/init.js";
+import { init, LEGACY_CONFIG_ENV } from "../init/init.js";
 
 const GENERATORS_CONFIGURATION: generatorsYml.GeneratorsConfigurationSchema = {
     groups: {
@@ -91,7 +91,7 @@ const GENERATORS_CONFIGURATION: generatorsYml.GeneratorsConfigurationSchema = {
 
 describe("fern upgrade", () => {
     it("upgrades generators", async ({ signal }) => {
-        const directory = await init({ signal });
+        const directory = await init({ env: LEGACY_CONFIG_ENV, signal });
         const generatorsConfigurationFilepath = join(
             directory,
             RelativeFilePath.of(FERN_DIRECTORY),

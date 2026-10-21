@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v67.34.0] - 2026-10-19
+
+- Add `dynamic.FileUploadRequestBodyFileProperty.isOptional` (optional `boolean`) to the `file` and
+  `fileArray` variants of `dynamic.FileUploadRequestBodyProperty`, so dynamic snippet generators can
+  tell required files from optional ones. Populated from `FilePropertySingle.isOptional` /
+  `FilePropertyArray.isOptional`.
+
+## [v67.33.0] - 2026-10-16
+
+- Add optional `WebhookAlgorithmHeader.keyIdParameter` / `algorithmParameter` so verifiers can parse
+  `<name>=<value>` settings headers (Twilio's `key=<id>,algorithm=HMAC_SHA256`) and hand the bare key
+  ID to the caller.
+
+## [v67.32.0] - 2026-10-15
+
+- Add `dynamic.BaseAuth.requirement` (optional `dynamic.AuthRequirement`: `ALL` / `ANY` /
+  `ENDPOINT_SECURITY`): the API's auth requirement. Lets dynamic snippet generators tell `auth: any`
+  apart from endpoint-level security, since both set `wrapperProperty`.
+
 ## [v67.30.0] - 2026-10-06
 
 - Add `InferredAuthSchemeTokenEndpoint.grantType` (optional `InferredAuthGrantType`): a token endpoint

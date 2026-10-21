@@ -607,7 +607,7 @@ export async function runLocalGenerationForWorkspace({
     );
 
     if (results.some((didSucceed) => !didSucceed)) {
-        throw new TaskAbortSignal();
+        throw new TaskAbortSignal(context.getLastFailureMessage());
     }
 }
 

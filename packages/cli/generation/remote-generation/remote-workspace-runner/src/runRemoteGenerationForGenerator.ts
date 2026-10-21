@@ -38,6 +38,7 @@ import type { FernConfigMappingDiagnostic } from "@postman/sdk-config/sdk-config
 import { createAndStartJob } from "./createAndStartJob.js";
 import { discoverLatestSdkGenApiGeneratorVersions } from "./discoverSdkGenApiGeneratorVersions.js";
 import {
+    describeFernSdkGenApiIneligibility,
     type FernSdkConfigV1Payload,
     FernSdkGenApiBatch,
     type FernSdkGenApiBuildParameters,
@@ -255,9 +256,16 @@ export async function runRemoteGenerationForGenerator({
     // When the version is AUTO, pass the magic placeholder to the IR so that any
     // version strings embedded in generated code (e.g., User-Agent header,
     // X-Fern-SDK-Version) use the safe placeholder that Fiddle's AutoVersionStep
-    // will correctly replace post-generation.
+    // will correctly replace post-generation. The placeholder is mapped per language
+    // (e.g. Python "0.0.0.dev0") to match the version in the publishing config, which is
+    // the one AutoVersionStep replaces.
     const effectiveIrVersion =
-        resolvedVersion != null && isAutoVersion(resolvedVersion) ? MAGIC_VERSION : resolvedVersion;
+        resolvedVersion != null && isAutoVersion(resolvedVersion)
+            ? mapMagicVersionForLanguage(
+                  MAGIC_VERSION,
+                  generatorInvocation.language ?? extractLanguageFromGeneratorName(generatorInvocation.name)
+              )
+            : resolvedVersion;
 
     const userAgentTemplate = getUserAgentTemplateFromGeneratorConfig(generatorInvocation);
     const idempotencyKeyGeneration = getIdempotencyKeyGenerationFromGeneratorConfig(generatorInvocation);
@@ -304,25 +312,25 @@ export async function runRemoteGenerationForGenerator({
           }
         | undefined;
     let sdkConfigBuildParameters: FernSdkGenApiBuildParameters | undefined;
-    const sdkGenApiLanguage = getFernSdkGenApiLanguage(generatorInvocation.name);
     if (sdkGenApiRoute != null) {
+        // Preview must never retain a publishing destination from SDK Config.
+        const sdkConfigRequestedOutput =
+            sdkConfigTarget != null
+                ? resolveSdkConfigRequestedOutput(sdkConfigTarget.requestedOutput, isPreview)
+                : undefined;
         const candidate = {
             generatorInvocation,
             sdkVersion: resolvedVersion,
             specsTarGzBuffer,
-            whitelabel
+            whitelabel,
+            sdkConfigRequestedOutput
         };
         if (!isEligibleForFernSdkGenApi(candidate)) {
-            const reason =
-                resolvedVersion == null
-                    ? "the SDK version could not be resolved"
-                    : isAutoVersion(resolvedVersion)
-                      ? "automatic SDK versioning has not yet moved from Fiddle to the shared pipeline"
-                      : whitelabel != null
-                        ? "whitelabel generation has not yet moved from Fiddle to the shared pipeline"
-                        : specsTarGzBuffer == null
-                          ? "the source archive is unavailable"
-                          : `generator language ${generatorInvocation.language ?? "unknown"} does not match ${sdkGenApiLanguage}`;
+            const reason = describeFernSdkGenApiIneligibility({
+                candidate,
+                isSdkConfigTarget: sdkConfigTarget != null,
+                isPreview
+            });
             return interactiveTaskContext.failAndThrow(
                 `Cannot submit SDK generation to sdk-gen-api: ${reason}`,
                 undefined,
@@ -346,8 +354,7 @@ export async function runRemoteGenerationForGenerator({
                     token,
                     specsTarGzBuffer: candidate.specsTarGzBuffer,
                     payload: createSdkConfigTargetPayload(sdkConfigTarget),
-                    // Preview must never retain a publishing destination from SDK Config.
-                    requestedOutput: resolveSdkConfigRequestedOutput(sdkConfigTarget.requestedOutput, isPreview),
+                    requestedOutput: sdkConfigRequestedOutput,
                     ...(!isPreview && sdkConfigTarget.publishCredential != null
                         ? { publishCredential: sdkConfigTarget.publishCredential }
                         : {}),
@@ -761,7 +768,7 @@ export async function runRemoteGenerationForGenerator({
     }
 
     // use the actual version from the generation result, fallback to pre-computed version
-    let actualVersionForUpload = result?.actualVersion ?? resolvedVersion;
+    let actualVersionForUpload = result?.actualVersion ?? resolveVersionFallback(resolvedVersion);
     let versionUnresolvedReason: string | undefined;
     if (actualVersionForUpload == null && result != null && snippetPackageName != null) {
         if (snippetVersionCandidate == null) {

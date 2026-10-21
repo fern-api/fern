@@ -14,7 +14,8 @@
 ```ruby
 client.submit_form_data(
   username: "johndoe",
-  email: "john@example.com"
+  email: "john@example.com",
+  content: "{\"key\":\"value\"}"
 )
 ```
 </dd>
@@ -39,6 +40,14 @@ client.submit_form_data(
 <dd>
 
 **email:** `String` — The user's email address
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**content:** `String` — A JSON document carried as a form field
     
 </dd>
 </dl>

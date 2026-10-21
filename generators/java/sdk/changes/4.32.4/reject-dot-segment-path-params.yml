@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Path parameter values of exactly `.` or `..` now throw an `IllegalArgumentException` before
+    the request is sent. OkHttp's `addPathSegment` resolves these as dot-segments, so they could
+    change which endpoint the request was sent to. Values are checked by a new
+    `core.PathSegments` helper.
+  type: fix

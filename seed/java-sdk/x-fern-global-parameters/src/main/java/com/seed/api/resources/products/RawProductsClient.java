@@ -8,6 +8,7 @@ import com.seed.api.core.BodyProperties;
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.MediaTypes;
 import com.seed.api.core.ObjectMappers;
+import com.seed.api.core.PathSegments;
 import com.seed.api.core.RequestOptions;
 import com.seed.api.core.RetryInterceptor;
 import com.seed.api.core.SeedApiApiException;
@@ -50,7 +51,7 @@ public class RawProductsClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v1/products")
-                .addPathSegment(regionId)
+                .addPathSegment(PathSegments.validate(regionId))
                 .addPathSegments("search");
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
@@ -121,8 +122,8 @@ public class RawProductsClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("v1/products")
-                .addPathSegment(regionId)
-                .addPathSegment(productId);
+                .addPathSegment(PathSegments.validate(regionId))
+                .addPathSegment(PathSegments.validate(productId));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);

@@ -85,7 +85,7 @@ export class ServiceClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `download-content/${core.url.encodePathParam(id)}`,
+                `download-content/${core.url.encodePathParam(id, errors.SeedBytesDownloadError)}`,
             ),
             method: "GET",
             headers: _headers,

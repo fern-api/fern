@@ -457,6 +457,8 @@ function convertAlgorithmHeader({
             name: algorithmHeader.header
         }),
         keyIdDelimiter: algorithmHeader["key-id-delimiter"],
+        keyIdParameter: algorithmHeader["key-id-parameter"],
+        algorithmParameter: algorithmHeader["algorithm-parameter"],
         algorithms: entries.map(([wireValue, algorithm]) => ({
             wireValue,
             algorithm: convertHmacAlgorithm(algorithm)

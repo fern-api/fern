@@ -11,6 +11,14 @@ export interface WebhookAlgorithmHeader {
      * the whole header value is the algorithm.
      */
     keyIdDelimiter: string | undefined;
+    /**
+     * When present (with `algorithmParameter`), the header is a `keyIdDelimiter`-separated
+     * list of `<name>=<value>` pairs and the key ID is the value of this parameter
+     * (e.g. `key` in Twilio's `key=<id>,algorithm=HMAC_SHA256`).
+     */
+    keyIdParameter: string | undefined;
+    /** Name of the `<name>=<value>` pair carrying the algorithm when parsing named parameters. */
+    algorithmParameter: string | undefined;
     /** Allowed header values and the algorithm each selects. */
     algorithms: FernIr.WebhookAlgorithmOption[];
 }

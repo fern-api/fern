@@ -117,6 +117,7 @@ describe("runInteractiveTask", () => {
 
         expect(ok).toBe(false);
         expect(captured?.getLastFailureMessage()).toBe("GitHub 422: PR already exists");
+        expect(context.getLastFailureMessage()).toBe("GitHub 422: PR already exists");
     });
 
     it("does not emit a second log line when it swallows a TaskAbortSignal", async () => {

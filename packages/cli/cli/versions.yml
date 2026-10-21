@@ -1,4 +1,263 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.170.3
+  changelogEntry:
+    - summary: |
+        `fern check` no longer reports "No API definition found" for docs-only projects that
+        reference their API specs inline from `docs.yml` (`api` navigation items with `specs`)
+        and keep the spec in an `openapi/` or `asyncapi/` directory without a `generators.yml`.
+        A directory that `docs.yml` does not reference still reports the error.
+      type: fix
+  createdAt: "2026-10-20"
+  irVersion: 67
+- version: 5.170.2
+  changelogEntry:
+    - summary: |
+        Wait up to 18 minutes for an sdk-gen-api build so its 15-minute build timeout is reported first.
+        When the wait expires, the CLI checks the build status once more and fails with an internal
+        error instead of a network error if the build is still running. Failed targets now show the
+        sdk-gen-api error code with the message (for example, `FERN_BUILD_TIMEOUT: ...`).
+      type: fix
+  createdAt: "2026-10-20"
+  irVersion: 67
+- version: 5.170.1
+  changelogEntry:
+    - summary: |
+        When `fern generate` cannot resolve an SDK version for an sdk-gen-api generation (for example,
+        an MCP server generator with local file output and no package registry), the error now tells
+        you to pass one with `--version` instead of only reporting that the version could not be resolved.
+      type: fix
+  createdAt: "2026-10-20"
+  irVersion: 67
+- version: 5.170.0
+  changelogEntry:
+    - summary: |
+        Initialize new SDK projects with sdk-config.yml instead of generators.yml by default. Set FERN_USE_SDK_CONFIG=false to temporarily use the legacy initialization path.
+      type: feat
+  createdAt: "2026-10-20"
+  irVersion: 67
+- version: 5.169.0
+  changelogEntry:
+    - summary: |
+        Docs versions accept `default: true`, so the version that owns the unversioned URLs no
+        longer has to be first in the `versions` list. The list order still sets the order in the
+        version switcher, so a `Develop` version can be listed first while a release such as
+        `3.3.0` serves `/` and every unversioned page, the sitemap, canonical URLs, and `llms.txt`:
+
+        ```yaml
+        versions:
+          - display-name: Develop
+            ref: develop
+            availability: preview
+          - display-name: 3.3.0
+            default: true
+            path: ./versions/latest.yml
+        ```
+
+        The flag works on site-level `versions` and on `products[].versions`, and a default
+        version can use either `path` or `ref`. Setting `default: true` on more than one version
+        in the same list, or on a version with `hidden: true`, is a configuration error. Without
+        the flag, the first version is still the default.
+      type: feat
+    - summary: |
+        Add `settings.require-analytics-consent` to docs.yml. When enabled, Fern's built-in
+        docs analytics (PostHog) stays off until the page sets `window.fernAnalyticsConsent = true`
+        and dispatches a `fern-analytics-consent` event, e.g. from a consent manager callback.
+      type: feat
+  createdAt: "2026-10-20"
+  irVersion: 67
+- version: 5.168.1
+  changelogEntry:
+    - summary: |
+        With `--version AUTO`, the Python SDK `User-Agent` header now gets the computed version instead
+        of keeping `0.0.0-fern-placeholder`. The IR version is now mapped per language (Python
+        `0.0.0.dev0`) like the generator config version, so the autoversion step replaces both.
+      type: fix
+  createdAt: "2026-10-19"
+  irVersion: 67
+- version: 5.168.0
+  changelogEntry:
+    - summary: |
+        `fern docs md generate` now parses library source locally with Docker by default, with no
+        Fern login required. Pass `--remote` to parse on Fern's servers instead.
+        `--local` is still accepted but no longer needed.
+      type: feat
+  createdAt: "2026-10-19"
+  irVersion: 67
+- version: 5.167.0
+  changelogEntry:
+    - summary: |
+        Add `theme.code-blocks` to docs.yml to choose the syntax-highlighting color scheme for
+        code blocks, with separate `light` and `dark` Shiki themes. Supported themes are
+        `github-dark`, `github-dark-default`, `github-dark-dimmed`, `github-dark-high-contrast`,
+        `github-light`, `github-light-default`, `github-light-high-contrast`,
+        `material-theme-darker`, `min-dark`, and `min-light`.
+      type: feat
+  createdAt: "2026-10-19"
+  irVersion: 67
+- version: 5.166.0
+  changelogEntry:
+    - summary: |
+        The dynamic IR now marks whether each file-upload property (`file` and `fileArray`) is optional,
+        so dynamic snippet generators can add placeholders for required files only.
+      type: feat
+  createdAt: "2026-10-19"
+  irVersion: 67
+- version: 5.165.0
+  changelogEntry:
+    - summary: |
+        Initialize new SDK projects with sdk-config.yml instead of generators.yml by default. Set FERN_USE_SDK_CONFIG=false to temporarily use the legacy initialization path.
+      type: feat
+  createdAt: "2026-10-19"
+  irVersion: 67
+- version: 5.164.1
+  changelogEntry:
+    - summary: |
+        C/C++ library docs: generated page and group filenames no longer start with `_`
+        (e.g. `__be16` is written to `typedefs/be16.mdx`), so `folder:` navigation includes them.
+        URLs are unchanged. `fern check` now warns when only some generated library folders
+        (e.g. `macros/`) are wired into navigation.
+      type: fix
+  createdAt: "2026-10-19"
+  irVersion: 67
+- version: 5.164.0
+  changelogEntry:
+    - summary: |
+        `fern generate --version AUTO` now works for an `sdk-config.yml` target that delivers to GitHub, so
+        Fern Autorelease can release SDK Config targets. sdk-gen-api generates with a placeholder version,
+        and Fiddle picks the semver bump, replaces the placeholder and writes the changelog, as it does for
+        `generators.yml` groups. The CLI prints the picked version, and each AUTO run starts a new build
+        instead of replaying an earlier one. `AUTO` with download or direct registry output still fails
+        before generation, because nothing would replace the placeholder.
+      type: feat
+  createdAt: "2026-10-19"
+  irVersion: 67
+- version: 5.163.1
+  changelogEntry:
+    - summary: |
+        `fern generate` now fails with a deprecation error when a Fern Definition workspace is routed to sdk-gen-api,
+        instead of the internal "composes no spec-bearing dependencies" error. sdk-gen-api generates from source specs,
+        so the error points to `fern export` for migrating the API to OpenAPI.
+      type: fix
+  createdAt: "2026-10-17"
+  irVersion: 67
+- version: 5.163.0
+  changelogEntry:
+    - summary: |
+        An sdk-config.yml `cli` target without `generatorVersion` now generates with the newest fern-cli-generator the
+        route can run, like an unpinned generator in generators.yml: the translated generator is written as
+        `version: latest`, which sdk-gen-api resolves through its generator version discovery, and Fiddle and `--local`
+        resolve to the newest published version. Previously it was pinned to 0.49.0, which predates the crate-name,
+        installer URL, npm publish and build-attestation fixes. The `CLI_TARGET_UNPOOLED_VERSION` warning is removed.
+      type: feat
+  createdAt: "2026-10-17"
+  irVersion: 67
+- version: 5.162.0
+  changelogEntry:
+    - summary: |
+        The sdk-config.yml `cli` target now writes `output.distribution.githubAttestations` (`auto`, `true` or `false`)
+        to fern-cli-generator's `config.distribution.githubAttestations`, so the generated release workflow can skip
+        build-provenance attestations on private repositories. Previously the field was dropped with a warning and the
+        workflow always attested. Generator versions before 0.54.3 ignore the key, so `auto` or `false` on those
+        versions warns with `CLI_TARGET_ATTESTATIONS_VERSION`.
+      type: feat
+  createdAt: "2026-10-16"
+  irVersion: 67
+- version: 5.161.1
+  changelogEntry:
+    - summary: |
+        Respect `github.workflows: false` in `generators.yml` when generation runs through sdk-gen-api.
+        The setting was dropped on that route, so generated `.github/workflows/*` files were still
+        committed. Requests that keep the default (`true`) are unchanged.
+      type: fix
+    - summary: |
+        Upgrade `@postman/sdk-config` to 0.14.0, which adds optional `output.github.workflows` to SDK Config.
+        `output.github.workflows: false` in `sdk-config.yml` is now sent to sdk-gen-api the same way as
+        the `generators.yml` setting. The SDK Config `cli` target accepts the field and ignores it with a
+        warning, like the other GitHub delivery settings its translated `generators.yml` does not write.
+      type: fix
+  createdAt: "2026-10-16"
+  irVersion: 67
+- version: 5.161.0
+  changelogEntry:
+    - summary: |
+        `fern generator list` and `fern generator get` now describe SDK Config targets from `sdk-config.yml`
+        alongside legacy generator groups, so they stay accurate after `fern sdk migrate`.
+
+        `fern generator list` output now nests each API under `groups` (legacy groups from `generators.yml` or
+        `generators.legacy.yml`) and `targets` (SDK Config targets with their language, generator, and version,
+        where an unpinned target reports `latest`). A language configured in both files appears in both sections.
+        The new `--targets` option filters SDK Config targets by language or target id.
+
+        `fern generator get --target <language>` reads an SDK Config target's version, language, or repository.
+        Missing selections now fail with the configuration files inspected, and a legacy selection that was
+        migrated points at its SDK Config target.
+      type: feat
+  createdAt: "2026-10-16"
+  irVersion: 67
+- version: 5.160.0
+  changelogEntry:
+    - summary: |
+        `settings.search.prioritize-current-product` in `docs.yml` now defaults to `true`.
+        When unset, search boosts results from the current product/version without
+        hiding other products/versions. Set it to `false` to keep the previous ranking.
+      type: feat
+  createdAt: "2026-10-16"
+  irVersion: 67
+- version: 5.159.3
+  changelogEntry:
+    - summary: |
+        `webhook-signature.algorithm-header` now accepts `key-id-parameter` and `algorithm-parameter`
+        so key/value settings headers such as Twilio's
+        `X-Twilio-Webhooks-Signature-Settings: key=<id>,algorithm=HMAC_SHA256` are parsed into the
+        bare key ID and algorithm instead of `key=<id>` (IR 67.33.0).
+      type: fix
+  createdAt: "2026-10-16"
+  irVersion: 67
+- version: 5.159.2
+  changelogEntry:
+    - summary: |
+        Fix `fern docs dev` dropping uploaded (`file:`) icons and images from the navigation,
+        such as custom product switcher and navbar link icons. The Astro preview now maps the
+        preview's file IDs to file paths in the docs config, matching how `fern generate --docs`
+        publishes. Translated `navbar-links` overrides now also show up in the preview.
+      type: fix
+  createdAt: "2026-10-16"
+  irVersion: 67
+- version: 5.159.1
+  changelogEntry:
+    - summary: |
+        Preserve actionable sdk-gen-api errors instead of printing `[object Object]` when `fern sdk preview` fails.
+      type: fix
+  createdAt: "2026-10-15"
+  irVersion: 67
+- version: 5.159.0
+  changelogEntry:
+    - summary: |
+        The dynamic IR now sets `requirement` (`ALL`, `ANY` or `ENDPOINT_SECURITY`) on each endpoint's auth, so
+        dynamic snippet generators can tell `auth: any` apart from endpoint-level security.
+      type: feat
+  createdAt: "2026-10-15"
+  irVersion: 67
+- version: 5.158.2
+  changelogEntry:
+    - summary: |
+        SDK Config targets and generators.yml groups that publish a NuGet or RubyGems package through
+        GitHub now carry the `api-key: ${SECRET_NAME}` secret name to sdk-gen-api, so the generated
+        release workflow reads the API key from that repository secret instead of the default one. An
+        `apiKey` in sdk-config.yml that is not an environment expression is rejected, and so is an
+        `apiKey` combined with `trustedPublishing: true`.
+
+        A GitHub NuGet or RubyGems `api-key` in generators.yml is no longer resolved from the local
+        environment. It names a repository secret that by design exists only in GitHub, so requiring it
+        locally failed generation under the default `--require-env-vars`, and resolving it replaced the
+        secret name with the key.
+
+        A NuGet or RubyGems `api-key` of `OIDC` is now carried to sdk-gen-api as trusted publishing
+        instead of being dropped. Dropping it left the generated release workflow looking for an API key
+        secret that a trusted-publishing repository was never meant to hold.
+      type: fix
+  createdAt: "2026-10-15"
+  irVersion: 67
 - version: 5.158.1
   changelogEntry:
     - summary: |

@@ -76,7 +76,7 @@ describe("translateCliTarget", () => {
         expect(record(result.generatorsYml).api).toEqual({ specs: [{ openapi: "../openapi.yml" }] });
         expect(firstGenerator(result.generatorsYml)).toEqual({
             name: "fernapi/fern-cli-generator",
-            version: "0.49.0",
+            version: "latest",
             output: { location: "local-file-system", path: "../generated/cli" }
         });
     });
@@ -264,7 +264,7 @@ describe("prepareCliTargetWorkspace", () => {
             const groups = prepared.workspace.generatorsConfiguration?.groups ?? [];
             expect(groups.map((group) => group.groupName)).toEqual(["cli"]);
             expect(groups[0]?.generators.map((generator) => [generator.name, generator.version])).toEqual([
-                ["fernapi/fern-cli-generator", "0.49.0"]
+                ["fernapi/fern-cli-generator", "latest"]
             ]);
             expect(await read("sdk-config.yml")).toBe(before);
             expect(await exists(join(path, "generators.yml"))).toBe(false);

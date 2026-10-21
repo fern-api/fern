@@ -7,6 +7,7 @@ package com.test.sdk.resources.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.test.sdk.core.ClientOptions;
 import com.test.sdk.core.ObjectMappers;
+import com.test.sdk.core.PathSegments;
 import com.test.sdk.core.RequestOptions;
 import com.test.sdk.core.RetryInterceptor;
 import com.test.sdk.core.SeedApiApiException;
@@ -38,7 +39,7 @@ public class RawServiceClient {
     HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
       .addPathSegments("users")
 
-      .addPathSegment(userId);if (requestOptions != null) {
+      .addPathSegment(PathSegments.validate(userId));if (requestOptions != null) {
         requestOptions.getQueryParameters().forEach((_key, _value) -> {
           httpUrl.addQueryParameter(_key, _value);
         } );

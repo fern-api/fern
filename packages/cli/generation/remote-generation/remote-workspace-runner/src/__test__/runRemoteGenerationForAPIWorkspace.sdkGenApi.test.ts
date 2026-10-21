@@ -483,6 +483,78 @@ describe("runRemoteGenerationForAPIWorkspace sdk-gen-api preparation", () => {
         expect(JSON.stringify(request)).not.toContain("github-publish-secret");
     });
 
+    describe("a GitHub NuGet api-key expression", () => {
+        function nugetGithubGenerator(): generatorsYml.GeneratorInvocation {
+            const generator = invocation("fernapi/fern-csharp-sdk", "csharp", "2.999.999");
+            generator.outputMode = FernFiddle.OutputMode.githubV2(
+                FernFiddle.GithubOutputModeV2.push({
+                    owner: "acme",
+                    repo: "petstore-dotnet",
+                    publishInfo: FernFiddle.GithubPublishInfo.nuget({
+                        registryUrl: "https://nuget.org/",
+                        packageName: "Acme.Sdk",
+                        apiKey: "${MY_NUGET_KEY}"
+                    }),
+                    downloadSnippets: false,
+                    workflows: true
+                })
+            );
+            return generator;
+        }
+
+        function apiKeyOf(generator: generatorsYml.GeneratorInvocation): unknown {
+            const outputMode = generator.outputMode;
+            if (outputMode.type !== "githubV2") {
+                throw new Error("expected a githubV2 output mode");
+            }
+            return (outputMode.githubV2.publishInfo as { apiKey?: string } | undefined)?.apiKey;
+        }
+
+        it("reaches sdk-gen-api as a secret name, with no local variable required", () => {
+            vi.stubEnv("MY_NUGET_KEY", undefined);
+
+            const [prepared] = prepareFernSdkGenApiRoutes({
+                generators: [nugetGithubGenerator()],
+                isSdkGenApiEnabled: () => true,
+                requireEnvVars: true,
+                isPreview: false
+            });
+
+            expect(prepared?.error).toBeUndefined();
+            expect(prepared?.route).toMatchObject({ configKind: "legacy-fern" });
+            expect(apiKeyOf(prepared?.generatorInvocation as generatorsYml.GeneratorInvocation)).toBe(
+                "${MY_NUGET_KEY}"
+            );
+        });
+
+        it("is substituted as before for a generator that falls back to Fiddle", () => {
+            vi.stubEnv("MY_NUGET_KEY", "local-value");
+
+            const [prepared] = prepareFernSdkGenApiRoutes({
+                generators: [nugetGithubGenerator()],
+                isSdkGenApiEnabled: () => false,
+                requireEnvVars: true,
+                isPreview: false
+            });
+
+            expect(prepared?.route).toBeUndefined();
+            expect(apiKeyOf(prepared?.generatorInvocation as generatorsYml.GeneratorInvocation)).toBe("local-value");
+        });
+
+        it("still fails for Fiddle when the local variable is missing, as before", () => {
+            vi.stubEnv("MY_NUGET_KEY", undefined);
+
+            const [prepared] = prepareFernSdkGenApiRoutes({
+                generators: [nugetGithubGenerator()],
+                isSdkGenApiEnabled: () => false,
+                requireEnvVars: true,
+                isPreview: false
+            });
+
+            expect(String(prepared?.error)).toContain("Environment variable MY_NUGET_KEY is not defined.");
+        });
+    });
+
     it("keeps generators.yml direct publishing validation unchanged", () => {
         const generator = invocation("fernapi/fern-typescript-sdk", "typescript", "3.999.999");
         generator.outputMode = FernFiddle.OutputMode.publishV2(
@@ -503,6 +575,44 @@ describe("runRemoteGenerationForAPIWorkspace sdk-gen-api preparation", () => {
         expect(prepared?.error).toBeUndefined();
         expect(prepared?.route).toMatchObject({ configKind: "legacy-fern" });
         expect(prepared?.generatorInvocation.outputMode).toEqual(generator.outputMode);
+    });
+
+    it("routes legacy preview registry publishing through sdk-gen-api", () => {
+        const generator = invocation("fernapi/fern-typescript-sdk", "typescript", "3.96.0");
+        generator.outputMode = FernFiddle.OutputMode.publishV2(
+            FernFiddle.PublishOutputModeV2.npmOverride({
+                registryUrl: "https://npm.buildwithfern.com",
+                packageName: "@acme-preview/pets",
+                token: "preview-secret"
+            })
+        );
+
+        const [prepared] = prepareFernSdkGenApiRoutes({
+            generators: [generator],
+            isSdkGenApiEnabled: () => true,
+            requireEnvVars: false,
+            isPreview: true
+        });
+
+        expect(prepared?.error).toBeUndefined();
+        expect(prepared?.route).toMatchObject({ configKind: "legacy-fern" });
+        expect(prepared?.fallbackReason).toBeUndefined();
+        expect(prepared?.generatorInvocation.outputMode).toEqual(generator.outputMode);
+    });
+
+    it("continues routing legacy download previews through sdk-gen-api", () => {
+        const generator = invocation("fernapi/fern-typescript-sdk", "typescript", "3.96.0");
+
+        const [prepared] = prepareFernSdkGenApiRoutes({
+            generators: [generator],
+            isSdkGenApiEnabled: () => true,
+            requireEnvVars: false,
+            isPreview: true
+        });
+
+        expect(prepared?.error).toBeUndefined();
+        expect(prepared?.route).toMatchObject({ configKind: "legacy-fern" });
+        expect(prepared?.fallbackReason).toBeUndefined();
     });
 
     it("warns when a legacy target falls back to Fiddle generation", async () => {

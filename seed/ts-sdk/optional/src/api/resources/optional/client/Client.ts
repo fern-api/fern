@@ -177,7 +177,7 @@ export class OptionalClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `deploy/${core.url.encodePathParam(actionId)}/versions/${core.url.encodePathParam(id)}`,
+                `deploy/${core.url.encodePathParam(actionId, errors.SeedObjectsWithImportsError)}/versions/${core.url.encodePathParam(id, errors.SeedObjectsWithImportsError)}`,
             ),
             method: "POST",
             headers: _headers,

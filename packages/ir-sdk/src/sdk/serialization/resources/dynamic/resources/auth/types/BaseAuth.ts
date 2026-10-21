@@ -4,14 +4,17 @@ import type * as FernIr from "../../../../../../api/index.js";
 import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
 import { Name } from "../../commons/types/Name.js";
+import { AuthRequirement } from "./AuthRequirement.js";
 
 export const BaseAuth: core.serialization.ObjectSchema<serializers.dynamic.BaseAuth.Raw, FernIr.dynamic.BaseAuth> =
     core.serialization.objectWithoutOptionalProperties({
         wrapperProperty: Name.optional(),
+        requirement: AuthRequirement.optional(),
     });
 
 export declare namespace BaseAuth {
     export interface Raw {
         wrapperProperty?: Name.Raw | null;
+        requirement?: AuthRequirement.Raw | null;
     }
 }

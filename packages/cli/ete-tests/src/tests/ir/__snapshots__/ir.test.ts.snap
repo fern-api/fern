@@ -234,8 +234,10 @@ exports[`ir > {"name":"api-webhook-signature"} 1`] = `
                         "legacyQueryEncoding": true
                     },
                     "algorithmHeader": {
-                        "headerName": "X-Twilio-Webhook-Signature-Settings",
-                        "keyIdDelimiter": ";",
+                        "headerName": "X-Twilio-Webhooks-Signature-Settings",
+                        "keyIdDelimiter": ",",
+                        "keyIdParameter": "key",
+                        "algorithmParameter": "algorithm",
                         "algorithms": [
                             {
                                 "wireValue": "HMAC_SHA1",
@@ -720,8 +722,10 @@ exports[`ir > {"name":"api-webhook-signature"} 1`] = `
                 "legacyQueryEncoding": true
             },
             "algorithmHeader": {
-                "headerName": "X-Twilio-Webhook-Signature-Settings",
-                "keyIdDelimiter": ";",
+                "headerName": "X-Twilio-Webhooks-Signature-Settings",
+                "keyIdDelimiter": ",",
+                "keyIdParameter": "key",
+                "algorithmParameter": "algorithm",
                 "algorithms": [
                     {
                         "wireValue": "HMAC_SHA1",
@@ -2051,6 +2055,7 @@ exports[`ir > {"name":"file-upload"} 1`] = `
                             },
                             {
                                 "type": "file",
+                                "isOptional": false,
                                 "wireValue": "file",
                                 "name": {
                                     "originalName": "file",
@@ -2074,6 +2079,7 @@ exports[`ir > {"name":"file-upload"} 1`] = `
                             },
                             {
                                 "type": "file",
+                                "isOptional": true,
                                 "wireValue": "optionalFile",
                                 "name": {
                                     "originalName": "optionalFile",
@@ -18310,7 +18316,8 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                         }
                     },
                     "passwordOmit": null,
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {

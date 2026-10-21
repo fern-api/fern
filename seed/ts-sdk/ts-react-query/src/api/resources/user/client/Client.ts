@@ -94,7 +94,7 @@ export class UserClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/users/${core.url.encodePathParam(userId)}`,
+                `/users/${core.url.encodePathParam(userId, errors.SeedApiError)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -214,7 +214,7 @@ export class UserClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/users/${core.url.encodePathParam(userId)}`,
+                `/users/${core.url.encodePathParam(userId, errors.SeedApiError)}`,
             ),
             method: "PUT",
             headers: _headers,
@@ -277,7 +277,7 @@ export class UserClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/users/${core.url.encodePathParam(userId)}`,
+                `/users/${core.url.encodePathParam(userId, errors.SeedApiError)}`,
             ),
             method: "PATCH",
             headers: _headers,
@@ -331,7 +331,7 @@ export class UserClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/users/${core.url.encodePathParam(userId)}`,
+                `/users/${core.url.encodePathParam(userId, errors.SeedApiError)}`,
             ),
             method: "DELETE",
             headers: _headers,

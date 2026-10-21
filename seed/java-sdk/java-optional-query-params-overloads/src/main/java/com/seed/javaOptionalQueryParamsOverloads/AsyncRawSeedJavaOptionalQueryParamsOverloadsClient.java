@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.seed.javaOptionalQueryParamsOverloads.core.ClientOptions;
 import com.seed.javaOptionalQueryParamsOverloads.core.ObjectMappers;
+import com.seed.javaOptionalQueryParamsOverloads.core.PathSegments;
 import com.seed.javaOptionalQueryParamsOverloads.core.QueryStringMapper;
 import com.seed.javaOptionalQueryParamsOverloads.core.RequestOptions;
 import com.seed.javaOptionalQueryParamsOverloads.core.RetryInterceptor;
@@ -71,7 +72,7 @@ public class AsyncRawSeedJavaOptionalQueryParamsOverloadsClient {
                 .newBuilder()
                 .addPathSegments("api")
                 .addPathSegments("users")
-                .addPathSegment(userId)
+                .addPathSegment(PathSegments.validate(userId))
                 .addPathSegments("insurance");
         if (request.getIncludeExpired().isPresent()) {
             QueryStringMapper.addQueryParameter(

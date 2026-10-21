@@ -20,9 +20,16 @@ class PostSubmitRequest extends JsonSerializableType
     public string $email;
 
     /**
+     * @var string $content A JSON document carried as a form field
+     */
+    #[JsonProperty('Content')]
+    public string $content;
+
+    /**
      * @param array{
      *   username: string,
      *   email: string,
+     *   content: string,
      * } $values
      */
     public function __construct(
@@ -30,5 +37,6 @@ class PostSubmitRequest extends JsonSerializableType
     ) {
         $this->username = $values['username'];
         $this->email = $values['email'];
+        $this->content = $values['content'];
     }
 }

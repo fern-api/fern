@@ -9,6 +9,7 @@ import com.seed.unions.core.BodyProperties;
 import com.seed.unions.core.ClientOptions;
 import com.seed.unions.core.MediaTypes;
 import com.seed.unions.core.ObjectMappers;
+import com.seed.unions.core.PathSegments;
 import com.seed.unions.core.RequestOptions;
 import com.seed.unions.core.RetryInterceptor;
 import com.seed.unions.core.SeedUnionsApiException;
@@ -41,7 +42,7 @@ public class RawBigunionClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("bigunion")
-                .addPathSegment(id);
+                .addPathSegment(PathSegments.validate(id));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
