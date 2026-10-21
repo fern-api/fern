@@ -37,9 +37,9 @@ internal static class XmlUtils
         return element;
     }
 
-    internal static string Serialize(XElement element, bool xmlDeclaration = false)
+    internal static string Serialize(XElement element, bool xmlDeclaration = false, bool indent = false)
     {
-        var xml = element.ToString(SaveOptions.DisableFormatting);
+        var xml = element.ToString(indent ? SaveOptions.None : SaveOptions.DisableFormatting);
         var siblings = element.Annotation<SiblingComments>();
         if (siblings != null)
         {
