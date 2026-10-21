@@ -147,11 +147,11 @@ export namespace Dial {
 
         /**
          * Adds a `<Number>` child after any content added so far and returns its builder.
-         * @param fields initial `<Number>` attributes and children
+         * @param fields the `<Number>` text content, or its initial attributes and children
          * @returns the `SeedApi.Number.Builder` appended to this element
          */
-        addNumber(fields?: Partial<SeedApi.Number.Fields>): SeedApi.Number.Builder {
-            const builder = new SeedApi.Number.Builder(fields);
+        addNumber(fields?: string | Partial<SeedApi.Number.Fields>): SeedApi.Number.Builder {
+            const builder = new SeedApi.Number.Builder(typeof fields === "string" ? { phone_number: fields } : fields);
             this.elements.numbers = [...(this.elements.numbers ?? []), builder];
             return builder;
         }
