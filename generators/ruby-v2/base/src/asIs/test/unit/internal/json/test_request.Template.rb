@@ -3,11 +3,12 @@
 require "test_helper"
 
 describe <%= gem_namespace %>::Internal::JSON::Request do
-  def build_request(body: nil, request_options: {}, method: "POST")
+  def build_request(body: nil, query: {}, request_options: {}, method: "POST")
     <%= gem_namespace %>::Internal::JSON::Request.new(
       base_url: "https://example.com",
       path: "/test",
       method: method,
+      query: query,
       body: body,
       request_options: request_options
     )
@@ -109,37 +110,17 @@ describe <%= gem_namespace %>::Internal::JSON::Request do
     end
   end
 
-  describe "#encode_body with time values" do
-    it "serializes Time values as ISO 8601 strings, including nested values" do
-      request = build_request(
-        body: {
-          begin_time: Time.utc(2026, 10, 16, 1, 40, 16),
-          nested: { times: [Time.new(2026, 1, 2, 3, 4, 5, "+05:00")] }
-        }
-      )
+  describe "time values" do
+    it "serializes Time values in the body as RFC 3339 strings" do
+      request = build_request(body: { begin_time: Time.utc(2026, 10, 16, 1, 40, 16) })
 
-      assert_equal(
-        {
-          "begin_time" => "2026-10-16T01:40:16.000Z",
-          "nested" => { "times" => ["2026-01-02T03:04:05.000+05:00"] }
-        },
-        encoded_body(request)
-      )
+      assert_equal({ "begin_time" => "2026-10-16T01:40:16.000Z" }, encoded_body(request))
     end
 
-    it "serializes Date values as ISO 8601 dates" do
-      request = build_request(body: { day: Date.new(2026, 10, 16) })
+    it "serializes Time values in query parameters as RFC 3339 strings" do
+      request = build_request(query: { start: Time.utc(2026, 10, 16, 1, 40, 16), limit: 10 })
 
-      assert_equal({ "day" => "2026-10-16" }, encoded_body(request))
-    end
-
-    it "leaves non-time values unchanged" do
-      request = build_request(body: { name: "plant", count: 3, active: true, tags: ["a"], missing: nil })
-
-      assert_equal(
-        { "name" => "plant", "count" => 3, "active" => true, "tags" => ["a"], "missing" => nil },
-        encoded_body(request)
-      )
+      assert_equal({ start: "2026-10-16T01:40:16.000Z", limit: 10 }, request.encode_query)
     end
   end
 end

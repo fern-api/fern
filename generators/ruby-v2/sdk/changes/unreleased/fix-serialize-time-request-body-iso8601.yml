@@ -1,8 +1,9 @@
 # yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
 
 - summary: |
-    JSON request bodies now serialize `Time`, `DateTime`, `Date`, and
-    `ActiveSupport::TimeWithZone` values as ISO 8601 / RFC 3339 strings
-    (e.g. `"2026-10-16T01:40:16.000Z"`). Previously `::JSON.generate` fell back
-    to `to_s`, sending values like `"2026-10-16 01:40:16 UTC"` that APIs reject.
+    `Time` and `ActiveSupport::TimeWithZone` values are now sent as RFC 3339 strings
+    with millisecond precision (e.g. `"2026-10-16T01:40:16.000Z"`) in JSON request
+    bodies, query parameters, form-urlencoded bodies, and multipart form fields.
+    Previously they were sent via `Time#to_s` (e.g. `"2026-10-16 01:40:16 UTC"`),
+    which is not RFC 3339. `Date` and `DateTime` values are unchanged.
   type: fix

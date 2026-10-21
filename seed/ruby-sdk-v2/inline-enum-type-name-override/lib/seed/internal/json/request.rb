@@ -35,7 +35,7 @@ module Seed
         #   from request_options.
         def encode_body
           body = request_body
-          body.nil? ? nil : ::JSON.generate(serialize_times(body))
+          body.nil? ? nil : ::JSON.generate(Internal::Types::Utils.serialize_times(body))
         end
 
         private
@@ -43,24 +43,6 @@ module Seed
         # @return [Object, nil] The request body merged with additional_body_parameters.
         def request_body
           merge_additional_body_parameters(@body)
-        end
-
-        # ::JSON.generate falls back to `to_s` for Time-like values (e.g. "2026-10-16 01:40:16 UTC"),
-        # so convert Time, DateTime, Date, and ActiveSupport::TimeWithZone values to ISO 8601 strings first.
-        #
-        # @param value [Object]
-        # @return [Object]
-        def serialize_times(value)
-          case value
-          when ::Hash
-            value.transform_values { |item| serialize_times(item) }
-          when ::Array
-            value.map { |item| serialize_times(item) }
-          else
-            return value unless value.respond_to?(:iso8601)
-
-            value.respond_to?(:hour) ? value.iso8601(3) : value.iso8601
-          end
         end
       end
     end

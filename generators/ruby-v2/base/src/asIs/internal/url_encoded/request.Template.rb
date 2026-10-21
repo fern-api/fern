@@ -36,7 +36,7 @@ module <%= gem_namespace %>
         #   from request_options.
         def encode_body
           body = merge_additional_body_parameters(@body)
-          body.nil? ? nil : URI.encode_www_form(body.to_h.compact)
+          body.nil? ? nil : URI.encode_www_form(Internal::Types::Utils.serialize_times(body.to_h.compact))
         end
       end
     end
