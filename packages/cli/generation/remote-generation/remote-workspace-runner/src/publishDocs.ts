@@ -2,7 +2,13 @@ import { resolveSnippetPackageName, VisibilityFilter } from "@fern-api/api-works
 import { FernToken } from "@fern-api/auth";
 import { docsYml, generatorsYml } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
-import { asyncPool, errorMessageOrString, MediaType, replaceEnvVariables } from "@fern-api/core-utils";
+import {
+    asyncPool,
+    errorMessageOrString,
+    MediaType,
+    replaceEnvVariables,
+    sanitizePreviewId
+} from "@fern-api/core-utils";
 import {
     applyTranslatedApiTitlesToNavTree,
     applyTranslatedFrontmatterToNavTree,
@@ -83,23 +89,6 @@ const HASH_CONCURRENCY = parseInt(process.env.FERN_DOCS_ASSET_HASH_CONCURRENCY ?
 const REGISTER_MAX_RETRIES = 3;
 const REGISTER_BASE_DELAY_MS = 1_000;
 const REGISTER_JITTER_FACTOR = 0.5;
-
-/**
- * Sanitizes a preview ID to be valid in a DNS subdomain label.
- * This MUST match the sanitizePreviewId in generateDocsWorkspace.ts and the
- * server-side sanitizePreviewId in FDR so that predicted URLs match actual URLs.
- */
-function sanitizePreviewId(id: string): string {
-    const sanitized = id
-        .toLowerCase()
-        .replace(/[^a-z0-9-]/g, "-")
-        .replace(/-{2,}/g, "-")
-        .replace(/^-+|-+$/g, "");
-    if (sanitized.length === 0) {
-        return "default";
-    }
-    return sanitized;
-}
 
 /**
  * Extract a human-readable error detail from an oRPC / ledger publish error.
