@@ -117,7 +117,7 @@ module <%= gem_namespace %>
             snake_case.to_sym
           end
         end
-
+<% if (serializeTimeAsIso8601) { %>
         # Converts Time values (including ActiveSupport::TimeWithZone), recursively within hashes and arrays, to
         # RFC 3339 strings with millisecond precision. `Time#to_s` (e.g. "2026-10-16 01:40:16 UTC") is not RFC 3339.
         # Date and DateTime values are left unchanged because their `to_s` output is already ISO 8601.
@@ -134,7 +134,7 @@ module <%= gem_namespace %>
             value.is_a?(::Time) ? value.iso8601(3) : value
           end
         end
-      end
+<% } %>      end
     end
   end
 end

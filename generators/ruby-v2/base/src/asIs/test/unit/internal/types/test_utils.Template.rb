@@ -222,7 +222,7 @@ describe <%= gem_namespace %>::Internal::Types::Utils do
       end
     end
   end
-
+<% if (serializeTimeAsIso8601) { %>
   describe ".serialize_times" do
     it "converts Time values to RFC 3339 strings with millisecond precision" do
       assert_equal "2026-10-16T01:40:16.000Z", Utils.serialize_times(Time.utc(2026, 10, 16, 1, 40, 16))
@@ -246,4 +246,4 @@ describe <%= gem_namespace %>::Internal::Types::Utils do
       assert_equal value, Utils.serialize_times(value)
     end
   end
-end
+<% } %>end
