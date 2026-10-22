@@ -66,8 +66,10 @@ def serialize_datetime(v: dt.datetime) -> str:
     else:
         # astimezone() on a naive datetime treats it as local time and picks the offset for that date,
         # rather than today's offset, which is wrong across a daylight saving time change.
+        # Only the offset is used so the wall-clock time is sent as given, even for a time that
+        # does not exist locally because of a daylight saving time change.
         try:
-            localized_dt = v.astimezone()
+            localized_dt = v.replace(tzinfo=dt.timezone(v.astimezone().utcoffset() or dt.timedelta(0)))
         except (OverflowError, OSError, ValueError):
             # Some platforms (e.g. Windows) cannot look up local time for dates outside the epoch range.
             localized_dt = v.replace(tzinfo=dt.datetime.now().astimezone().tzinfo)
