@@ -22,6 +22,7 @@ export { convertNumberToSnakeCase } from "./convertNumberToSnakeCase.js";
 export { delay } from "./delay/delay.js";
 export { withMinimumTime } from "./delay/withMinimumTime.js";
 export { EMPTY_ARRAY, EMPTY_OBJECT } from "./empty.js";
+export { errorMessageOrString } from "./errorMessageOrString.js";
 export * as Examples from "./examples.js";
 export { extractErrorMessage } from "./extractErrorMessage.js";
 export { FERN_CA_BUNDLE_ENV_VAR, FERN_JAVA_SKIP_FORMATTING_ENV_VAR } from "./fernEnvVars.js";
