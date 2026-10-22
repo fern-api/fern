@@ -1,4 +1,4 @@
-import { isRecord } from "@fern-api/core-utils";
+import { isRecord, stripTrailingSlashes } from "@fern-api/core-utils";
 export const MCP_SERVER_NAME = "fern";
 
 export const MCP_CLIENTS = ["claude", "cursor", "codex"] as const;
@@ -20,7 +20,7 @@ export function getFaiOrigin(): string {
  * guessing.
  */
 export function getMcpServerUrl({ faiOrigin, organization }: { faiOrigin: string; organization?: string }): string {
-    const origin = faiOrigin.replace(/\/+$/, "");
+    const origin = stripTrailingSlashes(faiOrigin);
     return organization != null ? `${origin}/organizations/${organization}/mcp` : `${origin}/mcp`;
 }
 

@@ -1,3 +1,4 @@
+import { capitalizeFirstLetter } from "@fern-api/core-utils";
 import { OpenAPIV3_1 } from "openapi-types";
 
 export namespace UnionSchemaNamingUtils {
@@ -18,7 +19,7 @@ export namespace UnionSchemaNamingUtils {
         }
 
         // Handle camelCase - just capitalize the first letter
-        return str.charAt(0).toUpperCase() + str.slice(1);
+        return capitalizeFirstLetter(str);
     }
 
     /**
@@ -435,7 +436,7 @@ export namespace UnionSchemaNamingUtils {
                 .join("");
         } else {
             // Assume camelCase, just capitalize first letter
-            return prop.charAt(0).toUpperCase() + prop.slice(1);
+            return capitalizeFirstLetter(prop);
         }
     }
 }
