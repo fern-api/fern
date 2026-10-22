@@ -25,6 +25,7 @@ export { getSchemaOptions } from "./codegen-utils/getSchemaOptions.js";
 export { getSdkParameterPropertyName } from "./codegen-utils/getSdkParameterPropertyName.js";
 export { getTextOfTsKeyword } from "./codegen-utils/getTextOfTsKeyword.js";
 export { getTextOfTsNode } from "./codegen-utils/getTextOfTsNode.js";
+export { convertRecordToIndexSignature } from "./codegen-utils/convertRecordToIndexSignature.js";
 export { InlineConsts } from "./codegen-utils/inlineConsts.js";
 export { isExpressionUndefined } from "./codegen-utils/isExpressionUndefined.js";
 export { maybeAddDocsNode, maybeAddDocsStructure } from "./codegen-utils/maybeAddDocs.js";
