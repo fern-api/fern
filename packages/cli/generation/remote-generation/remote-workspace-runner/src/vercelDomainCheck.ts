@@ -32,6 +32,8 @@ export type CustomDomainRouting =
 export interface DnsLookup {
     resolveCname(host: string): Promise<string[]>;
     resolve4(host: string): Promise<string[]>;
+    /** Aborts in-flight queries so a hung resolver doesn't outlive the timeout. */
+    cancel?(): void;
 }
 
 export async function classifyCustomDomain(host: string, dns: DnsLookup): Promise<CustomDomainRouting> {
@@ -86,6 +88,7 @@ export async function checkCustomDomainsNotOnVercel({
             )
         }))
     );
+    dns.cancel?.();
     for (const { host, routing } of results) {
         context.logger.debug(`Custom domain ${host} routing: ${routing.type}`);
     }
@@ -136,7 +139,7 @@ export function getVercelDnsMessage(domains: { host: string; target: string }[],
         "Questions? Reach out in your Fern Slack channel or email support@buildwithfern.com."
     ];
     const width = Math.max(...lines.map((line) => stripAnsi(line).length)) + 2;
-    const border = color("━".repeat(width + 2));
+    const border = color("━".repeat(width));
     return ["", border, ...lines.map((line) => ` ${line}`), border, ""].join("\n");
 }
 
@@ -144,7 +147,8 @@ function createResolver(): DnsLookup {
     const resolver = new Resolver({ timeout: 2000, tries: 2 });
     return {
         resolveCname: (host) => resolver.resolveCname(host),
-        resolve4: (host) => resolver.resolve4(host)
+        resolve4: (host) => resolver.resolve4(host),
+        cancel: () => resolver.cancel()
     };
 }
 
