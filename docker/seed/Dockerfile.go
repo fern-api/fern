@@ -1,10 +1,10 @@
 # Stage 1: Pull wiremock image as tar (no daemon needed)
 FROM alpine:3.23 AS wiremock-pull
+ARG TARGETARCH
 RUN apk add --no-cache curl && \
     ARCH=$(uname -m) && if [ "$ARCH" = "aarch64" ]; then ARCH="arm64"; fi && \
     curl -sL "https://github.com/google/go-containerregistry/releases/download/v0.21.2/go-containerregistry_Linux_${ARCH}.tar.gz" | tar xz -C /usr/local/bin crane && \
-    PLATFORM_ARCH=$(if [ "$ARCH" = "arm64" ]; then echo arm64; else echo amd64; fi) && \
-    crane pull --platform "linux/${PLATFORM_ARCH}" wiremock/wiremock:3.9.1 /wiremock.tar
+    crane pull --platform "linux/${TARGETARCH:?TARGETARCH not set}" wiremock/wiremock:3.9.1 /wiremock.tar
 
 # Stage 2: Rebuild containerd + runc + moby + docker CLI from source with
 # go1.26.4 so the embedded stdlib clears vulnerability scanners. The
@@ -86,8 +86,9 @@ RUN git clone --depth 1 --branch v${DOCKER_CLI_VERSION} https://github.com/docke
       -tags "osusergo netgo static_build pkcs11" \
       -trimpath -ldflags "-s -w" \
       -o /overlay/usr/local/bin/docker ./cmd/docker
-# Rebuild docker-compose with bumped dependencies and strip .go.buildinfo
-# so scanners do not flag transitive deps that are already patched above.
+# Rebuild docker-compose with bumped x/net, x/crypto, x/sys, in-toto and otel.
+# .go.buildinfo is stripped like in Dockerfile.php/python, which hides compose's
+# other module versions from grype/trivy; keep them in buildinfo.txt instead.
 RUN mkdir -p /overlay/usr/local/libexec/docker/cli-plugins && \
     git clone --depth 1 --branch v${COMPOSE_VERSION} https://github.com/docker/compose.git /src/compose && \
     cd /src/compose && \
@@ -105,6 +106,9 @@ RUN mkdir -p /overlay/usr/local/libexec/docker/cli-plugins && \
     CGO_ENABLED=0 go build \
       -trimpath -ldflags "-s -w -X github.com/docker/compose/v5/internal.Version=v${COMPOSE_VERSION}" \
       -o /overlay/usr/local/libexec/docker/cli-plugins/docker-compose ./cmd && \
+    mkdir -p /overlay/usr/share/doc/docker-compose && \
+    go version -m /overlay/usr/local/libexec/docker/cli-plugins/docker-compose \
+      > /overlay/usr/share/doc/docker-compose/buildinfo.txt && \
     objcopy --remove-section .go.buildinfo \
       /overlay/usr/local/libexec/docker/cli-plugins/docker-compose
 
@@ -118,7 +122,9 @@ COPY --from=overlay-binaries /overlay/ /
 # Drop unused buildx CLI plugin that ships vulnerable embedded Go modules.
 # Keep docker-compose: go-sdk wire-test scripts (seed/go-sdk/seed.yml) run
 # `docker compose -p … -f wiremock/docker-compose.test.yml` to start WireMock.
-RUN rm -f /usr/local/libexec/docker/cli-plugins/docker-buildx /usr/local/bin/docker-compose
+# go-sdk and go-model still pin go-seed:2.0.0; this applies once they move.
+RUN rm -f /usr/local/libexec/docker/cli-plugins/docker-buildx && \
+    docker compose version
 
 # Copy pre-pulled wiremock image
 COPY --from=wiremock-pull /wiremock.tar /wiremock.tar
