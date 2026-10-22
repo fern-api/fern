@@ -21,10 +21,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @example
-      #   client.file_upload_example.upload_file(
-      #     name: "name",
-      #     file: "/path/to/your/file"
-      #   )
+      #   client.file_upload_example.upload_file(name: "name")
       #
       # @return [String]
       def upload_file(request_options: {}, **params)

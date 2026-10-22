@@ -31,10 +31,7 @@ require "seed"
 
 client = Seed::Client.new
 
-client.file_upload_example.upload_file(
-  name: "name",
-  file: "/path/to/your/file"
-)
+client.file_upload_example.upload_file(name: "name")
 ```
 
 ## Environments
