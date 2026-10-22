@@ -6,6 +6,7 @@ import { CliError, TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace } from "@fern-api/workspace-loader";
 import { stripCustomDomainProtocol, validateBasepathAlignment } from "./customDomainValidation.js";
 import { DocsPublishConflictError, publishDocs } from "./publishDocs.js";
+import { checkCustomDomainsNotOnVercel } from "./vercelDomainCheck.js";
 
 const PUBLISH_CONFLICT_RETRY_DELAYS_MS = [
     1 * 60 * 1000, // 1 minute
@@ -127,6 +128,7 @@ export async function runRemoteGenerationForDocsWorkspace({
 
     // The Fern instance url and every custom domain must share the same basepath.
     validateBasepathAlignment(maybeInstance.url, customDomains, context);
+    await checkCustomDomainsNotOnVercel({ customDomains, context });
 
     context.logger.info(`Starting docs publishing for ${preview ? "preview" : "production"}: ${maybeInstance.url}`);
     context.logger.debug(
