@@ -1,4 +1,4 @@
-import { asyncPool } from "@fern-api/core-utils";
+import { asyncPool, delay } from "@fern-api/core-utils";
 import {
     applyTranslatedApiTitlesToNavTree,
     type DocsDefinitionResolver,
@@ -489,11 +489,11 @@ async function uploadBlobWithRetry(
 
         const isRetryable = response.status === 429 || response.status >= 500;
         if (isRetryable && attempt < UPLOAD_MAX_RETRIES) {
-            const delay = UPLOAD_INITIAL_DELAY_MS * 2 ** attempt;
+            const retryDelayMs = UPLOAD_INITIAL_DELAY_MS * 2 ** attempt;
             context.logger.debug(
-                `[ledger] Upload ${hash} got ${response.status}, retrying in ${delay}ms (attempt ${attempt + 1}/${UPLOAD_MAX_RETRIES})`
+                `[ledger] Upload ${hash} got ${response.status}, retrying in ${retryDelayMs}ms (attempt ${attempt + 1}/${UPLOAD_MAX_RETRIES})`
             );
-            await new Promise((resolve) => setTimeout(resolve, delay));
+            await delay(retryDelayMs);
             continue;
         }
 
