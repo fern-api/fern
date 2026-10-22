@@ -3,6 +3,7 @@
 require "json"
 require "net/http"
 require "securerandom"
+require "time"
 
 require_relative "seed/internal/json/serializable"
 require_relative "seed/internal/types/type"
@@ -36,6 +37,13 @@ require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/connection_error"
-require_relative "seed/errors/types/property_based_error_test_body"
 require_relative "seed/client"
 require_relative "seed/property_based_error/client"
+
+module Seed
+  module Errors
+    module Types
+      autoload :PropertyBasedErrorTestBody, ::File.join(__dir__, "seed/errors/types/property_based_error_test_body")
+    end
+  end
+end

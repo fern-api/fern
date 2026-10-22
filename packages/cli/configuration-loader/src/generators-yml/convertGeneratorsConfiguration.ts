@@ -81,7 +81,8 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     respectPerSpecBasePath: undefined,
     respectOperationIdWordBoundaries: undefined,
     namespacedErrors: undefined,
-    errorResponses: undefined
+    errorResponses: undefined,
+    sharedErrorResponses: undefined
 };
 
 export async function convertGeneratorsConfiguration({
@@ -276,6 +277,22 @@ function parseRemoveDiscriminantsFromSchemas(
  * @param override - Override settings (higher priority)
  * @returns Merged settings where override values take precedence over base values
  */
+/**
+ * Merges API-wide `api.settings` with a spec's own settings and records whether `error-responses`
+ * is shared across specs (inherited from `api.settings`) or specific to this spec.
+ */
+export function mergeApiAndSpecSettings(
+    apiSettings: generatorsYml.APIDefinitionSettings,
+    specSettings: generatorsYml.APIDefinitionSettings
+): generatorsYml.APIDefinitionSettings {
+    const merged = mergeSettings(apiSettings, specSettings);
+    return {
+        ...merged,
+        sharedErrorResponses:
+            apiSettings.errorResponses != null && specSettings.errorResponses == null ? true : undefined
+    };
+}
+
 export function mergeSettings(
     base: generatorsYml.APIDefinitionSettings,
     override: generatorsYml.APIDefinitionSettings
@@ -484,7 +501,7 @@ async function parseApiConfigurationV2Schema({
                 overrides: spec.overrides,
                 overlays: spec.overlays,
                 audiences: [],
-                settings: mergeSettings(apiSettings, parseOpenApiDefinitionSettingsSchema(spec.settings)),
+                settings: mergeApiAndSpecSettings(apiSettings, parseOpenApiDefinitionSettingsSchema(spec.settings)),
                 gitSource
             };
         } else if (generatorsYml.isAsyncApiSpecSchema(spec)) {

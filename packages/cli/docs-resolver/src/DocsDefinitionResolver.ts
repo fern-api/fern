@@ -2182,6 +2182,13 @@ export class DocsDefinitionResolver {
             if (apiWorkspaces.length === 0 && openapiError != null) {
                 throw openapiError;
             }
+            if (openapiError != null) {
+                this.taskContext.logger.warn(
+                    `v3 parser failed for API definition${item.apiName != null ? ` "${item.apiName}"` : ""}: ${extractErrorMessage(
+                        openapiError
+                    )}. Falling back to the v2 parser.`
+                );
+            }
             workspace = await this.toFernWorkspaceForDocs(
                 directApiWorkspace ?? this.getFernWorkspaceForApiSection(item, apiWorkspaces)
             );

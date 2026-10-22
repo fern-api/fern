@@ -35,6 +35,7 @@ func emitPlatformHeadersWithIRUserAgent(t *testing.T, userAgent userAgentConfig,
 		false, // exportAllRequestsAtRoot
 		false, // omitEmptyRequestWrappers
 		false, // legacyNullableAliasPointers
+		false, // xmlTextFirstBuilders
 		userAgent,
 		UnionVersionUnspecified,
 		"",

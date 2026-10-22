@@ -97,6 +97,7 @@
     "respectParameterContent": false,
     "respectPerSpecBasePath": false,
     "respectOperationIdWordBoundaries": false,
-    "namespacedErrors": false
+    "namespacedErrors": false,
+    "sharedErrorResponses": false
   }
 }
