@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern generate --preview` no longer opens a pull request, pushes, or publishes when the generator runs
+    through sdk-gen-api. Preview requests now ask only for a download of the generated files, the same as
+    previews on Fiddle, instead of forwarding the GitHub or registry output from `generators.yml`.
+  type: fix
