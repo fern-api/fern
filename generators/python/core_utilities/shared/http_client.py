@@ -61,7 +61,7 @@ def _get_environment_proxies() -> typing.Dict[str, typing.Optional[str]]:
     # httpx's own resolver to keep identical semantics (incl. NO_PROXY bypass rules).
     try:
         from httpx._utils import get_environment_proxies
-    except ImportError:
+    except (ImportError, AttributeError):
         return {}
     return get_environment_proxies()
 

@@ -2404,16 +2404,6 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 writer.write_line("transport: typing.Optional[httpx.AsyncBaseTransport] = None,")
         writer.write_line(") -> httpx.AsyncClient:")
         with writer.indent():
-            if keepalive_enabled:
-                writer.write_line("mounts: typing.Optional[typing.Dict[str, typing.Optional[httpx.AsyncBaseTransport]]] = None")
-                writer.write_line("if transport is None:")
-                with writer.indent():
-                    writer.write("transport = ")
-                    writer.write_node(self._get_keepalive_transport_expression(is_async=True))
-                    writer.write_newline_if_last_line_not()
-                    writer.write("mounts = ")
-                    writer.write_node(self._get_keepalive_proxy_mounts_expression(is_async=True))
-                    writer.write_newline_if_last_line_not()
             writer.write_line("try:")
             with writer.indent():
                 writer.write_line("import httpx_aiohttp  # type: ignore[import-not-found]")
@@ -2432,19 +2422,25 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 writer.write_line("return httpx_aiohttp.HttpxAiohttpClient(timeout=timeout)")
             writer.write_line("")
             if keepalive_enabled:
+                writer.write_line(
+                    "mounts: typing.Optional[typing.Dict[str, typing.Optional[httpx.AsyncBaseTransport]]] = None"
+                )
+                writer.write_line("if transport is None:")
+                with writer.indent():
+                    writer.write("transport = ")
+                    writer.write_node(self._get_keepalive_transport_expression(is_async=True))
+                    writer.write_newline_if_last_line_not()
+                    writer.write("mounts = ")
+                    writer.write_node(self._get_keepalive_proxy_mounts_expression(is_async=True))
+                    writer.write_newline_if_last_line_not()
+            if accepts_transport:
+                client_kwargs = "transport=transport, mounts=mounts" if keepalive_enabled else "transport=transport"
                 writer.write_line("if follow_redirects is not None:")
                 with writer.indent():
                     writer.write_line(
-                        "return httpx.AsyncClient(timeout=timeout, follow_redirects=follow_redirects, transport=transport, mounts=mounts)"
+                        f"return httpx.AsyncClient(timeout=timeout, follow_redirects=follow_redirects, {client_kwargs})"
                     )
-                writer.write_line("return httpx.AsyncClient(timeout=timeout, transport=transport, mounts=mounts)")
-            elif accepts_transport:
-                writer.write_line("if follow_redirects is not None:")
-                with writer.indent():
-                    writer.write_line(
-                        "return httpx.AsyncClient(timeout=timeout, follow_redirects=follow_redirects, transport=transport)"
-                    )
-                writer.write_line("return httpx.AsyncClient(timeout=timeout, transport=transport)")
+                writer.write_line(f"return httpx.AsyncClient(timeout=timeout, {client_kwargs})")
             else:
                 writer.write_line("if follow_redirects is not None:")
                 with writer.indent():

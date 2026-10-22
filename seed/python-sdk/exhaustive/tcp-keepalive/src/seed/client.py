@@ -153,10 +153,6 @@ def _make_default_async_client(
     follow_redirects: typing.Optional[bool],
     transport: typing.Optional[httpx.AsyncBaseTransport] = None,
 ) -> httpx.AsyncClient:
-    mounts: typing.Optional[typing.Dict[str, typing.Optional[httpx.AsyncBaseTransport]]] = None
-    if transport is None:
-        transport = httpx.AsyncHTTPTransport(socket_options=get_keepalive_socket_options(idle=60, intvl=30, cnt=5))
-        mounts = get_async_keepalive_proxy_mounts(idle=60, intvl=30, cnt=5)
     try:
         import httpx_aiohttp  # type: ignore[import-not-found]
     except ImportError:
@@ -166,6 +162,10 @@ def _make_default_async_client(
             return httpx_aiohttp.HttpxAiohttpClient(timeout=timeout, follow_redirects=follow_redirects)
         return httpx_aiohttp.HttpxAiohttpClient(timeout=timeout)
 
+    mounts: typing.Optional[typing.Dict[str, typing.Optional[httpx.AsyncBaseTransport]]] = None
+    if transport is None:
+        transport = httpx.AsyncHTTPTransport(socket_options=get_keepalive_socket_options(idle=60, intvl=30, cnt=5))
+        mounts = get_async_keepalive_proxy_mounts(idle=60, intvl=30, cnt=5)
     if follow_redirects is not None:
         return httpx.AsyncClient(timeout=timeout, follow_redirects=follow_redirects, transport=transport, mounts=mounts)
     return httpx.AsyncClient(timeout=timeout, transport=transport, mounts=mounts)
