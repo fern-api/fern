@@ -1,5 +1,5 @@
 import { generatorsYml } from "@fern-api/configuration";
-import { assertNever, isNonNullish } from "@fern-api/core-utils";
+import { assertNever, isNonNullish, stripTrailingSlashes } from "@fern-api/core-utils";
 import {
     Endpoint,
     EndpointExample,
@@ -574,7 +574,7 @@ function prependBasePath(path: string, basePath: string | undefined): string {
         return path;
     }
 
-    const normalizedBasePath = basePath.replace(/\/+$/, "");
+    const normalizedBasePath = stripTrailingSlashes(basePath);
     if (path === normalizedBasePath || path.startsWith(`${normalizedBasePath}/`)) {
         return path;
     }

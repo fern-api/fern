@@ -1,5 +1,5 @@
 import { FernToken } from "@fern-api/auth";
-import { isRecord } from "@fern-api/core-utils";
+import { isRecord, stripTrailingSlashes } from "@fern-api/core-utils";
 import { CliError } from "@fern-api/task-context";
 import semver from "semver";
 
@@ -75,7 +75,7 @@ export async function discoverSdkGenApiGeneratorVersions({
     currentVersion: string;
     includeMajor: boolean;
 }): Promise<DiscoveryResult | UnavailableResult> {
-    const endpoint = new URL("v1/fern/generator-versions/discover", `${origin.replace(/\/+$/, "")}/`);
+    const endpoint = new URL("v1/fern/generator-versions/discover", `${stripTrailingSlashes(origin)}/`);
     const versionLabel = `${generatorId}@${currentVersion}`;
     let response: Response;
     try {

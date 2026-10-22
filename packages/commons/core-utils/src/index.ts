@@ -62,6 +62,7 @@ export { sanitizePreviewId } from "./sanitizePreviewId.js";
 export { diffSemverOrThrow, parseSemverOrThrow } from "./semverUtils.js";
 export { type SetRequired } from "./setRequired.js";
 export { stripLeadingSlash } from "./stripLeadingSlash.js";
+export { stripTrailingSlashes } from "./stripTrailingSlashes.js";
 export { titleCase } from "./titleCase.js";
 export { tokenizeOperationId } from "./tokenizeOperationId.js";
 export type { ContainerRunner, Digit, Letter, LowercaseLetter, UppercaseLetter } from "./types.js";
