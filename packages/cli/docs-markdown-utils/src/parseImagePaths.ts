@@ -231,10 +231,11 @@ function findDestinationCloseWithTitle(content: string, start: number): number |
         }
     }
 
-    i = skipTitleSeparator(content, i);
-    if (i == null) {
+    const titleStart = skipTitleSeparator(content, i);
+    if (titleStart == null) {
         return null;
     }
+    i = titleStart;
     const opener = content[i];
     if (opener === '"' || opener === "'" || opener === "(") {
         const closer = opener === "(" ? ")" : opener;
