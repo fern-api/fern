@@ -411,9 +411,9 @@ function getTemplateVariables({
         // On by default; `false` restores the previous `Time#to_s` request serialization
         // byte-for-byte.
         serializeTimeAsIso8601: serializeTimeAsIso8601 ?? true,
-        // On by default; `false` converts Integer values in `Float` fields with `to_f`, as
-        // generator 1.37.1 through 1.39.x did.
-        keepIntegersInFloatFields: keepIntegersInFloatFields ?? true,
+        // Off by default, so Integer values in `Float` fields are converted with `to_f`;
+        // `true` keeps them as Integers.
+        keepIntegersInFloatFields: keepIntegersInFloatFields ?? false,
         // Emits the RawClient#auth_headers_for_endpoint delegator only for
         // endpoint-security SDKs, so ALL/ANY SDKs see zero change to raw_client.rb.
         endpointSecurity: endpointSecurity ?? false,

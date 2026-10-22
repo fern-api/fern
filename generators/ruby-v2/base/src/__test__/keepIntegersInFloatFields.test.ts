@@ -4,8 +4,8 @@ import { dirname, join } from "path";
 import { fileURLToPath } from "url";
 import { describe, expect, it } from "vitest";
 
-// `keepIntegersInFloatFields` is on by default. Turning it off must restore the `to_f`
-// conversion of Integer values in `Float` fields.
+// `keepIntegersInFloatFields` is off by default, which keeps the `to_f` conversion of
+// Integer values in `Float` fields. Turning it on must return Integer values unchanged.
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const AS_IS_DIR = join(__dirname, "..", "asIs");
@@ -50,7 +50,7 @@ describe("keepIntegersInFloatFields", () => {
         expect(rendered).not.toContain(FLOAT_BRANCH_WITHOUT_FLAG);
     });
 
-    it("restores the previous Float coercion when disabled", () => {
+    it("keeps the Float coercion when disabled", () => {
         const rendered = render("internal/types/utils.Template.rb", false);
         expect(rendered).toContain(FLOAT_BRANCH_WITHOUT_FLAG);
         expect(rendered).not.toContain("Whole numbers keep their Integer value");
