@@ -19,6 +19,7 @@ export {
 } from "./assert.js";
 export { asyncPool } from "./asyncPool.js";
 export { convertNumberToSnakeCase } from "./convertNumberToSnakeCase.js";
+export { decodeJsonPointerSegment } from "./decodeJsonPointerSegment.js";
 export { delay } from "./delay/delay.js";
 export { withMinimumTime } from "./delay/withMinimumTime.js";
 export { EMPTY_ARRAY, EMPTY_OBJECT } from "./empty.js";
