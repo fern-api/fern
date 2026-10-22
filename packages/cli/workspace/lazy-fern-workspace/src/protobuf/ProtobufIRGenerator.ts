@@ -1,3 +1,4 @@
+import { isEnoentError } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { createLoggingExecutable, runExeca } from "@fern-api/logging-execa";
@@ -5,7 +6,6 @@ import { CliError, TaskContext } from "@fern-api/task-context";
 import { access, chmod, cp, unlink, writeFile } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";
-
 import {
     detectAirGappedModeForProtobuf,
     ensureBufCommand,
@@ -39,8 +39,7 @@ async function isFernOnPath(logger: Logger): Promise<boolean> {
         });
         return true;
     } catch (error) {
-        const isNotFound = error != null && typeof error === "object" && "code" in error && error.code === "ENOENT";
-        if (!isNotFound) {
+        if (!isEnoentError(error)) {
             logger.debug(
                 `Unexpected error checking for fern on PATH: ${error instanceof Error ? error.message : String(error)}`
             );

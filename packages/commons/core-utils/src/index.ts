@@ -26,6 +26,7 @@ export { FERN_CA_BUNDLE_ENV_VAR, FERN_JAVA_SKIP_FORMATTING_ENV_VAR } from "./fer
 export { getDuplicates } from "./getDuplicates.js";
 export { isCommitSha, isGitAvailable } from "./gitUtils.js";
 export { identity } from "./identity.js";
+export { hasErrnoCode, isEnoentError } from "./isEnoentError.js";
 export { isEnvVarTruthy } from "./isEnvVarTruthy.js";
 export { isNonNullish } from "./isNonNullish.js";
 export { MediaType } from "./mediaType.js";

@@ -6,11 +6,11 @@ import {
     LEGACY_GENERATORS_CONFIGURATION_FILENAME,
     SDK_CONFIG_FILENAME
 } from "@fern-api/configuration-loader";
+import { isEnoentError } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, dirname, doesPathExist, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import type { Project } from "@fern-api/project-loader";
 import { CliError } from "@fern-api/task-context";
 import { type FernConfigMappingDiagnostic, FernConfigMappingError } from "@postman/sdk-config/sdk-config/v1";
-
 import type { CliContext } from "../../cli-context/CliContext.js";
 import { commitMigrationFiles, fileMode } from "./commitMigrationFiles.js";
 import { editLegacyGeneratorsConfiguration } from "./editLegacyGeneratorsConfiguration.js";
@@ -278,7 +278,7 @@ async function readOptionalFile(filePath: AbsoluteFilePath): Promise<string | un
     try {
         return await readFile(filePath, "utf8");
     } catch (error) {
-        if (typeof error === "object" && error != null && "code" in error && error.code === "ENOENT") {
+        if (isEnoentError(error)) {
             return undefined;
         }
         throw error;
