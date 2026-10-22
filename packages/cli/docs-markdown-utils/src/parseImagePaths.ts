@@ -187,6 +187,111 @@ function findLabelEndBeforeNextBracket(content: string, start: number, limit: nu
     return null;
 }
 
+/**
+ * Returns the index of the `)` that closes a markdown link/image destination opened just
+ * before `start`. A quoted title may contain unbalanced parentheses
+ * (`./img.png "Step 1) Input"`), so it is skipped as a whole rather than counted.
+ */
+function findDestinationClose(content: string, start: number): number | null {
+    return findDestinationCloseWithTitle(content, start) ?? findBalancedParenClose(content, start);
+}
+
+function findDestinationCloseWithTitle(content: string, start: number): number | null {
+    const len = content.length;
+    let i = skipWhitespace(content, start);
+
+    if (content[i] === "<") {
+        i++;
+        while (i < len && content[i] !== ">" && content[i] !== "\n") {
+            i += content[i] === "\\" ? 2 : 1;
+        }
+        if (content[i] !== ">") {
+            return null;
+        }
+        i++;
+    } else {
+        let parenDepth = 0;
+        while (i < len && !/\s/.test(content[i] as string)) {
+            if (content[i] === "\\") {
+                i += 2;
+                continue;
+            }
+            if (content[i] === "(") {
+                parenDepth++;
+            } else if (content[i] === ")") {
+                if (parenDepth === 0) {
+                    return i;
+                }
+                parenDepth--;
+            }
+            i++;
+        }
+        if (parenDepth !== 0) {
+            return null;
+        }
+    }
+
+    i = skipWhitespace(content, i);
+    const opener = content[i];
+    if (opener === '"' || opener === "'" || opener === "(") {
+        const closer = opener === "(" ? ")" : opener;
+        i++;
+        while (i < len && content[i] !== closer) {
+            if (content[i] === "\\") {
+                i += 2;
+                continue;
+            }
+            // titles cannot span a blank line or, for (...) titles, contain an unescaped `(`
+            if ((content[i] === "\n" && content[i + 1] === "\n") || (opener === "(" && content[i] === "(")) {
+                return null;
+            }
+            i++;
+        }
+        if (i >= len) {
+            return null;
+        }
+        i = skipWhitespace(content, i + 1);
+    }
+
+    return content[i] === ")" ? i : null;
+}
+
+/**
+ * Fallback for destinations that are not `path "title"` shaped (e.g. unescaped spaces in the
+ * path): the `)` that balances the opening paren.
+ */
+function findBalancedParenClose(content: string, start: number): number | null {
+    const len = content.length;
+    let i = start;
+    let parenDepth = 1;
+
+    while (i < len) {
+        if (content[i] === "\\") {
+            i += 2;
+            continue;
+        }
+        if (content[i] === "(") {
+            parenDepth++;
+        } else if (content[i] === ")") {
+            parenDepth--;
+            if (parenDepth === 0) {
+                return i;
+            }
+        }
+        i++;
+    }
+
+    return null;
+}
+
+function skipWhitespace(content: string, start: number): number {
+    let i = start;
+    while (i < content.length && /\s/.test(content[i] as string)) {
+        i++;
+    }
+    return i;
+}
+
 interface MarkdownImageParseResult {
     urlStart: number;
     urlEnd: number;
@@ -197,36 +302,18 @@ interface MarkdownImageParseResult {
 }
 
 function parseMarkdownImage(content: string, start: number): MarkdownImageParseResult | null {
-    const len = content.length;
     const labelEnd = findLabelEnd(content, start + 1);
 
     if (labelEnd == null || content[labelEnd + 1] !== "(") {
         return null;
     }
 
-    let i = labelEnd + 2;
-    const urlStart = i;
-    let parenDepth = 1;
-
-    while (i < len && parenDepth > 0) {
-        if (content[i] === "\\") {
-            i += 2;
-        } else if (content[i] === "(") {
-            parenDepth++;
-            i++;
-        } else if (content[i] === ")") {
-            parenDepth--;
-            i++;
-        } else {
-            i++;
-        }
-    }
-
-    if (parenDepth !== 0) {
+    const urlStart = labelEnd + 2;
+    const urlEnd = findDestinationClose(content, urlStart);
+    if (urlEnd == null) {
         return null;
     }
-
-    const urlEnd = i - 1;
+    const i = urlEnd + 1;
     const url = content.slice(urlStart, urlEnd).trim();
     const rawSrc = trimAnchor(unwrapDelimitedDestination(splitDestinationAndTitle(url)).path);
     if (!rawSrc) {
@@ -352,28 +439,14 @@ function scanForEdits(content: string, mappers: ReferenceMappers): Edit[] {
             const labelEnd = findLabelEnd(content, i);
             let j = labelEnd ?? len;
             if (labelEnd != null && content[labelEnd + 1] === "(") {
-                j = labelEnd + 2;
-                const urlStart = j;
-                let parenDepth = 1;
-                while (j < len && parenDepth > 0) {
-                    if (content[j] === "\\") {
-                        j += 2;
-                    } else if (content[j] === "(") {
-                        parenDepth++;
-                        j++;
-                    } else if (content[j] === ")") {
-                        parenDepth--;
-                        j++;
-                    } else {
-                        j++;
-                    }
-                }
-                if (parenDepth !== 0) {
+                const urlStart = labelEnd + 2;
+                const urlEnd = findDestinationClose(content, urlStart);
+                if (urlEnd == null) {
                     i++;
                     continue;
                 }
+                j = urlEnd + 1;
                 edits.push(...scanNestedForEdits(content, i + 1, labelEnd, mappers));
-                const urlEnd = j - 1;
                 const href = content.slice(urlStart, urlEnd).trim();
                 const destination = splitDestinationAndTitle(href);
                 const hrefTitle = href.slice(destination.length);

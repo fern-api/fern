@@ -1390,6 +1390,47 @@ describe("markdown image titles", () => {
         expect(result).toContain("![b](file:b-id (parens))");
     });
 
+    it("should resolve images whose quoted title contains unbalanced parentheses", () => {
+        const page = [
+            '![Diagram](path/to/a.png "Flow: 1) Input, 2) Output")',
+            "![Diagram](path/to/b.png 'Step (1')",
+            '![Diagram](<path/to/c.png> "See 3) below")'
+        ].join("\n\n");
+        const parseResult = parseImagePaths(page, PATHS);
+        expect(parseResult.filepaths).toEqual([
+            "/Volume/git/fern/my/docs/folder/path/to/a.png",
+            "/Volume/git/fern/my/docs/folder/path/to/b.png",
+            "/Volume/git/fern/my/docs/folder/path/to/c.png"
+        ]);
+        const fileIds = new Map([
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/a.png"), "a-id"],
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/b.png"), "b-id"],
+            [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/c.png"), "c-id"]
+        ]);
+        const result = replaceImagePathsAndUrls(parseResult.markdown, fileIds, {}, PATHS, CONTEXT);
+        expect(result).toContain('![Diagram](file:a-id "Flow: 1) Input, 2) Output")');
+        expect(result).toContain("![Diagram](file:b-id 'Step (1')");
+        expect(result).toContain('![Diagram](<file:c-id> "See 3) below")');
+    });
+
+    it("should keep resolving paths with balanced parentheses and unescaped spaces", () => {
+        const page = ["![a](path/to/a(1).png)", "![b](path/to/my image.png)"].join("\n\n");
+        const parseResult = parseImagePaths(page, PATHS);
+        expect(parseResult.filepaths).toEqual([
+            "/Volume/git/fern/my/docs/folder/path/to/a(1).png",
+            "/Volume/git/fern/my/docs/folder/path/to/my image.png"
+        ]);
+    });
+
+    it("should resolve page links whose title contains unbalanced parentheses", () => {
+        const page = '[Next](../other/page.mdx "Step 1) Install")';
+        const markdownFilesToPathName = {
+            "/Volume/git/fern/my/docs/other/page.mdx": "/other/page"
+        };
+        const result = replaceImagePathsAndUrls(page, new Map(), markdownFilesToPathName, PATHS, CONTEXT);
+        expect(result.trim()).toBe('[Next](/other/page "Step 1) Install")');
+    });
+
     it("should preserve the title alongside an anchor", () => {
         const page = '![image](path/to/image.png#anchor "My title")';
         const parseResult = parseImagePaths(page, PATHS);

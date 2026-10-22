@@ -23,7 +23,8 @@ const include = [
     "src/__test__/convertThemeTabs.test.ts",
     "src/__test__/root-changelog.test.ts",
     "src/__test__/stitchGlobalTheme.test.ts",
-    "src/__test__/sort-by-availability.test.ts"
+    "src/__test__/sort-by-availability.test.ts",
+    "src/__test__/ref-version-image-title.test.ts"
 ];
 
 export default defineConfig({
