@@ -1,0 +1,8 @@
+language js
+
+// Matches `$value.replace(/\/+$/, "")`. The regex literal is matched on its source text because a
+// backtick snippet cannot express `$/` directly.
+`$value.replace($pattern, "")` as $strip where {
+    $pattern <: r"^/\\/\+\$/$",
+    register_diagnostic(span=$strip, message="Use `stripTrailingSlashes` from `@fern-api/core-utils` instead of replacing trailing slashes by hand.", severity="error")
+}

@@ -1,0 +1,8 @@
+language js
+
+or {
+    `$value.charAt(0).toUpperCase() + $value.slice(1)`,
+    `$value[0].toUpperCase() + $value.slice(1)`
+} as $capitalize where {
+    register_diagnostic(span=$capitalize, message="Use `capitalizeFirstLetter` from `@fern-api/core-utils` instead of capitalizing by hand.", severity="error")
+}
