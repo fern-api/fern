@@ -245,6 +245,24 @@
     },
     "overrides": [
         {
+            // Shared-helper rules. Each plugin points at the helper in @fern-api/core-utils that replaces the inline pattern.
+            "includes": [
+                "packages/cli/**/*.ts",
+                "packages/commons/**/*.ts",
+                "!packages/cli/cli-v2/**",
+                "!packages/cli/ete-tests/**",
+                "!packages/commons/core-utils/src/**",
+                "!**/__test__/**",
+                "!**/__tests__/**",
+                "!**/*.test.ts"
+            ],
+            "plugins": [
+                "./biome-plugins/no-inline-http-url-check.grit",
+                "./biome-plugins/no-inline-enoent-check.grit",
+                "./biome-plugins/no-inline-delay.grit"
+            ]
+        },
+        {
             "includes": [
                 "**/*.test.ts",
                 "**/*.spec.ts",
