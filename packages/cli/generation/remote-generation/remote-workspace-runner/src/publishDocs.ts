@@ -2,7 +2,7 @@ import { resolveSnippetPackageName, VisibilityFilter } from "@fern-api/api-works
 import { FernToken } from "@fern-api/auth";
 import { docsYml, generatorsYml } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
-import { MediaType, replaceEnvVariables } from "@fern-api/core-utils";
+import { asyncPool, MediaType, replaceEnvVariables } from "@fern-api/core-utils";
 import {
     applyTranslatedApiTitlesToNavTree,
     applyTranslatedFrontmatterToNavTree,
@@ -75,7 +75,6 @@ import { normalizeRepoUrlToHttps } from "./normalizeRepoUrl.js";
 import { publishDocsViaLedger } from "./publishDocsLedger.js";
 import { publishDocsViaLedgerPreview } from "./publishDocsLedgerPreview.js";
 import { retryWithBackoff } from "./retryWithBackoff.js";
-import { asyncPool } from "./utils/asyncPool.js";
 
 const MEASURE_IMAGE_BATCH_SIZE = 10;
 const UPLOAD_FILE_BATCH_SIZE = 10;

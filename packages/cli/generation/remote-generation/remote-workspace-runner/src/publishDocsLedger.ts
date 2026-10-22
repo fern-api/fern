@@ -1,3 +1,4 @@
+import { asyncPool } from "@fern-api/core-utils";
 import {
     applyTranslatedApiTitlesToNavTree,
     type DocsDefinitionResolver,
@@ -26,9 +27,7 @@ import type { TaskContext } from "@fern-api/task-context";
 import { createHash } from "crypto";
 import { readFile } from "fs/promises";
 import * as mime from "mime-types";
-
 import { mapDocsConfigToLedgerConfig } from "./mapDocsConfigToLedgerConfig.js";
-import { asyncPool } from "./utils/asyncPool.js";
 
 const UPLOAD_CONCURRENCY = 10;
 const TRANSLATION_BUILD_CONCURRENCY = 4;

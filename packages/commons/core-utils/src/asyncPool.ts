@@ -5,7 +5,7 @@
  * @param limit - Maximum number of concurrent tasks
  * @param items - Array of items to process
  * @param fn - Async function to run for each item
- * @returns Promise that resolves when all tasks are complete
+ * @returns Promise that resolves with the results, in the same order as `items`
  */
 export async function asyncPool<T, R>(
     limit: number,
