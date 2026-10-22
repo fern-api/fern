@@ -189,7 +189,7 @@ module <%= gem_namespace %>
                             field.default
                           end
 
-            @data[field_name] = Utils.coerce(field.type, field_value)
+            @data[field_name] = field_value.nil? ? nil : Utils.coerce(field.type, field_value)
           end
 
           # Any remaining values in the input become extra fields, except keys that match a declared field

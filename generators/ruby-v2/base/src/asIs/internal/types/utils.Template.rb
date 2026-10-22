@@ -29,6 +29,11 @@ module <%= gem_namespace %>
         def self.coerce(target, value, strict: false)
           type = unwrap_type(target)
 
+          # Fast path: a value that is already an instance of a scalar or model target type is returned as-is.
+          # This is what the pattern match below returns for these types, without walking every branch.
+          return value if type.is_a?(Class) && value.is_a?(type) && (type <= String || type <= Integer ||
+                                                                     type <= Float || type <= Model)
+
           case type
           in Array
             case value
