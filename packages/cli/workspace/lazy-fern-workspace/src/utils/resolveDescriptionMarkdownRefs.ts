@@ -1,4 +1,4 @@
-import { isPlainObject } from "@fern-api/core-utils";
+import { isHttpUrl, isPlainObject } from "@fern-api/core-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import { resolve } from "path";
@@ -90,7 +90,7 @@ function isMarkdownFileRef(value: unknown): value is { $ref: string } {
     if (typeof ref !== "string" || ref.length === 0) {
         return false;
     }
-    if (ref.startsWith("#") || ref.startsWith("http://") || ref.startsWith("https://")) {
+    if (ref.startsWith("#") || isHttpUrl(ref)) {
         return false;
     }
     return ref.toLowerCase().endsWith(".md");

@@ -28,6 +28,7 @@ export { isCommitSha, isGitAvailable } from "./gitUtils.js";
 export { identity } from "./identity.js";
 export { hasErrnoCode, isEnoentError } from "./isEnoentError.js";
 export { isEnvVarTruthy } from "./isEnvVarTruthy.js";
+export { isHttpUrl } from "./isHttpUrl.js";
 export { isNonNullish } from "./isNonNullish.js";
 export { MediaType } from "./mediaType.js";
 export { mergeWithOverrides } from "./mergeWithOverrides.js";
