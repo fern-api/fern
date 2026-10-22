@@ -605,10 +605,12 @@ fn ancestor_object_shorthand_supplied(
 ///
 /// Mirrors `commands::unconditionally_required`, which applies the same rule
 /// to the `Required parameters` help heading. An ancestor with no entry of its
-/// own does not count as optional.
-fn optional_ancestor_omitted(
+/// own does not count as optional. `injected` holds body paths a resolved
+/// global parameter will fill; those count as supplied.
+pub(crate) fn optional_ancestor_omitted(
     leaf_path: &str,
     supplied: &Map<String, Value>,
+    injected: &std::collections::HashSet<&str>,
     parameters: &std::collections::HashMap<String, MethodParameter>,
 ) -> bool {
     let mut rest = leaf_path;
@@ -618,6 +620,8 @@ fn optional_ancestor_omitted(
                 let child_prefix = format!("{ancestor}.");
                 let opted_in = supplied
                     .keys()
+                    .map(String::as_str)
+                    .chain(injected.iter().copied())
                     .any(|k| k == ancestor || k.starts_with(&child_prefix));
                 if !opted_in {
                     return true;
@@ -734,7 +738,12 @@ fn parse_and_validate_inputs(
         }
         if is_body
             && param_name.contains('.')
-            && optional_ancestor_omitted(param_name, &params, &method.parameters)
+            && optional_ancestor_omitted(
+                param_name,
+                &params,
+                &global_param_targets,
+                &method.parameters,
+            )
         {
             continue;
         }
@@ -7755,6 +7764,41 @@ mod tests {
             input.body.expect("body should be populated"),
             json!({ "kind": "note", "source": { "channel": "cli" } })
         );
+    }
+
+    #[test]
+    fn test_required_leaf_of_optional_parent_is_required_when_global_fills_sibling() {
+        use crate::openapi::app::ResolvedGlobalParam;
+        use crate::openapi::discovery::GlobalParameterLocation;
+
+        let doc = RestDescription {
+            base_url: Some("https://api.example.com/".to_string()),
+            ..Default::default()
+        };
+        let method = method_with_optional_parent_required_leaf();
+        let globals = vec![ResolvedGlobalParam {
+            name: "label".to_string(),
+            location: GlobalParameterLocation::Body,
+            target: "source.label".to_string(),
+            value: "x".to_string(),
+        }];
+        let err = parse_and_validate_inputs(
+            &doc,
+            &method,
+            Some(r#"{"kind": "note"}"#),
+            None,
+            false,
+            None,
+            &[],
+            &globals,
+        )
+        .unwrap_err();
+        match err {
+            CliError::Validation(msg) => {
+                assert!(msg.contains("'source.channel'"), "error should name leaf: {msg}");
+            }
+            other => panic!("expected Validation error, got {other:?}"),
+        }
     }
 
     #[test]
