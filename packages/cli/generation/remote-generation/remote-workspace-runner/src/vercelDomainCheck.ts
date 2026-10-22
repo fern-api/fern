@@ -204,18 +204,14 @@ function stripAnsi(value: string): string {
     return value.replace(/\u001b\[[0-9;]*m/g, "");
 }
 
-function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
-    return new Promise<T>((resolve, reject) => {
-        const timer = setTimeout(() => reject(new Error(`timed out after ${ms}ms`)), ms);
-        promise.then(
-            (value) => {
-                clearTimeout(timer);
-                resolve(value);
-            },
-            (error: unknown) => {
-                clearTimeout(timer);
-                reject(error);
-            }
-        );
+async function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const timeout = new Promise<never>((_, reject) => {
+        timer = setTimeout(() => reject(new Error(`timed out after ${ms}ms`)), ms);
     });
+    try {
+        return await Promise.race([promise, timeout]);
+    } finally {
+        clearTimeout(timer);
+    }
 }
