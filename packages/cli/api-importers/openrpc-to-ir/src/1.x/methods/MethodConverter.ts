@@ -1,4 +1,4 @@
-import { assertNever } from "@fern-api/core-utils";
+import { assertNeverNoThrow } from "@fern-api/core-utils";
 import {
     FernIr,
     HttpEndpoint,
@@ -246,7 +246,9 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
             case undefined:
                 return undefined;
             default:
-                assertNever(paramStructure);
+                // The OpenRPC loader doesn't validate method fields, so ignore unknown values instead of failing the import.
+                assertNeverNoThrow(paramStructure);
+                return undefined;
         }
     }
 
