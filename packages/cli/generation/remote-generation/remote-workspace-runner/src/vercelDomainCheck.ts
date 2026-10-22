@@ -2,6 +2,8 @@ import { Resolver } from "node:dns/promises";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 
+import { getBasepath } from "./customDomainValidation.js";
+
 /** From this moment on, publishing to a custom domain that still points at Vercel fails. */
 export const VERCEL_DNS_HARD_ERROR_DATE = new Date("2026-12-01T00:00:00Z");
 
@@ -61,8 +63,9 @@ export async function classifyCustomDomain(host: string, dns: DnsLookup): Promis
 
 /**
  * Warns (and, from {@link VERCEL_DNS_HARD_ERROR_DATE}, fails) when a custom domain still
- * CNAMEs to Vercel instead of Fern's hosting. Reverse proxies and customer CDNs resolve
- * elsewhere and pass. Lookup failures never block a publish.
+ * CNAMEs to Vercel instead of Fern's hosting. Subpath domains are always served through the
+ * customer's reverse proxy (whose host may itself be on Vercel), so they are skipped.
+ * Lookup failures never block a publish.
  */
 export async function checkCustomDomainsNotOnVercel({
     customDomains,
@@ -75,7 +78,9 @@ export async function checkCustomDomainsNotOnVercel({
     now?: Date;
     dns?: DnsLookup;
 }): Promise<void> {
-    const hosts = [...new Set(customDomains.map(toHostname))].filter((host): host is string => host != null);
+    const hosts = [...new Set(customDomains.filter((domain) => getBasepath(domain) === "/").map(toHostname))].filter(
+        (host): host is string => host != null
+    );
     if (hosts.length === 0) {
         return;
     }

@@ -95,7 +95,7 @@ describe("checkCustomDomainsNotOnVercel", () => {
     it("warns before the cutoff", async () => {
         const { context, warnings, errors } = createFakeContext();
         await checkCustomDomainsNotOnVercel({
-            customDomains: ["docs.example.com/api"],
+            customDomains: ["docs.example.com"],
             context,
             now: BEFORE_CUTOFF,
             dns: vercelDns
@@ -135,6 +135,14 @@ describe("checkCustomDomainsNotOnVercel", () => {
         });
         expect(warnings()).toEqual([]);
         expect(errors()).toEqual([]);
+    });
+
+    it("skips subpath domains, which are always reverse proxied", async () => {
+        const { context, warnings } = createFakeContext();
+        const dns = { resolveCname: vi.fn(), resolve4: vi.fn() };
+        await checkCustomDomainsNotOnVercel({ customDomains: ["example.com/docs"], context, now: AFTER_CUTOFF, dns });
+        expect(dns.resolveCname).not.toHaveBeenCalled();
+        expect(warnings()).toEqual([]);
     });
 
     it("lists only the Vercel domains", async () => {
