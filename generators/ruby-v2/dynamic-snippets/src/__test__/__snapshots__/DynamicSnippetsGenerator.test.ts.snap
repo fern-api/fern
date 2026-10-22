@@ -183,30 +183,37 @@ client.endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union(r
 
 exports[`snippets (default) > file-upload > 'POST /' 1`] = `
 "require "acme"
+require "stringio"
 
 client = Acme::Client.new
 
-client.service.post
+client.service.post(
+  file: StringIO.new("Hello, world!"),
+  file_list: [StringIO.new("First"), StringIO.new("Second")]
+)
 "
 `;
 
 exports[`snippets (default) > file-upload > 'POST /just-file' 1`] = `
 "require "acme"
+require "stringio"
 
 client = Acme::Client.new
 
-client.service.just_file
+client.service.just_file(file: StringIO.new("Hello, world!"))
 "
 `;
 
 exports[`snippets (default) > file-upload > 'POST /just-file-with-query-params' 1`] = `
 "require "acme"
+require "stringio"
 
 client = Acme::Client.new
 
 client.service.just_file_with_query_params(
   maybe_string: "exists",
-  integer: 42
+  integer: 42,
+  file: StringIO.new("Hello, world!")
 )
 "
 `;
@@ -295,8 +302,8 @@ client.nullable.create_user(
   username: "john.doe",
   tags: ["admin"],
   metadata: {
-    created_at: "1980-01-01T00:00:00Z",
-    updated_at: "1980-01-01T00:00:00Z",
+    createdAt: "1980-01-01T00:00:00Z",
+    updatedAt: "1980-01-01T00:00:00Z",
     avatar: nil,
     activated: nil
   },

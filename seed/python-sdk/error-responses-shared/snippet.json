@@ -1,0 +1,57 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/calls",
+                "method": "POST",
+                "identifier_override": "endpoint_calls/calls.createCall"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi()\nclient.calls.calls.create_call()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi()\n\n\nasync def main() -> None:\n    await client.calls.calls.create_call()\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/messages",
+                "method": "GET",
+                "identifier_override": "endpoint_messages/messages.listMessages"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi()\nclient.messages.messages.list_messages()\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi()\n\n\nasync def main() -> None:\n    await client.messages.messages.list_messages()\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/messages",
+                "method": "POST",
+                "identifier_override": "endpoint_messages/messages.createMessage"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi()\nclient.messages.messages.create_message(\n    sid=\"sid\",\n    body=\"body\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi()\n\n\nasync def main() -> None:\n    await client.messages.messages.create_message(\n        sid=\"sid\",\n        body=\"body\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/messages/{sid}",
+                "method": "DELETE",
+                "identifier_override": "endpoint_messages/messages.deleteMessage"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedApi\n\nclient = SeedApi()\nclient.messages.messages.delete_message(\n    sid=\"sid\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApi\n\nclient = AsyncSeedApi()\n\n\nasync def main() -> None:\n    await client.messages.messages.delete_message(\n        sid=\"sid\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        }
+    ]
+}

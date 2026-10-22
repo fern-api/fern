@@ -19,7 +19,9 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @example
-      #   client.catalog.create_catalog_image
+      #   client.catalog.create_catalog_image(request: {
+      #     catalog_object_id: "catalog_object_id"
+      #   })
       #
       # @return [Seed::Types::CatalogImage]
       def create_catalog_image(request_options: {}, **params)

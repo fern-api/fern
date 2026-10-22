@@ -3,6 +3,7 @@
 require "json"
 require "net/http"
 require "securerandom"
+require "time"
 
 require_relative "seed/internal/json/serializable"
 require_relative "seed/internal/types/type"
@@ -36,8 +37,15 @@ require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/connection_error"
-require_relative "seed/service/types/store_request"
-require_relative "seed/service/types/service_request"
-require_relative "seed/service/types/store_response"
 require_relative "seed/client"
 require_relative "seed/service/client"
+
+module Seed
+  module Service
+    module Types
+      autoload :StoreRequest, ::File.join(__dir__, "seed/service/types/store_request")
+      autoload :ServiceRequest, ::File.join(__dir__, "seed/service/types/service_request")
+      autoload :StoreResponse, ::File.join(__dir__, "seed/service/types/store_response")
+    end
+  end
+end

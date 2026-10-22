@@ -31,6 +31,7 @@ import { ExampleTypeFactory } from "../../schema/examples/ExampleTypeFactory.js"
 import { convertSchemaWithExampleToSchema } from "../../schema/utils/convertSchemaWithExampleToSchema.js";
 import { getGeneratedTypeName } from "../../schema/utils/getSchemaName.js";
 import { isReferenceObject } from "../../schema/utils/isReferenceObject.js";
+import { getSharedErrorResponsesSchemaName } from "../../utils/getErrorResponsesSchemaName.js";
 import { getSchemas } from "../../utils/getSchemas.js";
 import { sanitizeSecurityScopes } from "../../utils/sanitizeSecurityScopes.js";
 import { createSchemaCollisionTracker } from "../../utils/schemaCollision.js";
@@ -130,6 +131,20 @@ export function generateIr({
         source,
         namespace
     });
+    const sharedErrorSchemaName = namespace != null ? getSharedErrorResponsesSchemaName(options) : undefined;
+    // The API-wide `error-responses` body is declared in the root package, so it is converted without
+    // this spec's namespace (which would otherwise be prepended to its group name).
+    const rootContext =
+        sharedErrorSchemaName != null && openApi.components?.schemas?.[sharedErrorSchemaName] != null
+            ? new OpenAPIV3ParserContext({
+                  document: openApi,
+                  taskContext,
+                  authHeaders,
+                  options,
+                  source,
+                  namespace: undefined
+              })
+            : context;
 
     if (context.filter.hasEndpoints()) {
         taskContext.logger.debug("Endpoint filter applied...");
@@ -201,6 +216,9 @@ export function generateIr({
     const schemasWithExample: Record<string, SchemaWithExample> = Object.fromEntries(
         Object.entries(openApi.components?.schemas ?? {})
             .map(([key, schema]) => {
+                if (key === sharedErrorSchemaName) {
+                    return [key, convertSchema(schema, false, false, rootContext, [key], source, undefined)];
+                }
                 const schemaNamespace = getExtension<string>(schema, FernOpenAPIExtension.SDK_NAMESPACE);
                 if (!isReferenceObject(schema)) {
                     const ignoreSchema = getExtension<boolean>(schema, FernOpenAPIExtension.IGNORE);
@@ -402,7 +420,8 @@ export function generateIr({
                     description: error.description,
                     source: error.source,
                     examples,
-                    namespace: error.namespace
+                    namespace: error.namespace,
+                    isShared: error.isShared
                 };
             }),
             retries: endpointWithExample.retries,
@@ -465,7 +484,7 @@ export function generateIr({
         endpoints,
         webhooks,
         channels: {},
-        groupedSchemas: getSchemas(namespace, schemas),
+        groupedSchemas: getSchemas(namespace, schemas, sharedErrorSchemaName),
         securitySchemes,
         security,
         hasEndpointsMarkedInternal: endpoints.some((endpoint) => endpoint.internal),

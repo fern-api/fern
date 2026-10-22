@@ -1,4 +1,54 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.170.7
+  changelogEntry:
+    - summary: |
+        `error-responses` configured on `api.settings` (shared by every spec of the API) now declares
+        the error body type and the status-code errors once in the root package instead of duplicating
+        them under each namespaced spec. SDKs expose one `BadRequestError`, `NotFoundError`, ... that
+        every namespace throws. `error-responses` set on an individual spec is unchanged.
+      type: fix
+  createdAt: "2026-10-22"
+  irVersion: 67
+- version: 5.170.6
+  changelogEntry:
+    - summary: |
+        Fix `fern generate --docs` failing with `ENOENT` on Markdown images whose quoted title contains
+        an unbalanced `)`, e.g. `![Diagram](./diagram.png "Flow: 1) Input, 2) Output")`. The scanner
+        ended the destination at the first `)` inside the title and tried to upload a file named
+        `diagram.png "Flow: 1`. Page links with such titles are resolved the same way.
+      type: fix
+  createdAt: "2026-10-22"
+  irVersion: 67
+- version: 5.170.5
+  changelogEntry:
+    - summary: |
+        The v3 OpenAPI parser no longer crashes with `Maximum call stack size exceeded` on a
+        discriminated union that contains itself as a variant (for example a `Branch` whose
+        `parts` are a `Leaf` or another `Branch`) when the variants declare the discriminant property.
+      type: fix
+    - summary: |
+        `fern generate --docs` and `fern docs dev` now log a warning when the v3 OpenAPI parser fails
+        and the API Reference falls back to the v2 parser, instead of falling back silently.
+      type: fix
+    - summary: |
+        The v3 OpenAPI parser now honors `respect-per-spec-base-path`. Each spec's plain
+        `x-fern-base-path` is applied to that spec's endpoint paths, so it is no longer dropped
+        when `generators.yml` lists more than one spec (for example in docs API Reference URLs).
+        Set the option on every spec that has a base path: a spec without it still uses the API-wide
+        base path, and only one spec's API-wide base path is kept when specs are merged. A base path
+        with path parameters keeps the API-wide behavior and now logs a warning.
+      type: fix
+  createdAt: "2026-10-21"
+  irVersion: 67
+- version: 5.170.4
+  changelogEntry:
+    - summary: |
+        `fern sdk migrate` carries a Fern Python generator's `stream_abstraction` setting over to the target's
+        `generation.streamAbstraction` instead of reporting it as unsupported and dropping it. Bumps
+        `@postman/sdk-config` to 0.15.0.
+      type: fix
+  createdAt: "2026-10-21"
+  irVersion: 67
 - version: 5.170.3
   changelogEntry:
     - summary: |

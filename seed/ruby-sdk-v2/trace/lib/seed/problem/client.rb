@@ -28,11 +28,11 @@ module Seed
       #     },
       #     files: {
       #       JAVA: {
-      #         solution_file: {
+      #         solutionFile: {
       #           filename: "filename",
       #           contents: "contents"
       #         },
-      #         read_only_files: [{
+      #         readOnlyFiles: [{
       #           filename: "filename",
       #           contents: "contents"
       #         }, {
@@ -42,25 +42,25 @@ module Seed
       #       }
       #     },
       #     input_params: [{
-      #       variable_type: {},
+      #       variableType: {},
       #       name: "name"
       #     }, {
-      #       variable_type: {},
+      #       variableType: {},
       #       name: "name"
       #     }],
       #     output_type: {},
       #     testcases: [{
-      #       test_case: {
+      #       testCase: {
       #         id: "id",
       #         params: [{}, {}]
       #       },
-      #       expected_result: {}
+      #       expectedResult: {}
       #     }, {
-      #       test_case: {
+      #       testCase: {
       #         id: "id",
       #         params: [{}, {}]
       #       },
-      #       expected_result: {}
+      #       expectedResult: {}
       #     }],
       #     method_name: "methodName"
       #   )
@@ -109,11 +109,11 @@ module Seed
       #     },
       #     files: {
       #       JAVA: {
-      #         solution_file: {
+      #         solutionFile: {
       #           filename: "filename",
       #           contents: "contents"
       #         },
-      #         read_only_files: [{
+      #         readOnlyFiles: [{
       #           filename: "filename",
       #           contents: "contents"
       #         }, {
@@ -123,25 +123,25 @@ module Seed
       #       }
       #     },
       #     input_params: [{
-      #       variable_type: {},
+      #       variableType: {},
       #       name: "name"
       #     }, {
-      #       variable_type: {},
+      #       variableType: {},
       #       name: "name"
       #     }],
       #     output_type: {},
       #     testcases: [{
-      #       test_case: {
+      #       testCase: {
       #         id: "id",
       #         params: [{}, {}]
       #       },
-      #       expected_result: {}
+      #       expectedResult: {}
       #     }, {
-      #       test_case: {
+      #       testCase: {
       #         id: "id",
       #         params: [{}, {}]
       #       },
-      #       expected_result: {}
+      #       expectedResult: {}
       #     }],
       #     method_name: "methodName"
       #   )
@@ -221,10 +221,10 @@ module Seed
       # @example
       #   client.problem.get_default_starter_files(
       #     input_params: [{
-      #       variable_type: {},
+      #       variableType: {},
       #       name: "name"
       #     }, {
-      #       variable_type: {},
+      #       variableType: {},
       #       name: "name"
       #     }],
       #     output_type: {},

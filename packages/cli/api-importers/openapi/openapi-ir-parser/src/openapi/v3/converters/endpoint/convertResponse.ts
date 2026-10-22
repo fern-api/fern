@@ -3,8 +3,9 @@ import { FernOpenapiIr, ResponseWithExample, SchemaWithExample, Source } from "@
 import { OpenAPIV3 } from "openapi-types";
 
 import { getExtension } from "../../../../getExtension.js";
-import { convertSchema } from "../../../../schema/convertSchemas.js";
+import { convertSchema, getSchemaIdFromReference } from "../../../../schema/convertSchemas.js";
 import { isReferenceObject } from "../../../../schema/utils/isReferenceObject.js";
+import { getSharedErrorResponsesSchemaName } from "../../../../utils/getErrorResponsesSchemaName.js";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext.js";
 import { FernOpenAPIExtension } from "../../extensions/fernExtensions.js";
 import { OperationContext } from "../contexts.js";
@@ -397,6 +398,7 @@ function markErrorSchemas({
     namespace: string | undefined;
 }): Record<FernOpenapiIr.ErrorStatusCodeKey, FernOpenapiIr.HttpErrorWithExample> {
     const errors: Record<FernOpenapiIr.ErrorStatusCodeKey, FernOpenapiIr.HttpErrorWithExample> = {};
+    const sharedErrorSchemaName = namespace != null ? getSharedErrorResponsesSchemaName(context.options) : undefined;
     for (const [statusCode, response] of Object.entries(responses)) {
         if (statusCode === "default") {
             continue;
@@ -421,6 +423,12 @@ function markErrorSchemas({
             ? getExtension<string>(resolvedResponse, FernOpenAPIExtension.SDK_NAMESPACE)
             : undefined;
         const errorKey = isWildcardStatusCode ? statusCode.toUpperCase() : parsedStatusCode.toString();
+        const isShared =
+            sharedErrorSchemaName != null &&
+            responseNamespace == null &&
+            mediaObject?.schema != null &&
+            isReferenceObject(mediaObject.schema) &&
+            getSchemaIdFromReference(mediaObject.schema) === sharedErrorSchemaName;
         errors[errorKey] = {
             statusCode: parsedStatusCode,
             isWildcardStatusCode: isWildcardStatusCode ? true : undefined,
@@ -434,10 +442,11 @@ function markErrorSchemas({
                 context,
                 [errorName, "Body"],
                 source,
-                responseNamespace ?? namespace
+                isShared ? undefined : (responseNamespace ?? namespace)
             ),
             fullExamples: mediaObject?.examples,
             namespace: responseNamespace,
+            isShared: isShared ? true : undefined,
             source
         };
     }

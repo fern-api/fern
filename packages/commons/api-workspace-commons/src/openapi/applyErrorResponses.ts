@@ -1,8 +1,9 @@
 import { generatorsYml } from "@fern-api/configuration";
+import { DEFAULT_ERROR_RESPONSE_TYPE_NAME, getErrorResponsesSchemaName } from "@fern-api/openapi-ir-parser";
 import { cloneDeep, isEqual } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 
-export const DEFAULT_ERROR_RESPONSE_TYPE_NAME = "ProblemDetails";
+export { DEFAULT_ERROR_RESPONSE_TYPE_NAME };
 
 const DEFAULT_ERROR_MEDIA_TYPE = "application/json";
 
@@ -157,7 +158,7 @@ export function applyErrorResponses({ document, errorResponses, schema }: ApplyE
 }
 
 function getErrorSchemaName({ schema, name }: { schema: OpenAPIV3.SchemaObject; name: string | undefined }): string {
-    return name ?? schema.title ?? DEFAULT_ERROR_RESPONSE_TYPE_NAME;
+    return getErrorResponsesSchemaName({ schema, name });
 }
 
 function getErrorSchemaRef({
