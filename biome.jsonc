@@ -259,7 +259,8 @@
             "plugins": [
                 "./biome-plugins/no-inline-http-url-check.grit",
                 "./biome-plugins/no-inline-enoent-check.grit",
-                "./biome-plugins/no-inline-delay.grit"
+                "./biome-plugins/no-inline-delay.grit",
+                "./biome-plugins/no-inline-error-message.grit"
             ]
         },
         {

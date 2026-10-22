@@ -1,0 +1,5 @@
+language js
+
+`$error instanceof Error ? $error.message : String($error)` as $extract where {
+    register_diagnostic(span=$extract, message="Use `errorMessageOrString` from `@fern-api/core-utils` instead of unwrapping `error.message` by hand.", severity="error")
+}
