@@ -155,7 +155,7 @@ module <%= gem_namespace %>
           end
 
           def ===(instance)
-            instance.class.ancestors.include?(self)
+            instance.is_a?(self)
           end
         end
 
@@ -169,15 +169,18 @@ module <%= gem_namespace %>
           @data = {}
           @explicit_fields = {}
 
-          values = Utils.symbolize_keys(values.dup)
+          values = Utils.symbolize_keys(values)
 
           self.class.fields.each do |field_name, field|
             value = nil
-            [field.api_name.to_sym, field_name].uniq.each do |key|
-              next unless values.key?(key)
-
+            api_key = field.api_name.to_sym
+            if values.key?(api_key)
               @explicit_fields[field_name] = true
-              candidate = values.delete(key)
+              value = values.delete(api_key)
+            end
+            if api_key != field_name && values.key?(field_name)
+              @explicit_fields[field_name] = true
+              candidate = values.delete(field_name)
               value = candidate if value.nil?
             end
 

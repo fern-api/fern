@@ -51,19 +51,19 @@ module Seed
             when ::Array
               return coerce(type, value.to_h)
             end
-          in ->(t) { t <= NilClass }
+          in Class if type <= NilClass
             return nil
-          in ->(t) { t <= String }
+          in Class if type <= String
             case value
             when String, Symbol, Numeric, TrueClass, FalseClass
               return value.to_s
             end
-          in ->(t) { t <= Symbol }
+          in Class if type <= Symbol
             case value
             when Symbol, String
               return value.to_sym
             end
-          in ->(t) { t <= Integer }
+          in Class if type <= Integer
             case value
             when Numeric, String, Time
               return value.to_i
@@ -72,7 +72,7 @@ module Seed
               parsed = Integer(value.to_s, 10, exception: false)
               return parsed unless parsed.nil?
             end
-          in ->(t) { t <= Float }
+          in Class if type <= Float
             case value
             when Numeric, Time, String
               return value.to_f
@@ -80,7 +80,7 @@ module Seed
               parsed = Float(value.to_s, exception: false)
               return parsed unless parsed.nil?
             end
-          in ->(t) { t <= Model }
+          in Class if type <= Model
             case value
             when type
               return value
@@ -89,10 +89,7 @@ module Seed
             end
           in Module
             case type
-            in ->(t) {
-                 t.singleton_class.included_modules.include?(Enum) ||
-                   t.singleton_class.included_modules.include?(Union)
-               }
+            in Enum | Union
               return type.coerce(value, strict: strict)
             else
               value # rubocop:disable Lint/Void

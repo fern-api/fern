@@ -1,7 +1,8 @@
 # yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
 
 - summary: |
-    Response parsing is faster on large payloads. `Model#initialize` no longer coerces fields whose value is nil,
-    and `Utils.coerce` returns a value that is already an instance of a `String`, `Integer`, `Float`, or model
-    target type without walking the full type match. Parsed output is unchanged.
+    Response parsing is faster on large payloads. `Model#initialize` no longer coerces fields whose value is nil or
+    copies its input hash twice, `Utils.coerce` returns a value that is already an instance of a `String`, `Integer`,
+    `Float`, or model target type without walking the full type match, and type dispatch in `Utils.coerce` and
+    `Model.===` no longer allocates a lambda or ancestor list per call. Parsed output is unchanged.
   type: fix
