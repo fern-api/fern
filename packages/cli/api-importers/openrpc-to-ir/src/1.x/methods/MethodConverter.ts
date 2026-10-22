@@ -1,3 +1,4 @@
+import { assertNever } from "@fern-api/core-utils";
 import {
     FernIr,
     HttpEndpoint,
@@ -217,7 +218,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
             },
             transport: undefined,
             availability: undefined,
-            source: HttpEndpointSource.openrpc(),
+            source: HttpEndpointSource.openrpc({ paramStructure: this.convertParamStructure() }),
             audiences,
             retries: undefined,
             globalParameters: undefined,
@@ -231,6 +232,22 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
             inlinedTypes,
             servers: this.filterOutTopLevelServers(this.method.servers ?? [])
         };
+    }
+
+    private convertParamStructure(): FernIr.OpenRpcParamStructure | undefined {
+        const paramStructure = this.method.paramStructure;
+        switch (paramStructure) {
+            case "by-name":
+                return FernIr.OpenRpcParamStructure.ByName;
+            case "by-position":
+                return FernIr.OpenRpcParamStructure.ByPosition;
+            case "either":
+                return FernIr.OpenRpcParamStructure.Either;
+            case undefined:
+                return undefined;
+            default:
+                assertNever(paramStructure);
+        }
     }
 
     private filterOutTopLevelServers(servers: ServerObject[]): ServerObject[] {

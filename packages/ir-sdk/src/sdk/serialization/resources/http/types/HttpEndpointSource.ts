@@ -3,6 +3,7 @@
 import * as FernIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { OpenRpcSourceInfo } from "./OpenRpcSourceInfo.js";
 import { ProtoSourceInfo } from "./ProtoSourceInfo.js";
 
 export const HttpEndpointSource: core.serialization.Schema<
@@ -12,7 +13,7 @@ export const HttpEndpointSource: core.serialization.Schema<
     .union("type", {
         proto: ProtoSourceInfo,
         openapi: core.serialization.object({}),
-        openrpc: core.serialization.object({}),
+        openrpc: OpenRpcSourceInfo,
     })
     .transform<FernIr.HttpEndpointSource>({
         transform: (value) => {
@@ -22,7 +23,7 @@ export const HttpEndpointSource: core.serialization.Schema<
                 case "openapi":
                     return FernIr.HttpEndpointSource.openapi();
                 case "openrpc":
-                    return FernIr.HttpEndpointSource.openrpc();
+                    return FernIr.HttpEndpointSource.openrpc(value);
                 default:
                     return value as FernIr.HttpEndpointSource;
             }
@@ -41,7 +42,7 @@ export declare namespace HttpEndpointSource {
         type: "openapi";
     }
 
-    export interface Openrpc {
+    export interface Openrpc extends OpenRpcSourceInfo.Raw {
         type: "openrpc";
     }
 }
