@@ -28,6 +28,7 @@ func newRequireTestWriter(types map[common.TypeId]*ir.TypeDeclaration) *fileWrit
 		false, // exportAllRequestsAtRoot
 		false, // omitEmptyRequestWrappers
 		false, // legacyNullableAliasPointers
+		false, // xmlTextFirstBuilders
 		userAgentConfig{},
 		UnionVersionUnspecified,
 		"",

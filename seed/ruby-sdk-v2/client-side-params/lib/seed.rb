@@ -3,6 +3,7 @@
 require "json"
 require "net/http"
 require "securerandom"
+require "time"
 
 require_relative "seed/internal/json/serializable"
 require_relative "seed/internal/types/type"
@@ -36,16 +37,6 @@ require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/connection_error"
-require_relative "seed/types/types/resource"
-require_relative "seed/types/types/search_response"
-require_relative "seed/types/types/identity"
-require_relative "seed/types/types/user"
-require_relative "seed/types/types/paginated_user_response"
-require_relative "seed/types/types/create_user_request"
-require_relative "seed/types/types/update_user_request"
-require_relative "seed/types/types/connection"
-require_relative "seed/types/types/client"
-require_relative "seed/types/types/paginated_client_response"
 require_relative "seed/client"
 require_relative "seed/service/client"
 require_relative "seed/service/types/list_resources_request"
@@ -57,3 +48,20 @@ require_relative "seed/service/types/list_connections_request"
 require_relative "seed/service/types/get_connection_request"
 require_relative "seed/service/types/list_clients_request"
 require_relative "seed/service/types/get_client_request"
+
+module Seed
+  module Types
+    module Types
+      autoload :Resource, ::File.join(__dir__, "seed/types/types/resource")
+      autoload :SearchResponse, ::File.join(__dir__, "seed/types/types/search_response")
+      autoload :Identity, ::File.join(__dir__, "seed/types/types/identity")
+      autoload :User, ::File.join(__dir__, "seed/types/types/user")
+      autoload :PaginatedUserResponse, ::File.join(__dir__, "seed/types/types/paginated_user_response")
+      autoload :CreateUserRequest, ::File.join(__dir__, "seed/types/types/create_user_request")
+      autoload :UpdateUserRequest, ::File.join(__dir__, "seed/types/types/update_user_request")
+      autoload :Connection, ::File.join(__dir__, "seed/types/types/connection")
+      autoload :Client, ::File.join(__dir__, "seed/types/types/client")
+      autoload :PaginatedClientResponse, ::File.join(__dir__, "seed/types/types/paginated_client_response")
+    end
+  end
+end

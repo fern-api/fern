@@ -264,7 +264,8 @@ describe("SDK Config migration", () => {
             default_bytes_stream_chunk_size: 1024,
             recursion_limit: 10_000,
             extras: { pyaudio: ["audio-runtime"] },
-            additional_init_exports: [{ from: "types", imports: ["ApiError"] }]
+            additional_init_exports: [{ from: "types", imports: ["ApiError"] }],
+            stream_abstraction: true
         };
 
         const result = mapFernGroupToSdkConfig({
@@ -283,7 +284,8 @@ describe("SDK Config migration", () => {
             defaultBytesStreamChunkSize: 1024,
             recursionLimit: 10_000,
             extras: { pyaudio: ["audio-runtime"] },
-            additionalInitExports: [{ from: "types", imports: ["ApiError"] }]
+            additionalInitExports: [{ from: "types", imports: ["ApiError"] }],
+            streamAbstraction: true
         });
         expect(result.diagnostics).toEqual([]);
     });

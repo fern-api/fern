@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "../../seed"
+
 module Seed
   module Types
     # XML element without an explicit xml.name; falls back to the schema name.

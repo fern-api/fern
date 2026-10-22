@@ -553,7 +553,7 @@ client.service.create_big_entity(
     data: {
       data: "data"
     },
-    json_string: "jsonString"
+    jsonString: "jsonString"
   },
   data: {},
   migration: {

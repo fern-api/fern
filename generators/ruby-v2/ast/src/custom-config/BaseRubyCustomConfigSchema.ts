@@ -79,6 +79,10 @@ export const BaseRubyCustomConfigSchema = z.object({
     // untyped Hash instead of the documented model. Disabled by default because callers
     // of a published gem may already read that Hash by key.
     respectNullableUnionFields: z.boolean().optional(),
+    // Opt-out: `Time` (and `ActiveSupport::TimeWithZone`) values in request bodies, query
+    // parameters, and form fields are serialized as RFC 3339 strings. Set to `false` to keep
+    // the previous `Time#to_s` output (e.g. "2026-10-16 01:40:16 UTC"). Enabled by default.
+    serializeTimeAsIso8601: z.boolean().optional(),
     // Opt-in: a type alias to a named type coerces into that type rather than returning
     // the result of a bare `JSON.parse`. Without this, an endpoint whose response schema
     // is a `$ref` to another schema returns a string-keyed Hash while the SDK documents

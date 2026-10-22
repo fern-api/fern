@@ -3,6 +3,7 @@ package com.snippets;
 import com.seed.api.SeedApiClient;
 import com.seed.api.resources.catalog.requests.CreateCatalogImageBody;
 import com.seed.api.types.CreateCatalogImageRequest;
+import java.util.Optional;
 
 public class Example4 {
     public static void main(String[] args) {
@@ -11,7 +12,7 @@ public class Example4 {
 
         client.catalog()
                 .createCatalogImage(
-                        null,
+                        Optional.empty(),
                         CreateCatalogImageBody.builder()
                                 .request(CreateCatalogImageRequest.builder()
                                         .catalogObjectId("catalog_object_id")

@@ -222,4 +222,28 @@ describe <%= gem_namespace %>::Internal::Types::Utils do
       end
     end
   end
-end
+<% if (serializeTimeAsIso8601) { %>
+  describe ".serialize_times" do
+    it "converts Time values to RFC 3339 strings with millisecond precision" do
+      assert_equal "2026-10-16T01:40:16.000Z", Utils.serialize_times(Time.utc(2026, 10, 16, 1, 40, 16))
+      assert_equal "2026-01-02T03:04:05.000+05:00", Utils.serialize_times(Time.new(2026, 1, 2, 3, 4, 5, "+05:00"))
+    end
+
+    it "converts Time values nested in hashes and arrays" do
+      value = { begin_time: Time.utc(2026, 10, 16, 1, 40, 16), nested: { times: [Time.utc(2026, 1, 2, 3, 4, 5)] } }
+
+      assert_equal(
+        { begin_time: "2026-10-16T01:40:16.000Z", nested: { times: ["2026-01-02T03:04:05.000Z"] } },
+        Utils.serialize_times(value)
+      )
+    end
+
+    it "leaves Date, DateTime, and non-time values unchanged" do
+      date = Date.new(2026, 10, 16)
+      date_time = DateTime.new(2026, 10, 16, 1, 40, 16)
+      value = { date: date, date_time: date_time, name: "plant", count: 3, active: true, missing: nil }
+
+      assert_equal value, Utils.serialize_times(value)
+    end
+  end
+<% } %>end

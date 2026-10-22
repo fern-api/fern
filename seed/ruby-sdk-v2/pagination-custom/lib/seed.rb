@@ -3,6 +3,7 @@
 require "json"
 require "net/http"
 require "securerandom"
+require "time"
 
 require_relative "seed/internal/json/serializable"
 require_relative "seed/internal/types/type"
@@ -37,8 +38,13 @@ require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/internal/iterators/custom_pager"
 require_relative "seed/errors/connection_error"
-require_relative "seed/types/link"
-require_relative "seed/types/users_list_response"
 require_relative "seed/client"
 require_relative "seed/users/client"
 require_relative "seed/users/types/list_with_custom_pager_request"
+
+module Seed
+  module Types
+    autoload :Link, ::File.join(__dir__, "seed/types/link")
+    autoload :UsersListResponse, ::File.join(__dir__, "seed/types/users_list_response")
+  end
+end

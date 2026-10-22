@@ -3,11 +3,12 @@
 require "test_helper"
 
 describe Seed::Internal::JSON::Request do
-  def build_request(body: nil, request_options: {}, method: "POST")
+  def build_request(body: nil, query: {}, request_options: {}, method: "POST")
     Seed::Internal::JSON::Request.new(
       base_url: "https://example.com",
       path: "/test",
       method: method,
+      query: query,
       body: body,
       request_options: request_options
     )
@@ -106,6 +107,20 @@ describe Seed::Internal::JSON::Request do
       build_request(body: body, request_options: { additional_body_parameters: { "beta_flag" => true } }).encode_body
 
       assert_equal({ name: "plant" }, body)
+    end
+  end
+
+  describe "time values" do
+    it "serializes Time values in the body as RFC 3339 strings" do
+      request = build_request(body: { begin_time: Time.utc(2026, 10, 16, 1, 40, 16) })
+
+      assert_equal({ "begin_time" => "2026-10-16T01:40:16.000Z" }, encoded_body(request))
+    end
+
+    it "serializes Time values in query parameters as RFC 3339 strings" do
+      request = build_request(query: { start: Time.utc(2026, 10, 16, 1, 40, 16), limit: 10 })
+
+      assert_equal({ start: "2026-10-16T01:40:16.000Z", limit: 10 }, request.encode_query)
     end
   end
 end

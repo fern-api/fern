@@ -3,6 +3,7 @@
 require "json"
 require "net/http"
 require "securerandom"
+require "time"
 
 require_relative "seed/internal/json/serializable"
 require_relative "seed/internal/types/type"
@@ -36,9 +37,14 @@ require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/connection_error"
-require_relative "seed/types/create_plant_response"
-require_relative "seed/types/update_plant_response"
-require_relative "seed/types/create_plant_with_schema_response"
 require_relative "seed/client"
 require_relative "seed/types/update_plant_request"
 require_relative "seed/types/create_plant_with_schema_request"
+
+module Seed
+  module Types
+    autoload :CreatePlantResponse, ::File.join(__dir__, "seed/types/create_plant_response")
+    autoload :UpdatePlantResponse, ::File.join(__dir__, "seed/types/update_plant_response")
+    autoload :CreatePlantWithSchemaResponse, ::File.join(__dir__, "seed/types/create_plant_with_schema_response")
+  end
+end

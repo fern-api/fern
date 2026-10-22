@@ -12,11 +12,11 @@ client.problem.create_problem(
   },
   files: {
     JAVA: {
-      solution_file: {
+      solutionFile: {
         filename: "filename",
         contents: "contents"
       },
-      read_only_files: [{
+      readOnlyFiles: [{
         filename: "filename",
         contents: "contents"
       }, {
@@ -26,25 +26,25 @@ client.problem.create_problem(
     }
   },
   input_params: [{
-    variable_type: {},
+    variableType: {},
     name: "name"
   }, {
-    variable_type: {},
+    variableType: {},
     name: "name"
   }],
   output_type: {},
   testcases: [{
-    test_case: {
+    testCase: {
       id: "id",
       params: [{}, {}]
     },
-    expected_result: {}
+    expectedResult: {}
   }, {
-    test_case: {
+    testCase: {
       id: "id",
       params: [{}, {}]
     },
-    expected_result: {}
+    expectedResult: {}
   }],
   method_name: "methodName"
 )
