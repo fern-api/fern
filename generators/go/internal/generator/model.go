@@ -37,6 +37,7 @@ func (f *fileWriter) WriteType(
 		includeRawJSON:               includeRawJSON,
 		gettersPassByValue:           f.gettersPassByValue,
 		dedupeUnionBaseProperties:    f.dedupeUnionBaseProperties,
+		xmlTextFirstBuilders:         f.xmlTextFirstBuilders,
 		xml:                          typeDeclaration.Encoding.GetXml(),
 		docs:                         typeDeclaration.Docs,
 	}
@@ -59,6 +60,7 @@ type typeVisitor struct {
 	alwaysSendRequiredProperties bool
 	gettersPassByValue           bool
 	dedupeUnionBaseProperties    bool
+	xmlTextFirstBuilders         bool
 
 	// xml is set if the type is xml-encoded.
 	xml *ir.XmlEncoding
