@@ -198,7 +198,9 @@ export async function runRemoteGenerationForGenerator({
 
     const isPreview = isPreviewOverride ?? absolutePathToPreview != null;
     // Mirrors Fiddle's dry run (`preview` in createAndStartJob): a preview never delivers to
-    // GitHub or a registry, it only downloads the generated files.
+    // GitHub or a registry, it only downloads the generated files. Keyed off `fiddlePreview`
+    // rather than `isPreview` because `fern sdk preview` sets `isPreview` for its publish job
+    // (with `fiddlePreview: false`), which must keep its configured publish output.
     const previewRequestedOutput: FernSdkGenApiRequestedOutput | undefined =
         (fiddlePreview ?? absolutePathToPreview != null) ? { type: "download" } : undefined;
     const resolvedWhitelabel =
