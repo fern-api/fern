@@ -31,7 +31,8 @@ module <%= gem_namespace %>
         #
         # @param name [String] The name of the form field
         # @param file [String, #read] A path to a file on disk, or a file/readable object
-        # @param filename [String, nil] Optional filename (defaults to basename of the path for paths and File objects)
+        # @param filename [String, nil] Optional filename (defaults to basename of the path for paths and File objects,
+        #   and to the field name for readable objects without a path or name, such as StringIO)
         # @param content_type [String, nil] Optional content type (e.g. "image/png")
         # @return [self] Returns self for chaining
         def add_file(name:, file:, filename: nil, content_type: nil)
@@ -40,7 +41,7 @@ module <%= gem_namespace %>
             filename ||= ::File.basename(file)
             file = ::File.binread(file)
           else
-            filename ||= filename_for(file)
+            filename ||= filename_for(file) || name
           end
           add_part(FormDataPart.new(name:, value: file, filename:, headers:))
         end
