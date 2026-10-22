@@ -1,3 +1,4 @@
+import { isRecord } from "@fern-api/core-utils";
 export const MCP_SERVER_NAME = "fern";
 
 export const MCP_CLIENTS = ["claude", "cursor", "codex"] as const;
@@ -65,10 +66,6 @@ function parseJsonConfig(existingContents: string | undefined): Record<string, u
         throw new Error("Expected the config to contain a JSON object");
     }
     return parsed;
-}
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-    return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
 const CODEX_SERVER_TABLE_PATH = `mcp_servers.${MCP_SERVER_NAME}`;

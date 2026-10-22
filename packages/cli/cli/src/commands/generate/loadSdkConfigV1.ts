@@ -1,6 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
-import { assertNever, errorMessageOrString } from "@fern-api/core-utils";
+import { assertNever, errorMessageOrString, isRecord } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd } from "@fern-api/fs-utils";
 import type {
     FernSdkConfigV1Payload,
@@ -252,10 +252,6 @@ function requireSingleTarget<T>(targets: T[], index: number): T {
         throw new Error(`SDK Config v1 target ${index} did not survive validation exactly once`);
     }
     return target;
-}
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-    return typeof value === "object" && value != null && !Array.isArray(value);
 }
 
 function publicationValidationMetadata(requestedOutput: FernSdkGenApiRequestedOutput | undefined): {

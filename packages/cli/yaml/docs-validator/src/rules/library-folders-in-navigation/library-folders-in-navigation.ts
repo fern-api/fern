@@ -1,5 +1,5 @@
+import { isRecord } from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, doesPathExist, relative, resolve } from "@fern-api/fs-utils";
-
 import { readdir } from "fs/promises";
 import { sep } from "path";
 import { Rule, RuleViolation } from "../../Rule.js";
@@ -123,10 +123,6 @@ function isSameOrInside(path: string, ancestor: string): boolean {
     const normalizedPath = path.split(sep).join("/");
     const normalizedAncestor = ancestor.split(sep).join("/");
     return normalizedPath === normalizedAncestor || normalizedPath.startsWith(`${normalizedAncestor}/`);
-}
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-    return typeof value === "object" && value != null && !Array.isArray(value);
 }
 
 function collectNavigationReferences(node: unknown, configDir: AbsoluteFilePath, refs: NavigationReferences): void {

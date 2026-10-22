@@ -1,5 +1,5 @@
 import { FERNIGNORE_FILENAME, generatorsYml, getFernIgnorePaths } from "@fern-api/configuration-loader";
-import { assertNever, ContainerRunner, errorMessageOrString } from "@fern-api/core-utils";
+import { assertNever, ContainerRunner, errorMessageOrString, isRecord } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
@@ -376,7 +376,7 @@ async function ensureNpmPackageVersion({
 async function getNodePackageManagerCommand(outputPath: AbsoluteFilePath): Promise<string[]> {
     const packageJsonPath = join(outputPath, RelativeFilePath.of("package.json"));
     const packageJson: unknown = JSON.parse(await readFile(packageJsonPath, "utf-8"));
-    if (typeof packageJson === "object" && packageJson != null && !Array.isArray(packageJson)) {
+    if (isRecord(packageJson)) {
         const packageManager = "packageManager" in packageJson ? packageJson.packageManager : undefined;
         if (typeof packageManager === "string") {
             if (packageManager === "npm" || packageManager.startsWith("npm@")) {

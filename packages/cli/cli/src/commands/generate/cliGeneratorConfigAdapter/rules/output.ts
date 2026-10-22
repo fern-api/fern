@@ -1,5 +1,5 @@
 import { isAbsolute, relative, resolve, sep } from "node:path";
-
+import { isRecord } from "@fern-api/core-utils";
 import type { RuleContext } from "../types.js";
 
 /** The generators.yml `api` section, created on first use. */
@@ -46,8 +46,4 @@ export function resolveFromSource(context: RuleContext, path: string): string {
 
 export function resolveFromConfigDir(configDir: string, path: string): string {
     return isAbsolute(path) ? path : resolve(configDir, path);
-}
-
-export function isRecord(value: unknown): value is Record<string, unknown> {
-    return value !== null && typeof value === "object" && !Array.isArray(value);
 }

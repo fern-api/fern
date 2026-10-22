@@ -1,4 +1,5 @@
 import { FernToken } from "@fern-api/auth";
+import { isRecord } from "@fern-api/core-utils";
 import { CliError } from "@fern-api/task-context";
 import semver from "semver";
 
@@ -170,10 +171,6 @@ function optionalExactSemver(value: Record<string, unknown>, key: string): strin
         });
     }
     return version;
-}
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-    return typeof value === "object" && value != null && !Array.isArray(value);
 }
 
 function hasExactKeys(value: unknown, keys: string[]): value is Record<string, unknown> {

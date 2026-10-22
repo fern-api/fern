@@ -1,3 +1,4 @@
+import { isRecord } from "@fern-api/core-utils";
 import { resolveThemeFileUrls } from "@fern-api/docs-resolver";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import { mkdir, writeFile } from "fs/promises";
@@ -102,7 +103,7 @@ export function isThemeResponse(value: unknown): value is { config: Record<strin
         return false;
     }
     const config = (value as { config: unknown }).config;
-    return config != null && typeof config === "object" && !Array.isArray(config);
+    return isRecord(config);
 }
 
 /**

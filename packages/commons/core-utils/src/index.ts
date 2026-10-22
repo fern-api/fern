@@ -46,6 +46,7 @@ export {
 export { type ObjectPropertiesVisitor, visitObject, visitObjectAsync } from "./ObjectPropertiesVisitor.js";
 export { type Entries, entries } from "./objects/entries.js";
 export { isPlainObject } from "./objects/isPlainObject.js";
+export { isRecord } from "./objects/isRecord.js";
 export { keys } from "./objects/keys.js";
 export { mapValues } from "./objects/mapValues.js";
 export { type Values, values } from "./objects/values.js";

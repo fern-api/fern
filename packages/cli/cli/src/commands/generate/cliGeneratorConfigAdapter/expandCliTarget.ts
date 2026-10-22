@@ -1,4 +1,4 @@
-import { errorMessageOrString } from "@fern-api/core-utils";
+import { errorMessageOrString, isRecord } from "@fern-api/core-utils";
 import { parseSdkConfigIrV1, type SdkConfigIrV1 } from "@postman/sdk-config";
 import { type SdkConfigV1, splitSdkConfigV1TargetGeneration } from "@postman/sdk-config/sdk-config/v1";
 import type { CliTargetDiagnostic } from "./types.js";
@@ -157,8 +157,4 @@ function mergeObjects(base: object, override: object | undefined): Record<string
         merged[key] = isRecord(inherited) && isRecord(value) ? mergeObjects(inherited, value) : value;
     }
     return merged;
-}
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-    return value !== null && typeof value === "object" && !Array.isArray(value);
 }

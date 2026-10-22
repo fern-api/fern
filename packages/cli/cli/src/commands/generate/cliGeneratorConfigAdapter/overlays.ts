@@ -1,5 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { dirname, isAbsolute, relative, resolve, sep } from "node:path";
+import { isRecord } from "@fern-api/core-utils";
 import YAML from "yaml";
 
 /** Fern takes one overlay file per spec, so several overlays become one file with all their actions, in order. */
@@ -41,8 +42,4 @@ function rebaseReference(reference: string, sourceDir: string, destinationDir: s
     }
     const rebased = relative(destinationDir, resolve(sourceDir, file)).split(sep).join("/");
     return `${rebased.startsWith(".") ? rebased : `./${rebased}`}${fragment}`;
-}
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-    return value !== null && typeof value === "object" && !Array.isArray(value);
 }
