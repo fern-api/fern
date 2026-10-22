@@ -7,7 +7,16 @@ import {
     SDK_CONFIG_FILENAME
 } from "@fern-api/configuration-loader";
 import { isEnoentError } from "@fern-api/core-utils";
-import { AbsoluteFilePath, cwd, dirname, doesPathExist, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
+import {
+    AbsoluteFilePath,
+    cwd,
+    dirname,
+    doesPathExist,
+    join,
+    RelativeFilePath,
+    resolve,
+    toPosixPath
+} from "@fern-api/fs-utils";
 import type { Project } from "@fern-api/project-loader";
 import { CliError } from "@fern-api/task-context";
 import { type FernConfigMappingDiagnostic, FernConfigMappingError } from "@postman/sdk-config/sdk-config/v1";
@@ -286,7 +295,7 @@ async function readOptionalFile(filePath: AbsoluteFilePath): Promise<string | un
 }
 
 function displayPathFromWorkspace(workspaceDirectory: AbsoluteFilePath, outputPath: AbsoluteFilePath): string {
-    const relativePath = path.relative(workspaceDirectory, outputPath).split(path.sep).join("/");
+    const relativePath = toPosixPath(path.relative(workspaceDirectory, outputPath));
     return relativePath.startsWith(".") ? relativePath : `./${relativePath}`;
 }
 
