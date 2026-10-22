@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "../../seed"
+
 module Seed
   module Types
     # Base schema for union stream requests. Contains the stream_response field that is inherited by all oneOf variants

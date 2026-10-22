@@ -37,9 +37,14 @@ require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/connection_error"
-require_relative "seed/types/client_with_id"
-require_relative "seed/types/client_response"
-require_relative "seed/types/client"
 require_relative "seed/client"
 require_relative "seed/clients/client"
 require_relative "seed/clients/types/client_request"
+
+module Seed
+  module Types
+    autoload :ClientWithID, ::File.join(__dir__, "seed/types/client_with_id")
+    autoload :ClientResponse, ::File.join(__dir__, "seed/types/client_response")
+    autoload :Client, ::File.join(__dir__, "seed/types/client")
+  end
+end

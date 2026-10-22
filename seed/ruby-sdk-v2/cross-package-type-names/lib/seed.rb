@@ -37,13 +37,6 @@ require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/connection_error"
-require_relative "seed/commons/types/imported"
-require_relative "seed/folder_c/common/types/foo"
-require_relative "seed/folder_b/common/types/foo"
-require_relative "seed/folder_a/service/types/response"
-require_relative "seed/folder_d/service/types/response"
-require_relative "seed/foo/types/importing_type"
-require_relative "seed/foo/types/optional_string"
 require_relative "seed/client"
 require_relative "seed/folder_a/client"
 require_relative "seed/folder_a/service/client"
@@ -51,3 +44,50 @@ require_relative "seed/folder_d/client"
 require_relative "seed/folder_d/service/client"
 require_relative "seed/foo/client"
 require_relative "seed/foo/types/find_request"
+
+module Seed
+  module Commons
+    module Types
+      autoload :Imported, ::File.join(__dir__, "seed/commons/types/imported")
+    end
+  end
+
+  module FolderC
+    module Common
+      module Types
+        autoload :Foo, ::File.join(__dir__, "seed/folder_c/common/types/foo")
+      end
+    end
+  end
+
+  module FolderB
+    module Common
+      module Types
+        autoload :Foo, ::File.join(__dir__, "seed/folder_b/common/types/foo")
+      end
+    end
+  end
+
+  module FolderA
+    module Service
+      module Types
+        autoload :Response, ::File.join(__dir__, "seed/folder_a/service/types/response")
+      end
+    end
+  end
+
+  module FolderD
+    module Service
+      module Types
+        autoload :Response, ::File.join(__dir__, "seed/folder_d/service/types/response")
+      end
+    end
+  end
+
+  module Foo
+    module Types
+      autoload :ImportingType, ::File.join(__dir__, "seed/foo/types/importing_type")
+      autoload :OptionalString, ::File.join(__dir__, "seed/foo/types/optional_string")
+    end
+  end
+end

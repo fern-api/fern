@@ -37,10 +37,32 @@ require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/connection_error"
-require_relative "seed/commons/metadata/types/metadata"
-require_relative "seed/types/node"
-require_relative "seed/types/tree"
-require_relative "seed/file/types/file_info"
-require_relative "seed/file/types/file"
-require_relative "seed/file/directory/types/directory"
 require_relative "seed/client"
+
+module Seed
+  module Commons
+    module Metadata
+      module Types
+        autoload :Metadata, ::File.join(__dir__, "seed/commons/metadata/types/metadata")
+      end
+    end
+  end
+
+  module Types
+    autoload :Node, ::File.join(__dir__, "seed/types/node")
+    autoload :Tree, ::File.join(__dir__, "seed/types/tree")
+  end
+
+  module File
+    module Types
+      autoload :FileInfo, ::File.join(__dir__, "seed/file/types/file_info")
+      autoload :File, ::File.join(__dir__, "seed/file/types/file")
+    end
+
+    module Directory
+      module Types
+        autoload :Directory, ::File.join(__dir__, "seed/file/directory/types/directory")
+      end
+    end
+  end
+end

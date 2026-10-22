@@ -37,8 +37,13 @@ require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/connection_error"
-require_relative "seed/types/parent"
-require_relative "seed/types/alias_type"
-require_relative "seed/types/child"
 require_relative "seed/client"
 require_relative "seed/types/inlined_child_request"
+
+module Seed
+  module Types
+    autoload :Parent, ::File.join(__dir__, "seed/types/parent")
+    autoload :AliasType, ::File.join(__dir__, "seed/types/alias_type")
+    autoload :Child, ::File.join(__dir__, "seed/types/child")
+  end
+end

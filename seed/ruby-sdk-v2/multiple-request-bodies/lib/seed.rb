@@ -37,9 +37,14 @@ require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/connection_error"
-require_relative "seed/types/document_metadata"
-require_relative "seed/types/document_upload_result"
-require_relative "seed/types/upload_document_response"
 require_relative "seed/client"
 require_relative "seed/types/upload_document_request"
 require_relative "seed/environment"
+
+module Seed
+  module Types
+    autoload :DocumentMetadata, ::File.join(__dir__, "seed/types/document_metadata")
+    autoload :DocumentUploadResult, ::File.join(__dir__, "seed/types/document_upload_result")
+    autoload :UploadDocumentResponse, ::File.join(__dir__, "seed/types/upload_document_response")
+  end
+end

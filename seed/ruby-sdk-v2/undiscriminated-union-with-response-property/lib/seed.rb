@@ -37,10 +37,15 @@ require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/connection_error"
-require_relative "seed/types/variant_a"
-require_relative "seed/types/variant_b"
-require_relative "seed/types/variant_c"
-require_relative "seed/types/my_union"
-require_relative "seed/types/union_response"
-require_relative "seed/types/union_list_response"
 require_relative "seed/client"
+
+module Seed
+  module Types
+    autoload :VariantA, ::File.join(__dir__, "seed/types/variant_a")
+    autoload :VariantB, ::File.join(__dir__, "seed/types/variant_b")
+    autoload :VariantC, ::File.join(__dir__, "seed/types/variant_c")
+    autoload :MyUnion, ::File.join(__dir__, "seed/types/my_union")
+    autoload :UnionResponse, ::File.join(__dir__, "seed/types/union_response")
+    autoload :UnionListResponse, ::File.join(__dir__, "seed/types/union_list_response")
+  end
+end

@@ -37,11 +37,16 @@ require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/connection_error"
-require_relative "seed/types/item"
-require_relative "seed/types/item_not_found"
-require_relative "seed/types/api_error"
 require_relative "seed/client"
 require_relative "seed/items/client"
 require_relative "seed/items/types/create_item_request"
 require_relative "seed/items/types/get_item_request"
 require_relative "seed/environment"
+
+module Seed
+  module Types
+    autoload :Item, ::File.join(__dir__, "seed/types/item")
+    autoload :ItemNotFound, ::File.join(__dir__, "seed/types/item_not_found")
+    autoload :APIError, ::File.join(__dir__, "seed/types/api_error")
+  end
+end

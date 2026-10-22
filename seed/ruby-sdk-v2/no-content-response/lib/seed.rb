@@ -37,8 +37,13 @@ require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/connection_error"
-require_relative "seed/types/contact"
 require_relative "seed/client"
 require_relative "seed/contacts/client"
 require_relative "seed/contacts/types/create_contact_request"
 require_relative "seed/contacts/types/get_contacts_request"
+
+module Seed
+  module Types
+    autoload :Contact, ::File.join(__dir__, "seed/types/contact")
+  end
+end

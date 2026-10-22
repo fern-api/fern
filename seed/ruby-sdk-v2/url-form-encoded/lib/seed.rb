@@ -38,8 +38,13 @@ require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/internal/url_encoded/request"
 require_relative "seed/errors/connection_error"
-require_relative "seed/types/post_submit_response"
-require_relative "seed/types/token_request"
-require_relative "seed/types/token_response"
 require_relative "seed/client"
 require_relative "seed/types/post_submit_request"
+
+module Seed
+  module Types
+    autoload :PostSubmitResponse, ::File.join(__dir__, "seed/types/post_submit_response")
+    autoload :TokenRequest, ::File.join(__dir__, "seed/types/token_request")
+    autoload :TokenResponse, ::File.join(__dir__, "seed/types/token_response")
+  end
+end

@@ -37,8 +37,20 @@ require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/connection_error"
-require_relative "seed/commons/types/error_body"
-require_relative "seed/simple/types/foo_request"
-require_relative "seed/simple/types/foo_response"
 require_relative "seed/client"
 require_relative "seed/simple/client"
+
+module Seed
+  module Commons
+    module Types
+      autoload :ErrorBody, ::File.join(__dir__, "seed/commons/types/error_body")
+    end
+  end
+
+  module Simple
+    module Types
+      autoload :FooRequest, ::File.join(__dir__, "seed/simple/types/foo_request")
+      autoload :FooResponse, ::File.join(__dir__, "seed/simple/types/foo_response")
+    end
+  end
+end
