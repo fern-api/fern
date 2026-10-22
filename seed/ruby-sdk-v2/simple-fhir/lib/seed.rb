@@ -37,11 +37,16 @@ require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/connection_error"
-require_relative "seed/types/script"
-require_relative "seed/types/practitioner"
-require_relative "seed/types/patient"
-require_relative "seed/types/account"
-require_relative "seed/types/resource_list"
-require_relative "seed/types/base_resource"
-require_relative "seed/types/memo"
 require_relative "seed/client"
+
+module Seed
+  module Types
+    autoload :Script, ::File.join(__dir__, "seed/types/script")
+    autoload :Practitioner, ::File.join(__dir__, "seed/types/practitioner")
+    autoload :Patient, ::File.join(__dir__, "seed/types/patient")
+    autoload :Account, ::File.join(__dir__, "seed/types/account")
+    autoload :ResourceList, ::File.join(__dir__, "seed/types/resource_list")
+    autoload :BaseResource, ::File.join(__dir__, "seed/types/base_resource")
+    autoload :Memo, ::File.join(__dir__, "seed/types/memo")
+  end
+end

@@ -37,10 +37,20 @@ require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/connection_error"
-require_relative "seed/products/types/search_products_request_config"
-require_relative "seed/types/product"
-require_relative "seed/products/types/search_products_response"
 require_relative "seed/client"
 require_relative "seed/products/client"
 require_relative "seed/products/types/search_products_request"
 require_relative "seed/products/types/get_products_request"
+
+module Seed
+  module Products
+    module Types
+      autoload :SearchProductsRequestConfig, ::File.join(__dir__, "seed/products/types/search_products_request_config")
+      autoload :SearchProductsResponse, ::File.join(__dir__, "seed/products/types/search_products_response")
+    end
+  end
+
+  module Types
+    autoload :Product, ::File.join(__dir__, "seed/types/product")
+  end
+end

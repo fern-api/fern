@@ -37,9 +37,14 @@ require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/connection_error"
-require_relative "seed/types/docs"
-require_relative "seed/types/example_type"
-require_relative "seed/types/json"
-require_relative "seed/types/nested_type"
 require_relative "seed/client"
 require_relative "seed/types/inlined"
+
+module Seed
+  module Types
+    autoload :Docs, ::File.join(__dir__, "seed/types/docs")
+    autoload :ExampleType, ::File.join(__dir__, "seed/types/example_type")
+    autoload :JSON_, ::File.join(__dir__, "seed/types/json")
+    autoload :NestedType, ::File.join(__dir__, "seed/types/nested_type")
+  end
+end

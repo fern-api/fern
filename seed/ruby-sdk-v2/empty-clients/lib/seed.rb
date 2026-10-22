@@ -37,8 +37,24 @@ require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/connection_error"
-require_relative "seed/level1/level2/types/types/address"
-require_relative "seed/level1/level2/types/types/person"
-require_relative "seed/level1/types/types/address"
-require_relative "seed/level1/types/types/person"
 require_relative "seed/client"
+
+module Seed
+  module Level1
+    module Level2
+      module Types
+        module Types
+          autoload :Address, ::File.join(__dir__, "seed/level1/level2/types/types/address")
+          autoload :Person, ::File.join(__dir__, "seed/level1/level2/types/types/person")
+        end
+      end
+    end
+
+    module Types
+      module Types
+        autoload :Address, ::File.join(__dir__, "seed/level1/types/types/address")
+        autoload :Person, ::File.join(__dir__, "seed/level1/types/types/person")
+      end
+    end
+  end
+end

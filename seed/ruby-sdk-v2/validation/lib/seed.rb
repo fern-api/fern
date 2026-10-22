@@ -37,13 +37,18 @@ require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/connection_error"
-require_relative "seed/types/small_integer"
-require_relative "seed/types/large_integer"
-require_relative "seed/types/double"
-require_relative "seed/types/word"
-require_relative "seed/types/sentence"
-require_relative "seed/types/shape"
-require_relative "seed/types/type"
 require_relative "seed/client"
 require_relative "seed/types/create_request"
 require_relative "seed/types/get_request"
+
+module Seed
+  module Types
+    autoload :SmallInteger, ::File.join(__dir__, "seed/types/small_integer")
+    autoload :LargeInteger, ::File.join(__dir__, "seed/types/large_integer")
+    autoload :Double, ::File.join(__dir__, "seed/types/double")
+    autoload :Word, ::File.join(__dir__, "seed/types/word")
+    autoload :Sentence, ::File.join(__dir__, "seed/types/sentence")
+    autoload :Shape, ::File.join(__dir__, "seed/types/shape")
+    autoload :Type, ::File.join(__dir__, "seed/types/type")
+  end
+end

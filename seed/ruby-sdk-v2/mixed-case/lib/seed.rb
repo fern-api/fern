@@ -37,11 +37,18 @@ require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/connection_error"
-require_relative "seed/service/types/organization"
-require_relative "seed/service/types/user"
-require_relative "seed/service/types/nested_user"
-require_relative "seed/service/types/resource_status"
-require_relative "seed/service/types/resource"
 require_relative "seed/client"
 require_relative "seed/service/client"
 require_relative "seed/service/types/list_resources_request"
+
+module Seed
+  module Service
+    module Types
+      autoload :Organization, ::File.join(__dir__, "seed/service/types/organization")
+      autoload :User, ::File.join(__dir__, "seed/service/types/user")
+      autoload :NestedUser, ::File.join(__dir__, "seed/service/types/nested_user")
+      autoload :ResourceStatus, ::File.join(__dir__, "seed/service/types/resource_status")
+      autoload :Resource, ::File.join(__dir__, "seed/service/types/resource")
+    end
+  end
+end

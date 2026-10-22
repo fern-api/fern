@@ -37,10 +37,21 @@ require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/connection_error"
-require_relative "seed/a/d/types/types/foo"
 require_relative "seed/client"
 require_relative "seed/a/client"
 require_relative "seed/a/b/client"
 require_relative "seed/a/c/client"
 require_relative "seed/folder/client"
 require_relative "seed/folder/service/client"
+
+module Seed
+  module A
+    module D
+      module Types
+        module Types
+          autoload :Foo, ::File.join(__dir__, "seed/a/d/types/types/foo")
+        end
+      end
+    end
+  end
+end
