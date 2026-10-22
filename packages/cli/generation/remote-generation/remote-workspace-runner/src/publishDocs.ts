@@ -2,7 +2,7 @@ import { resolveSnippetPackageName, VisibilityFilter } from "@fern-api/api-works
 import { FernToken } from "@fern-api/auth";
 import { docsYml, generatorsYml } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
-import { asyncPool, MediaType, replaceEnvVariables } from "@fern-api/core-utils";
+import { asyncPool, errorMessageOrString, MediaType, replaceEnvVariables } from "@fern-api/core-utils";
 import {
     applyTranslatedApiTitlesToNavTree,
     applyTranslatedFrontmatterToNavTree,
@@ -110,7 +110,7 @@ function formatLedgerError(error: unknown): string {
     if (error == null) {
         return "Unknown error";
     }
-    const msg = error instanceof Error ? error.message : String(error);
+    const msg = errorMessageOrString(error);
 
     // oRPC errors carry validation issues in `error.data.issues`.
     const data = (error as { data?: { issues?: Array<{ message?: string; path?: Array<string | number> }> } }).data;

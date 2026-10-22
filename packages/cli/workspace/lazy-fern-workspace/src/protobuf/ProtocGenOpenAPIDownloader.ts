@@ -1,4 +1,4 @@
-import { delay } from "@fern-api/core-utils";
+import { delay, errorMessageOrString } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { CliError } from "@fern-api/task-context";
@@ -124,7 +124,7 @@ async function acquireLock(logger: Logger): Promise<() => Promise<void>> {
     try {
         await rm(lockPath, { recursive: true });
     } catch (err) {
-        logger.debug(`Failed to remove stale lock: ${err instanceof Error ? err.message : String(err)}`);
+        logger.debug(`Failed to remove stale lock: ${errorMessageOrString(err)}`);
     }
     try {
         await mkdir(lockPath, { recursive: false });
@@ -154,7 +154,7 @@ function createLockReleaser(lockPath: string, logger: Logger): () => Promise<voi
         try {
             await rm(lockPath, { recursive: true });
         } catch (err) {
-            logger.debug(`Failed to release lock: ${err instanceof Error ? err.message : String(err)}`);
+            logger.debug(`Failed to release lock: ${errorMessageOrString(err)}`);
         }
     };
 }
@@ -185,7 +185,7 @@ export async function resolveProtocGenOpenAPI(logger: Logger): Promise<AbsoluteF
             await releaseLock();
         }
     } catch (error) {
-        logger.debug(`Failed to resolve protoc-gen-openapi: ${error instanceof Error ? error.message : String(error)}`);
+        logger.debug(`Failed to resolve protoc-gen-openapi: ${errorMessageOrString(error)}`);
         return undefined;
     }
 }
@@ -235,16 +235,12 @@ async function resolveUnderLock(logger: Logger): Promise<AbsoluteFilePath | unde
         logger.info(`Downloaded protoc-gen-openapi ${PROTOC_GEN_OPENAPI_VERSION}`);
         return getCacheDir();
     } catch (error) {
-        logger.debug(
-            `Failed to download protoc-gen-openapi: ${error instanceof Error ? error.message : String(error)}`
-        );
+        logger.debug(`Failed to download protoc-gen-openapi: ${errorMessageOrString(error)}`);
         // Clean up partial download if it exists
         try {
             await rm(tmpDownloadPath, { force: true });
         } catch (cleanupErr) {
-            logger.debug(
-                `Failed to clean up partial download: ${cleanupErr instanceof Error ? cleanupErr.message : String(cleanupErr)}`
-            );
+            logger.debug(`Failed to clean up partial download: ${errorMessageOrString(cleanupErr)}`);
         }
         return undefined;
     }
@@ -254,7 +250,7 @@ async function readVersionMarker(markerPath: AbsoluteFilePath, logger: Logger): 
     try {
         return (await readFile(markerPath, "utf-8")).trim();
     } catch (err) {
-        logger.debug(`Failed to read version marker: ${err instanceof Error ? err.message : String(err)}`);
+        logger.debug(`Failed to read version marker: ${errorMessageOrString(err)}`);
         return undefined;
     }
 }

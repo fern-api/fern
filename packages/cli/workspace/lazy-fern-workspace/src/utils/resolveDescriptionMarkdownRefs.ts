@@ -1,4 +1,4 @@
-import { isHttpUrl, isPlainObject } from "@fern-api/core-utils";
+import { errorMessageOrString, isHttpUrl, isPlainObject } from "@fern-api/core-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import { resolve } from "path";
@@ -114,9 +114,9 @@ async function readMarkdownRef(ref: string, baseDir: string, context: TaskContex
         return contents.trimEnd();
     } catch (error) {
         context.logger.warn(
-            `Failed to resolve markdown description $ref at "${path}" → "${ref}" (${absolutePath}): ${
-                error instanceof Error ? error.message : String(error)
-            }. Coercing to empty string so generation can continue.`
+            `Failed to resolve markdown description $ref at "${path}" → "${ref}" (${absolutePath}): ${errorMessageOrString(
+                error
+            )}. Coercing to empty string so generation can continue.`
         );
         return "";
     }

@@ -1,6 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, errorMessageOrString } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd } from "@fern-api/fs-utils";
 import type {
     FernSdkConfigV1Payload,
@@ -52,9 +52,7 @@ export async function loadSdkConfigV1(
     try {
         input = YAML.parse(body.toString("utf8"));
     } catch (error) {
-        throw new Error(
-            `SDK Config v1 at ${absolutePath} is not valid YAML: ${error instanceof Error ? error.message : String(error)}`
-        );
+        throw new Error(`SDK Config v1 at ${absolutePath} is not valid YAML: ${errorMessageOrString(error)}`);
     }
 
     try {
@@ -159,10 +157,9 @@ export async function loadSdkConfigV1(
             githubNpmTokens: targetIndexes.map((index) => githubNpmTokens[index])
         };
     } catch (error) {
-        throw new Error(
-            `SDK Config v1 at ${absolutePath} failed validation: ${error instanceof Error ? error.message : String(error)}`,
-            { cause: error }
-        );
+        throw new Error(`SDK Config v1 at ${absolutePath} failed validation: ${errorMessageOrString(error)}`, {
+            cause: error
+        });
     }
 }
 

@@ -1,5 +1,5 @@
 import { docsYml } from "@fern-api/configuration";
-import { assertNever, isPlainObject, sanitizeNullValues } from "@fern-api/core-utils";
+import { assertNever, errorMessageOrString, isPlainObject, sanitizeNullValues } from "@fern-api/core-utils";
 import { FdrAPI as CjsFdrSdk } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, dirname, doesPathExist, listFiles, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { CliError, TaskContext } from "@fern-api/task-context";
@@ -669,11 +669,9 @@ async function parseContext7File({
     try {
         JSON.parse(contents);
     } catch (error) {
-        context.failAndThrow(
-            `Invalid JSON in Context7 config file: ${rawPath}`,
-            error instanceof Error ? error.message : String(error),
-            { code: CliError.Code.ConfigError }
-        );
+        context.failAndThrow(`Invalid JSON in Context7 config file: ${rawPath}`, errorMessageOrString(error), {
+            code: CliError.Code.ConfigError
+        });
     }
 
     return absolutePath;

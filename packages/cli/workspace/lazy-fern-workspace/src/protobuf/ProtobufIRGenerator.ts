@@ -1,4 +1,4 @@
-import { isEnoentError } from "@fern-api/core-utils";
+import { errorMessageOrString, isEnoentError } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { createLoggingExecutable, runExeca } from "@fern-api/logging-execa";
@@ -40,9 +40,7 @@ async function isFernOnPath(logger: Logger): Promise<boolean> {
         return true;
     } catch (error) {
         if (!isEnoentError(error)) {
-            logger.debug(
-                `Unexpected error checking for fern on PATH: ${error instanceof Error ? error.message : String(error)}`
-            );
+            logger.debug(`Unexpected error checking for fern on PATH: ${errorMessageOrString(error)}`);
         }
         return false;
     }
@@ -335,7 +333,7 @@ export class ProtobufIRGenerator {
         try {
             this.resolvedBufCommand = await ensureBufCommand(this.context.logger);
         } catch (error) {
-            this.context.failAndThrow(error instanceof Error ? error.message : String(error), undefined, {
+            this.context.failAndThrow(errorMessageOrString(error), undefined, {
                 code: CliError.Code.EnvironmentError
             });
         }
