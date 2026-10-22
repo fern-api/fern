@@ -70,6 +70,11 @@ describe("classifyCustomDomain", () => {
         expect((await classifyCustomDomain("example.com", dns)).type).toBe("vercel");
     });
 
+    it("covers Vercel's /16 nets", async () => {
+        const dns = fakeDns({ a: { "example.com": ["143.13.7.1", "155.121.0.9"] } });
+        expect((await classifyCustomDomain("example.com", dns)).type).toBe("vercel");
+    });
+
     it("treats a reverse proxy / own CDN as other", async () => {
         const dns = fakeDns({ a: { "example.com": ["104.18.5.93", "104.18.4.93"] } });
         expect(await classifyCustomDomain("example.com", dns)).toEqual({ type: "other" });
