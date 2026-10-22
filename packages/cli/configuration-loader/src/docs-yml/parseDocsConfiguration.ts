@@ -1367,10 +1367,7 @@ async function convertNavigationTabConfiguration({
                 code: CliError.Code.ConfigError
             });
         }
-        const nested =
-            dropdownItem.variants != null
-                ? await convertVariantsList(dropdownItem.variants)
-                : undefined;
+        const nested = dropdownItem.variants != null ? await convertVariantsList(dropdownItem.variants) : undefined;
         return { type: "variant", variant: await convertVariant(dropdownItem, dropdownItem.layout ?? [], nested) };
     };
     const convertDropdown = async (

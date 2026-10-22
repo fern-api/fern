@@ -31,9 +31,11 @@ describe("resolveVariantsSettings", () => {
     });
 
     it("falls back to a single-list sidebar selector without header tabs", () => {
-        expect(
-            resolveVariantsSettings({ location: "tab", columnHeight: 2, layout, hasHeaderTabs: false })
-        ).toEqual({ location: "sidebar", columnHeight: undefined, fellBackToSidebar: true });
+        expect(resolveVariantsSettings({ location: "tab", columnHeight: 2, layout, hasHeaderTabs: false })).toEqual({
+            location: "sidebar",
+            columnHeight: undefined,
+            fellBackToSidebar: true
+        });
     });
 
     it("sets interactOnClickOnly only for header tab menus when the layout asks for it", () => {

@@ -439,8 +439,7 @@ export function resolveVariantsSettings({
 }): ResolvedVariantsSettings {
     const fellBackToSidebar = location === "tab" && !hasHeaderTabs;
     const effectiveLocation: VariantsLocation = fellBackToSidebar ? "sidebar" : location;
-    const height =
-        effectiveLocation === "tab" ? (columnHeight ?? layout?.dropdownDefaultColumnHeight) : undefined;
+    const height = effectiveLocation === "tab" ? (columnHeight ?? layout?.dropdownDefaultColumnHeight) : undefined;
     return {
         location: effectiveLocation,
         columnHeight: typeof height === "number" && height > 0 ? Math.floor(height) : undefined,
