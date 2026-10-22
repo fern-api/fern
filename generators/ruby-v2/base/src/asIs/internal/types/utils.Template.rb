@@ -27,14 +27,14 @@ module <%= gem_namespace %>
         end
 
         EXACT_SCALAR_TYPES = [String, Integer, Float].freeze
+        private_constant :EXACT_SCALAR_TYPES
 
         def self.coerce(target, value, strict: false)
           type = unwrap_type(target)
 
-          # Fast path: values that already have the target type are returned as-is, as the branches below would.
-          # Scalars must be exact instances so subclasses still go through their `to_s`/`to_i`/`to_f` conversion.
+          # Fast path: exact String/Integer/Float instances are returned as-is, as the branches below would.
+          # Subclasses still go through their `to_s`/`to_i`/`to_f` conversion.
           return value if EXACT_SCALAR_TYPES.include?(type) && value.instance_of?(type)
-          return value if type.is_a?(Class) && type <= Model && value.is_a?(type)
 
           case type
           in Array

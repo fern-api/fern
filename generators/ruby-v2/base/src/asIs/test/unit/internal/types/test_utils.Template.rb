@@ -62,6 +62,18 @@ describe <%= gem_namespace %>::Internal::Types::Utils do
           Utils.coerce(String, Object.new, strict: true)
         end
       end
+
+      it "converts String subclasses through to_s" do
+        normalized = Class.new(String) do
+          def to_s
+            strip
+          end
+        end
+        result = Utils.coerce(String, normalized.new(" padded "))
+
+        assert_equal "padded", result
+        assert_instance_of String, result
+      end
     end
 
     describe "Symbol" do
