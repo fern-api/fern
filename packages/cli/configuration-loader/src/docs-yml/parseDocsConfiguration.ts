@@ -15,6 +15,7 @@ import { materializeGitRef } from "./git-versions/materializeGitRef.js";
 import { type RefVersionScope, resolveRefContentRoot } from "./git-versions/resolveRefContentRoot.js";
 import { buildNavigationForDirectory, getFrontmatterMetadata, nameToSlug, nameToTitle } from "./navigationUtils.js";
 import { resolveRedirects } from "./resolveRedirects.js";
+import { tabbedNavigationItemHasLayout, tabbedNavigationItemHasVariants } from "./tabbedNavigationItemGuards.js";
 
 function shouldProcessIconPath(iconPath?: string): boolean {
     if (!iconPath || iconPath.startsWith("<")) {
@@ -2012,22 +2013,6 @@ function isTabbedNavigationConfig(
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         (navigationConfig[0] as docsYml.RawSchemas.TabbedNavigationItem).tab != null
     );
-}
-
-function tabbedNavigationItemHasLayout(
-    item: docsYml.RawSchemas.TabbedNavigationItem
-): item is docsYml.RawSchemas.TabbedNavigationItemWithLayout & {
-    layout: docsYml.RawSchemas.NavigationItem[];
-} {
-    return "layout" in item && Array.isArray(item.layout);
-}
-
-function tabbedNavigationItemHasVariants(
-    item: docsYml.RawSchemas.TabbedNavigationItem
-): item is docsYml.RawSchemas.TabbedNavigationItemWithVariants & {
-    variants: docsYml.RawSchemas.TabVariant[];
-} {
-    return "variants" in item && Array.isArray(item.variants);
 }
 
 function convertNavbarLinks(
