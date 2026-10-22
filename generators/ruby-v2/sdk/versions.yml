@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.39.6
+  changelogEntry:
+    - summary: |
+        `Time` and `ActiveSupport::TimeWithZone` values are now sent as RFC 3339 strings
+        with millisecond precision (e.g. `"2026-10-16T01:40:16.000Z"`) in JSON request
+        bodies, query parameters, form-urlencoded bodies, and multipart form fields.
+        Previously they were sent via `Time#to_s` (e.g. `"2026-10-16 01:40:16 UTC"`),
+        which is not RFC 3339. `Date` and `DateTime` values are unchanged. Set
+        `serializeTimeAsIso8601: false` in the generator config to keep the previous output.
+      type: fix
+  createdAt: "2026-10-22"
+  irVersion: 67
 - version: 1.39.5
   changelogEntry:
     - summary: |
