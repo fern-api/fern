@@ -35,7 +35,7 @@ module Seed
         #   from request_options.
         def encode_body
           body = request_body
-          body.nil? ? nil : ::JSON.generate(body)
+          body.nil? ? nil : ::JSON.generate(Internal::Types::Utils.serialize_times(body))
         end
 
         private

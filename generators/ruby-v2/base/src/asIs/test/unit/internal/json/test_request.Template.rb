@@ -3,12 +3,13 @@
 require "test_helper"
 
 describe <%= gem_namespace %>::Internal::JSON::Request do
-  def build_request(body: nil, request_options: {}, method: "POST")
+  def build_request(body: nil, <% if (serializeTimeAsIso8601) { %>query: {}, <% } %>request_options: {}, method: "POST")
     <%= gem_namespace %>::Internal::JSON::Request.new(
       base_url: "https://example.com",
       path: "/test",
       method: method,
-      body: body,
+<% if (serializeTimeAsIso8601) { %>      query: query,
+<% } %>      body: body,
       request_options: request_options
     )
   end
@@ -108,4 +109,18 @@ describe <%= gem_namespace %>::Internal::JSON::Request do
       assert_equal({ name: "plant" }, body)
     end
   end
-end
+<% if (serializeTimeAsIso8601) { %>
+  describe "time values" do
+    it "serializes Time values in the body as RFC 3339 strings" do
+      request = build_request(body: { begin_time: Time.utc(2026, 10, 16, 1, 40, 16) })
+
+      assert_equal({ "begin_time" => "2026-10-16T01:40:16.000Z" }, encoded_body(request))
+    end
+
+    it "serializes Time values in query parameters as RFC 3339 strings" do
+      request = build_request(query: { start: Time.utc(2026, 10, 16, 1, 40, 16), limit: 10 })
+
+      assert_equal({ start: "2026-10-16T01:40:16.000Z", limit: 10 }, request.encode_query)
+    end
+  end
+<% } %>end

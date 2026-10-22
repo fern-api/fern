@@ -19,10 +19,10 @@ client.nullable_optional.create_complex_profile(
       street: "street",
       city: "city",
       state: "state",
-      zip_code: "zipCode",
+      zipCode: "zipCode",
       country: "country",
-      building_id: "buildingId",
-      tenant_id: "tenantId"
+      buildingId: "buildingId",
+      tenantId: "tenantId"
     }
   },
   nullable_list_of_unions: [],

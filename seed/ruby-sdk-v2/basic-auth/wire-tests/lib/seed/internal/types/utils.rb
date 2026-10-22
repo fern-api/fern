@@ -117,6 +117,23 @@ module Seed
             snake_case.to_sym
           end
         end
+
+        # Converts Time values (including ActiveSupport::TimeWithZone), recursively within hashes and arrays, to
+        # RFC 3339 strings with millisecond precision. `Time#to_s` (e.g. "2026-10-16 01:40:16 UTC") is not RFC 3339.
+        # Date and DateTime values are left unchanged because their `to_s` output is already ISO 8601.
+        #
+        # @param value [Object]
+        # @return [Object]
+        def self.serialize_times(value)
+          case value
+          when ::Hash
+            value.transform_values { |item| serialize_times(item) }
+          when ::Array
+            value.map { |item| serialize_times(item) }
+          else
+            value.is_a?(::Time) ? value.iso8601(3) : value
+          end
+        end
       end
     end
   end
