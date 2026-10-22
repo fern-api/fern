@@ -17,6 +17,21 @@ import { gzip } from "zlib";
 import { migrateIntermediateRepresentationForInvocation } from "./migrateIntermediateRepresentationForInvocation.js";
 import { retryWithRateLimit, TooManyRequestsError } from "./retryWithRateLimit.js";
 
+/**
+ * Whether a run is a dry run that must not deliver to GitHub or a registry: Fiddle's `preview`
+ * (dryRun) and sdk-gen-api's download-only output. `fern sdk preview` sets `fiddlePreview: false`
+ * for its publish job, so this differs from the CLI-side `isPreview`.
+ */
+export function isDryRunPreview({
+    fiddlePreview,
+    absolutePathToPreview
+}: {
+    fiddlePreview: boolean | undefined;
+    absolutePathToPreview: AbsoluteFilePath | undefined;
+}): boolean {
+    return fiddlePreview ?? absolutePathToPreview != null;
+}
+
 const gzipAsync = promisify(gzip);
 
 export async function createAndStartJob({
@@ -215,7 +230,7 @@ async function createJob({
         //   absolutePathToPreview != null (true) → Fiddle sets dryRun=true → npm publish --dry-run.
         // This is the only mechanism preventing dryRun for sdk preview jobs;
         // Fiddle's dryRun logic is intentionally unchanged.
-        preview: fiddlePreview ?? absolutePathToPreview != null,
+        preview: isDryRunPreview({ fiddlePreview, absolutePathToPreview }),
         pushPreviewBranch,
         fernignoreContents,
         skipIfNoDiff,

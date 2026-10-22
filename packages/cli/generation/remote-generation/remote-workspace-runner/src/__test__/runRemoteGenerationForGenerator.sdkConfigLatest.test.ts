@@ -131,6 +131,80 @@ describe("runRemoteGenerationForGenerator synthesized SDK Config latest", () => 
         expect(run).toHaveBeenCalledTimes(1);
     });
 
+    it.each([
+        { name: "requests download-only output for --preview", preview: true, expected: { type: "download" } },
+        {
+            name: "keeps the generators.yml GitHub output without --preview",
+            preview: false,
+            expected: { type: "github", repository: "acme/mcp", mode: "pull-request" }
+        }
+    ])("$name on the synthesized SDK Config route", async ({ preview, expected }) => {
+        const generatorInvocation = {
+            ...mcpInvocation(),
+            outputMode: FernFiddle.OutputMode.github({ owner: "acme", repo: "mcp", makePr: true })
+        };
+        const [prepared] = prepareRoute(generatorInvocation);
+        if (prepared?.route == null || prepared.route.payloadKind !== "sdk-config-v1") {
+            throw new Error("Expected an unpinned MCP SDK Config route");
+        }
+        const sourceArchive = archive();
+        const run = vi.fn(async (parameters: FernSdkGenApiBuildParameters) => {
+            const request = createFernSdkGenApiRequest({
+                apiName: parameters.apiName,
+                organization: parameters.organization,
+                cliVersion: parameters.cliVersion,
+                generatorInvocation: parameters.generatorInvocation,
+                sdkGenApiRoute: parameters.sdkGenApiRoute,
+                sdkVersion: parameters.sdkVersion,
+                apiVersion: parameters.apiVersion,
+                specsTarGzBuffer: parameters.specsTarGzBuffer,
+                payload: parameters.payload,
+                requestedOutput: parameters.requestedOutput
+            });
+            expect(request.targets[0]?.requestedOutput).toMatchObject(expected);
+            return buildResponse();
+        });
+
+        await runRemoteGenerationForGenerator({
+            projectConfig: { organization: "acme" } as never,
+            organization: "acme",
+            workspace: workspace() as never,
+            interactiveTaskContext: context() as never,
+            generatorInvocation,
+            version: "1.2.3",
+            audiences: { type: "all" },
+            shouldLogS3Url: false,
+            token: { value: "token" } as never,
+            whitelabel: undefined,
+            replay: undefined,
+            irVersionOverride: undefined,
+            absolutePathToPreview: preview ? AbsoluteFilePath.of("/tmp/fern-preview") : undefined,
+            readme: undefined,
+            fernignorePath: undefined,
+            dynamicIrOnly: false,
+            retryRateLimited: false,
+            requireEnvVars: true,
+            specsTarGzBuffer: sourceArchive.buffer,
+            sdkGenApiSourceArchive: sourceArchive,
+            sdkGenApiRoute: prepared.route,
+            sdkGenApiPreparationBatch: new FernSdkGenApiPreparationBatch(["0"]),
+            sdkGenApiBatch: { run } as never,
+            sdkGenApiTargetIdSeed: "0",
+            generateFullProject: true,
+            mapFernGroupToSdkConfig: () => ({
+                diagnostics: [],
+                sdkConfig: validateSdkConfigV1({
+                    schemaVersion: "sdk-config/v1",
+                    sdkName: "Petstore",
+                    source: { specs: [{ id: "source-0", type: "openapi", path: "fern/specs/openapi0.json" }] },
+                    targets: [{ language: "mcp", output: { delivery: "files" } }]
+                })
+            })
+        });
+
+        expect(run).toHaveBeenCalledTimes(1);
+    });
+
     it("resolves generators.yml latest once for runtime bundle migration and request serialization", async () => {
         const generatorInvocation = typescriptInvocation();
         const intermediateRepresentation = {
@@ -233,10 +307,23 @@ describe("runRemoteGenerationForGenerator synthesized SDK Config latest", () => 
     });
 
     it.each([
-        { name: "requests download-only output for --preview", preview: true, expected: { type: "download" } },
+        {
+            name: "requests download-only output for --preview",
+            preview: { absolutePathToPreview: AbsoluteFilePath.of("/tmp/fern-preview") },
+            expected: { type: "download" }
+        },
         {
             name: "keeps the generators.yml GitHub output without --preview",
-            preview: false,
+            preview: { absolutePathToPreview: undefined },
+            expected: { type: "github", repository: "acme/sdk", mode: "pull-request" }
+        },
+        {
+            name: "keeps the generators.yml GitHub output for the fern sdk preview publish job",
+            preview: {
+                absolutePathToPreview: AbsoluteFilePath.of("/tmp/fern-preview"),
+                isPreview: true,
+                fiddlePreview: false
+            },
             expected: { type: "github", repository: "acme/sdk", mode: "pull-request" }
         }
     ])("$name on the runtime bundle route", async ({ preview, expected }) => {
@@ -290,7 +377,7 @@ describe("runRemoteGenerationForGenerator synthesized SDK Config latest", () => 
             whitelabel: undefined,
             replay: undefined,
             irVersionOverride: undefined,
-            absolutePathToPreview: preview ? AbsoluteFilePath.of("/tmp/fern-preview") : undefined,
+            ...preview,
             readme: undefined,
             fernignorePath: undefined,
             dynamicIrOnly: false,

@@ -244,7 +244,8 @@ export async function runRemoteGenerationForAPIWorkspace({
         isPreview: isSdkPreview,
         verify,
         skipIfNoDiff,
-        autoMerge
+        autoMerge,
+        pushPreviewBranch
     });
     for (const result of routePreparation) {
         if (result.fallbackReason != null) {
@@ -444,7 +445,8 @@ export function prepareFernSdkGenApiRoutes({
     isPreview,
     verify,
     skipIfNoDiff,
-    autoMerge
+    autoMerge,
+    pushPreviewBranch
 }: {
     generators: generatorsYml.GeneratorInvocation[];
     /** Whether the `use-sdk-gen-api` flag routes this generator, keyed by its configured name. */
@@ -455,6 +457,7 @@ export function prepareFernSdkGenApiRoutes({
     verify?: boolean;
     skipIfNoDiff?: boolean;
     autoMerge?: boolean;
+    pushPreviewBranch?: boolean;
 }): Array<{
     generatorInvocation: generatorsYml.GeneratorInvocation;
     route: GenerationConfigRoute | undefined;
@@ -602,7 +605,8 @@ export function prepareFernSdkGenApiRoutes({
                 requestedOutput: configuredTarget?.requestedOutput,
                 verify,
                 skipIfNoDiff,
-                autoMerge
+                autoMerge,
+                pushPreviewBranch
             });
             if (route != null && unsupportedOutput != null) {
                 if (route.configKind === "legacy-fern") {
@@ -665,13 +669,15 @@ function getFernSdkGenApiUnsupportedOutput({
     requestedOutput,
     verify,
     skipIfNoDiff,
-    autoMerge
+    autoMerge,
+    pushPreviewBranch
 }: {
     generatorInvocation: generatorsYml.GeneratorInvocation;
     requestedOutput?: FernSdkGenApiRequestedOutput;
     verify?: boolean;
     skipIfNoDiff?: boolean;
     autoMerge?: boolean;
+    pushPreviewBranch?: boolean;
 }): string | undefined {
     const resolvedRequestedOutput = requestedOutput ?? mapFernSdkGenApiOutput(generatorInvocation).requestedOutput;
     const unsupported: string[] = [];
@@ -683,6 +689,9 @@ function getFernSdkGenApiUnsupportedOutput({
     }
     if (autoMerge === true) {
         unsupported.push("autoMerge=true is not implemented by sdk-gen-api");
+    }
+    if (pushPreviewBranch === true) {
+        unsupported.push("pushing a preview branch (`fern sdk preview --push-diff`) is not implemented by sdk-gen-api");
     }
     return unsupported.length > 0 ? unsupported.join("; ") : undefined;
 }
