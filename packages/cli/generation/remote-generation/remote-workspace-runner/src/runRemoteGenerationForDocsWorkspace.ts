@@ -1,6 +1,6 @@
 import { VisibilityFilter } from "@fern-api/api-workspace-commons";
 import { FernToken } from "@fern-api/auth";
-import { replaceEnvVariables } from "@fern-api/core-utils";
+import { delay, replaceEnvVariables } from "@fern-api/core-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace } from "@fern-api/workspace-loader";
@@ -195,7 +195,7 @@ export async function runRemoteGenerationForDocsWorkspace({
                 context.logger.warn(
                     `Another docs publish is in progress. Retrying in ${delayMinutes} minute${delayMinutes === 1 ? "" : "s"} (attempt ${attempt + 1}/${PUBLISH_CONFLICT_RETRY_DELAYS_MS.length})...`
                 );
-                await new Promise((resolve) => setTimeout(resolve, delayMs));
+                await delay(delayMs);
             }
         }
 

@@ -1,3 +1,4 @@
+import { delay } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { CliError } from "@fern-api/task-context";
@@ -114,7 +115,7 @@ async function acquireLock(logger: Logger): Promise<() => Promise<void>> {
             return createLockReleaser(lockPath, logger);
         } catch {
             logger.debug(`Waiting for lock on ${lockPath}...`);
-            await new Promise((resolve) => setTimeout(resolve, LOCK_RETRY_INTERVAL_MS));
+            await delay(LOCK_RETRY_INTERVAL_MS);
         }
     }
 
@@ -137,7 +138,7 @@ async function acquireLock(logger: Logger): Promise<() => Promise<void>> {
                 return createLockReleaser(lockPath, logger);
             } catch {
                 logger.debug(`Waiting for lock on ${lockPath} (post-break retry)...`);
-                await new Promise((resolve) => setTimeout(resolve, LOCK_RETRY_INTERVAL_MS));
+                await delay(LOCK_RETRY_INTERVAL_MS);
             }
         }
         throw new CliError({
