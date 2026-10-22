@@ -355,10 +355,6 @@ export const DropdownLayoutConfig = z.object({
     "interact-on-click-only": z.boolean().optional()
 });
 
-export const VariantsLayoutConfig = z.object({
-    "default-column-height": VariantsColumnHeight.nullable().optional()
-});
-
 export const LayoutConfig = z.object({
     "page-width": z.string().optional(),
     "content-width": z.string().optional(),
@@ -366,7 +362,6 @@ export const LayoutConfig = z.object({
     "header-height": z.string().optional(),
     "searchbar-placement": SearchbarPlacement.optional(),
     dropdown: DropdownLayoutConfig.optional(),
-    variants: VariantsLayoutConfig.optional(),
     "tabs-placement": TabsPlacement.optional(),
     "switcher-placement": SwitcherPlacement.optional(),
     "content-alignment": ContentAlignment.optional(),
@@ -1027,7 +1022,6 @@ export const TabVariantItem = z.union([TabVariant, TabVariantGroup, LinkConfigur
 
 export const TabbedNavigationItemWithVariants = z.object({
     tab: TabId,
-    "variants-column-height": VariantsColumnHeight.nullable().optional(),
     variants: z.array(TabVariantItem)
 });
 
@@ -1037,7 +1031,6 @@ export const DropdownItem = WithPermissions.merge(WithFeatureFlags).merge(
         subtitle: z.string().optional(),
         icon: z.string().optional(),
         layout: z.array(NavigationItem).optional(),
-        "variants-column-height": VariantsColumnHeight.nullable().optional(),
         variants: z.array(TabVariantItem).optional(),
         slug: z.string().optional(),
         "skip-slug": z.boolean().optional(),

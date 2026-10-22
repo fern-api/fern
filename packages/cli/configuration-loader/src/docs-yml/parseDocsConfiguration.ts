@@ -682,14 +682,13 @@ async function parseContext7File({
 function convertVariantsLayout(
     layout: docsYml.RawSchemas.LayoutConfig | undefined
 ): docsYml.VariantsLayout | undefined {
-    if (layout?.dropdown == null && layout?.variants == null) {
+    if (layout?.dropdown == null) {
         return undefined;
     }
 
     return {
         dropdownDefaultColumnHeight: layout.dropdown?.defaultColumnHeight ?? undefined,
-        dropdownInteractOnClickOnly: layout.dropdown?.interactOnClickOnly ?? undefined,
-        variantsDefaultColumnHeight: layout.variants?.defaultColumnHeight ?? undefined
+        dropdownInteractOnClickOnly: layout.dropdown?.interactOnClickOnly ?? undefined
     };
 }
 
@@ -1330,8 +1329,7 @@ async function convertNavigationTabConfiguration({
     const menuOrUndefined = (menu: docsYml.TabVariantMenuItem[]) =>
         menu.some((entry) => entry.type !== "variant") ? menu : undefined;
     const convertVariantsList = async (
-        items: docsYml.RawSchemas.TabVariantItem[],
-        columnHeight: docsYml.VariantsColumnHeight | undefined
+        items: docsYml.RawSchemas.TabVariantItem[]
     ): Promise<docsYml.NestedTabVariants> => {
         const convertEntry = async (entry: docsYml.RawTabVariantListItem): Promise<docsYml.TabVariantMenuEntry> => {
             if (docsYml.isRawTabVariantLink(entry)) {
@@ -1358,7 +1356,7 @@ async function convertNavigationTabConfiguration({
                 return convertEntry(entry);
             })
         );
-        return { variants: variantsInMenu(menu), columnHeight, menu: menuOrUndefined(menu) };
+        return { variants: variantsInMenu(menu), columnHeight: undefined, menu: menuOrUndefined(menu) };
     };
     const convertDropdownItem = async (
         dropdownItem: docsYml.RawSchemas.DropdownItem
@@ -1371,7 +1369,7 @@ async function convertNavigationTabConfiguration({
         }
         const nested =
             dropdownItem.variants != null
-                ? await convertVariantsList(dropdownItem.variants, dropdownItem.variantsColumnHeight ?? undefined)
+                ? await convertVariantsList(dropdownItem.variants)
                 : undefined;
         return { type: "variant", variant: await convertVariant(dropdownItem, dropdownItem.layout ?? [], nested) };
     };
@@ -1410,10 +1408,7 @@ async function convertNavigationTabConfiguration({
                 menu: menuOrUndefined(menu)
             };
         } else {
-            const { variants, columnHeight, menu } = await convertVariantsList(
-                item.variants,
-                item.variantsColumnHeight ?? undefined
-            );
+            const { variants, columnHeight, menu } = await convertVariantsList(item.variants);
             child = { type: "variants", variants, location: "sidebar", columnHeight, menu };
         }
         return {

@@ -54,8 +54,6 @@ export interface LayoutConfig {
     searchbarPlacement?: FernDocsConfig.SearchbarPlacement;
     /** Defaults for header tab dropdowns. */
     dropdown?: FernDocsConfig.DropdownLayoutConfig;
-    /** Defaults for sidebar variant selectors. */
-    variants?: FernDocsConfig.VariantsLayoutConfig;
     /**
      * Set the placement of the tabs
      *

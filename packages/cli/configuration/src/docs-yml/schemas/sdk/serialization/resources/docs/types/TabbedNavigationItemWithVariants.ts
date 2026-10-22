@@ -5,21 +5,18 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { TabId } from "./TabId.js";
 import { TabVariantItem } from "./TabVariantItem.js";
-import { VariantsColumnHeight } from "./VariantsColumnHeight.js";
 
 export const TabbedNavigationItemWithVariants: core.serialization.ObjectSchema<
     serializers.TabbedNavigationItemWithVariants.Raw,
     FernDocsConfig.TabbedNavigationItemWithVariants
 > = core.serialization.object({
     tab: TabId,
-    variantsColumnHeight: core.serialization.property("variants-column-height", VariantsColumnHeight.optional()),
     variants: core.serialization.list(TabVariantItem),
 });
 
 export declare namespace TabbedNavigationItemWithVariants {
     export interface Raw {
         tab: TabId.Raw;
-        "variants-column-height"?: VariantsColumnHeight.Raw | null;
         variants: TabVariantItem.Raw[];
     }
 }

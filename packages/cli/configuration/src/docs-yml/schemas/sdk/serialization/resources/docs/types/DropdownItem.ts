@@ -4,7 +4,6 @@ import type * as FernDocsConfig from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import * as serializers from "../../../index.js";
 import { TabVariantItem } from "./TabVariantItem.js";
-import { VariantsColumnHeight } from "./VariantsColumnHeight.js";
 import { WithFeatureFlags } from "./WithFeatureFlags.js";
 import { WithPermissions } from "./WithPermissions.js";
 
@@ -15,10 +14,6 @@ export const DropdownItem: core.serialization.ObjectSchema<serializers.DropdownI
             subtitle: core.serialization.string().optional(),
             icon: core.serialization.string().optional(),
             layout: core.serialization.list(core.serialization.lazy(() => serializers.NavigationItem)).optional(),
-            variantsColumnHeight: core.serialization.property(
-                "variants-column-height",
-                VariantsColumnHeight.optional(),
-            ),
             variants: core.serialization.list(TabVariantItem).optional(),
             slug: core.serialization.string().optional(),
             skipSlug: core.serialization.property("skip-slug", core.serialization.boolean().optional()),
@@ -34,7 +29,6 @@ export declare namespace DropdownItem {
         subtitle?: string | null;
         icon?: string | null;
         layout?: serializers.NavigationItem.Raw[] | null;
-        "variants-column-height"?: VariantsColumnHeight.Raw | null;
         variants?: TabVariantItem.Raw[] | null;
         slug?: string | null;
         "skip-slug"?: boolean | null;

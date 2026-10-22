@@ -10,8 +10,6 @@ export interface DropdownItem extends FernDocsConfig.WithPermissions, FernDocsCo
     subtitle?: string;
     icon?: string;
     layout?: FernDocsConfig.NavigationItem[];
-    /** Maximum number of items per column in this item's variant selector. Overrides `layout.variants.default-column-height`. */
-    variantsColumnHeight?: FernDocsConfig.VariantsColumnHeight;
     variants?: FernDocsConfig.TabVariantItem[];
     slug?: string;
     skipSlug?: boolean;

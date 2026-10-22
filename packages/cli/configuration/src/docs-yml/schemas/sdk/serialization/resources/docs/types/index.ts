@@ -173,7 +173,6 @@ export * from "./TwitterCardSetting.js";
 export * from "./UntabbedNavigationConfig.js";
 export * from "./VariantsColumnHeight.js";
 export * from "./VariantsColumnHeightCount.js";
-export * from "./VariantsLayoutConfig.js";
 export * from "./VersionAvailability.js";
 export * from "./VersionConfig.js";
 export * from "./VersionedSnippetLanguageConfiguration.js";

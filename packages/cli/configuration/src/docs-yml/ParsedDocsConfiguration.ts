@@ -98,7 +98,7 @@ export interface ParsedDocsConfiguration {
     colors: CjsFdrSdk.docs.v1.write.ColorsConfigV3 | undefined;
     typography: TypographyConfig | undefined;
     layout: CjsFdrSdk.docs.v1.commons.DocsLayoutConfig | undefined;
-    /* layout.variants defaults, resolved per tab by `resolveVariantsSettings` */
+    /* layout.dropdown defaults, resolved per tab by `resolveVariantsSettings` */
     variantsLayout?: VariantsLayout;
     settings: ParsedDocsSettingsConfig | undefined;
     context7File: AbsoluteFilePath | undefined;
@@ -368,7 +368,7 @@ export declare namespace TabbedNavigationChild {
         variants: TabVariant[];
         /** `tab` when written as `dropdown` (header tab menu), `sidebar` when written as `variants`. */
         location: VariantsLocation;
-        /** `dropdown-column-height` or `variants-column-height` as written on the tab. */
+        /** `dropdown-column-height` as written on the tab. Sidebar selectors have no columns. */
         columnHeight: VariantsColumnHeight | undefined;
         /** Groups and links around the variants. Undefined when the list only holds variants. */
         menu: TabVariantMenuItem[] | undefined;
@@ -385,8 +385,6 @@ export interface VariantsLayout {
     dropdownDefaultColumnHeight: VariantsColumnHeight | undefined;
     /** `layout.dropdown.interact-on-click-only` */
     dropdownInteractOnClickOnly: boolean | undefined;
-    /** `layout.variants.default-column-height` */
-    variantsDefaultColumnHeight: VariantsColumnHeight | undefined;
 }
 
 export type TabVariantMenuEntry = TabVariantMenuEntry.Variant | TabVariantMenuEntry.Link;
@@ -425,8 +423,8 @@ export interface ResolvedVariantsSettings {
 }
 
 /**
- * Precedence: the setting where the menu is used > `layout.dropdown.default-column-height` (header tab menus) or
- * `layout.variants.default-column-height` (sidebar selectors) > single column. `tab` placement needs header tabs.
+ * Header tab menus: `dropdown-column-height` > `layout.dropdown.default-column-height` > single column.
+ * Sidebar selectors (including a dropdown that fell back without header tabs) are always one list.
  */
 export function resolveVariantsSettings({
     location,
@@ -442,8 +440,7 @@ export function resolveVariantsSettings({
     const fellBackToSidebar = location === "tab" && !hasHeaderTabs;
     const effectiveLocation: VariantsLocation = fellBackToSidebar ? "sidebar" : location;
     const height =
-        columnHeight ??
-        (location === "tab" ? layout?.dropdownDefaultColumnHeight : layout?.variantsDefaultColumnHeight);
+        effectiveLocation === "tab" ? (columnHeight ?? layout?.dropdownDefaultColumnHeight) : undefined;
     return {
         location: effectiveLocation,
         columnHeight: typeof height === "number" && height > 0 ? Math.floor(height) : undefined,

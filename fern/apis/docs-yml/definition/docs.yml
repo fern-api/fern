@@ -852,11 +852,6 @@ types:
   TabbedNavigationItemWithVariants:
     properties:
       tab: TabId
-      variants-column-height:
-        type: optional<VariantsColumnHeight>
-        docs: |
-          Maximum number of items per column in the sidebar variant selector. `no-limit` keeps a single column.
-          Overrides `layout.variants.default-column-height`.
       variants:
         type: list<TabVariantItem>
         docs: Variants shown in a selector at the top of the tab's sidebar.
@@ -903,9 +898,6 @@ types:
       subtitle: optional<string>
       icon: optional<string>
       layout: optional<list<NavigationItem>>
-      variants-column-height:
-        type: optional<VariantsColumnHeight>
-        docs: Maximum number of items per column in this item's variant selector. Overrides `layout.variants.default-column-height`.
       variants: optional<list<TabVariantItem>>
       slug: optional<string>
       skip-slug: optional<boolean>
@@ -1083,10 +1075,6 @@ types:
       dropdown:
         type: optional<DropdownLayoutConfig>
         docs: Defaults for header tab dropdowns.
-
-      variants:
-        type: optional<VariantsLayoutConfig>
-        docs: Defaults for sidebar variant selectors.
 
       tabs-placement:
         type: optional<TabsPlacement>
@@ -2142,12 +2130,6 @@ types:
         docs: |
           When true, header tab dropdowns open and close on click only, with no open animation.
           By default they open on hover and close when the pointer leaves the tab and menu.
-
-  VariantsLayoutConfig:
-    properties:
-      default-column-height:
-        type: optional<VariantsColumnHeight>
-        docs: Column height for every sidebar variant selector that doesn't set `variants-column-height`.
 
   LinkConfiguration:
     properties:

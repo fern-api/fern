@@ -5,8 +5,7 @@ import { flattenRawTabLayouts, flattenRawTabVariants } from "../tabVariants.js";
 
 const layout: VariantsLayout = {
     dropdownDefaultColumnHeight: 4,
-    dropdownInteractOnClickOnly: undefined,
-    variantsDefaultColumnHeight: 8
+    dropdownInteractOnClickOnly: undefined
 };
 
 describe("resolveVariantsSettings", () => {
@@ -21,19 +20,20 @@ describe("resolveVariantsSettings", () => {
         ).toEqual({ location: "sidebar", columnHeight: undefined, fellBackToSidebar: false });
     });
 
-    it("prefers the setting where the menu is used, then the layout default for that menu type", () => {
+    it("prefers the tab's dropdown-column-height, then the layout default; sidebar selectors have no columns", () => {
         const resolve = (location: "tab" | "sidebar", columnHeight: number | "no-limit" | undefined) =>
             resolveVariantsSettings({ location, columnHeight, layout, hasHeaderTabs: true });
         expect(resolve("tab", undefined)).toMatchObject({ location: "tab", columnHeight: 4 });
-        expect(resolve("sidebar", undefined)).toMatchObject({ location: "sidebar", columnHeight: 8 });
+        expect(resolve("sidebar", undefined)).toMatchObject({ location: "sidebar", columnHeight: undefined });
+        expect(resolve("sidebar", 3)).toMatchObject({ location: "sidebar", columnHeight: undefined });
         expect(resolve("tab", 2)).toMatchObject({ location: "tab", columnHeight: 2 });
         expect(resolve("tab", "no-limit")).toMatchObject({ location: "tab", columnHeight: undefined });
     });
 
-    it("falls back to the sidebar without header tabs, keeping the dropdown's column height", () => {
+    it("falls back to a single-list sidebar selector without header tabs", () => {
         expect(
-            resolveVariantsSettings({ location: "tab", columnHeight: undefined, layout, hasHeaderTabs: false })
-        ).toEqual({ location: "sidebar", columnHeight: 4, fellBackToSidebar: true });
+            resolveVariantsSettings({ location: "tab", columnHeight: 2, layout, hasHeaderTabs: false })
+        ).toEqual({ location: "sidebar", columnHeight: undefined, fellBackToSidebar: true });
     });
 
     it("sets interactOnClickOnly only for header tab menus when the layout asks for it", () => {

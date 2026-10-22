@@ -12,7 +12,6 @@ import { HeaderPosition } from "./HeaderPosition.js";
 import { SearchbarPlacement } from "./SearchbarPlacement.js";
 import { SwitcherPlacement } from "./SwitcherPlacement.js";
 import { TabsPlacement } from "./TabsPlacement.js";
-import { VariantsLayoutConfig } from "./VariantsLayoutConfig.js";
 
 export const LayoutConfig: core.serialization.ObjectSchema<serializers.LayoutConfig.Raw, FernDocsConfig.LayoutConfig> =
     core.serialization.object({
@@ -22,7 +21,6 @@ export const LayoutConfig: core.serialization.ObjectSchema<serializers.LayoutCon
         headerHeight: core.serialization.property("header-height", core.serialization.string().optional()),
         searchbarPlacement: core.serialization.property("searchbar-placement", SearchbarPlacement.optional()),
         dropdown: DropdownLayoutConfig.optional(),
-        variants: VariantsLayoutConfig.optional(),
         tabsPlacement: core.serialization.property("tabs-placement", TabsPlacement.optional()),
         switcherPlacement: core.serialization.property("switcher-placement", SwitcherPlacement.optional()),
         contentAlignment: core.serialization.property("content-alignment", ContentAlignment.optional()),
@@ -56,7 +54,6 @@ export declare namespace LayoutConfig {
         "header-height"?: string | null;
         "searchbar-placement"?: SearchbarPlacement.Raw | null;
         dropdown?: DropdownLayoutConfig.Raw | null;
-        variants?: VariantsLayoutConfig.Raw | null;
         "tabs-placement"?: TabsPlacement.Raw | null;
         "switcher-placement"?: SwitcherPlacement.Raw | null;
         "content-alignment"?: ContentAlignment.Raw | null;

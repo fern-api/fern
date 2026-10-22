@@ -1089,26 +1089,6 @@
                       "tab": {
                         "type": "string"
                       },
-                      "variants-column-height": {
-                        "anyOf": [
-                          {
-                            "anyOf": [
-                              {
-                                "type": "integer",
-                                "exclusiveMinimum": 0,
-                                "maximum": 9007199254740991
-                              },
-                              {
-                                "type": "string",
-                                "const": "no-limit"
-                              }
-                            ]
-                          },
-                          {
-                            "type": "null"
-                          }
-                        ]
-                      },
                       "variants": {
                         "type": "array",
                         "items": {
@@ -1483,26 +1463,6 @@
                                     "$ref": "#/$defs/__schema0"
                                   }
                                 },
-                                "variants-column-height": {
-                                  "anyOf": [
-                                    {
-                                      "anyOf": [
-                                        {
-                                          "type": "integer",
-                                          "exclusiveMinimum": 0,
-                                          "maximum": 9007199254740991
-                                        },
-                                        {
-                                          "type": "string",
-                                          "const": "no-limit"
-                                        }
-                                      ]
-                                    },
-                                    {
-                                      "type": "null"
-                                    }
-                                  ]
-                                },
                                 "variants": {
                                   "type": "array",
                                   "items": {
@@ -1867,26 +1827,6 @@
                                             "items": {
                                               "$ref": "#/$defs/__schema0"
                                             }
-                                          },
-                                          "variants-column-height": {
-                                            "anyOf": [
-                                              {
-                                                "anyOf": [
-                                                  {
-                                                    "type": "integer",
-                                                    "exclusiveMinimum": 0,
-                                                    "maximum": 9007199254740991
-                                                  },
-                                                  {
-                                                    "type": "string",
-                                                    "const": "no-limit"
-                                                  }
-                                                ]
-                                              },
-                                              {
-                                                "type": "null"
-                                              }
-                                            ]
                                           },
                                           "variants": {
                                             "type": "array",
@@ -3979,32 +3919,6 @@
                 },
                 "interact-on-click-only": {
                   "type": "boolean"
-                }
-              },
-              "additionalProperties": false
-            },
-            "variants": {
-              "type": "object",
-              "properties": {
-                "default-column-height": {
-                  "anyOf": [
-                    {
-                      "anyOf": [
-                        {
-                          "type": "integer",
-                          "exclusiveMinimum": 0,
-                          "maximum": 9007199254740991
-                        },
-                        {
-                          "type": "string",
-                          "const": "no-limit"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
                 }
               },
               "additionalProperties": false
