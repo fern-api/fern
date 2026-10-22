@@ -862,6 +862,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_messages/messages.listMessages": {
@@ -982,6 +983,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_messages/messages.createMessage": {
@@ -1108,6 +1110,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_messages/messages.deleteMessage": {
@@ -1367,6 +1370,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": false,
             "examples": null
         }
     },
