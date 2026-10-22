@@ -219,6 +219,11 @@ describe <%= gem_namespace %>::Internal::Types::Model do
       assert_equal({ "name" => nil }, example.to_h)
     end
 
+    it "keeps a null required field when loading JSON" do
+      assert_equal({ "name" => nil }, ExampleModel.load({ name: nil }.to_json).to_h)
+      assert_equal({ "child" => { "value" => nil } }, ExampleParent.load({ child: { value: nil } }.to_json).to_h)
+    end
+
     it "coerces the default of a field whose value is nil" do
       assert_equal 3, ExampleWithCoercedDefault.new(count: nil).count
     end
