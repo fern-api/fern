@@ -209,14 +209,12 @@ module <%= gem_namespace %>
 
         def to_h
           result = self.class.fields.merge(self.class.extra_fields).each_with_object({}) do |(name, field), acc|
-            # If there is a value present in the data, use that value
-            # If there is a `nil` value present in the data, and it is optional but NOT nullable, exclude key altogether
-            # If there is a `nil` value present in the data, and it is optional and nullable, use the nil value
-            # only when it was explicitly provided; an omitted optional field is excluded
+            # A field that was never provided is excluded, even when required, so sparse payloads only carry
+            # what the caller set. An explicit `nil` is sent as `null` unless the field is optional but NOT nullable.
 
             value = @data[name]
 
-            next if value.nil? && field.optional && (!field.nullable || !@explicit_fields&.key?(name))
+            next if value.nil? && (!@explicit_fields&.key?(name) || (field.optional && !field.nullable))
 
             if value.is_a?(::Array)
               value = value.map { |item| !item.nil? && item.respond_to?(:to_h) ? item.to_h : item }
