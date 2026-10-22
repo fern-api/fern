@@ -510,7 +510,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @example
-      #   client.service.optional_args(image_file: "/path/to/your/file")
+      #   client.service.optional_args
       #
       # @return [String]
       def optional_args(request_options: {}, **params)
@@ -656,12 +656,9 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @example
-      #   client.service.with_ref_body(
-      #     image_file: "/path/to/your/file",
-      #     request: {
-      #       foo: "bar"
-      #     }
-      #   )
+      #   client.service.with_ref_body(request: {
+      #     foo: "bar"
+      #   })
       #
       # @return [String]
       def with_ref_body(request_options: {}, **params)

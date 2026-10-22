@@ -53,7 +53,7 @@ client.service.just_file(file: "/path/to/your/file")
 <dd>
 
 ```ruby
-client.service.optional_args(image_file: "/path/to/your/file")
+client.service.optional_args
 ```
 </dd>
 </dl>
@@ -93,12 +93,9 @@ client.service.optional_args(image_file: "/path/to/your/file")
 <dd>
 
 ```ruby
-client.service.with_ref_body(
-  image_file: "/path/to/your/file",
-  request: {
-    foo: "bar"
-  }
-)
+client.service.with_ref_body(request: {
+  foo: "bar"
+})
 ```
 </dd>
 </dl>
