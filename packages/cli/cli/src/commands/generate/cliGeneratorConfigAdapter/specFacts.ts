@@ -1,8 +1,8 @@
 import { access } from "node:fs/promises";
+import { errorMessageOrString } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { loadOpenAPI } from "@fern-api/lazy-fern-workspace";
 import type { TaskContext } from "@fern-api/task-context";
-
 import type { CliTargetDiagnostic, SpecFacts } from "./types.js";
 
 type Json = Record<string, unknown>;
@@ -46,7 +46,7 @@ export async function loadSpecFacts({
     } catch (cause) {
         return error(
             "CLI_TARGET_SPEC_PARSE",
-            `Could not load ${specPath}: ${cause instanceof Error ? cause.message : String(cause)}`,
+            `Could not load ${specPath}: ${errorMessageOrString(cause)}`,
             "Fix the spec so `fern check` accepts it."
         );
     }

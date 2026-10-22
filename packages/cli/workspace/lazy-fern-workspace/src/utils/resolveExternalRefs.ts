@@ -1,3 +1,4 @@
+import { isHttpUrl } from "@fern-api/core-utils";
 import { CliError } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
@@ -11,7 +12,7 @@ import { dirname, resolve } from "path";
  *  downstream converter (`AbstractSpecConverter.resolveAllExternalRefs`)
  *  to handle via `fetch()`. */
 function isUrlRef(ref: string): boolean {
-    return ref.startsWith("http://") || ref.startsWith("https://");
+    return isHttpUrl(ref);
 }
 
 /** Read and parse a YAML/JSON file, using `fileCache` to avoid redundant I/O

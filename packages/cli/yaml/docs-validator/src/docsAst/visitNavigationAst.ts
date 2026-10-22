@@ -1,5 +1,5 @@
 import { docsYml } from "@fern-api/configuration";
-import { noop, visitObjectAsync } from "@fern-api/core-utils";
+import { asyncPool, noop, visitObjectAsync } from "@fern-api/core-utils";
 import { parseImagePaths } from "@fern-api/docs-markdown-utils";
 import { NodePath } from "@fern-api/fern-definition-schema";
 import {
@@ -15,7 +15,6 @@ import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { readdir, stat } from "fs/promises";
 import path from "path";
-import { asyncPool } from "../utils/asyncPool.js";
 import { MarkdownFileReader } from "../utils/markdownFileReader.js";
 import { DocsConfigFileAstVisitor } from "./DocsConfigFileAstVisitor.js";
 import { visitFilepath } from "./visitFilepath.js";

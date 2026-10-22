@@ -1,6 +1,6 @@
 import { docsYml } from "@fern-api/configuration";
 import { DocsConfigurationWithResolvedRedirects } from "@fern-api/configuration-loader";
-import { isPlainObject } from "@fern-api/core-utils";
+import { isHttpUrl, isPlainObject } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import { DocsWorkspace } from "@fern-api/workspace-loader";
@@ -17,11 +17,11 @@ type RawDocsConfig = DocsConfigurationWithResolvedRedirects;
 // { hash } sentinels on upload and presigned S3 URLs on GET from FDR).
 // Presigned S3 URLs are identified by the presence of "X-Amz-" in the query string.
 export function isPresignedUrl(value: string): boolean {
-    return (value.startsWith("http://") || value.startsWith("https://")) && value.includes("X-Amz-");
+    return isHttpUrl(value) && value.includes("X-Amz-");
 }
 
 export function isRemoteUrl(value: string): boolean {
-    return value.startsWith("http://") || value.startsWith("https://");
+    return isHttpUrl(value);
 }
 
 export function parseFilenameFromDisposition(value: string | null): string | undefined {

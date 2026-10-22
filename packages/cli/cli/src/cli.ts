@@ -25,6 +25,7 @@ import {
 import { getFiddleOrigin } from "@fern-api/core";
 import {
     ContainerRunner,
+    errorMessageOrString,
     extractErrorMessage,
     haveSameNullishness,
     undefinedIfNullish,
@@ -2486,7 +2487,7 @@ function addDocsDevCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                 }
             } catch (error) {
                 throw new CliError({
-                    message: `Failed to find an available port: ${error instanceof Error ? error.message : String(error)}`,
+                    message: `Failed to find an available port: ${errorMessageOrString(error)}`,
                     code: CliError.Code.EnvironmentError
                 });
             }
@@ -3156,7 +3157,7 @@ function addAutomationsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: C
                         });
                     }
                 } catch (error) {
-                    const message = error instanceof Error ? error.message : String(error);
+                    const message = errorMessageOrString(error);
                     cliContext.logger.warn(`Preview failed for group '${group.groupName}': ${message}`);
                     results.push({
                         groupName: group.groupName,

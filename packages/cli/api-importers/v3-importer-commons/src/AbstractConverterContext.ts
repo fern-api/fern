@@ -1,6 +1,7 @@
 import { OpenAPISettings } from "@fern-api/api-workspace-commons";
 import { CasingsGenerator, constructCasingsGenerator } from "@fern-api/casings-generator";
 import { generatorsYml } from "@fern-api/configuration";
+import { isHttpUrl } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import {
     Availability,
@@ -836,7 +837,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
     }
 
     public isExternalReference($ref: string): boolean {
-        return typeof $ref === "string" && ($ref.startsWith("http://") || $ref.startsWith("https://"));
+        return typeof $ref === "string" && isHttpUrl($ref);
     }
 
     public isReferenceObjectWithIdentifier(

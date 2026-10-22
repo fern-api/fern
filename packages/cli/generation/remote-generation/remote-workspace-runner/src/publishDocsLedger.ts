@@ -1,3 +1,4 @@
+import { asyncPool, delay } from "@fern-api/core-utils";
 import {
     applyTranslatedApiTitlesToNavTree,
     type DocsDefinitionResolver,
@@ -26,9 +27,7 @@ import type { TaskContext } from "@fern-api/task-context";
 import { createHash } from "crypto";
 import { readFile } from "fs/promises";
 import * as mime from "mime-types";
-
 import { mapDocsConfigToLedgerConfig } from "./mapDocsConfigToLedgerConfig.js";
-import { asyncPool } from "./utils/asyncPool.js";
 
 const UPLOAD_CONCURRENCY = 10;
 const TRANSLATION_BUILD_CONCURRENCY = 4;
@@ -490,11 +489,11 @@ async function uploadBlobWithRetry(
 
         const isRetryable = response.status === 429 || response.status >= 500;
         if (isRetryable && attempt < UPLOAD_MAX_RETRIES) {
-            const delay = UPLOAD_INITIAL_DELAY_MS * 2 ** attempt;
+            const retryDelayMs = UPLOAD_INITIAL_DELAY_MS * 2 ** attempt;
             context.logger.debug(
-                `[ledger] Upload ${hash} got ${response.status}, retrying in ${delay}ms (attempt ${attempt + 1}/${UPLOAD_MAX_RETRIES})`
+                `[ledger] Upload ${hash} got ${response.status}, retrying in ${retryDelayMs}ms (attempt ${attempt + 1}/${UPLOAD_MAX_RETRIES})`
             );
-            await new Promise((resolve) => setTimeout(resolve, delay));
+            await delay(retryDelayMs);
             continue;
         }
 
