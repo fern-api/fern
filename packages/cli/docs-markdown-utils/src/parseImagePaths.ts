@@ -231,7 +231,10 @@ function findDestinationCloseWithTitle(content: string, start: number): number |
         }
     }
 
-    i = skipWhitespace(content, i);
+    i = skipTitleSeparator(content, i);
+    if (i == null) {
+        return null;
+    }
     const opener = content[i];
     if (opener === '"' || opener === "'" || opener === "(") {
         const closer = opener === "(" ? ")" : opener;
@@ -284,6 +287,19 @@ function findBalancedParenClose(content: string, start: number): number | null {
     return null;
 }
 
+/** Like `skipWhitespace`, but a title may not follow its destination across a blank line. */
+function skipTitleSeparator(content: string, start: number): number | null {
+    let i = start;
+    let newlines = 0;
+    while (i < content.length && /\s/.test(content[i] as string)) {
+        if (content[i] === "\n" && ++newlines > 1) {
+            return null;
+        }
+        i++;
+    }
+    return i;
+}
+
 function skipWhitespace(content: string, start: number): number {
     let i = start;
     while (i < content.length && /\s/.test(content[i] as string)) {
@@ -316,7 +332,8 @@ function parseMarkdownImage(content: string, start: number): MarkdownImageParseR
     const i = urlEnd + 1;
     const url = content.slice(urlStart, urlEnd).trim();
     const rawSrc = trimAnchor(unwrapDelimitedDestination(splitDestinationAndTitle(url)).path);
-    if (!rawSrc) {
+    // whitespace followed by a quote means a title we could not parse; leave the text as-is
+    if (!rawSrc || /\s["']/.test(rawSrc)) {
         return null;
     }
 

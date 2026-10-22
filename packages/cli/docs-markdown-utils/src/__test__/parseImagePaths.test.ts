@@ -1422,6 +1422,19 @@ describe("markdown image titles", () => {
         ]);
     });
 
+    it("should leave unparseable titled images as text instead of uploading a truncated path", () => {
+        const page = [
+            "![a](./x.png 'it's 1) here')",
+            '![a](my image.png "Step 1) x")',
+            '![a](./x.png "t" extra)',
+            '![a](./x.png "Step 1) Input) and more',
+            '![a](./x.png\n\n"Step 1) x")'
+        ].join("\n\n");
+        const result = parseImagePaths(page, PATHS);
+        expect(result.filepaths).toEqual([]);
+        expect(result.markdown.trim()).toBe(page);
+    });
+
     it("should resolve page links whose title contains unbalanced parentheses", () => {
         const page = '[Next](../other/page.mdx "Step 1) Install")';
         const markdownFilesToPathName = {
@@ -1726,6 +1739,6 @@ describe("collect and swap find the same images", () => {
         );
         const result = publish(page);
         expect(result.filepaths).toEqual([]);
-        expect(result.markdown).toBe(page);
+        expect(result.markdown.trim()).toBe(page);
     });
 });
