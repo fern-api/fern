@@ -2117,6 +2117,24 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             )
         )
 
+    def _get_keepalive_proxy_mounts_expression(self, *, is_async: bool) -> AST.Expression:
+        """Build ``get_keepalive_proxy_mounts(...)``: httpx ignores proxy env vars once a
+        custom transport is passed, so the keepalive default re-applies them as mounts.
+        """
+        keepalive = self._context.custom_config.tcp_keepalive
+        return AST.Expression(
+            AST.FunctionInvocation(
+                function_definition=self._context.core_utilities.get_reference_to_keepalive_proxy_mounts(
+                    is_async=is_async
+                ),
+                kwargs=[
+                    ("idle", AST.Expression(str(keepalive.idle_seconds))),
+                    ("intvl", AST.Expression(str(keepalive.interval_seconds))),
+                    ("cnt", AST.Expression(str(keepalive.count))),
+                ],
+            )
+        )
+
     def _get_client_wrapper_kwargs(
         self,
         client_wrapper_generator: ClientWrapperGenerator,
@@ -2239,6 +2257,12 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     "transport",
                     self._get_keepalive_transport_expression(is_async=is_async),
                 )
+            )
+            httpx_client_kwargs_with_redirects.append(
+                ("mounts", self._get_keepalive_proxy_mounts_expression(is_async=is_async))
+            )
+            httpx_client_kwargs_without_redirects.append(
+                ("mounts", self._get_keepalive_proxy_mounts_expression(is_async=is_async))
             )
 
         if ignore_httpx_constructor_parameter:
@@ -2381,10 +2405,14 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         writer.write_line(") -> httpx.AsyncClient:")
         with writer.indent():
             if keepalive_enabled:
+                writer.write_line("mounts: typing.Optional[typing.Dict[str, typing.Optional[httpx.AsyncBaseTransport]]] = None")
                 writer.write_line("if transport is None:")
                 with writer.indent():
                     writer.write("transport = ")
                     writer.write_node(self._get_keepalive_transport_expression(is_async=True))
+                    writer.write_newline_if_last_line_not()
+                    writer.write("mounts = ")
+                    writer.write_node(self._get_keepalive_proxy_mounts_expression(is_async=True))
                     writer.write_newline_if_last_line_not()
             writer.write_line("try:")
             with writer.indent():
@@ -2403,7 +2431,14 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     )
                 writer.write_line("return httpx_aiohttp.HttpxAiohttpClient(timeout=timeout)")
             writer.write_line("")
-            if accepts_transport:
+            if keepalive_enabled:
+                writer.write_line("if follow_redirects is not None:")
+                with writer.indent():
+                    writer.write_line(
+                        "return httpx.AsyncClient(timeout=timeout, follow_redirects=follow_redirects, transport=transport, mounts=mounts)"
+                    )
+                writer.write_line("return httpx.AsyncClient(timeout=timeout, transport=transport, mounts=mounts)")
+            elif accepts_transport:
                 writer.write_line("if follow_redirects is not None:")
                 with writer.indent():
                     writer.write_line(
