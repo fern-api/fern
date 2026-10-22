@@ -25,10 +25,10 @@ module Seed
       #     stream: false,
       #     context: "You're super wise",
       #     container_object: {
-      #       nested_objects: [{
+      #       nestedObjects: [{
       #         literal1: "literal1",
       #         literal2: "literal2",
-      #         str_prop: "strProp"
+      #         strProp: "strProp"
       #       }]
       #     }
       #   )

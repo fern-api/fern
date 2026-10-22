@@ -9,7 +9,7 @@ client.endpoints.object.get_and_return_with_required_nested_object(
   required_string: "requiredString",
   required_object: {
     string: "string",
-    nested_object: {
+    NestedObject: {
       string: "string",
       integer: 1,
       long: 1000000,

@@ -552,7 +552,7 @@ await client.Nullable.GetUsersAsync(
             "jane.doe",
         }
         ,
-        Tags = new List<string>(){
+        Tags = new List<string?>(){
             null,
         }
         ,

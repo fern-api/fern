@@ -1,4 +1,24 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.39.5
+  changelogEntry:
+    - summary: |
+        Ruby dynamic snippets now use wire names for keys inside nested hashes (e.g. `httpEndpoint:` instead of `http_endpoint:`), pass file upload fields (example file contents as `StringIO.new(...)`, since the SDK reads a String as a file path; a missing required file gets a `"/path/to/your/file"` path placeholder, and a missing optional file is left out; dynamic IR from CLIs that predate the `isOptional` flag treats every file as required), and show an undiscriminated union body whose example isn't an object as the keyword arguments of its first object variant instead of `request:` with an error.
+      type: fix
+    - summary: |
+        `Model#to_h` now serializes models nested as map values, so a map of objects is sent as JSON objects instead of Ruby inspect strings.
+      type: fix
+    - summary: |
+        Multipart uploads of a readable object with no path or name (e.g. `StringIO`) now send the form field name as the part's `filename`. Before, the part had no `filename`, so servers that tell files from text fields by `filename` read it as a text field. With a filename set, the part also gets the default `Content-Type: application/octet-stream` unless `content_type:` is passed, the same as `File` uploads. Elements of a file list each get the field name as their filename.
+      type: fix
+  createdAt: "2026-10-22"
+  irVersion: 67
+- version: 1.39.4
+  changelogEntry:
+    - summary: |
+        XML (TwiML) serialization drops characters outside the XML 1.0 `Char` production (e.g. `\x01`) from text and attribute values instead of emitting XML that no parser accepts.
+      type: fix
+  createdAt: "2026-10-21"
+  irVersion: 67
 - version: 1.39.3
   changelogEntry:
     - summary: |
