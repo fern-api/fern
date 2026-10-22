@@ -1,0 +1,57 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "2bc9cada",
+            "id": {
+                "method": "POST",
+                "path": "/calls",
+                "identifier_override": "endpoint_calls/calls.createCall"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.calls().calls().createCall();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.calls().calls().createCall();\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "816d825e",
+            "id": {
+                "method": "GET",
+                "path": "/messages",
+                "identifier_override": "endpoint_messages/messages.listMessages"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.messages().messages().listMessages();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.messages().messages().listMessages();\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "8bdc5c3b",
+            "id": {
+                "method": "POST",
+                "path": "/messages",
+                "identifier_override": "endpoint_messages/messages.createMessage"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.messages.types.Message;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.messages().messages().createMessage(\n            Message\n                .builder()\n                .sid(\"sid\")\n                .body(\"body\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.messages.types.Message;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.messages().messages().createMessage(\n            Message\n                .builder()\n                .sid(\"sid\")\n                .body(\"body\")\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "92d9aac5",
+            "id": {
+                "method": "DELETE",
+                "path": "/messages/{sid}",
+                "identifier_override": "endpoint_messages/messages.deleteMessage"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.messages.messages.requests.DeleteMessageRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.messages().messages().deleteMessage(\n            \"sid\",\n            DeleteMessageRequest\n                .builder()\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.resources.messages.messages.requests.DeleteMessageRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.messages().messages().deleteMessage(\n            \"sid\",\n            DeleteMessageRequest\n                .builder()\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

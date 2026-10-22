@@ -1,0 +1,19 @@
+package example
+
+import (
+    context "context"
+
+    client "github.com/error-responses-shared/fern/client"
+    option "github.com/error-responses-shared/fern/option"
+)
+
+func do() {
+    client := client.NewClient(
+        option.WithBaseURL(
+            "https://api.fern.com",
+        ),
+    )
+    client.Messages.Messages.ListMessages(
+        context.TODO(),
+    )
+}
