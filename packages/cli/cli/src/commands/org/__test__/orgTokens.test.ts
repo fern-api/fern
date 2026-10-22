@@ -1,6 +1,6 @@
-import { describe, expect, it } from "vitest";
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
-import { buildOrgTokensCsv, buildOrgTokensTable, type OrgTokenRow } from "../orgTokens.js";
+import { buildOrgTokensCsv, buildOrgTokensTable, formatTimestamp, type OrgTokenRow } from "../orgTokens.js";
 
 function token(overrides: Partial<OrgTokenRow> = {}): OrgTokenRow {
     return {
@@ -61,14 +61,22 @@ describe("buildOrgTokensCsv", () => {
 });
 
 describe("buildOrgTokensTable", () => {
+    const originalTz = process.env.TZ;
+    beforeAll(() => {
+        process.env.TZ = "UTC";
+    });
+    afterAll(() => {
+        process.env.TZ = originalTz;
+    });
+
     it("labels every column and carries the same fields as the CSV export", () => {
         const lines = buildOrgTokensTable(tokens);
 
         expect(lines).toMatchInlineSnapshot(`
           [
-            "Name            Token ID  Status   Created by          Created at                Last used at",
-            "CI/CD pipeline  tok_01    active   google-oauth2|1234  2026-07-15T12:00:00.000Z  2026-10-01T12:00:00.000Z",
-            "(no name)       tok_02    revoked  google-oauth2|1234  2026-07-20T12:00:00.000Z  2026-10-01T12:00:00.000Z",
+            "Name            Token ID  Status   Created by          Created at        Last used at",
+            "CI/CD pipeline  tok_01    active   google-oauth2|1234  2026-07-15 12:00  2026-10-01 12:00",
+            "(no name)       tok_02    revoked  google-oauth2|1234  2026-07-20 12:00  2026-10-01 12:00",
           ]
         `);
     });
@@ -85,5 +93,23 @@ describe("buildOrgTokensTable", () => {
         const [, row] = buildOrgTokensTable([token({ description: "line one\nline two" })]);
 
         expect(row).toContain("line one line two");
+    });
+});
+
+describe("formatTimestamp", () => {
+    const originalTz = process.env.TZ;
+    afterAll(() => {
+        process.env.TZ = originalTz;
+    });
+
+    it("shows minutes in local time and drops seconds and fractions", () => {
+        process.env.TZ = "America/Los_Angeles";
+
+        expect(formatTimestamp("2026-06-12T21:24:07.610Z")).toBe("2026-06-12 14:24");
+        expect(formatTimestamp("2026-06-12T22:52:08.582869Z")).toBe("2026-06-12 15:52");
+    });
+
+    it("returns unparseable values unchanged", () => {
+        expect(formatTimestamp("not a date")).toBe("not a date");
     });
 });

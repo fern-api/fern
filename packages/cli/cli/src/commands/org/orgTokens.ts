@@ -96,6 +96,19 @@ export function buildOrgTokensCsv(tokens: OrgTokenRow[]): string {
     return [headers, ...rows].map((row) => row.map(escapeCsvCell).join(",")).join("\n");
 }
 
+/**
+ * Short local-time form (`2026-06-12 14:24`) for the text view. The CSV and
+ * JSON outputs keep the ISO 8601 timestamps Venus returns.
+ */
+export function formatTimestamp(iso: string): string {
+    const date = new Date(iso);
+    if (Number.isNaN(date.getTime())) {
+        return iso;
+    }
+    const two = (n: number) => String(n).padStart(2, "0");
+    return `${date.getFullYear()}-${two(date.getMonth() + 1)}-${two(date.getDate())} ${two(date.getHours())}:${two(date.getMinutes())}`;
+}
+
 const TABLE_HEADERS = ["Name", "Token ID", "Status", "Created by", "Created at", "Last used at"] as const;
 
 /**
@@ -111,8 +124,8 @@ export function buildOrgTokensTable(tokens: OrgTokenRow[], { color = false }: { 
         t.tokenId,
         t.status,
         t.createdBy ?? "-",
-        t.createdTime,
-        t.lastUsedAt ?? "never"
+        formatTimestamp(t.createdTime),
+        t.lastUsedAt != null ? formatTimestamp(t.lastUsedAt) : "never"
     ]);
     const widths = TABLE_HEADERS.map((header, i) => Math.max(header.length, ...rows.map((row) => row[i]?.length ?? 0)));
     const pad = (value: string, i: number) => value.padEnd(widths[i] ?? 0);
