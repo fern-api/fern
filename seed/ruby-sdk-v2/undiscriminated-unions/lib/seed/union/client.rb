@@ -235,7 +235,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @example
-      #   client.union.nested_object_unions(request: "string")
+      #   client.union.nested_object_unions(label: "string")
       #
       # @return [String]
       def nested_object_unions(request_options: {}, **params)
@@ -271,8 +271,8 @@ module Seed
       #
       # @example
       #   client.union.aliased_object_union(request: {
-      #     only_in_a: "onlyInA",
-      #     shared_number: 1
+      #     onlyInA: "onlyInA",
+      #     sharedNumber: 1
       #   })
       #
       # @return [String]
@@ -351,8 +351,8 @@ module Seed
       #
       # @example
       #   client.union.test_camel_case_properties(payment_method: {
-      #     method_: "card",
-      #     card_number: "1234567890123456"
+      #     method: "card",
+      #     cardNumber: "1234567890123456"
       #   })
       #
       # @return [String]
