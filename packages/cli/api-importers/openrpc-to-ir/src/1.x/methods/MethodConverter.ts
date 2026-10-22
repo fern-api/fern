@@ -252,6 +252,13 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
         }
     }
 
+    private convertExampleParams(params: ExampleObject[]): unknown[] | Record<string, unknown> {
+        if (this.method.paramStructure === "by-name") {
+            return Object.fromEntries(params.map((param) => [param.name, param.value]));
+        }
+        return params.map((param) => param.value);
+    }
+
     private filterOutTopLevelServers(servers: ServerObject[]): ServerObject[] {
         return servers.filter(
             (server) => !this.topLevelServers.some((topLevelServer) => topLevelServer.url === server.url)
@@ -369,7 +376,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
                         pathParameters,
                         queryParameters: {},
                         headers: {},
-                        requestBody: resolvedParams.map((param) => param.value) ?? undefined
+                        requestBody: this.convertExampleParams(resolvedParams)
                     },
                     response: {
                         docs: undefined,

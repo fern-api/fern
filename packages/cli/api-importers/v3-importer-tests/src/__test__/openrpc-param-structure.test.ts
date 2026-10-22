@@ -47,6 +47,14 @@ describe("OpenRPC paramStructure", () => {
         expect(endpoints["plants.prune"]?.source).toMatchObject({ type: "openrpc", paramStructure: "BY_POSITION" });
         expect(endpoints["plants.list"]?.source).toMatchObject({ type: "openrpc", paramStructure: undefined });
 
+        expect(endpoints["plants.water"]?.v2Examples?.userSpecifiedExamples["Water"]?.request?.requestBody).toEqual({
+            plantId: "fern-1",
+            liters: 2
+        });
+        expect(endpoints["plants.prune"]?.v2Examples?.userSpecifiedExamples["Prune"]?.request?.requestBody).toEqual([
+            "fern-1"
+        ]);
+
         const fdrApi = convertIrToFdrApi({
             ir,
             snippetsConfig: {

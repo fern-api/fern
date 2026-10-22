@@ -21,6 +21,16 @@ methods:
       name: watered
       schema:
         type: boolean
+    examples:
+      - name: Water
+        params:
+          - name: plantId
+            value: fern-1
+          - name: liters
+            value: 2
+        result:
+          name: watered
+          value: true
   - name: plants.prune
     paramStructure: by-position
     params:
@@ -32,6 +42,14 @@ methods:
       name: pruned
       schema:
         type: boolean
+    examples:
+      - name: Prune
+        params:
+          - name: plantId
+            value: fern-1
+        result:
+          name: pruned
+          value: true
   - name: plants.list
     params: []
     result:
