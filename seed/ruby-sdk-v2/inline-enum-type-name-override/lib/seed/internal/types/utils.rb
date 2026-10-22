@@ -26,13 +26,15 @@ module Seed
           type.is_a?(Proc) ? type.call : type
         end
 
+        EXACT_SCALAR_TYPES = [String, Integer, Float].freeze
+
         def self.coerce(target, value, strict: false)
           type = unwrap_type(target)
 
-          # Fast path: a value that is already an instance of a scalar or model target type is returned as-is.
-          # This is what the pattern match below returns for these types, without walking every branch.
-          return value if type.is_a?(Class) && value.is_a?(type) && (type <= String || type <= Integer ||
-                                                                     type <= Float || type <= Model)
+          # Fast path: values that already have the target type are returned as-is, as the branches below would.
+          # Scalars must be exact instances so subclasses still go through their `to_s`/`to_i`/`to_f` conversion.
+          return value if EXACT_SCALAR_TYPES.include?(type) && value.instance_of?(type)
+          return value if type.is_a?(Class) && type <= Model && value.is_a?(type)
 
           case type
           in Array
