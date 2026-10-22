@@ -1,0 +1,5 @@
+- summary: |
+    Enum values containing braces (e.g. `item.features.{feature_name}`) no longer break the build of the
+    generated types crate. `Display` passed each value to `write!` unescaped, so `{...}` was read as a format
+    argument; braces are now escaped.
+  type: fix
