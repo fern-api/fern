@@ -71,7 +71,7 @@ import { computeDynamicIRs, type DynamicIrGeneratorJob } from "./dynamicIr/compu
 import { DynamicIrWorkerPool, parseDynamicIrResult } from "./dynamicIr/DynamicIrWorkerPool.js";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
 import { measureImageSizes } from "./measureImageSizes.js";
-import { normalizeRepoUrlToHttps } from "./normalizeRepoUrl.js";
+import { normalizeGoPackageForLookup, normalizeRepoUrlToHttps } from "./normalizeRepoUrl.js";
 import { publishDocsViaLedger } from "./publishDocsLedger.js";
 import { publishDocsViaLedgerPreview } from "./publishDocsLedgerPreview.js";
 import { retryWithBackoff } from "./retryWithBackoff.js";
@@ -1726,10 +1726,6 @@ async function checkAndDownloadExistingSdkDynamicIRs({
         context.logger.debug(`Error checking for existing SDK dynamic IRs: ${error}`);
         return undefined;
     }
-}
-// normalize Go package names by stripping https:// prefix to match how upload keys are generated.
-function normalizeGoPackageForLookup(repository: string): string {
-    return repository.replace(/^https:\/\//, "");
 }
 
 /**
