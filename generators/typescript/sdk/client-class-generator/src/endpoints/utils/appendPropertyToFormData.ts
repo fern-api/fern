@@ -1,4 +1,5 @@
 import { getWireValue } from "@fern-api/base-generator";
+import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { getSchemaOptions } from "@fern-typescript/commons";
 import { FileContext } from "@fern-typescript/contexts";
@@ -466,13 +467,20 @@ function isMaybeSet(typeReference: FernIr.TypeReference, context: FileContext): 
 }
 
 function referencesNamedType(typeReference: FernIr.TypeReference): boolean {
-    if (typeReference.type === "named") {
-        return true;
+    switch (typeReference.type) {
+        case "named":
+            return true;
+        case "primitive":
+        case "unknown":
+            return false;
+        case "container":
+            return containerReferencesNamedType(typeReference.container);
+        default:
+            assertNever(typeReference);
     }
-    if (typeReference.type !== "container") {
-        return false;
-    }
-    const container = typeReference.container;
+}
+
+function containerReferencesNamedType(container: FernIr.ContainerType): boolean {
     switch (container.type) {
         case "list":
             return referencesNamedType(container.list);
@@ -484,7 +492,9 @@ function referencesNamedType(typeReference: FernIr.TypeReference): boolean {
             return referencesNamedType(container.nullable);
         case "map":
             return referencesNamedType(container.keyType) || referencesNamedType(container.valueType);
-        default:
+        case "literal":
             return false;
+        default:
+            assertNever(container);
     }
 }
