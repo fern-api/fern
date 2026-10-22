@@ -96,6 +96,51 @@ export function buildOrgTokensCsv(tokens: OrgTokenRow[]): string {
     return [headers, ...rows].map((row) => row.map(escapeCsvCell).join(",")).join("\n");
 }
 
+const TABLE_HEADERS = ["Name", "Token ID", "Status", "Created by", "Created at", "Last used at"] as const;
+
+/**
+ * The text view of `fern org token list`: the same columns, in the same order,
+ * as the CSV export, with a header row so it is clear the first values are
+ * token IDs and names, not the secret key (which is only shown at creation).
+ * Empty cells get a placeholder so a blank column never reads as missing data.
+ */
+export function buildOrgTokensTable(tokens: OrgTokenRow[], { color = false }: { color?: boolean } = {}): string[] {
+    const singleLine = (value: string) => value.replace(/\s+/g, " ").trim();
+    const rows = tokens.map((t) => [
+        t.description != null && singleLine(t.description).length > 0 ? singleLine(t.description) : "(no name)",
+        t.tokenId,
+        t.status,
+        t.createdBy ?? "-",
+        t.createdTime,
+        t.lastUsedAt ?? "never"
+    ]);
+    const widths = TABLE_HEADERS.map((header, i) => Math.max(header.length, ...rows.map((row) => row[i]?.length ?? 0)));
+    const pad = (value: string, i: number) => value.padEnd(widths[i] ?? 0);
+    const statusColumn = TABLE_HEADERS.indexOf("Status");
+
+    const header = TABLE_HEADERS.map(pad).join("  ").trimEnd();
+    const body = rows.map((row) =>
+        row
+            .map((cell, i) => {
+                const padded = pad(cell, i);
+                if (!color) {
+                    return padded;
+                }
+                if (i === statusColumn) {
+                    return cell === "active"
+                        ? chalk.green(padded)
+                        : cell === "revoked"
+                          ? chalk.red(padded)
+                          : chalk.dim(padded);
+                }
+                return cell === "(no name)" || cell === "-" || cell === "never" ? chalk.dim(padded) : padded;
+            })
+            .join("  ")
+            .trimEnd()
+    );
+    return [color ? chalk.bold(header) : header, ...body];
+}
+
 export async function listOrgTokens({
     cliContext,
     org,
@@ -143,16 +188,8 @@ export async function listOrgTokens({
             context.logger.info(`  To create one, run: fern org token create --org ${orgName}`);
             return;
         }
-        for (const t of tokens) {
-            const status =
-                t.status === "active"
-                    ? chalk.green(t.status)
-                    : t.status === "revoked"
-                      ? chalk.red(t.status)
-                      : chalk.dim(t.status);
-            const description = t.description != null ? `  ${chalk.dim(t.description)}` : "";
-            const created = new Date(t.createdTime).toLocaleDateString();
-            context.logger.info(`${t.tokenId}  ${status}  ${chalk.dim(created)}${description}`);
+        for (const line of buildOrgTokensTable(tokens, { color: chalk.level > 0 })) {
+            context.logger.info(line);
         }
     });
 }

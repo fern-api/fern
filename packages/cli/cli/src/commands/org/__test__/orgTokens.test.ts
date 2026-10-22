@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { buildOrgTokensCsv, type OrgTokenRow } from "../orgTokens.js";
+import { buildOrgTokensCsv, buildOrgTokensTable, type OrgTokenRow } from "../orgTokens.js";
 
 function token(overrides: Partial<OrgTokenRow> = {}): OrgTokenRow {
     return {
@@ -57,5 +57,33 @@ describe("buildOrgTokensCsv", () => {
         const csv = buildOrgTokensCsv([token({ description: "-12.5" })]);
 
         expect(csv).toContain("\n-12.5,");
+    });
+});
+
+describe("buildOrgTokensTable", () => {
+    it("labels every column and carries the same fields as the CSV export", () => {
+        const lines = buildOrgTokensTable(tokens);
+
+        expect(lines).toMatchInlineSnapshot(`
+          [
+            "Name            Token ID  Status   Created by          Created at                Last used at",
+            "CI/CD pipeline  tok_01    active   google-oauth2|1234  2026-07-15T12:00:00.000Z  2026-10-01T12:00:00.000Z",
+            "(no name)       tok_02    revoked  google-oauth2|1234  2026-07-20T12:00:00.000Z  2026-10-01T12:00:00.000Z",
+          ]
+        `);
+    });
+
+    it("shows placeholders for missing names, creators and last-used times", () => {
+        const [, row] = buildOrgTokensTable([token({ description: null, createdBy: null, lastUsedAt: null })]);
+
+        expect(row).toContain("(no name)");
+        expect(row).toContain("-");
+        expect(row).toContain("never");
+    });
+
+    it("collapses multiline names onto one line", () => {
+        const [, row] = buildOrgTokensTable([token({ description: "line one\nline two" })]);
+
+        expect(row).toContain("line one line two");
     });
 });
