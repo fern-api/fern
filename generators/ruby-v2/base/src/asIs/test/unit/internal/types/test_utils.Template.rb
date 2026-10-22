@@ -137,6 +137,7 @@ describe <%= gem_namespace %>::Internal::Types::Utils do
 <% if (keepIntegersInFloatFields) { %>      it "keeps Integer values as Integer" do
         assert_equal 5, Utils.coerce(Float, 5)
         assert_kind_of Integer, Utils.coerce(Float, 5)
+        assert_equal 5, Utils.coerce(Float, 5, strict: true)
         assert_kind_of Float, Utils.coerce(Float, 1.5)
         assert_kind_of Float, Utils.coerce(Float, "5")
       end
