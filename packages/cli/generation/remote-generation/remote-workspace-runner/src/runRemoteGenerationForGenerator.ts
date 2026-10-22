@@ -35,7 +35,7 @@ import { CliError, InteractiveTaskContext } from "@fern-api/task-context";
 import { FernWorkspace, IdentifiableSource } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import type { FernConfigMappingDiagnostic } from "@postman/sdk-config/sdk-config/v1";
-import { createAndStartJob, isDryRunPreview } from "./createAndStartJob.js";
+import { createAndStartJob } from "./createAndStartJob.js";
 import { discoverLatestSdkGenApiGeneratorVersions } from "./discoverSdkGenApiGeneratorVersions.js";
 import {
     describeFernSdkGenApiIneligibility,
@@ -197,12 +197,10 @@ export async function runRemoteGenerationForGenerator({
     const snippetPackageName = resolveSnippetPackageName(generatorInvocation);
 
     const isPreview = isPreviewOverride ?? absolutePathToPreview != null;
-    const previewRequestedOutput: FernSdkGenApiRequestedOutput | undefined = isDryRunPreview({
-        fiddlePreview,
-        absolutePathToPreview
-    })
-        ? { type: "download" }
-        : undefined;
+    // `fern generate --preview` downloads the files instead of delivering them to GitHub or a registry.
+    // `fern sdk preview` sets `fiddlePreview` for its jobs, which keep their configured output.
+    const previewRequestedOutput: FernSdkGenApiRequestedOutput | undefined =
+        fiddlePreview == null && absolutePathToPreview != null ? { type: "download" } : undefined;
     const resolvedWhitelabel =
         whitelabel == null
             ? undefined

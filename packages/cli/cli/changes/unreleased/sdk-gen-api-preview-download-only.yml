@@ -5,7 +5,3 @@
     through sdk-gen-api. Preview requests now ask only for a download of the generated files, the same as
     previews on Fiddle, instead of forwarding the GitHub or registry output from `generators.yml`.
   type: fix
-- summary: |
-    `fern sdk preview --push-diff` now keeps its diff-branch job on Fiddle, since sdk-gen-api cannot push a preview
-    branch. Targets with no Fiddle fallback (SDK Config) fail with a clear error instead of skipping the branch.
-  type: fix

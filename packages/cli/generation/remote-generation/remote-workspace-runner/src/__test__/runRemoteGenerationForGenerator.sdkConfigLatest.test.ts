@@ -325,6 +325,11 @@ describe("runRemoteGenerationForGenerator synthesized SDK Config latest", () => 
                 fiddlePreview: false
             },
             expected: { type: "github", repository: "acme/sdk", mode: "pull-request" }
+        },
+        {
+            name: "keeps the generators.yml GitHub output for the fern sdk preview diff job",
+            preview: { absolutePathToPreview: undefined, isPreview: true, fiddlePreview: true },
+            expected: { type: "github", repository: "acme/sdk", mode: "pull-request" }
         }
     ])("$name on the runtime bundle route", async ({ preview, expected }) => {
         const generatorInvocation = {

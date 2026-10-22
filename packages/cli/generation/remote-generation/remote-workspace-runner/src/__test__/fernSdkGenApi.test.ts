@@ -965,42 +965,6 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(result?.error).toHaveProperty("message", expect.stringContaining("fern sdk migrate"));
     });
 
-    it("keeps a --push-diff preview branch job on Fiddle", () => {
-        const [result] = prepareFernSdkGenApiRoutes({
-            generators: [invocation({ version: "3.999.999" })],
-            isSdkGenApiEnabled: () => true,
-            requireEnvVars: true,
-            isPreview: true,
-            pushPreviewBranch: true
-        });
-
-        expect(result?.route).toBeUndefined();
-        expect(result?.error).toBeUndefined();
-        expect(result?.fallbackReason).toContain("--push-diff");
-    });
-
-    it("rejects a --push-diff preview branch job for SDK Config targets", () => {
-        const [result] = prepareFernSdkGenApiRoutes({
-            generators: [invocation({ version: "4.0.0" })],
-            isSdkGenApiEnabled: () => true,
-            sdkConfigV1: sdkConfigV1({
-                language: "typescript",
-                generatorVersion: "4.0.0",
-                requestedOutput: {
-                    type: "github",
-                    repository: "acme/sdk",
-                    mode: "pull-request"
-                }
-            }),
-            requireEnvVars: true,
-            isPreview: true,
-            pushPreviewBranch: true
-        });
-
-        expect(result?.route).toBeUndefined();
-        expect(result?.error).toHaveProperty("message", expect.stringContaining("--push-diff"));
-    });
-
     it("settles route failures per target while retaining successful siblings", async () => {
         const results = prepareFernSdkGenApiRoutes({
             generators: [invocation({ version: "3.999.999" }), invocation({ version: "not-semver" })],
