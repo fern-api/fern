@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    XML (TwiML) serialization drops characters outside the XML 1.0 `Char` production (e.g. `\u0001`) from text and attribute values instead of emitting XML that no parser accepts.
+  type: fix

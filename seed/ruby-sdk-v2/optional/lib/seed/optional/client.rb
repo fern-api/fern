@@ -104,7 +104,7 @@ module Seed
       #     action_id: "actionId",
       #     id: "id",
       #     request: {
-      #       update_draft: true
+      #       updateDraft: true
       #     }
       #   )
       #

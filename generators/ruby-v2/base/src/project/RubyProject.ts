@@ -220,6 +220,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                     retryStatusCodes: this.rubyContext.customConfig.retryStatusCodes,
                     respectOptionalRequestBody: this.rubyContext.customConfig.respectOptionalRequestBody,
                     respectNullableUnionFields: this.rubyContext.customConfig.respectNullableUnionFields,
+                    serializeTimeAsIso8601: this.rubyContext.customConfig.serializeTimeAsIso8601,
                     endpointSecurity: this.rubyContext.ir.auth.requirement === "ENDPOINT_SECURITY",
                     requestLevelMaxRetries: hasEndpointWithRetriesDisabled(
                         Object.values(this.rubyContext.ir.services).flatMap((service) => service.endpoints)
@@ -243,6 +244,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         retryStatusCodes,
         respectOptionalRequestBody,
         respectNullableUnionFields,
+        serializeTimeAsIso8601,
         endpointSecurity,
         requestLevelMaxRetries
     }: {
@@ -259,6 +261,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         retryStatusCodes?: string;
         respectOptionalRequestBody?: boolean;
         respectNullableUnionFields?: boolean;
+        serializeTimeAsIso8601?: boolean;
         endpointSecurity?: boolean;
         requestLevelMaxRetries?: boolean;
     }): Promise<File> {
@@ -276,6 +279,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                 maxRetries,
                 respectOptionalRequestBody,
                 respectNullableUnionFields,
+                serializeTimeAsIso8601,
                 endpointSecurity,
                 requestLevelMaxRetries
             })
@@ -354,6 +358,7 @@ function getTemplateVariables({
     maxRetries,
     respectOptionalRequestBody,
     respectNullableUnionFields,
+    serializeTimeAsIso8601,
     endpointSecurity,
     requestLevelMaxRetries
 }: {
@@ -368,6 +373,7 @@ function getTemplateVariables({
     maxRetries?: number;
     respectOptionalRequestBody?: boolean;
     respectNullableUnionFields?: boolean;
+    serializeTimeAsIso8601?: boolean;
     endpointSecurity?: boolean;
     requestLevelMaxRetries?: boolean;
 }): Record<string, unknown> {
@@ -396,6 +402,9 @@ function getTemplateVariables({
         // the opt-in flag is on, so flag-off internal/types/union.rb stays
         // byte-identical.
         respectNullableUnionFields: respectNullableUnionFields ?? false,
+        // On by default; `false` restores the previous `Time#to_s` request serialization
+        // byte-for-byte.
+        serializeTimeAsIso8601: serializeTimeAsIso8601 ?? true,
         // Emits the RawClient#auth_headers_for_endpoint delegator only for
         // endpoint-security SDKs, so ALL/ANY SDKs see zero change to raw_client.rb.
         endpointSecurity: endpointSecurity ?? false,
@@ -759,6 +768,9 @@ class ModuleFile {
     private get baseContents(): string {
         const hasBasicAuth = this.context.ir.auth.schemes.some((s) => s.type === "basic");
         const requires = ['"json"', '"net/http"', '"securerandom"'];
+        if (this.context.customConfig.serializeTimeAsIso8601 !== false) {
+            requires.push('"time"');
+        }
         if (hasBasicAuth) {
             requires.push('"base64"');
         }

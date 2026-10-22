@@ -42,7 +42,7 @@ module <%= gem_namespace %>
           if value.respond_to?(:read)
             value.read
           else
-            value.to_s
+            <% if (serializeTimeAsIso8601) { %>Internal::Types::Utils.serialize_times(value).to_s<% } else { %>value.to_s<% } %>
           end
         end
       end
