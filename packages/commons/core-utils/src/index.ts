@@ -18,6 +18,7 @@ export {
     assertVoidNoThrow
 } from "./assert.js";
 export { asyncPool } from "./asyncPool.js";
+export { capitalizeFirstLetter } from "./capitalizeFirstLetter.js";
 export { convertNumberToSnakeCase } from "./convertNumberToSnakeCase.js";
 export { decodeJsonPointerSegment } from "./decodeJsonPointerSegment.js";
 export { delay } from "./delay/delay.js";

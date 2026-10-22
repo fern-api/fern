@@ -1,7 +1,7 @@
 import { OpenAPISettings } from "@fern-api/api-workspace-commons";
 import { CasingsGenerator, constructCasingsGenerator } from "@fern-api/casings-generator";
 import { generatorsYml } from "@fern-api/configuration";
-import { isHttpUrl, isRecord } from "@fern-api/core-utils";
+import { capitalizeFirstLetter, isHttpUrl, isRecord } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import {
     Availability,
@@ -157,7 +157,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
         });
 
         const camelCased = camelCase(filteredBreadcrumbs.join("_"));
-        return camelCased.charAt(0).toUpperCase() + camelCased.slice(1);
+        return capitalizeFirstLetter(camelCased);
     }
 
     /**
