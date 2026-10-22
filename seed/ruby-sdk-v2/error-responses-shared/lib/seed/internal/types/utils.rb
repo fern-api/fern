@@ -26,8 +26,15 @@ module Seed
           type.is_a?(Proc) ? type.call : type
         end
 
+        EXACT_SCALAR_TYPES = [String, Integer, Float].freeze
+        private_constant :EXACT_SCALAR_TYPES
+
         def self.coerce(target, value, strict: false)
           type = unwrap_type(target)
+
+          # Fast path: exact String/Integer/Float instances are returned as-is, as the branches below would.
+          # Subclasses still go through their `to_s`/`to_i`/`to_f` conversion.
+          return value if EXACT_SCALAR_TYPES.include?(type) && value.instance_of?(type)
 
           case type
           in Array
@@ -44,19 +51,19 @@ module Seed
             when ::Array
               return coerce(type, value.to_h)
             end
-          in ->(t) { t <= NilClass }
+          in Class if type <= NilClass
             return nil
-          in ->(t) { t <= String }
+          in Class if type <= String
             case value
             when String, Symbol, Numeric, TrueClass, FalseClass
               return value.to_s
             end
-          in ->(t) { t <= Symbol }
+          in Class if type <= Symbol
             case value
             when Symbol, String
               return value.to_sym
             end
-          in ->(t) { t <= Integer }
+          in Class if type <= Integer
             case value
             when Numeric, String, Time
               return value.to_i
@@ -65,15 +72,18 @@ module Seed
               parsed = Integer(value.to_s, 10, exception: false)
               return parsed unless parsed.nil?
             end
-          in ->(t) { t <= Float }
+          in Class if type <= Float
             case value
+            when Integer
+              # Whole numbers keep their Integer value, so they serialize as `5` rather than `5.0`.
+              return value
             when Numeric, Time, String
               return value.to_f
             when Symbol
               parsed = Float(value.to_s, exception: false)
               return parsed unless parsed.nil?
             end
-          in ->(t) { t <= Model }
+          in Class if type <= Model
             case value
             when type
               return value
@@ -82,10 +92,7 @@ module Seed
             end
           in Module
             case type
-            in ->(t) {
-                 t.singleton_class.included_modules.include?(Enum) ||
-                   t.singleton_class.included_modules.include?(Union)
-               }
+            in Enum | Union
               return type.coerce(value, strict: strict)
             else
               value # rubocop:disable Lint/Void

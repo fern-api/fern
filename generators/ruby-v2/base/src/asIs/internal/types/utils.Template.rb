@@ -74,7 +74,10 @@ module <%= gem_namespace %>
             end
           in Class if type <= Float
             case value
-            when Numeric, Time, String
+<% if (keepIntegersInFloatFields) { %>            when Integer
+              # Whole numbers keep their Integer value, so they serialize as `5` rather than `5.0`.
+              return value
+<% } %>            when Numeric, Time, String
               return value.to_f
             when Symbol
               parsed = Float(value.to_s, exception: false)

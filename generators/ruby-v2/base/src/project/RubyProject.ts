@@ -221,6 +221,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                     respectOptionalRequestBody: this.rubyContext.customConfig.respectOptionalRequestBody,
                     respectNullableUnionFields: this.rubyContext.customConfig.respectNullableUnionFields,
                     serializeTimeAsIso8601: this.rubyContext.customConfig.serializeTimeAsIso8601,
+                    keepIntegersInFloatFields: this.rubyContext.customConfig.keepIntegersInFloatFields,
                     endpointSecurity: this.rubyContext.ir.auth.requirement === "ENDPOINT_SECURITY",
                     requestLevelMaxRetries: hasEndpointWithRetriesDisabled(
                         Object.values(this.rubyContext.ir.services).flatMap((service) => service.endpoints)
@@ -245,6 +246,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         respectOptionalRequestBody,
         respectNullableUnionFields,
         serializeTimeAsIso8601,
+        keepIntegersInFloatFields,
         endpointSecurity,
         requestLevelMaxRetries
     }: {
@@ -262,6 +264,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         respectOptionalRequestBody?: boolean;
         respectNullableUnionFields?: boolean;
         serializeTimeAsIso8601?: boolean;
+        keepIntegersInFloatFields?: boolean;
         endpointSecurity?: boolean;
         requestLevelMaxRetries?: boolean;
     }): Promise<File> {
@@ -280,6 +283,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                 respectOptionalRequestBody,
                 respectNullableUnionFields,
                 serializeTimeAsIso8601,
+                keepIntegersInFloatFields,
                 endpointSecurity,
                 requestLevelMaxRetries
             })
@@ -359,6 +363,7 @@ function getTemplateVariables({
     respectOptionalRequestBody,
     respectNullableUnionFields,
     serializeTimeAsIso8601,
+    keepIntegersInFloatFields,
     endpointSecurity,
     requestLevelMaxRetries
 }: {
@@ -374,6 +379,7 @@ function getTemplateVariables({
     respectOptionalRequestBody?: boolean;
     respectNullableUnionFields?: boolean;
     serializeTimeAsIso8601?: boolean;
+    keepIntegersInFloatFields?: boolean;
     endpointSecurity?: boolean;
     requestLevelMaxRetries?: boolean;
 }): Record<string, unknown> {
@@ -405,6 +411,9 @@ function getTemplateVariables({
         // On by default; `false` restores the previous `Time#to_s` request serialization
         // byte-for-byte.
         serializeTimeAsIso8601: serializeTimeAsIso8601 ?? true,
+        // On by default; `false` converts Integer values in `Float` fields with `to_f`, as
+        // generator 1.37.1 through 1.39.x did.
+        keepIntegersInFloatFields: keepIntegersInFloatFields ?? true,
         // Emits the RawClient#auth_headers_for_endpoint delegator only for
         // endpoint-security SDKs, so ALL/ANY SDKs see zero change to raw_client.rb.
         endpointSecurity: endpointSecurity ?? false,

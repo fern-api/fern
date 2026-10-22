@@ -134,6 +134,16 @@ describe <%= gem_namespace %>::Internal::Types::Utils do
         assert_in_delta(1_713_916_800.0, Utils.coerce(Integer, Time.utc(2024, 4, 24)))
       end
 
+<% if (keepIntegersInFloatFields) { %>      it "keeps Integer values as Integer" do
+        assert_equal 5, Utils.coerce(Float, 5)
+        assert_kind_of Integer, Utils.coerce(Float, 5)
+        assert_kind_of Float, Utils.coerce(Float, 1.5)
+        assert_kind_of Float, Utils.coerce(Float, "5")
+      end
+<% } else { %>      it "converts Integer values to Float" do
+        assert_kind_of Float, Utils.coerce(Float, 5)
+      end
+<% } %>
       it "coerces numeric Symbols such as symbolized JSON keys" do
         assert_in_delta(1.5, Utils.coerce(Float, :"1.5"))
         assert_in_delta(2.0, Utils.coerce(Float, :"2"))

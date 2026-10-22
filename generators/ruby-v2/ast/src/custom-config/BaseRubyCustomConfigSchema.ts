@@ -83,6 +83,11 @@ export const BaseRubyCustomConfigSchema = z.object({
     // parameters, and form fields are serialized as RFC 3339 strings. Set to `false` to keep
     // the previous `Time#to_s` output (e.g. "2026-10-16 01:40:16 UTC"). Enabled by default.
     serializeTimeAsIso8601: z.boolean().optional(),
+    // Opt-out: an Integer value in a `Float` field (`float`/`double`, e.g. an OpenAPI `number`)
+    // stays an Integer, so `5` is sent as `5` and a response `3600` decodes as `3600` rather
+    // than `3600.0`. Decimals are unaffected. Set to `false` to convert every value in such a
+    // field to `Float`. Enabled by default.
+    keepIntegersInFloatFields: z.boolean().optional(),
     // Opt-in: a type alias to a named type coerces into that type rather than returning
     // the result of a bare `JSON.parse`. Without this, an endpoint whose response schema
     // is a `$ref` to another schema returns a string-keyed Hash while the SDK documents

@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Integer values in `Float` fields (`float`/`double`, e.g. an OpenAPI `number`) now stay
+    Integers, as they did before 1.37.1. `5` is sent as `5` instead of `5.0`, and a response
+    value of `3600` decodes as `3600` instead of `3600.0`. Decimal values are unchanged and
+    still decode as `Float`. Set `keepIntegersInFloatFields: false` to convert every value in
+    these fields to `Float`, as 1.37.1 through 1.39.x did.
+  type: fix

@@ -62,6 +62,18 @@ describe Seed::Internal::Types::Utils do
           Utils.coerce(String, Object.new, strict: true)
         end
       end
+
+      it "converts String subclasses through to_s" do
+        normalized = Class.new(String) do
+          def to_s
+            strip
+          end
+        end
+        result = Utils.coerce(String, normalized.new(" padded "))
+
+        assert_equal "padded", result
+        assert_instance_of String, result
+      end
     end
 
     describe "Symbol" do
@@ -120,6 +132,13 @@ describe Seed::Internal::Types::Utils do
         assert_in_delta(1.0, Utils.coerce(Float, Complex.rect(1)))
         assert_in_delta(1.0, Utils.coerce(Float, Rational(1)))
         assert_in_delta(1_713_916_800.0, Utils.coerce(Integer, Time.utc(2024, 4, 24)))
+      end
+
+      it "keeps Integer values as Integer" do
+        assert_equal 5, Utils.coerce(Float, 5)
+        assert_kind_of Integer, Utils.coerce(Float, 5)
+        assert_kind_of Float, Utils.coerce(Float, 1.5)
+        assert_kind_of Float, Utils.coerce(Float, "5")
       end
 
       it "coerces numeric Symbols such as symbolized JSON keys" do
