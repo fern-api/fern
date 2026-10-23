@@ -1,4 +1,4 @@
-import { isRecord } from "@fern-api/core-utils";
+import { addLeadingSlash, isRecord, removeLeadingSlash } from "@fern-api/core-utils";
 import { FdrAPI as CjsFdrSdk, DocsV1Write } from "@fern-api/fdr-sdk";
 import {
     AbsoluteFilePath,
@@ -757,7 +757,7 @@ function resolvePath(
 
     const filepath = resolve(
         pathToImage.startsWith("/") ? absolutePathToFernFolder : dirname(absolutePathToMarkdownFile),
-        RelativeFilePath.of(pathToImage.replace(/^\//, ""))
+        RelativeFilePath.of(removeLeadingSlash(pathToImage))
     );
 
     // Strip Windows drive letter (e.g., C:/) to produce platform-agnostic paths
@@ -832,7 +832,7 @@ export function getReplacedHref({
         if (absoluteFilePath != null) {
             const slug = markdownFilesToPathName[absoluteFilePath];
             if (slug != null) {
-                const normalizeSlug = slug.startsWith("/") ? slug : "/" + slug;
+                const normalizeSlug = addLeadingSlash(slug);
                 return { type: "replace", slug: normalizeSlug, href };
             } else {
                 return { type: "missing-reference", path: absoluteFilePath, href };

@@ -2,7 +2,7 @@
 import { stripCliConfigKeys } from "@fern-api/api-workspace-commons";
 import { FernToken } from "@fern-api/auth";
 import { generatorsYml } from "@fern-api/configuration";
-import { delay } from "@fern-api/core-utils";
+import { delay, removeTrailingSlash } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { isAutoVersion } from "@fern-api/generator-cli/autoversion";
 import { type FeatureFlagContext, getFeatureFlagClient } from "@fern-api/posthog-manager";
@@ -419,7 +419,7 @@ export function getFernSdkGenApiOrigin(): string | undefined {
     if (origin.protocol !== "https:" && !isLoopbackHttp) {
         throw new Error("FERN_SDK_GEN_API_ORIGIN must use HTTPS unless it targets localhost");
     }
-    return origin.toString().replace(/\/$/, "");
+    return removeTrailingSlash(origin.toString());
 }
 
 export function getFernSdkGenApiLanguage(generatorName: string): FernSdkGenApiLanguage | undefined {

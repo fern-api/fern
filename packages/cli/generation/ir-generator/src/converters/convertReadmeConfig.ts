@@ -1,4 +1,5 @@
 import { generatorsYml } from "@fern-api/configuration";
+import { addLeadingSlash } from "@fern-api/core-utils";
 import { HttpEndpoint, HttpService, ReadmeConfig, ServiceId } from "@fern-api/ir-sdk";
 import { CliError } from "@fern-api/task-context";
 import urlJoin from "url-join";
@@ -110,7 +111,7 @@ function getFullPathForEndpoint(endpoint: HttpEndpoint): string {
             url = urlJoin(url, part.tail);
         }
     }
-    return url.startsWith("/") ? url : `/${url}`;
+    return addLeadingSlash(url);
 }
 
 function getReadmeEndpointObject({

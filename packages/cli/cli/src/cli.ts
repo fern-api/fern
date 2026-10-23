@@ -28,6 +28,7 @@ import {
     errorMessageOrString,
     extractErrorMessage,
     haveSameNullishness,
+    removeTrailingSlash,
     undefinedIfNullish,
     undefinedIfSomeNullish
 } from "@fern-api/core-utils";
@@ -2654,7 +2655,7 @@ async function resolveDocsLinkCheckContext(
     cliContext: CliContext,
     url: string | undefined
 ): Promise<DocsLinkCheckContext> {
-    const normalizeDomain = (u: string): string => u.replace(/^https?:\/\//i, "").replace(/\/$/, "");
+    const normalizeDomain = (u: string): string => removeTrailingSlash(u.replace(/^https?:\/\//i, ""));
 
     if (url != null) {
         let docsConfigDir: string | undefined;

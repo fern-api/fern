@@ -1,4 +1,4 @@
-import { isNonNullish } from "@fern-api/core-utils";
+import { addLeadingSlash, isNonNullish } from "@fern-api/core-utils";
 import {
     ContainerType,
     EnvironmentsConfig,
@@ -112,7 +112,7 @@ function convertHttpEndpoint({
         convertHttpPathToString(httpService.basePath),
         convertHttpPathToString(httpEndpoint.path)
     );
-    fullPath = !fullPath.startsWith("/") ? `/${fullPath}` : fullPath;
+    fullPath = addLeadingSlash(fullPath);
     const convertedHttpMethod = convertHttpMethod(httpEndpoint.method);
     const convertedGlobalPathParameters = ir.pathParameters.map((pathParameter) =>
         convertPathParameter({

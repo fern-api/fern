@@ -1,4 +1,5 @@
 import { docsYml } from "@fern-api/configuration";
+import { getPathSegments } from "@fern-api/core-utils";
 import { kebabCase } from "lodash-es";
 
 import { validateProductConfigFileSchema } from "../../docsAst/validateProductConfig.js";
@@ -36,7 +37,7 @@ export const CHANGELOG_FEED_ALLOWED_SLUGS: readonly string[] = [
  */
 export function getEffectiveChangelogSlugSegments(config: { slug?: string; title?: string }): string[] {
     const raw = config.slug ?? kebabCase(config.title ?? docsYml.DEFAULT_CHANGELOG_TITLE);
-    return splitSegments(raw);
+    return getPathSegments(raw);
 }
 
 /**
@@ -76,11 +77,7 @@ function ancestorSlugSegments(opts: { slug?: string; displayName?: string; skipS
         return [];
     }
     const raw = opts.slug ?? kebabCase(opts.displayName ?? "");
-    return splitSegments(raw);
-}
-
-function splitSegments(raw: string): string[] {
-    return raw.split("/").filter((segment) => segment.length > 0);
+    return getPathSegments(raw);
 }
 
 interface ChangelogLocation {

@@ -1,3 +1,4 @@
+import { getPathSegments } from "@fern-api/core-utils";
 /**
  * Render context for the C++ renderer.
  *
@@ -98,7 +99,7 @@ function computeRelativePath(fromSlugPath: string, toSlugPath: string): string {
     const fromDir = effectiveFrom.includes("/") ? effectiveFrom.substring(0, effectiveFrom.lastIndexOf("/")) : "";
 
     const fromParts = fromDir ? fromDir.split("/") : [];
-    const toParts = toPath.split("/").filter((p) => p.length > 0);
+    const toParts = getPathSegments(toPath);
 
     // Find common prefix
     let common = 0;

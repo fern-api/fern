@@ -6,6 +6,7 @@
  * Sentry and PostHog writes still surface the incident.
  */
 import { getAccessToken } from "@fern-api/auth";
+import { removeTrailingSlash } from "@fern-api/core-utils";
 import type { AutomationTelemetryContext } from "./automationTelemetryContext.js";
 import type { AutomationTelemetryEvent } from "./automationTelemetryEvent.js";
 import { toAutomationEventApiBody } from "./automationTelemetryEvent.js";
@@ -52,7 +53,7 @@ export class AutomationEventApiClient {
         if (this.origin.length === 0) {
             return undefined;
         }
-        return `${this.origin.replace(/\/$/, "")}/v1/automation/events`;
+        return `${removeTrailingSlash(this.origin)}/v1/automation/events`;
     }
 
     /**

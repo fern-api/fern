@@ -1,3 +1,4 @@
+import { removeTrailingSlash } from "@fern-api/core-utils";
 import { CliError, TaskContext } from "@fern-api/task-context";
 
 const HTTPS_PREFIX = "https://";
@@ -34,7 +35,7 @@ function normalizeBasepath(pathname: string): string {
     if (pathname === "" || pathname === "/") {
         return "/";
     }
-    return pathname.endsWith("/") ? pathname.slice(0, -1) : pathname;
+    return removeTrailingSlash(pathname);
 }
 
 /**

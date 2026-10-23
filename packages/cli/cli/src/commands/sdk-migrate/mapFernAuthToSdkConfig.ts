@@ -1,5 +1,5 @@
 import { type FernDefinition, getAllDefinitionFiles, getAllPackageMarkers } from "@fern-api/api-workspace-commons";
-import { stripTrailingSlashes } from "@fern-api/core-utils";
+import { removeTrailingSlash, stripTrailingSlashes } from "@fern-api/core-utils";
 import {
     HttpEndpointReferenceParser,
     type RawSchemas,
@@ -528,7 +528,7 @@ function withEndpointBaseUrl(path: string, urlId: string | undefined, root: Fern
 
 function normalizePath(path: string): string {
     const collapsed = `/${path}`.replace(/\/{2,}/g, "/");
-    return collapsed.length > 1 ? collapsed.replace(/\/$/, "") : collapsed;
+    return collapsed.length > 1 ? removeTrailingSlash(collapsed) : collapsed;
 }
 
 function normalizeFilePath(filePath: string): string {

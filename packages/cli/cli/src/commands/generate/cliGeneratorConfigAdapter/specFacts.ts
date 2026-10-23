@@ -1,5 +1,10 @@
 import { access } from "node:fs/promises";
-import { decodeJsonPointerSegment, errorMessageOrString, isRecord } from "@fern-api/core-utils";
+import {
+    decodeJsonPointerSegment,
+    errorMessageOrString,
+    isRecord,
+    removeUndefinedProperties
+} from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { loadOpenAPI } from "@fern-api/lazy-fern-workspace";
 import type { TaskContext } from "@fern-api/task-context";
@@ -142,7 +147,7 @@ function collectSecuritySchemes(spec: Json, resolver: RefResolver): SpecFacts["s
         if (!isRecord(scheme)) {
             continue;
         }
-        schemes[id] = removeUndefined({
+        schemes[id] = removeUndefinedProperties({
             type: stringOrUndefined(scheme.type),
             in: stringOrUndefined(scheme.in),
             name: stringOrUndefined(scheme.name),
@@ -292,8 +297,4 @@ async function exists(path: string): Promise<boolean> {
 
 function stringOrUndefined(value: unknown): string | undefined {
     return typeof value === "string" ? value : undefined;
-}
-
-function removeUndefined<T extends object>(value: T): T {
-    return Object.fromEntries(Object.entries(value).filter(([, entry]) => entry !== undefined)) as T;
 }

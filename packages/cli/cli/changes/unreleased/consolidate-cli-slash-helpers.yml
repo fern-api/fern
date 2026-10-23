@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Internal cleanup: adding, removing and stripping slashes, splitting a path into segments and
+    dropping undefined object properties now use shared helpers instead of inline copies. No
+    behavior change.
+  type: chore

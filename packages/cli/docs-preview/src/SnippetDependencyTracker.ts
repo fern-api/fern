@@ -1,3 +1,4 @@
+import { removeLeadingSlash } from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, doesPathExist, listFiles, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
@@ -34,7 +35,7 @@ export class SnippetDependencyTracker {
             if (src) {
                 const referencedFilePath = resolve(
                     src.startsWith("/") ? fernFolderPath : dirname(markdownFilePath),
-                    RelativeFilePath.of(src.replace(/^\//, ""))
+                    RelativeFilePath.of(removeLeadingSlash(src))
                 );
                 references.add(referencedFilePath);
             }
@@ -47,7 +48,7 @@ export class SnippetDependencyTracker {
             if (src) {
                 const referencedFilePath = resolve(
                     src.startsWith("/") ? fernFolderPath : dirname(markdownFilePath),
-                    RelativeFilePath.of(src.replace(/^\//, ""))
+                    RelativeFilePath.of(removeLeadingSlash(src))
                 );
                 references.add(referencedFilePath);
             }

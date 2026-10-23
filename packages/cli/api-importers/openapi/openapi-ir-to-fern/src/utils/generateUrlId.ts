@@ -1,3 +1,5 @@
+import { getPathSegments } from "@fern-api/core-utils";
+
 /**
  * Extract the last path segment from a URL.
  * Returns undefined if no path segment is found.
@@ -5,7 +7,7 @@
 export function extractPathSegment(url: string): string | undefined {
     try {
         const urlObj = new URL(url);
-        const pathSegments = urlObj.pathname.split("/").filter((s) => s.length > 0);
+        const pathSegments = getPathSegments(urlObj.pathname);
         if (pathSegments.length > 0) {
             return pathSegments[pathSegments.length - 1];
         }

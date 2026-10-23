@@ -1,4 +1,4 @@
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, removeUndefinedProperties } from "@fern-api/core-utils";
 import type { Dependency, SdkConfigIrV1 } from "@postman/sdk-config";
 
 import type { MapperRule, RuleContext } from "../types.js";
@@ -231,7 +231,7 @@ function spdxLicense(type: string): string {
 
 function cargoDependency(dependency: Dependency): unknown {
     const { source } = dependency;
-    const table = removeUndefined({
+    const table = removeUndefinedProperties({
         version: dependency.version,
         features: dependency.features,
         optional: dependency.optional,
@@ -340,8 +340,4 @@ function rejectPublishWithoutGithub(context: RuleContext, output: SdkConfigIrV1[
             'Set output.delivery to "github", or remove output.publish.'
         );
     }
-}
-
-function removeUndefined(value: Record<string, unknown>): Record<string, unknown> {
-    return Object.fromEntries(Object.entries(value).filter(([, entry]) => entry !== undefined));
 }

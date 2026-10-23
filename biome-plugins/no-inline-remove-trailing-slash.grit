@@ -1,0 +1,10 @@
+language js
+
+// The regex literal is matched on its source text because a backtick snippet cannot express `$/` directly.
+or {
+    `$value.endsWith("/") ? $value.slice(0, -1) : $value`,
+    `$value.endsWith("/") ? $value.substring(0, $value.length - 1) : $value`,
+    `$value.replace($pattern, "")` where { $pattern <: r"^/\\/\$/$" }
+} as $remove where {
+    register_diagnostic(span=$remove, message="Use `removeTrailingSlash` from `@fern-api/core-utils` instead of removing a trailing slash by hand.", severity="error")
+}

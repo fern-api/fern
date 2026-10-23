@@ -1,3 +1,4 @@
+import { addLeadingSlash, removeTrailingSlash } from "@fern-api/core-utils";
 import { match } from "path-to-regexp";
 
 export interface MarkdownEntry {
@@ -40,17 +41,11 @@ export interface MissingRedirectViolation {
     message: string;
 }
 
-function removeTrailingSlash(pathname: string): string {
-    return pathname.endsWith("/") ? pathname.slice(0, -1) : pathname;
-}
-
 function withBasepath(source: string, basePath: string | undefined): string {
     if (basePath == null) {
         return source;
     }
-    return source.startsWith(basePath)
-        ? source
-        : `${removeTrailingSlash(basePath)}${source.startsWith("/") ? "" : "/"}${source}`;
+    return source.startsWith(basePath) ? source : `${removeTrailingSlash(basePath)}${addLeadingSlash(source)}`;
 }
 
 function matchPath(pattern: string, path: string): boolean {
@@ -65,7 +60,7 @@ function matchPath(pattern: string, path: string): boolean {
 }
 
 function isSlugCoveredByRedirect(oldSlug: string, redirects: Redirect[], basePath: string | undefined): boolean {
-    const oldPath = oldSlug.startsWith("/") ? oldSlug : `/${oldSlug}`;
+    const oldPath = addLeadingSlash(oldSlug);
     return redirects.some((redirect) => {
         const source = removeTrailingSlash(withBasepath(redirect.source, basePath));
         return matchPath(source, oldPath);
@@ -130,10 +125,10 @@ export function checkMissingRedirects(
             continue;
         }
 
-        const oldPath = removed.oldSlug.startsWith("/") ? removed.oldSlug : `/${removed.oldSlug}`;
+        const oldPath = addLeadingSlash(removed.oldSlug);
 
         if (removed.newSlug != null) {
-            const newPath = removed.newSlug.startsWith("/") ? removed.newSlug : `/${removed.newSlug}`;
+            const newPath = addLeadingSlash(removed.newSlug);
             violations.push({
                 severity: "warning",
                 message:

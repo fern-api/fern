@@ -1,3 +1,5 @@
+import { addLeadingSlash } from "@fern-api/core-utils";
+
 const DYNAMIC_SPEC_PATTERN = /^\/(openapi|asyncapi)\/.+\.(json|ya?ml)$/;
 
 /**
@@ -9,7 +11,7 @@ export function isDynamicSpecialDocPage(pathname: string, basePath?: string): bo
         return true;
     }
     if (basePath != null) {
-        const normalizedBase = basePath.startsWith("/") ? basePath : `/${basePath}`;
+        const normalizedBase = addLeadingSlash(basePath);
         if (pathname.startsWith(normalizedBase)) {
             const withoutBase = pathname.slice(normalizedBase.length);
             return DYNAMIC_SPEC_PATTERN.test(withoutBase);

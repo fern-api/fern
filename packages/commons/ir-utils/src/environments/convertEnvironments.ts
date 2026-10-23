@@ -1,4 +1,5 @@
 import { CasingsGenerator } from "@fern-api/casings-generator";
+import { removeTrailingSlash } from "@fern-api/core-utils";
 import { RawSchemas, visitRawEnvironmentDeclaration } from "@fern-api/fern-definition-schema";
 import {
     Environments,
@@ -159,8 +160,4 @@ function convertMultipleBaseUrlEnvironments({
                 })
         )
     };
-}
-
-function removeTrailingSlash(url: string): string {
-    return url.endsWith("/") ? url.slice(0, -1) : url;
 }

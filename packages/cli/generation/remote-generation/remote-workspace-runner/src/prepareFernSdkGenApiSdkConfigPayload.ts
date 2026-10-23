@@ -1,5 +1,6 @@
 import type { FernWorkspace } from "@fern-api/api-workspace-commons";
 import type { Audiences, generatorsYml } from "@fern-api/configuration";
+import { stripLeadingSlash } from "@fern-api/core-utils";
 import {
     type FernConfigMappingDiagnostic,
     type SdkConfigV1Document,
@@ -92,7 +93,7 @@ function sdkConfigSourceFromArchive(archive: FernSdkGenApiSourceArchive): SdkCon
             type: entry.type,
             // SDK Config v1 requires relative paths; sdk-gen-api matches sources by type and
             // namespace, so the container path's leading slash is the only thing to drop.
-            path: entry.specPath.replace(/^\/+/, ""),
+            path: stripLeadingSlash(entry.specPath),
             ...(entry.namespace == null ? {} : { namespace: entry.namespace }),
             ...(entry.apiImportSettings == null ? {} : { apiImportSettings: entry.apiImportSettings }),
             ...(entry.overridePaths == null || entry.overridePaths.length === 0

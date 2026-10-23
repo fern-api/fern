@@ -1,4 +1,5 @@
 // Force cache invalidation for CI - server URL templating feature
+export { addLeadingSlash } from "./addLeadingSlash.js";
 export { addPrefixToString } from "./addPrefixToString.js";
 export {
     type AnyOfConstraintSchemaLike,
@@ -29,6 +30,7 @@ export * as Examples from "./examples.js";
 export { extractErrorMessage } from "./extractErrorMessage.js";
 export { FERN_CA_BUNDLE_ENV_VAR, FERN_JAVA_SKIP_FORMATTING_ENV_VAR } from "./fernEnvVars.js";
 export { getDuplicates } from "./getDuplicates.js";
+export { getPathSegments } from "./getPathSegments.js";
 export { isCommitSha, isGitAvailable } from "./gitUtils.js";
 export { identity } from "./identity.js";
 export { hasErrnoCode, isEnoentError } from "./isEnoentError.js";
@@ -54,7 +56,10 @@ export { mapValues } from "./objects/mapValues.js";
 export { type Values, values } from "./objects/values.js";
 export { parseEndpointLocator } from "./parseEndpointLocator.js";
 export { PLATFORM, type Platform } from "./platform.js";
+export { removeLeadingSlash } from "./removeLeadingSlash.js";
 export { removeSuffix } from "./removeSuffix.js";
+export { removeTrailingSlash } from "./removeTrailingSlash.js";
+export { removeUndefinedProperties } from "./removeUndefinedProperties.js";
 export { replaceEnvVariables } from "./replaceEnvVars.js";
 export { SymbolRegistry, type SymbolRegistryOptions } from "./SymbolRegistry.js";
 export { sanitizeChangelogEntry } from "./sanitizeChangelogEntry.js";
@@ -62,6 +67,7 @@ export { SKIP_MARKER, sanitizeNullValues } from "./sanitizeNullValues.js";
 export { sanitizePreviewId } from "./sanitizePreviewId.js";
 export { diffSemverOrThrow, parseSemverOrThrow } from "./semverUtils.js";
 export { type SetRequired } from "./setRequired.js";
+export { stripLeadingAndTrailingSlashes } from "./stripLeadingAndTrailingSlashes.js";
 export { stripLeadingSlash } from "./stripLeadingSlash.js";
 export { stripTrailingSlashes } from "./stripTrailingSlashes.js";
 export { titleCase } from "./titleCase.js";
