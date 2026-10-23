@@ -1,4 +1,4 @@
-import { isHttpUrl, isRecord } from "@fern-api/core-utils";
+import { decodeJsonPointerSegment, isHttpUrl, isRecord } from "@fern-api/core-utils";
 import { CliError } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
@@ -135,7 +135,7 @@ function navigateJsonPointer(root: unknown, pointer: string, filePath: string): 
     const segments = pointer.split("/").filter((k) => k !== "");
     let current: unknown = root;
     for (const segment of segments) {
-        const decodedKey = segment.replace(/~1/g, "/").replace(/~0/g, "~");
+        const decodedKey = decodeJsonPointerSegment(segment);
         if (typeof current !== "object" || current == null) {
             throw new Error(
                 `Cannot navigate JSON Pointer "${pointer}" in "${filePath}": ` +

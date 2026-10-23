@@ -1,5 +1,5 @@
 import { access } from "node:fs/promises";
-import { errorMessageOrString, isRecord } from "@fern-api/core-utils";
+import { decodeJsonPointerSegment, errorMessageOrString, isRecord } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { loadOpenAPI } from "@fern-api/lazy-fern-workspace";
 import type { TaskContext } from "@fern-api/task-context";
@@ -125,7 +125,7 @@ class RefResolver {
             .replace(/^#\/?/, "")
             .split("/")
             .filter(Boolean)
-            .map((segment) => segment.replace(/~1/g, "/").replace(/~0/g, "~"))
+            .map(decodeJsonPointerSegment)
             .reduce<unknown>((node, segment) => (isRecord(node) ? node[segment] : undefined), this.root);
     }
 }
