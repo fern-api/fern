@@ -8,6 +8,7 @@ function token(overrides: Partial<OrgTokenRow> = {}): OrgTokenRow {
         status: "active",
         createdTime: "2026-07-15T12:00:00.000Z",
         createdBy: "google-oauth2|1234",
+        createdByEmail: null,
         lastUsedAt: "2026-10-01T12:00:00.000Z",
         description: "CI/CD pipeline",
         ...overrides
@@ -87,6 +88,16 @@ describe("buildOrgTokensTable", () => {
         expect(row).toContain("(no name)");
         expect(row).toContain("-");
         expect(row).toContain("never");
+    });
+
+    it("shows the creator's email when Venus resolved it, else the user ID", () => {
+        const [, withEmail] = buildOrgTokensTable([token({ createdByEmail: "jane@acme.com" })]);
+        const [, withoutEmail] = buildOrgTokensTable([token()]);
+
+        expect(withEmail).toContain("jane@acme.com");
+        expect(withEmail).not.toContain("google-oauth2|1234");
+        expect(withoutEmail).toContain("google-oauth2|1234");
+        expect(buildOrgTokensCsv([token({ createdByEmail: "jane@acme.com" })])).toContain(",jane@acme.com,");
     });
 
     it("collapses multiline names onto one line", () => {

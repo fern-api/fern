@@ -11,6 +11,7 @@ export interface OrgTokenRow {
     status: string;
     createdTime: string;
     createdBy: string | null;
+    createdByEmail: string | null;
     lastUsedAt: string | null;
     description: string | null;
 }
@@ -50,13 +51,23 @@ function failForStatus(context: TaskContext, status: number, subject: string): n
 /**
  * The api-keys endpoints take the org name as `organizationId` (the dashboard
  * calls them the same way). The venus SDK's TokenMetadata type omits
- * `createdBy`/`lastUsedAt`, but they are present in the response
- * (unrecognizedObjectKeys: "passthrough"), so read them defensively.
+ * `createdBy`/`createdByEmail`/`lastUsedAt`, but they are present in the
+ * response (unrecognizedObjectKeys: "passthrough"), so read them defensively.
  */
-function readExtraFields(t: object): { createdBy: string | null; lastUsedAt: string | null } {
+function readExtraFields(t: object): {
+    createdBy: string | null;
+    createdByEmail: string | null;
+    lastUsedAt: string | null;
+} {
     const createdBy = "createdBy" in t && typeof t.createdBy === "string" ? t.createdBy : null;
+    const createdByEmail = "createdByEmail" in t && typeof t.createdByEmail === "string" ? t.createdByEmail : null;
     const lastUsedAt = "lastUsedAt" in t && typeof t.lastUsedAt === "string" ? t.lastUsedAt : null;
-    return { createdBy, lastUsedAt };
+    return { createdBy, createdByEmail, lastUsedAt };
+}
+
+/** The creator's email when Venus could resolve it, else the raw user ID. */
+function displayCreator(t: OrgTokenRow): string | null {
+    return t.createdByEmail ?? t.createdBy;
 }
 
 /**
@@ -89,7 +100,7 @@ export function buildOrgTokensCsv(tokens: OrgTokenRow[]): string {
         t.description ?? "",
         t.tokenId,
         t.status,
-        t.createdBy ?? "",
+        displayCreator(t) ?? "",
         t.createdTime,
         t.lastUsedAt ?? ""
     ]);
@@ -123,7 +134,7 @@ export function buildOrgTokensTable(tokens: OrgTokenRow[], { color = false }: { 
         t.description != null && singleLine(t.description).length > 0 ? singleLine(t.description) : "(no name)",
         t.tokenId,
         t.status,
-        t.createdBy ?? "-",
+        displayCreator(t) ?? "-",
         formatTimestamp(t.createdTime),
         t.lastUsedAt != null ? formatTimestamp(t.lastUsedAt) : "never"
     ]);
@@ -183,6 +194,7 @@ export async function listOrgTokens({
                 status: t.status.type,
                 createdTime: t.createdTime.toISOString(),
                 createdBy: extra.createdBy,
+                createdByEmail: extra.createdByEmail,
                 lastUsedAt: extra.lastUsedAt,
                 description: t.description ?? null
             };

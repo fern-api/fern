@@ -1,4 +1,5 @@
 - summary: |
     Add `fern org token` commands to manage organization API keys:
     `list` (with `--json`/`--csv` output), `create` (prints the secret once), and `revoke <token-id>`.
+    `list` shows each key's creator by email when Venus can resolve it.
   type: feat
