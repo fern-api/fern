@@ -6,11 +6,10 @@ import { createSampleGeneratorContext } from "../test-utils/createSampleGenerato
 
 const DEFINITION = resolve(__dirname, "../endpoint/request/__test__/test-definitions/referenced-bodies");
 
-function numberTypes(customConfig?: Record<string, unknown>): Promise<string[]> {
-    return createSampleGeneratorContext(DEFINITION, customConfig).then((context) =>
-        [FernIr.PrimitiveTypeV1.Double, FernIr.PrimitiveTypeV1.Float].map((v1) =>
-            context.typeMapper.convert({ reference: FernIr.TypeReference.primitive({ v1, v2: undefined }) }).toString()
-        )
+async function numberTypes(customConfig?: Record<string, unknown>): Promise<string[]> {
+    const context = await createSampleGeneratorContext(DEFINITION, customConfig);
+    return [FernIr.PrimitiveTypeV1.Double, FernIr.PrimitiveTypeV1.Float].map((v1) =>
+        context.typeMapper.convert({ reference: FernIr.TypeReference.primitive({ v1, v2: undefined }) }).toString()
     );
 }
 
