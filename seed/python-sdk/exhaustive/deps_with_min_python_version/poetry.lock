@@ -329,14 +329,14 @@ crt = ["awscrt (==0.22.0)"]
 
 [[package]]
 name = "certifi"
-version = "2026.10.19"
+version = "2026.10.23"
 description = "Python package for providing Mozilla's CA Bundle."
 optional = false
 python-versions = ">=3.7"
 groups = ["main", "dev"]
 files = [
-    {file = "certifi-2026.10.19-py3-none-any.whl", hash = "sha256:42d35340cc5b9ba78e818ddbff0c5b1c2b779de448a340fd1b989f5fa8670e1b"},
-    {file = "certifi-2026.10.19.tar.gz", hash = "sha256:035c1e85572b141bf1c3a3eff0e33a8eb74917522f2559075ff8d2fea780a1ae"},
+    {file = "certifi-2026.10.23-py3-none-any.whl", hash = "sha256:e9b54de76e530bb6cf0ccd036787103acb58fd42ba930ea8bf948ddbaa2f61d1"},
+    {file = "certifi-2026.10.23.tar.gz", hash = "sha256:a9895e6e2758b371e0545e321a3a8fd1fcfd9829ada8824a936dfb16aaaf36cd"},
 ]
 
 [[package]]
@@ -1114,20 +1114,20 @@ xai = ["langchain-xai"]
 
 [[package]]
 name = "langchain-core"
-version = "1.6.13"
+version = "1.7.0"
 description = "Building applications with LLMs through composability"
 optional = false
 python-versions = "<4.0.0,>=3.10.0"
 groups = ["dev"]
 files = [
-    {file = "langchain_core-1.6.13-py3-none-any.whl", hash = "sha256:8605de6f84a49902ef6be03d6fe2a126e7dfc35184315989689f341181f0a8fb"},
-    {file = "langchain_core-1.6.13.tar.gz", hash = "sha256:756d8fd971cd7e3a5a19cf5453a81159351bd40cbfe62cbfe7e2ee3941008772"},
+    {file = "langchain_core-1.7.0-py3-none-any.whl", hash = "sha256:e82b24d7ac51fc74874baa29d6b3c0b8234880d4f3d897f8ff57fb80dfd9b07d"},
+    {file = "langchain_core-1.7.0.tar.gz", hash = "sha256:c34e53358b103cd73f43c63f5f46f9b5c6c3467efdffcdf134892b89020494e4"},
 ]
 
 [package.dependencies]
 httpx = ">=0.23.0,<1.0.0"
 jsonpatch = ">=1.33.0,<2.0.0"
-langchain-protocol = ">=0.0.17"
+langchain-protocol = ">=0.0.20"
 langsmith = ">=0.14.9,<1.0.0"
 packaging = ">=23.2.0"
 pydantic = ">=2.7.4,<3.0.0"

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "../../seed"
+
 module Seed
   module Types
     # RFC 9457 Problem Details returned for every error response.
