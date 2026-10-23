@@ -39,6 +39,12 @@ export class RemoveMemberCommand {
             throw CliError.notFound();
         }
         const auth0OrgId = orgLookup.body.auth0Id;
+        if (auth0OrgId == null) {
+            context.stderr.error(
+                `${Icons.error} Organization "${args.org}" has not been claimed yet, so it has no members to manage.`
+            );
+            throw new CliError({ code: CliError.Code.UserError });
+        }
         const userId = args.userId;
 
         const response = await withSpinner({
