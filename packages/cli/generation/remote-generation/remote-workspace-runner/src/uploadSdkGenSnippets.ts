@@ -1,5 +1,5 @@
 import { createFdrService } from "@fern-api/core";
-import { isPlainObject } from "@fern-api/core-utils";
+import { isPlainObject, nonEmpty } from "@fern-api/core-utils";
 import type { FdrClient } from "@fern-api/fdr-sdk";
 import { type HttpMethod, HttpMethodSchema } from "@fern-api/fdr-sdk/orpc-client";
 import { isAutoVersion } from "@fern-api/generator-cli/autoversion";
@@ -22,11 +22,6 @@ interface SnippetStoreLanguage {
     identify: (pkg: FernSdkGenApiPackageConfig | undefined) => SdkIdentity | undefined;
     /** The store keeps a sync and an async snippet for these; sdk-gen writes one, so it fills both. */
     syncAndAsync: boolean;
-}
-
-function nonEmpty(value: string | undefined): string | undefined {
-    const trimmed = value?.trim();
-    return trimmed == null || trimmed === "" ? undefined : trimmed;
 }
 
 /** For languages filed under the package name alone; `field` is how the store names it. */

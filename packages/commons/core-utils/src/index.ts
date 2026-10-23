@@ -30,6 +30,7 @@ export { isEnvVarTruthy } from "./isEnvVarTruthy.js";
 export { isNonNullish } from "./isNonNullish.js";
 export { MediaType } from "./mediaType.js";
 export { mergeWithOverrides } from "./mergeWithOverrides.js";
+export { nonEmpty } from "./nonEmpty.js";
 export { noop } from "./noop.js";
 export {
     haveSameNullishness,

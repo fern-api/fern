@@ -66,6 +66,7 @@ import { camelCase, chunk } from "lodash-es";
 import * as mime from "mime-types";
 import { basename } from "path";
 import terminalLink from "terminal-link";
+import { attachSdkGenSnippets } from "./attachSdkGenSnippets.js";
 import { getDocsDeployMode } from "./docsDeployMode.js";
 import { computeDynamicIRs, type DynamicIrGeneratorJob } from "./dynamicIr/computeDynamicIRs.js";
 import { DynamicIrWorkerPool, parseDynamicIrResult } from "./dynamicIr/DynamicIrWorkerPool.js";
@@ -504,14 +505,22 @@ export async function publishDocs({
         }) => {
             // apiName (docs.yml folder name) becomes the FDR API identifier, so users can
             // reference APIs by their folder name in docs components.
-            const apiDefinition = convertIrToFdrApi({
-                ir,
+            // Only adds anything when FERN_UPLOAD_SDK_GEN_SNIPPETS=true: the snippets that `fern generate` stored in
+            // FDR for the SDKs docs.yml names become code samples in the definition, which both deploy modes publish.
+            const apiDefinition = await attachSdkGenSnippets({
+                token: token.value,
+                organization,
+                apiDefinition: convertIrToFdrApi({
+                    ir,
+                    snippetsConfig,
+                    playgroundConfig,
+                    graphqlOperations,
+                    graphqlTypes,
+                    context,
+                    apiNameOverride: apiName
+                }),
                 snippetsConfig,
-                playgroundConfig,
-                graphqlOperations,
-                graphqlTypes,
-                context,
-                apiNameOverride: apiName
+                logger: context.logger
             });
 
             // create dynamic IR + metadata for each generator language
