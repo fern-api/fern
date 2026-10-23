@@ -13,6 +13,7 @@ export {
     getDirectoryContentsForSnapshot
 } from "./getDirectoryContents.js";
 export { getFilename } from "./getFilename.js";
+export { getFilesAndDirectories } from "./getFilesAndDirectories.js";
 export { isCI } from "./isCI.js";
 export { isURL } from "./isUrl.js";
 export { join } from "./join.js";
