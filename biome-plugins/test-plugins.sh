@@ -17,7 +17,12 @@ cat > "$workdir/biome.jsonc" <<JSON
         "$root/biome-plugins/no-inline-is-record.grit",
         "$root/biome-plugins/no-inline-strip-trailing-slashes.grit",
         "$root/biome-plugins/no-inline-to-posix-path.grit",
-        "$root/biome-plugins/no-inline-capitalize.grit"
+        "$root/biome-plugins/no-inline-capitalize.grit",
+        "$root/biome-plugins/no-inline-remove-trailing-slash.grit",
+        "$root/biome-plugins/no-inline-remove-leading-slash.grit",
+        "$root/biome-plugins/no-inline-add-leading-slash.grit",
+        "$root/biome-plugins/no-inline-strip-leading-and-trailing-slashes.grit",
+        "$root/biome-plugins/no-inline-strip-leading-slash.grit"
     ]
 }
 JSON

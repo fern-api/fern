@@ -24,7 +24,36 @@ export function fixture(value: unknown, text: string, maybeText?: string) {
     const capitalize3 = text[0]?.toUpperCase() + text.slice(1); // violation
     const capitalize4 = `${text[0]?.toUpperCase()}${text.substring(1)}`; // violation
 
+    // no-inline-remove-trailing-slash
+    const removeTrailing1 = text.endsWith("/") ? text.slice(0, -1) : text; // violation
+    const removeTrailing2 = text.endsWith("/") ? text.substring(0, text.length - 1) : text; // violation
+    const removeTrailing3 = text.replace(/\/$/, ""); // violation
+
+    // no-inline-remove-leading-slash
+    const removeLeading1 = text.startsWith("/") ? text.slice(1) : text; // violation
+    const removeLeading2 = text.startsWith("/") ? text.substring(1) : text; // violation
+    const removeLeading3 = text.replace(/^\//, ""); // violation
+
+    // no-inline-add-leading-slash
+    const addLeading1 = text.startsWith("/") ? text : "/" + text; // violation
+    const addLeading2 = text.startsWith("/") ? text : `/${text}`; // violation
+    const addLeading3 = !text.startsWith("/") ? `/${text}` : text; // violation
+    const addLeading4 = !text.startsWith("/") ? "/" + text : text; // violation
+
+    // no-inline-strip-leading-and-trailing-slashes
+    const stripBoth1 = text.replace(/^\/+|\/+$/g, ""); // violation
+    const stripBoth2 = maybeText?.replace(/^\/+|\/+$/g, ""); // violation
+
+    // no-inline-strip-leading-slash
+    const stripLeading1 = text.replace(/^\/+/, ""); // violation
+    const stripLeading2 = maybeText?.replace(/^\/+/, ""); // violation
+
     // Negatives: similar shapes that must not be reported.
+    const keepRemoveTrailing = text.endsWith("/") ? text.slice(0, -2) : text;
+    const keepRemoveLeading = text.startsWith("/") ? text.slice(2) : text;
+    const keepAddLeading = text.startsWith("/") ? text : `x/${text}`;
+    const keepStripBoth = text.replace(/^\/+|\/+$/g, "x");
+    const keepStripLeading = text.replace(/^\/+/, "x");
     const keepStrip = text.replace(/\/+$/, "x");
     const keepPosix = text.split(sep).join("\\");
     const keepCapitalize = text.charAt(0).toLowerCase() + text.slice(1);
@@ -35,6 +64,11 @@ export function fixture(value: unknown, text: string, maybeText?: string) {
         strip1, strip2,
         posix1, posix2,
         capitalize1, capitalize2, capitalize3, capitalize4,
-        keepStrip, keepPosix, keepCapitalize, keepRecord
+        removeTrailing1, removeTrailing2, removeTrailing3,
+        removeLeading1, removeLeading2, removeLeading3,
+        addLeading1, addLeading2, addLeading3, addLeading4,
+        stripBoth1, stripBoth2, stripLeading1, stripLeading2,
+        keepStrip, keepPosix, keepCapitalize, keepRecord,
+        keepRemoveTrailing, keepRemoveLeading, keepAddLeading, keepStripBoth, keepStripLeading
     ];
 }
