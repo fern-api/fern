@@ -57,6 +57,7 @@ export { PLATFORM, type Platform } from "./platform.js";
 export { removeLeadingSlash } from "./removeLeadingSlash.js";
 export { removeSuffix } from "./removeSuffix.js";
 export { removeTrailingSlash } from "./removeTrailingSlash.js";
+export { removeUndefinedProperties } from "./removeUndefinedProperties.js";
 export { replaceEnvVariables } from "./replaceEnvVars.js";
 export { SymbolRegistry, type SymbolRegistryOptions } from "./SymbolRegistry.js";
 export { sanitizeChangelogEntry } from "./sanitizeChangelogEntry.js";
