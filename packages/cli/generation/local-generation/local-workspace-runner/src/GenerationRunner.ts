@@ -11,7 +11,7 @@ import {
 } from "@fern-api/api-workspace-commons";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { generatorsYml, SNIPPET_JSON_FILENAME } from "@fern-api/configuration";
-import { ContainerRunner } from "@fern-api/core-utils";
+import { ContainerRunner, resolveContainerRunner, UNKNOWN_CLI_VERSION } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { type PipelineLogger, PostGenerationPipeline } from "@fern-api/generator-cli/pipeline";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
@@ -158,7 +158,7 @@ export class GenerationRunner {
                                     generatorName: generatorInvocation.name,
                                     generatorVersion: verifyValidatorVersion ?? generatorInvocation.version,
                                     cliVersion: workspace.cliVersion,
-                                    runner: verifyRunner ?? "docker",
+                                    runner: resolveContainerRunner(verifyRunner),
                                     context: interactiveTaskContext
                                 });
                             }
@@ -329,7 +329,7 @@ async function runVerifyPipeline({
         {
             outputDir,
             verify: { enabled: true, runner },
-            cliVersion: cliVersion ?? "unknown",
+            cliVersion: cliVersion ?? UNKNOWN_CLI_VERSION,
             generatorVersions: { [generatorName]: generatorVersion },
             generatorName
         },

@@ -1,0 +1,5 @@
+language js
+
+`process.env.LOCAL_STORAGE_FOLDER` as $read where {
+    register_diagnostic(span=$read, message="Use `LOCAL_STORAGE_FOLDER` from `@fern-api/core-utils` instead of reading the environment variable by hand.", severity="error")
+}

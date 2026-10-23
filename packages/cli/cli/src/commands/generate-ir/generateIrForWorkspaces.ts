@@ -9,6 +9,7 @@ import { TaskContext } from "@fern-api/task-context";
 import path from "path";
 
 import { CliContext } from "../../cli-context/CliContext.js";
+import { UNNAMED_API_LABEL } from "../../constants.js";
 import { generateIrForFernWorkspace } from "./generateIrForFernWorkspace.js";
 
 export async function generateIrForWorkspaces({
@@ -39,7 +40,7 @@ export async function generateIrForWorkspaces({
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
-                cliContext.logger.info(`Generating IR for workspace ${workspace.workspaceName ?? "api"}`);
+                cliContext.logger.info(`Generating IR for workspace ${workspace.workspaceName ?? UNNAMED_API_LABEL}`);
 
                 const intermediateRepresentation = await getIntermediateRepresentation({
                     workspace,

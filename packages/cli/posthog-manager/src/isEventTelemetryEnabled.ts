@@ -1,3 +1,5 @@
+import { isTelemetryOptedOutByEnv } from "@fern-api/core-utils";
+
 /**
  * Whether this process may send PostHog events. Builds bake in `POSTHOG_API_KEY` (dev and local
  * builds inject none, and publish jobs without the secret inject `""`), and users opt out with
@@ -8,5 +10,5 @@ export function isEventTelemetryEnabled(): boolean {
     if (posthogApiKey == null || posthogApiKey.trim().length === 0) {
         return false;
     }
-    return process.env.FERN_DISABLE_TELEMETRY !== "true";
+    return !isTelemetryOptedOutByEnv();
 }

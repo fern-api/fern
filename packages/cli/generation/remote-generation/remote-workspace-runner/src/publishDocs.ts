@@ -5,9 +5,11 @@ import { createFdrService } from "@fern-api/core";
 import {
     asyncPool,
     errorMessageOrString,
+    getFdrOrigin,
     MediaType,
     replaceEnvVariables,
-    sanitizePreviewId
+    sanitizePreviewId,
+    UNKNOWN_GENERATOR_LANGUAGE
 } from "@fern-api/core-utils";
 import {
     applyTranslatedApiTitlesToNavTree,
@@ -242,11 +244,7 @@ export async function publishDocs({
     loginCommand?: string;
     multiSource?: boolean;
 }): Promise<string> {
-    const fdrOrigin =
-        process.env.FERN_FDR_ORIGIN ??
-        process.env.OVERRIDE_FDR_ORIGIN ??
-        process.env.DEFAULT_FDR_ORIGIN ??
-        "https://registry.buildwithfern.com";
+    const fdrOrigin = getFdrOrigin();
     const isAirGapped = await detectAirGappedMode(`${fdrOrigin}/health`, context.logger);
     if (isAirGapped) {
         context.logger.debug("Detected air-gapped environment - skipping external FDR service calls");
@@ -2026,7 +2024,7 @@ export function withCliSnippetNamespaces({
 export function describeGeneratorForSnippetLog(generatorInvocation: generatorsYml.GeneratorInvocation): string {
     const config = generatorInvocation.config;
     const configKeys = typeof config === "object" && config !== null ? Object.keys(config).join(",") : "none";
-    return `${generatorInvocation.name} (language=${generatorInvocation.language ?? "unknown"}, output=${generatorInvocation.outputMode.type}, publish-target=${generatorsYml.getPackageName({ generatorInvocation }) ?? "none"}, config keys=[${configKeys}])`;
+    return `${generatorInvocation.name} (language=${generatorInvocation.language ?? UNKNOWN_GENERATOR_LANGUAGE}, output=${generatorInvocation.outputMode.type}, publish-target=${generatorsYml.getPackageName({ generatorInvocation }) ?? "none"}, config keys=[${configKeys}])`;
 }
 
 async function computeSemanticVersionForLanguage({

@@ -6853,6 +6853,9 @@ importers:
       '@fern-api/core':
         specifier: workspace:*
         version: link:../../core
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../commons/core-utils
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils

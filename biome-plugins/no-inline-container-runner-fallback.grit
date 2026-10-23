@@ -1,0 +1,6 @@
+language js
+
+`$value ?? "docker"` as $fallback where {
+    $value <: r"(?i).*runner.*",
+    register_diagnostic(span=$fallback, message="Use `resolveContainerRunner` from `@fern-api/core-utils` instead of defaulting to docker by hand.", severity="error")
+}

@@ -1,3 +1,4 @@
+import { DEFAULT_GITHUB_HOST } from "@fern-api/core-utils";
 export interface CISource {
     type: "github" | "gitlab" | "bitbucket";
     repo?: string;
@@ -15,7 +16,7 @@ export interface CISource {
 export function detectCISource(): CISource | undefined {
     if (process.env.GITHUB_ACTIONS === "true") {
         const repo = process.env.GITHUB_REPOSITORY;
-        const serverUrl = process.env.GITHUB_SERVER_URL ?? "https://github.com";
+        const serverUrl = process.env.GITHUB_SERVER_URL ?? DEFAULT_GITHUB_HOST;
         const runId = process.env.GITHUB_RUN_ID;
         return {
             type: "github",

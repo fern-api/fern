@@ -1,5 +1,5 @@
-export const FDR_ORIGIN =
-    process.env.OVERRIDE_FDR_ORIGIN ?? process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
+import { DEFAULT_FDR_ORIGIN_URL } from "@fern-api/core-utils";
+export const FDR_ORIGIN = process.env.OVERRIDE_FDR_ORIGIN ?? process.env.DEFAULT_FDR_ORIGIN ?? DEFAULT_FDR_ORIGIN_URL;
 
 export function describeFetchError(error: unknown): string {
     if (!(error instanceof Error)) {

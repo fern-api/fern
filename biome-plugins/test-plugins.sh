@@ -17,7 +17,11 @@ cat > "$workdir/biome.jsonc" <<JSON
         "$root/biome-plugins/no-inline-is-record.grit",
         "$root/biome-plugins/no-inline-strip-trailing-slashes.grit",
         "$root/biome-plugins/no-inline-to-posix-path.grit",
-        "$root/biome-plugins/no-inline-capitalize.grit"
+        "$root/biome-plugins/no-inline-capitalize.grit",
+        "$root/biome-plugins/no-inline-container-runner-fallback.grit",
+        "$root/biome-plugins/no-inline-violation-severity-fallback.grit",
+        "$root/biome-plugins/no-inline-fdr-origin-url.grit",
+        "$root/biome-plugins/no-inline-local-storage-folder.grit"
     ]
 }
 JSON

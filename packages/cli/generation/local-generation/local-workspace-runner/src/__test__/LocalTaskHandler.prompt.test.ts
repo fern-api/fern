@@ -44,7 +44,7 @@ describe("LocalTaskHandler prompt - previous_version parameter", () => {
     });
 
     it("passes generatorLanguage to AnalyzeSdkDiff with 'unknown' fallback", () => {
-        expect(localTaskHandlerSource).toContain('this.generatorLanguage ?? "unknown"');
+        expect(localTaskHandlerSource).toContain("this.generatorLanguage ?? UNKNOWN_GENERATOR_LANGUAGE");
     });
 
     it("LocalTaskHandler Init interface includes generatorLanguage field", () => {

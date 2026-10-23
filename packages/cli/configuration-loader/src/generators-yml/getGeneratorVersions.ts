@@ -1,3 +1,4 @@
+import { DEFAULT_FDR_ORIGIN_URL } from "@fern-api/core-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { FernRegistry, FernRegistryClient as GeneratorsClient } from "@fern-fern/generators-sdk";
 import semver from "semver";
@@ -19,7 +20,7 @@ export async function getLatestGeneratorVersion({
 }): Promise<string | undefined> {
     const parsedVersion = semver.parse(currentGeneratorVersion);
     // We're just using unauthed endpoints, so we don't need to pass in a token
-    const fdrOrigin = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
+    const fdrOrigin = process.env.DEFAULT_FDR_ORIGIN ?? DEFAULT_FDR_ORIGIN_URL;
     const client = new GeneratorsClient({
         environment: fdrOrigin
     });

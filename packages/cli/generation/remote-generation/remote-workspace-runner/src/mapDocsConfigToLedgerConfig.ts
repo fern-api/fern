@@ -1,4 +1,4 @@
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, DEFAULT_GITHUB_BRANCH, DEFAULT_GITHUB_HOST } from "@fern-api/core-utils";
 import type { DocsV1Write } from "@fern-api/fdr-sdk";
 import type { FileManifestEntry, ImageRef, LedgerConfig, PathOrUrl } from "@fern-api/fdr-sdk/orpc-client";
 
@@ -316,8 +316,8 @@ export function mapDocsConfigToLedgerConfig({
                 ? {
                       owner: editThisPage.github.owner,
                       repo: editThisPage.github.repo,
-                      branch: editThisPage.github.branch ?? "main",
-                      host: editThisPage.github.host ?? "https://github.com"
+                      branch: editThisPage.github.branch ?? DEFAULT_GITHUB_BRANCH,
+                      host: editThisPage.github.host ?? DEFAULT_GITHUB_HOST
                   }
                 : undefined,
         integrations: mapIntegrations(docsConfig.integrations),

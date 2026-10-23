@@ -2,7 +2,7 @@
 import { stripCliConfigKeys } from "@fern-api/api-workspace-commons";
 import { FernToken } from "@fern-api/auth";
 import { generatorsYml } from "@fern-api/configuration";
-import { delay } from "@fern-api/core-utils";
+import { delay, UNKNOWN_GENERATOR_LANGUAGE } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { isAutoVersion } from "@fern-api/generator-cli/autoversion";
 import { type FeatureFlagContext, getFeatureFlagClient } from "@fern-api/posthog-manager";
@@ -1015,7 +1015,7 @@ export function describeFernSdkGenApiIneligibility({
     if (specsTarGzBuffer == null) {
         return "the source archive is unavailable";
     }
-    return `generator language ${generatorInvocation.language ?? "unknown"} does not match ${getFernSdkGenApiLanguage(generatorInvocation.name)}`;
+    return `generator language ${generatorInvocation.language ?? UNKNOWN_GENERATOR_LANGUAGE} does not match ${getFernSdkGenApiLanguage(generatorInvocation.name)}`;
 }
 
 export interface FernSdkGenApiPayload {

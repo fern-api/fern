@@ -1,9 +1,9 @@
+import { LOCAL_STORAGE_FOLDER, UNKNOWN_CLI_VERSION } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { appendFile, mkdir, readdir, stat, unlink, writeFile } from "fs/promises";
 import { homedir } from "os";
 import path from "path";
 
-const LOCAL_STORAGE_FOLDER = process.env.LOCAL_STORAGE_FOLDER ?? ".fern";
 const LOGS_FOLDER_NAME = "logs";
 
 // 100 MB cap for the logs directory
@@ -115,7 +115,7 @@ interface DebugLogEntry {
  * Get the CLI version source string in the format "cli@x.x.x"
  */
 function getCliSource(): string {
-    const version = process.env.CLI_VERSION ?? "unknown";
+    const version = process.env.CLI_VERSION ?? UNKNOWN_CLI_VERSION;
     return `cli@${version}`;
 }
 

@@ -1,6 +1,7 @@
 import { FernUserToken, getUserIdFromToken } from "@fern-api/auth";
 import { getRunIdProperties } from "@fern-api/cli-telemetry";
 import { createVenusService, detectCodingAgent } from "@fern-api/core";
+import { LOCAL_STORAGE_FOLDER } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import type { PosthogAutomationEvent, PosthogEvent } from "@fern-api/task-context";
 import { mkdir, readFile, writeFile } from "fs/promises";
@@ -13,7 +14,6 @@ import { getCliReleaseEnvironment } from "./feature-flags/CliReleaseEnvironment.
 import { PosthogManager } from "./PosthogManager.js";
 
 const DISTINCT_ID_FILENAME = "id";
-const LOCAL_STORAGE_FOLDER = process.env.LOCAL_STORAGE_FOLDER ?? ".fern";
 
 export class UserPosthogManager implements PosthogManager {
     private posthog: PostHog;

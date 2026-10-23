@@ -5,7 +5,12 @@ import {
     getRedirectsFilepaths,
     loadRedirects
 } from "@fern-api/configuration-loader";
-import { extractErrorMessage, sanitizeNullValues, validateAgainstJsonSchema } from "@fern-api/core-utils";
+import {
+    extractErrorMessage,
+    sanitizeNullValues,
+    UNKNOWN_ERROR_MESSAGE,
+    validateAgainstJsonSchema
+} from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { CliError, TaskContext } from "@fern-api/task-context";
 
@@ -133,7 +138,7 @@ export async function loadRawDocsConfiguration({
         };
     } else {
         throw new CliError({
-            message: `Failed to parse docs.yml:\n${result.error?.message ?? "Unknown error"}`,
+            message: `Failed to parse docs.yml:\n${result.error?.message ?? UNKNOWN_ERROR_MESSAGE}`,
             code: CliError.Code.ParseError
         });
     }

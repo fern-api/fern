@@ -269,7 +269,11 @@
                 "./biome-plugins/no-inline-is-record.grit",
                 "./biome-plugins/no-inline-strip-trailing-slashes.grit",
                 "./biome-plugins/no-inline-to-posix-path.grit",
-                "./biome-plugins/no-inline-capitalize.grit"
+                "./biome-plugins/no-inline-capitalize.grit",
+                "./biome-plugins/no-inline-container-runner-fallback.grit",
+                "./biome-plugins/no-inline-violation-severity-fallback.grit",
+                "./biome-plugins/no-inline-fdr-origin-url.grit",
+                "./biome-plugins/no-inline-local-storage-folder.grit"
             ]
         },
         {

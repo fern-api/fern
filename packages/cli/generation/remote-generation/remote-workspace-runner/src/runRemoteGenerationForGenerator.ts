@@ -17,7 +17,7 @@ import { FernToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { Audiences, fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { createFdrService, createVenusService } from "@fern-api/core";
-import { assertNever, extractErrorMessage, replaceEnvVariables } from "@fern-api/core-utils";
+import { assertNever, DEFAULT_FDR_ORIGIN_URL, extractErrorMessage, replaceEnvVariables } from "@fern-api/core-utils";
 import { FdrAPI, FdrClient } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import {
@@ -178,7 +178,7 @@ export async function runRemoteGenerationForGenerator({
 
     const isAirGapped = await detectFdrAirGappedMode({
         requiresFdrRegistration,
-        fdrOrigin: process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com",
+        fdrOrigin: process.env.DEFAULT_FDR_ORIGIN ?? DEFAULT_FDR_ORIGIN_URL,
         logger: interactiveTaskContext.logger
     });
 

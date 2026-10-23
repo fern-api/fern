@@ -1,3 +1,4 @@
+import { LOCAL_STORAGE_FOLDER } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
@@ -25,7 +26,6 @@ const ASTRO_PREVIEW_FOLDER_NAME = "astro-preview";
 const BUNDLE_FOLDER_NAME = "bundle";
 const NEXT_BUNDLE_FOLDER_NAME = ".next";
 const STANDALONE_FOLDER_NAME = "standalone";
-const LOCAL_STORAGE_FOLDER = process.env.LOCAL_STORAGE_FOLDER ?? ".fern";
 
 // Const for windows post-processing
 const INSTRUMENTATION_PATH = "packages/fern-docs/bundle/.next/server/instrumentation.js";

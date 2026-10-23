@@ -1,7 +1,7 @@
 import { FernDefinition, FernWorkspace, type IdentifiableSource, type Spec } from "@fern-api/api-workspace-commons";
 import { dependenciesYml } from "@fern-api/configuration-loader";
 import { createFiddleService } from "@fern-api/core";
-import { assertNever, extractErrorMessage, noop, visitObject } from "@fern-api/core-utils";
+import { assertNever, extractErrorMessage, LOCAL_STORAGE_FOLDER, noop, visitObject } from "@fern-api/core-utils";
 import { RootApiFileSchema, YAML_SCHEMA_VERSION } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { parseVersion } from "@fern-api/semver-utils";
@@ -115,7 +115,6 @@ export async function loadDependency({
 const DEPENDENCIES_FOLDER_NAME = "dependencies";
 const DEFINITION_FOLDER_NAME = "definition";
 const METADATA_RESPONSE_FILENAME = "metadata.json";
-const LOCAL_STORAGE_FOLDER = process.env.LOCAL_STORAGE_FOLDER ?? ".fern";
 
 function getPathToLocalStorageDependency(dependency: dependenciesYml.VersionedDependency): AbsoluteFilePath {
     return join(

@@ -1,4 +1,9 @@
-import { ContainerRunner, errorMessageOrString, extractErrorMessage } from "@fern-api/core-utils";
+import {
+    ContainerRunner,
+    errorMessageOrString,
+    extractErrorMessage,
+    resolveContainerRunner
+} from "@fern-api/core-utils";
 import {
     copyFromContainer,
     copyToContainer,
@@ -44,7 +49,7 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
 
     constructor({ imageName, runner, poolSize }: { imageName: string; runner?: ContainerRunner; poolSize?: number }) {
         this.imageName = imageName;
-        this.runner = runner ?? "docker";
+        this.runner = resolveContainerRunner(runner);
         this.poolSize = poolSize ?? 1;
     }
 

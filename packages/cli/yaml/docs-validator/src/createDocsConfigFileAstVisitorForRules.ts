@@ -1,3 +1,4 @@
+import { resolveViolationSeverity } from "@fern-api/core-utils";
 import { NodePath } from "@fern-api/fern-definition-schema";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import {
@@ -48,7 +49,7 @@ export function createDocsConfigFileAstVisitorForRules({
                         addViolations([
                             {
                                 name: ruleName,
-                                severity: severityOverride ?? "fatal",
+                                severity: resolveViolationSeverity(severityOverride),
                                 relativeFilepath: RelativeFilePath.of(""),
                                 nodePath,
                                 message: `Rule "${ruleName}" failed to run: ${formatInitError(error)}`

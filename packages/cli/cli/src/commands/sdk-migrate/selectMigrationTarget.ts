@@ -6,6 +6,7 @@ import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
 
 import type { CliContext } from "../../cli-context/CliContext.js";
+import { UNNAMED_API_SELECTOR } from "../../constants.js";
 import { resolveGroupAlias } from "../generate/resolveGroupAlias.js";
 import type { SdkMigrateArgs } from "./sdkMigrate.js";
 
@@ -131,7 +132,7 @@ async function selectWorkspace(
     }
     const choices = workspaces
         .map((workspace) => ({
-            name: workspace.workspaceName ?? "default",
+            name: workspace.workspaceName ?? UNNAMED_API_SELECTOR,
             value: workspace
         }))
         .sort((left, right) => left.name.localeCompare(right.name));
@@ -141,7 +142,7 @@ async function selectWorkspace(
         message: "Multiple APIs found. Select one:",
         choices,
         nonInteractiveError: `Multiple APIs found: ${names.join(", ")}. Use --api to select one.`,
-        flagHint: (workspace) => `--api ${workspace.workspaceName ?? "default"}`
+        flagHint: (workspace) => `--api ${workspace.workspaceName ?? UNNAMED_API_SELECTOR}`
     });
 }
 
@@ -351,5 +352,5 @@ async function promptSelect<T>({
 }
 
 function workspaceNames(workspaces: AbstractAPIWorkspace<unknown>[]): string[] {
-    return workspaces.map((workspace) => workspace.workspaceName ?? "default").sort();
+    return workspaces.map((workspace) => workspace.workspaceName ?? UNNAMED_API_SELECTOR).sort();
 }

@@ -1,5 +1,5 @@
 import { getUserToken } from "@fern-api/auth";
-import { extractErrorMessage, replaceEnvVariables } from "@fern-api/core-utils";
+import { DEFAULT_FDR_ORIGIN_URL, extractErrorMessage, replaceEnvVariables } from "@fern-api/core-utils";
 import {
     isValidRelativeSlug,
     parseImagePaths,
@@ -562,8 +562,7 @@ async function applyGlobalThemeIfNeeded(
     }
     // FERN_FDR_ORIGIN is checked first because DEFAULT_FDR_ORIGIN is baked into the
     // prod bundle at build time and cannot be overridden at runtime.
-    const fdrOrigin =
-        process.env.FERN_FDR_ORIGIN ?? process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
+    const fdrOrigin = process.env.FERN_FDR_ORIGIN ?? process.env.DEFAULT_FDR_ORIGIN ?? DEFAULT_FDR_ORIGIN_URL;
     return stitchGlobalTheme({ docsWorkspace, organization, fdrOrigin, token, taskContext: context });
 }
 
