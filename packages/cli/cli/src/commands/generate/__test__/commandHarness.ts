@@ -56,6 +56,10 @@ export function createTestCliContext(): TestCliContext {
     const taskContext = {
         ...task,
         setSubtitle: vi.fn(),
+        // Unlike the real CliContext, which catches the failure and returns `false`, a failed task throws out of
+        // here. The tests rely on that to read what a command failed with; a command that branches on the
+        // returned boolean (runRemoteGenerationForAPIWorkspace does, to fail after sibling generators finish)
+        // is therefore not covered for siblings.
         runInteractiveTask: async (_options: unknown, run: (context: TaskContext) => Promise<unknown>) => {
             await run(taskContext as never);
             return true;
