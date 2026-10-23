@@ -88,6 +88,11 @@ export const BaseRubyCustomConfigSchema = z.object({
     // such as `create(id: "h", MY_SECRET: "x")` are sent as the body, but `request:` is sent
     // wrapped as `{"request": ...}`. Disabled by default.
     legacyNonObjectRequestBodies: z.boolean().optional(),
+    // Opt-out: a map request body (e.g. `Hash[String, String]`) can also be passed as keyword
+    // arguments, as before 1.34.1: `create(id: "h", MY_SECRET: "x")` sends `{"MY_SECRET":"x"}`.
+    // `request:` (or the wrapped body key) still takes precedence. Set to `false` to only read the
+    // body from that argument. Enabled by default.
+    allowMapBodyAsKeywordArguments: z.boolean().optional(),
     // Opt-in: a type alias to a named type coerces into that type rather than returning
     // the result of a bare `JSON.parse`. Without this, an endpoint whose response schema
     // is a `$ref` to another schema returns a string-keyed Hash while the SDK documents
@@ -113,7 +118,12 @@ export const BaseRubyCustomConfigSchema = z.object({
     // returning the iterator, so an API error for that page is raised by the method call
     // instead of by the first iteration. Disabled by default because callers may rescue
     // errors around the loop, or build an iterator without iterating it.
-    fetchFirstPageOnCall: z.boolean().optional()
+    fetchFirstPageOnCall: z.boolean().optional(),
+    // Opt-in: `Model#to_h` leaves out every field the caller never set, required ones included,
+    // so sparse (partial update) payloads carry only what was provided. A field set explicitly
+    // to `nil` is still sent as `null`. Disabled by default because unset required fields are
+    // currently sent as `null`, and changing that changes request bodies on the wire.
+    omitUnsetModelFields: z.boolean().optional()
 });
 
 export type BaseRubyCustomConfigSchema = z.infer<typeof BaseRubyCustomConfigSchema>;

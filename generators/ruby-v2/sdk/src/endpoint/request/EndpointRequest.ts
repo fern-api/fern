@@ -7,6 +7,8 @@ import { RawClient } from "../http/RawClient.js";
 
 export const BODY_BAG_NAME = "body_params";
 export const PATH_PARAM_NAMES_VN = "path_param_names";
+const KEYWORD_BODY_VN = "keyword_body";
+const BODY_VALUE_VN = "body_value";
 
 export interface QueryParameterCodeBlock {
     code: ruby.CodeBlock;
@@ -175,8 +177,72 @@ export abstract class EndpointRequest {
     }
 
     protected getBodyValueExpression(bodyType: FernIr.TypeReference, parameterName: FernIr.NameOrString): string {
-        const value = this.getBodyArgumentReference(parameterName);
+        return this.getSerializedBodyExpression(bodyType, this.getBodyArgumentReference(parameterName));
+    }
+
+    private getSerializedBodyExpression(bodyType: FernIr.TypeReference, value: string): string {
         return this.getSerializedValueExpression(bodyType, value, { depth: 0, nilable: true }) ?? value;
+    }
+
+    /**
+     * True when a map body may also be passed as keyword arguments (the pre-1.34.1 call style),
+     * e.g. `create(id: "h", MY_SECRET: "x")`. Only maps qualify: their keys are free-form, while
+     * lists and primitives can only be passed through the body argument.
+     */
+    protected acceptsBodyAsKeywordArguments(bodyType: FernIr.TypeReference): boolean {
+        if (this.context.customConfig.allowMapBodyAsKeywordArguments === false) {
+            return false;
+        }
+        let resolved = this.resolveAliases(bodyType);
+        while (
+            resolved.type === "container" &&
+            (resolved.container.type === "optional" || resolved.container.type === "nullable")
+        ) {
+            resolved = this.resolveAliases(
+                resolved.container.type === "optional" ? resolved.container.optional : resolved.container.nullable
+            );
+        }
+        return resolved.type === "container" && resolved.container.type === "map";
+    }
+
+    /**
+     * Builds the body for `acceptsBodyAsKeywordArguments` endpoints: the body argument when it is
+     * passed, otherwise the remaining keyword arguments without the path, query and header ones.
+     */
+    protected getKeywordArgumentsBodyCodeBlock({
+        bodyType,
+        parameterName,
+        nonBodyParameterNames,
+        omitContentTypeWithoutBody
+    }: {
+        bodyType: FernIr.TypeReference;
+        parameterName: FernIr.NameOrString;
+        nonBodyParameterNames: string[];
+        omitContentTypeWithoutBody: boolean;
+    }): RequestBodyCodeBlock {
+        const bodyArgument = this.getBodyArgumentReference(parameterName);
+        const bodyArgumentName = this.case.snakeSafe(parameterName);
+        const hasNonBodyParameters = nonBodyParameterNames.length > 0;
+        const keywordBody = hasNonBodyParameters ? KEYWORD_BODY_VN : "params";
+        return {
+            code: ruby.codeblock((writer) => {
+                if (hasNonBodyParameters) {
+                    writer.writeLine(
+                        `${KEYWORD_BODY_VN} = params.except(*${toRubySymbolArray(nonBodyParameterNames)})`
+                    );
+                }
+                writer.writeLine(
+                    `${BODY_VALUE_VN} = params.key?(:${bodyArgumentName}) || ${keywordBody}.empty? ? ${bodyArgument} : ${keywordBody}`
+                );
+            }),
+            requestBodyReference: ruby.codeblock((writer) => {
+                if (omitContentTypeWithoutBody) {
+                    this.writeOptionalValueGuard(writer, BODY_VALUE_VN);
+                }
+                writer.write(this.getSerializedBodyExpression(bodyType, BODY_VALUE_VN));
+            }),
+            omitContentTypeWithoutBody
+        };
     }
 
     /**

@@ -47,6 +47,14 @@ export class ReferencedEndpointRequest extends EndpointRequest {
             if (this.usesLegacyNonObjectRequestBodies()) {
                 return this.getLegacyNonObjectBodyCodeBlock(omitContentTypeWithoutBody);
             }
+            if (this.acceptsBodyAsKeywordArguments(this.requestBodyShape)) {
+                return this.getKeywordArgumentsBodyCodeBlock({
+                    bodyType: this.requestBodyShape,
+                    parameterName: this.sdkRequest.requestParameterName,
+                    nonBodyParameterNames: this.getPathParameterNames(),
+                    omitContentTypeWithoutBody
+                });
+            }
             return {
                 omitContentTypeWithoutBody,
                 requestBodyReference: ruby.codeblock((writer) => {

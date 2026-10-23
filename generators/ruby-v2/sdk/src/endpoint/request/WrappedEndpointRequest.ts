@@ -160,6 +160,18 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 if (this.usesLegacyNonObjectRequestBodies()) {
                     return this.getLegacyNonObjectBodyCodeBlock(omitContentTypeWithoutBody);
                 }
+                if (this.acceptsBodyAsKeywordArguments(requestBodyType)) {
+                    return this.getKeywordArgumentsBodyCodeBlock({
+                        bodyType: requestBodyType,
+                        parameterName: this.wrapper.bodyKey,
+                        nonBodyParameterNames: [
+                            ...this.getPathParameterNames(),
+                            ...this.getQueryParameterNames(),
+                            ...this.endpoint.headers.map((header) => this.case.snakeSafe(header.name))
+                        ],
+                        omitContentTypeWithoutBody
+                    });
+                }
                 return {
                     requestBodyReference: ruby.codeblock((writer) => {
                         if (omitContentTypeWithoutBody) {

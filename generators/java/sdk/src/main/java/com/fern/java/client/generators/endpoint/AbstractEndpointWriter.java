@@ -640,12 +640,15 @@ public abstract class AbstractEndpointWriter {
                     // Companion multipart fields are serialized from the request object, which only
                     // works when the file is a standalone parameter that the stream replaces (i.e. it
                     // is not inlined into the request object) so the request remains available.
-                    boolean canStreamBodyProperties = hasBodyProperties
+                    boolean legacyStreamOverloads =
+                            clientGeneratorContext.getCustomConfig().legacyInputStreamUploadOverloads();
+                    boolean canStreamBodyProperties = !legacyStreamOverloads
+                            && hasBodyProperties
                             && fileParameterIsStandalone
                             && fileUploadBodyGetters.isPresent()
                             && requestParameterSpec.isPresent();
 
-                    if (isSingleFile && (!hasBodyProperties || canStreamBodyProperties)) {
+                    if (isSingleFile && (legacyStreamOverloads || !hasBodyProperties || canStreamBodyProperties)) {
                         NameAndWireValue filePropertyKey = fileProperty.visit(new GetFilePropertyKey());
                         String wireKey = filePropertyKey.getWireValue();
 
@@ -653,7 +656,7 @@ public abstract class AbstractEndpointWriter {
                         // stays on the signature only when companion form fields are read from it.
                         List<ParameterSpec> additionalParamsForStreamOverloads = additionalParameters.stream()
                                 .filter(parameterSpec -> {
-                                    if (parameterSpec.name.equals(fileParameterName)
+                                    if ((!legacyStreamOverloads && parameterSpec.name.equals(fileParameterName))
                                             || parameterSpec.type.equals(ClassName.get(java.io.File.class))) {
                                         return false;
                                     }
