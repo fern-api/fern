@@ -28,27 +28,10 @@ export class ListTokensCommand {
 
         const venus = createVenusService({ token: token.value, headers: context.headers });
 
-        const orgLookup = await venus.organization.get({ orgId: args.org });
-        if (!orgLookup.ok) {
-            const status = orgLookup.rawResponse.status;
-            if (status === 401 || status === 403) {
-                context.stderr.error(`${Icons.error} You do not have access to organization "${args.org}".`);
-                throw new CliError({ code: CliError.Code.AuthError });
-            }
-            context.stderr.error(`${Icons.error} Organization "${args.org}" was not found.`);
-            throw CliError.notFound();
-        }
-        const auth0OrgId = orgLookup.body.auth0Id;
-        if (auth0OrgId == null) {
-            context.stderr.error(
-                `${Icons.error} Organization "${args.org}" has not been claimed yet, so it has no tokens to manage.`
-            );
-            throw new CliError({ code: CliError.Code.UserError });
-        }
-
+        // The api-keys endpoints take the org name as organizationId, same as the dashboard.
         const response = await withSpinner({
             message: `Fetching tokens for organization "${args.org}"`,
-            operation: () => venus.apiKeys.getTokensForOrganization({ organizationId: auth0OrgId })
+            operation: () => venus.apiKeys.getTokensForOrganization({ organizationId: args.org })
         });
 
         if (!response.ok) {
