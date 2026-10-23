@@ -23,6 +23,8 @@ export declare namespace StringEnumGenerator {
         name: string;
         source: Source;
         docsContent?: string;
+        /** Decode values the API adds later into an `__unknown(String)` case instead of failing. */
+        forwardCompatible?: boolean;
     }
 }
 
@@ -30,11 +32,13 @@ export class StringEnumGenerator {
     private readonly name: string;
     private readonly source: StringEnumGenerator.Source;
     private readonly docsContent?: string;
+    private readonly forwardCompatible: boolean;
 
-    public constructor({ name, source, docsContent }: StringEnumGenerator.Args) {
+    public constructor({ name, source, docsContent, forwardCompatible }: StringEnumGenerator.Args) {
         this.name = name;
         this.source = source;
         this.docsContent = docsContent;
+        this.forwardCompatible = forwardCompatible ?? false;
     }
 
     public generate(): swift.EnumWithRawValues {
@@ -46,7 +50,7 @@ export class StringEnumGenerator {
             name: this.name,
             accessLevel: swift.AccessLevel.Public,
             conformances: [
-                "String",
+                this.forwardCompatible ? swift.Protocol.RawRepresentable : "String",
                 swift.Protocol.Codable,
                 swift.Protocol.Hashable,
                 swift.Protocol.CaseIterable,
@@ -68,6 +72,15 @@ export class StringEnumGenerator {
                     }));
                 }
             }),
+            unknownCase: this.forwardCompatible
+                ? {
+                      unsafeName: "__unknown",
+                      docs: swift.docComment({
+                          summary:
+                              "A value this version of the SDK does not recognize, such as one the API added later."
+                      })
+                  }
+                : undefined,
             docs: this.docsContent ? swift.docComment({ summary: this.docsContent }) : undefined
         });
     }

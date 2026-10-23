@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add the `enableForwardCompatibleEnums` config option (defaults to `false`), matching the Java
+    generator's `enable-forward-compatible-enums`. When enabled, a string enum decodes a value it
+    does not list into a `__unknown(String)` case instead of failing the whole response, and
+    encodes it back unchanged. `rawValue`, `init(rawValue:)` and `allCases` (listed values only)
+    keep working, so APIs can add enum values without breaking SDK versions already in use.
+    Exhaustive `switch` statements over these enums need to handle `__unknown`.
+  type: feat
