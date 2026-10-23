@@ -83,6 +83,11 @@ export const BaseRubyCustomConfigSchema = z.object({
     // parameters, and form fields are serialized as RFC 3339 strings. Set to `false` to keep
     // the previous `Time#to_s` output (e.g. "2026-10-16 01:40:16 UTC"). Enabled by default.
     serializeTimeAsIso8601: z.boolean().optional(),
+    // Opt-in: a non-object request body (map, list, primitive, enum, or an alias of one) is built
+    // from every keyword argument except the path parameters, as before 1.34.1. Spread keywords
+    // such as `create(id: "h", MY_SECRET: "x")` are sent as the body, but `request:` is sent
+    // wrapped as `{"request": ...}`. Disabled by default.
+    legacyNonObjectRequestBodies: z.boolean().optional(),
     // Opt-in: a type alias to a named type coerces into that type rather than returning
     // the result of a bare `JSON.parse`. Without this, an endpoint whose response schema
     // is a `$ref` to another schema returns a string-keyed Hash while the SDK documents

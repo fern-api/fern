@@ -44,6 +44,9 @@ export class ReferencedEndpointRequest extends EndpointRequest {
         const omitContentTypeWithoutBody = this.respectsOptionalRequestBody();
         const modelTypeId = this.getModelBodyTypeId(this.requestBodyShape);
         if (modelTypeId == null) {
+            if (this.usesLegacyNonObjectRequestBodies()) {
+                return this.getLegacyNonObjectBodyCodeBlock(omitContentTypeWithoutBody);
+            }
             return {
                 omitContentTypeWithoutBody,
                 requestBodyReference: ruby.codeblock((writer) => {

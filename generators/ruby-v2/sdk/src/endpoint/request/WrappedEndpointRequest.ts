@@ -157,6 +157,9 @@ export class WrappedEndpointRequest extends EndpointRequest {
             const requestBodyType = this.endpoint.requestBody.requestBodyType;
             const modelTypeId = this.getModelBodyTypeId(requestBodyType);
             if (modelTypeId == null) {
+                if (this.usesLegacyNonObjectRequestBodies()) {
+                    return this.getLegacyNonObjectBodyCodeBlock(omitContentTypeWithoutBody);
+                }
                 return {
                     requestBodyReference: ruby.codeblock((writer) => {
                         if (omitContentTypeWithoutBody) {

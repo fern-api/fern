@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add the `legacyNonObjectRequestBodies` option (default `false`). When `true`, non-object request
+    bodies (maps, lists, primitives, enums, and aliases of them) are built from every keyword argument
+    except the path parameters, as they were before 1.34.1. Spread keywords such as
+    `create(id: "h", my_secret: "x")` are sent as the body again, but `request:` is sent wrapped as
+    `{"request": ...}` and header and query arguments are included in the body, as before 1.34.1.
+  type: feat
