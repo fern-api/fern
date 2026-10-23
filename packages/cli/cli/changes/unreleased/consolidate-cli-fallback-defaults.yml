@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Internal cleanup: default values the CLI falls back to (local storage folder, container runner,
+    violation severity, FDR origin, package registry URLs, GitHub host and branch, placeholder
+    labels) are now defined once instead of being repeated inline. No behavior change.
+  type: chore

@@ -1,0 +1,5 @@
+language js
+
+`$value ?? "fatal"` as $fallback where {
+    register_diagnostic(span=$fallback, message="Use `resolveViolationSeverity` from `@fern-api/core-utils` instead of defaulting to fatal by hand.", severity="error")
+}

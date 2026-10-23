@@ -24,7 +24,19 @@ export function fixture(value: unknown, text: string, maybeText?: string) {
     const capitalize3 = text[0]?.toUpperCase() + text.slice(1); // violation
     const capitalize4 = `${text[0]?.toUpperCase()}${text.substring(1)}`; // violation
 
+    // no-inline-container-runner-fallback, no-inline-violation-severity-fallback
+    const runner = maybeText ?? "docker"; // violation
+    const severity = maybeText ?? "fatal"; // violation
+
+    // no-inline-fdr-origin-url, no-inline-local-storage-folder
+    const fdrOrigin = "https://registry.buildwithfern.com"; // violation
+    const storageFolder = process.env.LOCAL_STORAGE_FOLDER; // violation
+
     // Negatives: similar shapes that must not be reported.
+    const keepRunner = maybeText ?? "podman";
+    const keepSeverity = maybeText ?? "warning";
+    const keepFdrPath = "https://registry.buildwithfern.com/v1";
+    const keepOtherEnv = process.env.OTHER_FOLDER;
     const keepStrip = text.replace(/\/+$/, "x");
     const keepPosix = text.split(sep).join("\\");
     const keepCapitalize = text.charAt(0).toLowerCase() + text.slice(1);
@@ -35,6 +47,8 @@ export function fixture(value: unknown, text: string, maybeText?: string) {
         strip1, strip2,
         posix1, posix2,
         capitalize1, capitalize2, capitalize3, capitalize4,
+        runner, severity, fdrOrigin, storageFolder,
+        keepRunner, keepSeverity, keepFdrPath, keepOtherEnv,
         keepStrip, keepPosix, keepCapitalize, keepRecord
     ];
 }

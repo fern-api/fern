@@ -1,0 +1,5 @@
+language js
+
+`"https://registry.buildwithfern.com"` as $url where {
+    register_diagnostic(span=$url, message="Use `DEFAULT_FDR_ORIGIN_URL` (or `getFdrOrigin`) from `@fern-api/core-utils` instead of writing the FDR origin URL by hand.", severity="error")
+}
