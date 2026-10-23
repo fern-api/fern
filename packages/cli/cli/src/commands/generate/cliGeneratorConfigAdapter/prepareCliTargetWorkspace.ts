@@ -8,7 +8,7 @@ import { CliError, type TaskContext } from "@fern-api/task-context";
 import { handleFailedWorkspaceParserResult, loadAPIWorkspace } from "@fern-api/workspace-loader";
 import type { SdkConfigV1 } from "@postman/sdk-config/sdk-config/v1";
 import YAML from "yaml";
-
+import { UNNAMED_API_LABEL } from "../../../constants.js";
 import { mergeOverlays } from "./overlays.js";
 import { GROUP_NAME } from "./rules/generator.js";
 import { formatDiagnostic, translateCliTarget } from "./translateCliTarget.js";
@@ -59,7 +59,7 @@ export async function prepareCliTargetWorkspace({
             absolutePathToConfig,
             sourceRoot,
             outDir: folder,
-            apiName: workspaceName ?? "api",
+            apiName: workspaceName ?? UNNAMED_API_LABEL,
             organization,
             npmToken
         });

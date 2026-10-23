@@ -7,6 +7,7 @@ import { mkdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 
 import { CliContext } from "../../cli-context/CliContext.js";
+import { UNNAMED_API_LABEL } from "../../constants.js";
 import { convertIrToOpenApi } from "./convertIrToOpenApi.js";
 
 export async function generateOpenAPIForWorkspaces({
@@ -40,7 +41,7 @@ export async function generateOpenAPIForWorkspaces({
                     sourceResolver: new SourceResolverImpl(context, fernWorkspace)
                 });
                 const openapi = convertIrToOpenApi({
-                    apiName: workspace.workspaceName ?? "api",
+                    apiName: workspace.workspaceName ?? UNNAMED_API_LABEL,
                     ir,
                     mode: "openapi"
                 });

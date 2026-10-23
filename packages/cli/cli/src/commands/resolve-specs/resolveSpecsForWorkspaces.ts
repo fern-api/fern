@@ -6,6 +6,7 @@ import { mkdir, writeFile } from "fs/promises";
 import path from "path";
 
 import { CliContext } from "../../cli-context/CliContext.js";
+import { UNNAMED_API_LABEL } from "../../constants.js";
 
 export async function resolveSpecsForWorkspaces({
     project,
@@ -32,7 +33,7 @@ export async function resolveSpecsForWorkspaces({
 
                 const workspaceOutputDir =
                     project.apiWorkspaces.length > 1
-                        ? AbsoluteFilePath.of(path.join(outputDir, workspace.workspaceName ?? "api"))
+                        ? AbsoluteFilePath.of(path.join(outputDir, workspace.workspaceName ?? UNNAMED_API_LABEL))
                         : outputDir;
 
                 await mkdir(workspaceOutputDir, { recursive: true });

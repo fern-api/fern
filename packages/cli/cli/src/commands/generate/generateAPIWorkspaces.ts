@@ -16,7 +16,7 @@ import {
 import { CliError } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { CliContext } from "../../cli-context/CliContext.js";
-import { PREVIEW_DIRECTORY } from "../../constants.js";
+import { PREVIEW_DIRECTORY, UNNAMED_API_SELECTOR } from "../../constants.js";
 import { buildGeneratePosthogProperties, listRequestedGenerators } from "./buildGeneratePosthogProperties.js";
 import { checkOutputDirectory } from "./checkOutputDirectory.js";
 import { CLI_LANGUAGE, prepareCliTargetWorkspace } from "./cliGeneratorConfigAdapter/prepareCliTargetWorkspace.js";
@@ -400,7 +400,7 @@ async function prepareSdkConfigGenerations({
                 candidates.push({ path: defaultPath, owner: workspace });
             } else if (targetNames != null) {
                 return cliContext.failAndThrow(
-                    `No ${SDK_CONFIG_FILENAME} found for API '${workspace.workspaceName ?? "default"}'. Use --sdk-config to select another file.`,
+                    `No ${SDK_CONFIG_FILENAME} found for API '${workspace.workspaceName ?? UNNAMED_API_SELECTOR}'. Use --sdk-config to select another file.`,
                     undefined,
                     { code: CliError.Code.ConfigError }
                 );
@@ -617,7 +617,7 @@ function validateUniqueLanguageOwnership({
 }): void {
     const ownersByWorkspace = new Map<string, Map<string, { kind: WorkspaceGeneration["kind"]; owner: string }>>();
     for (const generation of generations) {
-        const workspaceName = generation.workspace.workspaceName ?? "default";
+        const workspaceName = generation.workspace.workspaceName ?? UNNAMED_API_SELECTOR;
         let owners = ownersByWorkspace.get(workspaceName);
         if (owners == null) {
             owners = new Map();

@@ -20,6 +20,7 @@ import { Workspace } from "@fern-api/workspace-loader";
 import { checkbox, input, select } from "@inquirer/prompts";
 import chalk from "chalk";
 import { maxBy } from "lodash-es";
+import { UNNAMED_API_LABEL } from "../constants.js";
 import {
     type AutomationTelemetryEmitOptions,
     AutomationTelemetryManager
@@ -245,7 +246,9 @@ export class CliContext {
     private longestWorkspaceName: string | undefined;
     public registerWorkspaces(workspaces: readonly Workspace[]): void {
         const longestWorkspaceName = maxBy(
-            workspaces.map((workspace) => (workspace.type === "docs" ? "docs" : (workspace.workspaceName ?? "api"))),
+            workspaces.map((workspace) =>
+                workspace.type === "docs" ? "docs" : (workspace.workspaceName ?? UNNAMED_API_LABEL)
+            ),
             (name) => name.length
         );
         if (longestWorkspaceName != null) {
@@ -331,7 +334,7 @@ export class CliContext {
     public readonly stderr = createLogger((level, ...args) => this.logStderr(level, ...args));
 
     private constructTaskInitForWorkspace(workspace: Workspace): TaskContextImpl.Init {
-        const workspaceName = workspace.type === "docs" ? "docs" : (workspace.workspaceName ?? "api");
+        const workspaceName = workspace.type === "docs" ? "docs" : (workspace.workspaceName ?? UNNAMED_API_LABEL);
         const prefixWithoutPadding = wrapWorkspaceNameForPrefix(workspaceName);
 
         // we want all the prefixes to be the same length, so use this.longestWorkspaceName
