@@ -1,4 +1,4 @@
-import { ContainerRunner } from "@fern-api/core-utils";
+import { ContainerRunner, resolveContainerRunner } from "@fern-api/core-utils";
 import { Logger } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { writeFile } from "fs/promises";
@@ -167,7 +167,7 @@ async function tryRunContainer({
         ...args
     ].filter(Boolean);
 
-    const containerRunner = runner ?? "docker";
+    const containerRunner = resolveContainerRunner(runner);
     const { stdout, stderr, exitCode } = await loggingExeca(logger, containerRunner, containerArgs, {
         reject: false,
         all: true,
@@ -223,7 +223,7 @@ function logForwardedEnvVars({
 }
 
 async function pullImage(imageName: string, runner?: ContainerRunner, signal?: AbortSignal): Promise<void> {
-    await loggingExeca(undefined, runner ?? "docker", ["pull", imageName], {
+    await loggingExeca(undefined, resolveContainerRunner(runner), ["pull", imageName], {
         all: true,
         doNotPipeOutput: true,
         signal
@@ -243,7 +243,7 @@ export async function startContainer({
     imageName: string;
     runner?: ContainerRunner;
 }): Promise<string> {
-    const containerRunner = runner ?? "docker";
+    const containerRunner = resolveContainerRunner(runner);
     await ensureDockerHubOatLogin({ imageName, runner, logger });
 
     const tryStart = async () => {
@@ -304,7 +304,7 @@ export async function execInContainer({
     writeLogsToFile?: boolean;
     reject?: boolean;
 }): Promise<{ stdout: string; stderr: string; exitCode: number }> {
-    const containerRunner = runner ?? "docker";
+    const containerRunner = resolveContainerRunner(runner);
     const { envVars: containerEnvVars, forwardedFromHost } = buildContainerEnvVars({
         envVars,
         processEnv: process.env
@@ -354,7 +354,7 @@ export async function copyToContainer({
     containerPath: string;
     runner?: ContainerRunner;
 }): Promise<void> {
-    const containerRunner = runner ?? "docker";
+    const containerRunner = resolveContainerRunner(runner);
     const { exitCode, stdout, stderr } = await loggingExeca(
         logger,
         containerRunner,
@@ -388,7 +388,7 @@ export async function copyFromContainer({
     hostPath: string;
     runner?: ContainerRunner;
 }): Promise<void> {
-    const containerRunner = runner ?? "docker";
+    const containerRunner = resolveContainerRunner(runner);
     const { exitCode, stdout, stderr } = await loggingExeca(
         logger,
         containerRunner,
@@ -416,7 +416,7 @@ export async function stopContainer({
     containerId: string;
     runner?: ContainerRunner;
 }): Promise<void> {
-    const containerRunner = runner ?? "docker";
+    const containerRunner = resolveContainerRunner(runner);
     await loggingExeca(logger, containerRunner, ["rm", "-f", containerId], {
         reject: false,
         doNotPipeOutput: true

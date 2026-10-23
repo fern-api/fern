@@ -1,4 +1,4 @@
-import { ContainerRunner, errorMessageOrString } from "@fern-api/core-utils";
+import { ContainerRunner, errorMessageOrString, resolveContainerRunner } from "@fern-api/core-utils";
 import { runContainer } from "@fern-api/docker-utils";
 import { CliError } from "@fern-api/task-context";
 import {
@@ -134,7 +134,7 @@ export class ContainerExecutionEnvironment implements ExecutionEnvironment {
             await verifyCaBundleMount({
                 hostPath: caBundle.hostPath,
                 imageName: this.containerImage,
-                runner: this.runner ?? runner ?? "docker",
+                runner: this.runner ?? resolveContainerRunner(runner),
                 logger: context.logger
             });
             binds.push(caBundle.bind);

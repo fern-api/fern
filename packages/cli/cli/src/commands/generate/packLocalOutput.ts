@@ -1,5 +1,11 @@
 import { FERNIGNORE_FILENAME, generatorsYml, getFernIgnorePaths } from "@fern-api/configuration-loader";
-import { assertNever, ContainerRunner, errorMessageOrString, isRecord } from "@fern-api/core-utils";
+import {
+    assertNever,
+    ContainerRunner,
+    errorMessageOrString,
+    isRecord,
+    resolveContainerRunner
+} from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
@@ -97,7 +103,7 @@ export async function packLocalOutputForGroup({
                 outputPath,
                 context,
                 mode,
-                runner: runner ?? "docker",
+                runner: resolveContainerRunner(runner),
                 version
             });
             if (packOnly) {

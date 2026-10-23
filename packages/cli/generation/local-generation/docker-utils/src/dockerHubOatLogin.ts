@@ -1,4 +1,4 @@
-import { ContainerRunner } from "@fern-api/core-utils";
+import { ContainerRunner, resolveContainerRunner } from "@fern-api/core-utils";
 import { Logger } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
 
@@ -117,7 +117,7 @@ export async function ensureDockerHubOatLogin({
     );
     const { exitCode, stdout, stderr } = await loggingExeca(
         logger,
-        runner ?? "docker",
+        resolveContainerRunner(runner),
         ["login", "--username", credentials.username, "--password-stdin"],
         {
             input: credentials.token,
