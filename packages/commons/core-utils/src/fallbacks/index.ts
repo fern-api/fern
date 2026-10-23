@@ -1,5 +1,6 @@
 export { DEFAULT_CONTAINER_RUNNER, resolveContainerRunner } from "./containerRunner.js";
 export { DEFAULT_FDR_ORIGIN_URL, getFdrOrigin } from "./fdrOrigin.js";
+export { DEFAULT_GITHUB_BRANCH, DEFAULT_GITHUB_HOST } from "./github.js";
 export { LOCAL_STORAGE_FOLDER } from "./localStorageFolder.js";
 export {
     DEFAULT_CRATES_REGISTRY_URL,

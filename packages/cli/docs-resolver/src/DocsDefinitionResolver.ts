@@ -10,6 +10,8 @@ import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { docsYml, parseAudiences, parseDocsConfiguration, WithoutQuestionMarks } from "@fern-api/configuration-loader";
 import {
     assertNever,
+    DEFAULT_GITHUB_BRANCH,
+    DEFAULT_GITHUB_HOST,
     extractErrorMessage,
     isNonNullish,
     replaceEnvVariables,
@@ -3416,7 +3418,7 @@ function createEditThisPageUrl(
         return { url: undefined, launch };
     }
 
-    const { owner, repo, branch = "main", host = "https://github.com" } = editThisPage.github;
+    const { owner, repo, branch = DEFAULT_GITHUB_BRANCH, host = DEFAULT_GITHUB_HOST } = editThisPage.github;
     const url = `${wrapWithHttps(host)}/${owner}/${repo}/blob/${branch}/fern/${pageFilepath}?plain=1`;
 
     return { url, launch };
