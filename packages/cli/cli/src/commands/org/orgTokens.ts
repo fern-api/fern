@@ -61,7 +61,9 @@ function readExtraFields(t: object): {
 } {
     const createdBy = "createdBy" in t && typeof t.createdBy === "string" ? t.createdBy : null;
     const createdByEmail = "createdByEmail" in t && typeof t.createdByEmail === "string" ? t.createdByEmail : null;
-    const lastUsedAt = "lastUsedAt" in t && typeof t.lastUsedAt === "string" ? t.lastUsedAt : null;
+    const raw = "lastUsedAt" in t ? t.lastUsedAt : null;
+    // Newer SDKs parse it into a Date; older ones pass the ISO string through.
+    const lastUsedAt = raw instanceof Date ? raw.toISOString() : typeof raw === "string" ? raw : null;
     return { createdBy, createdByEmail, lastUsedAt };
 }
 
