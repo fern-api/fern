@@ -134,7 +134,7 @@ export class ContainerExecutionEnvironment implements ExecutionEnvironment {
             await verifyCaBundleMount({
                 hostPath: caBundle.hostPath,
                 imageName: this.containerImage,
-                runner: this.runner ?? resolveContainerRunner(runner),
+                runner: resolveContainerRunner(this.runner ?? runner),
                 logger: context.logger
             });
             binds.push(caBundle.bind);

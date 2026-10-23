@@ -25,16 +25,20 @@ export function fixture(value: unknown, text: string, maybeText?: string) {
     const capitalize4 = `${text[0]?.toUpperCase()}${text.substring(1)}`; // violation
 
     // no-inline-container-runner-fallback, no-inline-violation-severity-fallback
-    const runner = maybeText ?? "docker"; // violation
-    const severity = maybeText ?? "fatal"; // violation
+    const configuredRunner = maybeText;
+    const reportedSeverity = maybeText;
+    const runner = configuredRunner ?? "docker"; // violation
+    const severity = reportedSeverity ?? "fatal"; // violation
 
     // no-inline-fdr-origin-url, no-inline-local-storage-folder
     const fdrOrigin = "https://registry.buildwithfern.com"; // violation
     const storageFolder = process.env.LOCAL_STORAGE_FOLDER; // violation
 
     // Negatives: similar shapes that must not be reported.
-    const keepRunner = maybeText ?? "podman";
-    const keepSeverity = maybeText ?? "warning";
+    const keepRunner = configuredRunner ?? "podman";
+    const keepSeverity = reportedSeverity ?? "warning";
+    const keepOtherDocker = maybeText ?? "docker";
+    const keepOtherFatal = maybeText ?? "fatal";
     const keepFdrPath = "https://registry.buildwithfern.com/v1";
     const keepOtherEnv = process.env.OTHER_FOLDER;
     const keepStrip = text.replace(/\/+$/, "x");
@@ -48,7 +52,7 @@ export function fixture(value: unknown, text: string, maybeText?: string) {
         posix1, posix2,
         capitalize1, capitalize2, capitalize3, capitalize4,
         runner, severity, fdrOrigin, storageFolder,
-        keepRunner, keepSeverity, keepFdrPath, keepOtherEnv,
+        keepRunner, keepSeverity, keepOtherDocker, keepOtherFatal, keepFdrPath, keepOtherEnv,
         keepStrip, keepPosix, keepCapitalize, keepRecord
     ];
 }
