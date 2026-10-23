@@ -1,3 +1,4 @@
+import { getPathSegments } from "@fern-api/core-utils";
 export interface CircularRefInfo {
     /** JSON path where the circular $ref is located (e.g., "components.schemas.MySchema") */
     path: string;
@@ -168,10 +169,7 @@ function collectRefs(obj: unknown, path: string[], refMap: Map<string, string>):
 }
 
 function pointerToDotPath(pointer: string): string {
-    return pointer
-        .split("/")
-        .filter((s) => s.length > 0)
-        .join(".");
+    return getPathSegments(pointer).join(".");
 }
 
 function dotPathToPointer(dotPath: string): string {

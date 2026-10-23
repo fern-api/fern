@@ -1,4 +1,4 @@
-import { extractErrorMessage } from "@fern-api/core-utils";
+import { extractErrorMessage, getPathSegments } from "@fern-api/core-utils";
 import { wrapWithHttps } from "@fern-api/docs-resolver";
 import { DocsV1Read, DocsV2Read, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, dirname, doesPathExist } from "@fern-api/fs-utils";
@@ -714,7 +714,7 @@ export async function runAppPreviewServer({
         }
 
         // Check if path starts with a locale prefix
-        const pathParts = pathname.split("/").filter((p) => p.length > 0);
+        const pathParts = getPathSegments(pathname);
         if (pathParts.length > 0) {
             const firstPart = pathParts[0];
             if (firstPart != null && availableLocales.includes(firstPart) && firstPart !== defaultLocale) {

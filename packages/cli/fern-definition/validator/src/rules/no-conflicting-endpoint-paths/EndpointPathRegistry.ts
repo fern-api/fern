@@ -1,3 +1,4 @@
+import { getPathSegments } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 
@@ -31,12 +32,12 @@ export class EndpointPathRegistry {
     }
 
     private getPathPartsForEndpoint(endpointReference: EndpointReference): PathPart[] {
-        return getFullEndpointPath({
-            service: endpointReference.service,
-            endpoint: endpointReference.endpoint
-        })
-            .split("/")
-            .filter((part) => part.length > 0);
+        return getPathSegments(
+            getFullEndpointPath({
+                service: endpointReference.service,
+                endpoint: endpointReference.endpoint
+            })
+        );
     }
 }
 

@@ -30,6 +30,7 @@ export * as Examples from "./examples.js";
 export { extractErrorMessage } from "./extractErrorMessage.js";
 export { FERN_CA_BUNDLE_ENV_VAR, FERN_JAVA_SKIP_FORMATTING_ENV_VAR } from "./fernEnvVars.js";
 export { getDuplicates } from "./getDuplicates.js";
+export { getPathSegments } from "./getPathSegments.js";
 export { isCommitSha, isGitAvailable } from "./gitUtils.js";
 export { identity } from "./identity.js";
 export { hasErrnoCode, isEnoentError } from "./isEnoentError.js";
