@@ -2508,9 +2508,9 @@
       "properties": {
         "group": {
           "type": "string",
-          "description": "Header shown above this group's variants in the variant menu."
+          "description": "Header shown above this group's items in the variant menu."
         },
-        "variants": {
+        "items": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/docs.TabVariantGroupItem"
@@ -2519,7 +2519,7 @@
       },
       "required": [
         "group",
-        "variants"
+        "items"
       ],
       "additionalProperties": false
     },
