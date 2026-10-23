@@ -30,6 +30,7 @@ interface EventEmitterLike {
 
 interface HandshakeResponse {
     statusCode?: number;
+    headers?: unknown;
     setEncoding?: (encoding: string) => unknown;
     on?: (event: string, listener: EmitterListener) => unknown;
     destroy?: () => unknown;
@@ -48,6 +49,23 @@ const isEventEmitterLike = (value: unknown): value is EventEmitterLike =>
     typeof value.removeListener === "function";
 
 const isHandshakeResponse = (value: unknown): value is HandshakeResponse => typeof value === "object" && value != null;
+
+const normalizeHandshakeHeaders = (rawHeaders: unknown): Record<string, string> => {
+    const headers: Record<string, string> = {};
+    if (typeof rawHeaders !== "object" || rawHeaders == null) {
+        return headers;
+    }
+    for (const [name, value] of Object.entries(rawHeaders)) {
+        if (typeof value === "string") {
+            headers[name] = value;
+        } else if (Array.isArray(value)) {
+            headers[name] = value.map(String).join(", ");
+        } else if (typeof value === "number") {
+            headers[name] = String(value);
+        }
+    }
+    return headers;
+};
 
 const formatHandshakeRejection = (statusCode: number | undefined, body: string): string => {
     const detail = body.trim();
@@ -750,7 +768,11 @@ export class ReconnectingWebSocket {
             }
             this._debug("handshake rejected", response?.statusCode);
             this._handleError(
-                new Events.ErrorEvent(new Error(formatHandshakeRejection(response?.statusCode, body)), this),
+                new Events.ErrorEvent(new Error(formatHandshakeRejection(response?.statusCode, body)), this, {
+                    statusCode: response?.statusCode,
+                    headers: normalizeHandshakeHeaders(response?.headers),
+                    body: body.slice(0, MAX_HANDSHAKE_REJECTION_BODY_LENGTH),
+                }),
             );
         };
         if (typeof response?.on !== "function") {

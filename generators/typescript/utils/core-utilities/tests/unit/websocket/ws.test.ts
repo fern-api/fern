@@ -531,6 +531,7 @@ class FakeIncomingMessage {
     constructor(
         public readonly statusCode: number,
         private readonly body = "",
+        public readonly headers: Record<string, string | string[] | undefined> = {},
     ) {}
 
     public setEncoding(_encoding: string): void {}
@@ -603,6 +604,61 @@ describe("ReconnectingWebSocket rejected handshake", () => {
             message: 'Unexpected server response: 400 ({"err_msg":"Unknown query parameters: foo"})',
         });
         expect(response.destroyed).toBe(true);
+    });
+
+    it("exposes the status, headers and body on the error event", async () => {
+        socket = createEmitterSocket({ maxRetries: 1 });
+        await flush();
+        const onError = jest.fn();
+        socket.addEventListener("error", onError);
+        const waiting = socket.waitForOpen().catch((error: unknown) => error);
+
+        const body = '{"err_msg":"Invalid credentials"}';
+        const response = new FakeIncomingMessage(401, body, {
+            "content-type": "application/json",
+            "x-request-id": "req-123",
+            "set-cookie": ["a=1", "b=2"],
+            "x-missing": undefined,
+        });
+        latestEmitterSocket().simulateUnexpectedResponse(response);
+        response.flush();
+        await flush();
+
+        const expected = {
+            statusCode: 401,
+            headers: { "content-type": "application/json", "x-request-id": "req-123", "set-cookie": "a=1, b=2" },
+            body,
+        };
+        expect(onError.mock.calls[0]?.[0]).toMatchObject(expected);
+        expect(await waiting).toMatchObject(expected);
+    });
+
+    it("caps the body field at the same length as the message", async () => {
+        socket = createEmitterSocket({ maxRetries: 1 });
+        await flush();
+        const onError = jest.fn();
+        socket.addEventListener("error", onError);
+
+        const response = new FakeIncomingMessage(400, "z".repeat(5000));
+        latestEmitterSocket().simulateUnexpectedResponse(response);
+        response.flush();
+        await flush();
+
+        expect((onError.mock.calls[0]?.[0] as ErrorEvent).body).toBe("z".repeat(1000));
+    });
+
+    it("leaves the handshake fields undefined for other errors", async () => {
+        socket = createEmitterSocket({ maxRetries: 0, connectionTimeout: 50 });
+        await flush();
+        const onError = jest.fn();
+        socket.addEventListener("error", onError);
+        await new Promise((resolve) => setTimeout(resolve, 100));
+
+        const event = onError.mock.calls[0]?.[0] as ErrorEvent;
+        expect(event.message).toBe("TIMEOUT");
+        expect(event.statusCode).toBeUndefined();
+        expect(event.headers).toBeUndefined();
+        expect(event.body).toBeUndefined();
     });
 
     it("reports the status alone when the response has no body", async () => {
