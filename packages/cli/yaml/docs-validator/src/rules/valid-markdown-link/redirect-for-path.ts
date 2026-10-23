@@ -1,7 +1,6 @@
+import { removeTrailingSlash } from "@fern-api/core-utils";
 import { compile, match } from "path-to-regexp";
 import urljoin from "url-join";
-
-import { removeTrailingSlash } from "./url-utils.js";
 
 // this is a copy of https://github.com/fern-api/fern-platform/blob/main/packages/ui/fern-docs-utils/src/getRedirectForPath.ts
 // please keep in sync with that file

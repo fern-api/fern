@@ -1,3 +1,4 @@
+import { removeLeadingSlash } from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, RelativeFilePath, relative, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
@@ -251,7 +252,7 @@ export async function replaceReferencedMarkdown({
 
         const filepath = resolve(
             src.startsWith("/") ? absolutePathToFernFolder : dirname(absolutePathToMarkdownFile),
-            RelativeFilePath.of(src.replace(/^\//, ""))
+            RelativeFilePath.of(removeLeadingSlash(src))
         );
 
         // Check for circular reference

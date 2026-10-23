@@ -1,3 +1,4 @@
+import { removeTrailingSlash } from "@fern-api/core-utils";
 import { match } from "path-to-regexp";
 
 export interface MarkdownEntry {
@@ -38,10 +39,6 @@ export interface Redirect {
 export interface MissingRedirectViolation {
     severity: "warning";
     message: string;
-}
-
-function removeTrailingSlash(pathname: string): string {
-    return pathname.endsWith("/") ? pathname.slice(0, -1) : pathname;
 }
 
 function withBasepath(source: string, basePath: string | undefined): string {

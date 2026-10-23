@@ -1,3 +1,4 @@
+import { removeTrailingSlash } from "@fern-api/core-utils";
 import { minimatch } from "minimatch";
 
 // Negation (`!pattern`) is NOT honored — every entry is treated as include-only.
@@ -12,7 +13,7 @@ export function expandFernignorePatterns(fernignoreContent: string, candidatePat
 }
 
 function matches(candidate: string, pattern: string): boolean {
-    const normalized = pattern.endsWith("/") ? pattern.slice(0, -1) : pattern;
+    const normalized = removeTrailingSlash(pattern);
     // `nonegate` makes `!` a literal character. Without it, minimatch would
     // invert the result and a stray `!pattern` would silently preserve nearly
     // every file — discarding generator output instead of customer code.

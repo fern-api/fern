@@ -1,3 +1,4 @@
+import { removeLeadingSlash, removeTrailingSlash } from "@fern-api/core-utils";
 /**
  * Returns the pathname with the site's basePath prepended, or null if prepending
  * would not change the path (no basePath configured, or the pathname already
@@ -17,21 +18,13 @@ export function withBasePathPrepended(pathname: string, basePath: string | undef
     if (basePathSlug === "") {
         return null;
     }
-    const bare = stripLeadingSlash(pathname);
+    const bare = removeLeadingSlash(pathname);
     if (bare === basePathSlug || bare.startsWith(basePathSlug + "/")) {
         return null;
     }
     return `${basePathSlug}/${bare}`;
 }
 
-function stripLeadingSlash(value: string): string {
-    return value.startsWith("/") ? value.slice(1) : value;
-}
-
-function stripTrailingSlash(value: string): string {
-    return value.endsWith("/") ? value.slice(0, -1) : value;
-}
-
 function stripSlashes(value: string): string {
-    return stripLeadingSlash(stripTrailingSlash(value));
+    return removeLeadingSlash(removeTrailingSlash(value));
 }

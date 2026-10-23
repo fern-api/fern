@@ -1,4 +1,4 @@
-import { isRecord } from "@fern-api/core-utils";
+import { isRecord, removeTrailingSlash } from "@fern-api/core-utils";
 import { PathParameter, PrimitiveSchemaValue, Schema } from "@fern-api/openapi-ir";
 import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 import { getExtension } from "../../../getExtension.js";
@@ -121,7 +121,7 @@ export function stripBasePathFromPaths({
     if (openApi.paths == null) {
         return [];
     }
-    const trimmedBasePath = basePath.endsWith("/") ? basePath.slice(0, -1) : basePath;
+    const trimmedBasePath = removeTrailingSlash(basePath);
     const errors: string[] = [];
     const newPaths: Record<string, OpenAPIV3.PathItemObject | undefined> = {};
 

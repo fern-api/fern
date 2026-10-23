@@ -1,6 +1,6 @@
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { Audiences } from "@fern-api/configuration";
-import { noop } from "@fern-api/core-utils";
+import { noop, removeLeadingSlash } from "@fern-api/core-utils";
 import { replaceReferencedMarkdown } from "@fern-api/docs-markdown-utils";
 import { convertIrToApiDefinition, DocsDefinitionResolver } from "@fern-api/docs-resolver";
 import { APIV1Read, ApiDefinition, FernNavigation } from "@fern-api/fdr-sdk";
@@ -18,7 +18,7 @@ import path from "path";
 import { Rule, RuleViolation } from "../../Rule.js";
 import { checkIfPathnameExists } from "./check-if-pathname-exists.js";
 import { collectPathnamesToCheck, PathnameToCheck } from "./collect-pathnames.js";
-import { getInstanceUrls, removeLeadingSlash, toBaseUrl } from "./url-utils.js";
+import { getInstanceUrls, toBaseUrl } from "./url-utils.js";
 
 /**
  * Build a task context for `DocsDefinitionResolver` during validation.

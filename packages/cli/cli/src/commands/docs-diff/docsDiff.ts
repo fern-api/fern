@@ -1,5 +1,5 @@
 import { FernToken } from "@fern-api/auth";
-import { isHttpUrl } from "@fern-api/core-utils";
+import { isHttpUrl, removeTrailingSlash } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
@@ -505,7 +505,7 @@ function getProductionUrlInfo(docsConfig: {
     // Parse the URL to extract base path
     try {
         const url = new URL(normalizedUrl);
-        const basePath = url.pathname !== "/" ? url.pathname.replace(/\/$/, "") : null;
+        const basePath = url.pathname !== "/" ? removeTrailingSlash(url.pathname) : null;
         const baseUrl = `${url.protocol}//${url.host}`;
         return { baseUrl, basePath };
     } catch {

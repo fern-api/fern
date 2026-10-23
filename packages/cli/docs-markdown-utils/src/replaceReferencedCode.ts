@@ -1,4 +1,4 @@
-import { isHttpUrl } from "@fern-api/core-utils";
+import { isHttpUrl, removeLeadingSlash } from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
@@ -201,7 +201,7 @@ export async function replaceReferencedCode({
             } else {
                 const filepath = resolve(
                     src.startsWith("/") ? absolutePathToFernFolder : dirname(absolutePathToMarkdownFile),
-                    RelativeFilePath.of(src.replace(/^\//, ""))
+                    RelativeFilePath.of(removeLeadingSlash(src))
                 );
                 replacement = await fileLoader(filepath);
                 language = filepath.split(".").pop();

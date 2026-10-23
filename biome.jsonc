@@ -269,7 +269,9 @@
                 "./biome-plugins/no-inline-is-record.grit",
                 "./biome-plugins/no-inline-strip-trailing-slashes.grit",
                 "./biome-plugins/no-inline-to-posix-path.grit",
-                "./biome-plugins/no-inline-capitalize.grit"
+                "./biome-plugins/no-inline-capitalize.grit",
+                "./biome-plugins/no-inline-remove-trailing-slash.grit",
+                "./biome-plugins/no-inline-remove-leading-slash.grit"
             ]
         },
         {
