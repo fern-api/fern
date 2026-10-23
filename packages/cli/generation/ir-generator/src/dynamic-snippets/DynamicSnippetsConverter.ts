@@ -5,7 +5,7 @@ import {
     FullCasingsGenerator
 } from "@fern-api/casings-generator";
 import { generatorsYml } from "@fern-api/configuration";
-import { assertNever } from "@fern-api/core-utils";
+import { addLeadingSlash, assertNever } from "@fern-api/core-utils";
 import {
     AliasTypeDeclaration,
     ApiAuth,
@@ -1141,7 +1141,7 @@ export class DynamicSnippetsConverter {
                 url = urlJoin(url, part.tail);
             }
         }
-        return url.startsWith("/") ? url : `/${url}`;
+        return addLeadingSlash(url);
     }
 
     private getGlobalHeaderExampleValues(): Record<string, unknown> {

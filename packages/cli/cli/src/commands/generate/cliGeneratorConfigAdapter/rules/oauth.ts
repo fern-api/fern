@@ -1,4 +1,4 @@
-import { assertNever, stripTrailingSlashes } from "@fern-api/core-utils";
+import { addLeadingSlash, assertNever, stripTrailingSlashes } from "@fern-api/core-utils";
 import type { AuthScheme } from "@postman/sdk-config";
 
 import type { MapperRule, RuleContext, SpecPostOperation } from "../types.js";
@@ -278,6 +278,6 @@ function urlPath(url: string): string {
         return new URL(url).pathname;
     } catch {
         // Not an absolute URL: treat it as a path.
-        return url.startsWith("/") ? url : `/${url}`;
+        return addLeadingSlash(url);
     }
 }

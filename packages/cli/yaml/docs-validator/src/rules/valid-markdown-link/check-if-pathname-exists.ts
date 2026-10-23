@@ -1,9 +1,8 @@
-import { isHttpUrl, removeLeadingSlash, removeTrailingSlash } from "@fern-api/core-utils";
+import { addLeadingSlash, isHttpUrl, removeLeadingSlash, removeTrailingSlash } from "@fern-api/core-utils";
 import { wrapWithHttps } from "@fern-api/docs-resolver";
 import { AbsoluteFilePath, dirname, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { isDynamicSpecialDocPage } from "./dynamic-special-doc-page.js";
 import { getRedirectForPath } from "./redirect-for-path.js";
-import { addLeadingSlash } from "./url-utils.js";
 import { withBasePathPrepended } from "./with-base-path-prepended.js";
 
 /**

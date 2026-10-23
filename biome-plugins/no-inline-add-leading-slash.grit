@@ -1,0 +1,12 @@
+language js
+
+// The template-literal branch is matched on its source text because a backtick snippet cannot contain a
+// template literal. It does not check that the interpolated name is the same variable.
+or {
+    `$value.startsWith("/") ? $value : "/" + $value`,
+    `!$value.startsWith("/") ? "/" + $value : $value`,
+    `$value.startsWith("/") ? $value : $alt` where { $alt <: r"^`/\x24\x7B[A-Za-z_][A-Za-z0-9_.]*\x7D`$" },
+    `!$value.startsWith("/") ? $alt : $value` where { $alt <: r"^`/\x24\x7B[A-Za-z_][A-Za-z0-9_.]*\x7D`$" }
+} as $add where {
+    register_diagnostic(span=$add, message="Use `addLeadingSlash` from `@fern-api/core-utils` instead of prepending a slash by hand.", severity="error")
+}

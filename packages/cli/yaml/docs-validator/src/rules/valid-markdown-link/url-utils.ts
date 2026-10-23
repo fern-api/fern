@@ -5,10 +5,6 @@ function stripAnchorsAndSearchParams(pathnameWithAnchorsOrSearchParams: string):
     return pathnameWithAnchorsOrSearchParams.split(/[?#]/)[0] ?? "";
 }
 
-function addLeadingSlash(pathname: string): string {
-    return pathname.startsWith("/") ? pathname : `/${pathname}`;
-}
-
 function getInstanceUrls(workspace: DocsWorkspace): string[] {
     const urls: string[] = [];
 
@@ -58,4 +54,4 @@ function urlMatchesInstanceHost(url: URL, instanceUrls: string[]): boolean {
     });
 }
 
-export { addLeadingSlash, getInstanceUrls, stripAnchorsAndSearchParams, toBaseUrl, urlMatchesInstanceHost };
+export { getInstanceUrls, stripAnchorsAndSearchParams, toBaseUrl, urlMatchesInstanceHost };
