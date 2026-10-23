@@ -13,6 +13,7 @@ import { RobotsTxtOnInstanceUrlRequiresRobotsTxtRule } from "./rules/robots-txt-
 import { TranslationDirectoriesExistRule } from "./rules/translation-directories-exist/index.js";
 import { ValidChangelogSlugRule } from "./rules/valid-changelog-slug/index.js";
 import { ValidDocsEndpoints } from "./rules/valid-docs-endpoints/index.js";
+import { ValidDropdownRule } from "./rules/valid-dropdown/index.js";
 import { ValidEmbeddingOriginsRule } from "./rules/valid-embedding-origins/index.js";
 import { ValidFileTypes } from "./rules/valid-file-types/index.js";
 import { ValidFrontmatter } from "./rules/valid-frontmatter/index.js";
@@ -57,6 +58,7 @@ const allRules = [
     ValidFrontmatter,
     TranslationDirectoriesExistRule,
     ValidChangelogSlugRule,
+    ValidDropdownRule, // Dropdown items need exactly one of layout/variants; warn when header tabs are off
     ValidWellKnownSkillsRule, // Validate author-supplied Agent Skills bundles under .well-known/
     ValidSkillsPageActionRule // Validate the "Install skills" page action display config
     // ValidMarkdownFileReferences

@@ -15,7 +15,7 @@ import { materializeGitRef } from "./git-versions/materializeGitRef.js";
 import { type RefVersionScope, resolveRefContentRoot } from "./git-versions/resolveRefContentRoot.js";
 import { buildNavigationForDirectory, getFrontmatterMetadata, nameToSlug, nameToTitle } from "./navigationUtils.js";
 import { resolveRedirects } from "./resolveRedirects.js";
-import { tabbedNavigationItemHasLayout, tabbedNavigationItemHasVariants } from "./tabbedNavigationItemGuards.js";
+import { tabbedNavigationItemHasLayout } from "./tabbedNavigationItemGuards.js";
 
 function shouldProcessIconPath(iconPath?: string): boolean {
     if (!iconPath || iconPath.startsWith("<")) {
@@ -280,6 +280,7 @@ export async function parseDocsConfiguration({
         colors: convertColorsConfiguration(colors, context),
         typography,
         layout: convertLayoutConfig(layout, tabsObj?.alignment, tabsObj?.placement),
+        variantsLayout: convertVariantsLayout(layout),
         settings: convertSettingsConfig(rawDocsConfiguration.settings, context),
         context7File,
         llmsTxtFile,
@@ -676,6 +677,19 @@ async function parseContext7File({
     }
 
     return absolutePath;
+}
+
+function convertVariantsLayout(
+    layout: docsYml.RawSchemas.LayoutConfig | undefined
+): docsYml.VariantsLayout | undefined {
+    if (layout?.dropdown == null) {
+        return undefined;
+    }
+
+    return {
+        dropdownDefaultColumnHeight: layout.dropdown?.defaultColumnHeight ?? undefined,
+        dropdownInteractOnClickOnly: layout.dropdown?.interactOnClickOnly ?? undefined
+    };
 }
 
 function convertLayoutConfig(
@@ -1301,45 +1315,137 @@ async function convertNavigationTabConfiguration({
         });
     }
 
-    if (tabbedNavigationItemHasVariants(item)) {
-        const variants: docsYml.TabVariant[] = await Promise.all(
-            item.variants.map(async (variant) => {
-                const layout = await Promise.all(
-                    variant.layout.map((layoutItem) =>
-                        convertNavigationItem({
-                            rawConfig: layoutItem,
-                            absolutePathToFernFolder,
-                            absolutePathToConfig,
-                            context,
-                            folderTitleSource
-                        })
-                    )
-                );
-                return {
-                    title: variant.title,
-                    subtitle: variant.subtitle,
-                    icon: resolveIconPath(variant.icon, absolutePathToConfig),
-                    layout,
-                    slug: variant.slug,
-                    skipUrlSlug: variant.skipSlug,
-                    hidden: variant.hidden,
-                    default: variant.default,
-                    viewers: parseRoles(variant.viewers),
-                    orphaned: variant.orphaned,
-                    featureFlags: convertFeatureFlag(variant.featureFlag)
-                };
+    const convertLayout = (layout: docsYml.RawSchemas.NavigationItem[]) =>
+        Promise.all(
+            layout.map((layoutItem) =>
+                convertNavigationItem({
+                    rawConfig: layoutItem,
+                    absolutePathToFernFolder,
+                    absolutePathToConfig,
+                    context,
+                    folderTitleSource
+                })
+            )
+        );
+    const convertLink = (link: docsYml.RawSchemas.LinkConfiguration): docsYml.TabVariantMenuEntry.Link => ({
+        type: "link",
+        title: link.link,
+        href: link.href,
+        icon: resolveIconPath(link.icon, absolutePathToConfig),
+        target: link.target
+    });
+    const convertVariant = async (
+        variant: docsYml.RawSchemas.TabVariant | docsYml.RawSchemas.DropdownItem,
+        layout: docsYml.RawSchemas.NavigationItem[],
+        nestedVariants: docsYml.NestedTabVariants | undefined
+    ): Promise<docsYml.TabVariant> => ({
+        title: variant.title,
+        subtitle: variant.subtitle,
+        icon: resolveIconPath(variant.icon, absolutePathToConfig),
+        layout: await convertLayout(layout),
+        slug: variant.slug,
+        skipUrlSlug: variant.skipSlug,
+        hidden: variant.hidden,
+        default: variant.default,
+        viewers: parseRoles(variant.viewers),
+        orphaned: variant.orphaned,
+        featureFlags: convertFeatureFlag(variant.featureFlag),
+        nestedVariants
+    });
+    // `variants` is built from the same TabVariant objects as `menu`, so the resolver can match them by identity.
+    const variantsInMenu = (menu: docsYml.TabVariantMenuItem[]): docsYml.TabVariant[] =>
+        menu
+            .flatMap((entry) => (entry.type === "group" ? entry.children : [entry]))
+            .flatMap((entry) => (entry.type === "variant" ? [entry.variant] : []));
+    const menuOrUndefined = (menu: docsYml.TabVariantMenuItem[]) =>
+        menu.some((entry) => entry.type !== "variant") ? menu : undefined;
+    const convertVariantsList = async (
+        items: docsYml.RawSchemas.TabVariantItem[]
+    ): Promise<docsYml.NestedTabVariants> => {
+        const convertEntry = async (entry: docsYml.RawTabVariantListItem): Promise<docsYml.TabVariantMenuEntry> => {
+            if (docsYml.isRawTabVariantLink(entry)) {
+                return convertLink(entry);
+            }
+            // A group can't nest inside a group; the schema only allows variants and links there.
+            if ("group" in entry) {
+                throw new CliError({
+                    message: `Tab ${item.tab}: variant groups can't be nested inside other groups.`,
+                    code: CliError.Code.ConfigError
+                });
+            }
+            return { type: "variant", variant: await convertVariant(entry, entry.layout, undefined) };
+        };
+        const menu: docsYml.TabVariantMenuItem[] = await Promise.all(
+            items.map(async (entry): Promise<docsYml.TabVariantMenuItem> => {
+                if (docsYml.isRawTabVariantGroup(entry)) {
+                    return {
+                        type: "group",
+                        title: entry.group,
+                        children: await Promise.all(entry.items.map(convertEntry))
+                    };
+                }
+                return convertEntry(entry);
             })
         );
+        return { variants: variantsInMenu(menu), columnHeight: undefined, menu: menuOrUndefined(menu) };
+    };
+    const convertDropdownItem = async (
+        dropdownItem: docsYml.RawSchemas.DropdownItem
+    ): Promise<docsYml.TabVariantMenuEntry.Variant> => {
+        if ((dropdownItem.layout != null) === (dropdownItem.variants != null)) {
+            throw new CliError({
+                message: `Tab ${item.tab}: dropdown item "${dropdownItem.title}" needs exactly one of layout or variants.`,
+                code: CliError.Code.ConfigError
+            });
+        }
+        const nested = dropdownItem.variants != null ? await convertVariantsList(dropdownItem.variants) : undefined;
+        return { type: "variant", variant: await convertVariant(dropdownItem, dropdownItem.layout ?? [], nested) };
+    };
+    const convertDropdown = async (
+        entries: docsYml.RawSchemas.DropdownEntry[]
+    ): Promise<docsYml.TabVariantMenuItem[]> => {
+        return Promise.all(
+            entries.map(async (entry): Promise<docsYml.TabVariantMenuItem> => {
+                if (docsYml.isRawDropdownGroup(entry)) {
+                    return {
+                        type: "group",
+                        title: entry.group,
+                        children: await Promise.all(
+                            entry.items.map((child) =>
+                                docsYml.isRawDropdownLink(child)
+                                    ? Promise.resolve(convertLink(child))
+                                    : convertDropdownItem(child)
+                            )
+                        )
+                    };
+                }
+                return docsYml.isRawDropdownLink(entry) ? convertLink(entry) : convertDropdownItem(entry);
+            })
+        );
+    };
+
+    if (docsYml.isRawTabWithVariantLayouts(item)) {
+        let child: docsYml.TabbedNavigationChild.Variants;
+        if (docsYml.isRawTabWithDropdown(item)) {
+            const menu = await convertDropdown(item.dropdown);
+            child = {
+                type: "variants",
+                variants: variantsInMenu(menu),
+                location: "tab",
+                columnHeight: tab.dropdownColumnHeight ?? undefined,
+                menu: menuOrUndefined(menu)
+            };
+        } else {
+            const { variants, columnHeight, menu } = await convertVariantsList(item.variants);
+            child = { type: "variants", variants, location: "sidebar", columnHeight, menu };
+        }
         return {
             title: tab.displayName,
             icon: resolveIconPath(tab.icon, absolutePathToConfig),
             slug: tab.slug,
             skipUrlSlug: tab.skipSlug,
             hidden: tab.hidden,
-            child: {
-                type: "variants",
-                variants
-            },
+            child,
             viewers: parseRoles(tab.viewers),
             orphaned: tab.orphaned,
             featureFlags: convertFeatureFlag(tab.featureFlag)

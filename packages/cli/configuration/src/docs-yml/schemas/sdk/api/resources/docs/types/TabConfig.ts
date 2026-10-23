@@ -17,4 +17,9 @@ export interface TabConfig extends FernDocsConfig.WithPermissions, FernDocsConfi
     target?: FernDocsConfig.Target;
     changelog?: FernDocsConfig.ChangelogFolderRelativePath;
     blog?: FernDocsConfig.ChangelogFolderRelativePath;
+    /**
+     * Maximum number of items per column in this tab's header dropdown. `no-limit` keeps a single column.
+     * Overrides `layout.dropdown.default-column-height`. Only applies when the tab has a `dropdown` in `navigation`.
+     */
+    dropdownColumnHeight?: FernDocsConfig.VariantsColumnHeight;
 }

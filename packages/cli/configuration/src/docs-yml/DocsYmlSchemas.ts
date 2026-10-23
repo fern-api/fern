@@ -348,12 +348,20 @@ export const BreadcrumbsConfig = z.object({
     "current-page": z.boolean().optional()
 });
 
+export const VariantsColumnHeight = z.union([z.number().int().positive(), z.literal("no-limit")]);
+
+export const DropdownLayoutConfig = z.object({
+    "default-column-height": VariantsColumnHeight.nullable().optional(),
+    "interact-on-click-only": z.boolean().optional()
+});
+
 export const LayoutConfig = z.object({
     "page-width": z.string().optional(),
     "content-width": z.string().optional(),
     "sidebar-width": z.string().optional(),
     "header-height": z.string().optional(),
     "searchbar-placement": SearchbarPlacement.optional(),
+    dropdown: DropdownLayoutConfig.optional(),
     "tabs-placement": TabsPlacement.optional(),
     "switcher-placement": SwitcherPlacement.optional(),
     "content-alignment": ContentAlignment.optional(),
@@ -1004,12 +1012,53 @@ export const TabbedNavigationItemWithLayout = z.object({
     layout: z.array(NavigationItem).optional()
 });
 
-export const TabbedNavigationItemWithVariants = z.object({
-    tab: TabId,
-    variants: z.array(TabVariant)
+export const TabVariantGroupItem = z.union([TabVariant, LinkConfiguration]);
+
+export const TabVariantGroup = z.object({
+    group: z.string(),
+    items: z.array(TabVariantGroupItem)
 });
 
-export const TabbedNavigationItem = z.union([TabbedNavigationItemWithLayout, TabbedNavigationItemWithVariants]);
+export const TabVariantItem = z.union([TabVariant, TabVariantGroup, LinkConfiguration]);
+
+export const TabbedNavigationItemWithVariants = z.object({
+    tab: TabId,
+    variants: z.array(TabVariantItem)
+});
+
+export const DropdownItem = WithPermissions.merge(WithFeatureFlags).merge(
+    z.object({
+        title: z.string(),
+        subtitle: z.string().optional(),
+        icon: z.string().optional(),
+        layout: z.array(NavigationItem).optional(),
+        variants: z.array(TabVariantItem).optional(),
+        slug: z.string().optional(),
+        "skip-slug": z.boolean().optional(),
+        hidden: z.boolean().optional(),
+        default: z.boolean().optional()
+    })
+);
+
+export const DropdownGroupItem = z.union([DropdownItem, LinkConfiguration]);
+
+export const DropdownGroup = z.object({
+    group: z.string(),
+    items: z.array(DropdownGroupItem)
+});
+
+export const DropdownEntry = z.union([DropdownItem, DropdownGroup, LinkConfiguration]);
+
+export const TabbedNavigationItemWithDropdown = z.object({
+    tab: TabId,
+    dropdown: z.array(DropdownEntry)
+});
+
+export const TabbedNavigationItem = z.union([
+    TabbedNavigationItemWithLayout,
+    TabbedNavigationItemWithVariants,
+    TabbedNavigationItemWithDropdown
+]);
 
 export const TabbedNavigationConfig = z.array(TabbedNavigationItem);
 
@@ -1027,7 +1076,8 @@ export const TabConfig = WithPermissions.merge(WithFeatureFlags).merge(
         href: z.string().optional(),
         target: Target.optional(),
         changelog: ChangelogFolderRelativePath.optional(),
-        blog: ChangelogFolderRelativePath.optional()
+        blog: ChangelogFolderRelativePath.optional(),
+        "dropdown-column-height": VariantsColumnHeight.nullable().optional()
     })
 );
 

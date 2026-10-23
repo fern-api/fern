@@ -132,6 +132,19 @@
       "type": "string",
       "description": "The relative path to a folder containing markdown files broken down by date.\n\nExample:\n```\nchangelog: \"changelog\"\n```\n\nThis will look for markdown files in the `/fern/changelog` directory, which should contain files named like\n- `/fern/changelog/2024-04-29.mdx`.\n- `/fern/changelog/2023-01-02.mdx`."
     },
+    "docs.VariantsColumnHeightCount": {
+      "type": "integer"
+    },
+    "docs.VariantsColumnHeight": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/docs.VariantsColumnHeightCount"
+        },
+        {
+          "const": "no-limit"
+        }
+      ]
+    },
     "docs.TabConfig": {
       "type": "object",
       "properties": {
@@ -249,6 +262,17 @@
               "type": "null"
             }
           ]
+        },
+        "dropdown-column-height": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.VariantsColumnHeight"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Maximum number of items per column in this tab's header dropdown. `no-limit` keeps a single column.\nOverrides `layout.dropdown.default-column-height`. Only applies when the tab has a `dropdown` in `navigation`."
         }
       },
       "required": [
@@ -2469,6 +2493,49 @@
       ],
       "additionalProperties": false
     },
+    "docs.TabVariantGroupItem": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/docs.TabVariant"
+        },
+        {
+          "$ref": "#/definitions/docs.LinkConfiguration"
+        }
+      ]
+    },
+    "docs.TabVariantGroup": {
+      "type": "object",
+      "properties": {
+        "group": {
+          "type": "string",
+          "description": "Header shown above this group's items in the variant menu."
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/docs.TabVariantGroupItem"
+          }
+        }
+      },
+      "required": [
+        "group",
+        "items"
+      ],
+      "additionalProperties": false
+    },
+    "docs.TabVariantItem": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/docs.TabVariant"
+        },
+        {
+          "$ref": "#/definitions/docs.TabVariantGroup"
+        },
+        {
+          "$ref": "#/definitions/docs.LinkConfiguration"
+        }
+      ]
+    },
     "docs.TabbedNavigationItemWithVariants": {
       "type": "object",
       "properties": {
@@ -2478,13 +2545,207 @@
         "variants": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/docs.TabVariant"
-          }
+            "$ref": "#/definitions/docs.TabVariantItem"
+          },
+          "description": "Variants shown in a selector at the top of the tab's sidebar."
         }
       },
       "required": [
         "tab",
         "variants"
+      ],
+      "additionalProperties": false
+    },
+    "docs.DropdownItem": {
+      "type": "object",
+      "properties": {
+        "viewers": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Role"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orphaned": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "When `orphaned` is set to `true`, the roles will not inherit from parents."
+        },
+        "feature-flag": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.FeatureFlagConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "title": {
+          "type": "string"
+        },
+        "subtitle": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "icon": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "layout": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/docs.NavigationItem"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "variants": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/docs.TabVariantItem"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "slug": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "skip-slug": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "hidden": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "default": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "title"
+      ],
+      "additionalProperties": false,
+      "description": "A dropdown item has either a `layout` (one sidebar) or `variants` (a selector at the top of its sidebar)."
+    },
+    "docs.DropdownGroupItem": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/docs.DropdownItem"
+        },
+        {
+          "$ref": "#/definitions/docs.LinkConfiguration"
+        }
+      ]
+    },
+    "docs.DropdownGroup": {
+      "type": "object",
+      "properties": {
+        "group": {
+          "type": "string",
+          "description": "Header shown above this group's items in the dropdown."
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/docs.DropdownGroupItem"
+          }
+        }
+      },
+      "required": [
+        "group",
+        "items"
+      ],
+      "additionalProperties": false
+    },
+    "docs.DropdownEntry": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/docs.DropdownItem"
+        },
+        {
+          "$ref": "#/definitions/docs.DropdownGroup"
+        },
+        {
+          "$ref": "#/definitions/docs.LinkConfiguration"
+        }
+      ]
+    },
+    "docs.TabbedNavigationItemWithDropdown": {
+      "type": "object",
+      "properties": {
+        "tab": {
+          "$ref": "#/definitions/docs.TabId"
+        },
+        "dropdown": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/docs.DropdownEntry"
+          },
+          "description": "Items shown in a menu that opens from the header tab. Requires header tabs; with `tabs-placement: sidebar`\nthe items fall back to a selector at the top of the sidebar."
+        }
+      },
+      "required": [
+        "tab",
+        "dropdown"
       ],
       "additionalProperties": false
     },
@@ -2495,6 +2756,9 @@
         },
         {
           "$ref": "#/definitions/docs.TabbedNavigationItemWithVariants"
+        },
+        {
+          "$ref": "#/definitions/docs.TabbedNavigationItemWithDropdown"
         }
       ]
     },

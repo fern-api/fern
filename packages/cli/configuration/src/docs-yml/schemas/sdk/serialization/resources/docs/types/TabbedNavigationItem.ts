@@ -3,14 +3,22 @@
 import type * as FernDocsConfig from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { TabbedNavigationItemWithDropdown } from "./TabbedNavigationItemWithDropdown.js";
 import { TabbedNavigationItemWithLayout } from "./TabbedNavigationItemWithLayout.js";
 import { TabbedNavigationItemWithVariants } from "./TabbedNavigationItemWithVariants.js";
 
 export const TabbedNavigationItem: core.serialization.Schema<
     serializers.TabbedNavigationItem.Raw,
     FernDocsConfig.TabbedNavigationItem
-> = core.serialization.undiscriminatedUnion([TabbedNavigationItemWithLayout, TabbedNavigationItemWithVariants]);
+> = core.serialization.undiscriminatedUnion([
+    TabbedNavigationItemWithLayout,
+    TabbedNavigationItemWithVariants,
+    TabbedNavigationItemWithDropdown,
+]);
 
 export declare namespace TabbedNavigationItem {
-    export type Raw = TabbedNavigationItemWithLayout.Raw | TabbedNavigationItemWithVariants.Raw;
+    export type Raw =
+        | TabbedNavigationItemWithLayout.Raw
+        | TabbedNavigationItemWithVariants.Raw
+        | TabbedNavigationItemWithDropdown.Raw;
 }
