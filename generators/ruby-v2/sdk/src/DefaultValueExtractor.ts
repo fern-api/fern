@@ -69,7 +69,9 @@ export class DefaultValueExtractor {
                     double: (t) =>
                         t.default != null ? { value: this.formatFloat(t.default), rubyType: "Float" } : undefined,
                     float: (t) =>
-                        t.default != null ? { value: this.formatFloat(t.default), rubyType: "Float" } : undefined,
+                        t.default != null && this.context.customConfig.legacyNumbersAsInteger !== true
+                            ? { value: this.formatFloat(t.default), rubyType: "Float" }
+                            : undefined,
                     boolean: (t) =>
                         t.default != null ? { value: t.default ? "true" : "false", rubyType: "Boolean" } : undefined,
                     string: (t) =>

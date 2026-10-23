@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add the `legacyNumbersAsInteger` option (default `false`). When `true`, `float` and `double` fields
+    (OpenAPI `number`) are typed and coerced as `Integer`, as they were before 1.37.1, so `5` is sent as
+    `5` and a response `3600` stays an `Integer`. Decimals are truncated (`100.57` becomes `100`), as
+    they were before 1.37.1.
+  type: feat
