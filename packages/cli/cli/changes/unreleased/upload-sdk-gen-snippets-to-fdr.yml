@@ -2,7 +2,7 @@
 
 - summary: |
     After `fern generate` builds an SDK Config target through sdk-gen-api, upload its code snippets
-    (`documentation/snippets/snippets.json`) to FDR's snippet store so the next docs publish shows them
-    on the endpoint pages. Off unless `FERN_UPLOAD_SDK_GEN_SNIPPETS=true` is set. A snippet failure never
-    fails generation.
+    (from the snippets file sdk-gen saves beside the SDK, when `docs.snippets.enabled` is set) to FDR's
+    snippet store so the next docs publish shows them on the endpoint pages. Off unless
+    `FERN_UPLOAD_SDK_GEN_SNIPPETS=true` is set. A snippet failure never fails generation.
   type: feat

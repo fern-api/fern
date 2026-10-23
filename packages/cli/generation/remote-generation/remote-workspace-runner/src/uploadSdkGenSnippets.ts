@@ -2,21 +2,15 @@ import { createFdrService } from "@fern-api/core";
 import { isPlainObject } from "@fern-api/core-utils";
 import type { FdrClient } from "@fern-api/fdr-sdk";
 import { type HttpMethod, HttpMethodSchema } from "@fern-api/fdr-sdk/orpc-client";
-import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { isAutoVersion } from "@fern-api/generator-cli/autoversion";
 import type { Logger } from "@fern-api/logger";
-import { readFile } from "fs/promises";
-import tmp from "tmp-promise";
+import axios from "axios";
 
 import type { FernSdkGenApiPackageConfig } from "./fernSdkGenApi.js";
 import { normalizeGoPackageForLookup } from "./normalizeRepoUrl.js";
-import { downloadAndExtractZipToDirectory } from "./RemoteTaskHandler.js";
 
 /** The upload is off unless this variable is `true`. */
 export const UPLOAD_SDK_GEN_SNIPPETS_ENV_VAR = "FERN_UPLOAD_SDK_GEN_SNIPPETS";
-
-/** Where sdk-gen writes the snippets inside every SDK it builds. */
-export const SDK_SNIPPETS_JSON_PATH = "documentation/snippets/snippets.json";
 
 type CreateSnippetsRequest = Parameters<FdrClient["snippetsFactory"]["createSnippetsForSdk"]>[0];
 
@@ -117,7 +111,7 @@ export function decideSdkGenSnippetsUpload({
 }
 
 /**
- * Parses `documentation/snippets/snippets.json`: endpoint path, then HTTP method, then code. The map sits under
+ * Parses the snippets file (the format of `documentation/snippets/snippets.json`): endpoint path, then HTTP method, then code. The map sits under
  * `endpoints`, or under `snippets.endpoints` in the shape of core's /snippets response. Entries the store
  * cannot take (an unknown method or no code) are dropped.
  */
@@ -166,25 +160,27 @@ export function buildSnippetsCreateRequest({
     } as CreateSnippetsRequest;
 }
 
+/** Downloads the snippets file sdk-gen saved beside the SDK, from the link the build status gives. */
+export async function downloadSnippetsJson(snippetsUrl: string): Promise<string> {
+    const response = await axios.get<string>(snippetsUrl, { responseType: "text", transformResponse: (data) => data });
+    return response.data;
+}
+
+let lastUpload: Promise<unknown> = Promise.resolve();
+
 /**
- * Downloads the SDK artifact the same way a real download does, and reads the snippets file from it.
- * Undefined when the SDK has no snippets file.
+ * Runs uploads to FDR one after another. A target's upload starts when its build finishes, so several can start
+ * together, and FDR fails the ones that race to create the same org and API row for the first time.
  */
-export async function readSnippetsJsonFromArtifact(artifactUrl: string): Promise<string | undefined> {
-    const directory = await tmp.dir({ prefix: "fern-sdk-snippets", unsafeCleanup: true });
-    try {
-        const root = AbsoluteFilePath.of(directory.path);
-        await downloadAndExtractZipToDirectory({ s3PreSignedReadUrl: artifactUrl, outputPath: root });
-        const file = join(root, RelativeFilePath.of(SDK_SNIPPETS_JSON_PATH));
-        return (await doesPathExist(file)) ? await readFile(file, "utf8") : undefined;
-    } finally {
-        await directory.cleanup();
-    }
+function afterPreviousUpload<T>(upload: () => Promise<T>): Promise<T> {
+    const result = lastUpload.then(upload, upload);
+    lastUpload = result.catch(() => undefined);
+    return result;
 }
 
 export interface UploadSdkGenSnippetsDependencies {
     createFdr?: (token: string) => Pick<FdrClient, "snippetsFactory">;
-    readSnippetsJson?: (artifactUrl: string) => Promise<string | undefined>;
+    readSnippetsJson?: (snippetsUrl: string) => Promise<string>;
     isEnabled?: () => boolean;
 }
 
@@ -202,7 +198,7 @@ export async function uploadSdkGenSnippets(
         language,
         package: pkg,
         version,
-        artifactUrl,
+        snippetsUrl,
         isPreview,
         logger
     }: {
@@ -213,7 +209,7 @@ export async function uploadSdkGenSnippets(
         language: string | undefined;
         package: FernSdkGenApiPackageConfig | undefined;
         version: string | undefined;
-        artifactUrl: string;
+        snippetsUrl: string | undefined;
         isPreview: boolean;
         logger: Pick<Logger, "info" | "warn">;
     },
@@ -230,17 +226,20 @@ export async function uploadSdkGenSnippets(
         if (!decision.upload) {
             return skip(decision.reason);
         }
-        const snippetsJson = await (dependencies.readSnippetsJson ?? readSnippetsJsonFromArtifact)(artifactUrl);
-        if (snippetsJson == null) {
-            return skip(`the SDK has no ${SDK_SNIPPETS_JSON_PATH}`);
+        if (snippetsUrl == null) {
+            return skip("the build saved no snippets file (is docs.snippets.enabled set in sdk-config.yml?)");
         }
-        const endpoints = parseSdkSnippetsJson(snippetsJson);
+        const endpoints = parseSdkSnippetsJson(
+            await (dependencies.readSnippetsJson ?? downloadSnippetsJson)(snippetsUrl)
+        );
         if (endpoints.length === 0) {
-            return skip(`${SDK_SNIPPETS_JSON_PATH} has no endpoint snippets`);
+            return skip("the snippets file has no endpoint snippets");
         }
         const fdr = (dependencies.createFdr ?? ((value: string) => createFdrService({ token: value })))(token);
-        await fdr.snippetsFactory.createSnippetsForSdk(
-            buildSnippetsCreateRequest({ organization, apiId, ...decision, endpoints })
+        await afterPreviousUpload(() =>
+            fdr.snippetsFactory.createSnippetsForSdk(
+                buildSnippetsCreateRequest({ organization, apiId, ...decision, endpoints })
+            )
         );
         logger.info(`Uploaded ${endpoints.length} ${label} snippets to FDR (version ${decision.version})`);
     } catch (error) {

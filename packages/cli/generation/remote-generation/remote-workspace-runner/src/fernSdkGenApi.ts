@@ -134,7 +134,7 @@ interface FernBuildStatus {
         targetId: string;
         status: "queued" | "running" | "publishing" | "succeeded" | "failed";
         logs: Array<{ level: string; message: string }>;
-        result?: { artifactUrl: string; actualVersion?: string };
+        result?: { artifactUrl: string; snippetsUrl?: string; actualVersion?: string };
         error?: { code?: string; message: string };
         publication?:
             | {
@@ -2165,7 +2165,7 @@ async function finishFernSdkGenApiTarget(
                 getFernSdkGenApiLanguage(participant.generatorInvocation.name),
             package: participant.payload.package,
             version: actualVersion,
-            artifactUrl: target.result.artifactUrl,
+            snippetsUrl: target.result.snippetsUrl,
             isPreview: participant.absolutePathToPreview != null,
             logger: participant.context.logger
         });

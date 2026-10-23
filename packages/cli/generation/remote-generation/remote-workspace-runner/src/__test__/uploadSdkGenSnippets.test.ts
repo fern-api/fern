@@ -1,20 +1,17 @@
-import { mkdir, writeFile } from "fs/promises";
-import path from "path";
+import axios from "axios";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { downloadAndExtractZipToDirectory } from "../RemoteTaskHandler.js";
 import {
     buildSnippetsCreateRequest,
     decideSdkGenSnippetsUpload,
+    downloadSnippetsJson,
     isUploadSdkGenSnippetsEnabled,
     parseSdkSnippetsJson,
-    readSnippetsJsonFromArtifact,
-    SDK_SNIPPETS_JSON_PATH,
     UPLOAD_SDK_GEN_SNIPPETS_ENV_VAR,
     uploadSdkGenSnippets
 } from "../uploadSdkGenSnippets.js";
 
-vi.mock("../RemoteTaskHandler.js", () => ({ downloadAndExtractZipToDirectory: vi.fn() }));
+vi.mock("axios");
 
 const SNIPPETS_JSON = JSON.stringify({
     endpoints: {
@@ -147,32 +144,21 @@ describe("buildSnippetsCreateRequest", () => {
     });
 });
 
-describe("readSnippetsJsonFromArtifact", () => {
-    function extractInto(files: Record<string, string>) {
-        vi.mocked(downloadAndExtractZipToDirectory).mockImplementation(async ({ outputPath }) => {
-            for (const [name, content] of Object.entries(files)) {
-                await mkdir(path.dirname(path.join(outputPath, name)), { recursive: true });
-                await writeFile(path.join(outputPath, name), content);
-            }
-        });
-    }
+describe("downloadSnippetsJson", () => {
+    it("returns the text of the file the link points at, unparsed", async () => {
+        vi.mocked(axios.get).mockResolvedValue({ data: SNIPPETS_JSON });
 
-    it("reads the snippets file from the extracted SDK", async () => {
-        extractInto({ "src/index.ts": "x", [SDK_SNIPPETS_JSON_PATH]: SNIPPETS_JSON });
-        expect(await readSnippetsJsonFromArtifact("https://example.com/sdk.zip")).toBe(SNIPPETS_JSON);
-        expect(downloadAndExtractZipToDirectory).toHaveBeenCalledWith(
-            expect.objectContaining({ s3PreSignedReadUrl: "https://example.com/sdk.zip" })
+        expect(await downloadSnippetsJson("https://example.com/snippets.json")).toBe(SNIPPETS_JSON);
+        expect(axios.get).toHaveBeenCalledWith(
+            "https://example.com/snippets.json",
+            expect.objectContaining({ responseType: "text" })
         );
     });
 
-    it("is undefined when the SDK has no snippets file", async () => {
-        extractInto({ "src/index.ts": "x" });
-        expect(await readSnippetsJsonFromArtifact("https://example.com/sdk.zip")).toBeUndefined();
-    });
-
     it("rejects when the download fails", async () => {
-        vi.mocked(downloadAndExtractZipToDirectory).mockRejectedValue(new Error("network down"));
-        await expect(readSnippetsJsonFromArtifact("https://example.com/sdk.zip")).rejects.toThrow("network down");
+        vi.mocked(axios.get).mockRejectedValue(new Error("network down"));
+
+        await expect(downloadSnippetsJson("https://example.com/snippets.json")).rejects.toThrow("network down");
     });
 });
 
@@ -185,7 +171,7 @@ describe("uploadSdkGenSnippets", () => {
         language: "typescript",
         package: { packageName: "@acme/sdk" },
         version: "1.2.3",
-        artifactUrl: "https://example.com/sdk.zip",
+        snippetsUrl: "https://example.com/snippets.json" as string | undefined,
         isPreview: false
     };
 
@@ -195,7 +181,7 @@ describe("uploadSdkGenSnippets", () => {
         failure
     }: {
         enabled?: boolean;
-        snippetsJson?: string | null;
+        snippetsJson?: string;
         failure?: "download" | "create";
     } = {}) {
         const logger = { info: vi.fn(), warn: vi.fn() };
@@ -208,7 +194,7 @@ describe("uploadSdkGenSnippets", () => {
             if (failure === "download") {
                 throw new Error("network down");
             }
-            return snippetsJson ?? undefined;
+            return snippetsJson;
         });
         const dependencies = {
             isEnabled: () => enabled,
@@ -251,7 +237,7 @@ describe("uploadSdkGenSnippets", () => {
     it.each([
         ["a preview", { isPreview: true }, "preview generation"],
         ["a language the store does not accept", { language: "php" }, "FDR's snippet store does not accept php yet"]
-    ])("skips %s without reading the SDK", async (_name, change, reason) => {
+    ])("skips %s without downloading", async (_name, change, reason) => {
         const { logger, readSnippetsJson, createSnippetsForSdk, run } = setup();
         await run(change);
         expect(readSnippetsJson).not.toHaveBeenCalled();
@@ -259,14 +245,19 @@ describe("uploadSdkGenSnippets", () => {
         expect(logger.info).toHaveBeenCalledWith(expect.stringContaining(reason));
     });
 
-    it.each([
-        ["has no snippets file", null, `the SDK has no ${SDK_SNIPPETS_JSON_PATH}`],
-        ["has no endpoints", '{"endpoints":{}}', "has no endpoint snippets"]
-    ])("skips when the SDK %s", async (_name, snippetsJson, reason) => {
-        const { logger, createSnippetsForSdk, run } = setup({ snippetsJson });
+    it("skips when the build saved no snippets file, without downloading", async () => {
+        const { logger, readSnippetsJson, createSnippetsForSdk, run } = setup();
+        await run({ snippetsUrl: undefined });
+        expect(readSnippetsJson).not.toHaveBeenCalled();
+        expect(createSnippetsForSdk).not.toHaveBeenCalled();
+        expect(logger.info).toHaveBeenCalledWith(expect.stringContaining("the build saved no snippets file"));
+    });
+
+    it("skips when the snippets file has no endpoints", async () => {
+        const { logger, createSnippetsForSdk, run } = setup({ snippetsJson: '{"endpoints":{}}' });
         await run();
         expect(createSnippetsForSdk).not.toHaveBeenCalled();
-        expect(logger.info).toHaveBeenCalledWith(expect.stringContaining(reason));
+        expect(logger.info).toHaveBeenCalledWith(expect.stringContaining("has no endpoint snippets"));
     });
 
     it.each([
@@ -277,5 +268,22 @@ describe("uploadSdkGenSnippets", () => {
         const { logger, run } = setup(options);
         await expect(run()).resolves.toBeUndefined();
         expect(logger.warn).toHaveBeenCalledWith(expect.stringContaining(message));
+    });
+
+    it("uploads one target at a time, so FDR is not asked to create the same API twice at once", async () => {
+        let running = 0;
+        let mostAtOnce = 0;
+        const { createSnippetsForSdk, run } = setup();
+        createSnippetsForSdk.mockImplementation(async () => {
+            running += 1;
+            mostAtOnce = Math.max(mostAtOnce, running);
+            await new Promise((resolve) => setTimeout(resolve, 5));
+            running -= 1;
+        });
+
+        await Promise.all([run(), run({ language: "python" }), run({ language: "csharp" })]);
+
+        expect(createSnippetsForSdk).toHaveBeenCalledTimes(3);
+        expect(mostAtOnce).toBe(1);
     });
 });
