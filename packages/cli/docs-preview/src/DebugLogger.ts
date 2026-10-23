@@ -1,9 +1,9 @@
+import { LOCAL_STORAGE_FOLDER } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { appendFile, mkdir, readdir, stat, unlink, writeFile } from "fs/promises";
 import { homedir } from "os";
 import path from "path";
 
-const LOCAL_STORAGE_FOLDER = process.env.LOCAL_STORAGE_FOLDER ?? ".fern";
 const LOGS_FOLDER_NAME = "logs";
 
 // 100 MB cap for the logs directory
