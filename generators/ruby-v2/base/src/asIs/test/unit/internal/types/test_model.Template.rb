@@ -204,7 +204,7 @@ describe <%= gem_namespace %>::Internal::Types::Model do
       assert_equal({ "name" => "Ruby" }, ExampleModel.new({ name: "Ruby" }).to_h)
     end
 
-    it "omits required fields that were never provided" do
+<% if (omitUnsetModelFields) { %>    it "omits required fields that were never provided" do
       assert_equal({}, ExampleModel.new.to_h)
       assert_equal({ "child" => {} }, ExampleParent.new(child: {}).to_h)
       assert_equal({ "rating" => 4 }, ExampleModel.new(rating: 4).to_h)
@@ -224,7 +224,7 @@ describe <%= gem_namespace %>::Internal::Types::Model do
       assert_equal({ "child" => { "value" => nil } }, ExampleParent.load({ child: { value: nil } }.to_json).to_h)
     end
 
-    it "coerces the default of a field whose value is nil" do
+<% } %>    it "coerces the default of a field whose value is nil" do
       assert_equal 3, ExampleWithCoercedDefault.new(count: nil).count
     end
   end

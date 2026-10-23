@@ -1,0 +1,351 @@
+# frozen_string_literal: true
+
+module Seed
+  module Endpoints
+    module Container
+      class Client
+        # @param client [Seed::Internal::Http::RawClient]
+        #
+        # @return [void]
+        def initialize(client:)
+          @client = client
+        end
+
+        # @param request_options [Hash]
+        # @param params [Hash]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
+        #
+        # @example
+        #   client.endpoints.container.get_and_return_list_of_primitives(request: %w[string string])
+        #
+        # @return [Array[String]]
+        def get_and_return_list_of_primitives(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
+          request = Seed::Internal::JSON::Request.new(
+            base_url: request_options[:base_url],
+            method: "POST",
+            path: "/container/list-of-primitives",
+            body: params[:request],
+            request_options: request_options
+          )
+          begin
+            response = @client.send(request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = response.code.to_i
+          if code.between?(200, 299)
+            Seed::Internal::Types::Utils.coerce(Internal::Types::Array[String], (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true)))
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(response.body, code: code)
+          end
+        end
+
+        # @param request_options [Hash]
+        # @param params [Hash]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
+        #
+        # @example
+        #   client.endpoints.container.get_and_return_list_of_objects(request: [{
+        #     string: "string"
+        #   }, {
+        #     string: "string"
+        #   }])
+        #
+        # @return [Array[Seed::Types::Object_::Types::ObjectWithRequiredField]]
+        def get_and_return_list_of_objects(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
+          request = Seed::Internal::JSON::Request.new(
+            base_url: request_options[:base_url],
+            method: "POST",
+            path: "/container/list-of-objects",
+            body: params[:request]&.map { |item| Seed::Types::Object_::Types::ObjectWithRequiredField.new(item).to_h },
+            request_options: request_options
+          )
+          begin
+            response = @client.send(request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = response.code.to_i
+          if code.between?(200, 299)
+            Seed::Internal::Types::Utils.coerce(Internal::Types::Array[Seed::Types::Object_::Types::ObjectWithRequiredField], (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true)))
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(response.body, code: code)
+          end
+        end
+
+        # @param request_options [Hash]
+        # @param params [Hash]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
+        #
+        # @example
+        #   client.endpoints.container.get_and_return_set_of_primitives(request: Set.new(["string"]))
+        #
+        # @return [Array[String]]
+        def get_and_return_set_of_primitives(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
+          request = Seed::Internal::JSON::Request.new(
+            base_url: request_options[:base_url],
+            method: "POST",
+            path: "/container/set-of-primitives",
+            body: params[:request]&.to_a,
+            request_options: request_options
+          )
+          begin
+            response = @client.send(request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = response.code.to_i
+          if code.between?(200, 299)
+            Seed::Internal::Types::Utils.coerce(Internal::Types::Array[String], (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true)))
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(response.body, code: code)
+          end
+        end
+
+        # @param request_options [Hash]
+        # @param params [Hash]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
+        #
+        # @example
+        #   client.endpoints.container.get_and_return_set_of_objects(request: Set.new([{
+        #     string: "string"
+        #   }]))
+        #
+        # @return [Array[Seed::Types::Object_::Types::ObjectWithRequiredField]]
+        def get_and_return_set_of_objects(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
+          request = Seed::Internal::JSON::Request.new(
+            base_url: request_options[:base_url],
+            method: "POST",
+            path: "/container/set-of-objects",
+            body: params[:request]&.map { |item| Seed::Types::Object_::Types::ObjectWithRequiredField.new(item).to_h },
+            request_options: request_options
+          )
+          begin
+            response = @client.send(request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = response.code.to_i
+          if code.between?(200, 299)
+            Seed::Internal::Types::Utils.coerce(Internal::Types::Array[Seed::Types::Object_::Types::ObjectWithRequiredField], (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true)))
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(response.body, code: code)
+          end
+        end
+
+        # @param request_options [Hash]
+        # @param params [Hash]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
+        #
+        # @example
+        #   client.endpoints.container.get_and_return_map_prim_to_prim(request: {
+        #     string: "string"
+        #   })
+        #
+        # @return [Hash[String, String]]
+        def get_and_return_map_prim_to_prim(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
+          request = Seed::Internal::JSON::Request.new(
+            base_url: request_options[:base_url],
+            method: "POST",
+            path: "/container/map-prim-to-prim",
+            body: params[:request],
+            request_options: request_options
+          )
+          begin
+            response = @client.send(request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = response.code.to_i
+          if code.between?(200, 299)
+            Seed::Internal::Types::Utils.coerce(Internal::Types::Hash[String, String], (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true)))
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(response.body, code: code)
+          end
+        end
+
+        # @param request_options [Hash]
+        # @param params [Hash]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
+        #
+        # @example
+        #   client.endpoints.container.get_and_return_map_of_prim_to_object(request: {
+        #     string: {
+        #       string: "string"
+        #     }
+        #   })
+        #
+        # @return [Hash[String, Seed::Types::Object_::Types::ObjectWithRequiredField]]
+        def get_and_return_map_of_prim_to_object(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
+          request = Seed::Internal::JSON::Request.new(
+            base_url: request_options[:base_url],
+            method: "POST",
+            path: "/container/map-prim-to-object",
+            body: params[:request]&.transform_values { |value| Seed::Types::Object_::Types::ObjectWithRequiredField.new(value).to_h },
+            request_options: request_options
+          )
+          begin
+            response = @client.send(request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = response.code.to_i
+          if code.between?(200, 299)
+            Seed::Internal::Types::Utils.coerce(Internal::Types::Hash[String, Seed::Types::Object_::Types::ObjectWithRequiredField], (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true)))
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(response.body, code: code)
+          end
+        end
+
+        # @param request_options [Hash]
+        # @param params [Hash]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
+        #
+        # @example
+        #   client.endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union(request: {
+        #     string: 1.1
+        #   })
+        #
+        # @return [Hash[String, Seed::Types::Union::Types::MixedType]]
+        def get_and_return_map_of_prim_to_undiscriminated_union(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
+          request = Seed::Internal::JSON::Request.new(
+            base_url: request_options[:base_url],
+            method: "POST",
+            path: "/container/map-prim-to-union",
+            body: params[:request],
+            request_options: request_options
+          )
+          begin
+            response = @client.send(request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = response.code.to_i
+          if code.between?(200, 299)
+            Seed::Internal::Types::Utils.coerce(Internal::Types::Hash[String, Seed::Types::Union::Types::MixedType], (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true)))
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(response.body, code: code)
+          end
+        end
+
+        # @param request_options [Hash]
+        # @param params [Hash]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
+        #
+        # @example
+        #   client.endpoints.container.get_and_return_map_of_integer_to_object(request: {
+        #     1 => {
+        #       string: "string"
+        #     }
+        #   })
+        #
+        # @return [Hash[Integer, Seed::Types::Object_::Types::ObjectWithRequiredField]]
+        def get_and_return_map_of_integer_to_object(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
+          request = Seed::Internal::JSON::Request.new(
+            base_url: request_options[:base_url],
+            method: "POST",
+            path: "/container/map-integer-to-object",
+            body: params[:request]&.transform_values { |value| Seed::Types::Object_::Types::ObjectWithRequiredField.new(value).to_h },
+            request_options: request_options
+          )
+          begin
+            response = @client.send(request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = response.code.to_i
+          if code.between?(200, 299)
+            Seed::Internal::Types::Utils.coerce(Internal::Types::Hash[Integer, Seed::Types::Object_::Types::ObjectWithRequiredField], (response.body.to_s.empty? ? nil : JSON.parse(response.body)))
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(response.body, code: code)
+          end
+        end
+
+        # @param request_options [Hash]
+        # @param params [Hash]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
+        #
+        # @example
+        #   client.endpoints.container.get_and_return_optional(request: {
+        #     string: "string"
+        #   })
+        #
+        # @return [Seed::Types::Object_::Types::ObjectWithRequiredField, nil]
+        def get_and_return_optional(request_options: {}, **params)
+          params = Seed::Internal::Types::Utils.normalize_keys(params)
+          request = Seed::Internal::JSON::Request.new(
+            base_url: request_options[:base_url],
+            method: "POST",
+            path: "/container/opt-objects",
+            body: params[:request]&.then { |value| Seed::Types::Object_::Types::ObjectWithRequiredField.new(value).to_h },
+            request_options: request_options
+          )
+          begin
+            response = @client.send(request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = response.code.to_i
+          if code.between?(200, 299)
+            (response.body.to_s.empty? ? nil : Seed::Types::Object_::Types::ObjectWithRequiredField.load(response.body))
+          else
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(response.body, code: code)
+          end
+        end
+      end
+    end
+  end
+end

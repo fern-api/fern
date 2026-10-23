@@ -221,6 +221,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                     respectOptionalRequestBody: this.rubyContext.customConfig.respectOptionalRequestBody,
                     respectNullableUnionFields: this.rubyContext.customConfig.respectNullableUnionFields,
                     serializeTimeAsIso8601: this.rubyContext.customConfig.serializeTimeAsIso8601,
+                    omitUnsetModelFields: this.rubyContext.customConfig.omitUnsetModelFields,
                     endpointSecurity: this.rubyContext.ir.auth.requirement === "ENDPOINT_SECURITY",
                     requestLevelMaxRetries: hasEndpointWithRetriesDisabled(
                         Object.values(this.rubyContext.ir.services).flatMap((service) => service.endpoints)
@@ -245,6 +246,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         respectOptionalRequestBody,
         respectNullableUnionFields,
         serializeTimeAsIso8601,
+        omitUnsetModelFields,
         endpointSecurity,
         requestLevelMaxRetries
     }: {
@@ -262,6 +264,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         respectOptionalRequestBody?: boolean;
         respectNullableUnionFields?: boolean;
         serializeTimeAsIso8601?: boolean;
+        omitUnsetModelFields?: boolean;
         endpointSecurity?: boolean;
         requestLevelMaxRetries?: boolean;
     }): Promise<File> {
@@ -280,6 +283,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                 respectOptionalRequestBody,
                 respectNullableUnionFields,
                 serializeTimeAsIso8601,
+                omitUnsetModelFields,
                 endpointSecurity,
                 requestLevelMaxRetries
             })
@@ -359,6 +363,7 @@ function getTemplateVariables({
     respectOptionalRequestBody,
     respectNullableUnionFields,
     serializeTimeAsIso8601,
+    omitUnsetModelFields,
     endpointSecurity,
     requestLevelMaxRetries
 }: {
@@ -374,6 +379,7 @@ function getTemplateVariables({
     respectOptionalRequestBody?: boolean;
     respectNullableUnionFields?: boolean;
     serializeTimeAsIso8601?: boolean;
+    omitUnsetModelFields?: boolean;
     endpointSecurity?: boolean;
     requestLevelMaxRetries?: boolean;
 }): Record<string, unknown> {
@@ -405,6 +411,9 @@ function getTemplateVariables({
         // On by default; `false` restores the previous `Time#to_s` request serialization
         // byte-for-byte.
         serializeTimeAsIso8601: serializeTimeAsIso8601 ?? true,
+        // Drops never-set required fields from `Model#to_h` only when the opt-in flag is on,
+        // so flag-off internal/types/model.rb stays byte-identical.
+        omitUnsetModelFields: omitUnsetModelFields ?? false,
         // Emits the RawClient#auth_headers_for_endpoint delegator only for
         // endpoint-security SDKs, so ALL/ANY SDKs see zero change to raw_client.rb.
         endpointSecurity: endpointSecurity ?? false,

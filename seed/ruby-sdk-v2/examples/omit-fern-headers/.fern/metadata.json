@@ -1,13 +1,14 @@
 {
   "cliVersion": "DUMMY",
   "generatorName": "fernapi/fern-ruby-sdk-v2",
-  "generatorVersion": "latest",
+  "generatorVersion": "local",
   "generatorConfig": {
     "rubocopSeverity": "error",
     "omitFernHeaders": true
   },
   "originGitCommit": "DUMMY",
-  "invokedBy": "manual",
+  "invokedBy": "ci",
   "requestedVersion": "0.0.1",
+  "ciProvider": "github",
   "sdkVersion": "0.0.1"
 }
