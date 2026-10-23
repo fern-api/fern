@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.172.0
+  changelogEntry:
+    - summary: |
+        `fern token` now mints the key through the managed api-keys path (same `fern_` token class), so the
+        key gets a `tokenId`, appears in `fern org token list` and the dashboard API Keys page, and is revocable.
+      type: feat
+    - summary: |
+        Add `fern org token` commands to manage organization API keys:
+        `list` (with `--json`/`--csv` output), `create` (prints the secret once), and `revoke <token-id>`.
+        `list` shows each key's creator by email when Venus can resolve it.
+      type: feat
+  createdAt: "2026-10-23"
+  irVersion: 67
 - version: 5.171.6
   changelogEntry:
     - summary: |
