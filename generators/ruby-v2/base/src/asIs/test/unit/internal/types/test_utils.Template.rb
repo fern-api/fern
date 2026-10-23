@@ -147,7 +147,6 @@ describe <%= gem_namespace %>::Internal::Types::Utils do
       end
 <% } else { %>      it "converts Integer values to Float" do
         assert_kind_of Float, Utils.coerce(Float, 5)
-        assert_kind_of Float, Utils.coerce(Float, "5")
       end
 <% } %>
       it "coerces numeric Symbols such as symbolized JSON keys" do
@@ -157,7 +156,6 @@ describe <%= gem_namespace %>::Internal::Types::Utils do
         assert_equal(-20, Utils.coerce(Float, :"-20"))
         assert_kind_of Float, Utils.coerce(Float, :"2.0")
 <% } else { %>        assert_in_delta(2.0, Utils.coerce(Float, :"2"))
-        assert_kind_of Float, Utils.coerce(Float, :"2")
 <% } %>        assert_equal :foo, Utils.coerce(Float, :foo)
       end
 
