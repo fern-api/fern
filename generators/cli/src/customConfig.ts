@@ -16,6 +16,13 @@ export interface FernCliCustomConfig {
     binaryName?: string;
 
     /**
+     * Opt-in banner shown above the generated CLI's root help. A string is
+     * monochrome text; the object form can add one solid colour, a
+     * multi-stop gradient along `direction`, or one colour per line.
+     */
+    banner?: string | FernCliBannerConfig;
+
+    /**
      * When true (the default), the generator produces the full custom
      * command infrastructure alongside the CLI binary:
      *   - `<binaryName>-types` library crate (typed serde structs)
@@ -459,6 +466,18 @@ const RESERVED_SUFFIX_FLAG_NAMES: ReadonlySet<string> = new Set([
     "debug",
     "schema"
 ]);
+export interface FernCliBannerConfig {
+    text: string;
+    colors?: string[];
+    direction?: FernCliBannerDirection;
+    lineColors?: string[];
+}
+
+export type FernCliBannerDirection = "horizontal" | "vertical" | "diagonal";
+
+const BANNER_CONFIG_FIELDS: ReadonlySet<string> = new Set(["text", "colors", "direction", "lineColors"]);
+const BANNER_DIRECTIONS: ReadonlySet<string> = new Set(["horizontal", "vertical", "diagonal"]);
+const BANNER_COLOR_PATTERN = /^#[0-9a-fA-F]{6}$/;
 
 export function getCustomConfig(generatorConfig: GeneratorConfig): FernCliCustomConfig {
     if (generatorConfig.customConfig == null) {
@@ -489,6 +508,9 @@ export function validateCustomConfig(raw: unknown): FernCliCustomConfig {
             throw new Error(`Invalid customConfig.binaryName: expected a string, got ${typeof obj.binaryName}.`);
         }
         result.binaryName = obj.binaryName;
+    }
+    if ("banner" in obj && obj.banner !== undefined) {
+        result.banner = validateBannerConfig(obj.banner);
     }
     if ("customCommands" in obj && obj.customCommands !== undefined) {
         if (typeof obj.customCommands !== "boolean") {
@@ -568,6 +590,89 @@ export function validateCustomConfig(raw: unknown): FernCliCustomConfig {
         result.distribution = validateDistribution(obj.distribution);
     }
     return result;
+}
+
+function validateBannerConfig(raw: unknown): string | FernCliBannerConfig {
+    if (typeof raw === "string") {
+        if (raw.length === 0) {
+            throw new Error('Invalid customConfig.banner: expected non-empty text, got "".');
+        }
+        return raw;
+    }
+
+    const obj = asConfigObject(raw, "customConfig.banner");
+    const unknownKeys = Object.keys(obj).filter((key) => !BANNER_CONFIG_FIELDS.has(key));
+    if (unknownKeys.length > 0) {
+        throw new Error(
+            `Invalid customConfig.banner: unknown field(s) ${unknownKeys.map((key) => `\`${key}\``).join(", ")}. ` +
+                "Supported fields: `text`, `colors`, `direction`, `lineColors`."
+        );
+    }
+
+    if (typeof obj.text !== "string" || obj.text.length === 0) {
+        throw new Error(
+            `Invalid customConfig.banner.text: expected a non-empty string, got ${describeConfigValue(obj.text)}.`
+        );
+    }
+
+    const result: FernCliBannerConfig = { text: obj.text };
+    const colors = validateBannerColors(obj.colors, "colors");
+    if (colors != null) {
+        result.colors = colors;
+    }
+    const lineColors = validateBannerColors(obj.lineColors, "lineColors");
+    if (lineColors != null) {
+        if (colors != null) {
+            throw new Error(
+                "Invalid customConfig.banner: set either `colors` (a gradient) or `lineColors` (one colour per line), not both."
+            );
+        }
+        result.lineColors = lineColors;
+    }
+    if (obj.direction !== undefined) {
+        if (typeof obj.direction !== "string" || !BANNER_DIRECTIONS.has(obj.direction)) {
+            throw new Error(
+                `Invalid customConfig.banner.direction: expected "horizontal", "vertical", or "diagonal", got ${describeConfigValue(obj.direction)}.`
+            );
+        }
+        result.direction = obj.direction as FernCliBannerDirection;
+    }
+    return result;
+}
+
+function validateBannerColors(raw: unknown, field: "colors" | "lineColors"): string[] | undefined {
+    if (raw === undefined) {
+        return undefined;
+    }
+    if (!Array.isArray(raw)) {
+        throw new Error(
+            `Invalid customConfig.banner.${field}: expected an array of 6-digit hex colours, got ${describeConfigValue(raw)}.`
+        );
+    }
+    return raw.map((color, index) => {
+        if (typeof color !== "string" || !BANNER_COLOR_PATTERN.test(color)) {
+            throw new Error(
+                `Invalid customConfig.banner.${field}[${index}]: expected a 6-digit hex colour like "#4949F2", got ${describeConfigValue(color)}.`
+            );
+        }
+        return color;
+    });
+}
+
+function describeConfigValue(value: unknown): string {
+    if (typeof value === "string") {
+        return JSON.stringify(value);
+    }
+    if (value === null) {
+        return "null";
+    }
+    if (Array.isArray(value)) {
+        return "array";
+    }
+    if (typeof value === "number" || typeof value === "boolean") {
+        return `${typeof value} ${value}`;
+    }
+    return typeof value;
 }
 
 const DEPENDENCY_SPEC_STRING_FIELDS = ["version", "package", "path", "git", "branch", "rev", "registry"] as const;
