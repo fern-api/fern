@@ -1,5 +1,5 @@
 import { createFdrService } from "@fern-api/core";
-import { isPlainObject, nonEmpty } from "@fern-api/core-utils";
+import { errorMessageOrString, isPlainObject, nonEmpty } from "@fern-api/core-utils";
 import type { FdrClient } from "@fern-api/fdr-sdk";
 import { type HttpMethod, HttpMethodSchema } from "@fern-api/fdr-sdk/orpc-client";
 import { isAutoVersion } from "@fern-api/generator-cli/autoversion";
@@ -238,7 +238,8 @@ export async function uploadSdkGenSnippets(
         );
         logger.info(`Uploaded ${endpoints.length} ${label} snippets to FDR (version ${decision.version})`);
     } catch (error) {
-        const message = error instanceof Error ? error.message : String(error);
-        logger.warn(`Could not upload ${label} snippets to FDR (the SDK is not affected): ${message}`);
+        logger.warn(
+            `Could not upload ${label} snippets to FDR (the SDK is not affected): ${errorMessageOrString(error)}`
+        );
     }
 }
