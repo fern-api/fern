@@ -230,7 +230,9 @@ export class Type extends AstNode {
                     writer.write("?");
                 }
                 this.internalType.value.write(writer, { comment });
-                if (isUnion && !this.unionHasOptional(internalType.types)) {
+                // A native union containing `mixed` is written as plain `mixed`, which already accepts null.
+                const unionCollapsesToMixed = isUnion && !comment && this.unionHasMixed(internalType.types);
+                if (isUnion && !unionCollapsesToMixed && !this.unionHasOptional(internalType.types)) {
                     writer.write("|");
                     writer.writeNode(Type.null());
                 }
@@ -602,6 +604,10 @@ export class Type extends AstNode {
             result.push(Type.null());
         }
         return result;
+    }
+
+    private unionHasMixed(types: Type[]): boolean {
+        return types.some((type) => type.underlyingType().internalType.type === "mixed");
     }
 
     /**
