@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Generated XML (TwiML) child-order tests now build each child element from its own schema (required
+    attributes and text content included), so the fixture parses for types whose children require text
+    (e.g. `<Message><Body>text</Body><Media>text</Media><Body>text</Body></Message>`) instead of failing
+    with a missing-required-text error. Generated test classes also reference the type under test and its
+    enums with `global::`-qualified names, so types named like BCL types (`Uri`, `Queue`, `Stream`) compile.
+  type: fix

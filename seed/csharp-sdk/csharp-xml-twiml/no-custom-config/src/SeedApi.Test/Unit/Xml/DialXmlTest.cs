@@ -11,7 +11,7 @@ public class DialXmlTest
     {
         var xml =
             "<tw:Dial xmlns:tw=\"https://www.twilio.com/twiml\" record=\"record-from-answer record-from-ringing\" statusCallbackEvent=\"statusCallbackEvent statusCallbackEvent-2\">text<Numbers><Number /></Numbers></tw:Dial>";
-        var parsed = Dial.FromXml(xml);
+        var parsed = global::SeedApi.Dial.FromXml(xml);
         Assert.That(
             parsed.Record,
             Is.EqualTo(
@@ -37,7 +37,7 @@ public class DialXmlTest
         );
         Assert.That(serialized, Does.Contain(">text<"));
         Assert.That(
-            Dial.FromXml(serialized).ToXml(false),
+            global::SeedApi.Dial.FromXml(serialized).ToXml(false),
             Is.EqualTo(serialized),
             "re-serializing the parsed document is stable"
         );
@@ -48,7 +48,7 @@ public class DialXmlTest
     [NUnit.Framework.Test]
     public void FromXml_PreservesUnknownAttributesAndChildren()
     {
-        var parsed = Dial.FromXml(
+        var parsed = global::SeedApi.Dial.FromXml(
             "<tw:Dial xmlns:tw=\"https://www.twilio.com/twiml\" data-unknown=\"1\"><Unknown a=\"1\">v</Unknown></tw:Dial>"
         );
         Assert.That(parsed.AdditionalAttributes["data-unknown"], Is.EqualTo("1"));
@@ -57,7 +57,7 @@ public class DialXmlTest
         var serialized = parsed.ToXml(false);
         Assert.That(serialized, Does.Contain("data-unknown=\"1\""));
         Assert.That(serialized, Does.Contain("<Unknown a=\"1\">v</Unknown>"));
-        Assert.That(Dial.FromXml(serialized).ToXml(false), Is.EqualTo(serialized));
+        Assert.That(global::SeedApi.Dial.FromXml(serialized).ToXml(false), Is.EqualTo(serialized));
     }
 
     [NUnit.Framework.Test]
@@ -67,20 +67,20 @@ public class DialXmlTest
         var serialized = model.ToXml(false);
         Assert.That(serialized, Does.Not.Contain("a & b"));
         Assert.That(serialized, Does.Not.Contain("< c"));
-        Assert.That(Dial.FromXml(serialized).Number, Is.EqualTo("a & b < c > d \"q\" 'r'"));
+        Assert.That(global::SeedApi.Dial.FromXml(serialized).Number, Is.EqualTo("a & b < c > d \"q\" 'r'"));
     }
 
     [NUnit.Framework.Test]
     public void FromXml_RejectsWrongRootElement()
     {
-        Assert.That(() => Dial.FromXml("<NotThetw:Dial />"), Throws.ArgumentException);
+        Assert.That(() => global::SeedApi.Dial.FromXml("<NotThetw:Dial />"), Throws.ArgumentException);
     }
 
     [NUnit.Framework.Test]
     public void FromXml_RejectsMalformedXml()
     {
         Assert.That(
-            () => Dial.FromXml("<tw:Dial xmlns:tw=\"https://www.twilio.com/twiml\"><unclosed>"),
+            () => global::SeedApi.Dial.FromXml("<tw:Dial xmlns:tw=\"https://www.twilio.com/twiml\"><unclosed>"),
             Throws.ArgumentException
         );
     }
@@ -90,7 +90,7 @@ public class DialXmlTest
     {
         Assert.That(
             () =>
-                Dial.FromXml(
+                global::SeedApi.Dial.FromXml(
                     "<!DOCTYPE tw:Dial [<!ENTITY xxe \"injected\">]><tw:Dial xmlns:tw=\"https://www.twilio.com/twiml\">&xxe;</tw:Dial>"
                 ),
             Throws.ArgumentException
