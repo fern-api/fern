@@ -128,6 +128,36 @@ describe("Enum", () => {
             `);
         });
 
+        it("should only emit Codable and CaseIterable members for listed conformances", () => {
+            const enum_ = swift.enumWithRawValues({
+                name: "Flag",
+                conformances: [swift.Protocol.RawRepresentable],
+                cases: [{ unsafeName: "on", rawValue: "on" }],
+                unknownCase: { unsafeName: "__unknown" }
+            });
+
+            expect(enum_.toString()).toMatchInlineSnapshot(`
+              "enum Flag: RawRepresentable {
+                  case on
+                  case __unknown(String)
+
+                  init(rawValue: String) {
+                      switch rawValue {
+                      case "on": self = .on
+                      default: self = .__unknown(rawValue)
+                      }
+                  }
+
+                  var rawValue: String {
+                      switch self {
+                      case .on: return "on"
+                      case .__unknown(let rawValue): return rawValue
+                      }
+                  }
+              }"
+            `);
+        });
+
         it("should render a forward compatible enum without listed cases", () => {
             const enum_ = swift.enumWithRawValues({
                 name: "Empty",

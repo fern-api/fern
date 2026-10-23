@@ -13,9 +13,9 @@ export declare namespace EnumWithRawValues {
 
     /**
      * Makes the enum forward compatible: a raw value it does not list decodes into this
-     * case instead of failing. The enum then implements `RawRepresentable` and `Codable` itself,
-     * plus `allCases` when it conforms to `CaseIterable`, so pass `RawRepresentable` rather than
-     * `String` as a conformance.
+     * case instead of failing. The enum then implements `RawRepresentable` itself, plus the
+     * `Codable` and `CaseIterable` members when it lists those conformances, so pass
+     * `RawRepresentable` rather than `String` as a conformance.
      */
     interface UnknownCase {
         unsafeName: string;
@@ -103,6 +103,7 @@ export class EnumWithRawValues extends AstNode {
         }));
         const writeLines = (lines: string[]) => {
             lines.forEach((line) => {
+                // Skip empty lines so blank lines don't pick up the indentation as trailing whitespace.
                 if (line.length > 0) {
                     writer.write(line);
                 }
@@ -114,7 +115,8 @@ export class EnumWithRawValues extends AstNode {
             if (case_.docs != null) {
                 case_.docs.write(writer);
             }
-            writeLines([`case ${escapeReservedKeyword(case_.unsafeName)}`]);
+            writer.write(`case ${escapeReservedKeyword(case_.unsafeName)}`);
+            writer.newLine();
         });
         if (unknownCase.docs != null) {
             unknownCase.docs.write(writer);
@@ -138,15 +140,19 @@ export class EnumWithRawValues extends AstNode {
             `    case .${unknownName}(let rawValue): return rawValue`,
             "    }",
             "}",
-            "",
-            `${access}init(from decoder: Decoder) throws {`,
-            "    self.init(rawValue: try decoder.singleValueContainer().decode(String.self))",
-            "}",
-            "",
-            `${access}func encode(to encoder: Encoder) throws {`,
-            "    var container = encoder.singleValueContainer()",
-            "    try container.encode(rawValue)",
-            "}"
+            ...(this.conformances.includes(Protocol.Codable)
+                ? [
+                      "",
+                      `${access}init(from decoder: Decoder) throws {`,
+                      "    self.init(rawValue: try decoder.singleValueContainer().decode(String.self))",
+                      "}",
+                      "",
+                      `${access}func encode(to encoder: Encoder) throws {`,
+                      "    var container = encoder.singleValueContainer()",
+                      "    try container.encode(rawValue)",
+                      "}"
+                  ]
+                : [])
         ]);
     }
 }
