@@ -1,0 +1,9 @@
+language js
+
+// The regex literal is matched on its source text because a backtick snippet cannot express `^/` directly.
+or {
+    `$value.replace($pattern, "")` where { $pattern <: r"^/\^\\/\+/$" },
+    `$value?.replace($pattern, "")` where { $pattern <: r"^/\^\\/\+/$" }
+} as $strip where {
+    register_diagnostic(span=$strip, message="Use `stripLeadingSlash` from `@fern-api/core-utils` instead of stripping leading slashes by hand.", severity="error")
+}
