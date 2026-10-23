@@ -1,4 +1,5 @@
 import { getPathSegments } from "@fern-api/core-utils";
+
 /**
  * Extract the last path segment from a URL.
  * Returns undefined if no path segment is found.
