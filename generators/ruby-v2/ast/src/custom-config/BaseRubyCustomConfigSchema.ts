@@ -88,6 +88,11 @@ export const BaseRubyCustomConfigSchema = z.object({
     // than `3600.0`. Decimals are unaffected. Disabled by default, so every value in such a
     // field is converted to `Float`.
     keepIntegersInFloatFields: z.boolean().optional(),
+    // Opt-out: a map request body (e.g. `Hash[String, String]`) can also be passed as keyword
+    // arguments, as before 1.34.1: `create(id: "h", MY_SECRET: "x")` sends `{"MY_SECRET":"x"}`.
+    // `request:` (or the wrapped body key) still takes precedence. Set to `false` to only read the
+    // body from that argument. Enabled by default.
+    allowMapBodyAsKeywordArguments: z.boolean().optional(),
     // Opt-in: a type alias to a named type coerces into that type rather than returning
     // the result of a bare `JSON.parse`. Without this, an endpoint whose response schema
     // is a `$ref` to another schema returns a string-keyed Hash while the SDK documents

@@ -12,6 +12,7 @@ export const BaseJavaCustomConfigSchema = z.object({
     "package-layout": z.enum(["flat", "nested"]).optional(),
     "package-prefix": z.string().optional(),
     "respect-optional-request-body": z.boolean().optional(),
+    "legacy-input-stream-upload-overloads": z.boolean().optional(),
     "use-local-date-for-dates": z.boolean().optional(),
 
     // General options.
