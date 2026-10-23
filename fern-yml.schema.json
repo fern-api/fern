@@ -1210,7 +1210,7 @@
                                 "group": {
                                   "type": "string"
                                 },
-                                "variants": {
+                                "items": {
                                   "type": "array",
                                   "items": {
                                     "anyOf": [
@@ -1339,7 +1339,7 @@
                               },
                               "required": [
                                 "group",
-                                "variants"
+                                "items"
                               ],
                               "additionalProperties": false
                             },
@@ -1564,7 +1564,7 @@
                                           "group": {
                                             "type": "string"
                                           },
-                                          "variants": {
+                                          "items": {
                                             "type": "array",
                                             "items": {
                                               "anyOf": [
@@ -1693,7 +1693,7 @@
                                         },
                                         "required": [
                                           "group",
-                                          "variants"
+                                          "items"
                                         ],
                                         "additionalProperties": false
                                       },
@@ -1929,7 +1929,7 @@
                                                     "group": {
                                                       "type": "string"
                                                     },
-                                                    "variants": {
+                                                    "items": {
                                                       "type": "array",
                                                       "items": {
                                                         "anyOf": [
@@ -2058,7 +2058,7 @@
                                                   },
                                                   "required": [
                                                     "group",
-                                                    "variants"
+                                                    "items"
                                                   ],
                                                   "additionalProperties": false
                                                 },

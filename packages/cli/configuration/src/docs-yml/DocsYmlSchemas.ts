@@ -1016,7 +1016,7 @@ export const TabVariantGroupItem = z.union([TabVariant, LinkConfiguration]);
 
 export const TabVariantGroup = z.object({
     group: z.string(),
-    variants: z.array(TabVariantGroupItem)
+    items: z.array(TabVariantGroupItem)
 });
 
 export const TabVariantItem = z.union([TabVariant, TabVariantGroup, LinkConfiguration]);

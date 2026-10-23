@@ -936,8 +936,8 @@ types:
     properties:
       group:
         type: string
-        docs: Header shown above this group's variants in the variant menu.
-      variants: list<TabVariantGroupItem>
+        docs: Header shown above this group's items in the variant menu.
+      items: list<TabVariantGroupItem>
 
   TabVariantGroupItem:
     discriminated: false

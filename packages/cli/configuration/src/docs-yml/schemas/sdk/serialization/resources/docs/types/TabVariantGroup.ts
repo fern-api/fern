@@ -10,12 +10,12 @@ export const TabVariantGroup: core.serialization.ObjectSchema<
     FernDocsConfig.TabVariantGroup
 > = core.serialization.object({
     group: core.serialization.string(),
-    variants: core.serialization.list(TabVariantGroupItem),
+    items: core.serialization.list(TabVariantGroupItem),
 });
 
 export declare namespace TabVariantGroup {
     export interface Raw {
         group: string;
-        variants: TabVariantGroupItem.Raw[];
+        items: TabVariantGroupItem.Raw[];
     }
 }

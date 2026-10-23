@@ -12,7 +12,7 @@ export function isRawTabVariantLink(item: RawTabVariantListItem): item is RawSch
 
 export interface RawTabVariantWithPath {
     variant: RawSchemas.TabVariant;
-    /** Path below the tab item, e.g. `["variants", "1", "variants", "0"]` for a grouped variant. */
+    /** Path below the tab item, e.g. `["variants", "1", "items", "0"]` for a grouped variant. */
     path: string[];
 }
 
@@ -20,10 +20,10 @@ export interface RawTabVariantWithPath {
 export function flattenRawTabVariants(items: RawSchemas.TabVariantItem[]): RawTabVariantWithPath[] {
     return items.flatMap((item, index): RawTabVariantWithPath[] => {
         if (isRawTabVariantGroup(item)) {
-            return item.variants.flatMap((child, childIndex): RawTabVariantWithPath[] =>
+            return item.items.flatMap((child, childIndex): RawTabVariantWithPath[] =>
                 isRawTabVariantLink(child)
                     ? []
-                    : [{ variant: child, path: ["variants", `${index}`, "variants", `${childIndex}`] }]
+                    : [{ variant: child, path: ["variants", `${index}`, "items", `${childIndex}`] }]
             );
         }
         if (isRawTabVariantLink(item)) {

@@ -58,12 +58,12 @@ describe("flattenRawTabVariants", () => {
         const variant = (title: string) => ({ title, layout: [] });
         const result = flattenRawTabVariants([
             variant("A"),
-            { group: "Platform", variants: [variant("B"), { link: "Status", href: "https://status.example.com" }] },
+            { group: "Platform", items: [variant("B"), { link: "Status", href: "https://status.example.com" }] },
             { link: "Changelog", href: "/changelog" }
         ]);
         expect(result.map(({ variant: v, path }) => [v.title, path.join(".")])).toEqual([
             ["A", "variants.0"],
-            ["B", "variants.1.variants.0"]
+            ["B", "variants.1.items.0"]
         ]);
     });
 });

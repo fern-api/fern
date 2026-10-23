@@ -1381,7 +1381,7 @@ async function convertNavigationTabConfiguration({
                     return {
                         type: "group",
                         title: entry.group,
-                        children: await Promise.all(entry.variants.map(convertEntry))
+                        children: await Promise.all(entry.items.map(convertEntry))
                     };
                 }
                 return convertEntry(entry);

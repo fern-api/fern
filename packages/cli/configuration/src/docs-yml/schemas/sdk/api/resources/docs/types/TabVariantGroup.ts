@@ -3,7 +3,7 @@
 import type * as FernDocsConfig from "../../../index.js";
 
 export interface TabVariantGroup {
-    /** Header shown above this group's variants in the variant menu. */
+    /** Header shown above this group's items in the variant menu. */
     group: string;
-    variants: FernDocsConfig.TabVariantGroupItem[];
+    items: FernDocsConfig.TabVariantGroupItem[];
 }
