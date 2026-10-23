@@ -1,5 +1,6 @@
-import { isAbsolute, relative, resolve, sep } from "node:path";
+import { isAbsolute, relative, resolve } from "node:path";
 import { isRecord } from "@fern-api/core-utils";
+import { toPosixPath } from "@fern-api/fs-utils";
 import type { RuleContext } from "../types.js";
 
 /** The generators.yml `api` section, created on first use. */
@@ -26,7 +27,7 @@ export function authSchemes(context: RuleContext): Record<string, unknown> {
 
 /** A path from sdk-config.yml's folder, rewritten relative to the generators.yml folder. */
 export function relativeToOutput(context: RuleContext, path: string): string {
-    const target = relative(context.input.outDir, resolveFromConfig(context, path)).split(sep).join("/");
+    const target = toPosixPath(relative(context.input.outDir, resolveFromConfig(context, path)));
     return target.startsWith(".") ? target : `./${target}`;
 }
 
@@ -36,7 +37,7 @@ export function resolveFromConfig(context: RuleContext, path: string): string {
 
 /** A source path rewritten relative to the generators.yml folder. */
 export function relativeSourceToOutput(context: RuleContext, path: string): string {
-    const target = relative(context.input.outDir, resolveFromSource(context, path)).split(sep).join("/");
+    const target = toPosixPath(relative(context.input.outDir, resolveFromSource(context, path)));
     return target.startsWith(".") ? target : `./${target}`;
 }
 

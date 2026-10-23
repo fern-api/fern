@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
-import { dirname, isAbsolute, relative, resolve, sep } from "node:path";
+import { dirname, isAbsolute, relative, resolve } from "node:path";
 import { isRecord } from "@fern-api/core-utils";
+import { toPosixPath } from "@fern-api/fs-utils";
 import YAML from "yaml";
 
 /** Fern takes one overlay file per spec, so several overlays become one file with all their actions, in order. */
@@ -40,6 +41,6 @@ function rebaseReference(reference: string, sourceDir: string, destinationDir: s
     if (file.length === 0 || isAbsolute(file) || /^[a-z][a-z\d+.-]*:/i.test(file)) {
         return reference;
     }
-    const rebased = relative(destinationDir, resolve(sourceDir, file)).split(sep).join("/");
+    const rebased = toPosixPath(relative(destinationDir, resolve(sourceDir, file)));
     return `${rebased.startsWith(".") ? rebased : `./${rebased}`}${fragment}`;
 }
