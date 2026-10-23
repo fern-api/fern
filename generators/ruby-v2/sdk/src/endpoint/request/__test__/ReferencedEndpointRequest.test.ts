@@ -95,10 +95,30 @@ describe("referenced request bodies", () => {
         expect(renderBody("setUniqueTags").body).toBe("params[:request]&.to_a");
     });
 
-    it("sends primitive, enum, and map bodies as the bare value", () => {
+    it("sends primitive and enum bodies as the bare value", () => {
         expect(renderBody("rename").body).toBe("params[:request]");
         expect(renderBody("setSeason").body).toBe("params[:request]");
-        expect(renderBody("setMetadata").body).toBe("params[:request]");
+    });
+
+    it("sends map bodies from `request:`, or else from the other keyword arguments", () => {
+        expect(renderBody("setMetadata")).toEqual({
+            code: "body_value = params.key?(:request) || params.empty? ? params[:request] : params",
+            body: "body_value"
+        });
+        expect(renderBody("setOptionalMetadata").body).toBe("body_value");
+    });
+
+    it("leaves path parameters out of keyword-argument map bodies", () => {
+        expect(renderBody("setPlantMetadata").code).toBe(
+            "keyword_body = params.except(*%i[plant_id])\nbody_value = params.key?(:request) || keyword_body.empty? ? params[:request] : keyword_body"
+        );
+    });
+
+    it("leaves path, query, and header parameters out of wrapped keyword-argument map bodies", () => {
+        expect(renderBody("setMetadataWithHeaders")).toEqual({
+            code: "keyword_body = params.except(*%i[plant_id dry_run x_trace_id])\nbody_value = params.key?(:body) || keyword_body.empty? ? params[:body] : keyword_body",
+            body: "body_value"
+        });
     });
 
     it("sends wrapped non-object bodies as the bare body argument, without path, query, or header params", () => {
@@ -124,10 +144,10 @@ describe("referenced request bodies", () => {
 
     it("serializes object map values through the model, keeping the keys", () => {
         expect(renderBody("setPlantsByRoom").body).toBe(
-            "params[:request]&.transform_values { |value| Test::Plants::Types::Plant.new(value).to_h }"
+            "body_value&.transform_values { |value| Test::Plants::Types::Plant.new(value).to_h }"
         );
         expect(renderBody("setOptionalPlantsByRoom").body).toBe(
-            "params[:request]&.transform_values { |value| value&.then { |value1| Test::Plants::Types::Plant.new(value1).to_h } }"
+            "body_value&.transform_values { |value| value&.then { |value1| Test::Plants::Types::Plant.new(value1).to_h } }"
         );
     });
 
@@ -173,10 +193,39 @@ describe("referenced request bodies with respectOptionalRequestBody", () => {
         });
     });
 
+    it("keeps an omitted optional keyword-argument map body nil", () => {
+        expect(renderBodyWith(context, "setOptionalMetadata", { optionalBody: true })).toMatchObject({
+            body: "body_value.nil? ? nil : body_value",
+            omitContentTypeWithoutBody: true
+        });
+    });
+
     it("does not guard required bodies", () => {
         expect(renderBodyWith(context, "setTags")).toMatchObject({
             body: "params[:request]",
             omitContentTypeWithoutBody: false
+        });
+    });
+});
+
+describe("referenced request bodies with allowMapBodyAsKeywordArguments: false", () => {
+    let context: SdkGeneratorContext;
+
+    beforeAll(async () => {
+        context = await createSampleGeneratorContext(REFERENCED_BODIES_DEFINITION, {
+            allowMapBodyAsKeywordArguments: false
+        });
+    });
+
+    it("reads map bodies only from the body argument", () => {
+        expect(renderBodyWith(context, "setMetadata")).toMatchObject({ code: undefined, body: "params[:request]" });
+        expect(renderBodyWith(context, "setPlantMetadata")).toMatchObject({
+            code: undefined,
+            body: "params[:request]"
+        });
+        expect(renderBodyWith(context, "setMetadataWithHeaders")).toMatchObject({
+            code: undefined,
+            body: "params[:body]"
         });
     });
 });
