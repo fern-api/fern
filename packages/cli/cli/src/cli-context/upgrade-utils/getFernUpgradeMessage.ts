@@ -1,3 +1,4 @@
+import { DEFAULT_FDR_ORIGIN_URL } from "@fern-api/core-utils";
 import { CliError } from "@fern-api/task-context";
 import { FernRegistryClient } from "@fern-fern/generators-sdk";
 import boxen from "boxen";
@@ -123,7 +124,7 @@ export async function getGeneratorUpgradeMessage({
 
 async function normalizeGeneratorName(generatorImage: string): Promise<string> {
     const client = new FernRegistryClient({
-        environment: process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com"
+        environment: process.env.DEFAULT_FDR_ORIGIN ?? DEFAULT_FDR_ORIGIN_URL
     });
     const generatorResponse = await client.generators.getGeneratorByImage({ dockerImage: generatorImage });
     if (!generatorResponse.ok || generatorResponse.body == null) {

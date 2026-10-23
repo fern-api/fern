@@ -1,6 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { docsYml } from "@fern-api/configuration";
-import { delay, extractErrorMessage } from "@fern-api/core-utils";
+import { delay, extractErrorMessage, getFdrOrigin } from "@fern-api/core-utils";
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, resolve } from "@fern-api/fs-utils";
 import { cloneRepositoryAtRef, resolveRepositorySubpath } from "@fern-api/github";
@@ -62,8 +62,7 @@ export interface LibraryDocsClient {
  * working.
  */
 export function createLibraryDocsClient({ token }: { token: string }): LibraryDocsClient {
-    const defaultOrigin = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com";
-    const baseUrl = process.env.FERN_FDR_ORIGIN ?? process.env.OVERRIDE_FDR_ORIGIN ?? defaultOrigin;
+    const baseUrl = getFdrOrigin();
     const docsBase = `${baseUrl}/v2/registry/docs`;
 
     async function request<T>(method: string, path: string, body?: unknown): Promise<T> {

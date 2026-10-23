@@ -1,5 +1,5 @@
 import { getToken } from "@fern-api/auth";
-import { errorMessageOrString } from "@fern-api/core-utils";
+import { errorMessageOrString, getFdrOrigin } from "@fern-api/core-utils";
 import { DocsDefinitionResolver } from "@fern-api/docs-resolver";
 import { DocsV1Write, FernNavigation } from "@fern-api/fdr-sdk";
 import { createLogger, type Logger, type LogLevel } from "@fern-api/logger";
@@ -85,15 +85,6 @@ async function fetchMarkdownEntries(
         const message = errorMessageOrString(error);
         return { error: message };
     }
-}
-
-function getFdrOrigin(): string {
-    return (
-        process.env.FERN_FDR_ORIGIN ??
-        process.env.OVERRIDE_FDR_ORIGIN ??
-        process.env.DEFAULT_FDR_ORIGIN ??
-        "https://registry.buildwithfern.com"
-    );
 }
 
 export const MissingRedirectsRule: Rule = {
