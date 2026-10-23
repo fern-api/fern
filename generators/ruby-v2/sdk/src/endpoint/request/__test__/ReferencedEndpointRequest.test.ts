@@ -208,6 +208,38 @@ describe("referenced request bodies with respectOptionalRequestBody", () => {
     });
 });
 
+describe("referenced request bodies with legacyNonObjectRequestBodies", () => {
+    let context: SdkGeneratorContext;
+
+    beforeAll(async () => {
+        context = await createSampleGeneratorContext(REFERENCED_BODIES_DEFINITION, {
+            legacyNonObjectRequestBodies: true
+        });
+    });
+
+    it("sends every keyword argument as a non-object body", () => {
+        for (const endpointName of ["setTags", "rename", "setSeason", "setMetadata", "renameWithHeaders"]) {
+            expect(renderBodyWith(context, endpointName)).toMatchObject({ code: undefined, body: "params" });
+        }
+    });
+
+    it("leaves path parameters out of a non-object body", () => {
+        for (const endpointName of ["tagPlant", "tagPlantWithHeaders"]) {
+            expect(renderBodyWith(context, endpointName)).toMatchObject({
+                code: "path_param_names = %i[plant_id]\nbody_params = params.except(*path_param_names)",
+                body: "body_params"
+            });
+        }
+    });
+
+    it("still builds object bodies with the model", () => {
+        expect(renderBodyWith(context, "createPlant").body).toBe("Test::Plants::Types::Plant.new(params).to_h");
+        expect(renderBodyWith(context, "createPlantWithHeaders").body).toBe(
+            "Test::Plants::Types::Plant.new(params).to_h"
+        );
+    });
+});
+
 describe("referenced request bodies with allowMapBodyAsKeywordArguments: false", () => {
     let context: SdkGeneratorContext;
 
