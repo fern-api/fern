@@ -41,6 +41,7 @@ import {
     validateGeneratorConfigCompatibility
 } from "./sdk-gen-client/index.js";
 import { FERN_GENERATOR_LATEST_VERSION, isGeneratorVersionForUnpinnedRoute } from "./sdkConfigGeneratorVersion.js";
+import { uploadSdkGenSnippets } from "./uploadSdkGenSnippets.js";
 
 const POLL_INTERVAL_MS = 2_000;
 const POLL_TIMEOUT_MS = 18 * 60 * 1_000;
@@ -134,7 +135,7 @@ interface FernBuildStatus {
         targetId: string;
         status: "queued" | "running" | "publishing" | "succeeded" | "failed";
         logs: Array<{ level: string; message: string }>;
-        result?: { artifactUrl: string; actualVersion?: string };
+        result?: { artifactUrl: string; snippetsUrl?: string; actualVersion?: string };
         error?: { code?: string; message: string };
         publication?:
             | {
@@ -2152,6 +2153,23 @@ async function finishFernSdkGenApiTarget(
     if (isAutoVersion(participant.sdkVersion) && actualVersion != null) {
         // Fern Autorelease reads the version from this phrase, which the legacy Fiddle path also logs.
         participant.context.logger.info(`AUTO versioning picked new version: ${actualVersion}`);
+    }
+    if (participant.payload.payloadKind === "sdk-config-v1") {
+        // Only runs when FERN_UPLOAD_SDK_GEN_SNIPPETS=true; never throws and never changes the build result.
+        await uploadSdkGenSnippets({
+            token: participant.token.value,
+            organization: participant.organization,
+            apiId: participant.apiName,
+            generatorName: participant.generatorInvocation.name,
+            language:
+                participant.generatorInvocation.language ??
+                getFernSdkGenApiLanguage(participant.generatorInvocation.name),
+            package: participant.payload.package,
+            version: actualVersion,
+            snippetsUrl: target.result.snippetsUrl,
+            isPreview: participant.absolutePathToPreview != null,
+            logger: participant.context.logger
+        });
     }
     return {
         createdSnippets: false,
