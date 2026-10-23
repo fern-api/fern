@@ -44,6 +44,7 @@ import {
     type FernSdkGenApiBuildParameters,
     type FernSdkGenApiGithubOptions,
     FernSdkGenApiPreparationBatch,
+    type FernSdkGenApiRequestedOutput,
     formatGeneratorConfigCompatibilityError,
     getFernSdkGenApiLanguage,
     getFernSdkGenApiOrigin,
@@ -196,6 +197,10 @@ export async function runRemoteGenerationForGenerator({
     const snippetPackageName = resolveSnippetPackageName(generatorInvocation);
 
     const isPreview = isPreviewOverride ?? absolutePathToPreview != null;
+    // `fern generate --preview` downloads the files instead of delivering them to GitHub or a registry.
+    // `fern sdk preview` sets `fiddlePreview` for its jobs, which keep their configured output.
+    const previewRequestedOutput: FernSdkGenApiRequestedOutput | undefined =
+        fiddlePreview == null && absolutePathToPreview != null ? { type: "download" } : undefined;
     const resolvedWhitelabel =
         whitelabel == null
             ? undefined
@@ -427,6 +432,7 @@ export async function runRemoteGenerationForGenerator({
                     token,
                     specsTarGzBuffer: candidate.specsTarGzBuffer,
                     payload: { payloadKind: "sdk-config-v1", body: synthesized.body },
+                    requestedOutput: previewRequestedOutput,
                     absolutePathToPreview,
                     context: interactiveTaskContext,
                     targetIdSeed: sdkGenApiTargetIdSeed,
@@ -681,6 +687,7 @@ export async function runRemoteGenerationForGenerator({
                               context: interactiveTaskContext
                           })
                       },
+                      requestedOutput: previewRequestedOutput,
                       absolutePathToPreview,
                       context: interactiveTaskContext,
                       targetIdSeed: sdkGenApiTargetIdSeed,
