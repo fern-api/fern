@@ -3,7 +3,8 @@
   "generatorName": "fernapi/fern-go-sdk",
   "generatorVersion": "local",
   "generatorConfig": {
-    "enableWireTests": false
+    "enableWireTests": false,
+    "xmlTextFirstBuilders": true
   },
   "originGitCommit": "DUMMY",
   "invokedBy": "ci",
