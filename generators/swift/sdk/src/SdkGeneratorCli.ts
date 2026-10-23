@@ -34,7 +34,8 @@ import { selectExamplesForSnippets } from "./utils/selectExamplesForSnippets.js"
 export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     private static readonly defaultCustomConfig: SdkCustomConfigSchema = {
         enableWireTests: SdkCustomConfigSchemaDefaults.enableWireTests,
-        nullableAsOptional: SdkCustomConfigSchemaDefaults.nullableAsOptional
+        nullableAsOptional: SdkCustomConfigSchemaDefaults.nullableAsOptional,
+        enableForwardCompatibleEnums: SdkCustomConfigSchemaDefaults.enableForwardCompatibleEnums
     };
 
     protected constructContext({
@@ -535,7 +536,8 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                     const generator = new StringEnumGenerator({
                         name: symbol.name,
                         source: { type: "ir", enumTypeDeclaration: etd, caseConverter: context.caseConverter },
-                        docsContent: typeDeclaration.docs
+                        docsContent: typeDeclaration.docs,
+                        forwardCompatible: context.customConfig.enableForwardCompatibleEnums
                     });
                     const enum_ = generator.generate();
                     context.project.addSourceFile({

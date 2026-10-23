@@ -8,6 +8,7 @@ export const Protocol = {
     Equatable: "Equatable",
     Error: "Error",
     Hashable: "Hashable",
+    RawRepresentable: "RawRepresentable",
     Sendable: "Sendable",
     MultipartFormDataConvertible: "MultipartFormDataConvertible"
 } as const;
