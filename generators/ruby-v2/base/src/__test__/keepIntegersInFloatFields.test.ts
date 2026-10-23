@@ -29,6 +29,7 @@ function render(filename: string, keepIntegersInFloatFields: boolean): string {
         respectNullableUnionFields: false,
         serializeTimeAsIso8601: true,
         keepIntegersInFloatFields,
+        omitUnsetModelFields: false,
         endpointSecurity: false,
         requestLevelMaxRetries: false
     });

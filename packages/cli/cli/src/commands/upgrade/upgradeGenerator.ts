@@ -17,6 +17,7 @@ import semver from "semver";
 import YAML from "yaml";
 
 import { CliContext } from "../../cli-context/CliContext.js";
+import { getChangelogUrl } from "../../utils/getChangelogUrl.js";
 import {
     compareGeneratorVersions,
     createSdkGenApiTokenProvider,
@@ -58,21 +59,6 @@ interface SkippedAutoreleaseDisabled {
     generatorName: string;
     groupName: string;
     version: string;
-}
-
-const CHANGELOG_BASE = "https://buildwithfern.com/learn/sdks/generators";
-
-/**
- * Derives the changelog URL from a generator name.
- * Generator names follow the pattern "fernapi/fern-<language>-sdk[-variant]",
- * and changelog pages live at buildwithfern.com/learn/sdks/generators/<language>/changelog.
- */
-function getChangelogUrl(generatorName: string): string | undefined {
-    const match = generatorName.match(/^fernapi\/fern-([a-z]+)/);
-    if (!match?.[1]) {
-        return undefined;
-    }
-    return `${CHANGELOG_BASE}/${match[1]}/changelog`;
 }
 
 export async function loadAndUpdateGenerators({

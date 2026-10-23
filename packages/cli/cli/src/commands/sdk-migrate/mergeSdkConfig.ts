@@ -1,8 +1,8 @@
 import { isDeepStrictEqual } from "node:util";
+import { errorMessageOrString, isRecord } from "@fern-api/core-utils";
 import { CliError } from "@fern-api/task-context";
 import { validateSdkConfigV1 } from "@postman/sdk-config/sdk-config/v1";
 import YAML, { isSeq } from "yaml";
-
 import type { MappingResult } from "./mapFernGroupToSdkConfig.js";
 
 export function mergeSdkConfig({
@@ -31,7 +31,7 @@ export function mergeSdkConfig({
     try {
         existing = validateSdkConfigV1(document.toJS());
     } catch (error) {
-        throw configError(`Existing SDK Config at ${outputPath} is invalid: ${errorMessage(error)}`);
+        throw configError(`Existing SDK Config at ${outputPath} is invalid: ${errorMessageOrString(error)}`);
     }
 
     const existingRoot = withoutTargets(existing);
@@ -74,7 +74,7 @@ export function mergeSdkConfig({
     try {
         validateSdkConfigV1(document.toJS());
     } catch (error) {
-        throw configError(`Merged SDK Config at ${outputPath} is invalid: ${errorMessage(error)}`);
+        throw configError(`Merged SDK Config at ${outputPath} is invalid: ${errorMessageOrString(error)}`);
     }
     return ensureTrailingNewline(document.toString({ lineWidth: 0 }));
 }
@@ -181,16 +181,8 @@ function mergeValues(base: unknown, override: unknown): unknown {
     return merged;
 }
 
-function isRecord(value: unknown): value is Record<string, unknown> {
-    return typeof value === "object" && value != null && !Array.isArray(value);
-}
-
 function ensureTrailingNewline(value: string): string {
     return value.endsWith("\n") ? value : `${value}\n`;
-}
-
-function errorMessage(error: unknown): string {
-    return error instanceof Error ? error.message : String(error);
 }
 
 function configError(message: string): CliError {

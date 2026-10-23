@@ -11,6 +11,7 @@ from seed.core.http_client import (
     HttpClient,
     _build_url,
     _merge_headers,
+    _parse_retry_after,
     _redact_headers,
     _should_retry,
     drop_content_type_without_body,
@@ -880,3 +881,56 @@ def test_http_client_sends_single_header_for_case_variant_override() -> None:
     sent = dummy_client.last_request_kwargs["headers"]
     assert [k for k in sent if k.lower() == "plaid-secret"] == ["plaid-secret"]
     assert sent["plaid-secret"] == "override"
+
+
+@pytest.mark.parametrize(
+    "headers,expected",
+    [
+        ({"retry-after-ms": "1500", "retry-after": "9"}, 1.5),
+        ({"retry-after-ms": "1"}, 0.001),
+        ({"retry-after-ms": "3000"}, 3.0),
+        ({"retry-after-ms": "0", "retry-after": "9"}, 9.0),
+        ({"retry-after-ms": "-5", "retry-after": "9"}, 9.0),
+        ({"retry-after-ms": "NaN", "retry-after": "9"}, 9.0),
+        ({"retry-after-ms": "Infinity", "retry-after": "9"}, 9.0),
+        ({"retry-after-ms": "1e400", "retry-after": "9"}, 9.0),
+        ({"retry-after-ms": "not-a-number", "retry-after": "9"}, 9.0),
+        ({"retry-after": "9"}, 9.0),
+        ({}, None),
+    ],
+)
+def test_parse_retry_after(headers: Dict[str, str], expected: Any) -> None:
+    assert _parse_retry_after(httpx.Headers(headers)) == expected
+
+
+@patch("seed.core.http_client.time.sleep", return_value=None)
+def test_sync_retry_uses_retry_after_ms_header(mock_sleep: MagicMock) -> None:
+    mock_client = MagicMock()
+    mock_client.request.side_effect = [
+        httpx.Response(429, headers={"retry-after-ms": "1500", "retry-after": "9"}),
+        _DummyResponse(),
+    ]
+    http_client = _make_sync_http_client(mock_client)
+
+    response = http_client.request(path="/test", method="GET")
+
+    assert response.status_code == 200
+    mock_sleep.assert_called_once_with(1.5)
+
+
+@pytest.mark.asyncio
+async def test_async_retry_uses_retry_after_ms_header() -> None:
+    mock_client = MagicMock()
+    mock_client.request = AsyncMock(
+        side_effect=[
+            httpx.Response(429, headers={"retry-after-ms": "1500", "retry-after": "9"}),
+            _DummyResponse(),
+        ]
+    )
+    http_client = _make_async_http_client(mock_client)
+
+    with patch("seed.core.http_client.asyncio.sleep", new_callable=AsyncMock) as mock_sleep:
+        response = await http_client.request(path="/test", method="GET")
+
+    assert response.status_code == 200
+    mock_sleep.assert_called_once_with(1.5)

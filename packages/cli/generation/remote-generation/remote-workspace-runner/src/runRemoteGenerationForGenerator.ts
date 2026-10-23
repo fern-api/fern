@@ -44,6 +44,7 @@ import {
     type FernSdkGenApiBuildParameters,
     type FernSdkGenApiGithubOptions,
     FernSdkGenApiPreparationBatch,
+    type FernSdkGenApiRequestedOutput,
     formatGeneratorConfigCompatibilityError,
     getFernSdkGenApiLanguage,
     getFernSdkGenApiOrigin,
@@ -311,6 +312,13 @@ export async function runRemoteGenerationForGenerator({
               specsTarGzBuffer: Buffer;
           }
         | undefined;
+    // `fern generate --preview` is a dry run: Fiddle gets `preview: true` and neither pushes nor
+    // publishes. sdk-gen-api has no such flag, so the preview asks it for a download instead of
+    // the generators.yml GitHub or registry output (whose `${ENV}` values preview blanks).
+    const isDryRunPreview = (fiddlePreview ?? absolutePathToPreview != null) && pushPreviewBranch !== true;
+    const previewRequestedOutput: FernSdkGenApiRequestedOutput | undefined = isDryRunPreview
+        ? { type: "download" }
+        : undefined;
     let sdkConfigBuildParameters: FernSdkGenApiBuildParameters | undefined;
     if (sdkGenApiRoute != null) {
         // Preview must never retain a publishing destination from SDK Config.
@@ -427,6 +435,7 @@ export async function runRemoteGenerationForGenerator({
                     token,
                     specsTarGzBuffer: candidate.specsTarGzBuffer,
                     payload: { payloadKind: "sdk-config-v1", body: synthesized.body },
+                    requestedOutput: previewRequestedOutput,
                     absolutePathToPreview,
                     context: interactiveTaskContext,
                     targetIdSeed: sdkGenApiTargetIdSeed,
@@ -681,6 +690,7 @@ export async function runRemoteGenerationForGenerator({
                               context: interactiveTaskContext
                           })
                       },
+                      requestedOutput: previewRequestedOutput,
                       absolutePathToPreview,
                       context: interactiveTaskContext,
                       targetIdSeed: sdkGenApiTargetIdSeed,

@@ -1,5 +1,5 @@
 import { docsYml } from "@fern-api/configuration-loader";
-import { AbsoluteFilePath, dirname, doesPathExist } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, dirname, doesPathExist, toPosixPath } from "@fern-api/fs-utils";
 import { CliError } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import path from "path";
@@ -205,7 +205,7 @@ function relativizeDocsImportSettings(
 }
 
 function relativePath(from: string, to: string): string {
-    const relative = path.relative(from, to).split(path.sep).join("/");
+    const relative = toPosixPath(path.relative(from, to));
     return relative.startsWith(".") ? relative : `./${relative}`;
 }
 

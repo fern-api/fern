@@ -1,8 +1,5 @@
 import { type docsYml } from "@fern-api/configuration-loader";
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-    return typeof value === "object" && value != null && !Array.isArray(value);
-}
+import { isRecord } from "@fern-api/core-utils";
 
 function isApiSectionWithInlineSpecs(
     value: Record<string, unknown>
