@@ -33,4 +33,5 @@ export { splitPath } from "./splitPath.js";
 export { streamObjectFromFile } from "./streamObjectFromFile.js";
 export { streamObjectToFile } from "./streamObjectToFile.js";
 export { stringifyLargeObject } from "./stringifyLargeObject.js";
+export { toPosixPath } from "./toPosixPath.js";
 export { waitUntilPathExists } from "./waitUntilPathExists.js";

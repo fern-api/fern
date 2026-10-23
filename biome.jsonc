@@ -245,13 +245,18 @@
     },
     "overrides": [
         {
-            // Shared-helper rules. Each plugin points at the helper in @fern-api/core-utils that replaces the inline pattern.
+            // Shared-helper rules. Each plugin points at the helper (in @fern-api/core-utils, or @fern-api/fs-utils for
+            // toPosixPath) that replaces the inline pattern.
             "includes": [
                 "packages/cli/**/*.ts",
                 "packages/commons/**/*.ts",
                 "!packages/cli/cli-v2/**",
                 "!packages/cli/ete-tests/**",
+                // Local copies kept on purpose: path-utils cannot depend on core-utils.
+                "!packages/commons/path-utils/src/dirname.ts",
+                "!packages/cli/generation/protoc-gen-fern/src/converters/utils/CapitalizeFirstLetter.ts",
                 "!packages/commons/core-utils/src/**",
+                "!packages/commons/fs-utils/src/toPosixPath.ts",
                 "!**/__test__/**",
                 "!**/__tests__/**",
                 "!**/*.test.ts"
@@ -260,7 +265,11 @@
                 "./biome-plugins/no-inline-http-url-check.grit",
                 "./biome-plugins/no-inline-enoent-check.grit",
                 "./biome-plugins/no-inline-delay.grit",
-                "./biome-plugins/no-inline-error-message.grit"
+                "./biome-plugins/no-inline-error-message.grit",
+                "./biome-plugins/no-inline-is-record.grit",
+                "./biome-plugins/no-inline-strip-trailing-slashes.grit",
+                "./biome-plugins/no-inline-to-posix-path.grit",
+                "./biome-plugins/no-inline-capitalize.grit"
             ]
         },
         {

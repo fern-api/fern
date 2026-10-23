@@ -1,5 +1,6 @@
 import type { FernDefinition, FernWorkspace } from "@fern-api/api-workspace-commons";
 import type { generatorsYml } from "@fern-api/configuration-loader";
+import { isRecord } from "@fern-api/core-utils";
 import {
     type FernConfigMappingDiagnostic,
     type FernResolvedGeneratorGroupInput,
@@ -9,7 +10,6 @@ import {
     type SdkConfigV1SourceConfig,
     validateSdkConfigV1
 } from "@postman/sdk-config/sdk-config/v1";
-
 import { mapFernAuthToSdkConfig } from "./mapFernAuthToSdkConfig.js";
 import type { SourceDerivedApiFields } from "./projectMigrationSource.js";
 
@@ -375,8 +375,4 @@ function isEmptyCredential(fieldName: string, value: unknown): boolean {
         typeof value === "string" &&
         value.trim() === ""
     );
-}
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-    return typeof value === "object" && value != null && !Array.isArray(value);
 }

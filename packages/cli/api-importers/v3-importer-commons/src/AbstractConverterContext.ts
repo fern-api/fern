@@ -1,7 +1,7 @@
 import { OpenAPISettings } from "@fern-api/api-workspace-commons";
 import { CasingsGenerator, constructCasingsGenerator } from "@fern-api/casings-generator";
 import { generatorsYml } from "@fern-api/configuration";
-import { isHttpUrl } from "@fern-api/core-utils";
+import { capitalizeFirstLetter, decodeJsonPointerSegment, isHttpUrl, isRecord } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import {
     Availability,
@@ -157,7 +157,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
         });
 
         const camelCased = camelCase(filteredBreadcrumbs.join("_"));
-        return camelCased.charAt(0).toUpperCase() + camelCased.slice(1);
+        return capitalizeFirstLetter(camelCased);
     }
 
     /**
@@ -389,7 +389,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
                 const refPath = refValue
                     .substring(2) // Remove leading "#/"
                     .split("/")
-                    .map((seg) => seg.replace(/~1/g, "/").replace(/~0/g, "~"));
+                    .map(decodeJsonPointerSegment);
 
                 for (const segment of refPath) {
                     if (typeof tempRef !== "object" || tempRef === null) {
@@ -930,7 +930,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
     }
 
     public getAsObject(value: unknown): Record<string, unknown> | undefined {
-        if (typeof value === "object" && value !== null && !Array.isArray(value)) {
+        if (isRecord(value)) {
             return value as Record<string, unknown>;
         }
         return undefined;

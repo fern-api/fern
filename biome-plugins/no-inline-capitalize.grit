@@ -1,0 +1,14 @@
+language js
+
+// The template-literal form is matched on its source text because a backtick snippet cannot
+// contain a template literal. It does not check that both operands are the same variable.
+or {
+    `$value.charAt(0).toUpperCase() + $value.slice(1)`,
+    `$value[0].toUpperCase() + $value.slice(1)`,
+    `$value[0]?.toUpperCase() + $value.slice(1)`,
+    JsTemplateExpression() as $template where {
+        $template <: r"^`\x24\x7B[A-Za-z_][A-Za-z0-9_.]*\[0\]\??\.toUpperCase\(\)\x7D\x24\x7B[A-Za-z_][A-Za-z0-9_.]*\.(?:substring|slice)\(1\)\x7D`$"
+    }
+} as $capitalize where {
+    register_diagnostic(span=$capitalize, message="Use `capitalizeFirstLetter` from `@fern-api/core-utils` instead of capitalizing by hand.", severity="error")
+}

@@ -1,5 +1,5 @@
 import { isDeepStrictEqual } from "node:util";
-import { errorMessageOrString } from "@fern-api/core-utils";
+import { errorMessageOrString, isRecord } from "@fern-api/core-utils";
 import { CliError } from "@fern-api/task-context";
 import { validateSdkConfigV1 } from "@postman/sdk-config/sdk-config/v1";
 import YAML, { isSeq } from "yaml";
@@ -179,10 +179,6 @@ function mergeValues(base: unknown, override: unknown): unknown {
         merged[key] = mergeValues(base[key], value);
     }
     return merged;
-}
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-    return typeof value === "object" && value != null && !Array.isArray(value);
 }
 
 function ensureTrailingNewline(value: string): string {

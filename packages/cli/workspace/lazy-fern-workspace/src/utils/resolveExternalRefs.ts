@@ -1,4 +1,4 @@
-import { isHttpUrl } from "@fern-api/core-utils";
+import { decodeJsonPointerSegment, isHttpUrl, isRecord } from "@fern-api/core-utils";
 import { CliError } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
@@ -73,7 +73,7 @@ export function buildExternalRefRegistry(doc: unknown, baseDir: string): Map<str
     registerSection(record["operations"], "#/operations");
 
     const components = record["components"];
-    if (components != null && typeof components === "object" && !Array.isArray(components)) {
+    if (isRecord(components)) {
         const comp = components as Record<string, unknown>;
         registerSection(comp["schemas"], "#/components/schemas");
         registerSection(comp["messages"], "#/components/messages");
@@ -135,7 +135,7 @@ function navigateJsonPointer(root: unknown, pointer: string, filePath: string): 
     const segments = pointer.split("/").filter((k) => k !== "");
     let current: unknown = root;
     for (const segment of segments) {
-        const decodedKey = segment.replace(/~1/g, "/").replace(/~0/g, "~");
+        const decodedKey = decodeJsonPointerSegment(segment);
         if (typeof current !== "object" || current == null) {
             throw new Error(
                 `Cannot navigate JSON Pointer "${pointer}" in "${filePath}": ` +
@@ -159,7 +159,7 @@ function mergeWithSiblings(
     siblingProperties: Record<string, unknown>,
     hasSiblings: boolean
 ): unknown {
-    if (hasSiblings && resolved != null && typeof resolved === "object" && !Array.isArray(resolved)) {
+    if (hasSiblings && isRecord(resolved)) {
         return { ...(resolved as Record<string, unknown>), ...siblingProperties };
     }
     return resolved;
