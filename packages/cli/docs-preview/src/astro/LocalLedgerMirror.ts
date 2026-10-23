@@ -1,3 +1,4 @@
+import { stripLeadingAndTrailingSlashes } from "@fern-api/core-utils";
 import { createHash } from "crypto";
 import express from "express";
 import { readFile } from "fs/promises";
@@ -168,7 +169,7 @@ function isManifestKey(key: string, basepath: string): boolean {
     if (key === MANIFEST_FILENAME) {
         return true;
     }
-    const trimmed = basepath.replace(/^\/+|\/+$/g, "");
+    const trimmed = stripLeadingAndTrailingSlashes(basepath);
     return trimmed.length > 0 && key === `${trimmed}/${MANIFEST_FILENAME}`;
 }
 

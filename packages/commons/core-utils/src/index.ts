@@ -66,6 +66,7 @@ export { SKIP_MARKER, sanitizeNullValues } from "./sanitizeNullValues.js";
 export { sanitizePreviewId } from "./sanitizePreviewId.js";
 export { diffSemverOrThrow, parseSemverOrThrow } from "./semverUtils.js";
 export { type SetRequired } from "./setRequired.js";
+export { stripLeadingAndTrailingSlashes } from "./stripLeadingAndTrailingSlashes.js";
 export { stripLeadingSlash } from "./stripLeadingSlash.js";
 export { stripTrailingSlashes } from "./stripTrailingSlashes.js";
 export { titleCase } from "./titleCase.js";

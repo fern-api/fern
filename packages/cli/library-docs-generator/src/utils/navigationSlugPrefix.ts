@@ -1,4 +1,5 @@
 import type { docsYml } from "@fern-api/configuration";
+import { stripLeadingAndTrailingSlashes } from "@fern-api/core-utils";
 import { kebabCase } from "lodash-es";
 import { isAbsolute, relative, resolve } from "path";
 
@@ -86,7 +87,8 @@ function isWithin(path: string, dir: string): boolean {
 
 function joinSlugs(...slugs: (string | undefined)[]): string {
     return slugs
-        .map((slug) => slug?.replace(/^\/+|\/+$/g, ""))
-        .filter((slug): slug is string => slug != null && slug.length > 0)
+        .filter((slug): slug is string => slug != null)
+        .map((slug) => stripLeadingAndTrailingSlashes(slug))
+        .filter((slug) => slug.length > 0)
         .join("/");
 }

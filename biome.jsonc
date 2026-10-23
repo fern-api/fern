@@ -272,7 +272,8 @@
                 "./biome-plugins/no-inline-capitalize.grit",
                 "./biome-plugins/no-inline-remove-trailing-slash.grit",
                 "./biome-plugins/no-inline-remove-leading-slash.grit",
-                "./biome-plugins/no-inline-add-leading-slash.grit"
+                "./biome-plugins/no-inline-add-leading-slash.grit",
+                "./biome-plugins/no-inline-strip-leading-and-trailing-slashes.grit"
             ]
         },
         {

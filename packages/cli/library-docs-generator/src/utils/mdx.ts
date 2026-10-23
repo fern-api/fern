@@ -1,3 +1,5 @@
+import { stripLeadingAndTrailingSlashes } from "@fern-api/core-utils";
+
 /**
  * MDX utility functions for rendering library documentation.
  *
@@ -111,7 +113,7 @@ export function createFrontmatter(slug: string, title?: string): string {
  * Leading and trailing slashes on the prefix are ignored.
  */
 export function withSlugPrefix(slug: string, slugPrefix: string | undefined): string {
-    const prefix = slugPrefix?.replace(/^\/+|\/+$/g, "") ?? "";
+    const prefix = stripLeadingAndTrailingSlashes(slugPrefix ?? "");
     return prefix.length > 0 ? `${prefix}/${slug}` : slug;
 }
 
