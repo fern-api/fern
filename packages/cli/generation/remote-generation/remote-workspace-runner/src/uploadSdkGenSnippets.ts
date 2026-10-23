@@ -166,6 +166,7 @@ let lastUpload: Promise<unknown> = Promise.resolve();
 /**
  * Runs uploads to FDR one after another. A target's upload starts when its build finishes, so several can start
  * together, and FDR fails the ones that race to create the same org and API row for the first time.
+ * One CLI run uses one organization, so one queue per process is the same as one per organization.
  */
 function afterPreviousUpload<T>(upload: () => Promise<T>): Promise<T> {
     const result = lastUpload.then(upload, upload);
