@@ -1,4 +1,5 @@
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
+import { resolveViolationSeverity } from "@fern-api/core-utils";
 import { isInlineRequestBody, RawSchemas } from "@fern-api/fern-definition-schema";
 import { ExampleResolver, ExampleValidators, FernFileContext, TypeResolver } from "@fern-api/ir-generator";
 
@@ -64,7 +65,7 @@ export function validateRequest({
                 breadcrumbs: ["request"],
                 depth: 0
             }).map((val): RuleViolation => {
-                return { severity: val.severity ?? "fatal", message: val.message };
+                return { severity: resolveViolationSeverity(val.severity), message: val.message };
             })
         );
     } else {
@@ -83,7 +84,7 @@ export function validateRequest({
             breadcrumbs: ["response", "body"],
             depth: 0
         }).map((val): RuleViolation => {
-            return { severity: val.severity ?? "fatal", message: val.message };
+            return { severity: resolveViolationSeverity(val.severity), message: val.message };
         });
         // an omitted request against a body that isn't optional is a common mistake, so report it
         // the same way the inlined branch does rather than with the generic type-mismatch message

@@ -1,4 +1,5 @@
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
+import { resolveViolationSeverity } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import { ExampleResolver, ExampleValidators, FernFileContext, TypeResolver } from "@fern-api/ir-generator";
 
@@ -93,7 +94,7 @@ export function validateExampleEndpointCallParameters<T>({
                                 breadcrumbs,
                                 depth: 0
                             }).map((val): RuleViolation => {
-                                return { severity: val.severity ?? "fatal", message: val.message };
+                                return { severity: resolveViolationSeverity(val.severity), message: val.message };
                             })
                         );
                     }
