@@ -290,6 +290,20 @@ describe("SDK Config migration", () => {
         expect(result.diagnostics).toEqual([]);
     });
 
+    it("maps the Go generator packageLayout setting into SDK Config", () => {
+        const generator = createGenerator("fernapi/fern-go-sdk", "go", "1.0.0");
+        generator.config = { packageLayout: "types" };
+
+        const result = mapFernGroupToSdkConfig({
+            fernWorkspace: { definition: createDefinition() },
+            group: createGroup([generator]),
+            source: createSource()
+        });
+
+        expect(result.sdkConfig.targets[0]?.generation).toMatchObject({ packageLayout: "types" });
+        expect(result.diagnostics).toEqual([]);
+    });
+
     it("preserves package metadata and language-specific README sections across SDK targets", () => {
         const typescript = createGenerator("fernapi/fern-typescript-sdk", "typescript", "4.0.0");
         typescript.config = {

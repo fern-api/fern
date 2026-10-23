@@ -47,6 +47,9 @@ export class WebhooksHelper {
 
 exports[`WebhooksHelperGenerator > HMAC verification > parses name=value settings headers into the bare key id and algorithm 1`] = `
 "const HMAC_ALGORITHMS = { "HMAC_SHA1": "sha1", "HMAC_SHA256": "sha256" } as const;
+function isSupportedAlgorithm(value: string): value is keyof typeof HMAC_ALGORITHMS {
+    return Object.keys(HMAC_ALGORITHMS).some((key) => key === value);
+}
 function getHeader(headers: Record<string, string | string[] | undefined>, name: string): string | undefined {
     const lower = name.toLowerCase();
     for (const key of Object.keys(headers)) {
@@ -123,11 +126,11 @@ export class WebhooksHelper {
                 console.warn("Webhook signature verification could not run: settings header is missing the key ID");
                 return false;
             }
-            if (!Object.prototype.hasOwnProperty.call(HMAC_ALGORITHMS, algorithmValue)) {
+            if (!isSupportedAlgorithm(algorithmValue)) {
                 console.warn("Webhook signature verification could not run: unsupported algorithm");
                 return false;
             }
-            algorithm = algorithmValue as keyof typeof HMAC_ALGORITHMS;
+            algorithm = algorithmValue;
         }
         const resolvedKey = typeof signatureKey === "function" ? await signatureKey(keyId) : signatureKey;
         if (resolvedKey == null || resolvedKey === "") {
@@ -575,6 +578,9 @@ export class WebhooksHelper {
 
 exports[`WebhooksHelperGenerator > HMAC verification > writes verifyRequest when an algorithm header is configured 1`] = `
 "const HMAC_ALGORITHMS = { "HMAC_SHA1": "sha1", "HMAC_SHA256": "sha256" } as const;
+function isSupportedAlgorithm(value: string): value is keyof typeof HMAC_ALGORITHMS {
+    return Object.keys(HMAC_ALGORITHMS).some((key) => key === value);
+}
 function getHeader(headers: Record<string, string | string[] | undefined>, name: string): string | undefined {
     const lower = name.toLowerCase();
     for (const key of Object.keys(headers)) {
@@ -640,11 +646,11 @@ export class WebhooksHelper {
             const delimiterIndex = settingsHeader.lastIndexOf(";");
             const algorithmValue = delimiterIndex >= 0 ? settingsHeader.slice(delimiterIndex + 1) : settingsHeader;
             keyId = delimiterIndex >= 0 ? settingsHeader.slice(0, delimiterIndex) : undefined;
-            if (!Object.prototype.hasOwnProperty.call(HMAC_ALGORITHMS, algorithmValue)) {
+            if (!isSupportedAlgorithm(algorithmValue)) {
                 console.warn("Webhook signature verification could not run: unsupported algorithm");
                 return false;
             }
-            algorithm = algorithmValue as keyof typeof HMAC_ALGORITHMS;
+            algorithm = algorithmValue;
         }
         const resolvedKey = typeof signatureKey === "function" ? await signatureKey(keyId) : signatureKey;
         if (resolvedKey == null || resolvedKey === "") {

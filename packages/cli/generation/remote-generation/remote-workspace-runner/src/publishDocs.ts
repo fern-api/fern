@@ -2,7 +2,13 @@ import { resolveSnippetPackageName, VisibilityFilter } from "@fern-api/api-works
 import { FernToken } from "@fern-api/auth";
 import { docsYml, generatorsYml } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
-import { MediaType, replaceEnvVariables } from "@fern-api/core-utils";
+import {
+    asyncPool,
+    errorMessageOrString,
+    MediaType,
+    replaceEnvVariables,
+    sanitizePreviewId
+} from "@fern-api/core-utils";
 import {
     applyTranslatedApiTitlesToNavTree,
     applyTranslatedFrontmatterToNavTree,
@@ -76,7 +82,6 @@ import { normalizeGoPackageForLookup, normalizeRepoUrlToHttps } from "./normaliz
 import { publishDocsViaLedger } from "./publishDocsLedger.js";
 import { publishDocsViaLedgerPreview } from "./publishDocsLedgerPreview.js";
 import { retryWithBackoff } from "./retryWithBackoff.js";
-import { asyncPool } from "./utils/asyncPool.js";
 
 const MEASURE_IMAGE_BATCH_SIZE = 10;
 const UPLOAD_FILE_BATCH_SIZE = 10;
@@ -87,23 +92,6 @@ const REGISTER_BASE_DELAY_MS = 1_000;
 const REGISTER_JITTER_FACTOR = 0.5;
 
 /**
- * Sanitizes a preview ID to be valid in a DNS subdomain label.
- * This MUST match the sanitizePreviewId in generateDocsWorkspace.ts and the
- * server-side sanitizePreviewId in FDR so that predicted URLs match actual URLs.
- */
-function sanitizePreviewId(id: string): string {
-    const sanitized = id
-        .toLowerCase()
-        .replace(/[^a-z0-9-]/g, "-")
-        .replace(/-{2,}/g, "-")
-        .replace(/^-+|-+$/g, "");
-    if (sanitized.length === 0) {
-        return "default";
-    }
-    return sanitized;
-}
-
-/**
  * Extract a human-readable error detail from an oRPC / ledger publish error.
  * When the server returns Zod validation issues (via oRPC's BAD_REQUEST),
  * those are surfaced so the user can see exactly which field failed.
@@ -112,7 +100,7 @@ function formatLedgerError(error: unknown): string {
     if (error == null) {
         return "Unknown error";
     }
-    const msg = error instanceof Error ? error.message : String(error);
+    const msg = errorMessageOrString(error);
 
     // oRPC errors carry validation issues in `error.data.issues`.
     const data = (error as { data?: { issues?: Array<{ message?: string; path?: Array<string | number> }> } }).data;

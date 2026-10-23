@@ -3421,6 +3421,14 @@ pub(crate) fn missing_required_params(
                 && !exempt.contains(name.as_str())
                 && !(is_body && body_json_supplied)
                 && !(is_body && ancestor_object_supplied(name))
+                && !(is_body
+                    && name.contains('.')
+                    && crate::openapi::executor::optional_ancestor_omitted(
+                        name,
+                        params,
+                        exempt,
+                        &method.parameters,
+                    ))
         })
         .cloned()
         .collect()
@@ -7390,6 +7398,43 @@ paths:
         let matches = shorthand_matches(&["--json", "{}"]);
         let params = collect_params_from_flags(&matches, &method, None).unwrap();
         assert!(missing_required_params(&matches, &method, &params, &empty).is_empty());
+    }
+
+    #[test]
+    fn test_missing_required_params_skips_leaf_of_omitted_optional_parent() {
+        use crate::openapi::discovery::MethodParameter;
+        let body = |param_type: &str, required: bool| MethodParameter {
+            location: Some("body".to_string()),
+            param_type: Some(param_type.to_string()),
+            required,
+            required_by_spec: required,
+            ..Default::default()
+        };
+        let mut parameters = std::collections::HashMap::new();
+        parameters.insert("kind".to_string(), body("string", true));
+        parameters.insert("source".to_string(), body("object", false));
+        parameters.insert("source.channel".to_string(), body("string", true));
+        parameters.insert("source.label".to_string(), body("string", false));
+        let method = RestMethod {
+            http_method: "POST".to_string(),
+            path: "captures".to_string(),
+            parameters,
+            ..Default::default()
+        };
+        let matches = clap::Command::new("test")
+            .arg(clap::Arg::new("json").long("json"))
+            .get_matches_from(["test"]);
+        let empty = std::collections::HashSet::new();
+
+        let mut params = serde_json::Map::new();
+        params.insert("kind".to_string(), serde_json::json!("note"));
+        assert!(missing_required_params(&matches, &method, &params, &empty).is_empty());
+
+        params.insert("source.label".to_string(), serde_json::json!("x"));
+        assert_eq!(
+            missing_required_params(&matches, &method, &params, &empty),
+            vec!["source.channel"]
+        );
     }
 
     #[test]

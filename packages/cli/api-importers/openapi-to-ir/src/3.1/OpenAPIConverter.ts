@@ -1,3 +1,4 @@
+import { stripTrailingSlashes } from "@fern-api/core-utils";
 import { isEndpointSecurityAuthSchemes } from "@fern-api/fern-definition-schema";
 import { AuthScheme, FernIr, IntermediateRepresentation, Literal } from "@fern-api/ir-sdk";
 import { constructHttpPath, convertApiAuth, convertEnvironments } from "@fern-api/ir-utils";
@@ -164,7 +165,7 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
         // than the whole API, so it survives merging with other specs.
         if (this.context.settings.respectPerSpecBasePath && parsed.parameters.length === 0) {
             if (!parsed.pathsIncludeBasePath) {
-                this.context.perSpecBasePath = parsed.path.replace(/\/+$/, "");
+                this.context.perSpecBasePath = stripTrailingSlashes(parsed.path);
             }
             return;
         }

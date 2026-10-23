@@ -92,6 +92,28 @@ service:
       method: POST
       path: /metadata
       request: map<string, string>
+    setPlantMetadata:
+      method: POST
+      path: /{plantId}/metadata
+      path-parameters:
+        plantId: string
+      request: map<string, string>
+    setOptionalMetadata:
+      method: POST
+      path: /optional-metadata
+      request: optional<map<string, string>>
+    setMetadataWithHeaders:
+      method: POST
+      path: /{plantId}/metadata-with-headers
+      path-parameters:
+        plantId: string
+      request:
+        name: SetMetadataWithHeadersRequest
+        headers:
+          X-Trace-Id: string
+        query-parameters:
+          dryRun: optional<boolean>
+        body: map<string, string>
     tagPlantWithHeaders:
       method: POST
       path: /{plantId}/tagged

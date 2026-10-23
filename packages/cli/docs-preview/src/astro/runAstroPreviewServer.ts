@@ -1,4 +1,4 @@
-import { extractErrorMessage } from "@fern-api/core-utils";
+import { extractErrorMessage, stripTrailingSlashes } from "@fern-api/core-utils";
 import { wrapWithHttps } from "@fern-api/docs-resolver";
 import { AbsoluteFilePath, dirname, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { runExeca } from "@fern-api/logging-execa";
@@ -83,7 +83,7 @@ export async function runAstroPreviewServer({
 
     const instance = new URL(wrapWithHttps(docsWorkspace.config.instances[0]?.url ?? `http://localhost:${port}`));
     const domain = instance.host;
-    const basepath = instance.pathname.replace(/\/+$/, "");
+    const basepath = stripTrailingSlashes(instance.pathname);
     const orgId = initialProject.config.organization;
     // The renderer only accepts generated preview hosts (`<org>-preview-<id>.docs…`).
     const rendererHost = `${orgId.toLowerCase()}-preview-local.docs.buildwithfern.com`;
