@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.40.0
+  changelogEntry:
+    - summary: |
+        Add the opt-in `omitUnsetModelFields` config option. When enabled, request bodies no longer include model
+        fields the caller did not set. Without it, a required field left out of a nested object (e.g. a partial
+        update payload) is sent as `null`, which APIs with sparse-update semantics reject. With the option on, unset
+        fields are omitted from `to_h`, and a field set explicitly to `nil` is still sent as `null` unless it is
+        optional and not nullable. Disabled by default, so existing request bodies are unchanged.
+      type: feat
+  createdAt: "2026-10-23"
+  irVersion: 67
 - version: 1.39.8
   changelogEntry:
     - summary: |
