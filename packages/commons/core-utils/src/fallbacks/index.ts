@@ -10,4 +10,5 @@ export {
     DEFAULT_PYPI_UPLOAD_URL,
     DEFAULT_RUBYGEMS_REGISTRY_URL
 } from "./registryUrls.js";
+export { isTelemetryOptedOutByEnv } from "./telemetryOptOut.js";
 export { DEFAULT_VIOLATION_SEVERITY, resolveViolationSeverity, type ViolationSeverity } from "./violationSeverity.js";

@@ -1,3 +1,5 @@
+import { isTelemetryOptedOutByEnv } from "@fern-api/core-utils";
+
 /**
  * Returns true when the user has opted out of CLI telemetry via the
  * `FERN_DISABLE_TELEMETRY` environment variable.
@@ -7,5 +9,5 @@
  * file to determine whether telemetry is disabled.
  */
 export function isTelemetryDisabled(): boolean {
-    return process.env.FERN_DISABLE_TELEMETRY === "true";
+    return isTelemetryOptedOutByEnv();
 }
