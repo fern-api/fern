@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.SubmitFormDataAsync(\n    new PostSubmitRequest { Username = \"johndoe\", Email = \"john@example.com\" }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.SubmitFormDataAsync(\n    new PostSubmitRequest\n    {\n        Username = \"johndoe\",\n        Email = \"john@example.com\",\n        Content = \"{\\\"key\\\":\\\"value\\\"}\",\n    }\n);\n"
             }
         },
         {

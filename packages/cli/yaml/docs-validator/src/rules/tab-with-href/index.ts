@@ -1,4 +1,4 @@
-import { docsYml } from "@fern-api/configuration-loader";
+import { docsYml, tabbedNavigationItemHasLayout } from "@fern-api/configuration-loader";
 
 import { Rule, RuleViolation } from "../../Rule.js";
 
@@ -62,12 +62,4 @@ function isTabbedNavigationConfig(
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         (navigationConfig[0] as docsYml.RawSchemas.TabbedNavigationItem).tab != null
     );
-}
-
-function tabbedNavigationItemHasLayout(
-    item: docsYml.RawSchemas.TabbedNavigationItem
-): item is docsYml.RawSchemas.TabbedNavigationItemWithLayout & {
-    layout: docsYml.RawSchemas.NavigationItem[];
-} {
-    return "layout" in item && Array.isArray(item.layout);
 }

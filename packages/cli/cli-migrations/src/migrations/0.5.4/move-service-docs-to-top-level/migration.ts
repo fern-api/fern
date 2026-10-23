@@ -4,7 +4,7 @@ import { readFile, writeFile } from "fs/promises";
 import YAML from "yaml";
 
 import { Migration } from "../../../types/Migration.js";
-import { getAllYamlFiles } from "./getAllYamlFiles.js";
+import { getAllYamlFiles } from "../../../utils/getAllYamlFiles.js";
 
 export const migration: Migration = {
     name: "move-service-docs-to-top-level",

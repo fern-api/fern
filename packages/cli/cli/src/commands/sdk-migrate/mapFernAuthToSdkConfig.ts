@@ -1,4 +1,5 @@
 import { type FernDefinition, getAllDefinitionFiles, getAllPackageMarkers } from "@fern-api/api-workspace-commons";
+import { stripTrailingSlashes } from "@fern-api/core-utils";
 import {
     HttpEndpointReferenceParser,
     type RawSchemas,
@@ -522,7 +523,7 @@ function withEndpointBaseUrl(path: string, urlId: string | undefined, root: Fern
         const values = environmentUrls.map(({ name, url }) => `${name}: ${url}`).join(", ");
         return { failure: `uses environment URL '${urlId}', which differs across environments (${values})` };
     }
-    return { url: `${baseUrl.replace(/\/+$/, "")}${path}` };
+    return { url: `${stripTrailingSlashes(baseUrl)}${path}` };
 }
 
 function normalizePath(path: string): string {

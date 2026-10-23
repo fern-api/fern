@@ -1,5 +1,6 @@
 import { docsYml } from "@fern-api/configuration";
-import { noop, visitObjectAsync } from "@fern-api/core-utils";
+import { tabbedNavigationItemHasLayout } from "@fern-api/configuration-loader";
+import { asyncPool, noop, visitObjectAsync } from "@fern-api/core-utils";
 import { parseImagePaths } from "@fern-api/docs-markdown-utils";
 import { NodePath } from "@fern-api/fern-definition-schema";
 import {
@@ -15,7 +16,6 @@ import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { readdir, stat } from "fs/promises";
 import path from "path";
-import { asyncPool } from "../utils/asyncPool.js";
 import { MarkdownFileReader } from "../utils/markdownFileReader.js";
 import { DocsConfigFileAstVisitor } from "./DocsConfigFileAstVisitor.js";
 import { visitFilepath } from "./visitFilepath.js";
@@ -491,20 +491,4 @@ function navigationConfigIsTabbed(
     config: docsYml.RawSchemas.NavigationConfig
 ): config is docsYml.RawSchemas.TabbedNavigationConfig {
     return (config as docsYml.RawSchemas.TabbedNavigationConfig)[0]?.tab != null;
-}
-
-function tabbedNavigationItemHasLayout(
-    item: docsYml.RawSchemas.TabbedNavigationItem
-): item is docsYml.RawSchemas.TabbedNavigationItemWithLayout & {
-    layout: docsYml.RawSchemas.NavigationItem[];
-} {
-    return "layout" in item && Array.isArray(item.layout);
-}
-
-function tabbedNavigationItemHasVariants(
-    item: docsYml.RawSchemas.TabbedNavigationItem
-): item is docsYml.RawSchemas.TabbedNavigationItemWithVariants & {
-    variants: docsYml.RawSchemas.TabVariantItem[];
-} {
-    return "variants" in item && Array.isArray(item.variants);
 }

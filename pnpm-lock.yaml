@@ -109,8 +109,8 @@ catalogs:
       specifier: ^1.14.9
       version: 1.14.9
     '@postman/sdk-config':
-      specifier: 0.14.0
-      version: 0.14.0
+      specifier: 0.16.0
+      version: 0.16.0
     '@redocly/openapi-core':
       specifier: ^1.4.1
       version: 1.34.11
@@ -1388,8 +1388,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
       '@fern-api/dynamic-ir-sdk':
-        specifier: 67.21.0
-        version: 67.21.0
+        specifier: 67.34.0
+        version: 67.34.0
       '@fern-api/java-ast':
         specifier: workspace:*
         version: link:../ast
@@ -2051,8 +2051,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
       '@fern-api/dynamic-ir-sdk':
-        specifier: 67.21.0
-        version: 67.21.0
+        specifier: 67.34.0
+        version: 67.34.0
       '@fern-api/path-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/path-utils
@@ -2658,8 +2658,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
       '@fern-api/dynamic-ir-sdk':
-        specifier: 67.21.0
-        version: 67.21.0
+        specifier: 67.34.0
+        version: 67.34.0
       '@fern-api/path-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/path-utils
@@ -3776,6 +3776,9 @@ importers:
       '@fern-api/configuration':
         specifier: workspace:*
         version: link:../configuration
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../commons/core-utils
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
@@ -4046,6 +4049,9 @@ importers:
 
   packages/cli/api-importers/openapi/openapi-ir:
     dependencies:
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../../commons/core-utils
       lodash-es:
         specifier: 'catalog:'
         version: 4.18.1
@@ -4575,7 +4581,7 @@ importers:
         version: 7.10.1(@types/node@22.19.17)
       '@postman/sdk-config':
         specifier: 'catalog:'
-        version: 0.14.0
+        version: 0.16.0
       '@sentry/cli':
         specifier: 'catalog:'
         version: 2.58.5
@@ -4767,9 +4773,6 @@ importers:
       chalk:
         specifier: 'catalog:'
         version: 5.6.2
-      find-up:
-        specifier: 'catalog:'
-        version: 6.3.0
       glob:
         specifier: 'catalog:'
         version: 11.1.0
@@ -5394,6 +5397,9 @@ importers:
 
   packages/cli/docs-markdown-utils:
     dependencies:
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../commons/core-utils
       '@fern-api/fdr-sdk':
         specifier: 1.2.172-ef737b9982
         version: 1.2.172-ef737b9982(@opentelemetry/api@1.9.1)(typescript@5.9.3)
@@ -6292,7 +6298,7 @@ importers:
         version: 0.0.1167
       '@postman/sdk-config':
         specifier: 'catalog:'
-        version: 0.14.0
+        version: 0.16.0
       chalk:
         specifier: 'catalog:'
         version: 5.6.2
@@ -6482,7 +6488,7 @@ importers:
         version: 0.0.1167
       '@postman/sdk-config':
         specifier: 'catalog:'
-        version: 0.14.0
+        version: 0.16.0
       axios:
         specifier: 'catalog:'
         version: 1.16.0
@@ -6622,7 +6628,7 @@ importers:
         version: link:../workspace/loader
       '@postman/sdk-config':
         specifier: 'catalog:'
-        version: 0.14.0
+        version: 0.16.0
       axios:
         specifier: 'catalog:'
         version: 1.16.0
@@ -6884,6 +6890,9 @@ importers:
       '@fern-api/configuration-loader':
         specifier: workspace:*
         version: link:../configuration-loader
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../commons/core-utils
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -9638,6 +9647,10 @@ packages:
     resolution: {integrity: sha512-GLjIZlB4dVov24hQBYEcMR21aVMUqi6hC6j463rkUR12fi93/7i0JBAs0AzIwlqpria+Xy5KtyNQT/LzitH+qQ==}
     engines: {node: '>=18.0.0'}
 
+  '@fern-api/dynamic-ir-sdk@67.34.0':
+    resolution: {integrity: sha512-sbdHOhVpzk0YklJaLHWjJ/UjrS3hfSGEbJbWffJd05+uYnbw5VaJ10JXYu/rIQ6j1eEi8axhG8IG4Rf7daEflA==}
+    engines: {node: '>=18.0.0'}
+
   '@fern-api/fai-sdk@0.0.6-2ee1b7e28':
     resolution: {integrity: sha512-3qhAAuc4ZJWLaFtyZzaYXfF9OQ5iviNrvLDXtjKScKUNS134fR3v3c3xedCidTq5KedapuBECziUaOmmd6KXVA==}
     engines: {node: '>=18.0.0'}
@@ -10516,8 +10529,8 @@ packages:
   '@posthog/types@1.415.1':
     resolution: {integrity: sha512-7Qs2wcqipl8KcFpIkIKE1Wcj1djX4dEB3cfq907HrNpKK7/xKh3U4N4bkOD6h9+8j3SxWWrj9JNpE8CZXsE35w==}
 
-  '@postman/sdk-config@0.14.0':
-    resolution: {integrity: sha512-2AkS/OvSm4bmkdT+xDJP6gfqPLNfpSFE17QsMDgNxzcNTTKm1LVGqXRickn1nbxf/JsJFQ6PTntPuQp9pxUA8w==}
+  '@postman/sdk-config@0.16.0':
+    resolution: {integrity: sha512-2NsFqef3uTm6IZ7t7yK+OTBOntOqWy/wjEDlsYauhjJIyXthgFKZ9wiXTgECmIBu/kqpnPVftufEHfUEJj6xGA==}
     engines: {node: '>=24'}
 
   '@prisma/instrumentation@7.6.0':
@@ -16609,6 +16622,8 @@ snapshots:
 
   '@fern-api/dynamic-ir-sdk@67.21.0': {}
 
+  '@fern-api/dynamic-ir-sdk@67.34.0': {}
+
   '@fern-api/fai-sdk@0.0.6-2ee1b7e28': {}
 
   '@fern-api/fdr-sdk@1.2.172-ef737b9982(@opentelemetry/api@1.9.1)(typescript@5.9.3)':
@@ -17626,7 +17641,7 @@ snapshots:
 
   '@posthog/types@1.415.1': {}
 
-  '@postman/sdk-config@0.14.0':
+  '@postman/sdk-config@0.16.0':
     dependencies:
       semver: 7.8.4
       zod: 4.3.6

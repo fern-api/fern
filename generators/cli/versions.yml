@@ -1,4 +1,105 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.57.2
+  changelogEntry:
+    - summary: |
+        A body field that is required inside an optional object (for example `source.channel`
+        when `source` itself is optional) is no longer reported missing when the caller omits
+        that object. Previously `captures capture --kind note --content ...` failed with
+        "Required parameter 'source.channel' is missing" even though the API accepts the
+        request without `source`. The field is still required once any part of the object is
+        supplied, matching what `--help` already lists as required.
+      type: fix
+  createdAt: "2026-10-23"
+  irVersion: 67
+- version: 0.57.1
+  changelogEntry:
+    - summary: |
+        Saving or deleting a credential no longer reads the stored secret first. On macOS, `profiles remove`,
+        `auth logout`, and overwriting a saved credential used to read every keychain entry before changing
+        it, and each read could raise a password prompt. The CLI now updates or deletes the keychain item
+        directly, and it skips the Windows-only check for oversized entries on macOS and Linux.
+      type: fix
+  createdAt: "2026-10-21"
+  irVersion: 67
+- version: 0.57.0
+  changelogEntry:
+    - summary: |
+        Add the `x-fern-cli-table` OpenAPI operation extension. It sets the
+        columns that `--format table` shows for that command: header, field
+        path (after `x-fern-sdk-return-value` extraction), order, alignment,
+        max width, `format: date`, and optional columns hidden by default.
+        Commands with the extension get a `--columns` flag (`--table-columns`
+        when the operation already has a `columns` parameter) to pick columns
+        (`name,stage`), add or remove them (`+description,-v`), or show every
+        field (`all`). `--query` and the JSON, YAML, CSV, JSONL and raw formats
+        are unchanged and keep the full response. Commands without the
+        extension print the same tables as before.
+      type: feat
+  createdAt: "2026-10-20"
+  irVersion: 67
+- version: 0.56.0
+  changelogEntry:
+    - summary: |
+        A flag whose value is an object with exactly one required string property
+        (for example `EmailAddr: {email (required), name}`) now also accepts a
+        plain value for that property: `--from a@x.com` sends
+        `{"email":"a@x.com"}`, and on list flags `--to a@x.com,b@x.com` sends one
+        object per comma-separated entry. JSON input is unchanged.
+      type: feat
+    - summary: |
+        String values the spec marks `format: email` are checked before the
+        request is sent, so `--to 'NOT AN EMAIL'` fails locally with the field
+        path instead of reaching the API.
+      type: feat
+    - summary: |
+        When stdin and stderr are both terminals, the CLI prompts for required
+        inputs that were not supplied by a flag, `--params`, `--json`, a profile or
+        a global parameter. Scripts, CI and piped runs never prompt and keep the
+        existing "is missing" error.
+      type: feat
+    - summary: |
+        `@file` / `@data://` references inside repeated object flags (for example
+        `--attachments '{"content":"@data://a.txt","filename":"a.txt"}'`) are now
+        read like they are for single-value and `--json` input, and a missing file
+        fails before the request is sent. Previously the reference text was sent
+        as-is.
+      type: fix
+    - summary: |
+        Body properties and array items wrapped in a one-option `oneOf`/`anyOf`
+        (`oneOf: [$ref: Model]`) are now treated as the wrapped object, so their
+        flag accepts JSON and gets dot-notation leaf flags. Previously the JSON was
+        sent as a string and rejected with "Expected object".
+      type: fix
+    - summary: |
+        Null fields are no longer printed in human-readable API error details
+        (`code: null`) or as empty rows in single-object table output. JSON output
+        is unchanged.
+      type: fix
+  createdAt: "2026-10-20"
+  irVersion: 67
+- version: 0.55.2
+  changelogEntry:
+    - summary: |
+        zsh TAB completion no longer stacks copies of the prompt and list when the window is resized while a list
+        is open (macOS Terminal.app, iTerm2, tmux and other terminals that re-wrap lines on resize). The zsh
+        registration script now sets the `last-prompt` completion style to false for this CLI only, so zsh
+        prints the prompt again below the list instead of jumping back above it. Other commands' completion
+        and the user's own zsh settings are unchanged.
+      type: fix
+  createdAt: "2026-10-20"
+  irVersion: 67
+- version: 0.55.1
+  changelogEntry:
+    - summary: |
+        `profiles remove` signs the API-key revoke with the parent credentials from env when they are set,
+        and falls back to the profile's stored key only when they aren't. Twilio rejects a standard API key
+        on its Keys endpoint (error 70004), so revoking with the stored key failed there.
+        When the revoke fails after the interactive "Also delete this profile's API key" prompt, the profile
+        is still removed and the key's revoke parameters (e.g. `Sid=SK…`) are printed so it can be deleted from the console. An explicit
+        `--revoke` still stops on failure.
+      type: fix
+  createdAt: "2026-10-20"
+  irVersion: 67
 - version: 0.55.0
   changelogEntry:
     - summary: |

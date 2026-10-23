@@ -22,9 +22,14 @@ paths:
                   format: email
                   description: "The user's email address"
                   example: john@example.com
+                Content:
+                  type: string
+                  description: "A JSON document carried as a form field"
+                  example: '{"key":"value"}'
               required:
                 - username
                 - email
+                - Content
       responses:
         "200":
           description: "Successful operation"

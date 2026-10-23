@@ -17,6 +17,7 @@ func do() {
     request := &fern.PostSubmitRequest{
         Username: "username",
         Email: "email",
+        Content: "Content",
     }
     client.SubmitFormData(
         context.TODO(),

@@ -23,6 +23,7 @@ pub mod openapi;
 pub mod pager;
 pub mod profiles;
 pub mod stability;
+pub mod table_columns;
 pub mod user_agent;
 pub mod validate;
 pub mod sdk_executor;

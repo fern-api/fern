@@ -1,4 +1,48 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.92.8
+  changelogEntry:
+    - summary: |
+        Fix `WebhooksHelper.VerifyRequest` failing to compile on `net462`/`netstandard2.0`
+        (`CS1503: cannot convert from 'string' to 'char'`) when `webhook-signature.algorithm-header`
+        uses `key-id-parameter`/`algorithm-parameter`: the settings header is now split with
+        `Split(new[] { "," }, StringSplitOptions.None)` instead of the `Split(string)` overload that
+        only exists on newer target frameworks.
+      type: fix
+  createdAt: "2026-10-22"
+  irVersion: 67
+- version: 2.92.7
+  changelogEntry:
+    - summary: |
+        C# dynamic snippets now keep nullable list and set item types (e.g. `List<MyEnum?>` for a multi-value query parameter typed `optional<nullable<MyEnum>>`), matching the SDK's `IEnumerable<MyEnum?>` property type instead of failing with CS0266.
+      type: fix
+  createdAt: "2026-10-21"
+  irVersion: 67
+- version: 2.92.6
+  changelogEntry:
+    - summary: |
+        XML (TwiML) `ToXml()` drops characters outside the XML 1.0 `Char` production (e.g. `\u0001`) from text, attributes and comments instead of throwing `ArgumentException`.
+      type: fix
+  createdAt: "2026-10-21"
+  irVersion: 67
+- version: 2.92.5
+  changelogEntry:
+    - summary: |
+        XML (TwiML) fluent child builders now take the element's text content as the first parameter, before
+        attributes, so legacy-style calls such as `response.Say("hi")` and `response.Dial("+15551234567")`
+        compile and set the content instead of an attribute. `ToXml(xmlDeclaration, indent)` adds an indented
+        output option.
+      type: fix
+  createdAt: "2026-10-21"
+  irVersion: 67
+- version: 2.92.4
+  changelogEntry:
+    - summary: |
+        Escape form-urlencoded example keys and values when generating C# mock-server tests. Examples
+        containing quotes, backslashes, or control characters now produce valid C# string literals
+        instead of causing the formatter to fail with syntax errors.
+      type: fix
+  createdAt: "2026-10-20"
+  irVersion: 67
 - version: 2.92.3
   changelogEntry:
     - summary: |

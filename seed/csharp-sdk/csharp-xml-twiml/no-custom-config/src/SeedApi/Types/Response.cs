@@ -136,6 +136,12 @@ public record Response : IJsonOnDeserialized, IXmlNode
     public string ToXml(bool xmlDeclaration) => XmlUtils.Serialize(ToXElement(), xmlDeclaration);
 
     /// <summary>
+    /// Serializes this value to XML, optionally prefixed with the XML declaration and optionally indented.
+    /// </summary>
+    public string ToXml(bool xmlDeclaration, bool indent) =>
+        XmlUtils.Serialize(ToXElement(), xmlDeclaration, indent);
+
+    /// <summary>
     /// Hash code derived from the rendered XML, consistent with Equals.
     /// </summary>
     public override int GetHashCode() => XmlUtils.XmlHashCode(this);
@@ -191,16 +197,16 @@ public record Response : IJsonOnDeserialized, IXmlNode
     /// </summary>
     public Response Dial(
         string? number = null,
-        IEnumerable<string>? statusCallbackEvent = null,
-        IEnumerable<DialRecordItem>? record_ = null
+        IEnumerable<DialRecordItem>? record_ = null,
+        IEnumerable<string>? statusCallbackEvent = null
     )
     {
         return Dial(
             new global::SeedApi.Dial
             {
                 Number = number,
-                StatusCallbackEvent = statusCallbackEvent,
                 Record = record_,
+                StatusCallbackEvent = statusCallbackEvent,
             }
         );
     }

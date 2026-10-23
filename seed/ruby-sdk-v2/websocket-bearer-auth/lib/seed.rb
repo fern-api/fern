@@ -3,6 +3,7 @@
 require "json"
 require "net/http"
 require "securerandom"
+require "time"
 
 require_relative "seed/internal/json/serializable"
 require_relative "seed/internal/types/type"
@@ -36,13 +37,25 @@ require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/connection_error"
-require_relative "seed/realtime_no_auth/types/no_auth_send_event"
-require_relative "seed/realtime_no_auth/types/no_auth_receive_event"
-require_relative "seed/realtime/types/send_event"
-require_relative "seed/realtime/types/send_snake_case"
-require_relative "seed/realtime/types/receive_event"
-require_relative "seed/realtime/types/receive_snake_case"
-require_relative "seed/realtime/types/send_event2"
-require_relative "seed/realtime/types/receive_event2"
-require_relative "seed/realtime/types/receive_event3"
 require_relative "seed/client"
+
+module Seed
+  module RealtimeNoAuth
+    module Types
+      autoload :NoAuthSendEvent, ::File.join(__dir__, "seed/realtime_no_auth/types/no_auth_send_event")
+      autoload :NoAuthReceiveEvent, ::File.join(__dir__, "seed/realtime_no_auth/types/no_auth_receive_event")
+    end
+  end
+
+  module Realtime
+    module Types
+      autoload :SendEvent, ::File.join(__dir__, "seed/realtime/types/send_event")
+      autoload :SendSnakeCase, ::File.join(__dir__, "seed/realtime/types/send_snake_case")
+      autoload :ReceiveEvent, ::File.join(__dir__, "seed/realtime/types/receive_event")
+      autoload :ReceiveSnakeCase, ::File.join(__dir__, "seed/realtime/types/receive_snake_case")
+      autoload :SendEvent2, ::File.join(__dir__, "seed/realtime/types/send_event2")
+      autoload :ReceiveEvent2, ::File.join(__dir__, "seed/realtime/types/receive_event2")
+      autoload :ReceiveEvent3, ::File.join(__dir__, "seed/realtime/types/receive_event3")
+    end
+  end
+end

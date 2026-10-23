@@ -57,6 +57,49 @@ def get_keepalive_socket_options(
     return opts
 
 
+def _get_environment_proxies() -> typing.Dict[str, typing.Optional[str]]:
+    # httpx skips HTTP(S)_PROXY / ALL_PROXY / NO_PROXY whenever a custom transport is
+    # passed, so the keepalive default rebuilds those env-derived mounts itself, using
+    # httpx's own resolver to keep identical semantics (incl. NO_PROXY bypass rules).
+    try:
+        from httpx._utils import get_environment_proxies
+    except (ImportError, AttributeError):
+        return {}
+    return get_environment_proxies()
+
+
+def get_keepalive_proxy_mounts(
+    idle: int = 60,
+    intvl: int = 30,
+    cnt: int = 5,
+) -> typing.Dict[str, typing.Optional[httpx.BaseTransport]]:
+    """
+    Build ``httpx.Client(mounts=...)`` entries for the proxies configured in the environment,
+    each carrying the TCP keepalive socket options. ``None`` entries are NO_PROXY bypasses
+    that fall back to the client's default transport.
+    """
+    socket_options = get_keepalive_socket_options(idle=idle, intvl=intvl, cnt=cnt)
+    return {
+        pattern: None if url is None else httpx.HTTPTransport(proxy=httpx.Proxy(url=url), socket_options=socket_options)
+        for pattern, url in _get_environment_proxies().items()
+    }
+
+
+def get_async_keepalive_proxy_mounts(
+    idle: int = 60,
+    intvl: int = 30,
+    cnt: int = 5,
+) -> typing.Dict[str, typing.Optional[httpx.AsyncBaseTransport]]:
+    """Async counterpart of ``get_keepalive_proxy_mounts`` for ``httpx.AsyncClient(mounts=...)``."""
+    socket_options = get_keepalive_socket_options(idle=idle, intvl=intvl, cnt=cnt)
+    return {
+        pattern: None
+        if url is None
+        else httpx.AsyncHTTPTransport(proxy=httpx.Proxy(url=url), socket_options=socket_options)
+        for pattern, url in _get_environment_proxies().items()
+    }
+
+
 def _parse_retry_after(response_headers: httpx.Headers) -> typing.Optional[float]:
     """
     This function parses the `Retry-After` header in a HTTP response and returns the number of seconds to wait.
@@ -66,9 +109,12 @@ def _parse_retry_after(response_headers: httpx.Headers) -> typing.Optional[float
     retry_after_ms = response_headers.get("retry-after-ms")
     if retry_after_ms is not None:
         try:
-            return int(retry_after_ms) / 1000 if retry_after_ms > 0 else 0
-        except Exception:
+            retry_after_ms_value = float(retry_after_ms)
+        except ValueError:
             pass
+        else:
+            if 0 < retry_after_ms_value < float("inf"):
+                return retry_after_ms_value / 1000
 
     retry_after = response_headers.get("retry-after")
     if retry_after is None:

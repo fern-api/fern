@@ -1,4 +1,39 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.107.7
+  changelogEntry:
+    - summary: |
+        Fix generated `WebhooksHelper.verifyRequest` failing to compile (`TS2550: Property 'hasOwn' does not
+        exist on type 'ObjectConstructor'`) under the SDK's default `target: ES6` tsconfig: the supported-algorithm
+        check used `Object.prototype.hasOwnProperty.call`, which the generator's Biome `--fix --unsafe` pass rewrote
+        to the ES2022-only `Object.hasOwn`. The check is now an `isSupportedAlgorithm` type guard over
+        `Object.keys(HMAC_ALGORITHMS)`, which Biome leaves alone and which compiles on ES6.
+      type: fix
+  createdAt: "2026-10-23"
+  irVersion: 67
+- version: 3.107.6
+  changelogEntry:
+    - summary: |
+        TypeScript dynamic snippets now follow the SDK generator's `noSerdeLayer` default (on unless `noSerdeLayer: false` or `serdeLayer: true` is set), so they use wire property names (e.g. `per_page`) that match the generated request types. Without a serde layer, query parameters, headers, file fields and object properties use the wire value, as the SDK does, even when a name override gives them a different original name. Property names that aren't valid identifiers (e.g. `org.iso.18013.5.1`) are now quoted, file values are always sent as a `Blob`, and a required file field (or file list) missing from the example gets a `fs.createReadStream("/path/to/your/file")` placeholder instead of being dropped. Optional file fields missing from the example are still left out; dynamic IR from CLIs that predate the `isOptional` flag treats every file as required. A config that never sets `noSerdeLayer` but pins a TypeScript generator older than 1.0 (where the serde layer was on by default) now gets wire-name snippets; `fern generator upgrade` sets the flag explicitly, so upgraded configs are unaffected.
+      type: fix
+  createdAt: "2026-10-21"
+  irVersion: 67
+- version: 3.107.5
+  changelogEntry:
+    - summary: |
+        XML (TwiML) serialization drops characters outside the XML 1.0 `Char` production (e.g. `\x01`) from text and attribute values instead of emitting XML that no parser accepts.
+      type: fix
+  createdAt: "2026-10-21"
+  irVersion: 67
+- version: 3.107.4
+  changelogEntry:
+    - summary: |
+        XML (TwiML) child builder methods accept the element's text content as a string, so legacy-style calls
+        such as `response.dial("+15551234567")` and `response.say("hi")` produce `<Dial>+15551234567</Dial>`
+        instead of an empty element. Element text no longer escapes double quotes as `&quot;` (attributes still do),
+        matching the legacy TwiML output.
+      type: fix
+  createdAt: "2026-10-21"
+  irVersion: 67
 - version: 3.107.3
   changelogEntry:
     - summary: |

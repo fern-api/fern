@@ -1285,6 +1285,7 @@
                 "response": {
                     "type": "streaming"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_dummy.generate": {
@@ -1502,6 +1503,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             }
         },

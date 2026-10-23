@@ -1,8 +1,8 @@
 import { access } from "node:fs/promises";
+import { decodeJsonPointerSegment, errorMessageOrString, isRecord } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { loadOpenAPI } from "@fern-api/lazy-fern-workspace";
 import type { TaskContext } from "@fern-api/task-context";
-
 import type { CliTargetDiagnostic, SpecFacts } from "./types.js";
 
 type Json = Record<string, unknown>;
@@ -46,11 +46,11 @@ export async function loadSpecFacts({
     } catch (cause) {
         return error(
             "CLI_TARGET_SPEC_PARSE",
-            `Could not load ${specPath}: ${cause instanceof Error ? cause.message : String(cause)}`,
+            `Could not load ${specPath}: ${errorMessageOrString(cause)}`,
             "Fix the spec so `fern check` accepts it."
         );
     }
-    if (!isObject(document)) {
+    if (!isRecord(document)) {
         return error("CLI_TARGET_SPEC_PARSE", `${specPath} is not an OpenAPI document.`, "Fix the spec.");
     }
 
@@ -84,14 +84,14 @@ export function extractSpecFacts(spec: Json): SpecFacts {
         schemeKeys: [...new Set(headerApiKeys.map(([key]) => key.toLowerCase()))].sort(),
         postOperations: collectPostOperations(spec, resolver),
         serverUrls: collectServerUrls(spec),
-        ...(isObject(spec.info) && typeof spec.info.title === "string" ? { title: spec.info.title } : {})
+        ...(isRecord(spec.info) && typeof spec.info.title === "string" ? { title: spec.info.title } : {})
     };
 }
 
 function externalRefs(value: unknown, found = new Set<string>()): Set<string> {
     if (Array.isArray(value)) {
         value.forEach((item) => externalRefs(item, found));
-    } else if (isObject(value)) {
+    } else if (isRecord(value)) {
         for (const [key, child] of Object.entries(value)) {
             if (key === "$ref" && typeof child === "string" && !child.startsWith("#")) {
                 found.add(child);
@@ -110,7 +110,7 @@ class RefResolver {
     resolve(value: unknown): unknown {
         const seen = new Set<string>();
         let current = value;
-        while (isObject(current) && typeof current.$ref === "string") {
+        while (isRecord(current) && typeof current.$ref === "string") {
             if (seen.has(current.$ref)) {
                 return undefined;
             }
@@ -125,21 +125,21 @@ class RefResolver {
             .replace(/^#\/?/, "")
             .split("/")
             .filter(Boolean)
-            .map((segment) => segment.replace(/~1/g, "/").replace(/~0/g, "~"))
-            .reduce<unknown>((node, segment) => (isObject(node) ? node[segment] : undefined), this.root);
+            .map(decodeJsonPointerSegment)
+            .reduce<unknown>((node, segment) => (isRecord(node) ? node[segment] : undefined), this.root);
     }
 }
 
 function collectSecuritySchemes(spec: Json, resolver: RefResolver): SpecFacts["securitySchemes"] {
-    const components = isObject(spec.components) ? spec.components : {};
+    const components = isRecord(spec.components) ? spec.components : {};
     const declared = {
-        ...(isObject(spec.securityDefinitions) ? spec.securityDefinitions : {}),
-        ...(isObject(components.securitySchemes) ? components.securitySchemes : {})
+        ...(isRecord(spec.securityDefinitions) ? spec.securityDefinitions : {}),
+        ...(isRecord(components.securitySchemes) ? components.securitySchemes : {})
     };
     const schemes: SpecFacts["securitySchemes"] = {};
     for (const [id, raw] of Object.entries(declared)) {
         const scheme = resolver.resolve(raw);
-        if (!isObject(scheme)) {
+        if (!isRecord(scheme)) {
             continue;
         }
         schemes[id] = removeUndefined({
@@ -168,14 +168,14 @@ function collectDeclaredHeaders(spec: Json, resolver: RefResolver, apiKeyHeaders
 
 function operationHeaders(spec: Json, resolver: RefResolver): unknown[] {
     const parameterLists: unknown[] = [];
-    for (const pathItem of Object.values(isObject(spec.paths) ? spec.paths : {})) {
+    for (const pathItem of Object.values(isRecord(spec.paths) ? spec.paths : {})) {
         const item = resolver.resolve(pathItem);
-        if (!isObject(item)) {
+        if (!isRecord(item)) {
             continue;
         }
         parameterLists.push(item.parameters);
         for (const operation of Object.values(item)) {
-            if (isObject(operation)) {
+            if (isRecord(operation)) {
                 parameterLists.push(resolver.resolve(operation.parameters));
             }
         }
@@ -183,16 +183,16 @@ function operationHeaders(spec: Json, resolver: RefResolver): unknown[] {
     return parameterLists
         .flatMap((parameters) => (Array.isArray(parameters) ? parameters : []))
         .map((raw) => resolver.resolve(raw))
-        .filter((parameter): parameter is Json => isObject(parameter) && parameter.in === "header")
+        .filter((parameter): parameter is Json => isRecord(parameter) && parameter.in === "header")
         .map((parameter) => parameter.name);
 }
 
 function collectPostOperations(spec: Json, resolver: RefResolver): SpecFacts["postOperations"] {
     const operations: SpecFacts["postOperations"] = {};
-    for (const [path, pathItem] of Object.entries(isObject(spec.paths) ? spec.paths : {})) {
+    for (const [path, pathItem] of Object.entries(isRecord(spec.paths) ? spec.paths : {})) {
         const item = resolver.resolve(pathItem);
-        const post = isObject(item) ? resolver.resolve(item.post) : undefined;
-        if (!isObject(post)) {
+        const post = isRecord(item) ? resolver.resolve(item.post) : undefined;
+        if (!isRecord(post)) {
             continue;
         }
         operations[path] = {
@@ -205,14 +205,14 @@ function collectPostOperations(spec: Json, resolver: RefResolver): SpecFacts["po
 
 function requestProperties(operation: Json, resolver: RefResolver): string[] {
     const body = resolver.resolve(operation.requestBody);
-    if (isObject(body)) {
+    if (isRecord(body)) {
         return contentProperties(body.content, resolver);
     }
     // Swagger 2.0: body and formData parameters.
     const names = new Set<string>();
     for (const raw of Array.isArray(operation.parameters) ? operation.parameters : []) {
         const parameter = resolver.resolve(raw);
-        if (!isObject(parameter)) {
+        if (!isRecord(parameter)) {
             continue;
         }
         if (parameter.in === "formData" && typeof parameter.name === "string") {
@@ -226,14 +226,14 @@ function requestProperties(operation: Json, resolver: RefResolver): string[] {
 }
 
 function responseProperties(operation: Json, resolver: RefResolver): string[] {
-    const responses = isObject(operation.responses) ? operation.responses : {};
+    const responses = isRecord(operation.responses) ? operation.responses : {};
     const names = new Set<string>();
     for (const [status, raw] of Object.entries(responses)) {
         if (!/^2/.test(status)) {
             continue;
         }
         const response = resolver.resolve(raw);
-        if (!isObject(response)) {
+        if (!isRecord(response)) {
             continue;
         }
         contentProperties(response.content, resolver).forEach((name) => names.add(name));
@@ -244,8 +244,8 @@ function responseProperties(operation: Json, resolver: RefResolver): string[] {
 
 function contentProperties(content: unknown, resolver: RefResolver): string[] {
     const names = new Set<string>();
-    for (const media of Object.values(isObject(content) ? content : {})) {
-        if (isObject(media)) {
+    for (const media of Object.values(isRecord(content) ? content : {})) {
+        if (isRecord(media)) {
             schemaProperties(media.schema, resolver).forEach((name) => names.add(name));
         }
     }
@@ -254,10 +254,10 @@ function contentProperties(content: unknown, resolver: RefResolver): string[] {
 
 function schemaProperties(raw: unknown, resolver: RefResolver, depth = 0): string[] {
     const schema = resolver.resolve(raw);
-    if (!isObject(schema) || depth > 16) {
+    if (!isRecord(schema) || depth > 16) {
         return [];
     }
-    const names = new Set(Object.keys(isObject(schema.properties) ? schema.properties : {}));
+    const names = new Set(Object.keys(isRecord(schema.properties) ? schema.properties : {}));
     for (const part of Array.isArray(schema.allOf) ? schema.allOf : []) {
         schemaProperties(part, resolver, depth + 1).forEach((name) => names.add(name));
     }
@@ -267,7 +267,7 @@ function schemaProperties(raw: unknown, resolver: RefResolver, depth = 0): strin
 function collectServerUrls(spec: Json): string[] {
     if (Array.isArray(spec.servers)) {
         return spec.servers.flatMap((server) =>
-            isObject(server) && typeof server.url === "string" ? [server.url] : []
+            isRecord(server) && typeof server.url === "string" ? [server.url] : []
         );
     }
     if (typeof spec.host === "string") {
@@ -278,7 +278,7 @@ function collectServerUrls(spec: Json): string[] {
 }
 
 function arrayOf(value: unknown): Json[] {
-    return Array.isArray(value) ? value.filter(isObject) : [];
+    return Array.isArray(value) ? value.filter(isRecord) : [];
 }
 
 async function exists(path: string): Promise<boolean> {
@@ -296,8 +296,4 @@ function stringOrUndefined(value: unknown): string | undefined {
 
 function removeUndefined<T extends object>(value: T): T {
     return Object.fromEntries(Object.entries(value).filter(([, entry]) => entry !== undefined)) as T;
-}
-
-function isObject(value: unknown): value is Json {
-    return value !== null && typeof value === "object" && !Array.isArray(value);
 }

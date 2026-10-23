@@ -822,3 +822,49 @@ exports[`snippets (default) > single-url-environment-default > 'invalid environm
   }
 ]"
 `;
+
+exports[`snippets (file properties as positional parameters) > files stay null when the IR doesn't set isOptional 1`] = `
+"package com.example.usage;
+
+import com.acme.acme.AcmeAcmeClient;
+import com.acme.acme.types.MyRequest;
+
+AcmeAcmeClient client = AcmeAcmeClient
+    .builder()
+    .build();
+
+client.service().post(
+    null,
+    null,
+    null,
+    null,
+    MyRequest
+        .builder()
+        .build()
+);
+"
+`;
+
+exports[`snippets (file properties as positional parameters) > required files get a placeholder and optional files get Optional.empty() 1`] = `
+"package com.example.usage;
+
+import com.acme.acme.AcmeAcmeClient;
+import com.acme.acme.types.MyRequest;
+import java.io.File;
+import java.util.Optional;
+
+AcmeAcmeClient client = AcmeAcmeClient
+    .builder()
+    .build();
+
+client.service().post(
+    new File("path/to/file"),
+    new File("path/to/file"),
+    Optional.empty(),
+    Optional.empty(),
+    MyRequest
+        .builder()
+        .build()
+);
+"
+`;

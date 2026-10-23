@@ -4,7 +4,7 @@ import { readFile, writeFile } from "fs/promises";
 import YAML from "yaml";
 
 import { Migration } from "../../../types/Migration.js";
-import { getAllGeneratorYamlFiles } from "./getAllGeneratorYamlFiles.js";
+import { getAllGeneratorYamlFiles } from "../../../utils/getAllGeneratorYamlFiles.js";
 
 export const migration: Migration = {
     name: "add-publishing-to-release-generators",

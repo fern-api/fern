@@ -197,7 +197,12 @@ public partial class SeedApiClient : ISeedApiClient
 
     /// <example><code>
     /// await client.SubmitFormDataAsync(
-    ///     new PostSubmitRequest { Username = "johndoe", Email = "john@example.com" }
+    ///     new PostSubmitRequest
+    ///     {
+    ///         Username = "johndoe",
+    ///         Email = "john@example.com",
+    ///         Content = "{\"key\":\"value\"}",
+    ///     }
     /// );
     /// </code></example>
     public WithRawResponseTask<PostSubmitResponse> SubmitFormDataAsync(

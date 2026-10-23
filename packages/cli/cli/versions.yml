@@ -1,4 +1,185 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.171.5
+  changelogEntry:
+    - summary: |
+        Internal cleanup: trailing-slash stripping, forward-slash path conversion and first-letter
+        capitalization now use shared helpers instead of inline copies. No behavior change.
+      type: chore
+    - summary: |
+        Internal cleanup: `isRecord`, `sanitizePreviewId`, `decodeJsonPointerSegment` and a few other
+        helpers that were copied across packages now have a single shared definition. No behavior change.
+      type: chore
+  createdAt: "2026-10-23"
+  irVersion: 67
+- version: 5.171.4
+  changelogEntry:
+    - summary: |
+        Internal cleanup: the CLI migrations now share one fern-directory lookup and one
+        files-and-directories listing helper instead of per-migration copies. No behavior change.
+      type: chore
+  createdAt: "2026-10-23"
+  irVersion: 67
+- version: 5.171.3
+  changelogEntry:
+    - summary: |
+        `fern sdk migrate` carries a Go generator's `packageLayout` setting (`root` or `types`) over to the target's
+        `generation.packageLayout` instead of reporting it as unsupported and dropping it. Bumps
+        `@postman/sdk-config` to 0.16.0.
+      type: fix
+  createdAt: "2026-10-23"
+  irVersion: 67
+- version: 5.171.2
+  changelogEntry:
+    - summary: |
+        Internal cleanup: shared helpers for ENOENT checks, http(s) URL checks, delays,
+        `asyncPool` and `convertNumberToSnakeCase` now live in `core-utils` instead of being
+        copied across packages. No behavior change.
+      type: chore
+  createdAt: "2026-10-22"
+  irVersion: 67
+- version: 5.171.1
+  changelogEntry:
+    - summary: |
+        The `custom-domain` Vercel check now recognizes apex domains on all of Vercel's
+        IPv4 networks (per ARIN), not just a subset.
+      type: fix
+  createdAt: "2026-10-22"
+  irVersion: 67
+- version: 5.171.0
+  changelogEntry:
+    - summary: |
+        `fern generate --docs` (including `--preview`) now checks the DNS of each configured
+        `custom-domain`. If a domain still points to Vercel instead of `cname.ferndocs.com`
+        (or your own reverse proxy), the CLI prints a warning with migration steps. Starting
+        December 1, 2026 this becomes an error and publishing fails until the DNS is switched.
+      type: feat
+  createdAt: "2026-10-22"
+  irVersion: 67
+- version: 5.170.8
+  changelogEntry:
+    - summary: |
+        The dynamic IR now reports `hasResponseBody: false` for endpoints that have no response body
+        (previously every endpoint was reported as `response: json`). This lets dynamic snippet generators
+        distinguish `(response, error)` methods from `error`-only methods (e.g. Go deletes).
+      type: fix
+  createdAt: "2026-10-22"
+  irVersion: 67
+- version: 5.170.7
+  changelogEntry:
+    - summary: |
+        `error-responses` configured on `api.settings` (shared by every spec of the API) now declares
+        the error body type and the status-code errors once in the root package instead of duplicating
+        them under each namespaced spec. SDKs expose one `BadRequestError`, `NotFoundError`, ... that
+        every namespace throws. `error-responses` set on an individual spec is unchanged.
+      type: fix
+  createdAt: "2026-10-22"
+  irVersion: 67
+- version: 5.170.6
+  changelogEntry:
+    - summary: |
+        Fix `fern generate --docs` failing with `ENOENT` on Markdown images whose quoted title contains
+        an unbalanced `)`, e.g. `![Diagram](./diagram.png "Flow: 1) Input, 2) Output")`. The scanner
+        ended the destination at the first `)` inside the title and tried to upload a file named
+        `diagram.png "Flow: 1`. Page links with such titles are resolved the same way.
+      type: fix
+  createdAt: "2026-10-22"
+  irVersion: 67
+- version: 5.170.5
+  changelogEntry:
+    - summary: |
+        The v3 OpenAPI parser no longer crashes with `Maximum call stack size exceeded` on a
+        discriminated union that contains itself as a variant (for example a `Branch` whose
+        `parts` are a `Leaf` or another `Branch`) when the variants declare the discriminant property.
+      type: fix
+    - summary: |
+        `fern generate --docs` and `fern docs dev` now log a warning when the v3 OpenAPI parser fails
+        and the API Reference falls back to the v2 parser, instead of falling back silently.
+      type: fix
+    - summary: |
+        The v3 OpenAPI parser now honors `respect-per-spec-base-path`. Each spec's plain
+        `x-fern-base-path` is applied to that spec's endpoint paths, so it is no longer dropped
+        when `generators.yml` lists more than one spec (for example in docs API Reference URLs).
+        Set the option on every spec that has a base path: a spec without it still uses the API-wide
+        base path, and only one spec's API-wide base path is kept when specs are merged. A base path
+        with path parameters keeps the API-wide behavior and now logs a warning.
+      type: fix
+  createdAt: "2026-10-21"
+  irVersion: 67
+- version: 5.170.4
+  changelogEntry:
+    - summary: |
+        `fern sdk migrate` carries a Fern Python generator's `stream_abstraction` setting over to the target's
+        `generation.streamAbstraction` instead of reporting it as unsupported and dropping it. Bumps
+        `@postman/sdk-config` to 0.15.0.
+      type: fix
+  createdAt: "2026-10-21"
+  irVersion: 67
+- version: 5.170.3
+  changelogEntry:
+    - summary: |
+        `fern check` no longer reports "No API definition found" for docs-only projects that
+        reference their API specs inline from `docs.yml` (`api` navigation items with `specs`)
+        and keep the spec in an `openapi/` or `asyncapi/` directory without a `generators.yml`.
+        A directory that `docs.yml` does not reference still reports the error.
+      type: fix
+  createdAt: "2026-10-20"
+  irVersion: 67
+- version: 5.170.2
+  changelogEntry:
+    - summary: |
+        Wait up to 18 minutes for an sdk-gen-api build so its 15-minute build timeout is reported first.
+        When the wait expires, the CLI checks the build status once more and fails with an internal
+        error instead of a network error if the build is still running. Failed targets now show the
+        sdk-gen-api error code with the message (for example, `FERN_BUILD_TIMEOUT: ...`).
+      type: fix
+  createdAt: "2026-10-20"
+  irVersion: 67
+- version: 5.170.1
+  changelogEntry:
+    - summary: |
+        When `fern generate` cannot resolve an SDK version for an sdk-gen-api generation (for example,
+        an MCP server generator with local file output and no package registry), the error now tells
+        you to pass one with `--version` instead of only reporting that the version could not be resolved.
+      type: fix
+  createdAt: "2026-10-20"
+  irVersion: 67
+- version: 5.170.0
+  changelogEntry:
+    - summary: |
+        Initialize new SDK projects with sdk-config.yml instead of generators.yml by default. Set FERN_USE_SDK_CONFIG=false to temporarily use the legacy initialization path.
+      type: feat
+  createdAt: "2026-10-20"
+  irVersion: 67
+- version: 5.169.0
+  changelogEntry:
+    - summary: |
+        Docs versions accept `default: true`, so the version that owns the unversioned URLs no
+        longer has to be first in the `versions` list. The list order still sets the order in the
+        version switcher, so a `Develop` version can be listed first while a release such as
+        `3.3.0` serves `/` and every unversioned page, the sitemap, canonical URLs, and `llms.txt`:
+
+        ```yaml
+        versions:
+          - display-name: Develop
+            ref: develop
+            availability: preview
+          - display-name: 3.3.0
+            default: true
+            path: ./versions/latest.yml
+        ```
+
+        The flag works on site-level `versions` and on `products[].versions`, and a default
+        version can use either `path` or `ref`. Setting `default: true` on more than one version
+        in the same list, or on a version with `hidden: true`, is a configuration error. Without
+        the flag, the first version is still the default.
+      type: feat
+    - summary: |
+        Add `settings.require-analytics-consent` to docs.yml. When enabled, Fern's built-in
+        docs analytics (PostHog) stays off until the page sets `window.fernAnalyticsConsent = true`
+        and dispatches a `fern-analytics-consent` event, e.g. from a consent manager callback.
+      type: feat
+  createdAt: "2026-10-20"
+  irVersion: 67
 - version: 5.168.1
   changelogEntry:
     - summary: |

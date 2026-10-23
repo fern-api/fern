@@ -2,6 +2,7 @@
 import { stripCliConfigKeys } from "@fern-api/api-workspace-commons";
 import { FernToken } from "@fern-api/auth";
 import { generatorsYml } from "@fern-api/configuration";
+import { delay } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { isAutoVersion } from "@fern-api/generator-cli/autoversion";
 import { type FeatureFlagContext, getFeatureFlagClient } from "@fern-api/posthog-manager";
@@ -42,7 +43,7 @@ import {
 import { FERN_GENERATOR_LATEST_VERSION, isGeneratorVersionForUnpinnedRoute } from "./sdkConfigGeneratorVersion.js";
 
 const POLL_INTERVAL_MS = 2_000;
-const POLL_TIMEOUT_MS = 15 * 60 * 1_000;
+const POLL_TIMEOUT_MS = 18 * 60 * 1_000;
 const REQUEST_TIMEOUT_MS = 60_000;
 const MAX_PAYLOADS = 64;
 const MAX_SOURCE_COMPRESSED_BYTES = 25 * 1024 * 1024;
@@ -134,7 +135,7 @@ interface FernBuildStatus {
         status: "queued" | "running" | "publishing" | "succeeded" | "failed";
         logs: Array<{ level: string; message: string }>;
         result?: { artifactUrl: string; actualVersion?: string };
-        error?: { message: string };
+        error?: { code?: string; message: string };
         publication?:
             | {
                   status: "success";
@@ -998,7 +999,7 @@ export function describeFernSdkGenApiIneligibility({
 }): string {
     const { generatorInvocation, sdkVersion, specsTarGzBuffer, whitelabel } = candidate;
     if (sdkVersion == null) {
-        return "the SDK version could not be resolved";
+        return "the SDK version could not be resolved. Pass one with --version (for example, --version 1.0.0)";
     }
     if (whitelabel != null) {
         return "whitelabel generation has not yet moved from Fiddle to the shared pipeline";
@@ -1459,6 +1460,7 @@ async function executeFernSdkGenApiBuild(
     const loggedByTarget = new Map<string, number>();
     const pollDeadline = Date.now() + POLL_TIMEOUT_MS;
     for (;;) {
+        const isFinalPoll = Date.now() >= pollDeadline;
         let status: FernBuildStatus;
         try {
             const response = await axios.get<FernBuildStatus>(`${origin}/v1/fern/build/${buildId}`, {
@@ -1513,14 +1515,14 @@ async function executeFernSdkGenApiBuild(
                 )
             );
         }
-        if (Date.now() >= pollDeadline) {
+        if (isFinalPoll) {
             return first.context.failAndThrow(
                 `Timed out waiting for sdk-gen-api build ${buildId} after ${POLL_TIMEOUT_MS / 60_000} minutes`,
                 undefined,
-                { code: CliError.Code.NetworkError }
+                { code: CliError.Code.InternalError }
             );
         }
-        await new Promise((resolve) => setTimeout(resolve, POLL_INTERVAL_MS));
+        await delay(POLL_INTERVAL_MS);
     }
 }
 
@@ -1713,7 +1715,14 @@ function sanitizeFernBuildStatus(status: FernBuildStatus, sensitiveValues: strin
             })),
             ...(target.error == null
                 ? {}
-                : { error: { message: redactSensitiveValues(target.error.message, sensitiveValues) } }),
+                : {
+                      error: {
+                          ...(typeof target.error.code === "string"
+                              ? { code: redactSensitiveValues(target.error.code, sensitiveValues) }
+                              : {}),
+                          message: redactSensitiveValues(target.error.message, sensitiveValues)
+                      }
+                  }),
             ...(target.publication == null
                 ? {}
                 : target.publication.status === "success"
@@ -2091,7 +2100,7 @@ async function finishFernSdkGenApiTarget(
                 { code: CliError.Code.ContainerError }
             );
         }
-        return participant.context.failAndThrow(target.error?.message ?? "sdk-gen-api generation failed", undefined, {
+        return participant.context.failAndThrow(formatFernSdkGenApiTargetError(target.error), undefined, {
             code: CliError.Code.ContainerError
         });
     }
@@ -2151,6 +2160,11 @@ async function finishFernSdkGenApiTarget(
         ...githubDelivery,
         publishTarget: actualVersion == null ? undefined : mapFernSdkGenApiPublishTarget(target, actualVersion)
     };
+}
+
+function formatFernSdkGenApiTargetError(error: FernBuildStatus["targets"][number]["error"]): string {
+    const message = error?.message || "sdk-gen-api generation failed";
+    return error?.code != null && error.code !== "" ? `${error.code}: ${message}` : message;
 }
 
 type GithubDeliveryOutcome = Pick<FernSdkGenApiBuildResponse, "pullRequestUrl" | "noChangesDetected">;

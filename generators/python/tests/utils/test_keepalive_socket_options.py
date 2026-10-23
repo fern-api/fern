@@ -11,7 +11,11 @@ from typing import Dict, List, Tuple
 
 import httpx
 
-from core_utilities.shared.http_client import get_keepalive_socket_options
+from core_utilities.shared.http_client import (
+    get_async_keepalive_proxy_mounts,
+    get_keepalive_proxy_mounts,
+    get_keepalive_socket_options,
+)
 
 
 def _opt_dict(opts: List[Tuple[int, int, int]]) -> Dict[Tuple[int, int], int]:
@@ -123,3 +127,41 @@ def test_getsockopt_readback_on_real_socket() -> None:
             conn.close()
         client.close()
         server.close()
+
+
+def _clear_proxy_env(monkeypatch) -> None:  # type: ignore[no-untyped-def]
+    for name in ("HTTP_PROXY", "HTTPS_PROXY", "ALL_PROXY", "NO_PROXY"):
+        monkeypatch.delenv(name, raising=False)
+        monkeypatch.delenv(name.lower(), raising=False)
+
+
+def test_proxy_mounts_empty_without_proxy_env(monkeypatch) -> None:  # type: ignore[no-untyped-def]
+    _clear_proxy_env(monkeypatch)
+    assert get_keepalive_proxy_mounts() == {}
+    assert get_async_keepalive_proxy_mounts() == {}
+
+
+def test_proxy_mounts_honor_proxy_env_with_keepalive(monkeypatch) -> None:  # type: ignore[no-untyped-def]
+    # httpx ignores proxy env vars once a custom transport is passed, so the keepalive
+    # default must rebuild them as mounts (regression: cohere-python#817).
+    _clear_proxy_env(monkeypatch)
+    monkeypatch.setenv("HTTP_PROXY", "http://proxy.internal:3128")
+    monkeypatch.setenv("HTTPS_PROXY", "http://proxy.internal:3129")
+    monkeypatch.setenv("NO_PROXY", "localhost")
+
+    sync_client = httpx.Client(
+        transport=httpx.HTTPTransport(socket_options=get_keepalive_socket_options()),
+        mounts=get_keepalive_proxy_mounts(),
+    )
+    assert sync_client._transport_for_url(httpx.URL("http://api.example.com")) is sync_client._mounts[
+        httpx._utils.URLPattern("http://")
+    ]
+    https_transport = sync_client._transport_for_url(httpx.URL("https://api.example.com"))
+    assert isinstance(https_transport, httpx.HTTPTransport)
+    assert https_transport is not sync_client._transport
+    assert https_transport._pool._socket_options == get_keepalive_socket_options()  # type: ignore[attr-defined]
+    assert sync_client._transport_for_url(httpx.URL("http://localhost:8080")) is sync_client._transport
+
+    async_mounts = get_async_keepalive_proxy_mounts()
+    assert isinstance(async_mounts["https://"], httpx.AsyncHTTPTransport)
+    assert async_mounts["all://localhost"] is None

@@ -142,7 +142,7 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @example
-      #   client.service.just_file
+      #   client.service.just_file(file: "/path/to/your/file")
       #
       # @return [untyped]
       def just_file(request_options: {}, **params)
@@ -656,7 +656,9 @@ module Seed
       # @option request_options [Integer] :timeout_in_seconds
       #
       # @example
-      #   client.service.with_ref_body
+      #   client.service.with_ref_body(request: {
+      #     foo: "bar"
+      #   })
       #
       # @return [String]
       def with_ref_body(request_options: {}, **params)

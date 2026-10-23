@@ -1,3 +1,4 @@
+import { delay, errorMessageOrString } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { CliError } from "@fern-api/task-context";
@@ -120,7 +121,7 @@ async function acquireLock(logger: Logger): Promise<() => Promise<void>> {
             return createLockReleaser(lockPath, logger);
         } catch {
             logger.debug(`Waiting for buf lock on ${lockPath}...`);
-            await new Promise((resolve) => setTimeout(resolve, LOCK_RETRY_INTERVAL_MS));
+            await delay(LOCK_RETRY_INTERVAL_MS);
         }
     }
 
@@ -129,7 +130,7 @@ async function acquireLock(logger: Logger): Promise<() => Promise<void>> {
     try {
         await rm(lockPath, { recursive: true });
     } catch (err) {
-        logger.debug(`Failed to remove stale buf lock: ${err instanceof Error ? err.message : String(err)}`);
+        logger.debug(`Failed to remove stale buf lock: ${errorMessageOrString(err)}`);
     }
     try {
         await mkdir(lockPath, { recursive: false });
@@ -143,7 +144,7 @@ async function acquireLock(logger: Logger): Promise<() => Promise<void>> {
                 return createLockReleaser(lockPath, logger);
             } catch {
                 logger.debug(`Waiting for buf lock on ${lockPath} (post-break retry)...`);
-                await new Promise((resolve) => setTimeout(resolve, LOCK_RETRY_INTERVAL_MS));
+                await delay(LOCK_RETRY_INTERVAL_MS);
             }
         }
         throw new CliError({
@@ -159,7 +160,7 @@ function createLockReleaser(lockPath: string, logger: Logger): () => Promise<voi
         try {
             await rm(lockPath, { recursive: true });
         } catch (err) {
-            logger.debug(`Failed to release buf lock: ${err instanceof Error ? err.message : String(err)}`);
+            logger.debug(`Failed to release buf lock: ${errorMessageOrString(err)}`);
         }
     };
 }
@@ -190,7 +191,7 @@ export async function resolveBuf(logger: Logger): Promise<AbsoluteFilePath | und
             await releaseLock();
         }
     } catch (error) {
-        logger.debug(`Failed to resolve buf: ${error instanceof Error ? error.message : String(error)}`);
+        logger.debug(`Failed to resolve buf: ${errorMessageOrString(error)}`);
         return undefined;
     }
 }
@@ -240,14 +241,12 @@ async function resolveUnderLock(logger: Logger): Promise<AbsoluteFilePath | unde
         logger.info(`Downloaded buf ${BUF_VERSION}`);
         return canonicalPath;
     } catch (error) {
-        logger.debug(`Failed to download buf: ${error instanceof Error ? error.message : String(error)}`);
+        logger.debug(`Failed to download buf: ${errorMessageOrString(error)}`);
         // Clean up partial download if it exists
         try {
             await rm(tmpDownloadPath, { force: true });
         } catch (cleanupErr) {
-            logger.debug(
-                `Failed to clean up partial buf download: ${cleanupErr instanceof Error ? cleanupErr.message : String(cleanupErr)}`
-            );
+            logger.debug(`Failed to clean up partial buf download: ${errorMessageOrString(cleanupErr)}`);
         }
         return undefined;
     }
@@ -257,7 +256,7 @@ async function readVersionMarker(markerPath: AbsoluteFilePath, logger: Logger): 
     try {
         return (await readFile(markerPath, "utf-8")).trim();
     } catch (err) {
-        logger.debug(`Failed to read buf version marker: ${err instanceof Error ? err.message : String(err)}`);
+        logger.debug(`Failed to read buf version marker: ${errorMessageOrString(err)}`);
         return undefined;
     }
 }
