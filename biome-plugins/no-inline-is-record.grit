@@ -4,7 +4,8 @@ or {
     `typeof $value === "object" && $value != null && !Array.isArray($value)`,
     `typeof $value === "object" && $value !== null && !Array.isArray($value)`,
     `$value !== null && typeof $value === "object" && !Array.isArray($value)`,
-    `$value != null && typeof $value === "object" && !Array.isArray($value)`
+    `$value != null && typeof $value === "object" && !Array.isArray($value)`,
+    `typeof $value === "object" && !Array.isArray($value) && $value !== null`
 } as $check where {
     register_diagnostic(span=$check, message="Use `isRecord` from `@fern-api/core-utils` instead of checking for a non-null, non-array object by hand.", severity="error")
 }
