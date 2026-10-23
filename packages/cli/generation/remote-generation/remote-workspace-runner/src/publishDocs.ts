@@ -8,7 +8,8 @@ import {
     getFdrOrigin,
     MediaType,
     replaceEnvVariables,
-    sanitizePreviewId
+    sanitizePreviewId,
+    UNKNOWN_GENERATOR_LANGUAGE
 } from "@fern-api/core-utils";
 import {
     applyTranslatedApiTitlesToNavTree,
@@ -2023,7 +2024,7 @@ export function withCliSnippetNamespaces({
 export function describeGeneratorForSnippetLog(generatorInvocation: generatorsYml.GeneratorInvocation): string {
     const config = generatorInvocation.config;
     const configKeys = typeof config === "object" && config !== null ? Object.keys(config).join(",") : "none";
-    return `${generatorInvocation.name} (language=${generatorInvocation.language ?? "unknown"}, output=${generatorInvocation.outputMode.type}, publish-target=${generatorsYml.getPackageName({ generatorInvocation }) ?? "none"}, config keys=[${configKeys}])`;
+    return `${generatorInvocation.name} (language=${generatorInvocation.language ?? UNKNOWN_GENERATOR_LANGUAGE}, output=${generatorInvocation.outputMode.type}, publish-target=${generatorsYml.getPackageName({ generatorInvocation }) ?? "none"}, config keys=[${configKeys}])`;
 }
 
 async function computeSemanticVersionForLanguage({

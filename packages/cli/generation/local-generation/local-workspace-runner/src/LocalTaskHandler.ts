@@ -1,7 +1,7 @@
 import type { BamlClientInstance, ClientRegistryInstance } from "@fern-api/cli-ai";
 import { loadBamlDependencies, VersionBump } from "@fern-api/cli-ai";
 import { FERNIGNORE_FILENAME, generatorsYml, getFernIgnorePaths } from "@fern-api/configuration";
-import { extractErrorMessage } from "@fern-api/core-utils";
+import { extractErrorMessage, UNKNOWN_GENERATOR_LANGUAGE } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import {
     AutoVersioningCache,
@@ -379,7 +379,7 @@ export class LocalTaskHandler {
                     // Single chunk (or small diff): use normal path with caching
                     analysis = await this.getAnalysis(
                         cleanedDiff,
-                        this.generatorLanguage ?? "unknown",
+                        this.generatorLanguage ?? UNKNOWN_GENERATOR_LANGUAGE,
                         previousVersion ?? "0.0.0",
                         priorChangelog,
                         specCommitMessage
@@ -406,7 +406,7 @@ export class LocalTaskHandler {
 
                         const chunkAnalysis = await this.getAnalysis(
                             chunk,
-                            this.generatorLanguage ?? "unknown",
+                            this.generatorLanguage ?? UNKNOWN_GENERATOR_LANGUAGE,
                             previousVersion ?? "0.0.0",
                             priorChangelog,
                             specCommitMessage
@@ -462,7 +462,7 @@ export class LocalTaskHandler {
                                 }).ConsolidateChangelog(
                                     rawEntries,
                                     bestBump,
-                                    this.generatorLanguage ?? "unknown",
+                                    this.generatorLanguage ?? UNKNOWN_GENERATOR_LANGUAGE,
                                     previousVersion,
                                     projectedVersion
                                 );

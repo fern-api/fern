@@ -1,6 +1,6 @@
 import { formatLog } from "@fern-api/cli-logger";
 import { DEPENDENCIES_FILENAME } from "@fern-api/configuration-loader";
-import { assertNever, decodeJsonPointerSegment, entries } from "@fern-api/core-utils";
+import { assertNever, decodeJsonPointerSegment, entries, UNKNOWN_ERROR_MESSAGE } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WorkspaceLoader, WorkspaceLoaderFailureType } from "@fern-api/lazy-fern-workspace";
 import { Logger } from "@fern-api/logger";
@@ -105,7 +105,7 @@ function handleWorkspaceParserFailureForFile({
                 }
                 logger.error(
                     formatLog({
-                        title: failure.error.error.message ?? "Unknown error",
+                        title: failure.error.error.message ?? UNKNOWN_ERROR_MESSAGE,
                         breadcrumbs: [relativeFilepath, ...pathSegments]
                     })
                 );

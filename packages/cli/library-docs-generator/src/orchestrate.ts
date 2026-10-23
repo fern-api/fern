@@ -1,6 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { docsYml } from "@fern-api/configuration";
-import { delay, extractErrorMessage, getFdrOrigin } from "@fern-api/core-utils";
+import { delay, extractErrorMessage, getFdrOrigin, UNKNOWN_ERROR_MESSAGE } from "@fern-api/core-utils";
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, resolve } from "@fern-api/fs-utils";
 import { cloneRepositoryAtRef, resolveRepositorySubpath } from "@fern-api/github";
@@ -555,7 +555,7 @@ async function pollForCompletion(client: LibraryDocsClient, jobId: string, libra
                 throw new CliError({
                     message:
                         `Generation failed for library '${libraryName}': ` +
-                        `${status.error?.message ?? "Unknown error"} (${status.error?.code ?? "UNKNOWN"})`,
+                        `${status.error?.message ?? UNKNOWN_ERROR_MESSAGE} (${status.error?.code ?? "UNKNOWN"})`,
                     code: CliError.Code.InternalError
                 });
             default:

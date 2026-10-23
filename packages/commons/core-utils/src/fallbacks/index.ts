@@ -2,6 +2,7 @@ export { DEFAULT_CONTAINER_RUNNER, resolveContainerRunner } from "./containerRun
 export { DEFAULT_FDR_ORIGIN_URL, getFdrOrigin } from "./fdrOrigin.js";
 export { DEFAULT_GITHUB_BRANCH, DEFAULT_GITHUB_HOST } from "./github.js";
 export { LOCAL_STORAGE_FOLDER } from "./localStorageFolder.js";
+export { UNKNOWN_CLI_VERSION, UNKNOWN_ERROR_MESSAGE, UNKNOWN_GENERATOR_LANGUAGE } from "./placeholders.js";
 export {
     DEFAULT_CRATES_REGISTRY_URL,
     DEFAULT_NPM_REGISTRY_URL,

@@ -15,6 +15,7 @@ import {
     extractErrorMessage,
     isNonNullish,
     replaceEnvVariables,
+    UNKNOWN_CLI_VERSION,
     visitDiscriminatedUnion
 } from "@fern-api/core-utils";
 import {
@@ -1424,7 +1425,7 @@ export class DocsDefinitionResolver {
             absoluteFilePath: this.docsWorkspace.absoluteFilePath,
             generatorsConfiguration: undefined,
             changelog: undefined,
-            cliVersion: this.cliVersion ?? "unknown"
+            cliVersion: this.cliVersion ?? UNKNOWN_CLI_VERSION
         });
         return workspace;
     }

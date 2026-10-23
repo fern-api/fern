@@ -17,7 +17,7 @@ import { FernToken, getAccessToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { createVenusService } from "@fern-api/core";
-import { ContainerRunner, extractErrorMessage, replaceEnvVariables } from "@fern-api/core-utils";
+import { ContainerRunner, extractErrorMessage, replaceEnvVariables, UNKNOWN_CLI_VERSION } from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
 import {
     AutoVersioningCache,
@@ -513,7 +513,7 @@ export async function runLocalGenerationForWorkspace({
                                           apiBaseUrl: getGithubApiBaseUrl(selfhostedGithubConfig.uri)
                                       }
                                     : undefined,
-                            cliVersion: workspace.cliVersion ?? "unknown",
+                            cliVersion: workspace.cliVersion ?? UNKNOWN_CLI_VERSION,
                             generatorVersions: {
                                 [generatorInvocation.name]: generatorInvocation.version
                             },
