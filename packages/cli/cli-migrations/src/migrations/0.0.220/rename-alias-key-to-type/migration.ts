@@ -1,7 +1,7 @@
 import { readFile, writeFile } from "fs/promises";
 
 import { Migration } from "../../../types/Migration.js";
-import { getAllYamlFiles } from "./getAllYamlFiles.js";
+import { getAllYamlFiles } from "../../../utils/getAllYamlFiles.js";
 
 export const migration: Migration = {
     name: "rename-alias-key-to-type",

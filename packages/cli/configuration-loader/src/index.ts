@@ -6,6 +6,7 @@ export * from "./commons/WithoutQuestionMarks.js";
 export * from "./dependencies-yml/index.js";
 export * from "./docs-yml/index.js";
 export * from "./fern-config-json/index.js";
+export * from "./findFernDirectory.js";
 export { GeneratorName } from "./generators-yml/GeneratorName.js";
 export * from "./generators-yml/index.js";
 export * from "./getFernDirectory.js";

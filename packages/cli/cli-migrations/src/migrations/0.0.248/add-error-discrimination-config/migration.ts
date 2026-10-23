@@ -3,7 +3,7 @@ import { readFile, writeFile } from "fs/promises";
 import YAML from "yaml";
 
 import { Migration } from "../../../types/Migration.js";
-import { getAllRootApiYamlFiles } from "./getAllRootApiYamlFiles.js";
+import { getAllRootApiYamlFiles } from "../../../utils/getAllRootApiYamlFiles.js";
 
 export const migration: Migration = {
     name: "add-error-discrimination-config",
