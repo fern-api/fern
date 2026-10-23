@@ -108,7 +108,12 @@ export const BaseRubyCustomConfigSchema = z.object({
     // returning the iterator, so an API error for that page is raised by the method call
     // instead of by the first iteration. Disabled by default because callers may rescue
     // errors around the loop, or build an iterator without iterating it.
-    fetchFirstPageOnCall: z.boolean().optional()
+    fetchFirstPageOnCall: z.boolean().optional(),
+    // Opt-in: `Model#to_h` leaves out every field the caller never set, required ones included,
+    // so sparse (partial update) payloads carry only what was provided. A field set explicitly
+    // to `nil` is still sent as `null`. Disabled by default because unset required fields are
+    // currently sent as `null`, and changing that changes request bodies on the wire.
+    omitUnsetModelFields: z.boolean().optional()
 });
 
 export type BaseRubyCustomConfigSchema = z.infer<typeof BaseRubyCustomConfigSchema>;
