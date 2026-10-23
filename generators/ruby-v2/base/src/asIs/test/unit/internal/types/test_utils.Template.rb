@@ -139,16 +139,26 @@ describe <%= gem_namespace %>::Internal::Types::Utils do
         assert_kind_of Integer, Utils.coerce(Float, 5)
         assert_equal 5, Utils.coerce(Float, 5, strict: true)
         assert_kind_of Float, Utils.coerce(Float, 1.5)
-        assert_kind_of Float, Utils.coerce(Float, "5")
+        assert_equal 5, Utils.coerce(Float, "5")
+        assert_kind_of Integer, Utils.coerce(Float, "5")
+        assert_in_delta(5.7, Utils.coerce(Float, "5.7"))
+        assert_kind_of Float, Utils.coerce(Float, "5.0")
+        assert_in_delta(5.0, Utils.coerce(Float, "5abc"))
       end
 <% } else { %>      it "converts Integer values to Float" do
         assert_kind_of Float, Utils.coerce(Float, 5)
+        assert_kind_of Float, Utils.coerce(Float, "5")
       end
 <% } %>
       it "coerces numeric Symbols such as symbolized JSON keys" do
         assert_in_delta(1.5, Utils.coerce(Float, :"1.5"))
-        assert_in_delta(2.0, Utils.coerce(Float, :"2"))
-        assert_equal :foo, Utils.coerce(Float, :foo)
+<% if (keepIntegersInFloatFields) { %>        assert_equal 2, Utils.coerce(Float, :"2")
+        assert_kind_of Integer, Utils.coerce(Float, :"2")
+        assert_equal(-20, Utils.coerce(Float, :"-20"))
+        assert_kind_of Float, Utils.coerce(Float, :"2.0")
+<% } else { %>        assert_in_delta(2.0, Utils.coerce(Float, :"2"))
+        assert_kind_of Float, Utils.coerce(Float, :"2")
+<% } %>        assert_equal :foo, Utils.coerce(Float, :foo)
       end
 
       it "passes through value if it cannot be coerced and not strict" do

@@ -57,6 +57,17 @@ describe("keepIntegersInFloatFields", () => {
         expect(rendered).not.toContain("Whole numbers keep their Integer value");
     });
 
+    it("decodes whole-number Symbol map keys as Integer only when enabled", () => {
+        const integerFirst = `parsed = Integer(value.to_s, 10, exception: false) || Float(value.to_s, exception: false)`;
+        expect(render("internal/types/utils.Template.rb", true)).toContain(integerFirst);
+        const disabled = render("internal/types/utils.Template.rb", false);
+        expect(disabled).not.toContain(integerFirst);
+        expect(disabled).toContain(`            when Symbol
+              parsed = Float(value.to_s, exception: false)
+              return parsed unless parsed.nil?
+`);
+    });
+
     it("emits the matching runtime unit test", () => {
         expect(render("test/unit/internal/types/test_utils.Template.rb", true)).toContain(
             "keeps Integer values as Integer"

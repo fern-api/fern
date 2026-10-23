@@ -77,11 +77,19 @@ module <%= gem_namespace %>
 <% if (keepIntegersInFloatFields) { %>            when Integer
               # Whole numbers keep their Integer value, so they serialize as `5` rather than `5.0`.
               return value
-<% } %>            when Numeric, Time, String
+            when String
+              # Whole-number strings such as "5" become Integers too; anything else converts as before.
+              return Integer(value, 10, exception: false) || value.to_f
+            when Numeric, Time
+              return value.to_f
+            when Symbol
+              # Whole-number map keys parsed as symbols, e.g. :"2", become Integers like other whole numbers.
+              parsed = Integer(value.to_s, 10, exception: false) || Float(value.to_s, exception: false)
+<% } else { %>            when Numeric, Time, String
               return value.to_f
             when Symbol
               parsed = Float(value.to_s, exception: false)
-              return parsed unless parsed.nil?
+<% } %>              return parsed unless parsed.nil?
             end
           in Class if type <= Model
             case value
