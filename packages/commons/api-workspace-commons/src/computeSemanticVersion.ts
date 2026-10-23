@@ -1,5 +1,10 @@
 import type { generatorsYml } from "@fern-api/configuration";
-import { assertNever, stripTrailingSlashes } from "@fern-api/core-utils";
+import {
+    assertNever,
+    DEFAULT_CRATES_REGISTRY_URL,
+    DEFAULT_NPM_REGISTRY_URL,
+    stripTrailingSlashes
+} from "@fern-api/core-utils";
 import { getFileContent, getLatestRelease as getLatestReleaseFromGithub } from "@fern-api/github";
 import type { FernFiddle } from "@fern-fern/fiddle-sdk";
 import latestVersion from "latest-version";
@@ -57,13 +62,11 @@ export namespace RegistryInfo {
 
 // ─── Default public registry URLs ───────────────────────────────────
 
-const DEFAULT_NPM_REGISTRY_URL = "https://registry.npmjs.org";
 const DEFAULT_PYPI_LOOKUP_URL = "https://pypi.org/pypi";
 const DEFAULT_MAVEN_SEARCH_URL = "https://search.maven.org/solrsearch/select";
 const DEFAULT_NUGET_FLAT_CONTAINER_URL = "https://api.nuget.org/v3-flatcontainer";
 const DEFAULT_RUBYGEMS_API_URL = "https://rubygems.org/api/v1/gems";
 const DEFAULT_GO_PROXY_URL = "https://proxy.golang.org";
-const DEFAULT_CRATES_API_URL = "https://crates.io/api/v1/crates";
 
 /**
  * Computes the next semantic version for an SDK package by fetching the current version
@@ -836,10 +839,10 @@ async function fetchGoProxyVersion(modulePath: string): Promise<string | undefin
 function resolveCratesApiUrl(registryInfo: RegistryInfo): string {
     const configuredUrl = registryInfo.registryUrl;
     if (configuredUrl == null || configuredUrl === "") {
-        return DEFAULT_CRATES_API_URL;
+        return DEFAULT_CRATES_REGISTRY_URL;
     }
     if (configuredUrl.includes("crates.io")) {
-        return DEFAULT_CRATES_API_URL;
+        return DEFAULT_CRATES_REGISTRY_URL;
     }
     // For custom registries, use the configured URL directly
     return stripTrailingSlashes(configuredUrl);

@@ -1,5 +1,12 @@
 import { generatorsYml } from "@fern-api/configuration";
-import { assertNever } from "@fern-api/core-utils";
+import {
+    assertNever,
+    DEFAULT_CRATES_REGISTRY_URL,
+    DEFAULT_NPM_REGISTRY_URL,
+    DEFAULT_NUGET_REGISTRY_URL,
+    DEFAULT_PYPI_UPLOAD_URL,
+    DEFAULT_RUBYGEMS_REGISTRY_URL
+} from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { parseRepository } from "@fern-api/github";
 import { CliError, TaskContext } from "@fern-api/task-context";
@@ -1062,7 +1069,7 @@ async function convertOutputMode({
         case "npm":
             return FernFiddle.OutputMode.publishV2(
                 FernFiddle.remoteGen.PublishOutputModeV2.npmOverride({
-                    registryUrl: generator.output.url ?? "https://registry.npmjs.org",
+                    registryUrl: generator.output.url ?? DEFAULT_NPM_REGISTRY_URL,
                     packageName: generator.output["package-name"],
                     token: generator.output.token ?? "",
                     downloadSnippets
@@ -1097,7 +1104,7 @@ async function convertOutputMode({
         case "pypi":
             return FernFiddle.OutputMode.publishV2(
                 FernFiddle.remoteGen.PublishOutputModeV2.pypiOverride({
-                    registryUrl: generator.output.url ?? "https://upload.pypi.org/legacy/",
+                    registryUrl: generator.output.url ?? DEFAULT_PYPI_UPLOAD_URL,
                     username: generator.output.token != null ? "__token__" : (generator.output.username ?? ""),
                     password: generator.output.token ?? generator.output.password ?? "",
                     coordinate: generator.output["package-name"],
@@ -1112,7 +1119,7 @@ async function convertOutputMode({
         case "nuget":
             return FernFiddle.OutputMode.publishV2(
                 FernFiddle.remoteGen.PublishOutputModeV2.nugetOverride({
-                    registryUrl: generator.output.url ?? "https://nuget.org/",
+                    registryUrl: generator.output.url ?? DEFAULT_NUGET_REGISTRY_URL,
                     packageName: generator.output["package-name"],
                     apiKey: generator.output["api-key"] ?? "",
                     downloadSnippets
@@ -1121,7 +1128,7 @@ async function convertOutputMode({
         case "rubygems":
             return FernFiddle.OutputMode.publishV2(
                 FernFiddle.remoteGen.PublishOutputModeV2.rubyGemsOverride({
-                    registryUrl: generator.output.url ?? "https://rubygems.org/",
+                    registryUrl: generator.output.url ?? DEFAULT_RUBYGEMS_REGISTRY_URL,
                     packageName: generator.output["package-name"],
                     apiKey: generator.output["api-key"] ?? "",
                     downloadSnippets
@@ -1130,7 +1137,7 @@ async function convertOutputMode({
         case "crates":
             return FernFiddle.OutputMode.publishV2(
                 FernFiddle.remoteGen.PublishOutputModeV2.cratesOverride({
-                    registryUrl: generator.output.url ?? "https://crates.io/api/v1/crates",
+                    registryUrl: generator.output.url ?? DEFAULT_CRATES_REGISTRY_URL,
                     packageName: generator.output["package-name"],
                     token: generator.output.token ?? "",
                     downloadSnippets
@@ -1191,7 +1198,7 @@ function getGithubPublishInfo(
             });
         case "npm":
             return FernFiddle.GithubPublishInfo.npm({
-                registryUrl: output.url ?? "https://registry.npmjs.org",
+                registryUrl: output.url ?? DEFAULT_NPM_REGISTRY_URL,
                 packageName: output["package-name"],
                 token: output.token
             });
@@ -1222,7 +1229,7 @@ function getGithubPublishInfo(
             });
         case "pypi":
             return FernFiddle.GithubPublishInfo.pypi({
-                registryUrl: output.url ?? "https://upload.pypi.org/legacy/",
+                registryUrl: output.url ?? DEFAULT_PYPI_UPLOAD_URL,
                 packageName: output["package-name"],
                 credentials:
                     output.token != null
@@ -1242,19 +1249,19 @@ function getGithubPublishInfo(
             });
         case "nuget":
             return FernFiddle.GithubPublishInfo.nuget({
-                registryUrl: output.url ?? "https://nuget.org/",
+                registryUrl: output.url ?? DEFAULT_NUGET_REGISTRY_URL,
                 packageName: output["package-name"],
                 apiKey: output["api-key"]
             });
         case "rubygems":
             return FernFiddle.GithubPublishInfo.rubygems({
-                registryUrl: output.url ?? "https://rubygems.org/",
+                registryUrl: output.url ?? DEFAULT_RUBYGEMS_REGISTRY_URL,
                 packageName: output["package-name"],
                 apiKey: output["api-key"]
             });
         case "crates":
             return FernFiddle.GithubPublishInfo.crates({
-                registryUrl: output.url ?? "https://crates.io/api/v1/crates",
+                registryUrl: output.url ?? DEFAULT_CRATES_REGISTRY_URL,
                 packageName: output["package-name"],
                 token: output.token
             });
