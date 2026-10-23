@@ -389,6 +389,26 @@
               },
               "blog": {
                 "type": "string"
+              },
+              "dropdown-column-height": {
+                "anyOf": [
+                  {
+                    "anyOf": [
+                      {
+                        "type": "integer",
+                        "exclusiveMinimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      {
+                        "type": "string",
+                        "const": "no-limit"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
               }
             },
             "required": [
@@ -1366,26 +1386,6 @@
                     "properties": {
                       "tab": {
                         "type": "string"
-                      },
-                      "dropdown-column-height": {
-                        "anyOf": [
-                          {
-                            "anyOf": [
-                              {
-                                "type": "integer",
-                                "exclusiveMinimum": 0,
-                                "maximum": 9007199254740991
-                              },
-                              {
-                                "type": "string",
-                                "const": "no-limit"
-                              }
-                            ]
-                          },
-                          {
-                            "type": "null"
-                          }
-                        ]
                       },
                       "dropdown": {
                         "type": "array",
