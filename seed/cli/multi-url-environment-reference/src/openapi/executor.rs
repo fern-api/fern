@@ -597,6 +597,42 @@ fn ancestor_object_shorthand_supplied(
     false
 }
 
+/// Returns true if some dotted ancestor of `leaf_path` is an optional object
+/// the caller has not opted into: neither the ancestor itself nor any of its
+/// descendants were supplied. A leaf the spec marks required inside such an
+/// object (`source.channel` under an optional `source`) is only required once
+/// the caller sends that object, so it must not be reported missing.
+///
+/// Mirrors `commands::unconditionally_required`, which applies the same rule
+/// to the `Required parameters` help heading. An ancestor with no entry of its
+/// own does not count as optional. `injected` holds body paths a resolved
+/// global parameter will fill; those count as supplied.
+pub(crate) fn optional_ancestor_omitted(
+    leaf_path: &str,
+    supplied: &Map<String, Value>,
+    injected: &std::collections::HashSet<&str>,
+    parameters: &std::collections::HashMap<String, MethodParameter>,
+) -> bool {
+    let mut rest = leaf_path;
+    while let Some((ancestor, _)) = rest.rsplit_once('.') {
+        if let Some(def) = parameters.get(ancestor) {
+            if !(def.required || def.required_by_spec) {
+                let child_prefix = format!("{ancestor}.");
+                let opted_in = supplied
+                    .keys()
+                    .map(String::as_str)
+                    .chain(injected.iter().copied())
+                    .any(|k| k == ancestor || k.starts_with(&child_prefix));
+                if !opted_in {
+                    return true;
+                }
+            }
+        }
+        rest = ancestor;
+    }
+    false
+}
+
 /// Parsed and validated inputs ready for request execution.
 #[derive(Debug)]
 struct ExecutionInput {
@@ -697,6 +733,17 @@ fn parse_and_validate_inputs(
         if is_body
             && param_name.contains('.')
             && ancestor_object_shorthand_supplied(param_name, &params, &method.parameters)
+        {
+            continue;
+        }
+        if is_body
+            && param_name.contains('.')
+            && optional_ancestor_omitted(
+                param_name,
+                &params,
+                &global_param_targets,
+                &method.parameters,
+            )
         {
             continue;
         }
@@ -7611,7 +7658,8 @@ mod tests {
     #[test]
     fn test_required_leaf_still_reported_when_no_ancestor_shorthand() {
         // Sanity check: with the same shape as above but no shorthand value
-        // supplied, the required-leaf check still fires.
+        // supplied, the required-leaf check still fires. `name` is required by
+        // the spec; its shorthand flag stays clap-optional (`required: false`).
         let mut parameters = std::collections::HashMap::new();
         parameters.insert(
             "name".to_string(),
@@ -7619,6 +7667,7 @@ mod tests {
                 location: Some("body".to_string()),
                 param_type: Some("object".to_string()),
                 required: false,
+                required_by_spec: true,
                 ..Default::default()
             },
         );
@@ -7648,6 +7697,105 @@ mod tests {
         match err {
             CliError::Validation(msg) => {
                 assert!(msg.contains("name.first"), "error should name leaf: {msg}");
+            }
+            other => panic!("expected Validation error, got {other:?}"),
+        }
+    }
+
+    /// `kind` (required), optional `source` object with a required
+    /// `source.channel` leaf and an optional `source.label` leaf.
+    fn method_with_optional_parent_required_leaf() -> RestMethod {
+        let body = |param_type: &str, required: bool| MethodParameter {
+            location: Some("body".to_string()),
+            param_type: Some(param_type.to_string()),
+            required,
+            required_by_spec: required,
+            ..Default::default()
+        };
+        let mut parameters = std::collections::HashMap::new();
+        parameters.insert("kind".to_string(), body("string", true));
+        parameters.insert("source".to_string(), body("object", false));
+        parameters.insert("source.channel".to_string(), body("string", true));
+        parameters.insert("source.label".to_string(), body("string", false));
+        RestMethod {
+            http_method: "POST".to_string(),
+            path: "captures".to_string(),
+            parameters,
+            ..Default::default()
+        }
+    }
+
+    #[test]
+    fn test_required_leaf_of_omitted_optional_parent_is_not_required() {
+        let doc = RestDescription {
+            base_url: Some("https://api.example.com/".to_string()),
+            ..Default::default()
+        };
+        let method = method_with_optional_parent_required_leaf();
+        let input = parse_and_validate_inputs(&doc, &method, Some(r#"{"kind": "note"}"#), None, false, None, &[], &[])
+            .expect("omitting an optional parent must not require its leaves");
+        assert_eq!(input.body.expect("body should be populated"), json!({ "kind": "note" }));
+    }
+
+    #[test]
+    fn test_required_leaf_of_optional_parent_is_required_once_parent_is_used() {
+        let doc = RestDescription {
+            base_url: Some("https://api.example.com/".to_string()),
+            ..Default::default()
+        };
+        let method = method_with_optional_parent_required_leaf();
+        let params_json = r#"{"kind": "note", "source.label": "x"}"#;
+        let err = parse_and_validate_inputs(&doc, &method, Some(params_json), None, false, None, &[], &[])
+            .unwrap_err();
+        match err {
+            CliError::Validation(msg) => {
+                assert!(
+                    msg.contains("'source.channel'"),
+                    "error should name the leaf: {msg}"
+                );
+            }
+            other => panic!("expected Validation error, got {other:?}"),
+        }
+
+        let params_json = r#"{"kind": "note", "source.channel": "cli"}"#;
+        let input = parse_and_validate_inputs(&doc, &method, Some(params_json), None, false, None, &[], &[])
+            .expect("supplying the required leaf satisfies the parent");
+        assert_eq!(
+            input.body.expect("body should be populated"),
+            json!({ "kind": "note", "source": { "channel": "cli" } })
+        );
+    }
+
+    #[test]
+    fn test_required_leaf_of_optional_parent_is_required_when_global_fills_sibling() {
+        use crate::openapi::app::ResolvedGlobalParam;
+        use crate::openapi::discovery::GlobalParameterLocation;
+
+        let doc = RestDescription {
+            base_url: Some("https://api.example.com/".to_string()),
+            ..Default::default()
+        };
+        let method = method_with_optional_parent_required_leaf();
+        let globals = vec![ResolvedGlobalParam {
+            name: "label".to_string(),
+            location: GlobalParameterLocation::Body,
+            target: "source.label".to_string(),
+            value: "x".to_string(),
+        }];
+        let err = parse_and_validate_inputs(
+            &doc,
+            &method,
+            Some(r#"{"kind": "note"}"#),
+            None,
+            false,
+            None,
+            &[],
+            &globals,
+        )
+        .unwrap_err();
+        match err {
+            CliError::Validation(msg) => {
+                assert!(msg.contains("'source.channel'"), "error should name leaf: {msg}");
             }
             other => panic!("expected Validation error, got {other:?}"),
         }

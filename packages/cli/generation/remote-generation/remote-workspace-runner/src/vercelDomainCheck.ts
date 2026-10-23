@@ -13,16 +13,22 @@ const DASHBOARD_URL = "https://dashboard.buildwithfern.com";
 const MAX_CNAME_HOPS = 8;
 const LOOKUP_TIMEOUT_MS = 5000;
 
-// Vercel's anycast ranges for custom-domain A records (apex domains without a CNAME).
+// Vercel's IPv4 nets per ARIN (org ZEITI, https://whois.arin.net/rest/org/ZEITI/nets); A records here mean an apex domain is on Vercel.
 const VERCEL_RANGES = [
-    "76.76.21.0/24",
-    "66.33.60.0/24",
+    "143.13.0.0/16",
+    "155.121.0.0/16",
+    "64.29.17.0/24",
     "64.239.109.0/24",
     "64.239.123.0/24",
-    "64.29.17.0/24",
+    "66.33.60.0/24",
+    "76.76.21.0/24",
+    "198.169.1.0/24",
+    "198.169.2.0/24",
     "216.150.1.0/24",
     "216.150.16.0/24",
-    "216.198.79.0/24"
+    "216.198.79.0/24",
+    "216.230.84.0/24",
+    "216.230.86.0/24"
 ];
 
 export type CustomDomainRouting =

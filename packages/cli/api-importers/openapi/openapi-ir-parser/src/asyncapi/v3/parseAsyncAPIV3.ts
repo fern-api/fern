@@ -1,4 +1,4 @@
-import { extractErrorMessage } from "@fern-api/core-utils";
+import { decodeJsonPointerSegment, extractErrorMessage } from "@fern-api/core-utils";
 import {
     HeaderWithExample,
     PathParameterWithExample,
@@ -636,10 +636,6 @@ export function parseAsyncAPIV3({
         servers: finalServers,
         basePath
     };
-}
-
-function decodeJsonPointerSegment(segment: string): string {
-    return segment.replace(/~1/g, "/").replace(/~0/g, "~");
 }
 
 function getChannelPathFromOperation(operation: AsyncAPIV3.Operation): string {

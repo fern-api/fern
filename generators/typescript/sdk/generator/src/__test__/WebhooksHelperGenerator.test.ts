@@ -204,6 +204,8 @@ describe("WebhooksHelperGenerator", () => {
             expect(text).toContain('const algorithmValue = settingsParts["algorithm"] ?? "";');
             expect(text).toContain('keyId = settingsParts["key"];');
             expect(text).not.toContain("lastIndexOf");
+            expect(text).not.toContain("hasOwn");
+            expect(text).toContain("if (!isSupportedAlgorithm(algorithmValue)) {");
             expect(text).toMatchSnapshot();
         });
 

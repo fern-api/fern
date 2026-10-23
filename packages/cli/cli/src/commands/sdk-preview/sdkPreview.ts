@@ -5,7 +5,7 @@ import {
     GENERATORS_CONFIGURATION_FILENAME,
     generatorsYml
 } from "@fern-api/configuration-loader";
-import { extractErrorMessage } from "@fern-api/core-utils";
+import { extractErrorMessage, isHttpUrl } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { getGeneratorOutputSubfolder, runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
 import { askToLogin } from "@fern-api/login";
@@ -93,7 +93,7 @@ export function toSdkPreviewError(error: unknown): SdkPreviewError {
  * misclassified, but that's not a realistic output target.
  */
 function isRegistryUrl(value: string): boolean {
-    return value.startsWith("https://") || value.startsWith("http://");
+    return isHttpUrl(value);
 }
 
 export async function sdkPreview({

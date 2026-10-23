@@ -1,3 +1,4 @@
+import { isRecord } from "@fern-api/core-utils";
 import {
     jsonObjectSchema,
     jsonValueSchema,
@@ -205,8 +206,4 @@ export function irLeaves(value: unknown, schema: ZodLike = rootSchema()): IrLeaf
 export function nonDefaultLeaves(ir: SdkConfigIrV1): IrLeaf[] {
     const wire: unknown = JSON.parse(new TextDecoder().decode(serializeSdkConfigIrV1(ir).body));
     return irLeaves(wire);
-}
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-    return value !== null && typeof value === "object" && !Array.isArray(value);
 }

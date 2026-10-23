@@ -4,7 +4,7 @@ import {
     Directory,
     doesPathExist,
     File,
-    getDirectoryContents,
+    getFilesAndDirectories,
     join,
     RelativeFilePath
 } from "@fern-api/fs-utils";
@@ -349,24 +349,6 @@ function getDeprecatedRootApiSettings(root: object): generatorsYml.ApiDefinition
         return {};
     }
     return root["api-settings"] as generatorsYml.ApiDefinitionSettingsSchema;
-}
-
-async function getFilesAndDirectories(
-    absoluteFilepath: AbsoluteFilePath
-): Promise<{ files: File[]; directories: Directory[] }> {
-    const contents = await getDirectoryContents(absoluteFilepath);
-
-    const files: File[] = [];
-    const directories: Directory[] = [];
-    for (const fileOrFolder of contents) {
-        if (fileOrFolder.type === "directory") {
-            directories.push(fileOrFolder);
-        } else {
-            files.push(fileOrFolder);
-        }
-    }
-
-    return { files, directories };
 }
 
 function convertDeprecatedApiSettingsToOpenApiSettings(

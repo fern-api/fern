@@ -280,9 +280,9 @@ export class WebhooksHelperGenerator extends FileGenerator<CSharpFile, SdkGenera
             writer.writeTextStatement(
                 "var settingsParts = new System.Collections.Generic.Dictionary<string, string>()"
             );
-            writer.write("foreach (var part in settingsHeader.Split(");
+            writer.write("foreach (var part in settingsHeader.Split(new[] { ");
             writer.writeNode(delimiter);
-            writer.writeLine("))");
+            writer.writeLine(" }, System.StringSplitOptions.None))");
             writer.writeLine("{");
             writer.indent();
             writer.writeTextStatement("var separatorIndex = part.IndexOf('=')");

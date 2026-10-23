@@ -1,6 +1,6 @@
+import { errorMessageOrString, isRecord } from "@fern-api/core-utils";
 import { parseSdkConfigIrV1, type SdkConfigIrV1 } from "@postman/sdk-config";
 import { type SdkConfigV1, splitSdkConfigV1TargetGeneration } from "@postman/sdk-config/sdk-config/v1";
-
 import type { CliTargetDiagnostic } from "./types.js";
 
 const LANGUAGE = "cli";
@@ -92,7 +92,7 @@ export function expandCliTarget(
     } catch (error) {
         return failure(
             "CLI_TARGET_EXPANSION",
-            `The cli target could not be expanded to SDK Config IR v1: ${error instanceof Error ? error.message : String(error)}`,
+            `The cli target could not be expanded to SDK Config IR v1: ${errorMessageOrString(error)}`,
             "Fix the reported fields in sdk-config.yml."
         );
     }
@@ -157,8 +157,4 @@ function mergeObjects(base: object, override: object | undefined): Record<string
         merged[key] = isRecord(inherited) && isRecord(value) ? mergeObjects(inherited, value) : value;
     }
     return merged;
-}
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-    return value !== null && typeof value === "object" && !Array.isArray(value);
 }
