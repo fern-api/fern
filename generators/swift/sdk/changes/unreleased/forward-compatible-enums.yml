@@ -6,5 +6,7 @@
     does not list into a `__unknown(String)` case instead of failing the whole response, and
     encodes it back unchanged. `rawValue`, `init(rawValue:)` and `allCases` (listed values only)
     keep working, so APIs can add enum values without breaking SDK versions already in use.
+    Undiscriminated unions try each member enum's listed values before keeping an unlisted value
+    in the first such enum, so member order doesn't change which variant a known value decodes to.
     Exhaustive `switch` statements over these enums need to handle `__unknown`.
   type: feat
