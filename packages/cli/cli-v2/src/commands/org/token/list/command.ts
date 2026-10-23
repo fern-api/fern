@@ -39,6 +39,12 @@ export class ListTokensCommand {
             throw CliError.notFound();
         }
         const auth0OrgId = orgLookup.body.auth0Id;
+        if (auth0OrgId == null) {
+            context.stderr.error(
+                `${Icons.error} Organization "${args.org}" has not been claimed yet, so it has no tokens to manage.`
+            );
+            throw new CliError({ code: CliError.Code.UserError });
+        }
 
         const response = await withSpinner({
             message: `Fetching tokens for organization "${args.org}"`,

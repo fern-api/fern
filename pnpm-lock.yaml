@@ -40,8 +40,8 @@ catalogs:
       specifier: 0.10.3
       version: 0.10.3
     '@fern-api/venus-api-sdk':
-      specifier: 5.0.0
-      version: 5.0.0
+      specifier: 11.6.0
+      version: 11.6.0
     '@fern-fern/docs-config':
       specifier: 0.0.80
       version: 0.0.80
@@ -4382,7 +4382,7 @@ importers:
         version: link:../task-context
       '@fern-api/venus-api-sdk':
         specifier: 'catalog:'
-        version: 5.0.0
+        version: 11.6.0
       jsonwebtoken:
         specifier: 'catalog:'
         version: 9.0.3
@@ -4566,7 +4566,7 @@ importers:
         version: link:../task-context
       '@fern-api/venus-api-sdk':
         specifier: 'catalog:'
-        version: 5.0.0
+        version: 11.6.0
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../workspace/loader
@@ -4997,7 +4997,7 @@ importers:
         version: link:../task-context
       '@fern-api/venus-api-sdk':
         specifier: 'catalog:'
-        version: 5.0.0
+        version: 11.6.0
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../workspace/loader
@@ -6286,7 +6286,7 @@ importers:
         version: link:../../../../../generators/typescript-v2/dynamic-snippets
       '@fern-api/venus-api-sdk':
         specifier: 'catalog:'
-        version: 5.0.0
+        version: 11.6.0
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../../../workspace/loader
@@ -6476,7 +6476,7 @@ importers:
         version: link:../../../task-context
       '@fern-api/venus-api-sdk':
         specifier: 'catalog:'
-        version: 5.0.0
+        version: 11.6.0
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../../../workspace/loader
@@ -8101,7 +8101,7 @@ importers:
         version: 1.2.172-ef737b9982(@opentelemetry/api@1.9.1)(typescript@5.9.3)
       '@fern-api/venus-api-sdk':
         specifier: 'catalog:'
-        version: 5.0.0
+        version: 11.6.0
       '@fern-fern/fdr-test-sdk':
         specifier: 'catalog:'
         version: 0.0.5297
@@ -9670,8 +9670,8 @@ packages:
   '@fern-api/ui-core-utils@0.145.12-b50d999d1':
     resolution: {integrity: sha512-S1sE+Fs6kc/7F1Gzwsz7sZlAhMLIsaMeVDQ68038YXfzsLhrsg3DEVPvil5T3KxH/qV80Uso25q1D1W/LwXo6Q==}
 
-  '@fern-api/venus-api-sdk@5.0.0':
-    resolution: {integrity: sha512-RAV+NGOtSSgxA5T8HjoMCEqAjb4Px+CltiPRSQURpjqMA2/VSfdYrvVPoKWDYhRp+rtvZeAFVmHy+kgIMh0V+A==}
+  '@fern-api/venus-api-sdk@11.6.0':
+    resolution: {integrity: sha512-BmV93UJK8icBnKAHr0quT6xC+YmkF9yCRrwZoJ8QXRKKsfB5QLAfKwAoM3Kkm3f3efRMVwLIkwHI4lczQBZcGg==}
     engines: {node: '>=18.0.0'}
 
   '@fern-fern/docs-config@0.0.80':
@@ -16679,7 +16679,7 @@ snapshots:
       title: 3.5.3
       ua-parser-js: 1.0.41
 
-  '@fern-api/venus-api-sdk@5.0.0': {}
+  '@fern-api/venus-api-sdk@11.6.0': {}
 
   '@fern-fern/docs-config@0.0.80': {}
 

@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Upgrade `@fern-api/venus-api-sdk` to 11.6.0. `fern org member invite`, `fern org member remove`,
+    `fern org token create` and `fern org token list` now print a clear error for organizations that
+    have not been claimed yet, instead of sending an empty organization ID to Venus.
+  type: fix
