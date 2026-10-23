@@ -646,6 +646,11 @@ types:
       target: optional<Target>
       changelog: optional<ChangelogFolderRelativePath>
       blog: optional<ChangelogFolderRelativePath>
+      dropdown-column-height:
+        type: optional<VariantsColumnHeight>
+        docs: |
+          Maximum number of items per column in this tab's header dropdown. `no-limit` keeps a single column.
+          Overrides `layout.dropdown.default-column-height`. Only applies when the tab has a `dropdown` in `navigation`.
 
   ChangelogFolderRelativePath:
     type: string
@@ -869,11 +874,6 @@ types:
   TabbedNavigationItemWithDropdown:
     properties:
       tab: TabId
-      dropdown-column-height:
-        type: optional<VariantsColumnHeight>
-        docs: |
-          Maximum number of items per column in the dropdown. `no-limit` keeps a single column.
-          Overrides `layout.dropdown.default-column-height`.
       dropdown:
         type: list<DropdownEntry>
         docs: |

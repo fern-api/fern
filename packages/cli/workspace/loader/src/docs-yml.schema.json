@@ -1024,6 +1024,19 @@
       "type": "string",
       "description": "The relative path to a folder containing markdown files broken down by date.\n\nExample:\n```\nchangelog: \"changelog\"\n```\n\nThis will look for markdown files in the `/fern/changelog` directory, which should contain files named like\n- `/fern/changelog/2024-04-29.mdx`.\n- `/fern/changelog/2023-01-02.mdx`."
     },
+    "docs.VariantsColumnHeightCount": {
+      "type": "integer"
+    },
+    "docs.VariantsColumnHeight": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/docs.VariantsColumnHeightCount"
+        },
+        {
+          "const": "no-limit"
+        }
+      ]
+    },
     "docs.TabConfig": {
       "type": "object",
       "properties": {
@@ -1141,6 +1154,17 @@
               "type": "null"
             }
           ]
+        },
+        "dropdown-column-height": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.VariantsColumnHeight"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Maximum number of items per column in this tab's header dropdown. `no-limit` keeps a single column.\nOverrides `layout.dropdown.default-column-height`. Only applies when the tab has a `dropdown` in `navigation`."
         }
       },
       "required": [
@@ -3793,19 +3817,6 @@
       ],
       "additionalProperties": false
     },
-    "docs.VariantsColumnHeightCount": {
-      "type": "integer"
-    },
-    "docs.VariantsColumnHeight": {
-      "anyOf": [
-        {
-          "$ref": "#/definitions/docs.VariantsColumnHeightCount"
-        },
-        {
-          "const": "no-limit"
-        }
-      ]
-    },
     "docs.DropdownItem": {
       "type": "object",
       "properties": {
@@ -3984,17 +3995,6 @@
       "properties": {
         "tab": {
           "$ref": "#/definitions/docs.TabId"
-        },
-        "dropdown-column-height": {
-          "oneOf": [
-            {
-              "$ref": "#/definitions/docs.VariantsColumnHeight"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "Maximum number of items per column in the dropdown. `no-limit` keeps a single column.\nOverrides `layout.dropdown.default-column-height`."
         },
         "dropdown": {
           "type": "array",

@@ -374,7 +374,7 @@ export declare namespace TabbedNavigationChild {
         variants: TabVariant[];
         /** `tab` when written as `dropdown` (header tab menu), `sidebar` when written as `variants`. */
         location: VariantsLocation;
-        /** `dropdown-column-height` as written on the tab. Sidebar selectors have no columns. */
+        /** `tabs.<id>.dropdown-column-height`. Sidebar selectors have no columns. */
         columnHeight: VariantsColumnHeight | undefined;
         /** Groups and links around the variants. Undefined when the list only holds variants. */
         menu: TabVariantMenuItem[] | undefined;
@@ -429,7 +429,7 @@ export interface ResolvedVariantsSettings {
 }
 
 /**
- * Header tab menus: `dropdown-column-height` > `layout.dropdown.default-column-height` > single column.
+ * Header tab menus: `tabs.<id>.dropdown-column-height` > `layout.dropdown.default-column-height` > single column.
  * Sidebar selectors (including a dropdown that fell back without header tabs) are always one list.
  */
 export function resolveVariantsSettings({

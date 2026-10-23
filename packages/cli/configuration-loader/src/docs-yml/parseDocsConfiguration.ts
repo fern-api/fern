@@ -1432,7 +1432,7 @@ async function convertNavigationTabConfiguration({
                 type: "variants",
                 variants: variantsInMenu(menu),
                 location: "tab",
-                columnHeight: item.dropdownColumnHeight ?? undefined,
+                columnHeight: tab.dropdownColumnHeight ?? undefined,
                 menu: menuOrUndefined(menu)
             };
         } else {

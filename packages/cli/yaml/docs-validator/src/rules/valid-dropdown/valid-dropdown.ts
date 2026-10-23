@@ -12,6 +12,19 @@ export const ValidDropdownRule: Rule = {
                 }
                 const hasHeaderTabs = config.layout?.tabsPlacement === "header" && config.layout.disableHeader !== true;
                 const violations: RuleViolation[] = [];
+                const dropdownTabIds = new Set(
+                    config.navigation.flatMap((item) =>
+                        "tab" in item && docsYml.isRawTabWithDropdown(item) ? [item.tab] : []
+                    )
+                );
+                for (const [tabId, tab] of Object.entries(config.tabs ?? {})) {
+                    if (tab.dropdownColumnHeight != null && !dropdownTabIds.has(tabId)) {
+                        violations.push({
+                            severity: "warning",
+                            message: `Tab "${tabId}" sets dropdown-column-height, but it has no dropdown in navigation, so the setting has no effect.`
+                        });
+                    }
+                }
                 for (const item of config.navigation) {
                     if (!("tab" in item) || !docsYml.isRawTabWithDropdown(item)) {
                         continue;

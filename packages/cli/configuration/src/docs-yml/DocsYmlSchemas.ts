@@ -1051,7 +1051,6 @@ export const DropdownEntry = z.union([DropdownItem, DropdownGroup, LinkConfigura
 
 export const TabbedNavigationItemWithDropdown = z.object({
     tab: TabId,
-    "dropdown-column-height": VariantsColumnHeight.nullable().optional(),
     dropdown: z.array(DropdownEntry)
 });
 
@@ -1077,7 +1076,8 @@ export const TabConfig = WithPermissions.merge(WithFeatureFlags).merge(
         href: z.string().optional(),
         target: Target.optional(),
         changelog: ChangelogFolderRelativePath.optional(),
-        blog: ChangelogFolderRelativePath.optional()
+        blog: ChangelogFolderRelativePath.optional(),
+        "dropdown-column-height": VariantsColumnHeight.nullable().optional()
     })
 );
 

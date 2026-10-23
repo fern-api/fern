@@ -5,6 +5,7 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { ChangelogFolderRelativePath } from "./ChangelogFolderRelativePath.js";
 import { Target } from "./Target.js";
+import { VariantsColumnHeight } from "./VariantsColumnHeight.js";
 import { WithFeatureFlags } from "./WithFeatureFlags.js";
 import { WithPermissions } from "./WithPermissions.js";
 
@@ -20,6 +21,10 @@ export const TabConfig: core.serialization.ObjectSchema<serializers.TabConfig.Ra
             target: Target.optional(),
             changelog: ChangelogFolderRelativePath.optional(),
             blog: ChangelogFolderRelativePath.optional(),
+            dropdownColumnHeight: core.serialization.property(
+                "dropdown-column-height",
+                VariantsColumnHeight.optional(),
+            ),
         })
         .extend(WithPermissions)
         .extend(WithFeatureFlags);
@@ -35,5 +40,6 @@ export declare namespace TabConfig {
         target?: Target.Raw | null;
         changelog?: ChangelogFolderRelativePath.Raw | null;
         blog?: ChangelogFolderRelativePath.Raw | null;
+        "dropdown-column-height"?: VariantsColumnHeight.Raw | null;
     }
 }

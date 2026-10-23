@@ -5,11 +5,6 @@ import type * as FernDocsConfig from "../../../index.js";
 export interface TabbedNavigationItemWithDropdown {
     tab: FernDocsConfig.TabId;
     /**
-     * Maximum number of items per column in the dropdown. `no-limit` keeps a single column.
-     * Overrides `layout.dropdown.default-column-height`.
-     */
-    dropdownColumnHeight?: FernDocsConfig.VariantsColumnHeight;
-    /**
      * Items shown in a menu that opens from the header tab. Requires header tabs; with `tabs-placement: sidebar`
      * the items fall back to a selector at the top of the sidebar.
      */

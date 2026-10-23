@@ -50,6 +50,23 @@ describe("valid-dropdown", () => {
         expect(violations[1]?.message).toContain('"Neither"');
     });
 
+    it("warns when a tab sets dropdown-column-height without a dropdown", async () => {
+        const violations = await violationsFor({
+            layout: headerTabs,
+            tabs: {
+                products: { displayName: "Products", dropdownColumnHeight: 3 },
+                guides: { displayName: "Guides", dropdownColumnHeight: 2 }
+            },
+            navigation: [
+                { tab: "products", dropdown: [{ title: "Studio", layout: [] }] },
+                { tab: "guides", layout: [] }
+            ]
+        });
+        expect(violations).toHaveLength(1);
+        expect(violations[0]?.severity).toBe("warning");
+        expect(violations[0]?.message).toContain('"guides"');
+    });
+
     it("rejects a tab that combines dropdown with variants", async () => {
         const violations = await violationsFor({
             layout: headerTabs,
