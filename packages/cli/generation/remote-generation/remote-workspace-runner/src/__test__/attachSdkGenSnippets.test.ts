@@ -71,6 +71,16 @@ describe("getSdkRequests", () => {
         ]);
     });
 
+    it("skips entries that name no package, which FDR could not look up", () => {
+        expect(
+            getSdkRequests({
+                javaSdk: { coordinate: "sdk", version: "1.0.0" },
+                goSdk: { githubRepo: "  ", version: "1.0.0" }
+            })
+        ).toEqual([]);
+        expect(getSdkRequests({ javaSdk: { coordinate: ":sdk", version: "1.0.0" } })).toEqual([]);
+    });
+
     it("skips entries without a version and languages the store lacks", () => {
         expect(
             getSdkRequests({
@@ -217,6 +227,19 @@ describe("attachSdkGenSnippets", () => {
         expect(result.rootPackage.endpoints[0]?.examples[0]?.codeSamples).toEqual([
             { language: "typescript", code: "client.pet.get()" }
         ]);
+    });
+
+    it("does not say it loaded snippets when it loaded none", async () => {
+        const { logger, run } = setup({
+            load: vi.fn(async () => {
+                throw new Error("down");
+            })
+        });
+
+        await run();
+
+        expect(logger.warn).toHaveBeenCalled();
+        expect(logger.info).not.toHaveBeenCalled();
     });
 
     it("warns when FDR has more than one page of snippets", async () => {

@@ -19,7 +19,7 @@ type CodeByEndpoint = ReadonlyMap<string, string>;
 const SDK_LANGUAGES = ["typescript", "python", "java", "go", "ruby", "csharp"] as const;
 type SdkLanguage = (typeof SDK_LANGUAGES)[number];
 
-/** The lookup for the docs.yml `snippets:` entry of a language, if the entry exists. */
+/** The lookup for the docs.yml `snippets:` entry of a language, if the entry exists and names a package. */
 function toSdkRequest(language: SdkLanguage, config: SnippetsConfig): SdkRequest | null | undefined {
     switch (language) {
         case "typescript":
@@ -34,13 +34,17 @@ function toSdkRequest(language: SdkLanguage, config: SnippetsConfig): SdkRequest
         }
         case "go": {
             const sdk = config.goSdk;
-            const githubRepo = normalizeGoPackageForLookup(sdk?.githubRepo ?? "");
-            return sdk && { type: language, githubRepo, version: nonEmpty(sdk.version) };
+            const githubRepo = nonEmpty(normalizeGoPackageForLookup(sdk?.githubRepo ?? ""));
+            return sdk == null || githubRepo == null
+                ? undefined
+                : { type: language, githubRepo, version: nonEmpty(sdk.version) };
         }
         case "java": {
             const sdk = config.javaSdk;
-            const [group = "", artifact = ""] = sdk?.coordinate.split(":") ?? [];
-            return sdk && { type: language, group, artifact, version: nonEmpty(sdk.version) };
+            const [group, artifact] = sdk?.coordinate.split(":").map(nonEmpty) ?? [];
+            return sdk == null || group == null || artifact == null
+                ? undefined
+                : { type: language, group, artifact, version: nonEmpty(sdk.version) };
         }
         default:
             assertNever(language);
@@ -193,6 +197,8 @@ export async function attachSdkGenSnippets(
         )
     );
     const counts = [...codeByLanguage].map(([language, codeByEndpoint]) => `${language}: ${codeByEndpoint.size}`);
-    logger.info(`Loaded SDK snippets from FDR (${counts.join(", ")})`);
+    if ([...codeByLanguage.values()].some((codeByEndpoint) => codeByEndpoint.size > 0)) {
+        logger.info(`Loaded SDK snippets from FDR (${counts.join(", ")})`);
+    }
     return mapEndpoints(apiDefinition, (endpoint) => addCodeSamples(endpoint, codeByLanguage));
 }
