@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix a stack overflow during docs generation when an OpenAPI object declares a property
+    named `properties`. The breadcrumb-to-name conversion dropped every `properties` crumb,
+    including the one holding the property's own name, so the property's inline schema was
+    given the same type id as the object declaring it. The resulting self-referential type
+    made example generation recurse until the call stack was exhausted.
+  type: fix
