@@ -685,6 +685,11 @@ function computePageKeys(
     return disambiguateSlugCollisions(result);
 }
 
+/**
+ * `hyphenated` collapses underscore runs and drops leading/trailing ones, so `__s_dup` and
+ * `s_dup` share a filename that `compact` keeps apart. Those extra collisions are resolved by
+ * `disambiguateSlugCollisions` (public name first, internal one gets `-2`).
+ */
 function applySlugStyle(filename: string, slugStyle: CppSlugStyle): string {
     if (slugStyle !== "hyphenated") {
         return filename;

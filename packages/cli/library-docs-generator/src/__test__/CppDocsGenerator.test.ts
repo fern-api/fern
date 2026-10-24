@@ -644,6 +644,20 @@ describe("generateCpp()", () => {
         expect(fnIndex).toContain("](functions/sa-b)");
     });
 
+    it("slugStyle: hyphenated still keeps colliding public/internal symbols on distinct pages", () => {
+        const internal = makeFunction({ name: "__s_dup", path: "__s_dup" });
+        const pub = makeFunction({ name: "s_dup", path: "s_dup" });
+        const ir = makeIr(makeNamespace({ functions: [internal, pub] }), { packageName: "lib" });
+
+        generateCpp({ ir, outputDir: tmpDir, slug: "reference/lib", slugStyle: "hyphenated" });
+
+        const relativePaths = collectMdxFiles(tmpDir).map((f) => f.substring(tmpDir.length + 1));
+        expect(relativePaths).toContain("functions/s-dup.mdx");
+        expect(relativePaths).toContain("functions/s-dup-2.mdx");
+        expect(readFileSync(join(tmpDir, "functions/s-dup.mdx"), "utf-8")).toContain("title: s_dup\n");
+        expect(readFileSync(join(tmpDir, "functions/s-dup-2.mdx"), "utf-8")).toContain("title: __s_dup\n");
+    });
+
     it("drops leading underscores from page and group filenames so folder navigation includes them", () => {
         const be16 = makeMacro({ name: "__be16", path: "__be16" });
         const ir = makeIr(makeNamespace({ macros: [be16] }), { packageName: "lib" }, [

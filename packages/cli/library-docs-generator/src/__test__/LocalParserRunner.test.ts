@@ -28,6 +28,11 @@ describe("runLocalParser", () => {
         vi.clearAllMocks();
     });
 
+    afterEach(() => {
+        delete process.env.FERN_PYTHON_PARSER_IMAGE;
+        delete process.env.FERN_CPP_PARSER_IMAGE;
+    });
+
     it("forwards logFilePath so parser logs outlive the temp output dir cleanup", async () => {
         (runContainer as Mock).mockImplementation(async ({ binds }: { binds: string[] }) => {
             const outputDir = bindFor(binds, ":/output");
@@ -43,11 +48,6 @@ describe("runLocalParser", () => {
 
         const call = (runContainer as Mock).mock.calls[0]?.[0];
         expect(call.logFilePath).toBe("/tmp/fern/library-docs-logs/doca.log");
-    });
-
-    afterEach(() => {
-        delete process.env.FERN_PYTHON_PARSER_IMAGE;
-        delete process.env.FERN_CPP_PARSER_IMAGE;
     });
 
     it("runs the CLI entry point, mounts /repo + /output + config, and returns the unwrapped ir", async () => {

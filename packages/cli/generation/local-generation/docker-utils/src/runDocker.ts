@@ -439,10 +439,14 @@ async function writeLogsFile({
     logFilePath?: string;
 }): Promise<void> {
     if (logFilePath != null) {
-        await mkdir(dirname(logFilePath), { recursive: true });
-        await writeFile(logFilePath, logs);
-        logger.info(`Generator logs here: ${logFilePath}`);
-        return;
+        try {
+            await mkdir(dirname(logFilePath), { recursive: true });
+            await writeFile(logFilePath, logs);
+            logger.info(`Generator logs here: ${logFilePath}`);
+            return;
+        } catch (error) {
+            logger.warn(`Failed to write logs to ${logFilePath} (${String(error)}); using a temporary file instead.`);
+        }
     }
     const tmpFile = await tmp.file();
     await writeFile(tmpFile.path, logs);

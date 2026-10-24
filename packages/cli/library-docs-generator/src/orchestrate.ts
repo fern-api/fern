@@ -288,7 +288,10 @@ async function generateSingleLibrary({
         });
     }
     const includeUndocumentedMacros = config.lang === "cpp" ? config.config?.includeUndocumentedMacros : undefined;
-    const logFilePath = logsDir != null ? join(logsDir, RelativeFilePath.of(`${name}.log`)) : undefined;
+    const logFilePath =
+        logsDir != null
+            ? join(logsDir, RelativeFilePath.of(`${name.replace(/[^a-zA-Z0-9._-]/g, "_")}.log`))
+            : undefined;
 
     let doxyfileContent: string | undefined;
     if (config.lang === "cpp" && config.config?.doxyfile != null) {

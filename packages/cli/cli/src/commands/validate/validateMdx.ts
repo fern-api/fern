@@ -105,6 +105,8 @@ export async function validateMdxFiles({
         const frontmatterError = getFrontmatterError(content);
         if (frontmatterError != null) {
             errors.push(new MdxValidationError(filepath, `Invalid frontmatter: ${frontmatterError}`, 1));
+            // Without parseable frontmatter the body offsets below are meaningless (gray-matter
+            // would throw again), so the MDX body check runs once the frontmatter is fixed.
             continue;
         }
 
