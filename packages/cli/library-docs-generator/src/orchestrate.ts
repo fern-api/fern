@@ -1,3 +1,4 @@
+import { createHash } from "crypto";
 import { readFile } from "node:fs/promises";
 import { docsYml } from "@fern-api/configuration";
 import { delay, extractErrorMessage } from "@fern-api/core-utils";
@@ -244,6 +245,18 @@ export async function runLibraryDocsGeneration({
     return { successful: results.length - failures.length };
 }
 
+/**
+ * Library names come from docs.yml keys; keep the log filename safe and unique even when two
+ * names only differ in characters the sanitizer replaces (`a b` vs `a_b`).
+ */
+function logFileStem(name: string): string {
+    const safe = name.replace(/[^a-zA-Z0-9._-]/g, "_");
+    if (safe === name) {
+        return safe;
+    }
+    return `${safe}-${createHash("sha1").update(name).digest("hex").slice(0, 8)}`;
+}
+
 async function generateSingleLibrary({
     client,
     context,
@@ -288,10 +301,7 @@ async function generateSingleLibrary({
         });
     }
     const includeUndocumentedMacros = config.lang === "cpp" ? config.config?.includeUndocumentedMacros : undefined;
-    const logFilePath =
-        logsDir != null
-            ? join(logsDir, RelativeFilePath.of(`${name.replace(/[^a-zA-Z0-9._-]/g, "_")}.log`))
-            : undefined;
+    const logFilePath = logsDir != null ? join(logsDir, RelativeFilePath.of(`${logFileStem(name)}.log`)) : undefined;
 
     let doxyfileContent: string | undefined;
     if (config.lang === "cpp" && config.config?.doxyfile != null) {
