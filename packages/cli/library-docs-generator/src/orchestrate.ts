@@ -1,4 +1,3 @@
-import { createHash } from "crypto";
 import { readFile } from "node:fs/promises";
 import { docsYml } from "@fern-api/configuration";
 import { delay, extractErrorMessage } from "@fern-api/core-utils";
@@ -7,6 +6,7 @@ import { AbsoluteFilePath, join, RelativeFilePath, resolve } from "@fern-api/fs-
 import { cloneRepositoryAtRef, resolveRepositorySubpath } from "@fern-api/github";
 import { CliError, type TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
+import { createHash } from "crypto";
 
 import { generateCpp } from "./CppDocsGenerator.js";
 import { type LocalParserConfig, runLocalParser } from "./LocalParserRunner.js";
