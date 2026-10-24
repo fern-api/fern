@@ -28,6 +28,23 @@ describe("runLocalParser", () => {
         vi.clearAllMocks();
     });
 
+    it("forwards logFilePath so parser logs outlive the temp output dir cleanup", async () => {
+        (runContainer as Mock).mockImplementation(async ({ binds }: { binds: string[] }) => {
+            const outputDir = bindFor(binds, ":/output");
+            await writeFile(join(outputDir, "ir.json"), JSON.stringify({ ir: {}, metadata: {} }));
+        });
+
+        await runLocalParser({
+            context: makeContext(),
+            sourcePath: AbsoluteFilePath.of("/tmp/src"),
+            language: "CPP",
+            config: { logFilePath: "/tmp/fern/library-docs-logs/doca.log" }
+        });
+
+        const call = (runContainer as Mock).mock.calls[0]?.[0];
+        expect(call.logFilePath).toBe("/tmp/fern/library-docs-logs/doca.log");
+    });
+
     afterEach(() => {
         delete process.env.FERN_PYTHON_PARSER_IMAGE;
         delete process.env.FERN_CPP_PARSER_IMAGE;

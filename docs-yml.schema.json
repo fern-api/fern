@@ -687,6 +687,13 @@
       ],
       "description": "The programming language of the library source code."
     },
+    "docs.LibrarySlugStyle": {
+      "type": "string",
+      "enum": [
+        "compact",
+        "hyphenated"
+      ]
+    },
     "docs.LibraryConfig": {
       "type": "object",
       "properties": {
@@ -711,6 +718,17 @@
             }
           ],
           "description": "Also generate pages for `#define`s that have no Doxygen comment.\nBy default only documented macros are rendered. Include guards are never\nemitted (Doxygen drops them). Only valid when lang is cpp."
+        },
+        "slug-style": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.LibrarySlugStyle"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "How symbol names become page URLs. `compact` (default) drops underscores; `hyphenated` keeps word boundaries. Only valid when lang is cpp."
         }
       },
       "additionalProperties": false,

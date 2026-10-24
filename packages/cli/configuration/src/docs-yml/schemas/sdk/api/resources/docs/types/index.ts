@@ -92,6 +92,7 @@ export * from "./Language.js";
 export * from "./LanguageSwitcherThemeConfig.js";
 export * from "./LayoutConfig.js";
 export * from "./LibraryConfig.js";
+export * from "./LibrarySlugStyle.js";
 export * from "./LibraryConfiguration.js";
 export * from "./LibraryInputConfiguration.js";
 export * from "./LibraryLanguage.js";

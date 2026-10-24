@@ -102,6 +102,12 @@ export async function validateMdxFiles({
     for (const filepath of filesToCheck) {
         const content = readFileSync(filepath, "utf-8");
 
+        const frontmatterError = getFrontmatterError(content);
+        if (frontmatterError != null) {
+            errors.push(new MdxValidationError(filepath, `Invalid frontmatter: ${frontmatterError}`, 1));
+            continue;
+        }
+
         try {
             parseMarkdownToTree(content);
         } catch (error) {
@@ -156,6 +162,21 @@ export async function validateMdxFiles({
     }
 
     return { errors, totalFiles: filesToCheck.length };
+}
+
+/**
+ * Returns the YAML parse error for a page's frontmatter, if any. Fern falls back to an
+ * empty frontmatter when the YAML is malformed, which silently drops `title`/`description`
+ * (and can take the whole site down when the block is read as page content), so the
+ * check must fail loudly instead.
+ */
+export function getFrontmatterError(content: string): string | undefined {
+    try {
+        grayMatter(content);
+        return undefined;
+    } catch (error) {
+        return errorMessageOrString(error);
+    }
 }
 
 export function logMdxValidationResults({
