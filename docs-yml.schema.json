@@ -728,7 +728,7 @@
               "type": "null"
             }
           ],
-          "description": "How symbol names become page URLs. `compact` (default) drops underscores; `hyphenated` keeps word boundaries. Only valid when lang is cpp."
+          "description": "How symbol names become page URLs. `compact` (default) drops underscores\n(`doca_pcc_dev_get_port_counter_id` -> `docapccdevgetportcounterid`);\n`hyphenated` keeps word boundaries (`doca-pcc-dev-get-port-counter-id`).\nChanging this renames every generated page. Only valid when lang is cpp."
         }
       },
       "additionalProperties": false,

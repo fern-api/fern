@@ -4,8 +4,10 @@ import type * as FernDocsConfig from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
-export const LibrarySlugStyle: core.serialization.Schema<serializers.LibrarySlugStyle.Raw, FernDocsConfig.LibrarySlugStyle> =
-    core.serialization.enum_(["compact", "hyphenated"]);
+export const LibrarySlugStyle: core.serialization.Schema<
+    serializers.LibrarySlugStyle.Raw,
+    FernDocsConfig.LibrarySlugStyle
+> = core.serialization.enum_(["compact", "hyphenated"]);
 
 export declare namespace LibrarySlugStyle {
     export type Raw = "compact" | "hyphenated";
