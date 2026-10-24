@@ -17,6 +17,22 @@ public class QueryStringMapper {
     public static void addQueryParameter(HttpUrl.Builder httpUrl, String key, Object value, boolean arraysAsRepeats) {
         JsonNode valueNode = MAPPER.valueToTree(value);
 
+        // A map query parameter is exploded: every entry becomes its own parameter, keyed by
+        // the property name alone, and only nested levels stay bracketed. A declared object
+        // keeps the parameter name, so only the dynamic case changes.
+        if (value instanceof Map && valueNode.isObject()) {
+            Iterator<Map.Entry<String, JsonNode>> fields = valueNode.fields();
+            while (fields.hasNext()) {
+                Map.Entry<String, JsonNode> field = fields.next();
+                addQueryParameterNode(httpUrl, field.getKey(), field.getValue(), arraysAsRepeats);
+            }
+            return;
+        }
+        addQueryParameterNode(httpUrl, key, valueNode, arraysAsRepeats);
+    }
+
+    private static void addQueryParameterNode(
+            HttpUrl.Builder httpUrl, String key, JsonNode valueNode, boolean arraysAsRepeats) {
         List<Map.Entry<String, JsonNode>> flat;
         if (valueNode.isObject()) {
             flat = flattenObject((ObjectNode) valueNode, arraysAsRepeats);
