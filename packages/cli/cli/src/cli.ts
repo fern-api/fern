@@ -2238,6 +2238,12 @@ function addDocsMdGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCo
                     boolean: true,
                     hidden: true,
                     description: "Deprecated: local generation is the default"
+                })
+                .option("keep-logs", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Keep the parser logs under <fern folder>/.fern/library-docs-logs/<library>.log instead of a temporary file"
                 }),
         async (argv) => {
             cliContext.instrumentPostHogEvent({
@@ -2253,7 +2259,8 @@ function addDocsMdGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCo
                 project,
                 cliContext,
                 library: argv.library,
-                local: !argv.remote
+                local: !argv.remote,
+                keepLogs: argv.keepLogs
             });
         }
     );
