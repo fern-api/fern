@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    With `noSerdeLayer: false`, the serialization `Raw` type of an undiscriminated union with a
+    self-recursive map member (e.g. `map<string, JsonLike>`) now uses an index signature instead of
+    `Record<string, JsonLike.Raw>`, which TypeScript rejected as a circular type alias (TS2456).
+  type: fix
