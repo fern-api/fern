@@ -8,6 +8,7 @@ import { toJson } from "../../../../core/json.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import * as serializers from "../../../../serialization/index.js";
+import { MyObject } from "../../../../serialization/resources/service/types/MyObject.js";
 import type * as SeedFileUpload from "../../../index.js";
 
 export declare namespace ServiceClient {
@@ -403,9 +404,20 @@ export class ServiceClient {
         const _body = await core.newFormData();
         await _body.appendFile("file", request.file);
         _body.append("foo", request.foo);
-        _body.append("bar", toJson(request.bar));
+        _body.append(
+            "bar",
+            toJson(MyObject.jsonOrThrow(request.bar, { unrecognizedObjectKeys: "strip", omitUndefined: true })),
+        );
         if (request.fooBar != null) {
-            _body.append("foo_bar", toJson(request.fooBar));
+            _body.append(
+                "foo_bar",
+                toJson(
+                    MyObject.optional().jsonOrThrow(request.fooBar, {
+                        unrecognizedObjectKeys: "strip",
+                        omitUndefined: true,
+                    }),
+                ),
+            );
         }
 
         const _maybeEncodedRequest = await _body.getRequest();
@@ -932,7 +944,10 @@ export class ServiceClient {
             await _body.appendFile("image_file", request.imageFile);
         }
 
-        _body.append("request", toJson(request.request));
+        _body.append(
+            "request",
+            toJson(MyObject.jsonOrThrow(request.request, { unrecognizedObjectKeys: "strip", omitUndefined: true })),
+        );
         const _maybeEncodedRequest = await _body.getRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
