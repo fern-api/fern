@@ -1,5 +1,6 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import {
+    convertRecordToIndexSignature,
     GetReferenceOpts,
     generateInlineAliasModule,
     getTextOfTsNode,
@@ -52,7 +53,11 @@ export class GeneratedAliasTypeImpl<Context extends BaseContext>
         const typeAlias: TypeAliasDeclarationStructure = {
             kind: StructureKind.TypeAlias,
             name: this.typeName,
-            type: getTextOfTsNode(context.type.getReferenceToInlineAliasType(this.shape, this.typeName).typeNode),
+            type: getTextOfTsNode(
+                convertRecordToIndexSignature(
+                    context.type.getReferenceToInlineAliasType(this.shape, this.typeName).typeNode
+                )
+            ),
             isExported: true
         };
         maybeAddDocsStructure(typeAlias, this.getDocs({ context }));
