@@ -187,6 +187,22 @@ describe("fern init", () => {
         expect(result.exitCode).not.toBe(0);
     }, 180_000);
 
+    it.concurrent("fails fast without --organization when stdin is not a TTY", async ({ expect, signal }) => {
+        const tmpDir = await tmp.dir();
+        const result = await runFernCli(["init"], {
+            cwd: AbsoluteFilePath.of(tmpDir.path),
+            reject: false,
+            timeout: 60_000,
+            signal
+        });
+        expect(result.timedOut).toBe(false);
+        expect(result.exitCode).not.toBe(0);
+        expect(result.stderr + result.stdout).toContain("--organization is required in non-interactive mode");
+        expect(await doesPathExist(join(AbsoluteFilePath.of(tmpDir.path), RelativeFilePath.of(FERN_DIRECTORY)))).toBe(
+            false
+        );
+    }, 180_000);
+
     it.concurrent("init docs", async ({ expect, signal }) => {
         const pathOfDirectory = await init({
             additionalArgs: [{ name: "--fern-definition" }],

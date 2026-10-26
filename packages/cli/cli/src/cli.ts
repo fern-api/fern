@@ -442,7 +442,11 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 if (projectConfig != null) {
                     argv.organization = projectConfig;
                 } else {
-                    argv.organization = await cliContext.getInput({ message: "Please enter your organization" });
+                    argv.organization = await cliContext.getInput({
+                        message: "Please enter your organization",
+                        nonInteractiveError:
+                            "--organization is required in non-interactive mode (stdin is not a TTY or CI is set). Example: fern init --organization acme"
+                    });
                 }
             }
             if (argv.api != null && argv.docs != null) {
