@@ -177,6 +177,9 @@ export abstract class AbstractConverterContext<Spec extends object> {
     private static getPropertyNameIndices(breadcrumbs: string[]): Set<number> {
         const propertyNameIndices = new Set<number>();
         for (const [index, crumb] of breadcrumbs.entries()) {
+            // Skipping crumbs already claimed as a property name is what keeps the alternation
+            // right across a consecutive run: in ["properties", "properties", "properties", "foo"]
+            // the second crumb is a name, so only the third introduces `foo`.
             if (crumb === "properties" && !propertyNameIndices.has(index) && index + 1 < breadcrumbs.length) {
                 propertyNameIndices.add(index + 1);
             }

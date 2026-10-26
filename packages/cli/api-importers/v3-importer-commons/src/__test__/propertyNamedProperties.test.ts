@@ -113,6 +113,18 @@ describe("a property whose name collides with a structural breadcrumb", () => {
         );
     });
 
+    // An object whose `properties` property is itself an object with a `properties`
+    // property gives four consecutive crumbs, and only every other one is structural.
+    it("keeps the right alternation when the crumbs run consecutively", () => {
+        const context = createContext();
+        expect(context.convertBreadcrumbsToName(["X", "properties", "properties", "properties", "foo"])).toBe(
+            "XPropertiesFoo"
+        );
+        expect(context.convertBreadcrumbsToName(["X", "properties", "properties", "properties", "properties"])).toBe(
+            "XPropertiesProperties"
+        );
+    });
+
     it("still filters the structural crumbs around it", () => {
         const context = createContext();
         expect(context.convertBreadcrumbsToName(breadcrumbsToExtractionConfigSchema)).toBe(
@@ -136,7 +148,10 @@ describe("a property whose name collides with a structural breadcrumb", () => {
         const property =
             shape?.type === "object" ? shape.properties.find((p) => getWireValue(p.name) === "properties") : undefined;
         expect(property).toBeDefined();
-        expect(property?.valueType.type === "named" && property.valueType.typeId).not.toBe(id);
+        expect(property?.valueType.type).toBe("named");
+        if (property?.valueType.type === "named") {
+            expect(property.valueType.typeId).not.toBe(id);
+        }
         expect(Object.keys(output?.inlinedTypes ?? {})).not.toContain(id);
     });
 });
