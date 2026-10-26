@@ -2,7 +2,9 @@ import { FernVenusApiClient } from "@fern-api/venus-api-sdk";
 
 import { getCodingAgentHeaders } from "../codingAgent.js";
 
-// The generated BearerAuthProvider skips the header when its supplier yields nothing.
+// `BearerAuthProvider.getAuthRequest` in @fern-api/venus-api-sdk returns no headers when its token supplier
+// yields null/undefined; a plain `undefined` is rejected at construction, hence the supplier. Pinned by
+// __test__/venus.test.ts.
 const NO_TOKEN = (): string => undefined as unknown as string;
 
 export function createVenusService({

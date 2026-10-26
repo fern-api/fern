@@ -248,9 +248,8 @@ export async function generateAPIWorkspaces({
                       .map(({ name }) => name)
               });
 
-        if (guest) {
-            // Credential and organization already come from the guest session.
-        } else if (!useLocalDocker) {
+        // As a guest, the credential and organization already come from the guest session.
+        if (!guest && !useLocalDocker) {
             const currentToken = await cliContext.runTask(async (context) => {
                 return askToLogin(context, { suggestGuest: true });
             });
@@ -264,7 +263,7 @@ export async function generateAPIWorkspaces({
                 });
             }
             token = currentToken;
-        } else {
+        } else if (!guest) {
             // Local generation must stay non-interactive: silently pick up an existing
             // token (FERN_TOKEN env var or saved login file) so Venus calls are
             // authenticated when possible, and leave `token` undefined otherwise.

@@ -20,7 +20,8 @@ export type CreateGuestSession = (
 
 /**
  * Returns the guest session recorded for this repo (`fern/.guest-session` -> `~/.fern/guest-sessions/<id>.json`)
- * while it is still live, otherwise mints a new one from Venus and records it. Policy (limits, kill switch,
+ * while it is still live and was issued by the Venus the CLI is talking to now, otherwise mints a new one from
+ * Venus and records it. Policy (limits, kill switch,
  * expiry) is the server's; this only keeps the credential.
  */
 export async function getOrCreateGuestSession({
@@ -37,7 +38,7 @@ export async function getOrCreateGuestSession({
     now?: Date;
 }): Promise<{ token: FernGuestToken; reused: boolean }> {
     const stored = await readStoredGuestSession({ absolutePathToFernDirectory });
-    if (stored != null && isGuestSessionLive(stored, now)) {
+    if (stored != null && stored.venusOrigin === getVenusOrigin() && isGuestSessionLive(stored, now)) {
         return { token: toGuestToken(stored), reused: true };
     }
 
