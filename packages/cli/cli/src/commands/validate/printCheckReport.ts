@@ -2,6 +2,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { ValidationViolation } from "@fern-api/fern-definition-validator";
 import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
+import { SystemValidationResult } from "./checkNodeVersion.js";
 
 export interface ApiValidationResult {
     apiName: string;
@@ -15,6 +16,7 @@ export interface DocsValidationResult {
 }
 
 export interface CheckReportInput {
+    systemResult?: SystemValidationResult;
     apiResults: ApiValidationResult[];
     docsResult: DocsValidationResult | undefined;
     logWarnings: boolean;
@@ -26,11 +28,24 @@ interface ViolationStats {
     numWarnings: number;
 }
 
-export function printCheckReport({ apiResults, docsResult, logWarnings, context }: CheckReportInput): {
+export function printCheckReport({ systemResult, apiResults, docsResult, logWarnings, context }: CheckReportInput): {
     hasErrors: boolean;
 } {
     const startTime = performance.now();
     let hasErrors = false;
+
+    if (systemResult != null) {
+        const systemStats = getViolationStats(systemResult.violations);
+        if (systemStats.numErrors > 0 || (logWarnings && systemStats.numWarnings > 0)) {
+            hasErrors = hasErrors || systemStats.numErrors > 0;
+            printSystemSection({
+                violations: systemResult.violations,
+                stats: systemStats,
+                logWarnings,
+                context
+            });
+        }
+    }
 
     // Print SDK section if there are any API results with violations
     const apiResultsWithViolations = apiResults.filter((result) => {
@@ -87,7 +102,11 @@ export function printCheckReport({ apiResults, docsResult, logWarnings, context 
 
     // Print summary
     const totalElapsedMillis = performance.now() - startTime;
-    const allViolations = [...apiResults.map((r) => r.violations).flat(), ...(docsResult?.violations ?? [])];
+    const allViolations = [
+        ...(systemResult?.violations ?? []),
+        ...apiResults.map((r) => r.violations).flat(),
+        ...(docsResult?.violations ?? [])
+    ];
     const totalStats = getViolationStats(allViolations);
 
     printSummary({
@@ -98,6 +117,28 @@ export function printCheckReport({ apiResults, docsResult, logWarnings, context 
     });
 
     return { hasErrors };
+}
+
+function printSystemSection({
+    violations,
+    stats,
+    logWarnings,
+    context
+}: {
+    violations: ValidationViolation[];
+    stats: ViolationStats;
+    logWarnings: boolean;
+    context: TaskContext;
+}): void {
+    const statsStr = formatStats(stats, logWarnings);
+    context.logger.info(chalk.yellow(chalk.bold(`[system]`)) + ` ${statsStr}`);
+
+    printViolationsByType({
+        violations,
+        logWarnings,
+        context,
+        indent: "    "
+    });
 }
 
 function printSdkSectionFlat({

@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern check` now validates the Node.js version running the CLI and fails with a `[system]` error
+    (rule `supported-node-version`) when it is outside the supported range (20.x-24.x). The error is
+    also reported under `results.system` in `fern check --json`.
+  type: feat
