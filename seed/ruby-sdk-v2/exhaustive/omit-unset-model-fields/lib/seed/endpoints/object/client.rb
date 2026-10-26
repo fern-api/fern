@@ -413,11 +413,13 @@ module Seed
         # @return [Hash[String, Object]]
         def get_and_return_map_of_documented_unknown_type(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
+          body_value = params.key?(:request) || params.empty? ? params[:request] : params
+
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
             path: "/object/get-and-return-map-of-documented-unknown-type",
-            body: params[:request],
+            body: body_value,
             request_options: request_options
           )
           begin
