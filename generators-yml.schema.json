@@ -4905,17 +4905,6 @@
             }
           ]
         },
-        "auto-merge": {
-          "oneOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "Enable GitHub auto-merge (squash) on the pull request opened by Fern. Defaults to false. Auto-merge is skipped when the release contains breaking changes (MAJOR bump), and the repository must allow auto-merge for GitHub to accept it. Only applies when `mode` is `pull-request`."
-        },
         "workflows": {
           "oneOf": [
             {
@@ -4926,6 +4915,17 @@
             }
           ],
           "description": "Whether generated `.github/workflows/*` files are committed. Defaults to true. When false, existing workflow files are left untouched and newly generated ones are skipped."
+        },
+        "auto-merge": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Enable GitHub auto-merge (squash) on the pull request opened by Fern. Defaults to false. Auto-merge is skipped when the release contains breaking changes (MAJOR bump), and the repository must allow auto-merge for GitHub to accept it. Only applies when `mode` is `pull-request`."
         }
       },
       "required": [
@@ -5078,17 +5078,6 @@
             }
           ]
         },
-        "auto-merge": {
-          "oneOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "Enable GitHub auto-merge (squash) on the pull request opened by Fern. Defaults to false. Auto-merge is skipped when the release contains breaking changes (MAJOR bump), and the repository must allow auto-merge for GitHub to accept it."
-        },
         "workflows": {
           "oneOf": [
             {
@@ -5099,6 +5088,17 @@
             }
           ],
           "description": "Whether generated `.github/workflows/*` files are committed. Defaults to true. When false, existing workflow files are left untouched and newly generated ones are skipped."
+        },
+        "auto-merge": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Enable GitHub auto-merge (squash) on the pull request opened by Fern. Defaults to false. Auto-merge is skipped when the release contains breaking changes (MAJOR bump), and the repository must allow auto-merge for GitHub to accept it."
         }
       },
       "required": [
