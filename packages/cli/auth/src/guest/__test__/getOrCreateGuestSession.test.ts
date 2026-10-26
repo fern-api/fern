@@ -1,4 +1,4 @@
-import { mkdir, mkdtemp, readFile, rm, stat, writeFile } from "node:fs/promises";
+import { chmod, mkdir, mkdtemp, readFile, rm, stat, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
@@ -90,6 +90,23 @@ describe("getOrCreateGuestSession", () => {
         });
     });
 
+    it("tightens the permissions of a session file that already exists", async () => {
+        const sessionFile = getPathToGuestSessionFile("gs_123");
+        await mkdir(path.dirname(sessionFile), { recursive: true });
+        await writeFile(sessionFile, "{}");
+        await chmod(sessionFile, 0o644);
+
+        await getOrCreateGuestSession({
+            absolutePathToFernDirectory: fernDirectory,
+            cliVersion: "1.2.3",
+            context: createMockTaskContext(),
+            createGuestSession: vi.fn().mockResolvedValue(venusResponse()),
+            now: NOW
+        });
+
+        expect((await stat(sessionFile)).mode & 0o777).toBe(0o600);
+    });
+
     it("appends to an existing .gitignore without duplicating the entry", async () => {
         await writeFile(path.join(fernDirectory, ".gitignore"), "**/.preview\n**/.definition");
         const createGuestSession = vi.fn().mockResolvedValue(venusResponse());
@@ -147,6 +164,30 @@ describe("getOrCreateGuestSession", () => {
         expect(later.token.sessionId).toBe("gs_new");
         const pointer = await readFile(path.join(fernDirectory, GUEST_SESSION_POINTER_FILENAME), "utf-8");
         expect(pointer.trim()).toBe("gs_new");
+    });
+
+    it("does not reuse a session issued by a different Venus origin", async () => {
+        const createGuestSession = vi
+            .fn()
+            .mockResolvedValueOnce(venusResponse({ sessionId: "gs_local", organizationId: "guest-gs_local" }))
+            .mockResolvedValueOnce(venusResponse({ sessionId: "gs_prod", organizationId: "guest-gs_prod" }));
+        const args = {
+            absolutePathToFernDirectory: fernDirectory,
+            cliVersion: "1.2.3",
+            context: createMockTaskContext(),
+            createGuestSession,
+            now: NOW
+        };
+
+        vi.stubEnv("DEFAULT_VENUS_ORIGIN", "http://localhost:8089");
+        await getOrCreateGuestSession(args);
+        vi.stubEnv("DEFAULT_VENUS_ORIGIN", "https://venus.buildwithfern.com");
+        const onProd = await getOrCreateGuestSession(args);
+        vi.unstubAllEnvs();
+
+        expect(createGuestSession).toHaveBeenCalledTimes(2);
+        expect(onProd.reused).toBe(false);
+        expect(onProd.token.sessionId).toBe("gs_prod");
     });
 
     it("fails with an auth error when Venus refuses to issue a session", async () => {

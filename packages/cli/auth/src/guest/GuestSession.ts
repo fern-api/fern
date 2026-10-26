@@ -1,5 +1,5 @@
 import { AbsoluteFilePath, dirname, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { mkdir, readFile, writeFile } from "fs/promises";
+import { chmod, mkdir, readFile, writeFile } from "fs/promises";
 import { homedir } from "os";
 
 import { FernGuestToken } from "../FernToken.js";
@@ -66,9 +66,12 @@ export async function writeStoredGuestSession({
     const sessionPath = getPathToGuestSessionFile(session.sessionId);
     await mkdir(dirname(sessionPath), { recursive: true, mode: 0o700 });
     await writeFile(sessionPath, JSON.stringify(session, null, 2), { mode: 0o600 });
+    // `mode` only applies when the file is created; tighten a pre-existing file too.
+    await chmod(sessionPath, 0o600);
 
-    await writeFile(getPathToGuestSessionPointer(absolutePathToFernDirectory), `${session.sessionId}\n`);
+    // Ignore the pointer before it exists, so a failure here never leaves a committable file behind.
     await ensureGitignored({ absolutePathToFernDirectory });
+    await writeFile(getPathToGuestSessionPointer(absolutePathToFernDirectory), `${session.sessionId}\n`);
 }
 
 export function isGuestSessionLive(session: Pick<StoredGuestSession, "expiresAt">, now: Date = new Date()): boolean {
@@ -87,6 +90,10 @@ export function toGuestToken(session: StoredGuestSession): FernGuestToken {
     };
 }
 
+/**
+ * Best effort: appends the pointer to `fern/.gitignore` unless that file already lists it line-for-line. A rule in a
+ * parent .gitignore, or a negation, is not detected.
+ */
 async function ensureGitignored({
     absolutePathToFernDirectory
 }: {
