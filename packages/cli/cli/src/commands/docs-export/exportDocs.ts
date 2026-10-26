@@ -179,7 +179,7 @@ async function resolveHostedSource({
             replaceEnvVariables(
                 docsInstance.url,
                 { onError: (e) => context.failAndThrow(undefined, e, { code: CliError.Code.EnvironmentError }) },
-                { substituteAsEmpty: !docsWorkspace?.config.settings?.substituteEnvVars }
+                { substituteAsEmpty: false }
             )
         )
     );
