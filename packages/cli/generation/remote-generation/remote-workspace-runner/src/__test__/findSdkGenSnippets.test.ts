@@ -20,8 +20,8 @@ const query = {
     languages: ["typescript", "python"]
 };
 
-const page = (data: Array<{ language: string; snippetsUrl?: string }>, pages = 1) => ({
-    data: { data, count: data.length, pages }
+const page = (data: Array<{ language: string; snippetsUrl?: string }>) => ({
+    data: { data, count: data.length, pages: 1 }
 });
 
 describe("findSdkGenSnippetsUrls", () => {
@@ -39,7 +39,6 @@ describe("findSdkGenSnippetsUrls", () => {
         expect(parsed.searchParams.get("status")).toBe("SUCCESS");
         expect(parsed.searchParams.getAll("language")).toEqual(["typescript", "python"]);
         expect(parsed.searchParams.get("limit")).toBe("50");
-        expect(parsed.searchParams.get("offset")).toBe("0");
         expect(options).toMatchObject({
             headers: { Authorization: "Bearer secret-token", "X-Fern-Organization-Id": "acme" }
         });
@@ -68,34 +67,5 @@ describe("findSdkGenSnippetsUrls", () => {
         const urls = await findSdkGenSnippetsUrls({ ...query, languages: ["typescript"] });
 
         expect([...urls]).toEqual([["typescript", "https://s3/older-ts"]]);
-    });
-
-    it("reads the next page until every language has a link", async () => {
-        get.mockResolvedValueOnce(
-            page([{ language: "typescript", snippetsUrl: "https://s3/ts" }], 3)
-        ).mockResolvedValueOnce(page([{ language: "python", snippetsUrl: "https://s3/py" }], 3));
-
-        const urls = await findSdkGenSnippetsUrls(query);
-
-        expect(get).toHaveBeenCalledTimes(2);
-        expect(new URL(String(get.mock.calls[1]?.[0])).searchParams.get("offset")).toBe("50");
-        expect([...urls.keys()]).toEqual(["typescript", "python"]);
-    });
-
-    it("stops at the last page, and returns the languages it found", async () => {
-        get.mockResolvedValue(page([{ language: "typescript", snippetsUrl: "https://s3/ts" }], 1));
-
-        const urls = await findSdkGenSnippetsUrls(query);
-
-        expect(get).toHaveBeenCalledTimes(1);
-        expect([...urls.keys()]).toEqual(["typescript"]);
-    });
-
-    it("gives up after four pages", async () => {
-        get.mockResolvedValue(page([], 100));
-
-        await findSdkGenSnippetsUrls(query);
-
-        expect(get).toHaveBeenCalledTimes(4);
     });
 });

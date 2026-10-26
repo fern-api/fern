@@ -1,19 +1,11 @@
 import axios from "axios";
 
-/** The most the sdk-gen-api lists in one page. */
-const PAGE_SIZE = 50;
-/** The pages looked through, newest SDKs first, before giving up on a language. */
-const MAX_PAGES = 4;
+/** The most the sdk-gen-api lists in one page: the newest builds of the SDK, far more than its languages. */
+const LIMIT = 50;
 const REQUEST_TIMEOUT_MS = 60_000;
 
-interface ListedArtifact {
-    language: string;
-    snippetsUrl?: string;
-}
-
 interface ArtifactPage {
-    data: ListedArtifact[];
-    pages: number;
+    data: Array<{ language: string; snippetsUrl?: string }>;
 }
 
 export interface SdkGenSnippetsQuery {
@@ -40,30 +32,19 @@ export async function findSdkGenSnippetsUrls({
     version,
     languages
 }: SdkGenSnippetsQuery): Promise<Map<string, string>> {
-    const headers = { Authorization: `Bearer ${token}`, "X-Fern-Organization-Id": organization };
+    const query = new URLSearchParams({ sdkName, version, status: "SUCCESS", limit: String(LIMIT) });
+    for (const language of languages) {
+        query.append("language", language);
+    }
+    const { data: listed } = await axios.get<ArtifactPage>(`${origin}/v1/fern/artifacts?${query}`, {
+        headers: { Authorization: `Bearer ${token}`, "X-Fern-Organization-Id": organization },
+        timeout: REQUEST_TIMEOUT_MS
+    });
     const urls = new Map<string, string>();
-    for (let page = 0; page < MAX_PAGES; page++) {
-        const query = new URLSearchParams({
-            sdkName,
-            version,
-            status: "SUCCESS",
-            limit: String(PAGE_SIZE),
-            offset: String(page * PAGE_SIZE)
-        });
-        for (const language of languages) {
-            query.append("language", language);
-        }
-        const { data: listed } = await axios.get<ArtifactPage>(`${origin}/v1/fern/artifacts?${query}`, {
-            headers,
-            timeout: REQUEST_TIMEOUT_MS
-        });
-        for (const { language, snippetsUrl } of listed.data) {
-            if (snippetsUrl != null && !urls.has(language)) {
-                urls.set(language, snippetsUrl);
-            }
-        }
-        if (languages.every((language) => urls.has(language)) || page + 1 >= listed.pages) {
-            break;
+    for (const { language, snippetsUrl } of listed.data) {
+        // The newest build comes first, so a language keeps the first link it gets.
+        if (snippetsUrl != null && !urls.has(language)) {
+            urls.set(language, snippetsUrl);
         }
     }
     return urls;
