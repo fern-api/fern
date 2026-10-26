@@ -11,6 +11,6 @@ async fn main() {
     client
         .endpoints
         .primitive
-        .get_and_return_int(&1, None)
+        .get_and_return_string(&"string".to_string(), None)
         .await;
 }

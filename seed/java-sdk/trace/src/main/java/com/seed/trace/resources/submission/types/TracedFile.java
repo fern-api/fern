@@ -94,7 +94,6 @@ public final class TracedFile {
 
         private String directory;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -123,6 +122,14 @@ public final class TracedFile {
         @java.lang.Override
         public TracedFile build() {
             return new TracedFile(filename, directory, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("filename") || key.equalsIgnoreCase("directory")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

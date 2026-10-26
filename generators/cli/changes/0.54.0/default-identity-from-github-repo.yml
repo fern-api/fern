@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    GitHub-mode output now defaults the crate's `[package]` identity from the output repo, so the cargo-dist
+    shell and PowerShell installers download from the consumer's releases instead of 404ing against
+    `github.com/fern-api/cli-sdk`. Unless `packageIdentity` pins them, `repository` and `homepage` default to
+    the repo URL (previously only when Homebrew was configured) and `name` defaults to the binary name when it
+    is a valid crate name. Release assets and installers are therefore renamed from `fern-cli-sdk-*` to
+    `<binaryName>-*`; the README install commands, `Cargo.lock`, and the npm launcher's `homepage` follow the
+    same identity. Local-files and publish output are unchanged.
+  type: feat

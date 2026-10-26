@@ -87,7 +87,6 @@ public final class ModifyResourceAtInlinedPath {
   public static final class Builder implements BodyStage, _FinalStage {
     private String body;
 
-    @JsonAnySetter
     private Map<String, Object> additionalProperties = new HashMap<>();
 
     private Builder() {
@@ -109,6 +108,14 @@ public final class ModifyResourceAtInlinedPath {
     @java.lang.Override
     public ModifyResourceAtInlinedPath build() {
       return new ModifyResourceAtInlinedPath(body, additionalProperties);
+    }
+
+    @JsonAnySetter
+    private void putAdditionalPropertyFromJson(String key, Object value) {
+      if (key.equalsIgnoreCase("body")) {
+        return;
+      }
+      this.additionalProperties.put(key, value);
     }
 
     @java.lang.Override

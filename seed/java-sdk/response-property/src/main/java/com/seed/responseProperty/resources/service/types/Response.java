@@ -115,7 +115,6 @@ public final class Response implements IWithMetadata, IWithDocs {
 
         private Map<String, String> metadata = new LinkedHashMap<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -169,6 +168,14 @@ public final class Response implements IWithMetadata, IWithDocs {
         @java.lang.Override
         public Response build() {
             return new Response(metadata, docs, data, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("metadata") || key.equalsIgnoreCase("docs") || key.equalsIgnoreCase("data")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

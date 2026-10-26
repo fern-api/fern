@@ -79,7 +79,6 @@ public final class UpdateProblemResponse {
     public static final class Builder implements ProblemVersionStage, _FinalStage {
         private int problemVersion;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -100,6 +99,14 @@ public final class UpdateProblemResponse {
         @java.lang.Override
         public UpdateProblemResponse build() {
             return new UpdateProblemResponse(problemVersion, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("problemVersion")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

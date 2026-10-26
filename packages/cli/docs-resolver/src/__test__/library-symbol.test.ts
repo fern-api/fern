@@ -14,6 +14,7 @@ function refVersion(version: string, ref: string): docsYml.VersionInfo {
     return {
         landingPage: undefined,
         version,
+        default: undefined,
         navigation: { type: "untabbed", items: [] },
         availability: undefined,
         slug: undefined,

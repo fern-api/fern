@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "../../../../seed"
+
 module Seed
   module Types
     module Union
@@ -7,7 +9,7 @@ module Seed
         class MixedType < Internal::Types::Model
           extend Seed::Internal::Types::Union
 
-          member -> { Integer }
+          member -> { Float }
 
           member -> { Internal::Types::Boolean }
 

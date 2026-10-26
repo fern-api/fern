@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "../../seed"
+
 module Seed
   module Types
     # <Say> TwiML Verb
@@ -31,10 +33,13 @@ module Seed
       # @param attributes [Hash] attribute values keyed by field name; unknown keys become extra attributes
       # @option attributes [Seed::Types::BreakStrength, nil] :strength Set a pause based on strength
       # @option attributes [String, nil] :time Set a pause to a specific length of time in seconds or milliseconds
+      # @yieldparam child [Break] the new element, for nesting children inline
       # @return [Break]
       def break_(**attributes)
         child = Seed::Types::Break.new(**attributes)
         self.children = [*children, child]
+        record_content(child)
+        yield child if block_given?
         child
       end
     end

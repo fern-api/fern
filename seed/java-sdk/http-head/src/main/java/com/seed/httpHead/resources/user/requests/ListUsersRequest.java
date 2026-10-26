@@ -79,7 +79,6 @@ public final class ListUsersRequest {
     public static final class Builder implements LimitStage, _FinalStage {
         private int limit;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -100,6 +99,14 @@ public final class ListUsersRequest {
         @java.lang.Override
         public ListUsersRequest build() {
             return new ListUsersRequest(limit, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("limit")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

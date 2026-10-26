@@ -4,8 +4,10 @@
 package com.seed._enum.resources.pathparam;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed._enum.core.BodyProperties;
 import com.seed._enum.core.ClientOptions;
 import com.seed._enum.core.ObjectMappers;
+import com.seed._enum.core.PathSegments;
 import com.seed._enum.core.RequestOptions;
 import com.seed._enum.core.RetryInterceptor;
 import com.seed._enum.core.SeedEnumApiException;
@@ -38,8 +40,8 @@ public class RawPathParamClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("path")
-                .addPathSegment(operand.toString())
-                .addPathSegment(operandOrColor.toString());
+                .addPathSegment(PathSegments.validate(operand.toString()))
+                .addPathSegment(PathSegments.validate(operandOrColor.toString()));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -47,7 +49,11 @@ public class RawPathParamClient {
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
-                .method("POST", RequestBody.create("", null))
+                .method(
+                        "POST",
+                        BodyProperties.toRequestBody(
+                                requestOptions != null ? requestOptions.getBodyProperties() : null,
+                                RequestBody.create("", null)))
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .build();
         OkHttpClient client = clientOptions.httpClient();

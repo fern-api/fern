@@ -15,7 +15,7 @@ final class XmlElement implements XmlNode
     public array $attributes;
 
     /**
-     * @var list<XmlNode> Child elements in document order.
+     * @var list<XmlNode|XmlText|XmlComment> Child elements, text segments and comments in document order.
      */
     public array $children;
 
@@ -28,7 +28,7 @@ final class XmlElement implements XmlNode
      * @param string $name Local element name.
      * @param ?string $text Text content, if any.
      * @param array<string, string|int|float|bool|\BackedEnum|null> $attributes
-     * @param list<XmlNode> $children
+     * @param list<XmlNode|XmlText|XmlComment> $children
      * @param ?string $namespace Namespace URI, if any.
      * @param ?string $prefix Namespace prefix, if any.
      */
@@ -68,9 +68,27 @@ final class XmlElement implements XmlNode
         return $this->attributes[$name] ?? null;
     }
 
-    public function addChild(XmlNode $child): self
+    public function addChild(XmlNode|XmlText|XmlComment $child): self
     {
         $this->children[] = $child;
+        return $this;
+    }
+
+    /**
+     * Appends an XML comment (`<!--text-->`) after the children added so far.
+     */
+    public function addComment(string $text): self
+    {
+        $this->children[] = new XmlComment($text);
+        return $this;
+    }
+
+    /**
+     * Appends a text segment after the children added so far (for mixed content).
+     */
+    public function addText(string $text): self
+    {
+        $this->children[] = new XmlText($text);
         return $this;
     }
 
@@ -81,6 +99,9 @@ final class XmlElement implements XmlNode
     {
         $result = [];
         foreach ($this->children as $child) {
+            if ($child instanceof XmlText || $child instanceof XmlComment) {
+                continue;
+            }
             $element = $child instanceof XmlElement ? $child : $child->toXmlElement();
             if ($element->name === $name) {
                 $result[] = $element;

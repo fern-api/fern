@@ -6,31 +6,16 @@ import {
     loadProjectConfig
 } from "@fern-api/configuration-loader";
 import { Project } from "@fern-api/project-loader";
-import { isFernSdkGenApiEnabled } from "@fern-api/remote-workspace-runner";
 import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
 import { writeFile } from "fs/promises";
 
 import { CliContext } from "../../../cli-context/CliContext.js";
 import { loadProjectAndRegisterWorkspacesWithContext } from "../../../cliCommons.js";
+import { getChangelogUrl } from "../../../utils/getChangelogUrl.js";
 import { createSdkGenApiTokenProvider } from "../../upgrade/getSdkGenApiGeneratorVersions.js";
 import { upgrade } from "../../upgrade/upgrade.js";
 import { loadAndUpdateGenerators } from "../../upgrade/upgradeGenerator.js";
-
-const CHANGELOG_BASE = "https://buildwithfern.com/learn/sdks/generators";
-
-/**
- * Derives the changelog URL from a generator name.
- * Generator names follow the pattern "fernapi/fern-<language>-sdk[-variant]",
- * and changelog pages live at buildwithfern.com/learn/sdks/generators/<language>/changelog.
- */
-export function getChangelogUrl(generatorName: string): string | undefined {
-    const match = generatorName.match(/^fernapi\/fern-([a-z]+)/);
-    if (!match?.[1]) {
-        return undefined;
-    }
-    return `${CHANGELOG_BASE}/${match[1]}/changelog`;
-}
 
 export interface AutomationsUpgradeOptions {
     includeMajor: boolean;
@@ -209,7 +194,8 @@ async function upgradeGeneratorsForAllWorkspaces({
     const generators: GeneratorUpgradeEntry[] = [];
     const skippedMajor: SkippedMajorEntry[] = [];
     const alreadyUpToDate: AlreadyUpToDateEntry[] = [];
-    const getSdkGenApiToken = isFernSdkGenApiEnabled() ? createSdkGenApiTokenProvider(cliContext) : undefined;
+    // Lazy: only generators the `use-sdk-gen-api` flag routes through sdk-gen-api trigger a login.
+    const getSdkGenApiToken = createSdkGenApiTokenProvider(cliContext);
 
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
@@ -387,3 +373,5 @@ function buildPrSuggestion({
         commitMessage: buildCommitMessage({ cli, generators })
     };
 }
+
+export { getChangelogUrl };

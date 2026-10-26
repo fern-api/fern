@@ -1,11 +1,11 @@
 import { getDirectoryContentsForSnapshot } from "@fern-api/fs-utils";
 
 import { runFernCli } from "../../utils/runFernCli.js";
-import { init } from "../init/init.js";
+import { init, LEGACY_CONFIG_ENV } from "../init/init.js";
 
 describe("fern add", () => {
     it("fern add <generator>", async ({ signal }) => {
-        const pathOfDirectory = await init({ signal });
+        const pathOfDirectory = await init({ env: LEGACY_CONFIG_ENV, signal });
 
         const add = async (generator: string) => {
             await runFernCli(["add", generator], { cwd: pathOfDirectory, signal });
@@ -18,7 +18,7 @@ describe("fern add", () => {
     }, 180_000);
 
     it("fern add <generator> --group sdk", async ({ signal }) => {
-        const pathOfDirectory = await init({ signal });
+        const pathOfDirectory = await init({ env: LEGACY_CONFIG_ENV, signal });
 
         const add = async (generator: string, groupName: string) => {
             await runFernCli(["add", generator, "--group", groupName], { cwd: pathOfDirectory, signal });

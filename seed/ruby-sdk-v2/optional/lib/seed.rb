@@ -3,6 +3,7 @@
 require "json"
 require "net/http"
 require "securerandom"
+require "time"
 
 require_relative "seed/internal/json/serializable"
 require_relative "seed/internal/types/type"
@@ -35,8 +36,16 @@ require_relative "seed/internal/iterators/cursor_item_iterator"
 require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
-require_relative "seed/optional/types/send_optional_body_request"
-require_relative "seed/optional/types/deploy_params"
-require_relative "seed/optional/types/deploy_response"
+require_relative "seed/errors/connection_error"
 require_relative "seed/client"
 require_relative "seed/optional/client"
+
+module Seed
+  module Optional
+    module Types
+      autoload :SendOptionalBodyRequest, ::File.join(__dir__, "seed/optional/types/send_optional_body_request")
+      autoload :DeployParams, ::File.join(__dir__, "seed/optional/types/deploy_params")
+      autoload :DeployResponse, ::File.join(__dir__, "seed/optional/types/deploy_response")
+    end
+  end
+end

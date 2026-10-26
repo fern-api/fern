@@ -8,8 +8,10 @@ enum Example7 {
             token: "<token>"
         )
 
-        _ = try await client.endpoints.container.getAndReturnOptional(request: ObjectWithRequiredField(
-            string: "string"
-        ))
+        _ = try await client.endpoints.container.getAndReturnMapOfIntegerToObject(request: [
+            1: ObjectWithRequiredField(
+                string: "string"
+            )
+        ])
     }
 }

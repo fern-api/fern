@@ -80,7 +80,6 @@ public final class ReceiveEvent3 {
     public static final class Builder implements ReceiveText3Stage, _FinalStage {
         private String receiveText3;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -101,6 +100,14 @@ public final class ReceiveEvent3 {
         @java.lang.Override
         public ReceiveEvent3 build() {
             return new ReceiveEvent3(receiveText3, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("receiveText3")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

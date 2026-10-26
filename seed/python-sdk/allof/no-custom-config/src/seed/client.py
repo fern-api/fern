@@ -249,14 +249,14 @@ class SeedApi:
     def create_plant(
         self,
         *,
+        common_name: str,
+        watering_frequency: PlantBaseWateringFrequency,
         sun_exposure: PlantPostSunExposure,
         species: str,
         family: str,
         genus: str,
         planted_at: typing.Optional[dt.date] = OMIT,
         soil_type: typing.Optional[str] = OMIT,
-        common_name: typing.Optional[str] = OMIT,
-        watering_frequency: typing.Optional[PlantBaseWateringFrequency] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PlantStrict:
         """
@@ -264,6 +264,11 @@ class SeedApi:
 
         Parameters
         ----------
+        common_name : str
+            The common name of the plant.
+
+        watering_frequency : PlantBaseWateringFrequency
+
         sun_exposure : PlantPostSunExposure
             Required sun exposure level.
 
@@ -282,11 +287,6 @@ class SeedApi:
         soil_type : typing.Optional[str]
             Preferred soil type.
 
-        common_name : typing.Optional[str]
-            The common name of the plant.
-
-        watering_frequency : typing.Optional[PlantBaseWateringFrequency]
-
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -304,18 +304,20 @@ class SeedApi:
             species="species",
             family="family",
             genus="genus",
+            common_name="commonName",
+            watering_frequency="daily",
             sun_exposure="full",
         )
         """
         _response = self._raw_client.create_plant(
+            common_name=common_name,
+            watering_frequency=watering_frequency,
             sun_exposure=sun_exposure,
             species=species,
             family=family,
             genus=genus,
             planted_at=planted_at,
             soil_type=soil_type,
-            common_name=common_name,
-            watering_frequency=watering_frequency,
             request_options=request_options,
         )
         return _response.data
@@ -323,11 +325,11 @@ class SeedApi:
     def create_tree(
         self,
         *,
+        tree_name: str,
+        tree_species: str,
         id: str,
         planted_date: typing.Optional[dt.date] = OMIT,
-        tree_species: typing.Optional[str] = OMIT,
         height_in_feet: typing.Optional[float] = OMIT,
-        tree_name: typing.Optional[str] = OMIT,
         tree_description: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TreeRecord:
@@ -336,20 +338,20 @@ class SeedApi:
 
         Parameters
         ----------
+        tree_name : str
+            Display name of the tree.
+
+        tree_species : str
+            The species of tree.
+
         id : str
             Unique tree identifier.
 
         planted_date : typing.Optional[dt.date]
             Date the tree was planted.
 
-        tree_species : typing.Optional[str]
-            The species of tree.
-
         height_in_feet : typing.Optional[float]
             Height of the tree in feet.
-
-        tree_name : typing.Optional[str]
-            Display name of the tree.
 
         tree_description : typing.Optional[str]
             A description of the tree.
@@ -368,15 +370,17 @@ class SeedApi:
 
         client = SeedApi()
         client.create_tree(
+            tree_name="treeName",
             id="id",
+            tree_species="treeSpecies",
         )
         """
         _response = self._raw_client.create_tree(
+            tree_name=tree_name,
+            tree_species=tree_species,
             id=id,
             planted_date=planted_date,
-            tree_species=tree_species,
             height_in_feet=height_in_feet,
-            tree_name=tree_name,
             tree_description=tree_description,
             request_options=request_options,
         )
@@ -664,14 +668,14 @@ class AsyncSeedApi:
     async def create_plant(
         self,
         *,
+        common_name: str,
+        watering_frequency: PlantBaseWateringFrequency,
         sun_exposure: PlantPostSunExposure,
         species: str,
         family: str,
         genus: str,
         planted_at: typing.Optional[dt.date] = OMIT,
         soil_type: typing.Optional[str] = OMIT,
-        common_name: typing.Optional[str] = OMIT,
-        watering_frequency: typing.Optional[PlantBaseWateringFrequency] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> PlantStrict:
         """
@@ -679,6 +683,11 @@ class AsyncSeedApi:
 
         Parameters
         ----------
+        common_name : str
+            The common name of the plant.
+
+        watering_frequency : PlantBaseWateringFrequency
+
         sun_exposure : PlantPostSunExposure
             Required sun exposure level.
 
@@ -696,11 +705,6 @@ class AsyncSeedApi:
 
         soil_type : typing.Optional[str]
             Preferred soil type.
-
-        common_name : typing.Optional[str]
-            The common name of the plant.
-
-        watering_frequency : typing.Optional[PlantBaseWateringFrequency]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -724,6 +728,8 @@ class AsyncSeedApi:
                 species="species",
                 family="family",
                 genus="genus",
+                common_name="commonName",
+                watering_frequency="daily",
                 sun_exposure="full",
             )
 
@@ -731,14 +737,14 @@ class AsyncSeedApi:
         asyncio.run(main())
         """
         _response = await self._raw_client.create_plant(
+            common_name=common_name,
+            watering_frequency=watering_frequency,
             sun_exposure=sun_exposure,
             species=species,
             family=family,
             genus=genus,
             planted_at=planted_at,
             soil_type=soil_type,
-            common_name=common_name,
-            watering_frequency=watering_frequency,
             request_options=request_options,
         )
         return _response.data
@@ -746,11 +752,11 @@ class AsyncSeedApi:
     async def create_tree(
         self,
         *,
+        tree_name: str,
+        tree_species: str,
         id: str,
         planted_date: typing.Optional[dt.date] = OMIT,
-        tree_species: typing.Optional[str] = OMIT,
         height_in_feet: typing.Optional[float] = OMIT,
-        tree_name: typing.Optional[str] = OMIT,
         tree_description: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> TreeRecord:
@@ -759,20 +765,20 @@ class AsyncSeedApi:
 
         Parameters
         ----------
+        tree_name : str
+            Display name of the tree.
+
+        tree_species : str
+            The species of tree.
+
         id : str
             Unique tree identifier.
 
         planted_date : typing.Optional[dt.date]
             Date the tree was planted.
 
-        tree_species : typing.Optional[str]
-            The species of tree.
-
         height_in_feet : typing.Optional[float]
             Height of the tree in feet.
-
-        tree_name : typing.Optional[str]
-            Display name of the tree.
 
         tree_description : typing.Optional[str]
             A description of the tree.
@@ -796,18 +802,20 @@ class AsyncSeedApi:
 
         async def main() -> None:
             await client.create_tree(
+                tree_name="treeName",
                 id="id",
+                tree_species="treeSpecies",
             )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.create_tree(
+            tree_name=tree_name,
+            tree_species=tree_species,
             id=id,
             planted_date=planted_date,
-            tree_species=tree_species,
             height_in_feet=height_in_feet,
-            tree_name=tree_name,
             tree_description=tree_description,
             request_options=request_options,
         )

@@ -4,9 +4,11 @@
 package com.seed.multiLineDocs.resources.user;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.multiLineDocs.core.BodyProperties;
 import com.seed.multiLineDocs.core.ClientOptions;
 import com.seed.multiLineDocs.core.MediaTypes;
 import com.seed.multiLineDocs.core.ObjectMappers;
+import com.seed.multiLineDocs.core.PathSegments;
 import com.seed.multiLineDocs.core.RequestOptions;
 import com.seed.multiLineDocs.core.RetryInterceptor;
 import com.seed.multiLineDocs.core.SeedMultiLineDocsApiException;
@@ -46,7 +48,7 @@ public class RawUserClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("users")
-                .addPathSegment(userId);
+                .addPathSegment(PathSegments.validate(userId));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -110,7 +112,9 @@ public class RawUserClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedMultiLineDocsException("Failed to serialize request", e);
         }

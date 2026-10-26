@@ -8,5 +8,5 @@ async fn main() {
         ..Default::default()
     };
     let client = PaginationUriPathClient::new(config).expect("Failed to build client");
-    client.users.list_with_path_pagination(None).await;
+    client.users.list_with_uri_pagination(None).await;
 }

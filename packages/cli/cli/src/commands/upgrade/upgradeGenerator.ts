@@ -17,6 +17,7 @@ import semver from "semver";
 import YAML from "yaml";
 
 import { CliContext } from "../../cli-context/CliContext.js";
+import { getChangelogUrl } from "../../utils/getChangelogUrl.js";
 import {
     compareGeneratorVersions,
     createSdkGenApiTokenProvider,
@@ -58,21 +59,6 @@ interface SkippedAutoreleaseDisabled {
     generatorName: string;
     groupName: string;
     version: string;
-}
-
-const CHANGELOG_BASE = "https://buildwithfern.com/learn/sdks/generators";
-
-/**
- * Derives the changelog URL from a generator name.
- * Generator names follow the pattern "fernapi/fern-<language>-sdk[-variant]",
- * and changelog pages live at buildwithfern.com/learn/sdks/generators/<language>/changelog.
- */
-function getChangelogUrl(generatorName: string): string | undefined {
-    const match = generatorName.match(/^fernapi\/fern-([a-z]+)/);
-    if (!match?.[1]) {
-        return undefined;
-    }
-    return `${CHANGELOG_BASE}/${match[1]}/changelog`;
 }
 
 export async function loadAndUpdateGenerators({
@@ -244,7 +230,14 @@ export async function loadAndUpdateGenerators({
             }
 
             const currentGeneratorVersion = generator.get("version") as string;
-            const useSdkGenApi = isFernSdkGenApiEnabled();
+            const tracksLatest = currentGeneratorVersion === "latest";
+            // `latest` never looks up versions, so it needs no flag request.
+            const useSdkGenApi =
+                !tracksLatest &&
+                (await isFernSdkGenApiEnabled({
+                    organization,
+                    generatorName: addDefaultDockerOrgIfNotPresent(generatorName)
+                }));
             if (useSdkGenApi && getSdkGenApiToken == null) {
                 throw new Error("SDK Gen API generator version discovery requires authentication");
             }
@@ -261,16 +254,18 @@ export async function loadAndUpdateGenerators({
                     context
                 });
             }
-            const latestVersion = useSdkGenApi
-                ? sdkGenApiVersions?.compatibleVersion
-                : await getLatestGeneratorVersion({
-                      generatorName: normalizedGeneratorName,
-                      cliVersion,
-                      currentGeneratorVersion,
-                      channel,
-                      includeMajor,
-                      context
-                  });
+            const latestVersion = tracksLatest
+                ? currentGeneratorVersion
+                : useSdkGenApi
+                  ? sdkGenApiVersions?.compatibleVersion
+                  : await getLatestGeneratorVersion({
+                        generatorName: normalizedGeneratorName,
+                        cliVersion,
+                        currentGeneratorVersion,
+                        channel,
+                        includeMajor,
+                        context
+                    });
 
             const versionComparison =
                 latestVersion == null
@@ -369,7 +364,7 @@ export async function loadAndUpdateGenerators({
                 }
             }
 
-            if (!includeMajor) {
+            if (!includeMajor && !tracksLatest) {
                 const latestMajorVersion = useSdkGenApi
                     ? sdkGenApiVersions?.withheldMajorVersion
                     : await getLatestGeneratorVersion({
@@ -425,7 +420,8 @@ export async function upgradeGenerator({
     channel: FernRegistry.generators.ReleaseType | undefined;
 }): Promise<void> {
     const { apiWorkspaces } = project;
-    const getSdkGenApiToken = isFernSdkGenApiEnabled() ? createSdkGenApiTokenProvider(cliContext) : undefined;
+    // Lazy: only generators the `use-sdk-gen-api` flag routes through sdk-gen-api trigger a login.
+    const getSdkGenApiToken = createSdkGenApiTokenProvider(cliContext);
     const allSkippedMajorUpgrades: SkippedMajorUpgrade[] = [];
     const allAppliedUpgrades: Array<{ workspace: string | undefined; upgrades: AppliedUpgrade[] }> = [];
     const allAlreadyUpToDate: Array<{ workspace: string | undefined; upToDate: AlreadyUpToDate[] }> = [];

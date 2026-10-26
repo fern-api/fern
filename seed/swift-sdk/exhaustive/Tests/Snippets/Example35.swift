@@ -8,9 +8,6 @@ enum Example35 {
             token: "<token>"
         )
 
-        _ = try await client.endpoints.params.getWithQuery(
-            query: "query",
-            number: 1
-        )
+        _ = try await client.endpoints.params.getWithInlinePath(param: "param")
     }
 }

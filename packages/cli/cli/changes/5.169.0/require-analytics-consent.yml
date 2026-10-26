@@ -1,0 +1,5 @@
+- summary: |
+    Add `settings.require-analytics-consent` to docs.yml. When enabled, Fern's built-in
+    docs analytics (PostHog) stays off until the page sets `window.fernAnalyticsConsent = true`
+    and dispatches a `fern-analytics-consent` event, e.g. from a consent manager callback.
+  type: feat

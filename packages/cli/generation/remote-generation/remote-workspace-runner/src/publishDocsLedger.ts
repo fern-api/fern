@@ -1,7 +1,9 @@
+import { asyncPool, delay, isRecord } from "@fern-api/core-utils";
 import {
     applyTranslatedApiTitlesToNavTree,
     type DocsDefinitionResolver,
     findIncompatibleTranslatedApiIds,
+    markUntranslatedNavNodesNoindex,
     type TranslatedApiSpec
 } from "@fern-api/docs-resolver";
 import {
@@ -25,9 +27,7 @@ import type { TaskContext } from "@fern-api/task-context";
 import { createHash } from "crypto";
 import { readFile } from "fs/promises";
 import * as mime from "mime-types";
-
 import { mapDocsConfigToLedgerConfig } from "./mapDocsConfigToLedgerConfig.js";
-import { asyncPool } from "./utils/asyncPool.js";
 
 const UPLOAD_CONCURRENCY = 10;
 const TRANSLATION_BUILD_CONCURRENCY = 4;
@@ -83,7 +83,7 @@ interface BlobRef {
  */
 function stableStringify(value: unknown): string {
     return JSON.stringify(value, (_key, val) => {
-        if (val != null && typeof val === "object" && !Array.isArray(val)) {
+        if (isRecord(val)) {
             return Object.fromEntries(Object.entries(val).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)));
         }
         return val;
@@ -489,11 +489,11 @@ async function uploadBlobWithRetry(
 
         const isRetryable = response.status === 429 || response.status >= 500;
         if (isRetryable && attempt < UPLOAD_MAX_RETRIES) {
-            const delay = UPLOAD_INITIAL_DELAY_MS * 2 ** attempt;
+            const retryDelayMs = UPLOAD_INITIAL_DELAY_MS * 2 ** attempt;
             context.logger.debug(
-                `[ledger] Upload ${hash} got ${response.status}, retrying in ${delay}ms (attempt ${attempt + 1}/${UPLOAD_MAX_RETRIES})`
+                `[ledger] Upload ${hash} got ${response.status}, retrying in ${retryDelayMs}ms (attempt ${attempt + 1}/${UPLOAD_MAX_RETRIES})`
             );
-            await new Promise((resolve) => setTimeout(resolve, delay));
+            await delay(retryDelayMs);
             continue;
         }
 
@@ -661,6 +661,7 @@ export async function buildAllTranslationInputs({
             // Build locale-specific API definitions from translated OpenAPI specs.
             const localeTranslatedSpecs = translatedApiSpecsByLocale.get(locale);
             let localeApiDefinitions = apiDefinitions;
+            let translatedApiDefinitionIds: ReadonlySet<string> = new Set();
             if (localeTranslatedSpecs != null && localeTranslatedSpecs.size > 0) {
                 localeApiDefinitions = buildLocaleApiDefinitions({
                     baseApiDefinitions: apiDefinitions,
@@ -716,6 +717,11 @@ export async function buildAllTranslationInputs({
                     const rewritableApiIds = new Set(
                         Object.keys(translatedApisForTitles).filter((apiId) => !incompatibleApiIds.has(apiId))
                     );
+                    translatedApiDefinitionIds = new Set(
+                        Array.from(rewritableApiIds).filter(
+                            (apiId) => localeApiDefinitions.get(apiId) !== apiDefinitions.get(apiId)
+                        )
+                    );
 
                     if (Object.keys(translatedApisForTitles).length > 0) {
                         translatedDefinition.config.root = applyTranslatedApiTitlesToNavTree(
@@ -727,6 +733,10 @@ export async function buildAllTranslationInputs({
                     }
                 }
             }
+
+            translatedDefinition.config.root = markUntranslatedNavNodesNoindex(translatedDefinition.config.root, {
+                translatedApiDefinitionIds
+            });
 
             const { localeEntry, blobs } = buildLedgerInput({
                 docsDefinition: translatedDefinition,

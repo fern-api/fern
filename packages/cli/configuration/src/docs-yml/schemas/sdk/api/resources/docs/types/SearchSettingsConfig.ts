@@ -4,9 +4,10 @@ export interface SearchSettingsConfig {
     /**
      * If set to true, search results from the current product/version are
      * boosted in Algolia's ranking (via `optionalFilters`) without excluding
-     * results from other products/versions.
+     * results from other products/versions. Set to false to rank all
+     * products/versions equally.
      *
-     * @default: false
+     * @default: true
      */
     prioritizeCurrentProduct?: boolean;
     /**

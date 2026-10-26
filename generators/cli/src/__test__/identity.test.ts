@@ -10,7 +10,8 @@ const emptyIr = (apiDisplayName: string | undefined = undefined): IrSummary => (
     headers: [],
     services: {},
     environments: undefined,
-    whiteLabel: false
+    whiteLabel: false,
+    requestedVersion: undefined
 });
 
 describe("toKebabCase", () => {

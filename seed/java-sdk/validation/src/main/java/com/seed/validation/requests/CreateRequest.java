@@ -124,7 +124,6 @@ public final class CreateRequest {
 
         private Shape shape;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -169,6 +168,17 @@ public final class CreateRequest {
         @java.lang.Override
         public CreateRequest build() {
             return new CreateRequest(decimal, even, name, shape, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("decimal")
+                    || key.equalsIgnoreCase("even")
+                    || key.equalsIgnoreCase("name")
+                    || key.equalsIgnoreCase("shape")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

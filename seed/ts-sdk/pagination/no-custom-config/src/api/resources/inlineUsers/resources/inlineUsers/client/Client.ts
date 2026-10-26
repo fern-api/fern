@@ -370,8 +370,15 @@ export class InlineUsersClient {
             hasNextPage: (response) => (response?.data.users ?? []).length > 0,
             getItems: (response) => response?.data.users ?? [],
             loadPage: (_response) => {
-                _offset += 1;
-                return list(core.setObjectProperty(request, "page", _offset));
+                const _nextOffset = _offset + 1;
+                return core.HttpResponsePromise.fromPromise(
+                    list(core.setObjectProperty(request, "page", _nextOffset))
+                        .withRawResponse()
+                        .then((_pageResponse) => {
+                            _offset = _nextOffset;
+                            return _pageResponse;
+                        }),
+                );
             },
         });
     }
@@ -461,8 +468,15 @@ export class InlineUsersClient {
             hasNextPage: (response) => (response?.data.users ?? []).length > 0,
             getItems: (response) => response?.data.users ?? [],
             loadPage: (_response) => {
-                _offset += 1;
-                return list(core.setObjectProperty(request, "page", _offset));
+                const _nextOffset = _offset + 1;
+                return core.HttpResponsePromise.fromPromise(
+                    list(core.setObjectProperty(request, "page", _nextOffset))
+                        .withRawResponse()
+                        .then((_pageResponse) => {
+                            _offset = _nextOffset;
+                            return _pageResponse;
+                        }),
+                );
             },
         });
     }
@@ -543,8 +557,15 @@ export class InlineUsersClient {
             hasNextPage: (response) => (response?.data.users ?? []).length > 0,
             getItems: (response) => response?.data.users ?? [],
             loadPage: (_response) => {
-                _offset += 1;
-                return list(core.setObjectProperty(request, "pagination.page", _offset));
+                const _nextOffset = _offset + 1;
+                return core.HttpResponsePromise.fromPromise(
+                    list(core.setObjectProperty(request, "pagination.page", _nextOffset))
+                        .withRawResponse()
+                        .then((_pageResponse) => {
+                            _offset = _nextOffset;
+                            return _pageResponse;
+                        }),
+                );
             },
         });
     }
@@ -634,8 +655,15 @@ export class InlineUsersClient {
                 (request?.limit == null || (response?.data.users ?? []).length >= request?.limit),
             getItems: (response) => response?.data.users ?? [],
             loadPage: (response) => {
-                _offset += response?.data.users != null ? response.data.users.length : 1;
-                return list(core.setObjectProperty(request, "page", _offset));
+                const _nextOffset = _offset + (response?.data.users != null ? response.data.users.length : 1);
+                return core.HttpResponsePromise.fromPromise(
+                    list(core.setObjectProperty(request, "page", _nextOffset))
+                        .withRawResponse()
+                        .then((_pageResponse) => {
+                            _offset = _nextOffset;
+                            return _pageResponse;
+                        }),
+                );
             },
         });
     }
@@ -726,8 +754,15 @@ export class InlineUsersClient {
                     (request?.limit == null || (response?.data.users ?? []).length >= request?.limit)),
             getItems: (response) => response?.data.users ?? [],
             loadPage: (response) => {
-                _offset += response?.data.users != null ? response.data.users.length : 1;
-                return list(core.setObjectProperty(request, "page", _offset));
+                const _nextOffset = _offset + (response?.data.users != null ? response.data.users.length : 1);
+                return core.HttpResponsePromise.fromPromise(
+                    list(core.setObjectProperty(request, "page", _nextOffset))
+                        .withRawResponse()
+                        .then((_pageResponse) => {
+                            _offset = _nextOffset;
+                            return _pageResponse;
+                        }),
+                );
             },
         });
     }
@@ -1048,8 +1083,15 @@ export class InlineUsersClient {
             hasNextPage: (response) => (response?.results ?? []).length > 0,
             getItems: (response) => response?.results ?? [],
             loadPage: (_response) => {
-                _offset += 1;
-                return list(core.setObjectProperty(request, "offset", _offset));
+                const _nextOffset = _offset + 1;
+                return core.HttpResponsePromise.fromPromise(
+                    list(core.setObjectProperty(request, "offset", _nextOffset))
+                        .withRawResponse()
+                        .then((_pageResponse) => {
+                            _offset = _nextOffset;
+                            return _pageResponse;
+                        }),
+                );
             },
         });
     }

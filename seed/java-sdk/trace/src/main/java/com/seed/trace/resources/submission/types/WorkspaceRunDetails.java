@@ -116,7 +116,6 @@ public final class WorkspaceRunDetails {
 
         private Optional<ExceptionV2> exceptionV2 = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -165,6 +164,16 @@ public final class WorkspaceRunDetails {
         @java.lang.Override
         public WorkspaceRunDetails build() {
             return new WorkspaceRunDetails(exceptionV2, exception, stdout, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("exceptionV2")
+                    || key.equalsIgnoreCase("exception")
+                    || key.equalsIgnoreCase("stdout")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

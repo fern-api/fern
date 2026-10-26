@@ -25,10 +25,12 @@ type CreateOauth2TokenRequest struct {
 }
 
 func (c *CreateOauth2TokenRequest) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetClientID sets the ClientID field and marks it as non-optional;
@@ -73,13 +75,13 @@ func (c *CreateOauth2TokenRequest) MarshalJSON() ([]byte, error) {
 	return json.Marshal(explicitMarshaler)
 }
 
-// An OAuth token response with nullable properties.
 var (
 	tokenResponseFieldAccessToken  = big.NewInt(1 << 0)
 	tokenResponseFieldExpiresIn    = big.NewInt(1 << 1)
 	tokenResponseFieldRefreshToken = big.NewInt(1 << 2)
 )
 
+// An OAuth token response with nullable properties.
 type TokenResponse struct {
 	AccessToken  *string `json:"access_token,omitempty" url:"access_token,omitempty"`
 	ExpiresIn    *int    `json:"expires_in,omitempty" url:"expires_in,omitempty"`
@@ -121,10 +123,12 @@ func (t *TokenResponse) GetExtraProperties() map[string]interface{} {
 }
 
 func (t *TokenResponse) require(field *big.Int) {
-	if t.explicitFields == nil {
-		t.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if t.explicitFields != nil {
+		next.Set(t.explicitFields)
 	}
-	t.explicitFields.Or(t.explicitFields, field)
+	next.Or(next, field)
+	t.explicitFields = next
 }
 
 // SetAccessToken sets the AccessToken field and marks it as non-optional;

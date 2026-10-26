@@ -56,6 +56,10 @@ export class UndiscriminatedUnionGenerator extends FileGenerator<
             node: ruby.codeblock((writer) => {
                 ruby.comment({ docs: "frozen_string_literal: true" }).write(writer);
                 writer.newLine();
+                writer.writeLine(
+                    `require_relative "${this.context.getRequireRelativePathToRootFile(this.typeDeclaration.name.typeId)}"`
+                );
+                writer.newLine();
                 ruby.wrapInModules(classNode, this.context.getModulesForTypeId(this.typeDeclaration.name.typeId)).write(
                     writer
                 );

@@ -83,6 +83,43 @@ extension JSONValue {
     }
 }
 
+// MARK: - Literal conformances
+extension JSONValue: Swift.ExpressibleByStringLiteral {
+    public init(stringLiteral value: Swift.String) {
+        self = .string(value)
+    }
+}
+
+extension JSONValue: Swift.ExpressibleByIntegerLiteral {
+    public init(integerLiteral value: Swift.Int) {
+        self = .number(Swift.Double(value))
+    }
+}
+
+extension JSONValue: Swift.ExpressibleByFloatLiteral {
+    public init(floatLiteral value: Swift.Double) {
+        self = .number(value)
+    }
+}
+
+extension JSONValue: Swift.ExpressibleByBooleanLiteral {
+    public init(booleanLiteral value: Swift.Bool) {
+        self = .bool(value)
+    }
+}
+
+extension JSONValue: Swift.ExpressibleByArrayLiteral {
+    public init(arrayLiteral elements: JSONValue...) {
+        self = .array(elements)
+    }
+}
+
+extension JSONValue: Swift.ExpressibleByDictionaryLiteral {
+    public init(dictionaryLiteral elements: (Swift.String, JSONValue)...) {
+        self = .object(Swift.Dictionary(elements, uniquingKeysWith: { _, last in last }))
+    }
+}
+
 // MARK: - Value extraction
 extension JSONValue {
     public var stringValue: String? {

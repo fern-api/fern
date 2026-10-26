@@ -132,6 +132,57 @@ class OffsetItemIteratorTest < Minitest::Test
     assert_equal 2, @times_called
   end
 
+  def test_load_first_page_requests_the_first_page_once
+    iterator = make_iterator(LAZY_TEST_ITERATOR_CONFIG)
+
+    assert_same iterator, iterator.load_first_page
+    assert_equal 1, @times_called
+
+    iterator.load_first_page
+
+    assert_equal 1, @times_called
+    assert_equal (1..65).to_a, iterator.to_a
+
+    pages = make_iterator(LAZY_TEST_ITERATOR_CONFIG).load_first_page.pages
+
+    assert_equal 1, @times_called
+    assert_equal (1..10).to_a, pages.next_page.items
+    assert_equal 1, @times_called
+  end
+
+  def test_load_first_page_does_not_request_an_empty_first_page_twice
+    times_called = 0
+    iterator = Seed::Internal::OffsetItemIterator.new(initial_page: 1, item_field: :items, has_next_field: nil, step: false) do |_page|
+      times_called += 1
+      OffsetPageResponse.new(items: [])
+    end
+
+    iterator.load_first_page
+
+    assert_equal [], iterator.to_a
+    assert_equal 1, times_called
+  end
+
+  def test_load_first_page_raises_api_errors_at_the_call
+    iterator = Seed::Internal::OffsetItemIterator.new(initial_page: nil, item_field: :items, has_next_field: nil, step: false) do |_page|
+      raise ArgumentError, "first page failed"
+    end
+
+    assert_raises(ArgumentError) { iterator.load_first_page }
+  end
+
+  def test_loops_after_load_first_page_reuse_the_first_page
+    iterator = make_iterator(LAZY_TEST_ITERATOR_CONFIG).load_first_page
+
+    assert_equal (1..65).to_a, iterator.to_a
+    requests_per_loop = @times_called - 1
+
+    assert_equal (1..65).to_a, iterator.to_a
+    assert_equal 1 + (2 * requests_per_loop), @times_called
+    assert_equal (1..10).to_a, iterator.pages.first.items
+    assert_equal 1 + (2 * requests_per_loop), @times_called
+  end
+
   def test_pages_iterator_iterates_lazily
     iterator = make_iterator(LAZY_TEST_ITERATOR_CONFIG).pages
 
@@ -146,5 +197,58 @@ class OffsetItemIteratorTest < Minitest::Test
     assert_equal 0, @times_called
     assert_equal 3, iterator.first(3).length
     assert_equal 3, @times_called
+  end
+
+  def test_items_iterator_restarts_from_the_first_page_on_every_loop
+    iterator = make_iterator(LAZY_TEST_ITERATOR_CONFIG)
+    all_items = (1..LAZY_TEST_ITERATOR_CONFIG.total_item_count).to_a
+
+    assert_equal [1, 2], iterator.first(2)
+    assert_equal [1, 2], iterator.first(2)
+    assert_predicate iterator, :any?
+    assert_equal(all_items, iterator.map { |item| item })
+    assert_equal all_items.length, iterator.count
+    assert_equal all_items, iterator.to_a
+  end
+
+  def test_reading_pages_does_not_skip_items
+    iterator = make_iterator(LAZY_TEST_ITERATOR_CONFIG)
+    all_items = (1..LAZY_TEST_ITERATOR_CONFIG.total_item_count).to_a
+
+    assert_equal (1..10).to_a, iterator.pages.first.items
+    assert_equal all_items, iterator.to_a
+    assert_equal 7, iterator.pages.to_a.length
+    assert_equal all_items, iterator.to_a
+  end
+
+  def test_each_without_a_block_returns_an_enumerator
+    iterator = make_iterator(LAZY_TEST_ITERATOR_CONFIG)
+
+    assert_instance_of Enumerator, iterator.each
+    assert_equal (1..LAZY_TEST_ITERATOR_CONFIG.total_item_count).to_a, iterator.each.to_a
+    assert_instance_of Enumerator, iterator.pages.each
+    assert_equal 7, iterator.pages.each.to_a.length
+  end
+
+  def test_nested_loops_do_not_share_a_position
+    iterator = make_iterator(LAZY_TEST_ITERATOR_CONFIG)
+    all_items = (1..LAZY_TEST_ITERATOR_CONFIG.total_item_count).to_a
+    seen = []
+    iterator.each do |item|
+      seen.push(item)
+      iterator.first(2)
+    end
+
+    assert_equal all_items, seen
+  end
+
+  def test_loops_do_not_move_manual_iteration
+    iterator = make_iterator(LAZY_TEST_ITERATOR_CONFIG)
+
+    assert_equal 1, iterator.next_element
+    assert_equal (1..LAZY_TEST_ITERATOR_CONFIG.total_item_count).to_a, iterator.to_a
+    assert_equal 2, iterator.next_element
+    assert_equal (1..10).to_a, iterator.pages.next_page.items
+    assert_equal 3, iterator.next_element
   end
 end

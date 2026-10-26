@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "../../../seed"
+
 module Seed
   module NullableOptional
     module Types
@@ -37,9 +39,9 @@ module Seed
 
         field :optional_map, -> { Internal::Types::Hash[String, String] }, optional: true, nullable: false, api_name: "optionalMap"
 
-        field :optional_nullable_string, -> { String }, optional: true, nullable: false, api_name: "optionalNullableString"
+        field :optional_nullable_string, -> { String }, optional: true, nullable: true, api_name: "optionalNullableString"
 
-        field :optional_nullable_object, -> { Seed::NullableOptional::Types::Address }, optional: true, nullable: false, api_name: "optionalNullableObject"
+        field :optional_nullable_object, -> { Seed::NullableOptional::Types::Address }, optional: true, nullable: true, api_name: "optionalNullableObject"
       end
     end
   end

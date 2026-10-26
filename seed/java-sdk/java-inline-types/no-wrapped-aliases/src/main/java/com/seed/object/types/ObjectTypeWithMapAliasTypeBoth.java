@@ -68,7 +68,6 @@ public final class ObjectTypeWithMapAliasTypeBoth {
     public static final class Builder {
         private Map<PropKey, PropValue> prop = new LinkedHashMap<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -101,6 +100,14 @@ public final class ObjectTypeWithMapAliasTypeBoth {
 
         public ObjectTypeWithMapAliasTypeBoth build() {
             return new ObjectTypeWithMapAliasTypeBoth(prop, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("prop")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {
@@ -178,7 +185,6 @@ public final class ObjectTypeWithMapAliasTypeBoth {
         public static final class Builder implements PropStage, _FinalStage {
             private String prop;
 
-            @JsonAnySetter
             private Map<String, Object> additionalProperties = new HashMap<>();
 
             private Builder() {}
@@ -199,6 +205,14 @@ public final class ObjectTypeWithMapAliasTypeBoth {
             @java.lang.Override
             public PropKey build() {
                 return new PropKey(prop, additionalProperties);
+            }
+
+            @JsonAnySetter
+            private void putAdditionalPropertyFromJson(String key, Object value) {
+                if (key.equalsIgnoreCase("prop")) {
+                    return;
+                }
+                this.additionalProperties.put(key, value);
             }
 
             @java.lang.Override
@@ -279,7 +293,6 @@ public final class ObjectTypeWithMapAliasTypeBoth {
         public static final class Builder implements PropStage, _FinalStage {
             private String prop;
 
-            @JsonAnySetter
             private Map<String, Object> additionalProperties = new HashMap<>();
 
             private Builder() {}
@@ -300,6 +313,14 @@ public final class ObjectTypeWithMapAliasTypeBoth {
             @java.lang.Override
             public PropValue build() {
                 return new PropValue(prop, additionalProperties);
+            }
+
+            @JsonAnySetter
+            private void putAdditionalPropertyFromJson(String key, Object value) {
+                if (key.equalsIgnoreCase("prop")) {
+                    return;
+                }
+                this.additionalProperties.put(key, value);
             }
 
             @java.lang.Override

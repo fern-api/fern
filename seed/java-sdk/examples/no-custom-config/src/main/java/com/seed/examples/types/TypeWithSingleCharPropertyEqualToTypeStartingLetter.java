@@ -96,7 +96,6 @@ public final class TypeWithSingleCharPropertyEqualToTypeStartingLetter {
 
         private String ty;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -125,6 +124,14 @@ public final class TypeWithSingleCharPropertyEqualToTypeStartingLetter {
         @java.lang.Override
         public TypeWithSingleCharPropertyEqualToTypeStartingLetter build() {
             return new TypeWithSingleCharPropertyEqualToTypeStartingLetter(t, ty, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("t") || key.equalsIgnoreCase("ty")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

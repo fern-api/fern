@@ -8,11 +8,9 @@ enum Example42 {
             token: "<token>"
         )
 
-        _ = try await client.endpoints.params.createWithBodyAndQuery(
-            fields: "_fields",
-            request: ObjectWithRequiredField(
-                string: "string"
-            )
+        _ = try await client.endpoints.params.uploadWithPath(
+            param: "upload-path",
+            request: Data("data".utf8)
         )
     }
 }

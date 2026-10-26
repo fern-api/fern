@@ -1,3 +1,7 @@
+> [!WARNING]
+> **This open-source project is no longer maintained.**
+> For access to Fern's SDK, CLI, MCP, and Docs generation, sign up at [buildwithfern.com](https://buildwithfern.com/?utm_source=github&utm_medium=readme&utm_campaign=fern&utm_content=unmaintained-banner).
+
 <br/>
 <div align="center">
   <a href="https://www.buildwithfern.com/?utm_source=github&utm_medium=readme&utm_campaign=fern&utm_content=logo">

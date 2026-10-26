@@ -175,7 +175,6 @@ public final class UpdateComplexProfileRequest {
 
         private Optional<List<String>> nullableArray = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -309,6 +308,18 @@ public final class UpdateComplexProfileRequest {
                     nullableSearchResult,
                     nullableArray,
                     additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("nullableRole")
+                    || key.equalsIgnoreCase("nullableStatus")
+                    || key.equalsIgnoreCase("nullableNotification")
+                    || key.equalsIgnoreCase("nullableSearchResult")
+                    || key.equalsIgnoreCase("nullableArray")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

@@ -115,7 +115,6 @@ public final class IdentifierUpdate {
 
         private String newValue;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -156,6 +155,16 @@ public final class IdentifierUpdate {
         @java.lang.Override
         public IdentifierUpdate build() {
             return new IdentifierUpdate(idType, oldValue, newValue, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("idType")
+                    || key.equalsIgnoreCase("oldValue")
+                    || key.equalsIgnoreCase("newValue")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

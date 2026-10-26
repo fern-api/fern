@@ -30,7 +30,12 @@ export class OAuthAuthProvider implements core.AuthProvider {
         this.expiresAt = new Date();
     }
 
-    public static canCreate(options?: Partial<OAuthAuthProvider.ClientCredentials & BaseClientOptions>): boolean {
+    public static canCreate(
+        options?: Partial<OAuthAuthProvider.ClientCredentials & OAuthAuthProvider.TokenOverride & BaseClientOptions>,
+    ): boolean {
+        if (OAuthTokenOverrideAuthProvider.canCreate(options)) {
+            return true;
+        }
         return (
             (options?.[CLIENT_ID_PARAM] != null || process.env?.[ENV_CLIENT_ID] != null) &&
             (options?.[CLIENT_SECRET_PARAM] != null || process.env?.[ENV_CLIENT_SECRET] != null)

@@ -5,10 +5,12 @@ module Seed
     module API
       class Client
         # @param client [Seed::Internal::Http::RawClient]
+        # @param root_variable [String, nil]
         #
         # @return [void]
-        def initialize(client:)
+        def initialize(client:, root_variable: nil)
           @client = client
+          @root_variable = root_variable
         end
 
         # @param request_options [Hash]

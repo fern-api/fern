@@ -16,6 +16,8 @@ public final class XmlWriter {
     private final String qualifiedName;
     private final StringBuilder attributes = new StringBuilder();
     private final List<String> content = new ArrayList<>();
+    private final List<String> commentsBefore = new ArrayList<>();
+    private final List<String> commentsAfter = new ArrayList<>();
 
     public XmlWriter(String name) {
         this(name, null, null);
@@ -117,6 +119,39 @@ public final class XmlWriter {
     }
 
     /**
+     * Adds ordered mixed content: text segments are escaped, elements are serialized without a declaration and
+     * comments are rendered in place, or around this element for {@link XmlNode#commentBefore} and
+     * {@link XmlNode#commentAfter}.
+     */
+    public XmlWriter content(Collection<XmlNode> nodes) {
+        if (nodes == null) {
+            return this;
+        }
+        for (XmlNode node : nodes) {
+            if (node.isText()) {
+                content.add(escape(node.getText().get()));
+            } else if (node.isComment()) {
+                String rendered = XmlNode.renderComment(node.getComment().get());
+                switch (node.getCommentPlacement().get()) {
+                    case BEFORE:
+                        commentsBefore.add(rendered);
+                        break;
+                    case AFTER:
+                        commentsAfter.add(rendered);
+                        break;
+                    case INSIDE:
+                    default:
+                        content.add(rendered);
+                        break;
+                }
+            } else {
+                content.add(node.getElement().get().toXml(false));
+            }
+        }
+        return this;
+    }
+
+    /**
      * Adds child elements wrapped in a container element with the given name. Nothing is emitted when the value is
      * absent.
      */
@@ -134,15 +169,23 @@ public final class XmlWriter {
         if (xmlDeclaration) {
             xml.append(XML_DECLARATION);
         }
+        for (String comment : commentsBefore) {
+            xml.append(comment);
+        }
         xml.append('<').append(qualifiedName).append(attributes);
         if (content.isEmpty()) {
-            return xml.append(" />").toString();
+            xml.append(" />");
+        } else {
+            xml.append('>');
+            for (String part : content) {
+                xml.append(part);
+            }
+            xml.append("</").append(qualifiedName).append('>');
         }
-        xml.append('>');
-        for (String part : content) {
-            xml.append(part);
+        for (String comment : commentsAfter) {
+            xml.append(comment);
         }
-        return xml.append("</").append(qualifiedName).append('>').toString();
+        return xml.toString();
     }
 
     private void appendAttribute(String name, String value) {
@@ -176,11 +219,19 @@ public final class XmlWriter {
         return String.valueOf(value);
     }
 
+    /**
+     * Escapes markup characters and drops characters outside the XML 1.0 {@code Char} production (control
+     * characters, lone surrogates), which no XML parser accepts.
+     */
     public static String escape(String value) {
         StringBuilder escaped = new StringBuilder(value.length());
-        for (int i = 0; i < value.length(); i++) {
-            char c = value.charAt(i);
-            switch (c) {
+        for (int i = 0; i < value.length(); ) {
+            int codePoint = value.codePointAt(i);
+            i += Character.charCount(codePoint);
+            if (!isXmlChar(codePoint)) {
+                continue;
+            }
+            switch (codePoint) {
                 case '&':
                     escaped.append("&amp;");
                     break;
@@ -194,9 +245,31 @@ public final class XmlWriter {
                     escaped.append("&quot;");
                     break;
                 default:
-                    escaped.append(c);
+                    escaped.appendCodePoint(codePoint);
             }
         }
         return escaped.toString();
+    }
+
+    /** Drops characters outside the XML 1.0 {@code Char} production without escaping markup. */
+    public static String stripInvalidXmlChars(String value) {
+        StringBuilder result = new StringBuilder(value.length());
+        for (int i = 0; i < value.length(); ) {
+            int codePoint = value.codePointAt(i);
+            i += Character.charCount(codePoint);
+            if (isXmlChar(codePoint)) {
+                result.appendCodePoint(codePoint);
+            }
+        }
+        return result.toString();
+    }
+
+    private static boolean isXmlChar(int codePoint) {
+        return codePoint == 0x9
+                || codePoint == 0xA
+                || codePoint == 0xD
+                || (codePoint >= 0x20 && codePoint <= 0xD7FF)
+                || (codePoint >= 0xE000 && codePoint <= 0xFFFD)
+                || (codePoint >= 0x10000 && codePoint <= 0x10FFFF);
     }
 }

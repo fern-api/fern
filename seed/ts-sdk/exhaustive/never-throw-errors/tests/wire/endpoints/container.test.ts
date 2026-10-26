@@ -191,6 +191,34 @@ describe("ContainerClient", () => {
         });
     });
 
+    test("getAndReturnMapOfIntegerToObject", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
+        const rawRequestBody = { "1": { string: "string" } };
+        const rawResponseBody = { "1": { string: "string" } };
+
+        server
+            .mockEndpoint()
+            .post("/container/map-integer-to-object")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.endpoints.container.getAndReturnMapOfIntegerToObject({
+            1: {
+                string: "string",
+            },
+        });
+        expect(response).toEqual({
+            body: rawResponseBody,
+            ok: true,
+            headers: expect.any(Object),
+            rawResponse: expect.any(Object),
+        });
+    });
+
     test("getAndReturnOptional", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });

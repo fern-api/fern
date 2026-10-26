@@ -16,7 +16,7 @@ public class Example23 {
             ObjectWithUnknownField
                 .builder()
                 .unknown(new 
-                    HashMap<String, Object>() {{put("key", "value");
+                    HashMap<String, Object>() {{put("$ref", "https://example.com/schema");
                     }})
                 .build()
         );

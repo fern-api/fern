@@ -6,7 +6,7 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { camelCase } from "lodash-es";
 
-import { TYPES_DIRECTORY } from "./constants.js";
+import { ERRORS_DIRECTORY, TYPES_DIRECTORY } from "./constants.js";
 import { JavaGeneratorAgent } from "./JavaGeneratorAgent.js";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
 import { EndpointSnippetsGenerator } from "./reference/EndpointSnippetsGenerator.js";
@@ -235,6 +235,13 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
         return java.classReference({
             name: this.getApiExceptionClassName(),
             packageName: this.getCorePackageName()
+        });
+    }
+
+    public getErrorClassReference(errorDeclaration: FernIr.ErrorDeclaration): java.ClassReference {
+        return java.classReference({
+            name: this.caseConverter.pascalSafe(errorDeclaration.name.name),
+            packageName: this.getResourcesPackage(errorDeclaration.name.fernFilepath, ERRORS_DIRECTORY)
         });
     }
 

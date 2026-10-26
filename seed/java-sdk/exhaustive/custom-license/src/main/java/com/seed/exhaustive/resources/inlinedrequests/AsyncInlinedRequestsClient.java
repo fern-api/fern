@@ -5,6 +5,7 @@ package com.seed.exhaustive.resources.inlinedrequests;
 
 import com.seed.exhaustive.core.ClientOptions;
 import com.seed.exhaustive.core.RequestOptions;
+import com.seed.exhaustive.core.SeedExhaustiveHttpResponse;
 import com.seed.exhaustive.resources.inlinedrequests.requests.PostWithArrayBodyAndHeaders;
 import com.seed.exhaustive.resources.inlinedrequests.requests.PostWithObjectBody;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithOptionalField;
@@ -32,7 +33,15 @@ public class AsyncInlinedRequestsClient {
      * POST with custom object in request body, response is an object
      */
     public CompletableFuture<ObjectWithOptionalField> postWithObjectBodyandResponse(PostWithObjectBody request) {
-        return this.rawClient.postWithObjectBodyandResponse(request).thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithOptionalField>> rawFuture =
+                this.rawClient.postWithObjectBodyandResponse(request);
+        CompletableFuture<ObjectWithOptionalField> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -40,30 +49,60 @@ public class AsyncInlinedRequestsClient {
      */
     public CompletableFuture<ObjectWithOptionalField> postWithObjectBodyandResponse(
             PostWithObjectBody request, RequestOptions requestOptions) {
-        return this.rawClient
-                .postWithObjectBodyandResponse(request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<ObjectWithOptionalField>> rawFuture =
+                this.rawClient.postWithObjectBodyandResponse(request, requestOptions);
+        CompletableFuture<ObjectWithOptionalField> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * POST with root-level array body and header params
      */
     public CompletableFuture<String> postWithArrayBodyAndHeaders(List<String> body) {
-        return this.rawClient.postWithArrayBodyAndHeaders(body).thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<String>> rawFuture =
+                this.rawClient.postWithArrayBodyAndHeaders(body);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * POST with root-level array body and header params
      */
     public CompletableFuture<String> postWithArrayBodyAndHeaders(List<String> body, RequestOptions requestOptions) {
-        return this.rawClient.postWithArrayBodyAndHeaders(body, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<String>> rawFuture =
+                this.rawClient.postWithArrayBodyAndHeaders(body, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * POST with root-level array body and header params
      */
     public CompletableFuture<String> postWithArrayBodyAndHeaders(PostWithArrayBodyAndHeaders request) {
-        return this.rawClient.postWithArrayBodyAndHeaders(request).thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<String>> rawFuture =
+                this.rawClient.postWithArrayBodyAndHeaders(request);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -71,8 +110,14 @@ public class AsyncInlinedRequestsClient {
      */
     public CompletableFuture<String> postWithArrayBodyAndHeaders(
             PostWithArrayBodyAndHeaders request, RequestOptions requestOptions) {
-        return this.rawClient
-                .postWithArrayBodyAndHeaders(request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedExhaustiveHttpResponse<String>> rawFuture =
+                this.rawClient.postWithArrayBodyAndHeaders(request, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

@@ -70,6 +70,7 @@ export async function generateWireTests(args: {
         globalFlags: collectGlobalFlags(globalParams),
         oauthTokenEndpoint,
         loginFlowSchemes,
+        headerAuthValues: collectHeaderAuthValues(authBindings, authEnvVars),
         requiredBodyContracts
     });
 
@@ -98,7 +99,7 @@ export async function generateWireTests(args: {
 const MOCK_UTILS_BASIC_USERNAME = "test-username";
 const MOCK_UTILS_BASIC_PASSWORD = "test-password";
 
-/** Value the harness exports for any credential whose matcher is presence-only. */
+/** Value the harness exports for any credential `mock-utils` does not pin to an exact value. */
 const PRESENCE_ONLY_CREDENTIAL = "test";
 
 /** Value the harness passes for a required global parameter. */
@@ -136,8 +137,8 @@ function collectGlobalFlags(globalParams: DetectedGlobalParam[]): Array<{ name: 
  * The value matters only for `basic`: `mock-utils` matches `Authorization` with
  * an exact base64 of `test-username:test-password`, so seeding the generic
  * placeholder would produce a header that is well-formed and still unmatchable.
- * Bearer and apiKey schemes get presence-only matchers (`Bearer .+`, `.+`), so
- * any non-empty value satisfies them.
+ * Bearer schemes get a presence-only matcher (`Bearer .+`). Header API-key
+ * schemes are pinned to this value by {@link collectHeaderAuthValues}.
  */
 function collectAuthEnvVars(authBindings: DetectedAuthBinding[]): Array<{ name: string; value: string }> {
     const byName = new Map<string, string>();
@@ -152,6 +153,30 @@ function collectAuthEnvVars(authBindings: DetectedAuthBinding[]): Array<{ name: 
         }
     }
     return [...byName.entries()].map(([name, value]) => ({ name, value })).sort((a, b) => a.name.localeCompare(b.name));
+}
+
+/**
+ * The exact header value each header API-key binding sends once the harness
+ * exports its credential: the configured prefix, one space, then the value.
+ */
+export function collectHeaderAuthValues(
+    authBindings: DetectedAuthBinding[],
+    authEnvVars: Array<{ name: string; value: string }>
+): Array<{ headerName: string; value: string }> {
+    const valueByEnvVar = new Map(authEnvVars.map(({ name, value }) => [name, value]));
+    const values: Array<{ headerName: string; value: string }> = [];
+    for (const binding of authBindings) {
+        if (binding.kind !== "header" || binding.headerAuth == null) {
+            continue;
+        }
+        const { headerName, envVar, prefix } = binding.headerAuth;
+        const credential = valueByEnvVar.get(envVar);
+        if (credential == null) {
+            continue;
+        }
+        values.push({ headerName, value: prefix != null ? `${prefix} ${credential}` : credential });
+    }
+    return values;
 }
 
 /** The basic-auth half `binding.envVars[index]` supplies, if any. */

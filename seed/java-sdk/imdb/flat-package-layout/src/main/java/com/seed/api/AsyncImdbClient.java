@@ -5,6 +5,7 @@ package com.seed.api;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
+import com.seed.api.core.SeedApiHttpResponse;
 import com.seed.api.types.CreateMovieRequest;
 import com.seed.api.types.GetMovieImdbRequest;
 import com.seed.api.types.Movie;
@@ -31,30 +32,73 @@ public class AsyncImdbClient {
      * Add a movie to the database using the movies/* /... path.
      */
     public CompletableFuture<String> createMovie(CreateMovieRequest request) {
-        return this.rawClient.createMovie(request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<String>> rawFuture = this.rawClient.createMovie(request);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Add a movie to the database using the movies/* /... path.
      */
     public CompletableFuture<String> createMovie(CreateMovieRequest request, RequestOptions requestOptions) {
-        return this.rawClient.createMovie(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<String>> rawFuture = this.rawClient.createMovie(request, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Movie> getMovie(String movieId) {
-        return this.rawClient.getMovie(movieId).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Movie>> rawFuture = this.rawClient.getMovie(movieId);
+        CompletableFuture<Movie> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Movie> getMovie(String movieId, RequestOptions requestOptions) {
-        return this.rawClient.getMovie(movieId, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Movie>> rawFuture = this.rawClient.getMovie(movieId, requestOptions);
+        CompletableFuture<Movie> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Movie> getMovie(String movieId, GetMovieImdbRequest request) {
-        return this.rawClient.getMovie(movieId, request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Movie>> rawFuture = this.rawClient.getMovie(movieId, request);
+        CompletableFuture<Movie> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Movie> getMovie(
             String movieId, GetMovieImdbRequest request, RequestOptions requestOptions) {
-        return this.rawClient.getMovie(movieId, request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Movie>> rawFuture =
+                this.rawClient.getMovie(movieId, request, requestOptions);
+        CompletableFuture<Movie> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

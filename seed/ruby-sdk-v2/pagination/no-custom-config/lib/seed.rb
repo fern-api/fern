@@ -3,6 +3,7 @@
 require "json"
 require "net/http"
 require "securerandom"
+require "time"
 
 require_relative "seed/internal/json/serializable"
 require_relative "seed/internal/types/type"
@@ -35,54 +36,7 @@ require_relative "seed/internal/iterators/cursor_item_iterator"
 require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
-require_relative "seed/types/username_page"
-require_relative "seed/types/username_cursor"
-require_relative "seed/complex/types/multiple_filter_search_request_operator"
-require_relative "seed/complex/types/single_filter_search_request_operator"
-require_relative "seed/complex/types/single_filter_search_request"
-require_relative "seed/complex/types/multiple_filter_search_request_value"
-require_relative "seed/complex/types/multiple_filter_search_request"
-require_relative "seed/complex/types/search_request_query"
-require_relative "seed/complex/types/starting_after_paging"
-require_relative "seed/complex/types/search_request"
-require_relative "seed/complex/types/cursor_pages"
-require_relative "seed/complex/types/conversation"
-require_relative "seed/complex/types/paginated_conversation_response"
-require_relative "seed/inline_users/inline_users/types/order"
-require_relative "seed/inline_users/inline_users/types/with_page"
-require_relative "seed/inline_users/inline_users/types/with_cursor"
-require_relative "seed/inline_users/inline_users/types/user"
-require_relative "seed/inline_users/inline_users/types/user_list_container"
-require_relative "seed/inline_users/inline_users/types/user_page"
-require_relative "seed/inline_users/inline_users/types/user_optional_list_container"
-require_relative "seed/inline_users/inline_users/types/user_optional_list_page"
-require_relative "seed/inline_users/inline_users/types/username_container"
-require_relative "seed/inline_users/inline_users/types/list_users_extended_response"
-require_relative "seed/inline_users/inline_users/types/list_users_extended_optional_list_response"
-require_relative "seed/inline_users/inline_users/types/next_page"
-require_relative "seed/inline_users/inline_users/types/page"
-require_relative "seed/inline_users/inline_users/types/users"
-require_relative "seed/inline_users/inline_users/types/list_users_pagination_response"
-require_relative "seed/inline_users/inline_users/types/list_users_mixed_type_pagination_response"
-require_relative "seed/users/types/order"
-require_relative "seed/users/types/with_page"
-require_relative "seed/users/types/with_cursor"
-require_relative "seed/users/types/user"
-require_relative "seed/users/types/user_list_container"
-require_relative "seed/users/types/user_page"
-require_relative "seed/users/types/user_optional_list_container"
-require_relative "seed/users/types/user_optional_list_page"
-require_relative "seed/users/types/username_container"
-require_relative "seed/users/types/list_users_extended_response"
-require_relative "seed/users/types/list_users_extended_optional_list_response"
-require_relative "seed/users/types/next_page"
-require_relative "seed/users/types/page"
-require_relative "seed/users/types/list_users_pagination_response"
-require_relative "seed/users/types/list_users_optional_data_pagination_response"
-require_relative "seed/users/types/list_users_mixed_type_pagination_response"
-require_relative "seed/users/types/list_users_top_level_cursor_pagination_response"
-require_relative "seed/users/types/user_list"
-require_relative "seed/users/types/list_users_aliased_data_pagination_response"
+require_relative "seed/errors/connection_error"
 require_relative "seed/client"
 require_relative "seed/complex/client"
 require_relative "seed/inline_users/client"
@@ -116,3 +70,73 @@ require_relative "seed/users/types/list_usernames_with_optional_response_request
 require_relative "seed/users/types/list_with_global_config_request"
 require_relative "seed/users/types/list_users_optional_data_request"
 require_relative "seed/users/types/list_users_aliased_data_request"
+
+module Seed
+  module Types
+    autoload :UsernamePage, ::File.join(__dir__, "seed/types/username_page")
+    autoload :UsernameCursor, ::File.join(__dir__, "seed/types/username_cursor")
+  end
+
+  module Complex
+    module Types
+      autoload :MultipleFilterSearchRequestOperator, ::File.join(__dir__, "seed/complex/types/multiple_filter_search_request_operator")
+      autoload :SingleFilterSearchRequestOperator, ::File.join(__dir__, "seed/complex/types/single_filter_search_request_operator")
+      autoload :SingleFilterSearchRequest, ::File.join(__dir__, "seed/complex/types/single_filter_search_request")
+      autoload :MultipleFilterSearchRequestValue, ::File.join(__dir__, "seed/complex/types/multiple_filter_search_request_value")
+      autoload :MultipleFilterSearchRequest, ::File.join(__dir__, "seed/complex/types/multiple_filter_search_request")
+      autoload :SearchRequestQuery, ::File.join(__dir__, "seed/complex/types/search_request_query")
+      autoload :StartingAfterPaging, ::File.join(__dir__, "seed/complex/types/starting_after_paging")
+      autoload :SearchRequest, ::File.join(__dir__, "seed/complex/types/search_request")
+      autoload :CursorPages, ::File.join(__dir__, "seed/complex/types/cursor_pages")
+      autoload :Conversation, ::File.join(__dir__, "seed/complex/types/conversation")
+      autoload :PaginatedConversationResponse, ::File.join(__dir__, "seed/complex/types/paginated_conversation_response")
+    end
+  end
+
+  module InlineUsers
+    module InlineUsers
+      module Types
+        autoload :Order, ::File.join(__dir__, "seed/inline_users/inline_users/types/order")
+        autoload :WithPage, ::File.join(__dir__, "seed/inline_users/inline_users/types/with_page")
+        autoload :WithCursor, ::File.join(__dir__, "seed/inline_users/inline_users/types/with_cursor")
+        autoload :User, ::File.join(__dir__, "seed/inline_users/inline_users/types/user")
+        autoload :UserListContainer, ::File.join(__dir__, "seed/inline_users/inline_users/types/user_list_container")
+        autoload :UserPage, ::File.join(__dir__, "seed/inline_users/inline_users/types/user_page")
+        autoload :UserOptionalListContainer, ::File.join(__dir__, "seed/inline_users/inline_users/types/user_optional_list_container")
+        autoload :UserOptionalListPage, ::File.join(__dir__, "seed/inline_users/inline_users/types/user_optional_list_page")
+        autoload :UsernameContainer, ::File.join(__dir__, "seed/inline_users/inline_users/types/username_container")
+        autoload :ListUsersExtendedResponse, ::File.join(__dir__, "seed/inline_users/inline_users/types/list_users_extended_response")
+        autoload :ListUsersExtendedOptionalListResponse, ::File.join(__dir__, "seed/inline_users/inline_users/types/list_users_extended_optional_list_response")
+        autoload :NextPage, ::File.join(__dir__, "seed/inline_users/inline_users/types/next_page")
+        autoload :Page, ::File.join(__dir__, "seed/inline_users/inline_users/types/page")
+        autoload :Users, ::File.join(__dir__, "seed/inline_users/inline_users/types/users")
+        autoload :ListUsersPaginationResponse, ::File.join(__dir__, "seed/inline_users/inline_users/types/list_users_pagination_response")
+        autoload :ListUsersMixedTypePaginationResponse, ::File.join(__dir__, "seed/inline_users/inline_users/types/list_users_mixed_type_pagination_response")
+      end
+    end
+  end
+
+  module Users
+    module Types
+      autoload :Order, ::File.join(__dir__, "seed/users/types/order")
+      autoload :WithPage, ::File.join(__dir__, "seed/users/types/with_page")
+      autoload :WithCursor, ::File.join(__dir__, "seed/users/types/with_cursor")
+      autoload :User, ::File.join(__dir__, "seed/users/types/user")
+      autoload :UserListContainer, ::File.join(__dir__, "seed/users/types/user_list_container")
+      autoload :UserPage, ::File.join(__dir__, "seed/users/types/user_page")
+      autoload :UserOptionalListContainer, ::File.join(__dir__, "seed/users/types/user_optional_list_container")
+      autoload :UserOptionalListPage, ::File.join(__dir__, "seed/users/types/user_optional_list_page")
+      autoload :UsernameContainer, ::File.join(__dir__, "seed/users/types/username_container")
+      autoload :ListUsersExtendedResponse, ::File.join(__dir__, "seed/users/types/list_users_extended_response")
+      autoload :ListUsersExtendedOptionalListResponse, ::File.join(__dir__, "seed/users/types/list_users_extended_optional_list_response")
+      autoload :NextPage, ::File.join(__dir__, "seed/users/types/next_page")
+      autoload :Page, ::File.join(__dir__, "seed/users/types/page")
+      autoload :ListUsersPaginationResponse, ::File.join(__dir__, "seed/users/types/list_users_pagination_response")
+      autoload :ListUsersOptionalDataPaginationResponse, ::File.join(__dir__, "seed/users/types/list_users_optional_data_pagination_response")
+      autoload :ListUsersMixedTypePaginationResponse, ::File.join(__dir__, "seed/users/types/list_users_mixed_type_pagination_response")
+      autoload :ListUsersTopLevelCursorPaginationResponse, ::File.join(__dir__, "seed/users/types/list_users_top_level_cursor_pagination_response")
+      autoload :UserList, ::File.join(__dir__, "seed/users/types/user_list")
+      autoload :ListUsersAliasedDataPaginationResponse, ::File.join(__dir__, "seed/users/types/list_users_aliased_data_pagination_response")
+    end
+  end
+end

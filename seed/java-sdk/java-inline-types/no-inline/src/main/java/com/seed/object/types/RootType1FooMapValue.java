@@ -106,7 +106,6 @@ public final class RootType1FooMapValue {
 
         private ReferenceType ref;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -143,6 +142,14 @@ public final class RootType1FooMapValue {
         @java.lang.Override
         public RootType1FooMapValue build() {
             return new RootType1FooMapValue(foo, ref, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("foo") || key.equalsIgnoreCase("ref")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

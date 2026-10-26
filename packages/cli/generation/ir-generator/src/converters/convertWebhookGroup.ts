@@ -21,6 +21,7 @@ import {
     JsonResponse,
     StreamingResponse,
     Webhook,
+    WebhookAlgorithmHeader,
     WebhookBodyHashAlgorithm,
     WebhookBodyHashBinding,
     WebhookBodyHashLocation,
@@ -428,7 +429,40 @@ function convertHmacSignature({
         payloadFormat: convertPayloadFormat(hmac["payload-format"]),
         timestamp: convertTimestampConfig({ timestamp: hmac.timestamp, file }),
         bodyHashBinding: convertBodyHashBinding(hmac["body-hash-binding"]),
-        notificationUrlNormalization: convertUrlNormalization(hmac["url-normalization"])
+        notificationUrlNormalization: convertUrlNormalization(hmac["url-normalization"]),
+        algorithmHeader: convertAlgorithmHeader({ algorithmHeader: hmac["algorithm-header"], file })
+    };
+}
+
+function convertAlgorithmHeader({
+    algorithmHeader,
+    file
+}: {
+    algorithmHeader: RawSchemas.WebhookAlgorithmHeaderSchema | undefined;
+    file: FernFileContext;
+}): WebhookAlgorithmHeader | undefined {
+    if (algorithmHeader == null) {
+        return undefined;
+    }
+    const entries = Object.entries(algorithmHeader.algorithms);
+    if (entries.length === 0) {
+        throw new CliError({
+            message: `webhook-signature algorithm-header "${algorithmHeader.header}" must list at least one entry under "algorithms" (e.g. HMAC_SHA256: sha256).`,
+            code: CliError.Code.ValidationError
+        });
+    }
+    return {
+        headerName: file.casingsGenerator.generateNameAndWireValue({
+            wireValue: algorithmHeader.header,
+            name: algorithmHeader.header
+        }),
+        keyIdDelimiter: algorithmHeader["key-id-delimiter"],
+        keyIdParameter: algorithmHeader["key-id-parameter"],
+        algorithmParameter: algorithmHeader["algorithm-parameter"],
+        algorithms: entries.map(([wireValue, algorithm]) => ({
+            wireValue,
+            algorithm: convertHmacAlgorithm(algorithm)
+        }))
     };
 }
 

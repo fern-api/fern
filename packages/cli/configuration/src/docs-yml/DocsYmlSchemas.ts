@@ -69,7 +69,23 @@ export const Availability = z.enum([
     "in-development",
     "pre-release",
     "deprecated",
-    "beta"
+    "beta",
+    "alpha",
+    "preview",
+    "legacy"
+]);
+
+export const SortByAvailabilityValue = z.enum([
+    "unset",
+    "stable",
+    "generally-available",
+    "in-development",
+    "pre-release",
+    "deprecated",
+    "beta",
+    "alpha",
+    "preview",
+    "legacy"
 ]);
 
 export const VersionAvailability = z.enum(["deprecated", "ga", "stable", "beta"]);
@@ -99,6 +115,24 @@ export const ApiReferenceLayout = z.enum(["indented", "cards"]);
 export const ProductSwitcherThemeConfig = z.enum(["default", "toggle", "tabs"]);
 
 export const LanguageSwitcherThemeConfig = z.enum(["default", "minimal"]);
+
+export const CodeBlockTheme = z.enum([
+    "github-dark",
+    "github-dark-default",
+    "github-dark-dimmed",
+    "github-dark-high-contrast",
+    "github-light",
+    "github-light-default",
+    "github-light-high-contrast",
+    "material-theme-darker",
+    "min-dark",
+    "min-light"
+]);
+
+export const CodeBlocksThemeConfig = z.object({
+    light: CodeBlockTheme.optional(),
+    dark: CodeBlockTheme.optional()
+});
 
 export const SiteSwitcherThemeConfig = z.object({
     enabled: z.boolean().optional(),
@@ -304,7 +338,8 @@ export const ThemeConfig = z.object({
     "footer-nav": FooterNavThemeConfig.optional(),
     "language-switcher": LanguageSwitcherThemeConfig.optional(),
     "product-switcher": ProductSwitcherThemeConfig.optional(),
-    "site-switcher": SiteSwitcherThemeConfig.optional()
+    "site-switcher": SiteSwitcherThemeConfig.optional(),
+    "code-blocks": CodeBlocksThemeConfig.optional()
 });
 
 // ===== Layout schemas =====
@@ -331,6 +366,7 @@ export const LayoutConfig = z.object({
     "api-reference-layout": ApiReferenceLayout.optional(),
     "api-reference-expand-properties": z.boolean().optional(),
     "show-nav-availability-badges": z.boolean().optional(),
+    "hide-webhook-method-badges": z.boolean().optional(),
     breadcrumbs: BreadcrumbsConfig.optional()
 });
 
@@ -352,6 +388,7 @@ export const DocsSettingsConfig = z.object({
     "use-javascript-as-typescript": z.boolean().optional(),
     "disable-explorer-proxy": z.boolean().optional(),
     "disable-analytics": z.boolean().optional(),
+    "require-analytics-consent": z.boolean().optional(),
     language: Language.optional(),
     "folder-title-source": TitleSource.optional(),
     "substitute-env-vars": z.boolean().optional(),
@@ -471,6 +508,7 @@ export const SnippetsConfiguration = z.object({
     csharp: SnippetLanguageConfiguration.optional(),
     php: SnippetLanguageConfiguration.optional(),
     swift: SnippetLanguageConfiguration.optional(),
+    cli: SnippetLanguageConfiguration.optional(),
     rust: SnippetLanguageConfiguration.optional()
 });
 
@@ -673,6 +711,7 @@ export const ExperimentalConfig = z.object({
     "ai-example-style-instructions": z.string().optional(),
     "exclude-apis": z.boolean().optional(),
     "basepath-aware": z.boolean().optional(),
+    "robots-txt-on-instance-url": z.boolean().optional(),
     "external-sitemaps": z.array(ExternalSitemapSchema).optional()
 });
 
@@ -904,6 +943,7 @@ export const ApiReferenceConfiguration = WithPermissions.merge(WithFeatureFlags)
         availability: Availability.optional(),
         "skip-slug": z.boolean().optional(),
         alphabetized: z.boolean().optional(),
+        "sort-by-availability": z.array(SortByAvailabilityValue).optional(),
         flattened: z.boolean().optional(),
         paginated: z.boolean().optional(),
         playground: PlaygroundSettings.optional()

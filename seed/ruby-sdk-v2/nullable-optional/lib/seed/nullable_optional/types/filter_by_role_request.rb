@@ -8,7 +8,7 @@ module Seed
 
         field :status, -> { Seed::NullableOptional::Types::UserStatus }, optional: true, nullable: false
 
-        field :secondary_role, -> { Seed::NullableOptional::Types::UserRole }, optional: true, nullable: false, api_name: "secondaryRole"
+        field :secondary_role, -> { Seed::NullableOptional::Types::UserRole }, optional: true, nullable: true, api_name: "secondaryRole"
       end
     end
   end

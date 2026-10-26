@@ -1,5 +1,6 @@
 import { generatorsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { createLogger, LogLevel } from "@fern-api/logger";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { mkdir, mkdtemp, readdir, readFile, stat, writeFile } from "fs/promises";
 import { homedir, tmpdir } from "os";
@@ -114,8 +115,11 @@ describe("packLocalOutputForGroup", () => {
         expect(options?.env?.GIT_DIR).toBe(path.join(outputDir, ".git"));
     });
 
-    it("runs npm install and npm pack for typescript generators, including build when a build script exists", async () => {
-        await writeFile(path.join(outputDir, "package.json"), JSON.stringify({ scripts: { build: "tsc" } }));
+    it("runs pnpm install and npm pack for typescript generators, including build when a build script exists", async () => {
+        await writeFile(
+            path.join(outputDir, "package.json"),
+            JSON.stringify({ name: "@acme/test-sdk", version: "", scripts: { build: "tsc" } })
+        );
         const group = {
             groupName: "test",
             audiences: { type: "all" },
@@ -128,12 +132,13 @@ describe("packLocalOutputForGroup", () => {
             ]
         } as unknown as generatorsYml.GeneratorGroup;
 
-        await packLocalOutputForGroup({ group, context: createMockTaskContext() });
+        await packLocalOutputForGroup({ group, context: createMockTaskContext(), version: "1.2.3" });
 
         const commands = loggingExecaMock.mock.calls.map(([, command, args]) => [command, ...(args ?? [])].join(" "));
-        expect(commands[0]).toBe("npm install");
+        expect(commands[0]).toBe("npx --yes pnpm install");
         expect(commands[1]).toBe("npx --yes pnpm run build");
         expect(commands[2]).toContain("npm pack");
+        expect(JSON.parse(await readFile(path.join(outputDir, "package.json"), "utf-8")).version).toBe("1.2.3");
     });
 
     it("compiles with tsc before packing when a typescript package has no build script", async () => {
@@ -154,9 +159,63 @@ describe("packLocalOutputForGroup", () => {
         await packLocalOutputForGroup({ group, context: createMockTaskContext() });
 
         const commands = loggingExecaMock.mock.calls.map(([, command, args]) => [command, ...(args ?? [])].join(" "));
-        expect(commands[0]).toBe("npm install");
+        expect(commands[0]).toBe("npx --yes pnpm install");
         expect(commands[1]).toBe("npx --yes --package typescript tsc --project tsconfig.cjs.json");
         expect(commands[2]).toContain("npm pack");
+    });
+
+    it("uses the package manager declared by a typescript project", async () => {
+        await writeFile(
+            path.join(outputDir, "package.json"),
+            JSON.stringify({
+                name: "acme",
+                version: "1.0.0",
+                packageManager: "yarn@1.22.22",
+                scripts: { build: "tsc" }
+            })
+        );
+        const group = {
+            groupName: "test",
+            audiences: { type: "all" },
+            generators: [
+                createGenerator({
+                    name: "fernapi/fern-typescript-sdk",
+                    language: "typescript",
+                    outputPath: outputDir
+                })
+            ]
+        } as unknown as generatorsYml.GeneratorGroup;
+
+        await packLocalOutputForGroup({ group, context: createMockTaskContext() });
+
+        const commands = loggingExecaMock.mock.calls.map(([, command, args]) => [command, ...(args ?? [])].join(" "));
+        expect(commands[0]).toBe("npx --yes yarn install");
+        expect(commands[1]).toBe("npx --yes yarn run build");
+    });
+
+    it("uses npm when an existing typescript project has a package-lock", async () => {
+        await writeFile(
+            path.join(outputDir, "package.json"),
+            JSON.stringify({ name: "acme", version: "1.0.0", scripts: { build: "tsc" } })
+        );
+        await writeFile(path.join(outputDir, "package-lock.json"), "{}");
+        const group = {
+            groupName: "test",
+            audiences: { type: "all" },
+            generators: [
+                createGenerator({
+                    name: "fernapi/fern-typescript-sdk",
+                    language: "typescript",
+                    outputPath: outputDir
+                })
+            ]
+        } as unknown as generatorsYml.GeneratorGroup;
+
+        await packLocalOutputForGroup({ group, context: createMockTaskContext() });
+
+        const commands = loggingExecaMock.mock.calls.map(([, command, args]) => [command, ...(args ?? [])].join(" "));
+        expect(commands[0]).toBe("npm install");
+        expect(commands[1]).toBe("npm run build");
     });
 
     it("fails typescript packaging when tsc fails and no output was emitted", async () => {
@@ -490,6 +549,25 @@ describe("packLocalOutputForGroup", () => {
         expect(distFiles).toEqual([`${path.basename(outputDir)}-source.zip`]);
     });
 
+    it("keeps README.md and reference.md in fern-dist when packOnly is set", async () => {
+        await writeFile(path.join(outputDir, "go.mod"), "module example.com/test\n");
+        await writeFile(path.join(outputDir, "README.md"), "# SDK\n");
+        await writeFile(path.join(outputDir, "reference.md"), "# Reference\n");
+        const group = {
+            groupName: "test",
+            audiences: { type: "all" },
+            generators: [createGenerator({ name: "fernapi/fern-go-sdk", language: "go", outputPath: outputDir })]
+        } as unknown as generatorsYml.GeneratorGroup;
+
+        await packLocalOutputForGroup({ group, context: createMockTaskContext(), packOnly: true });
+
+        expect(await readdir(outputDir)).toEqual(["fern-dist"]);
+        expect((await readdir(path.join(outputDir, "fern-dist"))).sort()).toEqual(
+            ["README.md", "reference.md", `${path.basename(outputDir)}-source.zip`].sort()
+        );
+        expect(await readFile(path.join(outputDir, "fern-dist", "reference.md"), "utf-8")).toBe("# Reference\n");
+    });
+
     it("preserves .git, .fernignore, and fernignore-listed paths when packOnly is set", async () => {
         await writeFile(path.join(outputDir, "go.mod"), "module example.com/test\n");
         await mkdir(path.join(outputDir, ".git"), { recursive: true });
@@ -519,6 +597,48 @@ describe("packLocalOutputForGroup", () => {
         await packLocalOutputForGroup({ group, context: createMockTaskContext(), packOnly: true });
 
         expect(await readdir(outputDir)).toEqual(["Package.swift"]);
+    });
+
+    it("packages a Rust crate with cargo and copies the .crate into fern-dist", async () => {
+        await writeFile(path.join(outputDir, "Cargo.toml"), '[package]\nname = "acme"\n');
+        await mkdir(path.join(outputDir, "target", "package"), { recursive: true });
+        await writeFile(path.join(outputDir, "target", "package", "acme-0.1.0.crate"), "crate-bytes");
+        const group = {
+            groupName: "test",
+            audiences: { type: "all" },
+            generators: [createGenerator({ name: "fernapi/fern-rust-sdk", language: "rust", outputPath: outputDir })]
+        } as unknown as generatorsYml.GeneratorGroup;
+
+        await packLocalOutputForGroup({ group, context: createMockTaskContext() });
+
+        expect(loggingExecaMock).toHaveBeenCalledWith(
+            expect.anything(),
+            "cargo",
+            ["package", "--allow-dirty", "--no-verify"],
+            expect.objectContaining({ cwd: outputDir })
+        );
+        expect(await readdir(path.join(outputDir, "fern-dist"))).toEqual(["acme-0.1.0.crate"]);
+    });
+
+    it("skips cargo and keeps the source when Rust output has no Cargo.toml (rust-model) and packOnly is set", async () => {
+        await mkdir(path.join(outputDir, "src"), { recursive: true });
+        await writeFile(path.join(outputDir, "src", "lib.rs"), "pub mod types;\n");
+        const group = {
+            groupName: "test",
+            audiences: { type: "all" },
+            generators: [createGenerator({ name: "fernapi/fern-rust-model", language: "rust", outputPath: outputDir })]
+        } as unknown as generatorsYml.GeneratorGroup;
+        const log = vi.fn<(level: LogLevel, ...args: string[]) => void>();
+
+        await packLocalOutputForGroup({
+            group,
+            context: createMockTaskContext({ logger: createLogger(log) }),
+            packOnly: true
+        });
+
+        expect(loggingExecaMock).not.toHaveBeenCalled();
+        expect(log).toHaveBeenCalledWith(LogLevel.Warn, expect.stringMatching(/No Cargo\.toml found/));
+        expect(await readdir(outputDir)).toEqual(["src"]);
     });
 
     it("keeps generated source alongside fern-dist when packOnly is not set", async () => {

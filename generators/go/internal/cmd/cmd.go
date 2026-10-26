@@ -71,6 +71,9 @@ type Config struct {
 	OmitFernHeaders                bool
 	IncludePlatformHeaders         bool
 	AllowUserAgentAppInfo          bool
+	UserAgentOnly                  bool
+	LegacyNullableAliasPointers    bool
+	XmlTextFirstBuilders           bool
 	Organization                   string
 	CoordinatorURL                 string
 	CoordinatorTaskID              string
@@ -249,6 +252,9 @@ func newConfig(configFilename string) (*Config, error) {
 		OmitFernHeaders:                *customConfig.OmitFernHeaders,
 		IncludePlatformHeaders:         *customConfig.IncludePlatformHeaders,
 		AllowUserAgentAppInfo:          *customConfig.AllowUserAgentAppInfo,
+		UserAgentOnly:                  *customConfig.UserAgentOnly,
+		LegacyNullableAliasPointers:    *customConfig.LegacyNullableAliasPointers,
+		XmlTextFirstBuilders:           *customConfig.XmlTextFirstBuilders,
 		Organization:                   config.Organization,
 		AlwaysSendRequiredProperties:   *customConfig.AlwaysSendRequiredProperties,
 		Whitelabel:                     config.Whitelabel,
@@ -320,6 +326,9 @@ type customConfig struct {
 	OmitFernHeaders                *bool         `json:"omitFernHeaders,omitempty"`
 	IncludePlatformHeaders         *bool         `json:"includePlatformHeaders,omitempty"`
 	AllowUserAgentAppInfo          *bool         `json:"allowUserAgentAppInfo,omitempty"`
+	UserAgentOnly                  *bool         `json:"userAgentOnly,omitempty"`
+	LegacyNullableAliasPointers    *bool         `json:"legacyNullableAliasPointers,omitempty"`
+	XmlTextFirstBuilders           *bool         `json:"xmlTextFirstBuilders,omitempty"`
 	ClientName                     string        `json:"clientName,omitempty"`
 	ClientConstructorName          string        `json:"clientConstructorName,omitempty"`
 	ImportPath                     string        `json:"importPath,omitempty"`
@@ -555,6 +564,15 @@ func applyCustomConfigDefaultsForV1(customConfig *customConfig) *customConfig {
 	}
 	if customConfig.AllowUserAgentAppInfo == nil {
 		customConfig.AllowUserAgentAppInfo = gospec.Ptr(false)
+	}
+	if customConfig.UserAgentOnly == nil {
+		customConfig.UserAgentOnly = gospec.Ptr(false)
+	}
+	if customConfig.LegacyNullableAliasPointers == nil {
+		customConfig.LegacyNullableAliasPointers = gospec.Ptr(false)
+	}
+	if customConfig.XmlTextFirstBuilders == nil {
+		customConfig.XmlTextFirstBuilders = gospec.Ptr(false)
 	}
 	if customConfig.UnionVersion == "" {
 		customConfig.UnionVersion = "v1"

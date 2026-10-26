@@ -19,8 +19,22 @@ class SeedExhaustiveError extends Error {
         }
     }
     get requestId() {
-        var _a, _b, _c;
-        return (_c = (_b = (_a = this.rawResponse) === null || _a === void 0 ? void 0 : _a.headers) === null || _b === void 0 ? void 0 : _b.get("x-request-id")) !== null && _c !== void 0 ? _c : undefined;
+        var _a;
+        const headers = (_a = this.rawResponse) === null || _a === void 0 ? void 0 : _a.headers;
+        if (headers == null) {
+            return undefined;
+        }
+        const requestId = headers.get("X-Request-Id");
+        if (requestId != null) {
+            return requestId;
+        }
+        let fallback;
+        headers.forEach((value, name) => {
+            if (fallback === undefined && /request[-_]?id$/i.test(name)) {
+                fallback = value;
+            }
+        });
+        return fallback;
     }
 }
 exports.SeedExhaustiveError = SeedExhaustiveError;

@@ -86,7 +86,6 @@ public final class RequestTypeInlineType1 {
     public static final class Builder implements FooStage, _FinalStage {
         private String foo;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -111,6 +110,14 @@ public final class RequestTypeInlineType1 {
         @java.lang.Override
         public RequestTypeInlineType1 build() {
             return new RequestTypeInlineType1(foo, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("foo")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

@@ -139,9 +139,13 @@ export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Setting
         return workspace;
     }
 
+    /** False for a plain Fern Definition: no composed dependency carries source specs. */
+    public async composesSourceSpecs(): Promise<boolean> {
+        return ((await this.getComposedSpecs())?.specs.length ?? 0) > 0;
+    }
+
     public async getSourceSpecs(): Promise<Spec[]> {
-        await this.toFernWorkspace({ context: this.context });
-        const composed = this.composedSpecs[this.cacheKey(undefined)];
+        const composed = await this.getComposedSpecs();
         const specs = composed?.specs ?? [];
         if (specs.length === 0) {
             throw new CliError({
@@ -180,6 +184,11 @@ export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Setting
 
     public getAbsoluteFilePaths(): AbsoluteFilePath[] {
         return [this.absoluteFilePath];
+    }
+
+    private async getComposedSpecs(): Promise<ComposedSpecs | undefined> {
+        await this.toFernWorkspace({ context: this.context });
+        return this.composedSpecs[this.cacheKey(undefined)];
     }
 
     private cacheKey(settings: OSSWorkspace.Settings | undefined): string {

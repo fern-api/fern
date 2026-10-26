@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    List-valued XML (TwiML) attributes accept a single space-separated string in addition to
+    an array, matching the legacy call style: `new Gather(['input' => 'speech dtmf'])` and
+    `$response->gather(['input' => 'speech dtmf'])` no longer throw a `TypeError`.
+  type: fix

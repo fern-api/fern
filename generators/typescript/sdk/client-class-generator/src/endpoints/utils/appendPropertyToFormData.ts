@@ -1,5 +1,7 @@
 import { getWireValue } from "@fern-api/base-generator";
+import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
+import { getSchemaOptions } from "@fern-typescript/commons";
 import { FileContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
@@ -14,7 +16,8 @@ export function appendPropertyToFormData({
     requestParameter,
     includeSerdeLayer,
     allowExtraFields,
-    omitUndefined
+    omitUndefined,
+    requestContentType
 }: {
     property: FernIr.FileUploadRequestProperty;
     context: FileContext;
@@ -24,6 +27,7 @@ export function appendPropertyToFormData({
     includeSerdeLayer: boolean;
     allowExtraFields: boolean;
     omitUndefined: boolean;
+    requestContentType?: string;
 }): ts.Statement {
     return FernIr.FileUploadRequestProperty._visit(property, {
         file: (property) => {
@@ -110,6 +114,9 @@ export function appendPropertyToFormData({
             const FOR_LOOP_ITEM_VARIABLE_NAME = "_item";
 
             const referenceToBodyProperty = requestParameter.getReferenceToBodyProperty(property, context);
+            const contentType = context.includeMultipartPartContentType
+                ? getPartContentType(property, requestContentType)
+                : undefined;
 
             let statement: ts.Statement;
 
@@ -152,7 +159,8 @@ export function appendPropertyToFormData({
                             context.coreUtilities.formDataUtils.append({
                                 referenceToFormData,
                                 key: ts.factory.createIdentifier("key"),
-                                value: ts.factory.createIdentifier("value")
+                                value: ts.factory.createIdentifier("value"),
+                                contentType
                             })
                         ],
                         true
@@ -160,14 +168,24 @@ export function appendPropertyToFormData({
                 );
             } else if (property.style === "json") {
                 // if JSON, always serialize to JSON, regardless of whether the property is iterable or not
+                const jsonValue =
+                    includeSerdeLayer && referencesNamedType(property.valueType)
+                        ? context.typeSchema
+                              .getSchemaOfTypeReference(property.valueType)
+                              .jsonOrThrow(
+                                  referenceToBodyProperty,
+                                  getSchemaOptions({ allowExtraFields, omitUndefined })
+                              )
+                        : referenceToBodyProperty;
                 statement = context.coreUtilities.formDataUtils.append({
                     referenceToFormData,
                     key: getWireValue(property.name),
                     value: ts.factory.createCallExpression(
                         context.jsonContext.getReferenceToToJson().getExpression(),
                         [],
-                        [referenceToBodyProperty]
-                    )
+                        [jsonValue]
+                    ),
+                    contentType
                 });
             } else if (isMaybeIterable(property.valueType, context)) {
                 statement = ts.factory.createForOfStatement(
@@ -193,7 +211,8 @@ export function appendPropertyToFormData({
                                     ts.factory.createIdentifier(FOR_LOOP_ITEM_VARIABLE_NAME),
                                     property.valueType,
                                     context
-                                )
+                                ),
+                                contentType
                             })
                         ],
                         true
@@ -236,7 +255,8 @@ export function appendPropertyToFormData({
                     key: getWireValue(property.name),
                     value: context.type.stringify(referenceToBodyProperty, property.valueType, {
                         includeNullCheckIfOptional: false
-                    })
+                    }),
+                    contentType
                 });
             }
 
@@ -257,6 +277,27 @@ export function appendPropertyToFormData({
             throw new Error("Unknown addPropertyToFormData: " + property.type);
         }
     });
+}
+
+// Without an explicit encoding, importers copy the request's own content type (e.g. multipart/form-data)
+// onto each part. That is not a part type, so it is dropped; any other declared type is sent as-is.
+function getPartContentType(
+    property: FernIr.FileUploadBodyProperty,
+    requestContentType: string | undefined
+): string | undefined {
+    const contentType = property.contentType?.trim();
+    if (contentType == null || contentType.length === 0) {
+        return undefined;
+    }
+    const essence = getMediaTypeEssence(contentType);
+    if (essence === "multipart/form-data" || essence === getMediaTypeEssence(requestContentType ?? "")) {
+        return undefined;
+    }
+    return contentType;
+}
+
+function getMediaTypeEssence(contentType: string): string {
+    return (contentType.split(";")[0] ?? "").trim().toLowerCase();
 }
 
 function isMaybeIterable(typeReference: FernIr.TypeReference, context: FileContext): boolean {
@@ -453,4 +494,37 @@ function isMaybeSet(typeReference: FernIr.TypeReference, context: FileContext): 
             throw new Error("Unknown TypeReference: " + typeReference.type);
         }
     });
+}
+
+function referencesNamedType(typeReference: FernIr.TypeReference): boolean {
+    switch (typeReference.type) {
+        case "named":
+            return true;
+        case "primitive":
+        case "unknown":
+            return false;
+        case "container":
+            return containerReferencesNamedType(typeReference.container);
+        default:
+            assertNever(typeReference);
+    }
+}
+
+function containerReferencesNamedType(container: FernIr.ContainerType): boolean {
+    switch (container.type) {
+        case "list":
+            return referencesNamedType(container.list);
+        case "set":
+            return referencesNamedType(container.set);
+        case "optional":
+            return referencesNamedType(container.optional);
+        case "nullable":
+            return referencesNamedType(container.nullable);
+        case "map":
+            return referencesNamedType(container.keyType) || referencesNamedType(container.valueType);
+        case "literal":
+            return false;
+        default:
+            assertNever(container);
+    }
 }

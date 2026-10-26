@@ -5,7 +5,7 @@ import {
     GeneratorNotificationService,
     getPackageName
 } from "@fern-api/browser-compatible-base-generator";
-import { RelativeFilePath } from "@fern-api/path-utils";
+import { AbsoluteFilePath, join, RelativeFilePath, relative } from "@fern-api/path-utils";
 import { BaseRubyCustomConfigSchema, ruby } from "@fern-api/ruby-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { upperFirst } from "lodash-es";
@@ -209,6 +209,16 @@ export abstract class AbstractRubyGeneratorContext<
     public abstract getClassReferenceForTypeId(typeId: FernIr.TypeId): ruby.ClassReference;
 
     public abstract getFileNameForTypeId(typeId: FernIr.TypeId): string;
+
+    /**
+     * Returns the `require_relative` target that loads the gem's root file (`lib/<root>.rb`) from the
+     * file declaring the given type, so a type file can be required on its own.
+     */
+    public getRequireRelativePathToRootFile(typeId: FernIr.TypeId): string {
+        const typeDirectory = join(AbsoluteFilePath.of("/"), this.getLocationForTypeId(typeId));
+        const libDirectory = join(AbsoluteFilePath.of("/"), RelativeFilePath.of("lib"));
+        return join(relative(typeDirectory, libDirectory), RelativeFilePath.of(this.getRootFolderName()));
+    }
 
     public abstract getModuleNamesForTypeId(typeId: FernIr.TypeId): string[];
 

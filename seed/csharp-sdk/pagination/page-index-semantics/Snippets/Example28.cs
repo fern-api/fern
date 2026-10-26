@@ -10,8 +10,8 @@ public partial class Examples
             }
         );
 
-        await client.Users.ListUsernamesWithOptionalResponseAsync(
-            new ListUsernamesWithOptionalResponseRequest {
+        await client.Users.ListUsernamesAsync(
+            new SeedPagination.ListUsernamesRequest {
                 StartingAfter = "starting_after"
             }
         );

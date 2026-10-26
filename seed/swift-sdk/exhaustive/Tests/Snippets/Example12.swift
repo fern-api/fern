@@ -8,8 +8,6 @@ enum Example12 {
             token: "<token>"
         )
 
-        _ = try await client.endpoints.httpMethods.testPost(request: ObjectWithRequiredField(
-            string: "string"
-        ))
+        _ = try await client.endpoints.httpMethods.testGet(id: "id")
     }
 }

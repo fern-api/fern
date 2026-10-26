@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    The `additional_body_parameters` request option is now applied to request bodies. Previously it was
+    documented on every endpoint method but silently ignored. Extra properties are merged into the serialized
+    JSON (or form-urlencoded) body using their API wire-format names, override SDK-set fields with the same name,
+    and create a body when the endpoint has none
+    (except GET and HEAD requests, which are still sent without a body). Multipart (file upload) requests are not affected.
+  type: fix

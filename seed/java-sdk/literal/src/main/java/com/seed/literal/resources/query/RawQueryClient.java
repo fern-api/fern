@@ -4,6 +4,7 @@
 package com.seed.literal.resources.query;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.literal.core.BodyProperties;
 import com.seed.literal.core.ClientOptions;
 import com.seed.literal.core.ObjectMappers;
 import com.seed.literal.core.QueryStringMapper;
@@ -73,7 +74,11 @@ public class RawQueryClient {
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
-                .method("POST", RequestBody.create("", null))
+                .method(
+                        "POST",
+                        BodyProperties.toRequestBody(
+                                requestOptions != null ? requestOptions.getBodyProperties() : null,
+                                RequestBody.create("", null)))
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json");
         Request okhttpRequest = _requestBuilder.build();

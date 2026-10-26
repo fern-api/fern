@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    The pipeline's `autoVersion` step accepts `faiOrgId` and sends it to FAI as `X-Fern-Org-Id`.
+    A caller that analyzes a customer's SDK with a service token sets it, so FAI records the usage
+    under the customer's organization instead of the token's.
+  type: feat

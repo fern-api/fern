@@ -81,7 +81,6 @@ public final class ResponseType {
     public static final class Builder implements TypeStage, _FinalStage {
         private Type type;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -102,6 +101,14 @@ public final class ResponseType {
         @java.lang.Override
         public ResponseType build() {
             return new ResponseType(type, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("type")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

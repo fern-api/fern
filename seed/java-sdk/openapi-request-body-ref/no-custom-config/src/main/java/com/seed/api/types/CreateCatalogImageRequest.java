@@ -97,7 +97,6 @@ public final class CreateCatalogImageRequest {
 
         private Optional<String> caption = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -132,6 +131,14 @@ public final class CreateCatalogImageRequest {
         @java.lang.Override
         public CreateCatalogImageRequest build() {
             return new CreateCatalogImageRequest(caption, catalogObjectId, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("caption") || key.equalsIgnoreCase("catalog_object_id")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

@@ -8,6 +8,8 @@ extension Requests {
         public let nullableNumber: Nullable<Double>?
         /// Regular non-nullable field
         public let nonNullableText: String?
+        /// Must be sent, but may be null to clear the value
+        public let requiredNullableText: Nullable<String>
         /// Additional properties that are not explicitly defined in the schema
         public let additionalProperties: [String: JSONValue]
 
@@ -15,11 +17,13 @@ extension Requests {
             nullableText: Nullable<String>? = nil,
             nullableNumber: Nullable<Double>? = nil,
             nonNullableText: String? = nil,
+            requiredNullableText: Nullable<String>,
             additionalProperties: [String: JSONValue] = .init()
         ) {
             self.nullableText = nullableText
             self.nullableNumber = nullableNumber
             self.nonNullableText = nonNullableText
+            self.requiredNullableText = requiredNullableText
             self.additionalProperties = additionalProperties
         }
 
@@ -28,6 +32,7 @@ extension Requests {
             self.nullableText = try container.decodeNullableIfPresent(String.self, forKey: .nullableText)
             self.nullableNumber = try container.decodeNullableIfPresent(Double.self, forKey: .nullableNumber)
             self.nonNullableText = try container.decodeIfPresent(String.self, forKey: .nonNullableText)
+            self.requiredNullableText = try container.decode(Nullable<String>.self, forKey: .requiredNullableText)
             self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
         }
 
@@ -37,6 +42,7 @@ extension Requests {
             try container.encodeNullableIfPresent(self.nullableText, forKey: .nullableText)
             try container.encodeNullableIfPresent(self.nullableNumber, forKey: .nullableNumber)
             try container.encodeIfPresent(self.nonNullableText, forKey: .nonNullableText)
+            try container.encode(self.requiredNullableText, forKey: .requiredNullableText)
         }
 
         /// Keys for encoding/decoding struct properties.
@@ -44,6 +50,7 @@ extension Requests {
             case nullableText = "nullable_text"
             case nullableNumber = "nullable_number"
             case nonNullableText = "non_nullable_text"
+            case requiredNullableText = "required_nullable_text"
         }
     }
 }

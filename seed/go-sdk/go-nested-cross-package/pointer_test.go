@@ -8,6 +8,16 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+func TestPtr(t *testing.T) {
+	value := 42
+	ptr := Ptr(value)
+	assert.NotNil(t, ptr)
+	assert.Equal(t, value, *ptr)
+
+	str := Ptr("hello")
+	assert.Equal(t, "hello", *str)
+}
+
 func TestBool(t *testing.T) {
 	value := true
 	ptr := Bool(value)

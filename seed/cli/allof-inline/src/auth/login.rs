@@ -200,7 +200,7 @@ pub(crate) fn scheme_credential_fields(
     match binding {
         SchemeBinding::Basic { .. } => Some(vec!["username", "password"]),
         SchemeBinding::Custom(provider) => provider.credential_fields(),
-        SchemeBinding::Token(_) => None,
+        SchemeBinding::Token(_) | SchemeBinding::PrefixedToken { .. } => None,
     }
 }
 
@@ -223,26 +223,75 @@ pub(crate) fn multi_field_keyring_value(
 ///
 /// Pipeable (`printf 'id\nsecret\n' | cli auth login --with-token`), the
 /// same contract single-value paste already has. Prompts go to stderr so
-/// piping stdout is unaffected, and each is on its own line so a piped run
-/// does not render them run together.
+/// piping stdout is unaffected. In a terminal the value is typed on the
+/// prompt's line and secret fields are not echoed; piped runs keep one
+/// prompt per line so they don't render run together.
 pub(crate) fn read_fields_from_stdin(
+    scheme_name: &str,
     fields: &[&'static str],
 ) -> Result<Vec<(&'static str, String)>, CliError> {
     let stderr = std::io::stderr();
     let mut err = stderr.lock();
+    let labels: Vec<String> = fields
+        .iter()
+        .map(|field| field_label(scheme_name, field).unwrap_or_else(|| (*field).to_string()))
+        .collect();
     let _ = writeln!(
         err,
         "This scheme needs {} values: {}.",
         fields.len(),
-        fields.join(", "),
+        labels.join(", "),
     );
     let mut out = Vec::with_capacity(fields.len());
-    for field in fields {
-        let _ = writeln!(err, "{field}:");
+    let typed = std::io::stdin().is_terminal();
+    for (field, label) in fields.iter().zip(&labels) {
+        let echo = (typed && crate::profiles::commands::is_secret_field(field))
+            .then(crate::profiles::commands::EchoOff::new);
+        let hidden = echo.as_ref().is_some_and(|echo| echo.active());
+        let _ = if typed {
+            write!(err, "{label}{}: ", if hidden { " (hidden)" } else { "" })
+        } else {
+            writeln!(err, "{label}:")
+        };
         let _ = err.flush();
-        out.push((*field, read_line_from_stdin(field)?));
+        let value = read_line_from_stdin(label);
+        drop(echo);
+        if hidden {
+            let _ = writeln!(err);
+        }
+        out.push((*field, value?));
     }
     Ok(out)
+}
+
+/// Prompt labels declared by the schemes (`scheme`, `field`, `label`), e.g.
+/// basic auth's `username` shown as `Account Sid`. Process-wide because the
+/// paste paths that prompt have no access to the registered bindings.
+static FIELD_LABELS: std::sync::RwLock<Vec<(String, String, String)>> =
+    std::sync::RwLock::new(Vec::new());
+
+/// Record the prompt labels a scheme declares. Called by `CliApp::auth`.
+pub(crate) fn register_field_labels(scheme_name: &str, labels: Vec<(String, String)>) {
+    if labels.is_empty() {
+        return;
+    }
+    let mut registry = FIELD_LABELS.write().unwrap_or_else(|e| e.into_inner());
+    registry.retain(|(scheme, _, _)| scheme != scheme_name);
+    registry.extend(
+        labels
+            .into_iter()
+            .map(|(field, label)| (scheme_name.to_string(), field, label)),
+    );
+}
+
+/// The label a scheme declared for one of its credential fields, if any.
+pub(crate) fn field_label(scheme_name: &str, field: &str) -> Option<String> {
+    FIELD_LABELS
+        .read()
+        .unwrap_or_else(|e| e.into_inner())
+        .iter()
+        .find(|(scheme, f, _)| scheme == scheme_name && f == field)
+        .map(|(_, _, label)| label.clone())
 }
 
 /// Concrete token-paste implementation, separated so the universal
@@ -277,7 +326,7 @@ pub(crate) fn run_token_paste_for(
     }
     let stored = if let Some(fields) = fields {
         drop(err);
-        multi_field_keyring_value(&read_fields_from_stdin(&fields)?)?
+        multi_field_keyring_value(&read_fields_from_stdin(scheme_name, &fields)?)?
     } else {
         let _ = writeln!(err, "Paste your token (input will be read from stdin):");
         let _ = err.flush();
@@ -288,6 +337,7 @@ pub(crate) fn run_token_paste_for(
     let mut err = stderr.lock();
     let account = crate::profiles::keyring_account(scheme_name);
     active_store().set(cli_name, &account, &stored)?;
+    crate::profiles::note_stored_credential(cli_name, scheme_name, &stored);
 
     let _ = writeln!(
         err,
@@ -505,6 +555,7 @@ fn handle_logout(
     // active would silently log the user out of every tenant.
     let account = crate::profiles::keyring_account(&scheme);
     active_store().delete(cli_name, &account)?;
+    crate::profiles::note_removed_credential(cli_name, &scheme);
     let _ = writeln!(
         std::io::stderr().lock(),
         "{}",
@@ -675,7 +726,9 @@ pub(crate) fn expand_slots(
     cli_name: &str,
 ) -> CredentialSlots {
     match binding {
-        SchemeBinding::Token(s) => CredentialSlots::required([flatten_chain(s.clone())]),
+        SchemeBinding::Token(s) | SchemeBinding::PrefixedToken { source: s, .. } => {
+            CredentialSlots::required([flatten_chain(s.clone())])
+        }
         SchemeBinding::Basic { username, password } => CredentialSlots::required([
             flatten_chain(username.clone()),
             flatten_chain(password.clone()),
@@ -892,6 +945,7 @@ fn run_env_capture(
             .ok_or_else(|| from_env_error(cli_name, scheme, "a credential"))?,
     };
     crate::auth::keyring_store::active_store().set(cli_name, &account, &stored)?;
+    crate::profiles::note_stored_credential(cli_name, scheme, &stored);
 
     let mut stderr = std::io::stderr();
     let scope = match crate::profiles::active_name() {
@@ -996,8 +1050,13 @@ pub fn shadowing_env_vars(
 }
 
 /// Warn when any of `candidates` is set and would outrank the keyring entry
-/// just written. Get `candidates` from [`shadowing_env_vars`].
+/// just written. Get `candidates` from [`shadowing_env_vars`]. Only the
+/// unscoped entry can be shadowed: a credential stored under a profile
+/// outranks env whenever that profile is selected (ADR-0011).
 pub(crate) fn warn_if_env_shadows<W: Write>(out: &mut W, candidates: &[String]) {
+    if crate::profiles::active_name().is_some() {
+        return;
+    }
     for name in candidates {
         if let Ok(v) = std::env::var(name) {
             if !v.trim().is_empty() {
@@ -1068,7 +1127,7 @@ pub fn inject_keyring_sources(
             crate::profiles::keyring_account(scheme_name.as_str()),
         );
         match binding {
-            SchemeBinding::Token(src) => {
+            SchemeBinding::Token(src) | SchemeBinding::PrefixedToken { source: src, .. } => {
                 let existing = std::mem::replace(src, AuthCredentialSource::Missing);
                 *src = splice_keyring(existing, kr);
             }
@@ -1112,23 +1171,25 @@ pub fn inject_oauth2_caches(cli_name: &str, bindings: &mut [(String, SchemeBindi
 /// the right precedence.
 ///
 /// Normally it goes *last*, preserving ADR-0008's order (CLI flag > env >
-/// keyring > file). But when the profile was named explicitly with `-p`, it
-/// goes *first*: `-p prod` is the most specific statement of intent this
-/// invocation has, and every other explicit flag already beats the
-/// environment. An ambient profile still loses to env, so a CI job's
-/// exported credentials stay authoritative. See
-/// [`crate::profiles::outranks_env`].
+/// keyring > file). But when a profile is in play — however it was selected —
+/// it goes directly *below the CLI flag rungs* and above everything else:
+/// an explicit flag still wins, the profile's stored credential is what the
+/// user chose for that tenant, and env only fills in when nothing is stored.
+/// See [`crate::profiles::outranks_env`].
 fn splice_keyring(
     existing: AuthCredentialSource,
     keyring: AuthCredentialSource,
 ) -> AuthCredentialSource {
     if crate::profiles::outranks_env() {
+        let is_flag = |s: &AuthCredentialSource| matches!(s, AuthCredentialSource::Cli(_));
         return match existing {
             AuthCredentialSource::Chain(mut sources) => {
-                sources.insert(0, keyring);
+                let at = sources.iter().take_while(|s| is_flag(s)).count();
+                sources.insert(at, keyring);
                 AuthCredentialSource::Chain(sources)
             }
             AuthCredentialSource::Missing => keyring,
+            flag if is_flag(&flag) => AuthCredentialSource::Chain(vec![flag, keyring]),
             single => AuthCredentialSource::Chain(vec![keyring, single]),
         };
     }
@@ -1155,6 +1216,20 @@ fn append_to_chain(
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn field_labels_are_scoped_to_their_scheme() {
+        super::register_field_labels(
+            "labels_test_scheme",
+            vec![("username".to_string(), "Account Sid".to_string())],
+        );
+        assert_eq!(
+            super::field_label("labels_test_scheme", "username").as_deref(),
+            Some("Account Sid")
+        );
+        assert_eq!(super::field_label("labels_test_scheme", "password"), None);
+        assert_eq!(super::field_label("labels_other_scheme", "username"), None);
+    }
+
     use super::*;
     use crate::auth::keyring_store::{set_active_store, KeyringStore, MockKeyringStore};
     use serial_test::serial;
@@ -1267,14 +1342,14 @@ mod tests {
             match &bindings[0].1 {
                 SchemeBinding::Token(AuthCredentialSource::Chain(sources)) => assert!(
                     matches!(
-                        sources[1],
+                        sources[0],
                         AuthCredentialSource::Keyring { ref account, .. }
                             if account == "OAuth2#acme"
                     ),
                     "{:?}",
-                    describe_source(&sources[1]),
+                    describe_source(&sources[0]),
                 ),
-                _ => panic!("expected Token(Chain([Env, Keyring]))"),
+                _ => panic!("expected Token(Chain([Keyring, Env]))"),
             }
         });
     }
@@ -1282,8 +1357,8 @@ mod tests {
     #[test]
     #[serial]
     fn the_profile_does_not_add_a_rung_to_the_credential_chain() {
-        // It only selects which account the existing keyring rung reads, so
-        // ADR-0008's precedence (CLI > env > keyring > file) is untouched.
+        // It selects which account the keyring rung reads and moves that rung
+        // ahead of env; it never adds a rung of its own.
         with_profile(Some("acme"), || {
             let mut bindings = vec![(
                 "OAuth2".to_string(),
@@ -1293,9 +1368,10 @@ mod tests {
             match &bindings[0].1 {
                 SchemeBinding::Token(AuthCredentialSource::Chain(sources)) => {
                     assert_eq!(sources.len(), 2, "{sources:?}", sources = sources.len());
-                    assert!(matches!(sources[0], AuthCredentialSource::Env(_)));
+                    assert!(matches!(sources[0], AuthCredentialSource::Keyring { .. }));
+                    assert!(matches!(sources[1], AuthCredentialSource::Env(_)));
                 }
-                _ => panic!("expected Token(Chain([Env, Keyring]))"),
+                _ => panic!("expected Token(Chain([Keyring, Env]))"),
             }
         });
     }
@@ -1341,6 +1417,43 @@ mod tests {
                 assert!(matches!(sources[2], AuthCredentialSource::Keyring { .. }));
             }
             _ => panic!("expected Chain"),
+        }
+    }
+
+    #[test]
+    #[serial]
+    fn inject_keyring_under_a_profile_sits_below_the_flag_and_above_env() {
+        let mut bindings = vec![(
+            "scheme1".to_string(),
+            SchemeBinding::Token(AuthCredentialSource::any([
+                AuthCredentialSource::cli("api-token"),
+                AuthCredentialSource::from_env("MY_TOKEN"),
+            ])),
+        )];
+        with_profile(Some("prod"), || {
+            inject_keyring_sources("cli", &mut bindings)
+        });
+        match &bindings[0].1 {
+            SchemeBinding::Token(AuthCredentialSource::Chain(sources)) => {
+                assert_eq!(sources.len(), 3);
+                assert!(matches!(sources[0], AuthCredentialSource::Cli(_)));
+                assert!(matches!(sources[1], AuthCredentialSource::Keyring { .. }));
+                assert!(matches!(sources[2], AuthCredentialSource::Env(_)));
+            }
+            _ => panic!("expected Chain([Cli, Keyring, Env])"),
+        }
+
+        let mut single = vec![(
+            "scheme1".to_string(),
+            SchemeBinding::Token(AuthCredentialSource::cli("api-token")),
+        )];
+        with_profile(Some("prod"), || inject_keyring_sources("cli", &mut single));
+        match &single[0].1 {
+            SchemeBinding::Token(AuthCredentialSource::Chain(sources)) => {
+                assert!(matches!(sources[0], AuthCredentialSource::Cli(_)));
+                assert!(matches!(sources[1], AuthCredentialSource::Keyring { .. }));
+            }
+            _ => panic!("expected Chain([Cli, Keyring])"),
         }
     }
 
@@ -1500,6 +1613,7 @@ mod tests {
         assert!(slots.required.is_empty());
         assert_eq!(slots.alternatives.len(), 1);
         match &slots.alternatives[0] {
+
             AuthCredentialSource::Keyring { service, account } => {
                 assert_eq!(service, "my-cli");
                 assert_eq!(account, "OAuth2");
@@ -1540,7 +1654,6 @@ mod tests {
             matches!(&slots.required[1][..], [AuthCredentialSource::Env(e)] if e == "OAUTH_CLIENT_SECRET")
         );
     }
-
 
     #[test]
     #[serial]

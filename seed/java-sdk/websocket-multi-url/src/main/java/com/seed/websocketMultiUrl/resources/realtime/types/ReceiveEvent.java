@@ -94,7 +94,6 @@ public final class ReceiveEvent {
 
         private int timestamp;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -123,6 +122,14 @@ public final class ReceiveEvent {
         @java.lang.Override
         public ReceiveEvent build() {
             return new ReceiveEvent(data, timestamp, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("data") || key.equalsIgnoreCase("timestamp")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

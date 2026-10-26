@@ -145,6 +145,10 @@ runs:
             SNIPPET_PACKAGE="@fern-api/swift-dynamic-snippets"
             SNIPPET_DIR="generators/swift/dynamic-snippets"
             ;;
+          "cli")
+            SNIPPET_PACKAGE="@fern-api/cli-dynamic-snippets"
+            SNIPPET_DIR="generators/cli/dynamic-snippets"
+            ;;
           *)
             echo "No snippet package for generator: $GENERATOR_NAME"
             SNIPPET_PACKAGE=""

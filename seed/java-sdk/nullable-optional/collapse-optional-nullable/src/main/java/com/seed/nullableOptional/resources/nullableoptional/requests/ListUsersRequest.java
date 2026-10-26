@@ -118,7 +118,6 @@ public final class ListUsersRequest {
 
         private OptionalNullable<String> sortBy = OptionalNullable.absent();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -197,6 +196,17 @@ public final class ListUsersRequest {
 
         public ListUsersRequest build() {
             return new ListUsersRequest(limit, offset, includeDeleted, sortBy, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("limit")
+                    || key.equalsIgnoreCase("offset")
+                    || key.equalsIgnoreCase("includeDeleted")
+                    || key.equalsIgnoreCase("sortBy")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

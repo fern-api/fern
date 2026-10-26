@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern export` no longer marks `optional<T>` object properties (including union variant values and
+    multipart form fields), query parameters, headers, and request bodies as `nullable: true`. Optionality is already expressed by leaving them out of `required`, so the
+    extra flag turned every `optional<T>` into `optional<nullable<T>>` when the spec was imported or used
+    to generate an SDK. `nullable<T>` and `optional<nullable<T>>` still export with `nullable: true`, as do
+    `optional<T>` list items, map values, aliases, and responses, where `null` is how an absent value is sent.
+  type: fix

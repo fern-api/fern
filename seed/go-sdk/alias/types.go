@@ -12,12 +12,12 @@ import (
 // Object is an alias for a type.
 type Object = *Type
 
-// A simple type with just a name.
 var (
 	typeFieldID   = big.NewInt(1 << 0)
 	typeFieldName = big.NewInt(1 << 1)
 )
 
+// A simple type with just a name.
 type Type struct {
 	ID   TypeID `json:"id" url:"id"`
 	Name string `json:"name" url:"name"`
@@ -51,10 +51,12 @@ func (t *Type) GetExtraProperties() map[string]interface{} {
 }
 
 func (t *Type) require(field *big.Int) {
-	if t.explicitFields == nil {
-		t.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if t.explicitFields != nil {
+		next.Set(t.explicitFields)
 	}
-	t.explicitFields.Or(t.explicitFields, field)
+	next.Or(next, field)
+	t.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;

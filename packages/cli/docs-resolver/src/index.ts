@@ -18,10 +18,13 @@ export {
     applyTranslatedNavigationOverlays,
     getTranslatedAnnouncement
 } from "./applyTranslatedNavigationOverlays.js";
+export { markUntranslatedNavNodesNoindex } from "./markUntranslatedNavNodesNoindex.js";
 export type TranslationNavigationOverlay = docsYml.TranslationNavigationOverlay;
 export { bundleMdxComponents } from "./bundleMdxComponents.js";
 export {
     DocsDefinitionResolver,
+    getApiRegistrationConcurrency,
+    type OnApiRegistrationQueuedFn,
     type RegisterApiFn,
     type TranslatedApiSpec,
     type UploadedFile

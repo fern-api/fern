@@ -122,3 +122,19 @@ describe("nullable alias snippets", () => {
         expect(response.snippet).toContain("return &value");
     });
 });
+
+describe("nullable alias snippets with legacyNullableAliasPointers", () => {
+    it("takes the address of aliases that already render as pointers", async () => {
+        const generator = buildDynamicSnippetsGenerator({
+            irFilepath: IR_FILEPATH,
+            config: buildGeneratorConfig({ customConfig: { legacyNullableAliasPointers: true } })
+        });
+
+        const response = await generator.generate(
+            createReport({ tags_alias: ["a"], metadata_alias: { key: "value" }, description: "description" })
+        );
+
+        expect(response.errors).toBeUndefined();
+        expect(response.snippet).toMatchSnapshot();
+    });
+});

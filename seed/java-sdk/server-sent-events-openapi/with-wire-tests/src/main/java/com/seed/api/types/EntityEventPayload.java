@@ -96,7 +96,6 @@ public final class EntityEventPayload implements IEntityEventPayload {
 
         private Optional<OffsetDateTime> updatedTime = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -143,6 +142,16 @@ public final class EntityEventPayload implements IEntityEventPayload {
 
         public EntityEventPayload build() {
             return new EntityEventPayload(entityId, eventType, updatedTime, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("entityId")
+                    || key.equalsIgnoreCase("eventType")
+                    || key.equalsIgnoreCase("updatedTime")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

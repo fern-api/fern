@@ -5,6 +5,7 @@ package com.seed.pathParameters.resources.organizations;
 
 import com.seed.pathParameters.core.ClientOptions;
 import com.seed.pathParameters.core.RequestOptions;
+import com.seed.pathParameters.core.SeedPathParametersHttpResponse;
 import com.seed.pathParameters.resources.organizations.requests.GetOrganizationUserRequest;
 import com.seed.pathParameters.resources.organizations.requests.SearchOrganizationsRequest;
 import com.seed.pathParameters.resources.organizations.types.Organization;
@@ -30,58 +31,128 @@ public class AsyncOrganizationsClient {
     }
 
     public CompletableFuture<Organization> getOrganization(String organizationId) {
-        return this.rawClient.getOrganization(organizationId).thenApply(response -> response.body());
+        CompletableFuture<SeedPathParametersHttpResponse<Organization>> rawFuture =
+                this.rawClient.getOrganization(organizationId);
+        CompletableFuture<Organization> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Organization> getOrganization(String organizationId, RequestOptions requestOptions) {
-        return this.rawClient.getOrganization(organizationId, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedPathParametersHttpResponse<Organization>> rawFuture =
+                this.rawClient.getOrganization(organizationId, requestOptions);
+        CompletableFuture<Organization> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<User> getOrganizationUser(String organizationId, String userId) {
-        return this.rawClient.getOrganizationUser(organizationId, userId).thenApply(response -> response.body());
+        CompletableFuture<SeedPathParametersHttpResponse<User>> rawFuture =
+                this.rawClient.getOrganizationUser(organizationId, userId);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<User> getOrganizationUser(
             String organizationId, String userId, RequestOptions requestOptions) {
-        return this.rawClient
-                .getOrganizationUser(organizationId, userId, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedPathParametersHttpResponse<User>> rawFuture =
+                this.rawClient.getOrganizationUser(organizationId, userId, requestOptions);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<User> getOrganizationUser(
             String organizationId, String userId, GetOrganizationUserRequest request) {
-        return this.rawClient
-                .getOrganizationUser(organizationId, userId, request)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedPathParametersHttpResponse<User>> rawFuture =
+                this.rawClient.getOrganizationUser(organizationId, userId, request);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<User> getOrganizationUser(
             String organizationId, String userId, GetOrganizationUserRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .getOrganizationUser(organizationId, userId, request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedPathParametersHttpResponse<User>> rawFuture =
+                this.rawClient.getOrganizationUser(organizationId, userId, request, requestOptions);
+        CompletableFuture<User> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<List<Organization>> searchOrganizations(String organizationId) {
-        return this.rawClient.searchOrganizations(organizationId).thenApply(response -> response.body());
+        CompletableFuture<SeedPathParametersHttpResponse<List<Organization>>> rawFuture =
+                this.rawClient.searchOrganizations(organizationId);
+        CompletableFuture<List<Organization>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<List<Organization>> searchOrganizations(
             String organizationId, RequestOptions requestOptions) {
-        return this.rawClient
-                .searchOrganizations(organizationId, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedPathParametersHttpResponse<List<Organization>>> rawFuture =
+                this.rawClient.searchOrganizations(organizationId, requestOptions);
+        CompletableFuture<List<Organization>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<List<Organization>> searchOrganizations(
             String organizationId, SearchOrganizationsRequest request) {
-        return this.rawClient.searchOrganizations(organizationId, request).thenApply(response -> response.body());
+        CompletableFuture<SeedPathParametersHttpResponse<List<Organization>>> rawFuture =
+                this.rawClient.searchOrganizations(organizationId, request);
+        CompletableFuture<List<Organization>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<List<Organization>> searchOrganizations(
             String organizationId, SearchOrganizationsRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .searchOrganizations(organizationId, request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedPathParametersHttpResponse<List<Organization>>> rawFuture =
+                this.rawClient.searchOrganizations(organizationId, request, requestOptions);
+        CompletableFuture<List<Organization>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

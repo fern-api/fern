@@ -114,7 +114,7 @@ export class ImdbClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `movies/${core.url.encodePathParam(movieId)}`,
+                `movies/${core.url.encodePathParam(movieId, errors.SeedApiError)}`,
             ),
             method: "GET",
             headers: _headers,

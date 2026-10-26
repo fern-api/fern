@@ -651,6 +651,7 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": false,
                 "examples": null
             }
         },
@@ -784,4 +785,4 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
 }"
 `;
 
-exports[`dependencies > file dependencies 1`] = `2445756`;
+exports[`dependencies > file dependencies 1`] = `2446509`;

@@ -188,8 +188,8 @@ module Seed
       #     test_case_id: "testCaseId",
       #     result: {
       #       result: {
-      #         expected_result: {},
-      #         actual_result: {
+      #         expectedResult: {},
+      #         actualResult: {
       #           value: {}
       #         },
       #         passed: true
@@ -197,18 +197,18 @@ module Seed
       #       stdout: "stdout"
       #     },
       #     trace_responses: [{
-      #       submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-      #       line_number: 1,
-      #       return_value: {},
-      #       expression_location: {
+      #       submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+      #       lineNumber: 1,
+      #       returnValue: {},
+      #       expressionLocation: {
       #         start: 1,
       #         offset: 1
       #       },
       #       stack: {
-      #         num_stack_frames: 1,
-      #         top_stack_frame: {
-      #           method_name: "methodName",
-      #           line_number: 1,
+      #         numStackFrames: 1,
+      #         topStackFrame: {
+      #           methodName: "methodName",
+      #           lineNumber: 1,
       #           scopes: [{
       #             variables: {
       #               variables: {}
@@ -222,18 +222,18 @@ module Seed
       #       },
       #       stdout: "stdout"
       #     }, {
-      #       submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-      #       line_number: 1,
-      #       return_value: {},
-      #       expression_location: {
+      #       submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+      #       lineNumber: 1,
+      #       returnValue: {},
+      #       expressionLocation: {
       #         start: 1,
       #         offset: 1
       #       },
       #       stack: {
-      #         num_stack_frames: 1,
-      #         top_stack_frame: {
-      #           method_name: "methodName",
-      #           line_number: 1,
+      #         numStackFrames: 1,
+      #         topStackFrame: {
+      #           methodName: "methodName",
+      #           lineNumber: 1,
       #           scopes: [{
       #             variables: {
       #               variables: {}
@@ -290,22 +290,22 @@ module Seed
       #     submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
       #     test_case_id: "testCaseId",
       #     request: [{
-      #       submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-      #       line_number: 1,
+      #       submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+      #       lineNumber: 1,
       #       file: {
       #         filename: "filename",
       #         directory: "directory"
       #       },
-      #       return_value: {},
-      #       expression_location: {
+      #       returnValue: {},
+      #       expressionLocation: {
       #         start: 1,
       #         offset: 1
       #       },
       #       stack: {
-      #         num_stack_frames: 1,
-      #         top_stack_frame: {
-      #           method_name: "methodName",
-      #           line_number: 1,
+      #         numStackFrames: 1,
+      #         topStackFrame: {
+      #           methodName: "methodName",
+      #           lineNumber: 1,
       #           scopes: [{
       #             variables: {
       #               variables: {}
@@ -319,22 +319,22 @@ module Seed
       #       },
       #       stdout: "stdout"
       #     }, {
-      #       submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-      #       line_number: 1,
+      #       submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+      #       lineNumber: 1,
       #       file: {
       #         filename: "filename",
       #         directory: "directory"
       #       },
-      #       return_value: {},
-      #       expression_location: {
+      #       returnValue: {},
+      #       expressionLocation: {
       #         start: 1,
       #         offset: 1
       #       },
       #       stack: {
-      #         num_stack_frames: 1,
-      #         top_stack_frame: {
-      #           method_name: "methodName",
-      #           line_number: 1,
+      #         numStackFrames: 1,
+      #         topStackFrame: {
+      #           methodName: "methodName",
+      #           lineNumber: 1,
       #           scopes: [{
       #             variables: {
       #               variables: {}
@@ -353,14 +353,11 @@ module Seed
       # @return [untyped]
       def store_traced_test_case_v2(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        path_param_names = %i[submission_id test_case_id]
-        body_params = params.except(*path_param_names)
-
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/admin/store-test-trace-v2/submission/#{URI.encode_uri_component(params[:submission_id].to_s)}/testCase/#{URI.encode_uri_component(params[:test_case_id].to_s)}",
-          body: body_params,
+          body: params[:request]&.map { |item| Seed::Submission::Types::TraceResponseV2.new(item).to_h },
           request_options: request_options
         )
         begin
@@ -389,25 +386,25 @@ module Seed
       #     submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
       #     workspace_run_details: {
       #       exception: {
-      #         exception_type: "exceptionType",
-      #         exception_message: "exceptionMessage",
-      #         exception_stacktrace: "exceptionStacktrace"
+      #         exceptionType: "exceptionType",
+      #         exceptionMessage: "exceptionMessage",
+      #         exceptionStacktrace: "exceptionStacktrace"
       #       },
       #       stdout: "stdout"
       #     },
       #     trace_responses: [{
-      #       submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-      #       line_number: 1,
-      #       return_value: {},
-      #       expression_location: {
+      #       submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+      #       lineNumber: 1,
+      #       returnValue: {},
+      #       expressionLocation: {
       #         start: 1,
       #         offset: 1
       #       },
       #       stack: {
-      #         num_stack_frames: 1,
-      #         top_stack_frame: {
-      #           method_name: "methodName",
-      #           line_number: 1,
+      #         numStackFrames: 1,
+      #         topStackFrame: {
+      #           methodName: "methodName",
+      #           lineNumber: 1,
       #           scopes: [{
       #             variables: {
       #               variables: {}
@@ -421,18 +418,18 @@ module Seed
       #       },
       #       stdout: "stdout"
       #     }, {
-      #       submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-      #       line_number: 1,
-      #       return_value: {},
-      #       expression_location: {
+      #       submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+      #       lineNumber: 1,
+      #       returnValue: {},
+      #       expressionLocation: {
       #         start: 1,
       #         offset: 1
       #       },
       #       stack: {
-      #         num_stack_frames: 1,
-      #         top_stack_frame: {
-      #           method_name: "methodName",
-      #           line_number: 1,
+      #         numStackFrames: 1,
+      #         topStackFrame: {
+      #           methodName: "methodName",
+      #           lineNumber: 1,
       #           scopes: [{
       #             variables: {
       #               variables: {}
@@ -487,22 +484,22 @@ module Seed
       #   client.admin.store_traced_workspace_v2(
       #     submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
       #     request: [{
-      #       submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-      #       line_number: 1,
+      #       submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+      #       lineNumber: 1,
       #       file: {
       #         filename: "filename",
       #         directory: "directory"
       #       },
-      #       return_value: {},
-      #       expression_location: {
+      #       returnValue: {},
+      #       expressionLocation: {
       #         start: 1,
       #         offset: 1
       #       },
       #       stack: {
-      #         num_stack_frames: 1,
-      #         top_stack_frame: {
-      #           method_name: "methodName",
-      #           line_number: 1,
+      #         numStackFrames: 1,
+      #         topStackFrame: {
+      #           methodName: "methodName",
+      #           lineNumber: 1,
       #           scopes: [{
       #             variables: {
       #               variables: {}
@@ -516,22 +513,22 @@ module Seed
       #       },
       #       stdout: "stdout"
       #     }, {
-      #       submission_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-      #       line_number: 1,
+      #       submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+      #       lineNumber: 1,
       #       file: {
       #         filename: "filename",
       #         directory: "directory"
       #       },
-      #       return_value: {},
-      #       expression_location: {
+      #       returnValue: {},
+      #       expressionLocation: {
       #         start: 1,
       #         offset: 1
       #       },
       #       stack: {
-      #         num_stack_frames: 1,
-      #         top_stack_frame: {
-      #           method_name: "methodName",
-      #           line_number: 1,
+      #         numStackFrames: 1,
+      #         topStackFrame: {
+      #           methodName: "methodName",
+      #           lineNumber: 1,
       #           scopes: [{
       #             variables: {
       #               variables: {}
@@ -550,14 +547,11 @@ module Seed
       # @return [untyped]
       def store_traced_workspace_v2(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
-        path_param_names = %i[submission_id]
-        body_params = params.except(*path_param_names)
-
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/admin/store-workspace-trace-v2/submission/#{URI.encode_uri_component(params[:submission_id].to_s)}",
-          body: body_params,
+          body: params[:request]&.map { |item| Seed::Submission::Types::TraceResponseV2.new(item).to_h },
           request_options: request_options
         )
         begin

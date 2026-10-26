@@ -149,29 +149,6 @@
     "Dial": {
       "type": "object",
       "properties": {
-        "number": {
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "status_callback_event": {
-          "oneOf": [
-            {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
         "record": {
           "oneOf": [
             {
@@ -192,6 +169,29 @@
               "items": {
                 "$ref": "#/definitions/Number"
               }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "status_callback_event": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "number": {
+          "oneOf": [
+            {
+              "type": "string"
             },
             {
               "type": "null"
@@ -222,6 +222,33 @@
       "type": "object",
       "additionalProperties": false
     },
+    "Redirect": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string"
+        },
+        "method": {
+          "type": "string"
+        },
+        "kind": {
+          "oneOf": [
+            {
+              "const": "redirect"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "url",
+        "method"
+      ],
+      "additionalProperties": false,
+      "description": "Text element with a required attribute."
+    },
     "ResponseChildrenItem": {
       "anyOf": [
         {
@@ -235,6 +262,9 @@
         },
         {
           "$ref": "#/definitions/Hangup"
+        },
+        {
+          "$ref": "#/definitions/Redirect"
         }
       ]
     }

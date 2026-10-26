@@ -82,7 +82,6 @@ public final class LoadRequest {
 
         private Optional<LoadRequestStatus> status = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -117,6 +116,14 @@ public final class LoadRequest {
 
         public LoadRequest build() {
             return new LoadRequest(cache, status, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("cache") || key.equalsIgnoreCase("status")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

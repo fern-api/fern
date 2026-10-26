@@ -26,8 +26,8 @@ export function generateFields({
             isCircular = propertyTypeDeclaration?.referencedTypes.has(typeDeclaration.name.typeId) ?? false;
         }
 
-        const isOptional = prop.valueType.type === "container" && prop.valueType.container.type === "optional";
-        const isNullable = prop.valueType.type === "container" && prop.valueType.container.type === "nullable";
+        const isOptional = hasWrapper(prop.valueType, "optional");
+        const isNullable = hasWrapper(prop.valueType, "nullable");
 
         const docs = documentFields ? prop.docs?.trim() : undefined;
 
@@ -45,4 +45,25 @@ export function generateFields({
             }
         });
     });
+}
+
+/**
+ * Whether the type is `optional`/`nullable`, including through the other wrapper, so that
+ * `optional<nullable<T>>` is both optional and nullable.
+ */
+function hasWrapper(typeReference: FernIr.TypeReference, wrapper: "optional" | "nullable"): boolean {
+    if (typeReference.type !== "container") {
+        return false;
+    }
+    const container = typeReference.container;
+    if (container.type === wrapper) {
+        return true;
+    }
+    if (container.type === "optional") {
+        return hasWrapper(container.optional, wrapper);
+    }
+    if (container.type === "nullable") {
+        return hasWrapper(container.nullable, wrapper);
+    }
+    return false;
 }

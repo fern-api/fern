@@ -47,7 +47,7 @@ export class SeedApiClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `account/${core.url.encodePathParam(account_id)}`,
+                `account/${core.url.encodePathParam(account_id, errors.SeedApiError)}`,
             ),
             method: "GET",
             headers: _headers,

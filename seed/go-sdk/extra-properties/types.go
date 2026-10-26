@@ -32,10 +32,12 @@ func (f *Failure) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *Failure) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 func (f *Failure) UnmarshalJSON(data []byte) error {

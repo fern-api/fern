@@ -1,0 +1,19 @@
+swagger: "2.0"
+info: { title: Acme, version: "1" }
+host: api.acme.test
+basePath: /v2
+schemes: [https]
+securityDefinitions:
+  ApiKey: { type: apiKey, in: header, name: X-Api-Key }
+paths:
+  /token:
+    post:
+      operationId: getToken
+      consumes: [application/x-www-form-urlencoded]
+      parameters:
+        - { name: client_id, in: formData, type: string }
+        - { name: client_secret, in: formData, type: string }
+      responses:
+        "200":
+          description: ok
+          schema: { type: object, properties: { access_token: { type: string } } }

@@ -17,12 +17,12 @@ func do() {
             "<token>",
         ),
     )
-    request := map[string]types.DocumentedUnknownType{
-        "string": map[string]any{
+    request := &types.ObjectWithDocumentedUnknownType{
+        DocumentedUnknownType: map[string]any{
             "key": "value",
         },
     }
-    client.Endpoints.Object.GetAndReturnMapOfDocumentedUnknownType(
+    client.Endpoints.Object.GetAndReturnWithDocumentedUnknownType(
         context.TODO(),
         request,
     )

@@ -148,7 +148,6 @@ public final class RootType1InlineType1NestedInlineType1 {
 
         private ReferenceType ref;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -209,6 +208,17 @@ public final class RootType1InlineType1NestedInlineType1 {
         @java.lang.Override
         public RootType1InlineType1NestedInlineType1 build() {
             return new RootType1InlineType1NestedInlineType1(foo, bar, myEnum, ref, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("foo")
+                    || key.equalsIgnoreCase("bar")
+                    || key.equalsIgnoreCase("myEnum")
+                    || key.equalsIgnoreCase("ref")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

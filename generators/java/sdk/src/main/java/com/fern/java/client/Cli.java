@@ -32,6 +32,7 @@ import com.fern.java.client.generators.ApiErrorGenerator;
 import com.fern.java.client.generators.AsyncRootClientGenerator;
 import com.fern.java.client.generators.AsyncSubpackageClientGenerator;
 import com.fern.java.client.generators.BaseErrorGenerator;
+import com.fern.java.client.generators.BodyPropertiesGenerator;
 import com.fern.java.client.generators.ClientOptionsGenerator;
 import com.fern.java.client.generators.ConsoleLoggerGenerator;
 import com.fern.java.client.generators.CoreMediaTypesGenerator;
@@ -80,6 +81,7 @@ import com.fern.java.generators.NullableNonemptyFilterGenerator;
 import com.fern.java.generators.ObjectMappersGenerator;
 import com.fern.java.generators.OptionalNullableGenerator;
 import com.fern.java.generators.PaginationCoreGenerator;
+import com.fern.java.generators.PathSegmentsGenerator;
 import com.fern.java.generators.QueryStringMapperGenerator;
 import com.fern.java.generators.Rfc2822DateTimeDeserializerGenerator;
 import com.fern.java.generators.SseEventGenerator;
@@ -89,6 +91,7 @@ import com.fern.java.generators.TypesGenerator;
 import com.fern.java.generators.TypesGenerator.Result;
 import com.fern.java.generators.WrappedAliasGenerator;
 import com.fern.java.generators.XmlCoreGenerator;
+import com.fern.java.generators.tests.PathSegmentsTestGenerator;
 import com.fern.java.generators.tests.QueryStringMapperTestGenerator;
 import com.fern.java.generators.tests.UndiscriminatedUnionDeserializationTestGenerator;
 import com.fern.java.output.GeneratedFile;
@@ -195,6 +198,7 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 .enableForwardCompatibleEnum(customConfig.enableForwardCompatibleEnums())
                 .includePlatformHeaders(customConfig.includePlatformHeaders())
                 .allowUserAgentAppInfo(customConfig.allowUserAgentAppInfo())
+                .userAgentOnly(customConfig.userAgentOnly())
                 .build();
 
         Boolean generateFullProject = ir.getPublishConfig()
@@ -467,6 +471,10 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         this.addGeneratedFile(queryStringMapperGenerator.generateFile());
         QueryStringMapperTestGenerator queryStringMapperTestGenerator = new QueryStringMapperTestGenerator(context);
         this.addGeneratedFile(queryStringMapperTestGenerator.generateFile());
+        PathSegmentsGenerator pathSegmentsGenerator = new PathSegmentsGenerator(context);
+        this.addGeneratedFile(pathSegmentsGenerator.generateFile());
+        PathSegmentsTestGenerator pathSegmentsTestGenerator = new PathSegmentsTestGenerator(context);
+        this.addGeneratedFile(pathSegmentsTestGenerator.generateFile());
 
         dependencies.add(ParsedGradleDependency.builder()
                 .type(GradleDependencyType.TEST_IMPLEMENTATION)
@@ -564,6 +572,9 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         CoreMediaTypesGenerator mediaTypesGenerator = new CoreMediaTypesGenerator(context);
         GeneratedResourcesJavaFile generatedMediaTypesFile = mediaTypesGenerator.generateFile();
         this.addGeneratedFile(generatedMediaTypesFile);
+
+        BodyPropertiesGenerator bodyPropertiesGenerator = new BodyPropertiesGenerator(context);
+        this.addGeneratedFile(bodyPropertiesGenerator.generateFile());
 
         List<GeneratedJavaFile> generatedWebhooksHelpers = WebhooksHelperGenerator.generateFiles(context);
         if (!generatedWebhooksHelpers.isEmpty()) {

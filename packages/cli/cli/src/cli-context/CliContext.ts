@@ -1,6 +1,7 @@
 import { Log, logErrorMessage, TtyAwareLogger } from "@fern-api/cli-logger";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { createLogger, LOG_LEVELS, LogLevel } from "@fern-api/logger";
-import { getPosthogManager, type PosthogManager } from "@fern-api/posthog-manager";
+import { flushFeatureFlagClient, getPosthogManager, type PosthogManager } from "@fern-api/posthog-manager";
 import { Project } from "@fern-api/project-loader";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import {
@@ -136,7 +137,14 @@ export class CliContext {
 
     public failAndThrow(message?: string, error?: unknown, options?: { code?: CliError.Code }): never {
         this.failWithoutThrowing(message, error, options);
-        throw new TaskAbortSignal();
+        throw new TaskAbortSignal(
+            message ??
+                (error instanceof TaskAbortSignal
+                    ? error.failureMessage
+                    : error != null
+                      ? extractErrorMessage(error)
+                      : undefined)
+        );
     }
 
     public failWithoutThrowing(message?: string, error?: unknown, options?: { code?: CliError.Code }): void {
@@ -193,7 +201,7 @@ export class CliContext {
         }
         this.ttyAwareLogger.finish();
         try {
-            await this.posthogManager.flush();
+            await Promise.all([this.posthogManager.flush(), flushFeatureFlagClient()]);
         } catch {
             // Silently swallow – analytics should never block the CLI
         }
@@ -205,7 +213,7 @@ export class CliContext {
     private async nudgeUpgradeIfAvailable() {
         try {
             const upgradeInfo = await Promise.race<[Promise<FernUpgradeInfo>, Promise<never>]>([
-                this.isUpgradeAvailable(),
+                this.isUpgradeAvailable({ skipFeatureFlagRequest: true }),
                 new Promise((_resolve, reject) => setTimeout(() => reject("Request timed out"), 300))
             ]);
 
@@ -282,10 +290,14 @@ export class CliContext {
         try {
             result = await run(context);
         } catch (error) {
+            const failureMessage =
+                error instanceof TaskAbortSignal
+                    ? (error.failureMessage ?? context.getLastFailureMessage())
+                    : extractErrorMessage(error);
             context.failWithoutThrowing(undefined, error);
 
             // We need to throw a TaskAbortSignal to stop execution.
-            throw new TaskAbortSignal();
+            throw new TaskAbortSignal(failureMessage);
         } finally {
             context.finish();
         }
@@ -399,9 +411,12 @@ export class CliContext {
 
     private _isUpgradeAvailable: FernUpgradeInfo | undefined;
     public async isUpgradeAvailable({
-        includePreReleases = false
+        includePreReleases = false,
+        skipFeatureFlagRequest = false
     }: {
         includePreReleases?: boolean;
+        /** Reuse an already-resolved sdk-gen-api flag instead of requesting it (exit-time nudge). */
+        skipFeatureFlagRequest?: boolean;
     } = {}): Promise<FernUpgradeInfo> {
         if (this._isUpgradeAvailable == null) {
             // Check if the CLI is upgradable
@@ -426,7 +441,8 @@ export class CliContext {
             // Check if the generators are upgradable
             const generatorUpgrades: FernGeneratorUpgradeInfo[] = await getProjectGeneratorUpgrades({
                 project: this.project,
-                cliContext: this
+                cliContext: this,
+                skipFeatureFlagRequest
             });
 
             this._isUpgradeAvailable = {

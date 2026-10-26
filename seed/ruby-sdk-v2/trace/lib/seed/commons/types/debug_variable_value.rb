@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "../../../seed"
+
 module Seed
   module Commons
     module Types
@@ -12,7 +14,7 @@ module Seed
 
         member -> { Internal::Types::Boolean }, key: "BOOLEAN_VALUE"
 
-        member -> { Integer }, key: "DOUBLE_VALUE"
+        member -> { Float }, key: "DOUBLE_VALUE"
 
         member -> { String }, key: "STRING_VALUE"
 

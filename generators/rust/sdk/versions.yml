@@ -1,4 +1,54 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.53.3
+  changelogEntry:
+    - summary: |
+        Fix a compile error in multipart upload requests whose property names don't round-trip
+        through the old snake_case conversion (for example `file_0` or `URLPath`). `to_multipart()`
+        now uses the same field name as the request struct instead of deriving its own.
+      type: fix
+  createdAt: "2026-10-13"
+  irVersion: 67
+- version: 0.53.2
+  changelogEntry:
+    - summary: |
+        Fix generated snippets and wire tests referencing type names that don't exist in the SDK.
+        Snippets now use the same casing as the generated types (e.g. `MarketplaceIdsItem` rather than
+        `MarketplaceIDsItem`) and the same collision-resolved names (e.g. `Address4` when several
+        types are named `Address`), including inline, file upload and query request types. Casing
+        overrides are kept.
+      type: fix
+  createdAt: "2026-10-12"
+  irVersion: 67
+- version: 0.53.1
+  changelogEntry:
+    - summary: |
+        SSE unions discriminated by the `event:` line (`x-fern-discriminator-context: protocol`) now read
+        the `event:` line instead of deserializing every event as `__Unknown`. Both variant styles work:
+        envelope variants (`{event, data: Payload}`) are built from the `data:` JSON, and payload variants (the `data:` JSON itself) get the `event:` value injected as the discriminant.
+        The event name no longer has to be repeated inside the `data:` JSON.
+      type: fix
+  createdAt: "2026-10-08"
+  irVersion: 67
+- version: 0.53.0
+  changelogEntry:
+    - summary: |
+        Add `RequestOptions::additional_body_param` (backed by `additional_body_params`) for sending
+        extra request body properties, such as undocumented or beta fields, without a new SDK release.
+        Properties are merged into the serialized body under their wire-format keys and override
+        generated fields with the same key. When an endpoint has no body, a JSON object containing only
+        the additional properties is sent. JSON and form-urlencoded bodies are supported; multipart and
+        raw bytes bodies are sent unchanged.
+      type: feat
+  createdAt: "2026-10-05"
+  irVersion: 67
+- version: 0.52.0
+  changelogEntry:
+    - summary: |
+        The generated prelude now re-exports `futures::StreamExt`, so `use <crate>::prelude::*;` is enough to
+        iterate SSE streams and paginators without adding `futures` as a direct dependency.
+      type: feat
+  createdAt: "2026-10-02"
+  irVersion: 67
 - version: 0.51.0
   changelogEntry:
     - summary: |

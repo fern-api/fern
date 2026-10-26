@@ -8,6 +8,10 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 const DEFAULT_TIMESTAMP_TOLERANCE_SECONDS = 300;
+const MISSING_SIGNATURE_MESSAGE = "Webhook signature verification could not run: missing signature header";
+const UNSUPPORTED_ALGORITHM_MESSAGE = "Webhook signature verification could not run: unsupported algorithm";
+const UNRESOLVED_KEY_MESSAGE = "Webhook signature verification could not run: signing key could not be resolved";
+const MISSING_KEY_ID_MESSAGE = "Webhook signature verification could not run: settings header is missing the key ID";
 
 interface WebhookVerificationEntry {
     config: FernIr.HmacSignatureVerification;
@@ -116,6 +120,19 @@ export class WebhooksHelperGenerator {
             encoding: config.encoding,
             signaturePrefix: config.signaturePrefix ?? null,
             signatureHeaderName: getWireValue(config.signatureHeaderName),
+            algorithmHeader:
+                config.algorithmHeader == null
+                    ? null
+                    : {
+                          headerName: getWireValue(config.algorithmHeader.headerName),
+                          keyIdDelimiter: config.algorithmHeader.keyIdDelimiter ?? null,
+                          keyIdParameter: config.algorithmHeader.keyIdParameter ?? null,
+                          algorithmParameter: config.algorithmHeader.algorithmParameter ?? null,
+                          algorithms: config.algorithmHeader.algorithms.map((option) => [
+                              option.wireValue,
+                              option.algorithm
+                          ])
+                      },
             payloadFormat: {
                 components: config.payloadFormat.components,
                 delimiter: config.payloadFormat.delimiter,
@@ -183,6 +200,11 @@ export class WebhooksHelperGenerator {
     }
 }
 
+interface GoParameter {
+    name: string;
+    type: string;
+}
+
 class HmacHelperWriter {
     private readonly context: SdkGeneratorContext;
     private readonly className: string;
@@ -219,32 +241,212 @@ class HmacHelperWriter {
             writer.writeLine(`type ${this.className} struct{}`);
             writer.newLine();
 
-            writer.writeLine("// VerifySignature verifies an HMAC webhook signature.");
-            writer.writeLine(`func (${this.className}) VerifySignature(`);
+            const defaultAlgorithm = this.mapAlgorithm(this.config.algorithm);
+            writer.writeLine(
+                `// VerifySignature verifies an HMAC webhook signature using the configured "${defaultAlgorithm}" algorithm.`
+            );
+            writer.writeLine(`func (h ${this.className}) VerifySignature(`);
             for (const parameter of this.buildParameters()) {
-                writer.writeLine(`\t${parameter},`);
+                writer.writeLine(`\t${parameter.name} ${parameter.type},`);
             }
             writer.writeLine(") (bool, error) {");
+            writer.writeLine("\treturn h.VerifySignatureWithAlgorithm(");
+            for (const parameter of this.buildParameters()) {
+                writer.writeLine(`\t\t${parameter.name},`);
+            }
+            writer.writeLine(`\t\t"${defaultAlgorithm}",`);
+            writer.writeLine("\t)");
+            writer.writeLine("}");
+            writer.newLine();
+
+            const algorithmHeader = this.config.algorithmHeader;
+            writer.writeLine(
+                "// VerifySignatureWithAlgorithm verifies an HMAC webhook signature using the given HMAC algorithm"
+            );
+            if (algorithmHeader != null) {
+                const names = algorithmHeader.algorithms.map((option) => `"${option.wireValue}"`).join(", ");
+                writer.writeLine(
+                    `// (${names}, or the generic "sha1", "sha256", "sha384" or "sha512"), overriding the configured default.`
+                );
+            } else {
+                writer.writeLine('// ("sha1", "sha256", "sha384" or "sha512"), overriding the configured default.');
+            }
+            writer.writeLine(`func (${this.className}) VerifySignatureWithAlgorithm(`);
+            for (const parameter of this.buildParameters()) {
+                writer.writeLine(`\t${parameter.name} ${parameter.type},`);
+            }
+            writer.writeLine("\talgorithm string,");
+            writer.writeLine(") (bool, error) {");
+            if (algorithmHeader != null) {
+                writer.writeLine(`\tif mapped, ok := ${this.algorithmsVarName()}[algorithm]; ok {`);
+                writer.writeLine("\t\talgorithm = mapped");
+                writer.writeLine("\t}");
+            }
             this.writeBody(writer, coreAlias, errorsAlias);
             writer.writeLine("}");
+
+            if (algorithmHeader != null) {
+                writer.newLine();
+                this.writeVerifyRequest(writer, errorsAlias, algorithmHeader);
+            }
         });
     }
 
-    private buildParameters(): string[] {
+    private algorithmsVarName(): string {
+        return `${this.className.charAt(0).toLowerCase()}${this.className.slice(1)}Algorithms`;
+    }
+
+    private buildPayloadParameters(): GoParameter[] {
+        const parameters: GoParameter[] = [];
+        for (const component of this.components) {
+            if (component === "NOTIFICATION_URL") {
+                parameters.push({ name: "notificationUrl", type: "string" });
+            } else if (component === "MESSAGE_ID") {
+                parameters.push({ name: "messageId", type: "string" });
+            }
+        }
+        return parameters;
+    }
+
+    /**
+     * Emits the algorithm lookup table plus a request-level `VerifyRequest` that reads the
+     * signature header and the algorithm-selection header (`<key-id><delimiter><algorithm>`,
+     * e.g. Twilio's `X-Twilio-Webhook-Signature-Settings: <sid>;HMAC_SHA256`). The key id is
+     * handed to the caller's resolver because the SDK never holds secrets; when the header
+     * is absent the resolver is called with "" and the configured default algorithm is used.
+     */
+    private writeVerifyRequest(
+        writer: go.Writer,
+        errorsAlias: string,
+        algorithmHeader: FernIr.WebhookAlgorithmHeader
+    ): void {
+        const httpAlias = writer.addImport("net/http");
+        const varName = this.algorithmsVarName();
+        const bodyType = this.hasBodySort ? "interface{}" : "string";
+        const signatureHeader = JSON.stringify(getWireValue(this.config.signatureHeaderName));
+        const settingsHeader = JSON.stringify(getWireValue(algorithmHeader.headerName));
+        const payloadParameters = this.buildPayloadParameters();
+
+        const stringsAlias = writer.addImport("strings");
+        const helperName = `${varName.replace(/Algorithms$/, "")}Header`;
+        writer.writeLine(
+            `// ${helperName} reads a header case-insensitively, including keys inserted into the map without canonicalization.`
+        );
+        writer.writeLine(`func ${helperName}(headers ${httpAlias}.Header, name string) string {`);
+        writer.writeLine('\tif value := headers.Get(name); value != "" {');
+        writer.writeLine("\t\treturn value");
+        writer.writeLine("\t}");
+        writer.writeLine("\tfor key, values := range headers {");
+        writer.writeLine(`\t\tif ${stringsAlias}.EqualFold(key, name) && len(values) > 0 {`);
+        writer.writeLine("\t\t\treturn values[0]");
+        writer.writeLine("\t\t}");
+        writer.writeLine("\t}");
+        writer.writeLine('\treturn ""');
+        writer.writeLine("}");
+        writer.newLine();
+        writer.writeLine(`var ${varName} = map[string]string{`);
+        for (const option of algorithmHeader.algorithms) {
+            writer.writeLine(`\t"${option.wireValue}": "${this.mapAlgorithm(option.algorithm)}",`);
+        }
+        writer.writeLine("}");
+        writer.newLine();
+        writer.writeLine(
+            `// VerifyRequest reads the ${getWireValue(this.config.signatureHeaderName)} and ${getWireValue(algorithmHeader.headerName)} headers`
+        );
+        writer.writeLine(
+            "// and verifies the signature. signatureKey resolves the signing secret for the key id carried in"
+        );
+        writer.writeLine("// the settings header; it receives an empty key id when that header is absent.");
+        writer.writeLine(`func (h ${this.className}) VerifyRequest(`);
+        writer.writeLine(`\theaders ${httpAlias}.Header,`);
+        writer.writeLine(`\trequestBody ${bodyType},`);
+        for (const parameter of payloadParameters) {
+            writer.writeLine(`\t${parameter.name} ${parameter.type},`);
+        }
+        writer.writeLine("\tsignatureKey func(keyID string) (string, error),");
+        writer.writeLine(") (bool, error) {");
+        writer.writeLine(`\tsignatureHeader := ${helperName}(headers, ${signatureHeader})`);
+        writer.writeLine('\tif signatureHeader == "" {');
+        writer.writeLine(`\t\treturn false, ${errorsAlias}.New(${JSON.stringify(MISSING_SIGNATURE_MESSAGE)})`);
+        writer.writeLine("\t}");
+        writer.writeLine(`\talgorithm := "${this.mapAlgorithm(this.config.algorithm)}"`);
+        writer.writeLine('\tkeyID := ""');
+        writer.writeLine(`\tif settings := ${helperName}(headers, ${settingsHeader}); settings != "" {`);
+        writer.writeLine("\t\talgorithmValue := settings");
+        if (algorithmHeader.algorithmParameter != null) {
+            writer.writeLine("\t\tsettingsParts := map[string]string{}");
+            writer.writeLine(
+                `\t\tfor _, part := range ${stringsAlias}.Split(settings, ${JSON.stringify(algorithmHeader.keyIdDelimiter ?? ",")}) {`
+            );
+            writer.writeLine(`\t\t\tif name, value, found := ${stringsAlias}.Cut(part, "="); found {`);
+            writer.writeLine(
+                `\t\t\t\tsettingsParts[${stringsAlias}.TrimSpace(name)] = ${stringsAlias}.TrimSpace(value)`
+            );
+            writer.writeLine("\t\t\t}");
+            writer.writeLine("\t\t}");
+            writer.writeLine(
+                `\t\talgorithmValue = settingsParts[${JSON.stringify(algorithmHeader.algorithmParameter)}]`
+            );
+            if (algorithmHeader.keyIdParameter != null) {
+                writer.writeLine(`\t\tkeyID = settingsParts[${JSON.stringify(algorithmHeader.keyIdParameter)}]`);
+                writer.writeLine('\t\tif keyID == "" {');
+                writer.writeLine(`\t\t\treturn false, ${errorsAlias}.New(${JSON.stringify(MISSING_KEY_ID_MESSAGE)})`);
+                writer.writeLine("\t\t}");
+            }
+        } else if (algorithmHeader.keyIdDelimiter != null) {
+            writer.writeLine(
+                `\t\tif index := ${stringsAlias}.LastIndex(settings, ${JSON.stringify(algorithmHeader.keyIdDelimiter)}); index >= 0 {`
+            );
+            writer.writeLine("\t\t\tkeyID = settings[:index]");
+            writer.writeLine(`\t\t\talgorithmValue = settings[index+${algorithmHeader.keyIdDelimiter.length}:]`);
+            writer.writeLine("\t\t}");
+        }
+        writer.writeLine(`\t\tmapped, ok := ${varName}[algorithmValue]`);
+        writer.writeLine("\t\tif !ok {");
+        writer.writeLine(`\t\t\treturn false, ${errorsAlias}.New(${JSON.stringify(UNSUPPORTED_ALGORITHM_MESSAGE)})`);
+        writer.writeLine("\t\t}");
+        writer.writeLine("\t\talgorithm = mapped");
+        writer.writeLine("\t}");
+        writer.writeLine("\tif signatureKey == nil {");
+        writer.writeLine(`\t\treturn false, ${errorsAlias}.New(${JSON.stringify(UNRESOLVED_KEY_MESSAGE)})`);
+        writer.writeLine("\t}");
+        writer.writeLine("\tresolvedKey, err := signatureKey(keyID)");
+        writer.writeLine("\tif err != nil {");
+        writer.writeLine("\t\treturn false, err");
+        writer.writeLine("\t}");
+        writer.writeLine('\tif resolvedKey == "" {');
+        writer.writeLine(`\t\treturn false, ${errorsAlias}.New(${JSON.stringify(UNRESOLVED_KEY_MESSAGE)})`);
+        writer.writeLine("\t}");
+        writer.writeLine("\treturn h.VerifySignatureWithAlgorithm(");
+        writer.writeLine("\t\trequestBody,");
+        writer.writeLine("\t\tsignatureHeader,");
+        writer.writeLine("\t\tresolvedKey,");
+        for (const parameter of payloadParameters) {
+            writer.writeLine(`\t\t${parameter.name},`);
+        }
+        if (this.hasTimestamp || this.components.includes("TIMESTAMP")) {
+            const timestampHeader =
+                this.config.timestamp != null ? JSON.stringify(getWireValue(this.config.timestamp.headerName)) : '""';
+            writer.writeLine(`\t\t${helperName}(headers, ${timestampHeader}),`);
+        }
+        writer.writeLine("\t\talgorithm,");
+        writer.writeLine("\t)");
+        writer.writeLine("}");
+    }
+
+    private buildParameters(): GoParameter[] {
         // When bodySort is set, the request body accepts either a raw string or a
         // map[string][]string-shaped multimap, so it is widened to interface{}.
         const bodyType = this.hasBodySort ? "interface{}" : "string";
-        const parameters: string[] = [`requestBody ${bodyType}`, "signatureHeader string", "signatureKey string"];
-        for (const component of this.components) {
-            if (component === "NOTIFICATION_URL") {
-                parameters.push("notificationUrl string");
-            } else if (component === "MESSAGE_ID") {
-                parameters.push("messageId string");
-            }
-        }
+        const parameters: GoParameter[] = [
+            { name: "requestBody", type: bodyType },
+            { name: "signatureHeader", type: "string" },
+            { name: "signatureKey", type: "string" },
+            ...this.buildPayloadParameters()
+        ];
         // The timestamp header is needed either for timestamp validation or as a payload component.
         if (this.hasTimestamp || this.components.includes("TIMESTAMP")) {
-            parameters.push("timestampHeader string");
+            parameters.push({ name: "timestampHeader", type: "string" });
         }
         return parameters;
     }
@@ -290,10 +492,9 @@ class HmacHelperWriter {
         }
 
         writer.newLine();
-        const algorithm = this.mapAlgorithm(this.config.algorithm);
         const encoding = this.mapEncoding(this.config.encoding);
         writer.writeLine(
-            `\texpected, err := ${coreAlias}.ComputeHmacSignature(payload, signatureKey, "${algorithm}", "${encoding}")`
+            `\texpected, err := ${coreAlias}.ComputeHmacSignature(payload, signatureKey, algorithm, "${encoding}")`
         );
         writer.writeLine("\tif err != nil {");
         writer.writeLine("\t\treturn false, err");
@@ -356,7 +557,6 @@ class HmacHelperWriter {
         normalization: FernIr.WebhookNotificationUrlNormalization
     ): void {
         const binding = this.config.bodyHashBinding;
-        const algorithm = this.mapAlgorithm(this.config.algorithm);
         const encoding = this.mapEncoding(this.config.encoding);
 
         writer.newLine();
@@ -407,7 +607,7 @@ class HmacHelperWriter {
             writer.writeLine(`\t\tpayload := ${formPayloadExpr}`);
         }
         writer.writeLine(
-            `\t\texpected, err := ${coreAlias}.ComputeHmacSignature(payload, signatureKey, "${algorithm}", "${encoding}")`
+            `\t\texpected, err := ${coreAlias}.ComputeHmacSignature(payload, signatureKey, algorithm, "${encoding}")`
         );
         writer.writeLine("\t\tif err != nil {");
         writer.writeLine("\t\t\treturn false, err");

@@ -20,16 +20,147 @@ async function defaultMarkdownLoader(filepath: AbsoluteFilePath) {
     return content;
 }
 
-function extractAttributes(markdownTag: string): Record<string, string> {
-    const attributes: Record<string, string> = {};
+/** Returns the index just past the closing quote of the JSX attribute string starting at `start`, or -1. */
+function skipAttributeString(source: string, start: number): number {
+    const end = source.indexOf(source.charAt(start), start + 1);
+    return end === -1 ? -1 : end + 1;
+}
 
-    const attrRegex = /(\w+)=(?:{?['"]([^'"]+)['"]?}?|{([^}]+)})/g;
+/** Returns the index just past the closing quote of the JS string literal starting at `start`, or -1. */
+function skipJsString(source: string, start: number): number {
+    const quote = source.charAt(start);
+    for (let i = start + 1; i < source.length; i++) {
+        const ch = source.charAt(i);
+        if (ch === "\\") {
+            i++;
+        } else if (ch === quote) {
+            return i + 1;
+        }
+    }
+    return -1;
+}
+
+/** Returns the index just past the `}` that balances the `{` at `start`, or -1. */
+function skipBracedExpression(source: string, start: number): number {
+    let depth = 0;
+    for (let i = start; i < source.length; i++) {
+        const ch = source.charAt(i);
+        if (ch === '"' || ch === "'" || ch === "`") {
+            const end = skipJsString(source, i);
+            if (end === -1) {
+                return -1;
+            }
+            i = end - 1;
+        } else if (ch === "{") {
+            depth++;
+        } else if (ch === "}") {
+            depth--;
+            if (depth === 0) {
+                return i + 1;
+            }
+        }
+    }
+    return -1;
+}
+
+/**
+ * Scans the attributes of a `<Markdown` tag starting at `start` and returns the index just past its `/>`,
+ * or -1 if the tag isn't self-closing. Quoted and `{...}` values are skipped whole, so a `>` inside a value
+ * (e.g. `returnType="Promise<void>"`) doesn't end the tag.
+ */
+function findSelfClosingTagEnd(source: string, start: number): number {
+    let i = start;
+    while (i < source.length) {
+        const ch = source.charAt(i);
+        if (ch === '"' || ch === "'") {
+            i = skipAttributeString(source, i);
+        } else if (ch === "{") {
+            i = skipBracedExpression(source, i);
+        } else if (ch === ">") {
+            return -1;
+        } else if (ch === "/" && source.charAt(i + 1) === ">") {
+            return i + 2;
+        } else {
+            i++;
+        }
+        if (i === -1) {
+            return -1;
+        }
+    }
+    return -1;
+}
+
+interface MarkdownTagMatch {
+    index: number;
+    matchString: string;
+    indent: string;
+    attributesString: string;
+}
+
+function findMarkdownTags(markdown: string): MarkdownTagMatch[] {
+    const tags: MarkdownTagMatch[] = [];
+    const tagStartRegex = /([ \t]*)<Markdown\s+/g;
+
+    let startMatch: RegExpExecArray | null;
+    while ((startMatch = tagStartRegex.exec(markdown)) != null) {
+        const attributesStart = tagStartRegex.lastIndex;
+        const end = findSelfClosingTagEnd(markdown, attributesStart);
+        if (end === -1) {
+            continue;
+        }
+        tags.push({
+            index: startMatch.index,
+            matchString: markdown.slice(startMatch.index, end),
+            indent: startMatch[1] ?? "",
+            attributesString: markdown.slice(attributesStart, end - 2)
+        });
+        tagStartRegex.lastIndex = end;
+    }
+
+    return tags;
+}
+
+/** `{"value"}` / `{'value'}` / `` {`value`} `` evaluate to the string literal; any other expression is kept as written. */
+function unwrapExpression(expression: string): string {
+    const trimmed = expression.trim();
+    const quote = trimmed.charAt(0);
+    if ((quote === '"' || quote === "'" || quote === "`") && skipJsString(trimmed, 0) === trimmed.length) {
+        const literal = trimmed.slice(1, -1);
+        if (quote !== "`" || !literal.includes("${")) {
+            return literal.replace(/\\(["'`\\])/g, "$1");
+        }
+    }
+    return expression;
+}
+
+function extractAttributes(attributesString: string): Record<string, string> {
+    const attributes: Record<string, string> = {};
+    const attrNameRegex = /(\w+)=/g;
 
     let attrMatch: RegExpExecArray | null;
-    while ((attrMatch = attrRegex.exec(markdownTag)) != null) {
+    while ((attrMatch = attrNameRegex.exec(attributesString)) != null) {
         const attrName = attrMatch[1];
-        const attrValue = attrMatch[2] ?? attrMatch[3];
-        if (attrName != null && attrValue != null) {
+        const valueStart = attrNameRegex.lastIndex;
+        const ch = attributesString.charAt(valueStart);
+
+        let attrValue: string | undefined;
+        let valueEnd = -1;
+        if (ch === '"' || ch === "'") {
+            valueEnd = skipAttributeString(attributesString, valueStart);
+            if (valueEnd !== -1) {
+                attrValue = attributesString.slice(valueStart + 1, valueEnd - 1);
+            }
+        } else if (ch === "{") {
+            valueEnd = skipBracedExpression(attributesString, valueStart);
+            if (valueEnd !== -1) {
+                attrValue = unwrapExpression(attributesString.slice(valueStart + 1, valueEnd - 1));
+            }
+        }
+
+        if (valueEnd !== -1) {
+            attrNameRegex.lastIndex = valueEnd;
+        }
+        if (attrName != null && attrValue != null && attrValue.length > 0) {
             attributes[attrName] = attrValue;
         }
     }
@@ -107,21 +238,10 @@ export async function replaceReferencedMarkdown({
         return { markdown, referencedFiles: Array.from(collectedFiles.values()) };
     }
 
-    const regex = /([ \t]*)<Markdown\s+([^>]+)\/>/g;
-
     let newMarkdown = markdown;
 
-    // while match is found, replace the match with the content of the referenced markdown file
-    let match: RegExpExecArray | null;
-    while ((match = regex.exec(markdown)) != null) {
-        const matchString = match[0];
-        const indent = match[1] ?? "";
-        const attributesString = match[2];
-
-        if (matchString == null || attributesString == null) {
-            throw new Error(`Failed to parse regex "${match}" in ${absolutePathToMarkdownFile}`);
-        }
-
+    // replace each tag with the content of the referenced markdown file
+    for (const { index, matchString, indent, attributesString } of findMarkdownTags(markdown)) {
         const attributes = extractAttributes(attributesString);
         const src = attributes.src;
 
@@ -136,8 +256,7 @@ export async function replaceReferencedMarkdown({
 
         // Check for circular reference
         if (ancestorFiles.has(filepath)) {
-            const idx = match.index ?? markdown.indexOf(matchString);
-            const line = getLineNumber(markdown, idx);
+            const line = getLineNumber(markdown, index);
             context.logger.warn(
                 `[${absolutePathToMarkdownFile}:${line}] Circular reference detected: "${src}" is already being processed in the current chain`
             );
@@ -169,8 +288,7 @@ export async function replaceReferencedMarkdown({
             const missingVariables = [...usedVariables].filter((v) => !providedVariables.has(v));
 
             if (missingVariables.length > 0) {
-                const idx = match.index ?? markdown.indexOf(matchString);
-                const line = getLineNumber(markdown, idx);
+                const line = getLineNumber(markdown, index);
 
                 for (const variable of missingVariables) {
                     context.logger.warn(
@@ -195,7 +313,7 @@ export async function replaceReferencedMarkdown({
             });
             replaceString = result.markdown;
 
-            const tagIndex = match.index + match[0].indexOf("<Markdown");
+            const tagIndex = index + indent.length;
             const continuationIndent = getContinuationIndent(markdown, tagIndex, indent);
             replaceString = replaceString
                 .split("\n")

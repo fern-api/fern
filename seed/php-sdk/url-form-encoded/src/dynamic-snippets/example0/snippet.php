@@ -14,5 +14,6 @@ $client->submitFormData(
     new PostSubmitRequest([
         'username' => 'johndoe',
         'email' => 'john@example.com',
+        'content' => '{"key":"value"}',
     ]),
 );

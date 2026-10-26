@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "../../../seed"
+
 module Seed
   module NullableOptional
     module Types
@@ -7,11 +9,11 @@ module Seed
       class UpdateUserRequest < Internal::Types::Model
         field :username, -> { String }, optional: true, nullable: false
 
-        field :email, -> { String }, optional: true, nullable: false
+        field :email, -> { String }, optional: true, nullable: true
 
         field :phone, -> { String }, optional: true, nullable: false
 
-        field :address, -> { Seed::NullableOptional::Types::Address }, optional: true, nullable: false
+        field :address, -> { Seed::NullableOptional::Types::Address }, optional: true, nullable: true
       end
     end
   end

@@ -18,6 +18,12 @@ public record PostSubmitRequest
     [JsonPropertyName("email")]
     public required string Email { get; set; }
 
+    /// <summary>
+    /// A JSON document carried as a form field
+    /// </summary>
+    [JsonPropertyName("Content")]
+    public required string Content { get; set; }
+
     /// <inheritdoc />
     public override string ToString()
     {

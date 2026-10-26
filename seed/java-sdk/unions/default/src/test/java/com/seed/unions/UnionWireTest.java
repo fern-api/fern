@@ -22,7 +22,10 @@ public class UnionWireTest {
     public void setup() throws Exception {
         server = new MockWebServer();
         server.start();
-        client = SeedUnionsClient.builder().url(server.url("/").toString()).build();
+        client = SeedUnionsClient.builder()
+                .url(server.url("/").toString())
+                .maxRetries(0)
+                .build();
     }
 
     @AfterEach

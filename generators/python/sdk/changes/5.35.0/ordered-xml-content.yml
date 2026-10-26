@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    XML (TwiML) models keep text segments, typed children and undeclared `XmlElement` children in one
+    ordered content sequence, so `to_xml()` writes them in insertion order (`say("a")`, `add_child(...)`,
+    `say("b")` renders `<Say>a</Say><Custom /><Say>b</Say>`) and `from_xml()` preserves document order,
+    including nested mixed content in undeclared children. Builders gain `add_text(text)` for mixed
+    content such as `Say("Hi ").break_(...).add_text(" world")`. Typed child properties and
+    `add_child()` keep working as before.
+  type: feat

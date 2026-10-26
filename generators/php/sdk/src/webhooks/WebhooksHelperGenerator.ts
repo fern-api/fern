@@ -6,6 +6,13 @@ import type { BasePhpCustomConfigSchema } from "@fern-api/php-codegen";
 import { php } from "@fern-api/php-codegen";
 import { FernIr } from "@fern-fern/ir-sdk";
 
+const HMAC_ALGORITHMS = ["sha1", "sha256", "sha384", "sha512"] as const;
+const MISSING_SIGNATURE_MESSAGE = "Webhook signature verification could not run: missing signature header";
+const VERIFICATION_FAILED_MESSAGE = "Webhook signature verification failed: signature mismatch";
+const UNSUPPORTED_ALGORITHM_MESSAGE = "Webhook signature verification could not run: unsupported algorithm";
+const UNRESOLVED_KEY_MESSAGE = "Webhook signature verification could not run: signing key could not be resolved";
+const MISSING_KEY_ID_MESSAGE = "Webhook signature verification could not run: settings header is missing the key ID";
+
 const DEFAULT_TIMESTAMP_TOLERANCE_SECONDS = 300;
 
 interface WebhookVerificationEntry {
@@ -114,6 +121,19 @@ export class WebhooksHelperGenerator {
             encoding: config.encoding,
             signaturePrefix: config.signaturePrefix,
             signatureHeaderName: getWireValue(config.signatureHeaderName),
+            algorithmHeader:
+                config.algorithmHeader == null
+                    ? null
+                    : {
+                          headerName: getWireValue(config.algorithmHeader.headerName),
+                          keyIdDelimiter: config.algorithmHeader.keyIdDelimiter ?? null,
+                          keyIdParameter: config.algorithmHeader.keyIdParameter ?? null,
+                          algorithmParameter: config.algorithmHeader.algorithmParameter ?? null,
+                          algorithms: config.algorithmHeader.algorithms.map((option) => [
+                              option.wireValue,
+                              option.algorithm
+                          ])
+                      },
             payloadFormat: {
                 components: config.payloadFormat.components,
                 delimiter: config.payloadFormat.delimiter,
@@ -151,6 +171,27 @@ export class WebhooksHelperGenerator {
             namespace: this.context.getRootNamespace(),
             docs: this.buildDocs(config)
         });
+        const algorithmHeader = config.algorithmHeader;
+        if (algorithmHeader != null) {
+            const entries = algorithmHeader.algorithms
+                .map(
+                    (option) =>
+                        `${this.phpString(option.wireValue)} => ${this.phpString(this.mapHmacAlgorithm(option.algorithm))}`
+                )
+                .join(", ");
+            class_.addMethod(
+                php.method({
+                    name: "hmacAlgorithms",
+                    access: php.Access.Private,
+                    static_: true,
+                    parameters: [],
+                    return_: php.Type.map(php.Type.string(), php.Type.string()),
+                    body: php.codeblock((writer) => {
+                        writer.writeLine(`return [${entries}];`);
+                    })
+                })
+            );
+        }
         class_.addMethod(
             php.method({
                 name: "verifySignature",
@@ -161,6 +202,48 @@ export class WebhooksHelperGenerator {
                 body: this.buildBody(config)
             })
         );
+        if (algorithmHeader != null) {
+            class_.addMethod(
+                php.method({
+                    name: "verifyRequest",
+                    access: php.Access.Public,
+                    static_: true,
+                    parameters: this.buildVerifyRequestParameters(config),
+                    return_: php.Type.bool(),
+                    body: this.buildVerifyRequestBody(config, algorithmHeader)
+                })
+            );
+            class_.addMethod(
+                php.method({
+                    name: "getHeader",
+                    access: php.Access.Private,
+                    static_: true,
+                    parameters: [
+                        php.parameter({
+                            name: "headers",
+                            type: php.Type.map(
+                                php.Type.string(),
+                                php.Type.union([php.Type.string(), php.Type.array(php.Type.string())])
+                            )
+                        }),
+                        php.parameter({ name: "name", type: php.Type.string() })
+                    ],
+                    return_: php.Type.union([php.Type.string(), php.Type.null()]),
+                    body: php.codeblock((writer) => {
+                        writer.writeLine("foreach ($headers as $key => $value) {");
+                        writer.indent();
+                        writer.writeLine("if (strcasecmp((string) $key, $name) === 0) {");
+                        writer.indent();
+                        writer.writeLine("return is_array($value) ? ($value[0] ?? null) : $value;");
+                        writer.dedent();
+                        writer.writeLine("}");
+                        writer.dedent();
+                        writer.writeLine("}");
+                        writer.writeLine("return null;");
+                    })
+                })
+            );
+        }
         return new PhpFile({
             clazz: class_,
             directory: RelativeFilePath.of(""),
@@ -209,7 +292,141 @@ export class WebhooksHelperGenerator {
         if (config.timestamp != null || config.payloadFormat.components.includes("TIMESTAMP")) {
             parameters.push(php.parameter({ name: "timestampHeader", type: nullableString }));
         }
+        parameters.push(
+            php.parameter({
+                name: "algorithm",
+                type: php.Type.optional(
+                    php.Type.union(this.algorithmLiterals(config).map((algorithm) => php.Type.literalString(algorithm)))
+                ),
+                initializer: php.codeblock("null")
+            })
+        );
         return parameters;
+    }
+
+    private payloadParameterNames(config: FernIr.HmacSignatureVerification): string[] {
+        const names: string[] = [];
+        for (const component of config.payloadFormat.components) {
+            if (component === "NOTIFICATION_URL") {
+                names.push("notificationUrl");
+            } else if (component === "MESSAGE_ID") {
+                names.push("messageId");
+            }
+        }
+        return names;
+    }
+
+    private buildVerifyRequestParameters(config: FernIr.HmacSignatureVerification): php.Parameter[] {
+        const parameters = this.buildParameters(config).filter(
+            (parameter) =>
+                !["$signatureHeader", "$signatureKey", "$timestampHeader", "$algorithm"].includes(parameter.name)
+        );
+        return [
+            php.parameter({
+                name: "headers",
+                type: php.Type.map(
+                    php.Type.string(),
+                    php.Type.union([php.Type.string(), php.Type.array(php.Type.string())])
+                )
+            }),
+            ...parameters,
+            // Either the signing secret or `callable(?string $keyId): ?string`; the SDK never
+            // holds shared-key secrets, so the key ID parsed from the header is handed back.
+            php.parameter({ name: "signatureKey", type: php.Type.mixed() })
+        ];
+    }
+
+    private buildVerifyRequestBody(
+        config: FernIr.HmacSignatureVerification,
+        algorithmHeader: FernIr.WebhookAlgorithmHeader
+    ): php.CodeBlock {
+        return php.codeblock((writer) => {
+            writer.writeLine(
+                `$signatureHeader = self::getHeader($headers, ${this.phpString(getWireValue(config.signatureHeaderName))});`
+            );
+            writer.writeLine("if ($signatureHeader === null || $signatureHeader === '') {");
+            writer.indent();
+            writer.writeLine(`error_log(${this.phpString(MISSING_SIGNATURE_MESSAGE)});`);
+            writer.writeLine("return false;");
+            writer.dedent();
+            writer.writeLine("}");
+            writer.writeLine("$keyId = null;");
+            writer.writeLine("$algorithm = null;");
+            writer.writeLine(
+                `$settingsHeader = self::getHeader($headers, ${this.phpString(getWireValue(algorithmHeader.headerName))});`
+            );
+            writer.writeLine("if ($settingsHeader !== null && $settingsHeader !== '') {");
+            writer.indent();
+            writer.writeLine("$algorithmValue = $settingsHeader;");
+            if (algorithmHeader.algorithmParameter != null) {
+                const delimiter = this.phpString(algorithmHeader.keyIdDelimiter ?? ",");
+                writer.writeLine("$settingsParts = [];");
+                writer.writeLine(`foreach (explode(${delimiter}, $settingsHeader) as $part) {`);
+                writer.indent();
+                writer.writeLine("$separatorIndex = strpos($part, '=');");
+                writer.writeLine("if ($separatorIndex === false) {");
+                writer.indent();
+                writer.writeLine("continue;");
+                writer.dedent();
+                writer.writeLine("}");
+                writer.writeLine(
+                    "$settingsParts[trim(substr($part, 0, $separatorIndex))] = trim(substr($part, $separatorIndex + 1));"
+                );
+                writer.dedent();
+                writer.writeLine("}");
+                writer.writeLine(
+                    `$algorithmValue = $settingsParts[${this.phpString(algorithmHeader.algorithmParameter)}] ?? '';`
+                );
+                if (algorithmHeader.keyIdParameter != null) {
+                    writer.writeLine(
+                        `$keyId = $settingsParts[${this.phpString(algorithmHeader.keyIdParameter)}] ?? null;`
+                    );
+                    writer.writeLine("if ($keyId === null || $keyId === '') {");
+                    writer.indent();
+                    writer.writeLine(`error_log(${this.phpString(MISSING_KEY_ID_MESSAGE)});`);
+                    writer.writeLine("return false;");
+                    writer.dedent();
+                    writer.writeLine("}");
+                }
+            } else if (algorithmHeader.keyIdDelimiter != null) {
+                const delimiter = this.phpString(algorithmHeader.keyIdDelimiter);
+                writer.writeLine(`$delimiterIndex = strrpos($settingsHeader, ${delimiter});`);
+                writer.writeLine("if ($delimiterIndex !== false) {");
+                writer.indent();
+                writer.writeLine("$keyId = substr($settingsHeader, 0, $delimiterIndex);");
+                writer.writeLine(
+                    `$algorithmValue = substr($settingsHeader, $delimiterIndex + ${algorithmHeader.keyIdDelimiter.length});`
+                );
+                writer.dedent();
+                writer.writeLine("}");
+            }
+            writer.writeLine("if (!array_key_exists($algorithmValue, self::hmacAlgorithms())) {");
+            writer.indent();
+            writer.writeLine(`error_log(${this.phpString(UNSUPPORTED_ALGORITHM_MESSAGE)});`);
+            writer.writeLine("return false;");
+            writer.dedent();
+            writer.writeLine("}");
+            writer.writeLine("$algorithm = $algorithmValue;");
+            writer.dedent();
+            writer.writeLine("}");
+            writer.writeLine("$resolvedKey = is_callable($signatureKey) ? $signatureKey($keyId) : $signatureKey;");
+            writer.writeLine("if (!is_string($resolvedKey) || $resolvedKey === '') {");
+            writer.indent();
+            writer.writeLine(`error_log(${this.phpString(UNRESOLVED_KEY_MESSAGE)});`);
+            writer.writeLine("return false;");
+            writer.dedent();
+            writer.writeLine("}");
+            const args = ["$requestBody", "$signatureHeader", "$resolvedKey"];
+            for (const name of this.payloadParameterNames(config)) {
+                args.push(`$${name}`);
+            }
+            if (config.timestamp != null || config.payloadFormat.components.includes("TIMESTAMP")) {
+                const timestampHeader = config.timestamp != null ? getWireValue(config.timestamp.headerName) : "";
+                args.push(`self::getHeader($headers, ${this.phpString(timestampHeader)})`);
+            }
+            args.push("$algorithm");
+            writer.writeLine(`return self::verifySignature(${args.join(", ")});`);
+        });
     }
 
     private buildBody(config: FernIr.HmacSignatureVerification): php.CodeBlock {
@@ -220,9 +437,13 @@ export class WebhooksHelperGenerator {
                 config.payloadFormat.bodySort == null
                     ? "$requestBody === null || $requestBody === ''"
                     : "$requestBody === null || $requestBody === '' || $requestBody === []";
-            writer.writeLine(
-                `if (${emptyRequestBodyCheck} || $signatureHeader === null || $signatureHeader === '' || $signatureKey === null || $signatureKey === '') {`
-            );
+            writer.writeLine("if ($signatureHeader === null || $signatureHeader === '') {");
+            writer.indent();
+            writer.writeLine(`error_log(${this.phpString(MISSING_SIGNATURE_MESSAGE)});`);
+            writer.writeLine("return false;");
+            writer.dedent();
+            writer.writeLine("}");
+            writer.writeLine(`if (${emptyRequestBodyCheck} || $signatureKey === null || $signatureKey === '') {`);
             writer.indent();
             writer.writeLine("return false;");
             writer.dedent();
@@ -273,9 +494,15 @@ export class WebhooksHelperGenerator {
             this.writeHmacComputation(writer, config, "$payload");
 
             writer.newLine();
-            writer.write("return ");
+            writer.write("$valid = ");
             writer.writeNode(this.webhookSignatureReference());
             writer.writeLine("::timingSafeEqual($signature, $expected);");
+            writer.writeLine("if (!$valid) {");
+            writer.indent();
+            writer.writeLine(`error_log(${this.phpString(VERIFICATION_FAILED_MESSAGE)});`);
+            writer.dedent();
+            writer.writeLine("}");
+            writer.writeLine("return $valid;");
         });
     }
 
@@ -297,7 +524,7 @@ export class WebhooksHelperGenerator {
         writer.indent();
         writer.writeLine(`payload: ${payloadExpression},`);
         writer.writeLine("secret: $signatureKey,");
-        writer.writeLine(`algorithm: ${this.phpString(this.mapHmacAlgorithm(config.algorithm))},`);
+        writer.writeLine(`algorithm: ${this.algorithmExpression(config)},`);
         writer.writeLine(`encoding: ${this.phpString(this.mapEncoding(config.encoding))},`);
         writer.dedent();
         writer.writeLine(");");
@@ -492,6 +719,7 @@ export class WebhooksHelperGenerator {
         writer.writeNode(this.webhookSignatureReference());
         writer.writeLine("::timingSafeEqual($expectedBodyHash, $transmittedBodyHash)) {");
         writer.indent();
+        writer.writeLine(`error_log(${this.phpString(VERIFICATION_FAILED_MESSAGE)});`);
         writer.writeLine("return false;");
         writer.dedent();
         writer.writeLine("}");
@@ -561,6 +789,7 @@ export class WebhooksHelperGenerator {
         writer.writeLine("}");
 
         writer.newLine();
+        writer.writeLine(`error_log(${this.phpString(VERIFICATION_FAILED_MESSAGE)});`);
         writer.writeLine("return false;");
     }
 
@@ -586,6 +815,21 @@ export class WebhooksHelperGenerator {
             default:
                 assertNever(algorithm);
         }
+    }
+
+    private algorithmLiterals(config: FernIr.HmacSignatureVerification): readonly string[] {
+        if (config.algorithmHeader == null) {
+            return HMAC_ALGORITHMS;
+        }
+        return config.algorithmHeader.algorithms.map((option) => option.wireValue);
+    }
+
+    private algorithmExpression(config: FernIr.HmacSignatureVerification): string {
+        const fallback = this.phpString(this.mapHmacAlgorithm(config.algorithm));
+        if (config.algorithmHeader == null) {
+            return `$algorithm ?? ${fallback}`;
+        }
+        return `$algorithm !== null ? (self::hmacAlgorithms()[$algorithm] ?? $algorithm) : ${fallback}`;
     }
 
     private mapHmacAlgorithm(algorithm: FernIr.HmacAlgorithm): string {

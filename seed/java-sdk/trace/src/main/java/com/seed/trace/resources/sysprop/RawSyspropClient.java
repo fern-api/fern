@@ -5,8 +5,10 @@ package com.seed.trace.resources.sysprop;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.seed.trace.core.BodyProperties;
 import com.seed.trace.core.ClientOptions;
 import com.seed.trace.core.ObjectMappers;
+import com.seed.trace.core.PathSegments;
 import com.seed.trace.core.RequestOptions;
 import com.seed.trace.core.RetryInterceptor;
 import com.seed.trace.core.SeedTraceApiException;
@@ -40,8 +42,8 @@ public class RawSyspropClient {
                 .newBuilder()
                 .addPathSegments("sysprop")
                 .addPathSegments("num-warm-instances")
-                .addPathSegment(language.toString())
-                .addPathSegment(Integer.toString(numWarmInstances));
+                .addPathSegment(PathSegments.validate(language.toString()))
+                .addPathSegment(PathSegments.validate(Integer.toString(numWarmInstances)));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -49,7 +51,11 @@ public class RawSyspropClient {
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
-                .method("PUT", RequestBody.create("", null))
+                .method(
+                        "PUT",
+                        BodyProperties.toRequestBody(
+                                requestOptions != null ? requestOptions.getBodyProperties() : null,
+                                RequestBody.create("", null)))
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .build();
         OkHttpClient client = clientOptions.httpClient();

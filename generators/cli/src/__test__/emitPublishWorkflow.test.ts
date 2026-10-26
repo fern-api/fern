@@ -1,4 +1,6 @@
-import { mkdir, mkdtemp, readFile, rm } from "fs/promises";
+import { spawnSync } from "child_process";
+import { mkdir, mkdtemp, readdir, readFile, rm, writeFile } from "fs/promises";
+import yaml from "js-yaml";
 import os from "os";
 import path from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
@@ -53,9 +55,9 @@ describe("emitPublishWorkflow", () => {
     it("invokes npm publish directly on a pinned Node toolchain (no wrapper, no npm@latest)", async () => {
         const yaml = await emitAndRead(baseInfo);
 
-        expect(yaml).toContain("npm publish --access public");
+        expect(yaml).toContain('npm publish "$@"');
         expect(yaml).not.toContain("npm@latest");
-        expect(yaml).not.toMatch(/publish\(\)\s*\{/);
+        expect(yaml).not.toMatch(/(^|\s)publish\(\)\s*\{/);
         expect(yaml).toContain('node-version: "lts/Krypton"');
     });
 
@@ -229,17 +231,13 @@ describe("emitPublishWorkflow", () => {
         expect(yaml).not.toContain('"repository"');
     });
 
-    it("both publish steps call npm publish directly with backport logic", async () => {
+    it("both publish steps publish through npm_publish_once with backport logic", async () => {
         const yaml = await emitAndRead(baseInfo);
 
-        // No publish() wrapper is defined anymore — npm publish is inlined.
-        expect(yaml).not.toMatch(/publish\(\)\s*\{/);
-
-        // Each step inlines three npm publish calls (pre-release, backport,
-        // stable) across the two publish steps. The pre-release branch used to
-        // be two hardcoded calls for -alpha and -beta; it is now one call whose
-        // dist-tag is derived from the version.
-        const npmPublishMatches = yaml.match(/npm publish --access public/g);
+        // Each step has three publish calls (pre-release, backport, stable).
+        // The pre-release branch is one call whose dist-tag is derived from
+        // the version.
+        const npmPublishMatches = yaml.match(/npm_publish_once --access public/g);
         expect(npmPublishMatches).toHaveLength(6);
 
         // Both platform and launcher steps should have backport logic
@@ -421,6 +419,288 @@ describe("emitPublishWorkflow", () => {
         // 128 + signum is the shell convention (SIGTERM -> 143).
         expect(yaml).toMatch(/process\.exit\(128 \+ \(SIGNUM\[e\.signal\] \|\| 0\)\)/);
         expect(yaml).toMatch(/SIGTERM: 15/);
+    });
+});
+
+describe("emitPublishWorkflow npm_publish_once helper", () => {
+    let tmpDir: string;
+
+    beforeEach(async () => {
+        tmpDir = await mkdtemp(path.join(os.tmpdir(), "npmPublishOnce-"));
+    });
+
+    afterEach(async () => {
+        await rm(tmpDir, { recursive: true, force: true });
+    });
+
+    const baseInfo: ResolvedNpmPublishInfo = {
+        packageName: "@acme/cli",
+        registryUrl: "https://registry.example.test/npm/",
+        tokenEnvironmentVariable: "NPM_TOKEN",
+        useOidc: false
+    };
+
+    const HOSTILE_REGISTRY_URL = 'https://evil.test/"; touch pwned; echo "$(touch pwned)`touch pwned`${HOME}\'\\';
+
+    const PUBLISH_STEPS = ["Package and publish npm platform package", "Publish launcher package"];
+
+    interface WorkflowStep {
+        name?: string;
+        env?: Record<string, string>;
+        run?: string;
+        with?: Record<string, string>;
+    }
+
+    async function emitYaml(npmPublishInfo: ResolvedNpmPublishInfo = baseInfo): Promise<string> {
+        const outputDir = path.join(tmpDir, "out");
+        await emitPublishWorkflow({ outputDir, binaryName: "acme", npmPublishInfo, repoUrl: undefined });
+        return readFile(path.join(outputDir, ".github", "workflows", "ci.yml"), "utf-8");
+    }
+
+    function publishSteps(yamlText: string): WorkflowStep[] {
+        const workflow = yaml.load(yamlText) as { jobs: Record<string, { steps: WorkflowStep[] }> };
+        return Object.values(workflow.jobs)
+            .flatMap((job) => job.steps)
+            .filter((step) => step.name != null && PUBLISH_STEPS.includes(step.name));
+    }
+
+    function extractHelpers(yamlText: string): string[] {
+        const helpers = [...yamlText.matchAll(/^ {10}npm_publish_once\(\) \{\n[\s\S]*?\n {10}\}$/gm)].map((m) => m[0]);
+        return helpers.map((helper) =>
+            helper
+                .split("\n")
+                .map((line) => line.replace(/^ {10}/, ""))
+                .join("\n")
+        );
+    }
+
+    it("emits the same helper in the platform and launcher publish steps", async () => {
+        const yamlText = await emitYaml();
+
+        const helpers = extractHelpers(yamlText);
+        expect(helpers).toHaveLength(2);
+        expect(helpers[0]).toBe(helpers[1]);
+
+        const steps = publishSteps(yamlText);
+        expect(steps.map((step) => step.name)).toEqual(PUBLISH_STEPS);
+        for (const step of steps) {
+            expect(step.run).toContain("npm_publish_once() {");
+            expect(step.run).toContain("npm_publish_once --access public");
+            expect(step.run).not.toMatch(/^\s*npm publish --access/m);
+        }
+    });
+
+    it("passes the registry URL through env rather than splicing it into bash", async () => {
+        const yamlText = await emitYaml();
+        const [helper] = extractHelpers(yamlText);
+
+        expect(helper).toContain('npm view "${name}@${version}" version --registry "${NPM_REGISTRY_URL}"');
+        expect(helper).not.toContain("registry.example.test");
+        for (const step of publishSteps(yamlText)) {
+            expect(step.env?.NPM_REGISTRY_URL).toBe("https://registry.example.test/npm/");
+            expect(step.env?.NODE_AUTH_TOKEN).toBe("${{ secrets.NPM_TOKEN }}");
+        }
+    });
+
+    it("keeps a hostile registry URL out of the script and round-trips it through YAML intact", async () => {
+        const yamlText = await emitYaml({ ...baseInfo, registryUrl: HOSTILE_REGISTRY_URL });
+
+        for (const step of publishSteps(yamlText)) {
+            expect(step.env?.NPM_REGISTRY_URL).toBe(HOSTILE_REGISTRY_URL);
+            expect(step.run).not.toContain("evil.test");
+            expect(step.run).not.toContain("pwned");
+        }
+        const workflow = yaml.load(yamlText) as { jobs: Record<string, { steps: WorkflowStep[] }> };
+        const registryUrls = Object.values(workflow.jobs)
+            .flatMap((job) => job.steps)
+            .map((step) => step.with?.["registry-url"])
+            .filter((url) => url != null);
+        expect(registryUrls).toEqual([HOSTILE_REGISTRY_URL, HOSTILE_REGISTRY_URL]);
+    });
+
+    it("matches npm's E404 code line and nothing looser", async () => {
+        const [helper] = extractHelpers(await emitYaml());
+
+        expect(helper).toContain("grep -Eq '^npm (ERR!|error) code E404'");
+        expect(helper).not.toContain("404 Not Found");
+    });
+
+    it("captures publish output without losing npm's exit status and explains EOTP", async () => {
+        const [helper] = extractHelpers(await emitYaml());
+
+        expect(helper).toContain('npm publish "$@" 2>&1 | tee "${log}" || publish_status=$?');
+        expect(helper).toContain("grep -q 'EOTP'");
+        expect(helper).toContain('\\"Bypass 2FA\\"');
+        expect(helper).toContain("trusted publishing (OIDC)");
+        expect(helper).toContain('return "${publish_status}"');
+    });
+
+    it("keeps the launcher waiting on every platform package", async () => {
+        const yamlText = await emitYaml();
+
+        const launcher = yamlText.slice(yamlText.indexOf("  publish-launcher:"));
+        expect(launcher).toContain("needs: [publish]");
+    });
+
+    it("leaves the OIDC token handling unchanged", async () => {
+        const yamlText = await emitYaml({ ...baseInfo, tokenEnvironmentVariable: "<USE_OIDC>", useOidc: true });
+
+        expect(extractHelpers(yamlText)).toHaveLength(2);
+        expect(yamlText).not.toContain("NODE_AUTH_TOKEN");
+        expect(yamlText.match(/id-token: write/g)).toHaveLength(2);
+        for (const step of publishSteps(yamlText)) {
+            expect(step.env).toEqual({ NPM_REGISTRY_URL: "https://registry.example.test/npm/" });
+        }
+    });
+
+    describe.skipIf(process.platform === "win32")("against a stub npm", () => {
+        const STUB_NPM = `#!/usr/bin/env bash
+printf 'npm' >> "$STUB_CALLS"
+printf ' [%s]' "$@" >> "$STUB_CALLS"
+printf '\\n' >> "$STUB_CALLS"
+case "$1" in
+  view)
+    case "$STUB_VIEW" in
+      published) echo "\${2##*@}" ;;
+      empty) ;;
+      other-version) echo "1.2.2" ;;
+      e404) echo "npm error code E404" >&2; echo "npm error 404 No match found for version \${2##*@}" >&2; exit 1 ;;
+      e404-legacy) echo "npm ERR! code E404" >&2; echo "npm ERR! 404 Not Found - GET https://registry.npmjs.org/acme" >&2; exit 1 ;;
+      network) echo "npm error code ETIMEDOUT" >&2; echo "npm error network request failed" >&2; exit 1 ;;
+      auth-mentions-404) echo "npm error code E401" >&2; echo "npm error 404 Not Found - proxy said E404 earlier" >&2; exit 1 ;;
+    esac
+    ;;
+  publish)
+    case "$STUB_PUBLISH" in
+      ok) echo "+ acme@1.2.3" ;;
+      eotp) echo "npm error code EOTP" >&2; echo "npm error This operation requires a one-time password." >&2; exit 1 ;;
+      fail) echo "npm error code E403" >&2; exit 3 ;;
+    esac
+    ;;
+esac
+`;
+
+        type ViewMode =
+            | "published"
+            | "empty"
+            | "other-version"
+            | "e404"
+            | "e404-legacy"
+            | "network"
+            | "auth-mentions-404";
+
+        async function runHelper(
+            view: ViewMode,
+            publish: "ok" | "eotp" | "fail",
+            registryUrl = baseInfo.registryUrl
+        ): Promise<{ status: number; stdout: string; stderr: string; calls: string[]; leftovers: string[] }> {
+            const yamlText = await emitYaml({ ...baseInfo, registryUrl });
+            const [step] = publishSteps(yamlText);
+            const [helper] = extractHelpers(yamlText);
+            if (helper == null || step?.env?.NPM_REGISTRY_URL == null) {
+                throw new Error("expected the helper and its env to be emitted");
+            }
+            const binDir = path.join(tmpDir, "bin");
+            const pkgDir = path.join(tmpDir, "pkg");
+            const scratchDir = path.join(tmpDir, "scratch");
+            await mkdir(binDir, { recursive: true });
+            await mkdir(pkgDir, { recursive: true });
+            await mkdir(scratchDir, { recursive: true });
+            await writeFile(path.join(binDir, "npm"), STUB_NPM, { mode: 0o755 });
+            await writeFile(path.join(pkgDir, "package.json"), JSON.stringify({ name: "acme", version: "1.2.3" }));
+            const callsFile = path.join(tmpDir, "calls.log");
+            await writeFile(callsFile, "");
+
+            const script = `set -euo pipefail\n${helper}\nnpm_publish_once --access public\necho "after publish"\n`;
+            const result = spawnSync("bash", ["-c", script], {
+                cwd: pkgDir,
+                encoding: "utf-8",
+                env: {
+                    ...process.env,
+                    PATH: `${binDir}${path.delimiter}${process.env.PATH ?? ""}`,
+                    TMPDIR: scratchDir,
+                    NPM_REGISTRY_URL: step.env.NPM_REGISTRY_URL,
+                    STUB_VIEW: view,
+                    STUB_PUBLISH: publish,
+                    STUB_CALLS: callsFile
+                }
+            });
+            const calls = (await readFile(callsFile, "utf-8")).split("\n").filter((line) => line !== "");
+            const leftovers = await readdir(scratchDir);
+            return { status: result.status ?? -1, stdout: result.stdout, stderr: result.stderr, calls, leftovers };
+        }
+
+        const VIEW_CALL = "npm [view] [acme@1.2.3] [version] [--registry] [https://registry.example.test/npm/]";
+        const PUBLISH_CALL = "npm [publish] [--access] [public]";
+
+        it("skips an already-published version without calling npm publish", async () => {
+            const result = await runHelper("published", "ok");
+
+            expect(result.status).toBe(0);
+            expect(result.stdout).toContain("::notice::acme@1.2.3 is already published; skipping.");
+            expect(result.stdout).toContain("after publish");
+            expect(result.calls).toEqual([VIEW_CALL]);
+            expect(result.leftovers).toEqual([]);
+        });
+
+        it.each([
+            ["npm >= 10 E404", "e404"],
+            ["npm <= 9 E404", "e404-legacy"],
+            ["npm <= 7 exit 0 with empty output", "empty"],
+            ["exit 0 with a different version", "other-version"]
+        ] as const)("publishes when npm view reports the version missing (%s)", async (_label, view) => {
+            const result = await runHelper(view, "ok");
+
+            expect(result.status).toBe(0);
+            expect(result.stdout).toContain("acme@1.2.3 is not on the registry yet; publishing.");
+            expect(result.stdout).toContain("+ acme@1.2.3");
+            expect(result.stdout).toContain("after publish");
+            expect(result.calls).toEqual([VIEW_CALL, PUBLISH_CALL]);
+            expect(result.leftovers).toEqual([]);
+        });
+
+        it.each([
+            ["a network error", "network", "ETIMEDOUT"],
+            ["an auth error that merely mentions 404", "auth-mentions-404", "E401"]
+        ] as const)("fails without publishing when npm view fails with %s", async (_label, view, code) => {
+            const result = await runHelper(view, "ok");
+
+            expect(result.status).toBe(1);
+            expect(result.stdout).toContain("::error::Could not check whether acme@1.2.3 is already published");
+            expect(result.stderr).toContain(code);
+            expect(result.stdout).not.toContain("after publish");
+            expect(result.calls).toEqual([VIEW_CALL]);
+            expect(result.leftovers).toEqual([]);
+        });
+
+        it("explains EOTP and exits non-zero when publish needs a one-time password", async () => {
+            const result = await runHelper("e404", "eotp");
+
+            expect(result.status).toBe(1);
+            expect(result.stdout).toContain("npm error code EOTP");
+            expect(result.stdout).toContain("::error::npm publish of acme@1.2.3 requires a one-time password (EOTP).");
+            expect(result.stdout).toContain('"Bypass 2FA"');
+            expect(result.stdout).not.toContain("after publish");
+            expect(result.leftovers).toEqual([]);
+        });
+
+        it("propagates npm's exit status on other publish failures without the EOTP hint", async () => {
+            const result = await runHelper("e404", "fail");
+
+            expect(result.status).toBe(3);
+            expect(result.stdout).toContain("npm error code E403");
+            expect(result.stdout).not.toContain("EOTP");
+            expect(result.stdout).not.toContain("after publish");
+            expect(result.leftovers).toEqual([]);
+        });
+
+        it("hands a hostile registry URL to npm as one literal argument without running it", async () => {
+            const result = await runHelper("published", "ok", HOSTILE_REGISTRY_URL);
+
+            expect(result.status).toBe(0);
+            expect(result.calls).toEqual([`npm [view] [acme@1.2.3] [version] [--registry] [${HOSTILE_REGISTRY_URL}]`]);
+            expect(await readdir(path.join(tmpDir, "pkg"))).toEqual(["package.json"]);
+        });
     });
 });
 

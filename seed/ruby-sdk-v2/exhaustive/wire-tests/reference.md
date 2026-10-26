@@ -1229,7 +1229,7 @@ client.endpoints.object.get_and_return_nested_with_required_field(
 ```ruby
 client.endpoints.object.get_and_return_nested_with_required_field_as_list(request: [{
   string: "string",
-  nested_object: {
+  NestedObject: {
     string: "string",
     integer: 1,
     long: 1000000,
@@ -1248,7 +1248,7 @@ client.endpoints.object.get_and_return_nested_with_required_field_as_list(reques
   }
 }, {
   string: "string",
-  nested_object: {
+  NestedObject: {
     string: "string",
     integer: 1,
     long: 1000000,
@@ -1554,7 +1554,7 @@ client.endpoints.object.get_and_return_with_required_nested_object(
   required_string: "hello",
   required_object: {
     string: "nested",
-    nested_object: {}
+    NestedObject: {}
   }
 )
 ```
@@ -1659,7 +1659,7 @@ client.endpoints.object.get_and_return_with_datetime_like_string(
 </details>
 
 ## Endpoints Pagination
-<details><summary><code>client.endpoints.pagination.<a href="/lib/seed/endpoints/pagination/client.rb">list_items</a>() -> Seed::Endpoints::Pagination::Types::PaginatedResponse</code></summary>
+<details><summary><code>client.endpoints.pagination.<a href="/lib/seed/endpoints/pagination/client.rb">list_items</a>() -> Seed::Internal::CursorItemIterator</code></summary>
 <dl>
 <dd>
 
@@ -1672,6 +1672,10 @@ client.endpoints.object.get_and_return_with_datetime_like_string(
 <dd>
 
 List items with cursor pagination
+
+Returns a `Seed::Internal::CursorItemIterator` that yields each `Seed::Types::Object_::Types::ObjectWithRequiredField` in the `items` field of every page, requesting pages as they are needed. Call `pages` on it to get each page as a `Seed::Endpoints::Pagination::Types::PaginatedResponse`, including its other fields.
+
+No request is sent by this call. The first page is requested when you start iterating (or call `load_first_page`), so an API error is raised by the loop (or by `load_first_page`), not by this call.
 </dd>
 </dl>
 </dd>
@@ -2699,7 +2703,7 @@ client.endpoints.primitive.get_and_return_long(request: 1000000)
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="/lib/seed/endpoints/primitive/client.rb">get_and_return_double</a>(request) -> Integer</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="/lib/seed/endpoints/primitive/client.rb">get_and_return_double</a>(request) -> Float</code></summary>
 <dl>
 <dd>
 
@@ -2727,7 +2731,7 @@ client.endpoints.primitive.get_and_return_double(request: 1.1)
 <dl>
 <dd>
 
-**request:** `Integer` 
+**request:** `Float` 
     
 </dd>
 </dl>

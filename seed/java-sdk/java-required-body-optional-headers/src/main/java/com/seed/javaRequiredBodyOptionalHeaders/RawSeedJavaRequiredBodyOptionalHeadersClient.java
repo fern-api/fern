@@ -5,9 +5,11 @@ package com.seed.javaRequiredBodyOptionalHeaders;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.seed.javaRequiredBodyOptionalHeaders.core.BodyProperties;
 import com.seed.javaRequiredBodyOptionalHeaders.core.ClientOptions;
 import com.seed.javaRequiredBodyOptionalHeaders.core.MediaTypes;
 import com.seed.javaRequiredBodyOptionalHeaders.core.ObjectMappers;
+import com.seed.javaRequiredBodyOptionalHeaders.core.PathSegments;
 import com.seed.javaRequiredBodyOptionalHeaders.core.QueryStringMapper;
 import com.seed.javaRequiredBodyOptionalHeaders.core.RequestOptions;
 import com.seed.javaRequiredBodyOptionalHeaders.core.RetryInterceptor;
@@ -79,7 +81,9 @@ public class RawSeedJavaRequiredBodyOptionalHeadersClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request.getBody(), requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -156,7 +160,7 @@ public class RawSeedJavaRequiredBodyOptionalHeadersClient {
                 .newBuilder()
                 .addPathSegments("api")
                 .addPathSegments("users")
-                .addPathSegment(userId);
+                .addPathSegment(PathSegments.validate(userId));
         if (request.getDryRun().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "dryRun", request.getDryRun().get(), false);
@@ -169,7 +173,9 @@ public class RawSeedJavaRequiredBodyOptionalHeadersClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request.getBody(), requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -257,7 +263,9 @@ public class RawSeedJavaRequiredBodyOptionalHeadersClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request.getBody(), requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -327,7 +335,9 @@ public class RawSeedJavaRequiredBodyOptionalHeadersClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request.getBody(), requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -396,7 +406,9 @@ public class RawSeedJavaRequiredBodyOptionalHeadersClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request.getBody(), requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -539,7 +551,9 @@ public class RawSeedJavaRequiredBodyOptionalHeadersClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

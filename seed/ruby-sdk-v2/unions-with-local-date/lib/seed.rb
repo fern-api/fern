@@ -3,6 +3,7 @@
 require "json"
 require "net/http"
 require "securerandom"
+require "time"
 
 require_relative "seed/internal/json/serializable"
 require_relative "seed/internal/types/type"
@@ -35,61 +36,79 @@ require_relative "seed/internal/iterators/cursor_item_iterator"
 require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
-require_relative "seed/bigunion/types/normal_sweet"
-require_relative "seed/bigunion/types/thankful_factor"
-require_relative "seed/bigunion/types/jumbo_end"
-require_relative "seed/bigunion/types/hasty_pain"
-require_relative "seed/bigunion/types/misty_snow"
-require_relative "seed/bigunion/types/distinct_failure"
-require_relative "seed/bigunion/types/practical_principle"
-require_relative "seed/bigunion/types/limping_step"
-require_relative "seed/bigunion/types/vibrant_excitement"
-require_relative "seed/bigunion/types/active_diamond"
-require_relative "seed/bigunion/types/popular_limit"
-require_relative "seed/bigunion/types/false_mirror"
-require_relative "seed/bigunion/types/primary_block"
-require_relative "seed/bigunion/types/rotating_ratio"
-require_relative "seed/bigunion/types/colorful_cover"
-require_relative "seed/bigunion/types/disloyal_value"
-require_relative "seed/bigunion/types/gruesome_coach"
-require_relative "seed/bigunion/types/total_work"
-require_relative "seed/bigunion/types/harmonious_play"
-require_relative "seed/bigunion/types/unique_stress"
-require_relative "seed/bigunion/types/unwilling_smoke"
-require_relative "seed/bigunion/types/frozen_sleep"
-require_relative "seed/bigunion/types/diligent_deal"
-require_relative "seed/bigunion/types/attractive_script"
-require_relative "seed/bigunion/types/hoarse_mouse"
-require_relative "seed/bigunion/types/circular_card"
-require_relative "seed/bigunion/types/potable_bad"
-require_relative "seed/bigunion/types/triangular_repair"
-require_relative "seed/bigunion/types/gaseous_road"
-require_relative "seed/bigunion/types/big_union"
-require_relative "seed/types/types/foo"
-require_relative "seed/types/types/bar"
-require_relative "seed/types/types/union"
-require_relative "seed/types/types/union_with_discriminant"
-require_relative "seed/types/types/union_with_primitive"
-require_relative "seed/types/types/union_with_duplicate_primitive"
-require_relative "seed/types/types/union_without_key"
-require_relative "seed/types/types/union_with_no_properties"
-require_relative "seed/types/types/union_with_multiple_no_properties"
-require_relative "seed/types/types/union_with_literal"
-require_relative "seed/types/types/union_with_base_properties"
-require_relative "seed/types/types/union_with_time"
-require_relative "seed/types/types/union_with_optional_time"
-require_relative "seed/types/types/union_with_single_element"
-require_relative "seed/types/types/union_with_duplicate_types"
-require_relative "seed/types/types/foo_extended"
-require_relative "seed/types/types/union_with_sub_types"
-require_relative "seed/types/types/union_with_same_string_types"
-require_relative "seed/types/types/union_with_same_number_types"
-require_relative "seed/union/types/get_shape_request"
-require_relative "seed/union/types/with_name"
-require_relative "seed/union/types/circle"
-require_relative "seed/union/types/square"
-require_relative "seed/union/types/shape"
+require_relative "seed/errors/connection_error"
 require_relative "seed/client"
 require_relative "seed/bigunion/client"
 require_relative "seed/types/client"
 require_relative "seed/union/client"
+
+module Seed
+  module Bigunion
+    module Types
+      autoload :NormalSweet, ::File.join(__dir__, "seed/bigunion/types/normal_sweet")
+      autoload :ThankfulFactor, ::File.join(__dir__, "seed/bigunion/types/thankful_factor")
+      autoload :JumboEnd, ::File.join(__dir__, "seed/bigunion/types/jumbo_end")
+      autoload :HastyPain, ::File.join(__dir__, "seed/bigunion/types/hasty_pain")
+      autoload :MistySnow, ::File.join(__dir__, "seed/bigunion/types/misty_snow")
+      autoload :DistinctFailure, ::File.join(__dir__, "seed/bigunion/types/distinct_failure")
+      autoload :PracticalPrinciple, ::File.join(__dir__, "seed/bigunion/types/practical_principle")
+      autoload :LimpingStep, ::File.join(__dir__, "seed/bigunion/types/limping_step")
+      autoload :VibrantExcitement, ::File.join(__dir__, "seed/bigunion/types/vibrant_excitement")
+      autoload :ActiveDiamond, ::File.join(__dir__, "seed/bigunion/types/active_diamond")
+      autoload :PopularLimit, ::File.join(__dir__, "seed/bigunion/types/popular_limit")
+      autoload :FalseMirror, ::File.join(__dir__, "seed/bigunion/types/false_mirror")
+      autoload :PrimaryBlock, ::File.join(__dir__, "seed/bigunion/types/primary_block")
+      autoload :RotatingRatio, ::File.join(__dir__, "seed/bigunion/types/rotating_ratio")
+      autoload :ColorfulCover, ::File.join(__dir__, "seed/bigunion/types/colorful_cover")
+      autoload :DisloyalValue, ::File.join(__dir__, "seed/bigunion/types/disloyal_value")
+      autoload :GruesomeCoach, ::File.join(__dir__, "seed/bigunion/types/gruesome_coach")
+      autoload :TotalWork, ::File.join(__dir__, "seed/bigunion/types/total_work")
+      autoload :HarmoniousPlay, ::File.join(__dir__, "seed/bigunion/types/harmonious_play")
+      autoload :UniqueStress, ::File.join(__dir__, "seed/bigunion/types/unique_stress")
+      autoload :UnwillingSmoke, ::File.join(__dir__, "seed/bigunion/types/unwilling_smoke")
+      autoload :FrozenSleep, ::File.join(__dir__, "seed/bigunion/types/frozen_sleep")
+      autoload :DiligentDeal, ::File.join(__dir__, "seed/bigunion/types/diligent_deal")
+      autoload :AttractiveScript, ::File.join(__dir__, "seed/bigunion/types/attractive_script")
+      autoload :HoarseMouse, ::File.join(__dir__, "seed/bigunion/types/hoarse_mouse")
+      autoload :CircularCard, ::File.join(__dir__, "seed/bigunion/types/circular_card")
+      autoload :PotableBad, ::File.join(__dir__, "seed/bigunion/types/potable_bad")
+      autoload :TriangularRepair, ::File.join(__dir__, "seed/bigunion/types/triangular_repair")
+      autoload :GaseousRoad, ::File.join(__dir__, "seed/bigunion/types/gaseous_road")
+      autoload :BigUnion, ::File.join(__dir__, "seed/bigunion/types/big_union")
+    end
+  end
+
+  module Types
+    module Types
+      autoload :Foo, ::File.join(__dir__, "seed/types/types/foo")
+      autoload :Bar, ::File.join(__dir__, "seed/types/types/bar")
+      autoload :Union, ::File.join(__dir__, "seed/types/types/union")
+      autoload :UnionWithDiscriminant, ::File.join(__dir__, "seed/types/types/union_with_discriminant")
+      autoload :UnionWithPrimitive, ::File.join(__dir__, "seed/types/types/union_with_primitive")
+      autoload :UnionWithDuplicatePrimitive, ::File.join(__dir__, "seed/types/types/union_with_duplicate_primitive")
+      autoload :UnionWithoutKey, ::File.join(__dir__, "seed/types/types/union_without_key")
+      autoload :UnionWithNoProperties, ::File.join(__dir__, "seed/types/types/union_with_no_properties")
+      autoload :UnionWithMultipleNoProperties, ::File.join(__dir__, "seed/types/types/union_with_multiple_no_properties")
+      autoload :UnionWithLiteral, ::File.join(__dir__, "seed/types/types/union_with_literal")
+      autoload :UnionWithBaseProperties, ::File.join(__dir__, "seed/types/types/union_with_base_properties")
+      autoload :UnionWithTime, ::File.join(__dir__, "seed/types/types/union_with_time")
+      autoload :UnionWithOptionalTime, ::File.join(__dir__, "seed/types/types/union_with_optional_time")
+      autoload :UnionWithSingleElement, ::File.join(__dir__, "seed/types/types/union_with_single_element")
+      autoload :UnionWithDuplicateTypes, ::File.join(__dir__, "seed/types/types/union_with_duplicate_types")
+      autoload :FooExtended, ::File.join(__dir__, "seed/types/types/foo_extended")
+      autoload :UnionWithSubTypes, ::File.join(__dir__, "seed/types/types/union_with_sub_types")
+      autoload :UnionWithSameStringTypes, ::File.join(__dir__, "seed/types/types/union_with_same_string_types")
+      autoload :UnionWithSameNumberTypes, ::File.join(__dir__, "seed/types/types/union_with_same_number_types")
+    end
+  end
+
+  module Union
+    module Types
+      autoload :GetShapeRequest, ::File.join(__dir__, "seed/union/types/get_shape_request")
+      autoload :WithName, ::File.join(__dir__, "seed/union/types/with_name")
+      autoload :Circle, ::File.join(__dir__, "seed/union/types/circle")
+      autoload :Square, ::File.join(__dir__, "seed/union/types/square")
+      autoload :Shape, ::File.join(__dir__, "seed/union/types/shape")
+    end
+  end
+end

@@ -56,10 +56,12 @@ func (p *PaymentInfo) GetExtraProperties() map[string]interface{} {
 }
 
 func (p *PaymentInfo) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetAmount sets the Amount field and marks it as non-optional;

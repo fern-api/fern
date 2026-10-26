@@ -1012,6 +1012,37 @@ pub(crate) struct SpecEntry {
     overrides: Vec<String>,
 }
 
+impl SpecEntry {
+    /// Whether this spec's top-level group can be listed from its prefix
+    /// alone: a JSON spec with no overlays or overrides that has no tag, SDK
+    /// group or path's first segment the group's metadata could be looked up
+    /// by (any string, or first `/` segment of one, equal to the prefix up to
+    /// case and punctuation). Errs towards parsing.
+    fn listable_from_prefix(&self) -> bool {
+        let Some(top) = self.prefix_path.first() else {
+            return false;
+        };
+        if !self.overlays.is_empty()
+            || !self.overrides.is_empty()
+            || !self.yaml.trim_start().starts_with('{')
+        {
+            return false;
+        }
+        let key = crate::openapi::commands::tag_match_key(top);
+        let names_group = |s: &str| {
+            s.len() <= 4 * top.len() + 8
+                && s.chars()
+                    .filter(|c| c.is_alphanumeric())
+                    .flat_map(char::to_lowercase)
+                    .eq(key.chars())
+        };
+        key != "default"
+            && !self.yaml.split('"').any(|s| {
+                names_group(s) || s.trim_start_matches('/').split('/').next().is_some_and(names_group)
+            })
+    }
+}
+
 /// A server-URL template variable like `{store_hash}` in
 /// `https://api.bigcommerce.com/stores/{store_hash}/v3`. Resolved at runtime
 /// from a CLI flag (`--<name>`), an env var, or a built-in default — first
@@ -1416,6 +1447,58 @@ impl CliApp {
     }
 
     /// Build the merged `RestDescription` from all registered specs.
+    /// Every spec, except while building the tree for a TAB completion:
+    /// - under one top-level command, only unprefixed specs and those mounted
+    ///   under that command, since no other spec can add to its subtree
+    ///   (unrecognised words, e.g. an alias, keep every spec);
+    /// - for the top-level word itself, only the specs whose top-level group
+    ///   can't be listed from its prefix alone (see
+    ///   [`Self::completion_placeholders`]).
+    fn specs_to_build(&self) -> Vec<&SpecEntry> {
+        let all = || self.specs.iter().collect();
+        let Some(focus) = crate::completions::completion_focus() else {
+            return all();
+        };
+        if !self.audiences.is_empty() {
+            return all();
+        }
+        let Some(word) = focus.word.as_deref() else {
+            return self
+                .specs
+                .iter()
+                .filter(|e| !e.listable_from_prefix())
+                .collect();
+        };
+        let mounted_under_focus = |e: &SpecEntry| e.prefix_path.first().is_some_and(|p| p == word);
+        if !focus.outside_specs && !self.specs.iter().any(mounted_under_focus) {
+            return all();
+        }
+        self.specs
+            .iter()
+            .filter(|e| e.prefix_path.is_empty() || mounted_under_focus(e))
+            .collect()
+    }
+
+    /// Top-level groups to list without parsing their specs while completing
+    /// the top-level word: the prefixes of the specs [`Self::specs_to_build`]
+    /// skipped. Their `about` comes from the parsed specs' metadata, exactly
+    /// as it would in a full build.
+    pub(crate) fn completion_placeholders(&self) -> Vec<String> {
+        let top_level = crate::completions::completion_focus().is_some_and(|f| f.word.is_none());
+        if !top_level || !self.audiences.is_empty() {
+            return Vec::new();
+        }
+        let mut names: Vec<String> = self
+            .specs
+            .iter()
+            .filter(|e| e.listable_from_prefix())
+            .map(|e| e.prefix_path[0].clone())
+            .collect();
+        names.sort();
+        names.dedup();
+        names
+    }
+
     pub(crate) fn build_doc(&self) -> Result<RestDescription, CliError> {
         if self.specs.is_empty() {
             return Err(CliError::Discovery(
@@ -1425,7 +1508,7 @@ impl CliApp {
 
         let mut merged: Option<RestDescription> = None;
 
-        for entry in &self.specs {
+        for entry in self.specs_to_build() {
             // 1. Apply overlays (RFC 7396 style) first.
             let effective_yaml = crate::openapi::overlay::apply_overlays_to_spec(
                 &entry.yaml,
@@ -1485,7 +1568,8 @@ impl CliApp {
             }
         }
 
-        let mut doc = merged.expect("at least one spec was processed");
+        // Only a focused completion build can skip every spec.
+        let mut doc = merged.unwrap_or_default();
         if let Some(ref t) = self.title_override {
             doc.title = Some(t.clone());
         }
@@ -2208,6 +2292,56 @@ impl CliApp {
         doc: &mut RestDescription,
         matches: &clap::ArgMatches,
     ) {
+        self.apply_server_vars_for(doc, matches, None);
+    }
+
+    /// [`apply_server_vars`](Self::apply_server_vars) with the profile rung
+    /// read from `profile` instead of the installed selection, for calls
+    /// made on behalf of a profile that is not (yet, or any longer) selected.
+    pub(crate) fn apply_server_vars_for(
+        &self,
+        doc: &mut RestDescription,
+        matches: &clap::ArgMatches,
+        profile: Option<&crate::profiles::ResolvedProfile>,
+    ) {
+        let (subs, caller_pinned_any) = self.resolve_server_var_subs(doc, matches, profile);
+        if !caller_pinned_any {
+            apply_default_server_urls(doc);
+        }
+        apply_server_var_substitutions(doc, &subs);
+    }
+
+    /// Fill `{name}` server-variable placeholders in a caller-supplied base
+    /// URL (`--base-url`, `<NAME>_BASE_URL`, or a profile's base URL) from the
+    /// same ladder that resolves the spec's own server URLs, so
+    /// `--base-url https://api.stage-{region}.twilio.com` honours `--region`.
+    pub(crate) fn substitute_base_url_vars(
+        &self,
+        url: Option<String>,
+        doc: &RestDescription,
+        matches: &clap::ArgMatches,
+        profile: Option<&crate::profiles::ResolvedProfile>,
+    ) -> Option<String> {
+        let url = url?;
+        if !url.contains('{') {
+            return Some(url);
+        }
+        let (subs, _) = self.resolve_server_var_subs(doc, matches, profile);
+        Some(substitute_url_vars(&url, &subs))
+    }
+
+    /// Server-variable values (command line > profile > env var > spec
+    /// default), plus whether the caller or a profile pinned any of them.
+    fn resolve_server_var_subs(
+        &self,
+        doc: &RestDescription,
+        matches: &clap::ArgMatches,
+        profile: Option<&crate::profiles::ResolvedProfile>,
+    ) -> (std::collections::HashMap<String, String>, bool) {
+        let profile_var = |name: &str| match profile {
+            Some(p) => p.server_variables.get(name).cloned(),
+            None => crate::profiles::server_variable(name),
+        };
         let spec_vars = collect_spec_server_variables(doc);
         let names = self
             .server_vars
@@ -2243,7 +2377,7 @@ impl CliApp {
                 );
                 continue;
             }
-            if let Some(value) = crate::profiles::server_variable(name) {
+            if let Some(value) = profile_var(name) {
                 caller_pinned_any = true;
                 subs.insert(name.clone(), value);
                 continue;
@@ -2269,10 +2403,7 @@ impl CliApp {
             }
         }
 
-        if !caller_pinned_any {
-            apply_default_server_urls(doc);
-        }
-        apply_server_var_substitutions(doc, &subs);
+        (subs, caller_pinned_any)
     }
 
     /// Handle the `generate-skills` subcommand: validate the output
@@ -2570,6 +2701,8 @@ impl AppContext {
             color_mode: formatter::ColorMode::default(),
             quiet: self.quiet,
             query: None,
+            table_columns: None,
+            table_page_widths: Default::default(),
         };
         let extra_headers = self.extra_headers_for_entry(entry, method, params_json)?;
         let filtered_global_params = self.extra_global_params_for_entry(entry, method, params_json);
@@ -3060,6 +3193,14 @@ pub(crate) fn collect_params_from_flags(
                 // literal string.
                 let mut arr: Vec<serde_json::Value> = Vec::new();
                 let mut explicit_null = false;
+                // Object/number/etc. elements are JSON, so `@file` references
+                // inside them resolve like the single-value branch below.
+                // String elements stay literal; an untyped list (`item_type:
+                // None`) is a string list, so it stays literal too.
+                let json_items = param_def
+                    .item_type
+                    .as_deref()
+                    .is_some_and(|t| t != "string");
                 for v in values {
                     // Null sentinel (ADR-0003): on a nullable list, a lone
                     // `null` is the user asking to send JSON null rather
@@ -3069,20 +3210,29 @@ pub(crate) fn collect_params_from_flags(
                         continue;
                     }
                     match serde_json::from_str::<serde_json::Value>(v) {
-                        Ok(serde_json::Value::Array(elems)) => arr.extend(elems),
+                        Ok(serde_json::Value::Array(mut elems)) => {
+                            if json_items {
+                                for elem in &mut elems {
+                                    executor::resolve_file_refs(elem)?;
+                                }
+                            }
+                            arr.extend(elems)
+                        }
                         // A non-string element type means each occurrence is
                         // itself JSON — `--inputs '{"text":"hi"}'` is one
                         // object, not the literal text of one. Keeping it a
                         // string made an array-of-objects flag impossible to
                         // use one element at a time, while `--schema` now
                         // advertises `items: {type: object}`.
-                        Ok(decoded)
-                            if param_def
-                                .item_type
-                                .as_deref()
-                                .is_some_and(|t| t != "string") =>
-                        {
+                        Ok(mut decoded) if json_items => {
+                            executor::resolve_file_refs(&mut decoded)?;
                             arr.push(decoded)
+                        }
+                        // Not JSON at all, on a list of single-field objects:
+                        // each comma-separated value fills that field
+                        // (`--to a@x.com,b@x.com`).
+                        Err(_) if param_def.shorthand_field.is_some() => {
+                            arr.extend(shorthand_objects(param_def, v))
                         }
                         // Anything else — including non-array JSON like "123"
                         // on a string-element flag — stays a literal string.
@@ -3153,7 +3303,11 @@ pub(crate) fn collect_params_from_flags(
                             executor::resolve_file_refs(&mut parsed)?;
                             parsed
                         }
-                        Err(_) => serde_json::Value::String(value.clone()),
+                        Err(_) => match &param_def.shorthand_field {
+                            // `--from a@x.com` on a single-field object.
+                            Some(field) => serde_json::json!({ field.as_str(): value }),
+                            None => serde_json::Value::String(value.clone()),
+                        },
                     }
                 } else {
                     let wire = param_def
@@ -3191,6 +3345,203 @@ pub(crate) fn collect_params_from_flags(
     }
 
     Ok(params)
+}
+
+/// Whether prompts can be shown: both stdin and stderr are terminals. A
+/// script, CI job or agent piping I/O never sees a prompt.
+pub(crate) fn interactive_terminal() -> bool {
+    use std::io::IsTerminal;
+    std::io::stdin().is_terminal() && std::io::stderr().is_terminal()
+}
+
+/// Whether any flag value reads stdin: `--json -`, a multipart file `-`, or
+/// an `@-` reference anywhere in a value. Prompts must not compete for it.
+/// `--output -` is stdout, not stdin.
+pub(crate) fn args_read_stdin(matched_args: &clap::ArgMatches) -> bool {
+    matched_args.ids().filter(|id| id.as_str() != "output").any(|id| {
+        matched_args
+            .get_raw(id.as_str())
+            .into_iter()
+            .flatten()
+            .filter_map(|v| v.to_str())
+            .any(|v| v == "-" || v.contains("@-"))
+    })
+}
+
+/// Required parameters the user supplied by no flag, `--params` or `--json`,
+/// in the spec's order — the same set the executor would report as missing.
+/// `exempt` holds wire names a resolved global parameter will fill.
+pub(crate) fn missing_required_params(
+    matched_args: &clap::ArgMatches,
+    method: &RestMethod,
+    params: &serde_json::Map<String, serde_json::Value>,
+    exempt: &std::collections::HashSet<&str>,
+) -> Vec<String> {
+    let body_json_supplied = matched_args
+        .try_get_one::<String>("json")
+        .ok()
+        .flatten()
+        .is_some();
+    let mut names: Vec<&String> = method.parameter_order.iter().collect();
+    let mut rest: Vec<&String> = method
+        .parameters
+        .keys()
+        .filter(|name| !method.parameter_order.contains(*name))
+        .collect();
+    rest.sort();
+    names.extend(rest);
+
+    let ancestor_object_supplied = |name: &str| {
+        let mut remaining = name;
+        while let Some((prefix, _)) = remaining.rsplit_once('.') {
+            if params.contains_key(prefix)
+                && method
+                    .parameters
+                    .get(prefix)
+                    .and_then(|p| p.param_type.as_deref())
+                    == Some("object")
+            {
+                return true;
+            }
+            remaining = prefix;
+        }
+        false
+    };
+
+    names
+        .into_iter()
+        .filter(|name| {
+            let Some(def) = method.parameters.get(*name) else {
+                return false;
+            };
+            let is_body = def.location.as_deref() == Some("body");
+            def.required
+                && def.variable_reference.is_none()
+                && !params.contains_key(*name)
+                && !exempt.contains(name.as_str())
+                && !(is_body && body_json_supplied)
+                && !(is_body && ancestor_object_supplied(name))
+                && !(is_body
+                    && name.contains('.')
+                    && crate::openapi::executor::optional_ancestor_omitted(
+                        name,
+                        params,
+                        exempt,
+                        &method.parameters,
+                    ))
+        })
+        .cloned()
+        .collect()
+}
+
+/// Ask for each of `missing` on `out`, reading answers from `input`. An empty
+/// answer leaves the parameter unset, so the executor still reports it.
+pub(crate) fn prompt_for_params(
+    missing: &[String],
+    method: &RestMethod,
+    params: &mut serde_json::Map<String, serde_json::Value>,
+    input: &mut impl std::io::BufRead,
+    out: &mut impl std::io::Write,
+) -> Result<(), CliError> {
+    for name in missing {
+        let Some(def) = method.parameters.get(name) else {
+            continue;
+        };
+        let flag = crate::openapi::commands::resolve_param_flag_name(def, name)
+            .unwrap_or_else(|| crate::text::to_kebab_flag(name));
+        let hint = if def.repeated {
+            " (comma-separated)"
+        } else if def.param_type.as_deref() == Some("object") && def.shorthand_field.is_none() {
+            " (JSON)"
+        } else {
+            ""
+        };
+        let _ = write!(out, "--{flag}{hint}: ");
+        let _ = out.flush();
+        let mut answer = String::new();
+        let read = input
+            .read_line(&mut answer)
+            .map_err(|e| CliError::Other(e.into()))?;
+        if read == 0 {
+            // EOF (Ctrl-D): stop asking; the executor reports what's left.
+            let _ = writeln!(out);
+            break;
+        }
+        let answer = answer.trim();
+        if answer.is_empty() {
+            continue;
+        }
+        params.insert(name.clone(), prompted_value_to_json(def, answer)?);
+    }
+    Ok(())
+}
+
+/// Convert a prompt answer the way the equivalent flag value would be.
+fn prompted_value_to_json(
+    def: &crate::openapi::discovery::MethodParameter,
+    answer: &str,
+) -> Result<serde_json::Value, CliError> {
+    // Null sentinel (ADR-0003), as on the equivalent flag.
+    if def.nullable && answer == "null" {
+        return Ok(serde_json::Value::Null);
+    }
+    let json_items = def.item_type.as_deref().is_some_and(|t| t != "string");
+    if def.repeated {
+        let value = match serde_json::from_str::<serde_json::Value>(answer) {
+            Ok(serde_json::Value::Array(elems)) => serde_json::Value::Array(elems),
+            Ok(decoded) if json_items => serde_json::Value::Array(vec![decoded]),
+            Err(_) if def.shorthand_field.is_some() => {
+                serde_json::Value::Array(shorthand_objects(def, answer))
+            }
+            _ => serde_json::Value::Array(
+                answer
+                    .split(',')
+                    .map(str::trim)
+                    .filter(|part| !part.is_empty())
+                    .map(|part| serde_json::Value::String(part.to_string()))
+                    .collect(),
+            ),
+        };
+        // A `oneOf [string, array<string>]` field keeps one value scalar, as
+        // on the equivalent flag.
+        return Ok(match value {
+            serde_json::Value::Array(mut arr) if def.scalar_or_array && arr.len() == 1 => {
+                arr.remove(0)
+            }
+            other => other,
+        });
+    }
+    if matches!(def.param_type.as_deref(), Some("object") | Some("array")) {
+        return Ok(match serde_json::from_str::<serde_json::Value>(answer) {
+            Ok(mut parsed) => {
+                executor::resolve_file_refs(&mut parsed)?;
+                parsed
+            }
+            Err(_) => match &def.shorthand_field {
+                Some(field) => serde_json::json!({ field.as_str(): answer }),
+                None => serde_json::Value::String(answer.to_string()),
+            },
+        });
+    }
+    Ok(serde_json::Value::String(
+        def.resolve_enum_display_to_wire(answer).into_owned(),
+    ))
+}
+
+/// Expand a non-JSON value on a list-of-objects flag into one object per
+/// comma-separated entry, keyed by [`MethodParameter::shorthand_field`].
+fn shorthand_objects(
+    param_def: &crate::openapi::discovery::MethodParameter,
+    raw: &str,
+) -> Vec<serde_json::Value> {
+    let Some(field) = param_def.shorthand_field.as_deref() else {
+        return Vec::new();
+    };
+    raw.split(',')
+        .map(str::trim)
+        .filter(|part| !part.is_empty())
+        .map(|part| serde_json::json!({ field: part }))
+        .collect()
 }
 
 /// Collect multipart/form-data parts from CLI arg matches. Returns `None`
@@ -4872,6 +5223,134 @@ mod tests {
         );
     }
 
+    fn object_list_method(name: &str) -> crate::openapi::discovery::RestMethod {
+        let mut params = std::collections::HashMap::new();
+        params.insert(
+            name.to_string(),
+            crate::openapi::discovery::MethodParameter {
+                param_type: Some("string".to_string()),
+                location: Some("body".to_string()),
+                repeated: true,
+                item_type: Some("object".to_string()),
+                ..Default::default()
+            },
+        );
+        crate::openapi::discovery::RestMethod {
+            parameters: params,
+            ..Default::default()
+        }
+    }
+
+    fn object_list_matches(name: &'static str, values: &[&str]) -> clap::ArgMatches {
+        let cmd = clap::Command::new("test")
+            .arg(
+                clap::Arg::new(name)
+                    .long(name)
+                    .action(clap::ArgAction::Append),
+            )
+            .arg(clap::Arg::new("params").long("params"));
+        let mut argv = vec!["test".to_string()];
+        for v in values {
+            argv.push(format!("--{name}"));
+            argv.push((*v).to_string());
+        }
+        cmd.get_matches_from(argv)
+    }
+
+    #[test]
+    fn test_collect_params_repeated_object_resolves_file_refs() {
+        let tmp = tempfile::NamedTempFile::new().unwrap();
+        std::fs::write(tmp.path(), b"hello").unwrap();
+        let path = tmp.path().to_str().unwrap();
+        let data_ref = format!(r#"{{"content":"@data://{path}","filename":"a.txt"}}"#);
+        let text_ref = format!(r#"{{"content":"@{path}","filename":"b.txt"}}"#);
+        let method = object_list_method("attachments");
+        let matches = object_list_matches("attachments", &[&data_ref, &text_ref]);
+        let result = collect_params_from_flags(&matches, &method, None).unwrap();
+        assert_eq!(
+            result.get("attachments"),
+            Some(&serde_json::json!([
+                {"content": "aGVsbG8=", "filename": "a.txt"},
+                {"content": "hello", "filename": "b.txt"},
+            ])),
+        );
+    }
+
+    #[test]
+    fn test_collect_params_repeated_object_json_array_resolves_file_refs() {
+        let tmp = tempfile::NamedTempFile::new().unwrap();
+        std::fs::write(tmp.path(), b"hello").unwrap();
+        let path = tmp.path().to_str().unwrap();
+        let value = format!(r#"[{{"type":"text/plain","value":"@{path}"}}]"#);
+        let method = object_list_method("content");
+        let matches = object_list_matches("content", &[&value]);
+        let result = collect_params_from_flags(&matches, &method, None).unwrap();
+        assert_eq!(
+            result.get("content"),
+            Some(&serde_json::json!([{"type": "text/plain", "value": "hello"}])),
+        );
+    }
+
+    #[test]
+    fn test_collect_params_repeated_object_missing_file_errors() {
+        let method = object_list_method("attachments");
+        let matches = object_list_matches(
+            "attachments",
+            &[r#"{"content":"@data:///nonexistent/fern-cli-test.txt","filename":"a"}"#],
+        );
+        let err = collect_params_from_flags(&matches, &method, None).unwrap_err();
+        let msg = err.to_string();
+        assert!(msg.contains("/nonexistent/fern-cli-test.txt"), "{msg}");
+    }
+
+    #[test]
+    fn test_collect_params_repeated_string_keeps_at_literal() {
+        let mut params = std::collections::HashMap::new();
+        params.insert(
+            "to".to_string(),
+            crate::openapi::discovery::MethodParameter {
+                param_type: Some("string".to_string()),
+                location: Some("body".to_string()),
+                repeated: true,
+                ..Default::default()
+            },
+        );
+        let method = crate::openapi::discovery::RestMethod {
+            parameters: params,
+            ..Default::default()
+        };
+        let matches = object_list_matches("to", &["@handle", r#"["@other"]"#]);
+        let result = collect_params_from_flags(&matches, &method, None).unwrap();
+        assert_eq!(
+            result.get("to"),
+            Some(&serde_json::json!(["@handle", "@other"]))
+        );
+    }
+
+    #[test]
+    fn test_collect_params_repeated_untyped_json_array_keeps_at_literal() {
+        let mut params = std::collections::HashMap::new();
+        params.insert(
+            "items".to_string(),
+            crate::openapi::discovery::MethodParameter {
+                param_type: Some("string".to_string()),
+                location: Some("body".to_string()),
+                repeated: true,
+                ..Default::default()
+            },
+        );
+        let method = crate::openapi::discovery::RestMethod {
+            parameters: params,
+            ..Default::default()
+        };
+        let matches = object_list_matches("items", &[r#"[{"value":"@data:///nonexistent"}]"#]);
+        let result = collect_params_from_flags(&matches, &method, None).unwrap();
+        assert_eq!(
+            result.get("items"),
+            Some(&serde_json::json!([{"value": "@data:///nonexistent"}])),
+        );
+    }
+
     #[test]
     fn test_collect_params_scalar_or_array_single_value_stays_scalar() {
         // For oneOf [string, array<string>] unions, a single value should be
@@ -5940,6 +6419,42 @@ paths:
     }
 
     #[test]
+    fn test_substitute_base_url_vars_fills_region_in_caller_base_url() {
+        // `--base-url https://api.stage-{region}.twilio.com` must not reach
+        // the request builder with a literal `{region}`.
+        let app = CliApp::new("t").spec(TWILIO_SHAPED_SPEC);
+        let doc = app.build_doc().unwrap();
+        let cli = app.decorate_command(&doc, crate::openapi::commands::build_cli(&doc));
+        let stage = Some("https://api.stage-{region}.twilio.com".to_string());
+
+        let pinned = cli
+            .clone()
+            .try_get_matches_from(["t", "--region", "ie1", "messages", "list-message"])
+            .unwrap();
+        assert_eq!(
+            app.substitute_base_url_vars(stage.clone(), &doc, &pinned, None).as_deref(),
+            Some("https://api.stage-ie1.twilio.com")
+        );
+
+        let defaulted = cli.try_get_matches_from(["t", "messages", "list-message"]).unwrap();
+        assert_eq!(
+            app.substitute_base_url_vars(stage, &doc, &defaulted, None).as_deref(),
+            Some("https://api.stage-us1.twilio.com")
+        );
+        assert_eq!(
+            app.substitute_base_url_vars(
+                Some("http://127.0.0.1:8080/{unknown}".to_string()),
+                &doc,
+                &defaulted,
+                None,
+            )
+            .as_deref(),
+            Some("http://127.0.0.1:8080/{unknown}")
+        );
+        assert_eq!(app.substitute_base_url_vars(None, &doc, &defaulted, None), None);
+    }
+
+    #[test]
     fn test_apply_server_vars_caller_value_beats_default_url() {
         // An explicit `--region` must route the request, not be discarded in
         // favour of `x-fern-default-url`.
@@ -6799,5 +7314,205 @@ paths:
             overrides.is_empty(),
             "optional with no value should be omitted: {overrides:?}"
         );
+    }
+
+    fn shorthand_method() -> crate::openapi::discovery::RestMethod {
+        let mut params = std::collections::HashMap::new();
+        params.insert(
+            "to".to_string(),
+            crate::openapi::discovery::MethodParameter {
+                param_type: Some("string".to_string()),
+                location: Some("body".to_string()),
+                required: true,
+                repeated: true,
+                item_type: Some("object".to_string()),
+                shorthand_field: Some("email".to_string()),
+                ..Default::default()
+            },
+        );
+        params.insert(
+            "from".to_string(),
+            crate::openapi::discovery::MethodParameter {
+                param_type: Some("object".to_string()),
+                location: Some("body".to_string()),
+                shorthand_field: Some("email".to_string()),
+                ..Default::default()
+            },
+        );
+        params.insert(
+            "subject".to_string(),
+            crate::openapi::discovery::MethodParameter {
+                param_type: Some("string".to_string()),
+                location: Some("body".to_string()),
+                required: true,
+                ..Default::default()
+            },
+        );
+        crate::openapi::discovery::RestMethod {
+            parameters: params,
+            parameter_order: vec!["to".to_string(), "subject".to_string()],
+            ..Default::default()
+        }
+    }
+
+    fn shorthand_matches(argv: &[&str]) -> clap::ArgMatches {
+        clap::Command::new("test")
+            .arg(clap::Arg::new("to").long("to").action(clap::ArgAction::Append))
+            .arg(clap::Arg::new("from").long("from"))
+            .arg(clap::Arg::new("subject").long("subject"))
+            .arg(clap::Arg::new("json").long("json"))
+            .arg(clap::Arg::new("params").long("params"))
+            .get_matches_from(std::iter::once("test").chain(argv.iter().copied()))
+    }
+
+    #[test]
+    fn test_collect_params_shorthand_fills_single_required_field() {
+        let matches = shorthand_matches(&[
+            "--to",
+            "a@x.com, b@x.com",
+            "--to",
+            r#"{"email":"c@x.com","name":"C"}"#,
+            "--from",
+            "me@x.com",
+        ]);
+        let result = collect_params_from_flags(&matches, &shorthand_method(), None).unwrap();
+        assert_eq!(
+            result.get("to"),
+            Some(&serde_json::json!([
+                {"email": "a@x.com"},
+                {"email": "b@x.com"},
+                {"email": "c@x.com", "name": "C"},
+            ])),
+        );
+        assert_eq!(result.get("from"), Some(&serde_json::json!({"email": "me@x.com"})));
+    }
+
+    #[test]
+    fn test_missing_required_params_respects_json_and_supplied_flags() {
+        let method = shorthand_method();
+        let empty = std::collections::HashSet::new();
+        let matches = shorthand_matches(&["--to", "a@x.com"]);
+        let params = collect_params_from_flags(&matches, &method, None).unwrap();
+        assert_eq!(missing_required_params(&matches, &method, &params, &empty), vec!["subject"]);
+
+        let matches = shorthand_matches(&["--json", "{}"]);
+        let params = collect_params_from_flags(&matches, &method, None).unwrap();
+        assert!(missing_required_params(&matches, &method, &params, &empty).is_empty());
+    }
+
+    #[test]
+    fn test_missing_required_params_skips_leaf_of_omitted_optional_parent() {
+        use crate::openapi::discovery::MethodParameter;
+        let body = |param_type: &str, required: bool| MethodParameter {
+            location: Some("body".to_string()),
+            param_type: Some(param_type.to_string()),
+            required,
+            required_by_spec: required,
+            ..Default::default()
+        };
+        let mut parameters = std::collections::HashMap::new();
+        parameters.insert("kind".to_string(), body("string", true));
+        parameters.insert("source".to_string(), body("object", false));
+        parameters.insert("source.channel".to_string(), body("string", true));
+        parameters.insert("source.label".to_string(), body("string", false));
+        let method = RestMethod {
+            http_method: "POST".to_string(),
+            path: "captures".to_string(),
+            parameters,
+            ..Default::default()
+        };
+        let matches = clap::Command::new("test")
+            .arg(clap::Arg::new("json").long("json"))
+            .get_matches_from(["test"]);
+        let empty = std::collections::HashSet::new();
+
+        let mut params = serde_json::Map::new();
+        params.insert("kind".to_string(), serde_json::json!("note"));
+        assert!(missing_required_params(&matches, &method, &params, &empty).is_empty());
+
+        params.insert("source.label".to_string(), serde_json::json!("x"));
+        assert_eq!(
+            missing_required_params(&matches, &method, &params, &empty),
+            vec!["source.channel"]
+        );
+    }
+
+    #[test]
+    fn test_prompt_for_params_converts_answers_like_flags() {
+        let method = shorthand_method();
+        let mut params = serde_json::Map::new();
+        let mut input = std::io::Cursor::new(b"a@x.com,b@x.com\n\n".to_vec());
+        let mut out = Vec::new();
+        prompt_for_params(
+            &["to".to_string(), "subject".to_string()],
+            &method,
+            &mut params,
+            &mut input,
+            &mut out,
+        )
+        .unwrap();
+        assert_eq!(
+            params.get("to"),
+            Some(&serde_json::json!([{"email": "a@x.com"}, {"email": "b@x.com"}])),
+        );
+        assert!(!params.contains_key("subject"), "empty answer leaves it unset");
+        let shown = String::from_utf8(out).unwrap();
+        assert!(shown.contains("--to (comma-separated): "), "{shown}");
+        assert!(shown.contains("--subject: "), "{shown}");
+    }
+
+    #[test]
+    fn test_prompted_value_to_json_null_and_scalar_or_array_match_flags() {
+        use crate::openapi::discovery::MethodParameter;
+        let nullable_list = MethodParameter {
+            param_type: Some("string".to_string()),
+            repeated: true,
+            nullable: true,
+            ..Default::default()
+        };
+        assert_eq!(prompted_value_to_json(&nullable_list, "null").unwrap(), serde_json::Value::Null);
+        let nullable_string = MethodParameter {
+            param_type: Some("string".to_string()),
+            nullable: true,
+            ..Default::default()
+        };
+        assert_eq!(prompted_value_to_json(&nullable_string, "null").unwrap(), serde_json::Value::Null);
+        let scalar_or_array = MethodParameter {
+            param_type: Some("string".to_string()),
+            repeated: true,
+            scalar_or_array: true,
+            ..Default::default()
+        };
+        assert_eq!(prompted_value_to_json(&scalar_or_array, "a").unwrap(), serde_json::json!("a"));
+        assert_eq!(
+            prompted_value_to_json(&scalar_or_array, "a,b").unwrap(),
+            serde_json::json!(["a", "b"]),
+        );
+    }
+
+    #[test]
+    fn test_prompt_for_params_stops_at_eof() {
+        let method = shorthand_method();
+        let mut params = serde_json::Map::new();
+        let mut input = std::io::Cursor::new(Vec::new());
+        let mut out = Vec::new();
+        prompt_for_params(
+            &["to".to_string(), "subject".to_string()],
+            &method,
+            &mut params,
+            &mut input,
+            &mut out,
+        )
+        .unwrap();
+        let shown = String::from_utf8(out).unwrap();
+        assert!(params.is_empty());
+        assert!(!shown.contains("--subject"), "no prompts after EOF: {shown}");
+    }
+
+    #[test]
+    fn test_args_read_stdin_detects_dash_and_at_dash() {
+        assert!(args_read_stdin(&shorthand_matches(&["--json", "-"])));
+        assert!(args_read_stdin(&shorthand_matches(&["--to", r#"{"email":"@-"}"#])));
+        assert!(!args_read_stdin(&shorthand_matches(&["--to", "a@x.com", "--subject", "Hi"])));
     }
 }

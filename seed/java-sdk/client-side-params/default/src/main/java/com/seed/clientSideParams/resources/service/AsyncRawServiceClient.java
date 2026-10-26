@@ -5,9 +5,11 @@ package com.seed.clientSideParams.resources.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.seed.clientSideParams.core.BodyProperties;
 import com.seed.clientSideParams.core.ClientOptions;
 import com.seed.clientSideParams.core.MediaTypes;
 import com.seed.clientSideParams.core.ObjectMappers;
+import com.seed.clientSideParams.core.PathSegments;
 import com.seed.clientSideParams.core.QueryStringMapper;
 import com.seed.clientSideParams.core.RequestOptions;
 import com.seed.clientSideParams.core.RetryInterceptor;
@@ -110,7 +112,8 @@ public class AsyncRawServiceClient {
                     .build();
         }
         CompletableFuture<SeedClientSideParamsHttpResponse<List<Resource>>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -141,6 +144,11 @@ public class AsyncRawServiceClient {
                         new SeedClientSideParamsException("Network error executing HTTP request", e));
             }
         });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
+            }
+        });
         return future;
     }
 
@@ -161,7 +169,7 @@ public class AsyncRawServiceClient {
                 .newBuilder()
                 .addPathSegments("api")
                 .addPathSegments("resources")
-                .addPathSegment(resourceId);
+                .addPathSegment(PathSegments.validate(resourceId));
         QueryStringMapper.addQueryParameter(
                 httpUrl, "include_metadata", request.getIncludeMetadata().orElse(false), false);
         QueryStringMapper.addQueryParameter(
@@ -191,7 +199,8 @@ public class AsyncRawServiceClient {
                     .build();
         }
         CompletableFuture<SeedClientSideParamsHttpResponse<Resource>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -218,6 +227,11 @@ public class AsyncRawServiceClient {
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(
                         new SeedClientSideParamsException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;
@@ -251,7 +265,9 @@ public class AsyncRawServiceClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -276,7 +292,8 @@ public class AsyncRawServiceClient {
                     .build();
         }
         CompletableFuture<SeedClientSideParamsHttpResponse<SearchResponse>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -304,6 +321,11 @@ public class AsyncRawServiceClient {
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(
                         new SeedClientSideParamsException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;
@@ -393,7 +415,8 @@ public class AsyncRawServiceClient {
                     .build();
         }
         CompletableFuture<SeedClientSideParamsHttpResponse<PaginatedUserResponse>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -421,6 +444,11 @@ public class AsyncRawServiceClient {
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(
                         new SeedClientSideParamsException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;
@@ -458,7 +486,7 @@ public class AsyncRawServiceClient {
                 .newBuilder()
                 .addPathSegments("api")
                 .addPathSegments("users")
-                .addPathSegment(userId);
+                .addPathSegment(PathSegments.validate(userId));
         if (request.getFields().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "fields", request.getFields().get(), false);
@@ -490,7 +518,8 @@ public class AsyncRawServiceClient {
                     .build();
         }
         CompletableFuture<SeedClientSideParamsHttpResponse<User>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -517,6 +546,11 @@ public class AsyncRawServiceClient {
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(
                         new SeedClientSideParamsException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;
@@ -546,7 +580,9 @@ public class AsyncRawServiceClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedClientSideParamsException("Failed to serialize request", e);
         }
@@ -571,7 +607,8 @@ public class AsyncRawServiceClient {
                     .build();
         }
         CompletableFuture<SeedClientSideParamsHttpResponse<User>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -598,6 +635,11 @@ public class AsyncRawServiceClient {
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(
                         new SeedClientSideParamsException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;
@@ -635,7 +677,7 @@ public class AsyncRawServiceClient {
                 .newBuilder()
                 .addPathSegments("api")
                 .addPathSegments("users")
-                .addPathSegment(userId);
+                .addPathSegment(PathSegments.validate(userId));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -644,7 +686,9 @@ public class AsyncRawServiceClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedClientSideParamsException("Failed to serialize request", e);
         }
@@ -669,7 +713,8 @@ public class AsyncRawServiceClient {
                     .build();
         }
         CompletableFuture<SeedClientSideParamsHttpResponse<User>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -698,6 +743,11 @@ public class AsyncRawServiceClient {
                         new SeedClientSideParamsException("Network error executing HTTP request", e));
             }
         });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
+            }
+        });
         return future;
     }
 
@@ -717,7 +767,7 @@ public class AsyncRawServiceClient {
                 .newBuilder()
                 .addPathSegments("api")
                 .addPathSegments("users")
-                .addPathSegment(userId);
+                .addPathSegment(PathSegments.validate(userId));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -725,7 +775,10 @@ public class AsyncRawServiceClient {
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
-                .method("DELETE", null)
+                .method(
+                        "DELETE",
+                        BodyProperties.toRequestBody(
+                                requestOptions != null ? requestOptions.getBodyProperties() : null, null))
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .build();
         OkHttpClient client = clientOptions.httpClient();
@@ -742,7 +795,8 @@ public class AsyncRawServiceClient {
                     .build();
         }
         CompletableFuture<SeedClientSideParamsHttpResponse<Void>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -768,6 +822,11 @@ public class AsyncRawServiceClient {
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(
                         new SeedClientSideParamsException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;
@@ -842,7 +901,8 @@ public class AsyncRawServiceClient {
                     .build();
         }
         CompletableFuture<SeedClientSideParamsHttpResponse<List<Connection>>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -871,6 +931,11 @@ public class AsyncRawServiceClient {
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(
                         new SeedClientSideParamsException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;
@@ -908,7 +973,7 @@ public class AsyncRawServiceClient {
                 .newBuilder()
                 .addPathSegments("api")
                 .addPathSegments("connections")
-                .addPathSegment(connectionId);
+                .addPathSegment(PathSegments.validate(connectionId));
         if (request.getFields().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "fields", request.getFields().get(), false);
@@ -938,7 +1003,8 @@ public class AsyncRawServiceClient {
                     .build();
         }
         CompletableFuture<SeedClientSideParamsHttpResponse<Connection>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -965,6 +1031,11 @@ public class AsyncRawServiceClient {
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(
                         new SeedClientSideParamsException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;
@@ -1059,7 +1130,8 @@ public class AsyncRawServiceClient {
                     .build();
         }
         CompletableFuture<SeedClientSideParamsHttpResponse<PaginatedClientResponse>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -1087,6 +1159,11 @@ public class AsyncRawServiceClient {
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(
                         new SeedClientSideParamsException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;
@@ -1124,7 +1201,7 @@ public class AsyncRawServiceClient {
                 .newBuilder()
                 .addPathSegments("api")
                 .addPathSegments("clients")
-                .addPathSegment(clientId);
+                .addPathSegment(PathSegments.validate(clientId));
         if (request.getFields().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "fields", request.getFields().get(), false);
@@ -1158,7 +1235,8 @@ public class AsyncRawServiceClient {
                     .build();
         }
         CompletableFuture<SeedClientSideParamsHttpResponse<Client>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -1185,6 +1263,11 @@ public class AsyncRawServiceClient {
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(
                         new SeedClientSideParamsException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;

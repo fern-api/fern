@@ -15,7 +15,8 @@ public class UpdateFooTest : BaseMockServerTest
             {
               "nullable_text": "nullable_text",
               "nullable_number": 1.1,
-              "non_nullable_text": "non_nullable_text"
+              "non_nullable_text": "non_nullable_text",
+              "required_nullable_text": "required_nullable_text"
             }
             """;
 
@@ -52,6 +53,7 @@ public class UpdateFooTest : BaseMockServerTest
                 NullableText = "nullable_text",
                 NullableNumber = 1.1,
                 NonNullableText = "non_nullable_text",
+                RequiredNullableText = "required_nullable_text",
             }
         );
         JsonAssert.AreEqual(response, mockResponse);

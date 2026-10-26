@@ -1,3 +1,4 @@
+import { isHttpUrl } from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
@@ -6,10 +7,6 @@ async function defaultFileLoader(filepath: AbsoluteFilePath): Promise<string> {
     // strip frontmatter from the referenced markdown
     const file = await readFile(filepath);
     return file.toString();
-}
-
-function isUrl(src: string): boolean {
-    return src.startsWith("http://") || src.startsWith("https://");
 }
 
 /**
@@ -107,7 +104,7 @@ export function collectCodeSrcUrls(markdown: string): string[] {
     let match: RegExpExecArray | null;
     while ((match = regex.exec(markdown)) != null) {
         const src = match[2];
-        if (src && isUrl(src)) {
+        if (src && isHttpUrl(src)) {
             urls.push(src);
         }
     }
@@ -190,7 +187,7 @@ export async function replaceReferencedCode({
             let language: string | undefined;
             let title: string | undefined;
 
-            if (isUrl(src)) {
+            if (isHttpUrl(src)) {
                 const cached = urlCache?.get(src);
                 if (cached !== undefined) {
                     replacement = cached;

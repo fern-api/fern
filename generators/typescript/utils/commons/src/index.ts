@@ -1,6 +1,7 @@
 export { getOriginalName, getWireValue } from "@fern-api/base-generator";
 export * from "@fern-api/typescript-base";
 export { AsIsManager } from "./asIs/AsIsManager.js";
+export { convertRecordToIndexSignature } from "./codegen-utils/convertRecordToIndexSignature.js";
 export {
     createNumericLiteralSafe,
     createNumericLiteralSafeTypeNode
@@ -33,7 +34,6 @@ export { writerToString } from "./codegen-utils/writerToString.js";
 export {
     type GetTypeDeclaration,
     getXmlChildObjectTypes,
-    getXmlChildTypeIds,
     getXmlEncoding,
     getXmlPropertyKind,
     getXmlValueShape,

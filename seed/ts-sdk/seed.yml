@@ -226,6 +226,7 @@ fixtures:
     - outputFolder: serde
       customConfig:
         noSerdeLayer: false
+        includeMultipartPartContentType: true
     - outputFolder: wrapper
       customConfig:
         streamType: wrapper
@@ -435,10 +436,19 @@ fixtures:
     - outputFolder: always-send-auth
       customConfig:
         alwaysSendAuth: true
+    - outputFolder: flatten-any-auth-options
+      customConfig:
+        flattenAnyAuthOptions: true
     - outputFolder: always-send-auth-optional-auth
       customConfig:
         alwaysSendAuth: true
         optional-auth: true
+    - outputFolder: guard-process-env-access
+      customConfig:
+        guardProcessEnvAccess: true
+  ts-global-header-env:
+    - outputFolder: no-custom-config
+      customConfig: null
     - outputFolder: guard-process-env-access
       customConfig:
         guardProcessEnvAccess: true
@@ -505,6 +515,10 @@ fixtures:
       customConfig:
         includePlatformHeaders: true
         allowUserAgentAppInfo: true
+    - outputFolder: user-agent-only
+      customConfig:
+        includePlatformHeaders: true
+        userAgentOnly: true
     - outputFolder: no-custom-config
       customConfig: null
     - outputFolder: bundle
@@ -666,6 +680,9 @@ fixtures:
     - outputFolder: serde-layer
       customConfig:
         noSerdeLayer: false
+    - outputFolder: forward-compatible-enums
+      customConfig:
+        enableForwardCompatibleEnums: true
 
 scripts:
   - image: fernapi/ts-seed

@@ -3,6 +3,7 @@ export { generateModels } from "./generateModels.js";
 export { generateModelTests as generateTests } from "./generateTests.js";
 export { generateVersion } from "./generateVersion.js";
 export { generateWellKnownProtobufFiles } from "./generateWellKnownProtobufFiles.js";
+export { generateXmlTests } from "./generateXmlTests.js";
 export * from "./ModelGeneratorCli.js";
 export { ExampleGenerator } from "./snippets/ExampleGenerator.js";
 export { getUndiscriminatedUnionSerializerAnnotation } from "./undiscriminated-union/getUndiscriminatedUnionSerializerAnnotation.js";

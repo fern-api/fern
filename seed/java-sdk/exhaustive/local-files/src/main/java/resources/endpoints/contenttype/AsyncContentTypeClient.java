@@ -6,6 +6,7 @@ package com.fern.sdk.resources.endpoints.contenttype;
 
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.RequestOptions;
+import com.fern.sdk.core.SeedExhaustiveHttpResponse;
 import com.fern.sdk.resources.types.object.types.ObjectWithOptionalField;
 import java.lang.Void;
 import java.util.concurrent.CompletableFuture;
@@ -28,38 +29,94 @@ public class AsyncContentTypeClient {
   }
 
   public CompletableFuture<Void> postJsonPatchContentType() {
-    return this.rawClient.postJsonPatchContentType().thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<Void>> rawFuture = this.rawClient.postJsonPatchContentType();
+    CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<Void> postJsonPatchContentType(RequestOptions requestOptions) {
-    return this.rawClient.postJsonPatchContentType(requestOptions).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<Void>> rawFuture = this.rawClient.postJsonPatchContentType(requestOptions);
+    CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<Void> postJsonPatchContentType(ObjectWithOptionalField request) {
-    return this.rawClient.postJsonPatchContentType(request).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<Void>> rawFuture = this.rawClient.postJsonPatchContentType(request);
+    CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<Void> postJsonPatchContentType(ObjectWithOptionalField request,
       RequestOptions requestOptions) {
-    return this.rawClient.postJsonPatchContentType(request, requestOptions).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<Void>> rawFuture = this.rawClient.postJsonPatchContentType(request, requestOptions);
+    CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<Void> postJsonPatchContentWithCharsetType() {
-    return this.rawClient.postJsonPatchContentWithCharsetType().thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<Void>> rawFuture = this.rawClient.postJsonPatchContentWithCharsetType();
+    CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<Void> postJsonPatchContentWithCharsetType(
       RequestOptions requestOptions) {
-    return this.rawClient.postJsonPatchContentWithCharsetType(requestOptions).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<Void>> rawFuture = this.rawClient.postJsonPatchContentWithCharsetType(requestOptions);
+    CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<Void> postJsonPatchContentWithCharsetType(
       ObjectWithOptionalField request) {
-    return this.rawClient.postJsonPatchContentWithCharsetType(request).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<Void>> rawFuture = this.rawClient.postJsonPatchContentWithCharsetType(request);
+    CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 
   public CompletableFuture<Void> postJsonPatchContentWithCharsetType(
       ObjectWithOptionalField request, RequestOptions requestOptions) {
-    return this.rawClient.postJsonPatchContentWithCharsetType(request, requestOptions).thenApply(response -> response.body());
+    CompletableFuture<SeedExhaustiveHttpResponse<Void>> rawFuture = this.rawClient.postJsonPatchContentWithCharsetType(request, requestOptions);
+    CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+    future.whenComplete((result_, throwable_) -> {
+      if (future.isCancelled()) {
+        rawFuture.cancel(true);
+      }
+    });
+    return future;
   }
 }

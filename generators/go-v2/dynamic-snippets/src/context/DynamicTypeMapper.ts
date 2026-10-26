@@ -64,12 +64,12 @@ export class DynamicTypeMapper {
      */
     private isPointerAliasReference(reference: FernIr.dynamic.TypeReference): boolean {
         if (reference.type === "named") {
-            return this.isAliasToPointerType(reference.value);
+            return this.omitsPointerForAlias(reference.value);
         }
         if (reference.type === "optional" || reference.type === "nullable") {
             const inner = reference.value;
             if (inner.type === "named") {
-                return this.isAliasToPointerType(inner.value);
+                return this.omitsPointerForAlias(inner.value);
             }
         }
         return false;
@@ -80,26 +80,50 @@ export class DynamicTypeMapper {
      * (e.g. a nullable primitive like *time.Time). Traverses alias chains.
      */
     public isAliasToPointerType(typeId: FernIr.dynamic.TypeId): boolean {
+        return this.resolvePointerAliasTarget(typeId) != null;
+    }
+
+    /**
+     * Returns true if an optional reference to the alias should not add another pointer because
+     * the alias already generates as a pointer. With `legacyNullableAliasPointers`, only date and
+     * datetime aliases omit the pointer because their fields are marshaled through *time.Time.
+     */
+    public omitsPointerForAlias(typeId: FernIr.dynamic.TypeId): boolean {
+        const target = this.resolvePointerAliasTarget(typeId);
+        if (target == null) {
+            return false;
+        }
+        if (this.context.customConfig?.legacyNullableAliasPointers !== true) {
+            return true;
+        }
+        return target.type === "primitive" && (target.value === "DATE" || target.value === "DATE_TIME");
+    }
+
+    private resolvePointerAliasTarget(typeId: FernIr.dynamic.TypeId): FernIr.dynamic.TypeReference | undefined {
         const seen = new Set<FernIr.dynamic.TypeId>();
         let currentTypeId = typeId;
         while (true) {
             if (seen.has(currentTypeId)) {
-                return false;
+                return undefined;
             }
             seen.add(currentTypeId);
             const namedType = this.context.resolveNamedType({ typeId: currentTypeId });
             if (namedType == null || namedType.type !== "alias") {
-                return false;
+                return undefined;
             }
             const aliasOf = namedType.typeReference;
             if (aliasOf.type === "optional" || aliasOf.type === "nullable") {
-                return this.isPointerRequiredForOptionalInner(aliasOf);
+                let inner = aliasOf.value;
+                while (inner.type === "optional" || inner.type === "nullable") {
+                    inner = inner.value;
+                }
+                return this.isPointerRequiredForOptionalInner(inner) ? inner : undefined;
             }
             if (aliasOf.type === "named") {
                 currentTypeId = aliasOf.value;
                 continue;
             }
-            return false;
+            return undefined;
         }
     }
 
@@ -107,11 +131,7 @@ export class DynamicTypeMapper {
      * Lists, maps, sets, and unknown values are already nil-able, so an optional/nullable
      * wrapper around them renders without a pointer.
      */
-    private isPointerRequiredForOptionalInner(reference: FernIr.dynamic.TypeReference): boolean {
-        let inner = reference;
-        while (inner.type === "optional" || inner.type === "nullable") {
-            inner = inner.value;
-        }
+    private isPointerRequiredForOptionalInner(inner: FernIr.dynamic.TypeReference): boolean {
         return inner.type !== "list" && inner.type !== "map" && inner.type !== "set" && inner.type !== "unknown";
     }
 

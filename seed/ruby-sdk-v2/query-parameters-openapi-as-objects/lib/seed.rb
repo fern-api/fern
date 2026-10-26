@@ -3,6 +3,7 @@
 require "json"
 require "net/http"
 require "securerandom"
+require "time"
 
 require_relative "seed/internal/json/serializable"
 require_relative "seed/internal/types/type"
@@ -35,10 +36,16 @@ require_relative "seed/internal/iterators/cursor_item_iterator"
 require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
-require_relative "seed/types/user"
-require_relative "seed/types/nested_user"
-require_relative "seed/types/search_request_neighbor"
-require_relative "seed/types/search_request_neighbor_required"
-require_relative "seed/types/search_response"
+require_relative "seed/errors/connection_error"
 require_relative "seed/client"
 require_relative "seed/types/search_request"
+
+module Seed
+  module Types
+    autoload :User, ::File.join(__dir__, "seed/types/user")
+    autoload :NestedUser, ::File.join(__dir__, "seed/types/nested_user")
+    autoload :SearchRequestNeighbor, ::File.join(__dir__, "seed/types/search_request_neighbor")
+    autoload :SearchRequestNeighborRequired, ::File.join(__dir__, "seed/types/search_request_neighbor_required")
+    autoload :SearchResponse, ::File.join(__dir__, "seed/types/search_response")
+  end
+end

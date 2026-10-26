@@ -9,4 +9,10 @@ export interface HttpError extends FernOpenapiIr.WithDescription, FernOpenapiIr.
     examples: FernOpenapiIr.ErrorExample[] | undefined;
     /** Namespace declared via `x-fern-sdk-namespace` on the response object itself. */
     namespace: string | undefined;
+    /**
+     * True when this error was produced by the API-wide `error-responses` setting
+     * (`api.settings`). Shared errors and their body type are declared in the root
+     * package and reused by every namespaced spec.
+     */
+    isShared: boolean | undefined;
 }

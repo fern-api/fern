@@ -1,15 +1,17 @@
 import { createOrganizationIfDoesNotExist, FernToken, FernUserToken, getToken } from "@fern-api/auth";
+import { SDK_CONFIG_FILENAME } from "@fern-api/configuration-loader";
 import { createFdrService } from "@fern-api/core";
-import { extractErrorMessage } from "@fern-api/core-utils";
+import { extractErrorMessage, sanitizePreviewId } from "@fern-api/core-utils";
 import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { Rules } from "@fern-api/docs-validator";
 import { FdrAPI } from "@fern-api/fdr-sdk";
-import { basename } from "@fern-api/fs-utils";
+import { basename, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
 import { type ValidationViolation, validateOSSWorkspace } from "@fern-api/oss-validator";
 import { Project } from "@fern-api/project-loader";
 import { runRemoteGenerationForDocsWorkspace } from "@fern-api/remote-workspace-runner";
 import { CliError } from "@fern-api/task-context";
+import type { DocsWorkspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { detectCISource, detectDeployerAuthor, isCI } from "../../utils/environment.js";
@@ -17,26 +19,6 @@ import { validateDocsWorkspaceAndLogIssues } from "../validate/validateDocsWorks
 
 const DOMAIN_SUFFIX = "docs.buildwithfern.com";
 const SUBDOMAIN_LIMIT = 62;
-
-/**
- * Sanitizes a preview ID to be valid in a DNS subdomain label.
- * Replaces invalid characters with hyphens, collapses consecutive hyphens,
- * strips leading/trailing hyphens, and lowercases.
- *
- * This MUST match the server-side sanitizePreviewId in FDR so the CLI
- * can accurately predict the preview URL.
- */
-function sanitizePreviewId(id: string): string {
-    const sanitized = id
-        .toLowerCase()
-        .replace(/[^a-z0-9-]/g, "-")
-        .replace(/-{2,}/g, "-")
-        .replace(/^-+|-+$/g, "");
-    if (sanitized.length === 0) {
-        return "default";
-    }
-    return sanitized;
-}
 
 /**
  * Replicates the server-side truncateDomainName logic so the CLI can predict
@@ -143,8 +125,8 @@ export async function generateDocsWorkspace({
         }
     }
 
-    // When --id is provided and we're not in CI and not --force, check if the preview already exists
-    if (previewId != null && !isCI() && !force) {
+    // When --id is provided and we're not in CI, --force, or --no-prompt, check if the preview already exists
+    if (previewId != null && !isCI() && !force && !noPrompt) {
         const expectedDomain = buildPreviewDomain({ orgId: project.config.organization, previewId });
         const fdr = createFdrService({ token: token.value });
 
@@ -173,6 +155,12 @@ export async function generateDocsWorkspace({
     });
 
     await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
+        // `valid-markdown-links` and the publish below each resolve the full docs definition;
+        // build each API's IR once and share it.
+        for (const ossWorkspace of await filterOssWorkspaces(project)) {
+            ossWorkspace.enableResultCaching();
+        }
+
         await validateDocsWorkspaceAndLogIssues({
             workspace: docsWorkspace,
             context,
@@ -222,6 +210,7 @@ export async function generateDocsWorkspace({
             organization: project.config.organization,
             apiWorkspaces: project.apiWorkspaces,
             ossWorkspaces,
+            usesSdkConfig: await projectUsesSdkConfig({ project, docsWorkspace }),
             docsWorkspace,
             context,
             token,
@@ -240,8 +229,34 @@ export async function generateDocsWorkspace({
     });
 }
 
+/**
+ * Whether the project configures SDKs in an sdk-config.yml. `project.sdkConfigWorkspaces` only lists
+ * workspaces that have no generators file at all, so a project that still has a generators.yml (or the
+ * renamed generators.legacy.yml) next to its sdk-config.yml is found by looking for the file itself.
+ */
+async function projectUsesSdkConfig({
+    project,
+    docsWorkspace
+}: {
+    project: Project;
+    docsWorkspace: DocsWorkspace;
+}): Promise<boolean> {
+    if ((project.sdkConfigWorkspaces?.length ?? 0) > 0) {
+        return true;
+    }
+    const directories = [
+        docsWorkspace.absoluteFilePath,
+        ...project.apiWorkspaces.map((workspace) => workspace.absoluteFilePath)
+    ];
+    const exists = await Promise.all(
+        directories.map((directory) => doesPathExist(join(directory, RelativeFilePath.of(SDK_CONFIG_FILENAME))))
+    );
+    return exists.some(Boolean);
+}
+
 function getExcludeRules(brokenLinks: boolean, strictBrokenLinks: boolean): string[] {
-    const excludeRules: string[] = [];
+    // publishDocs runs missing-redirects on the docs it resolves, so the navigation is built once.
+    const excludeRules: string[] = [Rules.MissingRedirectsRule.name];
     if (!brokenLinks && !strictBrokenLinks) {
         excludeRules.push(Rules.ValidMarkdownLinks.name);
     }

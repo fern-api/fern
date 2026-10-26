@@ -5,6 +5,7 @@ package com.seed.trace.resources.v2;
 
 import com.seed.trace.core.ClientOptions;
 import com.seed.trace.core.RequestOptions;
+import com.seed.trace.core.SeedTraceHttpResponse;
 import com.seed.trace.core.Suppliers;
 import com.seed.trace.resources.v2.problem.AsyncProblemClient;
 import com.seed.trace.resources.v2.v3.AsyncV3Client;
@@ -35,11 +36,25 @@ public class AsyncV2Client {
     }
 
     public CompletableFuture<Void> test() {
-        return this.rawClient.test().thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<Void>> rawFuture = this.rawClient.test();
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> test(RequestOptions requestOptions) {
-        return this.rawClient.test(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedTraceHttpResponse<Void>> rawFuture = this.rawClient.test(requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public AsyncProblemClient problem() {

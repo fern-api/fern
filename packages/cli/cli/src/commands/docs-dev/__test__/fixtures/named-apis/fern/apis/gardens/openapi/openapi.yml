@@ -1,0 +1,11 @@
+openapi: 3.0.0
+info:
+  title: Gardens API
+  version: 1.0.0
+paths:
+  /gardens:
+    get:
+      operationId: listGardens
+      responses:
+        "200":
+          description: OK

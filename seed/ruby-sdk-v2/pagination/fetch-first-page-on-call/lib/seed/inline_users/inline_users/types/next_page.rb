@@ -1,0 +1,17 @@
+# frozen_string_literal: true
+
+require_relative "../../../../seed"
+
+module Seed
+  module InlineUsers
+    module InlineUsers
+      module Types
+        class NextPage < Internal::Types::Model
+          field :page, -> { Integer }, optional: false, nullable: false
+
+          field :starting_after, -> { String }, optional: false, nullable: false
+        end
+      end
+    end
+  end
+end

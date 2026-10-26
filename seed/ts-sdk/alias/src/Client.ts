@@ -47,7 +47,7 @@ export class SeedAliasClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/${core.url.encodePathParam(typeId)}`,
+                `/${core.url.encodePathParam(typeId, errors.SeedAliasError)}`,
             ),
             method: "GET",
             headers: _headers,

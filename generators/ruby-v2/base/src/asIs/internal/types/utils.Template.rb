@@ -26,8 +26,15 @@ module <%= gem_namespace %>
           type.is_a?(Proc) ? type.call : type
         end
 
+        EXACT_SCALAR_TYPES = [String, Integer, Float].freeze
+        private_constant :EXACT_SCALAR_TYPES
+
         def self.coerce(target, value, strict: false)
           type = unwrap_type(target)
+
+          # Fast path: exact String/Integer/Float instances are returned as-is, as the branches below would.
+          # Subclasses still go through their `to_s`/`to_i`/`to_f` conversion.
+          return value if EXACT_SCALAR_TYPES.include?(type) && value.instance_of?(type)
 
           case type
           in Array
@@ -44,29 +51,36 @@ module <%= gem_namespace %>
             when ::Array
               return coerce(type, value.to_h)
             end
-          in ->(t) { t <= NilClass }
+          in Class if type <= NilClass
             return nil
-          in ->(t) { t <= String }
+          in Class if type <= String
             case value
             when String, Symbol, Numeric, TrueClass, FalseClass
               return value.to_s
             end
-          in ->(t) { t <= Symbol }
+          in Class if type <= Symbol
             case value
             when Symbol, String
               return value.to_sym
             end
-          in ->(t) { t <= Integer }
+          in Class if type <= Integer
             case value
             when Numeric, String, Time
               return value.to_i
+            when Symbol
+              # JSON object keys are parsed as symbols, so numeric map keys arrive as e.g. :"1"
+              parsed = Integer(value.to_s, 10, exception: false)
+              return parsed unless parsed.nil?
             end
-          in ->(t) { t <= Float }
+          in Class if type <= Float
             case value
             when Numeric, Time, String
               return value.to_f
+            when Symbol
+              parsed = Float(value.to_s, exception: false)
+              return parsed unless parsed.nil?
             end
-          in ->(t) { t <= Model }
+          in Class if type <= Model
             case value
             when type
               return value
@@ -75,10 +89,7 @@ module <%= gem_namespace %>
             end
           in Module
             case type
-            in ->(t) {
-                 t.singleton_class.included_modules.include?(Enum) ||
-                   t.singleton_class.included_modules.include?(Union)
-               }
+            in Enum | Union
               return type.coerce(value, strict: strict)
             else
               value # rubocop:disable Lint/Void
@@ -110,7 +121,24 @@ module <%= gem_namespace %>
             snake_case.to_sym
           end
         end
-      end
+<% if (serializeTimeAsIso8601) { %>
+        # Converts Time values (including ActiveSupport::TimeWithZone), recursively within hashes and arrays, to
+        # RFC 3339 strings with millisecond precision. `Time#to_s` (e.g. "2026-10-16 01:40:16 UTC") is not RFC 3339.
+        # Date and DateTime values are left unchanged because their `to_s` output is already ISO 8601.
+        #
+        # @param value [Object]
+        # @return [Object]
+        def self.serialize_times(value)
+          case value
+          when ::Hash
+            value.transform_values { |item| serialize_times(item) }
+          when ::Array
+            value.map { |item| serialize_times(item) }
+          else
+            value.is_a?(::Time) ? value.iso8601(3) : value
+          end
+        end
+<% } %>      end
     end
   end
 end

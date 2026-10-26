@@ -224,7 +224,6 @@ public final class ObjectWithDocs {
     public static final class Builder implements StringStage, _FinalStage {
         private String string;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -318,6 +317,14 @@ public final class ObjectWithDocs {
         @java.lang.Override
         public ObjectWithDocs build() {
             return new ObjectWithDocs(string, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("string")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

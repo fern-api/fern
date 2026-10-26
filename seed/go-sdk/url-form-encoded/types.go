@@ -12,6 +12,7 @@ import (
 var (
 	postSubmitRequestFieldUsername = big.NewInt(1 << 0)
 	postSubmitRequestFieldEmail    = big.NewInt(1 << 1)
+	postSubmitRequestFieldContent  = big.NewInt(1 << 2)
 )
 
 type PostSubmitRequest struct {
@@ -19,16 +20,20 @@ type PostSubmitRequest struct {
 	Username string `json:"username" url:"-"`
 	// The user's email address
 	Email string `json:"email" url:"-"`
+	// A JSON document carried as a form field
+	Content string `json:"Content" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
 func (p *PostSubmitRequest) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetUsername sets the Username field and marks it as non-optional;
@@ -43,6 +48,13 @@ func (p *PostSubmitRequest) SetUsername(username string) {
 func (p *PostSubmitRequest) SetEmail(email string) {
 	p.Email = email
 	p.require(postSubmitRequestFieldEmail)
+}
+
+// SetContent sets the Content field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PostSubmitRequest) SetContent(content string) {
+	p.Content = content
+	p.require(postSubmitRequestFieldContent)
 }
 
 func (p *PostSubmitRequest) UnmarshalJSON(data []byte) error {
@@ -104,10 +116,12 @@ func (p *PostSubmitResponse) GetExtraProperties() map[string]interface{} {
 }
 
 func (p *PostSubmitResponse) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetStatus sets the Status field and marks it as non-optional;
@@ -206,10 +220,12 @@ func (t *TokenRequest) GetExtraProperties() map[string]interface{} {
 }
 
 func (t *TokenRequest) require(field *big.Int) {
-	if t.explicitFields == nil {
-		t.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if t.explicitFields != nil {
+		next.Set(t.explicitFields)
 	}
-	t.explicitFields.Or(t.explicitFields, field)
+	next.Or(next, field)
+	t.explicitFields = next
 }
 
 // SetClientID sets the ClientID field and marks it as non-optional;
@@ -306,10 +322,12 @@ func (t *TokenResponse) GetExtraProperties() map[string]interface{} {
 }
 
 func (t *TokenResponse) require(field *big.Int) {
-	if t.explicitFields == nil {
-		t.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if t.explicitFields != nil {
+		next.Set(t.explicitFields)
 	}
-	t.explicitFields.Or(t.explicitFields, field)
+	next.Or(next, field)
+	t.explicitFields = next
 }
 
 // SetAccessToken sets the AccessToken field and marks it as non-optional;

@@ -5,9 +5,11 @@ package com.seed.pathParameters.resources.user;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.seed.pathParameters.core.BodyProperties;
 import com.seed.pathParameters.core.ClientOptions;
 import com.seed.pathParameters.core.MediaTypes;
 import com.seed.pathParameters.core.ObjectMappers;
+import com.seed.pathParameters.core.PathSegments;
 import com.seed.pathParameters.core.QueryStringMapper;
 import com.seed.pathParameters.core.RequestOptions;
 import com.seed.pathParameters.core.RetryInterceptor;
@@ -53,9 +55,9 @@ public class RawUserClient {
             String userId, GetUsersRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegment(clientOptions.tenantId())
+                .addPathSegment(PathSegments.validate(clientOptions.tenantId()))
                 .addPathSegments("user")
-                .addPathSegment(userId);
+                .addPathSegment(PathSegments.validate(userId));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -104,7 +106,7 @@ public class RawUserClient {
     public SeedPathParametersHttpResponse<User> createUser(User request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegment(clientOptions.tenantId())
+                .addPathSegment(PathSegments.validate(clientOptions.tenantId()))
                 .addPathSegments("user");
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
@@ -114,7 +116,9 @@ public class RawUserClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedPathParametersException("Failed to serialize request", e);
         }
@@ -163,9 +167,9 @@ public class RawUserClient {
             String userId, UpdateUserRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegment(clientOptions.tenantId())
+                .addPathSegment(PathSegments.validate(clientOptions.tenantId()))
                 .addPathSegments("user")
-                .addPathSegment(userId);
+                .addPathSegment(PathSegments.validate(userId));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -174,7 +178,9 @@ public class RawUserClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request.getBody(), requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedPathParametersException("Failed to serialize request", e);
         }
@@ -231,9 +237,9 @@ public class RawUserClient {
             String userId, SearchUsersRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegment(clientOptions.tenantId())
+                .addPathSegment(PathSegments.validate(clientOptions.tenantId()))
                 .addPathSegments("user")
-                .addPathSegment(userId)
+                .addPathSegment(PathSegments.validate(userId))
                 .addPathSegments("search");
         if (request.getLimit().isPresent()) {
             QueryStringMapper.addQueryParameter(
@@ -311,11 +317,11 @@ public class RawUserClient {
             String userId, int version, GetUserMetadataRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegment(clientOptions.tenantId())
+                .addPathSegment(PathSegments.validate(clientOptions.tenantId()))
                 .addPathSegments("user")
-                .addPathSegment(userId)
+                .addPathSegment(PathSegments.validate(userId))
                 .addPathSegments("metadata")
-                .addPathSegment("v" + Integer.toString(version));
+                .addPathSegment(PathSegments.validate("v" + Integer.toString(version)));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -393,12 +399,12 @@ public class RawUserClient {
             RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegment(clientOptions.tenantId())
+                .addPathSegment(PathSegments.validate(clientOptions.tenantId()))
                 .addPathSegments("user")
-                .addPathSegment(userId)
+                .addPathSegment(PathSegments.validate(userId))
                 .addPathSegments("specifics")
-                .addPathSegment(Integer.toString(version))
-                .addPathSegment(thought);
+                .addPathSegment(PathSegments.validate(Integer.toString(version)))
+                .addPathSegment(PathSegments.validate(thought));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);

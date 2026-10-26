@@ -109,7 +109,6 @@ public final class UserCreatedPayload {
 
         private String createdAt;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -146,6 +145,14 @@ public final class UserCreatedPayload {
         @java.lang.Override
         public UserCreatedPayload build() {
             return new UserCreatedPayload(userId, email, createdAt, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("userId") || key.equalsIgnoreCase("email") || key.equalsIgnoreCase("createdAt")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

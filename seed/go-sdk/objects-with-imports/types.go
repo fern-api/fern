@@ -57,10 +57,12 @@ func (n *Node) GetExtraProperties() map[string]interface{} {
 }
 
 func (n *Node) require(field *big.Int) {
-	if n.explicitFields == nil {
-		n.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if n.explicitFields != nil {
+		next.Set(n.explicitFields)
 	}
-	n.explicitFields.Or(n.explicitFields, field)
+	next.Or(next, field)
+	n.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -155,10 +157,12 @@ func (t *Tree) GetExtraProperties() map[string]interface{} {
 }
 
 func (t *Tree) require(field *big.Int) {
-	if t.explicitFields == nil {
-		t.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if t.explicitFields != nil {
+		next.Set(t.explicitFields)
 	}
-	t.explicitFields.Or(t.explicitFields, field)
+	next.Or(next, field)
+	t.explicitFields = next
 }
 
 // SetNodes sets the Nodes field and marks it as non-optional;

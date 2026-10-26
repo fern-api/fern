@@ -96,7 +96,6 @@ public final class FilteredType {
 
         private Optional<String> publicProperty = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -131,6 +130,14 @@ public final class FilteredType {
         @java.lang.Override
         public FilteredType build() {
             return new FilteredType(publicProperty, privateProperty, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("public_property") || key.equalsIgnoreCase("private_property")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

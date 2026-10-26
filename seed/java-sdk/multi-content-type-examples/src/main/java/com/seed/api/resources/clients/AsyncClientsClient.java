@@ -5,6 +5,7 @@ package com.seed.api.resources.clients;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
+import com.seed.api.core.SeedApiHttpResponse;
 import com.seed.api.resources.clients.requests.ClientRequest;
 import com.seed.api.types.ClientResponse;
 import java.util.concurrent.CompletableFuture;
@@ -27,18 +28,47 @@ public class AsyncClientsClient {
     }
 
     public CompletableFuture<ClientResponse> create() {
-        return this.rawClient.create().thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<ClientResponse>> rawFuture = this.rawClient.create();
+        CompletableFuture<ClientResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<ClientResponse> create(RequestOptions requestOptions) {
-        return this.rawClient.create(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<ClientResponse>> rawFuture = this.rawClient.create(requestOptions);
+        CompletableFuture<ClientResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<ClientResponse> create(ClientRequest request) {
-        return this.rawClient.create(request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<ClientResponse>> rawFuture = this.rawClient.create(request);
+        CompletableFuture<ClientResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<ClientResponse> create(ClientRequest request, RequestOptions requestOptions) {
-        return this.rawClient.create(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<ClientResponse>> rawFuture =
+                this.rawClient.create(request, requestOptions);
+        CompletableFuture<ClientResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

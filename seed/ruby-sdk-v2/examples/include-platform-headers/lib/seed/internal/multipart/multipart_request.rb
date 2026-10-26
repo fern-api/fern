@@ -31,6 +31,7 @@ module Seed
         end
 
         # @return [String, nil] The encoded HTTP request body.
+        # Note: additional_body_parameters from request_options are not applied to multipart requests.
         def encode_body
           @body&.encode
         end

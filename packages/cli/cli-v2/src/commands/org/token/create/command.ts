@@ -30,18 +30,6 @@ export class CreateTokenCommand {
 
         const venus = createVenusService({ token: token.value, headers: context.headers });
 
-        const orgLookup = await venus.organization.get({ orgId: args.org });
-        if (!orgLookup.ok) {
-            const status = orgLookup.rawResponse.status;
-            if (status === 401 || status === 403) {
-                context.stderr.error(`${Icons.error} You do not have access to organization "${args.org}".`);
-                throw new CliError({ code: CliError.Code.AuthError });
-            }
-            context.stderr.error(`${Icons.error} Organization "${args.org}" was not found.`);
-            throw CliError.notFound();
-        }
-        const auth0OrgId = orgLookup.body.auth0Id;
-
         let description = args.description;
         if (description == null && context.isTTY) {
             const { desc } = await inquirer.prompt<{ desc: string }>([
@@ -60,7 +48,7 @@ export class CreateTokenCommand {
             message: `Creating token for organization "${args.org}"`,
             operation: () =>
                 venus.apiKeys.create({
-                    organizationId: auth0OrgId,
+                    organizationId: args.org,
                     description
                 })
         });

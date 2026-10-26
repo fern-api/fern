@@ -1,0 +1,11 @@
+api:
+  specs:
+    - openapi: ./openapi.yml
+groups:
+  cli:
+    generators:
+      - name: fernapi/fern-cli-generator
+        version: 0.49.0
+        output:
+          location: local-file-system
+          path: ../out

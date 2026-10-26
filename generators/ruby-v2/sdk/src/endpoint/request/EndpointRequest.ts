@@ -7,6 +7,8 @@ import { RawClient } from "../http/RawClient.js";
 
 export const BODY_BAG_NAME = "body_params";
 export const PATH_PARAM_NAMES_VN = "path_param_names";
+const KEYWORD_BODY_VN = "keyword_body";
+const BODY_VALUE_VN = "body_value";
 
 export interface QueryParameterCodeBlock {
     code: ruby.CodeBlock;
@@ -73,6 +75,15 @@ export abstract class EndpointRequest {
         writer.write(`${bodyVariableName}.empty? ? nil : `);
     }
 
+    /**
+     * Writes `<valueExpression>.nil? ? nil : ` for bodies passed as a single argument, so an omitted
+     * optional body stays nil (and the Content-Type header is omitted). `.empty?` is not used because
+     * `[]`, `{}`, and `""` are valid explicit bodies and scalars do not respond to it.
+     */
+    protected writeOptionalValueGuard(writer: ruby.Writer, valueExpression: string): void {
+        writer.write(`${valueExpression}.nil? ? nil : `);
+    }
+
     protected getPathParameterNames(): string[] {
         return this.endpoint.allPathParameters.map((pathParameter) => this.case.snakeSafe(pathParameter.name));
     }
@@ -109,6 +120,173 @@ export abstract class EndpointRequest {
         return currentTypeId;
     }
 
+    /**
+     * Returns the type id of the model the body is built from when the body type (following
+     * alias-of-named chains) is a class whose fields are passed as keyword arguments. Returns
+     * undefined for bodies passed as a single argument (containers, primitives, enums, and
+     * aliases of those), which are sent as the bare value.
+     */
+    protected getModelBodyTypeId(bodyType: FernIr.TypeReference): FernIr.TypeId | undefined {
+        if (bodyType.type !== "named") {
+            return undefined;
+        }
+        const resolvedTypeId = this.resolveNamedTypeId(bodyType.typeId);
+        const shape = this.context.getTypeDeclarationOrThrow(resolvedTypeId).shape;
+        // Enums and aliases are modules, not classes, so they don't have a .new() method
+        if (shape.type === "enum" || shape.type === "alias") {
+            return undefined;
+        }
+        return resolvedTypeId;
+    }
+
+    /**
+     * The expression for a body passed as the single `parameterName:` argument. Objects (including
+     * optional, nullable, and those nested in lists, sets, and map values) are serialized through
+     * their model so fields use their wire names; sets are converted to arrays because
+     * `JSON.generate` does not serialize `Set`. Omitted values stay nil.
+     */
+    protected getBodyArgumentReference(parameterName: FernIr.NameOrString): string {
+        return `params[:${this.case.snakeSafe(parameterName)}]`;
+    }
+
+    protected getBodyValueExpression(bodyType: FernIr.TypeReference, parameterName: FernIr.NameOrString): string {
+        return this.getSerializedBodyExpression(bodyType, this.getBodyArgumentReference(parameterName));
+    }
+
+    private getSerializedBodyExpression(bodyType: FernIr.TypeReference, value: string): string {
+        return this.getSerializedValueExpression(bodyType, value, { depth: 0, nilable: true }) ?? value;
+    }
+
+    /**
+     * True when a map body may also be passed as keyword arguments (the pre-1.34.1 call style),
+     * e.g. `create(id: "h", MY_SECRET: "x")`. Only maps qualify: their keys are free-form, while
+     * lists and primitives can only be passed through the body argument.
+     */
+    protected acceptsBodyAsKeywordArguments(bodyType: FernIr.TypeReference): boolean {
+        if (this.context.customConfig.allowMapBodyAsKeywordArguments === false) {
+            return false;
+        }
+        let resolved = this.resolveAliases(bodyType);
+        while (
+            resolved.type === "container" &&
+            (resolved.container.type === "optional" || resolved.container.type === "nullable")
+        ) {
+            resolved = this.resolveAliases(
+                resolved.container.type === "optional" ? resolved.container.optional : resolved.container.nullable
+            );
+        }
+        return resolved.type === "container" && resolved.container.type === "map";
+    }
+
+    /**
+     * Builds the body for `acceptsBodyAsKeywordArguments` endpoints: the body argument when it is
+     * passed, otherwise the remaining keyword arguments without the path, query and header ones.
+     */
+    protected getKeywordArgumentsBodyCodeBlock({
+        bodyType,
+        parameterName,
+        nonBodyParameterNames,
+        omitContentTypeWithoutBody
+    }: {
+        bodyType: FernIr.TypeReference;
+        parameterName: FernIr.NameOrString;
+        nonBodyParameterNames: string[];
+        omitContentTypeWithoutBody: boolean;
+    }): RequestBodyCodeBlock {
+        const bodyArgument = this.getBodyArgumentReference(parameterName);
+        const bodyArgumentName = this.case.snakeSafe(parameterName);
+        const hasNonBodyParameters = nonBodyParameterNames.length > 0;
+        const keywordBody = hasNonBodyParameters ? KEYWORD_BODY_VN : "params";
+        return {
+            code: ruby.codeblock((writer) => {
+                if (hasNonBodyParameters) {
+                    writer.writeLine(
+                        `${KEYWORD_BODY_VN} = params.except(*${toRubySymbolArray(nonBodyParameterNames)})`
+                    );
+                }
+                writer.writeLine(
+                    `${BODY_VALUE_VN} = params.key?(:${bodyArgumentName}) || ${keywordBody}.empty? ? ${bodyArgument} : ${keywordBody}`
+                );
+            }),
+            requestBodyReference: ruby.codeblock((writer) => {
+                if (omitContentTypeWithoutBody) {
+                    this.writeOptionalValueGuard(writer, BODY_VALUE_VN);
+                }
+                writer.write(this.getSerializedBodyExpression(bodyType, BODY_VALUE_VN));
+            }),
+            omitContentTypeWithoutBody
+        };
+    }
+
+    /**
+     * Returns an expression converting `value` to its wire representation, or undefined when the
+     * value can be sent as-is.
+     */
+    private getSerializedValueExpression(
+        typeReference: FernIr.TypeReference,
+        value: string,
+        { depth, nilable }: { depth: number; nilable: boolean }
+    ): string | undefined {
+        const resolved = this.resolveAliases(typeReference);
+        if (resolved.type === "named") {
+            if (this.context.getTypeDeclarationOrThrow(resolved.typeId).shape.type !== "object") {
+                return undefined;
+            }
+            const model = this.context.getReferenceToTypeId(resolved.typeId);
+            if (!nilable) {
+                return `${model}.new(${value}).to_h`;
+            }
+            const blockVar = toBlockVariable("value", depth);
+            return `${value}&.then { |${blockVar}| ${model}.new(${blockVar}).to_h }`;
+        }
+        if (resolved.type !== "container") {
+            return undefined;
+        }
+        const container = resolved.container;
+        switch (container.type) {
+            case "optional":
+                return this.getSerializedValueExpression(container.optional, value, { depth, nilable: true });
+            case "nullable":
+                return this.getSerializedValueExpression(container.nullable, value, { depth, nilable: true });
+            case "list":
+            case "set": {
+                const itemVar = toBlockVariable("item", depth);
+                const itemType = container.type === "list" ? container.list : container.set;
+                const item = this.getSerializedValueExpression(itemType, itemVar, { depth: depth + 1, nilable: false });
+                if (item != null) {
+                    return `${value}${nilable ? "&." : "."}map { |${itemVar}| ${item} }`;
+                }
+                return container.type === "set" ? `${value}${nilable ? "&." : "."}to_a` : undefined;
+            }
+            case "map": {
+                const valueVar = toBlockVariable("value", depth);
+                const mapValue = this.getSerializedValueExpression(container.valueType, valueVar, {
+                    depth: depth + 1,
+                    nilable: false
+                });
+                return mapValue != null
+                    ? `${value}${nilable ? "&." : "."}transform_values { |${valueVar}| ${mapValue} }`
+                    : undefined;
+            }
+            default:
+                return undefined;
+        }
+    }
+
+    private resolveAliases(typeReference: FernIr.TypeReference): FernIr.TypeReference {
+        const seen = new Set<FernIr.TypeId>();
+        let current = typeReference;
+        while (current.type === "named" && !seen.has(current.typeId)) {
+            seen.add(current.typeId);
+            const shape = this.context.getTypeDeclarationOrThrow(current.typeId).shape;
+            if (shape.type !== "alias") {
+                break;
+            }
+            current = shape.aliasOf;
+        }
+        return current;
+    }
+
     public abstract getQueryParameterCodeBlock(queryParameterBagName: string): QueryParameterCodeBlock | undefined;
 
     public abstract getHeaderParameterCodeBlock(): HeaderParameterCodeBlock | undefined;
@@ -116,6 +294,10 @@ export abstract class EndpointRequest {
     public abstract getRequestBodyCodeBlock(): RequestBodyCodeBlock | undefined;
 
     public abstract getRequestType(): RawClient.RequestBodyType | undefined;
+}
+
+function toBlockVariable(name: string, depth: number): string {
+    return depth === 0 ? name : `${name}${depth}`;
 }
 
 export function toRubySymbolArray(names: string[]): string {

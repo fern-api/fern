@@ -102,7 +102,6 @@ public final class GetDiscriminatedUnionRequest {
 
         private String foo;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -131,6 +130,14 @@ public final class GetDiscriminatedUnionRequest {
         @java.lang.Override
         public GetDiscriminatedUnionRequest build() {
             return new GetDiscriminatedUnionRequest(bar, foo, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("bar") || key.equalsIgnoreCase("foo")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override
@@ -522,7 +529,6 @@ public final class GetDiscriminatedUnionRequest {
 
                 private ReferenceType ref;
 
-                @JsonAnySetter
                 private Map<String, Object> additionalProperties = new HashMap<>();
 
                 private Builder() {}
@@ -571,6 +577,14 @@ public final class GetDiscriminatedUnionRequest {
                 @java.lang.Override
                 public Type1 build() {
                     return new Type1(foo, bar, ref, additionalProperties);
+                }
+
+                @JsonAnySetter
+                private void putAdditionalPropertyFromJson(String key, Object value) {
+                    if (key.equalsIgnoreCase("foo") || key.equalsIgnoreCase("bar") || key.equalsIgnoreCase("ref")) {
+                        return;
+                    }
+                    this.additionalProperties.put(key, value);
                 }
 
                 @java.lang.Override
@@ -676,7 +690,6 @@ public final class GetDiscriminatedUnionRequest {
 
                     private ReferenceType ref;
 
-                    @JsonAnySetter
                     private Map<String, Object> additionalProperties = new HashMap<>();
 
                     private Builder() {}
@@ -713,6 +726,14 @@ public final class GetDiscriminatedUnionRequest {
                     @java.lang.Override
                     public Bar_ build() {
                         return new Bar_(foo, ref, additionalProperties);
+                    }
+
+                    @JsonAnySetter
+                    private void putAdditionalPropertyFromJson(String key, Object value) {
+                        if (key.equalsIgnoreCase("foo") || key.equalsIgnoreCase("ref")) {
+                            return;
+                        }
+                        this.additionalProperties.put(key, value);
                     }
 
                     @java.lang.Override
@@ -820,7 +841,6 @@ public final class GetDiscriminatedUnionRequest {
 
                 private ReferenceType ref;
 
-                @JsonAnySetter
                 private Map<String, Object> additionalProperties = new HashMap<>();
 
                 private Builder() {}
@@ -857,6 +877,14 @@ public final class GetDiscriminatedUnionRequest {
                 @java.lang.Override
                 public Type2 build() {
                     return new Type2(baz, ref, additionalProperties);
+                }
+
+                @JsonAnySetter
+                private void putAdditionalPropertyFromJson(String key, Object value) {
+                    if (key.equalsIgnoreCase("baz") || key.equalsIgnoreCase("ref")) {
+                        return;
+                    }
+                    this.additionalProperties.put(key, value);
                 }
 
                 @java.lang.Override

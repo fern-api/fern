@@ -87,6 +87,21 @@ fn with_availability_badge(text: &str, availability: Option<Availability>) -> St
     }
 }
 
+/// Clap id of the `--columns` flag on operations with `x-fern-cli-table`.
+pub(crate) const TABLE_COLUMNS_ARG_ID: &str = "fern-table-columns";
+
+/// `columns`, or `table-columns` when `cmd` already has a `--columns` flag.
+fn table_columns_flag(cmd: &Command) -> &'static str {
+    let taken = |name: &str| {
+        flag_name_is_reserved(name) || cmd.get_arguments().any(|a| a.get_long() == Some(name))
+    };
+    if taken("columns") {
+        "table-columns"
+    } else {
+        "columns"
+    }
+}
+
 /// Names of built-in flags that must not be duplicated by parameter-derived flags.
 pub(crate) const BUILTIN_FLAG_NAMES: &[&str] = &[
     "params",
@@ -115,31 +130,95 @@ pub(crate) const BUILTIN_FLAG_NAMES: &[&str] = &[
 /// computed dynamically from bindings by `CliApp::run_async` and
 /// prepended via `Command::after_help` — keeping them out of this string
 /// avoids stale `{NAME}_API_KEY` boilerplate.
-pub fn after_help_footer(binary_name: &str) -> String {
-    let prefix = binary_name.to_uppercase().replace('-', "_");
+///
+/// Server variables come from the spec (`servers[].variables`), which is
+/// where `<PREFIX>_REGION`-style vars originate; `profiles set --help`
+/// documents which of these can also be stored per profile.
+pub fn after_help_footer(binary_name: &str, doc: &RestDescription) -> String {
+    let prefix = crate::text::env_var_prefix(binary_name);
     // The suffix flag/env names default to `--user-agent-suffix` /
     // `<NAME>_USER_AGENT_SUFFIX` but can be renamed at generation time.
     let ua_env = format!("{prefix}{}", crate::user_agent::suffix_env_segment());
     let ua_flag = crate::user_agent::suffix_flag();
-    format!(
-        "Environment variables:\n  \
-         {prefix}_BASE_URL             Override the API base URL\n  \
-         {prefix}_CA_BUNDLE            Path to PEM file with extra trust roots (or SSL_CERT_FILE)\n  \
-         {prefix}_INSECURE=1           Skip TLS verification (debugging only)\n  \
-         {prefix}_PROXY                HTTP(S) proxy URL\n  \
-         {prefix}_TIMEOUT_SECS         Total request timeout\n  \
-         {ua_env}    Product token appended to the User-Agent (e.g. my-app/1.0; --{ua_flag} wins)\n\n\
-         Standard env vars (HTTPS_PROXY / HTTP_PROXY / NO_PROXY / SSL_CERT_FILE) are also honored."
-    )
+
+    let mut rows: Vec<(String, String)> = vec![
+        (
+            format!("{prefix}_PROFILE"),
+            "Named profile to run under (-p/--profile wins)".into(),
+        ),
+        (
+            format!("{prefix}_BASE_URL"),
+            "Override the API base URL (--base-url wins)".into(),
+        ),
+        (
+            format!("{prefix}_OUTPUT"),
+            "Default output format (--format wins)".into(),
+        ),
+        (
+            format!("{prefix}_RETRIES"),
+            "Retry attempts for failed requests (--retries wins)".into(),
+        ),
+    ];
+    for var in crate::openapi::app::collect_spec_server_variables(doc) {
+        let name = format!("{prefix}_{}", crate::text::to_screaming_snake(&var.name));
+        if rows.iter().any(|(existing, _)| *existing == name) {
+            continue;
+        }
+        rows.push((
+            name,
+            format!(
+                "Value for the {{{}}} URL template variable (--{} wins)",
+                var.name,
+                crate::text::to_kebab_flag(&var.name)
+            ),
+        ));
+    }
+    rows.extend([
+        (
+            format!("{prefix}_CA_BUNDLE"),
+            "Path to PEM file with extra trust roots (or SSL_CERT_FILE)".into(),
+        ),
+        (
+            format!("{prefix}_INSECURE=1"),
+            "Skip TLS verification (debugging only)".into(),
+        ),
+        (format!("{prefix}_PROXY"), "HTTP(S) proxy URL".into()),
+        (format!("{prefix}_TIMEOUT_SECS"), "Total request timeout".into()),
+        (
+            ua_env,
+            format!("Product token appended to the User-Agent (e.g. my-app/1.0; --{ua_flag} wins)"),
+        ),
+    ]);
+
+    let width = rows
+        .iter()
+        .map(|(name, _)| name.chars().count())
+        .max()
+        .unwrap_or(0);
+    let mut out = String::from("Environment variables:\n");
+    for (name, help) in &rows {
+        out.push_str(&format!("  {name:<width$}  {help}\n"));
+    }
+    out.push_str(
+        "\nStandard env vars (HTTPS_PROXY / HTTP_PROXY / NO_PROXY / SSL_CERT_FILE) are also honored.",
+    );
+    out
 }
 
 /// Builds the full CLI command tree from an API description.
 pub fn build_cli(doc: &RestDescription) -> Command {
+    build_cli_with_placeholders(doc, &[])
+}
+
+/// [`build_cli`], plus a bare top-level group (name and `about` only) for each
+/// of `placeholders` not already in `doc`. Lists top-level commands on TAB
+/// without parsing the specs behind them.
+pub(crate) fn build_cli_with_placeholders(doc: &RestDescription, placeholders: &[String]) -> Command {
     let about_text = doc
         .title
         .clone()
         .unwrap_or_else(|| format!("{} CLI", doc.name));
-    let after_help = after_help_footer(&doc.name);
+    let after_help = after_help_footer(&doc.name, doc);
     let mut root = Command::new(doc.name.clone())
         .about(about_text)
         .after_help(after_help)
@@ -198,10 +277,24 @@ pub fn build_cli(doc: &RestDescription) -> Command {
         );
 
     // Add resource subcommands
-    let mut resource_names: Vec<_> = doc.resources.keys().collect();
+    let mut resource_names: Vec<_> = doc.resources.keys().chain(placeholders).collect();
     resource_names.sort();
+    resource_names.dedup();
     for name in resource_names {
-        let resource = &doc.resources[name];
+        let Some(resource) = doc.resources.get(name) else {
+            let about = group_about_text_for_group(
+                name,
+                &doc.groups,
+                &doc.tag_descriptions,
+                &doc.group_tag_names,
+                &doc.group_tag_operation_counts,
+                &doc.group_operation_counts,
+                &doc.tag_group_names,
+                &doc.tag_description_order,
+            );
+            root = root.subcommand(Command::new(name.clone()).about(about).subcommand_required(true));
+            continue;
+        };
         if let Some(cmd) = build_resource_command(
             name,
             resource,
@@ -252,7 +345,7 @@ pub(crate) fn group_tag_description_for_group(
     })
 }
 
-fn tag_match_key(value: &str) -> String {
+pub(crate) fn tag_match_key(value: &str) -> String {
     value
         .chars()
         .filter(|c| c.is_alphanumeric())
@@ -763,6 +856,23 @@ fn build_resource_command(
                         complete (handy for piping into another JSON tool)",
                     )
                     .action(clap::ArgAction::SetTrue)
+                    .help_heading(HELP_HEADING_REQUEST),
+            );
+        }
+
+        // `--columns` picks the `x-fern-cli-table` columns. An operation
+        // that already has a `--columns` flag (a request parameter) keeps
+        // it, and the picker becomes `--table-columns`.
+        let picker_id_taken = method_cmd
+            .get_arguments()
+            .any(|a| a.get_id() == TABLE_COLUMNS_ARG_ID);
+        if let Some(table) = method.table.as_ref().filter(|_| !picker_id_taken) {
+            let flag = table_columns_flag(&method_cmd);
+            method_cmd = method_cmd.arg(
+                Arg::new(TABLE_COLUMNS_ARG_ID)
+                    .long(flag)
+                    .value_name("COLS")
+                    .help(table.columns_help())
                     .help_heading(HELP_HEADING_REQUEST),
             );
         }
@@ -1293,6 +1403,7 @@ fn value_name_for(param: &MethodParameter) -> &'static str {
         Some("number") => "NUMBER",
         Some("boolean") => "BOOLEAN",
         Some("array") => "JSON_ARRAY",
+        Some("object") if param.shorthand_field.is_some() => "VALUE|JSON_OBJECT",
         Some("object") => "JSON_OBJECT",
         _ => "VALUE",
     }
@@ -3940,6 +4051,11 @@ paths:
             ..Default::default()
         };
         assert_eq!(value_name_for(&objects), "JSON_OBJECT");
+        let shorthand = MethodParameter {
+            shorthand_field: Some("email".to_string()),
+            ..objects.clone()
+        };
+        assert_eq!(value_name_for(&shorthand), "VALUE|JSON_OBJECT");
         // Body array: `item_type: None` means string — unchanged from before.
         assert_eq!(value_name_for(&strings), "STRING");
         assert_eq!(value_name_for(&query_strings), "STRING");

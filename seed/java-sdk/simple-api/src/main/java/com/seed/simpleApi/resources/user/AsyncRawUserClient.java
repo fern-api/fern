@@ -6,6 +6,7 @@ package com.seed.simpleApi.resources.user;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.simpleApi.core.ClientOptions;
 import com.seed.simpleApi.core.ObjectMappers;
+import com.seed.simpleApi.core.PathSegments;
 import com.seed.simpleApi.core.RequestOptions;
 import com.seed.simpleApi.core.RetryInterceptor;
 import com.seed.simpleApi.core.SeedSimpleApiApiException;
@@ -39,7 +40,7 @@ public class AsyncRawUserClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("users")
-                .addPathSegment(id);
+                .addPathSegment(PathSegments.validate(id));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -65,7 +66,8 @@ public class AsyncRawUserClient {
                     .build();
         }
         CompletableFuture<SeedSimpleApiHttpResponse<User>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -90,6 +92,11 @@ public class AsyncRawUserClient {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(new SeedSimpleApiException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;

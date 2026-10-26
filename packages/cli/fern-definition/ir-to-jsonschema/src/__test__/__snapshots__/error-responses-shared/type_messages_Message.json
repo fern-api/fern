@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "sid": {
+      "type": "string"
+    },
+    "body": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "sid",
+    "body"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

@@ -21,10 +21,12 @@ type GetAttemptedMigrationsRequest struct {
 }
 
 func (g *GetAttemptedMigrationsRequest) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetAdminKeyHeader sets the AdminKeyHeader field and marks it as non-optional;
@@ -72,10 +74,12 @@ func (m *Migration) GetExtraProperties() map[string]interface{} {
 }
 
 func (m *Migration) require(field *big.Int) {
-	if m.explicitFields == nil {
-		m.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if m.explicitFields != nil {
+		next.Set(m.explicitFields)
 	}
-	m.explicitFields.Or(m.explicitFields, field)
+	next.Or(next, field)
+	m.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;

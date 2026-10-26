@@ -67,7 +67,6 @@ public final class RefundRequest {
     public static final class Builder {
         private Optional<Double> amount = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -90,6 +89,14 @@ public final class RefundRequest {
 
         public RefundRequest build() {
             return new RefundRequest(amount, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("amount")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

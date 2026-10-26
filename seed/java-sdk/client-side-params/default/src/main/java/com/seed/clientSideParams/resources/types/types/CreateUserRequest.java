@@ -221,7 +221,6 @@ public final class CreateUserRequest {
 
         private Optional<Boolean> emailVerified = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -358,6 +357,22 @@ public final class CreateUserRequest {
                     appMetadata,
                     connection,
                     additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("email")
+                    || key.equalsIgnoreCase("email_verified")
+                    || key.equalsIgnoreCase("username")
+                    || key.equalsIgnoreCase("password")
+                    || key.equalsIgnoreCase("phone_number")
+                    || key.equalsIgnoreCase("phone_verified")
+                    || key.equalsIgnoreCase("user_metadata")
+                    || key.equalsIgnoreCase("app_metadata")
+                    || key.equalsIgnoreCase("connection")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

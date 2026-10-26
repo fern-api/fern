@@ -14,10 +14,8 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    request := &fern.StreamXFernStreamingConditionStreamRequest{
-        Query: "query",
-    }
-    client.StreamXFernStreamingConditionStream(
+    request := &fern.StreamRequest{}
+    client.StreamOasSpecNative(
         context.TODO(),
         request,
     )

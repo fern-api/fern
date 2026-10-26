@@ -9,6 +9,7 @@ import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.utils.NameUtils;
 import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
@@ -71,7 +72,7 @@ public class ErrorGenerator extends AbstractFileGenerator {
                             .addStatement(
                                     "super($S, $L, $L, $L)",
                                     errorName,
-                                    errorDeclaration.getStatusCode(),
+                                    rawResponseStatusCode(errorDeclaration),
                                     BODY_FIELD_NAME,
                                     "rawResponse")
                             .addStatement("this.$L = $L", BODY_FIELD_NAME, BODY_FIELD_NAME)
@@ -94,7 +95,7 @@ public class ErrorGenerator extends AbstractFileGenerator {
                             .addStatement(
                                     "super($S, $L, $L, $L)",
                                     errorName,
-                                    errorDeclaration.getStatusCode(),
+                                    rawResponseStatusCode(errorDeclaration),
                                     BODY_FIELD_NAME,
                                     "rawResponse")
                             .build());
@@ -106,5 +107,12 @@ public class ErrorGenerator extends AbstractFileGenerator {
                 .className(className)
                 .javaFile(javaFile)
                 .build();
+    }
+
+    private static CodeBlock rawResponseStatusCode(ErrorDeclaration errorDeclaration) {
+        if (errorDeclaration.getIsWildcardStatusCode().orElse(false)) {
+            return CodeBlock.of("rawResponse != null ? rawResponse.code() : $L", errorDeclaration.getStatusCode());
+        }
+        return CodeBlock.of("$L", errorDeclaration.getStatusCode());
     }
 }

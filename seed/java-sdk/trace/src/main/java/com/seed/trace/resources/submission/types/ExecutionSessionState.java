@@ -178,7 +178,6 @@ public final class ExecutionSessionState {
 
         private Optional<String> lastTimeContacted = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -256,6 +255,19 @@ public final class ExecutionSessionState {
         public ExecutionSessionState build() {
             return new ExecutionSessionState(
                     lastTimeContacted, sessionId, isWarmInstance, awsTaskId, language, status, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("lastTimeContacted")
+                    || key.equalsIgnoreCase("sessionId")
+                    || key.equalsIgnoreCase("isWarmInstance")
+                    || key.equalsIgnoreCase("awsTaskId")
+                    || key.equalsIgnoreCase("language")
+                    || key.equalsIgnoreCase("status")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

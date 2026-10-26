@@ -111,7 +111,7 @@ export declare namespace generateIntermediateRepresentation {
 
 export function generateIntermediateRepresentation({
     workspace,
-    generationLanguage,
+    generationLanguage: rawGenerationLanguage,
     keywords,
     smartCasing,
     smartCasingDigitWordBoundary,
@@ -131,6 +131,12 @@ export function generateIntermediateRepresentation({
     dynamicGeneratorConfig,
     generationMetadata
 }: generateIntermediateRepresentation.Args): IntermediateRepresentation {
+    // The CLI generator is not an IR SupportedSdkLanguage; it historically resolved to `undefined`
+    // here. Preserve that so the dynamic IR's casing and the user-agent template are unchanged — CLI
+    // snippet command/flag names derive from the dynamic IR's originalName, not casings.
+    const generationLanguage =
+        rawGenerationLanguage === generatorsYml.GenerationLanguage.CLI ? undefined : rawGenerationLanguage;
+
     const irSettings = getIrGenerationSettings({ workspace });
 
     const casingsGenerator = constructCasingsGenerator({
@@ -223,7 +229,8 @@ export function generateIntermediateRepresentation({
                       docs: typeof variable !== "string" ? variable.docs : undefined,
                       id: key,
                       name: rootApiFileContext.casingsGenerator.generateName(key),
-                      type: rootApiFileContext.parseTypeReference(variable)
+                      type: rootApiFileContext.parseTypeReference(variable),
+                      envVar: typeof variable !== "string" ? getVariableEnvVar(variable.env) : undefined
                   }))
                 : [],
         globalParameters:
@@ -703,4 +710,9 @@ function computeServiceTypeReferenceInfo(irGraph: IrGraph): ServiceTypeReference
         typesReferencedOnlyByService,
         sharedTypes
     };
+}
+
+function getVariableEnvVar(env: string | undefined): string | undefined {
+    const trimmed = env?.trim();
+    return trimmed != null && trimmed.length > 0 ? trimmed : undefined;
 }

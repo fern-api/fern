@@ -1,7 +1,7 @@
 package com.snippets;
 
 import com.fern.sdk.SeedExhaustiveClient;
-import com.fern.sdk.resources.endpoints.params.requests.GetWithInlinePathAndQuery;
+import com.fern.sdk.resources.endpoints.params.requests.GetWithPathAndQuery;
 
 public class Example38 {
     public static void main(String[] args) {
@@ -11,10 +11,10 @@ public class Example38 {
             .url("https://api.fern.com")
             .build();
 
-        client.endpoints().params().getWithInlinePathAndQuery(
-            GetWithInlinePathAndQuery
+        client.endpoints().params().getWithPathAndQuery(
+            "param",
+            GetWithPathAndQuery
                 .builder()
-                .param("param")
                 .query("query")
                 .build()
         );

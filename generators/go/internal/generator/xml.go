@@ -11,7 +11,9 @@ import (
 const (
 	xmlExtraAttributesField = "ExtraAttributes"
 	xmlExtraChildrenField   = "ExtraChildren"
+	xmlContentField         = "Content"
 	xmlAddChildMethod       = "AddChild"
+	xmlAddTextMethod        = "AddText"
 )
 
 // xmlValueKind describes how a single (non-list) XML value maps to Go.
@@ -55,6 +57,7 @@ type xmlValue struct {
 type xmlUnionMember struct {
 	field   string
 	goType  string
+	typeId  common.TypeId
 	xmlName string
 	docs    *string
 }
@@ -87,7 +90,7 @@ func (t *typeVisitor) newXmlResolver() *xmlResolver {
 }
 
 func (r *xmlResolver) goType(typeReference *ir.TypeReference) string {
-	return typeReferenceToGoType(typeReference, r.types, r.visitor.writer.scope, r.baseImportPath, r.importPath, false)
+	return typeReferenceToGoType(typeReference, r.types, r.visitor.writer.scope, r.baseImportPath, r.importPath, false, r.visitor.writer.legacyNullableAliasPointers)
 }
 
 // resolve resolves the given type reference into an xmlValue, following aliases and
@@ -218,11 +221,31 @@ func (r *xmlResolver) unionMembers(declaration *ir.TypeDeclaration) ([]*xmlUnion
 		members = append(members, &xmlUnionMember{
 			field:   field,
 			goType:  strings.TrimPrefix(r.goType(member.Type), "*"),
+			typeId:  member.Type.Named.TypeId,
 			xmlName: xml.Name,
 			docs:    memberDeclaration.Docs,
 		})
 	}
 	return members, nil
+}
+
+// textProperty returns the text property of the xml-encoded object type with the given id,
+// or nil if the type has none.
+func (r *xmlResolver) textProperty(typeId common.TypeId) (*xmlProperty, error) {
+	declaration, ok := r.types[typeId]
+	if !ok || declaration.Shape.Object == nil {
+		return nil, nil
+	}
+	properties, err := r.xmlProperties(declaration.Shape.Object)
+	if err != nil {
+		return nil, err
+	}
+	for _, property := range properties {
+		if property.kind == ir.XmlPropertyKindText && !property.value.list {
+			return property, nil
+		}
+	}
+	return nil, nil
 }
 
 // xmlProperties collects the xml-encoded properties of the object, including extended ones.
@@ -275,14 +298,6 @@ func (r *xmlResolver) xmlProperties(object *ir.ObjectTypeDeclaration) ([]*xmlPro
 // preserving any package qualifier (e.g. "pkg.Number" -> "pkg.NumberFromXmlElement").
 func xmlFromElementFunc(goType string) string {
 	return goType + "FromXmlElement"
-}
-
-// xmlEnumFromStringFunc returns the name of the enum's FromString constructor.
-func xmlEnumFromStringFunc(goType string) string {
-	if index := strings.LastIndex(goType, "."); index >= 0 {
-		return goType[:index+1] + "New" + goType[index+1:] + "FromString"
-	}
-	return "New" + goType + "FromString"
 }
 
 // xmlFormatExpression returns a Go expression formatting the (non-pointer) value as an XML string.
@@ -353,10 +368,9 @@ func (t *typeVisitor) writeXmlParseValue(value *xmlValue, input string, output s
 		t.writer.P(fail)
 		t.writer.P("}")
 	case xmlValueEnum:
-		t.writer.P(output, ", err := ", xmlEnumFromStringFunc(value.goType), "(", input, ")")
-		t.writer.P("if err != nil {")
-		t.writer.P(fail)
-		t.writer.P("}")
+		// Enums are open on the wire: unknown values are kept as-is so documents written by a
+		// newer API version still parse and round-trip.
+		t.writer.P(output, " := ", value.goType, "(", input, ")")
 	}
 }
 
@@ -407,30 +421,62 @@ func (t *typeVisitor) writeXmlObjectMethods(object *ir.ObjectTypeDeclaration, xm
 		}
 		t.writeXmlSerializeScalar(receiver, property, "element.Text = %s")
 	}
-	extraChildren := receiver + "." + xmlExtraChildrenField
-	if hasWrappedList(properties) {
-		// Unknown content parsed out of a wrapper is merged back into the wrapper
-		// emitted for the typed items, so a document round-trips to one wrapper.
-		t.writer.P("extraChildren := ", extraChildren)
-		extraChildren = "extraChildren"
-	}
 	for _, property := range properties {
-		if property.kind != ir.XmlPropertyKindElement {
+		if property.kind == ir.XmlPropertyKindElement && !xmlIsNodeProperty(property) && !(property.wrapped && property.value.list) {
+			t.writeXmlSerializeElement(receiver, property)
+		}
+	}
+	wrapped := "nil"
+	if hasWrappedList(properties) {
+		wrapped = "wrapped"
+		t.writer.P("wrapped := make(map[string][]core.XmlNode)")
+		for _, property := range properties {
+			if property.kind != ir.XmlPropertyKindElement || !property.wrapped || !property.value.list {
+				continue
+			}
+			field := receiver + "." + property.field
+			if xmlIsNodeProperty(property) {
+				t.writer.P("wrapped[", quote(property.xmlName), "] = core.XmlNodes(", field, ")")
+				continue
+			}
+			t.writer.P("for _, item := range ", field, " {")
+			t.writer.P("wrapped[", quote(property.xmlName), "] = append(wrapped[", quote(property.xmlName), "], core.NewXmlElement(", quote(property.xmlName), ").SetText(", xmlFormatExpression(property.value, "item"), "))")
+			t.writer.P("}")
+		}
+	}
+	t.writer.P("core.AddXmlContent(element, core.OrderXmlContent(")
+	t.writer.P(receiver, ".", xmlContentField, ",")
+	for _, property := range properties {
+		if property.kind != ir.XmlPropertyKindElement || !xmlIsNodeProperty(property) || property.wrapped {
 			continue
 		}
-		t.writeXmlSerializeElement(receiver, property)
+		field := receiver + "." + property.field
+		if property.value.list {
+			t.writer.P("core.XmlNodes(", field, "),")
+		} else {
+			t.writer.P("core.XmlNodes([]*", property.value.goType, "{", field, "}),")
+		}
 	}
-	t.writer.P("for _, child := range ", extraChildren, " {")
-	t.writer.P("element.AddChild(child)")
-	t.writer.P("}")
+	t.writer.P(receiver, ".", xmlExtraChildrenField, ",")
+	t.writer.P("), ", wrapped, ")")
 	t.writer.P("return element")
 	t.writer.P("}")
 	t.writer.P()
 
 	// ToXml
-	t.writer.P("// ToXml serializes the ", t.typeName, " to an XML string.")
+	t.writer.P("// ToXml serializes the ", t.typeName, " to an XML document, prefixed with the XML declaration.")
 	t.writer.P("func (", receiver, " *", t.typeName, ") ToXml() string {")
-	t.writer.P("return ", receiver, ".ToXmlElement().ToXml()")
+	t.writer.P("return ", receiver, ".ToXmlElement().ToXmlDocument()")
+	t.writer.P("}")
+	t.writer.P()
+
+	// String
+	t.writer.P("// String implements fmt.Stringer and returns the XML representation of the ", t.typeName, ".")
+	t.writer.P("func (", receiver, " *", t.typeName, ") String() string {")
+	t.writer.P("if ", receiver, " == nil {")
+	t.writer.P("return \"<nil>\"")
+	t.writer.P("}")
+	t.writer.P("return ", receiver, ".ToXml()")
 	t.writer.P("}")
 	t.writer.P()
 
@@ -442,12 +488,54 @@ func (t *typeVisitor) writeXmlObjectMethods(object *ir.ObjectTypeDeclaration, xm
 	t.writer.P("// ", addChild, " appends an arbitrary child element (e.g. a core.XmlElement) and returns the ", t.typeName, ".")
 	t.writer.P("func (", receiver, " *", t.typeName, ") ", addChild, "(child core.XmlNode) *", t.typeName, " {")
 	t.writer.P(receiver, ".", xmlExtraChildrenField, " = append(", receiver, ".", xmlExtraChildrenField, ", child)")
+	t.writer.P(receiver, ".", xmlContentField, " = append(", receiver, ".", xmlContentField, ", child)")
 	t.writer.P("return ", receiver)
 	t.writer.P("}")
 	t.writer.P()
 
+	// AddText
+	addText := xmlAddTextMethod
+	if _, ok := fieldNames[addText]; ok {
+		addText = "AddXmlText"
+	}
+	t.writer.P("// ", addText, " appends a text segment after the children added so far and returns the ", t.typeName, ".")
+	t.writer.P("func (", receiver, " *", t.typeName, ") ", addText, "(text string) *", t.typeName, " {")
+	t.writer.P(receiver, ".", xmlContentField, " = append(", receiver, ".", xmlContentField, ", core.XmlText(text))")
+	t.writer.P("return ", receiver)
+	t.writer.P("}")
+	t.writer.P()
+
+	// Comment, CommentBefore, CommentAfter
+	comments := []struct {
+		name     string
+		fallback string
+		value    string
+		doc      string
+	}{
+		{"Comment", "AddXmlComment", "core.XmlComment{Text: text}", "appends an XML comment (<!--text-->) inside the element after the content added so far"},
+		{"CommentBefore", "AddXmlCommentBefore", "core.XmlCommentBefore(text)", "adds an XML comment rendered immediately before this element (as a sibling in its parent, or before the root element)"},
+		{"CommentAfter", "AddXmlCommentAfter", "core.XmlCommentAfter(text)", "adds an XML comment rendered immediately after this element (as a sibling in its parent, or after the root element)"},
+	}
+	for _, comment := range comments {
+		name := comment.name
+		if _, ok := fieldNames[name]; ok {
+			name = comment.fallback
+		}
+		t.writer.P("// ", name, " ", comment.doc, " and returns the ", t.typeName, ".")
+		t.writer.P("func (", receiver, " *", t.typeName, ") ", name, "(text string) *", t.typeName, " {")
+		t.writer.P(receiver, ".", xmlContentField, " = append(", receiver, ".", xmlContentField, ", ", comment.value, ")")
+		t.writer.P("return ", receiver)
+		t.writer.P("}")
+		t.writer.P()
+	}
+
 	// Builders
-	t.writeXmlBuilders(receiver, properties, fieldNames, addChild)
+	if err := t.writeXmlBuilders(resolver, receiver, properties, fieldNames, addChild, addText); err != nil {
+		return err
+	}
+	if t.xmlTextFirstBuilders {
+		t.writeXmlOptions(receiver, properties)
+	}
 
 	// FromXml
 	t.writer.P("// ", t.typeName, "FromXml parses a ", t.typeName, " from an XML document.")
@@ -487,10 +575,12 @@ func (t *typeVisitor) writeXmlObjectMethods(object *ir.ObjectTypeDeclaration, xm
 	t.writer.P("result.", xmlExtraAttributesField, "[attribute.Name] = attribute.Value")
 	t.writer.P("}")
 	t.writer.P("}")
+	hasText := false
 	for _, property := range properties {
 		if property.kind != ir.XmlPropertyKindText {
 			continue
 		}
+		hasText = true
 		// Whitespace-only text is indentation between child elements, not a value.
 		t.writer.P("if strings.TrimSpace(element.Text) != \"\" {")
 		input := "element.Text"
@@ -500,7 +590,27 @@ func (t *typeVisitor) writeXmlObjectMethods(object *ir.ObjectTypeDeclaration, xm
 		t.writeXmlParseScalar(property, input)
 		t.writer.P("}")
 	}
-	t.writer.P("for _, child := range element.ChildElements() {")
+	if !hasText {
+		t.writer.P("if element.Text != \"\" && !core.IsXmlIndentation(element.Text) {")
+		t.writer.P("result.", xmlContentField, " = append(result.", xmlContentField, ", core.XmlText(element.Text))")
+		t.writer.P("}")
+	}
+	t.writer.P("for _, node := range element.Children {")
+	t.writer.P("if node == nil {")
+	t.writer.P("continue")
+	t.writer.P("}")
+	t.writer.P("if _, ok := node.(core.XmlText); ok {")
+	t.writer.P("result.", xmlContentField, " = append(result.", xmlContentField, ", node)")
+	t.writer.P("continue")
+	t.writer.P("}")
+	t.writer.P("if _, ok := node.(core.XmlComment); ok {")
+	t.writer.P("result.", xmlContentField, " = append(result.", xmlContentField, ", node)")
+	t.writer.P("continue")
+	t.writer.P("}")
+	t.writer.P("child := node.ToXmlElement()")
+	t.writer.P("if child == nil {")
+	t.writer.P("continue")
+	t.writer.P("}")
 	t.writer.P("switch child.Name {")
 	for _, property := range properties {
 		if property.kind != ir.XmlPropertyKindElement {
@@ -510,6 +620,7 @@ func (t *typeVisitor) writeXmlObjectMethods(object *ir.ObjectTypeDeclaration, xm
 	}
 	t.writer.P("default:")
 	t.writer.P("result.", xmlExtraChildrenField, " = append(result.", xmlExtraChildrenField, ", child)")
+	t.writer.P("result.", xmlContentField, " = append(result.", xmlContentField, ", child)")
 	t.writer.P("}")
 	t.writer.P("}")
 	t.writer.P("return result, nil")
@@ -548,11 +659,18 @@ func (t *typeVisitor) writeXmlSerializeScalar(receiver string, property *xmlProp
 	t.writer.P(fmt.Sprintf(format, xmlFormatExpression(value, field)))
 }
 
-// writeXmlSerializeElement writes the serialization of a child element property.
+// xmlIsNodeProperty reports whether the property holds XML nodes (objects or unions)
+// rather than scalar values.
+func xmlIsNodeProperty(property *xmlProperty) bool {
+	return property.value.kind == xmlValueObject || property.value.kind == xmlValueUnion
+}
+
+// writeXmlSerializeElement writes the serialization of a scalar child element property.
+// Node properties are written through the ordered content instead.
 func (t *typeVisitor) writeXmlSerializeElement(receiver string, property *xmlProperty) {
 	field := receiver + "." + property.field
 	value := property.value
-	isNode := value.kind == xmlValueObject || value.kind == xmlValueUnion
+	isNode := xmlIsNodeProperty(property)
 	if value.list && property.wrapped {
 		t.writer.P("{")
 		t.writer.P("wrapper := core.NewXmlElement(", quote(property.xmlName), ")")
@@ -636,17 +754,21 @@ func (t *typeVisitor) writeXmlParseElement(property *xmlProperty) {
 	value := property.value
 	if property.wrapped && value.list {
 		t.writer.P("case ", quote(property.xmlName), ":")
-		t.writer.P("unknown := &core.XmlElement{Name: child.Name, Namespace: child.Namespace, Prefix: child.Prefix, Attributes: child.Attributes, Text: strings.TrimSpace(child.Text)}")
-		t.writer.P("for _, item := range child.ChildElements() {")
+		t.writer.P("marker := &core.XmlElement{Name: child.Name, Namespace: child.Namespace, Prefix: child.Prefix, Attributes: child.Attributes, Text: strings.TrimSpace(child.Text)}")
+		t.writer.P("for _, wrappedNode := range child.Children {")
+		t.writer.P("item := wrappedNode.ToXmlElement()")
+		t.writer.P("if item == nil {")
+		t.writer.P("marker.Children = append(marker.Children, wrappedNode)")
+		t.writer.P("continue")
+		t.writer.P("}")
 		t.writer.P("switch item.Name {")
 		t.writeXmlParseChildCases(property, "item")
+		t.writer.P("marker.WrappedItemCount++")
 		t.writer.P("default:")
-		t.writer.P("unknown.AddChild(item)")
+		t.writer.P("marker.AddChild(item)")
 		t.writer.P("}")
 		t.writer.P("}")
-		t.writer.P("if len(unknown.Children) > 0 || len(unknown.Attributes) > 0 || unknown.Text != \"\" {")
-		t.writer.P("result.", xmlExtraChildrenField, " = append(result.", xmlExtraChildrenField, ", unknown)")
-		t.writer.P("}")
+		t.writer.P("result.", xmlContentField, " = append(result.", xmlContentField, ", marker)")
 		return
 	}
 	t.writeXmlParseChildCases(property, "child")
@@ -670,6 +792,9 @@ func (t *typeVisitor) writeXmlParseChildCases(property *xmlProperty, element str
 		t.writer.P("return nil, err")
 		t.writer.P("}")
 		assign("value")
+		if !property.wrapped {
+			t.writer.P("result.", xmlContentField, " = append(result.", xmlContentField, ", value)")
+		}
 	default:
 		t.writer.P("case ", quote(property.xmlName), ":")
 		t.writeXmlParseValue(value, element+".Text", "value", property.xmlName)
@@ -683,10 +808,10 @@ func (t *typeVisitor) writeXmlParseChildCases(property *xmlProperty, element str
 
 // writeXmlBuilders writes fluent methods appending typed children to list properties,
 // e.g. func (r *Response) Say(say *Say) *Response.
-func (t *typeVisitor) writeXmlBuilders(receiver string, properties []*xmlProperty, fieldNames map[string]struct{}, addChild string) {
+func (t *typeVisitor) writeXmlBuilders(resolver *xmlResolver, receiver string, properties []*xmlProperty, fieldNames map[string]struct{}, addChild string, addText string) error {
 	used := map[string]struct{}{
 		"ToXmlElement": {}, "ToXml": {}, "String": {}, "MarshalJSON": {}, "UnmarshalJSON": {},
-		"GetExtraProperties": {}, addChild: {},
+		"GetExtraProperties": {}, addChild: {}, addText: {},
 	}
 	for name := range fieldNames {
 		used[name] = struct{}{}
@@ -700,25 +825,146 @@ func (t *typeVisitor) writeXmlBuilders(receiver string, properties []*xmlPropert
 		}
 		switch value.kind {
 		case xmlValueObject:
-			name := xmlBuilderName(value.goType, used)
-			t.writeXmlBuilderDocs(name, value.xmlName, value.docs)
-			t.writer.P("func (", receiver, " *", t.typeName, ") ", name, "(child *", value.goType, ") *", t.typeName, " {")
-			t.writer.P(receiver, ".", property.field, " = append(", receiver, ".", property.field, ", child)")
-			t.writer.P("return ", receiver)
-			t.writer.P("}")
-			t.writer.P()
-		case xmlValueUnion:
-			for _, member := range value.members {
-				name := xmlBuilderName(member.goType, used)
-				t.writeXmlBuilderDocs(name, member.xmlName, member.docs)
-				t.writer.P("func (", receiver, " *", t.typeName, ") ", name, "(child *", member.goType, ") *", t.typeName, " {")
-				t.writer.P(receiver, ".", property.field, " = append(", receiver, ".", property.field, ", ", xmlUnionConstructor(value.goType, member, "child"), ")")
+			typed := func(name string) {
+				t.writer.P("func (", receiver, " *", t.typeName, ") ", name, "(child *", value.goType, ") *", t.typeName, " {")
+				t.writer.P(receiver, ".", property.field, " = append(", receiver, ".", property.field, ", child)")
+				if !property.wrapped {
+					t.writer.P(receiver, ".", xmlContentField, " = append(", receiver, ".", xmlContentField, ", child)")
+				}
 				t.writer.P("return ", receiver)
 				t.writer.P("}")
 				t.writer.P()
 			}
+			if err := t.writeXmlChildBuilders(resolver, receiver, value.goType, value.typeId, value.xmlName, value.docs, used, typed); err != nil {
+				return err
+			}
+		case xmlValueUnion:
+			for _, member := range value.members {
+				member := member
+				typed := func(name string) {
+					t.writer.P("func (", receiver, " *", t.typeName, ") ", name, "(child *", member.goType, ") *", t.typeName, " {")
+					t.writer.P("item := ", xmlUnionConstructor(value.goType, member, "child"))
+					t.writer.P(receiver, ".", property.field, " = append(", receiver, ".", property.field, ", item)")
+					if !property.wrapped {
+						t.writer.P(receiver, ".", xmlContentField, " = append(", receiver, ".", xmlContentField, ", item)")
+					}
+					t.writer.P("return ", receiver)
+					t.writer.P("}")
+					t.writer.P()
+				}
+				if err := t.writeXmlChildBuilders(resolver, receiver, member.goType, member.typeId, member.xmlName, member.docs, used, typed); err != nil {
+					return err
+				}
+			}
 		}
 	}
+	return nil
+}
+
+// writeXmlChildBuilders writes the builder method(s) appending a child of the given type.
+//
+// By default a single method taking the typed child is written (e.g. Say(child *Say)).
+// With xmlTextFirstBuilders, the plain name takes the child's text and functional options
+// (e.g. Say(text string, opts ...SayOption), or Pause(opts ...PauseOption) for text-less
+// elements) and the typed variant is written under the "Add" prefix (AddSay(child *Say)).
+func (t *typeVisitor) writeXmlChildBuilders(
+	resolver *xmlResolver,
+	receiver string,
+	goType string,
+	typeId common.TypeId,
+	xmlName string,
+	docs *string,
+	used map[string]struct{},
+	writeTyped func(name string),
+) error {
+	if !t.xmlTextFirstBuilders {
+		name := xmlBuilderName(goType, used)
+		t.writeXmlBuilderDocs(name, xmlName, docs)
+		writeTyped(name)
+		return nil
+	}
+	text, err := resolver.textProperty(typeId)
+	if err != nil {
+		return err
+	}
+	name := xmlBuilderName(goType, used)
+	typedName := xmlBuilderName("Add"+xmlShortTypeName(goType), used)
+	optionType := goType + "Option"
+	if text != nil {
+		t.writeXmlBuilderDocs(name, xmlName, docs)
+		t.writer.P("//")
+		t.writer.P("// The text is the element's content; options set its attributes, e.g.")
+		t.writer.P("// ", name, "(text, ", xmlOptionName(goType, "Attribute"), "(value)).")
+		t.writer.P("func (", receiver, " *", t.typeName, ") ", name, "(text ", text.value.goType, ", opts ...", optionType, ") *", t.typeName, " {")
+		if text.value.pointer {
+			t.writer.P("child := &", goType, "{", text.field, ": &text}")
+		} else {
+			t.writer.P("child := &", goType, "{", text.field, ": text}")
+		}
+	} else {
+		t.writeXmlBuilderDocs(name, xmlName, docs)
+		t.writer.P("//")
+		t.writer.P("// Options set the element's attributes, e.g. ", name, "(", xmlOptionName(goType, "Attribute"), "(value)).")
+		t.writer.P("func (", receiver, " *", t.typeName, ") ", name, "(opts ...", optionType, ") *", t.typeName, " {")
+		t.writer.P("child := &", goType, "{}")
+	}
+	t.writer.P("for _, opt := range opts {")
+	t.writer.P("opt(child)")
+	t.writer.P("}")
+	t.writer.P("return ", receiver, ".", typedName, "(child)")
+	t.writer.P("}")
+	t.writer.P()
+	t.writeXmlBuilderDocs(typedName, xmlName, docs)
+	writeTyped(typedName)
+	return nil
+}
+
+// writeXmlOptions writes the functional option type used by the text-first builders
+// (<Type>Option) and one With<Type><Field> option per attribute of the type.
+func (t *typeVisitor) writeXmlOptions(receiver string, properties []*xmlProperty) {
+	optionType := t.typeName + "Option"
+	t.writer.P("// ", optionType, " configures a ", t.typeName, " created by a text-first builder.")
+	t.writer.P("type ", optionType, " func(*", t.typeName, ")")
+	t.writer.P()
+	for _, property := range properties {
+		if property.kind != ir.XmlPropertyKindAttribute {
+			continue
+		}
+		value := property.value
+		name := xmlOptionName(t.typeName, property.field)
+		paramType := value.goType
+		if value.list {
+			paramType = "..." + value.goType
+		}
+		assigned := "value"
+		if value.pointer {
+			assigned = "&value"
+		}
+		t.writer.P("// ", name, " sets the ", property.xmlName, " attribute of the ", t.typeName, ".")
+		t.writer.P("func ", name, "(value ", paramType, ") ", optionType, " {")
+		t.writer.P("return func(", receiver, " *", t.typeName, ") {")
+		t.writer.P(receiver, ".", property.field, " = ", assigned)
+		t.writer.P("}")
+		t.writer.P("}")
+		t.writer.P()
+	}
+}
+
+// xmlOptionName returns the name of the functional option setting the given field of the
+// (possibly package-qualified) type, e.g. ("pkg.Say", "Voice") -> "pkg.WithSayVoice".
+func xmlOptionName(goType string, field string) string {
+	if index := strings.LastIndex(goType, "."); index >= 0 {
+		return goType[:index+1] + "With" + goType[index+1:] + field
+	}
+	return "With" + goType + field
+}
+
+// xmlShortTypeName returns the Go type name without its package qualifier.
+func xmlShortTypeName(goType string) string {
+	if index := strings.LastIndex(goType, "."); index >= 0 {
+		return goType[index+1:]
+	}
+	return goType
 }
 
 // writeXmlBuilderDocs writes the doc comment for a fluent child method, including the

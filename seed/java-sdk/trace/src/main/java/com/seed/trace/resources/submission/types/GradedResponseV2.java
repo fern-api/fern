@@ -100,7 +100,6 @@ public final class GradedResponseV2 {
 
         private Map<String, TestCaseGrade> testCases = new LinkedHashMap<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -146,6 +145,14 @@ public final class GradedResponseV2 {
         @java.lang.Override
         public GradedResponseV2 build() {
             return new GradedResponseV2(submissionId, testCases, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("submissionId") || key.equalsIgnoreCase("testCases")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

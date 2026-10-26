@@ -1,4 +1,29 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.37.1
+  changelogEntry:
+    - summary: |
+        Fix snippets and wire tests for APIs with multiple base URLs leaving out the `baseURL`
+        argument the client initializer requires, so they failed to compile. A custom base URL is now
+        passed through. Otherwise the snippet uses the first base URL of the requested (or default)
+        environment.
+      type: fix
+  createdAt: "2026-10-12"
+  irVersion: 66
+- version: 0.37.0
+  changelogEntry:
+    - summary: |
+        The `additionalBodyParameters` request option (`[String: String]`) is now applied to requests;
+        previously it was accepted but ignored. Add a new `additionalBodyProperties` request option
+        (`[String: JSONValue]`) for sending non-string JSON values (booleans, numbers, arrays, objects,
+        and `null`). Both are merged into the serialized JSON request body using wire-format keys,
+        override generated fields on collision, and create a JSON body when the endpoint has none
+        (except GET and HEAD requests, which are still sent without a body);
+        `additionalBodyProperties` wins when both set the same key. Multipart and raw `Data` bodies are
+        left unchanged. `JSONValue` now supports string, integer, float, boolean, array, and dictionary
+        literals.
+      type: feat
+  createdAt: "2026-10-05"
+  irVersion: 66
 - version: 0.36.4
   changelogEntry:
     - summary: |

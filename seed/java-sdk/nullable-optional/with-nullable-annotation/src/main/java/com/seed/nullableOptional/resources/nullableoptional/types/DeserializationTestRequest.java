@@ -333,7 +333,6 @@ public final class DeserializationTestRequest {
 
         private String nullableString;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -532,6 +531,25 @@ public final class DeserializationTestRequest {
                     nullableObject,
                     optionalObject,
                     additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("requiredString")
+                    || key.equalsIgnoreCase("nullableString")
+                    || key.equalsIgnoreCase("optionalString")
+                    || key.equalsIgnoreCase("optionalNullableString")
+                    || key.equalsIgnoreCase("nullableEnum")
+                    || key.equalsIgnoreCase("optionalEnum")
+                    || key.equalsIgnoreCase("nullableUnion")
+                    || key.equalsIgnoreCase("optionalUnion")
+                    || key.equalsIgnoreCase("nullableList")
+                    || key.equalsIgnoreCase("nullableMap")
+                    || key.equalsIgnoreCase("nullableObject")
+                    || key.equalsIgnoreCase("optionalObject")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

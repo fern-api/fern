@@ -4,6 +4,7 @@ namespace Example;
 
 use Seed\SeedClient;
 use Seed\Requests\PlantPost;
+use Seed\Types\PlantBaseWateringFrequency;
 use Seed\Types\PlantPostSunExposure;
 
 $client = new SeedClient(
@@ -16,6 +17,8 @@ $client->createPlant(
         'species' => 'species',
         'family' => 'family',
         'genus' => 'genus',
+        'commonName' => 'commonName',
+        'wateringFrequency' => PlantBaseWateringFrequency::Daily->value,
         'sunExposure' => PlantPostSunExposure::Full->value,
     ]),
 );

@@ -54,8 +54,10 @@ export async function splitTypesCrates(args: {
     typesCrateName: string;
     plan: TypeCratePartitionPlan;
     needsReqwest: boolean;
+    /** `[package] version` for the facade and every partition. */
+    version: string;
 }): Promise<SplitTypesCratesResult> {
-    const { typesOutputDir, typesCrateName, plan, needsReqwest } = args;
+    const { typesOutputDir, typesCrateName, plan, needsReqwest, version } = args;
     const manifest = await readModelFileManifest(typesOutputDir);
     const modulesByPartition = groupModulesByPartition({ manifest, plan });
 
@@ -86,7 +88,8 @@ export async function splitTypesCrates(args: {
             // leaf, which on a 60-spec workspace means 60 warnings in the
             // consumer's build for no benefit.
             reexportCoreTypes: coreOwnsTypes,
-            needsReqwest
+            needsReqwest,
+            version
         });
         partitionCrates.push({
             crateName,
@@ -99,6 +102,7 @@ export async function splitTypesCrates(args: {
         typesCrateName,
         partitionCrates,
         coreCrateName,
+        version,
         // Same reason as the leaf preludes: re-exporting an empty `types`
         // module is an unused import, so the facade skips any crate that owns
         // no types. In practice that is only ever core.
@@ -182,6 +186,7 @@ async function writePartitionCrate(args: {
     dependsOnCoreCrate: string | undefined;
     reexportCoreTypes: boolean;
     needsReqwest: boolean;
+    version: string;
 }): Promise<void> {
     const {
         crateDir,
@@ -191,7 +196,8 @@ async function writePartitionCrate(args: {
         monolithSrcDir,
         dependsOnCoreCrate,
         reexportCoreTypes,
-        needsReqwest
+        needsReqwest,
+        version
     } = args;
     const srcDir = path.join(crateDir, "src");
     const typesDir = path.join(srcDir, TYPES_MODULE_DIRECTORY);
@@ -236,6 +242,7 @@ async function writePartitionCrate(args: {
         path.join(crateDir, "Cargo.toml"),
         buildTypesCrateCargoToml({
             crateName: toSnakeCase(crateName),
+            version,
             needsReqwest,
             pathDependencies:
                 dependsOnCoreCrate == null
@@ -254,9 +261,10 @@ async function writeFacadeCrate(args: {
     typesCrateName: string;
     partitionCrates: TypePartitionCrate[];
     coreCrateName: string;
+    version: string;
     crateNamesOwningTypes: ReadonlySet<string>;
 }): Promise<void> {
-    const { typesOutputDir, typesCrateName, partitionCrates, coreCrateName, crateNamesOwningTypes } = args;
+    const { typesOutputDir, typesCrateName, partitionCrates, coreCrateName, version, crateNamesOwningTypes } = args;
     const srcDir = path.join(typesOutputDir, "src");
 
     // A facade holds no derives or type definitions, so it stays cheap to
@@ -301,6 +309,7 @@ async function writeFacadeCrate(args: {
         path.join(typesOutputDir, "Cargo.toml"),
         buildTypesCrateCargoToml({
             crateName: toSnakeCase(typesCrateName),
+            version,
             needsReqwest: false,
             includeSerdeDependencies: false,
             // The partitions live inside this crate's own directory, so the

@@ -32,10 +32,12 @@ type GetDefaultStarterFilesRequest struct {
 }
 
 func (g *GetDefaultStarterFilesRequest) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetInputParams sets the InputParams field and marks it as non-optional;
@@ -265,10 +267,12 @@ func (c *CreateProblemRequest) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *CreateProblemRequest) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetProblemName sets the ProblemName field and marks it as non-optional;
@@ -553,10 +557,12 @@ func (g *GenericCreateProblemError) GetExtraProperties() map[string]interface{} 
 }
 
 func (g *GenericCreateProblemError) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetMessage sets the Message field and marks it as non-optional;
@@ -651,10 +657,12 @@ func (g *GetDefaultStarterFilesResponse) GetExtraProperties() map[string]interfa
 }
 
 func (g *GetDefaultStarterFilesResponse) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetFiles sets the Files field and marks it as non-optional;
@@ -744,10 +752,12 @@ func (p *ProblemFiles) GetExtraProperties() map[string]interface{} {
 }
 
 func (p *ProblemFiles) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetSolutionFile sets the SolutionFile field and marks it as non-optional;
@@ -916,10 +926,12 @@ func (p *ProblemInfo) GetExtraProperties() map[string]interface{} {
 }
 
 func (p *ProblemInfo) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetProblemID sets the ProblemID field and marks it as non-optional;
@@ -1063,10 +1075,12 @@ func (u *UpdateProblemResponse) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UpdateProblemResponse) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetProblemVersion sets the ProblemVersion field and marks it as non-optional;
@@ -1156,10 +1170,12 @@ func (v *VariableTypeAndName) GetExtraProperties() map[string]interface{} {
 }
 
 func (v *VariableTypeAndName) require(field *big.Int) {
-	if v.explicitFields == nil {
-		v.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if v.explicitFields != nil {
+		next.Set(v.explicitFields)
 	}
-	v.explicitFields.Or(v.explicitFields, field)
+	next.Or(next, field)
+	v.explicitFields = next
 }
 
 // SetVariableType sets the VariableType field and marks it as non-optional;

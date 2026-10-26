@@ -25,7 +25,8 @@
                         "safeName": "Token"
                     }
                 },
-                "wrapperProperty": null
+                "wrapperProperty": null,
+                "requirement": "ALL"
             },
             "declaration": {
                 "name": {
@@ -169,6 +170,7 @@
                     "properties": [
                         {
                             "type": "file",
+                            "isOptional": false,
                             "wireValue": "file",
                             "name": {
                                 "originalName": "file",
@@ -234,6 +236,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         }
     },

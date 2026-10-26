@@ -13,7 +13,8 @@ class UserWireTest < WireMockTestCase
       client_secret: "test-client-secret",
       username: "test-username",
       password: "test-password",
-      base_url: WIREMOCK_BASE_URL
+      base_url: WIREMOCK_BASE_URL,
+      max_retries: 0
     )
   end
 

@@ -70,16 +70,45 @@ export class DataClass extends AstNode {
             parameters: this.getConstructorParameters({ orderedFields }),
             body: php.codeblock((writer) => {
                 if (orderedFields.length > 0) {
-                    for (const field of orderedFields) {
-                        writer.write(`$this->${field.name} = $${CONSTRUCTOR_PARAMETER_NAME}['${field.name}']`);
-                        if (field.type.isOptional()) {
-                            writer.write(" ?? null");
-                        } else if (field.initializer != null) {
-                            writer.write(" ?? ");
-                            field.initializer.write(writer);
+                    orderedFields.forEach((field, index) => {
+                        const rawValue = `$${CONSTRUCTOR_PARAMETER_NAME}['${field.name}']`;
+                        if (field.constructorValueWrapper != null) {
+                            // assign through a typed local so static analysis keeps the field's declared type
+                            const local =
+                                field.name === CONSTRUCTOR_PARAMETER_NAME ? `$_${field.name}` : `$${field.name}`;
+                            if (index > 0) {
+                                writer.newLine();
+                            }
+                            writer.write("/** @var ");
+                            field.type.write(writer, { comment: true });
+                            writer.writeLine(` ${local} */`);
+                            const defaulted = php.codeblock((inner) => {
+                                inner.write(rawValue);
+                                if (field.type.isOptional()) {
+                                    inner.write(" ?? null");
+                                } else if (field.initializer != null) {
+                                    inner.write(" ?? ");
+                                    field.initializer.write(inner);
+                                }
+                            });
+                            writer.write(`${local} = `);
+                            writer.writeNode(field.constructorValueWrapper(defaulted));
+                            writer.writeLine(";");
+                            writer.write(`$this->${field.name} = ${local};`);
+                            if (index < orderedFields.length - 1) {
+                                writer.newLine();
+                            }
+                        } else {
+                            writer.write(`$this->${field.name} = ${rawValue}`);
+                            if (field.type.isOptional()) {
+                                writer.write(" ?? null");
+                            } else if (field.initializer != null) {
+                                writer.write(" ?? ");
+                                field.initializer.write(writer);
+                            }
+                            writer.write(";");
                         }
-                        writer.write(";");
-                    }
+                    });
                 } else {
                     writer.writeLine(`unset($${CONSTRUCTOR_PARAMETER_NAME});`);
                 }
@@ -99,7 +128,7 @@ export class DataClass extends AstNode {
                 type: Type.typeDict(
                     orderedFields.map((field) => ({
                         key: field.name,
-                        valueType: field.type,
+                        valueType: field.constructorType ?? field.type,
                         optional: field.type.isOptional() || field.initializer != null
                     })),
                     {

@@ -78,7 +78,6 @@ public final class SearchProductsRequestConfig {
 
         private Optional<Integer> limit = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -113,6 +112,14 @@ public final class SearchProductsRequestConfig {
 
         public SearchProductsRequestConfig build() {
             return new SearchProductsRequestConfig(currency, limit, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("currency") || key.equalsIgnoreCase("limit")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

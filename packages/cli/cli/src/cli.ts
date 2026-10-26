@@ -25,6 +25,7 @@ import {
 import { getFiddleOrigin } from "@fern-api/core";
 import {
     ContainerRunner,
+    errorMessageOrString,
     extractErrorMessage,
     haveSameNullishness,
     undefinedIfNullish,
@@ -44,6 +45,11 @@ import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { askToLogin, getDashboardBaseUrl, login, logout } from "@fern-api/login";
 import { type Project } from "@fern-api/project-loader";
 import { protocGenFern } from "@fern-api/protoc-gen-fern";
+import {
+    isDynamicIrWorkerThread,
+    registerDynamicIrWorkerEntrypoint,
+    runDynamicIrWorkerThread
+} from "@fern-api/remote-workspace-runner";
 import { CliError } from "@fern-api/task-context";
 import chalk from "chalk";
 import getPort from "get-port";
@@ -95,13 +101,14 @@ import {
     unsetOrgCliVersion,
     warnIfVersionOutsideOrgBounds
 } from "./commands/org/orgConfig.js";
+import { createOrgToken, listOrgTokens, revokeOrgToken } from "./commands/org/orgTokens.js";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1.js";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2.js";
 import { resolveSpecsForWorkspaces } from "./commands/resolve-specs/resolveSpecsForWorkspaces.js";
 import { sdkDiffCommand } from "./commands/sdk-diff/sdkDiffCommand.js";
 import { sdkMigrate } from "./commands/sdk-migrate/sdkMigrate.js";
 import type { SdkPreviewResult, SdkPreviewSuccess } from "./commands/sdk-preview/sdkPreview.js";
-import { sdkPreview } from "./commands/sdk-preview/sdkPreview.js";
+import { sdkPreview, toSerializableSdkPreviewResult } from "./commands/sdk-preview/sdkPreview.js";
 import { selfUpdate } from "./commands/self-update/selfUpdate.js";
 import { testOutput } from "./commands/test/testOutput.js";
 import { generateToken } from "./commands/token/token.js";
@@ -117,7 +124,8 @@ import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion.js";
 import { resolveGroupGithubConfig } from "./resolveGroupGithubConfig.js";
 import { RUNTIME } from "./runtime.js";
 import { installProcessHandlers } from "./telemetry/processHandlers.js";
-import { isVersionRedirectionExempt } from "./utils/versionRedirection.js";
+import { isSdkConfigInitEnabled } from "./utils/isSdkConfigInitEnabled.js";
+import { getInvokedCommandName, isVersionRedirectionExempt } from "./utils/versionRedirection.js";
 
 // Node 26+ on Linux enables io_uring in libuv, which has a busy-loop bug that
 // hangs the process. UV_USE_IO_URING must be set before Node starts (libuv
@@ -145,7 +153,12 @@ if (process.env.UV_THREADPOOL_SIZE == null) {
     process.env.UV_THREADPOOL_SIZE = "8";
 }
 
-void runCli();
+if (isDynamicIrWorkerThread()) {
+    runDynamicIrWorkerThread();
+} else {
+    registerDynamicIrWorkerEntrypoint(typeof __filename === "string" ? __filename : undefined);
+    void runCli();
+}
 
 async function runCli() {
     // Shell completion must be fast and side-effect-free. When the shell
@@ -342,8 +355,9 @@ async function getIntendedVersionOfCli(cliContext: CliContext): Promise<string> 
         // Redirection is off (e.g. local dev builds), so we won't re-exec at the
         // org bounds — but still surface a warning if the running version is out
         // of range, otherwise enforcement would be silently invisible here.
+        // `upgrade` is skipped: it is about to move the project off this version.
         const orgId = await getOrganization(cliContext);
-        if (orgId != null) {
+        if (orgId != null && getInvokedCommandName(process.argv) !== "upgrade") {
             await warnIfVersionOutsideOrgBounds({
                 cliContext,
                 orgId,
@@ -463,7 +477,9 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     await initializeDocs({
                         organization: argv.organization,
                         versionOfCli: await getLatestVersionOfCli({ cliEnvironment: cliContext.environment }),
-                        taskContext: context
+                        taskContext: context,
+                        openApi: argv.openapi,
+                        useSdkConfig: isSdkConfigInitEnabled()
                     });
                 });
             } else if (argv.mintlify != null) {
@@ -476,24 +492,28 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     });
                 });
             } else {
+                const useFernDefinition = argv["fern-definition"] === true;
+                const useSdkConfig = isSdkConfigInitEnabled() && !useFernDefinition;
                 let absoluteOpenApiPath: AbsoluteFilePath | undefined = undefined;
+                let openApiUrl: string | undefined = undefined;
                 if (argv.openapi != null) {
                     if (isURL(argv.openapi)) {
-                        const result = await loadOpenAPIFromUrl({ url: argv.openapi, logger: cliContext.logger });
+                        openApiUrl = argv.openapi;
+                        if (!useSdkConfig) {
+                            const result = await loadOpenAPIFromUrl({ url: argv.openapi, logger: cliContext.logger });
 
-                        if (result.status === LoadOpenAPIStatus.Failure) {
-                            cliContext.failAndThrow(result.errorMessage, undefined, {
-                                code: CliError.Code.NetworkError
-                            });
+                            if (result.status === LoadOpenAPIStatus.Failure) {
+                                cliContext.failAndThrow(result.errorMessage, undefined, {
+                                    code: CliError.Code.NetworkError
+                                });
+                            }
+
+                            absoluteOpenApiPath = AbsoluteFilePath.of(result.filePath);
                         }
-
-                        const tmpFilepath = result.filePath;
-                        absoluteOpenApiPath = AbsoluteFilePath.of(tmpFilepath);
                     } else {
                         absoluteOpenApiPath = AbsoluteFilePath.of(resolve(cwd(), argv.openapi));
                     }
-                    const pathExists = await doesPathExist(absoluteOpenApiPath);
-                    if (!pathExists) {
+                    if (absoluteOpenApiPath != null && !(await doesPathExist(absoluteOpenApiPath))) {
                         cliContext.failAndThrow(`${absoluteOpenApiPath} does not exist`, undefined, {
                             code: CliError.Code.ConfigError
                         });
@@ -505,7 +525,10 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                         versionOfCli: await getLatestVersionOfCli({ cliEnvironment: cliContext.environment }),
                         context,
                         openApiPath: absoluteOpenApiPath,
-                        useFernDefinition: argv["fern-definition"] === true
+                        openApiUrl,
+                        useFernDefinition,
+                        useSdkConfig,
+                        includeDocs: argv.api == null
                     });
                 });
             }
@@ -788,7 +811,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     boolean: true,
                     default: false,
                     description:
-                        "Run legacy generator groups locally using Docker (SDK Config targets require remote generation)"
+                        "Run the generator(s) locally using Docker. SDK Config targets run on the on-prem generator."
                 })
                 .option("keepDocker", {
                     boolean: true,
@@ -2206,10 +2229,15 @@ function addDocsMdGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCo
                     type: "string",
                     description: "Name of a specific library defined in docs.yml to generate docs for"
                 })
-                .option("local", {
+                .option("remote", {
                     boolean: true,
                     default: false,
-                    description: "Run the library parser(s) locally using Docker instead of Fern's servers"
+                    description: "Run the library parser(s) on Fern's servers instead of locally using Docker"
+                })
+                .option("local", {
+                    boolean: true,
+                    hidden: true,
+                    description: "Deprecated: local generation is the default"
                 }),
         async (argv) => {
             cliContext.instrumentPostHogEvent({
@@ -2225,7 +2253,7 @@ function addDocsMdGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCo
                 project,
                 cliContext,
                 library: argv.library,
-                local: argv.local
+                local: !argv.remote
             });
         }
     );
@@ -2384,12 +2412,19 @@ function addDocsDevCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                 .option("beta", {
                     boolean: true,
                     default: false,
-                    description: "Run the app router development server"
+                    hidden: true,
+                    description: "Deprecated alias for --legacy"
                 })
                 .option("legacy", {
                     boolean: true,
                     default: false,
-                    description: "Run the legacy development server"
+                    description: "Run the legacy Next.js docs preview server instead of the default Astro one"
+                })
+                .option("astro", {
+                    boolean: true,
+                    default: false,
+                    hidden: true,
+                    description: "No-op: Astro is now the default docs preview server"
                 })
                 .option("backend-port", {
                     number: true,
@@ -2405,12 +2440,32 @@ function addDocsDevCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                     default: false,
                     description:
                         "Include OpenAPI elements marked `x-twilio.docsVisibility: private` in the previewed API reference. By default only `public` elements are shown; `hidden` elements are always excluded."
+                })
+                .option("skip-api", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Skip building API reference sections for a much faster preview. Endpoint and schema pages are left out; overview and hand-written pages in API sections are kept."
+                })
+                .option("skip-validation", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Skip validating the docs while previewing, so the preview is ready sooner on large sites. Docs errors will not be reported."
                 }),
         async (argv) => {
             if (argv.beta) {
                 cliContext.logger.warn(
-                    "--beta flag now accesses the same functionality as default and will be deprecated in a future release"
+                    "--beta is deprecated and is now an alias for --legacy (the Next.js docs preview server). Use --legacy instead."
                 );
+            }
+            const legacy = argv.legacy || argv.beta;
+            if (legacy && argv.astro) {
+                throw new CliError({
+                    message:
+                        "--astro and --legacy cannot be used together. Astro is the default; pass --legacy for Next.js.",
+                    code: CliError.Code.ConfigError
+                });
             }
 
             let port: number;
@@ -2433,7 +2488,7 @@ function addDocsDevCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                 }
             } catch (error) {
                 throw new CliError({
-                    message: `Failed to find an available port: ${error instanceof Error ? error.message : String(error)}`,
+                    message: `Failed to find an available port: ${errorMessageOrString(error)}`,
                     code: CliError.Code.EnvironmentError
                 });
             }
@@ -2448,10 +2503,12 @@ function addDocsDevCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                 port,
                 bundlePath,
                 brokenLinks: argv.brokenLinks,
-                legacyPreview: argv.legacy,
+                legacy,
                 backendPort,
                 forceDownload: argv.forceDownload,
-                includePrivate: argv.private
+                includePrivate: argv.private,
+                skipApi: argv.skipApi,
+                skipValidation: argv.skipValidation
             });
         }
     );
@@ -2798,6 +2855,12 @@ function addExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     type: "number",
                     description: "Indentation width in spaces (default: 2)",
                     default: 2
+                })
+                .option("audience", {
+                    type: "array",
+                    string: true,
+                    default: [] as string[],
+                    description: "Only export endpoints, webhooks, and types for the provided audiences"
                 }),
         async (argv) => {
             cliContext.instrumentPostHogEvent({
@@ -2814,7 +2877,8 @@ function addExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 }),
                 cliContext,
                 outputPath: resolve(cwd(), argv.outputPath),
-                indent: argv.indent
+                indent: argv.indent,
+                audiences: argv.audience.length > 0 ? { type: "select", audiences: argv.audience } : { type: "all" }
             });
         }
     );
@@ -3094,7 +3158,7 @@ function addAutomationsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: C
                         });
                     }
                 } catch (error) {
-                    const message = error instanceof Error ? error.message : String(error);
+                    const message = errorMessageOrString(error);
                     cliContext.logger.warn(`Preview failed for group '${group.groupName}': ${message}`);
                     results.push({
                         groupName: group.groupName,
@@ -3419,7 +3483,7 @@ function writeSdkPreviewOutput({
     cliContext: CliContext;
 }): void {
     if (json) {
-        process.stdout.write(JSON.stringify(result, null, 2) + "\n");
+        process.stdout.write(JSON.stringify(toSerializableSdkPreviewResult(result), null, 2) + "\n");
         if (result.status === "error") {
             process.exitCode = 1;
         }
@@ -3427,6 +3491,10 @@ function writeSdkPreviewOutput({
     }
 
     if (result.status === "error") {
+        if (result.messageAlreadyLogged === true) {
+            process.exitCode = 1;
+            return;
+        }
         return cliContext.failAndThrow(
             result.message,
             undefined,
@@ -4138,6 +4206,73 @@ function addOrgCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                         }
                     )
                     .demandCommand(1, "Specify what to unset, e.g. `fern org unset cli-version`."),
+            () => {
+                /* handled by subcommand */
+            }
+        );
+
+        yargs.command(
+            "token",
+            "Manage organization API keys",
+            (tokenYargs) =>
+                tokenYargs
+                    .command(
+                        "list",
+                        "List API keys for the organization",
+                        (y) =>
+                            y
+                                .option("org", {
+                                    type: "string",
+                                    description: "Override org ID (defaults to the org in fern.config.json)"
+                                })
+                                .option("json", { type: "boolean", description: "Output as JSON" })
+                                .option("csv", { type: "boolean", description: "Output as CSV" }),
+                        async (argv) => {
+                            cliContext.instrumentPostHogEvent({ command: "fern org token list" });
+                            await listOrgTokens({ cliContext, org: argv.org, json: argv.json, csv: argv.csv });
+                        }
+                    )
+                    .command(
+                        "create",
+                        "Create an API key for the organization",
+                        (y) =>
+                            y
+                                .option("org", {
+                                    type: "string",
+                                    description: "Override org ID (defaults to the org in fern.config.json)"
+                                })
+                                .option("description", {
+                                    type: "string",
+                                    description: "Name/description for the key"
+                                })
+                                .option("json", { type: "boolean", description: "Output as JSON" }),
+                        async (argv) => {
+                            cliContext.instrumentPostHogEvent({ command: "fern org token create" });
+                            await createOrgToken({
+                                cliContext,
+                                org: argv.org,
+                                description: argv.description,
+                                json: argv.json
+                            });
+                        }
+                    )
+                    .command(
+                        "revoke <tokenId>",
+                        "Revoke an organization API key",
+                        (y) =>
+                            y
+                                .positional("tokenId", {
+                                    type: "string",
+                                    demandOption: true,
+                                    description: "Token ID to revoke"
+                                })
+                                .option("json", { type: "boolean", description: "Output as JSON" }),
+                        async (argv) => {
+                            cliContext.instrumentPostHogEvent({ command: "fern org token revoke" });
+                            await revokeOrgToken({ cliContext, tokenId: argv.tokenId, json: argv.json });
+                        }
+                    )
+                    .demandCommand(1, "Specify a token command, e.g. `fern org token list`."),
             () => {
                 /* handled by subcommand */
             }

@@ -24,6 +24,12 @@ type AuthWithWrapperPropertyField = AuthFields & {
     wrapperProperty?: FernIr.dynamic.Name | null;
 };
 
+type AuthRequirement = "ALL" | "ANY" | "ENDPOINT_SECURITY";
+
+type AuthWithRequirementField = AuthFields & {
+    requirement?: AuthRequirement | null;
+};
+
 // TODO: remove once @fern-api/dynamic-ir-sdk >= 67.27.0 ships wrapperProperty on Auth
 function hasWrapperPropertyField(auth: AuthFields): auth is AuthWithWrapperPropertyField {
     return "wrapperProperty" in auth;
@@ -31,6 +37,15 @@ function hasWrapperPropertyField(auth: AuthFields): auth is AuthWithWrapperPrope
 
 function getAuthWrapperProperty(auth: AuthFields): FernIr.dynamic.Name | undefined {
     return hasWrapperPropertyField(auth) ? (auth.wrapperProperty ?? undefined) : undefined;
+}
+
+// TODO: remove once @fern-api/dynamic-ir-sdk >= 67.32.0 ships requirement on Auth
+function hasRequirementField(auth: AuthFields): auth is AuthWithRequirementField {
+    return "requirement" in auth;
+}
+
+function getAuthRequirement(auth: AuthFields): AuthRequirement | undefined {
+    return hasRequirementField(auth) ? (auth.requirement ?? undefined) : undefined;
 }
 
 export class EndpointSnippetGenerator {
@@ -376,9 +391,19 @@ export class EndpointSnippetGenerator {
         return wrapperProperty.camelCase.unsafeName === "oAuth" ? "oauth" : wrapperProperty.camelCase.unsafeName;
     }
 
+    private shouldFlattenAuthFields(auth: AuthFields): boolean {
+        if (this.context.customConfig?.flattenAnyAuthOptions !== true) {
+            return false;
+        }
+        // The SDK only flattens `auth: any`; endpoint security keeps nested options. Older dynamic IR has no
+        // requirement, so it can't be told apart and falls back to flattening.
+        const requirement = getAuthRequirement(auth);
+        return requirement == null || requirement === "ANY";
+    }
+
     private wrapAuthFields({ auth, fields }: { auth: AuthFields; fields: ts.ObjectField[] }): ts.ObjectField[] {
         const wrapperProperty = getAuthWrapperProperty(auth);
-        if (wrapperProperty == null) {
+        if (wrapperProperty == null || this.shouldFlattenAuthFields(auth)) {
             return fields;
         }
         return [
@@ -425,7 +450,8 @@ export class EndpointSnippetGenerator {
             return undefined;
         }
         return {
-            name: this.context.getPropertyName(header.name.name),
+            // The SDK always names client header options in camelCase, whatever the serde setting.
+            name: header.name.name.camelCase.unsafeName,
             value: typeLiteral
         };
     }
@@ -647,7 +673,7 @@ export class EndpointSnippetGenerator {
             values: snippet.queryParameters ?? {}
         });
         const queryParameterFields = queryParameters.map((queryParameter) => ({
-            name: this.context.getPropertyName(queryParameter.name.name),
+            name: this.context.getPropertyNameFromNameAndWireValue(queryParameter.name),
             value: this.context.dynamicTypeLiteralMapper.convert({
                 ...queryParameter,
                 convertOpts: { isForRequest: true }
@@ -661,7 +687,7 @@ export class EndpointSnippetGenerator {
             values: snippet.headers ?? {}
         });
         const headerFields = headers.map((header) => ({
-            name: this.context.getPropertyName(header.name.name),
+            name: this.context.getPropertyNameFromNameAndWireValue(header.name),
             value: this.context.dynamicTypeLiteralMapper.convert({ ...header, convertOpts: { isForRequest: true } })
         }));
         this.context.errors.unscope();
@@ -795,7 +821,7 @@ export class EndpointSnippetGenerator {
         });
         for (const parameter of bodyProperties) {
             fields.push({
-                name: this.context.getPropertyName(parameter.name.name),
+                name: this.context.getPropertyNameFromNameAndWireValue(parameter.name),
                 value: this.context.dynamicTypeLiteralMapper.convert({
                     ...parameter,
                     convertOpts: { isForRequest: true }
@@ -825,7 +851,7 @@ export class EndpointSnippetGenerator {
         });
         for (const parameter of pathParameters) {
             args.push({
-                name: this.context.getPropertyName(parameter.name.name),
+                name: this.context.getPropertyNameFromNameAndWireValue(parameter.name),
                 value: this.context.dynamicTypeLiteralMapper.convert({
                     ...parameter,
                     convertOpts: { isForRequest: true }

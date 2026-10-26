@@ -22,6 +22,7 @@ export const baseGoCustomConfigSchema = z.strictObject({
     omitEmptyRequestWrappers: z.boolean().optional(),
     respectOptionalRequestBody: z.boolean().optional(),
     union: z.enum(["v0", "v1"]).optional(),
+    xmlTextFirstBuilders: z.boolean().optional(),
     useReaderForBytesRequest: z.boolean().optional(),
     useDefaultRequestParameterValues: z.boolean().optional(),
     gettersPassByValue: z.boolean().optional(),
@@ -37,6 +38,8 @@ export const baseGoCustomConfigSchema = z.strictObject({
     omitFernHeaders: z.boolean().optional(),
     includePlatformHeaders: z.boolean().optional(),
     allowUserAgentAppInfo: z.boolean().optional(),
+    userAgentOnly: z.boolean().optional(),
+    legacyNullableAliasPointers: z.boolean().optional(),
     maxRetries: z.number().int().min(0).optional(),
     retryStatusCodes: z.optional(z.enum(["legacy", "recommended"]))
 });

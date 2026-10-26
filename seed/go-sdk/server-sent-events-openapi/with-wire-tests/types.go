@@ -2670,6 +2670,156 @@ func (s *StreamProtocolCollisionResponse) validate() error {
 	return nil
 }
 
+type StreamProtocolMixedSchemaResponse struct {
+	Event      string
+	Heartbeat  *DataContextHeartbeat
+	Entity     *DataContextEntityEvent
+	ObjectData *ProtocolObjectEvent
+
+	rawJSON json.RawMessage
+}
+
+func (s *StreamProtocolMixedSchemaResponse) GetEvent() string {
+	if s == nil {
+		return ""
+	}
+	return s.Event
+}
+
+func (s *StreamProtocolMixedSchemaResponse) GetHeartbeat() *DataContextHeartbeat {
+	if s == nil {
+		return nil
+	}
+	return s.Heartbeat
+}
+
+func (s *StreamProtocolMixedSchemaResponse) GetEntity() *DataContextEntityEvent {
+	if s == nil {
+		return nil
+	}
+	return s.Entity
+}
+
+func (s *StreamProtocolMixedSchemaResponse) GetObjectData() *ProtocolObjectEvent {
+	if s == nil {
+		return nil
+	}
+	return s.ObjectData
+}
+
+func (s *StreamProtocolMixedSchemaResponse) UnmarshalJSON(data []byte) error {
+	var unmarshaler struct {
+		Event string `json:"event"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	s.Event = unmarshaler.Event
+	if unmarshaler.Event == "" {
+		return fmt.Errorf("%T did not include discriminant event", s)
+	}
+	switch unmarshaler.Event {
+	case "heartbeat":
+		value := new(DataContextHeartbeat)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		s.Heartbeat = value
+	case "entity":
+		value := new(DataContextEntityEvent)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		s.Entity = value
+	case "object_data":
+		value := new(ProtocolObjectEvent)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		s.ObjectData = value
+	}
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s StreamProtocolMixedSchemaResponse) MarshalJSON() ([]byte, error) {
+	if err := s.validate(); err != nil {
+		return nil, err
+	}
+	if s.Heartbeat != nil {
+		return internal.MarshalJSONWithExtraProperty(s.Heartbeat, "event", "heartbeat")
+	}
+	if s.Entity != nil {
+		return internal.MarshalJSONWithExtraProperty(s.Entity, "event", "entity")
+	}
+	if s.ObjectData != nil {
+		return internal.MarshalJSONWithExtraProperty(s.ObjectData, "event", "object_data")
+	}
+	if len(s.rawJSON) > 0 {
+		return s.rawJSON, nil
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", s)
+}
+
+type StreamProtocolMixedSchemaResponseVisitor interface {
+	VisitHeartbeat(*DataContextHeartbeat) error
+	VisitEntity(*DataContextEntityEvent) error
+	VisitObjectData(*ProtocolObjectEvent) error
+}
+
+func (s *StreamProtocolMixedSchemaResponse) Accept(visitor StreamProtocolMixedSchemaResponseVisitor) error {
+	if s.Heartbeat != nil {
+		return visitor.VisitHeartbeat(s.Heartbeat)
+	}
+	if s.Entity != nil {
+		return visitor.VisitEntity(s.Entity)
+	}
+	if s.ObjectData != nil {
+		return visitor.VisitObjectData(s.ObjectData)
+	}
+	return fmt.Errorf("type %T does not define a non-empty union type", s)
+}
+
+func (s *StreamProtocolMixedSchemaResponse) validate() error {
+	if s == nil {
+		return fmt.Errorf("type %T is nil", s)
+	}
+	var fields []string
+	if s.Heartbeat != nil {
+		fields = append(fields, "heartbeat")
+	}
+	if s.Entity != nil {
+		fields = append(fields, "entity")
+	}
+	if s.ObjectData != nil {
+		fields = append(fields, "object_data")
+	}
+	if len(fields) == 0 {
+		if s.Event != "" {
+			if len(s.rawJSON) > 0 {
+				return nil
+			}
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", s, s.Event)
+		}
+		return fmt.Errorf("type %T is empty", s)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", s, fields)
+	}
+	if s.Event != "" {
+		field := fields[0]
+		if s.Event != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				s,
+				s.Event,
+				s,
+			)
+		}
+	}
+	return nil
+}
+
 type StreamProtocolNoCollisionResponse struct {
 	Event      string
 	Heartbeat  *ProtocolHeartbeat

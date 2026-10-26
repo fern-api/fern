@@ -84,10 +84,11 @@ The order in `runPipeline` is locked in by
    of `/dist/sdk/`).
 2. **`patchCargoToml({ outputDir, binaryName })`** rewrites the
    `[[bin]] name` and `[[bin]] path` to `<binaryName>` and
-   `cli/<binaryName>/main.rs` respectively. `[package] name`,
-   `[lib] name`, and the `strip-schema` `[[bin]]` are deliberately
-   untouched (`[package] name = "fern-cli-sdk"` matches the shipped
-   `Cargo.lock`, which cargo's `--locked` would otherwise reject).
+   `cli/<binaryName>/main.rs` respectively. `[lib] name` is never
+   touched, and `[package] name` changes only when the resolved package
+   identity sets one (see [Package identity](#package-identity)), in
+   which case the shipped `Cargo.lock` entry is renamed with it so
+   cargo's `--locked` still resolves.
 3. **`copySpecs({ outputDir, binaryName })`** writes each mounted
    OpenAPI spec to `cli/<binaryName>/<filename>.json` and emits
    `cli/<binaryName>/main.rs` from scratch via `renderMainRs`.
@@ -139,10 +140,19 @@ The derived name flows through:
 
 ## Package identity
 
-By default the generated crate keeps the SDK template's Fern-owned
-`[package]` block (`fern-cli-sdk`, `github.com/fern-api/cli-sdk`). Set
-`customConfig.packageIdentity` to publish under the customer's own
-identity instead:
+For GitHub output, `withDistributionDefaults` in
+[`patchCargoToml.ts`](src/patchCargoToml.ts) defaults the unset
+`[package]` fields from the output repo: `repository` and `homepage` to
+`repoUrl`, and `name` to `binaryName` when it is a valid crate name that
+doesn't collide with a crate in the shipped `Cargo.lock`. cargo-dist
+names the release archives and `<name>-installer.sh` / `.ps1` after
+`name` and downloads them from `repository`, so left at the template's
+values every installer 404s. `runPipeline` resolves this identity once
+and threads it into the README install commands, the `Cargo.lock`
+rename and the npm launcher. Other output modes keep the SDK template's
+Fern-owned `[package]` block (`fern-cli-sdk`,
+`github.com/fern-api/cli-sdk`); `authors` and `keywords` always do
+unless set. Set `customConfig.packageIdentity` to pin any field:
 
 ```yaml
 config:
@@ -164,6 +174,28 @@ same pass — `[package] name` and the lockfile must agree or
 
 `[lib] name = "fern_cli_sdk"` is deliberately **not** configurable: every
 `use fern_cli_sdk::...` in the vendored `src/` tree resolves through it.
+
+## Version
+
+`resolveOutputConfig` picks one version for the whole workspace:
+
+1. `config.output.mode.version` (github / publish modes)
+2. the IR's `generationMetadata.requestedVersion` — local-file-system
+   output runs in `downloadFiles` mode, whose config has no version slot,
+   so this is the only carrier for `fern generate --version` and SDK
+   Config's `sdkVersion`. Non-semver values (`AUTO`, `v1.2.3`) are dropped:
+   Cargo rejects them.
+3. none — root and types crates stay `0.0.0`, the SDK crate keeps the Rust
+   generator's `0.1.0`.
+
+The root `[package] version` is what `<cli> --version` and the User-Agent
+report (`env!("CARGO_PKG_VERSION")`); `patchCargoToml` rewrites the
+matching `Cargo.lock` entry on every run, since the shipped lock pins the
+template's own release. The embedded SDK (via the Rust SDK's
+`crateVersion`, which also feeds `X-Fern-SDK-Version`) and every types
+crate get the same version, matching the Rust generator stamping
+`--version` into each crate it emits. Their lock stanzas are derived from
+their manifests, so they follow automatically.
 
 ## Split type crates
 
@@ -318,24 +350,11 @@ asserts the unconfigured output is byte-identical to a committed
 pre-Homebrew seed fixture, so the composition cannot drift from what
 cargo-dist emits.
 
-Enabling Homebrew also points `[package]` at the consumer
-(`withDistributionDefaults` in [`patchCargoToml.ts`](src/patchCargoToml.ts)).
-cargo-dist renders the `.rb` straight off that block:
-
-| `[package]` | Where it lands in the formula |
-|---|---|
-| `repository` | the per-arch **release download URLs** |
-| `homepage` | `homepage "..."` |
-| `description` | `desc "..."` |
-
-`repository` is load-bearing: left at the template's value the URLs
-resolve to `github.com/fern-api/cli-sdk/releases/...` and every
-`brew install` 404s. All three default from `repoUrl` / the API display
-name when unset. Deliberately scoped to the Homebrew case — applying
-them unconditionally would change every existing github-mode
-`Cargo.toml`. `name` is *not* defaulted (it would rename the crate and
-its `Cargo.lock` entry); it only affects archive filenames, which stay
-internally consistent either way.
+Enabling Homebrew additionally defaults `[package] description` (the
+formula's `desc "..."`) from the API display name; `repository` (the
+per-arch release download URLs) and `homepage` (`homepage "..."`)
+already default from `repoUrl` for every GitHub output (see
+[Package identity](#package-identity)).
 
 Three things generation cannot do, which the consumer must:
 
@@ -375,7 +394,7 @@ Each scheme in the IR's `auth.schemes` is visited via
 | IR variant | Emitted call | Env var source |
 |---|---|---|
 | `bearer` | `.auth_scheme_env("<key>", "<env>")` | `scheme.tokenEnvVar` ?? `<BIN>_TOKEN` |
-| `header` | `.auth_scheme_env("<key>", "<env>")` | `scheme.headerEnvVar` ?? `<BIN>_API_KEY` |
+| `header` | `.auth(ApiKeyAuth::new("<key>").source(<--api-key flag, then env>))`, plus `.prefix("<prefix>")` when the scheme sets one (sent as `<prefix> <credential>`, applied once at request time for every source, keyring included) | `scheme.headerEnvVar` ?? `<BIN>_API_KEY` |
 | `basic` (both halves bound) | `.auth(BasicAuth::new("<key>").username_env(...).password_env(...))` at root, so `auth status` enumerates it [FER-11474] | `scheme.{username,password}EnvVar` ?? `<BIN>_{USERNAME,PASSWORD}` |
 | `basic` (`usernameOmit`/`passwordOmit`) | `.auth_provider("<key>", BasicAuthProvider::…)` — stays binding-level; no root path for `BasicAuthProvider` | the bound half's env var; omitted half is a literal `""` |
 | `oauth` (`clientCredentials`) | `.auth(OAuth2Auth::new("<key>").client_id_env(...).client_secret_env(...).token_endpoint(OAuth2Endpoint::new(...))...)` at root, with structured token/refresh request and response mappings | `scheme.clientId/clientSecretEnvVar` plus deterministic env vars for custom request properties; optional properties are omitted when unset |

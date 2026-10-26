@@ -2,7 +2,9 @@
 
 import type * as GeneratorsYml from "../../../../../index.js";
 
-export interface TokenBearerAuthSchema extends GeneratorsYml.fernDefinition.WithDocsSchema {
+export interface TokenBearerAuthSchema
+    extends GeneratorsYml.fernDefinition.WithDocsSchema,
+        GeneratorsYml.fernDefinition.WithPlaygroundDocsSchema {
     scheme: "bearer";
     token?: GeneratorsYml.fernDefinition.AuthVariable;
 }

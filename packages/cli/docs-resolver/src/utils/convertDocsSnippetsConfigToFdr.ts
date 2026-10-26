@@ -120,6 +120,17 @@ export function convertDocsSnippetsConfigToFdr(
                               ? undefined
                               : snippetsConfiguration.rust.version
                   }
+                : undefined,
+        cliSdk:
+            snippetsConfiguration.cli != null
+                ? {
+                      package:
+                          typeof snippetsConfiguration.cli === "string"
+                              ? snippetsConfiguration.cli
+                              : snippetsConfiguration.cli.package,
+                      version:
+                          typeof snippetsConfiguration.cli === "string" ? undefined : snippetsConfiguration.cli.version
+                  }
                 : undefined
     };
 }

@@ -16,6 +16,7 @@ $client->submitFormData(
     new PostSubmitRequest([
         'username' => 'johndoe',
         'email' => 'john@example.com',
+        'content' => '{"key":"value"}',
     ]),
 );
 ```
@@ -41,6 +42,14 @@ $client->submitFormData(
 <dd>
 
 **$email:** `string` — The user's email address
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$content:** `string` — A JSON document carried as a form field
     
 </dd>
 </dl>

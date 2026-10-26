@@ -186,6 +186,31 @@ class EndpointsContainerWireTest extends WireMockTestCase
 
     /**
      */
+    public function testGetAndReturnMapOfIntegerToObject(): void {
+        $testId = 'endpoints.container.get_and_return_map_of_integer_to_object.0';
+        $this->client->endpoints->container->getAndReturnMapOfIntegerToObject(
+            [
+                1 => new ObjectWithRequiredField([
+                    'string' => 'string',
+                ]),
+            ],
+            [
+                'headers' => [
+                    'X-Test-Id' => 'endpoints.container.get_and_return_map_of_integer_to_object.0',
+                ],
+            ],
+        );
+        $this->verifyRequestCount(
+            $testId,
+            "POST",
+            "/container/map-integer-to-object",
+            null,
+            1
+        );
+    }
+
+    /**
+     */
     public function testGetAndReturnOptional(): void {
         $testId = 'endpoints.container.get_and_return_optional.0';
         $this->client->endpoints->container->getAndReturnOptional(

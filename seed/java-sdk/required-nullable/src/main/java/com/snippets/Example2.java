@@ -12,6 +12,7 @@ public class Example2 {
                 "id",
                 UpdateFooRequest.builder()
                         .xIdempotencyKey("X-Idempotency-Key")
+                        .requiredNullableText("required_nullable_text")
                         .nullableText("nullable_text")
                         .nullableNumber(1.1)
                         .nonNullableText("non_nullable_text")

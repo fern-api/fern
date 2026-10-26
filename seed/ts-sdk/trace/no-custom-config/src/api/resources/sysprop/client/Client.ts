@@ -60,7 +60,7 @@ export class SyspropClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/sysprop/num-warm-instances/${core.url.encodePathParam(language)}/${core.url.encodePathParam(numWarmInstances)}`,
+                `/sysprop/num-warm-instances/${core.url.encodePathParam(language, errors.SeedTraceError)}/${core.url.encodePathParam(numWarmInstances, errors.SeedTraceError)}`,
             ),
             method: "PUT",
             headers: _headers,

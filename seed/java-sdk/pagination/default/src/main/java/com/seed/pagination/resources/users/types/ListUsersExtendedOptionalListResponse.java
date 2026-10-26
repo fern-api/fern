@@ -124,7 +124,6 @@ public final class ListUsersExtendedOptionalListResponse implements IUserOptiona
 
         private Optional<UUID> next = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -171,6 +170,14 @@ public final class ListUsersExtendedOptionalListResponse implements IUserOptiona
         @java.lang.Override
         public ListUsersExtendedOptionalListResponse build() {
             return new ListUsersExtendedOptionalListResponse(data, next, totalCount, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("data") || key.equalsIgnoreCase("next") || key.equalsIgnoreCase("total_count")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

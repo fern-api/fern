@@ -341,7 +341,8 @@
                         "unsafeName": "Bearer",
                         "safeName": "Bearer"
                     }
-                }
+                },
+                "requirement": "ENDPOINT_SECURITY"
             },
             "declaration": {
                 "name": {
@@ -619,6 +620,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_user.getWithBearer": {
@@ -661,7 +663,8 @@
                         "unsafeName": "Bearer",
                         "safeName": "Bearer"
                     }
-                }
+                },
+                "requirement": "ENDPOINT_SECURITY"
             },
             "declaration": {
                 "name": {
@@ -740,6 +743,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_user.getWithApiKey": {
@@ -782,7 +786,8 @@
                         "unsafeName": "Bearer",
                         "safeName": "Bearer"
                     }
-                }
+                },
+                "requirement": "ENDPOINT_SECURITY"
             },
             "declaration": {
                 "name": {
@@ -861,6 +866,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_user.getWithOAuth": {
@@ -903,7 +909,8 @@
                         "unsafeName": "Bearer",
                         "safeName": "Bearer"
                     }
-                }
+                },
+                "requirement": "ENDPOINT_SECURITY"
             },
             "declaration": {
                 "name": {
@@ -982,6 +989,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_user.getWithBasic": {
@@ -1024,7 +1032,8 @@
                         "unsafeName": "Bearer",
                         "safeName": "Bearer"
                     }
-                }
+                },
+                "requirement": "ENDPOINT_SECURITY"
             },
             "declaration": {
                 "name": {
@@ -1103,6 +1112,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_user.getWithInferredAuth": {
@@ -1145,7 +1155,8 @@
                         "unsafeName": "Bearer",
                         "safeName": "Bearer"
                     }
-                }
+                },
+                "requirement": "ENDPOINT_SECURITY"
             },
             "declaration": {
                 "name": {
@@ -1224,6 +1235,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_user.getWithAnyAuth": {
@@ -1266,7 +1278,8 @@
                         "unsafeName": "Bearer",
                         "safeName": "Bearer"
                     }
-                }
+                },
+                "requirement": "ENDPOINT_SECURITY"
             },
             "declaration": {
                 "name": {
@@ -1345,6 +1358,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_user.getWithAllAuth": {
@@ -1387,7 +1401,8 @@
                         "unsafeName": "Bearer",
                         "safeName": "Bearer"
                     }
-                }
+                },
+                "requirement": "ENDPOINT_SECURITY"
             },
             "declaration": {
                 "name": {
@@ -1466,6 +1481,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         }
     },

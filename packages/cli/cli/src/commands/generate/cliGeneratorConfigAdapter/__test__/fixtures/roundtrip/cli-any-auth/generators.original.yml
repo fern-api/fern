@@ -1,0 +1,38 @@
+auth-schemes:
+  BasicAuth:
+    scheme: basic
+    username:
+      env: ACME_ACCOUNT_SID
+    password:
+      env: ACME_AUTH_TOKEN
+  OAuth2:
+    scheme: oauth
+    type: client-credentials
+    client-id-env: ACME_CLIENT_ID
+    client-secret-env: ACME_CLIENT_SECRET
+    get-token:
+      endpoint: POST /token
+      request-properties:
+        client-id: $request.client_id
+        client-secret: $request.client_secret
+      response-properties:
+        access-token: $response.access_token
+        expires-in: $response.expires_in
+api:
+  auth:
+    any:
+      - BasicAuth
+      - OAuth2
+  specs:
+    - openapi: ./openapi.yml
+groups:
+  cli:
+    generators:
+      - name: fernapi/fern-cli-generator
+        version: 0.49.0
+        output:
+          location: local-file-system
+          path: ../out
+        config:
+          binaryName: any-auth-cli
+          customCommands: false

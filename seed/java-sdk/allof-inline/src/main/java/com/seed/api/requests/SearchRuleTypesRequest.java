@@ -67,7 +67,6 @@ public final class SearchRuleTypesRequest {
     public static final class Builder {
         private Optional<String> query = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -90,6 +89,14 @@ public final class SearchRuleTypesRequest {
 
         public SearchRuleTypesRequest build() {
             return new SearchRuleTypesRequest(query, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("query")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

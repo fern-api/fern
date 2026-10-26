@@ -14,6 +14,7 @@ import {
     ExternalSitemap,
     LibraryLanguage,
     PlaygroundSettings,
+    SortByAvailabilityValue,
     Target,
     ThemeConfig,
     TranslationConfig,
@@ -52,6 +53,7 @@ interface ParsedDocsSettingsConfig extends Omit<CjsFdrSdk.docs.v1.commons.DocsSe
     websocketOneofDisplay: "flat" | "grouped" | undefined;
     embedding: EmbeddingConfig | undefined;
     showHeadersInExamples: boolean | undefined;
+    requireAnalyticsConsent: boolean | undefined;
     search:
         | {
               prioritizeCurrentProduct: boolean | undefined;
@@ -259,6 +261,11 @@ export interface VersionInfo
     availability: VersionAvailability | undefined;
     slug: string | undefined;
     hidden: boolean | undefined;
+    /**
+     * Set from `default: true` in docs.yml. The default version owns the unversioned URLs.
+     * When no version in a `versions` list sets it, the first version is the default.
+     */
+    default: boolean | undefined;
     announcement: AnnouncementConfig | undefined;
     /**
      * Present when this version's content is built from a git ref rather than the
@@ -439,6 +446,7 @@ export declare namespace DocsNavigationItem {
         slug: string | undefined;
         skipUrlSlug: boolean | undefined;
         alphabetized: boolean;
+        sortByAvailability: SortByAvailabilityValue[] | undefined;
         flattened: boolean;
         paginated: boolean;
         playground: PlaygroundSettings | undefined;
@@ -489,6 +497,7 @@ export declare namespace DocsNavigationItem {
         csharp: string | VersionedSnippetLanguageConfiguration | undefined;
         php: string | VersionedSnippetLanguageConfiguration | undefined;
         swift: string | VersionedSnippetLanguageConfiguration | undefined;
+        cli: string | VersionedSnippetLanguageConfiguration | undefined;
     }
 }
 
@@ -678,6 +687,10 @@ export interface AnnouncementOverlay {
 export type NavigationItemOverlay =
     | NavigationItemOverlay.Page
     | NavigationItemOverlay.Section
+    | NavigationItemOverlay.Link
+    | NavigationItemOverlay.ApiReference
+    | NavigationItemOverlay.ApiPackage
+    | NavigationItemOverlay.Endpoint
     | NavigationItemOverlay.Tab
     | NavigationItemOverlay.Variant;
 
@@ -692,6 +705,33 @@ export declare namespace NavigationItemOverlay {
         title: string | undefined;
         slug: string | undefined;
         contents: NavigationItemOverlay[] | undefined;
+    }
+    /** `{ link: "Translated label" }` — matched positionally among sibling links. */
+    export interface Link {
+        type: "link";
+        title: string | undefined;
+    }
+    /** `{ api: "Translated title", slug?: ..., layout?: [...] }` */
+    export interface ApiReference {
+        type: "apiReference";
+        title: string | undefined;
+        slug: string | undefined;
+        layout: NavigationItemOverlay[] | undefined;
+    }
+    /** `{ <package-name>: { title?: ..., slug?: ..., contents?: [...] } }` inside an `api` layout. */
+    export interface ApiPackage {
+        type: "apiPackage";
+        packageName: string;
+        title: string | undefined;
+        slug: string | undefined;
+        contents: NavigationItemOverlay[] | undefined;
+    }
+    /** `{ endpoint: "POST /path", title?: ..., slug?: ... }` inside an `api` layout. */
+    export interface Endpoint {
+        type: "endpoint";
+        endpoint: string;
+        title: string | undefined;
+        slug: string | undefined;
     }
     export interface Tab {
         type: "tab";

@@ -57,7 +57,7 @@ export class SeedApiClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedApiEnvironment.Default,
-                `Profiles/${core.url.encodePathParam(profileId)}/Identifiers/${core.url.encodePathParam(idTypePathParam)}`,
+                `Profiles/${core.url.encodePathParam(profileId, errors.SeedApiError)}/Identifiers/${core.url.encodePathParam(idTypePathParam, errors.SeedApiError)}`,
             ),
             method: "PATCH",
             headers: _headers,

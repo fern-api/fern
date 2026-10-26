@@ -602,6 +602,11 @@ struct OpenApiOperation {
     /// means the executor prints the full response.
     #[serde(rename = "x-fern-sdk-return-value", default)]
     x_fern_sdk_return_value: Option<String>,
+    /// Raw `x-fern-cli-table` extension: per-operation columns for `table`
+    /// output. Parsed into [`crate::table_columns::TableSpec`]; a malformed
+    /// value is ignored with a warning.
+    #[serde(rename = "x-fern-cli-table", default)]
+    x_fern_cli_table: Option<serde_yaml::Value>,
     /// Raw operation-level `x-fern-streaming` extension. May be:
     /// - the literal `true` (boolean shorthand → NDJSON, no terminator)
     /// - the literal `false` (explicit opt-out)
@@ -2073,6 +2078,7 @@ fn convert_schema_object(obj: &OpenApiSchemaObject) -> JsonSchema {
         // lowers to a single-member enum here exactly as it does everywhere
         // else the parser reads an enum.
         enum_values: effective_enum_values(obj),
+        format: obj.format.clone(),
         required: obj.required.clone(),
         one_of: convert_composition_branches(&obj.one_of),
         any_of: convert_composition_branches(&obj.any_of),
@@ -2769,9 +2775,22 @@ fn parameter_should_ignore(
 
 /// Load and convert an OpenAPI 3.0 YAML spec into the internal `RestDescription`.
 pub fn load_openapi_spec(yaml_str: &str, cli_name: &str) -> Result<RestDescription, CliError> {
-    let value: serde_yaml::Value = serde_yaml::from_str(yaml_str)
+    let value = parse_spec_value(yaml_str)
         .map_err(|e| CliError::Discovery(format!("Failed to parse OpenAPI spec: {e}")))?;
     load_openapi_spec_from_value(value, cli_name)
+}
+
+/// Parse spec text into a YAML value. JSON specs (the common case for
+/// generated CLIs) go through serde_json, which is several times faster than
+/// the YAML parser and dominates startup on CLIs with many embedded specs.
+/// Anything serde_json rejects falls back to the YAML parser unchanged.
+fn parse_spec_value(text: &str) -> Result<serde_yaml::Value, serde_yaml::Error> {
+    if text.trim_start().starts_with('{') {
+        if let Ok(value) = serde_json::from_str::<serde_yaml::Value>(text) {
+            return Ok(value);
+        }
+    }
+    serde_yaml::from_str(text)
 }
 
 /// Load and convert an OpenAPI spec from a pre-parsed `serde_yaml::Value`.
@@ -3223,6 +3242,20 @@ pub fn load_openapi_spec_from_value(
                 .map(|s| s.trim().to_string())
                 .filter(|s| !s.is_empty());
 
+            let table = operation.x_fern_cli_table.as_ref().and_then(|raw| {
+                match crate::table_columns::TableSpec::from_yaml(raw) {
+                    Ok(spec) => Some(spec),
+                    Err(reason) => {
+                        tracing::warn!(
+                            operation = operation.operation_id.as_deref().unwrap_or("unknown"),
+                            %reason,
+                            "invalid x-fern-cli-table; using the default table"
+                        );
+                        None
+                    }
+                }
+            });
+
             let streaming = parse_streaming_extension(
                 operation.x_fern_streaming.as_ref(),
                 operation.operation_id.as_deref().unwrap_or("unknown"),
@@ -3297,6 +3330,7 @@ pub fn load_openapi_spec_from_value(
                 idempotent,
                 no_auto_idempotency_key,
                 return_value,
+                table,
                 streaming,
                 retries,
                 audiences,
@@ -3970,6 +4004,34 @@ fn classify_multipart_property_at_depth(
     (false, None)
 }
 
+/// The sole required property of an object schema, when it is a string —
+/// `email` on `EmailAddr: {required: [email], properties: {email, name}}`.
+/// See [`MethodParameter::shorthand_field`].
+fn sole_required_string_field(
+    schema: &OpenApiSchemaObject,
+    component_schemas: &HashMap<String, OpenApiSchemaObject>,
+) -> Option<String> {
+    let resolved = resolve_ref_chain(schema, component_schemas)?;
+    let resolved = recognize_nullable_composite(resolved, component_schemas).unwrap_or(resolved);
+    if resolved.schema_type() != Some("object") || !resolved.all_of.is_empty() {
+        return None;
+    }
+    let [field] = resolved.required.as_slice() else {
+        return None;
+    };
+    let prop = resolved.properties.get(field)?;
+    let prop = resolve_ref_chain(prop, component_schemas)?;
+    (prop.schema_type() == Some("string")).then(|| field.clone())
+}
+
+/// [`sole_required_string_field`] of an array schema's element.
+fn array_item_shorthand_field(
+    schema: &OpenApiSchemaObject,
+    component_schemas: &HashMap<String, OpenApiSchemaObject>,
+) -> Option<String> {
+    sole_required_string_field(schema.items.as_deref()?, component_schemas)
+}
+
 /// Element type of an array schema, resolved through `$ref` and through a
 /// nullable composition on the items. `None` for a non-array, an untyped
 /// element, or a plain string element — the caller treats `None` as "string",
@@ -3981,6 +4043,8 @@ fn array_item_type(
     let items = schema.items.as_deref()?;
     let resolved = resolve_ref_chain(items, component_schemas)
         .or_else(|| recognize_nullable_composite(items, component_schemas))?;
+    let resolved =
+        recognize_single_branch_composite(resolved, component_schemas).unwrap_or(resolved);
     match resolved.schema_type() {
         // An `allOf` / property-bag element has no `type` of its own but is
         // object-shaped — the inheritance idiom.
@@ -4211,6 +4275,33 @@ fn recognize_nullable_composite<'a>(
     obj: &'a OpenApiSchemaObject,
     component_schemas: &'a HashMap<String, OpenApiSchemaObject>,
 ) -> Option<&'a OpenApiSchemaObject> {
+    match sole_composite_branch(obj, component_schemas)? {
+        (resolved, 1) => Some(resolved),
+        _ => None,
+    }
+}
+
+/// Recognize `anyOf`/`oneOf` with exactly one branch, no null sentinel, that
+/// resolves to a composite type — `oneOf: [$ref: Model]`, a common wrapper
+/// some spec generators emit around every `$ref`. Unlike
+/// [`recognize_nullable_composite`] the field stays non-nullable.
+fn recognize_single_branch_composite<'a>(
+    obj: &'a OpenApiSchemaObject,
+    component_schemas: &'a HashMap<String, OpenApiSchemaObject>,
+) -> Option<&'a OpenApiSchemaObject> {
+    match sole_composite_branch(obj, component_schemas)? {
+        (resolved, 0) => Some(resolved),
+        _ => None,
+    }
+}
+
+/// The single non-null composite branch of an `anyOf`/`oneOf`, with the number
+/// of null-sentinel branches beside it. `None` for a true union (more than one
+/// non-null branch) or a scalar branch.
+fn sole_composite_branch<'a>(
+    obj: &'a OpenApiSchemaObject,
+    component_schemas: &'a HashMap<String, OpenApiSchemaObject>,
+) -> Option<(&'a OpenApiSchemaObject, usize)> {
     let branches: &[OpenApiSchemaObject] = if !obj.one_of.is_empty() {
         &obj.one_of
     } else if !obj.any_of.is_empty() {
@@ -4234,15 +4325,14 @@ fn recognize_nullable_composite<'a>(
         composite = Some(resolve_ref_chain(branch, component_schemas)?);
     }
 
-    if null_count != 1 {
-        return None;
-    }
     let resolved = composite?;
     match resolved.schema_type() {
-        Some("object") | Some("array") => Some(resolved),
+        Some("object") | Some("array") => Some((resolved, null_count)),
         // An `allOf` composition with properties is object-shaped even
         // without a `type` keyword (the inheritance idiom).
-        None if !resolved.all_of.is_empty() || !resolved.properties.is_empty() => Some(resolved),
+        None if !resolved.all_of.is_empty() || !resolved.properties.is_empty() => {
+            Some((resolved, null_count))
+        }
         _ => None,
     }
 }
@@ -4517,6 +4607,10 @@ fn flatten_body_params_prefix(
                                     .description
                                     .clone()
                                     .or_else(|| resolved.description.clone()),
+                                shorthand_field: sole_required_string_field(
+                                    resolved,
+                                    component_schemas,
+                                ),
                                 ..Default::default()
                             },
                         );
@@ -4563,11 +4657,20 @@ fn flatten_body_params_prefix(
                 // nullable *composite* union (`anyOf: [$ref Model, null]`)
                 // promotes to the wrapped object/array instead; see ADR-0010.
                 let promoted_scalar = recognize_nullable_union(resolved, component_schemas);
-                let promoted_composite = if promoted_scalar.is_some() {
+                let nullable_composite = if promoted_scalar.is_some() {
                     None
                 } else {
                     recognize_nullable_composite(resolved, component_schemas)
                 };
+                let promoted_composite = nullable_composite.or_else(|| {
+                    promoted_scalar
+                        .is_none()
+                        .then(|| recognize_single_branch_composite(resolved, component_schemas))
+                        .flatten()
+                });
+                // OpenAPI 3.0 `nullable: true` next to a one-option wrapper.
+                let composite_nullable = nullable_composite.is_some()
+                    || (promoted_composite.is_some() && resolved.is_nullable());
                 let effective = promoted_composite.unwrap_or(resolved);
                 let is_array = effective.schema_type() == Some("array");
                 // Parity with a bare `$ref` to the same object: emit the
@@ -4600,8 +4703,10 @@ fn flatten_body_params_prefix(
                                 description: prop
                                     .description
                                     .clone()
+                                    .or_else(|| resolved.description.clone())
                                     .or_else(|| inner.description.clone()),
-                                nullable: true,
+                                shorthand_field: sole_required_string_field(inner, component_schemas),
+                                nullable: composite_nullable,
                                 ..Default::default()
                             },
                         );
@@ -4647,9 +4752,16 @@ fn flatten_body_params_prefix(
                         } else {
                             None
                         },
+                        shorthand_field: if is_array {
+                            array_item_shorthand_field(effective, component_schemas)
+                        } else if promoted_composite.is_some() {
+                            sole_required_string_field(effective, component_schemas)
+                        } else {
+                            None
+                        },
                         nullable: is_scalar_nullable(resolved)
                             || promoted_scalar.is_some()
-                            || promoted_composite.is_some(),
+                            || composite_nullable,
                         ..Default::default()
                     },
                 );
@@ -4677,6 +4789,7 @@ fn flatten_body_params_prefix(
                         required: false,
                         required_by_spec: required.contains(name.as_str()),
                         description: prop.description.clone(),
+                        shorthand_field: sole_required_string_field(prop, component_schemas),
                         ..Default::default()
                     },
                 );
@@ -4723,11 +4836,20 @@ fn flatten_body_params_prefix(
         // `anyOf: [{...object/array...}, null]` — pydantic's `Optional[T]`.
         // Promote to the wrapped composite so the value is coerced as JSON
         // rather than sent as an escaped string; see ADR-0010.
-        let promoted_composite = if promoted_scalar.is_some() {
+        let nullable_composite = if promoted_scalar.is_some() {
             None
         } else {
             recognize_nullable_composite(prop, component_schemas)
         };
+        let promoted_composite = nullable_composite.or_else(|| {
+            promoted_scalar
+                .is_none()
+                .then(|| recognize_single_branch_composite(prop, component_schemas))
+                .flatten()
+        });
+        // OpenAPI 3.0 `nullable: true` next to a one-option wrapper.
+        let composite_nullable = nullable_composite.is_some()
+            || (promoted_composite.is_some() && prop.is_nullable());
         let effective = promoted_composite.unwrap_or(prop);
         let is_array = effective.schema_type() == Some("array");
         // Parity with a bare `$ref` to the same object: emit the
@@ -4757,7 +4879,8 @@ fn flatten_body_params_prefix(
                             .description
                             .clone()
                             .or_else(|| inner.description.clone()),
-                        nullable: true,
+                        shorthand_field: sole_required_string_field(inner, component_schemas),
+                        nullable: composite_nullable,
                         ..Default::default()
                     },
                 );
@@ -4797,9 +4920,16 @@ fn flatten_body_params_prefix(
                 } else {
                     None
                 },
+                shorthand_field: if is_array {
+                    array_item_shorthand_field(effective, component_schemas)
+                } else if promoted_composite.is_some() {
+                    sole_required_string_field(effective, component_schemas)
+                } else {
+                    None
+                },
                 nullable: is_scalar_nullable(prop)
                     || promoted_scalar.is_some()
-                    || promoted_composite.is_some(),
+                    || composite_nullable,
                 ..Default::default()
             },
         );
@@ -10199,6 +10329,30 @@ paths:
     // ------------------------------------------------------------------
 
     #[test]
+    fn test_operation_cli_table_parsed() {
+        let doc = parse_op_with_extra(
+            "      x-fern-cli-table:\n        columns:\n          - { header: NAME, path: name }\n          - { header: ROWS, path: stats.rows, align: right, maxWidth: 8 }",
+        );
+        let table = first_method(&doc, "things", "list")
+            .table
+            .as_ref()
+            .expect("x-fern-cli-table is parsed onto the method");
+        let headers: Vec<&str> = table.columns.iter().map(|c| c.header.as_str()).collect();
+        assert_eq!(headers, ["NAME", "ROWS"]);
+        assert_eq!(table.columns[1].path, "stats.rows");
+        assert_eq!(table.columns[1].max_width, Some(8));
+    }
+
+    #[test]
+    fn test_operation_cli_table_absent_or_invalid_is_none() {
+        let absent = parse_op_with_extra("");
+        assert!(first_method(&absent, "things", "list").table.is_none());
+        // A malformed extension must not fail the whole spec load.
+        let invalid = parse_op_with_extra("      x-fern-cli-table: { columns: [] }");
+        assert!(first_method(&invalid, "things", "list").table.is_none());
+    }
+
+    #[test]
     fn test_operation_return_value_absent_is_none() {
         let doc = parse_op_with_extra("");
         let m = first_method(&doc, "things", "list");
@@ -12597,6 +12751,96 @@ paths:
     }
 
     #[test]
+    fn test_single_branch_one_of_promotes_to_object() {
+        // `oneOf: [$ref]` with no null branch — a wrapper some spec generators
+        // put around every `$ref`. Without promotion `--from '{...}'` was sent
+        // as a string and rejected with "Expected object".
+        let schema: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: object
+            properties:
+              from:
+                oneOf:
+                  - $ref: '#/components/schemas/Addr'
+              to:
+                type: array
+                items:
+                  oneOf:
+                    - $ref: '#/components/schemas/Addr'
+              reply_to:
+                nullable: true
+                oneOf:
+                  - $ref: '#/components/schemas/Addr'
+            "#,
+        )
+        .unwrap();
+        let addr: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: object
+            properties:
+              address:
+                type: string
+            "#,
+        )
+        .unwrap();
+        let mut component_schemas = HashMap::new();
+        component_schemas.insert("Addr".to_string(), addr);
+        let params = flatten_body_params(&schema, &component_schemas, 0);
+        let from = params.get("from").expect("from flag should be emitted");
+        assert_eq!(from.param_type.as_deref(), Some("object"));
+        assert!(!from.nullable, "no null branch, so no null sentinel");
+        assert!(params.contains_key("from.address"), "dotted leaf flag");
+        let to = params.get("to").expect("to flag should be emitted");
+        assert!(to.repeated);
+        assert_eq!(to.item_type.as_deref(), Some("object"));
+        let reply_to = params.get("reply_to").expect("reply_to flag should be emitted");
+        assert_eq!(reply_to.param_type.as_deref(), Some("object"));
+        assert!(reply_to.nullable, "`nullable: true` on the wrapper keeps null");
+    }
+
+    #[test]
+    fn test_single_branch_one_of_component_keeps_wrapper_description() {
+        // `mapping: $ref Wrapper` where `Wrapper` is `oneOf: [$ref Inner]`: the
+        // flag's help comes from the schema the property points at, not the
+        // branch inside it, same as before the branch was unwrapped.
+        let schema: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: object
+            properties:
+              mapping:
+                $ref: '#/components/schemas/Wrapper'
+            "#,
+        )
+        .unwrap();
+        let wrapper: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: object
+            description: Where to map from.
+            oneOf:
+              - $ref: '#/components/schemas/Inner'
+            "#,
+        )
+        .unwrap();
+        let inner: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: object
+            description: Mapping from a dataset.
+            properties:
+              datasetId:
+                type: string
+            "#,
+        )
+        .unwrap();
+        let mut component_schemas = HashMap::new();
+        component_schemas.insert("Wrapper".to_string(), wrapper);
+        component_schemas.insert("Inner".to_string(), inner);
+        let params = flatten_body_params(&schema, &component_schemas, 0);
+        let mapping = params.get("mapping").expect("mapping flag should be emitted");
+        assert_eq!(mapping.description.as_deref(), Some("Where to map from."));
+        assert!(params.contains_key("mapping.datasetId"), "dotted leaf flag");
+    }
+
+    #[test]
     fn test_true_union_of_objects_is_not_promoted() {
         // Two non-null branches have no single shape to promote to, so the
         // property stays opaque exactly as before.
@@ -13303,5 +13547,60 @@ components:
             doc.schemas.contains_key("Normal"),
             "Normal schema should be present",
         );
+    }
+
+    #[test]
+    fn parse_spec_value_json_matches_yaml_parser() {
+        let json = r#"{"openapi":"3.0.0","info":{"title":"T","version":"1"},"paths":{"/a":{"get":{"operationId":"getA","parameters":[{"name":"n","in":"query","schema":{"type":"integer","default":3,"maximum":1.5e3}}],"responses":{"200":{"description":"ok"}}}}},"x-flag":true,"x-null":null}"#;
+        let fast = super::parse_spec_value(json).unwrap();
+        let slow: serde_yaml::Value = serde_yaml::from_str(json).unwrap();
+        assert_eq!(fast, slow);
+    }
+
+    #[test]
+    fn parse_spec_value_falls_back_to_yaml() {
+        let yaml = "openapi: 3.0.0\ninfo: {title: T, version: '1'}\npaths: {}\n";
+        let value = super::parse_spec_value(yaml).unwrap();
+        assert_eq!(value["openapi"], serde_yaml::Value::String("3.0.0".into()));
+    }
+
+    #[test]
+    fn test_shorthand_field_for_single_required_string_objects() {
+        let schema: OpenApiSchemaObject = serde_yaml::from_str(
+            r#"
+            type: object
+            properties:
+              from:
+                $ref: '#/components/schemas/EmailAddr'
+              to:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EmailAddr'
+              content:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Content'
+            "#,
+        )
+        .unwrap();
+        let mut components = HashMap::new();
+        components.insert(
+            "EmailAddr".to_string(),
+            serde_yaml::from_str::<OpenApiSchemaObject>(
+                "type: object\nrequired: [email]\nproperties:\n  email:\n    type: string\n    format: email\n  name:\n    type: string\n",
+            )
+            .unwrap(),
+        );
+        components.insert(
+            "Content".to_string(),
+            serde_yaml::from_str::<OpenApiSchemaObject>(
+                "type: object\nrequired: [type, value]\nproperties:\n  type:\n    type: string\n  value:\n    type: string\n",
+            )
+            .unwrap(),
+        );
+        let params = flatten_body_params(&schema, &components, 0);
+        assert_eq!(params["from"].shorthand_field.as_deref(), Some("email"));
+        assert_eq!(params["to"].shorthand_field.as_deref(), Some("email"));
+        assert_eq!(params["content"].shorthand_field, None);
     }
 }

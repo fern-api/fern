@@ -152,6 +152,21 @@ describe("patchDistWorkspaceToml (filesystem)", () => {
         expect(result).toContain('cargo-dist-version = "0.31.0"');
     });
 
+    it.each([
+        [false, "github-attestations = false"],
+        [true, "github-attestations = true"],
+        ["auto", "github-attestations = true"],
+        [undefined, "github-attestations = true"]
+    ] as const)("githubAttestations %s writes `%s`", async (githubAttestations, expected) => {
+        await writeFile(path.join(tmpDir, "dist-workspace.toml"), TEMPLATE_DIST_TOML);
+
+        await patchDistWorkspaceToml({ outputDir: tmpDir, githubAttestations });
+
+        const result = await readFile(path.join(tmpDir, "dist-workspace.toml"), "utf-8");
+        expect(result).toContain(expected);
+        expect(result.match(/^github-attestations/gm)).toHaveLength(1);
+    });
+
     it("no-op when dist-workspace.toml doesn't exist — doesn't crash if the SDK template ever drops the file", async () => {
         await expect(patchDistWorkspaceToml({ outputDir: tmpDir })).resolves.toBeUndefined();
     });

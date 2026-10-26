@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.seed.javaOptionalQueryParamsOverloads.core.ClientOptions;
 import com.seed.javaOptionalQueryParamsOverloads.core.ObjectMappers;
+import com.seed.javaOptionalQueryParamsOverloads.core.PathSegments;
 import com.seed.javaOptionalQueryParamsOverloads.core.QueryStringMapper;
 import com.seed.javaOptionalQueryParamsOverloads.core.RequestOptions;
 import com.seed.javaOptionalQueryParamsOverloads.core.RetryInterceptor;
@@ -71,7 +72,7 @@ public class AsyncRawSeedJavaOptionalQueryParamsOverloadsClient {
                 .newBuilder()
                 .addPathSegments("api")
                 .addPathSegments("users")
-                .addPathSegment(userId)
+                .addPathSegment(PathSegments.validate(userId))
                 .addPathSegments("insurance");
         if (request.getIncludeExpired().isPresent()) {
             QueryStringMapper.addQueryParameter(
@@ -107,7 +108,8 @@ public class AsyncRawSeedJavaOptionalQueryParamsOverloadsClient {
         }
         CompletableFuture<SeedJavaOptionalQueryParamsOverloadsHttpResponse<InsurancePolicy>> future =
                 new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -135,6 +137,11 @@ public class AsyncRawSeedJavaOptionalQueryParamsOverloadsClient {
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(
                         new SeedJavaOptionalQueryParamsOverloadsException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;
@@ -188,7 +195,8 @@ public class AsyncRawSeedJavaOptionalQueryParamsOverloadsClient {
         }
         CompletableFuture<SeedJavaOptionalQueryParamsOverloadsHttpResponse<List<InsurancePolicy>>> future =
                 new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -217,6 +225,11 @@ public class AsyncRawSeedJavaOptionalQueryParamsOverloadsClient {
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(
                         new SeedJavaOptionalQueryParamsOverloadsException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;
@@ -265,7 +278,8 @@ public class AsyncRawSeedJavaOptionalQueryParamsOverloadsClient {
         }
         CompletableFuture<SeedJavaOptionalQueryParamsOverloadsHttpResponse<List<InsurancePolicy>>> future =
                 new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -294,6 +308,11 @@ public class AsyncRawSeedJavaOptionalQueryParamsOverloadsClient {
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(
                         new SeedJavaOptionalQueryParamsOverloadsException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;

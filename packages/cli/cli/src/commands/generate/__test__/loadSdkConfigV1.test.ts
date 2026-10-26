@@ -4,7 +4,7 @@ import { join } from "node:path";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import YAML from "yaml";
 
-import { loadSdkConfigV1 } from "../loadSdkConfigV1.js";
+import { assertNoSdkConfigDirectRubyGemsPublishing, loadSdkConfigV1 } from "../loadSdkConfigV1.js";
 
 describe("loadSdkConfigV1", () => {
     const temporaryDirectories: string[] = [];
@@ -357,8 +357,44 @@ describe("loadSdkConfigV1", () => {
         const error = await loadSdkConfigV1(configPath).catch((cause: unknown) => cause);
 
         expect(error).toBeInstanceOf(Error);
-        expect(String(error)).toContain("does not support direct rubygems");
+        expect(String(error)).toContain("Direct RubyGems publishing is not supported. Use output.delivery: github");
         expect(String(error)).not.toContain("unsupported-secret");
+    });
+
+    it("lets fern check flag direct RubyGems publishing that preview loading accepts", async () => {
+        const { configPath } = await writeSdkConfig(temporaryDirectories, {
+            language: "ruby",
+            output: { delivery: "files", publish: { registry: "rubygems" } }
+        });
+
+        const loaded = await loadSdkConfigV1(configPath, true);
+
+        expect(() => assertNoSdkConfigDirectRubyGemsPublishing(loaded)).toThrow(
+            "target 0 (ruby): Direct RubyGems publishing is not supported. Use output.delivery: github with publish.registry: rubygems"
+        );
+    });
+
+    it("allows RubyGems publishing through GitHub delivery during fern check", async () => {
+        const { configPath } = await writeSdkConfig(temporaryDirectories, {
+            language: "ruby",
+            output: { delivery: "github", github: { repository: "acme/acme-ruby" }, publish: { registry: "rubygems" } }
+        });
+
+        const loaded = await loadSdkConfigV1(configPath, true);
+
+        expect(() => assertNoSdkConfigDirectRubyGemsPublishing(loaded)).not.toThrow();
+    });
+
+    it("allows RubyGems publishing through GitHub delivery during fern generate", async () => {
+        const { configPath } = await writeSdkConfig(temporaryDirectories, {
+            language: "ruby",
+            output: { delivery: "github", github: { repository: "acme/acme-ruby" }, publish: { registry: "rubygems" } }
+        });
+
+        const loaded = await loadSdkConfigV1(configPath);
+
+        expect(loaded.payload.targets[0]?.requestedOutput?.type).toBe("github");
+        expect(loaded.payload.targets[0]?.publishCredential).toBeUndefined();
     });
 
     it("strips unsupported top-level credential literals before validation errors", async () => {
@@ -380,7 +416,7 @@ describe("loadSdkConfigV1", () => {
         const serializedError = String(error);
 
         expect(error).toBeInstanceOf(Error);
-        expect(serializedError).toContain("does not support direct rubygems");
+        expect(serializedError).toContain("Direct RubyGems publishing is not supported");
         expect(serializedError).not.toContain("unsupported-token");
         expect(serializedError).not.toContain("unsupported-user");
         expect(serializedError).not.toContain("unsupported-password");
@@ -539,6 +575,178 @@ describe("loadSdkConfigV1", () => {
                 ]
             }
         });
+    });
+
+    it("forwards a NuGet apiKey as a repository secret name without sending it in the SDK Config document", async () => {
+        const { configPath } = await writeSdkConfig(temporaryDirectories, {
+            language: "csharp",
+            package: { packageName: "Acme.Sdk" },
+            output: {
+                delivery: "github",
+                github: { repository: "acme/sdk-dotnet", mode: "pull-request" },
+                publish: { registry: "nuget", apiKey: "${MY_NUGET_KEY}" }
+            }
+        });
+
+        const loaded = await loadSdkConfigV1(configPath);
+
+        expect(loaded.payload.targets[0]?.requestedOutput).toEqual({
+            type: "github",
+            repository: "acme/sdk-dotnet",
+            mode: "pull-request",
+            publish: { registry: "nuget", apiKeyEnvironmentVariable: "MY_NUGET_KEY" }
+        });
+        expect(loaded.payload.targets[0]?.body.toString("utf8")).not.toContain("MY_NUGET_KEY");
+    });
+
+    it("forwards github.workflows false as requestedOutput.workflows", async () => {
+        const { configPath } = await writeSdkConfig(temporaryDirectories, {
+            language: "typescript",
+            package: { packageName: "acme-sdk" },
+            output: { delivery: "github", github: { repository: "acme/sdk", workflows: false } }
+        });
+
+        const loaded = await loadSdkConfigV1(configPath);
+
+        expect(loaded.payload.targets[0]?.requestedOutput).toEqual({
+            type: "github",
+            repository: "acme/sdk",
+            workflows: false
+        });
+    });
+
+    it.each([true, undefined])("omits requestedOutput.workflows when github.workflows is %s", async (workflows) => {
+        const { configPath } = await writeSdkConfig(temporaryDirectories, {
+            language: "typescript",
+            package: { packageName: "acme-sdk" },
+            output: {
+                delivery: "github",
+                github: { repository: "acme/sdk", ...(workflows == null ? {} : { workflows }) }
+            }
+        });
+
+        const loaded = await loadSdkConfigV1(configPath);
+
+        expect(loaded.payload.targets[0]?.requestedOutput).not.toHaveProperty("workflows");
+        expect(JSON.stringify(loaded.payload.targets[0]?.requestedOutput)).not.toContain("workflows");
+    });
+
+    it("does not set a NuGet secret name when no apiKey is configured", async () => {
+        const { configPath } = await writeSdkConfig(temporaryDirectories, {
+            language: "csharp",
+            package: { packageName: "Acme.Sdk" },
+            output: {
+                delivery: "github",
+                github: { repository: "acme/sdk-dotnet" },
+                publish: { registry: "nuget" }
+            }
+        });
+
+        const loaded = await loadSdkConfigV1(configPath);
+
+        expect(loaded.payload.targets[0]?.requestedOutput).toMatchObject({
+            publish: { registry: "nuget" }
+        });
+        expect(loaded.payload.targets[0]?.requestedOutput).not.toHaveProperty("publish.apiKeyEnvironmentVariable");
+    });
+
+    it("rejects a NuGet apiKey that is not an environment expression naming a secret", async () => {
+        const { configPath } = await writeSdkConfig(temporaryDirectories, {
+            language: "csharp",
+            package: { packageName: "Acme.Sdk" },
+            output: {
+                delivery: "github",
+                github: { repository: "acme/sdk-dotnet" },
+                publish: { registry: "nuget", apiKey: "literal-nuget-key" }
+            }
+        });
+
+        await expect(loadSdkConfigV1(configPath)).rejects.toThrow(
+            "output.publish.apiKey for nuget must be an environment expression naming a repository secret"
+        );
+        await expect(loadSdkConfigV1(configPath)).rejects.not.toThrow("literal-nuget-key");
+    });
+
+    it.each([
+        { language: "csharp", registry: "nuget", packageName: "Acme.Sdk", apiKey: "${MY_NUGET_KEY}" },
+        { language: "ruby", registry: "rubygems", packageName: "acme-sdk", apiKey: "${MY_GEM_KEY}" }
+    ])("rejects a $registry apiKey combined with trustedPublishing", async ({
+        language,
+        registry,
+        packageName,
+        apiKey
+    }) => {
+        const { configPath } = await writeSdkConfig(temporaryDirectories, {
+            language,
+            package: { packageName },
+            output: {
+                delivery: "github",
+                github: { repository: "acme/sdk" },
+                publish: { registry, apiKey, trustedPublishing: true }
+            }
+        });
+
+        await expect(loadSdkConfigV1(configPath)).rejects.toThrow(
+            `output.publish for ${registry}: apiKey must be omitted when trustedPublishing is true`
+        );
+    });
+
+    it("forwards a RubyGems apiKey as a repository secret name without sending it in the SDK Config document", async () => {
+        const { configPath } = await writeSdkConfig(temporaryDirectories, {
+            language: "ruby",
+            package: { packageName: "acme-sdk" },
+            output: {
+                delivery: "github",
+                github: { repository: "acme/sdk-ruby", mode: "pull-request" },
+                publish: { registry: "rubygems", apiKey: "${MY_GEM_KEY}" }
+            }
+        });
+
+        const loaded = await loadSdkConfigV1(configPath);
+
+        expect(loaded.payload.targets[0]?.requestedOutput).toEqual({
+            type: "github",
+            repository: "acme/sdk-ruby",
+            mode: "pull-request",
+            publish: { registry: "rubygems", apiKeyEnvironmentVariable: "MY_GEM_KEY" }
+        });
+        expect(loaded.payload.targets[0]?.body.toString("utf8")).not.toContain("MY_GEM_KEY");
+    });
+
+    it("does not set a RubyGems secret name when no apiKey is configured", async () => {
+        const { configPath } = await writeSdkConfig(temporaryDirectories, {
+            language: "ruby",
+            package: { packageName: "acme-sdk" },
+            output: {
+                delivery: "github",
+                github: { repository: "acme/sdk-ruby" },
+                publish: { registry: "rubygems" }
+            }
+        });
+
+        const loaded = await loadSdkConfigV1(configPath);
+
+        expect(loaded.payload.targets[0]?.requestedOutput).toMatchObject({
+            publish: { registry: "rubygems" }
+        });
+        expect(loaded.payload.targets[0]?.requestedOutput).not.toHaveProperty("publish.apiKeyEnvironmentVariable");
+    });
+
+    it("rejects a RubyGems apiKey that is not an environment expression naming a secret", async () => {
+        const { configPath } = await writeSdkConfig(temporaryDirectories, {
+            language: "ruby",
+            package: { packageName: "acme-sdk" },
+            output: {
+                delivery: "github",
+                github: { repository: "acme/sdk-ruby" },
+                publish: { registry: "rubygems", apiKey: "literal-gem-key" }
+            }
+        });
+
+        await expect(loadSdkConfigV1(configPath)).rejects.toThrow(
+            "output.publish.apiKey for rubygems must be an environment expression naming a repository secret"
+        );
+        await expect(loadSdkConfigV1(configPath)).rejects.not.toThrow("literal-gem-key");
     });
 
     it("preserves GitHub delivery while omitting registry publication credentials", async () => {

@@ -205,6 +205,8 @@ client.createPlant(
         .species("species")
         .family("family")
         .genus("genus")
+        .commonName("commonName")
+        .wateringFrequency(PlantBaseWateringFrequency.DAILY)
         .sunExposure(PlantPostSunExposure.FULL)
         .build()
 );
@@ -218,6 +220,22 @@ client.createPlant(
 
 <dl>
 <dd>
+
+<dl>
+<dd>
+
+**commonName:** `String` — The common name of the plant.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**wateringFrequency:** `PlantBaseWateringFrequency` 
+    
+</dd>
+</dl>
 
 <dl>
 <dd>
@@ -281,6 +299,8 @@ client.createTree(
     TreeRecord
         .builder()
         .id("id")
+        .treeName("treeName")
+        .treeSpecies("treeSpecies")
         .build()
 );
 ```

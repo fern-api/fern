@@ -17,12 +17,13 @@ describe("dynamic auth wrapperProperty", () => {
         const endpoint = Object.values(dynamicIr.endpoints)[0];
 
         expect(endpoint?.auth?.wrapperProperty).toBeUndefined();
+        expect(endpoint?.auth?.requirement).toBe("ALL");
     });
 
     it.each([
-        ["any-auth", "bearer", "Bearer"],
-        ["endpoint-security-auth", "bearer", "Bearer"]
-    ])("sets wrapperProperty for %s auth", async (fixtureName, expectedSafeName, expectedOriginalName) => {
+        ["any-auth", "bearer", "Bearer", "ANY"],
+        ["endpoint-security-auth", "bearer", "Bearer", "ENDPOINT_SECURITY"]
+    ])("sets wrapperProperty for %s auth", async (fixtureName, expectedSafeName, expectedOriginalName, expectedRequirement) => {
         const ir = await generateIRFromPath({
             absolutePathToWorkspace: AbsoluteFilePath.of(path.join(TEST_DEFINITIONS_DIR, "fern/apis", fixtureName)),
             workspaceName: `dynamicAuthWrapperProperty${fixtureName}`,
@@ -33,6 +34,7 @@ describe("dynamic auth wrapperProperty", () => {
 
         expect(endpoint?.auth?.wrapperProperty?.camelCase.safeName).toBe(expectedSafeName);
         expect(endpoint?.auth?.wrapperProperty?.originalName).toBe(expectedOriginalName);
+        expect(endpoint?.auth?.requirement).toBe(expectedRequirement);
     });
 
     it("sets wrapperProperty for the real flattening fixture", async () => {

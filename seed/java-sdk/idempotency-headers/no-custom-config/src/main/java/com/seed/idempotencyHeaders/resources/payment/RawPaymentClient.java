@@ -4,10 +4,12 @@
 package com.seed.idempotencyHeaders.resources.payment;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.idempotencyHeaders.core.BodyProperties;
 import com.seed.idempotencyHeaders.core.ClientOptions;
 import com.seed.idempotencyHeaders.core.IdempotentRequestOptions;
 import com.seed.idempotencyHeaders.core.MediaTypes;
 import com.seed.idempotencyHeaders.core.ObjectMappers;
+import com.seed.idempotencyHeaders.core.PathSegments;
 import com.seed.idempotencyHeaders.core.RequestOptions;
 import com.seed.idempotencyHeaders.core.RetryInterceptor;
 import com.seed.idempotencyHeaders.core.SeedIdempotencyHeadersApiException;
@@ -48,7 +50,9 @@ public class RawPaymentClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedIdempotencyHeadersException("Failed to serialize request", e);
         }
@@ -97,7 +101,7 @@ public class RawPaymentClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("payment")
-                .addPathSegment(paymentId);
+                .addPathSegment(PathSegments.validate(paymentId));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -105,7 +109,10 @@ public class RawPaymentClient {
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
-                .method("DELETE", null)
+                .method(
+                        "DELETE",
+                        BodyProperties.toRequestBody(
+                                requestOptions != null ? requestOptions.getBodyProperties() : null, null))
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .build();
         OkHttpClient client = clientOptions.httpClient();

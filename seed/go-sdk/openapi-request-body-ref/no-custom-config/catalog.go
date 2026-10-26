@@ -19,10 +19,12 @@ type CreateCatalogImageBody struct {
 }
 
 func (c *CreateCatalogImageBody) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 var (
@@ -37,10 +39,12 @@ type GetCatalogImageRequest struct {
 }
 
 func (g *GetCatalogImageRequest) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetImageID sets the ImageID field and marks it as non-optional;
@@ -106,10 +110,12 @@ func (c *CatalogImage) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *CatalogImage) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -220,10 +226,12 @@ func (c *CreateCatalogImageRequest) GetExtraProperties() map[string]interface{} 
 }
 
 func (c *CreateCatalogImageRequest) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetCaption sets the Caption field and marks it as non-optional;

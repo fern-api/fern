@@ -4,9 +4,11 @@
 package com.seed.unions.resources.union;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.unions.core.BodyProperties;
 import com.seed.unions.core.ClientOptions;
 import com.seed.unions.core.MediaTypes;
 import com.seed.unions.core.ObjectMappers;
+import com.seed.unions.core.PathSegments;
 import com.seed.unions.core.RequestOptions;
 import com.seed.unions.core.RetryInterceptor;
 import com.seed.unions.core.SeedUnionsApiException;
@@ -40,7 +42,7 @@ public class AsyncRawUnionClient {
     public CompletableFuture<SeedUnionsHttpResponse<Shape>> get(String id, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegment(id);
+                .addPathSegment(PathSegments.validate(id));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -66,7 +68,8 @@ public class AsyncRawUnionClient {
                     .build();
         }
         CompletableFuture<SeedUnionsHttpResponse<Shape>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -93,6 +96,11 @@ public class AsyncRawUnionClient {
                 future.completeExceptionally(new SeedUnionsException("Network error executing HTTP request", e));
             }
         });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
+            }
+        });
         return future;
     }
 
@@ -112,7 +120,9 @@ public class AsyncRawUnionClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedUnionsException("Failed to serialize request", e);
         }
@@ -137,7 +147,8 @@ public class AsyncRawUnionClient {
                     .build();
         }
         CompletableFuture<SeedUnionsHttpResponse<Boolean>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -162,6 +173,11 @@ public class AsyncRawUnionClient {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(new SeedUnionsException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;

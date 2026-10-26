@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "../../seed"
+
 module Seed
   module Types
     class Product < Internal::Types::Model
@@ -7,7 +9,7 @@ module Seed
 
       field :name, -> { String }, optional: true, nullable: false
 
-      field :price, -> { Integer }, optional: true, nullable: false
+      field :price, -> { Float }, optional: true, nullable: false
     end
   end
 end

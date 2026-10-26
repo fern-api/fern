@@ -1,0 +1,38 @@
+schemaVersion: sdk-config/v1
+sdkName: api
+source:
+  specs:
+    - id: openapi
+      type: openapi
+      path: ./openapi.yml
+api:
+  auth:
+    schemes:
+      - id: BasicAuth
+        type: basic
+        username:
+          environmentVariable: ACME_ACCOUNT_SID
+        password:
+          environmentVariable: ACME_AUTH_TOKEN
+      - id: OAuth2
+        type: oauth2
+        flows:
+          - type: client-credentials
+            tokenUrl: /token
+        clientId:
+          environmentVariable: ACME_CLIENT_ID
+        clientSecret:
+          environmentVariable: ACME_CLIENT_SECRET
+    requirements:
+      - schemes:
+          - BasicAuth
+      - schemes:
+          - OAuth2
+targets:
+  - language: cli
+    output:
+      delivery: files
+      path: ../out
+    generation:
+      binaryName: any-auth-cli
+      customCommands: false

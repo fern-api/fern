@@ -11,15 +11,6 @@ async fn main() {
     client
         .endpoints
         .params
-        .create_with_body_and_query(
-            &CreateWithBodyAndQueryRequest {
-                fields: Some("_fields".to_string()),
-                body: ObjectWithRequiredField {
-                    string: "string".to_string(),
-                    ..Default::default()
-                },
-            },
-            None,
-        )
+        .upload_with_path(&"upload-path".to_string(), &vec![], None)
         .await;
 }

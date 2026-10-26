@@ -10,10 +10,12 @@ async fn main() {
     client
         .create_tree(
             &TreeRecord {
-                tree_base_fields: TreeBase {
+                tree_identifiable_fields: TreeIdentifiable {
                     id: "id".to_string(),
                     ..Default::default()
                 },
+                tree_name: "treeName".to_string(),
+                tree_species: "treeSpecies".to_string(),
                 ..Default::default()
             },
             None,

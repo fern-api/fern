@@ -105,7 +105,6 @@ public final class UpdatePlaylistRequest {
 
         private List<String> problems = new ArrayList<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -162,6 +161,14 @@ public final class UpdatePlaylistRequest {
         @java.lang.Override
         public UpdatePlaylistRequest build() {
             return new UpdatePlaylistRequest(name, problems, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("name") || key.equalsIgnoreCase("problems")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

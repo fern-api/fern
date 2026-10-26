@@ -5,6 +5,7 @@ package com.seed.fileUpload.resources.service;
 
 import com.seed.fileUpload.core.ClientOptions;
 import com.seed.fileUpload.core.RequestOptions;
+import com.seed.fileUpload.core.SeedFileUploadHttpResponse;
 import com.seed.fileUpload.resources.service.requests.InlineTypeRequest;
 import com.seed.fileUpload.resources.service.requests.JustFileRequest;
 import com.seed.fileUpload.resources.service.requests.JustFileWithOptionalQueryParamsRequest;
@@ -42,9 +43,15 @@ public class AsyncServiceClient {
 
     public CompletableFuture<Void> post(
             File file, File fileList, Optional<File> maybeFile, Optional<File> maybeFileList, MyRequest request) {
-        return this.rawClient
-                .post(file, fileList, maybeFile, maybeFileList, request)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedFileUploadHttpResponse<Void>> rawFuture =
+                this.rawClient.post(file, fileList, maybeFile, maybeFileList, request);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> post(
@@ -54,123 +61,310 @@ public class AsyncServiceClient {
             Optional<File> maybeFileList,
             MyRequest request,
             RequestOptions requestOptions) {
-        return this.rawClient
-                .post(file, fileList, maybeFile, maybeFileList, request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedFileUploadHttpResponse<Void>> rawFuture =
+                this.rawClient.post(file, fileList, maybeFile, maybeFileList, request, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> justFile(File file, JustFileRequest request) {
-        return this.rawClient.justFile(file, request).thenApply(response -> response.body());
+        CompletableFuture<SeedFileUploadHttpResponse<Void>> rawFuture = this.rawClient.justFile(file, request);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> justFile(File file, JustFileRequest request, RequestOptions requestOptions) {
-        return this.rawClient.justFile(file, request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedFileUploadHttpResponse<Void>> rawFuture =
+                this.rawClient.justFile(file, request, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> justFile(InputStream stream, String filename) {
-        return this.rawClient.justFile(stream, filename).thenApply(response -> response.body());
+        CompletableFuture<SeedFileUploadHttpResponse<Void>> rawFuture = this.rawClient.justFile(stream, filename);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> justFile(InputStream stream, String filename, MediaType mediaType) {
-        return this.rawClient.justFile(stream, filename, mediaType).thenApply(response -> response.body());
+        CompletableFuture<SeedFileUploadHttpResponse<Void>> rawFuture =
+                this.rawClient.justFile(stream, filename, mediaType);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> justFile(InputStream stream, String filename, RequestOptions requestOptions) {
-        return this.rawClient.justFile(stream, filename, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedFileUploadHttpResponse<Void>> rawFuture =
+                this.rawClient.justFile(stream, filename, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> justFile(
             InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions) {
-        return this.rawClient
-                .justFile(stream, filename, mediaType, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedFileUploadHttpResponse<Void>> rawFuture =
+                this.rawClient.justFile(stream, filename, mediaType, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> justFileWithQueryParams(File file, JustFileWithQueryParamsRequest request) {
-        return this.rawClient.justFileWithQueryParams(file, request).thenApply(response -> response.body());
+        CompletableFuture<SeedFileUploadHttpResponse<Void>> rawFuture =
+                this.rawClient.justFileWithQueryParams(file, request);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> justFileWithQueryParams(
             File file, JustFileWithQueryParamsRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .justFileWithQueryParams(file, request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedFileUploadHttpResponse<Void>> rawFuture =
+                this.rawClient.justFileWithQueryParams(file, request, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> justFileWithOptionalQueryParams(
             File file, JustFileWithOptionalQueryParamsRequest request) {
-        return this.rawClient.justFileWithOptionalQueryParams(file, request).thenApply(response -> response.body());
+        CompletableFuture<SeedFileUploadHttpResponse<Void>> rawFuture =
+                this.rawClient.justFileWithOptionalQueryParams(file, request);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> justFileWithOptionalQueryParams(
             File file, JustFileWithOptionalQueryParamsRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .justFileWithOptionalQueryParams(file, request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedFileUploadHttpResponse<Void>> rawFuture =
+                this.rawClient.justFileWithOptionalQueryParams(file, request, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> withContentType(File file, WithContentTypeRequest request) {
-        return this.rawClient.withContentType(file, request).thenApply(response -> response.body());
+        CompletableFuture<SeedFileUploadHttpResponse<Void>> rawFuture = this.rawClient.withContentType(file, request);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> withContentType(
             File file, WithContentTypeRequest request, RequestOptions requestOptions) {
-        return this.rawClient.withContentType(file, request, requestOptions).thenApply(response -> response.body());
-    }
-
-    public CompletableFuture<Void> withContentType(InputStream stream, String filename) {
-        return this.rawClient.withContentType(stream, filename).thenApply(response -> response.body());
-    }
-
-    public CompletableFuture<Void> withContentType(InputStream stream, String filename, MediaType mediaType) {
-        return this.rawClient.withContentType(stream, filename, mediaType).thenApply(response -> response.body());
-    }
-
-    public CompletableFuture<Void> withContentType(InputStream stream, String filename, RequestOptions requestOptions) {
-        return this.rawClient.withContentType(stream, filename, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedFileUploadHttpResponse<Void>> rawFuture =
+                this.rawClient.withContentType(file, request, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> withContentType(
-            InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions) {
-        return this.rawClient
-                .withContentType(stream, filename, mediaType, requestOptions)
-                .thenApply(response -> response.body());
+            WithContentTypeRequest request, InputStream stream, String filename) {
+        CompletableFuture<SeedFileUploadHttpResponse<Void>> rawFuture =
+                this.rawClient.withContentType(request, stream, filename);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<Void> withContentType(
+            WithContentTypeRequest request, InputStream stream, String filename, MediaType mediaType) {
+        CompletableFuture<SeedFileUploadHttpResponse<Void>> rawFuture =
+                this.rawClient.withContentType(request, stream, filename, mediaType);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<Void> withContentType(
+            WithContentTypeRequest request, InputStream stream, String filename, RequestOptions requestOptions) {
+        CompletableFuture<SeedFileUploadHttpResponse<Void>> rawFuture =
+                this.rawClient.withContentType(request, stream, filename, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<Void> withContentType(
+            WithContentTypeRequest request,
+            InputStream stream,
+            String filename,
+            MediaType mediaType,
+            RequestOptions requestOptions) {
+        CompletableFuture<SeedFileUploadHttpResponse<Void>> rawFuture =
+                this.rawClient.withContentType(request, stream, filename, mediaType, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> withFormEncoding(File file, WithFormEncodingRequest request) {
-        return this.rawClient.withFormEncoding(file, request).thenApply(response -> response.body());
+        CompletableFuture<SeedFileUploadHttpResponse<Void>> rawFuture = this.rawClient.withFormEncoding(file, request);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> withFormEncoding(
             File file, WithFormEncodingRequest request, RequestOptions requestOptions) {
-        return this.rawClient.withFormEncoding(file, request, requestOptions).thenApply(response -> response.body());
-    }
-
-    public CompletableFuture<Void> withFormEncoding(InputStream stream, String filename) {
-        return this.rawClient.withFormEncoding(stream, filename).thenApply(response -> response.body());
-    }
-
-    public CompletableFuture<Void> withFormEncoding(InputStream stream, String filename, MediaType mediaType) {
-        return this.rawClient.withFormEncoding(stream, filename, mediaType).thenApply(response -> response.body());
-    }
-
-    public CompletableFuture<Void> withFormEncoding(
-            InputStream stream, String filename, RequestOptions requestOptions) {
-        return this.rawClient.withFormEncoding(stream, filename, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedFileUploadHttpResponse<Void>> rawFuture =
+                this.rawClient.withFormEncoding(file, request, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> withFormEncoding(
-            InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions) {
-        return this.rawClient
-                .withFormEncoding(stream, filename, mediaType, requestOptions)
-                .thenApply(response -> response.body());
+            WithFormEncodingRequest request, InputStream stream, String filename) {
+        CompletableFuture<SeedFileUploadHttpResponse<Void>> rawFuture =
+                this.rawClient.withFormEncoding(request, stream, filename);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<Void> withFormEncoding(
+            WithFormEncodingRequest request, InputStream stream, String filename, MediaType mediaType) {
+        CompletableFuture<SeedFileUploadHttpResponse<Void>> rawFuture =
+                this.rawClient.withFormEncoding(request, stream, filename, mediaType);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<Void> withFormEncoding(
+            WithFormEncodingRequest request, InputStream stream, String filename, RequestOptions requestOptions) {
+        CompletableFuture<SeedFileUploadHttpResponse<Void>> rawFuture =
+                this.rawClient.withFormEncoding(request, stream, filename, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<Void> withFormEncoding(
+            WithFormEncodingRequest request,
+            InputStream stream,
+            String filename,
+            MediaType mediaType,
+            RequestOptions requestOptions) {
+        CompletableFuture<SeedFileUploadHttpResponse<Void>> rawFuture =
+                this.rawClient.withFormEncoding(request, stream, filename, mediaType, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> withFormEncodedContainers(
             File file, File fileList, Optional<File> maybeFile, Optional<File> maybeFileList, MyOtherRequest request) {
-        return this.rawClient
-                .withFormEncodedContainers(file, fileList, maybeFile, maybeFileList, request)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedFileUploadHttpResponse<Void>> rawFuture =
+                this.rawClient.withFormEncodedContainers(file, fileList, maybeFile, maybeFileList, request);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> withFormEncodedContainers(
@@ -180,193 +374,460 @@ public class AsyncServiceClient {
             Optional<File> maybeFileList,
             MyOtherRequest request,
             RequestOptions requestOptions) {
-        return this.rawClient
-                .withFormEncodedContainers(file, fileList, maybeFile, maybeFileList, request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedFileUploadHttpResponse<Void>> rawFuture = this.rawClient.withFormEncodedContainers(
+                file, fileList, maybeFile, maybeFileList, request, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> optionalArgs(Optional<File> imageFile) {
-        return this.rawClient.optionalArgs(imageFile).thenApply(response -> response.body());
+        CompletableFuture<SeedFileUploadHttpResponse<String>> rawFuture = this.rawClient.optionalArgs(imageFile);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> optionalArgs(Optional<File> imageFile, RequestOptions requestOptions) {
-        return this.rawClient.optionalArgs(imageFile, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedFileUploadHttpResponse<String>> rawFuture =
+                this.rawClient.optionalArgs(imageFile, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> optionalArgs(Optional<File> imageFile, OptionalArgsRequest request) {
-        return this.rawClient.optionalArgs(imageFile, request).thenApply(response -> response.body());
+        CompletableFuture<SeedFileUploadHttpResponse<String>> rawFuture =
+                this.rawClient.optionalArgs(imageFile, request);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> optionalArgs(
             Optional<File> imageFile, OptionalArgsRequest request, RequestOptions requestOptions) {
-        return this.rawClient.optionalArgs(imageFile, request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedFileUploadHttpResponse<String>> rawFuture =
+                this.rawClient.optionalArgs(imageFile, request, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
-    public CompletableFuture<String> optionalArgs(Optional<File> imageFile, InputStream stream, String filename) {
-        return this.rawClient.optionalArgs(imageFile, stream, filename).thenApply(response -> response.body());
+    public CompletableFuture<String> optionalArgs(OptionalArgsRequest request, InputStream stream, String filename) {
+        CompletableFuture<SeedFileUploadHttpResponse<String>> rawFuture =
+                this.rawClient.optionalArgs(request, stream, filename);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> optionalArgs(
-            Optional<File> imageFile, InputStream stream, String filename, MediaType mediaType) {
-        return this.rawClient
-                .optionalArgs(imageFile, stream, filename, mediaType)
-                .thenApply(response -> response.body());
+            OptionalArgsRequest request, InputStream stream, String filename, MediaType mediaType) {
+        CompletableFuture<SeedFileUploadHttpResponse<String>> rawFuture =
+                this.rawClient.optionalArgs(request, stream, filename, mediaType);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> optionalArgs(
-            Optional<File> imageFile, InputStream stream, String filename, RequestOptions requestOptions) {
-        return this.rawClient
-                .optionalArgs(imageFile, stream, filename, requestOptions)
-                .thenApply(response -> response.body());
+            OptionalArgsRequest request, InputStream stream, String filename, RequestOptions requestOptions) {
+        CompletableFuture<SeedFileUploadHttpResponse<String>> rawFuture =
+                this.rawClient.optionalArgs(request, stream, filename, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> optionalArgs(
-            Optional<File> imageFile,
+            OptionalArgsRequest request,
             InputStream stream,
             String filename,
             MediaType mediaType,
             RequestOptions requestOptions) {
-        return this.rawClient
-                .optionalArgs(imageFile, stream, filename, mediaType, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedFileUploadHttpResponse<String>> rawFuture =
+                this.rawClient.optionalArgs(request, stream, filename, mediaType, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> withInlineType(File file, InlineTypeRequest request) {
-        return this.rawClient.withInlineType(file, request).thenApply(response -> response.body());
+        CompletableFuture<SeedFileUploadHttpResponse<String>> rawFuture = this.rawClient.withInlineType(file, request);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> withInlineType(
             File file, InlineTypeRequest request, RequestOptions requestOptions) {
-        return this.rawClient.withInlineType(file, request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedFileUploadHttpResponse<String>> rawFuture =
+                this.rawClient.withInlineType(file, request, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
-    public CompletableFuture<String> withInlineType(InputStream stream, String filename) {
-        return this.rawClient.withInlineType(stream, filename).thenApply(response -> response.body());
-    }
-
-    public CompletableFuture<String> withInlineType(InputStream stream, String filename, MediaType mediaType) {
-        return this.rawClient.withInlineType(stream, filename, mediaType).thenApply(response -> response.body());
+    public CompletableFuture<String> withInlineType(InlineTypeRequest request, InputStream stream, String filename) {
+        CompletableFuture<SeedFileUploadHttpResponse<String>> rawFuture =
+                this.rawClient.withInlineType(request, stream, filename);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> withInlineType(
-            InputStream stream, String filename, RequestOptions requestOptions) {
-        return this.rawClient.withInlineType(stream, filename, requestOptions).thenApply(response -> response.body());
+            InlineTypeRequest request, InputStream stream, String filename, MediaType mediaType) {
+        CompletableFuture<SeedFileUploadHttpResponse<String>> rawFuture =
+                this.rawClient.withInlineType(request, stream, filename, mediaType);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> withInlineType(
-            InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions) {
-        return this.rawClient
-                .withInlineType(stream, filename, mediaType, requestOptions)
-                .thenApply(response -> response.body());
+            InlineTypeRequest request, InputStream stream, String filename, RequestOptions requestOptions) {
+        CompletableFuture<SeedFileUploadHttpResponse<String>> rawFuture =
+                this.rawClient.withInlineType(request, stream, filename, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
-    public CompletableFuture<String> withJsonProperty(File file, WithJsonPropertyRequest request) {
-        return this.rawClient.withJsonProperty(file, request).thenApply(response -> response.body());
-    }
-
-    public CompletableFuture<String> withJsonProperty(
-            File file, WithJsonPropertyRequest request, RequestOptions requestOptions) {
-        return this.rawClient.withJsonProperty(file, request, requestOptions).thenApply(response -> response.body());
-    }
-
-    public CompletableFuture<String> withJsonProperty(InputStream stream, String filename) {
-        return this.rawClient.withJsonProperty(stream, filename).thenApply(response -> response.body());
-    }
-
-    public CompletableFuture<String> withJsonProperty(InputStream stream, String filename, MediaType mediaType) {
-        return this.rawClient.withJsonProperty(stream, filename, mediaType).thenApply(response -> response.body());
-    }
-
-    public CompletableFuture<String> withJsonProperty(
-            InputStream stream, String filename, RequestOptions requestOptions) {
-        return this.rawClient.withJsonProperty(stream, filename, requestOptions).thenApply(response -> response.body());
-    }
-
-    public CompletableFuture<String> withJsonProperty(
-            InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions) {
-        return this.rawClient
-                .withJsonProperty(stream, filename, mediaType, requestOptions)
-                .thenApply(response -> response.body());
-    }
-
-    public CompletableFuture<String> withRefBody(Optional<File> imageFile, WithRefBodyRequest request) {
-        return this.rawClient.withRefBody(imageFile, request).thenApply(response -> response.body());
-    }
-
-    public CompletableFuture<String> withRefBody(
-            Optional<File> imageFile, WithRefBodyRequest request, RequestOptions requestOptions) {
-        return this.rawClient.withRefBody(imageFile, request, requestOptions).thenApply(response -> response.body());
-    }
-
-    public CompletableFuture<String> withRefBody(Optional<File> imageFile, InputStream stream, String filename) {
-        return this.rawClient.withRefBody(imageFile, stream, filename).thenApply(response -> response.body());
-    }
-
-    public CompletableFuture<String> withRefBody(
-            Optional<File> imageFile, InputStream stream, String filename, MediaType mediaType) {
-        return this.rawClient
-                .withRefBody(imageFile, stream, filename, mediaType)
-                .thenApply(response -> response.body());
-    }
-
-    public CompletableFuture<String> withRefBody(
-            Optional<File> imageFile, InputStream stream, String filename, RequestOptions requestOptions) {
-        return this.rawClient
-                .withRefBody(imageFile, stream, filename, requestOptions)
-                .thenApply(response -> response.body());
-    }
-
-    public CompletableFuture<String> withRefBody(
-            Optional<File> imageFile,
+    public CompletableFuture<String> withInlineType(
+            InlineTypeRequest request,
             InputStream stream,
             String filename,
             MediaType mediaType,
             RequestOptions requestOptions) {
-        return this.rawClient
-                .withRefBody(imageFile, stream, filename, mediaType, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedFileUploadHttpResponse<String>> rawFuture =
+                this.rawClient.withInlineType(request, stream, filename, mediaType, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<String> withJsonProperty(File file, WithJsonPropertyRequest request) {
+        CompletableFuture<SeedFileUploadHttpResponse<String>> rawFuture =
+                this.rawClient.withJsonProperty(file, request);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<String> withJsonProperty(
+            File file, WithJsonPropertyRequest request, RequestOptions requestOptions) {
+        CompletableFuture<SeedFileUploadHttpResponse<String>> rawFuture =
+                this.rawClient.withJsonProperty(file, request, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<String> withJsonProperty(
+            WithJsonPropertyRequest request, InputStream stream, String filename) {
+        CompletableFuture<SeedFileUploadHttpResponse<String>> rawFuture =
+                this.rawClient.withJsonProperty(request, stream, filename);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<String> withJsonProperty(
+            WithJsonPropertyRequest request, InputStream stream, String filename, MediaType mediaType) {
+        CompletableFuture<SeedFileUploadHttpResponse<String>> rawFuture =
+                this.rawClient.withJsonProperty(request, stream, filename, mediaType);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<String> withJsonProperty(
+            WithJsonPropertyRequest request, InputStream stream, String filename, RequestOptions requestOptions) {
+        CompletableFuture<SeedFileUploadHttpResponse<String>> rawFuture =
+                this.rawClient.withJsonProperty(request, stream, filename, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<String> withJsonProperty(
+            WithJsonPropertyRequest request,
+            InputStream stream,
+            String filename,
+            MediaType mediaType,
+            RequestOptions requestOptions) {
+        CompletableFuture<SeedFileUploadHttpResponse<String>> rawFuture =
+                this.rawClient.withJsonProperty(request, stream, filename, mediaType, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<String> withRefBody(Optional<File> imageFile, WithRefBodyRequest request) {
+        CompletableFuture<SeedFileUploadHttpResponse<String>> rawFuture =
+                this.rawClient.withRefBody(imageFile, request);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<String> withRefBody(
+            Optional<File> imageFile, WithRefBodyRequest request, RequestOptions requestOptions) {
+        CompletableFuture<SeedFileUploadHttpResponse<String>> rawFuture =
+                this.rawClient.withRefBody(imageFile, request, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<String> withRefBody(WithRefBodyRequest request, InputStream stream, String filename) {
+        CompletableFuture<SeedFileUploadHttpResponse<String>> rawFuture =
+                this.rawClient.withRefBody(request, stream, filename);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<String> withRefBody(
+            WithRefBodyRequest request, InputStream stream, String filename, MediaType mediaType) {
+        CompletableFuture<SeedFileUploadHttpResponse<String>> rawFuture =
+                this.rawClient.withRefBody(request, stream, filename, mediaType);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<String> withRefBody(
+            WithRefBodyRequest request, InputStream stream, String filename, RequestOptions requestOptions) {
+        CompletableFuture<SeedFileUploadHttpResponse<String>> rawFuture =
+                this.rawClient.withRefBody(request, stream, filename, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<String> withRefBody(
+            WithRefBodyRequest request,
+            InputStream stream,
+            String filename,
+            MediaType mediaType,
+            RequestOptions requestOptions) {
+        CompletableFuture<SeedFileUploadHttpResponse<String>> rawFuture =
+                this.rawClient.withRefBody(request, stream, filename, mediaType, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> simple() {
-        return this.rawClient.simple().thenApply(response -> response.body());
+        CompletableFuture<SeedFileUploadHttpResponse<Void>> rawFuture = this.rawClient.simple();
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> simple(RequestOptions requestOptions) {
-        return this.rawClient.simple(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedFileUploadHttpResponse<Void>> rawFuture = this.rawClient.simple(requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> withLiteralAndEnumTypes(File file, LiteralEnumRequest request) {
-        return this.rawClient.withLiteralAndEnumTypes(file, request).thenApply(response -> response.body());
+        CompletableFuture<SeedFileUploadHttpResponse<String>> rawFuture =
+                this.rawClient.withLiteralAndEnumTypes(file, request);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> withLiteralAndEnumTypes(
             File file, LiteralEnumRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .withLiteralAndEnumTypes(file, request, requestOptions)
-                .thenApply(response -> response.body());
-    }
-
-    public CompletableFuture<String> withLiteralAndEnumTypes(InputStream stream, String filename) {
-        return this.rawClient.withLiteralAndEnumTypes(stream, filename).thenApply(response -> response.body());
-    }
-
-    public CompletableFuture<String> withLiteralAndEnumTypes(InputStream stream, String filename, MediaType mediaType) {
-        return this.rawClient
-                .withLiteralAndEnumTypes(stream, filename, mediaType)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedFileUploadHttpResponse<String>> rawFuture =
+                this.rawClient.withLiteralAndEnumTypes(file, request, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> withLiteralAndEnumTypes(
-            InputStream stream, String filename, RequestOptions requestOptions) {
-        return this.rawClient
-                .withLiteralAndEnumTypes(stream, filename, requestOptions)
-                .thenApply(response -> response.body());
+            LiteralEnumRequest request, InputStream stream, String filename) {
+        CompletableFuture<SeedFileUploadHttpResponse<String>> rawFuture =
+                this.rawClient.withLiteralAndEnumTypes(request, stream, filename);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<String> withLiteralAndEnumTypes(
-            InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions) {
-        return this.rawClient
-                .withLiteralAndEnumTypes(stream, filename, mediaType, requestOptions)
-                .thenApply(response -> response.body());
+            LiteralEnumRequest request, InputStream stream, String filename, MediaType mediaType) {
+        CompletableFuture<SeedFileUploadHttpResponse<String>> rawFuture =
+                this.rawClient.withLiteralAndEnumTypes(request, stream, filename, mediaType);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<String> withLiteralAndEnumTypes(
+            LiteralEnumRequest request, InputStream stream, String filename, RequestOptions requestOptions) {
+        CompletableFuture<SeedFileUploadHttpResponse<String>> rawFuture =
+                this.rawClient.withLiteralAndEnumTypes(request, stream, filename, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    public CompletableFuture<String> withLiteralAndEnumTypes(
+            LiteralEnumRequest request,
+            InputStream stream,
+            String filename,
+            MediaType mediaType,
+            RequestOptions requestOptions) {
+        CompletableFuture<SeedFileUploadHttpResponse<String>> rawFuture =
+                this.rawClient.withLiteralAndEnumTypes(request, stream, filename, mediaType, requestOptions);
+        CompletableFuture<String> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

@@ -38,10 +38,12 @@ func (a *A) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *A) require(field *big.Int) {
-	if a.explicitFields == nil {
-		a.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if a.explicitFields != nil {
+		next.Set(a.explicitFields)
 	}
-	a.explicitFields.Or(a.explicitFields, field)
+	next.Or(next, field)
+	a.explicitFields = next
 }
 
 // SetS sets the S field and marks it as non-optional;

@@ -12,8 +12,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.seed.api.core.ObjectMappers;
 import com.seed.api.core.XmlElement;
+import com.seed.api.core.XmlNode;
 import com.seed.api.core.XmlReader;
 import com.seed.api.core.XmlSerializable;
 import com.seed.api.core.XmlWriter;
@@ -25,7 +25,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import org.w3c.dom.Element;
 
 /**
@@ -550,7 +549,7 @@ public final class Wide implements XmlSerializable {
 
     private final Map<String, Object> additionalProperties;
 
-    private final List<XmlElement> additionalChildren;
+    private final List<XmlNode> content;
 
     private Wide(Builder builder) {
         this.attr1 = builder.attr1;
@@ -811,7 +810,7 @@ public final class Wide implements XmlSerializable {
         this.attr256 = builder.attr256;
         this.children = builder.children;
         this.additionalProperties = builder.additionalProperties;
-        this.additionalChildren = builder.additionalChildren;
+        this.content = builder.content;
     }
 
     @JsonProperty("attr1")
@@ -2110,9 +2109,20 @@ public final class Wide implements XmlSerializable {
         return this.additionalProperties;
     }
 
+    /**
+     * The ordered content of this element: text segments and child elements (typed or generic) in the order they were added or parsed.
+     */
+    @JsonIgnore
+    public List<XmlNode> getContent() {
+        return this.content;
+    }
+
+    /**
+     * The child elements that are not described by the API definition, in order.
+     */
     @JsonIgnore
     public List<XmlElement> getAdditionalChildren() {
-        return this.additionalChildren;
+        return XmlNode.additionalChildren(this.content);
     }
 
     private boolean equalTo(Wide other) {
@@ -2637,13 +2647,13 @@ public final class Wide implements XmlSerializable {
                 this.children);
     }
 
-    @java.lang.Override
-    public String toString() {
-        return ObjectMappers.stringify(this);
-    }
-
     public static Builder builder() {
         return new Builder();
+    }
+
+    @Override
+    public String toString() {
+        return toXml();
     }
 
     @Override
@@ -2910,9 +2920,8 @@ public final class Wide implements XmlSerializable {
         writer.attribute("attr254", this.attr254);
         writer.attribute("attr255", this.attr255);
         writer.attribute("attr256", this.attr256);
-        writer.children("children", this.children);
         writer.attributes(this.additionalProperties);
-        writer.children(this.additionalChildren);
+        writer.content(XmlNode.ordered(this.content, this.children));
         return writer.toXml(xmlDeclaration);
     }
 
@@ -2925,6 +2934,14 @@ public final class Wide implements XmlSerializable {
 
     public static Wide fromXml(Element element) {
         XmlReader.expect(element, "Wide");
+        List<XmlNode> content = XmlReader.content(element, false, Arrays.asList(), e -> {
+            switch (XmlReader.localName(e)) {
+                case "Pause":
+                    return Pause.fromXml(e);
+                default:
+                    return null;
+            }
+        });
         Builder builder = new Builder();
         builder.attr1 = XmlReader.attribute(element, "attr1");
         builder.attr2 = XmlReader.attribute(element, "attr2");
@@ -3182,9 +3199,7 @@ public final class Wide implements XmlSerializable {
         builder.attr254 = XmlReader.attribute(element, "attr254");
         builder.attr255 = XmlReader.attribute(element, "attr255");
         builder.attr256 = XmlReader.attribute(element, "attr256");
-        builder.children = XmlReader.optionalList(XmlReader.children(element, "Pause").stream()
-                .map(Pause::fromXml)
-                .collect(Collectors.toList()));
+        builder.children = XmlReader.optionalList(XmlNode.elements(content, Pause.class));
         builder.additionalProperties = XmlReader.extraAttributes(
                 element,
                 Arrays.asList(
@@ -3219,7 +3234,7 @@ public final class Wide implements XmlSerializable {
                         "attr237", "attr238", "attr239", "attr240", "attr241", "attr242", "attr243", "attr244",
                         "attr245", "attr246", "attr247", "attr248", "attr249", "attr250", "attr251", "attr252",
                         "attr253", "attr254", "attr255", "attr256"));
-        builder.additionalChildren = XmlReader.unknownChildren(element, Arrays.asList("Pause"));
+        builder.content = content;
         return new Wide(builder);
     }
 
@@ -3739,11 +3754,10 @@ public final class Wide implements XmlSerializable {
 
         private Optional<List<Pause>> children = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         @JsonIgnore
-        private List<XmlElement> additionalChildren = new ArrayList<>();
+        private List<XmlNode> content = new ArrayList<>();
 
         private Builder() {}
 
@@ -4005,6 +4019,7 @@ public final class Wide implements XmlSerializable {
             attr255(other.getAttr255());
             attr256(other.getAttr256());
             children(other.getChildren());
+            content(other.getContent());
             return this;
         }
 
@@ -6839,6 +6854,270 @@ public final class Wide implements XmlSerializable {
             return new Wide(this);
         }
 
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("attr1")
+                    || key.equalsIgnoreCase("attr2")
+                    || key.equalsIgnoreCase("attr3")
+                    || key.equalsIgnoreCase("attr4")
+                    || key.equalsIgnoreCase("attr5")
+                    || key.equalsIgnoreCase("attr6")
+                    || key.equalsIgnoreCase("attr7")
+                    || key.equalsIgnoreCase("attr8")
+                    || key.equalsIgnoreCase("attr9")
+                    || key.equalsIgnoreCase("attr10")
+                    || key.equalsIgnoreCase("attr11")
+                    || key.equalsIgnoreCase("attr12")
+                    || key.equalsIgnoreCase("attr13")
+                    || key.equalsIgnoreCase("attr14")
+                    || key.equalsIgnoreCase("attr15")
+                    || key.equalsIgnoreCase("attr16")
+                    || key.equalsIgnoreCase("attr17")
+                    || key.equalsIgnoreCase("attr18")
+                    || key.equalsIgnoreCase("attr19")
+                    || key.equalsIgnoreCase("attr20")
+                    || key.equalsIgnoreCase("attr21")
+                    || key.equalsIgnoreCase("attr22")
+                    || key.equalsIgnoreCase("attr23")
+                    || key.equalsIgnoreCase("attr24")
+                    || key.equalsIgnoreCase("attr25")
+                    || key.equalsIgnoreCase("attr26")
+                    || key.equalsIgnoreCase("attr27")
+                    || key.equalsIgnoreCase("attr28")
+                    || key.equalsIgnoreCase("attr29")
+                    || key.equalsIgnoreCase("attr30")
+                    || key.equalsIgnoreCase("attr31")
+                    || key.equalsIgnoreCase("attr32")
+                    || key.equalsIgnoreCase("attr33")
+                    || key.equalsIgnoreCase("attr34")
+                    || key.equalsIgnoreCase("attr35")
+                    || key.equalsIgnoreCase("attr36")
+                    || key.equalsIgnoreCase("attr37")
+                    || key.equalsIgnoreCase("attr38")
+                    || key.equalsIgnoreCase("attr39")
+                    || key.equalsIgnoreCase("attr40")
+                    || key.equalsIgnoreCase("attr41")
+                    || key.equalsIgnoreCase("attr42")
+                    || key.equalsIgnoreCase("attr43")
+                    || key.equalsIgnoreCase("attr44")
+                    || key.equalsIgnoreCase("attr45")
+                    || key.equalsIgnoreCase("attr46")
+                    || key.equalsIgnoreCase("attr47")
+                    || key.equalsIgnoreCase("attr48")
+                    || key.equalsIgnoreCase("attr49")
+                    || key.equalsIgnoreCase("attr50")
+                    || key.equalsIgnoreCase("attr51")
+                    || key.equalsIgnoreCase("attr52")
+                    || key.equalsIgnoreCase("attr53")
+                    || key.equalsIgnoreCase("attr54")
+                    || key.equalsIgnoreCase("attr55")
+                    || key.equalsIgnoreCase("attr56")
+                    || key.equalsIgnoreCase("attr57")
+                    || key.equalsIgnoreCase("attr58")
+                    || key.equalsIgnoreCase("attr59")
+                    || key.equalsIgnoreCase("attr60")
+                    || key.equalsIgnoreCase("attr61")
+                    || key.equalsIgnoreCase("attr62")
+                    || key.equalsIgnoreCase("attr63")
+                    || key.equalsIgnoreCase("attr64")
+                    || key.equalsIgnoreCase("attr65")
+                    || key.equalsIgnoreCase("attr66")
+                    || key.equalsIgnoreCase("attr67")
+                    || key.equalsIgnoreCase("attr68")
+                    || key.equalsIgnoreCase("attr69")
+                    || key.equalsIgnoreCase("attr70")
+                    || key.equalsIgnoreCase("attr71")
+                    || key.equalsIgnoreCase("attr72")
+                    || key.equalsIgnoreCase("attr73")
+                    || key.equalsIgnoreCase("attr74")
+                    || key.equalsIgnoreCase("attr75")
+                    || key.equalsIgnoreCase("attr76")
+                    || key.equalsIgnoreCase("attr77")
+                    || key.equalsIgnoreCase("attr78")
+                    || key.equalsIgnoreCase("attr79")
+                    || key.equalsIgnoreCase("attr80")
+                    || key.equalsIgnoreCase("attr81")
+                    || key.equalsIgnoreCase("attr82")
+                    || key.equalsIgnoreCase("attr83")
+                    || key.equalsIgnoreCase("attr84")
+                    || key.equalsIgnoreCase("attr85")
+                    || key.equalsIgnoreCase("attr86")
+                    || key.equalsIgnoreCase("attr87")
+                    || key.equalsIgnoreCase("attr88")
+                    || key.equalsIgnoreCase("attr89")
+                    || key.equalsIgnoreCase("attr90")
+                    || key.equalsIgnoreCase("attr91")
+                    || key.equalsIgnoreCase("attr92")
+                    || key.equalsIgnoreCase("attr93")
+                    || key.equalsIgnoreCase("attr94")
+                    || key.equalsIgnoreCase("attr95")
+                    || key.equalsIgnoreCase("attr96")
+                    || key.equalsIgnoreCase("attr97")
+                    || key.equalsIgnoreCase("attr98")
+                    || key.equalsIgnoreCase("attr99")
+                    || key.equalsIgnoreCase("attr100")
+                    || key.equalsIgnoreCase("attr101")
+                    || key.equalsIgnoreCase("attr102")
+                    || key.equalsIgnoreCase("attr103")
+                    || key.equalsIgnoreCase("attr104")
+                    || key.equalsIgnoreCase("attr105")
+                    || key.equalsIgnoreCase("attr106")
+                    || key.equalsIgnoreCase("attr107")
+                    || key.equalsIgnoreCase("attr108")
+                    || key.equalsIgnoreCase("attr109")
+                    || key.equalsIgnoreCase("attr110")
+                    || key.equalsIgnoreCase("attr111")
+                    || key.equalsIgnoreCase("attr112")
+                    || key.equalsIgnoreCase("attr113")
+                    || key.equalsIgnoreCase("attr114")
+                    || key.equalsIgnoreCase("attr115")
+                    || key.equalsIgnoreCase("attr116")
+                    || key.equalsIgnoreCase("attr117")
+                    || key.equalsIgnoreCase("attr118")
+                    || key.equalsIgnoreCase("attr119")
+                    || key.equalsIgnoreCase("attr120")
+                    || key.equalsIgnoreCase("attr121")
+                    || key.equalsIgnoreCase("attr122")
+                    || key.equalsIgnoreCase("attr123")
+                    || key.equalsIgnoreCase("attr124")
+                    || key.equalsIgnoreCase("attr125")
+                    || key.equalsIgnoreCase("attr126")
+                    || key.equalsIgnoreCase("attr127")
+                    || key.equalsIgnoreCase("attr128")
+                    || key.equalsIgnoreCase("attr129")
+                    || key.equalsIgnoreCase("attr130")
+                    || key.equalsIgnoreCase("attr131")
+                    || key.equalsIgnoreCase("attr132")
+                    || key.equalsIgnoreCase("attr133")
+                    || key.equalsIgnoreCase("attr134")
+                    || key.equalsIgnoreCase("attr135")
+                    || key.equalsIgnoreCase("attr136")
+                    || key.equalsIgnoreCase("attr137")
+                    || key.equalsIgnoreCase("attr138")
+                    || key.equalsIgnoreCase("attr139")
+                    || key.equalsIgnoreCase("attr140")
+                    || key.equalsIgnoreCase("attr141")
+                    || key.equalsIgnoreCase("attr142")
+                    || key.equalsIgnoreCase("attr143")
+                    || key.equalsIgnoreCase("attr144")
+                    || key.equalsIgnoreCase("attr145")
+                    || key.equalsIgnoreCase("attr146")
+                    || key.equalsIgnoreCase("attr147")
+                    || key.equalsIgnoreCase("attr148")
+                    || key.equalsIgnoreCase("attr149")
+                    || key.equalsIgnoreCase("attr150")
+                    || key.equalsIgnoreCase("attr151")
+                    || key.equalsIgnoreCase("attr152")
+                    || key.equalsIgnoreCase("attr153")
+                    || key.equalsIgnoreCase("attr154")
+                    || key.equalsIgnoreCase("attr155")
+                    || key.equalsIgnoreCase("attr156")
+                    || key.equalsIgnoreCase("attr157")
+                    || key.equalsIgnoreCase("attr158")
+                    || key.equalsIgnoreCase("attr159")
+                    || key.equalsIgnoreCase("attr160")
+                    || key.equalsIgnoreCase("attr161")
+                    || key.equalsIgnoreCase("attr162")
+                    || key.equalsIgnoreCase("attr163")
+                    || key.equalsIgnoreCase("attr164")
+                    || key.equalsIgnoreCase("attr165")
+                    || key.equalsIgnoreCase("attr166")
+                    || key.equalsIgnoreCase("attr167")
+                    || key.equalsIgnoreCase("attr168")
+                    || key.equalsIgnoreCase("attr169")
+                    || key.equalsIgnoreCase("attr170")
+                    || key.equalsIgnoreCase("attr171")
+                    || key.equalsIgnoreCase("attr172")
+                    || key.equalsIgnoreCase("attr173")
+                    || key.equalsIgnoreCase("attr174")
+                    || key.equalsIgnoreCase("attr175")
+                    || key.equalsIgnoreCase("attr176")
+                    || key.equalsIgnoreCase("attr177")
+                    || key.equalsIgnoreCase("attr178")
+                    || key.equalsIgnoreCase("attr179")
+                    || key.equalsIgnoreCase("attr180")
+                    || key.equalsIgnoreCase("attr181")
+                    || key.equalsIgnoreCase("attr182")
+                    || key.equalsIgnoreCase("attr183")
+                    || key.equalsIgnoreCase("attr184")
+                    || key.equalsIgnoreCase("attr185")
+                    || key.equalsIgnoreCase("attr186")
+                    || key.equalsIgnoreCase("attr187")
+                    || key.equalsIgnoreCase("attr188")
+                    || key.equalsIgnoreCase("attr189")
+                    || key.equalsIgnoreCase("attr190")
+                    || key.equalsIgnoreCase("attr191")
+                    || key.equalsIgnoreCase("attr192")
+                    || key.equalsIgnoreCase("attr193")
+                    || key.equalsIgnoreCase("attr194")
+                    || key.equalsIgnoreCase("attr195")
+                    || key.equalsIgnoreCase("attr196")
+                    || key.equalsIgnoreCase("attr197")
+                    || key.equalsIgnoreCase("attr198")
+                    || key.equalsIgnoreCase("attr199")
+                    || key.equalsIgnoreCase("attr200")
+                    || key.equalsIgnoreCase("attr201")
+                    || key.equalsIgnoreCase("attr202")
+                    || key.equalsIgnoreCase("attr203")
+                    || key.equalsIgnoreCase("attr204")
+                    || key.equalsIgnoreCase("attr205")
+                    || key.equalsIgnoreCase("attr206")
+                    || key.equalsIgnoreCase("attr207")
+                    || key.equalsIgnoreCase("attr208")
+                    || key.equalsIgnoreCase("attr209")
+                    || key.equalsIgnoreCase("attr210")
+                    || key.equalsIgnoreCase("attr211")
+                    || key.equalsIgnoreCase("attr212")
+                    || key.equalsIgnoreCase("attr213")
+                    || key.equalsIgnoreCase("attr214")
+                    || key.equalsIgnoreCase("attr215")
+                    || key.equalsIgnoreCase("attr216")
+                    || key.equalsIgnoreCase("attr217")
+                    || key.equalsIgnoreCase("attr218")
+                    || key.equalsIgnoreCase("attr219")
+                    || key.equalsIgnoreCase("attr220")
+                    || key.equalsIgnoreCase("attr221")
+                    || key.equalsIgnoreCase("attr222")
+                    || key.equalsIgnoreCase("attr223")
+                    || key.equalsIgnoreCase("attr224")
+                    || key.equalsIgnoreCase("attr225")
+                    || key.equalsIgnoreCase("attr226")
+                    || key.equalsIgnoreCase("attr227")
+                    || key.equalsIgnoreCase("attr228")
+                    || key.equalsIgnoreCase("attr229")
+                    || key.equalsIgnoreCase("attr230")
+                    || key.equalsIgnoreCase("attr231")
+                    || key.equalsIgnoreCase("attr232")
+                    || key.equalsIgnoreCase("attr233")
+                    || key.equalsIgnoreCase("attr234")
+                    || key.equalsIgnoreCase("attr235")
+                    || key.equalsIgnoreCase("attr236")
+                    || key.equalsIgnoreCase("attr237")
+                    || key.equalsIgnoreCase("attr238")
+                    || key.equalsIgnoreCase("attr239")
+                    || key.equalsIgnoreCase("attr240")
+                    || key.equalsIgnoreCase("attr241")
+                    || key.equalsIgnoreCase("attr242")
+                    || key.equalsIgnoreCase("attr243")
+                    || key.equalsIgnoreCase("attr244")
+                    || key.equalsIgnoreCase("attr245")
+                    || key.equalsIgnoreCase("attr246")
+                    || key.equalsIgnoreCase("attr247")
+                    || key.equalsIgnoreCase("attr248")
+                    || key.equalsIgnoreCase("attr249")
+                    || key.equalsIgnoreCase("attr250")
+                    || key.equalsIgnoreCase("attr251")
+                    || key.equalsIgnoreCase("attr252")
+                    || key.equalsIgnoreCase("attr253")
+                    || key.equalsIgnoreCase("attr254")
+                    || key.equalsIgnoreCase("attr255")
+                    || key.equalsIgnoreCase("attr256")
+                    || key.equalsIgnoreCase("children")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
+        }
+
         public Builder additionalProperty(String key, Object value) {
             this.additionalProperties.put(key, value);
             return this;
@@ -6850,28 +7129,72 @@ public final class Wide implements XmlSerializable {
         }
 
         /**
-         * Appends a child element that is not described by the API definition.
+         * Appends a child element that is not described by the API definition, after any content added so far.
          */
         public Builder addChild(XmlElement child) {
-            this.additionalChildren.add(child);
-            return this;
-        }
-
-        public Builder additionalChildren(List<XmlElement> additionalChildren) {
-            this.additionalChildren.addAll(additionalChildren);
+            this.content.add(XmlNode.element(child));
             return this;
         }
 
         /**
-         * Appends a &lt;Pause&gt; child element.
+         * Appends a text segment after any content added so far, so text can be interleaved with child elements.
+         */
+        public Builder addText(String text) {
+            this.content.add(XmlNode.text(text));
+            return this;
+        }
+
+        /**
+         * Appends an xml comment ({@code <!--text-->}) inside this element, after any content added so far.
+         */
+        public Builder comment(String text) {
+            this.content.add(XmlNode.comment(text));
+            return this;
+        }
+
+        /**
+         * Adds an xml comment rendered immediately before this element (as a sibling in its parent, or before the root element).
+         */
+        public Builder commentBefore(String text) {
+            this.content.add(XmlNode.commentBefore(text));
+            return this;
+        }
+
+        /**
+         * Adds an xml comment rendered immediately after this element (as a sibling in its parent, or after the root element).
+         */
+        public Builder commentAfter(String text) {
+            this.content.add(XmlNode.commentAfter(text));
+            return this;
+        }
+
+        public Builder additionalChildren(List<XmlElement> additionalChildren) {
+            for (XmlElement child : additionalChildren) {
+                this.content.add(XmlNode.element(child));
+            }
+            return this;
+        }
+
+        /**
+         * Appends ordered content (text segments and child elements).
+         */
+        public Builder content(List<XmlNode> content) {
+            this.content.addAll(content);
+            return this;
+        }
+
+        /**
+         * Appends a &lt;Pause&gt; child element after any content added so far.
          * <p>XML element without an explicit xml.name; falls back to the schema name.</p>
          * @param pause the &lt;Pause&gt; element to append
          * @return this builder
          */
         public Builder pause(Pause pause) {
+            Pause item = pause;
             List<Pause> updated = new ArrayList<>(this.children.orElseGet(Collections::emptyList));
-            updated.add(pause);
+            updated.add(item);
             this.children = Optional.of(updated);
+            this.content.add(XmlNode.element(item));
             return this;
         }
 
@@ -6886,7 +7209,6 @@ public final class Wide implements XmlSerializable {
             Wide parsed = Wide.fromXml(element);
             Builder builder = new Builder().from(parsed);
             builder.additionalProperties(parsed.getAdditionalProperties());
-            builder.additionalChildren(parsed.getAdditionalChildren());
             return builder;
         }
     }

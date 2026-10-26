@@ -210,7 +210,7 @@ export class MockEndpointGenerator extends WithGeneration {
                     if (requestContentType === "application/x-www-form-urlencoded") {
                         // For form-urlencoded requests, use FormUrlEncodedMatcher
                         const filteredRequestJson = this.filterReadOnlyPropertiesFromExample(example.request, endpoint);
-                        const formPairs = this.convertToFormUrlEncodedPairs(filteredRequestJson);
+                        const formPairs = convertToFormUrlEncodedPairs(filteredRequestJson);
                         writer.write(`.WithBody(new WireMock.Matchers.FormUrlEncodedMatcher([${formPairs}]))`);
                     } else if (typeof example.request.jsonExample !== "object") {
                         // Not entirely sure why we can't use BodyAsJson here, but it causes test failure
@@ -1214,23 +1214,24 @@ export class MockEndpointGenerator extends WithGeneration {
         }
         return nullableNames;
     }
+}
 
-    /**
-     * Converts a JSON object to form-urlencoded key=value pairs for use with FormUrlEncodedMatcher.
-     * Returns a string like: "key1=value1", "key2=value2"
-     */
-    private convertToFormUrlEncodedPairs(json: unknown): string {
-        if (typeof json !== "object" || json === null) {
-            return "";
-        }
-        const pairs: string[] = [];
-        for (const [key, value] of Object.entries(json)) {
-            if (value !== undefined && value !== null) {
-                pairs.push(`"${key}=${String(value)}"`);
-            }
-        }
-        return pairs.join(", ");
+/**
+ * Converts a JSON object to escaped C# string literals for use with FormUrlEncodedMatcher.
+ * Escaping the complete key=value pair keeps the runtime matcher value unchanged while ensuring
+ * that quotes, backslashes, and control characters produce valid generated C# source.
+ */
+export function convertToFormUrlEncodedPairs(json: unknown): string {
+    if (typeof json !== "object" || json === null) {
+        return "";
     }
+    const pairs: string[] = [];
+    for (const [key, value] of Object.entries(json)) {
+        if (value !== undefined && value !== null) {
+            pairs.push(`"${escapeForCSharpString(`${key}=${String(value)}`)}"`);
+        }
+    }
+    return pairs.join(", ");
 }
 
 // Characters the C# SDK's QueryStringBuilder treats as safe for query keys.
