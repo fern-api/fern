@@ -37,7 +37,7 @@ function main(): void {
     }
 
     const banner = logoToBanner(readFileSync(input), {
-        width: values.width != null ? Number(values.width) : undefined,
+        width: values.width != null ? parseWidth(values.width) : undefined,
         mode: values.mode
     });
     if (values.output != null) {
@@ -45,6 +45,13 @@ function main(): void {
     } else {
         process.stdout.write(banner);
     }
+}
+
+function parseWidth(raw: string): number {
+    if (!/^[1-9][0-9]*$/.test(raw)) {
+        throw new Error(`Invalid --width: expected a positive integer, got "${raw}".`);
+    }
+    return Number(raw);
 }
 
 function isLogoMode(value: string): value is LogoMode {
