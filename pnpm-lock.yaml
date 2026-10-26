@@ -8036,6 +8036,9 @@ importers:
 
   packages/commons/terminal-logo:
     dependencies:
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../core-utils
       '@resvg/resvg-js':
         specifier: 'catalog:'
         version: 2.6.2

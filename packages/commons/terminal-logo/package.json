@@ -35,6 +35,7 @@
     "test:update": "vitest --passWithNoTests --run -u"
   },
   "dependencies": {
+    "@fern-api/core-utils": "workspace:*",
     "@resvg/resvg-js": "catalog:",
     "pngjs": "catalog:"
   },

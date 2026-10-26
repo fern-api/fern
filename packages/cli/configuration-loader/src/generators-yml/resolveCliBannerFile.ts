@@ -1,3 +1,4 @@
+import { isRecord } from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, resolve } from "@fern-api/fs-utils";
 import { CliError } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
@@ -49,8 +50,4 @@ export async function resolveCliBannerFile({
         });
     }
     return { ...config, banner: { ...banner, text } };
-}
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-    return typeof value === "object" && value !== null && !Array.isArray(value);
 }

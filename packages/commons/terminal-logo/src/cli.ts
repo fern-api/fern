@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { readFileSync, writeFileSync } from "node:fs";
 import { parseArgs } from "node:util";
+import { errorMessageOrString } from "@fern-api/core-utils";
 import { type LogoMode, logoToBanner } from "./logoToBanner.js";
 
 const USAGE = `Usage: fern-terminal-logo <logo.svg|logo.png> [options]
@@ -53,6 +54,6 @@ function isLogoMode(value: string): value is LogoMode {
 try {
     main();
 } catch (error) {
-    process.stderr.write(`${error instanceof Error ? error.message : String(error)}\n`);
+    process.stderr.write(`${errorMessageOrString(error)}\n`);
     process.exitCode = 1;
 }
