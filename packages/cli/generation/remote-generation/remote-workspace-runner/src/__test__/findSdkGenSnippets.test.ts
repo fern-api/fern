@@ -1,6 +1,15 @@
-import { describe, expect, it, vi } from "vitest";
+import axios from "axios";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { findSdkGenSnippetsUrls } from "../findSdkGenSnippets.js";
+
+vi.mock("axios");
+
+const get = vi.mocked(axios.get);
+
+beforeEach(() => {
+    get.mockReset();
+});
 
 const query = {
     origin: "https://sdk-gen.example",
@@ -17,9 +26,9 @@ const page = (data: Array<{ language: string; snippetsUrl?: string }>, pages = 1
 
 describe("findSdkGenSnippetsUrls", () => {
     it("asks the sdk-gen-api for the successfully built SDKs of the name, version and languages", async () => {
-        const get = vi.fn(async (_url: string, _options: object) => page([]));
+        get.mockResolvedValue(page([]));
 
-        await findSdkGenSnippetsUrls(query, get);
+        await findSdkGenSnippetsUrls(query);
 
         expect(get).toHaveBeenCalledTimes(1);
         const [url, options] = get.mock.calls[0] ?? [];
@@ -37,7 +46,7 @@ describe("findSdkGenSnippetsUrls", () => {
     });
 
     it("takes the link of the newest SDK of each language", async () => {
-        const get = vi.fn(async (_url: string, _options: object) =>
+        get.mockResolvedValue(
             page([
                 { language: "typescript", snippetsUrl: "https://s3/new-ts" },
                 { language: "python", snippetsUrl: "https://s3/new-py" },
@@ -45,29 +54,28 @@ describe("findSdkGenSnippetsUrls", () => {
             ])
         );
 
-        expect([...(await findSdkGenSnippetsUrls(query, get))]).toEqual([
+        expect([...(await findSdkGenSnippetsUrls(query))]).toEqual([
             ["typescript", "https://s3/new-ts"],
             ["python", "https://s3/new-py"]
         ]);
     });
 
     it("skips a newer SDK that saved no snippets file and takes an older one's", async () => {
-        const get = vi.fn(async (_url: string, _options: object) =>
+        get.mockResolvedValue(
             page([{ language: "typescript" }, { language: "typescript", snippetsUrl: "https://s3/older-ts" }])
         );
 
-        const urls = await findSdkGenSnippetsUrls({ ...query, languages: ["typescript"] }, get);
+        const urls = await findSdkGenSnippetsUrls({ ...query, languages: ["typescript"] });
 
         expect([...urls]).toEqual([["typescript", "https://s3/older-ts"]]);
     });
 
     it("reads the next page until every language has a link", async () => {
-        const get = vi
-            .fn<(url: string, options: object) => Promise<{ data: unknown }>>()
-            .mockResolvedValueOnce(page([{ language: "typescript", snippetsUrl: "https://s3/ts" }], 3))
-            .mockResolvedValueOnce(page([{ language: "python", snippetsUrl: "https://s3/py" }], 3));
+        get.mockResolvedValueOnce(
+            page([{ language: "typescript", snippetsUrl: "https://s3/ts" }], 3)
+        ).mockResolvedValueOnce(page([{ language: "python", snippetsUrl: "https://s3/py" }], 3));
 
-        const urls = await findSdkGenSnippetsUrls(query, get);
+        const urls = await findSdkGenSnippetsUrls(query);
 
         expect(get).toHaveBeenCalledTimes(2);
         expect(new URL(String(get.mock.calls[1]?.[0])).searchParams.get("offset")).toBe("50");
@@ -75,27 +83,19 @@ describe("findSdkGenSnippetsUrls", () => {
     });
 
     it("stops at the last page, and returns the languages it found", async () => {
-        const get = vi.fn(async (_url: string, _options: object) =>
-            page([{ language: "typescript", snippetsUrl: "https://s3/ts" }], 1)
-        );
+        get.mockResolvedValue(page([{ language: "typescript", snippetsUrl: "https://s3/ts" }], 1));
 
-        const urls = await findSdkGenSnippetsUrls(query, get);
+        const urls = await findSdkGenSnippetsUrls(query);
 
         expect(get).toHaveBeenCalledTimes(1);
         expect([...urls.keys()]).toEqual(["typescript"]);
     });
 
     it("gives up after four pages", async () => {
-        const get = vi.fn(async (_url: string, _options: object) => page([], 100));
+        get.mockResolvedValue(page([], 100));
 
-        await findSdkGenSnippetsUrls(query, get);
+        await findSdkGenSnippetsUrls(query);
 
         expect(get).toHaveBeenCalledTimes(4);
-    });
-
-    it("fails on a response that is not an artifact list", async () => {
-        const get = vi.fn(async (_url: string, _options: object) => ({ data: { unexpected: true } }));
-
-        await expect(findSdkGenSnippetsUrls(query, get)).rejects.toThrow("unexpected artifact list");
     });
 });

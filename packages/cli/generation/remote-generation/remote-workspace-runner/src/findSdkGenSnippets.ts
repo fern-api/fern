@@ -1,4 +1,3 @@
-import { isPlainObject } from "@fern-api/core-utils";
 import axios from "axios";
 
 /** The most the sdk-gen-api lists in one page. */
@@ -27,35 +26,20 @@ export interface SdkGenSnippetsQuery {
     languages: string[];
 }
 
-type HttpGet = (
-    url: string,
-    options: { headers: Record<string, string>; timeout: number }
-) => Promise<{ data: unknown }>;
-
-function isArtifactPage(value: unknown): value is ArtifactPage {
-    return (
-        isPlainObject(value) &&
-        typeof value.pages === "number" &&
-        Array.isArray(value.data) &&
-        value.data.every(
-            (artifact) =>
-                isPlainObject(artifact) &&
-                typeof artifact.language === "string" &&
-                (artifact.snippetsUrl === undefined || typeof artifact.snippetsUrl === "string")
-        )
-    );
-}
-
 /**
  * The links to the snippets files of one SDK version, by language: from the newest successfully built SDK of each
  * language that has one. The sdk-gen-api lists the organization's SDKs, newest first, filtered by the sdkName, version
  * and languages the docs ask for, so nothing is needed from the machine that built the SDK. A language with no link
  * is missing from the result.
  */
-export async function findSdkGenSnippetsUrls(
-    { origin, token, organization, sdkName, version, languages }: SdkGenSnippetsQuery,
-    get: HttpGet = axios.get
-): Promise<Map<string, string>> {
+export async function findSdkGenSnippetsUrls({
+    origin,
+    token,
+    organization,
+    sdkName,
+    version,
+    languages
+}: SdkGenSnippetsQuery): Promise<Map<string, string>> {
     const headers = { Authorization: `Bearer ${token}`, "X-Fern-Organization-Id": organization };
     const urls = new Map<string, string>();
     for (let page = 0; page < MAX_PAGES; page++) {
@@ -69,13 +53,10 @@ export async function findSdkGenSnippetsUrls(
         for (const language of languages) {
             query.append("language", language);
         }
-        const { data: listed } = await get(`${origin}/v1/fern/artifacts?${query}`, {
+        const { data: listed } = await axios.get<ArtifactPage>(`${origin}/v1/fern/artifacts?${query}`, {
             headers,
             timeout: REQUEST_TIMEOUT_MS
         });
-        if (!isArtifactPage(listed)) {
-            throw new Error("sdk-gen-api returned an unexpected artifact list");
-        }
         for (const { language, snippetsUrl } of listed.data) {
             if (snippetsUrl != null && !urls.has(language)) {
                 urls.set(language, snippetsUrl);
