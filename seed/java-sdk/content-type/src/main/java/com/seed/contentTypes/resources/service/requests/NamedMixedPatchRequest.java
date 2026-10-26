@@ -112,7 +112,6 @@ public final class NamedMixedPatchRequest {
 
         private Optional<Boolean> active = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -181,6 +180,16 @@ public final class NamedMixedPatchRequest {
 
         public NamedMixedPatchRequest build() {
             return new NamedMixedPatchRequest(appId, instructions, active, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("appId")
+                    || key.equalsIgnoreCase("instructions")
+                    || key.equalsIgnoreCase("active")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

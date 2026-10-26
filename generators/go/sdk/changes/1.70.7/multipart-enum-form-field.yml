@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Multipart form requests now send enum fields as plain form values (`DUE_DILIGENCE`)
+    instead of JSON-encoded strings (`"DUE_DILIGENCE"`), matching the other SDKs.
+    Lists of enums are sent the same way, one plain part per value.
+  type: fix

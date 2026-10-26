@@ -10,10 +10,7 @@ import { CliError } from "@fern-api/task-context";
 import { writeFile } from "fs/promises";
 import { produce } from "immer";
 import { CliContext } from "../../cli-context/CliContext.js";
-
-function ensureFinalNewline(content: string): string {
-    return content.endsWith("\n") ? content : content + "\n";
-}
+import { ensureFinalNewline } from "../../utils/ensureFinalNewline.js";
 
 /**
  * Handles CLI downgrades by updating the version in fern.config.json.

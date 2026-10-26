@@ -1,3 +1,4 @@
+import { decodeJsonPointerSegment } from "@fern-api/core-utils";
 import { relative } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
@@ -13,10 +14,8 @@ function validateReference(ref: string, spec: unknown): boolean {
     const pathParts = ref
         .replace(/^#\//, "")
         .split("/")
-        .map((part) =>
-            // Decode JSON Pointer escapes: ~1 -> /, ~0 -> ~
-            part.replace(/~1/g, "/").replace(/~0/g, "~")
-        );
+        // Decode JSON Pointer escapes: ~1 -> /, ~0 -> ~
+        .map(decodeJsonPointerSegment);
 
     let current: unknown = spec;
 

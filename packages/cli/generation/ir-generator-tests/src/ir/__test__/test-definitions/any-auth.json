@@ -1982,7 +1982,8 @@
                             "unsafeName": "Bearer",
                             "safeName": "Bearer"
                         }
-                    }
+                    },
+                    "requirement": "ANY"
                 },
                 "declaration": {
                     "name": {
@@ -2260,6 +2261,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_user.get": {
@@ -2302,7 +2304,8 @@
                             "unsafeName": "Bearer",
                             "safeName": "Bearer"
                         }
-                    }
+                    },
+                    "requirement": "ANY"
                 },
                 "declaration": {
                     "name": {
@@ -2381,6 +2384,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_user.getAdmins": {
@@ -2423,7 +2427,8 @@
                             "unsafeName": "Bearer",
                             "safeName": "Bearer"
                         }
-                    }
+                    },
+                    "requirement": "ANY"
                 },
                 "declaration": {
                     "name": {
@@ -2502,6 +2507,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             }
         },

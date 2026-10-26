@@ -132,7 +132,6 @@ public final class SendEnumAsHeaderRequest {
 
         private Optional<Operand> maybeOperand = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -186,6 +185,11 @@ public final class SendEnumAsHeaderRequest {
         public SendEnumAsHeaderRequest build() {
             return new SendEnumAsHeaderRequest(
                     operand, maybeOperand, operandOrColor, maybeOperandOrColor, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

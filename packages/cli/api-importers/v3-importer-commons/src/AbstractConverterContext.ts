@@ -1,6 +1,7 @@
 import { OpenAPISettings } from "@fern-api/api-workspace-commons";
 import { CasingsGenerator, constructCasingsGenerator } from "@fern-api/casings-generator";
 import { generatorsYml } from "@fern-api/configuration";
+import { capitalizeFirstLetter, decodeJsonPointerSegment, isHttpUrl, isRecord } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import {
     Availability,
@@ -63,6 +64,8 @@ export abstract class AbstractConverterContext<Spec extends object> {
     public readonly generateV1Examples: boolean;
     public readonly documentBaseDir?: string;
     private readonly externalDocuments = new Map<string, Promise<unknown>>();
+    /** Type ids of discriminated union variants currently being inlined, to break self-referencing cycles. */
+    public readonly discriminatedVariantsInProgress = new Set<string>();
 
     constructor(protected readonly args: Spec.Args<Spec>) {
         this.spec = args.spec;
@@ -164,7 +167,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
         });
 
         const camelCased = camelCase(filteredBreadcrumbs.join("_"));
-        return camelCased.charAt(0).toUpperCase() + camelCased.slice(1);
+        return capitalizeFirstLetter(camelCased);
     }
 
     /**
@@ -410,7 +413,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
                 const refPath = refValue
                     .substring(2) // Remove leading "#/"
                     .split("/")
-                    .map((seg) => seg.replace(/~1/g, "/").replace(/~0/g, "~"));
+                    .map(decodeJsonPointerSegment);
 
                 for (const segment of refPath) {
                     if (typeof tempRef !== "object" || tempRef === null) {
@@ -858,7 +861,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
     }
 
     public isExternalReference($ref: string): boolean {
-        return typeof $ref === "string" && ($ref.startsWith("http://") || $ref.startsWith("https://"));
+        return typeof $ref === "string" && isHttpUrl($ref);
     }
 
     public isReferenceObjectWithIdentifier(
@@ -951,7 +954,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
     }
 
     public getAsObject(value: unknown): Record<string, unknown> | undefined {
-        if (typeof value === "object" && value !== null && !Array.isArray(value)) {
+        if (isRecord(value)) {
             return value as Record<string, unknown>;
         }
         return undefined;

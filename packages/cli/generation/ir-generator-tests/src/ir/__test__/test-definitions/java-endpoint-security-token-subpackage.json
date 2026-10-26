@@ -3019,7 +3019,8 @@
                             "unsafeName": "OAuth",
                             "safeName": "OAuth"
                         }
-                    }
+                    },
+                    "requirement": "ENDPOINT_SECURITY"
                 },
                 "declaration": {
                     "name": {
@@ -3366,6 +3367,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_user.getWithOAuth": {
@@ -3428,7 +3430,8 @@
                             "unsafeName": "OAuth",
                             "safeName": "OAuth"
                         }
-                    }
+                    },
+                    "requirement": "ENDPOINT_SECURITY"
                 },
                 "declaration": {
                     "name": {
@@ -3507,6 +3510,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_user.getWithApiKeyOrOAuth": {
@@ -3569,7 +3573,8 @@
                             "unsafeName": "OAuth",
                             "safeName": "OAuth"
                         }
-                    }
+                    },
+                    "requirement": "ENDPOINT_SECURITY"
                 },
                 "declaration": {
                     "name": {
@@ -3648,6 +3653,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_user.getWithBearer": {
@@ -3710,7 +3716,8 @@
                             "unsafeName": "OAuth",
                             "safeName": "OAuth"
                         }
-                    }
+                    },
+                    "requirement": "ENDPOINT_SECURITY"
                 },
                 "declaration": {
                     "name": {
@@ -3789,6 +3796,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_user.getWithBasic": {
@@ -3851,7 +3859,8 @@
                             "unsafeName": "OAuth",
                             "safeName": "OAuth"
                         }
-                    }
+                    },
+                    "requirement": "ENDPOINT_SECURITY"
                 },
                 "declaration": {
                     "name": {
@@ -3930,6 +3939,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_user.getAnonymous": {
@@ -3992,7 +4002,8 @@
                             "unsafeName": "OAuth",
                             "safeName": "OAuth"
                         }
-                    }
+                    },
+                    "requirement": "ENDPOINT_SECURITY"
                 },
                 "declaration": {
                     "name": {
@@ -4071,6 +4082,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             }
         },

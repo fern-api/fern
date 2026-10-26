@@ -159,7 +159,6 @@ public final class UndiscriminatedUnionTypeWithAliasListVariant {
         public static final class Builder implements PropStage, _FinalStage {
             private String prop;
 
-            @JsonAnySetter
             private Map<String, Object> additionalProperties = new HashMap<>();
 
             private Builder() {}
@@ -180,6 +179,14 @@ public final class UndiscriminatedUnionTypeWithAliasListVariant {
             @java.lang.Override
             public AliasVariantType build() {
                 return new AliasVariantType(prop, additionalProperties);
+            }
+
+            @JsonAnySetter
+            private void putAdditionalPropertyFromJson(String key, Object value) {
+                if (key.equalsIgnoreCase("prop")) {
+                    return;
+                }
+                this.additionalProperties.put(key, value);
             }
 
             @java.lang.Override

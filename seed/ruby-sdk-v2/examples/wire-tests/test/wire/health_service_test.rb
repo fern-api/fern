@@ -8,7 +8,8 @@ class HealthServiceWireTest < WireMockTestCase
 
     @client = Seed::Client.new(
       token: "<token>",
-      base_url: WIREMOCK_BASE_URL
+      base_url: WIREMOCK_BASE_URL,
+      max_retries: 0
     )
   end
 
@@ -28,6 +29,27 @@ class HealthServiceWireTest < WireMockTestCase
       test_id: test_id,
       method: "GET",
       url_path: "/check/id-2sdx82h",
+      query_params: nil,
+      expected: 1
+    )
+  end
+
+  def test_health_service_check_example2_with_wiremock
+    test_id = "health.service.check.1"
+
+    @client.health.service.check(
+      id: "id-3tey93i",
+      request_options: {
+        additional_headers: {
+          "X-Test-Id" => "health.service.check.1"
+        }
+      }
+    )
+
+    verify_request_count(
+      test_id: test_id,
+      method: "GET",
+      url_path: "/check/id-3tey93i",
       query_params: nil,
       expected: 1
     )

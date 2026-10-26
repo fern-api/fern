@@ -95,7 +95,6 @@ public final class NestedObjectWithRequiredField {
 
         private ObjectWithOptionalField nestedObject;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -124,6 +123,14 @@ public final class NestedObjectWithRequiredField {
         @java.lang.Override
         public NestedObjectWithRequiredField build() {
             return new NestedObjectWithRequiredField(string, nestedObject, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("string") || key.equalsIgnoreCase("NestedObject")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

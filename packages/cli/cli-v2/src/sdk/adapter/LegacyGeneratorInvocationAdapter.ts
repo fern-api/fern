@@ -391,7 +391,8 @@ export class LegacyGeneratorInvocationAdapter {
             csharp: generatorsYml.GenerationLanguage.CSHARP,
             swift: generatorsYml.GenerationLanguage.SWIFT,
             php: generatorsYml.GenerationLanguage.PHP,
-            rust: generatorsYml.GenerationLanguage.RUST
+            rust: generatorsYml.GenerationLanguage.RUST,
+            cli: generatorsYml.GenerationLanguage.CLI
         };
         return languageMap[lang.toLowerCase()];
     }

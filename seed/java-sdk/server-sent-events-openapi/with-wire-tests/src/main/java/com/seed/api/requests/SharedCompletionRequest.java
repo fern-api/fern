@@ -129,7 +129,6 @@ public final class SharedCompletionRequest {
 
         private Optional<Boolean> stream = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -187,6 +186,14 @@ public final class SharedCompletionRequest {
         @java.lang.Override
         public SharedCompletionRequest build() {
             return new SharedCompletionRequest(prompt, model, stream, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("prompt") || key.equalsIgnoreCase("model") || key.equalsIgnoreCase("stream")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

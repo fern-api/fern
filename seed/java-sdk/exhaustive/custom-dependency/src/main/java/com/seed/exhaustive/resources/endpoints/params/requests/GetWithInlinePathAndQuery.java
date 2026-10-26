@@ -94,7 +94,6 @@ public final class GetWithInlinePathAndQuery {
 
         private String query;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -123,6 +122,14 @@ public final class GetWithInlinePathAndQuery {
         @java.lang.Override
         public GetWithInlinePathAndQuery build() {
             return new GetWithInlinePathAndQuery(param, query, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("param") || key.equalsIgnoreCase("query")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

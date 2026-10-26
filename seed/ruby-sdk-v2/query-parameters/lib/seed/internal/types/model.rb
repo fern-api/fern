@@ -10,6 +10,23 @@ module Seed
         include Type
 
         class << self
+          # Serializes models nested in a hash, including inside arrays and nested hashes.
+          #
+          # @api private
+          def serialize_hash_values(hash)
+            hash.transform_values { |item| serialize_nested_value(item) }
+          end
+
+          # @api private
+          def serialize_nested_value(value)
+            case value
+            when Model then value.to_h
+            when ::Array then value.map { |item| serialize_nested_value(item) }
+            when ::Hash then serialize_hash_values(value)
+            else value
+            end
+          end
+
           # The defined fields for this model
           #
           # @api private
@@ -94,6 +111,18 @@ module Seed
             define_setter(name)
           end
 
+          # Whether an unknown input key is dropped instead of kept as an extra field: it matches a declared
+          # field's name or API name, ignoring case
+          #
+          # @api private
+          #
+          # @param key [Symbol, String]
+          # @return [Boolean]
+          def drop_extra_key?(key)
+            key = key.to_s
+            fields.any? { |name, field| name.to_s.casecmp?(key) || field.api_name.to_s.casecmp?(key) }
+          end
+
           # @api private
           private def define_accessor(name)
             method_name = name.to_sym
@@ -126,7 +155,7 @@ module Seed
           end
 
           def ===(instance)
-            instance.class.ancestors.include?(self)
+            instance.is_a?(self)
           end
         end
 
@@ -140,15 +169,18 @@ module Seed
           @data = {}
           @explicit_fields = {}
 
-          values = Utils.symbolize_keys(values.dup)
+          values = Utils.symbolize_keys(values)
 
           self.class.fields.each do |field_name, field|
             value = nil
-            [field.api_name.to_sym, field_name].uniq.each do |key|
-              next unless values.key?(key)
-
+            api_key = field.api_name.to_sym
+            if values.key?(api_key)
               @explicit_fields[field_name] = true
-              candidate = values.delete(key)
+              value = values.delete(api_key)
+            end
+            if api_key != field_name && values.key?(field_name)
+              @explicit_fields[field_name] = true
+              candidate = values.delete(field_name)
               value = candidate if value.nil?
             end
 
@@ -160,11 +192,15 @@ module Seed
                             field.default
                           end
 
-            @data[field_name] = Utils.coerce(field.type, field_value)
+            @data[field_name] = field_value.nil? ? nil : Utils.coerce(field.type, field_value)
           end
 
-          # Any remaining values in the input become extra fields
+          # Any remaining values in the input become extra fields, except keys that match a declared field
+          # case-insensitively (e.g. `VALUE` next to `value`): re-emitting those would let a case-insensitive
+          # JSON decoder downstream read the extra key instead of the declared field.
           values.each do |name, value|
+            next if self.class.drop_extra_key?(name)
+
             self.class.add_extra_field_definition(name: name, type: value.class)
 
             @data[name.to_sym] = value
@@ -184,6 +220,8 @@ module Seed
 
             if value.is_a?(::Array)
               value = value.map { |item| !item.nil? && item.respond_to?(:to_h) ? item.to_h : item }
+            elsif value.is_a?(::Hash)
+              value = Model.serialize_hash_values(value)
             elsif !value.nil? && value.respond_to?(:to_h)
               value = value.to_h
             end

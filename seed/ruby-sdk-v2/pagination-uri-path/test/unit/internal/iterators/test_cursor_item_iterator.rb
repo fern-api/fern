@@ -337,4 +337,27 @@ class CursorItemIteratorTest < Minitest::Test
 
     assert_equal "response 60", iterator.http_response
   end
+
+  def test_reads_nested_cursor_and_item_fields
+    nested_page = Struct.new(:payload, :pagination, keyword_init: true)
+    payload = Struct.new(:cards, keyword_init: true)
+    pagination = Struct.new(:next_cursor, keyword_init: true)
+    cursors = []
+    iterator = Seed::Internal::CursorItemIterator.new(
+      initial_cursor: nil,
+      cursor_field: %i[pagination next_cursor],
+      item_field: %i[payload cards]
+    ) do |cursor|
+      cursors << cursor
+      start = cursor || 0
+      next_cursor = start + 10
+      nested_page.new(
+        payload: payload.new(cards: NUMBERS[start...next_cursor]),
+        pagination: pagination.new(next_cursor: next_cursor < NUMBERS.length ? next_cursor : nil)
+      )
+    end
+
+    assert_equal NUMBERS, iterator.to_a
+    assert_equal [nil, 10, 20, 30, 40, 50, 60], cursors
+  end
 end

@@ -94,7 +94,6 @@ public final class CreateMovieRequest {
 
         private double rating;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -123,6 +122,14 @@ public final class CreateMovieRequest {
         @java.lang.Override
         public CreateMovieRequest build() {
             return new CreateMovieRequest(title, rating, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("title") || key.equalsIgnoreCase("rating")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

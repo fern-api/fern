@@ -11,8 +11,8 @@ async fn main() {
     client
         .users
         .list_with_body_offset_pagination(
-            &ListUsersBodyOffsetPaginationRequest {
-                pagination: Some(WithPage {
+            &ListUsersBodyOffsetPaginationRequest2 {
+                pagination: Some(WithPage2 {
                     page: Some(1),
                     ..Default::default()
                 }),

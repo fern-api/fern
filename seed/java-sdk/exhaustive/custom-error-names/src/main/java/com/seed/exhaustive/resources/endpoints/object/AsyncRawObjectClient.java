@@ -11,6 +11,7 @@ import com.seed.exhaustive.core.CustomApiException;
 import com.seed.exhaustive.core.CustomException;
 import com.seed.exhaustive.core.MediaTypes;
 import com.seed.exhaustive.core.ObjectMappers;
+import com.seed.exhaustive.core.PathSegments;
 import com.seed.exhaustive.core.RequestOptions;
 import com.seed.exhaustive.core.RetryInterceptor;
 import com.seed.exhaustive.core.SeedExhaustiveHttpResponse;
@@ -412,7 +413,7 @@ public class AsyncRawObjectClient {
                 .newBuilder()
                 .addPathSegments("object")
                 .addPathSegments("get-and-return-nested-with-required-field")
-                .addPathSegment(string);
+                .addPathSegment(PathSegments.validate(string));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);

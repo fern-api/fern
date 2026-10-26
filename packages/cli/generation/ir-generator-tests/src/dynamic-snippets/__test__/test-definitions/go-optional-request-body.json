@@ -299,6 +299,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_.waterAllPlants": {
@@ -348,6 +349,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_.prunePlant": {
@@ -481,6 +483,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_.mistPlant": {
@@ -648,6 +651,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         }
     },

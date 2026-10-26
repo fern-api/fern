@@ -135,7 +135,7 @@ client.vendor().createVendor(
 
 ```java
 client.catalog().createCatalogImage(
-    null,
+    Optional.empty(),
     CreateCatalogImageBody
         .builder()
         .request(

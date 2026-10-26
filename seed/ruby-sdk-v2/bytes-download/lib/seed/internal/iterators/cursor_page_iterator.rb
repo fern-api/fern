@@ -12,7 +12,7 @@ module Seed
       # Instantiates a CursorPageIterator, an Enumerable class which wraps calls to a cursor-based paginated API and yields pages of items.
       #
       # @param initial_cursor [String] The initial cursor to use when iterating, if any.
-      # @param cursor_field [Symbol] The name of the field in API responses to extract the next cursor from.
+      # @param cursor_field [Symbol, Array<Symbol>] The name (or nested path) of the field in API responses to extract the next cursor from.
       # @param block [Proc] A block which is responsible for receiving a cursor to use and returning the given page from the API.
       #   The block should return a two-element array: [parsed_page, raw_http_response].
       # @return [Seed::Internal::CursorPageIterator]
@@ -93,7 +93,7 @@ module Seed
         end
         @at_first_page = false
         @need_initial_load = false
-        @cursor = page.send(@cursor_field)
+        @cursor = read_field(page, @cursor_field)
         page
       end
 
@@ -111,6 +111,15 @@ module Seed
         fetched_page, raw_response = result
         @http_response = raw_response
         fetched_page
+      end
+
+      # Reads a field from an API response, walking through enclosing objects when the field is nested.
+      #
+      # @param value [Object, nil] The API response.
+      # @param field [Symbol, Array<Symbol>] The field name, or the path of field names for a nested field.
+      # @return [Object, nil]
+      def read_field(value, field)
+        Array(field).reduce(value) { |object, name| object&.send(name) }
       end
     end
   end

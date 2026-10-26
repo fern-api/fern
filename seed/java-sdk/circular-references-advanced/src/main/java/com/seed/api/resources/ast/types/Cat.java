@@ -80,7 +80,6 @@ public final class Cat {
     public static final class Builder implements FruitStage, _FinalStage {
         private Fruit fruit;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -101,6 +100,14 @@ public final class Cat {
         @java.lang.Override
         public Cat build() {
             return new Cat(fruit, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("fruit")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

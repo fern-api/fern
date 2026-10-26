@@ -116,7 +116,6 @@ public final class AstllmNodeWithSchema {
 
         private Map<String, Object> valueSchema = new LinkedHashMap<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -170,6 +169,14 @@ public final class AstllmNodeWithSchema {
         @java.lang.Override
         public AstllmNodeWithSchema build() {
             return new AstllmNodeWithSchema(type, model, valueSchema, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("type") || key.equalsIgnoreCase("model") || key.equalsIgnoreCase("value_schema")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

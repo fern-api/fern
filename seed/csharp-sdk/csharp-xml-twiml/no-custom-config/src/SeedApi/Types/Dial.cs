@@ -12,17 +12,17 @@ public record Dial : IJsonOnDeserialized, IXmlNode
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
-    [JsonPropertyName("number")]
-    public string? Number { get; set; }
-
-    [JsonPropertyName("status_callback_event")]
-    public IEnumerable<string>? StatusCallbackEvent { get; set; }
-
     [JsonPropertyName("record")]
     public IEnumerable<DialRecordItem>? Record { get; set; }
 
     [JsonPropertyName("numbers")]
     public IEnumerable<Number>? Numbers { get; set; }
+
+    [JsonPropertyName("status_callback_event")]
+    public IEnumerable<string>? StatusCallbackEvent { get; set; }
+
+    [JsonPropertyName("number")]
+    public string? Number { get; set; }
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
@@ -65,11 +65,6 @@ public record Dial : IJsonOnDeserialized, IXmlNode
         );
         var result = new Dial
         {
-            Number = XmlUtils.ParseValue<string?>(XmlUtils.GetLeadingText(element)),
-            StatusCallbackEvent = XmlUtils.ParseList<string>(
-                XmlUtils.GetAttribute(element, "statusCallbackEvent"),
-                " "
-            ),
             Record = XmlUtils.ParseList<DialRecordItem>(
                 XmlUtils.GetAttribute(element, "record"),
                 " "
@@ -79,10 +74,15 @@ public record Dial : IJsonOnDeserialized, IXmlNode
                 new string[] { "Number" },
                 global::SeedApi.Number.FromXElement
             ),
+            StatusCallbackEvent = XmlUtils.ParseList<string>(
+                XmlUtils.GetAttribute(element, "statusCallbackEvent"),
+                " "
+            ),
+            Number = XmlUtils.ParseValue<string?>(XmlUtils.GetLeadingText(element)),
             AdditionalAttributes = XmlUtils.GetAdditionalAttributes(
                 element,
-                "statusCallbackEvent",
-                "record"
+                "record",
+                "statusCallbackEvent"
             ),
             Content = content,
         };
@@ -98,13 +98,13 @@ public record Dial : IJsonOnDeserialized, IXmlNode
     public XElement ToXElement()
     {
         var element = XmlUtils.CreateElement("Dial", "https://www.twilio.com/twiml", "tw");
-        XmlUtils.SetText(element, XmlUtils.ToXmlString(Number));
+        XmlUtils.SetAttribute(element, "record", XmlUtils.JoinValues(Record, " "));
         XmlUtils.SetAttribute(
             element,
             "statusCallbackEvent",
             XmlUtils.JoinValues(StatusCallbackEvent, " ")
         );
-        XmlUtils.SetAttribute(element, "record", XmlUtils.JoinValues(Record, " "));
+        XmlUtils.SetText(element, XmlUtils.ToXmlString(Number));
         XmlUtils.AddContent(
             element,
             XmlUtils.OrderContent(Content),
@@ -126,6 +126,12 @@ public record Dial : IJsonOnDeserialized, IXmlNode
     /// Serializes this value to an XML element, optionally prefixed with the XML declaration.
     /// </summary>
     public string ToXml(bool xmlDeclaration) => XmlUtils.Serialize(ToXElement(), xmlDeclaration);
+
+    /// <summary>
+    /// Serializes this value to XML, optionally prefixed with the XML declaration and optionally indented.
+    /// </summary>
+    public string ToXml(bool xmlDeclaration, bool indent) =>
+        XmlUtils.Serialize(ToXElement(), xmlDeclaration, indent);
 
     /// <summary>
     /// Hash code derived from the rendered XML, consistent with Equals.

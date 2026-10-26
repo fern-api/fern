@@ -55,6 +55,17 @@ module <%= gem_namespace %>
         end
 
         module ClassMethods
+          # XML attribute names are case-sensitive, so an extra key such as `VOICE` is a distinct attribute from a
+          # declared `voice` and is kept.
+          #
+          # @api private
+          #
+          # @param _key [Symbol, String]
+          # @return [Boolean]
+          def drop_extra_key?(_key)
+            false
+          end
+
           # @return [String] the element name
           attr_reader :xml_name
           # @return [String, nil] the element namespace URI
@@ -347,15 +358,18 @@ module <%= gem_namespace %>
           element
         end
 
+        # @param declaration [Boolean, nil] positional form of `xml_declaration` (`to_xml(false)`)
         # @param xml_declaration [Boolean] whether to prepend `<?xml version="1.0" encoding="UTF-8"?>`
         # @return [String]
-        def to_xml(xml_declaration: true)
+        def to_xml(declaration = nil, xml_declaration: true)
+          xml_declaration = declaration unless declaration.nil?
           Utils.serialize(to_xml_element, xml_declaration: xml_declaration)
         end
 
-        # @return [String] the XML document, including the declaration
-        def to_s
-          to_xml
+        # @param xml_declaration [Boolean] whether to prepend the declaration (`to_s(false)` omits it)
+        # @return [String] the XML document
+        def to_s(xml_declaration = true) # rubocop:disable Style/OptionalBooleanParameter
+          to_xml(xml_declaration: xml_declaration)
         end
 
         def ==(other)

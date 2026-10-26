@@ -380,6 +380,7 @@
                     "properties": [
                         {
                             "type": "file",
+                            "isOptional": false,
                             "wireValue": "audio",
                             "name": {
                                 "originalName": "audio",
@@ -445,6 +446,7 @@
             "response": {
                 "type": "fileDownload"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_service.isolateAudio": {
@@ -591,6 +593,7 @@
                     "properties": [
                         {
                             "type": "file",
+                            "isOptional": false,
                             "wireValue": "audio",
                             "name": {
                                 "originalName": "audio",
@@ -622,6 +625,7 @@
             "response": {
                 "type": "fileDownload"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_service.transcribeAudio": {
@@ -802,6 +806,7 @@
                     "properties": [
                         {
                             "type": "file",
+                            "isOptional": false,
                             "wireValue": "audio",
                             "name": {
                                 "originalName": "audio",
@@ -867,6 +872,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_service.speechToSpeech": {
@@ -1110,6 +1116,7 @@
                     "properties": [
                         {
                             "type": "file",
+                            "isOptional": false,
                             "wireValue": "audio",
                             "name": {
                                 "originalName": "audio",
@@ -1175,6 +1182,7 @@
             "response": {
                 "type": "fileDownload"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_service.getSpeechToSpeechSettings": {
@@ -1392,6 +1400,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": false,
             "examples": null
         },
         "endpoint_service.simple": {
@@ -1473,6 +1482,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": false,
             "examples": null
         }
     },

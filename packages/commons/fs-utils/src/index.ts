@@ -13,6 +13,7 @@ export {
     getDirectoryContentsForSnapshot
 } from "./getDirectoryContents.js";
 export { getFilename } from "./getFilename.js";
+export { getFilesAndDirectories } from "./getFilesAndDirectories.js";
 export { isCI } from "./isCI.js";
 export { isURL } from "./isUrl.js";
 export { join } from "./join.js";
@@ -32,4 +33,5 @@ export { splitPath } from "./splitPath.js";
 export { streamObjectFromFile } from "./streamObjectFromFile.js";
 export { streamObjectToFile } from "./streamObjectToFile.js";
 export { stringifyLargeObject } from "./stringifyLargeObject.js";
+export { toPosixPath } from "./toPosixPath.js";
 export { waitUntilPathExists } from "./waitUntilPathExists.js";

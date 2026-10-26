@@ -166,7 +166,6 @@ public final class Identity {
 
         private Optional<String> accessToken = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -239,6 +238,19 @@ public final class Identity {
         @java.lang.Override
         public Identity build() {
             return new Identity(connection, userId, provider, isSocial, accessToken, expiresIn, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("connection")
+                    || key.equalsIgnoreCase("user_id")
+                    || key.equalsIgnoreCase("provider")
+                    || key.equalsIgnoreCase("is_social")
+                    || key.equalsIgnoreCase("access_token")
+                    || key.equalsIgnoreCase("expires_in")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

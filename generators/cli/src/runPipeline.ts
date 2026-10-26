@@ -1,4 +1,4 @@
-import { mkdir, writeFile } from "fs/promises";
+import { mkdir, readFile, writeFile } from "fs/promises";
 import path from "path";
 import { copySdk, SDK_TEMPLATE_DIRECTORY } from "./copySdk.js";
 import { copySpecs, DEFAULT_PROFILES_COMMAND_NAME, hasOpenApiSpecs } from "./copySpecs.js";
@@ -17,6 +17,7 @@ import { generateSdk } from "./generateSdk.js";
 import { deriveBinaryName } from "./identity.js";
 import type { IrSummary } from "./ir.js";
 import {
+    cargoLockPackageNames,
     patchCargoLockForSdk,
     patchCargoLockForTypePartitions,
     patchCargoLockForTypes,
@@ -119,11 +120,19 @@ export async function runPipeline(args: {
     // workflow to run it.
     //
     // Resolved before the Cargo.toml patch because enabling Homebrew also
-    // decides the crate's `homepage` — cargo-dist copies it into the
+    // decides the crate's `description` — cargo-dist copies it into the
     // published formula.
     const distribution = outputConfig.isGithubOutput ? customConfig.distribution : undefined;
 
     await copySdk(outputDir, sdkTemplateDir ?? SDK_TEMPLATE_DIRECTORY);
+    const packageIdentity = withDistributionDefaults({
+        packageIdentity: customConfig.packageIdentity,
+        publishesHomebrew: distribution?.homebrew != null,
+        repoUrl: outputConfig.repoUrl,
+        binaryName,
+        description: defaultCrateDescription(ir.apiDisplayName ?? binaryName),
+        lockedPackageNames: cargoLockPackageNames(await readFile(path.join(outputDir, "Cargo.lock"), "utf-8"))
+    });
     // Right after copySdk so the LICENSE lands in the same pass that lays down
     // the rest of the repo, and before patchCargoToml — which is where a
     // `license-file` pointer would have to agree with what actually exists.
@@ -137,25 +146,25 @@ export async function runPipeline(args: {
         // saying nothing or shipping the text. Honored as a fallback, so any
         // of the three standard keys still wins and existing output is
         // unchanged.
-        license: license ?? licenseFromPackageIdentity(customConfig.packageIdentity?.license),
+        license: license ?? licenseFromPackageIdentity(packageIdentity?.license),
         // `license: MIT` needs a copyright holder; the first declared author is
         // the closest thing the config has, falling back to the Fern org.
-        copyrightHolder: customConfig.packageIdentity?.authors?.[0] ?? organization
+        copyrightHolder: packageIdentity?.authors?.[0] ?? organization
     });
     await patchCargoToml({
         outputDir,
         binaryName,
         version: outputConfig.version,
-        packageIdentity: withDistributionDefaults({
-            packageIdentity: customConfig.packageIdentity,
-            publishesHomebrew: distribution?.homebrew != null,
-            repoUrl: outputConfig.repoUrl,
-            description: defaultCrateDescription(ir.apiDisplayName ?? binaryName)
-        }),
+        packageIdentity,
         extraDependencies: customConfig.extraDependencies,
         extraDevDependencies: customConfig.extraDevDependencies
     });
-    await patchDistWorkspaceToml({ outputDir, homebrew: distribution?.homebrew, binaryName });
+    await patchDistWorkspaceToml({
+        outputDir,
+        homebrew: distribution?.homebrew,
+        binaryName,
+        githubAttestations: distribution?.githubAttestations
+    });
     const customCommands = customConfig.customCommands !== false && irFilepath != null;
     await copySpecs({
         outputDir,
@@ -208,7 +217,7 @@ export async function runPipeline(args: {
         npmPublishInfo: outputConfig.npmPublishInfo,
         repoUrl: outputConfig.repoUrl,
         distribution,
-        packageName: customConfig.packageIdentity?.name,
+        packageName: packageIdentity?.name,
         whiteLabel: ir.whiteLabel
     });
     await emitReference({
@@ -229,7 +238,8 @@ export async function runPipeline(args: {
             irFilepath,
             outputDir,
             binaryName,
-            splitTypeCrates: customConfig.splitTypeCrates
+            splitTypeCrates: customConfig.splitTypeCrates,
+            version: outputConfig.version
         });
         typesCrateName = typesResult.typesCrateName;
         typePartitionCrates = typesResult.partitionCrates;
@@ -240,7 +250,8 @@ export async function runPipeline(args: {
                 irFilepath,
                 outputDir,
                 binaryName,
-                typesCrateName
+                typesCrateName,
+                crateVersion: outputConfig.version
             });
             sdkCrateName = sdkResult.sdkCrateName;
 
@@ -273,7 +284,7 @@ export async function runPipeline(args: {
     // Wire up path dependencies and workspace members for generated crates.
     if (typesCrateName != null || sdkCrateName != null) {
         await patchCargoToml({ outputDir, binaryName, typesCrateName, sdkCrateName });
-        const packageName = customConfig.packageIdentity?.name;
+        const packageName = packageIdentity?.name;
         if (typePartitionCrates.length > 0) {
             await patchCargoLockForTypePartitions({ outputDir, partitionCrates: typePartitionCrates });
         }
@@ -308,7 +319,7 @@ export async function runPipeline(args: {
                 binaryName,
                 npmPublishInfo: outputConfig.npmPublishInfo,
                 repoUrl: outputConfig.repoUrl,
-                packageIdentity: customConfig.packageIdentity
+                packageIdentity
             });
         } else {
             await emitCiWorkflow({ outputDir, binaryName });
@@ -334,12 +345,12 @@ export async function runPipeline(args: {
                           binaryName,
                           scoop: distribution.scoop,
                           repoUrl: outputConfig.repoUrl,
-                          license: customConfig.packageIdentity?.license,
+                          license: packageIdentity?.license,
                           description:
-                              customConfig.packageIdentity?.description ??
-                              defaultCrateDescription(ir.apiDisplayName ?? binaryName)
+                              packageIdentity?.description ?? defaultCrateDescription(ir.apiDisplayName ?? binaryName)
                       }
-                    : undefined
+                    : undefined,
+            githubAttestations: distribution?.githubAttestations
         });
     }
 

@@ -114,7 +114,6 @@ public final class TeamMember {
 
         private Optional<String> givenName = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -163,6 +162,16 @@ public final class TeamMember {
         @java.lang.Override
         public TeamMember build() {
             return new TeamMember(id, givenName, familyName, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("id")
+                    || key.equalsIgnoreCase("given_name")
+                    || key.equalsIgnoreCase("family_name")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

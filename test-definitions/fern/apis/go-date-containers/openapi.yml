@@ -36,8 +36,69 @@ paths:
                   first: "2002-08-28T12:30:00Z"
                 aliased_timestamps:
                   - "2002-08-28T12:30:00Z"
+  /loans/by-date/{as_of}:
+    get:
+      operationId: listLoansByDate
+      tags:
+        - Loans
+      parameters:
+        - name: as_of
+          in: path
+          required: true
+          schema:
+            type: string
+            format: date
+          example: "2002-08-28"
+        - name: page
+          in: query
+          required: true
+          style: deepObject
+          explode: true
+          schema:
+            $ref: "#/components/schemas/PageRequest"
+          example:
+            number: 2
+            size: 20
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Loan"
+  /loans/by-timestamp/{as_of}:
+    get:
+      operationId: listLoansByTimestamp
+      tags:
+        - Loans
+      parameters:
+        - name: as_of
+          in: path
+          required: true
+          schema:
+            type: string
+            format: date-time
+          example: "2002-08-28T12:30:00Z"
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Loan"
 components:
   schemas:
+    PageRequest:
+      type: object
+      properties:
+        number:
+          type: integer
+        size:
+          type: integer
     DateList:
       type: array
       items:

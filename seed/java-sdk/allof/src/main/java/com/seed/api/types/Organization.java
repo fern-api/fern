@@ -111,7 +111,6 @@ public final class Organization {
 
         private Optional<BaseOrgMetadata> metadata = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -154,6 +153,14 @@ public final class Organization {
         @java.lang.Override
         public Organization build() {
             return new Organization(name, id, metadata, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("name") || key.equalsIgnoreCase("id") || key.equalsIgnoreCase("metadata")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern generate --docs` (including `--preview`) now checks the DNS of each configured
+    `custom-domain`. If a domain still points to Vercel instead of `cname.ferndocs.com`
+    (or your own reverse proxy), the CLI prints a warning with migration steps. Starting
+    December 1, 2026 this becomes an error and publishing fails until the DNS is switched.
+  type: feat

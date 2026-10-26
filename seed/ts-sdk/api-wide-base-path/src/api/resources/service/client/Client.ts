@@ -54,7 +54,7 @@ export class ServiceClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/test/${core.url.encodePathParam(this._options.pathParam)}/${core.url.encodePathParam(serviceParam)}/${core.url.encodePathParam(endpointParam)}/${core.url.encodePathParam(resourceParam)}`,
+                `/test/${core.url.encodePathParam(this._options.pathParam, errors.SeedApiWideBasePathError)}/${core.url.encodePathParam(serviceParam, errors.SeedApiWideBasePathError)}/${core.url.encodePathParam(endpointParam, errors.SeedApiWideBasePathError)}/${core.url.encodePathParam(resourceParam, errors.SeedApiWideBasePathError)}`,
             ),
             method: "POST",
             headers: _headers,

@@ -116,7 +116,6 @@ public final class EmailNotification {
 
         private Optional<String> htmlContent = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -159,6 +158,16 @@ public final class EmailNotification {
         @java.lang.Override
         public EmailNotification build() {
             return new EmailNotification(emailAddress, subject, htmlContent, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("emailAddress")
+                    || key.equalsIgnoreCase("subject")
+                    || key.equalsIgnoreCase("htmlContent")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

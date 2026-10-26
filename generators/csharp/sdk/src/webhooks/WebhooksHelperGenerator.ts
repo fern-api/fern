@@ -1,3 +1,4 @@
+import { getWireValue } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast } from "@fern-api/csharp-codegen";
@@ -8,6 +9,9 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 const MISSING_SIGNATURE_MESSAGE = "Webhook signature verification could not run: missing signature header";
 const VERIFICATION_FAILED_MESSAGE = "Webhook signature verification failed: signature mismatch";
+const UNSUPPORTED_ALGORITHM_MESSAGE = "Webhook signature verification could not run: unsupported algorithm";
+const UNRESOLVED_KEY_MESSAGE = "Webhook signature verification could not run: signing key could not be resolved";
+const MISSING_KEY_ID_MESSAGE = "Webhook signature verification could not run: settings header is missing the key ID";
 
 const DEFAULT_TIMESTAMP_TOLERANCE_SECONDS = 300;
 
@@ -69,6 +73,23 @@ export class WebhooksHelperGenerator extends FileGenerator<CSharpFile, SdkGenera
             });
         }
 
+        const algorithmHeader = this.config.algorithmHeader;
+        if (algorithmHeader != null) {
+            const entries = algorithmHeader.algorithms
+                .map((option) => `{ "${option.wireValue}", "${this.mapAlgorithm(option.algorithm)}" }`)
+                .join(", ");
+            class_.addField({
+                name: "HmacAlgorithms",
+                access: ast.Access.Private,
+                static_: true,
+                readonly: true,
+                type: this.System.Collections.Generic.Dictionary(this.Primitive.string, this.Primitive.string),
+                initializer: this.csharp.codeblock(
+                    `new System.Collections.Generic.Dictionary<string, string> { ${entries} }`
+                )
+            });
+        }
+
         class_.addMethod({
             name: "VerifySignature",
             access: ast.Access.Public,
@@ -78,6 +99,62 @@ export class WebhooksHelperGenerator extends FileGenerator<CSharpFile, SdkGenera
             parameters: this.buildParameters(),
             body: this.csharp.codeblock((writer) => this.writeBody(writer))
         });
+
+        if (algorithmHeader != null) {
+            class_.addMethod({
+                name: "VerifyRequest",
+                access: ast.Access.Public,
+                type: ast.MethodType.STATIC,
+                isAsync: false,
+                return_: this.Primitive.boolean,
+                parameters: this.buildVerifyRequestParameters(),
+                body: this.csharp.codeblock((writer) => this.writeVerifyRequestBody(writer, algorithmHeader))
+            });
+            class_.addMethod({
+                name: "VerifyRequest",
+                access: ast.Access.Public,
+                type: ast.MethodType.STATIC,
+                isAsync: false,
+                return_: this.Primitive.boolean,
+                parameters: this.buildVerifyRequestParameters(this.Primitive.string),
+                body: this.csharp.codeblock((writer) => {
+                    const args = ["headers", "requestBody"];
+                    for (const parameter of this.buildPayloadParameters()) {
+                        args.push(parameter.name);
+                    }
+                    args.push("_ => signatureKey");
+                    writer.writeTextStatement(`return VerifyRequest(${args.join(", ")})`);
+                })
+            });
+            class_.addMethod({
+                name: "GetHeader",
+                access: ast.Access.Private,
+                type: ast.MethodType.STATIC,
+                isAsync: false,
+                return_: this.Primitive.string.asNullable(),
+                parameters: [
+                    this.csharp.parameter({
+                        name: "headers",
+                        type: this.headersType()
+                    }),
+                    this.csharp.parameter({ name: "name", type: this.Primitive.string })
+                ],
+                body: this.csharp.codeblock((writer) => {
+                    writer.writeLine("foreach (var header in headers)");
+                    writer.writeLine("{");
+                    writer.indent();
+                    writer.writeLine("if (string.Equals(header.Key, name, System.StringComparison.OrdinalIgnoreCase))");
+                    writer.writeLine("{");
+                    writer.indent();
+                    writer.writeTextStatement("return header.Value");
+                    writer.dedent();
+                    writer.writeLine("}");
+                    writer.dedent();
+                    writer.writeLine("}");
+                    writer.writeTextStatement("return null");
+                })
+            });
+        }
 
         return new CSharpFile({
             clazz: class_,
@@ -109,12 +186,7 @@ export class WebhooksHelperGenerator extends FileGenerator<CSharpFile, SdkGenera
 
         // Extra payload parameters are added in the same order as the payload components,
         // matching the TypeScript `addPayloadParameters` behavior.
-        for (const component of this.config.payloadFormat.components) {
-            const parameterName = this.getComponentParameterName(component);
-            if (parameterName != null) {
-                parameters.push(this.csharp.parameter({ name: parameterName, type: this.Primitive.string }));
-            }
-        }
+        parameters.push(...this.buildPayloadParameters());
 
         if (this.config.timestamp != null) {
             parameters.push(this.csharp.parameter({ name: "timestampHeader", type: this.Primitive.string }));
@@ -142,6 +214,147 @@ export class WebhooksHelperGenerator extends FileGenerator<CSharpFile, SdkGenera
             default:
                 return assertNever(component);
         }
+    }
+
+    private buildPayloadParameters(): ast.Parameter[] {
+        const parameters: ast.Parameter[] = [];
+        for (const component of this.config.payloadFormat.components) {
+            const parameterName = this.getComponentParameterName(component);
+            if (parameterName != null) {
+                parameters.push(this.csharp.parameter({ name: parameterName, type: this.Primitive.string }));
+            }
+        }
+        return parameters;
+    }
+
+    private headersType(): ast.ClassReference {
+        return this.System.Collections.Generic.IEnumerable(
+            this.System.Collections.Generic.KeyValuePair(this.Primitive.string, this.Primitive.string)
+        );
+    }
+
+    private buildVerifyRequestParameters(signatureKeyType?: ast.Type): ast.Parameter[] {
+        const headersType = this.headersType();
+        const resolverType =
+            signatureKeyType ??
+            this.System.Func([this.Primitive.string.asNullable()], this.Primitive.string.asNullable());
+        return [
+            this.csharp.parameter({ name: "headers", type: headersType }),
+            this.csharp.parameter({
+                name: "requestBody",
+                type: this.hasBodySort() ? this.Primitive.object : this.Primitive.string
+            }),
+            ...this.buildPayloadParameters(),
+            this.csharp.parameter({ name: "signatureKey", type: resolverType })
+        ];
+    }
+
+    /**
+     * Request-level wrapper: reads the signature header and the algorithm-selection header
+     * (`<key-id><delimiter><algorithm>`, e.g. Twilio's `X-Twilio-Webhook-Signature-Settings:
+     * <sid>;HMAC_SHA256`). The key id is handed to the caller's resolver because the SDK never
+     * holds secrets; when the header is absent the resolver receives null and the configured
+     * default algorithm is used.
+     */
+    private writeVerifyRequestBody(writer: ast.Writer, algorithmHeader: FernIr.WebhookAlgorithmHeader): void {
+        const signatureHeader = getWireValue(this.config.signatureHeaderName);
+        const settingsHeader = getWireValue(algorithmHeader.headerName);
+        writer.writeTextStatement(`var signatureHeader = GetHeader(headers, "${signatureHeader}")`);
+        writer.writeLine("if (string.IsNullOrEmpty(signatureHeader))");
+        writer.writeLine("{");
+        writer.indent();
+        writer.writeTextStatement(`System.Diagnostics.Trace.TraceWarning("${MISSING_SIGNATURE_MESSAGE}")`);
+        writer.writeTextStatement("return false");
+        writer.dedent();
+        writer.writeLine("}");
+        writer.writeTextStatement("string? keyId = null");
+        writer.writeTextStatement("string? algorithm = null");
+        writer.writeTextStatement(`var settingsHeader = GetHeader(headers, "${settingsHeader}")`);
+        writer.writeLine("if (!string.IsNullOrEmpty(settingsHeader))");
+        writer.writeLine("{");
+        writer.indent();
+        writer.writeTextStatement("var algorithmValue = settingsHeader");
+        if (algorithmHeader.algorithmParameter != null) {
+            const delimiter = this.csharp.string_({ string: algorithmHeader.keyIdDelimiter ?? "," });
+            const algorithmParameter = this.csharp.string_({ string: algorithmHeader.algorithmParameter });
+            writer.writeTextStatement(
+                "var settingsParts = new System.Collections.Generic.Dictionary<string, string>()"
+            );
+            writer.write("foreach (var part in settingsHeader.Split(new[] { ");
+            writer.writeNode(delimiter);
+            writer.writeLine(" }, System.StringSplitOptions.None))");
+            writer.writeLine("{");
+            writer.indent();
+            writer.writeTextStatement("var separatorIndex = part.IndexOf('=')");
+            writer.writeLine("if (separatorIndex < 0)");
+            writer.writeLine("{");
+            writer.indent();
+            writer.writeTextStatement("continue");
+            writer.dedent();
+            writer.writeLine("}");
+            writer.writeTextStatement(
+                "settingsParts[part.Substring(0, separatorIndex).Trim()] = part.Substring(separatorIndex + 1).Trim()"
+            );
+            writer.dedent();
+            writer.writeLine("}");
+            writer.write("algorithmValue = settingsParts.TryGetValue(");
+            writer.writeNode(algorithmParameter);
+            writer.writeTextStatement(', out var configuredAlgorithm) ? configuredAlgorithm : ""');
+            if (algorithmHeader.keyIdParameter != null) {
+                const keyIdParameter = this.csharp.string_({ string: algorithmHeader.keyIdParameter });
+                writer.write("keyId = settingsParts.TryGetValue(");
+                writer.writeNode(keyIdParameter);
+                writer.writeTextStatement(", out var configuredKeyId) ? configuredKeyId : null");
+                writer.writeLine("if (string.IsNullOrEmpty(keyId))");
+                writer.writeLine("{");
+                writer.indent();
+                writer.writeTextStatement(`System.Diagnostics.Trace.TraceWarning("${MISSING_KEY_ID_MESSAGE}")`);
+                writer.writeTextStatement("return false");
+                writer.dedent();
+                writer.writeLine("}");
+            }
+        } else if (algorithmHeader.keyIdDelimiter != null) {
+            const delimiter = this.csharp.string_({ string: algorithmHeader.keyIdDelimiter });
+            writer.write("var delimiterIndex = settingsHeader.LastIndexOf(");
+            writer.writeNode(delimiter);
+            writer.writeTextStatement(", System.StringComparison.Ordinal)");
+            writer.writeLine("if (delimiterIndex >= 0)");
+            writer.writeLine("{");
+            writer.indent();
+            writer.writeTextStatement("keyId = settingsHeader.Substring(0, delimiterIndex)");
+            writer.writeTextStatement(
+                `algorithmValue = settingsHeader.Substring(delimiterIndex + ${algorithmHeader.keyIdDelimiter.length})`
+            );
+            writer.dedent();
+            writer.writeLine("}");
+        }
+        writer.writeLine("if (!HmacAlgorithms.ContainsKey(algorithmValue))");
+        writer.writeLine("{");
+        writer.indent();
+        writer.writeTextStatement(`System.Diagnostics.Trace.TraceWarning("${UNSUPPORTED_ALGORITHM_MESSAGE}")`);
+        writer.writeTextStatement("return false");
+        writer.dedent();
+        writer.writeLine("}");
+        writer.writeTextStatement("algorithm = HmacAlgorithms[algorithmValue]");
+        writer.dedent();
+        writer.writeLine("}");
+        writer.writeTextStatement("var resolvedKey = signatureKey == null ? null : signatureKey(keyId)");
+        writer.writeLine("if (string.IsNullOrEmpty(resolvedKey))");
+        writer.writeLine("{");
+        writer.indent();
+        writer.writeTextStatement(`System.Diagnostics.Trace.TraceWarning("${UNRESOLVED_KEY_MESSAGE}")`);
+        writer.writeTextStatement("return false");
+        writer.dedent();
+        writer.writeLine("}");
+        const args = ["requestBody", "signatureHeader", "resolvedKey"];
+        for (const parameter of this.buildPayloadParameters()) {
+            args.push(parameter.name);
+        }
+        if (this.config.timestamp != null) {
+            args.push(`GetHeader(headers, "${getWireValue(this.config.timestamp.headerName)}") ?? ""`);
+        }
+        args.push("algorithm");
+        writer.writeTextStatement(`return VerifySignature(${args.join(", ")})`);
     }
 
     private writeBody(writer: ast.Writer): void {
@@ -211,7 +424,7 @@ export class WebhooksHelperGenerator extends FileGenerator<CSharpFile, SdkGenera
         writer.write("var expected = ");
         writer.writeNode(webhookSignatureReference);
         writer.writeTextStatement(
-            `.ComputeHmacSignature(payload, signatureKey, algorithm ?? "${this.mapAlgorithm(this.config.algorithm)}", ` +
+            `.ComputeHmacSignature(payload, signatureKey, ${this.algorithmExpression()}, ` +
                 `"${this.mapEncoding(this.config.encoding)}")`
         );
         writer.newLine();
@@ -425,7 +638,7 @@ export class WebhooksHelperGenerator extends FileGenerator<CSharpFile, SdkGenera
         writer.write("var expected = ");
         writer.writeNode(webhookSignatureReference);
         writer.writeTextStatement(
-            `.ComputeHmacSignature(payload, signatureKey, algorithm ?? "${this.mapAlgorithm(this.config.algorithm)}", ` +
+            `.ComputeHmacSignature(payload, signatureKey, ${this.algorithmExpression()}, ` +
                 `"${this.mapEncoding(this.config.encoding)}")`
         );
         writer.write("if (");
@@ -616,6 +829,14 @@ export class WebhooksHelperGenerator extends FileGenerator<CSharpFile, SdkGenera
             default:
                 return assertNever(component);
         }
+    }
+
+    private algorithmExpression(): string {
+        const fallback = `"${this.mapAlgorithm(this.config.algorithm)}"`;
+        if (this.config.algorithmHeader == null) {
+            return `algorithm ?? ${fallback}`;
+        }
+        return `(algorithm != null && HmacAlgorithms.TryGetValue(algorithm, out var mappedAlgorithm) ? mappedAlgorithm : algorithm ?? ${fallback})`;
     }
 
     private mapAlgorithm(algorithm: FernIr.HmacAlgorithm): string {

@@ -1,10 +1,11 @@
 import { runFernCli } from "../../utils/runFernCli.js";
-import { init } from "../init/init.js";
+import { init, LEGACY_CONFIG_ENV } from "../init/init.js";
 
-// Ensure that the generators list command works and the format doesn't change, since fern-bot consumes this
+// Ensure that the generators list command works and its output format only changes intentionally.
+// Each API nests legacy generator groups under `groups` and SDK Config targets under `targets`.
 describe("fern generator list", () => {
     it("fern generator list", async ({ signal }) => {
-        const pathOfDirectory = await init({ signal });
+        const pathOfDirectory = await init({ env: LEGACY_CONFIG_ENV, signal });
 
         const out = await runFernCli(["generator", "list"], { cwd: pathOfDirectory, signal });
 
@@ -12,7 +13,7 @@ describe("fern generator list", () => {
     }, 60_000);
 
     it("fern generator list with exclude", async ({ signal }) => {
-        const pathOfDirectory = await init({ signal });
+        const pathOfDirectory = await init({ env: LEGACY_CONFIG_ENV, signal });
 
         const out = await runFernCli(["generator", "list", "--exclude-mode", "local-file-system"], {
             cwd: pathOfDirectory,
@@ -23,7 +24,7 @@ describe("fern generator list", () => {
     }, 60_000);
 
     it("fern generator list with include", async ({ signal }) => {
-        const pathOfDirectory = await init({ signal });
+        const pathOfDirectory = await init({ env: LEGACY_CONFIG_ENV, signal });
 
         const out = await runFernCli(["generator", "list", "--include-mode", "local-file-system"], {
             cwd: pathOfDirectory,

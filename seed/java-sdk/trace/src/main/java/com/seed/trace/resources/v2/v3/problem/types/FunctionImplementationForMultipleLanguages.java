@@ -70,7 +70,6 @@ public final class FunctionImplementationForMultipleLanguages {
     public static final class Builder {
         private Map<Language, FunctionImplementation> codeByLanguage = new LinkedHashMap<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -103,6 +102,14 @@ public final class FunctionImplementationForMultipleLanguages {
 
         public FunctionImplementationForMultipleLanguages build() {
             return new FunctionImplementationForMultipleLanguages(codeByLanguage, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("codeByLanguage")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

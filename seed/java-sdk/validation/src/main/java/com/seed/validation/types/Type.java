@@ -122,7 +122,6 @@ public final class Type {
 
         private Shape shape;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -167,6 +166,17 @@ public final class Type {
         @java.lang.Override
         public Type build() {
             return new Type(decimal, even, name, shape, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("decimal")
+                    || key.equalsIgnoreCase("even")
+                    || key.equalsIgnoreCase("name")
+                    || key.equalsIgnoreCase("shape")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

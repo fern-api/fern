@@ -321,6 +321,7 @@
             "response": {
                 "type": "streaming"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_completions.streamWithoutTerminator": {
@@ -505,6 +506,7 @@
             "response": {
                 "type": "streaming"
             },
+            "hasResponseBody": true,
             "examples": null
         }
     },

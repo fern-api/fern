@@ -255,7 +255,6 @@ public final class PlantPost {
 
         private Optional<String> plantedAt = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -387,6 +386,21 @@ public final class PlantPost {
                     plantedAt,
                     soilType,
                     additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("species")
+                    || key.equalsIgnoreCase("family")
+                    || key.equalsIgnoreCase("genus")
+                    || key.equalsIgnoreCase("commonName")
+                    || key.equalsIgnoreCase("wateringFrequency")
+                    || key.equalsIgnoreCase("sunExposure")
+                    || key.equalsIgnoreCase("plantedAt")
+                    || key.equalsIgnoreCase("soilType")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

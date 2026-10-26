@@ -94,7 +94,6 @@ public final class ModifyResourceAtInlinedPath {
 
         private String body;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -123,6 +122,14 @@ public final class ModifyResourceAtInlinedPath {
         @java.lang.Override
         public ModifyResourceAtInlinedPath build() {
             return new ModifyResourceAtInlinedPath(param, body, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("param") || key.equalsIgnoreCase("body")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

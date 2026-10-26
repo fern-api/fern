@@ -131,7 +131,6 @@ public final class AliasListInline implements WrappedAlias {
 
             private String bar;
 
-            @JsonAnySetter
             private Map<String, Object> additionalProperties = new HashMap<>();
 
             private Builder() {}
@@ -160,6 +159,14 @@ public final class AliasListInline implements WrappedAlias {
             @java.lang.Override
             public ValueItem build() {
                 return new ValueItem(foo, bar, additionalProperties);
+            }
+
+            @JsonAnySetter
+            private void putAdditionalPropertyFromJson(String key, Object value) {
+                if (key.equalsIgnoreCase("foo") || key.equalsIgnoreCase("bar")) {
+                    return;
+                }
+                this.additionalProperties.put(key, value);
             }
 
             @java.lang.Override

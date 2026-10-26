@@ -79,7 +79,6 @@ public final class GetAttemptedMigrationsRequest {
     public static final class Builder implements AdminKeyHeaderStage, _FinalStage {
         private String adminKeyHeader;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -99,6 +98,11 @@ public final class GetAttemptedMigrationsRequest {
         @java.lang.Override
         public GetAttemptedMigrationsRequest build() {
             return new GetAttemptedMigrationsRequest(adminKeyHeader, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

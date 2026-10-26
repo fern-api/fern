@@ -2823,7 +2823,8 @@
                             "variable": null
                         }
                     ],
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -3192,6 +3193,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_auth.refreshToken": {
@@ -3327,7 +3329,8 @@
                             "variable": null
                         }
                     ],
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -3539,6 +3542,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_system.health": {
@@ -3674,7 +3678,8 @@
                             "variable": null
                         }
                     ],
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -3753,6 +3758,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": false,
                 "examples": null
             },
             "endpoint_pets.list": {
@@ -3888,7 +3894,8 @@
                             "variable": null
                         }
                     ],
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -3967,6 +3974,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             }
         },

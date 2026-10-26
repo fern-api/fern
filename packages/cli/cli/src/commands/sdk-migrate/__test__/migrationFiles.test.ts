@@ -127,6 +127,39 @@ targets:
         expect((YAML.parse(merged) as { targets: unknown[] }).targets).toHaveLength(2);
     });
 
+    it("preserves an existing placeholder SDK name from a previous CLI migration", () => {
+        const existing = validateSdkConfigV1({
+            ...root,
+            sdkName: "api",
+            targets: [{ language: "typescript", output: { delivery: "zip" } }]
+        });
+        const migrated = validateSdkConfigV1({
+            ...root,
+            sdkName: "acme",
+            targets: [{ language: "python", output: { delivery: "zip" } }]
+        });
+
+        expect(() =>
+            mergeSdkConfig({
+                existingContents: YAML.stringify(existing),
+                mapped: { diagnostics: [], sdkConfig: migrated },
+                outputPath: "/tmp/sdk-config.yml"
+            })
+        ).toThrow("sdkName");
+
+        const merged = mergeSdkConfig({
+            existingContents: YAML.stringify(existing),
+            legacyPlaceholderSdkName: "api",
+            mapped: { diagnostics: [], sdkConfig: migrated },
+            outputPath: "/tmp/sdk-config.yml"
+        });
+
+        expect(YAML.parse(merged)).toMatchObject({
+            sdkName: "api",
+            targets: [{ language: "typescript" }, { language: "python" }]
+        });
+    });
+
     it("scopes compatible settings contributed by a later language to its target", () => {
         const existing = YAML.stringify({
             ...root,

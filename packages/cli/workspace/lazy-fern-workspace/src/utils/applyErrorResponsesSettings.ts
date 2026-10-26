@@ -1,4 +1,6 @@
 import { applyErrorResponses, type OpenAPISettings } from "@fern-api/api-workspace-commons";
+import { generatorsYml } from "@fern-api/configuration";
+import { isRecord } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { CliError } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
@@ -16,33 +18,33 @@ export async function applyErrorResponsesSettings({
 }: {
     document: OpenAPIV3.Document;
     settings: Pick<OpenAPISettings, "errorResponses"> | undefined;
-}): Promise<OpenAPIV3.Document> {
+}): Promise<{
+    document: OpenAPIV3.Document;
+    /** `errorResponses` with a file-path `schema` replaced by the loaded schema object. */
+    errorResponses: generatorsYml.OpenApiErrorResponsesSchema | undefined;
+}> {
     const errorResponses = settings?.errorResponses;
     if (errorResponses == null) {
-        return document;
+        return { document, errorResponses: undefined };
     }
-    return applyErrorResponses({
-        document,
-        errorResponses,
-        schema:
-            typeof errorResponses.schema === "string"
-                ? await loadErrorSchemaFile(AbsoluteFilePath.of(errorResponses.schema))
-                : errorResponses.schema
-    });
+    const schema =
+        typeof errorResponses.schema === "string"
+            ? await loadErrorSchemaFile(AbsoluteFilePath.of(errorResponses.schema))
+            : errorResponses.schema;
+    return {
+        document: applyErrorResponses({ document, errorResponses, schema }),
+        errorResponses: { ...errorResponses, schema }
+    };
 }
 
 async function loadErrorSchemaFile(absoluteFilePath: AbsoluteFilePath): Promise<Record<string, unknown>> {
     const contents = (await readFile(absoluteFilePath)).toString();
     const parsed: unknown = yaml.load(contents);
-    if (!isMapping(parsed)) {
+    if (!isRecord(parsed)) {
         throw new CliError({
             message: `Expected ${absoluteFilePath} to contain an OpenAPI schema object.`,
             code: CliError.Code.ConfigError
         });
     }
     return parsed;
-}
-
-function isMapping(value: unknown): value is Record<string, unknown> {
-    return typeof value === "object" && value != null && !Array.isArray(value);
 }

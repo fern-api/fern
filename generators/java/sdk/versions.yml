@@ -1,4 +1,86 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.33.0
+  changelogEntry:
+    - summary: |
+        Add the `legacy-input-stream-upload-overloads` option (default `false`). When `true`, single-file
+        upload endpoints get the `InputStream` overloads from before 4.23.2, such as
+        `create(InputStream stream, String filename)`. These leave out the request object, so companion
+        multipart fields are not sent, as before 4.23.2.
+      type: feat
+  createdAt: "2026-10-23"
+  irVersion: 67
+- version: 4.32.7
+  changelogEntry:
+    - summary: |
+        Dynamic snippets now pass a placeholder for a required file the example doesn't include
+        (`new File("path/to/file")`) and `Optional.empty()` for a missing optional file, instead of
+        `null`, which compiled but threw a `NullPointerException` in the SDK. This applies when
+        `inline-file-properties` is off and needs dynamic IR from a CLI that sets `isOptional` on file
+        properties; with older IR, missing files are still passed as `null`.
+      type: fix
+  createdAt: "2026-10-21"
+  irVersion: 67
+- version: 4.32.6
+  changelogEntry:
+    - summary: |
+        XML (TwiML) serialization drops characters outside the XML 1.0 `Char` production (e.g. `\u0001`) from text and attribute values instead of emitting XML that no parser accepts.
+      type: fix
+  createdAt: "2026-10-21"
+  irVersion: 67
+- version: 4.32.5
+  changelogEntry:
+    - summary: |
+        XML (TwiML) builders gain a varargs overload for list-valued attributes (`gather.input(GatherInputItem.DTMF,
+        GatherInputItem.SPEECH)`), a static `builder(text)` factory for types whose text content is required
+        (`Body.builder("hello")`), and typed child overloads under the legacy name when only the text setter used it
+        (`dial.number(Number)` next to `dial.number(String)`; `addNumber(Number)` is kept).
+      type: fix
+  createdAt: "2026-10-21"
+  irVersion: 67
+- version: 4.32.4
+  changelogEntry:
+    - summary: |
+        Path parameter values of exactly `.` or `..` now throw an `IllegalArgumentException` before
+        the request is sent. OkHttp's `addPathSegment` resolves these as dot-segments, so they could
+        change which endpoint the request was sent to. Values are checked by a new
+        `core.PathSegments` helper.
+      type: fix
+  createdAt: "2026-10-19"
+  irVersion: 67
+- version: 4.32.3
+  changelogEntry:
+    - summary: |
+        `WebhooksHelper.verifyRequest` now parses `name=value` settings headers when
+        `webhook-signature.algorithm-header` sets `key-id-parameter`/`algorithm-parameter`
+        (e.g. Twilio's `X-Twilio-Webhooks-Signature-Settings: key=<id>,algorithm=HMAC_SHA256`),
+        so the key resolver receives the bare key ID instead of `key=<id>`. Requires IR 67.33.0.
+      type: fix
+  createdAt: "2026-10-16"
+  irVersion: 67
+- version: 4.32.2
+  changelogEntry:
+    - summary: |
+        The generated `WebhooksHelper` now consumes `algorithm-header` from `api.settings.webhook-signature`:
+        a request-level `verifyRequest` helper reads the configured signature header first (missing or empty
+        fails early with "could not run: missing signature header"), then the algorithm-selection header
+        (e.g. `X-Twilio-Webhook-Signature-Settings: <key_id>;HMAC_SHA256`) to pick the HMAC algorithm from
+        the configured wire values and hand the key ID to an application-supplied secret resolver. When the
+        header is absent the configured default algorithm and the plain secret are used, so legacy
+        auth-token flows keep working. The lower-level `verifySignature` is unchanged and still returns
+        `false` without throwing.
+      type: fix
+  createdAt: "2026-10-13"
+  irVersion: 67
+- version: 4.32.1
+  changelogEntry:
+    - summary: |
+        Unknown JSON keys that match a declared property's wire name case-insensitively (e.g. `VALUE` next to
+        `value`) are no longer kept in `additionalProperties`, so they are not re-emitted on serialization where a
+        case-insensitive, last-wins decoder downstream would read them instead of the declared field. Non-colliding
+        unknown keys are still preserved and round-tripped.
+      type: fix
+  createdAt: "2026-10-12"
+  irVersion: 67
 - version: 4.32.0
   changelogEntry:
     - summary: |

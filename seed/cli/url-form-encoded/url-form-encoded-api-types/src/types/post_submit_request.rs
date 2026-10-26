@@ -10,6 +10,10 @@ pub struct PostSubmitRequest {
     /// The user's email address
     #[serde(default)]
     pub email: String,
+    /// A JSON document carried as a form field
+    #[serde(rename = "Content")]
+    #[serde(default)]
+    pub content: String,
 }
 
 impl PostSubmitRequest {
@@ -23,6 +27,7 @@ impl PostSubmitRequest {
 pub struct PostSubmitRequestBuilder {
     username: Option<String>,
     email: Option<String>,
+    content: Option<String>,
 }
 
 impl PostSubmitRequestBuilder {
@@ -36,14 +41,21 @@ impl PostSubmitRequestBuilder {
         self
     }
 
+    pub fn content(mut self, value: impl Into<String>) -> Self {
+        self.content = Some(value.into());
+        self
+    }
+
     /// Consumes the builder and constructs a [`PostSubmitRequest`].
     /// This method will fail if any of the following fields are not set:
     /// - [`username`](PostSubmitRequestBuilder::username)
     /// - [`email`](PostSubmitRequestBuilder::email)
+    /// - [`content`](PostSubmitRequestBuilder::content)
     pub fn build(self) -> Result<PostSubmitRequest, BuildError> {
         Ok(PostSubmitRequest {
             username: self.username.ok_or_else(|| BuildError::missing_field("username"))?,
             email: self.email.ok_or_else(|| BuildError::missing_field("email"))?,
+            content: self.content.ok_or_else(|| BuildError::missing_field("content"))?,
         })
     }
 }

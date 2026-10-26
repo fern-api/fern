@@ -92,7 +92,6 @@ public final class ListItemsRequest {
 
     private Optional<Integer> limit = Optional.empty();
 
-    @JsonAnySetter
     private Map<String, Object> additionalProperties = new HashMap<>();
 
     private Builder() {
@@ -140,6 +139,14 @@ public final class ListItemsRequest {
 
     public ListItemsRequest build() {
       return new ListItemsRequest(cursor, limit, additionalProperties);
+    }
+
+    @JsonAnySetter
+    private void putAdditionalPropertyFromJson(String key, Object value) {
+      if (key.equalsIgnoreCase("cursor") || key.equalsIgnoreCase("limit")) {
+        return;
+      }
+      this.additionalProperties.put(key, value);
     }
 
     public Builder additionalProperty(String key, Object value) {

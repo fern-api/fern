@@ -79,7 +79,6 @@ public final class Square {
     public static final class Builder implements LengthStage, _FinalStage {
         private double length;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -100,6 +99,14 @@ public final class Square {
         @java.lang.Override
         public Square build() {
             return new Square(length, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("length")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

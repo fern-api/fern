@@ -165,7 +165,6 @@ public final class GetTokenRequest {
 
         private Optional<String> scope = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -251,6 +250,19 @@ public final class GetTokenRequest {
         public GetTokenRequest build() {
             return new GetTokenRequest(
                     refreshToken, grantType, scope, code, codeVerifier, redirectUri, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("refresh_token")
+                    || key.equalsIgnoreCase("grant_type")
+                    || key.equalsIgnoreCase("scope")
+                    || key.equalsIgnoreCase("code")
+                    || key.equalsIgnoreCase("code_verifier")
+                    || key.equalsIgnoreCase("redirect_uri")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

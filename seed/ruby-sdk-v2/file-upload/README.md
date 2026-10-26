@@ -31,7 +31,7 @@ require "seed"
 
 client = Seed::Client.new
 
-client.service.just_file
+client.service.just_file(file: "/path/to/your/file")
 ```
 
 ## Environments

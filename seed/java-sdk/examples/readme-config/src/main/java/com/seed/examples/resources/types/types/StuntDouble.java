@@ -94,7 +94,6 @@ public final class StuntDouble {
 
         private String actorOrActressId;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -123,6 +122,14 @@ public final class StuntDouble {
         @java.lang.Override
         public StuntDouble build() {
             return new StuntDouble(name, actorOrActressId, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("name") || key.equalsIgnoreCase("actorOrActressId")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

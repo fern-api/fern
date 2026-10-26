@@ -2,4 +2,4 @@ require "seed"
 
 client = Seed::Client.new(base_url: "https://api.fern.com")
 
-client.union.nested_object_unions(request: "string")
+client.union.nested_object_unions(label: "string")

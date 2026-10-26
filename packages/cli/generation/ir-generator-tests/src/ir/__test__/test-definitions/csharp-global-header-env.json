@@ -328,7 +328,8 @@
                             "unsafeName": "Basic",
                             "safeName": "Basic"
                         }
-                    }
+                    },
+                    "requirement": "ANY"
                 },
                 "declaration": {
                     "name": {
@@ -407,6 +408,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             }
         },

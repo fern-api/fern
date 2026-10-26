@@ -2957,6 +2957,9 @@
             "show-nav-availability-badges": {
               "type": "boolean"
             },
+            "hide-webhook-method-badges": {
+              "type": "boolean"
+            },
             "breadcrumbs": {
               "type": "object",
               "properties": {
@@ -3031,6 +3034,9 @@
               "type": "boolean"
             },
             "disable-analytics": {
+              "type": "boolean"
+            },
+            "require-analytics-consent": {
               "type": "boolean"
             },
             "language": {
@@ -3154,6 +3160,42 @@
                 },
                 "show-products": {
                   "type": "boolean"
+                }
+              },
+              "additionalProperties": false
+            },
+            "code-blocks": {
+              "type": "object",
+              "properties": {
+                "light": {
+                  "type": "string",
+                  "enum": [
+                    "github-dark",
+                    "github-dark-default",
+                    "github-dark-dimmed",
+                    "github-dark-high-contrast",
+                    "github-light",
+                    "github-light-default",
+                    "github-light-high-contrast",
+                    "material-theme-darker",
+                    "min-dark",
+                    "min-light"
+                  ]
+                },
+                "dark": {
+                  "type": "string",
+                  "enum": [
+                    "github-dark",
+                    "github-dark-default",
+                    "github-dark-dimmed",
+                    "github-dark-high-contrast",
+                    "github-light",
+                    "github-light-default",
+                    "github-light-high-contrast",
+                    "material-theme-darker",
+                    "min-dark",
+                    "min-light"
+                  ]
                 }
               },
               "additionalProperties": false
@@ -5869,6 +5911,29 @@
                   ]
                 },
                 "swift": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "version": {
+                          "type": "string"
+                        },
+                        "package": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "version",
+                        "package"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "cli": {
                   "anyOf": [
                     {
                       "type": "string"

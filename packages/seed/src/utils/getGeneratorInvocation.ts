@@ -176,6 +176,8 @@ function getGithubPublishInfo({
             return undefined;
         case "php":
             return undefined;
+        case "cli":
+            return undefined;
         default:
             assertNever(language);
     }
@@ -221,6 +223,8 @@ function getPublishInfo({
             throw new Error("Seed doesn't support publish mode in PHP");
         case "rust":
             throw new Error("Seed doesn't support publish mode in Rust");
+        case "cli":
+            throw new Error("Seed doesn't support publish mode in CLI");
         default:
             assertNever(language);
     }

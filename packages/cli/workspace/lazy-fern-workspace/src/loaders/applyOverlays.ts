@@ -1,4 +1,4 @@
-import { applyOpenAPIOverlay, type OverlayAction } from "@fern-api/core-utils";
+import { applyOpenAPIOverlay, isRecord, type OverlayAction } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import { readFile, writeFile } from "fs/promises";
@@ -146,8 +146,4 @@ function validateOverlay(overlay: unknown, context: TaskContext): overlay is Ove
     }
 
     return true;
-}
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-    return typeof value === "object" && value != null && !Array.isArray(value);
 }

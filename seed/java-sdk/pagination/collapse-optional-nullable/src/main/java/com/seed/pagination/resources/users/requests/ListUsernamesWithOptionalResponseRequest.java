@@ -73,7 +73,6 @@ public final class ListUsernamesWithOptionalResponseRequest {
     public static final class Builder {
         private Optional<String> startingAfter = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -100,6 +99,14 @@ public final class ListUsernamesWithOptionalResponseRequest {
 
         public ListUsernamesWithOptionalResponseRequest build() {
             return new ListUsernamesWithOptionalResponseRequest(startingAfter, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("starting_after")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

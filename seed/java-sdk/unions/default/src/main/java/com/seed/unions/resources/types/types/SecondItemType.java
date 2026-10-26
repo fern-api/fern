@@ -96,7 +96,6 @@ public final class SecondItemType {
 
         private Optional<String> type = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -131,6 +130,14 @@ public final class SecondItemType {
         @java.lang.Override
         public SecondItemType build() {
             return new SecondItemType(type, title, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("type") || key.equalsIgnoreCase("title")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

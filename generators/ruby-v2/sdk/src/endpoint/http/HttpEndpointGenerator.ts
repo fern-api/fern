@@ -208,8 +208,7 @@ export class HttpEndpointGenerator {
             switch (endpoint.pagination.type) {
                 case "custom": {
                     const customPagerClassName = this.context.customConfig.customPagerName ?? "CustomPager";
-                    // Use snakeCase.safeName for Ruby method calls
-                    const itemField = this.case.snakeSafe(endpoint.pagination.results.property.name);
+                    const itemField = this.getResponseFieldReference(endpoint.pagination.results);
                     requestStatements = [
                         ...requestStatements,
                         ruby.invokeMethod({
@@ -222,7 +221,7 @@ export class HttpEndpointGenerator {
                             keywordArguments: [
                                 ruby.keywordArgument({
                                     name: "item_field",
-                                    value: ruby.codeblock(`:${itemField}`)
+                                    value: ruby.codeblock(itemField)
                                 }),
                                 ruby.keywordArgument({
                                     name: "raw_client",
@@ -249,17 +248,11 @@ export class HttpEndpointGenerator {
                             keywordArguments: [
                                 ruby.keywordArgument({
                                     name: "cursor_field",
-                                    // Use snakeCase.safeName for Ruby method calls (e.g., "next" -> "next_")
-                                    value: ruby.codeblock(
-                                        `:${this.case.snakeSafe(endpoint.pagination.next.property.name)}`
-                                    )
+                                    value: ruby.codeblock(this.getResponseFieldReference(endpoint.pagination.next))
                                 }),
                                 ruby.keywordArgument({
                                     name: "item_field",
-                                    // Use snakeCase.safeName for Ruby method calls
-                                    value: ruby.codeblock(
-                                        `:${this.case.snakeSafe(endpoint.pagination.results.property.name)}`
-                                    )
+                                    value: ruby.codeblock(this.getResponseFieldReference(endpoint.pagination.results))
                                 }),
                                 ruby.keywordArgument({
                                     name: "initial_cursor",
@@ -295,17 +288,13 @@ export class HttpEndpointGenerator {
                                 }),
                                 ruby.keywordArgument({
                                     name: "item_field",
-                                    // Use snakeCase.safeName for Ruby method calls
-                                    value: ruby.codeblock(
-                                        `:${this.case.snakeSafe(endpoint.pagination.results.property.name)}`
-                                    )
+                                    value: ruby.codeblock(this.getResponseFieldReference(endpoint.pagination.results))
                                 }),
                                 ruby.keywordArgument({
                                     name: "has_next_field",
-                                    // Use snakeCase.safeName for Ruby method calls
                                     value: endpoint.pagination.hasNextPage
                                         ? ruby.codeblock(
-                                              `:${this.case.snakeSafe(endpoint.pagination.hasNextPage.property.name)}`
+                                              this.getResponseFieldReference(endpoint.pagination.hasNextPage)
                                           )
                                         : ruby.nilValue()
                                 }),
@@ -387,6 +376,18 @@ export class HttpEndpointGenerator {
             return undefined;
         }
         return pagination.page.property.type === "body" ? pagination.page : undefined;
+    }
+
+    /**
+     * The Ruby literal naming a response field for the pagination iterators: a symbol for a top-level
+     * field, or an array of symbols for a field nested inside response objects. Uses snake-case safe
+     * names because the iterators call them as methods (e.g. "next" -> "next_").
+     */
+    private getResponseFieldReference(property: FernIr.ResponseProperty): string {
+        const path = [...(property.propertyPath ?? []), property.property].map((item) =>
+            this.case.snakeSafe(item.name)
+        );
+        return path.length > 1 ? `%i[${path.join(" ")}]` : `:${path[0]}`;
     }
 
     /**

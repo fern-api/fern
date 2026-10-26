@@ -1,5 +1,6 @@
 import Ajv, { ErrorObject } from "ajv";
 import { JSONSchema4 } from "json-schema";
+import { decodeJsonPointerSegment } from "./decodeJsonPointerSegment.js";
 
 // Type guards and interfaces
 interface SchemaWithUnion extends JSONSchema4 {
@@ -85,7 +86,7 @@ function formatJsonPath(instancePath: string, additionalSegment?: string): strin
         "$" +
         segments
             .map((segment) => {
-                const decoded = segment.replace(/~1/g, "/").replace(/~0/g, "~");
+                const decoded = decodeJsonPointerSegment(segment);
 
                 if (/^\d+$/.test(decoded)) {
                     return `[${decoded}]`;
@@ -122,7 +123,7 @@ function getValueAtPath(payload: unknown, instancePath: string): unknown {
         const segments = instancePath.split("/").filter((part) => part !== "");
         let value: unknown = payload;
         for (const segment of segments) {
-            const decoded = segment.replace(/~1/g, "/").replace(/~0/g, "~");
+            const decoded = decodeJsonPointerSegment(segment);
             if (Array.isArray(value)) {
                 const index = parseInt(decoded, 10);
                 if (!isNaN(index)) {
@@ -777,7 +778,7 @@ export function validateAgainstJsonSchema(
                         let currentSchema = schema;
 
                         for (const segment of pathSegments) {
-                            const decodedSegment = segment.replace(/~1/g, "/").replace(/~0/g, "~");
+                            const decodedSegment = decodeJsonPointerSegment(segment);
                             if (currentSchema.properties && currentSchema.properties[decodedSegment]) {
                                 currentSchema = currentSchema.properties[decodedSegment] as JSONSchema4;
                             } else if (currentSchema.items && /^\d+$/.test(decodedSegment)) {

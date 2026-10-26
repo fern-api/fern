@@ -1,5 +1,6 @@
 import { gunzipSync, gzipSync } from "node:zlib";
 import type { generatorsYml } from "@fern-api/configuration";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { CliError } from "@fern-api/task-context";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { validateSdkConfigV1 } from "@postman/sdk-config/sdk-config/v1";
@@ -229,6 +230,92 @@ describe("runRemoteGenerationForGenerator synthesized SDK Config latest", () => 
         );
         expect(generatorInvocation.version).toBe("latest");
         expect(intermediateRepresentation.generationMetadata.generatorVersion).toBe("latest");
+    });
+
+    describe("fern generate --preview with GitHub output", () => {
+        const githubPush = () =>
+            FernFiddle.OutputMode.githubV2(
+                FernFiddle.GithubOutputModeV2.push({ owner: "acme", repo: "sdk", branch: "${SDK_BRANCH}" })
+            );
+
+        async function submittedRequestedOutput(
+            overrides: Partial<Parameters<typeof runRemoteGenerationForGenerator>[0]>
+        ) {
+            vi.stubEnv("SDK_BRANCH", "api-updates-293596b");
+            const generatorInvocation = { ...typescriptInvocation(), version: "3.54.0", outputMode: githubPush() };
+            const [prepared] = prepareFernSdkGenApiRoutes({
+                generators: [generatorInvocation],
+                isSdkGenApiEnabled: () => true,
+                requireEnvVars: true,
+                isPreview: true
+            });
+            if (prepared?.route == null || prepared.route.payloadKind !== "fern-runtime-bundle") {
+                throw new Error("Expected a Fern runtime bundle route");
+            }
+            const sourceArchive = archive();
+            let requestedOutput: unknown;
+            const run = vi.fn(async (parameters: FernSdkGenApiBuildParameters) => {
+                requestedOutput = createFernSdkGenApiRequest({
+                    apiName: parameters.apiName,
+                    organization: parameters.organization,
+                    cliVersion: parameters.cliVersion,
+                    generatorInvocation: parameters.generatorInvocation,
+                    sdkGenApiRoute: parameters.sdkGenApiRoute,
+                    sdkVersion: parameters.sdkVersion,
+                    specsTarGzBuffer: parameters.specsTarGzBuffer,
+                    payload: parameters.payload,
+                    requestedOutput: parameters.requestedOutput,
+                    githubOptions: parameters.githubOptions
+                }).targets[0]?.requestedOutput;
+                return buildResponse();
+            });
+            await runRemoteGenerationForGenerator({
+                projectConfig: { organization: "acme" } as never,
+                organization: "acme",
+                workspace: workspace() as never,
+                interactiveTaskContext: context() as never,
+                generatorInvocation: prepared.generatorInvocation,
+                version: "1.2.3",
+                audiences: { type: "all" },
+                shouldLogS3Url: false,
+                token: { value: "token" } as never,
+                whitelabel: undefined,
+                replay: undefined,
+                irVersionOverride: undefined,
+                absolutePathToPreview: AbsoluteFilePath.of("/tmp/fern-preview"),
+                readme: undefined,
+                fernignorePath: undefined,
+                dynamicIrOnly: false,
+                retryRateLimited: false,
+                requireEnvVars: true,
+                specsTarGzBuffer: sourceArchive.buffer,
+                sdkGenApiSourceArchive: sourceArchive,
+                sdkGenApiRoute: prepared.route,
+                sdkGenApiPreparationBatch: new FernSdkGenApiPreparationBatch(["0"]),
+                sdkGenApiBatch: { run } as never,
+                sdkGenApiTargetIdSeed: "0",
+                ...overrides
+            });
+            if (run.mock.calls.length !== 1) {
+                throw new Error(`Expected one sdk-gen-api build, got ${run.mock.calls.length}`);
+            }
+            return requestedOutput;
+        }
+
+        it("requests a download instead of a GitHub push with a blanked branch", async () => {
+            await expect(submittedRequestedOutput({})).resolves.toEqual({ type: "download" });
+        });
+
+        it("keeps the GitHub output when sdk preview pushes a preview branch", async () => {
+            await expect(
+                submittedRequestedOutput({
+                    absolutePathToPreview: undefined,
+                    isPreview: false,
+                    fiddlePreview: true,
+                    pushPreviewBranch: true
+                })
+            ).resolves.toMatchObject({ type: "github", repository: "acme/sdk", mode: "push" });
+        });
     });
 
     it("rejects latest runtime resolution at the SDK Config cutover before migration or submission", async () => {

@@ -54,7 +54,7 @@ export class PathClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `path/${core.url.encodePathParam(id)}`,
+                `path/${core.url.encodePathParam(id, errors.SeedLiteralError)}`,
             ),
             method: "POST",
             headers: _headers,

@@ -1,0 +1,15 @@
+schemaVersion: sdk-config/v1
+sdkName: api
+source:
+  specs:
+    - id: openapi
+      type: openapi
+      path: ./openapi.yml
+targets:
+  - language: cli
+    output:
+      delivery: files
+      path: ../out
+    generation:
+      binaryName: shared-types-cli
+      splitTypeCrates: true

@@ -3805,6 +3805,59 @@
       },
       "additionalProperties": false
     },
+    "webhooks.WebhookAlgorithmHeaderSchema": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "string"
+        },
+        "key-id-delimiter": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "When set, the header value is `<key-id><delimiter><algorithm>`; the key ID is handed\nback to the caller so it can resolve the matching secret. When omitted, the whole\nheader value is the algorithm."
+        },
+        "key-id-parameter": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "When set together with `algorithm-parameter`, the header is a list of `<name>=<value>`\npairs separated by `key-id-delimiter` and the key ID is the value of this parameter,\ne.g. `key` for Twilio's `key=<id>,algorithm=HMAC_SHA256`."
+        },
+        "algorithm-parameter": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Name of the `<name>=<value>` pair that carries the algorithm when the header is\nparsed as named parameters, e.g. `algorithm`."
+        },
+        "algorithms": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/webhooks.WebhookSignatureAlgorithmSchema"
+          },
+          "description": "Allowed header values mapped to the HMAC algorithm they select, e.g.\n`HMAC_SHA1: sha1`, `HMAC_SHA256: sha256`. These wire values also become the\nalgorithm enum exposed by the generated verifier."
+        }
+      },
+      "required": [
+        "header",
+        "algorithms"
+      ],
+      "additionalProperties": false
+    },
     "webhooks.AsymmetricAlgorithmSchema": {
       "type": "string",
       "enum": [
@@ -3912,6 +3965,17 @@
                 }
               ],
               "description": "When set, the signature is verified against multiple normalized forms of the\nnotification URL (e.g. with/without port, legacy query encoding), succeeding if any\ncandidate matches. Required by providers like Twilio."
+            },
+            "algorithm-header": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/webhooks.WebhookAlgorithmHeaderSchema"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "When set, the HMAC algorithm (and optionally a key ID) is read per request from\nthis header instead of being fixed to `algorithm`, which then only acts as the\ndefault when the header is absent. E.g. Twilio's `X-Twilio-Webhooks-Signature-Settings:\nkey=<key_id>,algorithm=HMAC_SHA256`."
             }
           },
           "required": [

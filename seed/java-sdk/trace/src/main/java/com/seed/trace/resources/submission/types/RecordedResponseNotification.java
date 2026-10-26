@@ -117,7 +117,6 @@ public final class RecordedResponseNotification {
 
         private Optional<String> testCaseId = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -160,6 +159,16 @@ public final class RecordedResponseNotification {
         @java.lang.Override
         public RecordedResponseNotification build() {
             return new RecordedResponseNotification(submissionId, traceResponsesSize, testCaseId, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("submissionId")
+                    || key.equalsIgnoreCase("traceResponsesSize")
+                    || key.equalsIgnoreCase("testCaseId")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

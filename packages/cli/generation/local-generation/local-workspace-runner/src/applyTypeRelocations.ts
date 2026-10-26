@@ -1,3 +1,4 @@
+import { errorMessageOrString } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { IntermediateRepresentation, serialization as IrSerialization } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
@@ -69,9 +70,7 @@ export async function applyTypeRelocations({
         }
     } catch (error) {
         context.logger.warn(
-            `Failed to apply type relocations from ${relocationsFilepath}: ${
-                error instanceof Error ? error.message : String(error)
-            }`
+            `Failed to apply type relocations from ${relocationsFilepath}: ${errorMessageOrString(error)}`
         );
     } finally {
         // Never let the relocations file leak into the generated SDK output.

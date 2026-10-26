@@ -56,12 +56,16 @@ export class OpenAPILoader {
                         loadAiExamples
                     });
                     if (isOpenAPIV3(openAPI)) {
+                        const { document, errorResponses } = await applyErrorResponsesSettings({
+                            document: openAPI,
+                            settings: spec.settings
+                        });
                         return {
                             type: "openapi",
-                            value: await applyErrorResponsesSettings({ document: openAPI, settings: spec.settings }),
+                            value: document,
                             source,
                             namespace: spec.namespace,
-                            settings: getParseOptions({ options: spec.settings })
+                            settings: getParseOptions({ options: spec.settings, overrides: { errorResponses } })
                         };
                     } else if (isOpenAPIV2(openAPI)) {
                         // default to https to produce a valid URL
@@ -69,15 +73,16 @@ export class OpenAPILoader {
                             openAPI.schemes = ["https"];
                         }
                         const convertedOpenAPI = await convertOpenAPIV2ToV3(openAPI, { context });
+                        const { document, errorResponses } = await applyErrorResponsesSettings({
+                            document: convertedOpenAPI,
+                            settings: spec.settings
+                        });
                         return {
                             type: "openapi",
-                            value: await applyErrorResponsesSettings({
-                                document: convertedOpenAPI,
-                                settings: spec.settings
-                            }),
+                            value: document,
                             source,
                             namespace: spec.namespace,
-                            settings: getParseOptions({ options: spec.settings })
+                            settings: getParseOptions({ options: spec.settings, overrides: { errorResponses } })
                         };
                     }
                 } catch (error) {

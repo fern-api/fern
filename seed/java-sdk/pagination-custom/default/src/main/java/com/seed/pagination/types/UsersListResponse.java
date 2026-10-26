@@ -119,7 +119,6 @@ public final class UsersListResponse {
 
         private List<String> data = new ArrayList<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -210,6 +209,18 @@ public final class UsersListResponse {
 
         public UsersListResponse build() {
             return new UsersListResponse(limit, count, hasMore, links, data, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("limit")
+                    || key.equalsIgnoreCase("count")
+                    || key.equalsIgnoreCase("has_more")
+                    || key.equalsIgnoreCase("links")
+                    || key.equalsIgnoreCase("data")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

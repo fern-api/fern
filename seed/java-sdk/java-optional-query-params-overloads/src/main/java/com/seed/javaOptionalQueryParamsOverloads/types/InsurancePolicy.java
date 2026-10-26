@@ -147,7 +147,6 @@ public final class InsurancePolicy {
 
         private double coverageAmount;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -200,6 +199,18 @@ public final class InsurancePolicy {
         @java.lang.Override
         public InsurancePolicy build() {
             return new InsurancePolicy(id, userId, policyType, isExpired, coverageAmount, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("id")
+                    || key.equalsIgnoreCase("userId")
+                    || key.equalsIgnoreCase("policyType")
+                    || key.equalsIgnoreCase("isExpired")
+                    || key.equalsIgnoreCase("coverageAmount")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

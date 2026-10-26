@@ -5569,7 +5569,8 @@
                         "safeName": "Token"
                     }
                 },
-                "wrapperProperty": null
+                "wrapperProperty": null,
+                "requirement": "ALL"
             },
             "declaration": {
                 "name": {
@@ -5616,6 +5617,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_.createType": {
@@ -5640,7 +5642,8 @@
                         "safeName": "Token"
                     }
                 },
-                "wrapperProperty": null
+                "wrapperProperty": null,
+                "requirement": "ALL"
             },
             "declaration": {
                 "name": {
@@ -5687,6 +5690,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_file/notification/service.getException": {
@@ -5711,7 +5715,8 @@
                         "safeName": "Token"
                     }
                 },
-                "wrapperProperty": null
+                "wrapperProperty": null,
+                "requirement": "ALL"
             },
             "declaration": {
                 "name": {
@@ -5898,6 +5903,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_file/service.getFile": {
@@ -5922,7 +5928,8 @@
                         "safeName": "Token"
                     }
                 },
-                "wrapperProperty": null
+                "wrapperProperty": null,
+                "requirement": "ALL"
             },
             "declaration": {
                 "name": {
@@ -6210,6 +6217,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_health/service.check": {
@@ -6234,7 +6242,8 @@
                         "safeName": "Token"
                     }
                 },
-                "wrapperProperty": null
+                "wrapperProperty": null,
+                "requirement": "ALL"
             },
             "declaration": {
                 "name": {
@@ -6383,6 +6392,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": false,
             "examples": null
         },
         "endpoint_health/service.ping": {
@@ -6407,7 +6417,8 @@
                         "safeName": "Token"
                     }
                 },
-                "wrapperProperty": null
+                "wrapperProperty": null,
+                "requirement": "ALL"
             },
             "declaration": {
                 "name": {
@@ -6525,6 +6536,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_service.getMovie": {
@@ -6549,7 +6561,8 @@
                         "safeName": "Token"
                     }
                 },
-                "wrapperProperty": null
+                "wrapperProperty": null,
+                "requirement": "ALL"
             },
             "declaration": {
                 "name": {
@@ -6659,6 +6672,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_service.createMovie": {
@@ -6683,7 +6697,8 @@
                         "safeName": "Token"
                     }
                 },
-                "wrapperProperty": null
+                "wrapperProperty": null,
+                "requirement": "ALL"
             },
             "declaration": {
                 "name": {
@@ -6768,6 +6783,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_service.getMetadata": {
@@ -6792,7 +6808,8 @@
                         "safeName": "Token"
                     }
                 },
-                "wrapperProperty": null
+                "wrapperProperty": null,
+                "requirement": "ALL"
             },
             "declaration": {
                 "name": {
@@ -7041,6 +7058,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_service.createBigEntity": {
@@ -7065,7 +7083,8 @@
                         "safeName": "Token"
                     }
                 },
-                "wrapperProperty": null
+                "wrapperProperty": null,
+                "requirement": "ALL"
             },
             "declaration": {
                 "name": {
@@ -7150,6 +7169,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_service.refreshToken": {
@@ -7174,7 +7194,8 @@
                         "safeName": "Token"
                     }
                 },
-                "wrapperProperty": null
+                "wrapperProperty": null,
+                "requirement": "ALL"
             },
             "declaration": {
                 "name": {
@@ -7262,6 +7283,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": false,
             "examples": null
         }
     },

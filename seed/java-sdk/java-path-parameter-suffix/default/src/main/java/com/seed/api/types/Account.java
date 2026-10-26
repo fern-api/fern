@@ -96,7 +96,6 @@ public final class Account {
 
         private Optional<String> friendlyName = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -131,6 +130,14 @@ public final class Account {
         @java.lang.Override
         public Account build() {
             return new Account(sid, friendlyName, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("sid") || key.equalsIgnoreCase("friendlyName")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

@@ -12,6 +12,8 @@ module Seed
         DOCTYPE_IN_PROLOG = /\A\s*(?:<\?.*?\?>\s*|<!--.*?-->\s*)*<!DOCTYPE/mi
         TRUE_VALUES = %w[true 1].freeze
         FALSE_VALUES = %w[false 0].freeze
+        # Characters outside the XML 1.0 `Char` production (control characters), which no XML parser accepts.
+        INVALID_XML_CHARS = /[^\u0009\u000A\u000D\u0020-\uD7FF\uE000-\uFFFD\u{10000}-\u{10FFFF}]/
 
         class << self
           # -----------------------------------------------------------------------------------------
@@ -123,7 +125,7 @@ module Seed
           # @param value [String]
           # @return [String]
           def escape_text(value)
-            value.to_s.gsub("&", "&amp;").gsub("<", "&lt;").gsub(">", "&gt;")
+            value.to_s.gsub(INVALID_XML_CHARS, "").gsub("&", "&amp;").gsub("<", "&lt;").gsub(">", "&gt;")
           end
 
           # @param value [String]

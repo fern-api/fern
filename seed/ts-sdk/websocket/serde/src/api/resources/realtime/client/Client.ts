@@ -4,6 +4,7 @@ import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import * as errors from "../../../../errors/index.js";
 import { RealtimeSocket } from "./Socket.js";
 
 export declare namespace RealtimeClient {
@@ -65,7 +66,7 @@ export class RealtimeClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/realtime/${core.url.encodePathParam(sessionId)}`,
+                `/realtime/${core.url.encodePathParam(sessionId, errors.SeedWebsocketError)}`,
             ),
             protocols: protocols ?? [],
             queryParameters: { ..._queryParams, ...queryParams },

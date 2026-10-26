@@ -9,4 +9,10 @@ export interface BaseAuth {
      * must be nested under this property, named after the scheme key.
      */
     wrapperProperty: FernIr.dynamic.Name | undefined;
+    /**
+     * The API's auth requirement. Lets generators tell `auth: any` (ANY) apart
+     * from endpoint-level security (ENDPOINT_SECURITY), since both set
+     * `wrapperProperty`.
+     */
+    requirement: FernIr.dynamic.AuthRequirement | undefined;
 }

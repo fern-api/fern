@@ -3,6 +3,7 @@
 require "json"
 require "net/http"
 require "securerandom"
+require "time"
 
 require_relative "seed/internal/json/serializable"
 require_relative "seed/internal/types/type"
@@ -36,12 +37,19 @@ require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/connection_error"
-require_relative "seed/user/types/user"
-require_relative "seed/user/types/nested_user"
-require_relative "seed/user/types/create_username_body"
-require_relative "seed/user/types/create_username_body_optional_properties"
 require_relative "seed/client"
 require_relative "seed/user/client"
 require_relative "seed/user/types/create_username_request"
 require_relative "seed/user/types/create_username_referenced_request"
 require_relative "seed/user/types/get_users_request"
+
+module Seed
+  module User
+    module Types
+      autoload :User, ::File.join(__dir__, "seed/user/types/user")
+      autoload :NestedUser, ::File.join(__dir__, "seed/user/types/nested_user")
+      autoload :CreateUsernameBody, ::File.join(__dir__, "seed/user/types/create_username_body")
+      autoload :CreateUsernameBodyOptionalProperties, ::File.join(__dir__, "seed/user/types/create_username_body_optional_properties")
+    end
+  end
+end

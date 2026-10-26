@@ -80,7 +80,6 @@ public final class GetWithInlinePath {
     public static final class Builder implements ParamStage, _FinalStage {
         private String param;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -101,6 +100,14 @@ public final class GetWithInlinePath {
         @java.lang.Override
         public GetWithInlinePath build() {
             return new GetWithInlinePath(param, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("param")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

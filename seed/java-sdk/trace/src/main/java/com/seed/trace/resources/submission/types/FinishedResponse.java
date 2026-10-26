@@ -81,7 +81,6 @@ public final class FinishedResponse {
     public static final class Builder implements SubmissionIdStage, _FinalStage {
         private UUID submissionId;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -102,6 +101,14 @@ public final class FinishedResponse {
         @java.lang.Override
         public FinishedResponse build() {
             return new FinishedResponse(submissionId, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("submissionId")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

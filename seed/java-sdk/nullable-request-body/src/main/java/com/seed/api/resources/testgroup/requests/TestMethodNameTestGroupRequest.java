@@ -124,7 +124,6 @@ public final class TestMethodNameTestGroupRequest {
 
         private Optional<PlainObject> body = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -204,6 +203,16 @@ public final class TestMethodNameTestGroupRequest {
 
         public TestMethodNameTestGroupRequest build() {
             return new TestMethodNameTestGroupRequest(queryParamObject, queryParamInteger, body, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("query_param_object")
+                    || key.equalsIgnoreCase("query_param_integer")
+                    || key.equalsIgnoreCase("body")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

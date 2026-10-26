@@ -80,7 +80,6 @@ public final class LeafObjectB {
     public static final class Builder implements OnlyInBStage, _FinalStage {
         private String onlyInB;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -101,6 +100,14 @@ public final class LeafObjectB {
         @java.lang.Override
         public LeafObjectB build() {
             return new LeafObjectB(onlyInB, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("onlyInB")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

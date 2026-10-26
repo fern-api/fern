@@ -1,4 +1,5 @@
 import { getAllPages, parseDocsConfiguration } from "@fern-api/configuration-loader";
+import { errorMessageOrString } from "@fern-api/core-utils";
 import { parseMarkdownToTree } from "@fern-api/docs-markdown-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
@@ -109,7 +110,7 @@ export async function validateMdxFiles({
             const contentLines = contentWithoutFrontmatter.split("\n").length;
             const frontmatterLineCount = totalLines - contentLines;
 
-            const message = error instanceof Error ? error.message : String(error);
+            const message = errorMessageOrString(error);
             let line: number | undefined;
             let column: number | undefined;
 

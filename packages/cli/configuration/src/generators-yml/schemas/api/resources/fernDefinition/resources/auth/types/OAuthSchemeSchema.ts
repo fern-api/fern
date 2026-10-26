@@ -2,7 +2,9 @@
 
 import type * as GeneratorsYml from "../../../../../index.js";
 
-export interface OAuthSchemeSchema extends GeneratorsYml.fernDefinition.WithDocsSchema {
+export interface OAuthSchemeSchema
+    extends GeneratorsYml.fernDefinition.WithDocsSchema,
+        GeneratorsYml.fernDefinition.WithPlaygroundDocsSchema {
     scheme: "oauth";
     /** The OAuth flow. Defaults to 'client-credentials'. */
     type: GeneratorsYml.fernDefinition.OAuthFlowTypeSchema;

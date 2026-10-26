@@ -111,7 +111,6 @@ public final class GetUndiscriminatedUnionRequest {
 
         private String foo;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -140,6 +139,14 @@ public final class GetUndiscriminatedUnionRequest {
         @java.lang.Override
         public GetUndiscriminatedUnionRequest build() {
             return new GetUndiscriminatedUnionRequest(bar, foo, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("bar") || key.equalsIgnoreCase("foo")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override
@@ -443,7 +450,6 @@ public final class GetUndiscriminatedUnionRequest {
 
                 private ReferenceType ref;
 
-                @JsonAnySetter
                 private Map<String, Object> additionalProperties = new HashMap<>();
 
                 private Builder() {}
@@ -492,6 +498,14 @@ public final class GetUndiscriminatedUnionRequest {
                 @java.lang.Override
                 public InlineType1 build() {
                     return new InlineType1(foo, bar, ref, additionalProperties);
+                }
+
+                @JsonAnySetter
+                private void putAdditionalPropertyFromJson(String key, Object value) {
+                    if (key.equalsIgnoreCase("foo") || key.equalsIgnoreCase("bar") || key.equalsIgnoreCase("ref")) {
+                        return;
+                    }
+                    this.additionalProperties.put(key, value);
                 }
 
                 @java.lang.Override
@@ -597,7 +611,6 @@ public final class GetUndiscriminatedUnionRequest {
 
                     private ReferenceType ref;
 
-                    @JsonAnySetter
                     private Map<String, Object> additionalProperties = new HashMap<>();
 
                     private Builder() {}
@@ -634,6 +647,14 @@ public final class GetUndiscriminatedUnionRequest {
                     @java.lang.Override
                     public Bar_ build() {
                         return new Bar_(foo, ref, additionalProperties);
+                    }
+
+                    @JsonAnySetter
+                    private void putAdditionalPropertyFromJson(String key, Object value) {
+                        if (key.equalsIgnoreCase("foo") || key.equalsIgnoreCase("ref")) {
+                            return;
+                        }
+                        this.additionalProperties.put(key, value);
                     }
 
                     @java.lang.Override
@@ -1011,7 +1032,6 @@ public final class GetUndiscriminatedUnionRequest {
 
                     private ReferenceType ref;
 
-                    @JsonAnySetter
                     private Map<String, Object> additionalProperties = new HashMap<>();
 
                     private Builder() {}
@@ -1048,6 +1068,14 @@ public final class GetUndiscriminatedUnionRequest {
                     @java.lang.Override
                     public Type2 build() {
                         return new Type2(baz, ref, additionalProperties);
+                    }
+
+                    @JsonAnySetter
+                    private void putAdditionalPropertyFromJson(String key, Object value) {
+                        if (key.equalsIgnoreCase("baz") || key.equalsIgnoreCase("ref")) {
+                            return;
+                        }
+                        this.additionalProperties.put(key, value);
                     }
 
                     @java.lang.Override
@@ -1174,7 +1202,6 @@ public final class GetUndiscriminatedUnionRequest {
 
                     private ReferenceType ref;
 
-                    @JsonAnySetter
                     private Map<String, Object> additionalProperties = new HashMap<>();
 
                     private Builder() {}
@@ -1223,6 +1250,14 @@ public final class GetUndiscriminatedUnionRequest {
                     @java.lang.Override
                     public Type1 build() {
                         return new Type1(foo, bar, ref, additionalProperties);
+                    }
+
+                    @JsonAnySetter
+                    private void putAdditionalPropertyFromJson(String key, Object value) {
+                        if (key.equalsIgnoreCase("foo") || key.equalsIgnoreCase("bar") || key.equalsIgnoreCase("ref")) {
+                            return;
+                        }
+                        this.additionalProperties.put(key, value);
                     }
 
                     @java.lang.Override
@@ -1328,7 +1363,6 @@ public final class GetUndiscriminatedUnionRequest {
 
                         private ReferenceType ref;
 
-                        @JsonAnySetter
                         private Map<String, Object> additionalProperties = new HashMap<>();
 
                         private Builder() {}
@@ -1365,6 +1399,14 @@ public final class GetUndiscriminatedUnionRequest {
                         @java.lang.Override
                         public Bar_ build() {
                             return new Bar_(foo, ref, additionalProperties);
+                        }
+
+                        @JsonAnySetter
+                        private void putAdditionalPropertyFromJson(String key, Object value) {
+                            if (key.equalsIgnoreCase("foo") || key.equalsIgnoreCase("ref")) {
+                                return;
+                            }
+                            this.additionalProperties.put(key, value);
                         }
 
                         @java.lang.Override
@@ -1473,7 +1515,6 @@ public final class GetUndiscriminatedUnionRequest {
 
                 private ReferenceType ref;
 
-                @JsonAnySetter
                 private Map<String, Object> additionalProperties = new HashMap<>();
 
                 private Builder() {}
@@ -1510,6 +1551,14 @@ public final class GetUndiscriminatedUnionRequest {
                 @java.lang.Override
                 public InlineType2 build() {
                     return new InlineType2(baz, ref, additionalProperties);
+                }
+
+                @JsonAnySetter
+                private void putAdditionalPropertyFromJson(String key, Object value) {
+                    if (key.equalsIgnoreCase("baz") || key.equalsIgnoreCase("ref")) {
+                        return;
+                    }
+                    this.additionalProperties.put(key, value);
                 }
 
                 @java.lang.Override
@@ -1712,7 +1761,6 @@ public final class GetUndiscriminatedUnionRequest {
 
                 private ReferenceType ref;
 
-                @JsonAnySetter
                 private Map<String, Object> additionalProperties = new HashMap<>();
 
                 private Builder() {}
@@ -1749,6 +1797,14 @@ public final class GetUndiscriminatedUnionRequest {
                 @java.lang.Override
                 public InlineSetItem1 build() {
                     return new InlineSetItem1(foo, ref, additionalProperties);
+                }
+
+                @JsonAnySetter
+                private void putAdditionalPropertyFromJson(String key, Object value) {
+                    if (key.equalsIgnoreCase("foo") || key.equalsIgnoreCase("ref")) {
+                        return;
+                    }
+                    this.additionalProperties.put(key, value);
                 }
 
                 @java.lang.Override
@@ -1855,7 +1911,6 @@ public final class GetUndiscriminatedUnionRequest {
 
                 private ReferenceType ref;
 
-                @JsonAnySetter
                 private Map<String, Object> additionalProperties = new HashMap<>();
 
                 private Builder() {}
@@ -1892,6 +1947,14 @@ public final class GetUndiscriminatedUnionRequest {
                 @java.lang.Override
                 public InlineMapItem1 build() {
                     return new InlineMapItem1(foo, ref, additionalProperties);
+                }
+
+                @JsonAnySetter
+                private void putAdditionalPropertyFromJson(String key, Object value) {
+                    if (key.equalsIgnoreCase("foo") || key.equalsIgnoreCase("ref")) {
+                        return;
+                    }
+                    this.additionalProperties.put(key, value);
                 }
 
                 @java.lang.Override
@@ -1998,7 +2061,6 @@ public final class GetUndiscriminatedUnionRequest {
 
                 private ReferenceType ref;
 
-                @JsonAnySetter
                 private Map<String, Object> additionalProperties = new HashMap<>();
 
                 private Builder() {}
@@ -2035,6 +2097,14 @@ public final class GetUndiscriminatedUnionRequest {
                 @java.lang.Override
                 public InlineListItem1 build() {
                     return new InlineListItem1(foo, ref, additionalProperties);
+                }
+
+                @JsonAnySetter
+                private void putAdditionalPropertyFromJson(String key, Object value) {
+                    if (key.equalsIgnoreCase("foo") || key.equalsIgnoreCase("ref")) {
+                        return;
+                    }
+                    this.additionalProperties.put(key, value);
                 }
 
                 @java.lang.Override

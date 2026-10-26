@@ -58,6 +58,7 @@ public class AsyncRawSeedApiClient {
             Map<String, Object> formParams = new LinkedHashMap<>();
             formParams.put("username", request.getUsername());
             formParams.put("email", request.getEmail());
+            formParams.put("Content", request.getContent());
             for (Map.Entry<String, Object> entry : BodyProperties.mergeFormParams(
                             formParams, requestOptions != null ? requestOptions.getBodyProperties() : null)
                     .entrySet()) {

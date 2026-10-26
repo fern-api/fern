@@ -37,6 +37,7 @@ type Config struct {
 	AllowUserAgentAppInfo          bool
 	UserAgentOnly                  bool
 	LegacyNullableAliasPointers    bool
+	XmlTextFirstBuilders           bool
 	Organization                   string
 	Version                        string
 	IRFilepath                     string
@@ -117,6 +118,7 @@ func NewConfig(
 	allowUserAgentAppInfo bool,
 	userAgentOnly bool,
 	legacyNullableAliasPointers bool,
+	xmlTextFirstBuilders bool,
 	organization string,
 	version string,
 	irFilepath string,
@@ -157,6 +159,7 @@ func NewConfig(
 		AllowUserAgentAppInfo:          allowUserAgentAppInfo,
 		UserAgentOnly:                  userAgentOnly,
 		LegacyNullableAliasPointers:    legacyNullableAliasPointers,
+		XmlTextFirstBuilders:           xmlTextFirstBuilders,
 		Version:                        version,
 		IRFilepath:                     irFilepath,
 		SnippetFilepath:                snippetFilepath,

@@ -31,6 +31,18 @@ describe("error reporting", () => {
         expect(reportErrorSpy).toHaveBeenCalledOnce();
     });
 
+    it("preserves an already-logged task failure message for structured callers", async () => {
+        const cliContext = await createMockCliContext();
+
+        await expect(
+            cliContext.runTask(async (context) => {
+                context.failAndThrow("sdk-gen-api validation failed");
+            })
+        ).rejects.toMatchObject({
+            failureMessage: "sdk-gen-api validation failed"
+        });
+    });
+
     it("uncaught task error reports exactly once through the full chain", async () => {
         reportErrorSpy.mockClear();
         const cliContext = await createMockCliContext();

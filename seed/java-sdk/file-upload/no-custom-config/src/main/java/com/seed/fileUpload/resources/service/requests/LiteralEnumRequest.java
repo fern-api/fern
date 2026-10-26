@@ -94,7 +94,6 @@ public final class LiteralEnumRequest {
 
         private Optional<String> maybeName = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -141,6 +140,16 @@ public final class LiteralEnumRequest {
 
         public LiteralEnumRequest build() {
             return new LiteralEnumRequest(modelType, openEnum, maybeName, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("model_type")
+                    || key.equalsIgnoreCase("open_enum")
+                    || key.equalsIgnoreCase("maybe_name")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

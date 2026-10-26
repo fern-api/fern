@@ -141,7 +141,6 @@ public final class ListUsersPaginationResponse {
 
         private Optional<Boolean> hasNextPage = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -219,6 +218,17 @@ public final class ListUsersPaginationResponse {
         @java.lang.Override
         public ListUsersPaginationResponse build() {
             return new ListUsersPaginationResponse(hasNextPage, page, totalCount, data, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("hasNextPage")
+                    || key.equalsIgnoreCase("page")
+                    || key.equalsIgnoreCase("total_count")
+                    || key.equalsIgnoreCase("data")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

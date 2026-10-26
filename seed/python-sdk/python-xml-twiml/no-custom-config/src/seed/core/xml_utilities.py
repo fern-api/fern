@@ -22,7 +22,8 @@ from typing import (
 )
 from xml.dom import minidom
 from xml.parsers.expat import ExpatError
-from xml.sax.saxutils import escape, quoteattr
+from xml.sax.saxutils import escape as _sax_escape
+from xml.sax.saxutils import quoteattr as _sax_quoteattr
 
 import pydantic
 from .pydantic_utilities import IS_PYDANTIC_V2
@@ -75,7 +76,7 @@ class XmlChild:
 def xml_comment_text(text: str) -> str:
     """Makes text safe to place inside a comment: XML forbids `--` within a comment and a trailing `-`,
     and either would otherwise end the comment early and turn the rest into markup."""
-    safe = re.sub(r"-(?=-)", "- ", text)
+    safe = re.sub(r"-(?=-)", "- ", _INVALID_XML_CHARS.sub("", text))
     return f"{safe} " if safe.endswith("-") else safe
 
 
@@ -96,6 +97,18 @@ class XmlComment:
 
     def __repr__(self) -> str:
         return f"XmlComment({self.text!r})"
+
+
+# Characters outside the XML 1.0 `Char` production (control characters, lone surrogates), which no XML parser accepts.
+_INVALID_XML_CHARS = re.compile("[^\u0009\u000a\u000d\u0020-\ud7ff\ue000-\ufffd\U00010000-\U0010ffff]")
+
+
+def escape(value: str) -> str:
+    return _sax_escape(_INVALID_XML_CHARS.sub("", value))
+
+
+def quoteattr(value: str) -> str:
+    return _sax_quoteattr(_INVALID_XML_CHARS.sub("", value))
 
 
 def serialize_xml_element(

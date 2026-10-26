@@ -158,7 +158,6 @@ public final class UndiscriminatedUnionTypeWithAliasMapVariant {
         public static final class Builder implements PropStage, _FinalStage {
             private String prop;
 
-            @JsonAnySetter
             private Map<String, Object> additionalProperties = new HashMap<>();
 
             private Builder() {}
@@ -179,6 +178,14 @@ public final class UndiscriminatedUnionTypeWithAliasMapVariant {
             @java.lang.Override
             public OtherAliasVariantType build() {
                 return new OtherAliasVariantType(prop, additionalProperties);
+            }
+
+            @JsonAnySetter
+            private void putAdditionalPropertyFromJson(String key, Object value) {
+                if (key.equalsIgnoreCase("prop")) {
+                    return;
+                }
+                this.additionalProperties.put(key, value);
             }
 
             @java.lang.Override
@@ -259,7 +266,6 @@ public final class UndiscriminatedUnionTypeWithAliasMapVariant {
         public static final class Builder implements PropStage, _FinalStage {
             private String prop;
 
-            @JsonAnySetter
             private Map<String, Object> additionalProperties = new HashMap<>();
 
             private Builder() {}
@@ -280,6 +286,14 @@ public final class UndiscriminatedUnionTypeWithAliasMapVariant {
             @java.lang.Override
             public AliasVariantType build() {
                 return new AliasVariantType(prop, additionalProperties);
+            }
+
+            @JsonAnySetter
+            private void putAdditionalPropertyFromJson(String key, Object value) {
+                if (key.equalsIgnoreCase("prop")) {
+                    return;
+                }
+                this.additionalProperties.put(key, value);
             }
 
             @java.lang.Override

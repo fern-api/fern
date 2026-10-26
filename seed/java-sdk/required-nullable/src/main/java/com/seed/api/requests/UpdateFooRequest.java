@@ -213,7 +213,6 @@ public final class UpdateFooRequest {
 
         private Optional<String> nullableText = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -371,6 +370,17 @@ public final class UpdateFooRequest {
                     nonNullableText,
                     requiredNullableText,
                     additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("nullable_text")
+                    || key.equalsIgnoreCase("nullable_number")
+                    || key.equalsIgnoreCase("non_nullable_text")
+                    || key.equalsIgnoreCase("required_nullable_text")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

@@ -1,0 +1,53 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/calls",
+                "method": "POST",
+                "identifier_override": "endpoint_calls/calls.createCall"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Calls.Calls.CreateCallAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/messages",
+                "method": "GET",
+                "identifier_override": "endpoint_messages/messages.listMessages"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Messages.Messages.ListMessagesAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/messages",
+                "method": "POST",
+                "identifier_override": "endpoint_messages/messages.createMessage"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi.Messages;\nusing SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Messages.Messages.CreateMessageAsync(new Message { Sid = \"sid\", Body = \"body\" });\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/messages/{sid}",
+                "method": "DELETE",
+                "identifier_override": "endpoint_messages/messages.deleteMessage"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedApi.Messages;\nusing SeedApi;\n\nvar client = new SeedApiClient();\nawait client.Messages.Messages.DeleteMessageAsync(new DeleteMessageRequest { Sid = \"sid\" });\n"
+            }
+        }
+    ]
+}

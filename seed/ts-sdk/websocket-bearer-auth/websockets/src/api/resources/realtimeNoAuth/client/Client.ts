@@ -4,6 +4,7 @@ import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import * as errors from "../../../../errors/index.js";
 import { RealtimeNoAuthSocket } from "./Socket.js";
 
 export declare namespace RealtimeNoAuthClient {
@@ -59,7 +60,7 @@ export class RealtimeNoAuthClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/realtime-no-auth/${core.url.encodePathParam(sessionId)}`,
+                `/realtime-no-auth/${core.url.encodePathParam(sessionId, errors.SeedWebsocketBearerAuthError)}`,
             ),
             protocols: protocols ?? [],
             queryParameters: { ..._queryParams, ...queryParams },

@@ -99,7 +99,6 @@ public final class UserPage implements IUserPage {
 
         private Optional<UUID> next = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -134,6 +133,14 @@ public final class UserPage implements IUserPage {
         @java.lang.Override
         public UserPage build() {
             return new UserPage(data, next, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("data") || key.equalsIgnoreCase("next")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

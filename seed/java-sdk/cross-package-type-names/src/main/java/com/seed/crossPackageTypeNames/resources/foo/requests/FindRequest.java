@@ -94,7 +94,6 @@ public final class FindRequest {
 
         private Optional<Integer> privateProperty = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -141,6 +140,14 @@ public final class FindRequest {
 
         public FindRequest build() {
             return new FindRequest(optionalString, publicProperty, privateProperty, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("publicProperty") || key.equalsIgnoreCase("privateProperty")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

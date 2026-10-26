@@ -4,6 +4,7 @@ import {
     DEFAULT_HOMEBREW_TOKEN_ENV_VAR,
     DEFAULT_SCOOP_TOKEN_ENV_VAR,
     type FernCliGitHubAppConfig,
+    type FernCliGitHubAttestations,
     type FernCliHomebrewConfig,
     type ResolvedChannelAuth,
     resolveChannelAuth
@@ -45,14 +46,12 @@ export async function emitReleaseWorkflow(args: {
     homebrew?: FernCliHomebrewConfig;
     scoop?: ScoopJobArgs;
     githubApp?: FernCliGitHubAppConfig;
+    githubAttestations?: FernCliGitHubAttestations;
 }): Promise<void> {
-    const { outputDir, homebrew, scoop, githubApp } = args;
+    const { outputDir, ...rest } = args;
     const workflowsDir = path.join(outputDir, ".github", "workflows");
     await mkdir(workflowsDir, { recursive: true });
-    await writeFile(
-        path.join(workflowsDir, "release.yml"),
-        constructReleaseWorkflowYaml({ homebrew, scoop, githubApp })
-    );
+    await writeFile(path.join(workflowsDir, "release.yml"), constructReleaseWorkflowYaml(rest));
 }
 
 /**
@@ -62,8 +61,9 @@ export function constructReleaseWorkflowYaml(args: {
     homebrew?: FernCliHomebrewConfig;
     scoop?: ScoopJobArgs;
     githubApp?: FernCliGitHubAppConfig;
+    githubAttestations?: FernCliGitHubAttestations;
 }): string {
-    const { homebrew, scoop, githubApp } = args;
+    const { homebrew, scoop, githubApp, githubAttestations = "auto" } = args;
 
     const homebrewAuth =
         homebrew != null
@@ -112,7 +112,30 @@ export function constructReleaseWorkflowYaml(args: {
         jobs += constructScoopJobYaml({ ...scoop, auth: scoopAuth, preflightJob });
         publishJobs.push("publish-scoop");
     }
-    return RELEASE_WORKFLOW_YAML + jobs + constructAnnounceJob(publishJobs);
+    return applyAttestationMode(RELEASE_WORKFLOW_YAML, githubAttestations) + jobs + constructAnnounceJob(publishJobs);
+}
+
+const ATTEST_PERMISSION = `      "attestations": "write"\n`;
+const ATTEST_STEP_HEAD = `      - name: Attest\n`;
+const ATTEST_STEP = `${ATTEST_STEP_HEAD}        uses: actions/attest-build-provenance@v3
+        with:
+          subject-path: "target/distrib/*\${{ join(matrix.targets, ', ') }}*"
+`;
+
+/**
+ * `true` is cargo-dist's template verbatim. `auto` skips the step on
+ * private repos, where attestations need GitHub Enterprise Cloud and
+ * otherwise fail every build leg. `false` drops both the step and the
+ * permission it needs.
+ */
+function applyAttestationMode(yaml: string, mode: FernCliGitHubAttestations): string {
+    if (mode === true) {
+        return yaml;
+    }
+    if (mode === false) {
+        return yaml.replace(ATTEST_PERMISSION, "").replace(ATTEST_STEP, "");
+    }
+    return yaml.replace(ATTEST_STEP_HEAD, `${ATTEST_STEP_HEAD}        if: \${{ !github.event.repository.private }}\n`);
 }
 
 /**

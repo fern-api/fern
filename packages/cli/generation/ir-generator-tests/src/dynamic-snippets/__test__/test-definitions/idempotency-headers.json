@@ -139,7 +139,8 @@
                         "safeName": "Token"
                     }
                 },
-                "wrapperProperty": null
+                "wrapperProperty": null,
+                "requirement": "ALL"
             },
             "declaration": {
                 "name": {
@@ -351,6 +352,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_payment.delete": {
@@ -375,7 +377,8 @@
                         "safeName": "Token"
                     }
                 },
-                "wrapperProperty": null
+                "wrapperProperty": null,
+                "requirement": "ALL"
             },
             "declaration": {
                 "name": {
@@ -485,6 +488,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": false,
             "examples": null
         }
     },

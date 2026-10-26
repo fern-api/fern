@@ -80,7 +80,6 @@ public final class ImportingType {
     public static final class Builder implements ImportedStage, _FinalStage {
         private String imported;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -101,6 +100,14 @@ public final class ImportingType {
         @java.lang.Override
         public ImportingType build() {
             return new ImportingType(imported, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("imported")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

@@ -199,7 +199,7 @@ module Seed
       #       data: {
       #         data: "data"
       #       },
-      #       json_string: "jsonString"
+      #       jsonString: "jsonString"
       #     },
       #     data: {},
       #     migration: {

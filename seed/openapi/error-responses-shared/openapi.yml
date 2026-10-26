@@ -1,0 +1,248 @@
+openapi: 3.1.0
+info:
+  title: Messages
+  version: 0.0.0
+paths:
+  /calls:
+    post:
+      operationId: calls_calls_createCall
+      tags:
+        - CallsCalls
+      parameters: []
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/callsCall'
+              examples:
+                Example1:
+                  value:
+                    sid: sid
+        '403':
+          description: ForbiddenError
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceErrorResponse'
+        '409':
+          description: ConflictError
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceErrorResponse'
+        '422':
+          description: UnprocessableEntityError
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceErrorResponse'
+        '500':
+          description: InternalServerError
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceErrorResponse'
+  /messages:
+    get:
+      operationId: messages_messages_listMessages
+      tags:
+        - MessagesMessages
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/messagesMessage'
+              examples:
+                Example1:
+                  value:
+                    - sid: sid
+                      body: body
+        '401':
+          description: UnauthorizedError
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceErrorResponse'
+        '429':
+          description: TooManyRequestsError
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceErrorResponse'
+    post:
+      operationId: messages_messages_createMessage
+      tags:
+        - MessagesMessages
+      parameters: []
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/messagesMessage'
+              examples:
+                Example1:
+                  value:
+                    sid: sid
+                    body: body
+        '400':
+          description: BadRequestError
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceErrorResponse'
+        '422':
+          description: UnprocessableEntityError
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceErrorResponse'
+        '429':
+          description: TooManyRequestsError
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceErrorResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/messagesMessage'
+            examples:
+              Example1:
+                value:
+                  sid: sid
+                  body: body
+  /messages/{sid}:
+    delete:
+      operationId: messages_messages_deleteMessage
+      tags:
+        - MessagesMessages
+      parameters:
+        - name: sid
+          in: path
+          required: true
+          schema:
+            type: string
+          examples:
+            Example1:
+              value: sid
+      responses:
+        '204':
+          description: No content
+        '404':
+          description: NotFoundError
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceErrorResponse'
+components:
+  schemas:
+    callsCall:
+      title: callsCall
+      type: object
+      properties:
+        sid:
+          type:
+            - string
+            - 'null'
+    callsCallError:
+      title: callsCallError
+      type: object
+      properties:
+        code:
+          type:
+            - integer
+            - 'null'
+        message:
+          type:
+            - string
+            - 'null'
+    messagesMessage:
+      title: messagesMessage
+      type: object
+      properties:
+        sid:
+          type: string
+          examples:
+            - sid
+        body:
+          type: string
+          examples:
+            - body
+      required:
+        - sid
+        - body
+    ServiceErrorResponseErrorsItem:
+      title: ServiceErrorResponseErrorsItem
+      type: object
+      properties:
+        field:
+          type:
+            - string
+            - 'null'
+        message:
+          type:
+            - string
+            - 'null'
+    ServiceErrorResponse:
+      title: ServiceErrorResponse
+      type: object
+      description: RFC 9457 Problem Details returned for every error response.
+      properties:
+        type:
+          type: string
+          format: uri
+          description: A URI reference that identifies the problem type.
+        title:
+          type: string
+          description: A short, human-readable summary of the problem type.
+        status:
+          type: integer
+          description: >-
+            The HTTP status code generated by the origin server for this
+            occurrence of the problem.
+        detail:
+          type:
+            - string
+            - 'null'
+          description: >-
+            A human-readable explanation specific to this occurrence of the
+            problem.
+        instance:
+          type:
+            - string
+            - 'null'
+          format: uri
+          description: >-
+            A URI reference that identifies the specific occurrence of the
+            problem.
+        code:
+          type:
+            - integer
+            - 'null'
+          description: Service-specific error code.
+        errors:
+          type:
+            - array
+            - 'null'
+          items:
+            $ref: '#/components/schemas/ServiceErrorResponseErrorsItem'
+          description: Field-level validation failures.
+      required:
+        - type
+        - title
+        - status
+  securitySchemes: {}
+servers:
+  - url: https://api.example.com
+    description: Default

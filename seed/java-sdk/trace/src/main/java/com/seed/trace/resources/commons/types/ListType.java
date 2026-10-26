@@ -103,7 +103,6 @@ public final class ListType {
 
         private Optional<Boolean> isFixedLength = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -145,6 +144,14 @@ public final class ListType {
         @java.lang.Override
         public ListType build() {
             return new ListType(valueType, isFixedLength, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("valueType") || key.equalsIgnoreCase("isFixedLength")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

@@ -528,6 +528,30 @@ export class XmlObjectGenerator {
                 writer.write("(ToXElement(), xmlDeclaration)");
             })
         });
+        this.class_.addMethod({
+            name: "ToXml",
+            access: ast.Access.Public,
+            return_: this.context.Primitive.string,
+            parameters: [
+                this.csharp.parameter({
+                    name: "xmlDeclaration",
+                    type: this.context.Primitive.boolean,
+                    docs: "Whether to prefix the output with the XML declaration."
+                }),
+                this.csharp.parameter({
+                    name: "indent",
+                    type: this.context.Primitive.boolean,
+                    docs: "Whether to indent child elements on separate lines instead of emitting compact XML."
+                })
+            ],
+            summary:
+                "Serializes this value to XML, optionally prefixed with the XML declaration and optionally indented.",
+            bodyType: ast.Method.BodyType.Expression,
+            body: this.csharp.codeblock((writer) => {
+                this.utils(writer, "Serialize");
+                writer.write("(ToXElement(), xmlDeclaration, indent)");
+            })
+        });
     }
 
     private addToString(): void {
@@ -1152,10 +1176,11 @@ export class XmlObjectGenerator {
             }
             scalars.push(xmlProperty);
         }
-        return [
-            ...scalars.filter((scalar) => this.isRequiredValue(scalar)),
-            ...scalars.filter((scalar) => !this.isRequiredValue(scalar))
-        ];
+        // Element text first (so `Say("hi")` reads as the element's content, matching the legacy SDKs),
+        // then required attributes, then optional attributes.
+        const rank = (scalar: XmlProperty): number =>
+            (scalar.kind === "TEXT" ? 0 : 2) + (this.isRequiredValue(scalar) ? 0 : 1);
+        return [...scalars].sort((a, b) => rank(a) - rank(b));
     }
 
     private addAddChild(): void {

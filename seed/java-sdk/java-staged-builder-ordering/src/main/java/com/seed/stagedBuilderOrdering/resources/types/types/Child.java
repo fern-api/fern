@@ -94,7 +94,6 @@ public final class Child {
 
         private int childValue;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -123,6 +122,14 @@ public final class Child {
         @java.lang.Override
         public Child build() {
             return new Child(childId, childValue, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("childId") || key.equalsIgnoreCase("childValue")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

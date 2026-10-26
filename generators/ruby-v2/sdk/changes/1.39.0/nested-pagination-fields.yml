@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Pagination now works when the next cursor, the items, or the has-next-page flag is nested inside the
+    response (e.g. `$response.pagination.nextToken`). The pager used to read only the last field name
+    from the top-level response (`response.next_token`), which raised `NoMethodError`. It now follows
+    the full path (`response.pagination.next_token`).
+  type: fix

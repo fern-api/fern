@@ -7,7 +7,7 @@ describe("SeedApiClient", () => {
     test("submitFormData", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
-        const rawRequestBody = { username: "johndoe", email: "john@example.com" };
+        const rawRequestBody = { username: "johndoe", email: "john@example.com", Content: '{"key":"value"}' };
         const rawResponseBody = { status: "success", message: "Data received successfully." };
 
         server
@@ -22,6 +22,7 @@ describe("SeedApiClient", () => {
         const response = await client.submitFormData({
             username: "johndoe",
             email: "john@example.com",
+            Content: '{"key":"value"}',
         });
         expect(response).toEqual(rawResponseBody);
     });

@@ -69,7 +69,6 @@ public final class DataContextHeartbeat implements IHeartbeatPayload {
     public static final class Builder {
         private Optional<OffsetDateTime> timestamp = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -92,6 +91,14 @@ public final class DataContextHeartbeat implements IHeartbeatPayload {
 
         public DataContextHeartbeat build() {
             return new DataContextHeartbeat(timestamp, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("timestamp")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

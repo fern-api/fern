@@ -70,7 +70,6 @@ public final class GetConnectionRequest {
     public static final class Builder {
         private Optional<String> fields = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -96,6 +95,14 @@ public final class GetConnectionRequest {
 
         public GetConnectionRequest build() {
             return new GetConnectionRequest(fields, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("fields")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

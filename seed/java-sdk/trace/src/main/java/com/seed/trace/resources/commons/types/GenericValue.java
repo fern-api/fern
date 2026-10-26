@@ -97,7 +97,6 @@ public final class GenericValue {
 
         private Optional<String> stringifiedType = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -132,6 +131,14 @@ public final class GenericValue {
         @java.lang.Override
         public GenericValue build() {
             return new GenericValue(stringifiedType, stringifiedValue, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("stringifiedType") || key.equalsIgnoreCase("stringifiedValue")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

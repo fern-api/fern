@@ -5573,6 +5573,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_vendor.createVendor": {
@@ -5824,6 +5825,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_catalog.createCatalogImage": {
@@ -6001,6 +6003,7 @@
                             },
                             {
                                 "type": "file",
+                                "isOptional": true,
                                 "wireValue": "image_file",
                                 "name": {
                                     "originalName": "image_file",
@@ -6032,6 +6035,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_catalog.getCatalogImage": {
@@ -6213,6 +6217,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_teamMember.updateTeamMember": {
@@ -6497,6 +6502,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             }
         },

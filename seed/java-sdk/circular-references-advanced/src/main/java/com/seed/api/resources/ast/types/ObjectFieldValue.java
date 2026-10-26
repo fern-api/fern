@@ -94,7 +94,6 @@ public final class ObjectFieldValue {
 
         private FieldValue value;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -123,6 +122,14 @@ public final class ObjectFieldValue {
         @java.lang.Override
         public ObjectFieldValue build() {
             return new ObjectFieldValue(name, value, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("name") || key.equalsIgnoreCase("value")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

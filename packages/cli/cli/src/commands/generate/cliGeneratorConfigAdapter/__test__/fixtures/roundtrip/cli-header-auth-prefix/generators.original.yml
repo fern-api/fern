@@ -1,0 +1,21 @@
+auth-schemes:
+  apiKey:
+    header: X-Api-Key
+    type: string
+    env: HEADER_PREFIX_CLI_KEY
+    prefix: Key
+api:
+  auth: apiKey
+  specs:
+    - openapi: ./openapi.yml
+groups:
+  cli:
+    generators:
+      - name: fernapi/fern-cli-generator
+        version: 0.49.0
+        output:
+          location: local-file-system
+          path: ../out
+        config:
+          binaryName: header-prefix-cli
+          generateWireTests: true

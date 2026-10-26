@@ -4,6 +4,7 @@ interface RustCustomConfigSchema {
     crateName?: string;
     clientName?: string;
     respectOptionalRequestBody?: boolean;
+    capitalizeInitialisms?: boolean;
 }
 
 const DEFAULT_CONFIG: FernGeneratorExec.GeneratorConfig = {

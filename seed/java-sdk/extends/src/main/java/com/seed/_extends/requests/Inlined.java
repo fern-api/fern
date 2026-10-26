@@ -112,7 +112,6 @@ public final class Inlined implements IExampleType, IDocs {
 
         private String unique;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -149,6 +148,14 @@ public final class Inlined implements IExampleType, IDocs {
         @java.lang.Override
         public Inlined build() {
             return new Inlined(name, docs, unique, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("name") || key.equalsIgnoreCase("docs") || key.equalsIgnoreCase("unique")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

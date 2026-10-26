@@ -40,11 +40,19 @@ export class DynamicTypeMapper extends WithGeneration {
                 }
                 return this.convertNamed({ named, typeId: args.typeReference.value });
             }
-            case "optional":
-            case "nullable": {
-                const value = this.convert({ typeReference: args.typeReference.value });
-                return args.unboxOptionals ? value.asNonOptional() : value.asOptional();
+            case "optional": {
+                if (args.unboxOptionals) {
+                    return this.convert({ typeReference: args.typeReference.value, unboxOptionals: true });
+                }
+                return this.convert({ typeReference: args.typeReference.value }).asOptional();
             }
+            case "nullable":
+                // Matches the SDK type mapper: nullable<T> stays T? even when optionals are unboxed
+                // (e.g. list items), so List<Enum?> matches the SDK's IEnumerable<Enum?>.
+                return this.convert({
+                    typeReference: args.typeReference.value,
+                    unboxOptionals: args.unboxOptionals
+                }).asOptional();
             case "primitive":
                 return this.convertPrimitive({ primitive: args.typeReference.value });
             case "set":

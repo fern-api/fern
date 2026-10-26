@@ -115,7 +115,6 @@ public final class UpdateTagsRequest {
 
         private OptionalNullable<List<String>> labels = OptionalNullable.absent();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -202,6 +201,14 @@ public final class UpdateTagsRequest {
 
         public UpdateTagsRequest build() {
             return new UpdateTagsRequest(tags, categories, labels, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("tags") || key.equalsIgnoreCase("categories") || key.equalsIgnoreCase("labels")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {
