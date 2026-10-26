@@ -47,6 +47,26 @@ describe("renderBanner", () => {
         expect(banner).toBe("████\n");
     });
 
+    it("leaves the bottom half empty for an odd number of pixel rows", () => {
+        expect(renderBanner(image(1, 1, [RED]), { width: 1, mode: "shape" })).toBe("▀\n");
+        expect(renderBanner(image(1, 3, [RED, RED, RED]), { width: 1, mode: "shape" })).toBe("█\n▀\n");
+    });
+
+    it("rejects a logo whose strokes vanish when scaled down", () => {
+        const thinLine = image(
+            8,
+            8,
+            Array.from({ length: 64 }, (_, i) => (i % 8 === 0 ? RED : CLEAR))
+        );
+        thinLine.data.set(RED, 7 * 4);
+        expect(() => renderBanner(thinLine, { width: 1, mode: "shape" })).toThrow(/too thin/);
+    });
+
+    it("rejects an invalid width or alpha threshold", () => {
+        expect(() => renderBanner(image(1, 1, [RED]), { width: 2.5 })).toThrow(/Invalid width/);
+        expect(() => renderBanner(image(1, 1, [CLEAR]), { alphaThreshold: 0 })).toThrow(/Invalid alpha threshold/);
+    });
+
     it("rejects a logo with no visible pixels", () => {
         expect(() => renderBanner(image(1, 1, [CLEAR]))).toThrow("no visible pixels");
     });
@@ -56,7 +76,7 @@ describe("logoToBanner", () => {
     it("rasterises an SVG", () => {
         const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="10"><rect width="20" height="10" fill="#4949F2"/></svg>`;
         const banner = logoToBanner(new TextEncoder().encode(svg), { width: 10, mode: "shape" });
-        expect(banner).toBe(`${"█".repeat(10)}\n`.repeat(3));
+        expect(banner).toBe(`${`${"█".repeat(10)}\n`.repeat(2)}${"▀".repeat(10)}\n`);
     });
 
     it("decodes a PNG", () => {

@@ -11,7 +11,7 @@ export interface LogoToBannerOptions {
     /** Banner width in terminal columns. Height follows the logo's aspect ratio. Default 64. */
     width?: number;
     mode?: LogoMode;
-    /** Pixels with alpha below this (0-255) are treated as transparent. Default 110. */
+    /** Pixels with alpha below this (1-255) are treated as transparent. Default 110. */
     alphaThreshold?: number;
 }
 
@@ -23,10 +23,7 @@ const SVG_OVERSAMPLE = 8;
 type Pixel = [number, number, number, number];
 
 export function logoToBanner(bytes: Uint8Array, options: LogoToBannerOptions = {}): string {
-    const width = options.width ?? DEFAULT_WIDTH;
-    if (!Number.isInteger(width) || width < 1) {
-        throw new Error(`Invalid width: expected a positive integer, got ${width}.`);
-    }
+    const width = validateWidth(options.width ?? DEFAULT_WIDTH);
     return renderBanner(decodeLogo(bytes, width * SVG_OVERSAMPLE), options);
 }
 
@@ -35,17 +32,17 @@ export function logoToBanner(bytes: Uint8Array, options: LogoToBannerOptions = {
  * tall, drawn with `▀` / `▄` / `█` so the art keeps the logo's proportions.
  */
 export function renderBanner(image: RgbaImage, options: LogoToBannerOptions = {}): string {
-    const width = options.width ?? DEFAULT_WIDTH;
+    const width = validateWidth(options.width ?? DEFAULT_WIDTH);
     const mode = options.mode ?? "color";
-    const alphaThreshold = options.alphaThreshold ?? DEFAULT_ALPHA_THRESHOLD;
+    const alphaThreshold = validateAlphaThreshold(options.alphaThreshold ?? DEFAULT_ALPHA_THRESHOLD);
 
     const cropped = cropToContent(image, alphaThreshold);
     if (cropped == null) {
         throw new Error("The logo has no visible pixels.");
     }
     const columns = Math.min(width, cropped.width);
-    let rows = Math.max(1, Math.round((cropped.height * columns) / cropped.width));
-    rows += rows % 2;
+    // An odd row count leaves the last cell's bottom half transparent (see `pixelAt`).
+    const rows = Math.max(1, Math.round((cropped.height * columns) / cropped.width));
     const scaled = boxResize(cropped, columns, rows);
 
     const lines: string[] = [];
@@ -65,7 +62,27 @@ export function renderBanner(image: RgbaImage, options: LogoToBannerOptions = {}
     while (lines.length > 0 && lines[lines.length - 1] === "") {
         lines.pop();
     }
+    if (lines.length === 0) {
+        throw new Error(
+            "The logo disappeared when scaled down: its strokes are too thin for this width. " +
+                "Try a larger width or a lower alpha threshold."
+        );
+    }
     return `${lines.join("\n")}\n`;
+}
+
+function validateWidth(width: number): number {
+    if (!Number.isInteger(width) || width < 1) {
+        throw new Error(`Invalid width: expected a positive integer, got ${width}.`);
+    }
+    return width;
+}
+
+function validateAlphaThreshold(alphaThreshold: number): number {
+    if (!Number.isInteger(alphaThreshold) || alphaThreshold < 1 || alphaThreshold > 255) {
+        throw new Error(`Invalid alpha threshold: expected an integer from 1 to 255, got ${alphaThreshold}.`);
+    }
+    return alphaThreshold;
 }
 
 function renderCell(top: Pixel | null, bottom: Pixel | null, mode: LogoMode): string {
