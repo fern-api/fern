@@ -1,24 +1,31 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-const { mockSentryCaptureException, mockSentryFlush, mockSentryInit, mockSentrySetTag, mockLocalVariablesIntegration } =
-    vi.hoisted(() => ({
-        mockSentryCaptureException: vi.fn(),
-        mockSentryFlush: vi.fn().mockResolvedValue(true),
-        mockSentryInit: vi.fn(function () {
-            return {
-                captureException: mockSentryCaptureException,
-                flush: mockSentryFlush
-            };
-        }),
-        mockSentrySetTag: vi.fn(),
-        mockLocalVariablesIntegration: vi.fn().mockReturnValue({ name: "LocalVariables" })
-    }));
+const {
+    mockSentryCaptureException,
+    mockSentryFlush,
+    mockSentryInit,
+    mockSentrySetTag,
+    mockLocalVariablesIntegration,
+    mockOnUnhandledRejectionIntegration
+} = vi.hoisted(() => ({
+    mockSentryCaptureException: vi.fn(),
+    mockSentryFlush: vi.fn().mockResolvedValue(true),
+    mockSentryInit: vi.fn(function () {
+        return {
+            captureException: mockSentryCaptureException,
+            flush: mockSentryFlush
+        };
+    }),
+    mockSentrySetTag: vi.fn(),
+    mockLocalVariablesIntegration: vi.fn().mockReturnValue({ name: "LocalVariables" }),
+    mockOnUnhandledRejectionIntegration: vi.fn().mockReturnValue({ name: "OnUnhandledRejection" })
+}));
 
 vi.mock("@sentry/node", () => ({
     init: mockSentryInit,
     rewriteFramesIntegration: vi.fn().mockReturnValue({ name: "RewriteFrames" }),
     onUncaughtExceptionIntegration: vi.fn().mockReturnValue({ name: "OnUncaughtException" }),
-    onUnhandledRejectionIntegration: vi.fn().mockReturnValue({ name: "OnUnhandledRejection" }),
+    onUnhandledRejectionIntegration: mockOnUnhandledRejectionIntegration,
     linkedErrorsIntegration: vi.fn().mockReturnValue({ name: "LinkedErrors" }),
     nodeContextIntegration: vi.fn().mockReturnValue({ name: "NodeContext" }),
     localVariablesIntegration: mockLocalVariablesIntegration,
@@ -46,6 +53,7 @@ describe("SentryClient (base-generator)", () => {
         mockSentryInit.mockClear();
         mockSentrySetTag.mockClear();
         mockLocalVariablesIntegration.mockClear();
+        mockOnUnhandledRejectionIntegration.mockClear();
     });
 
     afterEach(() => {
@@ -118,5 +126,12 @@ describe("SentryClient (base-generator)", () => {
 
         expect(mockSentrySetTag).toHaveBeenCalledWith("error_code", "CONFIG_ERROR");
         expect(mockSentryCaptureException).toHaveBeenCalledOnce();
+    });
+
+    it("exits the process on unhandled rejections so a failed generator exits non-zero", () => {
+        // eslint-disable-next-line no-new
+        new SentryClient(DEFAULT_ARGS);
+
+        expect(mockOnUnhandledRejectionIntegration).toHaveBeenCalledWith({ mode: "strict" });
     });
 });
