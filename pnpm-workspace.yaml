@@ -94,7 +94,6 @@ catalog:
   "@open-rpc/meta-schema": ^1.14.9
   "@postman/sdk-config": 0.16.0
   "@redocly/openapi-core": ^1.4.1
-  "@resvg/resvg-js": 2.6.2
   "@rolldown/binding-darwin-arm64": 1.1.3
   "@sentry/cli": ^2.42.2
   "@types/cli-progress": ^3.11.6
