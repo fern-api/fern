@@ -9,6 +9,7 @@ import java.io.InterruptedIOException;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
+import okhttp3.Call;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.Response;
@@ -23,11 +24,17 @@ import okio.Okio;
  * calling threads.
  *
  * <p>A permit is taken before a request is sent and handed back once its response body has been closed (or the
- * request failed), so both {@code execute()} and {@code enqueue()} callers are bounded. Waiting for a permit counts
- * towards the call timeout. Retries scheduled by {@code RetryInterceptor} release their permit while they wait for
+ * request failed), so both {@code execute()} and {@code enqueue()} callers are bounded. A caller waiting for a permit
+ * gives up as soon as its call is cancelled, which is also what the call timeout does when it fires, so the wait never
+ * outlives the call timeout. Retries scheduled by {@code RetryInterceptor} release their permit while they wait for
  * the backoff delay, because that interceptor runs before this one.
+ *
+ * <p>The generated clients always close response bodies (try-with-resources). Code that uses the {@code OkHttpClient}
+ * directly must do the same: a response body that is never closed keeps its permit for good.
  */
 public class ConcurrencyLimitingInterceptor implements Interceptor {
+
+    private static final long CANCELLATION_POLL_NANOS = TimeUnit.MILLISECONDS.toNanos(100);
 
     private final int maxConcurrentRequests;
     private final Semaphore permits;
@@ -51,7 +58,7 @@ public class ConcurrencyLimitingInterceptor implements Interceptor {
 
     @Override
     public Response intercept(Chain chain) throws IOException {
-        acquirePermit(chain);
+        acquirePermit(chain.call());
         Response response;
         try {
             response = chain.proceed(chain.request());
@@ -69,16 +76,30 @@ public class ConcurrencyLimitingInterceptor implements Interceptor {
                 .build();
     }
 
-    private void acquirePermit(Chain chain) throws IOException {
-        long callTimeoutNanos = chain.call().timeout().timeoutNanos();
+    /**
+     * Waits for a permit in short slices so that cancellation of the call (explicit, or by OkHttp's call timeout
+     * watchdog) is honoured promptly. The configured call timeout is also applied as an absolute upper bound.
+     */
+    private void acquirePermit(Call call) throws IOException {
+        long callTimeoutNanos = call.timeout().timeoutNanos();
+        long deadlineNanos = callTimeoutNanos > 0 ? System.nanoTime() + callTimeoutNanos : Long.MAX_VALUE;
         try {
-            if (callTimeoutNanos <= 0) {
-                permits.acquire();
-                return;
-            }
-            if (!permits.tryAcquire(callTimeoutNanos, TimeUnit.NANOSECONDS)) {
-                throw new InterruptedIOException(
-                        "Timed out waiting for one of " + maxConcurrentRequests + " concurrent request permits");
+            while (true) {
+                if (call.isCanceled()) {
+                    throw new IOException("Canceled");
+                }
+                long waitNanos = CANCELLATION_POLL_NANOS;
+                if (deadlineNanos != Long.MAX_VALUE) {
+                    long remainingNanos = deadlineNanos - System.nanoTime();
+                    if (remainingNanos <= 0) {
+                        throw new InterruptedIOException("Timed out waiting for one of " + maxConcurrentRequests
+                                + " concurrent request permits");
+                    }
+                    waitNanos = Math.min(waitNanos, remainingNanos);
+                }
+                if (permits.tryAcquire(waitNanos, TimeUnit.NANOSECONDS)) {
+                    return;
+                }
             }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
@@ -89,7 +110,7 @@ public class ConcurrencyLimitingInterceptor implements Interceptor {
         }
     }
 
-    /** Releases the permit exactly once, when the body is closed. */
+    /** Closes the wrapped body and releases the permit exactly once, when the body is closed. */
     private static final class PermitReleasingResponseBody extends ResponseBody {
 
         private final ResponseBody delegate;
@@ -102,7 +123,7 @@ public class ConcurrencyLimitingInterceptor implements Interceptor {
                 @Override
                 public void close() throws IOException {
                     try {
-                        super.close();
+                        delegate.close();
                     } finally {
                         if (released.compareAndSet(false, true)) {
                             permits.release();

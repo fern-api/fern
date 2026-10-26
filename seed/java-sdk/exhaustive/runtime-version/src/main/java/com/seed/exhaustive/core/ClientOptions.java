@@ -361,8 +361,12 @@ public final class ClientOptions {
                                 this.retryJitterFactor));
             }
 
-            this.maxConcurrentRequests.ifPresent(
-                    limit -> httpClientBuilder.addInterceptor(new ConcurrencyLimitingInterceptor(limit)));
+            this.maxConcurrentRequests.ifPresent(limit -> {
+                httpClientBuilder
+                        .interceptors()
+                        .removeIf(interceptor -> interceptor instanceof ConcurrencyLimitingInterceptor);
+                httpClientBuilder.addInterceptor(new ConcurrencyLimitingInterceptor(limit));
+            });
 
             Logger logger = Logger.from(this.logging);
             httpClientBuilder.addInterceptor(new LoggingInterceptor(logger));

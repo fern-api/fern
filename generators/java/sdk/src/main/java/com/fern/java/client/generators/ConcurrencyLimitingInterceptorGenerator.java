@@ -25,7 +25,7 @@ public final class ConcurrencyLimitingInterceptorGenerator extends AbstractFileG
                     .contents(contents)
                     .build();
         } catch (IOException e) {
-            throw new RuntimeException("Failed to read ConcurrencyLimitingInterceptor.java");
+            throw new RuntimeException("Failed to read ConcurrencyLimitingInterceptor.java", e);
         }
     }
 }

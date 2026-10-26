@@ -313,4 +313,37 @@ class ConcurrencyLimitingInterceptorTest {
             shutdown(client);
         }
     }
+
+    @Test
+    void cancellingACallWhileItWaitsForAPermitAbortsTheWait() throws Exception {
+        Interceptor interceptor = newInterceptor(1);
+        OkHttpClient client =
+                new OkHttpClient.Builder().addInterceptor(interceptor).build();
+        try {
+            Response held = client.newCall(request()).execute();
+            assertThat(availablePermits(interceptor)).isEqualTo(0);
+
+            Call waiting = client.newCall(request());
+            ExecutorService executor = Executors.newSingleThreadExecutor();
+            try {
+                Future<Response> future = executor.submit(waiting::execute);
+                Thread.sleep(250);
+                assertThat(future.isDone()).isFalse();
+
+                long start = System.nanoTime();
+                waiting.cancel();
+                assertThatThrownBy(() -> future.get(5, TimeUnit.SECONDS)).hasCauseInstanceOf(IOException.class);
+                assertThat(TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - start))
+                        .isLessThan(2_000);
+                assertThat(availablePermits(interceptor)).isEqualTo(0);
+            } finally {
+                executor.shutdownNow();
+            }
+
+            held.close();
+            assertThat(availablePermits(interceptor)).isEqualTo(1);
+        } finally {
+            shutdown(client);
+        }
+    }
 }

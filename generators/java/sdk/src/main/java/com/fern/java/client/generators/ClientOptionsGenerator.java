@@ -1966,12 +1966,18 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .endControlFlow()
                 .addCode("\n")
                 // Placed after RetryInterceptor so a retry waiting out its backoff does not hold a permit, and before
-                // the logging/decompression interceptors so it wraps the body they hand back.
+                // the logging/decompression interceptors so it wraps the body they hand back. A limiter already on the
+                // client (Builder.from(...) or a caller-supplied OkHttpClient) is replaced rather than stacked.
+                .beginControlFlow("this.$L.ifPresent(limit ->", MAX_CONCURRENT_REQUESTS_FIELD_NAME)
                 .addStatement(
-                        "this.$L.ifPresent(limit -> $L.addInterceptor(new $T(limit)))",
-                        MAX_CONCURRENT_REQUESTS_FIELD_NAME,
+                        "$L.interceptors().removeIf(interceptor -> interceptor instanceof $T)",
                         OKHTTP_CLIENT_FIELD.name + "Builder",
                         clientGeneratorContext.getPoetClassNameFactory().getConcurrencyLimitingInterceptorClassName())
+                .addStatement(
+                        "$L.addInterceptor(new $T(limit))",
+                        OKHTTP_CLIENT_FIELD.name + "Builder",
+                        clientGeneratorContext.getPoetClassNameFactory().getConcurrencyLimitingInterceptorClassName())
+                .endControlFlow(")")
                 .addCode("\n")
                 .addStatement(
                         "$T $L = $T.from(this.$L)",
