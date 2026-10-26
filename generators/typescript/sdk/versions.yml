@@ -1,4 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.108.0
+  changelogEntry:
+    - summary: |
+        With `noSerdeLayer: false`, JSON-style parts of a multipart request are now serialized before they are
+        encoded, as JSON request bodies are. A part whose type is or contains a named type was sent as `toJson(value)`
+        with the SDK's camelCase property names instead of the wire names.
+      type: fix
+    - summary: |
+        Add the opt-in `includeMultipartPartContentType` config option. When enabled, non-file parts of a
+        multipart request carry their declared content type (e.g. OpenAPI
+        `encoding.<part>.contentType: application/json`) as the part's `Content-Type` header. It is off by
+        default because in browsers such parts are sent as a Blob, which also adds `filename=""`.
+      type: feat
+  createdAt: "2026-10-26"
+  irVersion: 67
 - version: 3.107.8
   changelogEntry:
     - summary: |
