@@ -153,5 +153,13 @@ describe("CrossPlatformFormData", () => {
             const request = formData.getRequest();
             expect(request.body.get("file").name).toBe("test.txt");
         });
+
+        it("should append a value with a part content type", async () => {
+            formData.append("metadata", '{"page_range":"1-2"}', "application/json");
+
+            const part = formData.getRequest().body.get("metadata");
+            expect(part.type).toBe("application/json");
+            expect(await part.text()).toBe('{"page_range":"1-2"}');
+        });
     });
 });

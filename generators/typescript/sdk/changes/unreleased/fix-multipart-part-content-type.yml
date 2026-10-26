@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add the opt-in `includeMultipartPartContentType` config option. When enabled, non-file parts of a
+    multipart request carry their declared content type (e.g. OpenAPI
+    `encoding.<part>.contentType: application/json`) as the part's `Content-Type` header. It is off by
+    default because in browsers such parts are sent as a Blob, which also adds `filename=""`.
+  type: feat
