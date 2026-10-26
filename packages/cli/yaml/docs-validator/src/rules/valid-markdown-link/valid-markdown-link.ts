@@ -17,7 +17,7 @@ import chalk from "chalk";
 import { randomUUID } from "crypto";
 import path from "path";
 import { Rule, RuleViolation } from "../../Rule.js";
-import { getFdrOrigin } from "../missing-redirects/missing-redirects.js";
+import { getFdrOrigin } from "../../utils/fdr-origin.js";
 import { checkIfPathnameExists } from "./check-if-pathname-exists.js";
 import { collectPathnamesToCheck, PathnameToCheck } from "./collect-pathnames.js";
 import { fetchSiblingBasepaths, getSiblingSiteBasepath } from "./sibling-sites.js";
@@ -413,8 +413,22 @@ async function loadSiblingBasepaths({
     instanceUrl: string | undefined;
     domain: string;
 }): Promise<{ siblingBasepaths: string[]; siblingLookupViolations: RuleViolation[] }> {
-    if (!enabled || instanceUrl == null) {
+    if (!enabled) {
         return { siblingBasepaths: [], siblingLookupViolations: [] };
+    }
+    if (instanceUrl == null) {
+        return {
+            siblingBasepaths: [],
+            siblingLookupViolations: [
+                {
+                    name: ValidMarkdownLinks.name,
+                    severity: "warning",
+                    message:
+                        "settings.sibling-site-links is on but docs.yml has no instances, so there is no domain " +
+                        "to look up sibling sites on and links to them are reported as broken."
+                }
+            ]
+        };
     }
     const result = await fetchSiblingBasepaths({
         fdrOrigin: getFdrOrigin(),

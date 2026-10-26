@@ -2,6 +2,8 @@ import { errorMessageOrString } from "@fern-api/core-utils";
 
 import { stripAnchorsAndSearchParams } from "./url-utils.js";
 
+const FETCH_TIMEOUT_MS = 30_000;
+
 export type SiblingBasepathsResult = { type: "success"; basepaths: string[] } | { type: "skipped"; reason: string };
 
 function trimSlashes(path: string): string {
@@ -32,7 +34,7 @@ export async function fetchSiblingBasepaths({
                 Authorization: `Bearer ${token}`
             },
             body: JSON.stringify({ domain }),
-            signal: AbortSignal.timeout(30_000)
+            signal: AbortSignal.timeout(FETCH_TIMEOUT_MS)
         });
         if (!response.ok) {
             return { type: "skipped", reason: `FDR returned ${response.status}` };
@@ -40,6 +42,9 @@ export async function fetchSiblingBasepaths({
         const data: unknown = await response.json();
         return { type: "success", basepaths: parseBasepaths(data) };
     } catch (error) {
+        if (error instanceof Error && error.name === "TimeoutError") {
+            return { type: "skipped", reason: `FDR timed out after ${FETCH_TIMEOUT_MS / 1000}s` };
+        }
         return { type: "skipped", reason: errorMessageOrString(error) };
     }
 }

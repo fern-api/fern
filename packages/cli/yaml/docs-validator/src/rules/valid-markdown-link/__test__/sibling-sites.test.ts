@@ -70,4 +70,12 @@ describe("fetchSiblingBasepaths", () => {
         const result = await fetchSiblingBasepaths({ fdrOrigin: "https://fdr", domain: "d", token: "t" });
         expect(result).toEqual({ type: "skipped", reason: "FDR returned 403" });
     });
+
+    it("reports a timeout clearly", async () => {
+        const timeout = new Error("The operation was aborted due to timeout");
+        timeout.name = "TimeoutError";
+        vi.stubGlobal("fetch", vi.fn().mockRejectedValue(timeout));
+        const result = await fetchSiblingBasepaths({ fdrOrigin: "https://fdr", domain: "d", token: "t" });
+        expect(result).toEqual({ type: "skipped", reason: "FDR timed out after 30s" });
+    });
 });

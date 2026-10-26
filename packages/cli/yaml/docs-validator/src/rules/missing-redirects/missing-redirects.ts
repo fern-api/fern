@@ -7,6 +7,7 @@ import { createMockTaskContext, type TaskContext } from "@fern-api/task-context"
 import { type DocsWorkspace } from "@fern-api/workspace-loader";
 import { formatInitError } from "../../formatInitError.js";
 import { Rule, type RuleContext, type RuleViolation } from "../../Rule.js";
+import { getFdrOrigin } from "../../utils/fdr-origin.js";
 import { getInstanceUrls, toBaseUrl } from "../valid-markdown-link/url-utils.js";
 import { buildPageIdToSlugMap } from "./buildPageIdToSlugMap.js";
 import {
@@ -85,15 +86,6 @@ async function fetchMarkdownEntries(
         const message = errorMessageOrString(error);
         return { error: message };
     }
-}
-
-export function getFdrOrigin(): string {
-    return (
-        process.env.FERN_FDR_ORIGIN ??
-        process.env.OVERRIDE_FDR_ORIGIN ??
-        process.env.DEFAULT_FDR_ORIGIN ??
-        "https://registry.buildwithfern.com"
-    );
 }
 
 export const MissingRedirectsRule: Rule = {
