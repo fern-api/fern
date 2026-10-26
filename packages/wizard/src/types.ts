@@ -47,7 +47,7 @@ export interface Detection {
 /** What the user wants Fern to produce for this repository. */
 export type Product = "sdks" | "docs";
 
-export type StepId = "cli-setup" | "agent" | "skills" | "publish" | "generate";
+export type StepId = "cli-setup" | "agent" | "publish" | "generate";
 
 export type ActionId =
     | "install-cli"

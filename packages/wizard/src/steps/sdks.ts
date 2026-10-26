@@ -1,7 +1,7 @@
 import { execFile } from "child_process";
-import { access, readdir, readFile, writeFile } from "fs/promises";
+import { readdir, readFile, writeFile } from "fs/promises";
 import path from "path";
-import { parse, parseDocument } from "yaml";
+import { isMap, isSeq, parse, parseDocument } from "yaml";
 
 // Which SDK languages a Fern project generates, and where each one is written.
 
@@ -41,24 +41,11 @@ export interface ConfiguredSdk {
 /** The SDK generators in fern/generators.yml's SDK group (see sdkGroupName). */
 export async function readConfiguredSdks(dir: string): Promise<ConfiguredSdk[]> {
     const fernDir = path.join(dir, "fern");
-    let config: unknown;
-    try {
-        config = parse(await readFile(path.join(fernDir, "generators.yml"), "utf8"));
-    } catch {
-        // No generators.yml yet.
-        return [];
-    }
-    if (!isRecord(config) || !isRecord(config.groups)) {
-        return [];
-    }
-    const groupName = sdkGroupName(config);
-    const group = groupName === undefined ? undefined : config.groups[groupName];
-    const generators = isRecord(group) && Array.isArray(group.generators) ? group.generators : [];
-    return generators.flatMap((generator): ConfiguredSdk[] => {
+    return (await readSdkGroupGenerators(dir)).flatMap((generator): ConfiguredSdk[] => {
         if (!isRecord(generator) || typeof generator.name !== "string") {
             return [];
         }
-        const name = generator.name.replace(/^fernapi\//, "");
+        const name = withoutImagePrefix(generator.name);
         const language = SDK_LANGUAGES.find(
             (candidate) => candidate.generator === name || candidate.aliases?.includes(name) === true
         );
@@ -72,6 +59,86 @@ export async function readConfiguredSdks(dir: string): Promise<ConfiguredSdk[]> 
                 : undefined;
         return [{ language, outputPath }];
     });
+}
+
+/** The generators in fern/generators.yml's SDK group, as written. */
+async function readSdkGroupGenerators(dir: string): Promise<unknown[]> {
+    let config: unknown;
+    try {
+        config = parse(await readFile(path.join(dir, "fern", "generators.yml"), "utf8"));
+    } catch {
+        // No generators.yml yet.
+        return [];
+    }
+    if (!isRecord(config) || !isRecord(config.groups)) {
+        return [];
+    }
+    const groupName = sdkGroupName(config);
+    const group = groupName === undefined ? undefined : config.groups[groupName];
+    return isRecord(group) && Array.isArray(group.generators) ? group.generators : [];
+}
+
+/**
+ * Whether every generator in the SDK group writes into this repository. Any other output (npm, PyPI,
+ * GitHub, …) publishes when `fern generate` runs, so the wizard leaves generating those to the user.
+ */
+export async function sdkGroupWritesOnlyLocally(dir: string): Promise<boolean> {
+    return (await readSdkGroupGenerators(dir)).every(
+        (generator) =>
+            isRecord(generator) && isRecord(generator.output) && generator.output.location === "local-file-system"
+    );
+}
+
+/** Changes a generator's pinned version in fern/generators.yml. Returns whether anything changed. */
+export async function setGeneratorVersion(dir: string, generator: string, from: string, to: string): Promise<boolean> {
+    const generatorsPath = path.join(dir, "fern", "generators.yml");
+    let contents: string;
+    try {
+        contents = await readFile(generatorsPath, "utf8");
+    } catch {
+        // No generators.yml.
+        return false;
+    }
+    const document = parseDocument(contents);
+    const groups = document.get("groups");
+    if (!isMap(groups)) {
+        return false;
+    }
+    let changed = false;
+    for (const group of groups.items) {
+        const generators = isMap(group.value) ? group.value.get("generators") : undefined;
+        if (!isSeq(generators)) {
+            continue;
+        }
+        for (const item of generators.items) {
+            if (
+                isMap(item) &&
+                withoutImagePrefix(String(item.get("name"))) === withoutImagePrefix(generator) &&
+                String(item.get("version")) === from
+            ) {
+                item.set("version", to);
+                changed = true;
+            }
+        }
+    }
+    if (changed) {
+        await writeFile(generatorsPath, document.toString());
+    }
+    return changed;
+}
+
+/** Whether a folder exists and has something in it. */
+export async function isNonEmptyDirectory(dirPath: string): Promise<boolean> {
+    try {
+        return (await readdir(dirPath)).length > 0;
+    } catch {
+        return false;
+    }
+}
+
+/** Generator names appear both with and without their Docker image prefix. */
+function withoutImagePrefix(name: string): string {
+    return name.replace(/^fernapi\//, "");
 }
 
 /** The default group, or the first group when none is the default. */
@@ -133,15 +200,6 @@ export async function isDockerRunning(): Promise<boolean> {
     return new Promise((resolve) => {
         execFile("docker", ["info"], { timeout: 10000 }, (error) => resolve(error === null));
     });
-}
-
-export async function pathExists(filePath: string): Promise<boolean> {
-    try {
-        await access(filePath);
-        return true;
-    } catch {
-        return false;
-    }
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {

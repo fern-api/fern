@@ -35,12 +35,14 @@ import { agentHandoffFiles, writeAgentHandoff } from "./steps/handoff";
 import {
     ensureSdkGroup,
     isDockerRunning,
+    isNonEmptyDirectory,
     listApis,
-    pathExists,
     readConfiguredSdks,
     readOrganization,
     SDK_LANGUAGES,
-    type SdkLanguage
+    type SdkLanguage,
+    sdkGroupWritesOnlyLocally,
+    setGeneratorVersion
 } from "./steps/sdks";
 import type {
     ActionId,
@@ -99,13 +101,8 @@ const STEPS: Array<{ id: StepId; title: string; question: string; actions: Actio
         id: "agent",
         title: "Teach your coding agent",
         question: "Teach your coding agent about Fern?",
-        actions: ["agent-handoff", "agent-mcp"]
-    },
-    {
-        id: "skills",
-        title: "Add skills",
-        question: "Add Fern's docs-writing skill for your coding agent?",
-        actions: ["docs-skills"]
+        // Connecting the MCP server also signs you in and edits global agent configs, so it asks again.
+        actions: ["agent-handoff", "docs-skills", "agent-mcp"]
     },
     {
         id: "publish",
@@ -506,7 +503,9 @@ export async function runWizard(flags: WizardFlags): Promise<number> {
         }
     }
     printNextSteps(products, {
-        organization: orgTaken ? undefined : await readOrganization(dir),
+        // Prefer fern.config.json, but fall back to the organization this run used, so the Dashboard
+        // link matches the one shown after publishing even if the file can't be read.
+        organization: orgTaken ? undefined : ((await readOrganization(dir)) ?? org),
         docsUrl: await docsSiteUrl(dir, scaffoldedDocsSite),
         ...published
     });
@@ -573,7 +572,7 @@ async function runAction(
                 spec === undefined
                     ? ["init", ...orgArgs(flags.org)]
                     : ["init", "--openapi", spec.path, ...orgArgs(flags.org)];
-            await withStatus("Creating your Fern project", () => runCommandQuietly(fernRunner(detection, args), dir));
+            await withStatus("Creating your Fern project", () => runFernQuietly(args, dir, detection));
             printDone(
                 spec === undefined ? "Created a starter Fern project in fern/" : `Created fern/ from ${spec.path}`
             );
@@ -583,7 +582,7 @@ async function runAction(
             const mintJson = findMintJson(detection);
             if (mintJson !== undefined) {
                 await withStatus("Importing your Mintlify docs", () =>
-                    runCommandQuietly(fernRunner(detection, docsInitArgs(mintJson, flags.org)), dir)
+                    runFernQuietly(docsInitArgs(mintJson, flags.org), dir, detection)
                 );
                 printDone(`Imported your Mintlify docs from ${mintJson}`);
                 return;
@@ -626,9 +625,7 @@ async function runAction(
             }
             // Signing in may open a browser and wait for it, so it keeps the terminal.
             await runFernCommand(["login"], dir, detection);
-            await withStatus("Connecting Fern's MCP server", () =>
-                runCommandQuietly(fernRunner(detection, ["mcp", "install"]), dir)
-            );
+            await withStatus("Connecting Fern's MCP server", () => runFernQuietly(["mcp", "install"], dir, detection));
             printDone("Connected Fern's MCP server to your coding agents");
             return;
         case "publish-docs":
@@ -761,7 +758,7 @@ async function previewAndPublish(
             type: "confirm",
             name: "publish",
             message: `Publish your docs to ${siteUrl ?? "your docs site"}? They'll be public and appear in your Fern Dashboard.`,
-            default: false
+            default: true
         }
     ]);
     if (!publish.publish) {
@@ -769,13 +766,12 @@ async function previewAndPublish(
         return;
     }
     let publishOutput: string;
-    let fallbackUrl = siteUrl;
     try {
         publishOutput = await withStatus("Publishing your docs", () =>
             runFernQuietly(["generate", "--docs", "--no-prompt"], dir, detection)
         );
     } catch (error) {
-        const takenDomain = error instanceof PublishFailedError ? error.takenDomain : undefined;
+        const takenDomain = error instanceof FernCommandError ? error.takenDomain : undefined;
         if (takenDomain === undefined) {
             throw error;
         }
@@ -786,10 +782,15 @@ async function previewAndPublish(
         publishOutput = await withStatus("Publishing your docs", () =>
             runFernQuietly(["generate", "--docs", "--no-prompt"], dir, detection)
         );
-        fallbackUrl = `https://${subdomain}.${DOCS_DOMAIN}`;
     }
-    published.publishedUrl = parsePublishedUrl(publishOutput) ?? fallbackUrl;
-    printDone(`Published to ${chalk.cyan(published.publishedUrl ?? "your docs site")}`);
+    // Only report a published site when Fern says it published one.
+    const publishedUrl = parsePublishedUrl(publishOutput);
+    if (publishedUrl === undefined) {
+        printSkipped(`Fern didn't report a published site. Check your Fern Dashboard: ${dashboard}`);
+        return;
+    }
+    published.publishedUrl = publishedUrl;
+    printDone(`Published to ${chalk.cyan(publishedUrl)}`);
     printDone(`Added to your Fern Dashboard: ${chalk.cyan(dashboard)}`);
 }
 
@@ -852,37 +853,108 @@ async function generateSdks(dir: string, detection: Detection, results: PublishR
         printSkipped("No SDKs to generate");
         return;
     }
-    // Docker generates on this machine; without it, Fern generates the SDKs on its servers.
-    const local = await isDockerRunning();
-    const names = sdks.map((sdk) => sdk.language.label).join(", ");
-    try {
-        await withStatus(
-            `Generating ${names} ${local ? "with Docker" : "on Fern's servers"} (this can take a few minutes)`,
-            () =>
-                runFernQuietly(["generate", ...groupArgs, ...(local ? ["--local"] : []), "--no-prompt"], dir, detection)
+    if (!(await sdkGroupWritesOnlyLocally(dir))) {
+        printSkipped(
+            `fern/generators.yml also publishes SDKs (for example to npm), so the wizard won't run it. Run \`fern generate${group === undefined ? "" : ` --group ${group}`}\` when you're ready.`
         );
-    } catch (error) {
-        if (!local && error instanceof Error) {
-            throw new Error(
-                `${error.message}\nTo generate on this machine instead, start Docker and run \`fern generate --local\`.`
-            );
-        }
-        throw error;
+        return;
     }
+    const names = sdks.map((sdk) => sdk.language.label).join(", ");
+    const output = await generateSdkFiles({ dir, detection, groupArgs, names });
 
     const generated: Array<{ label: string; path: string }> = [];
+    const empty: string[] = [];
     for (const sdk of sdks) {
-        if (sdk.outputPath !== undefined && (await pathExists(sdk.outputPath))) {
-            const relative = path.relative(dir, sdk.outputPath) || ".";
-            generated.push({ label: sdk.language.label, path: relative });
-            printDone(
-                `${sdk.language.label} SDK  ${chalk.cyan(hyperlink(relative, pathToFileURL(sdk.outputPath).href))}`
-            );
-        } else {
-            printSkipped(`${sdk.language.label} SDK wasn't written to this repository; check fern/generators.yml`);
+        if (sdk.outputPath === undefined) {
+            continue;
         }
+        if (!(await isNonEmptyDirectory(sdk.outputPath))) {
+            empty.push(sdk.language.label);
+            continue;
+        }
+        const relative = path.relative(dir, sdk.outputPath) || ".";
+        generated.push({ label: sdk.language.label, path: relative });
+        printDone(`${sdk.language.label} SDK  ${chalk.cyan(hyperlink(relative, pathToFileURL(sdk.outputPath).href))}`);
     }
     results.generatedSdks = generated;
+    if (empty.length > 0) {
+        // Fern can report success even when a generator crashed and wrote nothing.
+        const reason = generatorError(output);
+        throw new Error(
+            `Fern wrote no files for the ${empty.join(", ")} SDK${empty.length === 1 ? "" : "s"}${reason === undefined ? "" : `. The generator reported: ${reason}`}. Run \`fern generate --log-level debug\` to see more.`
+        );
+    }
+}
+
+/** The version a first SDK build gets; it only names the generated package, since nothing is published. */
+const FIRST_SDK_VERSION = "0.1.0";
+
+/**
+ * Generates with Docker when it's running, and on Fern's servers otherwise or if Docker fails (some
+ * Docker setups, like Colima's defaults, can't see the files Fern shares with the generator).
+ * Returns what Fern printed.
+ */
+async function generateSdkFiles({
+    dir,
+    detection,
+    groupArgs,
+    names
+}: {
+    dir: string;
+    detection: Detection;
+    groupArgs: string[];
+    names: string;
+}): Promise<string> {
+    if (await isDockerRunning()) {
+        try {
+            return await withStatus(`Generating ${names} with Docker (this can take a few minutes)`, () =>
+                runFernQuietly(["generate", ...groupArgs, "--local", "--no-prompt"], dir, detection)
+            );
+        } catch (error) {
+            const reason = error instanceof Error ? error.message.split("\n")[0] : String(error);
+            printSkipped(`Generating with Docker failed (${reason}), so Fern's servers will generate ${names}`);
+        }
+    }
+    // Every output is a folder in this repository (checked above), so a version only names the package.
+    const generate = (): Promise<string> =>
+        withStatus(`Generating ${names} on Fern's servers (this can take a few minutes)`, () =>
+            runFernQuietly(["generate", ...groupArgs, "--version", FIRST_SDK_VERSION, "--no-prompt"], dir, detection)
+        );
+    try {
+        return await generate();
+    } catch (error) {
+        const unavailable =
+            error instanceof FernCommandError ? parseUnavailableGeneratorVersion(error.output) : undefined;
+        if (
+            unavailable === undefined ||
+            !(await setGeneratorVersion(dir, unavailable.generator, unavailable.requested, unavailable.available))
+        ) {
+            throw error;
+        }
+        // `fern init` pins the newest generator, which Fern's servers may not offer yet.
+        printSkipped(
+            `Fern's servers don't have ${unavailable.generator} ${unavailable.requested} yet, so fern/generators.yml now uses ${unavailable.available}`
+        );
+        return generate();
+    }
+}
+
+/** Reads Fern's "version X is not currently available" error, which names the newest version it has. */
+export function parseUnavailableGeneratorVersion(
+    output: string
+): { generator: string; requested: string; available: string } | undefined {
+    const match = output.match(
+        /Generator (\S+) version (\S+) is not currently available\. The latest available version in the same major line is (\d[\w.+-]*?)\.?(?:\s|$)/
+    );
+    if (match?.[1] === undefined || match[2] === undefined || match[3] === undefined) {
+        return undefined;
+    }
+    return { generator: match[1], requested: match[2], available: match[3] };
+}
+
+/** The first error a generator printed, such as "Unsupported xml scalar type …". */
+export function generatorError(output: string): string | undefined {
+    return output.match(/\bError: ([^\n]+)/)?.[1]?.trim();
 }
 
 /**
@@ -996,10 +1068,12 @@ async function setDocsUrl(dir: string, from: string, to: string): Promise<void> 
     await writeFile(docsPath, contents.split(from).join(to));
 }
 
-/** A failed `fern generate --docs`, reduced to the lines that explain why. */
-class PublishFailedError extends Error {
+/** A failed fern command: its message is the few lines that explain why. */
+class FernCommandError extends Error {
     constructor(
         message: string,
+        /** Everything the command printed. */
+        public readonly output: string,
         /** Set when the docs URL belongs to another organization. */
         public readonly takenDomain: string | undefined
     ) {
@@ -1016,7 +1090,7 @@ async function runFernQuietly(args: string[], dir: string, detection: Detection)
             throw error;
         }
         const takenDomain = error.output.match(/domains belong to another organization:\s*(\S+)/)?.[1];
-        throw new PublishFailedError(summarizeFailure(error.output), takenDomain);
+        throw new FernCommandError(summarizeFailure(error.output), error.output, takenDomain);
     }
 }
 
@@ -1028,13 +1102,16 @@ export function summarizeFailure(output: string): string {
     const lines = output
         .split("\n")
         .map((line) => line.trim())
-        .filter((line) => line.length > 0 && !/\[warning\]/i.test(line))
-        .filter((line) =>
-            /error|fail|denied|forbidden|unauthori[sz]ed|belong|not found|invalid|must|cannot/i.test(line)
-        );
-    const unique = [...new Set(lines.map((line) => line.replace(/^\[[^\]]+\]:\s*/, "")))];
+        // Skip warnings and the "Upgrades available" box.
+        .filter((line) => line.length > 0 && !/\[warning\]/i.test(line) && !/^[│╭╰]/.test(line));
+    const explaining = lines.filter((line) =>
+        /error|fail|denied|forbidden|unauthori[sz]ed|belong|not found|invalid|must|cannot|unsupported|not currently available|no such file/i.test(
+            line
+        )
+    );
+    const unique = [...new Set(explaining.map((line) => line.replace(/^\[[^\]]+\]:\s*/, "")))];
     if (unique.length === 0) {
-        return output.trim().split("\n").at(-1) ?? "fern exited with an error";
+        return lines.at(-1) ?? "fern exited with an error";
     }
     return unique.slice(-3).join("\n");
 }

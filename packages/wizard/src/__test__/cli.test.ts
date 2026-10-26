@@ -50,12 +50,11 @@ describe("action planning", () => {
         ]);
     });
 
-    it("groups actions into CLI setup, coding agent, and skills steps", () => {
+    it("groups actions into setup, coding agent, publish, and SDK steps", () => {
         const steps = planSteps(planActions({ ...baseDetection, agents: ["cursor"] }, flags).actions);
         expect(steps.map((step) => [step.title, step.actions.map((action) => action.id)])).toEqual([
             ["Set up Fern", ["install-cli", "init-api", "init-docs"]],
-            ["Teach your coding agent", ["agent-handoff", "agent-mcp"]],
-            ["Add skills", ["docs-skills"]],
+            ["Teach your coding agent", ["agent-handoff", "docs-skills", "agent-mcp"]],
             ["Preview and publish your docs", ["publish-docs"]],
             ["Generate your SDKs", ["generate-sdks"]]
         ]);
