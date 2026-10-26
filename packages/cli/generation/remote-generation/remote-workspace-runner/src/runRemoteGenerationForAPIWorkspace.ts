@@ -681,7 +681,7 @@ function getFernSdkGenApiUnsupportedOutput({
     if (skipIfNoDiff === true && resolvedRequestedOutput.type !== "github") {
         unsupported.push("skipIfNoDiff=true is not implemented by sdk-gen-api for non-GitHub output");
     }
-    if (autoMerge === true) {
+    if (autoMerge === true || generatorsYml.isGithubAutoMergeEnabled(generatorInvocation.raw?.github)) {
         unsupported.push("autoMerge=true is not implemented by sdk-gen-api");
     }
     return unsupported.length > 0 ? unsupported.join("; ") : undefined;

@@ -158,7 +158,7 @@ export interface GithubStepConfig {
     automationMode?: boolean;
     /** When true: skip opening a PR / pushing when the generated output has no diff from the base branch. */
     skipIfNoDiff?: boolean;
-    /** Enable GitHub automerge on the PR (only effective when automationMode && !hasBreakingChanges) */
+    /** Enable GitHub automerge on the PR (skipped when hasBreakingChanges or version analysis is unavailable) */
     autoMerge?: boolean;
     /** Pre-computed: version bump is MAJOR (from --version AUTO AI analysis) */
     hasBreakingChanges?: boolean;
