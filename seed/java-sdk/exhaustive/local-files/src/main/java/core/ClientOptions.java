@@ -330,7 +330,10 @@ public final class ClientOptions {
         httpClientBuilder.callTimeout(this.timeout.orElse(60), TimeUnit.SECONDS).connectTimeout(0, TimeUnit.SECONDS).writeTimeout(0, TimeUnit.SECONDS).readTimeout(0, TimeUnit.SECONDS).addInterceptor(new RetryInterceptor(this.maxRetries, this.initialRetryDelayMillis, this.maxRetryDelayMillis, this.retryJitterFactor));
       }
 
-      this.maxConcurrentRequests.ifPresent(limit -> httpClientBuilder.addInterceptor(new ConcurrencyLimitingInterceptor(limit)));
+      this.maxConcurrentRequests.ifPresent(limit -> {
+        httpClientBuilder.interceptors().removeIf(interceptor -> interceptor instanceof ConcurrencyLimitingInterceptor);
+        httpClientBuilder.addInterceptor(new ConcurrencyLimitingInterceptor(limit));
+      } );
 
       Logger logger = Logger.from(this.logging);
       httpClientBuilder.addInterceptor(new LoggingInterceptor(logger));
