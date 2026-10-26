@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `fern docs export` to download a copy of your live docs site. `--format html` (default) writes the full
+    static site, which you can open with any static file server (`npx serve docs-export`). `--format md` writes
+    only the per-page Markdown and `llms.txt`. For self-hosted docs, pass `--url` and `--admin-token`.
+  type: feat
