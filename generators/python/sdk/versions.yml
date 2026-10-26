@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.41.9
+  changelogEntry:
+    - summary: |
+        `update_forward_refs` now passes its namespace to `model_rebuild` under Pydantic v2. Models whose
+        forward references go through a union alias (e.g. a recursive `Union["Branch", Leaf, "Items"]` whose
+        members are imported under `TYPE_CHECKING`) were left incomplete, and parsing them raised
+        `PydanticUserError: ... is not fully defined`.
+      type: fix
+  createdAt: "2026-10-26"
+  irVersion: 67
 - version: 5.41.8
   changelogEntry:
     - summary: |
