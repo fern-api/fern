@@ -111,7 +111,17 @@ export abstract class AbstractConverterContext<Spec extends object> {
      * @returns A string suitable for use as a schema name or type id
      */
     public convertBreadcrumbsToName(breadcrumbs: string[]): string {
+        const propertyNameIndices = AbstractConverterContext.getPropertyNameIndices(breadcrumbs);
+
         const filteredBreadcrumbs = breadcrumbs.filter((crumb, index) => {
+            // A property's own name is user-defined, so it is kept verbatim even when it
+            // collides with a crumb we would otherwise drop. Without this, a property named
+            // `properties` gets the same name -- and therefore the same type id -- as the
+            // object declaring it, producing a self-referential type.
+            if (propertyNameIndices.has(index)) {
+                return true;
+            }
+
             // Ignore numeric indices
             if (/^\d+$/.test(crumb)) {
                 return false;
@@ -158,6 +168,23 @@ export abstract class AbstractConverterContext<Spec extends object> {
 
         const camelCased = camelCase(filteredBreadcrumbs.join("_"));
         return capitalizeFirstLetter(camelCased);
+    }
+
+    /**
+     * Returns the indices of breadcrumbs that hold a user-defined property name, i.e. the crumb
+     * immediately following a structural `properties` crumb.
+     */
+    private static getPropertyNameIndices(breadcrumbs: string[]): Set<number> {
+        const propertyNameIndices = new Set<number>();
+        for (const [index, crumb] of breadcrumbs.entries()) {
+            // Skipping crumbs already claimed as a property name is what keeps the alternation
+            // right across a consecutive run: in ["properties", "properties", "properties", "foo"]
+            // the second crumb is a name, so only the third introduces `foo`.
+            if (crumb === "properties" && !propertyNameIndices.has(index) && index + 1 < breadcrumbs.length) {
+                propertyNameIndices.add(index + 1);
+            }
+        }
+        return propertyNameIndices;
     }
 
     /**

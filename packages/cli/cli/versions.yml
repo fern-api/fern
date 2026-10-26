@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.172.1
+  changelogEntry:
+    - summary: |
+        Fix a stack overflow during docs generation when an OpenAPI object declares a property
+        named `properties`.
+      type: fix
+  createdAt: "2026-10-26"
+  irVersion: 67
 - version: 5.172.0
   changelogEntry:
     - summary: |
