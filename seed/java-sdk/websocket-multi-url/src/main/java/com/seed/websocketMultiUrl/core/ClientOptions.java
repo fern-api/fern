@@ -229,6 +229,8 @@ public final class ClientOptions {
 
         private Optional<Integer> timeout = Optional.empty();
 
+        private Optional<Integer> maxConcurrentRequests = Optional.empty();
+
         private OkHttpClient httpClient = null;
 
         private boolean ownsHttpClient = true;
@@ -307,6 +309,23 @@ public final class ClientOptions {
         }
 
         /**
+         * Caps the number of requests that may be in flight at the same time, for both the
+         * synchronous and the asynchronous client. Defaults to no limit.
+         * A request holds a slot from the moment it is sent until its response body is
+         * closed; a caller that needs a slot waits (bounded by the call timeout) until one is
+         * free. Retries waiting for their backoff delay do not hold a slot. Also applies to
+         * an OkHttpClient supplied via httpClient(), whose own dispatcher limits still bound
+         * asynchronous calls.
+         */
+        public Builder maxConcurrentRequests(int maxConcurrentRequests) {
+            if (maxConcurrentRequests <= 0) {
+                throw new IllegalArgumentException("maxConcurrentRequests must be positive");
+            }
+            this.maxConcurrentRequests = Optional.of(maxConcurrentRequests);
+            return this;
+        }
+
+        /**
          * Sets the underlying OkHttp client. The caller retains ownership of its lifecycle:
          * close() will not shut down its dispatcher executor or evict its connection pool.
          */
@@ -354,6 +373,9 @@ public final class ClientOptions {
                                 this.maxRetryDelayMillis,
                                 this.retryJitterFactor));
             }
+
+            this.maxConcurrentRequests.ifPresent(
+                    limit -> httpClientBuilder.addInterceptor(new ConcurrencyLimitingInterceptor(limit)));
 
             Logger logger = Logger.from(this.logging);
             httpClientBuilder.addInterceptor(new LoggingInterceptor(logger));
