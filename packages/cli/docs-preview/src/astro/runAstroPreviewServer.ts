@@ -15,6 +15,7 @@ import { getPreviewDocsDefinition, PreviewDocsResult } from "../previewDocs.js";
 import { isContentOnlyEdit } from "../reloadUtils.js";
 import { SnippetDependencyTracker } from "../SnippetDependencyTracker.js";
 import { buildAstroPreviewModel } from "./buildAstroPreviewModel.js";
+import { DevServerLifetime, DocsDevLifecycleEvent, DocsDevStopReason } from "./DevServerLifetime.js";
 import { LocalLedgerMirror } from "./LocalLedgerMirror.js";
 
 const RELOAD_DEBOUNCE_MS = 500;
@@ -47,6 +48,10 @@ interface AstroBundle {
  * the renderer scopes requests by and injects a live-reload listener into HTML.
  * Reloads rebuild the model, purge the renderer, and reload the browser; a
  * failed reload keeps serving the last successful model.
+ *
+ * By default it runs until it receives SIGTERM/SIGINT/SIGHUP. `timeoutMs` / `idleTimeoutMs` let callers
+ * (agents, CI) have it stop itself the same way, and `onLifecycleEvent` reports ready/reload/stopped
+ * for `--json` output.
  */
 export async function runAstroPreviewServer({
     initialProject,
@@ -59,7 +64,10 @@ export async function runAstroPreviewServer({
     forceDownload = false,
     cacheDir,
     includePrivate,
-    skipApi
+    skipApi,
+    timeoutMs,
+    idleTimeoutMs,
+    onLifecycleEvent
 }: {
     initialProject: Project;
     reloadProject: () => Promise<Project>;
@@ -74,6 +82,11 @@ export async function runAstroPreviewServer({
     includePrivate?: boolean;
     /** Skip building API reference sections (much faster; API reference pages are empty). */
     skipApi?: boolean;
+    /** Stop this long after the server becomes ready. Unset: no limit. */
+    timeoutMs?: number;
+    /** Stop after this long with no HTTP requests (the live-reload stream doesn't count). Unset: no limit. */
+    idleTimeoutMs?: number;
+    onLifecycleEvent?: (event: DocsDevLifecycleEvent) => void;
 }): Promise<void> {
     const docsWorkspace = initialProject.docsWorkspaces;
     if (docsWorkspace == null) {
@@ -98,6 +111,8 @@ export async function runAstroPreviewServer({
     let previewResult: PreviewDocsResult | undefined;
     const snippetTracker = new SnippetDependencyTracker(context);
     await snippetTracker.buildDependencyMap(project);
+    // Lifecycle events are only emitted once the server is ready; the initial build is part of startup.
+    let isReady = false;
 
     const reloadDocsDefinition = async (editedAbsoluteFilepaths?: AbsoluteFilePath[]): Promise<boolean> => {
         context.logger.info("Reloading docs...");
@@ -134,7 +149,11 @@ export async function runAstroPreviewServer({
 
             previewResult = newPreviewResult;
             mirror.replaceModel(model);
-            context.logger.info(`Reload completed in ${Date.now() - startTime}ms`);
+            const durationMs = Date.now() - startTime;
+            context.logger.info(`Reload completed in ${durationMs}ms`);
+            if (isReady) {
+                onLifecycleEvent?.({ event: "reload", ok: true, durationMs });
+            }
             return true;
         } catch (err) {
             if (mirror.getModel() == null) {
@@ -145,6 +164,14 @@ export async function runAstroPreviewServer({
             context.logger.error(extractErrorMessage(err));
             if (err instanceof Error && err.stack != null) {
                 context.logger.debug(`Stack Trace:\n${err.stack}`);
+            }
+            if (isReady) {
+                onLifecycleEvent?.({
+                    event: "reload",
+                    ok: false,
+                    durationMs: Date.now() - startTime,
+                    error: extractErrorMessage(err)
+                });
             }
             return false;
         }
@@ -201,15 +228,44 @@ export async function runAstroPreviewServer({
     rendererProcess.stderr?.on("data", (data: Buffer) => context.logger.debug(`[Astro] ${data.toString().trimEnd()}`));
 
     const reloadClients = new Set<http.ServerResponse>();
-    const proxy = createFrontProxy({ rendererPort, rendererHost, mirrorPort: backendPort, basepath, reloadClients });
+    const lifetime = new DevServerLifetime({
+        timeoutMs,
+        idleTimeoutMs,
+        onExpire: (reason) => {
+            context.logger.info(
+                reason === "timeout"
+                    ? "--timeout reached; shutting down server..."
+                    : "--idle-timeout reached with no requests; shutting down server..."
+            );
+            stop(reason);
+        }
+    });
+    const proxy = createFrontProxy({
+        rendererPort,
+        rendererHost,
+        mirrorPort: backendPort,
+        basepath,
+        reloadClients,
+        lifetime
+    });
 
     let cleanedUp = false;
+    let reloadTimer: NodeJS.Timeout | undefined;
     let rejectRun: (err: Error) => void = () => undefined;
     const runUntilShutdown = new Promise<void>((_resolve, reject) => {
         rejectRun = reject;
     });
     const onSignal = (): void => {
         context.logger.debug("Shutting down server...");
+        stop("signal");
+    };
+    const stop = (reason: DocsDevStopReason): void => {
+        if (cleanedUp) {
+            return;
+        }
+        if (isReady) {
+            onLifecycleEvent?.({ event: "stopped", reason });
+        }
         cleanup();
     };
     const cleanup = (): void => {
@@ -217,6 +273,10 @@ export async function runAstroPreviewServer({
             return;
         }
         cleanedUp = true;
+        lifetime.dispose();
+        if (reloadTimer != null) {
+            clearTimeout(reloadTimer);
+        }
         for (const signal of SHUTDOWN_SIGNALS) {
             process.off(signal, onSignal);
         }
@@ -245,7 +305,7 @@ export async function runAstroPreviewServer({
         if (cleanedUp) {
             return;
         }
-        cleanup();
+        stop("renderer-exit");
         rejectRun(
             new CliError({
                 message:
@@ -286,7 +346,6 @@ export async function runAstroPreviewServer({
     };
 
     const editedAbsoluteFilepaths: AbsoluteFilePath[] = [];
-    let reloadTimer: NodeJS.Timeout | undefined;
     let isReloading = false;
     watcher.on("all", (event: string, targetPath: string) => {
         context.logger.info(chalk.dim(`[${event}] ${targetPath}`));
@@ -313,7 +372,11 @@ export async function runAstroPreviewServer({
         }, RELOAD_DEBOUNCE_MS);
     });
 
-    context.logger.info(`Docs preview server (Astro) ready on http://localhost:${port}${basepath}`);
+    const url = `http://localhost:${port}${basepath}`;
+    context.logger.info(`Docs preview server (Astro) ready on ${url}`);
+    isReady = true;
+    onLifecycleEvent?.({ event: "ready", url, port, backendPort, pid: process.pid });
+    lifetime.start();
 
     await runUntilShutdown;
 }
@@ -411,13 +474,15 @@ function createFrontProxy({
     rendererHost,
     mirrorPort,
     basepath,
-    reloadClients
+    reloadClients,
+    lifetime
 }: {
     rendererPort: number;
     rendererHost: string;
     mirrorPort: number;
     basepath: string;
     reloadClients: Set<http.ServerResponse>;
+    lifetime: DevServerLifetime;
 }): http.Server {
     const mirroredFilesPrefix = `${basepath}/${MIRRORED_FILES_DIR}/`;
     return http.createServer((req, res) => {
@@ -432,6 +497,10 @@ function createFrontProxy({
             req.on("close", () => reloadClients.delete(res));
             return;
         }
+
+        // The live-reload stream above stays open for as long as a tab is, so it doesn't count as activity.
+        lifetime.requestStarted();
+        res.once("close", () => lifetime.requestFinished());
 
         const isMirroredFile = req.url != null && req.url.startsWith(mirroredFilesPrefix);
         const upstream = http.request(

@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern docs dev` can now stop itself and report its state in a machine-readable way, so agents and CI
+    no longer have to find and kill the process. All three flags are off by default and apply to the default
+    (Astro) preview server only:
+    - `--timeout <duration>` stops the server cleanly this long after it is ready.
+    - `--idle-timeout <duration>` stops it after this long with no HTTP requests (the live-reload stream doesn't count).
+    - `--json` writes `ready` (URL, ports, PID), `reload` and `stopped` events to stdout as one JSON object per line; logs go to stderr.
+    Durations accept `30s`, `10m` or `1h`; a plain number means seconds.
+  type: feat
