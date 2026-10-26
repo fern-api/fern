@@ -111,7 +111,8 @@ export async function runAstroPreviewServer({
     let previewResult: PreviewDocsResult | undefined;
     const snippetTracker = new SnippetDependencyTracker(context);
     await snippetTracker.buildDependencyMap(project);
-    // Lifecycle events are only emitted once the server is ready; the initial build is part of startup.
+    // Lifecycle events are only emitted between `ready` and `stopped`; the initial build is part of startup,
+    // and a rebuild still running at shutdown must not report after `stopped`.
     let isReady = false;
 
     const reloadDocsDefinition = async (editedAbsoluteFilepaths?: AbsoluteFilePath[]): Promise<boolean> => {
@@ -265,6 +266,7 @@ export async function runAstroPreviewServer({
         }
         if (isReady) {
             onLifecycleEvent?.({ event: "stopped", reason });
+            isReady = false;
         }
         cleanup();
     };
