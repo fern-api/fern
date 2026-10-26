@@ -9,3 +9,9 @@
     - `--json` writes `ready` (URL, ports, PID), `reload` and `stopped` events to stdout as one JSON object per line; logs go to stderr.
     Durations accept `30s`, `10m` or `1h`; a plain number means seconds.
   type: feat
+- summary: |
+    `fern docs dev` (default Astro server) now exits and returns to the prompt after a clean stop (SIGTERM,
+    SIGHUP, `--timeout` or `--idle-timeout`) when run in an interactive terminal. Previously the server shut down
+    but the CLI process stayed alive. It now leaves through the CLI's normal exit path, after the renderer has
+    exited, and the renderer's 2s SIGKILL fallback now actually fires if it ignores SIGTERM.
+  type: fix

@@ -20,6 +20,7 @@ import { LocalLedgerMirror } from "./LocalLedgerMirror.js";
 
 const RELOAD_DEBOUNCE_MS = 500;
 const RENDERER_READY_TIMEOUT_MS = 60_000;
+const RENDERER_KILL_GRACE_MS = 2_000;
 const SHUTDOWN_SIGNALS = ["SIGTERM", "SIGINT", "SIGHUP"] as const;
 /** Written by fern-platform's `make-local-bundle` next to the renderer. */
 const BUNDLE_MANIFEST_FILENAME = "fern-local-bundle.json";
@@ -225,6 +226,7 @@ export async function runAstroPreviewServer({
         doNotPipeOutput: true
     });
     rendererProcess.catch(() => undefined);
+    const rendererExited = new Promise<void>((resolve) => rendererProcess.once("exit", () => resolve()));
     rendererProcess.stdout?.on("data", (data: Buffer) => context.logger.debug(`[Astro] ${data.toString().trimEnd()}`));
     rendererProcess.stderr?.on("data", (data: Buffer) => context.logger.debug(`[Astro] ${data.toString().trimEnd()}`));
 
@@ -252,8 +254,12 @@ export async function runAstroPreviewServer({
 
     let cleanedUp = false;
     let reloadTimer: NodeJS.Timeout | undefined;
+    // Settles when the server stops: resolves on a clean stop so the CLI leaves through its normal exit path
+    // (which stops the terminal spinner and flushes telemetry), and rejects if the renderer crashes.
+    let resolveRun: () => void = () => undefined;
     let rejectRun: (err: Error) => void = () => undefined;
-    const runUntilShutdown = new Promise<void>((_resolve, reject) => {
+    const runUntilShutdown = new Promise<void>((resolve, reject) => {
+        resolveRun = resolve;
         rejectRun = reject;
     });
     const onSignal = (): void => {
@@ -269,6 +275,10 @@ export async function runAstroPreviewServer({
             isReady = false;
         }
         cleanup();
+        if (reason !== "renderer-exit") {
+            // The CLI calls process.exit() once this resolves, so wait for the renderer first or it could be orphaned.
+            void rendererExited.then(resolveRun);
+        }
     };
     const cleanup = (): void => {
         if (cleanedUp) {
@@ -289,13 +299,16 @@ export async function runAstroPreviewServer({
             client.end();
         }
         proxy.close();
-        if (!rendererProcess.killed) {
+        // `.killed` turns true as soon as a signal is sent, so check whether the child has actually exited.
+        const rendererRunning = () => rendererProcess.exitCode == null && rendererProcess.signalCode == null;
+        if (rendererRunning()) {
             rendererProcess.kill();
-            setTimeout(() => {
-                if (!rendererProcess.killed) {
+            const forceKill = setTimeout(() => {
+                if (rendererRunning()) {
                     rendererProcess.kill("SIGKILL");
                 }
-            }, 2000).unref();
+            }, RENDERER_KILL_GRACE_MS);
+            void rendererExited.then(() => clearTimeout(forceKill));
         }
     };
     for (const signal of SHUTDOWN_SIGNALS) {
@@ -374,6 +387,10 @@ export async function runAstroPreviewServer({
         }, RELOAD_DEBOUNCE_MS);
     });
 
+    if (cleanedUp) {
+        // A signal arrived during startup; don't announce a server that has already stopped.
+        return;
+    }
     const url = `http://localhost:${port}${basepath}`;
     context.logger.info(`Docs preview server (Astro) ready on ${url}`);
     isReady = true;
