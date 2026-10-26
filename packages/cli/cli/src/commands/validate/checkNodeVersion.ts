@@ -11,7 +11,8 @@ export interface SystemValidationResult {
 }
 
 export function checkNodeVersion(nodeVersion: string = process.versions.node): SystemValidationResult {
-    const major = Number.parseInt(nodeVersion.split(".")[0] ?? "", 10);
+    const majorSegment = /^(\d+)(?:\.|$)/.exec(nodeVersion)?.[1];
+    const major = majorSegment != null ? Number.parseInt(majorSegment, 10) : Number.NaN;
     const supportedRange = `${MIN_SUPPORTED_NODE_MAJOR}.x-${MAX_SUPPORTED_NODE_MAJOR}.x`;
 
     let reason: string | undefined;

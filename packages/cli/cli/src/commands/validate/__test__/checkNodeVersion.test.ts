@@ -26,10 +26,10 @@ describe("checkNodeVersion", () => {
         expect(violations[0]?.message).toContain(`Node.js v${version} has not been verified`);
     });
 
-    it("rejects an unparseable version", () => {
-        const { violations } = checkNodeVersion("unknown");
+    it.each(["unknown", "20abc.1.0", ""])("rejects the unparseable version %j", (version) => {
+        const { violations } = checkNodeVersion(version);
         expect(violations).toHaveLength(1);
-        expect(violations[0]?.message).toContain('Could not determine the Node.js version (got "unknown")');
+        expect(violations[0]?.message).toContain(`Could not determine the Node.js version (got "${version}")`);
     });
 
     it("defaults to the running Node.js version", () => {
