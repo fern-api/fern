@@ -2,7 +2,6 @@ import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { getFernDirectory } from "@fern-api/configuration-loader";
 import { delay, replaceEnvVariables, stripTrailingSlashes } from "@fern-api/core-utils";
-import { isStaticBuildInternalFile } from "@fern-api/fdr-sdk/orpc-client";
 import { askToLogin } from "@fern-api/login";
 import { CliError } from "@fern-api/task-context";
 import { loadDocsWorkspace } from "@fern-api/workspace-loader";
@@ -16,23 +15,8 @@ export type DocsExportFormat = "html" | "md";
 const DOWNLOAD_CONCURRENCY = 16;
 const DOWNLOAD_ATTEMPTS = 3;
 
-/**
- * Whether a build file belongs in an export of the given format. Router-only
- * files (manifests, ACL tables, `_redirects`, ...) never do; `md` keeps only
- * the per-page Markdown and `llms.txt`.
- */
-export function keepsFile({
-    filePath,
-    format,
-    basepath
-}: {
-    filePath: string;
-    format: DocsExportFormat;
-    basepath: string;
-}): boolean {
-    if (isStaticBuildInternalFile(filePath, basepath)) {
-        return false;
-    }
+/** Whether a site file belongs in an export of the given format: `md` keeps only the per-page Markdown and `llms.txt`. */
+export function keepsFile(filePath: string, format: DocsExportFormat): boolean {
     return format === "html" || filePath.endsWith(".md") || path.posix.basename(filePath) === "llms.txt";
 }
 
@@ -50,17 +34,13 @@ export async function writeExport({
 }): Promise<number> {
     const root = path.resolve(outputDir);
     let written = 0;
-    try {
-        for await (const batch of source.batches()) {
-            const kept = batch.filter((file) => keepsFile({ filePath: file.path, format, basepath: source.basepath }));
-            await forEachConcurrently(kept, DOWNLOAD_CONCURRENCY, async (file) => {
-                await writeFileUnder(root, file);
-                written++;
-            });
-            onProgress?.(written);
-        }
-    } finally {
-        await source.close();
+    for await (const batch of source.batches()) {
+        const kept = batch.filter((file) => keepsFile(file.path, format));
+        await forEachConcurrently(kept, DOWNLOAD_CONCURRENCY, async (file) => {
+            await writeFileUnder(root, file);
+            written++;
+        });
+        onProgress?.(written);
     }
     return written;
 }

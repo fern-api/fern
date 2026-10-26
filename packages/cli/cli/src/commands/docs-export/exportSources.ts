@@ -2,7 +2,7 @@ import { mkdir, mkdtemp, readdir, readFile, rm, writeFile } from "node:fs/promis
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { delay, stripTrailingSlashes } from "@fern-api/core-utils";
-import { createDocsLedgerClient } from "@fern-api/fdr-sdk/orpc-client";
+import { createDocsLedgerClient, isRouterOnlyFile } from "@fern-api/fdr-sdk/orpc-client";
 import { toPosixPath } from "@fern-api/fs-utils";
 import * as tar from "tar";
 
@@ -12,31 +12,28 @@ export interface ExportFile {
     read(): Promise<Uint8Array>;
 }
 
-/** Where an export's files come from. Yields files in batches so large sites stream instead of buffering. */
+/**
+ * Where an export's files come from: reader-facing files only, router-only ones already dropped.
+ * Yields files in batches so large sites stream instead of buffering, and cleans up after itself.
+ */
 export interface ExportSource {
-    /** Path prefix the site is served under, without leading/trailing slashes ("" at the root). */
-    basepath: string;
     batches(): AsyncIterable<ExportFile[]>;
-    close(): Promise<void>;
 }
 
 /** A Fern-hosted site: the live static build, listed page by page through FDR. */
 export function hostedSource({
     fdrOrigin,
     token,
-    headers,
     domain,
     basepath
 }: {
     fdrOrigin: string;
     token: string;
-    headers?: Record<string, string>;
     domain: string;
     basepath: string;
 }): ExportSource {
-    const client = createDocsLedgerClient({ baseUrl: fdrOrigin, token, headers });
+    const client = createDocsLedgerClient({ baseUrl: fdrOrigin, token });
     return {
-        basepath: trimSlashes(basepath),
         async *batches() {
             let cursor: string | undefined;
             do {
@@ -44,8 +41,7 @@ export function hostedSource({
                 yield page.files.map((file) => ({ path: file.path, read: () => fetchBytes(file.url) }));
                 cursor = page.nextCursor;
             } while (cursor != null);
-        },
-        close: async () => undefined
+        }
     };
 }
 
@@ -67,53 +63,70 @@ export function selfHostedSource({
 }): ExportSource {
     const origin = stripTrailingSlashes(url);
     const auth = { Authorization: `Bearer ${adminToken}` };
-    let workDir: string | undefined;
     return {
-        basepath: trimSlashes(basepath),
         async *batches() {
-            workDir = await mkdtemp(path.join(tmpdir(), "fern-docs-export-"));
-            await adminRequest(`${origin}/__admin/export`, { method: "POST", headers: auth });
-            const deadline = Date.now() + EXPORT_TIMEOUT_MS;
-            for (;;) {
-                const job = (await (
-                    await adminRequest(`${origin}/__admin/export/status`, { headers: auth })
-                ).json()) as { status: string; phase?: string; error?: string };
-                if (job.status === "complete") {
-                    break;
+            const workDir = await mkdtemp(path.join(tmpdir(), "fern-docs-export-"));
+            try {
+                const siteDir = await downloadAndExtract({ origin, auth, workDir, pollIntervalMs });
+                const files = (await listFilesRecursively(siteDir)).filter(
+                    (relative) => !isRouterOnlyFile(relative, basepath)
+                );
+                for (let start = 0; start < files.length; start += SELF_HOSTED_BATCH_SIZE) {
+                    yield files.slice(start, start + SELF_HOSTED_BATCH_SIZE).map((relative) => ({
+                        path: relative,
+                        read: async () => new Uint8Array(await readFile(path.join(siteDir, relative)))
+                    }));
                 }
-                if (job.status === "failed") {
-                    throw new Error(`Self-hosted export failed: ${job.error ?? "unknown error"}`);
-                }
-                if (Date.now() > deadline) {
-                    throw new Error("Timed out waiting for the self-hosted export to finish");
-                }
-                await delay(pollIntervalMs);
-            }
-            const archive = path.join(workDir, "site.tar.gz");
-            const download = await adminRequest(`${origin}/__admin/export/download`, { headers: auth });
-            await writeFile(archive, new Uint8Array(await download.arrayBuffer()));
-            const siteDir = path.join(workDir, "site");
-            await mkdir(siteDir);
-            // Only regular files and folders: a link in the archive could point outside siteDir.
-            await tar.extract({
-                file: archive,
-                cwd: siteDir,
-                filter: (_entryPath, entry) => "type" in entry && (entry.type === "File" || entry.type === "Directory")
-            });
-            const files = await listFilesRecursively(siteDir);
-            for (let start = 0; start < files.length; start += SELF_HOSTED_BATCH_SIZE) {
-                yield files.slice(start, start + SELF_HOSTED_BATCH_SIZE).map((relative) => ({
-                    path: relative,
-                    read: async () => new Uint8Array(await readFile(path.join(siteDir, relative)))
-                }));
-            }
-        },
-        close: async () => {
-            if (workDir != null) {
+            } finally {
                 await rm(workDir, { recursive: true, force: true });
             }
         }
     };
+}
+
+/** Runs the container's export job, then downloads and unpacks its archive. Returns the unpacked site folder. */
+async function downloadAndExtract({
+    origin,
+    auth,
+    workDir,
+    pollIntervalMs
+}: {
+    origin: string;
+    auth: Record<string, string>;
+    workDir: string;
+    pollIntervalMs: number;
+}): Promise<string> {
+    await adminRequest(`${origin}/__admin/export`, { method: "POST", headers: auth });
+    const deadline = Date.now() + EXPORT_TIMEOUT_MS;
+    for (;;) {
+        const job = (await (await adminRequest(`${origin}/__admin/export/status`, { headers: auth })).json()) as {
+            status: string;
+            phase?: string;
+            error?: string;
+        };
+        if (job.status === "complete") {
+            break;
+        }
+        if (job.status === "failed") {
+            throw new Error(`Self-hosted export failed: ${job.error ?? "unknown error"}`);
+        }
+        if (Date.now() > deadline) {
+            throw new Error("Timed out waiting for the self-hosted export to finish");
+        }
+        await delay(pollIntervalMs);
+    }
+    const archive = path.join(workDir, "site.tar.gz");
+    const download = await adminRequest(`${origin}/__admin/export/download`, { headers: auth });
+    await writeFile(archive, new Uint8Array(await download.arrayBuffer()));
+    const siteDir = path.join(workDir, "site");
+    await mkdir(siteDir);
+    // Only regular files and folders: a link in the archive could point outside siteDir.
+    await tar.extract({
+        file: archive,
+        cwd: siteDir,
+        filter: (_entryPath, entry) => "type" in entry && (entry.type === "File" || entry.type === "Directory")
+    });
+    return siteDir;
 }
 
 async function adminRequest(url: string, init: RequestInit): Promise<Response> {
@@ -141,8 +154,4 @@ async function listFilesRecursively(root: string): Promise<string[]> {
         .filter((entry) => entry.isFile())
         .map((entry) => toPosixPath(path.relative(root, path.join(entry.parentPath, entry.name))))
         .sort();
-}
-
-function trimSlashes(value: string): string {
-    return value.replace(/^\/+|\/+$/g, "");
 }
