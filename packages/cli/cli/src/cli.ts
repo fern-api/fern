@@ -958,6 +958,12 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     description:
                         "Include OpenAPI elements marked `x-twilio.libraryVisibility: private` (SDKs) or `x-twilio.docsVisibility: private` (--docs) in the output. By default only `public` elements are generated; `hidden` elements are always excluded."
                 })
+                .option("guest", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Run without a Fern account: start (or reuse) a temporary guest session and generate under its guest organization. Claim the session from the printed link to keep the output. Cannot be combined with FERN_TOKEN or a saved login."
+                })
                 .example(
                     "$0 generate --api my-api",
                     "Generate the legacy default group and every target in the API's default sdk-config.yml"
@@ -1000,6 +1006,13 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
             if (argv.skipUpload && argv.docs == null) {
                 return cliContext.failWithoutThrowing(
                     "The --skip-upload flag can only be used with --docs.",
+                    undefined,
+                    { code: CliError.Code.ConfigError }
+                );
+            }
+            if (argv.guest && (argv.local || argv.runner != null)) {
+                return cliContext.failWithoutThrowing(
+                    "The --guest flag is not supported with local generation (--local or --runner); local generation needs no login.",
                     undefined,
                     { code: CliError.Code.ConfigError }
                 );
@@ -1127,7 +1140,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     pack: shouldPackage,
                     packMode: argv.packageMode,
                     packOnly: argv.packageOnly,
-                    includePrivate: argv.private
+                    includePrivate: argv.private,
+                    guest: argv.guest
                 });
             }
             if (argv.docs != null) {
@@ -1159,7 +1173,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     disableTemplates: argv.disableSnippets,
                     noPrompt: !argv.prompt,
                     skipUpload: argv.skipUpload,
-                    includePrivate: argv.private
+                    includePrivate: argv.private,
+                    guest: argv.guest
                 });
             }
             // default to loading api workspace to preserve legacy behavior
@@ -1199,7 +1214,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 pack: shouldPackage,
                 packMode: argv.packageMode,
                 packOnly: argv.packageOnly,
-                includePrivate: argv.private
+                includePrivate: argv.private,
+                guest: argv.guest
             });
         }
     );

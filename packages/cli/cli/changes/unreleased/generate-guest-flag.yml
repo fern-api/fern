@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `fern generate --guest` (SDKs and `--docs`): with no `fern login` or `FERN_TOKEN`, the CLI
+    starts a temporary Venus guest session, generates under its `guest-<id>` organization and prints the
+    claim link and expiry. The session is reused by every run in the same repo (`fern/.guest-session`,
+    gitignored; credential in `~/.fern/guest-sessions/`). The login error now mentions `--guest`.
+  type: feat

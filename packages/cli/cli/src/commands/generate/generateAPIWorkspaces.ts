@@ -26,6 +26,7 @@ import { generateWorkspace } from "./generateAPIWorkspace.js";
 import { getGeneratorSelectedTargetIndexes, loadSdkConfigV1 } from "./loadSdkConfigV1.js";
 import { PackMode } from "./packLocalOutput.js";
 import { resolveGroupsForWorkspace } from "./resolveGroupsForWorkspace.js";
+import { resolveGuestProject } from "./resolveGuestProject.js";
 import { resolvePosthogCommandLabel } from "./resolvePosthogCommandLabel.js";
 import { getSdkConfigGeneratorName } from "./sdkConfigGeneratorName.js";
 import { shouldPreflightGenerator } from "./shouldPreflightGenerator.js";
@@ -103,7 +104,8 @@ export async function generateAPIWorkspaces({
     pack,
     packMode,
     packOnly,
-    includePrivate
+    includePrivate,
+    guest = false
 }: {
     project: Project;
     cliContext: CliContext;
@@ -149,8 +151,15 @@ export async function generateAPIWorkspaces({
     packOnly?: boolean;
     /** Include `x-twilio.libraryVisibility: private` OpenAPI elements in the generated SDK (`--private`). */
     includePrivate?: boolean;
+    /** Generate under a Venus guest session instead of a login or FERN_TOKEN (`--guest`). */
+    guest?: boolean;
 }): Promise<void> {
     let token: FernToken | undefined = undefined;
+    if (guest) {
+        const resolved = await resolveGuestProject({ project, cliContext });
+        project = resolved.project;
+        token = resolved.token;
+    }
     const cleanupSdkConfigWorkspaces: Array<() => Promise<void>> = [];
 
     try {
@@ -239,9 +248,11 @@ export async function generateAPIWorkspaces({
                       .map(({ name }) => name)
               });
 
-        if (!useLocalDocker) {
+        if (guest) {
+            // Credential and organization already come from the guest session.
+        } else if (!useLocalDocker) {
             const currentToken = await cliContext.runTask(async (context) => {
-                return askToLogin(context);
+                return askToLogin(context, { suggestGuest: true });
             });
             if (currentToken.type === "user") {
                 await cliContext.runTask(async (context) => {
