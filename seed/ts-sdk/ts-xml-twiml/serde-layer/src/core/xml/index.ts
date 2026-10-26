@@ -47,6 +47,7 @@ export {
 } from "./read.js";
 export {
     escapeXml,
+    escapeXmlText,
     extraXmlAttributes,
     formatXmlScalar,
     isXmlSerializable,

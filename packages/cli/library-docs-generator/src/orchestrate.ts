@@ -1,6 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { docsYml } from "@fern-api/configuration";
-import { extractErrorMessage } from "@fern-api/core-utils";
+import { delay, extractErrorMessage } from "@fern-api/core-utils";
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, resolve } from "@fern-api/fs-utils";
 import { cloneRepositoryAtRef, resolveRepositorySubpath } from "@fern-api/github";
@@ -533,7 +533,7 @@ async function pollForCompletion(client: LibraryDocsClient, jobId: string, libra
     const deadline = Date.now() + POLL_TIMEOUT_MS;
 
     while (Date.now() < deadline) {
-        await new Promise((r) => setTimeout(r, POLL_INTERVAL_MS));
+        await delay(POLL_INTERVAL_MS);
 
         let status;
         try {

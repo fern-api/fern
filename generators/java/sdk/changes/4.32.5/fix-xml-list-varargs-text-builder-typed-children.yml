@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    XML (TwiML) builders gain a varargs overload for list-valued attributes (`gather.input(GatherInputItem.DTMF,
+    GatherInputItem.SPEECH)`), a static `builder(text)` factory for types whose text content is required
+    (`Body.builder("hello")`), and typed child overloads under the legacy name when only the text setter used it
+    (`dial.number(Number)` next to `dial.number(String)`; `addNumber(Number)` is kept).
+  type: fix

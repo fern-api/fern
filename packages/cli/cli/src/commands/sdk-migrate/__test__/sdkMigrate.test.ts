@@ -264,7 +264,8 @@ describe("SDK Config migration", () => {
             default_bytes_stream_chunk_size: 1024,
             recursion_limit: 10_000,
             extras: { pyaudio: ["audio-runtime"] },
-            additional_init_exports: [{ from: "types", imports: ["ApiError"] }]
+            additional_init_exports: [{ from: "types", imports: ["ApiError"] }],
+            stream_abstraction: true
         };
 
         const result = mapFernGroupToSdkConfig({
@@ -283,8 +284,23 @@ describe("SDK Config migration", () => {
             defaultBytesStreamChunkSize: 1024,
             recursionLimit: 10_000,
             extras: { pyaudio: ["audio-runtime"] },
-            additionalInitExports: [{ from: "types", imports: ["ApiError"] }]
+            additionalInitExports: [{ from: "types", imports: ["ApiError"] }],
+            streamAbstraction: true
         });
+        expect(result.diagnostics).toEqual([]);
+    });
+
+    it("maps the Go generator packageLayout setting into SDK Config", () => {
+        const generator = createGenerator("fernapi/fern-go-sdk", "go", "1.0.0");
+        generator.config = { packageLayout: "types" };
+
+        const result = mapFernGroupToSdkConfig({
+            fernWorkspace: { definition: createDefinition() },
+            group: createGroup([generator]),
+            source: createSource()
+        });
+
+        expect(result.sdkConfig.targets[0]?.generation).toMatchObject({ packageLayout: "types" });
         expect(result.diagnostics).toEqual([]);
     });
 

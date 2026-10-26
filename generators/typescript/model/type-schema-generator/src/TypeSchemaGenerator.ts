@@ -29,6 +29,7 @@ export declare namespace TypeSchemaGenerator {
     export namespace generateTypeSchema {
         export interface Args<Context> {
             typeName: string;
+            typeId: FernIr.TypeId;
             shape: FernIr.Type;
             getGeneratedType: () => GeneratedType<Context>;
             getReferenceToGeneratedType: () => ts.TypeNode;
@@ -58,6 +59,7 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
     public generateTypeSchema({
         shape,
         typeName,
+        typeId,
         getGeneratedType,
         getReferenceToGeneratedType,
         getReferenceToGeneratedTypeSchema
@@ -74,6 +76,7 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
             undiscriminatedUnion: (shape) =>
                 this.generateUndiscriminatedUnion({
                     typeName,
+                    typeId,
                     shape,
                     getGeneratedType,
                     getReferenceToGeneratedType,
@@ -209,12 +212,14 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
 
     private generateUndiscriminatedUnion({
         typeName,
+        typeId,
         shape,
         getGeneratedType,
         getReferenceToGeneratedType,
         getReferenceToGeneratedTypeSchema
     }: {
         typeName: string;
+        typeId: FernIr.TypeId;
         shape: FernIr.UndiscriminatedUnionTypeDeclaration;
         getGeneratedType: () => GeneratedType<Context>;
         getReferenceToGeneratedType: () => ts.TypeNode;
@@ -222,6 +227,7 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
     }): GeneratedUndiscriminatedUnionTypeSchemaImpl<Context> {
         return new GeneratedUndiscriminatedUnionTypeSchemaImpl({
             typeName,
+            typeId,
             shape,
             getGeneratedType,
             getReferenceToGeneratedType,

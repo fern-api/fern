@@ -5060,6 +5060,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_.getDiscriminatedUnion": {
@@ -5198,6 +5199,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": false,
             "examples": null
         },
         "endpoint_.getUndiscriminatedUnion": {
@@ -5336,6 +5338,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": false,
             "examples": null
         },
         "endpoint_.getMapResponse": {
@@ -5379,6 +5382,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_.getSharedChild": {
@@ -5422,6 +5426,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_.getOrphanParent": {
@@ -5465,6 +5470,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         }
     },

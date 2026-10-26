@@ -1,4 +1,4 @@
-import { convertNumberToSnakeCase } from "./convertNumberToSnakeCase.js";
+import { convertNumberToSnakeCase } from "@fern-api/core-utils";
 import { NUMERIC_REGEX } from "./constants.js";
 
 export function replaceStartingNumber(input: string): string | undefined {

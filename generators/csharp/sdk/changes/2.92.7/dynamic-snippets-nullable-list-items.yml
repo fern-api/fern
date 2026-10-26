@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    C# dynamic snippets now keep nullable list and set item types (e.g. `List<MyEnum?>` for a multi-value query parameter typed `optional<nullable<MyEnum>>`), matching the SDK's `IEnumerable<MyEnum?>` property type instead of failing with CS0266.
+  type: fix

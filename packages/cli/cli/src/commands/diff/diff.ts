@@ -1,4 +1,4 @@
-import { diffSemverOrThrow } from "@fern-api/core-utils";
+import { diffSemverOrThrow, errorMessageOrString } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, doesPathExist, resolve, streamObjectFromFile } from "@fern-api/fs-utils";
 import { IntermediateRepresentation, serialization } from "@fern-api/ir-sdk";
 import { IntermediateRepresentationChangeDetector } from "@fern-api/ir-utils";
@@ -85,7 +85,7 @@ async function readIr({
         ir = await streamObjectFromFile(absoluteFilepath);
     } catch (error) {
         context.failWithoutThrowing(
-            `Failed to parse IR file ${absoluteFilepath}: ${error instanceof Error ? error.message : String(error)}`,
+            `Failed to parse IR file ${absoluteFilepath}: ${errorMessageOrString(error)}`,
             error,
             { code: CliError.Code.ParseError }
         );

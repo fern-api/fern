@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "../../seed"
+
 module Seed
   module Types
     # A standard object with no nullable issues.

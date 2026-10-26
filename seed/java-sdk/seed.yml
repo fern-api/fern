@@ -257,6 +257,9 @@ fixtures:
         wrapped-aliases: true
       outputFolder: wrapped-aliases
     - customConfig:
+        legacy-input-stream-upload-overloads: true
+      outputFolder: legacy-input-stream-upload-overloads
+    - customConfig:
         inline-file-properties: true
         inline-path-parameters: true
       outputFolder: inline-file-properties

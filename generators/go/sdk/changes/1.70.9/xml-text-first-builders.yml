@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add the `xmlTextFirstBuilders` option (default `false`) for XML-encoded (TwiML) types. When
+    enabled, child builders take the element's text first and functional options for its
+    attributes — `r.Say("hi", twimlvoice.WithSayVoice("alice"), twimlvoice.WithSayLoop(2))`,
+    `r.Pause(twimlvoice.WithPauseLength(1))` — and the typed variant moves to `AddSay(&Say{...})`.
+    Every XML type gets a `<Type>Option` func type and one `With<Type><Attribute>(value)` option per
+    attribute, so pointer-typed optional attributes no longer need `api.String(...)`/`&v`.
+    Also adds a generic `Ptr[T any](v T) *T` helper next to the existing typed pointer helpers.
+  type: fix

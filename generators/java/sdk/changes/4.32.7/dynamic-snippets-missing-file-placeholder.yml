@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Dynamic snippets now pass a placeholder for a required file the example doesn't include
+    (`new File("path/to/file")`) and `Optional.empty()` for a missing optional file, instead of
+    `null`, which compiled but threw a `NullPointerException` in the SDK. This applies when
+    `inline-file-properties` is off and needs dynamic IR from a CLI that sets `isOptional` on file
+    properties; with older IR, missing files are still passed as `null`.
+  type: fix

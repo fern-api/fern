@@ -1,0 +1,5 @@
+api:
+  specs:
+    - openapi: ../plants.yml
+    - openapi: ../auth.yml
+      namespace: auth

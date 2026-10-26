@@ -58,6 +58,7 @@ package com.example.usage;
 
 import com.seed.api.SeedApiClient;
 import com.seed.api.resources.fileuploadexample.requests.UploadFileRequest;
+import java.util.Optional;
 
 public class Example {
     public static void main(String[] args) {
@@ -66,7 +67,7 @@ public class Example {
             .build();
 
         client.fileUploadExample().uploadFile(
-            null,
+            Optional.empty(),
             UploadFileRequest
                 .builder()
                 .name("name")

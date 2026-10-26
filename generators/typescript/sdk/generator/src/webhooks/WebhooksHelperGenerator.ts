@@ -13,6 +13,9 @@ const HMAC_ALGORITHM_TYPE = '"sha1" | "sha256" | "sha384" | "sha512"';
 const UNSUPPORTED_ALGORITHM_MESSAGE = "Webhook signature verification could not run: unsupported algorithm";
 const UNRESOLVED_KEY_MESSAGE = "Webhook signature verification could not run: signing key could not be resolved";
 const MISSING_KEY_ID_MESSAGE = "Webhook signature verification could not run: settings header is missing the key ID";
+const SUPPORTED_ALGORITHM_GUARD = `function isSupportedAlgorithm(value: string): value is keyof typeof HMAC_ALGORITHMS {
+    return Object.keys(HMAC_ALGORITHMS).some((key) => key === value);
+}`;
 const HEADER_LOOKUP_FUNCTION = `function getHeader(headers: Record<string, string | string[] | undefined>, name: string): string | undefined {
     const lower = name.toLowerCase();
     for (const key of Object.keys(headers)) {
@@ -58,7 +61,11 @@ export class WebhooksHelperGenerator {
             const entries = config.algorithmHeader.algorithms
                 .map((option) => `${JSON.stringify(option.wireValue)}: "${this.mapHmacAlgorithm(option.algorithm)}"`)
                 .join(", ");
-            result.fileConstants.unshift(`const HMAC_ALGORITHMS = { ${entries} } as const;`, HEADER_LOOKUP_FUNCTION);
+            result.fileConstants.unshift(
+                `const HMAC_ALGORITHMS = { ${entries} } as const;`,
+                SUPPORTED_ALGORITHM_GUARD,
+                HEADER_LOOKUP_FUNCTION
+            );
         }
         this.writeClass(context, parameters, result, this.buildJsDoc(config), this.buildVerifyRequestMethod(config));
     }
@@ -163,11 +170,11 @@ export class WebhooksHelperGenerator {
             lines.push("    const algorithmValue = settingsHeader;");
         }
         lines.push(
-            "    if (!Object.prototype.hasOwnProperty.call(HMAC_ALGORITHMS, algorithmValue)) {",
+            "    if (!isSupportedAlgorithm(algorithmValue)) {",
             `        console.warn(${JSON.stringify(UNSUPPORTED_ALGORITHM_MESSAGE)});`,
             "        return false;",
             "    }",
-            "    algorithm = algorithmValue as keyof typeof HMAC_ALGORITHMS;",
+            "    algorithm = algorithmValue;",
             "}",
             'const resolvedKey = typeof signatureKey === "function" ? await signatureKey(keyId) : signatureKey;',
             'if (resolvedKey == null || resolvedKey === "") {',

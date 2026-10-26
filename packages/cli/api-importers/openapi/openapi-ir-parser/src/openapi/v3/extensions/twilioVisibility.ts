@@ -1,4 +1,4 @@
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, isRecord } from "@fern-api/core-utils";
 import { Logger } from "@fern-api/logger";
 import { OpenAPIV3, OpenAPIV3_1 } from "openapi-types";
 
@@ -28,10 +28,6 @@ export interface SkippedVisibility {
 }
 
 type JsonRecord = Record<string, unknown>;
-
-function isRecord(value: unknown): value is JsonRecord {
-    return typeof value === "object" && value != null && !Array.isArray(value);
-}
 
 function isTwilioVisibility(value: unknown): value is TwilioVisibility {
     return typeof value === "string" && TWILIO_VISIBILITY_VALUES.includes(value);

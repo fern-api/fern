@@ -1,4 +1,4 @@
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, stripTrailingSlashes } from "@fern-api/core-utils";
 import type { AuthScheme } from "@postman/sdk-config";
 
 import type { MapperRule, RuleContext, SpecPostOperation } from "../types.js";
@@ -258,7 +258,7 @@ function stripCompatibleBase(url: URL, base: string): string | undefined {
     if (parsedBase == null || parsedBase.origin !== url.origin) {
         return undefined;
     }
-    const basePath = parsedBase.pathname.replace(/\/+$/, "");
+    const basePath = stripTrailingSlashes(parsedBase.pathname);
     if (url.pathname === basePath) {
         return "/";
     }

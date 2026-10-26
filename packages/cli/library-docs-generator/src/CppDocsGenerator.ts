@@ -12,6 +12,7 @@
  * currentPagePath) requires that pages are rendered one at a time.
  */
 
+import { errorMessageOrString } from "@fern-api/core-utils";
 import { CliError } from "@fern-api/task-context";
 import { existsSync, mkdirSync, mkdtempSync, renameSync, rmSync } from "fs";
 import { dirname, join, relative } from "path";
@@ -207,18 +208,18 @@ function swapIntoPlace(staged: string, target: string, backup: string): void {
             try {
                 renameSync(stagedMetadata, previousMetadata);
             } catch (metadataError) {
-                restoreErrors.push(`metadata left at ${stagedMetadata}: ${errorMessage(metadataError)}`);
+                restoreErrors.push(`metadata left at ${stagedMetadata}: ${errorMessageOrString(metadataError)}`);
             }
         }
         try {
             renameSync(backup, target);
         } catch (pagesError) {
-            restoreErrors.push(`previous pages kept at ${backup}: ${errorMessage(pagesError)}`);
+            restoreErrors.push(`previous pages kept at ${backup}: ${errorMessageOrString(pagesError)}`);
         }
         if (restoreErrors.length > 0) {
             throw new Error(
                 `Failed to replace ${target} and could not fully restore the previous output. ` +
-                    `Replace error: ${errorMessage(error)}. Restore errors: ${restoreErrors.join("; ")}`
+                    `Replace error: ${errorMessageOrString(error)}. Restore errors: ${restoreErrors.join("; ")}`
             );
         }
         throw error;
@@ -226,10 +227,6 @@ function swapIntoPlace(staged: string, target: string, backup: string): void {
 }
 
 const METADATA_DIR = ".fern";
-
-function errorMessage(error: unknown): string {
-    return error instanceof Error ? error.message : String(error);
-}
 
 /**
  * A library with no namespaces, concepts, templates or C++ class features

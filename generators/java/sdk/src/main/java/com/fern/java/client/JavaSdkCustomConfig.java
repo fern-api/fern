@@ -199,6 +199,16 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
         return false;
     }
 
+    /**
+     * When true, single-file upload endpoints get the {@code InputStream} overloads from before 4.23.2: they leave out
+     * the request object, so companion multipart fields are not sent. Off by default.
+     */
+    @Value.Default
+    @JsonProperty("legacy-input-stream-upload-overloads")
+    default Boolean legacyInputStreamUploadOverloads() {
+        return false;
+    }
+
     static ImmutableJavaSdkCustomConfig.Builder builder() {
         return ImmutableJavaSdkCustomConfig.builder();
     }

@@ -1,3 +1,4 @@
+import { errorMessageOrString, isEnoentError } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { createLoggingExecutable, runExeca } from "@fern-api/logging-execa";
@@ -5,7 +6,6 @@ import { CliError, TaskContext } from "@fern-api/task-context";
 import { access, chmod, cp, unlink, writeFile } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";
-
 import {
     detectAirGappedModeForProtobuf,
     ensureBufCommand,
@@ -39,11 +39,8 @@ async function isFernOnPath(logger: Logger): Promise<boolean> {
         });
         return true;
     } catch (error) {
-        const isNotFound = error != null && typeof error === "object" && "code" in error && error.code === "ENOENT";
-        if (!isNotFound) {
-            logger.debug(
-                `Unexpected error checking for fern on PATH: ${error instanceof Error ? error.message : String(error)}`
-            );
+        if (!isEnoentError(error)) {
+            logger.debug(`Unexpected error checking for fern on PATH: ${errorMessageOrString(error)}`);
         }
         return false;
     }
@@ -336,7 +333,7 @@ export class ProtobufIRGenerator {
         try {
             this.resolvedBufCommand = await ensureBufCommand(this.context.logger);
         } catch (error) {
-            this.context.failAndThrow(error instanceof Error ? error.message : String(error), undefined, {
+            this.context.failAndThrow(errorMessageOrString(error), undefined, {
                 code: CliError.Code.EnvironmentError
             });
         }

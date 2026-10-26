@@ -7405,6 +7405,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_inline-users/inline-users.listWithCursorPagination": {
@@ -7789,6 +7790,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_inline-users/inline-users.listWithMixedTypeCursorPagination": {
@@ -8074,6 +8076,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_inline-users/inline-users.listWithBodyCursorPagination": {
@@ -8362,6 +8365,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_inline-users/inline-users.listWithOffsetPagination": {
@@ -8746,6 +8750,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_inline-users/inline-users.listWithDoubleOffsetPagination": {
@@ -9130,6 +9135,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_inline-users/inline-users.listWithBodyOffsetPagination": {
@@ -9418,6 +9424,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_inline-users/inline-users.listWithOffsetStepPagination": {
@@ -9769,6 +9776,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_inline-users/inline-users.listWithOffsetPaginationHasNextPage": {
@@ -10120,6 +10128,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_inline-users/inline-users.listWithExtendedResults": {
@@ -10405,6 +10414,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_inline-users/inline-users.listWithExtendedResultsAndOptionalData": {
@@ -10690,6 +10700,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_inline-users/inline-users.listUsernames": {
@@ -10975,6 +10986,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_inline-users/inline-users.listWithGlobalConfig": {
@@ -11260,6 +11272,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_users.listWithCursorPagination": {
@@ -11566,6 +11579,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_users.listWithMixedTypeCursorPagination": {
@@ -11773,6 +11787,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_users.listWithBodyCursorPagination": {
@@ -11983,6 +11998,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_users.listWithTopLevelBodyCursorPagination": {
@@ -12226,6 +12242,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_users.listWithOffsetPagination": {
@@ -12532,6 +12549,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_users.listWithDoubleOffsetPagination": {
@@ -12838,6 +12856,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_users.listWithBodyOffsetPagination": {
@@ -13048,6 +13067,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_users.listWithOffsetStepPagination": {
@@ -13321,6 +13341,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_users.listWithOffsetPaginationHasNextPage": {
@@ -13594,6 +13615,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_users.listWithExtendedResults": {
@@ -13801,6 +13823,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_users.listWithExtendedResultsAndOptionalData": {
@@ -14008,6 +14031,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_users.listUsernames": {
@@ -14215,6 +14239,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_users.listUsernamesWithOptionalResponse": {
@@ -14422,6 +14447,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_users.listWithGlobalConfig": {
@@ -14629,6 +14655,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_users.listWithOptionalData": {
@@ -14836,6 +14863,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_users.listWithAliasedData": {
@@ -15109,6 +15137,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         }
     },

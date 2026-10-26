@@ -1,4 +1,5 @@
 import { SDK_CONFIG_FILENAME } from "@fern-api/configuration";
+import { errorMessageOrString } from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import type { SdkConfigV1 } from "@postman/sdk-config/sdk-config/v1";
 import { parseSdkConfigV1 } from "@postman/sdk-config/sdk-config/v1";
@@ -59,7 +60,7 @@ export async function loadSdkConfig({ absolutePathToFernConfig }: loadSdkConfig.
             return {
                 type: "invalid",
                 absolutePath,
-                message: `${filename} is not valid YAML: ${errorMessage(error)}`
+                message: `${filename} is not valid YAML: ${errorMessageOrString(error)}`
             };
         }
 
@@ -69,14 +70,10 @@ export async function loadSdkConfig({ absolutePathToFernConfig }: loadSdkConfig.
             return {
                 type: "invalid",
                 absolutePath,
-                message: `${filename} is not a valid SDK Config: ${errorMessage(error)}`
+                message: `${filename} is not a valid SDK Config: ${errorMessageOrString(error)}`
             };
         }
     }
 
     return { type: "absent" };
-}
-
-function errorMessage(error: unknown): string {
-    return error instanceof Error ? error.message : String(error);
 }
