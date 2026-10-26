@@ -299,26 +299,34 @@ asyncio.run(main())`
      * excluding the sync client class, so the async snippet can re-import them alongside the async client.
      */
     private extractPackageImportNamesFromSyncSnippet(syncSnippet: string): string[] {
-        const lines = syncSnippet.split("\n");
+        const lines = syncSnippet.split("\n").map((line) => this.stripPythonComment(line));
         const clientLineIdx = lines.findIndex((line) => line.startsWith("client = "));
         if (clientLineIdx === -1) {
             return [];
         }
         const packageImportPrefix = `from ${this.packageName} import `;
         const names: string[] = [];
-        for (let i = 0; i < clientLineIdx; i++) {
-            const line = lines[i];
-            if (line == null || !line.startsWith(packageImportPrefix)) {
+        let lineIdx = 0;
+        while (lineIdx < clientLineIdx) {
+            const line = lines[lineIdx] ?? "";
+            lineIdx++;
+            if (!line.startsWith(packageImportPrefix)) {
                 continue;
             }
             let importList = line.slice(packageImportPrefix.length).trim();
             if (importList.startsWith("(")) {
-                importList = importList.slice(1);
-                while (!importList.includes(")") && i + 1 < clientLineIdx) {
-                    i++;
-                    importList += `,${lines[i] ?? ""}`;
+                const parts = [importList.slice(1)];
+                while (!parts.some((part) => part.includes(")")) && lineIdx < clientLineIdx) {
+                    parts.push(lines[lineIdx] ?? "");
+                    lineIdx++;
                 }
-                importList = importList.replace(")", "");
+                const joined = parts.join(",");
+                const closeIdx = joined.indexOf(")");
+                if (closeIdx === -1) {
+                    // Unterminated parenthesized import; skip rather than emit a partial list.
+                    continue;
+                }
+                importList = joined.slice(0, closeIdx);
             }
             for (const name of importList.split(",")) {
                 const trimmed = name.trim();
@@ -328,6 +336,11 @@ asyncio.run(main())`
             }
         }
         return names;
+    }
+
+    private stripPythonComment(line: string): string {
+        const commentIdx = line.indexOf("#");
+        return commentIdx === -1 ? line : line.slice(0, commentIdx).trimEnd();
     }
 
     private getClientConstructorArgs(): string {
