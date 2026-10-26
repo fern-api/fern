@@ -9,7 +9,7 @@ import { CliContext } from "../../cli-context/CliContext.js";
 import { type CreatedSdkConfigWorkspace, createSdkConfigWorkspace } from "../generate/createSdkConfigWorkspace.js";
 import { assertNoSdkConfigDirectRubyGemsPublishing, loadSdkConfigV1 } from "../generate/loadSdkConfigV1.js";
 import { buildCheckJsonResult } from "./buildCheckJsonResult.js";
-import { checkNodeVersion } from "./checkNodeVersion.js";
+import { checkNodeVersion, type SystemValidationResult } from "./checkNodeVersion.js";
 import { ApiValidationResult, DocsValidationResult, printCheckReport } from "./printCheckReport.js";
 import { collectDocsWorkspaceViolations } from "./validateDocsWorkspaceAndLogIssues.js";
 
@@ -39,6 +39,10 @@ export async function validateWorkspaces({
     commandLineApiWorkspace?: string;
 }): Promise<void> {
     const systemResult = checkNodeVersion();
+    if (systemResult.violations.length > 0) {
+        // Report before validating: on an unsupported runtime, validation itself may hang or exit early.
+        await reportUnsupportedRuntimeAndFail({ systemResult, cliContext, logWarnings });
+    }
     const preparedSdkConfigWorkspaces = await prepareSdkConfigWorkspacesForValidation({
         project,
         cliContext,
@@ -220,6 +224,44 @@ export async function validateWorkspaces({
             }
         });
     }
+}
+
+async function reportUnsupportedRuntimeAndFail({
+    systemResult,
+    cliContext,
+    logWarnings
+}: {
+    systemResult: SystemValidationResult;
+    cliContext: CliContext;
+    logWarnings: boolean;
+}): Promise<never> {
+    await cliContext.runTask((context) =>
+        printCheckReport({ systemResult, apiResults: [], docsResult: undefined, logWarnings, context })
+    );
+    if (cliContext.isJsonMode) {
+        cliContext.writeJsonToStdout(
+            buildCheckJsonResult({
+                systemResult,
+                apiResults: [],
+                docsResult: undefined,
+                hasErrors: true,
+                showApiNames: false
+            })
+        );
+    }
+    cliContext.instrumentPostHogEvent({
+        command: "fern check",
+        properties: {
+            validationRules: [
+                ...new Set(systemResult.violations.map((v) => v.name).filter((name): name is string => name != null))
+            ],
+            numErrors: systemResult.violations.length,
+            numWarnings: 0,
+            passed: false,
+            abortReason: "unsupported node version"
+        }
+    });
+    return cliContext.failAndThrow(undefined, undefined, { code: CliError.Code.ValidationError });
 }
 
 /**
