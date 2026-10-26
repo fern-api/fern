@@ -286,6 +286,9 @@ export class GithubStep extends BaseStep {
             } catch (error) {
                 this.logger.debug(`Failed to update PR title/body: ${extractErrorMessage(error)}`);
             }
+            if (shouldEnableAutomerge(this.config, resolved)) {
+                await this.tryEnableAutomerge(octokit, existingPR.nodeId, existingPR.number, result);
+            }
         } else {
             const head = `${owner}:${prBranch}`;
 
@@ -303,26 +306,8 @@ export class GithubStep extends BaseStep {
                 result.prUrl = pullRequest.html_url;
                 result.prNumber = pullRequest.number;
 
-                // When autoMerge is requested, enable GitHub automerge on non-breaking PRs.
-                // Uses the built-in octokit.graphql() from @octokit/core (no extra dependency).
-                // The SDK repo's own branch protection rules govern whether the PR actually merges.
                 if (shouldEnableAutomerge(this.config, resolved) && pullRequest.node_id) {
-                    try {
-                        await octokit.graphql(
-                            `mutation($pullRequestId: ID!) {
-                                enablePullRequestAutoMerge(input: {
-                                    pullRequestId: $pullRequestId,
-                                    mergeMethod: SQUASH
-                                }) { clientMutationId }
-                            }`,
-                            { pullRequestId: pullRequest.node_id }
-                        );
-                        this.logger.info(`Enabled automerge on PR #${pullRequest.number}`);
-                        result.autoMergeEnabled = true;
-                    } catch (autoMergeError) {
-                        // Automerge may not be available (repo settings, branch protection, permissions)
-                        this.logger.warn(`Could not enable automerge: ${extractErrorMessage(autoMergeError)}`);
-                    }
+                    await this.tryEnableAutomerge(octokit, pullRequest.node_id, pullRequest.number, result);
                 }
             } catch (error) {
                 const message = extractErrorMessage(error);
@@ -335,6 +320,35 @@ export class GithubStep extends BaseStep {
         }
 
         return result;
+    }
+
+    /**
+     * Enables GitHub automerge on a non-breaking PR (newly created or updated) via the built-in
+     * octokit.graphql() from @octokit/core. The SDK repo's own branch protection rules govern
+     * whether the PR actually merges.
+     */
+    private async tryEnableAutomerge(
+        octokit: Octokit,
+        pullRequestNodeId: string,
+        pullRequestNumber: number,
+        result: GithubStepResult
+    ): Promise<void> {
+        try {
+            await octokit.graphql(
+                `mutation($pullRequestId: ID!) {
+                    enablePullRequestAutoMerge(input: {
+                        pullRequestId: $pullRequestId,
+                        mergeMethod: SQUASH
+                    }) { clientMutationId }
+                }`,
+                { pullRequestId: pullRequestNodeId }
+            );
+            this.logger.info(`Enabled automerge on PR #${pullRequestNumber}`);
+            result.autoMergeEnabled = true;
+        } catch (autoMergeError) {
+            // Automerge may not be available (repo settings, branch protection, permissions)
+            this.logger.warn(`Could not enable automerge: ${extractErrorMessage(autoMergeError)}`);
+        }
     }
 
     private async executePushMode(repository: ClonedRepository, resolved: ResolvedPrFields): Promise<GithubStepResult> {
