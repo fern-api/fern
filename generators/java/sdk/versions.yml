@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.34.0
+  changelogEntry:
+    - summary: |
+        Add `ClientOptions.Builder.maxConcurrentRequests(int)`, an opt-in cap on how many requests the SDK has in
+        flight at once. It applies to both the sync and the async client (OkHttp's dispatcher limits only bound async
+        calls, and its connection pool only bounds idle connections) and also to an OkHttpClient supplied via
+        `httpClient(...)`. A request holds a slot until its response body is closed; callers waiting for a slot are
+        bounded by the call timeout, and retries do not hold a slot during their backoff delay. Implemented by the new
+        generated `core/ConcurrencyLimitingInterceptor`.
+      type: feat
+  createdAt: "2026-10-26"
+  irVersion: 67
 - version: 4.33.0
   changelogEntry:
     - summary: |
