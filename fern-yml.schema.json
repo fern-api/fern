@@ -3039,6 +3039,9 @@
             "require-analytics-consent": {
               "type": "boolean"
             },
+            "sibling-site-links": {
+              "type": "boolean"
+            },
             "language": {
               "type": "string",
               "pattern": "^[a-zA-Z]{2,8}(-[a-zA-Z0-9]{1,8})*$"
