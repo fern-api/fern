@@ -13,6 +13,7 @@ export interface FormDataUtils {
         referenceToFormData: ts.Expression;
         key: string | ts.Expression;
         value: ts.Expression;
+        contentType?: string;
     }) => ts.Statement;
     encodeAsFormParameter: (args: { referenceToArgument: ts.Expression }) => ts.CallExpression;
     appendFile: (args: { referenceToFormData: ts.Expression; key: string; value: ts.Expression }) => ts.Statement;
@@ -57,17 +58,23 @@ export class FormDataUtilsImpl extends CoreUtility implements FormDataUtils {
     public readonly append = ({
         referenceToFormData,
         key,
-        value
+        value,
+        contentType
     }: {
         referenceToFormData: ts.Expression;
         key: string | ts.Expression;
         value: ts.Expression;
+        contentType?: string;
     }): ts.Statement => {
+        const args = [typeof key === "string" ? ts.factory.createStringLiteral(key) : key, value];
+        if (contentType != null) {
+            args.push(ts.factory.createStringLiteral(contentType));
+        }
         return ts.factory.createExpressionStatement(
             ts.factory.createCallExpression(
                 ts.factory.createPropertyAccessExpression(referenceToFormData, ts.factory.createIdentifier("append")),
                 undefined,
-                [typeof key === "string" ? ts.factory.createStringLiteral(key) : key, value]
+                args
             )
         );
     };
