@@ -6,11 +6,25 @@ import { ModuleDeclaration, ts } from "ts-morph";
 
 import { AbstractGeneratedTypeSchema } from "../AbstractGeneratedTypeSchema.js";
 
+export declare namespace GeneratedUndiscriminatedUnionTypeSchemaImpl {
+    export interface Init<Context>
+        extends AbstractGeneratedTypeSchema.Init<FernIr.UndiscriminatedUnionTypeDeclaration, Context> {
+        typeId: FernIr.TypeId;
+    }
+}
+
 export class GeneratedUndiscriminatedUnionTypeSchemaImpl<Context extends ModelContext>
     extends AbstractGeneratedTypeSchema<FernIr.UndiscriminatedUnionTypeDeclaration, Context>
     implements GeneratedUndiscriminatedUnionTypeSchema<Context>
 {
     public readonly type = "undiscriminatedUnion";
+
+    private readonly typeId: FernIr.TypeId;
+
+    constructor({ typeId, ...superInit }: GeneratedUndiscriminatedUnionTypeSchemaImpl.Init<Context>) {
+        super(superInit);
+        this.typeId = typeId;
+    }
 
     protected override buildSchema(context: Context): Zurg.Schema {
         return context.coreUtilities.zurg.undiscriminatedUnion(
@@ -60,7 +74,7 @@ export class GeneratedUndiscriminatedUnionTypeSchemaImpl<Context extends ModelCo
 
     private isSelfRecursive(typeRef: FernIr.TypeReference): boolean {
         const unwrapped = unwrapOptionalAndNullable(typeRef);
-        return unwrapped.type === "named" && this.case.pascalUnsafe(unwrapped.name) === this.typeName;
+        return unwrapped.type === "named" && unwrapped.typeId === this.typeId;
     }
 }
 
