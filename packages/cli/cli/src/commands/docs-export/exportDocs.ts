@@ -1,7 +1,7 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { getFernDirectory } from "@fern-api/configuration-loader";
-import { replaceEnvVariables } from "@fern-api/core-utils";
+import { delay, replaceEnvVariables } from "@fern-api/core-utils";
 import { isStaticBuildInternalFile } from "@fern-api/fdr-sdk/orpc-client";
 import { askToLogin } from "@fern-api/login";
 import { CliError } from "@fern-api/task-context";
@@ -82,10 +82,12 @@ async function withRetries<T>(run: () => Promise<T>): Promise<T> {
             return await run();
         } catch (error) {
             lastError = error;
-            await new Promise((resolve) => setTimeout(resolve, 250 * attempt));
+            if (attempt < DOWNLOAD_ATTEMPTS) {
+                await delay(250 * attempt);
+            }
         }
     }
-    throw lastError;
+    throw lastError instanceof Error ? lastError : new Error(`Download failed: ${String(lastError)}`);
 }
 
 async function forEachConcurrently<T>(items: T[], limit: number, run: (item: T) => Promise<void>): Promise<void> {
@@ -123,11 +125,16 @@ export async function exportDocs({
     selfHostedUrl: string | undefined;
     adminToken: string | undefined;
 }): Promise<void> {
+    if (selfHostedUrl != null && adminToken == null) {
+        return cliContext.failAndThrow("--admin-token is required with --url.", undefined, {
+            code: CliError.Code.ConfigError
+        });
+    }
     const source =
-        selfHostedUrl != null
+        selfHostedUrl != null && adminToken != null
             ? selfHostedSource({
                   url: selfHostedUrl,
-                  adminToken: adminToken ?? "",
+                  adminToken,
                   basepath: instance != null ? parseInstanceUrl(instance).basepath : ""
               })
             : await resolveHostedSource({ cliContext, instance });
@@ -181,6 +188,13 @@ async function resolveHostedSource({
         return cliContext.failAndThrow("No docs instances found in docs.yml.", undefined, {
             code: CliError.Code.ConfigError
         });
+    }
+    if (instance != null && !instanceUrls.includes(instance)) {
+        return cliContext.failAndThrow(
+            `--instance ${instance} is not in docs.yml. Available instances: ${instanceUrls.join(", ")}`,
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
     }
     if (instance == null && instanceUrls.length > 1) {
         return cliContext.failAndThrow(

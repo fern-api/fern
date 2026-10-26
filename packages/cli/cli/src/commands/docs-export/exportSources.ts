@@ -1,6 +1,7 @@
 import { mkdir, mkdtemp, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
+import { delay } from "@fern-api/core-utils";
 import { createDocsLedgerClient } from "@fern-api/fdr-sdk/orpc-client";
 import * as tar from "tar";
 
@@ -49,6 +50,7 @@ export function hostedSource({
 
 const EXPORT_POLL_INTERVAL_MS = 2_000;
 const EXPORT_TIMEOUT_MS = 30 * 60_000;
+const SELF_HOSTED_BATCH_SIZE = 1000;
 
 /** A self-hosted container: its existing `/__admin/export` archive, downloaded and unpacked to a temp dir. */
 export function selfHostedSource({
@@ -84,7 +86,7 @@ export function selfHostedSource({
                 if (Date.now() > deadline) {
                     throw new Error("Timed out waiting for the self-hosted export to finish");
                 }
-                await new Promise((resolve) => setTimeout(resolve, pollIntervalMs));
+                await delay(pollIntervalMs);
             }
             const archive = path.join(workDir, "site.tar.gz");
             const download = await adminRequest(`${origin}/__admin/export/download`, { headers: auth });
@@ -93,10 +95,12 @@ export function selfHostedSource({
             await mkdir(siteDir);
             await tar.extract({ file: archive, cwd: siteDir });
             const files = await listFilesRecursively(siteDir);
-            yield files.map((relative) => ({
-                path: relative,
-                read: async () => new Uint8Array(await readFile(path.join(siteDir, relative)))
-            }));
+            for (let start = 0; start < files.length; start += SELF_HOSTED_BATCH_SIZE) {
+                yield files.slice(start, start + SELF_HOSTED_BATCH_SIZE).map((relative) => ({
+                    path: relative,
+                    read: async () => new Uint8Array(await readFile(path.join(siteDir, relative)))
+                }));
+            }
         },
         close: async () => {
             if (workDir != null) {
