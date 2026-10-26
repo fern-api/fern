@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Non-file parts of a multipart request now carry their declared content type (e.g. OpenAPI
+    `encoding.<part>.contentType: application/json`) as the part's `Content-Type` header. Previously
+    the content type was ignored and the part was sent without one.
+  type: fix

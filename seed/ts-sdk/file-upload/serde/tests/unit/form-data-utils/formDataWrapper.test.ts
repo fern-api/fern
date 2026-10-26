@@ -242,6 +242,17 @@ describe("FormDataWrapper", () => {
             expect(serialized).toContain("test string");
         });
 
+        it("sets the part content type when one is given", async () => {
+            formData.append("metadata", '{"page_range":"1-2"}', "application/json");
+
+            const serialized = await serializeFormData(formData.getRequest().body);
+            expect(serialized).toContain(
+                'Content-Disposition: form-data; name="metadata"\r\nContent-Type: application/json',
+            );
+            expect(serialized).not.toContain("filename=");
+            expect(serialized).toContain('{"page_range":"1-2"}');
+        });
+
         it("serializes numbers and booleans as strings", async () => {
             formData.append("number", 12345);
             formData.append("flag", true);

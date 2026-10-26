@@ -112,6 +112,7 @@ export function appendPropertyToFormData({
             const FOR_LOOP_ITEM_VARIABLE_NAME = "_item";
 
             const referenceToBodyProperty = requestParameter.getReferenceToBodyProperty(property, context);
+            const contentType = getPartContentType(property);
 
             let statement: ts.Statement;
 
@@ -178,7 +179,8 @@ export function appendPropertyToFormData({
                         context.jsonContext.getReferenceToToJson().getExpression(),
                         [],
                         [jsonValue]
-                    )
+                    ),
+                    contentType
                 });
             } else if (isMaybeIterable(property.valueType, context)) {
                 statement = ts.factory.createForOfStatement(
@@ -204,7 +206,8 @@ export function appendPropertyToFormData({
                                     ts.factory.createIdentifier(FOR_LOOP_ITEM_VARIABLE_NAME),
                                     property.valueType,
                                     context
-                                )
+                                ),
+                                contentType
                             })
                         ],
                         true
@@ -247,7 +250,8 @@ export function appendPropertyToFormData({
                     key: getWireValue(property.name),
                     value: context.type.stringify(referenceToBodyProperty, property.valueType, {
                         includeNullCheckIfOptional: false
-                    })
+                    }),
+                    contentType
                 });
             }
 
@@ -268,6 +272,15 @@ export function appendPropertyToFormData({
             throw new Error("Unknown addPropertyToFormData: " + property.type);
         }
     });
+}
+
+// A multipart content type here would be the request's own, not a part's.
+function getPartContentType(property: FernIr.FileUploadBodyProperty): string | undefined {
+    const contentType = property.contentType?.trim();
+    if (contentType == null || contentType.length === 0 || contentType.toLowerCase().startsWith("multipart/")) {
+        return undefined;
+    }
+    return contentType;
 }
 
 function isMaybeIterable(typeReference: FernIr.TypeReference, context: FileContext): boolean {
