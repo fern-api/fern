@@ -52,7 +52,7 @@ function definition({
 }
 
 describe("getSdkRequests", () => {
-    it("reads each docs.yml entry that names a package and a version", () => {
+    it("reads each docs.yml entry that names a version, php included", () => {
         expect(
             getSdkRequests({
                 typescriptSdk: { package: "@acme/sdk", version: "1.2.3" },
@@ -60,34 +60,26 @@ describe("getSdkRequests", () => {
                 javaSdk: { coordinate: "com.acme:sdk", version: "3.0.0" },
                 goSdk: { githubRepo: "https://github.com/acme/sdk-go", version: "4.0.0" },
                 rubySdk: { gem: "acme", version: "5.0.0" },
-                csharpSdk: { package: "Acme.Sdk", version: "6.0.0" }
+                csharpSdk: { package: "Acme.Sdk", version: "6.0.0" },
+                phpSdk: { package: "acme/sdk", version: "7.0.0" }
             })
         ).toEqual([
-            { type: "typescript", package: "@acme/sdk", version: "1.2.3" },
-            { type: "python", package: "acme", version: "2.0.0" },
-            { type: "java", group: "com.acme", artifact: "sdk", version: "3.0.0" },
-            { type: "go", githubRepo: "github.com/acme/sdk-go", version: "4.0.0" },
-            { type: "ruby", gem: "acme", version: "5.0.0" },
-            { type: "csharp", package: "Acme.Sdk", version: "6.0.0" }
+            { type: "typescript", version: "1.2.3" },
+            { type: "python", version: "2.0.0" },
+            { type: "java", version: "3.0.0" },
+            { type: "go", version: "4.0.0" },
+            { type: "ruby", version: "5.0.0" },
+            { type: "csharp", version: "6.0.0" },
+            { type: "php", version: "7.0.0" }
         ]);
     });
 
-    it("skips entries that name no package, which FDR could not look up", () => {
-        expect(
-            getSdkRequests({
-                javaSdk: { coordinate: "sdk", version: "1.0.0" },
-                goSdk: { githubRepo: "  ", version: "1.0.0" }
-            })
-        ).toEqual([]);
-        expect(getSdkRequests({ javaSdk: { coordinate: ":sdk", version: "1.0.0" } })).toEqual([]);
-    });
-
-    it("skips entries without a version and languages the store lacks", () => {
+    it("skips entries without a version and languages the docs do not read", () => {
         expect(
             getSdkRequests({
                 typescriptSdk: { package: "@acme/sdk" },
                 pythonSdk: { package: "acme", version: "  " },
-                phpSdk: { package: "acme/sdk", version: "1.0.0" }
+                swiftSdk: { package: "Acme", version: "1.0.0" }
             })
         ).toEqual([]);
     });

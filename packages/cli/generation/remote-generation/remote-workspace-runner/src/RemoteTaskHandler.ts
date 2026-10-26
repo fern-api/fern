@@ -678,7 +678,7 @@ async function downloadFilesWithFernIgnoreInTempRepo({
     await cp(tmpOutputResolutionDir, absolutePathToLocalOutput, { recursive: true });
 }
 
-export async function downloadAndExtractZipToDirectory({
+async function downloadAndExtractZipToDirectory({
     s3PreSignedReadUrl,
     outputPath
 }: {

@@ -1,12 +1,10 @@
-import { assertNever, errorMessageOrString, nonEmpty } from "@fern-api/core-utils";
+import { errorMessageOrString, nonEmpty } from "@fern-api/core-utils";
 import type { APIV1Write } from "@fern-api/fdr-sdk";
-import type { SdkRequest } from "@fern-api/fdr-sdk/orpc-client";
 import type { Logger } from "@fern-api/logger";
 
 import { getFernSdkGenApiOrigin } from "./fernSdkGenApi.js";
 import { findSdkGenSnippetsUrls, type SdkGenSnippetsQuery } from "./findSdkGenSnippets.js";
-import { normalizeGoPackageForLookup } from "./normalizeRepoUrl.js";
-import { downloadSnippetsJson, isUploadSdkGenSnippetsEnabled, parseSdkSnippetsJson } from "./uploadSdkGenSnippets.js";
+import { downloadSnippetsJson, isSdkGenSnippetsEnabled, parseSdkSnippetsJson } from "./sdkGenSnippets.js";
 
 type ApiDefinition = APIV1Write.ApiDefinition;
 type Endpoint = APIV1Write.EndpointDefinition;
@@ -16,48 +14,21 @@ type SnippetsConfig = APIV1Write.SnippetsConfig;
 /** The code of one SDK's snippets, by endpoint, keyed like `GET /pet/{petId}`. */
 type CodeByEndpoint = ReadonlyMap<string, string>;
 
-/** The languages FDR's snippet store holds. */
-const SDK_LANGUAGES = ["typescript", "python", "java", "go", "ruby", "csharp"] as const;
-type SdkLanguage = (typeof SDK_LANGUAGES)[number];
+/** The languages whose docs.yml `snippets:` entry, `<language>Sdk`, asks for the snippets of an SDK. */
+const SDK_LANGUAGES = ["typescript", "python", "java", "go", "ruby", "csharp", "php"] as const;
 
-/** The lookup for the docs.yml `snippets:` entry of a language, if the entry exists and names a package. */
-function toSdkRequest(language: SdkLanguage, config: SnippetsConfig): SdkRequest | null | undefined {
-    switch (language) {
-        case "typescript":
-        case "python":
-        case "csharp": {
-            const sdk = config[`${language}Sdk` as const];
-            return sdk && { type: language, package: sdk.package, version: nonEmpty(sdk.version) };
-        }
-        case "ruby": {
-            const sdk = config.rubySdk;
-            return sdk && { type: language, gem: sdk.gem, version: nonEmpty(sdk.version) };
-        }
-        case "go": {
-            const sdk = config.goSdk;
-            const githubRepo = nonEmpty(normalizeGoPackageForLookup(sdk?.githubRepo ?? ""));
-            return sdk == null || githubRepo == null
-                ? undefined
-                : { type: language, githubRepo, version: nonEmpty(sdk.version) };
-        }
-        case "java": {
-            const sdk = config.javaSdk;
-            const [group, artifact] = sdk?.coordinate.split(":").map(nonEmpty) ?? [];
-            return sdk == null || group == null || artifact == null
-                ? undefined
-                : { type: language, group, artifact, version: nonEmpty(sdk.version) };
-        }
-        default:
-            assertNever(language);
-    }
+/** The SDK of one language, at one version, that the docs ask for. */
+interface SdkRequest {
+    type: (typeof SDK_LANGUAGES)[number];
+    version: string;
 }
 
-/** The store is keyed by package and version, so an entry without a version names no SDK. */
-const hasVersion = (request: SdkRequest | null | undefined): request is SdkRequest => request?.version != null;
-
-/** The SDKs whose snippets to look up, one per docs.yml `snippets:` entry. */
+/** The SDKs whose snippets to look up, one per docs.yml `snippets:` entry that names a version. */
 export function getSdkRequests(config: SnippetsConfig): SdkRequest[] {
-    return SDK_LANGUAGES.map((language) => toSdkRequest(language, config)).filter(hasVersion);
+    return SDK_LANGUAGES.flatMap((type) => {
+        const version = nonEmpty(config[`${type}Sdk`]?.version);
+        return version == null ? [] : [{ type, version }];
+    });
 }
 
 const toPathSegment = (part: Endpoint["path"]["parts"][number]): string =>
@@ -124,9 +95,6 @@ const getLookupKey = (sdkName: string, version: string): string => `${sdkName}\n
 function getLookups(requests: SdkRequest[], sdkNames: Record<string, string[]>): Map<string, SnippetsLookup> {
     const lookups = new Map<string, SnippetsLookup>();
     for (const { type, version } of requests) {
-        if (version == null) {
-            continue;
-        }
         for (const sdkName of sdkNames[type] ?? []) {
             const key = getLookupKey(sdkName, version);
             const lookup = lookups.get(key) ?? { sdkName, version, languages: [] };
@@ -162,7 +130,7 @@ export async function attachSdkGenSnippets(
         getOrigin = getFernSdkGenApiOrigin,
         findSnippetsUrls = (query) => findSdkGenSnippetsUrls(query),
         readSnippets = downloadSnippetsJson,
-        isEnabled = isUploadSdkGenSnippetsEnabled
+        isEnabled = isSdkGenSnippetsEnabled
     }: AttachSdkGenSnippetsDependencies = {}
 ): Promise<ApiDefinition> {
     const requests = getSdkRequests(snippetsConfig);
@@ -195,9 +163,6 @@ export async function attachSdkGenSnippets(
     const codeByLanguage = new Map(
         await Promise.all(
             requests.map(async ({ type, version }) => {
-                if (version == null) {
-                    return [type, new Map<string, string>()] as const;
-                }
                 const names = sdkNames[type] ?? [];
                 const snippetsUrl = names
                     .map((sdkName) => urlsByLookup.get(getLookupKey(sdkName, version))?.get(type))

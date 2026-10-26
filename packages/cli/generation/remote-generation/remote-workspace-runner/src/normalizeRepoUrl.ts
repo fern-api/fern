@@ -22,8 +22,3 @@ export function normalizeRepoUrlToHttps(repo: string, provider: "github" | "gitl
             assertNever(provider);
     }
 }
-
-/** Strips the scheme from a Go module's repository, the way snippet packages are keyed (`github.com/owner/repo`). */
-export function normalizeGoPackageForLookup(repository: string): string {
-    return repository.replace(/^https:\/\//, "");
-}
