@@ -68,20 +68,32 @@ describe("getSdkRequests", () => {
             { type: "python", version: "2.0.0" },
             { type: "java", version: "3.0.0" },
             { type: "go", version: "4.0.0" },
-            { type: "ruby", version: "5.0.0" },
             { type: "csharp", version: "6.0.0" },
-            { type: "php", version: "7.0.0" }
+            { type: "php", version: "7.0.0" },
+            { type: "ruby", version: "5.0.0" }
         ]);
     });
 
-    it("skips entries without a version and languages the docs do not read", () => {
+    it("skips entries without a version", () => {
         expect(
             getSdkRequests({
                 typescriptSdk: { package: "@acme/sdk" },
-                pythonSdk: { package: "acme", version: "  " },
-                swiftSdk: { package: "Acme", version: "1.0.0" }
+                pythonSdk: { package: "acme", version: "  " }
             })
         ).toEqual([]);
+    });
+
+    it("reads the other SDK languages too, but not the targets that are not SDKs", () => {
+        expect(
+            getSdkRequests({
+                swiftSdk: { package: "Acme", version: "1.0.0" },
+                rustSdk: { package: "acme", version: "2.0.0" },
+                cliSdk: { package: "acme-cli", version: "3.0.0" }
+            })
+        ).toEqual([
+            { type: "rust", version: "2.0.0" },
+            { type: "swift", version: "1.0.0" }
+        ]);
     });
 });
 

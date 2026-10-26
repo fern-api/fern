@@ -1,6 +1,7 @@
 import { errorMessageOrString, nonEmpty } from "@fern-api/core-utils";
 import type { APIV1Write } from "@fern-api/fdr-sdk";
 import type { Logger } from "@fern-api/logger";
+import { targetLanguageSchema } from "@postman/sdk-config";
 
 import { getFernSdkGenApiOrigin } from "./fernSdkGenApi.js";
 import { findSdkGenSnippetsUrls, type SdkGenSnippetsQuery } from "./findSdkGenSnippets.js";
@@ -14,19 +15,24 @@ type SnippetsConfig = APIV1Write.SnippetsConfig;
 /** The code of one SDK's snippets, by endpoint, keyed like `GET /pet/{petId}`. */
 type CodeByEndpoint = ReadonlyMap<string, string>;
 
-/** The languages whose docs.yml `snippets:` entry, `<language>Sdk`, asks for the snippets of an SDK. */
-const SDK_LANGUAGES = ["typescript", "python", "java", "go", "ruby", "csharp", "php"] as const;
+/** The targets sdk-gen builds that are not SDKs, so docs.yml `snippets:` has no entry for them. */
+const NON_SDK_LANGUAGES = ["cli", "mcp", "terraform"];
+const SDK_LANGUAGES = new Set<string>(targetLanguageSchema.options);
+for (const language of NON_SDK_LANGUAGES) {
+    SDK_LANGUAGES.delete(language);
+}
 
 /** The SDK of one language, at one version, that the docs ask for. */
 interface SdkRequest {
-    type: (typeof SDK_LANGUAGES)[number];
+    type: string;
     version: string;
 }
 
-/** The SDKs whose snippets to look up, one per docs.yml `snippets:` entry that names a version. */
+/** The SDKs whose snippets to look up: the docs.yml `snippets:` entry of each SDK language, when it names a version. */
 export function getSdkRequests(config: SnippetsConfig): SdkRequest[] {
-    return SDK_LANGUAGES.flatMap((type) => {
-        const version = nonEmpty(config[`${type}Sdk`]?.version);
+    const entries: Record<string, { version?: string | null } | null | undefined> = config;
+    return [...SDK_LANGUAGES].flatMap((type) => {
+        const version = nonEmpty(entries[`${type}Sdk`]?.version);
         return version == null ? [] : [{ type, version }];
     });
 }

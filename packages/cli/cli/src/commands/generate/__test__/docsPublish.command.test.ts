@@ -376,9 +376,9 @@ ${PYTHON_GENERATOR}`,
                 "python: python code",
                 "java: java code",
                 "go: go code",
-                "ruby: ruby code",
                 "csharp: csharp code",
-                "php: php code"
+                "php: php code",
+                "ruby: ruby code"
             ]);
             expect(sdkGenApi.artifactListRequests).toHaveLength(1);
         });
