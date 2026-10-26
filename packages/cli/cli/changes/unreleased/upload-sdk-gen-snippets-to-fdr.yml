@@ -3,8 +3,10 @@
 - summary: |
     After `fern generate` builds an SDK Config target through sdk-gen-api, upload its code snippets
     (from the snippets file sdk-gen saves beside the SDK, when `docs.snippets.enabled` is set) to FDR's
-    snippet store. At `fern generate --docs`, read back the stored snippets for the packages and versions
-    that docs.yml `snippets:` names and add them to the endpoints as code samples, in both deploy modes.
+    snippet store. At `fern generate --docs`, find the snippets of the SDKs that docs.yml `snippets:` names
+    (by the sdkName in sdk-config.yml, the language and the version) through sdk-gen-api, and add them to
+    the endpoints as code samples, in both deploy modes. This needs no build ID and no files from the
+    machine that built the SDK.
     Off unless `FERN_UPLOAD_SDK_GEN_SNIPPETS=true` is set. A snippet failure never fails generation or
     the docs publish.
   type: feat

@@ -1,11 +1,12 @@
-import { createFdrService } from "@fern-api/core";
-import { assertNever, isPlainObject, nonEmpty } from "@fern-api/core-utils";
-import type { APIV1Write, FdrClient } from "@fern-api/fdr-sdk";
+import { assertNever, errorMessageOrString, nonEmpty } from "@fern-api/core-utils";
+import type { APIV1Write } from "@fern-api/fdr-sdk";
 import type { SdkRequest } from "@fern-api/fdr-sdk/orpc-client";
 import type { Logger } from "@fern-api/logger";
 
+import { getFernSdkGenApiOrigin } from "./fernSdkGenApi.js";
+import { findSdkGenSnippetsUrls, type SdkGenSnippetsQuery } from "./findSdkGenSnippets.js";
 import { normalizeGoPackageForLookup } from "./normalizeRepoUrl.js";
-import { isUploadSdkGenSnippetsEnabled } from "./uploadSdkGenSnippets.js";
+import { downloadSnippetsJson, isUploadSdkGenSnippetsEnabled, parseSdkSnippetsJson } from "./uploadSdkGenSnippets.js";
 
 type ApiDefinition = APIV1Write.ApiDefinition;
 type Endpoint = APIV1Write.EndpointDefinition;
@@ -54,61 +55,9 @@ function toSdkRequest(language: SdkLanguage, config: SnippetsConfig): SdkRequest
 /** The store is keyed by package and version, so an entry without a version names no SDK. */
 const hasVersion = (request: SdkRequest | null | undefined): request is SdkRequest => request?.version != null;
 
-/** The SDKs to look up in FDR's snippet store, one per docs.yml `snippets:` entry. */
+/** The SDKs whose snippets to look up, one per docs.yml `snippets:` entry. */
 export function getSdkRequests(config: SnippetsConfig): SdkRequest[] {
     return SDK_LANGUAGES.map((language) => toSdkRequest(language, config)).filter(hasVersion);
-}
-
-/** Python and Java store a sync and an async client, and sdk-gen writes the same code for both. */
-function getCodeField(language: string): string {
-    return language === "python" || language === "java" ? "sync_client" : "client";
-}
-
-function getFirstCode(snippets: unknown[] = [], codeField: string): string | undefined {
-    return snippets
-        .map((snippet) => (isPlainObject(snippet) ? snippet[codeField] : undefined))
-        .find((code): code is string => typeof code === "string" && nonEmpty(code) != null);
-}
-
-/** FDR returns snippets by path, then HTTP method, untyped. This is the one place that reads that shape. */
-function toCodeByEndpoint(
-    snippets: Record<string, Partial<Record<string, unknown[]>>>,
-    codeField: string
-): CodeByEndpoint {
-    const snippetsByEndpoint = Object.entries(snippets).flatMap(([path, snippetsByMethod]) =>
-        Object.entries(snippetsByMethod).map(([method, list]) => [`${method} ${path}`, list] as const)
-    );
-    return new Map(
-        snippetsByEndpoint.flatMap(([endpoint, list]) => {
-            const code = getFirstCode(list, codeField);
-            return code == null ? [] : [[endpoint, code] as const];
-        })
-    );
-}
-
-/** The snippets of one SDK, or nothing when FDR cannot be read: a snippet problem must not fail the docs publish. */
-async function loadCodeByEndpoint({
-    fdr,
-    organization,
-    request,
-    logger
-}: {
-    fdr: Pick<FdrClient, "snippets">;
-    organization: string;
-    request: SdkRequest;
-    logger: Pick<Logger, "warn">;
-}): Promise<CodeByEndpoint> {
-    try {
-        // Leaving out the API id makes FDR pick the organization's only API with stored snippets.
-        const response = await fdr.snippets.load({ orgId: organization, sdks: [request] });
-        if (response.next != null) {
-            logger.warn(`FDR has more ${request.type} snippets than the first page; the rest are not added`);
-        }
-        return toCodeByEndpoint(response.snippets, getCodeField(request.type));
-    } catch (error) {
-        logger.warn(`Could not read ${request.type} snippets from FDR (the docs are not affected): ${error}`);
-        return new Map();
-    }
 }
 
 const toPathSegment = (part: Endpoint["path"]["parts"][number]): string =>
@@ -156,13 +105,41 @@ function mapEndpoints(apiDefinition: ApiDefinition, update: (endpoint: Endpoint)
 }
 
 export interface AttachSdkGenSnippetsDependencies {
-    createFdr?: (token: string) => Pick<FdrClient, "snippets">;
+    getOrigin?: () => string | undefined;
+    findSnippetsUrls?: (query: SdkGenSnippetsQuery) => Promise<Map<string, string>>;
+    readSnippets?: (snippetsUrl: string) => Promise<string>;
     isEnabled?: () => boolean;
 }
 
+/** One sdk-gen-api lookup: the languages of an SDK name and version whose snippets the docs ask for. */
+interface SnippetsLookup {
+    sdkName: string;
+    version: string;
+    languages: string[];
+}
+
+const getLookupKey = (sdkName: string, version: string): string => `${sdkName}\n${version}`;
+
+/** One lookup per sdkName and version, so an SDK's languages are found with a single request. */
+function getLookups(requests: SdkRequest[], sdkNames: Record<string, string[]>): Map<string, SnippetsLookup> {
+    const lookups = new Map<string, SnippetsLookup>();
+    for (const { type, version } of requests) {
+        if (version == null) {
+            continue;
+        }
+        for (const sdkName of sdkNames[type] ?? []) {
+            const key = getLookupKey(sdkName, version);
+            const lookup = lookups.get(key) ?? { sdkName, version, languages: [] };
+            lookups.set(key, { ...lookup, languages: [...lookup.languages, type] });
+        }
+    }
+    return lookups;
+}
+
 /**
- * Reads the snippets that `fern generate` stored in FDR for the SDKs the docs.yml `snippets:` entries name, and adds
- * them to the API definition as code samples. Does nothing unless FERN_UPLOAD_SDK_GEN_SNIPPETS is `true`.
+ * Reads the snippets sdk-gen saved with the builds of the SDKs the docs.yml `snippets:` entries name, found through the
+ * sdk-gen-api, and adds them to the API definition as code samples. Does nothing unless FERN_UPLOAD_SDK_GEN_SNIPPETS is
+ * `true`. A snippet problem must not fail the docs publish, so a failure only logs a warning.
  */
 export async function attachSdkGenSnippets(
     {
@@ -170,16 +147,21 @@ export async function attachSdkGenSnippets(
         organization,
         apiDefinition,
         snippetsConfig,
+        sdkNames = {},
         logger
     }: {
         token: string;
         organization: string;
         apiDefinition: ApiDefinition;
         snippetsConfig: SnippetsConfig;
-        logger: Pick<Logger, "info" | "warn">;
+        /** The sdkNames of each language's SDK in the sdk-config.yml; a language without one has no snippets to read. */
+        sdkNames?: Record<string, string[]>;
+        logger: Pick<Logger, "debug" | "info" | "warn">;
     },
     {
-        createFdr = (value) => createFdrService({ token: value }),
+        getOrigin = getFernSdkGenApiOrigin,
+        findSnippetsUrls = (query) => findSdkGenSnippetsUrls(query),
+        readSnippets = downloadSnippetsJson,
         isEnabled = isUploadSdkGenSnippetsEnabled
     }: AttachSdkGenSnippetsDependencies = {}
 ): Promise<ApiDefinition> {
@@ -187,18 +169,65 @@ export async function attachSdkGenSnippets(
     if (!isEnabled() || requests.length === 0) {
         return apiDefinition;
     }
-    const fdr = createFdr(token);
+    const origin = getOrigin();
+    if (origin == null) {
+        logger.warn(
+            "FERN_SDK_GEN_API_ORIGIN is not set, so the SDK snippets cannot be read (the docs are not affected)"
+        );
+        return apiDefinition;
+    }
+
+    const urlsByLookup = new Map(
+        await Promise.all(
+            [...getLookups(requests, sdkNames)].map(async ([key, lookup]) => {
+                try {
+                    return [key, await findSnippetsUrls({ origin, token, organization, ...lookup })] as const;
+                } catch (error) {
+                    logger.warn(
+                        `Could not find the snippets of SDK "${lookup.sdkName}" ${lookup.version} in the sdk-gen-api (the docs are not affected): ${errorMessageOrString(error)}`
+                    );
+                    return [key, new Map<string, string>()] as const;
+                }
+            })
+        )
+    );
+
     const codeByLanguage = new Map(
         await Promise.all(
-            requests.map(async (request) => {
-                const codeByEndpoint = await loadCodeByEndpoint({ fdr, organization, request, logger });
-                return [request.type, codeByEndpoint] as const;
+            requests.map(async ({ type, version }) => {
+                if (version == null) {
+                    return [type, new Map<string, string>()] as const;
+                }
+                const names = sdkNames[type] ?? [];
+                const snippetsUrl = names
+                    .map((sdkName) => urlsByLookup.get(getLookupKey(sdkName, version))?.get(type))
+                    .find((url): url is string => url != null);
+                if (snippetsUrl == null) {
+                    if (names.length > 0) {
+                        logger.warn(
+                            `No built ${type} SDK ${version} with snippets was found (the docs are not affected)`
+                        );
+                    }
+                    return [type, new Map<string, string>()] as const;
+                }
+                try {
+                    const endpoints = parseSdkSnippetsJson(await readSnippets(snippetsUrl));
+                    return [
+                        type,
+                        new Map(endpoints.map(({ method, path, code }) => [`${method} ${path}`, code]))
+                    ] as const;
+                } catch (error) {
+                    logger.warn(
+                        `Could not read the ${type} snippets (the docs are not affected): ${errorMessageOrString(error)}`
+                    );
+                    return [type, new Map<string, string>()] as const;
+                }
             })
         )
     );
     const counts = [...codeByLanguage].map(([language, codeByEndpoint]) => `${language}: ${codeByEndpoint.size}`);
     if ([...codeByLanguage.values()].some((codeByEndpoint) => codeByEndpoint.size > 0)) {
-        logger.info(`Loaded SDK snippets from FDR (${counts.join(", ")})`);
+        logger.info(`Loaded SDK snippets (${counts.join(", ")})`);
     }
     return mapEndpoints(apiDefinition, (endpoint) => addCodeSamples(endpoint, codeByLanguage));
 }

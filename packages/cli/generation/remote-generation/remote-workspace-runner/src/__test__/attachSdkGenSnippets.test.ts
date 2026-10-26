@@ -2,6 +2,7 @@ import type { APIV1Write } from "@fern-api/fdr-sdk";
 import { describe, expect, it, vi } from "vitest";
 
 import { attachSdkGenSnippets, getSdkRequests } from "../attachSdkGenSnippets.js";
+import type { SdkGenSnippetsQuery } from "../findSdkGenSnippets.js";
 
 const example = {
     path: "/pet/1",
@@ -97,65 +98,107 @@ describe("attachSdkGenSnippets", () => {
         typescriptSdk: { package: "@acme/sdk", version: "1.0.0" },
         pythonSdk: { package: "acme", version: "1.0.0" }
     };
-    const typescriptSnippets = { "/pet/{petId}": { GET: [{ type: "typescript", client: "client.pet.get()" }] } };
-    const pythonSnippets = {
-        "/pet/{petId}": { GET: [{ type: "python", sync_client: "SYNC", async_client: "ASYNC" }] }
+    const sdkNames = { typescript: ["acme-sdk"], python: ["acme-sdk"] };
+    const snippetsByUrl: Record<string, string> = {
+        "https://s3/typescript": JSON.stringify({ endpoints: { "/pet/{petId}": { GET: "client.pet.get()" } } }),
+        "https://s3/python": JSON.stringify({ endpoints: { "/pet/{petId}": { GET: "client.pet.get()  # py" } } })
     };
+
+    type FindSnippetsUrls = (query: SdkGenSnippetsQuery) => Promise<Map<string, string>>;
+    type ReadSnippets = (snippetsUrl: string) => Promise<string>;
 
     function setup({
         enabled = true,
-        load = vi.fn(async ({ sdks }: { sdks: Array<{ type: string }> }) => ({
-            next: undefined,
-            snippets: sdks[0]?.type === "python" ? pythonSnippets : typescriptSnippets
-        }))
+        origin = "https://sdk-gen.example",
+        findSnippetsUrls = vi.fn<FindSnippetsUrls>(
+            async ({ languages }) => new Map(languages.map((language) => [language, `https://s3/${language}`]))
+        ),
+        readSnippets = vi.fn<ReadSnippets>(async (url) => snippetsByUrl[url] ?? "{}")
     }: {
         enabled?: boolean;
-        load?: ReturnType<typeof vi.fn>;
+        /** `null` stands for an origin that is not set. */
+        origin?: string | null;
+        findSnippetsUrls?: ReturnType<typeof vi.fn<FindSnippetsUrls>>;
+        readSnippets?: ReturnType<typeof vi.fn<ReadSnippets>>;
     } = {}) {
-        const logger = { info: vi.fn(), warn: vi.fn() };
-        // The real client has many more members; the step only uses `snippets.load`.
-        const createFdr = vi.fn(() => ({ snippets: { load } })) as never;
+        const logger = { debug: vi.fn(), info: vi.fn(), warn: vi.fn() };
         const run = (
             apiDefinition: APIV1Write.ApiDefinition = definition(),
-            config: APIV1Write.SnippetsConfig = snippetsConfig
+            config: APIV1Write.SnippetsConfig = snippetsConfig,
+            names: Record<string, string[]> = sdkNames
         ) =>
             attachSdkGenSnippets(
-                { token: "token", organization: "acme", apiDefinition, snippetsConfig: config, logger },
-                { createFdr, isEnabled: () => enabled }
+                {
+                    token: "token",
+                    organization: "acme",
+                    apiDefinition,
+                    snippetsConfig: config,
+                    sdkNames: names,
+                    logger
+                },
+                { getOrigin: () => origin ?? undefined, findSnippetsUrls, readSnippets, isEnabled: () => enabled }
             );
-        return { logger, load, run };
+        return { logger, findSnippetsUrls, readSnippets, run };
     }
 
     it("does nothing while the flag is off", async () => {
-        const { logger, load, run } = setup({ enabled: false });
+        const { logger, findSnippetsUrls, run } = setup({ enabled: false });
         const input = definition();
 
         expect(await run(input)).toBe(input);
-        expect(load).not.toHaveBeenCalled();
+        expect(findSnippetsUrls).not.toHaveBeenCalled();
         expect(logger.info).not.toHaveBeenCalled();
     });
 
     it("does nothing when no docs.yml entry names an SDK", async () => {
-        const { load, run } = setup();
+        const { findSnippetsUrls, run } = setup();
         const input = definition();
 
         expect(await run(input, {})).toBe(input);
-        expect(load).not.toHaveBeenCalled();
+        expect(findSnippetsUrls).not.toHaveBeenCalled();
     });
 
-    it("asks FDR for the package and version each docs.yml entry names", async () => {
-        const { load, run } = setup();
+    it("warns, and leaves the definition as it is, when the sdk-gen-api origin is not set", async () => {
+        const { logger, findSnippetsUrls, run } = setup({ origin: null });
+        const input = definition();
+
+        expect(await run(input)).toBe(input);
+        expect(findSnippetsUrls).not.toHaveBeenCalled();
+        expect(logger.warn).toHaveBeenCalledWith(expect.stringContaining("FERN_SDK_GEN_API_ORIGIN"));
+    });
+
+    it("finds the languages of one SDK name and version with a single lookup", async () => {
+        const { findSnippetsUrls, run } = setup();
 
         await run();
 
-        expect(load).toHaveBeenCalledWith({
-            orgId: "acme",
-            sdks: [{ type: "typescript", package: "@acme/sdk", version: "1.0.0" }]
+        expect(findSnippetsUrls).toHaveBeenCalledTimes(1);
+        expect(findSnippetsUrls).toHaveBeenCalledWith({
+            origin: "https://sdk-gen.example",
+            token: "token",
+            organization: "acme",
+            sdkName: "acme-sdk",
+            version: "1.0.0",
+            languages: ["typescript", "python"]
         });
-        expect(load).toHaveBeenCalledWith({
-            orgId: "acme",
-            sdks: [{ type: "python", package: "acme", version: "1.0.0" }]
-        });
+    });
+
+    it("looks up each version, and each SDK name, separately", async () => {
+        const { findSnippetsUrls, run } = setup();
+
+        await run(
+            definition(),
+            {
+                typescriptSdk: { package: "@acme/sdk", version: "1.0.0" },
+                pythonSdk: { package: "acme", version: "2.0.0" }
+            },
+            { typescript: ["acme-sdk"], python: ["acme-py"] }
+        );
+
+        expect(findSnippetsUrls.mock.calls.map(([query]) => [query.sdkName, query.version, query.languages])).toEqual([
+            ["acme-sdk", "1.0.0", ["typescript"]],
+            ["acme-py", "2.0.0", ["python"]]
+        ]);
     });
 
     it("adds each language's code to the example of the endpoint with the same path and method", async () => {
@@ -165,10 +208,10 @@ describe("attachSdkGenSnippets", () => {
 
         expect(result.rootPackage.endpoints[0]?.examples[0]?.codeSamples).toEqual([
             { language: "typescript", code: "client.pet.get()" },
-            { language: "python", code: "SYNC" }
+            { language: "python", code: "client.pet.get()  # py" }
         ]);
         expect(result.rootPackage.endpoints[1]?.examples[0]?.codeSamples).toBeUndefined();
-        expect(logger.info).toHaveBeenCalledWith("Loaded SDK snippets from FDR (typescript: 1, python: 1)");
+        expect(logger.info).toHaveBeenCalledWith("Loaded SDK snippets (typescript: 1, python: 1)");
     });
 
     it("also covers endpoints in subpackages", async () => {
@@ -199,7 +242,7 @@ describe("attachSdkGenSnippets", () => {
 
         expect(result.rootPackage.endpoints[0]?.examples[0]?.codeSamples).toEqual([
             customer,
-            { language: "python", code: "SYNC" }
+            { language: "python", code: "client.pet.get()  # py" }
         ]);
     });
 
@@ -211,42 +254,71 @@ describe("attachSdkGenSnippets", () => {
         expect(result.rootPackage.endpoints[0]?.examples).toEqual([]);
     });
 
-    it("warns, and still adds the languages it could read, when FDR fails for one of them", async () => {
+    it("tries the next SDK name of a language when the first has no snippets for it", async () => {
+        const findSnippetsUrls = vi.fn<FindSnippetsUrls>(async ({ sdkName }) =>
+            sdkName === "second" ? new Map([["typescript", "https://s3/typescript"]]) : new Map<string, string>()
+        );
+        const { run } = setup({ findSnippetsUrls });
+
+        const result = await run(
+            definition(),
+            { typescriptSdk: snippetsConfig.typescriptSdk },
+            { typescript: ["first", "second"] }
+        );
+
+        expect(result.rootPackage.endpoints[0]?.examples[0]?.codeSamples).toEqual([
+            { language: "typescript", code: "client.pet.get()" }
+        ]);
+    });
+
+    it("asks nothing, and does not warn, for a language the sdk-config.yml does not name", async () => {
+        const { logger, findSnippetsUrls, run } = setup();
+
+        await run(definition(), snippetsConfig, { go: ["other"] });
+
+        expect(findSnippetsUrls).not.toHaveBeenCalled();
+        expect(logger.warn).not.toHaveBeenCalled();
+    });
+
+    it("warns when no built SDK with snippets is found for a language", async () => {
         const { logger, run } = setup({
-            load: vi.fn(async ({ sdks }: { sdks: Array<{ type: string }> }) => {
-                if (sdks[0]?.type === "python") {
-                    throw new Error("401 unauthorized");
-                }
-                return { next: undefined, snippets: typescriptSnippets };
+            findSnippetsUrls: vi.fn<FindSnippetsUrls>(async () => new Map<string, string>())
+        });
+
+        await run();
+
+        expect(logger.warn).toHaveBeenCalledWith(expect.stringContaining("No built typescript SDK 1.0.0"));
+        expect(logger.info).not.toHaveBeenCalled();
+    });
+
+    it("warns, and leaves the definition usable, when the lookup fails", async () => {
+        const { logger, run } = setup({
+            findSnippetsUrls: vi.fn<FindSnippetsUrls>(async () => {
+                throw new Error("401 unauthorized");
             })
         });
 
         const result = await run();
 
         expect(logger.warn).toHaveBeenCalledWith(expect.stringContaining("401 unauthorized"));
-        expect(result.rootPackage.endpoints[0]?.examples[0]?.codeSamples).toEqual([
-            { language: "typescript", code: "client.pet.get()" }
-        ]);
+        expect(result.rootPackage.endpoints[0]?.examples[0]?.codeSamples).toBeUndefined();
     });
 
-    it("does not say it loaded snippets when it loaded none", async () => {
+    it("warns, and still adds the languages it could read, when one snippets file cannot be read", async () => {
         const { logger, run } = setup({
-            load: vi.fn(async () => {
-                throw new Error("down");
+            readSnippets: vi.fn<ReadSnippets>(async (url) => {
+                if (url.endsWith("python")) {
+                    throw new Error("403 expired link");
+                }
+                return snippetsByUrl[url] ?? "{}";
             })
         });
 
-        await run();
+        const result = await run();
 
-        expect(logger.warn).toHaveBeenCalled();
-        expect(logger.info).not.toHaveBeenCalled();
-    });
-
-    it("warns when FDR has more than one page of snippets", async () => {
-        const { logger, run } = setup({ load: vi.fn(async () => ({ next: 2, snippets: {} })) });
-
-        await run();
-
-        expect(logger.warn).toHaveBeenCalledWith(expect.stringContaining("more typescript snippets"));
+        expect(logger.warn).toHaveBeenCalledWith(expect.stringContaining("403 expired link"));
+        expect(result.rootPackage.endpoints[0]?.examples[0]?.codeSamples).toEqual([
+            { language: "typescript", code: "client.pet.get()" }
+        ]);
     });
 });

@@ -197,6 +197,7 @@ export async function publishDocs({
     apiWorkspaces,
     ossWorkspaces,
     usesSdkConfig = false,
+    sdkNames = {},
     context,
     preview,
     previewId,
@@ -222,6 +223,8 @@ export async function publishDocs({
     ossWorkspaces: OSSWorkspace[];
     /** Whether the project configures SDKs in sdk-config.yml; only used to explain missing SDK snippets. */
     usesSdkConfig?: boolean;
+    /** The `sdkName` of each language's SDK in the sdk-config.yml, used to find its build for the SDK snippets. */
+    sdkNames?: Record<string, string[]>;
     context: TaskContext;
     preview: boolean;
     previewId: string | undefined;
@@ -493,8 +496,8 @@ export async function publishDocs({
         }) => {
             // apiName (docs.yml folder name) becomes the FDR API identifier, so users can
             // reference APIs by their folder name in docs components.
-            // Only adds anything when FERN_UPLOAD_SDK_GEN_SNIPPETS=true: the snippets that `fern generate` stored in
-            // FDR for the SDKs docs.yml names become code samples in the definition, which both deploy modes publish.
+            // Only adds anything when FERN_UPLOAD_SDK_GEN_SNIPPETS=true: the snippets sdk-gen saved with the builds of the
+            // SDKs docs.yml names become code samples in the definition, which both deploy modes publish.
             const apiDefinition = await attachSdkGenSnippets({
                 token: token.value,
                 organization,
@@ -508,6 +511,7 @@ export async function publishDocs({
                     apiNameOverride: apiName
                 }),
                 snippetsConfig,
+                sdkNames,
                 logger: context.logger
             });
 

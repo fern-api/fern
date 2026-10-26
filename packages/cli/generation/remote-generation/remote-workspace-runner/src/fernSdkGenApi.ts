@@ -2159,7 +2159,7 @@ async function finishFernSdkGenApiTarget(
         await uploadSdkGenSnippets({
             token: participant.token.value,
             organization: participant.organization,
-            apiId: participant.apiName,
+            apiId: participant.sdkName ?? participant.apiName,
             generatorName: participant.generatorInvocation.name,
             language:
                 participant.generatorInvocation.language ??
