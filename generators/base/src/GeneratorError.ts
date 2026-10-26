@@ -18,14 +18,6 @@ export declare namespace GeneratorError {
         | "CONFIG_ERROR";
 }
 
-const SENTRY_REPORTABLE_CODES: ReadonlySet<GeneratorError.Code> = new Set<GeneratorError.Code>([
-    "INTERNAL_ERROR",
-    "RESOLUTION_ERROR",
-    "IR_CONVERSION_ERROR",
-    "CONTAINER_ERROR",
-    "VERSION_ERROR"
-]);
-
 export class GeneratorError extends Error {
     public readonly code: GeneratorError.Code;
 
@@ -95,8 +87,4 @@ export function resolveErrorCode(error: unknown): GeneratorError.Code {
         return error.code;
     }
     return "INTERNAL_ERROR";
-}
-
-export function shouldReportToSentry(error: unknown): boolean {
-    return SENTRY_REPORTABLE_CODES.has(resolveErrorCode(error));
 }

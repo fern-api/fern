@@ -1,8 +1,7 @@
-export { CliError, resolveErrorCode, shouldReportToSentry } from "./CliError.js";
+export { CliError, resolveErrorCode } from "./CliError.js";
 export { createMockTaskContext } from "./MockTaskContext.js";
 export { TaskAbortSignal } from "./TaskAbortSignal.js";
 export {
-    type CaptureExceptionOptions,
     type CreateInteractiveTaskParams,
     type Finishable,
     type InteractiveTaskContext,

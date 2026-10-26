@@ -70,7 +70,7 @@ export async function rerunFernCliAtVersion({
         if (throwOnError) {
             throw new RerunCliError({ version, stdout, stderr });
         }
-        // We don't want to report this as an error to Sentry or PostHog, so we throw a TaskAbortSignal.
+        // We don't want to report this as an error to PostHog, so we throw a TaskAbortSignal.
         cliContext.failWithoutThrowing(undefined, new TaskAbortSignal());
     }
 }

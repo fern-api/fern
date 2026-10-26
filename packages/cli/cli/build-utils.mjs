@@ -29,8 +29,8 @@ async function loadCatalog() {
 /**
  * Rewrite every .map file in absOutDir so each entry in `sources` is a clean
  * path relative to the repo root (e.g. "packages/cli/cli/src/cli.ts") instead
- * of a relative path like "../../src/cli.ts". This gives Sentry a tidy,
- * already-normalised filename to display and lets a single repo-root-based
+ * of a relative path like "../../src/cli.ts". This gives stack traces a tidy,
+ * already-normalised filename and lets a single repo-root-based
  * code mapping resolve every frame regardless of package depth.
  */
 async function rewriteSourceMapSources(absOutDir) {
@@ -166,8 +166,8 @@ export async function buildCli(config) {
 
     const outDirAbs = path.join(__dirname, outDir);
 
-    // Rewrite source map `sources` to repo-root-relative paths so Sentry
-    // displays clean filenames (e.g. "packages/cli/cli/src/cli.ts") and a
+    // Rewrite source map `sources` to repo-root-relative paths so stack traces
+    // show clean filenames (e.g. "packages/cli/cli/src/cli.ts") and a
     // single repo-root-based code mapping resolves every frame.
     await rewriteSourceMapSources(outDirAbs);
 

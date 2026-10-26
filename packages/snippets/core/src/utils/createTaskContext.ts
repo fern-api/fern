@@ -19,10 +19,6 @@ export function createTaskContext(): TaskContext {
         failWithoutThrowing: (_message?: string, _error?: unknown) => {
             // no-op
         },
-        captureException: (_error: unknown) => {
-            // no-op
-            return undefined;
-        },
         getResult: () => TaskResult.Success,
         getLastFailureMessage: () => undefined,
         addInteractiveTask: () => {

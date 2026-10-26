@@ -11,11 +11,6 @@ publish:
     image: fernapi/fern-typescript-sdk
     aliases: [fernapi/fern-typescript-node-sdk]
     context: .
-  sentry:
-    name: fern-typescript-sdk
-    project: typescript-sdk
-    sourceMaps:
-      - dir: generators/typescript/sdk/cli/dist
 test:
   docker:
     image: fernapi/fern-typescript-sdk:latest

@@ -1,6 +1,6 @@
 /**
  * Thrown by `failAndThrow` to unwind the call stack after an error has
- * already been logged and (if applicable) reported to Sentry.
+ * already been logged and (if applicable) reported to PostHog.
  *
  * This is NOT a real error and carries no code or stack trace. It may retain
  * the already-logged failure message for structured-output callers. Catch

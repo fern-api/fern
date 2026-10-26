@@ -9,11 +9,6 @@ publish:
     file: ./generators/php/sdk/Dockerfile
     image: fernapi/fern-php-sdk
     context: .
-  sentry:
-    name: fern-php-sdk
-    project: php-sdk
-    sourceMaps:
-      - dir: generators/php/sdk/dist
 test:
   docker:
     image: fernapi/fern-php-sdk:latest

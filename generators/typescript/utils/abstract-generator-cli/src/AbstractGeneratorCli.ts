@@ -4,11 +4,7 @@ import {
     GeneratorNotificationService,
     NopGeneratorNotificationService,
     parseGeneratorConfig,
-    parseIR,
-    resolveErrorCode,
-    SentryClient,
-    shouldReportToSentry,
-    shouldTrackLocalVariablesInSentry
+    parseIR
 } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
@@ -60,19 +56,12 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
     }
 
     public async run(pathToConfig: string, options?: AbstractGeneratorCli.Options): Promise<void> {
-        let sentryClient: SentryClient | undefined;
-
         const config = await parseGeneratorConfig(pathToConfig);
         let generatorNotificationService: GeneratorNotificationService | NopGeneratorNotificationService =
             options?.disableNotifications
                 ? new NopGeneratorNotificationService()
                 : new GeneratorNotificationService(config.environment);
         try {
-            sentryClient = new SentryClient({
-                workspaceName: config.workspaceName,
-                organization: config.organization,
-                shouldTrackLocalVariables: shouldTrackLocalVariablesInSentry(config)
-            });
             const logger = createLogger((level, ...message) => {
                 CONSOLE_LOGGER.log(level, ...message);
 
@@ -285,11 +274,6 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             // biome-ignore lint/suspicious/noConsole: allow console
             console.log("Sent success event to coordinator");
         } catch (e) {
-            const errorCode = resolveErrorCode(e);
-            if (shouldReportToSentry(e)) {
-                await sentryClient?.captureException(e, { errorCode });
-            }
-
             // This call tears down generator service
             // TODO: if using in conjunction with MCP server generator, MCP server generator to tear down the service?
             // SEE: go-v2
@@ -303,8 +287,6 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             // biome-ignore lint/suspicious/noConsole: allow console
             console.log("Sent error event to coordinator");
             throw e;
-        } finally {
-            await sentryClient?.flush();
         }
     }
 

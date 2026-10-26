@@ -2,8 +2,7 @@
  * Reads observability-relevant context from the environment for automation
  * runs. Single source of truth for the enrichment fields that ride along on
  * every PostHog event and every automation event API payload during an
- * automation run. Sentry tags receive the same low-cardinality subset, with
- * URLs intentionally kept out of tags.
+ * automation run.
  */
 
 import { getRunIdProperties } from "@fern-api/cli-telemetry";

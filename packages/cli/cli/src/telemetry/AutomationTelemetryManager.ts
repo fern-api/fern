@@ -1,23 +1,12 @@
-import type { CaptureExceptionOptions, PosthogAutomationEvent } from "@fern-api/task-context";
+import type { PosthogAutomationEvent } from "@fern-api/task-context";
 import { AutomationEventApiClient } from "./AutomationEventApiClient.js";
 import { type AutomationTelemetryContext, getAutomationContextFromEnv } from "./automationTelemetryContext.js";
-import {
-    type AutomationTelemetryEvent,
-    isFailureAutomationEventName,
-    toPosthogProperties,
-    toSentryContext,
-    toSentryTags
-} from "./automationTelemetryEvent.js";
+import { type AutomationTelemetryEvent, toPosthogProperties } from "./automationTelemetryEvent.js";
 
 const FLUSH_TIMEOUT_MS = 3000;
 
 export interface AutomationTelemetryReporter {
     instrumentPostHogAutomationEvent: (event: PosthogAutomationEvent) => void;
-    captureException: (error: unknown, options?: CaptureExceptionOptions) => string | undefined;
-}
-
-export interface AutomationTelemetryEmitOptions {
-    error?: unknown;
 }
 
 export class AutomationTelemetryManager {
@@ -34,19 +23,9 @@ export class AutomationTelemetryManager {
         this.context = { ...this.context, org: organization };
     }
 
-    public emit(event: AutomationTelemetryEvent, options?: AutomationTelemetryEmitOptions): void {
-        const sentryEventId = this.captureSentryForFailure({
-            event,
-            context: this.context,
-            error: options?.error
-        });
-
-        const eventWithSentry =
-            sentryEventId == null
-                ? event
-                : { ...event, attributes: { ...(event.attributes ?? {}), sentry_event_id: sentryEventId } };
-        this.capturePostHogEvent({ event: eventWithSentry, context: this.context });
-        this.captureAutomationEventApiEvent(eventWithSentry, this.context);
+    public emit(event: AutomationTelemetryEvent): void {
+        this.capturePostHogEvent({ event, context: this.context });
+        this.captureAutomationEventApiEvent(event, this.context);
     }
 
     public async flush(): Promise<void> {
@@ -74,26 +53,6 @@ export class AutomationTelemetryManager {
             distinctId: context.run_id ?? undefined,
             event: event.event,
             properties: toPosthogProperties(event, context)
-        });
-    }
-
-    private captureSentryForFailure({
-        event,
-        context,
-        error
-    }: {
-        event: AutomationTelemetryEvent;
-        context: AutomationTelemetryContext;
-        error?: unknown;
-    }): string | undefined {
-        if (!isFailureAutomationEventName(event.event) || event.errorCode == null) {
-            return undefined;
-        }
-        return this.reporter.captureException(error, {
-            tags: toSentryTags(event, context),
-            context: {
-                automation: toSentryContext(event, context)
-            }
         });
     }
 

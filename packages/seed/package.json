@@ -36,7 +36,6 @@
   },
   "dependencies": {
     "@boundaryml/baml": "catalog:",
-    "@sentry/cli": "catalog:",
     "minimatch": "catalog:"
   },
   "devDependencies": {

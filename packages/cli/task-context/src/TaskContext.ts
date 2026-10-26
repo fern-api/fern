@@ -2,17 +2,11 @@ import { Logger } from "@fern-api/logger";
 
 import { type CliError } from "./CliError.js";
 
-export interface CaptureExceptionOptions {
-    tags?: Record<string, string>;
-    context?: Record<string, Record<string, unknown> | undefined>;
-}
-
 export interface TaskContext {
     logger: Logger;
     takeOverTerminal: (run: () => void | Promise<void>) => Promise<void>;
     failAndThrow: (message?: string, error?: unknown, options?: { code?: CliError.Code }) => never;
     failWithoutThrowing: (message?: string, error?: unknown, options?: { code?: CliError.Code }) => void;
-    captureException: (error: unknown, options?: CaptureExceptionOptions) => string | undefined;
     getResult: () => TaskResult;
     /**
      * Returns the most recent message passed to `failAndThrow` / `failWithoutThrowing`,

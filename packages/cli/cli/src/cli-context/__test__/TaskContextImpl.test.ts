@@ -17,7 +17,6 @@ function createContext(): { context: TaskContextImpl; getLogs: () => Log[] } {
         },
         shouldBufferLogs: false,
         instrumentPostHogEvent: () => undefined,
-        captureException: () => undefined,
         emitAutomationTelemetryEvent: () => undefined
     });
     return { context, getLogs: () => allLogs };
@@ -36,7 +35,6 @@ function createInteractiveContext(): { subtask: InteractiveTaskContextImpl; getL
         },
         shouldBufferLogs: false,
         instrumentPostHogEvent: () => undefined,
-        captureException: () => undefined,
         emitAutomationTelemetryEvent: () => undefined
     });
     return { subtask, getLogs: () => allLogs };

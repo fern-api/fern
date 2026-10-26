@@ -2,12 +2,6 @@ FROM node:24.17-alpine3.23 AS node
 FROM composer:2.9.7
 
 ENV YARN_CACHE_FOLDER=/.yarn
-ARG SENTRY_DSN
-ARG SENTRY_ENVIRONMENT=production
-ARG SENTRY_RELEASE
-ENV SENTRY_DSN=$SENTRY_DSN
-ENV SENTRY_ENVIRONMENT=$SENTRY_ENVIRONMENT
-ENV SENTRY_RELEASE=$SENTRY_RELEASE
 
 RUN apk update && apk upgrade --no-cache --available
 RUN apk --no-cache add bash curl git zip

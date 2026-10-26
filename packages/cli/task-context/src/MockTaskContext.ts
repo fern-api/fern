@@ -26,10 +26,6 @@ export function createMockTaskContext({ logger = CONSOLE_LOGGER }: { logger?: Lo
         failWithoutThrowing: (message?: string, error?: unknown, _options?: { code?: CliError.Code }) => {
             context.failAndThrow(message, error);
         },
-        captureException: () => {
-            // no-op in mock context
-            return undefined;
-        },
         getResult: () => TaskResult.Success,
         getLastFailureMessage: () => undefined,
         addInteractiveTask: () => {

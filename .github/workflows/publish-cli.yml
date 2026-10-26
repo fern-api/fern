@@ -62,8 +62,6 @@ jobs:
       AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
       AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
       POSTHOG_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
-      SENTRY_DSN: ${{ secrets.SENTRY_DSN_CLI }}
-      SENTRY_AUTH_TOKEN: ${{ secrets.FERN_SENTRY_AUTH_TOKEN }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6
@@ -139,8 +137,6 @@ jobs:
       AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
       AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
       POSTHOG_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
-      SENTRY_DSN: ${{ secrets.SENTRY_DSN_CLI }}
-      SENTRY_AUTH_TOKEN: ${{ secrets.FERN_SENTRY_AUTH_TOKEN }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6
@@ -201,8 +197,6 @@ jobs:
       AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
       AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
       POSTHOG_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
-      SENTRY_DSN: ${{ secrets.SENTRY_DSN_CLI }}
-      SENTRY_AUTH_TOKEN: ${{ secrets.FERN_SENTRY_AUTH_TOKEN }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v6

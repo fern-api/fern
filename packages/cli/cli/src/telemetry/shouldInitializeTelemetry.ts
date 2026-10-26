@@ -16,6 +16,6 @@ export function shouldInitializeTelemetry({
     }
 
     const isLocalDev = packageVersion === "0.0.0";
-    const isProductionCli = cliName === "fern" && process.env.SENTRY_ENVIRONMENT === "production";
+    const isProductionCli = cliName === "fern" && process.env.FERN_CLI_RELEASE_ENVIRONMENT === "prod";
     return !isLocalDev && isProductionCli;
 }

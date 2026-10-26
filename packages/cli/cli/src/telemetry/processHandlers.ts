@@ -4,7 +4,7 @@
  * The normal failure path goes through `cliContext.failWithoutThrowing` ->
  * `reportError`, which fires the relevant telemetry flow. Anything that
  * escapes that flow - uncaught exceptions and unhandled promise rejections -
- * would otherwise exit without flushing Sentry/PostHog, and in automation
+ * would otherwise exit without flushing PostHog, and in automation
  * mode without reaching Slack or the automation dashboards.
  *
  * Signal-driven cancellation (SIGINT / SIGTERM) is handled separately by the

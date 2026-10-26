@@ -33,7 +33,7 @@ export class TtyAwareLogger {
     ) {
         // If the downstream reader of our pipe (`fern ... | head`, `| jq`,
         // etc.) closes early, Node emits EPIPE on the stream. Without a
-        // listener it becomes an uncaught exception and lands in Sentry as
+        // listener it becomes an uncaught exception and crashes the CLI as
         // InternalError. Swallow EPIPE here so the CLI just exits cleanly;
         // anything else is rethrown so real I/O failures still surface.
         for (const stream of [this.stdout, this.stderr]) {

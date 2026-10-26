@@ -1,7 +1,7 @@
 import { constructCasingsGenerator } from "@fern-api/casings-generator";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { constructFernFileContext, TypeResolverImpl } from "@fern-api/ir-generator";
-import { CliError, createMockTaskContext, shouldReportToSentry } from "@fern-api/task-context";
+import { CliError, createMockTaskContext } from "@fern-api/task-context";
 import { loadAPIWorkspace } from "@fern-api/workspace-loader";
 
 describe("TypeResolver", () => {
@@ -110,6 +110,5 @@ describe("TypeResolver", () => {
             throw new Error("Expected missing type declaration to throw");
         }
         expect(thrownError.code).toBe(CliError.Code.ReferenceError);
-        expect(shouldReportToSentry(thrownError.code)).toBe(false);
     });
 });

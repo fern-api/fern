@@ -18,7 +18,7 @@ packages:
 # See: https://pnpm.io/settings
 allowBuilds:
   "@scarf/scarf": false
-  "@sentry/cli": true
+  '@sentry/cli': set this to true or false
   esbuild: true
   lefthook: set this to true or false
   puppeteer: true
@@ -95,7 +95,6 @@ catalog:
   "@postman/sdk-config": 0.16.0
   "@redocly/openapi-core": ^1.4.1
   "@rolldown/binding-darwin-arm64": 1.1.3
-  "@sentry/cli": ^2.42.2
   "@types/cli-progress": ^3.11.6
   "@types/cors": ^2.8.13
   "@types/decompress": ^4.2.7

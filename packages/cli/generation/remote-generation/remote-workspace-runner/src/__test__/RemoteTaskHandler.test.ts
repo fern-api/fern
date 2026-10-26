@@ -161,7 +161,6 @@ describe("RemoteTaskHandler.processUpdate — replay PostHog emission", () => {
             takeOverTerminal: vi.fn(),
             failAndThrow,
             failWithoutThrowing: vi.fn(),
-            captureException: vi.fn(),
             getResult: vi.fn().mockReturnValue(0 satisfies TaskResult),
             getLastFailureMessage: vi.fn(),
             addInteractiveTask: vi.fn(),

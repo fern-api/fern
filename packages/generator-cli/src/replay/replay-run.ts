@@ -280,7 +280,6 @@ export class ReplayPrepareError extends Error {
     public readonly reason: string;
 
     constructor(reason: string, cause: unknown) {
-        // ES2022 Error.cause — Sentry's linkedErrorsIntegration chains automatically.
         super(`Replay prepare failed: ${reason}`, { cause });
         // Restore the prototype chain — `extends Error` is broken by ES5 transpile
         // (TS targets node18 here, so it's defensive but matches the codebase

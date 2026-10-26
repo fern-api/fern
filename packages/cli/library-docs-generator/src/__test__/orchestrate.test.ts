@@ -46,7 +46,6 @@ function makeContext(logger: LoggerMock = makeLogger()): TaskContext & { logger:
             throw new Error(message ?? "fail");
         },
         failWithoutThrowing: vi.fn(),
-        captureException: vi.fn(),
         getResult: () => TaskResult.Success,
         getLastFailureMessage: () => undefined,
         instrumentPostHogEvent: vi.fn(),

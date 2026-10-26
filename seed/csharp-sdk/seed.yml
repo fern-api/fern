@@ -33,11 +33,6 @@ publish:
     file: ./generators/csharp/sdk/Dockerfile
     image: fernapi/fern-csharp-sdk
     context: .
-  sentry:
-    name: fern-csharp-sdk
-    project: csharp-sdk
-    sourceMaps:
-      - dir: generators/csharp/sdk/dist
 test:
   docker:
     image: fernapi/fern-csharp-sdk:latest

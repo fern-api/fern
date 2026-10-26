@@ -13,8 +13,6 @@ buildCli({
         VENUS_AUDIENCE: "venus-prod",
         LOCAL_STORAGE_FOLDER: ".fern",
         POSTHOG_API_KEY: process.env.POSTHOG_API_KEY ?? "",
-        SENTRY_DSN: process.env.SENTRY_DSN ?? "",
-        SENTRY_ENVIRONMENT: "development",
         DOCS_DOMAIN_SUFFIX: "docs.buildwithfern.com",
         APP_DOCS_TAR_PREVIEW_BUCKET: "https://prod-local-preview-bundle4.s3.amazonaws.com/",
         APP_DOCS_PREVIEW_BUCKET: "https://prod-local-preview-bundle3.s3.amazonaws.com/",

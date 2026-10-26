@@ -385,7 +385,7 @@ export async function runRemoteGenerationForAPIWorkspace({
     if (automation == null && results.some((didSucceed) => !didSucceed)) {
         // Subtasks have already logged and reported their failures via their own
         // `failAndThrow`. Carry the already-logged message for structured callers while
-        // unwinding without firing redundant logging, PostHog, or Sentry events.
+        // unwinding without firing redundant logging or PostHog events.
         throw new TaskAbortSignal(context.getLastFailureMessage());
     }
 

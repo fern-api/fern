@@ -9,12 +9,6 @@ RUN sed -i 's|golang.org/x/net v0.47.1-[^ ]*|golang.org/x/net v0.53.0|' \
     sed -i '/golang.org\/x\/net v0.47.1-/d' /usr/local/go/src/go.sum
 
 ENV YARN_CACHE_FOLDER=/.yarn
-ARG SENTRY_DSN
-ARG SENTRY_ENVIRONMENT=production
-ARG SENTRY_RELEASE
-ENV SENTRY_DSN=$SENTRY_DSN
-ENV SENTRY_ENVIRONMENT=$SENTRY_ENVIRONMENT
-ENV SENTRY_RELEASE=$SENTRY_RELEASE
 
 RUN apk update && apk upgrade --no-cache
 RUN apk --no-cache add bash curl git zip libstdc++

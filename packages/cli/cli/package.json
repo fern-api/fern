@@ -112,8 +112,6 @@
     "@fern-fern/generators-sdk": "catalog:",
     "@inquirer/prompts": "catalog:",
     "@postman/sdk-config": "catalog:",
-    "@sentry/cli": "catalog:",
-    "@sentry/node": "^10.45.0",
     "@types/js-yaml": "catalog:",
     "@types/lodash-es": "catalog:",
     "@types/mime-types": "catalog:",

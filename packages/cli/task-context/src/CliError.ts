@@ -68,26 +68,6 @@ export namespace CliError {
     } as const;
 }
 
-const SENTRY_REPORTABLE: Record<CliError.Code, boolean> = {
-    [CliError.Code.InternalError]: true,
-    [CliError.Code.ResolutionError]: true,
-    [CliError.Code.IrConversionError]: true,
-    [CliError.Code.ContainerError]: false,
-    [CliError.Code.VersionError]: false,
-    [CliError.Code.ParseError]: false,
-    [CliError.Code.EnvironmentError]: false,
-    [CliError.Code.ReferenceError]: false,
-    [CliError.Code.ValidationError]: false,
-    [CliError.Code.NetworkError]: false,
-    [CliError.Code.AuthError]: false,
-    [CliError.Code.ConfigError]: false,
-    [CliError.Code.UserError]: false
-};
-
-export function shouldReportToSentry(code: CliError.Code): boolean {
-    return SENTRY_REPORTABLE[code];
-}
-
 function isSchemaValidationError(error: unknown): boolean {
     return error instanceof Error && (error.name === "ParseError" || error.name === "JsonError");
 }
@@ -98,8 +78,7 @@ function isNodeVersionError(error: unknown): boolean {
 
 // Node `ErrnoException` codes that represent a problem with the user's
 // environment (missing file, bad perms, full disk, closed pipe, …).
-// None of these indicate a Fern bug, so they map to EnvironmentError
-// which is non-reportable to Sentry.
+// None of these indicate a Fern bug, so they map to EnvironmentError.
 const USER_ENVIRONMENT_ERRNOS: ReadonlySet<string> = new Set([
     "ENOENT",
     "EACCES",

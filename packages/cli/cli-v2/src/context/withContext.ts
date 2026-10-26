@@ -1,5 +1,5 @@
 import { LogLevel } from "@fern-api/logger";
-import { CliError, resolveErrorCode, shouldReportToSentry, TaskAbortSignal } from "@fern-api/task-context";
+import { CliError, resolveErrorCode, TaskAbortSignal } from "@fern-api/task-context";
 
 import chalk from "chalk";
 import { KeyringUnavailableError } from "../auth/errors/KeyringUnavailableError.js";
@@ -112,7 +112,7 @@ function handleError(context: Context, error: unknown): void {
 }
 
 /**
- * Reports an error to Sentry (conditionally) and PostHog.
+ * Reports an error to PostHog.
  * Called from the top-level catch in withContext and from
  * TaskContextAdapter.failWithoutThrowing.
  */
@@ -125,14 +125,6 @@ export function reportError(
         return;
     }
     const code = resolveErrorCode(error, options?.code);
-    const capturable = error ?? new CliError({ message: options?.message ?? "", code });
-    if (shouldReportToSentry(code)) {
-        context.telemetry.captureException(capturable, {
-            tags: {
-                "error.code": code
-            }
-        });
-    }
     context.telemetry.sendLifecycleEvent({
         status: "error",
         command: context.info.command,

@@ -54,7 +54,6 @@ function makeContext(): TaskContext {
             throw new Error(message ?? "fail");
         },
         failWithoutThrowing: vi.fn(),
-        captureException: vi.fn(),
         getResult: () => TaskResult.Success,
         getLastFailureMessage: () => undefined,
         instrumentPostHogEvent: vi.fn(),

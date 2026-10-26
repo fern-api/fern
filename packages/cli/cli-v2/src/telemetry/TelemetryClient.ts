@@ -1,8 +1,6 @@
-import { getRunIdProperties, setSentryRunIdTags } from "@fern-api/cli-telemetry";
+import { getRunIdProperties } from "@fern-api/cli-telemetry";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { getCliReleaseEnvironment } from "@fern-api/posthog-manager";
-import { type CaptureExceptionOptions, CliError } from "@fern-api/task-context";
-import * as Sentry from "@sentry/node";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import IS_CI from "is-ci";
 import * as os from "os";
@@ -17,7 +15,6 @@ import type { Tags } from "./Tags.js";
 
 export class TelemetryClient {
     private readonly posthog: PostHog | undefined;
-    private readonly sentry: Sentry.NodeClient | undefined;
     private readonly baseTags: Tags;
     private readonly accumulatedTags: Tags = {};
     private readonly distinctId: string;
@@ -46,45 +43,6 @@ export class TelemetryClient {
             apiKey != null && apiKey.length > 0 && isTelemetryEnabled
                 ? new PostHog(apiKey, { isServer: false })
                 : undefined;
-
-        const sentryDsn = process.env.SENTRY_DSN;
-        if (sentryDsn != null && sentryDsn.length > 0 && isTelemetryEnabled) {
-            const sentryEnvironment = process.env.SENTRY_ENVIRONMENT;
-            if (sentryEnvironment == null || sentryEnvironment.length === 0) {
-                throw new CliError({
-                    message: "SENTRY_ENVIRONMENT must be set when SENTRY_DSN is configured",
-                    code: CliError.Code.ConfigError
-                });
-            }
-            this.sentry = Sentry.init({
-                dsn: sentryDsn,
-                release: `cli@${Version}`,
-                environment: sentryEnvironment,
-                // Opt out of every built-in integration (HTTP tracing, local
-                // variables, console breadcrumbs, etc.) — error capture is all
-                // we need.
-                defaultIntegrations: false,
-                // Rewrite absolute frame paths to repo-root-relative paths so
-                // they align with the source maps uploaded at publish time.
-                // onUncaughtException / onUnhandledRejection catch errors that
-                // escape the CLI's top-level handler (fire-and-forget callbacks,
-                // unhandled rejections in background work, etc.).
-                // linkedErrors chains .cause so wrapped errors stay traceable.
-                // nodeContext adds Node.js version and OS to every event.
-                // Local variables are intentionally NOT collected here: the
-                // CLI runs on user machines where stack-frame locals could
-                // contain tokens, paths, or customer API content.
-                integrations: [
-                    Sentry.rewriteFramesIntegration(),
-                    Sentry.onUncaughtExceptionIntegration(),
-                    Sentry.onUnhandledRejectionIntegration(),
-                    Sentry.linkedErrorsIntegration(),
-                    Sentry.nodeContextIntegration()
-                ],
-                tracesSampleRate: 0
-            });
-            setSentryRunIdTags();
-        }
     }
 
     /** Send a named event that inherits base + accumulated properties. */
@@ -131,35 +89,6 @@ export class TelemetryClient {
         Object.assign(this.accumulatedTags, tags);
     }
 
-    /**
-     * Report an exception to Sentry.
-     *
-     * The caller is responsible for deciding which errors are worth reporting
-     * (see `shouldReportToSentry` in withContext.ts).
-     */
-    public captureException(error: unknown, options?: CaptureExceptionOptions): string | undefined {
-        if (this.sentry === undefined) {
-            return undefined;
-        }
-        try {
-            const tags = { ...this.baseTags, ...this.accumulatedTags, ...options?.tags };
-            const context = options?.context;
-            return Sentry.withScope((scope) => {
-                scope.setTags(tags);
-                if (context != null) {
-                    for (const [key, value] of Object.entries(context)) {
-                        if (value != null) {
-                            scope.setContext(key, value);
-                        }
-                    }
-                }
-                return this.sentry?.captureException(error, undefined, scope);
-            });
-        } catch {
-            return undefined;
-        }
-    }
-
     public async flush(): Promise<void> {
         const promises: Promise<unknown>[] = [];
         if (this.posthog != null) {
@@ -169,9 +98,6 @@ export class TelemetryClient {
                     new Promise<void>((resolve) => setTimeout(resolve, 3000))
                 ])
             );
-        }
-        if (this.sentry !== undefined) {
-            promises.push(Promise.resolve(this.sentry.flush(2000)).catch(() => undefined));
         }
         await Promise.all(promises);
     }

@@ -6,7 +6,6 @@ publishGa:
     - pnpm install
     - pnpm turbo run dist:cli:prod --filter @fern-api/cli -- $VERSION
     - pnpm --filter @fern-api/cli publish:cli:prod --tag latest
-    - pnpm exec sentry-cli sourcemaps upload --org buildwithfern --project cli --release cli@$VERSION --url-prefix app:/// dist/prod/
 publishRc:
   workingDirectory: packages/cli/cli
   versionSubstitution: $VERSION
@@ -14,7 +13,6 @@ publishRc:
     - pnpm install
     - pnpm turbo run dist:cli:prod --filter @fern-api/cli -- $VERSION
     - pnpm --filter @fern-api/cli publish:cli:prod --tag prerelease
-    - pnpm exec sentry-cli sourcemaps upload --org buildwithfern --project cli --release cli@$VERSION --url-prefix app:/// dist/prod/
 publishDev:
   workingDirectory: packages/cli/cli
   versionSubstitution: $VERSION
@@ -22,7 +20,6 @@ publishDev:
     - pnpm install
     - pnpm turbo run dist:cli:dev --filter @fern-api/cli -- $VERSION
     - pnpm --filter @fern-api/cli publish:cli:dev --access public --tag latest
-    - pnpm exec sentry-cli sourcemaps upload --org buildwithfern --project cli --release cli@$VERSION --url-prefix app:/// dist/dev/
 publishBeta:
   workingDirectory: packages/cli/cli
   versionSubstitution: $VERSION
@@ -30,7 +27,6 @@ publishBeta:
     - pnpm install
     - pnpm turbo run dist:cli:beta --filter @fern-api/cli -- $VERSION
     - pnpm --filter @fern-api/cli publish:cli:beta --access public --tag latest
-    - pnpm exec sentry-cli sourcemaps upload --org buildwithfern --project cli --release cli@$VERSION --url-prefix app:/// dist/beta/
 publishPreProd:
   workingDirectory: packages/cli/cli
   versionSubstitution: $VERSION
@@ -38,4 +34,3 @@ publishPreProd:
     - pnpm install
     - pnpm turbo run dist:cli:pre-prod --filter @fern-api/cli -- $VERSION
     - pnpm --filter @fern-api/cli publish:cli:pre-prod --access public --tag latest
-    - pnpm exec sentry-cli sourcemaps upload --org buildwithfern --project cli --release cli@$VERSION --url-prefix app:/// dist/pre-prod/

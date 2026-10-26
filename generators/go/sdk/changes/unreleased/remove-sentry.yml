@@ -1,0 +1,4 @@
+- summary: |
+    Remove Sentry error reporting from the generator image. Generators no
+    longer read `SENTRY_DSN`, `SENTRY_ENVIRONMENT` or `SENTRY_RELEASE`.
+  type: chore

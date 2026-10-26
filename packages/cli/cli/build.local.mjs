@@ -20,8 +20,6 @@ buildCli({
         // Local builds never call PostHog, so every feature flag is off. Use a dev/beta build to test flags.
         POSTHOG_FEATURE_FLAGS_API_KEY: "",
         FERN_CLI_RELEASE_ENVIRONMENT: "local",
-        SENTRY_DSN: null,
-        SENTRY_ENVIRONMENT: "local",
         DOCS_DOMAIN_SUFFIX: "docs.buildwithfern.com",
         APP_DOCS_TAR_PREVIEW_BUCKET: "http://localhost:9090/fdr/",
         APP_DOCS_PREVIEW_BUCKET: "http://localhost:9090/fdr/",

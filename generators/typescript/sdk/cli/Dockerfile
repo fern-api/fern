@@ -36,12 +36,6 @@ ENV PNPM_STORE_PATH=/.pnpm-cache
 ENV YARN_CACHE_FOLDER=/.yarn-cache
 ENV PNPM_HOME=/.pnpm
 ENV PATH=$PNPM_HOME/bin:$PNPM_HOME:$PATH
-ARG SENTRY_DSN
-ARG SENTRY_ENVIRONMENT=production
-ARG SENTRY_RELEASE
-ENV SENTRY_DSN=$SENTRY_DSN
-ENV SENTRY_ENVIRONMENT=$SENTRY_ENVIRONMENT
-ENV SENTRY_RELEASE=$SENTRY_RELEASE
 
 # Upgrade bundled npm and patch vendored dependencies (ip-address,
 # brace-expansion) to versions that clear vulnerability scanners.

@@ -1,0 +1,5 @@
+- summary: |
+    Remove Sentry error reporting from the CLI. Errors are still reported
+    through the existing PostHog telemetry, which `FERN_DISABLE_TELEMETRY=true`
+    continues to turn off.
+  type: chore

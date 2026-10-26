@@ -25,11 +25,6 @@ publish:
     file: ./generators/go/model/Dockerfile
     image: fernapi/fern-go-model
     context: .
-  sentry:
-    name: fern-go-model
-    project: go-sdk
-    sourceMaps:
-      - dir: generators/go-v2/model/dist
 
 test:
   docker:

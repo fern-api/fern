@@ -9,9 +9,7 @@ import {
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
-import { GeneratorError, resolveErrorCode, shouldReportToSentry } from "./GeneratorError.js";
-import { SentryClient } from "./telemetry/SentryClient.js";
-import { shouldTrackLocalVariablesInSentry } from "./telemetry/shouldTrackLocalVariablesInSentry.js";
+import { GeneratorError } from "./GeneratorError.js";
 
 export declare namespace AbstractGeneratorCli {
     interface Options {
@@ -30,16 +28,10 @@ export abstract class AbstractGeneratorCli<
 
     public async run(options: AbstractGeneratorCli.Options = {}): Promise<void> {
         const config = await getGeneratorConfig();
-        let sentryClient: SentryClient | undefined;
         let generatorNotificationService: AbstractGeneratorNotificationService = options.disableNotifications
             ? new NopGeneratorNotificationService()
             : new GeneratorNotificationService(config.environment);
         try {
-            sentryClient = new SentryClient({
-                workspaceName: config.workspaceName,
-                organization: config.organization,
-                shouldTrackLocalVariables: shouldTrackLocalVariablesInSentry(config)
-            });
             await generatorNotificationService.sendUpdate(
                 FernGeneratorExec.GeneratorUpdate.initV2({
                     publishingToRegistry: getPublishingToRegistry(config)
@@ -80,10 +72,6 @@ export abstract class AbstractGeneratorCli<
                 FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(FernGeneratorExec.ExitStatusUpdate.successful({}))
             );
         } catch (e) {
-            const errorCode = resolveErrorCode(e);
-            if (shouldReportToSentry(e)) {
-                await sentryClient?.captureException(e);
-            }
             if (generatorNotificationService != null) {
                 const exitMessage = e instanceof Error ? e.message : "Encountered error";
                 await generatorNotificationService.sendUpdate(
@@ -95,8 +83,6 @@ export abstract class AbstractGeneratorCli<
                 );
             }
             throw e;
-        } finally {
-            await sentryClient?.flush();
         }
     }
 

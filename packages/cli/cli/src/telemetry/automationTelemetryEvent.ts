@@ -11,8 +11,7 @@ export type JsonPrimitive = string | number | boolean | null;
 export type JsonValue = JsonPrimitive | JsonValue[] | { [key: string]: JsonValue };
 
 /**
- * Canonical automation event names. Used as both the PostHog event name and
- * the `event:<name>` Sentry tag for grouping/filtering.
+ * Canonical automation event names, used as the PostHog event name.
  */
 export const AUTOMATION_EVENT_NAMES = {
     GENERATION_STARTED: "generation_started",
@@ -79,45 +78,6 @@ export function toPosthogProperties(
         trigger: context.trigger,
         cli_version: context.cli_version,
         ...(event.errorCode !== undefined ? { error_code: event.errorCode } : {}),
-        ...(event.attributes ?? {})
-    };
-}
-
-export function toSentryTags(
-    event: AutomationTelemetryEvent,
-    context: AutomationTelemetryContext
-): Record<string, string> {
-    function appendStringIfPresent(target: Record<string, string>, key: string, value: string | undefined): void {
-        if (value != null) {
-            target[key] = value;
-        }
-    }
-
-    const tags: Record<string, string> = {
-        surface: "cli",
-        automation_mode: "true"
-    };
-    appendStringIfPresent(tags, "event", event.event);
-    appendStringIfPresent(tags, "action", context.action);
-    appendStringIfPresent(tags, "run_id", context.run_id);
-    appendStringIfPresent(tags, "org", context.org);
-    appendStringIfPresent(tags, "config_repo", context.config_repo);
-    appendStringIfPresent(tags, "trigger", context.trigger);
-    appendStringIfPresent(tags, "error_code", event.errorCode ?? "none");
-    return tags;
-}
-
-export function toSentryContext(
-    event: AutomationTelemetryEvent,
-    context: AutomationTelemetryContext
-): Record<string, unknown> {
-    return {
-        github_run_id: context.github_run_id,
-        github_run_url: context.github_run_url,
-        config_commit_sha: context.config_commit_sha,
-        config_branch: context.config_branch,
-        config_pr_number: context.config_pr_number,
-        cli_version: context.cli_version,
         ...(event.attributes ?? {})
     };
 }

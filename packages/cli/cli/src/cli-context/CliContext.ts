@@ -5,7 +5,6 @@ import { flushFeatureFlagClient, getPosthogManager, type PosthogManager } from "
 import { Project } from "@fern-api/project-loader";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import {
-    type CaptureExceptionOptions,
     CliError,
     Finishable,
     type PosthogAutomationEvent,
@@ -20,13 +19,9 @@ import { Workspace } from "@fern-api/workspace-loader";
 import { checkbox, input, select } from "@inquirer/prompts";
 import chalk from "chalk";
 import { maxBy } from "lodash-es";
-import {
-    type AutomationTelemetryEmitOptions,
-    AutomationTelemetryManager
-} from "../telemetry/AutomationTelemetryManager.js";
+import { AutomationTelemetryManager } from "../telemetry/AutomationTelemetryManager.js";
 import type { AutomationTelemetryEvent } from "../telemetry/automationTelemetryEvent.js";
 import { reportError } from "../telemetry/reportError.js";
-import { SentryClient } from "../telemetry/SentryClient.js";
 import { CliEnvironment } from "./CliEnvironment.js";
 import { StdoutRedirector } from "./StdoutRedirector.js";
 import { TaskContextImpl } from "./TaskContextImpl.js";
@@ -48,7 +43,6 @@ export interface FernUpgradeInfo {
 
 export class CliContext {
     public readonly environment: CliEnvironment;
-    private readonly sentryClient: SentryClient;
     private readonly posthogManager: PosthogManager;
     private readonly automationTelemetryManager: AutomationTelemetryManager;
 
@@ -91,14 +85,6 @@ export class CliContext {
             packageVersion,
             cliName
         };
-        this.sentryClient = new SentryClient({
-            release: `cli@${this.environment.packageVersion}`,
-            telemetry: {
-                cliName: this.environment.cliName,
-                packageVersion: this.environment.packageVersion,
-                isLocal: this.isLocal
-            }
-        });
         this.automationTelemetryManager = new AutomationTelemetryManager(this);
     }
 
@@ -205,7 +191,6 @@ export class CliContext {
         } catch {
             // Silently swallow – analytics should never block the CLI
         }
-        await this.sentryClient.flush();
         await this.automationTelemetryManager.flush();
         this.exitProgram({ code });
     }
@@ -316,15 +301,8 @@ export class CliContext {
         }
     }
 
-    public captureException(error: unknown, options?: CaptureExceptionOptions): string | undefined {
-        return this.sentryClient.captureException(error, options);
-    }
-
-    public emitAutomationTelemetryEvent(
-        event: AutomationTelemetryEvent,
-        options?: AutomationTelemetryEmitOptions
-    ): void {
-        this.automationTelemetryManager.emit(event, options);
+    public emitAutomationTelemetryEvent(event: AutomationTelemetryEvent): void {
+        this.automationTelemetryManager.emit(event);
     }
 
     public readonly logger = createLogger((level, ...args) => this.log(level, ...args));
@@ -368,8 +346,7 @@ export class CliContext {
                 this.instrumentPostHogEvent(event);
             },
             shouldBufferLogs: false,
-            captureException: (error, options) => this.sentryClient.captureException(error, options),
-            emitAutomationTelemetryEvent: (event, options) => this.emitAutomationTelemetryEvent(event, options)
+            emitAutomationTelemetryEvent: (event) => this.emitAutomationTelemetryEvent(event)
         };
     }
 

@@ -340,8 +340,7 @@
         {
             // Packages reachable from any dynamic-snippets bundle must be
             // browser-compatible. Importing @fern-api/base-generator pulls in
-            // Node-only dependencies (e.g. @sentry/node -> import-in-the-middle
-            // -> worker_threads) that break the esbuild browser bundle. Use
+            // Node-only dependencies that break the esbuild browser bundle. Use
             // @fern-api/browser-compatible-base-generator instead.
             //
             // Scope: every path that can end up in a per-language dynamic-snippets

@@ -12,13 +12,6 @@ FROM node:24.17-alpine3.23
 
 RUN apk update && apk upgrade --no-cache
 
-ARG SENTRY_DSN
-ARG SENTRY_ENVIRONMENT=production
-ARG SENTRY_RELEASE
-ENV SENTRY_DSN=$SENTRY_DSN
-ENV SENTRY_ENVIRONMENT=$SENTRY_ENVIRONMENT
-ENV SENTRY_RELEASE=$SENTRY_RELEASE
-
 COPY --from=rust /rustfmt /usr/local/lib/rustfmt
 ENV PATH=/usr/local/lib/rustfmt:$PATH \
     LD_LIBRARY_PATH=/usr/local/lib/rustfmt/lib

@@ -2,7 +2,6 @@ import { Log, logErrorMessage } from "@fern-api/cli-logger";
 import { addPrefixToString } from "@fern-api/core-utils";
 import { createLogger, LogLevel } from "@fern-api/logger";
 import {
-    type CaptureExceptionOptions,
     CliError,
     CreateInteractiveTaskParams,
     Finishable,
@@ -16,7 +15,6 @@ import {
 
 import chalk from "chalk";
 
-import type { AutomationTelemetryEmitOptions } from "../telemetry/AutomationTelemetryManager.js";
 import type { AutomationTelemetryEvent } from "../telemetry/automationTelemetryEvent.js";
 import { reportError } from "../telemetry/reportError.js";
 
@@ -36,11 +34,7 @@ export declare namespace TaskContextImpl {
         onResult?: (result: TaskResult) => void;
         shouldBufferLogs: boolean;
         instrumentPostHogEvent: (event: PosthogEvent) => void;
-        captureException: (error: unknown, options?: CaptureExceptionOptions) => string | undefined;
-        emitAutomationTelemetryEvent: (
-            event: AutomationTelemetryEvent,
-            options?: AutomationTelemetryEmitOptions
-        ) => void;
+        emitAutomationTelemetryEvent: (event: AutomationTelemetryEvent) => void;
     }
 }
 
@@ -56,11 +50,7 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
     protected status: "notStarted" | "running" | "finished" = "notStarted";
     private onResult: ((result: TaskResult) => void) | undefined;
     private instrumentPostHogEventImpl: (event: PosthogEvent) => void;
-    private captureExceptionImpl: (error: unknown, options?: CaptureExceptionOptions) => string | undefined;
-    private emitAutomationTelemetryEventImpl: (
-        event: AutomationTelemetryEvent,
-        options?: AutomationTelemetryEmitOptions
-    ) => void;
+    private emitAutomationTelemetryEventImpl: (event: AutomationTelemetryEvent) => void;
     public constructor({
         logImmediately,
         logPrefix,
@@ -69,7 +59,6 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
         onResult,
         shouldBufferLogs,
         instrumentPostHogEvent,
-        captureException,
         emitAutomationTelemetryEvent
     }: TaskContextImpl.Init) {
         this.logImmediately = logImmediately;
@@ -79,7 +68,6 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
         this.onResult = onResult;
         this.shouldBufferLogs = shouldBufferLogs;
         this.instrumentPostHogEventImpl = instrumentPostHogEvent;
-        this.captureExceptionImpl = captureException;
         this.emitAutomationTelemetryEventImpl = emitAutomationTelemetryEvent;
     }
 
@@ -131,15 +119,8 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
         return this.lastFailureMessage;
     }
 
-    public captureException(error: unknown, options?: CaptureExceptionOptions): string | undefined {
-        return this.captureExceptionImpl?.(error, options);
-    }
-
-    public emitAutomationTelemetryEvent(
-        event: AutomationTelemetryEvent,
-        options?: AutomationTelemetryEmitOptions
-    ): void {
-        this.emitAutomationTelemetryEventImpl(event, options);
+    public emitAutomationTelemetryEvent(event: AutomationTelemetryEvent): void {
+        this.emitAutomationTelemetryEventImpl(event);
     }
 
     public getResult(): TaskResult {
@@ -190,7 +171,6 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
             onResult: this.onResult,
             shouldBufferLogs: this.shouldBufferLogs,
             instrumentPostHogEvent: (event) => this.instrumentPostHogEventImpl(event),
-            captureException: this.captureExceptionImpl,
             emitAutomationTelemetryEvent: this.emitAutomationTelemetryEventImpl
         });
         this.subtasks.push(subtask);

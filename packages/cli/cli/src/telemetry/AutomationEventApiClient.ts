@@ -3,7 +3,7 @@
  * `/v1/automation/events` - the failure path that feeds Slack delivery.
  *
  * Best-effort by design: failures here are swallowed so the parallel
- * Sentry and PostHog writes still surface the incident.
+ * PostHog write still surfaces the incident.
  */
 import { getAccessToken } from "@fern-api/auth";
 import type { AutomationTelemetryContext } from "./automationTelemetryContext.js";
@@ -59,7 +59,7 @@ export class AutomationEventApiClient {
      * Enqueues an automation event POST to the automation event API.
      *
      * Best-effort: on any failure (timeout, DNS, non-2xx, missing endpoint),
-     * the request settles without throwing. Sentry + PostHog already captured
+     * the request settles without throwing. PostHog already captured
      * the incident.
      */
     public post(event: AutomationTelemetryEvent, context: AutomationTelemetryContext): void {

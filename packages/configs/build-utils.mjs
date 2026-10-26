@@ -14,8 +14,8 @@ const REPO_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..
 /**
  * Rewrite every .map file in absOutDir so each entry in `sources` is a clean
  * path relative to the repo root (e.g. "packages/cli/cli/src/cli.ts") instead
- * of a relative path like "../../src/cli.ts". This gives Sentry a tidy,
- * already-normalised filename to display and lets a single repo-root-based
+ * of a relative path like "../../src/cli.ts". This gives stack traces a tidy,
+ * already-normalised filename and lets a single repo-root-based
  * code mapping resolve every frame regardless of package depth.
  */
 export async function rewriteSourceMapSources(absOutDir) {
@@ -84,7 +84,7 @@ export async function buildGenerator(dirname, options = {}) {
         ...tsupOptions
     });
 
-    // Rewrite source map paths to be repo-root-relative so Sentry displays
+    // Rewrite source map paths to be repo-root-relative so stack traces show
     // "packages/foo/src/bar.ts" instead of "../../../foo/src/bar.ts".
     await rewriteSourceMapSources(path.join(dirname, outDir));
 

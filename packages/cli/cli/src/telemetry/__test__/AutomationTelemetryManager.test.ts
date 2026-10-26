@@ -12,8 +12,7 @@ describe("AutomationTelemetryManager", () => {
         const shutdown = vi.fn(() => new Promise<void>(() => undefined));
         const manager = new AutomationTelemetryManager(
             {
-                instrumentPostHogAutomationEvent: vi.fn(),
-                captureException: vi.fn()
+                instrumentPostHogAutomationEvent: vi.fn()
             },
             { shutdown } as unknown as AutomationEventApiClient
         );
@@ -29,8 +28,7 @@ describe("AutomationTelemetryManager", () => {
         vi.useFakeTimers();
         const manager = new AutomationTelemetryManager(
             {
-                instrumentPostHogAutomationEvent: vi.fn(),
-                captureException: vi.fn()
+                instrumentPostHogAutomationEvent: vi.fn()
             },
             { shutdown: vi.fn().mockResolvedValue(undefined) } as unknown as AutomationEventApiClient
         );

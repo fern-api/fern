@@ -61,7 +61,6 @@ function createMockTaskContext(): TaskContext {
             throw new Error(message ?? "Task failed");
         }) as unknown as TaskContext["failAndThrow"],
         failWithoutThrowing: vi.fn(),
-        captureException: vi.fn(),
         getResult: () => TaskResult.Success,
         getLastFailureMessage: () => undefined,
         addInteractiveTask: () => {

@@ -37,7 +37,7 @@ function makeContext(workspace: MockWorkspace) {
         loadWorkspaceOrThrow: vi.fn().mockResolvedValue(workspace),
         getTokenOrPrompt: vi.fn().mockResolvedValue({ type: "user", value: "tok-123" }),
         verifyOrgAccess: vi.fn().mockResolvedValue(undefined),
-        telemetry: { captureException: vi.fn(), sendEvent: vi.fn() }
+        telemetry: { sendEvent: vi.fn() }
     } as unknown as import("../../../../../context/Context.js").Context;
 }
 

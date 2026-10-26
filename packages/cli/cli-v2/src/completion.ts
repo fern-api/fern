@@ -5,7 +5,7 @@ import { resolve } from "path";
 /**
  * Returns true when the CLI is being invoked for shell completion
  * (i.e. the user pressed TAB). This is used to skip heavy
- * initialisation (telemetry, Sentry, network calls) so that
+ * initialisation (telemetry, network calls) so that
  * completions are fast and side-effect-free.
  */
 export function isCompletionMode(argv?: string[]): boolean {

@@ -33,7 +33,6 @@
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
-    "@sentry/node": "^10.45.0",
     "@types/node": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"

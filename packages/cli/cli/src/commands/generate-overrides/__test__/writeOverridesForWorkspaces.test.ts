@@ -24,7 +24,6 @@ function createMockContext(): TaskContext {
             throw new Error(message ?? "Task failed");
         },
         failWithoutThrowing: noop,
-        captureException: () => undefined,
         getResult: () => TaskResult.Success,
         getLastFailureMessage: () => undefined,
         addInteractiveTask: () => {

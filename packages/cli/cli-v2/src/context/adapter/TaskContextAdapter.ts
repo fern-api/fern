@@ -1,6 +1,5 @@
 import { createLogger, LOG_LEVELS, Logger, LogLevel } from "@fern-api/logger";
 import {
-    type CaptureExceptionOptions,
     type CliError,
     type CreateInteractiveTaskParams,
     type Finishable,
@@ -79,10 +78,6 @@ export class TaskContextAdapter implements TaskContext {
         return this.lastFailureMessage;
     }
 
-    public captureException(error: unknown, options?: CaptureExceptionOptions): string | undefined {
-        return this.context.telemetry.captureException(error, options);
-    }
-
     private getFullErrorMessage(message?: string, error?: unknown): string | undefined {
         const errorDetails = this.formatError(error);
         if (message != null && errorDetails != null) {
@@ -104,7 +99,6 @@ export class TaskContextAdapter implements TaskContext {
             takeOverTerminal: this.takeOverTerminal.bind(this),
             failAndThrow: this.failAndThrow.bind(this),
             failWithoutThrowing: this.failWithoutThrowing.bind(this),
-            captureException: this.captureException.bind(this),
             getResult: () => this.result,
             getLastFailureMessage: this.getLastFailureMessage.bind(this),
             addInteractiveTask: this.addInteractiveTask.bind(this),
