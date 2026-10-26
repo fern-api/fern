@@ -162,13 +162,14 @@ export type TypescriptCustomConfigSchema = z.infer<typeof TypescriptCustomConfig
 
 /**
  * Resolves the effective noSerdeLayer value from config.
- * `serdeLayer` takes precedence over `noSerdeLayer` when set.
+ * `serdeLayer` takes precedence over `noSerdeLayer` when set. Matches the
+ * TypeScript SDK generator, which omits the serde layer by default.
  */
 export function resolveNoSerdeLayer(config: TypescriptCustomConfigSchema | undefined): boolean {
     if (config?.serdeLayer != null) {
         return !config.serdeLayer;
     }
-    return !!config?.noSerdeLayer;
+    return config?.noSerdeLayer ?? true;
 }
 
 /**

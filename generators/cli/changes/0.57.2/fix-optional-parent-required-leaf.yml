@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    A body field that is required inside an optional object (for example `source.channel`
+    when `source` itself is optional) is no longer reported missing when the caller omits
+    that object. Previously `captures capture --kind note --content ...` failed with
+    "Required parameter 'source.channel' is missing" even though the API accepts the
+    request without `source`. The field is still required once any part of the object is
+    supplied, matching what `--help` already lists as required.
+  type: fix

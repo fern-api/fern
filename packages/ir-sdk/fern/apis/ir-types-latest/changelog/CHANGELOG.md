@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v67.35.0] - 2026-10-21
+
+- Add `dynamic.Endpoint.hasResponseBody` (optional `boolean`), `false` when an endpoint has no
+  response body (previously every endpoint was reported as `response: json`). Dynamic snippet
+  generators can use it to tell `(response, error)` methods apart from `error`-only methods (Go).
+
 ## [v67.34.0] - 2026-10-19
 
 - Add `dynamic.FileUploadRequestBodyFileProperty.isOptional` (optional `boolean`) to the `file` and

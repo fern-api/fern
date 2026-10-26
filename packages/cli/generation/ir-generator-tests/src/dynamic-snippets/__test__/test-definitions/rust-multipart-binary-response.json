@@ -446,6 +446,7 @@
             "response": {
                 "type": "fileDownload"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_service.isolateAudio": {
@@ -624,6 +625,7 @@
             "response": {
                 "type": "fileDownload"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_service.transcribeAudio": {
@@ -870,6 +872,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_service.speechToSpeech": {
@@ -1179,6 +1182,7 @@
             "response": {
                 "type": "fileDownload"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_service.getSpeechToSpeechSettings": {
@@ -1396,6 +1400,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": false,
             "examples": null
         },
         "endpoint_service.simple": {
@@ -1477,6 +1482,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": false,
             "examples": null
         }
     },

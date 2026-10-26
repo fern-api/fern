@@ -3,6 +3,7 @@ package com.snippets;
 import com.seed.fileUpload.SeedFileUploadClient;
 import com.seed.fileUpload.resources.service.requests.WithRefBodyRequest;
 import com.seed.fileUpload.resources.service.types.MyObject;
+import java.util.Optional;
 
 public class Example2 {
     public static void main(String[] args) {
@@ -11,7 +12,7 @@ public class Example2 {
 
         client.service()
                 .withRefBody(
-                        null,
+                        Optional.empty(),
                         WithRefBodyRequest.builder()
                                 .request(MyObject.builder().foo("bar").build())
                                 .build());

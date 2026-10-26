@@ -204,6 +204,7 @@
                 "response": {
                     "type": "fileDownload"
                 },
+                "hasResponseBody": true,
                 "examples": null
             }
         },

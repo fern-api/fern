@@ -3,7 +3,7 @@ import {
     AbsoluteFilePath,
     Directory,
     File,
-    getDirectoryContents,
+    getFilesAndDirectories,
     join,
     RelativeFilePath,
     relativize
@@ -117,22 +117,4 @@ async function addApiConfigurationToSingleWorkspace({
             context.logger.info(chalk.green(`Updated ${existingGeneratorsYml.absolutePath}`));
         }
     }
-}
-
-async function getFilesAndDirectories(
-    absoluteFilepath: AbsoluteFilePath
-): Promise<{ files: File[]; directories: Directory[] }> {
-    const contents = await getDirectoryContents(absoluteFilepath);
-
-    const files: File[] = [];
-    const directories: Directory[] = [];
-    for (const fileOrFolder of contents) {
-        if (fileOrFolder.type === "directory") {
-            directories.push(fileOrFolder);
-        } else {
-            files.push(fileOrFolder);
-        }
-    }
-
-    return { files, directories };
 }

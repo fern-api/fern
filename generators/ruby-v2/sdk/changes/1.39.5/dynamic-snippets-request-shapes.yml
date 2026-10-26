@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Ruby dynamic snippets now use wire names for keys inside nested hashes (e.g. `httpEndpoint:` instead of `http_endpoint:`), pass file upload fields (example file contents as `StringIO.new(...)`, since the SDK reads a String as a file path; a missing required file gets a `"/path/to/your/file"` path placeholder, and a missing optional file is left out; dynamic IR from CLIs that predate the `isOptional` flag treats every file as required), and show an undiscriminated union body whose example isn't an object as the keyword arguments of its first object variant instead of `request:` with an error.
+  type: fix
+- summary: |
+    `Model#to_h` now serializes models nested as map values, so a map of objects is sent as JSON objects instead of Ruby inspect strings.
+  type: fix

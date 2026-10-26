@@ -1,5 +1,5 @@
 import { generatorsYml } from "@fern-api/configuration";
-
+import { errorMessageOrString } from "@fern-api/core-utils";
 import type { AnalyzeCommitDiffResponse, ConsolidateChangelogResponse } from "./types.js";
 
 export interface BamlClientInstance {
@@ -57,7 +57,7 @@ export async function loadBamlDependencies(): Promise<BamlDependencies> {
             configureBamlClient: config.configureBamlClient
         };
     } catch (error) {
-        const original = error instanceof Error ? error.message : String(error);
+        const original = errorMessageOrString(error);
         throw new Error(`${INSTALL_MESSAGE}\n\nOriginal error: ${original}`);
     }
 }

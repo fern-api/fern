@@ -29,6 +29,7 @@ func newAppInfoTestWriter() *fileWriter {
 		false, // exportAllRequestsAtRoot
 		false, // omitEmptyRequestWrappers
 		false, // legacyNullableAliasPointers
+		false, // xmlTextFirstBuilders
 		userAgentConfig{allowUserAgentAppInfo: true},
 		UnionVersionUnspecified,
 		"",
@@ -132,6 +133,7 @@ func TestAppInfoTypeNotEmittedWhenFeatureDisabled(t *testing.T) {
 		false,             // exportAllRequestsAtRoot
 		false,             // omitEmptyRequestWrappers
 		false,             // legacyNullableAliasPointers
+		false,             // xmlTextFirstBuilders
 		userAgentConfig{}, // allowUserAgentAppInfo disabled
 		UnionVersionUnspecified,
 		"",

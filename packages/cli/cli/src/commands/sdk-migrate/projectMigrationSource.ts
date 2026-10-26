@@ -7,6 +7,7 @@ import {
     type Spec
 } from "@fern-api/api-workspace-commons";
 import { docsYml, generatorsYml } from "@fern-api/configuration-loader";
+import { toPosixPath } from "@fern-api/fs-utils";
 import { CliError } from "@fern-api/task-context";
 import type { SdkConfigV1SourceConfig, SdkConfigV1SourceSpec } from "@postman/sdk-config/sdk-config/v1";
 import path from "path";
@@ -670,7 +671,7 @@ function uniqueSourceId(candidate: string, usedIds: Set<string>): string {
 }
 
 function relativeSourcePath(sourceRoot: string, absolutePath: string): string {
-    const relative = path.relative(sourceRoot, absolutePath).split(path.sep).join("/");
+    const relative = toPosixPath(path.relative(sourceRoot, absolutePath));
     return relative.startsWith(".") ? relative : `./${relative}`;
 }
 

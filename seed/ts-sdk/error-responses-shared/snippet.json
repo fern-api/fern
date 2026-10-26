@@ -1,0 +1,49 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/calls",
+                "method": "POST",
+                "identifier_override": "endpoint_calls/calls.createCall"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/error-responses-shared\";\n\nconst client = new SeedApiClient;\nawait client.calls.calls.createCall();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/messages",
+                "method": "GET",
+                "identifier_override": "endpoint_messages/messages.listMessages"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/error-responses-shared\";\n\nconst client = new SeedApiClient;\nawait client.messages.messages.listMessages();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/messages",
+                "method": "POST",
+                "identifier_override": "endpoint_messages/messages.createMessage"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/error-responses-shared\";\n\nconst client = new SeedApiClient;\nawait client.messages.messages.createMessage({\n    sid: \"sid\",\n    body: \"body\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/messages/{sid}",
+                "method": "DELETE",
+                "identifier_override": "endpoint_messages/messages.deleteMessage"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/error-responses-shared\";\n\nconst client = new SeedApiClient;\nawait client.messages.messages.deleteMessage({\n    sid: \"sid\"\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}

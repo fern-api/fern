@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Generated SDKs now use `reflect.Pointer` instead of the deprecated `reflect.Ptr` alias,
+    so `go vet` and golangci-lint on Go 1.26+ no longer report
+    "Constant reflect.Ptr should be inlined". No behavior change: `reflect.Pointer` has
+    been available since Go 1.18, which generated SDKs already require (they use generics).
+  type: fix

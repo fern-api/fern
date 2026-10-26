@@ -20,7 +20,7 @@ public partial class Examples
                     true,
                 }
                 ,
-                Tags = new List<string>(){
+                Tags = new List<string?>(){
                     "tags",
                 }
                 ,

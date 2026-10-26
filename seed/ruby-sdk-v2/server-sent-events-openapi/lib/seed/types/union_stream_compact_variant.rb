@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "../../seed"
+
 module Seed
   module Types
     # Requests compaction of history. Inherits stream_response from base and adds compact-specific fields.

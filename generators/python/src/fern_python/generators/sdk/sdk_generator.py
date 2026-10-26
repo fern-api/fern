@@ -27,6 +27,7 @@ from fern_python.codegen.ast.dependency.dependency import DependencyCompatibilit
 from fern_python.codegen.filepath import Filepath
 from fern_python.codegen.module_manager import ModuleExport
 from fern_python.codegen.project import ProjectConfig
+from fern_python.external_dependencies.httpx import HTTPX_MIN_VERSION
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.generators.context.pydantic_generator_context import has_xml_types
 from fern_python.generators.pydantic_model.pydantic_model_generator import PydanticModelGenerator
@@ -145,6 +146,38 @@ class SdkGenerator(AbstractGenerator):
         aiohttp_deps = ["aiohttp", "httpx-aiohttp"]
         existing = extras.get("aiohttp", [])
         extras["aiohttp"] = list(dict.fromkeys(existing + aiohttp_deps))
+
+        if custom_config.http_client_extra is not None:
+            extras[custom_config.http_client_extra] = list(
+                dict.fromkeys(extras.get(custom_config.http_client_extra, []) + ["httpx"])
+            )
+            extras["aiohttp"] = list(dict.fromkeys(extras["aiohttp"] + ["httpx"]))
+            user_httpx = custom_config.extra_dependencies.get("httpx")
+            if user_httpx is None:
+                httpx_dependency = AST.Dependency(
+                    name="httpx",
+                    version="0.25.0" if custom_config.tcp_keepalive.enabled else HTTPX_MIN_VERSION,
+                    compatibility=DependencyCompatibility.GREATER_THAN_OR_EQUAL,
+                    optional=True,
+                )
+            elif isinstance(user_httpx, str):
+                httpx_dependency = AST.Dependency(name="httpx", version=user_httpx, optional=True)
+            else:
+                httpx_dependency = AST.Dependency(
+                    name="httpx", version=user_httpx.version, optional=True, python=user_httpx.python
+                )
+            project.add_dependency(dependency=httpx_dependency, is_user_override=True)
+            # Dev installs (`poetry install`) skip optional dependencies, so the generated
+            # tests and type checks still need httpx from the dev group.
+            project.add_dev_dependency(
+                dependency=AST.Dependency(
+                    name="httpx",
+                    version=httpx_dependency.version,
+                    compatibility=httpx_dependency.compatibility,
+                    python=httpx_dependency.python,
+                ),
+                is_user_override=True,
+            )
         project.add_extra(extras)
 
         # Add optional dependencies for aiohttp support.
@@ -161,7 +194,7 @@ class SdkGenerator(AbstractGenerator):
         # `socket_options=` on httpx.HTTPTransport/AsyncHTTPTransport (used for TCP
         # keepalive) was added in httpx>=0.25 / httpcore>=0.18. The generated SDK's
         # floor is otherwise httpx>=0.21.2, so bump it only when keepalive is opted in.
-        if custom_config.tcp_keepalive.enabled:
+        if custom_config.tcp_keepalive.enabled and custom_config.http_client_extra is None:
             project.add_dependency(
                 dependency=AST.Dependency(
                     name="httpx",

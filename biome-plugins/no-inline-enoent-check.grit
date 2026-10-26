@@ -1,0 +1,9 @@
+language js
+
+or {
+    `$error.code === "ENOENT"`,
+    `$error.code !== "ENOENT"`,
+    `"ENOENT" === $error.code`
+} as $check where {
+    register_diagnostic(span=$check, message="Use `isEnoentError` (or `hasErrnoCode` for other codes) from `@fern-api/core-utils` instead of comparing `error.code` by hand.", severity="error")
+}

@@ -1,4 +1,26 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.57.2
+  changelogEntry:
+    - summary: |
+        A body field that is required inside an optional object (for example `source.channel`
+        when `source` itself is optional) is no longer reported missing when the caller omits
+        that object. Previously `captures capture --kind note --content ...` failed with
+        "Required parameter 'source.channel' is missing" even though the API accepts the
+        request without `source`. The field is still required once any part of the object is
+        supplied, matching what `--help` already lists as required.
+      type: fix
+  createdAt: "2026-10-23"
+  irVersion: 67
+- version: 0.57.1
+  changelogEntry:
+    - summary: |
+        Saving or deleting a credential no longer reads the stored secret first. On macOS, `profiles remove`,
+        `auth logout`, and overwriting a saved credential used to read every keychain entry before changing
+        it, and each read could raise a password prompt. The CLI now updates or deletes the keychain item
+        directly, and it skips the Windows-only check for oversized entries on macOS and Linux.
+      type: fix
+  createdAt: "2026-10-21"
+  irVersion: 67
 - version: 0.57.0
   changelogEntry:
     - summary: |
