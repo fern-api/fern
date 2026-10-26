@@ -1,0 +1,49 @@
+{
+  "name": "@fern-api/terminal-logo",
+  "version": "0.0.0",
+  "description": "Convert a PNG or SVG logo into coloured terminal art for a CLI startup banner.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fern-api/fern.git",
+    "directory": "packages/commons/terminal-logo"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "development": "./src/index.ts",
+      "source": "./src/index.ts",
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.js",
+      "default": "./lib/index.js"
+    }
+  },
+  "main": "lib/index.js",
+  "source": "src/index.ts",
+  "types": "lib/index.d.ts",
+  "bin": {
+    "fern-terminal-logo": "lib/cli.js"
+  },
+  "files": ["lib"],
+  "scripts": {
+    "clean": "rm -rf ./lib",
+    "compile": "tsc",
+    "compile:debug": "tsc --sourceMap",
+    "depcheck": "knip --config ../../../knip.json --no-config-hints",
+    "test": "vitest --passWithNoTests --run",
+    "test:debug": "pnpm run test --inspect --no-file-parallelism",
+    "test:update": "vitest --passWithNoTests --run -u"
+  },
+  "dependencies": {
+    "@fern-api/core-utils": "workspace:*",
+    "@resvg/resvg-js": "catalog:",
+    "pngjs": "catalog:"
+  },
+  "devDependencies": {
+    "@fern-api/configs": "workspace:*",
+    "@types/node": "catalog:",
+    "@types/pngjs": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}
