@@ -16,7 +16,8 @@ export function appendPropertyToFormData({
     requestParameter,
     includeSerdeLayer,
     allowExtraFields,
-    omitUndefined
+    omitUndefined,
+    requestContentType
 }: {
     property: FernIr.FileUploadRequestProperty;
     context: FileContext;
@@ -26,6 +27,7 @@ export function appendPropertyToFormData({
     includeSerdeLayer: boolean;
     allowExtraFields: boolean;
     omitUndefined: boolean;
+    requestContentType?: string;
 }): ts.Statement {
     return FernIr.FileUploadRequestProperty._visit(property, {
         file: (property) => {
@@ -112,7 +114,9 @@ export function appendPropertyToFormData({
             const FOR_LOOP_ITEM_VARIABLE_NAME = "_item";
 
             const referenceToBodyProperty = requestParameter.getReferenceToBodyProperty(property, context);
-            const contentType = getPartContentType(property);
+            const contentType = context.includeMultipartPartContentType
+                ? getPartContentType(property, requestContentType)
+                : undefined;
 
             let statement: ts.Statement;
 
@@ -155,7 +159,8 @@ export function appendPropertyToFormData({
                             context.coreUtilities.formDataUtils.append({
                                 referenceToFormData,
                                 key: ts.factory.createIdentifier("key"),
-                                value: ts.factory.createIdentifier("value")
+                                value: ts.factory.createIdentifier("value"),
+                                contentType
                             })
                         ],
                         true
@@ -274,13 +279,25 @@ export function appendPropertyToFormData({
     });
 }
 
-// A multipart content type here would be the request's own, not a part's.
-function getPartContentType(property: FernIr.FileUploadBodyProperty): string | undefined {
+// Without an explicit encoding, importers copy the request's own content type (e.g. multipart/form-data)
+// onto each part. That is not a part type, so it is dropped; any other declared type is sent as-is.
+function getPartContentType(
+    property: FernIr.FileUploadBodyProperty,
+    requestContentType: string | undefined
+): string | undefined {
     const contentType = property.contentType?.trim();
-    if (contentType == null || contentType.length === 0 || contentType.toLowerCase().startsWith("multipart/")) {
+    if (contentType == null || contentType.length === 0) {
+        return undefined;
+    }
+    const essence = getMediaTypeEssence(contentType);
+    if (essence === "multipart/form-data" || essence === getMediaTypeEssence(requestContentType ?? "")) {
         return undefined;
     }
     return contentType;
+}
+
+function getMediaTypeEssence(contentType: string): string {
+    return (contentType.split(";")[0] ?? "").trim().toLowerCase();
 }
 
 function isMaybeIterable(typeReference: FernIr.TypeReference, context: FileContext): boolean {

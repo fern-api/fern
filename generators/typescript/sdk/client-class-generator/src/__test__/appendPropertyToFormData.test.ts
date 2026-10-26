@@ -17,8 +17,9 @@ const SET_STRING_TYPE = FernIr.TypeReference.container(FernIr.ContainerType.set(
 const UNKNOWN_TYPE = FernIr.TypeReference.unknown();
 
 // biome-ignore lint/suspicious/noExplicitAny: test mock for FileContext
-function createMockContext(): any {
+function createMockContext(opts?: { includeMultipartPartContentType?: boolean }): any {
     return {
+        includeMultipartPartContentType: opts?.includeMultipartPartContentType ?? false,
         includeSerdeLayer: true,
         retainOriginalCasing: false,
         inlineFileProperties: false,
@@ -68,17 +69,23 @@ function createMockContext(): any {
                     ),
                 append: ({
                     key,
-                    value
+                    value,
+                    contentType
                 }: {
                     referenceToFormData: ts.Expression;
                     key: string | ts.Expression;
                     value: ts.Expression;
+                    contentType?: string;
                 }) =>
                     ts.factory.createExpressionStatement(
                         ts.factory.createCallExpression(
                             ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier("_body"), "append"),
                             undefined,
-                            [typeof key === "string" ? ts.factory.createStringLiteral(key) : key, value]
+                            [
+                                typeof key === "string" ? ts.factory.createStringLiteral(key) : key,
+                                value,
+                                ...(contentType != null ? [ts.factory.createStringLiteral(contentType)] : [])
+                            ]
                         )
                     ),
                 encodeAsFormParameter: ({ referenceToArgument }: { referenceToArgument: ts.Expression }) =>
@@ -116,11 +123,12 @@ function createFileProperty(
 function createBodyProperty(
     name: string,
     valueType: FernIr.TypeReference,
-    style?: "form" | "json"
+    style?: "form" | "json",
+    contentType?: string
 ): FernIr.FileUploadRequestProperty {
     return FernIr.FileUploadRequestProperty.bodyProperty({
         ...createInlinedRequestBodyProperty(name, valueType),
-        contentType: undefined,
+        contentType,
         style: style ?? undefined
     });
 }
@@ -878,6 +886,70 @@ describe("appendPropertyToFormData", () => {
             const text = getTextOfTsNode(stmt);
             expect(text).toContain("append");
             expect(text).toMatchSnapshot();
+        });
+    });
+
+    describe("part content type", () => {
+        function generate({
+            property,
+            includeMultipartPartContentType,
+            requestContentType
+        }: {
+            property: FernIr.FileUploadRequestProperty;
+            includeMultipartPartContentType: boolean;
+            requestContentType?: string;
+        }): string {
+            return getTextOfTsNode(
+                appendPropertyToFormData({
+                    property,
+                    context: createMockContext({ includeMultipartPartContentType }),
+                    referenceToFormData,
+                    wrapperName: "request",
+                    requestParameter: createMockRequestParameter(),
+                    includeSerdeLayer: false,
+                    allowExtraFields: false,
+                    omitUndefined: false,
+                    requestContentType
+                })
+            );
+        }
+
+        it("omits the declared content type when includeMultipartPartContentType is off", () => {
+            const text = generate({
+                property: createBodyProperty("metadata", STRING_TYPE, "json", "application/json"),
+                includeMultipartPartContentType: false
+            });
+            expect(text).not.toContain("application/json");
+        });
+
+        it("passes the declared content type for json, form, and plain parts", () => {
+            for (const style of ["json", "form", undefined] as const) {
+                const text = generate({
+                    property: createBodyProperty("metadata", STRING_TYPE, style, "text/plain"),
+                    includeMultipartPartContentType: true
+                });
+                expect(text).toContain('"text/plain"');
+            }
+        });
+
+        it("drops a content type inherited from the request", () => {
+            for (const contentType of ["multipart/form-data", "multipart/related; type=foo"]) {
+                const text = generate({
+                    property: createBodyProperty("metadata", STRING_TYPE, "json", contentType),
+                    includeMultipartPartContentType: true,
+                    requestContentType: "multipart/related; type=foo"
+                });
+                expect(text).not.toContain("multipart/");
+            }
+        });
+
+        it("keeps an explicit nested multipart content type", () => {
+            const text = generate({
+                property: createBodyProperty("bundle", STRING_TYPE, undefined, "multipart/mixed"),
+                includeMultipartPartContentType: true,
+                requestContentType: "multipart/form-data"
+            });
+            expect(text).toContain('"multipart/mixed"');
         });
     });
 });

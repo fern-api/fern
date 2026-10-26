@@ -364,9 +364,9 @@ export class ServiceClient {
         const _body = await core.newFormData();
         await _body.appendFile("file", request.file);
         _body.append("foo", request.foo);
-        _body.append("bar", toJson(request.bar), "application/json");
+        _body.append("bar", toJson(request.bar));
         if (request.foo_bar != null) {
-            _body.append("foo_bar", toJson(request.foo_bar), "application/json");
+            _body.append("foo_bar", toJson(request.foo_bar));
         }
 
         const _maybeEncodedRequest = await _body.getRequest();
@@ -654,7 +654,7 @@ export class ServiceClient {
         }
 
         if (request.request != null) {
-            _body.append("request", toJson(request.request), "application/json; charset=utf-8");
+            _body.append("request", toJson(request.request));
         }
 
         const _maybeEncodedRequest = await _body.getRequest();
@@ -850,7 +850,7 @@ export class ServiceClient {
             await _body.appendFile("image_file", request.image_file);
         }
 
-        _body.append("request", toJson(request.request), "application/json; charset=utf-8");
+        _body.append("request", toJson(request.request));
         const _maybeEncodedRequest = await _body.getRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,

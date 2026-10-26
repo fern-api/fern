@@ -418,6 +418,13 @@ describe("FormDataWrapper", () => {
             expect(serialized).toContain('{"page_range":"1-2"}');
         });
 
+        it("stringifies non-string values that have a part content type", async () => {
+            formData.append("count", 5, "text/plain");
+
+            const serialized = await serializeFormData(formData.getRequest().body);
+            expect(serialized).toContain('Content-Disposition: form-data; name="count"\r\nContent-Type: text/plain\r\n\r\n5\r\n');
+        });
+
         it("serializes numbers and booleans as strings", async () => {
             formData.append("number", 12345);
             formData.append("flag", true);

@@ -146,7 +146,7 @@ export class Node16FormData implements CrossPlatformFormData {
 
     public append(key: string, value: any, contentType?: string): void {
         if (contentType != null) {
-            this.fd?.append(key, value, { contentType });
+            this.fd?.append(key, typeof value === "string" ? value : String(value), { contentType });
             return;
         }
         this.fd?.append(key, value);
