@@ -1,0 +1,7 @@
+- summary: |
+    Add `settings.sibling-site-links` to docs.yml. When enabled on a site with a basepath, root-relative
+    links in page content to another site's basepath on the same domain (e.g. `/product-b/overview` from
+    `/product-a`) are left as written. The broken-link check, including with `--preview`, looks up the
+    sites live on the domain and reports links to them as warnings instead of errors, since it can't see
+    the other site's pages.
+  type: feat

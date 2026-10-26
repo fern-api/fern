@@ -87,7 +87,7 @@ async function fetchMarkdownEntries(
     }
 }
 
-function getFdrOrigin(): string {
+export function getFdrOrigin(): string {
     return (
         process.env.FERN_FDR_ORIGIN ??
         process.env.OVERRIDE_FDR_ORIGIN ??

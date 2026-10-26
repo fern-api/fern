@@ -630,7 +630,8 @@ function convertSettingsConfig(
         websocketOneofDisplay: settings.websocketOneofDisplay ?? undefined,
         embedding: settings.embedding,
         showHeadersInExamples: settings.showHeadersInExamples ?? false,
-        requireAnalyticsConsent: settings.requireAnalyticsConsent ?? false
+        requireAnalyticsConsent: settings.requireAnalyticsConsent ?? false,
+        siblingSiteLinks: settings.siblingSiteLinks ?? false
     };
 }
 
