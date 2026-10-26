@@ -257,7 +257,9 @@ describe("FormDataWrapper", () => {
             formData.append("count", 5, "text/plain");
 
             const serialized = await serializeFormData(formData.getRequest().body);
-            expect(serialized).toContain('Content-Disposition: form-data; name="count"\r\nContent-Type: text/plain\r\n\r\n5\r\n');
+            expect(serialized).toContain(
+                'Content-Disposition: form-data; name="count"\r\nContent-Type: text/plain\r\n\r\n5\r\n',
+            );
         });
 
         it("serializes numbers and booleans as strings", async () => {
