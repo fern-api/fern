@@ -1,5 +1,5 @@
 import importlib
-import sys
+import re
 import textwrap
 from pathlib import Path
 
@@ -65,18 +65,18 @@ MODULES = {
 
 @pytest.mark.skipif(not IS_PYDANTIC_V2, reason="RootModel requires Pydantic v2")
 def test_recursive_union_alias_resolves_from_namespace(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
-    package = tmp_path / "recursive_alias"
+    # A per-test package name, so a module cached in sys.modules by another test can't be reused.
+    package_name = "recursive_alias_" + re.sub(r"\W", "_", tmp_path.name)
+    package = tmp_path / package_name
     package.mkdir()
     (package / "__init__.py").write_text("")
     for name, source in MODULES.items():
         (package / name).write_text(textwrap.dedent(source))
     monkeypatch.syspath_prepend(str(tmp_path))
-    for module in [m for m in sys.modules if m.split(".")[0] == "recursive_alias"]:
-        monkeypatch.delitem(sys.modules, module)
 
-    Result = importlib.import_module("recursive_alias.result").Result
-    Leaf = importlib.import_module("recursive_alias.leaf").Leaf
-    Items = importlib.import_module("recursive_alias.items").Items
+    Result = importlib.import_module(f"{package_name}.result").Result
+    Leaf = importlib.import_module(f"{package_name}.leaf").Leaf
+    Items = importlib.import_module(f"{package_name}.items").Items
 
     result = Result.model_validate({"data": {"a": {"value": "x"}, "b": [{"c": {"value": "y"}}]}})
 
