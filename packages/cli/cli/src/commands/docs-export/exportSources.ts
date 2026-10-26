@@ -94,7 +94,12 @@ export function selfHostedSource({
             await writeFile(archive, new Uint8Array(await download.arrayBuffer()));
             const siteDir = path.join(workDir, "site");
             await mkdir(siteDir);
-            await tar.extract({ file: archive, cwd: siteDir });
+            // Only regular files and folders: a link in the archive could point outside siteDir.
+            await tar.extract({
+                file: archive,
+                cwd: siteDir,
+                filter: (_entryPath, entry) => "type" in entry && (entry.type === "File" || entry.type === "Directory")
+            });
             const files = await listFilesRecursively(siteDir);
             for (let start = 0; start < files.length; start += SELF_HOSTED_BATCH_SIZE) {
                 yield files.slice(start, start + SELF_HOSTED_BATCH_SIZE).map((relative) => ({
