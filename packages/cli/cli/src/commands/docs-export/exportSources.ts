@@ -1,8 +1,9 @@
 import { mkdir, mkdtemp, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import { delay } from "@fern-api/core-utils";
+import { delay, stripTrailingSlashes } from "@fern-api/core-utils";
 import { createDocsLedgerClient } from "@fern-api/fdr-sdk/orpc-client";
+import { toPosixPath } from "@fern-api/fs-utils";
 import * as tar from "tar";
 
 /** One file of a docs build, addressed by its site-relative path (e.g. `docs/quickstart/index.html`). */
@@ -64,7 +65,7 @@ export function selfHostedSource({
     basepath: string;
     pollIntervalMs?: number;
 }): ExportSource {
-    const origin = url.replace(/\/+$/, "");
+    const origin = stripTrailingSlashes(url);
     const auth = { Authorization: `Bearer ${adminToken}` };
     let workDir: string | undefined;
     return {
@@ -133,7 +134,7 @@ async function listFilesRecursively(root: string): Promise<string[]> {
     const entries = await readdir(root, { recursive: true, withFileTypes: true });
     return entries
         .filter((entry) => entry.isFile())
-        .map((entry) => path.relative(root, path.join(entry.parentPath, entry.name)).split(path.sep).join("/"))
+        .map((entry) => toPosixPath(path.relative(root, path.join(entry.parentPath, entry.name))))
         .sort();
 }
 

@@ -1,7 +1,7 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { getFernDirectory } from "@fern-api/configuration-loader";
-import { delay, replaceEnvVariables } from "@fern-api/core-utils";
+import { delay, replaceEnvVariables, stripTrailingSlashes } from "@fern-api/core-utils";
 import { isStaticBuildInternalFile } from "@fern-api/fdr-sdk/orpc-client";
 import { askToLogin } from "@fern-api/login";
 import { CliError } from "@fern-api/task-context";
@@ -106,7 +106,7 @@ async function forEachConcurrently<T>(items: T[], limit: number, run: (item: T) 
 /** Splits a docs.yml instance url (`acme.docs.buildwithfern.com/learn`) into the domain and basepath FDR keys sites by. */
 export function parseInstanceUrl(instanceUrl: string): { domain: string; basepath: string } {
     const url = new URL(/^https?:\/\//i.test(instanceUrl) ? instanceUrl : `https://${instanceUrl}`);
-    const basepath = url.pathname.replace(/\/+$/, "");
+    const basepath = stripTrailingSlashes(url.pathname);
     return { domain: url.hostname, basepath: basepath === "/" ? "" : basepath };
 }
 
