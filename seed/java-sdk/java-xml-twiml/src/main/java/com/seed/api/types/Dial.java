@@ -179,7 +179,6 @@ public final class Dial implements XmlSerializable {
 
         private Optional<List<Number>> numbers = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         @JsonIgnore
@@ -242,6 +241,17 @@ public final class Dial implements XmlSerializable {
 
         public Dial build() {
             return new Dial(number, statusCallbackEvent, record, numbers, additionalProperties, content);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("number")
+                    || key.equalsIgnoreCase("status_callback_event")
+                    || key.equalsIgnoreCase("record")
+                    || key.equalsIgnoreCase("numbers")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {
@@ -309,6 +319,14 @@ public final class Dial implements XmlSerializable {
             return this;
         }
 
+        public Builder statusCallbackEvent(String... statusCallbackEvent) {
+            return statusCallbackEvent(Arrays.asList(statusCallbackEvent));
+        }
+
+        public Builder record(DialRecordItem... record) {
+            return record(Arrays.asList(record));
+        }
+
         /**
          * Appends a &lt;Number&gt; child element after any content added so far.
          * @param number the &lt;Number&gt; element to append
@@ -321,6 +339,15 @@ public final class Dial implements XmlSerializable {
             this.numbers = Optional.of(updated);
             this.content.add(XmlNode.element(item));
             return this;
+        }
+
+        /**
+         * Appends a &lt;Number&gt; child element after any content added so far.
+         * @param number the &lt;Number&gt; element to append
+         * @return this builder
+         */
+        public Builder number(Number number) {
+            return addNumber(number);
         }
 
         /**

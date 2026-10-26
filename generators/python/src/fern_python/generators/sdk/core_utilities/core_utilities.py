@@ -695,6 +695,15 @@ class CoreUtilities:
             ),
         )
 
+    def get_reference_to_keepalive_proxy_mounts(self, *, is_async: bool) -> AST.Reference:
+        return AST.Reference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "http_client"),
+                named_import="get_async_keepalive_proxy_mounts" if is_async else "get_keepalive_proxy_mounts",
+            ),
+        )
+
     def get_reference_to_generate_idempotency_key(self) -> AST.Reference:
         return AST.Reference(
             qualified_name_excluding_import=(),

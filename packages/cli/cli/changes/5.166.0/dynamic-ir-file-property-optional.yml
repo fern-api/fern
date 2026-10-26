@@ -1,0 +1,4 @@
+- summary: |
+    The dynamic IR now marks whether each file-upload property (`file` and `fileArray`) is optional,
+    so dynamic snippet generators can add placeholders for required files only.
+  type: feat

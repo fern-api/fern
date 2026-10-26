@@ -59,7 +59,7 @@ export class SeedApiClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `test/${core.url.encodePathParam(region ?? "us-east-1")}/resource`,
+                `test/${core.url.encodePathParam(region ?? "us-east-1", errors.SeedApiError)}/resource`,
             ),
             method: "GET",
             headers: _headers,

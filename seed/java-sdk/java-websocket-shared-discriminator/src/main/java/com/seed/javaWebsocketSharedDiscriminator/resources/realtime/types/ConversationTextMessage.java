@@ -99,7 +99,6 @@ public final class ConversationTextMessage {
 
         private double confidence;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -128,6 +127,14 @@ public final class ConversationTextMessage {
         @java.lang.Override
         public ConversationTextMessage build() {
             return new ConversationTextMessage(text, confidence, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("type") || key.equalsIgnoreCase("text") || key.equalsIgnoreCase("confidence")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

@@ -11,6 +11,7 @@ describe("overrides", () => {
     itFixtureWithIndent("simple", 8);
     itFixtureWithAudiences("audiences", ["public"]);
     itFixtureWithAudiences("audiences", ["public", "internal"]);
+    itFixture("optional-nullable");
 });
 
 function itFixture(fixtureName: string) {

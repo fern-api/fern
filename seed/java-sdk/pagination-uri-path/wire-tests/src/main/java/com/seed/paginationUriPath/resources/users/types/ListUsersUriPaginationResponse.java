@@ -80,7 +80,6 @@ public final class ListUsersUriPaginationResponse {
 
         private Optional<String> next = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -125,6 +124,14 @@ public final class ListUsersUriPaginationResponse {
 
         public ListUsersUriPaginationResponse build() {
             return new ListUsersUriPaginationResponse(data, next, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("data") || key.equalsIgnoreCase("next")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.service.just_file
+client.service.just_file(file: "/path/to/your/file")
 ```
 </dd>
 </dl>
@@ -93,7 +93,9 @@ client.service.optional_args
 <dd>
 
 ```ruby
-client.service.with_ref_body
+client.service.with_ref_body(request: {
+  foo: "bar"
+})
 ```
 </dd>
 </dl>

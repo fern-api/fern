@@ -9,6 +9,7 @@ import com.seed.nullableOptional.core.BodyProperties;
 import com.seed.nullableOptional.core.ClientOptions;
 import com.seed.nullableOptional.core.MediaTypes;
 import com.seed.nullableOptional.core.ObjectMappers;
+import com.seed.nullableOptional.core.PathSegments;
 import com.seed.nullableOptional.core.QueryStringMapper;
 import com.seed.nullableOptional.core.RequestOptions;
 import com.seed.nullableOptional.core.RetryInterceptor;
@@ -67,7 +68,7 @@ public class AsyncRawNullableOptionalClient {
                 .newBuilder()
                 .addPathSegments("api")
                 .addPathSegments("users")
-                .addPathSegment(userId);
+                .addPathSegment(PathSegments.validate(userId));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -252,7 +253,7 @@ public class AsyncRawNullableOptionalClient {
                 .newBuilder()
                 .addPathSegments("api")
                 .addPathSegments("users")
-                .addPathSegment(userId);
+                .addPathSegment(PathSegments.validate(userId));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -637,7 +638,7 @@ public class AsyncRawNullableOptionalClient {
                 .newBuilder()
                 .addPathSegments("api")
                 .addPathSegments("profiles/complex")
-                .addPathSegment(profileId);
+                .addPathSegment(PathSegments.validate(profileId));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -736,7 +737,7 @@ public class AsyncRawNullableOptionalClient {
                 .newBuilder()
                 .addPathSegments("api")
                 .addPathSegments("profiles/complex")
-                .addPathSegment(profileId);
+                .addPathSegment(PathSegments.validate(profileId));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -1013,7 +1014,7 @@ public class AsyncRawNullableOptionalClient {
                 .newBuilder()
                 .addPathSegments("api")
                 .addPathSegments("users")
-                .addPathSegment(userId)
+                .addPathSegment(PathSegments.validate(userId))
                 .addPathSegments("notifications");
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
@@ -1097,7 +1098,7 @@ public class AsyncRawNullableOptionalClient {
                 .newBuilder()
                 .addPathSegments("api")
                 .addPathSegments("users")
-                .addPathSegment(userId)
+                .addPathSegment(PathSegments.validate(userId))
                 .addPathSegments("tags");
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {

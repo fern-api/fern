@@ -150,7 +150,6 @@ public final class Break implements XmlSerializable {
 
         private Optional<String> time = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         @JsonIgnore
@@ -201,6 +200,14 @@ public final class Break implements XmlSerializable {
 
         public Break build() {
             return new Break(strength, time, additionalProperties, content);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("strength") || key.equalsIgnoreCase("time")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

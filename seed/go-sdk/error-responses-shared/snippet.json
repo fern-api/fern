@@ -1,0 +1,48 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/calls",
+                "method": "POST",
+                "identifier_override": "endpoint_calls/calls.createCall"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/error-responses-shared/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Calls.Calls.CreateCall(\n\tcontext.TODO(),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/messages",
+                "method": "GET",
+                "identifier_override": "endpoint_messages/messages.listMessages"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/error-responses-shared/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Messages.Messages.ListMessages(\n\tcontext.TODO(),\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/messages",
+                "method": "POST",
+                "identifier_override": "endpoint_messages/messages.createMessage"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/error-responses-shared/fern/client\"\n\tmessages \"github.com/error-responses-shared/fern/messages\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Messages.Messages.CreateMessage(\n\tcontext.TODO(),\n\t\u0026messages.Message{\n\t\tSid:  \"sid\",\n\t\tBody: \"body\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/messages/{sid}",
+                "method": "DELETE",
+                "identifier_override": "endpoint_messages/messages.deleteMessage"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfernclient \"github.com/error-responses-shared/fern/client\"\n\tmessages \"github.com/error-responses-shared/fern/messages\"\n)\n\nclient := fernclient.NewClient()\nerr := client.Messages.Messages.DeleteMessage(\n\tcontext.TODO(),\n\t\u0026messages.DeleteMessageRequest{\n\t\tSid: \"sid\",\n\t},\n)\n"
+            }
+        }
+    ]
+}

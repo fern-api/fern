@@ -9,6 +9,8 @@ import {
     toSentryTags
 } from "./automationTelemetryEvent.js";
 
+const FLUSH_TIMEOUT_MS = 3000;
+
 export interface AutomationTelemetryReporter {
     instrumentPostHogAutomationEvent: (event: PosthogAutomationEvent) => void;
     captureException: (error: unknown, options?: CaptureExceptionOptions) => string | undefined;
@@ -48,7 +50,17 @@ export class AutomationTelemetryManager {
     }
 
     public async flush(): Promise<void> {
-        await this.automationEventApiClient.shutdown();
+        let timeout: ReturnType<typeof setTimeout> | undefined;
+        try {
+            await Promise.race([
+                this.automationEventApiClient.shutdown(),
+                new Promise<void>((resolve) => {
+                    timeout = setTimeout(resolve, FLUSH_TIMEOUT_MS);
+                })
+            ]);
+        } finally {
+            clearTimeout(timeout);
+        }
     }
 
     private capturePostHogEvent({

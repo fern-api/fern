@@ -82,9 +82,11 @@ export interface FernCliCustomConfig {
      * Overrides the generated crate's `[package]` identity — the metadata
      * cargo (and cargo-dist's installers) publish under.
      *
-     * When omitted, the crate keeps the SDK template's Fern-owned
-     * identity (`fern-cli-sdk`, `github.com/fern-api/cli-sdk`), which is
-     * what every existing generation ships today.
+     * Unset fields default from the GitHub output repo: `repository` and
+     * `homepage` to its URL, and `name` to the binary name when that is a
+     * valid crate name. Without a GitHub repo (local-files / publish output)
+     * they keep the SDK template's Fern-owned identity (`fern-cli-sdk`,
+     * `github.com/fern-api/cli-sdk`).
      *
      * The `[lib]` name (`fern_cli_sdk`) is deliberately not configurable:
      * every `use fern_cli_sdk::...` in the vendored `src/` tree depends
@@ -250,6 +252,26 @@ export interface FernCliProfilesProvisionConfig {
      * request default.
      */
     revokeParameters?: Record<string, string>;
+
+    /**
+     * Long name of the `profiles create` flag. Defaults to `provision` (e.g. set `api-key`);
+     * `--provision` is always accepted as a hidden alias.
+     */
+    flag?: string;
+
+    /**
+     * Extra request values sent with the operation, e.g.
+     * `{ FriendlyName: "{cli} for {user} on {host}" }`. `{cli}`, `{profile}`,
+     * `{user}` and `{host}` are substituted; a value the profile sets wins.
+     */
+    parameters?: Record<string, string>;
+
+    /**
+     * Profile parameter → typed credential field it is copied from, e.g.
+     * `{ AccountSid: "username" }`, so requests keep the account once the
+     * credential is replaced by the provisioned key.
+     */
+    profileParameters?: Record<string, string>;
 }
 
 /**
@@ -286,7 +308,22 @@ export interface FernCliDistributionConfig {
      * Windows archive.
      */
     scoop?: FernCliScoopConfig;
+
+    /**
+     * Whether release builds sign artifacts with GitHub Artifact
+     * Attestations. GitHub only supports attestations on private repos
+     * with GitHub Enterprise Cloud, so on any other private repo the step
+     * fails every build leg and no release is cut.
+     *
+     * - `"auto"` (default): attest on public repos, skip on private ones.
+     *   Private repos on Enterprise Cloud should set `true`.
+     * - `true`: always attest.
+     * - `false`: never attest; drops the step and its permission.
+     */
+    githubAttestations?: FernCliGitHubAttestations;
 }
+
+export type FernCliGitHubAttestations = "auto" | boolean;
 
 export interface FernCliHomebrewConfig {
     /**
@@ -831,6 +868,29 @@ function validateStringMap(raw: unknown, label: string): Record<string, string> 
     return result;
 }
 
+// Free-text values (labels, templates) are interpolated into Rust string
+// literals, so quotes, backslashes and control characters are rejected.
+// biome-ignore lint/suspicious/noControlCharactersInRegex: intentionally rejecting control chars in codegen output
+const SAFE_TEXT = /^[^"\\\x00-\x1f]*$/;
+
+function validateTextMap(raw: unknown, label: string): Record<string, string> {
+    const obj = asConfigObject(raw, label);
+    const result: Record<string, string> = {};
+    for (const [key, value] of Object.entries(obj)) {
+        if (typeof value !== "string") {
+            throw new Error(`Invalid ${label}.${key}: expected a string, got ${typeof value}.`);
+        }
+        if (!FIELD_NAME.test(key)) {
+            throw new Error(`Invalid ${label}: "${key}" is not a field name ([A-Za-z0-9_.-]).`);
+        }
+        if (!SAFE_TEXT.test(value)) {
+            throw new Error(`Invalid ${label}.${key}: quotes, backslashes and control characters are not allowed.`);
+        }
+        result[key] = value;
+    }
+    return result;
+}
+
 function validateProvisionOperation(raw: unknown): FernCliProfilesProvisionConfig {
     const label = "customConfig.profiles.provisionOperation";
     const obj = asConfigObject(raw, label);
@@ -850,6 +910,18 @@ function validateProvisionOperation(raw: unknown): FernCliProfilesProvisionConfi
     const result: FernCliProfilesProvisionConfig = { operation: obj.operation, credential };
     if (obj.revokeParameters !== undefined) {
         result.revokeParameters = validateStringMap(obj.revokeParameters, `${label}.revokeParameters`);
+    }
+    if (obj.flag !== undefined) {
+        if (typeof obj.flag !== "string" || !/^[a-z][a-z0-9-]*$/.test(obj.flag)) {
+            throw new Error(`Invalid ${label}.flag: expected a kebab-case flag name without dashes (e.g. "api-key").`);
+        }
+        result.flag = obj.flag;
+    }
+    if (obj.parameters !== undefined) {
+        result.parameters = validateTextMap(obj.parameters, `${label}.parameters`);
+    }
+    if (obj.profileParameters !== undefined) {
+        result.profileParameters = validateStringMap(obj.profileParameters, `${label}.profileParameters`);
     }
     return result;
 }
@@ -882,6 +954,15 @@ function validateDistribution(raw: unknown): FernCliDistributionConfig {
     }
     if (obj.scoop !== undefined) {
         result.scoop = validateScoop(obj.scoop);
+    }
+    if (obj.githubAttestations !== undefined) {
+        if (obj.githubAttestations !== "auto" && typeof obj.githubAttestations !== "boolean") {
+            throw new Error(
+                `Invalid customConfig.distribution.githubAttestations: ${JSON.stringify(obj.githubAttestations)}. ` +
+                    'Expected "auto", true, or false.'
+            );
+        }
+        result.githubAttestations = obj.githubAttestations;
     }
     return result;
 }

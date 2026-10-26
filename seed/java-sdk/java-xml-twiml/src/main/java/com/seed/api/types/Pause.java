@@ -128,7 +128,6 @@ public final class Pause implements XmlSerializable {
     public static final class Builder {
         private Optional<Integer> length = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         @JsonIgnore
@@ -155,6 +154,14 @@ public final class Pause implements XmlSerializable {
 
         public Pause build() {
             return new Pause(length, additionalProperties, content);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("length")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

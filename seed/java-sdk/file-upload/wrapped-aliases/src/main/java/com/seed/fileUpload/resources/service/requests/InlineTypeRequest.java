@@ -81,7 +81,6 @@ public final class InlineTypeRequest {
     public static final class Builder implements RequestStage, _FinalStage {
         private MyInlineType request;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -102,6 +101,14 @@ public final class InlineTypeRequest {
         @java.lang.Override
         public InlineTypeRequest build() {
             return new InlineTypeRequest(request, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("request")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

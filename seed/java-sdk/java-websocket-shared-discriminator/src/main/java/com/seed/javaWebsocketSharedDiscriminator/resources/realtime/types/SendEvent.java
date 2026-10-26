@@ -80,7 +80,6 @@ public final class SendEvent {
     public static final class Builder implements TextStage, _FinalStage {
         private String text;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -101,6 +100,14 @@ public final class SendEvent {
         @java.lang.Override
         public SendEvent build() {
             return new SendEvent(text, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("text")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

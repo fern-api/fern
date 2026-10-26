@@ -1,4 +1,5 @@
 import { assertNever, visitDiscriminatedUnion } from "@fern-api/core-utils";
+import { getWireValue } from "@fern-api/ir-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { toEnvVarPrefix } from "./identity.js";
 
@@ -31,6 +32,13 @@ export interface DetectedAuthBinding {
      * a valid-looking header that can never match.
      */
     basicHalf?: "username" | "password" | "both";
+    /**
+     * For `header`, the header the credential is sent in, the env var that
+     * supplies it, and the configured value prefix (`null` when the raw
+     * credential is sent). Lets the wire-test manifest assert the exact
+     * outgoing value rather than mere presence.
+     */
+    headerAuth?: { headerName: string; envVar: string; prefix: string | null };
     /**
      * For `oauth-client-credentials`, the resolved token-endpoint contract the
      * generated CLI actually calls at runtime. Consumed by the wire-test
@@ -116,7 +124,8 @@ export function authStrategyVariant(auth: {
  *
  *   - `bearer` → `.auth(BearerAuth::new("<key>").env("<env>"))`
  *   - `header` → `.auth(ApiKeyAuth::new("<key>").source(...))` with a
- *     `--api-key` flag tried first, falling back to the env var
+ *     `--api-key` flag tried first, falling back to the env var, plus
+ *     `.prefix("<prefix>")` when the scheme configures one
  *   - `basic` (both halves bound) → `.auth(BasicAuth::new("<key>").username_env(...).password_env(...))`
  *     at root, so `auth status` enumerates the scheme [FER-11474]. The
  *     root `BasicAuth` builder lowers to the same `SchemeBinding::Basic`
@@ -209,13 +218,20 @@ function bindingForScheme(args: {
             // the env var. `.cli()` and `.env()` on the builder overwrite each
             // other, so the chain has to go through `.source(Chain([...]))`
             // rather than `.cli().env()`.
+            const prefix = header.prefix?.trim() ?? "";
+            const prefixCall = prefix !== "" ? `.prefix(${rustString(prefix)})` : "";
             return {
                 schemeName: header.key,
-                rustCall: `.auth(ApiKeyAuth::new("${header.key}").source(AuthCredentialSource::any(vec![AuthCredentialSource::cli("${flag}"), AuthCredentialSource::from_env("${env}")])))`,
+                rustCall: `.auth(ApiKeyAuth::new("${header.key}").source(AuthCredentialSource::any(vec![AuthCredentialSource::cli("${flag}"), AuthCredentialSource::from_env("${env}")]))${prefixCall})`,
                 placement: "root",
                 authTypeImport: "ApiKeyAuth, AuthCredentialSource",
                 envVars: [env],
-                kind: "header"
+                kind: "header",
+                headerAuth: {
+                    headerName: getWireValue(header.name),
+                    envVar: env,
+                    prefix: prefix !== "" ? prefix : null
+                }
             };
         },
         basic: (basic) => {
@@ -255,7 +271,7 @@ function bindingForScheme(args: {
             // binding for request-time credential resolution [FER-11474].
             return {
                 schemeName: basic.key,
-                rustCall: `.auth(BasicAuth::new("${basic.key}").username_env("${usernameEnv}").password_env("${passwordEnv}"))`,
+                rustCall: `.auth(BasicAuth::new("${basic.key}").username_env("${usernameEnv}").password_env("${passwordEnv}")${basicLabelCalls(basic)})`,
                 placement: "root",
                 authTypeImport: "BasicAuth",
                 envVars: [usernameEnv, passwordEnv],
@@ -836,6 +852,38 @@ function impliedGrantType(path: string[], endpointKind: "TOKEN" | "REFRESH"): st
 
 function nameValue(name: FernIr.NameOrString): string {
     return typeof name === "string" ? name : name.originalName;
+}
+
+/**
+ * `.username_label(...)` / `.password_label(...)` for halves the spec names
+ * (e.g. `accountSid` → "Account Sid"), so prompts use the API's own words.
+ * Halves left as the default `username` / `password` emit nothing.
+ */
+function basicLabelCalls(basic: FernIr.BasicAuthScheme): string {
+    const halves: Array<["username" | "password", FernIr.NameOrString]> = [
+        ["username", basic.username],
+        ["password", basic.password]
+    ];
+    return halves
+        .map(([half, name]) => {
+            const original = nameValue(name);
+            const label = humanizeName(original);
+            if (label === "" || original.toLowerCase() === half) {
+                return "";
+            }
+            return `.${half}_label(${JSON.stringify(label)})`;
+        })
+        .join("");
+}
+
+/** `accountSid` / `auth_token` → `Account Sid` / `Auth Token`. */
+function humanizeName(name: string): string {
+    return name
+        .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
+        .split(/[^A-Za-z0-9]+/)
+        .filter((word) => word !== "")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ");
 }
 
 function isOptionalType(type: FernIr.TypeReference): boolean {

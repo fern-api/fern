@@ -75,7 +75,7 @@ export class PlaylistClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/v2/playlist/${core.url.encodePathParam(serviceParam)}/create`,
+                `/v2/playlist/${core.url.encodePathParam(serviceParam, errors.SeedTraceError)}/create`,
             ),
             method: "POST",
             headers: _headers,
@@ -167,7 +167,7 @@ export class PlaylistClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/v2/playlist/${core.url.encodePathParam(serviceParam)}/all`,
+                `/v2/playlist/${core.url.encodePathParam(serviceParam, errors.SeedTraceError)}/all`,
             ),
             method: "GET",
             headers: _headers,
@@ -242,7 +242,7 @@ export class PlaylistClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/v2/playlist/${core.url.encodePathParam(serviceParam)}/${core.url.encodePathParam(playlistId)}`,
+                `/v2/playlist/${core.url.encodePathParam(serviceParam, errors.SeedTraceError)}/${core.url.encodePathParam(playlistId, errors.SeedTraceError)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -332,7 +332,7 @@ export class PlaylistClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/v2/playlist/${core.url.encodePathParam(serviceParam)}/${core.url.encodePathParam(playlistId)}`,
+                `/v2/playlist/${core.url.encodePathParam(serviceParam, errors.SeedTraceError)}/${core.url.encodePathParam(playlistId, errors.SeedTraceError)}`,
             ),
             method: "PUT",
             headers: _headers,
@@ -414,7 +414,7 @@ export class PlaylistClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/v2/playlist/${core.url.encodePathParam(serviceParam)}/${core.url.encodePathParam(playlist_id)}`,
+                `/v2/playlist/${core.url.encodePathParam(serviceParam, errors.SeedTraceError)}/${core.url.encodePathParam(playlist_id, errors.SeedTraceError)}`,
             ),
             method: "DELETE",
             headers: _headers,

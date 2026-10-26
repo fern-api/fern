@@ -576,6 +576,9 @@ fixtures:
   python-xml-twiml:
     - customConfig: null
       outputFolder: no-custom-config
+    - customConfig:
+        http_client_extra: client
+      outputFolder: http-client-extra
   openapi-per-spec-base-path:
     - customConfig: null
       outputFolder: no-custom-config

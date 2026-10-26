@@ -47,11 +47,13 @@ interface CargoPathDependency {
  */
 export function buildTypesCrateCargoToml({
     crateName,
+    version,
     needsReqwest,
     includeSerdeDependencies = true,
     pathDependencies = []
 }: {
     crateName: string;
+    version: string;
     needsReqwest: boolean;
     includeSerdeDependencies?: boolean;
     pathDependencies?: CargoPathDependency[];
@@ -74,7 +76,7 @@ export function buildTypesCrateCargoToml({
     const lines = [
         "[package]",
         `name = "${crateName}"`,
-        'version = "0.0.0"',
+        `version = "${version}"`,
         'edition = "2021"',
         "",
         "[lib]",

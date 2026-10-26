@@ -1419,6 +1419,7 @@
             "response": {
                 "type": "streaming"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_completions.streamEvents": {
@@ -1603,6 +1604,7 @@
             "response": {
                 "type": "streaming"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_completions.streamEventsDiscriminantInData": {
@@ -1787,6 +1789,7 @@
             "response": {
                 "type": "streaming"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_completions.streamEventsContextProtocol": {
@@ -1971,6 +1974,7 @@
             "response": {
                 "type": "streaming"
             },
+            "hasResponseBody": true,
             "examples": null
         }
     },

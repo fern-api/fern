@@ -233,7 +233,6 @@ public final class UnionTypeWithAliasSetVariant {
         public static final class Builder implements PropStage, _FinalStage {
             private String prop;
 
-            @JsonAnySetter
             private Map<String, Object> additionalProperties = new HashMap<>();
 
             private Builder() {}
@@ -254,6 +253,14 @@ public final class UnionTypeWithAliasSetVariant {
             @java.lang.Override
             public AliasVariantItem build() {
                 return new AliasVariantItem(prop, additionalProperties);
+            }
+
+            @JsonAnySetter
+            private void putAdditionalPropertyFromJson(String key, Object value) {
+                if (key.equalsIgnoreCase("prop")) {
+                    return;
+                }
+                this.additionalProperties.put(key, value);
             }
 
             @java.lang.Override

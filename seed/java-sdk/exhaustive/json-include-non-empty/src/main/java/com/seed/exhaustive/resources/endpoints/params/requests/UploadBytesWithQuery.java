@@ -96,7 +96,6 @@ public final class UploadBytesWithQuery {
 
         private Optional<String> fields = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -131,6 +130,14 @@ public final class UploadBytesWithQuery {
         @java.lang.Override
         public UploadBytesWithQuery build() {
             return new UploadBytesWithQuery(fields, body, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("_fields") || key.equalsIgnoreCase("body")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

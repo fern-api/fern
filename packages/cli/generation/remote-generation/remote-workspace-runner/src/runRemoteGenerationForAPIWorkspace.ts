@@ -3,7 +3,7 @@ import { validateAPIWorkspaceAndLogIssues } from "@fern-api/api-workspace-valida
 import { FernToken } from "@fern-api/auth";
 import { renderGithubAnnotation, shouldEmitGithubAnnotations } from "@fern-api/cli-logger";
 import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
-import { extractErrorMessage, replaceEnvVariables } from "@fern-api/core-utils";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { CliError, resolveErrorCode, TaskAbortSignal, TaskContext } from "@fern-api/task-context";
@@ -24,6 +24,7 @@ import {
     formatGeneratorConfigCompatibilityError,
     getFernSdkGenApiEnvOverride,
     getFernSdkGenApiLanguage,
+    getFlagIndependentSdkGenApiRouting,
     isSdkGenApiOnly,
     mapFernSdkGenApiOutput,
     resolveFernSdkGenApiEnabledByGenerator,
@@ -38,6 +39,7 @@ import {
     type FernSdkGenApiSourceArchive,
     validateFernSdkGenApiSourceCompatibility
 } from "./fernSdkGenApiSourceArchive.js";
+import { replaceEnvVariablesPreservingWorkflowApiKey, substituteWorkflowApiKey } from "./githubWorkflowApiKey.js";
 import type { MapFernGroupToSdkConfig } from "./prepareFernSdkGenApiSdkConfigPayload.js";
 import type { PublishTarget } from "./publishTarget.js";
 import type { AutomationRunOptions } from "./RemoteGeneratorRunRecorder.js";
@@ -217,10 +219,20 @@ export async function runRemoteGenerationForAPIWorkspace({
     const generatorsYmlAbsolutePath = workspace.generatorsConfiguration?.absolutePathToConfiguration;
     const isSdkPreview = isPreview ?? absolutePathToPreview != null;
     // The flag is evaluated per generator, so an org, a language, or one generator in one org can be
-    // routed (or kept off sdk-gen-api) independently. Values are memoized per process.
+    // routed (or kept off sdk-gen-api) independently. Values are memoized per process. Generators whose
+    // routing the flag does not decide (SDK Config, post-cutover versions) make no flag request.
     const sdkGenApiEnabledByGenerator = await resolveFernSdkGenApiEnabledByGenerator({
         organization,
-        generatorNames: generatorGroup.generators.map((generator) => generator.name)
+        generatorNames: generatorGroup.generators
+            .filter(
+                (generator) =>
+                    getFlagIndependentSdkGenApiRouting({
+                        generatorName: generator.name,
+                        version: generator.version,
+                        usesSdkConfig: sdkConfigV1 != null
+                    }) == null
+            )
+            .map((generator) => generator.name)
     });
     // Select every target route before starting any per-target work. A bad target therefore cannot
     // race a sibling into remote registration or generation.
@@ -372,9 +384,9 @@ export async function runRemoteGenerationForAPIWorkspace({
 
     if (automation == null && results.some((didSucceed) => !didSucceed)) {
         // Subtasks have already logged and reported their failures via their own
-        // `failAndThrow`. Throw a bare TaskAbortSignal to unwind without firing
-        // redundant logging, PostHog, or Sentry events.
-        throw new TaskAbortSignal();
+        // `failAndThrow`. Carry the already-logged message for structured callers while
+        // unwinding without firing redundant logging, PostHog, or Sentry events.
+        throw new TaskAbortSignal(context.getLastFailureMessage());
     }
 
     return {
@@ -452,18 +464,24 @@ export function prepareFernSdkGenApiRoutes({
 }> {
     return generators.map((generatorInvocation, generatorIndex) => {
         let resolved = generatorInvocation;
+        const substitution = {
+            onError: (error?: string) => {
+                if (!isPreview && requireEnvVars) {
+                    throw error;
+                }
+            }
+        };
+        const substitutionOptions = { substituteAsEmpty: isPreview };
+        // sdk-gen-api gets the NuGet/RubyGems `api-key` as a secret name. Every route that falls back
+        // to Fiddle gets it substituted, as it always has.
+        const forFiddle = (invocation: generatorsYml.GeneratorInvocation) =>
+            substituteWorkflowApiKey(invocation, substitution, substitutionOptions);
         const sdkConfigTargetIndex = getSdkConfigTargetIndex(generatorInvocation, generatorIndex);
         try {
-            resolved = replaceEnvVariables(
+            resolved = replaceEnvVariablesPreservingWorkflowApiKey(
                 generatorInvocation,
-                {
-                    onError: (error) => {
-                        if (!isPreview && requireEnvVars) {
-                            throw error;
-                        }
-                    }
-                },
-                { substituteAsEmpty: isPreview }
+                substitution,
+                substitutionOptions
             );
             // Previews download files instead of publishing, so only real publishes are rejected.
             if (!isPreview && sdkConfigV1 == null && isDirectRubyGemsOutputMode(resolved.outputMode)) {
@@ -499,9 +517,24 @@ export function prepareFernSdkGenApiRoutes({
             if (configuredTarget?.generatorVersion != null) {
                 resolved = { ...resolved, version: configuredTarget.generatorVersion };
             }
-            if (!isSdkGenApiEnabled(generatorInvocation.name)) {
+            // SDK Config runs and Postman-built (post-cutover) versions have no Fiddle route, so they use
+            // sdk-gen-api whatever `use-sdk-gen-api` says; the flag only governs Fern-built versions. A
+            // post-cutover version without SDK Config therefore always gets the `fern sdk migrate` error
+            // from route selection below.
+            const flagIndependentRouting = getFlagIndependentSdkGenApiRouting({
+                generatorName: resolved.name,
+                version: resolved.version,
+                usesSdkConfig: sdkConfigV1 != null
+            });
+            if (!(flagIndependentRouting ?? isSdkGenApiEnabled(generatorInvocation.name))) {
                 if (sdkConfigV1 != null) {
                     throw new Error("SDK Config v1 generation requires the sdk-gen-api generation backend");
+                }
+                if (flagIndependentRouting === false) {
+                    throw new CliError({
+                        message: `${resolved.name} ${resolved.version} requires sdk-gen-api generation, which ${USE_SDK_GEN_API_ENV_VAR}=false turns off. Unset ${USE_SDK_GEN_API_ENV_VAR} to generate it.`,
+                        code: CliError.Code.ConfigError
+                    });
                 }
                 // Generators without a Fiddle fallback must not fall through to legacy
                 // generation, where they would fail opaquely.
@@ -514,7 +547,7 @@ export function prepareFernSdkGenApiRoutes({
                         code: CliError.Code.ConfigError
                     });
                 }
-                return { generatorInvocation: resolved, route: undefined, error: undefined };
+                return { generatorInvocation: forFiddle(resolved), route: undefined, error: undefined };
             }
             let route: GenerationConfigRoute | undefined;
             if (configuredTarget != null && configuredTarget.generatorVersion == null) {
@@ -555,7 +588,7 @@ export function prepareFernSdkGenApiRoutes({
                 } catch (error) {
                     if (route.configKind === "legacy-fern") {
                         return {
-                            generatorInvocation: resolved,
+                            generatorInvocation: forFiddle(resolved),
                             route: undefined,
                             error: undefined,
                             fallbackReason: extractErrorMessage(error)
@@ -574,7 +607,7 @@ export function prepareFernSdkGenApiRoutes({
             if (route != null && unsupportedOutput != null) {
                 if (route.configKind === "legacy-fern") {
                     return {
-                        generatorInvocation: resolved,
+                        generatorInvocation: forFiddle(resolved),
                         route: undefined,
                         error: undefined,
                         fallbackReason: unsupportedOutput

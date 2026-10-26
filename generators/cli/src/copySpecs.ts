@@ -511,5 +511,14 @@ function renderProvisionOperation(config: FernCliProfilesProvisionConfig): strin
     for (const [parameter, responseField] of Object.entries(config.revokeParameters ?? {})) {
         out += `.revoke_parameter(${rustStringLiteral(parameter, "profiles.provisionOperation.revokeParameters")}, ${rustStringLiteral(responseField, "profiles.provisionOperation.revokeParameters")})`;
     }
+    if (config.flag != null) {
+        out += `.flag(${rustStringLiteral(config.flag, "profiles.provisionOperation.flag")})`;
+    }
+    for (const [parameter, value] of Object.entries(config.parameters ?? {})) {
+        out += `.parameter(${rustStringLiteral(parameter, "profiles.provisionOperation.parameters")}, ${rustStringLiteral(value, "profiles.provisionOperation.parameters")})`;
+    }
+    for (const [parameter, field] of Object.entries(config.profileParameters ?? {})) {
+        out += `.profile_parameter(${rustStringLiteral(parameter, "profiles.provisionOperation.profileParameters")}, ${rustStringLiteral(field, "profiles.provisionOperation.profileParameters")})`;
+    }
     return out;
 }

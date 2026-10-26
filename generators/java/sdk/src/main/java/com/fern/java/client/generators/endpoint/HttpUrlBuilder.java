@@ -415,7 +415,7 @@ public final class HttpUrlBuilder {
                 && ((ParameterizedTypeName) typeName).rawType.equals(ClassName.get(Optional.class));
     }
 
-    private static CodeBlock buildPathSegmentArg(String prefix, CodeBlock paramValue, String suffix) {
+    private CodeBlock buildPathSegmentArg(String prefix, CodeBlock paramValue, String suffix) {
         CodeBlock.Builder arg = CodeBlock.builder();
         if (!prefix.isEmpty()) {
             arg.add("$S + ", prefix);
@@ -424,7 +424,8 @@ public final class HttpUrlBuilder {
         if (!suffix.isEmpty()) {
             arg.add(" + $S", suffix);
         }
-        return arg.build();
+        return CodeBlock.of(
+                "$T.validate($L)", context.getPoetClassNameFactory().getPathSegmentsClassName(), arg.build());
     }
 
     private static String stripLeadingAndTrailingSlash(String value) {

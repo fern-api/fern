@@ -88,7 +88,6 @@ public final class PostWithArrayBodyAndHeaders {
 
     private List<String> body = new ArrayList<>();
 
-    @JsonAnySetter
     private Map<String, Object> additionalProperties = new HashMap<>();
 
     private Builder() {
@@ -136,6 +135,14 @@ public final class PostWithArrayBodyAndHeaders {
 
     public PostWithArrayBodyAndHeaders build() {
       return new PostWithArrayBodyAndHeaders(xCustomHeader, body, additionalProperties);
+    }
+
+    @JsonAnySetter
+    private void putAdditionalPropertyFromJson(String key, Object value) {
+      if (key.equalsIgnoreCase("body")) {
+        return;
+      }
+      this.additionalProperties.put(key, value);
     }
 
     public Builder additionalProperty(String key, Object value) {

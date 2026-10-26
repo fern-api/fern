@@ -94,7 +94,6 @@ public final class GeneratedFiles {
 
         private Map<Language, Files> other = new LinkedHashMap<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -171,6 +170,16 @@ public final class GeneratedFiles {
 
         public GeneratedFiles build() {
             return new GeneratedFiles(generatedTestCaseFiles, generatedTemplateFiles, other, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("generatedTestCaseFiles")
+                    || key.equalsIgnoreCase("generatedTemplateFiles")
+                    || key.equalsIgnoreCase("other")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

@@ -428,7 +428,6 @@ public final class User {
 
         private Optional<String> username = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -727,6 +726,34 @@ public final class User {
                     givenName,
                     familyName,
                     additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("user_id")
+                    || key.equalsIgnoreCase("email")
+                    || key.equalsIgnoreCase("email_verified")
+                    || key.equalsIgnoreCase("username")
+                    || key.equalsIgnoreCase("phone_number")
+                    || key.equalsIgnoreCase("phone_verified")
+                    || key.equalsIgnoreCase("created_at")
+                    || key.equalsIgnoreCase("updated_at")
+                    || key.equalsIgnoreCase("identities")
+                    || key.equalsIgnoreCase("app_metadata")
+                    || key.equalsIgnoreCase("user_metadata")
+                    || key.equalsIgnoreCase("picture")
+                    || key.equalsIgnoreCase("name")
+                    || key.equalsIgnoreCase("nickname")
+                    || key.equalsIgnoreCase("multifactor")
+                    || key.equalsIgnoreCase("last_ip")
+                    || key.equalsIgnoreCase("last_login")
+                    || key.equalsIgnoreCase("logins_count")
+                    || key.equalsIgnoreCase("blocked")
+                    || key.equalsIgnoreCase("given_name")
+                    || key.equalsIgnoreCase("family_name")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

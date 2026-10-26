@@ -23,11 +23,14 @@ public final class PostSubmitRequest {
 
     private final String email;
 
+    private final String content;
+
     private final Map<String, Object> additionalProperties;
 
-    private PostSubmitRequest(String username, String email, Map<String, Object> additionalProperties) {
+    private PostSubmitRequest(String username, String email, String content, Map<String, Object> additionalProperties) {
         this.username = username;
         this.email = email;
+        this.content = content;
         this.additionalProperties = additionalProperties;
     }
 
@@ -47,6 +50,14 @@ public final class PostSubmitRequest {
         return email;
     }
 
+    /**
+     * @return A JSON document carried as a form field
+     */
+    @JsonProperty("Content")
+    public String getContent() {
+        return content;
+    }
+
     @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
@@ -59,12 +70,12 @@ public final class PostSubmitRequest {
     }
 
     private boolean equalTo(PostSubmitRequest other) {
-        return username.equals(other.username) && email.equals(other.email);
+        return username.equals(other.username) && email.equals(other.email) && content.equals(other.content);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.username, this.email);
+        return Objects.hash(this.username, this.email, this.content);
     }
 
     @java.lang.Override
@@ -89,7 +100,14 @@ public final class PostSubmitRequest {
         /**
          * <p>The user's email address</p>
          */
-        _FinalStage email(@NotNull String email);
+        ContentStage email(@NotNull String email);
+    }
+
+    public interface ContentStage {
+        /**
+         * <p>A JSON document carried as a form field</p>
+         */
+        _FinalStage content(@NotNull String content);
     }
 
     public interface _FinalStage {
@@ -101,12 +119,13 @@ public final class PostSubmitRequest {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder implements UsernameStage, EmailStage, _FinalStage {
+    public static final class Builder implements UsernameStage, EmailStage, ContentStage, _FinalStage {
         private String username;
 
         private String email;
 
-        @JsonAnySetter
+        private String content;
+
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -115,6 +134,7 @@ public final class PostSubmitRequest {
         public Builder from(PostSubmitRequest other) {
             username(other.getUsername());
             email(other.getEmail());
+            content(other.getContent());
             return this;
         }
 
@@ -135,14 +155,33 @@ public final class PostSubmitRequest {
          */
         @java.lang.Override
         @JsonSetter("email")
-        public _FinalStage email(@NotNull String email) {
+        public ContentStage email(@NotNull String email) {
             this.email = Objects.requireNonNull(email, "email must not be null");
+            return this;
+        }
+
+        /**
+         * <p>A JSON document carried as a form field</p>
+         * @return Reference to {@code this} so that method calls can be chained together.
+         */
+        @java.lang.Override
+        @JsonSetter("Content")
+        public _FinalStage content(@NotNull String content) {
+            this.content = Objects.requireNonNull(content, "content must not be null");
             return this;
         }
 
         @java.lang.Override
         public PostSubmitRequest build() {
-            return new PostSubmitRequest(username, email, additionalProperties);
+            return new PostSubmitRequest(username, email, content, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("username") || key.equalsIgnoreCase("email") || key.equalsIgnoreCase("Content")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

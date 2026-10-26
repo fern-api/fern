@@ -1,7 +1,7 @@
 import type { generatorsYml } from "@fern-api/configuration-loader";
 import { assertNever } from "@fern-api/core-utils";
 import type { Project } from "@fern-api/project-loader";
-import type { FernSdkConfigV1Payload } from "@fern-api/remote-workspace-runner";
+import { type FernSdkConfigV1Payload, getFlagIndependentSdkGenApiRouting } from "@fern-api/remote-workspace-runner";
 import type { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 
 import { expandGroupFilter } from "./expandGroupFilter.js";
@@ -28,8 +28,9 @@ export interface RequestedGeneratorTelemetry {
     version: string;
     outputMode: string;
     /**
-     * The `use-sdk-gen-api` flag value for this generator in this org. Undefined for local (Docker)
-     * generation, which never routes through sdk-gen-api, so no flag request is made.
+     * Whether this generator routes through sdk-gen-api: always for SDK Config and post-cutover versions,
+     * otherwise the `use-sdk-gen-api` flag value for this generator in this org. Undefined for local
+     * (Docker) generation, which never routes through sdk-gen-api, so no flag request is made.
      */
     sdkGenApiEnabled: boolean | undefined;
 }
@@ -40,7 +41,7 @@ export interface GeneratePosthogProperties {
     /** Every generator selected to run, after group, alias, `--generator`, and SDK Config resolution. */
     requestedGenerators: RequestedGeneratorTelemetry[];
     /**
-     * True when the `use-sdk-gen-api` flag is on for at least one requested generator; see each
+     * True when at least one requested generator routes through sdk-gen-api; see each
      * `requestedGenerators` entry for the per-generator value. Undefined for local (Docker) generation.
      */
     sdkGenApiEnabled: boolean | undefined;
@@ -66,7 +67,13 @@ export function buildGeneratePosthogProperties({
     const requestedGenerators = listRequestedGenerators({ generations, isAutomation }).map((generator) => ({
         ...generator,
         sdkGenApiEnabled:
-            sdkGenApiEnabledByGenerator == null ? undefined : sdkGenApiEnabledByGenerator.get(generator.name) === true
+            sdkGenApiEnabledByGenerator == null
+                ? undefined
+                : (getFlagIndependentSdkGenApiRouting({
+                      generatorName: generator.name,
+                      version: generator.version,
+                      usesSdkConfig: generator.kind === "sdk-config"
+                  }) ?? sdkGenApiEnabledByGenerator.get(generator.name) === true)
     }));
     return {
         workspaces: buildPosthogWorkspaces({ project, groupNames, generatorName }),

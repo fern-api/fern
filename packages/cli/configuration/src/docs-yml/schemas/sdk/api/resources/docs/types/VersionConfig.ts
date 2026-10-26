@@ -13,6 +13,19 @@ export interface VersionConfig extends FernDocsConfig.WithPermissions, FernDocsC
      * A git ref—branch, tag, or commit SHA—whose committed content is built for this
      * version. Branches are mutable and resolve to their latest commit on the remote;
      * tags and commit SHAs are immutable.
+     *
+     * The CLI checks out the ref and reads the docs.yml committed there to locate the
+     * pages to build:
+     * - For a version listed under top-level `versions`, it uses the ref's docs.yml
+     *   `versions` list and takes the first entry that has a `path` (skipping entries
+     *   that have a `ref`). If the ref's docs.yml has no such entry, it uses the ref's
+     *   top-level `navigation`.
+     * - For a version listed under `products[].versions`, it finds the product with the
+     *   same `slug` (or, when either side has no `slug`, the same `display-name`) in the
+     *   ref's docs.yml and applies the same rule to that product's `versions` list,
+     *   falling back to the `navigation` in that product's file.
+     * Entries with a `ref` in the ref's docs.yml are ignored: only the docs.yml being
+     * built determines which versions are published.
      */
     ref?: string;
     /** The "slug" is this version's basePath. If not set, the slug will be generated from the display-name. */
@@ -22,5 +35,15 @@ export interface VersionConfig extends FernDocsConfig.WithPermissions, FernDocsC
     audiences?: FernDocsConfig.Audience;
     /** If true, this version will be hidden from navigation, search, and indexing, but still accessible via direct URL. */
     hidden?: boolean;
+    /**
+     * If true, this version is the default version: it is served at the unversioned URLs
+     * (without the version slug) and is used for canonical URLs, the sitemap, search, and
+     * `llms.txt`. The order of the `versions` list only controls the order in the version
+     * switcher. At most one version in a `versions` list may set `default: true`, and the
+     * default version cannot be `hidden`. A default version may be built from the working
+     * tree (`path`) or from a git ref (`ref`). If no version sets `default`, the first
+     * version in the list is the default.
+     */
+    default?: boolean;
     announcement?: FernDocsConfig.AnnouncementConfig;
 }

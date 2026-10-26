@@ -1,6 +1,6 @@
 import { readFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, errorMessageOrString, isRecord } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd } from "@fern-api/fs-utils";
 import type {
     FernSdkConfigV1Payload,
@@ -17,6 +17,7 @@ import YAML from "yaml";
 import { getDuplicateTargetLanguageIndexes } from "./getDuplicateTargetLanguageIndexes.js";
 import { getSdkConfigGeneratorName } from "./sdkConfigGeneratorName.js";
 import {
+    extractSdkConfigGithubNpmTokens,
     resolveSdkConfigPublishCredential,
     sanitizeSdkConfigPublishCredentials
 } from "./sdkConfigPublishCredentials.js";
@@ -25,6 +26,8 @@ export interface LoadedSdkConfigV1 {
     absolutePath: string;
     config: SdkConfigV1;
     payload: FernSdkConfigV1Payload;
+    /** Unresolved npm `token` per `config.targets` entry with GitHub delivery; never in `config` or `payload`. */
+    githubNpmTokens: Array<string | undefined>;
 }
 
 export interface SdkConfigGeneratorSelection {
@@ -49,15 +52,21 @@ export async function loadSdkConfigV1(
     try {
         input = YAML.parse(body.toString("utf8"));
     } catch (error) {
-        throw new Error(
-            `SDK Config v1 at ${absolutePath} is not valid YAML: ${error instanceof Error ? error.message : String(error)}`
-        );
+        throw new Error(`SDK Config v1 at ${absolutePath} is not valid YAML: ${errorMessageOrString(error)}`);
     }
 
     try {
-        const { sanitizedInput, credentials } = sanitizeSdkConfigPublishCredentials(input, isPreview);
+        const { sanitizedInput, credentials, apiKeySecretNames } = sanitizeSdkConfigPublishCredentials(
+            input,
+            isPreview
+        );
+        const githubNpmTokens = extractSdkConfigGithubNpmTokens(input);
         const { document, parsed } = validateAndParseSdkConfigV1(sanitizedInput);
-        if (document.targets.length !== credentials.length || parsed.targets.length !== credentials.length) {
+        if (
+            document.targets.length !== credentials.length ||
+            parsed.targets.length !== credentials.length ||
+            githubNpmTokens.length !== credentials.length
+        ) {
             throw new Error("SDK Config v1 target count changed during validation");
         }
         const targetIndexes = getTargetIndexes(parsed, selection.targetNames);
@@ -95,7 +104,7 @@ export async function loadSdkConfigV1(
                     ...(target.client?.pathParameterStyle != null
                         ? { clientPathParameterStyle: target.client.pathParameterStyle }
                         : {}),
-                    requestedOutput: toRequestedOutput(output, isPreview),
+                    requestedOutput: toRequestedOutput(output, isPreview, apiKeySecretNames[index]),
                     ...(output?.delivery === "zip"
                         ? {
                               absolutePathToLocalOutputArchive: AbsoluteFilePath.of(
@@ -144,13 +153,13 @@ export async function loadSdkConfigV1(
                     return target;
                 })
             },
-            payload
+            payload,
+            githubNpmTokens: targetIndexes.map((index) => githubNpmTokens[index])
         };
     } catch (error) {
-        throw new Error(
-            `SDK Config v1 at ${absolutePath} failed validation: ${error instanceof Error ? error.message : String(error)}`,
-            { cause: error }
-        );
+        throw new Error(`SDK Config v1 at ${absolutePath} failed validation: ${errorMessageOrString(error)}`, {
+            cause: error
+        });
     }
 }
 
@@ -245,10 +254,6 @@ function requireSingleTarget<T>(targets: T[], index: number): T {
     return target;
 }
 
-function isRecord(value: unknown): value is Record<string, unknown> {
-    return typeof value === "object" && value != null && !Array.isArray(value);
-}
-
 function publicationValidationMetadata(requestedOutput: FernSdkGenApiRequestedOutput | undefined): {
     publishRegistry?: string;
     publishUrl?: string;
@@ -263,7 +268,11 @@ function publicationValidationMetadata(requestedOutput: FernSdkGenApiRequestedOu
           };
 }
 
-function toRequestedOutput(output: SdkConfigV1["output"], isPreview: boolean): FernSdkGenApiRequestedOutput {
+function toRequestedOutput(
+    output: SdkConfigV1["output"],
+    isPreview: boolean,
+    apiKeySecretName: string | undefined
+): FernSdkGenApiRequestedOutput {
     if (isPreview) {
         return { type: "download" };
     }
@@ -277,7 +286,15 @@ function toRequestedOutput(output: SdkConfigV1["output"], isPreview: boolean): F
         ...(output.github.branch == null ? {} : { branch: output.github.branch }),
         ...(output.github.mode == null ? {} : { mode: toRequestedGithubMode(output.github.mode) }),
         ...(output.github.reviewers == null ? {} : { reviewers: output.github.reviewers }),
-        ...(output.publish == null ? {} : { publish: output.publish })
+        ...(output.github.workflows === false ? { workflows: false } : {}),
+        ...(output.publish == null
+            ? {}
+            : {
+                  publish: {
+                      ...output.publish,
+                      ...(apiKeySecretName == null ? {} : { apiKeyEnvironmentVariable: apiKeySecretName })
+                  }
+              })
     };
 }
 

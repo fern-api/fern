@@ -93,12 +93,20 @@ fixtures:
     - outputFolder: wire-tests
       customConfig:
         enableWireTests: true
+  errors:
+    - outputFolder: .
+      customConfig:
+        enableWireTests: true
   exhaustive:
     - outputFolder: wire-tests
       customConfig:
         enableWireTests: true
         clientModuleName: MyClient
         maxRetries: 5
+    - outputFolder: omit-unset-model-fields
+      customConfig:
+        enableWireTests: true
+        omitUnsetModelFields: true
   idempotency-headers:
     - outputFolder: no-custom-config
       customConfig: null

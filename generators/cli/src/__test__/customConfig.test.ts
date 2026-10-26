@@ -301,6 +301,18 @@ describe("validateCustomConfig — distribution", () => {
         });
     });
 
+    it.each(["auto", true, false] as const)("accepts githubAttestations: %s", (githubAttestations) => {
+        expect(validateCustomConfig({ distribution: { githubAttestations } })).toEqual({
+            distribution: { githubAttestations }
+        });
+    });
+
+    it.each(["yes", "false", 1, null])("rejects githubAttestations: %s", (githubAttestations) => {
+        expect(() => validateCustomConfig({ distribution: { githubAttestations } })).toThrow(
+            /customConfig\.distribution\.githubAttestations/
+        );
+    });
+
     it("accepts a scoop-only block", () => {
         expect(validateCustomConfig({ distribution: { scoop: { bucket: "acme/scoop-bucket" } } })).toEqual({
             distribution: { scoop: { bucket: "acme/scoop-bucket" } }
@@ -560,6 +572,41 @@ describe("validateCustomConfig — profiles", () => {
             credential: { username: "sid", password: "secret" },
             revokeParameters: { Sid: "sid" }
         });
+    });
+
+    it("accepts the interactive provisionOperation fields", () => {
+        expect(
+            validateCustomConfig({
+                profiles: {
+                    enabled: true,
+                    provisionOperation: {
+                        operation: "core.keys.create",
+                        credential: { username: "sid", password: "secret" },
+                        flag: "api-key",
+                        parameters: { FriendlyName: "{cli} for {user} on {host}" },
+                        profileParameters: { AccountSid: "username" }
+                    }
+                }
+            }).profiles?.provisionOperation
+        ).toEqual({
+            operation: "core.keys.create",
+            credential: { username: "sid", password: "secret" },
+            flag: "api-key",
+            parameters: { FriendlyName: "{cli} for {user} on {host}" },
+            profileParameters: { AccountSid: "username" }
+        });
+    });
+
+    it("rejects an invalid provisionOperation flag or unsafe text", () => {
+        const base = { operation: "core.keys.create", credential: { token: "secret" } };
+        expect(() =>
+            validateCustomConfig({ profiles: { enabled: true, provisionOperation: { ...base, flag: "--api-key" } } })
+        ).toThrow(/provisionOperation.flag/);
+        expect(() =>
+            validateCustomConfig({
+                profiles: { enabled: true, provisionOperation: { ...base, parameters: { FriendlyName: 'a"b' } } }
+            })
+        ).toThrow(/provisionOperation.parameters.FriendlyName/);
     });
 
     it("rejects a provisionOperation without a credential mapping", () => {

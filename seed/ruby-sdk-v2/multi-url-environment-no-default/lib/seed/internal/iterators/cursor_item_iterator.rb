@@ -6,8 +6,8 @@ module Seed
       # Instantiates a CursorItemIterator, an Enumerable class which wraps calls to a cursor-based paginated API and yields individual items from it.
       #
       # @param initial_cursor [String] The initial cursor to use when iterating, if any.
-      # @param cursor_field [Symbol] The field in API responses to extract the next cursor from.
-      # @param item_field [Symbol] The field in API responses to extract the items to iterate over.
+      # @param cursor_field [Symbol, Array<Symbol>] The field (or nested path) in API responses to extract the next cursor from.
+      # @param item_field [Symbol, Array<Symbol>] The field (or nested path) in API responses to extract the items to iterate over.
       # @param block [Proc] A block which is responsible for receiving a cursor to use and returning the given page from the API.
       # @return [Seed::Internal::CursorItemIterator]
       def initialize(initial_cursor:, cursor_field:, item_field:, &block)

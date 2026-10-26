@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Allow `playground-docs` on `auth-schemes` in `generators.yml`. Previously the CLI rejected it with
+    `Unexpected key "playground-docs"`, so schemes defined there could not set playground-only auth text.
+  type: fix

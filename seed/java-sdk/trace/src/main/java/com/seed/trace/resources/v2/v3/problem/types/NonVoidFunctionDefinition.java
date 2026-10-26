@@ -97,7 +97,6 @@ public final class NonVoidFunctionDefinition {
 
         private FunctionImplementationForMultipleLanguages code;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -126,6 +125,14 @@ public final class NonVoidFunctionDefinition {
         @java.lang.Override
         public NonVoidFunctionDefinition build() {
             return new NonVoidFunctionDefinition(signature, code, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("signature") || key.equalsIgnoreCase("code")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

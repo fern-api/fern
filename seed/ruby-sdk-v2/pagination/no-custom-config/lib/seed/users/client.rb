@@ -47,7 +47,7 @@ module Seed
         query_params["starting_after"] = params[:starting_after] if params.key?(:starting_after)
 
         Seed::Internal::CursorItemIterator.new(
-          cursor_field: :starting_after,
+          cursor_field: %i[page next_ starting_after],
           item_field: :data,
           initial_cursor: query_params["starting_after"]
         ) do |next_cursor|
@@ -151,7 +151,7 @@ module Seed
       def list_with_body_cursor_pagination(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
         Seed::Internal::CursorItemIterator.new(
-          cursor_field: :starting_after,
+          cursor_field: %i[page next_ starting_after],
           item_field: :data,
           initial_cursor: Seed::Internal::Types::Utils.normalize_keys(params[:pagination].to_h)[:cursor]
         ) do |next_cursor|
@@ -570,7 +570,7 @@ module Seed
 
         Seed::Internal::CursorItemIterator.new(
           cursor_field: :next_,
-          item_field: :users,
+          item_field: %i[data users],
           initial_cursor: query_params["cursor"]
         ) do |next_cursor|
           query_params["cursor"] = next_cursor
@@ -624,7 +624,7 @@ module Seed
 
         Seed::Internal::CursorItemIterator.new(
           cursor_field: :next_,
-          item_field: :users,
+          item_field: %i[data users],
           initial_cursor: query_params["cursor"]
         ) do |next_cursor|
           query_params["cursor"] = next_cursor
@@ -677,8 +677,8 @@ module Seed
         query_params["starting_after"] = params[:starting_after] if params.key?(:starting_after)
 
         Seed::Internal::CursorItemIterator.new(
-          cursor_field: :after,
-          item_field: :data,
+          cursor_field: %i[cursor after],
+          item_field: %i[cursor data],
           initial_cursor: query_params["starting_after"]
         ) do |next_cursor|
           query_params["starting_after"] = next_cursor
@@ -731,8 +731,8 @@ module Seed
         query_params["starting_after"] = params[:starting_after] if params.key?(:starting_after)
 
         Seed::Internal::CursorItemIterator.new(
-          cursor_field: :after,
-          item_field: :data,
+          cursor_field: %i[cursor after],
+          item_field: %i[cursor data],
           initial_cursor: query_params["starting_after"]
         ) do |next_cursor|
           query_params["starting_after"] = next_cursor
@@ -903,7 +903,7 @@ module Seed
         query_params["starting_after"] = params[:starting_after] if params.key?(:starting_after)
 
         Seed::Internal::CursorItemIterator.new(
-          cursor_field: :starting_after,
+          cursor_field: %i[page next_ starting_after],
           item_field: :data,
           initial_cursor: query_params["starting_after"]
         ) do |next_cursor|

@@ -58,7 +58,7 @@ public final class ApiClient: Sendable {
     /// import Api
     ///
     /// private func main() async throws {
-    ///     let client = ApiClient()
+    ///     let client = ApiClient(baseURL: "https://api.example.com/v1")
     ///
     ///     _ = try await client.getUsers()
     /// }
@@ -81,7 +81,7 @@ public final class ApiClient: Sendable {
     /// import Api
     ///
     /// private func main() async throws {
-    ///     let client = ApiClient()
+    ///     let client = ApiClient(baseURL: "https://api.example.com/v1")
     ///
     ///     _ = try await client.getUser(userId: "userId")
     /// }
@@ -104,7 +104,7 @@ public final class ApiClient: Sendable {
     /// import Api
     ///
     /// private func main() async throws {
-    ///     let client = ApiClient()
+    ///     let client = ApiClient(baseURL: "https://api.example.com/v1")
     ///
     ///     _ = try await client.getToken(request: .init(
     ///         clientId: "client_id",

@@ -101,7 +101,6 @@ public final class DefaultProvidedFile {
 
         private List<VariableType> relatedTypes = new ArrayList<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -147,6 +146,14 @@ public final class DefaultProvidedFile {
         @java.lang.Override
         public DefaultProvidedFile build() {
             return new DefaultProvidedFile(file, relatedTypes, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("file") || key.equalsIgnoreCase("relatedTypes")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

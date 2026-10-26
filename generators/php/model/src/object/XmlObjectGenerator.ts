@@ -34,6 +34,7 @@ const RESERVED_METHOD_NAMES = [
     "toJson",
     "jsonSerialize",
     "toXml",
+    "asXML",
     "toXmlElement",
     "fromXml",
     "fromXmlElement",
@@ -814,11 +815,12 @@ export class XmlObjectGenerator {
     // ---------------------------------------------------------------------------------------------
 
     private getChildBuilderMethods(): php.Method[] {
-        const taken = new Set<string>(RESERVED_METHOD_NAMES);
+        // PHP method names are case-insensitive, so names are compared lowercased.
+        const taken = new Set<string>(RESERVED_METHOD_NAMES.map((name) => name.toLowerCase()));
         for (const property of this.properties) {
-            taken.add(property.fieldName);
-            taken.add(this.context.getPropertyGetterName(property.name));
-            taken.add(this.context.getPropertySetterName(property.name));
+            taken.add(property.fieldName.toLowerCase());
+            taken.add(this.context.getPropertyGetterName(property.name).toLowerCase());
+            taken.add(this.context.getPropertySetterName(property.name).toLowerCase());
         }
         const methods: php.Method[] = [];
         const seenChildTypes = new Set<FernIr.TypeId>();
@@ -840,14 +842,14 @@ export class XmlObjectGenerator {
     private pickBuilderName(xmlName: string, taken: Set<string>): string {
         const camel = this.context.case.camelUnsafe(xmlName);
         let name = camel;
-        if (taken.has(name)) {
+        if (taken.has(name.toLowerCase())) {
             const prefixed = `add${this.context.case.pascalUnsafe(xmlName)}`;
             name = prefixed;
-            for (let suffix = 2; taken.has(name); suffix++) {
+            for (let suffix = 2; taken.has(name.toLowerCase()); suffix++) {
                 name = `${prefixed}${suffix}`;
             }
         }
-        taken.add(name);
+        taken.add(name.toLowerCase());
         return name;
     }
 

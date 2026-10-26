@@ -170,7 +170,6 @@ public final class AuthorizeRequest {
 
         private Optional<String> codeChallengeMethod = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -250,6 +249,20 @@ public final class AuthorizeRequest {
         public AuthorizeRequest build() {
             return new AuthorizeRequest(
                     clientId, redirectUri, codeChallenge, codeChallengeMethod, scope, state, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("response_type")
+                    || key.equalsIgnoreCase("client_id")
+                    || key.equalsIgnoreCase("redirect_uri")
+                    || key.equalsIgnoreCase("code_challenge")
+                    || key.equalsIgnoreCase("code_challenge_method")
+                    || key.equalsIgnoreCase("scope")
+                    || key.equalsIgnoreCase("state")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

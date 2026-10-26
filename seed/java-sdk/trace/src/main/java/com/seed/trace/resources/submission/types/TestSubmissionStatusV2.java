@@ -136,7 +136,6 @@ public final class TestSubmissionStatusV2 {
 
         private List<TestSubmissionUpdate> updates = new ArrayList<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -198,6 +197,17 @@ public final class TestSubmissionStatusV2 {
         @java.lang.Override
         public TestSubmissionStatusV2 build() {
             return new TestSubmissionStatusV2(updates, problemId, problemVersion, problemInfo, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("updates")
+                    || key.equalsIgnoreCase("problemId")
+                    || key.equalsIgnoreCase("problemVersion")
+                    || key.equalsIgnoreCase("problemInfo")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

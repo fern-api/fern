@@ -104,7 +104,6 @@ public final class StoreTracedTestCaseRequest {
 
         private List<TraceResponse> traceResponses = new ArrayList<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -150,6 +149,14 @@ public final class StoreTracedTestCaseRequest {
         @java.lang.Override
         public StoreTracedTestCaseRequest build() {
             return new StoreTracedTestCaseRequest(result, traceResponses, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("result") || key.equalsIgnoreCase("traceResponses")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

@@ -10,6 +10,12 @@ import {
     ts
 } from "ts-morph";
 
+export declare namespace GeneratedGenericAPISdkErrorImpl {
+    export interface Init {
+        errorClassName: string;
+    }
+}
+
 export class GeneratedGenericAPISdkErrorImpl
     extends AbstractErrorClassGenerator<FileContext>
     implements GeneratedGenericAPISdkError
@@ -29,7 +35,12 @@ export class GeneratedGenericAPISdkErrorImpl
 
     private static readonly BUILD_MESSAGE_FUNCTION_NAME = "buildMessage";
     private static readonly REQUEST_ID_PROPERTY_NAME = "requestId";
-    private static readonly REQUEST_ID_HEADER = "x-request-id";
+    private static readonly REQUEST_ID_HEADER = "X-Request-Id";
+    private static readonly REQUEST_ID_HEADER_FALLBACK_PATTERN = "/request[-_]?id$/i";
+
+    constructor({ errorClassName }: GeneratedGenericAPISdkErrorImpl.Init) {
+        super({ errorClassName });
+    }
 
     public writeToFile(context: FileContext): void {
         super.writeToSourceFile(context);
@@ -338,7 +349,23 @@ export class GeneratedGenericAPISdkErrorImpl
             returnType: "string | undefined",
             scope: Scope.Public,
             statements: [
-                `return this.${GeneratedGenericAPISdkErrorImpl.RAW_RESPONSE_PROPERTY_NAME}?.headers?.get("${GeneratedGenericAPISdkErrorImpl.REQUEST_ID_HEADER}") ?? undefined;`
+                [
+                    `const headers = this.${GeneratedGenericAPISdkErrorImpl.RAW_RESPONSE_PROPERTY_NAME}?.headers;`,
+                    "if (headers == null) {",
+                    "    return undefined;",
+                    "}",
+                    `const requestId = headers.get(${JSON.stringify(GeneratedGenericAPISdkErrorImpl.REQUEST_ID_HEADER)});`,
+                    "if (requestId != null) {",
+                    "    return requestId;",
+                    "}",
+                    "let fallback: string | undefined;",
+                    "headers.forEach((value, name) => {",
+                    `    if (fallback === undefined && ${GeneratedGenericAPISdkErrorImpl.REQUEST_ID_HEADER_FALLBACK_PATTERN}.test(name)) {`,
+                    "        fallback = value;",
+                    "    }",
+                    "});",
+                    "return fallback;"
+                ].join("\n")
             ]
         });
     }

@@ -80,7 +80,6 @@ public final class AssetReportGetResponse {
     public static final class Builder implements RequestIdStage, _FinalStage {
         private String requestId;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -101,6 +100,14 @@ public final class AssetReportGetResponse {
         @java.lang.Override
         public AssetReportGetResponse build() {
             return new AssetReportGetResponse(requestId, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("request_id")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

@@ -8,7 +8,7 @@ buildCli({
         AUTH0_CLIENT_ID: "4QiMvRvRUYpnycrVDK2M59hhJ6kcHYFQ",
         DEFAULT_FIDDLE_ORIGIN: "https://fiddle-coordinator-dev2.buildwithfern.com",
         DEFAULT_SDK_GEN_API_ORIGIN: "https://sdk-gen.postman-beta.tech",
-        DEFAULT_USE_SDK_CONFIG: "false",
+        DEFAULT_USE_SDK_CONFIG: "true",
         DEFAULT_VENUS_ORIGIN: "https://sdk-gen-venus.postman-beta.tech",
         DEFAULT_FDR_ORIGIN: "https://sdk-gen-fern-definition-registry.postman-beta.tech",
         DEFAULT_FAI_ORIGIN: "https://sdk-gen-fern-fai.postman-beta.tech",
@@ -24,7 +24,6 @@ buildCli({
         SENTRY_DSN: process.env.SENTRY_DSN ?? "",
         SENTRY_ENVIRONMENT: "beta",
         DOCS_DOMAIN_SUFFIX: "docs.dev.buildwithfern.com", // intentional, we do not have a beta docs domain yet
-        DOCS_PREVIEW_BUCKET: "https://dev2-local-preview-bundle2.s3.amazonaws.com/",
         APP_DOCS_TAR_PREVIEW_BUCKET: "https://dev2-local-preview-bundle4.s3.amazonaws.com/",
         APP_DOCS_PREVIEW_BUCKET: "https://dev2-local-preview-bundle3.s3.amazonaws.com/",
         APP_DOCS_ASTRO_PREVIEW_BUCKET: "https://dev2-local-preview-astro-bundle.s3.amazonaws.com/",

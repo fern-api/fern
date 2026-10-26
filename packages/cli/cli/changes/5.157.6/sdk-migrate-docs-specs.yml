@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Restore the docs.yml step of `fern sdk migrate`. It adds `specs` (paths, namespaces, overlays, overrides, and import settings) to the API reference sections that use the migrated API, so docs no longer depend on generators.yml. All specs of an API stay in one section, so docs merge them into one API reference as before. The docs edits are committed together with the SDK Config and rolled back with it if anything fails.
+  type: fix

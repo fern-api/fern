@@ -239,6 +239,14 @@ export interface ParseOpenAPIOptions {
      * OpenAPI document before it reaches either parser. Undefined disables it.
      */
     errorResponses: generatorsYml.OpenApiErrorResponsesSchema | undefined;
+
+    /**
+     * True when `errorResponses` comes from the API-wide `api.settings` (shared by every spec of
+     * the API) rather than from a single spec. In that case the configured error body schema and
+     * the status-code errors produced from it are declared in the root package instead of being
+     * duplicated under each spec's namespace. Defaults to false.
+     */
+    sharedErrorResponses: boolean;
 }
 
 export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
@@ -289,7 +297,8 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     respectPerSpecBasePath: false,
     respectOperationIdWordBoundaries: false,
     namespacedErrors: false,
-    errorResponses: undefined
+    errorResponses: undefined,
+    sharedErrorResponses: false
 };
 
 function mergeOptions<T extends object>(params: {

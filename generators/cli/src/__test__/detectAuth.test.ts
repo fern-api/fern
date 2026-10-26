@@ -30,11 +30,16 @@ const bearer = (overrides: { key: string; tokenEnvVar?: string }): FernIr.AuthSc
         docs: undefined
     });
 
-const header = (overrides: { key: string; headerName?: string; headerEnvVar?: string }): FernIr.AuthScheme =>
+const header = (overrides: {
+    key: string;
+    headerName?: string;
+    headerEnvVar?: string;
+    prefix?: string;
+}): FernIr.AuthScheme =>
     FernIr.AuthScheme.header({
         key: overrides.key,
         name: overrides.headerName ?? "X-Api-Key",
-        prefix: undefined,
+        prefix: overrides.prefix,
         headerEnvVar: overrides.headerEnvVar,
         headerPlaceholder: undefined,
         valueType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
@@ -43,6 +48,8 @@ const header = (overrides: { key: string; headerName?: string; headerEnvVar?: st
 
 const basic = (overrides: {
     key: string;
+    username?: string;
+    password?: string;
     usernameEnvVar?: string;
     passwordEnvVar?: string;
     usernameOmit?: boolean;
@@ -50,11 +57,11 @@ const basic = (overrides: {
 }): FernIr.AuthScheme =>
     FernIr.AuthScheme.basic({
         key: overrides.key,
-        username: "username",
+        username: overrides.username ?? "username",
         usernameEnvVar: overrides.usernameEnvVar,
         usernameOmit: overrides.usernameOmit,
         usernamePlaceholder: undefined,
-        password: "password",
+        password: overrides.password ?? "password",
         passwordEnvVar: overrides.passwordEnvVar,
         passwordOmit: overrides.passwordOmit,
         passwordPlaceholder: undefined,
@@ -109,6 +116,43 @@ describe("detectAuthBindings", () => {
         );
     });
 
+    it("header scheme with a prefix registers it on the ApiKeyAuth builder", () => {
+        const bindings = detectAuthBindings({
+            auth: auth(header({ key: "apiKey", headerEnvVar: "API_KEY_VALUE", prefix: "Key" })),
+            binaryName: "close"
+        });
+        expect(bindings[0]?.rustCall).toBe(
+            '.auth(ApiKeyAuth::new("apiKey").source(AuthCredentialSource::any(vec![AuthCredentialSource::cli("api-key"), AuthCredentialSource::from_env("API_KEY_VALUE")])).prefix("Key"))'
+        );
+        expect(bindings[0]?.envVars).toEqual(["API_KEY_VALUE"]);
+        expect(bindings[0]?.headerAuth).toEqual({ headerName: "X-Api-Key", envVar: "API_KEY_VALUE", prefix: "Key" });
+    });
+
+    it("header scheme prefix is trimmed, and a blank prefix sends the raw credential", () => {
+        const [padded, blank, absent] = detectAuthBindings({
+            auth: auth(
+                header({ key: "A", headerName: "X-A", prefix: " Token " }),
+                header({ key: "B", headerName: "X-B", prefix: "  " }),
+                header({ key: "C", headerName: "X-C" })
+            ),
+            binaryName: "close"
+        });
+        expect(padded?.rustCall).toContain(')).prefix("Token"))');
+        expect(padded?.headerAuth).toMatchObject({ headerName: "X-A", prefix: "Token" });
+        for (const binding of [blank, absent]) {
+            expect(binding?.rustCall).not.toContain(".prefix(");
+            expect(binding?.headerAuth?.prefix).toBeNull();
+        }
+    });
+
+    it("header scheme prefix is emitted as an escaped Rust string literal", () => {
+        const [binding] = detectAuthBindings({
+            auth: auth(header({ key: "apiKey", prefix: 'Key"x' })),
+            binaryName: "close"
+        });
+        expect(binding?.rustCall).toContain('.prefix("Key\\"x"))');
+    });
+
     it("multiple header schemes disambiguate the CLI flag from each key", () => {
         const bindings = detectAuthBindings({
             auth: auth(
@@ -144,6 +188,24 @@ describe("detectAuthBindings", () => {
         // unmatchable.
         expect(bindings[0]?.basicHalf).toBe("both");
         expect(bindings[0]?.envVars).toEqual(["CLOSE_USER", "CLOSE_PASS"]);
+    });
+
+    it("basic auth with named halves: emits prompt labels from the spec's names", () => {
+        const bindings = detectAuthBindings({
+            auth: auth(
+                basic({
+                    key: "accountSid_authToken",
+                    username: "accountSid",
+                    password: "auth_token",
+                    usernameEnvVar: "TWILIO_ACCOUNT_SID",
+                    passwordEnvVar: "TWILIO_AUTH_TOKEN"
+                })
+            ),
+            binaryName: "twilio"
+        });
+        expect(bindings[0]?.rustCall).toBe(
+            '.auth(BasicAuth::new("accountSid_authToken").username_env("TWILIO_ACCOUNT_SID").password_env("TWILIO_AUTH_TOKEN").username_label("Account Sid").password_label("Auth Token"))'
+        );
     });
 
     it("basic auth with passwordOmit (Close pattern): emits auth_provider with BasicAuthProvider::username_only", () => {

@@ -109,7 +109,6 @@ public final class GenericCreateProblemError {
 
         private String stacktrace;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -146,6 +145,14 @@ public final class GenericCreateProblemError {
         @java.lang.Override
         public GenericCreateProblemError build() {
             return new GenericCreateProblemError(message, type, stacktrace, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("message") || key.equalsIgnoreCase("type") || key.equalsIgnoreCase("stacktrace")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

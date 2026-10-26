@@ -1536,7 +1536,8 @@
                             "unsafeName": "BearerAuth",
                             "safeName": "BearerAuth"
                         }
-                    }
+                    },
+                    "requirement": "ANY"
                 },
                 "declaration": {
                     "name": {
@@ -1743,6 +1744,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_users.updateUserProfile": {
@@ -1785,7 +1787,8 @@
                             "unsafeName": "BearerAuth",
                             "safeName": "BearerAuth"
                         }
-                    }
+                    },
+                    "requirement": "ANY"
                 },
                 "declaration": {
                     "name": {
@@ -1901,6 +1904,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             }
         },

@@ -117,7 +117,6 @@ public final class PostWithObjectBody {
 
     private ObjectWithOptionalField nestedObject;
 
-    @JsonAnySetter
     private Map<String, Object> additionalProperties = new HashMap<>();
 
     private Builder() {
@@ -155,6 +154,14 @@ public final class PostWithObjectBody {
     @java.lang.Override
     public PostWithObjectBody build() {
       return new PostWithObjectBody(string, integer, nestedObject, additionalProperties);
+    }
+
+    @JsonAnySetter
+    private void putAdditionalPropertyFromJson(String key, Object value) {
+      if (key.equalsIgnoreCase("string") || key.equalsIgnoreCase("integer") || key.equalsIgnoreCase("NestedObject")) {
+        return;
+      }
+      this.additionalProperties.put(key, value);
     }
 
     @java.lang.Override

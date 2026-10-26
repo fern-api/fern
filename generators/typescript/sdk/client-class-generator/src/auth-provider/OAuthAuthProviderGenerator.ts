@@ -452,7 +452,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                 parameters: [
                     {
                         name: "options?",
-                        type: `Partial<${CLASS_NAME}.ClientCredentials & BaseClientOptions>`
+                        type: `Partial<${CLASS_NAME}.ClientCredentials & ${CLASS_NAME}.TokenOverride & BaseClientOptions>`
                     }
                 ]
             },
@@ -797,7 +797,10 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         const clientIdCheck = `options?.${wrapperAccess}[CLIENT_ID_PARAM] != null${clientIdEnvCheck}`;
         const clientSecretCheck = `options?.${wrapperAccess}[CLIENT_SECRET_PARAM] != null${clientSecretEnvCheck}`;
 
-        return `return (${clientIdCheck}) && (${clientSecretCheck});`;
+        return `if (${TOKEN_OVERRIDE_CLASS_NAME}.canCreate(options)) {
+            return true;
+        }
+        return (${clientIdCheck}) && (${clientSecretCheck});`;
     }
 
     private generateClientIdSupplierStatements(clientIdEnvVar: string | undefined, context: FileContext): string {

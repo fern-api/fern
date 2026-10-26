@@ -257,7 +257,6 @@ public final class ProblemInfo {
 
         private Map<Language, ProblemFiles> files = new LinkedHashMap<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -412,6 +411,23 @@ public final class ProblemInfo {
                     methodName,
                     supportsCustomTestCases,
                     additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("problemId")
+                    || key.equalsIgnoreCase("problemDescription")
+                    || key.equalsIgnoreCase("problemName")
+                    || key.equalsIgnoreCase("problemVersion")
+                    || key.equalsIgnoreCase("files")
+                    || key.equalsIgnoreCase("inputParams")
+                    || key.equalsIgnoreCase("outputType")
+                    || key.equalsIgnoreCase("testcases")
+                    || key.equalsIgnoreCase("methodName")
+                    || key.equalsIgnoreCase("supportsCustomTestCases")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

@@ -6,3 +6,8 @@ export { stripBasePathFromPaths } from "./openapi/v3/extensions/getFernBasePath.
 export { applyTwilioVisibility } from "./openapi/v3/extensions/twilioVisibility.js";
 export { getParseOptions, type ParseOpenAPIOptions, type VisibilityFilter } from "./options.js";
 export { type Document, type OpenAPIDocument, parse } from "./parse.js";
+export {
+    DEFAULT_ERROR_RESPONSE_TYPE_NAME,
+    getErrorResponsesSchemaName,
+    getSharedErrorResponsesSchemaName
+} from "./utils/getErrorResponsesSchemaName.js";

@@ -94,7 +94,6 @@ public final class ErrorEvent {
 
         private String errorMessage;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -123,6 +122,14 @@ public final class ErrorEvent {
         @java.lang.Override
         public ErrorEvent build() {
             return new ErrorEvent(errorCode, errorMessage, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("errorCode") || key.equalsIgnoreCase("errorMessage")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

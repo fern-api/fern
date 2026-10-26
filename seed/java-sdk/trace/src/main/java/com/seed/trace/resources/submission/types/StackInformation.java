@@ -96,7 +96,6 @@ public final class StackInformation {
 
         private Optional<StackFrame> topStackFrame = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -131,6 +130,14 @@ public final class StackInformation {
         @java.lang.Override
         public StackInformation build() {
             return new StackInformation(numStackFrames, topStackFrame, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("numStackFrames") || key.equalsIgnoreCase("topStackFrame")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

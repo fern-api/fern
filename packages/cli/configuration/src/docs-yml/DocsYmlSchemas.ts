@@ -116,6 +116,24 @@ export const ProductSwitcherThemeConfig = z.enum(["default", "toggle", "tabs"]);
 
 export const LanguageSwitcherThemeConfig = z.enum(["default", "minimal"]);
 
+export const CodeBlockTheme = z.enum([
+    "github-dark",
+    "github-dark-default",
+    "github-dark-dimmed",
+    "github-dark-high-contrast",
+    "github-light",
+    "github-light-default",
+    "github-light-high-contrast",
+    "material-theme-darker",
+    "min-dark",
+    "min-light"
+]);
+
+export const CodeBlocksThemeConfig = z.object({
+    light: CodeBlockTheme.optional(),
+    dark: CodeBlockTheme.optional()
+});
+
 export const SiteSwitcherThemeConfig = z.object({
     enabled: z.boolean().optional(),
     order: z.array(z.string()).optional(),
@@ -320,7 +338,8 @@ export const ThemeConfig = z.object({
     "footer-nav": FooterNavThemeConfig.optional(),
     "language-switcher": LanguageSwitcherThemeConfig.optional(),
     "product-switcher": ProductSwitcherThemeConfig.optional(),
-    "site-switcher": SiteSwitcherThemeConfig.optional()
+    "site-switcher": SiteSwitcherThemeConfig.optional(),
+    "code-blocks": CodeBlocksThemeConfig.optional()
 });
 
 // ===== Layout schemas =====
@@ -369,6 +388,7 @@ export const DocsSettingsConfig = z.object({
     "use-javascript-as-typescript": z.boolean().optional(),
     "disable-explorer-proxy": z.boolean().optional(),
     "disable-analytics": z.boolean().optional(),
+    "require-analytics-consent": z.boolean().optional(),
     language: Language.optional(),
     "folder-title-source": TitleSource.optional(),
     "substitute-env-vars": z.boolean().optional(),
@@ -488,6 +508,7 @@ export const SnippetsConfiguration = z.object({
     csharp: SnippetLanguageConfiguration.optional(),
     php: SnippetLanguageConfiguration.optional(),
     swift: SnippetLanguageConfiguration.optional(),
+    cli: SnippetLanguageConfiguration.optional(),
     rust: SnippetLanguageConfiguration.optional()
 });
 

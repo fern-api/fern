@@ -22,6 +22,7 @@ export const baseGoCustomConfigSchema = z.strictObject({
     omitEmptyRequestWrappers: z.boolean().optional(),
     respectOptionalRequestBody: z.boolean().optional(),
     union: z.enum(["v0", "v1"]).optional(),
+    xmlTextFirstBuilders: z.boolean().optional(),
     useReaderForBytesRequest: z.boolean().optional(),
     useDefaultRequestParameterValues: z.boolean().optional(),
     gettersPassByValue: z.boolean().optional(),

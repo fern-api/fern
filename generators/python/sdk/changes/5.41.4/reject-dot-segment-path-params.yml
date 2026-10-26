@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Path parameter values of exactly `.` or `..` now raise a `ValueError` before the request is
+    sent. These are dot-segments that httpx resolves, so they could change which endpoint the
+    request was sent to. When `encode_path_params` is off (the default), values are not
+    percent-encoded, so any `.` or `..` segment inside the value (including `%2e` forms) is also
+    rejected.
+  type: fix

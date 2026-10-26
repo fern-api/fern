@@ -55,8 +55,13 @@ export async function generateEmbeddedSdk(args: {
     outputDir: string;
     binaryName: string;
     typesCrateName: string;
+    /**
+     * Forwarded as the Rust SDK's `crateVersion`, which also feeds its
+     * `X-Fern-SDK-Version` header. Unset keeps that generator's own default.
+     */
+    crateVersion?: string;
 }): Promise<EmbeddedSdkResult> {
-    const { irFilepath, outputDir, binaryName, typesCrateName } = args;
+    const { irFilepath, outputDir, binaryName, typesCrateName, crateVersion } = args;
     const sdkCrateName = `${binaryName}-sdk`;
     const sdkOutputDir = path.join(outputDir, sdkCrateName);
     await mkdir(sdkOutputDir, { recursive: true });
@@ -115,7 +120,8 @@ export async function generateEmbeddedSdk(args: {
         },
         customConfig: {
             crateName: sdkCrateName.replace(/-/g, "_"),
-            cliEmbedded: true
+            cliEmbedded: true,
+            ...(crateVersion != null ? { crateVersion } : {})
         },
         workspaceName: binaryName,
         organization: "",

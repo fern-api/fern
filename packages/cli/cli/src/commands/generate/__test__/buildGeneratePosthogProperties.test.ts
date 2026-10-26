@@ -52,7 +52,7 @@ function createGeneratorsConfiguration(
 }
 
 const pythonSdk = createGenerator("fernapi/fern-python-sdk", "4.0.0");
-const typescriptSdk = createGenerator("fernapi/fern-typescript-sdk", "4.1.0");
+const typescriptSdk = createGenerator("fernapi/fern-typescript-sdk", "3.86.0");
 const goSdk = createGenerator("fernapi/fern-go-sdk", "1.2.3");
 
 const legacyWorkspace = {
@@ -112,7 +112,7 @@ describe("buildGeneratePosthogProperties", () => {
                 kind: "legacy",
                 group: "sdks",
                 name: "fernapi/fern-typescript-sdk",
-                version: "4.1.0",
+                version: "3.86.0",
                 outputMode: "downloadFiles",
                 sdkGenApiEnabled: false
             }
@@ -165,7 +165,7 @@ describe("buildGeneratePosthogProperties", () => {
                 name: "fernapi/fern-go-sdk",
                 version: "1.2.3",
                 outputMode: "downloadFiles",
-                sdkGenApiEnabled: false
+                sdkGenApiEnabled: true
             },
             {
                 workspace: "payments",
@@ -174,7 +174,7 @@ describe("buildGeneratePosthogProperties", () => {
                 name: "fernapi/fern-python-sdk",
                 version: "6.0.0",
                 outputMode: "downloadFiles",
-                sdkGenApiEnabled: false
+                sdkGenApiEnabled: true
             }
         ]);
         expect(requestedGeneratorNames(properties)).toEqual([
@@ -262,7 +262,7 @@ describe("buildGeneratePosthogProperties", () => {
                         },
                         {
                             name: "fernapi/fern-typescript-sdk",
-                            version: "4.1.0",
+                            version: "3.86.0",
                             outputMode: "downloadFiles",
                             config: { secretLookingOption: "kept-out-of-requested-generators" }
                         }
@@ -270,6 +270,27 @@ describe("buildGeneratePosthogProperties", () => {
                 ]
             }
         ]);
+    });
+
+    it("reports post-cutover generators as routed without the flag", () => {
+        const postCutoverWorkspace = {
+            workspaceName: "payments",
+            generatorsConfiguration: createGeneratorsConfiguration([
+                { groupName: "sdks", generators: [createGenerator("fernapi/fern-typescript-sdk", "4.1.0"), pythonSdk] }
+            ])
+        } satisfies GenerationTelemetryInput["workspace"];
+
+        const properties = build({
+            generations: [{ kind: "legacy", workspace: postCutoverWorkspace, resolvedGroupNames: ["sdks"] }]
+        });
+
+        expect(
+            properties.requestedGenerators.map(({ name, sdkGenApiEnabled }) => ({ name, sdkGenApiEnabled }))
+        ).toEqual([
+            { name: "fernapi/fern-typescript-sdk", sdkGenApiEnabled: true },
+            { name: "fernapi/fern-python-sdk", sdkGenApiEnabled: false }
+        ]);
+        expect(properties.sdkGenApiEnabled).toBe(true);
     });
 
     it("reports the sdk-gen-api flag per generator and whether any generator is routed", () => {

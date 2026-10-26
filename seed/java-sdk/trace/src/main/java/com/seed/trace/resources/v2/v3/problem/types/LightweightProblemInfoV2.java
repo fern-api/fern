@@ -136,7 +136,6 @@ public final class LightweightProblemInfoV2 {
 
         private Set<VariableType> variableTypes = new LinkedHashSet<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -199,6 +198,17 @@ public final class LightweightProblemInfoV2 {
         public LightweightProblemInfoV2 build() {
             return new LightweightProblemInfoV2(
                     problemId, problemName, problemVersion, variableTypes, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("problemId")
+                    || key.equalsIgnoreCase("problemName")
+                    || key.equalsIgnoreCase("problemVersion")
+                    || key.equalsIgnoreCase("variableTypes")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

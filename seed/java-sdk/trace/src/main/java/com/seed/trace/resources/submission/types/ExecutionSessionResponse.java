@@ -133,7 +133,6 @@ public final class ExecutionSessionResponse {
 
         private Optional<String> executionSessionUrl = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -184,6 +183,17 @@ public final class ExecutionSessionResponse {
         @java.lang.Override
         public ExecutionSessionResponse build() {
             return new ExecutionSessionResponse(sessionId, executionSessionUrl, language, status, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("sessionId")
+                    || key.equalsIgnoreCase("executionSessionUrl")
+                    || key.equalsIgnoreCase("language")
+                    || key.equalsIgnoreCase("status")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

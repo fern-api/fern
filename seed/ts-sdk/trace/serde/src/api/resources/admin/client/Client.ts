@@ -64,7 +64,7 @@ export class AdminClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/admin/store-test-submission-status/${core.url.encodePathParam(serializers.SubmissionId.jsonOrThrow(submissionId, { omitUndefined: true }))}`,
+                `/admin/store-test-submission-status/${core.url.encodePathParam(serializers.SubmissionId.jsonOrThrow(submissionId, { omitUndefined: true }), errors.SeedTraceError)}`,
             ),
             method: "POST",
             headers: _headers,
@@ -148,7 +148,7 @@ export class AdminClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/admin/store-test-submission-status-v2/${core.url.encodePathParam(serializers.SubmissionId.jsonOrThrow(submissionId, { omitUndefined: true }))}`,
+                `/admin/store-test-submission-status-v2/${core.url.encodePathParam(serializers.SubmissionId.jsonOrThrow(submissionId, { omitUndefined: true }), errors.SeedTraceError)}`,
             ),
             method: "POST",
             headers: _headers,
@@ -228,7 +228,7 @@ export class AdminClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/admin/store-workspace-submission-status/${core.url.encodePathParam(serializers.SubmissionId.jsonOrThrow(submissionId, { omitUndefined: true }))}`,
+                `/admin/store-workspace-submission-status/${core.url.encodePathParam(serializers.SubmissionId.jsonOrThrow(submissionId, { omitUndefined: true }), errors.SeedTraceError)}`,
             ),
             method: "POST",
             headers: _headers,
@@ -312,7 +312,7 @@ export class AdminClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/admin/store-workspace-submission-status-v2/${core.url.encodePathParam(serializers.SubmissionId.jsonOrThrow(submissionId, { omitUndefined: true }))}`,
+                `/admin/store-workspace-submission-status-v2/${core.url.encodePathParam(serializers.SubmissionId.jsonOrThrow(submissionId, { omitUndefined: true }), errors.SeedTraceError)}`,
             ),
             method: "POST",
             headers: _headers,
@@ -480,7 +480,7 @@ export class AdminClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/admin/store-test-trace/submission/${core.url.encodePathParam(serializers.SubmissionId.jsonOrThrow(submissionId, { omitUndefined: true }))}/testCase/${core.url.encodePathParam(testCaseId)}`,
+                `/admin/store-test-trace/submission/${core.url.encodePathParam(serializers.SubmissionId.jsonOrThrow(submissionId, { omitUndefined: true }), errors.SeedTraceError)}/testCase/${core.url.encodePathParam(testCaseId, errors.SeedTraceError)}`,
             ),
             method: "POST",
             headers: _headers,
@@ -637,7 +637,7 @@ export class AdminClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/admin/store-test-trace-v2/submission/${core.url.encodePathParam(serializers.SubmissionId.jsonOrThrow(submissionId, { omitUndefined: true }))}/testCase/${core.url.encodePathParam(serializers.v2.TestCaseId.jsonOrThrow(testCaseId, { omitUndefined: true }))}`,
+                `/admin/store-test-trace-v2/submission/${core.url.encodePathParam(serializers.SubmissionId.jsonOrThrow(submissionId, { omitUndefined: true }), errors.SeedTraceError)}/testCase/${core.url.encodePathParam(serializers.v2.TestCaseId.jsonOrThrow(testCaseId, { omitUndefined: true }), errors.SeedTraceError)}`,
             ),
             method: "POST",
             headers: _headers,
@@ -797,7 +797,7 @@ export class AdminClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/admin/store-workspace-trace/submission/${core.url.encodePathParam(serializers.SubmissionId.jsonOrThrow(submissionId, { omitUndefined: true }))}`,
+                `/admin/store-workspace-trace/submission/${core.url.encodePathParam(serializers.SubmissionId.jsonOrThrow(submissionId, { omitUndefined: true }), errors.SeedTraceError)}`,
             ),
             method: "POST",
             headers: _headers,
@@ -951,7 +951,7 @@ export class AdminClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.SeedTraceEnvironment.Prod,
-                `/admin/store-workspace-trace-v2/submission/${core.url.encodePathParam(serializers.SubmissionId.jsonOrThrow(submissionId, { omitUndefined: true }))}`,
+                `/admin/store-workspace-trace-v2/submission/${core.url.encodePathParam(serializers.SubmissionId.jsonOrThrow(submissionId, { omitUndefined: true }), errors.SeedTraceError)}`,
             ),
             method: "POST",
             headers: _headers,

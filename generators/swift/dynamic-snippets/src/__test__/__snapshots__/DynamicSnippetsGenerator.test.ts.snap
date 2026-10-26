@@ -361,7 +361,10 @@ exports[`snippets (default) > multi-url-environment > 'Custom environment' 1`] =
 import Acme
 
 private func main() async throws {
-    let client = AcmeClient(token: "<YOUR_API_KEY>")
+    let client = AcmeClient(
+        baseURL: "https://custom.ec2.aws.com",
+        token: "<YOUR_API_KEY>"
+    )
 
     _ = try await client.s3.getPresignedURL(request: .init(s3Key: "xyz"))
 }
@@ -375,7 +378,10 @@ exports[`snippets (default) > multi-url-environment > 'Invalid multi url environ
 import Acme
 
 private func main() async throws {
-    let client = AcmeClient(token: "<YOUR_API_KEY>")
+    let client = AcmeClient(
+        baseURL: "https://custom.ec2.aws.com",
+        token: "<YOUR_API_KEY>"
+    )
 
     _ = try await client.s3.getPresignedURL(request: .init(s3Key: "xyz"))
 }
@@ -389,7 +395,10 @@ exports[`snippets (default) > multi-url-environment > 'Production environment' 1
 import Acme
 
 private func main() async throws {
-    let client = AcmeClient(token: "<YOUR_API_KEY>")
+    let client = AcmeClient(
+        baseURL: "https://ec2.aws.com",
+        token: "<YOUR_API_KEY>"
+    )
 
     _ = try await client.s3.getPresignedURL(request: .init(s3Key: "xyz"))
 }
@@ -403,7 +412,10 @@ exports[`snippets (default) > multi-url-environment > 'Staging environment' 1`] 
 import Acme
 
 private func main() async throws {
-    let client = AcmeClient(token: "<YOUR_API_KEY>")
+    let client = AcmeClient(
+        baseURL: "https://staging.ec2.aws.com",
+        token: "<YOUR_API_KEY>"
+    )
 
     _ = try await client.s3.getPresignedURL(request: .init(s3Key: "xyz"))
 }
@@ -413,17 +425,13 @@ try await main()
 `;
 
 exports[`snippets (default) > multi-url-environment > 'Unrecognized environment' 1`] = `
-"import Foundation
-import Acme
-
-private func main() async throws {
-    let client = AcmeClient(token: "<YOUR_API_KEY>")
-
-    _ = try await client.s3.getPresignedURL(request: .init(s3Key: "xyz"))
-}
-
-try await main()
-"
+"[
+  {
+    "severity": "CRITICAL",
+    "path": [],
+    "message": "Environment \\"Unrecognized\\" was not found"
+  }
+]"
 `;
 
 exports[`snippets (default) > nullable > 'Body properties' 1`] = `

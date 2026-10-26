@@ -137,7 +137,6 @@ public final class Playlist implements IPlaylistCreateRequest {
 
         private List<String> problems = new ArrayList<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -199,6 +198,17 @@ public final class Playlist implements IPlaylistCreateRequest {
         @java.lang.Override
         public Playlist build() {
             return new Playlist(name, problems, playlistId, ownerId, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("name")
+                    || key.equalsIgnoreCase("problems")
+                    || key.equalsIgnoreCase("playlist_id")
+                    || key.equalsIgnoreCase("owner-id")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

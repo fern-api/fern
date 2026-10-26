@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "../../seed"
+
 module Seed
   module Types
     # Too many fields for a one-parameter-per-field constructor; exercises builder-based fromXml.

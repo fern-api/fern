@@ -934,6 +934,16 @@
               "type": "null"
             }
           ]
+        },
+        "cli": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.SnippetLanguageConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false

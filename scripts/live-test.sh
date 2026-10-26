@@ -2,6 +2,8 @@
 
 set -e
 
+trap 'rm -rf "${test_dir:-}" "${register_dir:-}" "${install_dir:-}"' EXIT
+
 cli_path="$1"
 token="$2"
 test_tarball="${3:-false}"
@@ -33,7 +35,7 @@ cd "$test_dir"
 echo "Running Fern Commands in $test_dir!"
 set -x
 
-node "$cli_path" init --organization fern --fern-definition
+node "$cli_path" init --organization fern
 
 node "$cli_path" add fern-java-sdk
 node "$cli_path" add fern-python-sdk
@@ -41,15 +43,16 @@ node "$cli_path" add fern-python-sdk
 echo "Testing fern upgrade command..."
 node "$cli_path" upgrade --yes --log-level debug
 
-node "$cli_path" generate --log-level debug
+# sdk-gen-api requires an explicit SDK version.
+node "$cli_path" generate --version 0.0.1 --log-level debug
+
+# fern register only supports Fern Definitions.
+register_dir="$(mktemp -d)"
+cd "$register_dir"
+node "$cli_path" init --organization fern --fern-definition
 
 set +x
 
 node "$cli_path" register --log-level debug
 
 echo "All commands completed successfully!"
-
-rm -rf "$test_dir"
-if [ "$test_tarball" = "true" ] && [ -n "$install_dir" ]; then
-    rm -rf "$install_dir"
-fi

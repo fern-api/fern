@@ -3,7 +3,7 @@ import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-a
 import { mkdir, writeFile } from "fs/promises";
 
 import { runFernCli } from "../../utils/runFernCli.js";
-import { init } from "../init/init.js";
+import { init, LEGACY_CONFIG_ENV } from "../init/init.js";
 
 const FERNIGNORE_FILECONTENTS = `
 fern.js
@@ -29,7 +29,7 @@ Practice schema-first API design with Fern
 describe("fern generate --local", () => {
     // eslint-disable-next-line jest/expect-expect
     it.concurrent("Keep files listed in .fernignore from unmodified", async ({ signal }) => {
-        const pathOfDirectory = await init({ signal });
+        const pathOfDirectory = await init({ env: LEGACY_CONFIG_ENV, signal });
         await runFernCli(["generate", "--local", "--keepDocker"], { cwd: pathOfDirectory, signal });
 
         // write custom files and override
@@ -56,7 +56,7 @@ describe("fern generate --local", () => {
 
     // eslint-disable-next-line jest/expect-expect
     it.concurrent("Prevent initial generation of files listed in .fernignore", async ({ signal }) => {
-        const pathOfDirectory = await init({ signal });
+        const pathOfDirectory = await init({ env: LEGACY_CONFIG_ENV, signal });
 
         // Create output directory with .fernignore BEFORE first generation
         const absolutePathToLocalOutput = join(pathOfDirectory, RelativeFilePath.of("sdks/typescript"));

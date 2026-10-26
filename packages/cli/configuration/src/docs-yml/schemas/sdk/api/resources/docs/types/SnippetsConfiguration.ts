@@ -12,4 +12,5 @@ export interface SnippetsConfiguration {
     php?: FernDocsConfig.SnippetLanguageConfiguration;
     swift?: FernDocsConfig.SnippetLanguageConfiguration;
     rust?: FernDocsConfig.SnippetLanguageConfiguration;
+    cli?: FernDocsConfig.SnippetLanguageConfiguration;
 }

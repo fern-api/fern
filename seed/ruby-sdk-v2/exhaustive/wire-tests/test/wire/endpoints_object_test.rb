@@ -8,7 +8,8 @@ class EndpointsObjectWireTest < WireMockTestCase
 
     @client = Seed::MyClient.new(
       token: "<token>",
-      base_url: WIREMOCK_BASE_URL
+      base_url: WIREMOCK_BASE_URL,
+      max_retries: 0
     )
   end
 
@@ -235,7 +236,7 @@ class EndpointsObjectWireTest < WireMockTestCase
     result = @client.endpoints.object.get_and_return_nested_with_required_field_as_list(
       request: [{
         string: "string",
-        nested_object: {
+        NestedObject: {
           string: "string",
           integer: 1,
           long: 1000000,
@@ -254,7 +255,7 @@ class EndpointsObjectWireTest < WireMockTestCase
         }
       }, {
         string: "string",
-        nested_object: {
+        NestedObject: {
           string: "string",
           integer: 1,
           long: 1000000,
@@ -417,7 +418,7 @@ class EndpointsObjectWireTest < WireMockTestCase
       required_string: "hello",
       required_object: {
         string: "nested",
-        nested_object: {}
+        NestedObject: {}
       },
       request_options: {
         additional_headers: {

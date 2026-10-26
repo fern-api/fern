@@ -1,6 +1,6 @@
+import { errorMessageOrString } from "@fern-api/core-utils";
 import { CliError } from "@fern-api/task-context";
 import latestVersion from "latest-version";
-
 import { CliEnvironment } from "../CliEnvironment.js";
 
 export async function getLatestVersionOfCli({
@@ -21,7 +21,7 @@ export async function getLatestVersionOfCli({
         });
     } catch (error) {
         throw new CliError({
-            message: `Failed to resolve latest CLI version: ${error instanceof Error ? error.message : String(error)}`,
+            message: `Failed to resolve latest CLI version: ${errorMessageOrString(error)}`,
             code: CliError.Code.NetworkError
         });
     }

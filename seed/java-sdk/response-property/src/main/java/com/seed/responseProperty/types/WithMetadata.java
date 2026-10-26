@@ -68,7 +68,6 @@ public final class WithMetadata implements IWithMetadata {
     public static final class Builder {
         private Map<String, String> metadata = new LinkedHashMap<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -101,6 +100,14 @@ public final class WithMetadata implements IWithMetadata {
 
         public WithMetadata build() {
             return new WithMetadata(metadata, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("metadata")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

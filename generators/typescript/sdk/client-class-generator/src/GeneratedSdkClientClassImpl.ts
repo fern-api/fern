@@ -122,6 +122,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     private readonly inlineFileProperties: boolean;
     private readonly includeSerdeLayer: boolean;
+    private readonly neverThrowErrors: boolean;
     private readonly omitUndefined: boolean;
     private readonly formDataSupport: "Node16" | "Node18";
     private readonly allowExtraFields: boolean;
@@ -177,6 +178,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.retainOriginalCasing = retainOriginalCasing;
         this.inlineFileProperties = inlineFileProperties;
         this.includeSerdeLayer = includeSerdeLayer;
+        this.neverThrowErrors = neverThrowErrors;
         this.omitUndefined = omitUndefined;
         this.allowExtraFields = allowExtraFields;
         this.formDataSupport = formDataSupport;
@@ -538,6 +540,18 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             return generatedEndpoint.endpoint.id === endpointId;
         });
         return generatedEndpoint;
+    }
+
+    /**
+     * The error class thrown when a path parameter is rejected before the request is sent.
+     * Uses the generic SDK error so it is caught like any other request failure; undefined when
+     * the SDK never throws (no generic error class), in which case core throws a plain `Error`.
+     */
+    public getReferenceToInvalidPathParameterError(context: FileContext): ts.Expression | undefined {
+        if (this.neverThrowErrors) {
+            return undefined;
+        }
+        return context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression();
     }
 
     public invokeEndpoint(args: {

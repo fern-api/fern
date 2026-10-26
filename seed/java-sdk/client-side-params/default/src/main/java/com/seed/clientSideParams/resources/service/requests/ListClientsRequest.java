@@ -186,7 +186,6 @@ public final class ListClientsRequest {
 
         private Optional<List<String>> appType = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -326,6 +325,21 @@ public final class ListClientsRequest {
                     isFirstParty,
                     appType,
                     additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("fields")
+                    || key.equalsIgnoreCase("include_fields")
+                    || key.equalsIgnoreCase("page")
+                    || key.equalsIgnoreCase("per_page")
+                    || key.equalsIgnoreCase("include_totals")
+                    || key.equalsIgnoreCase("is_global")
+                    || key.equalsIgnoreCase("is_first_party")
+                    || key.equalsIgnoreCase("app_type")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

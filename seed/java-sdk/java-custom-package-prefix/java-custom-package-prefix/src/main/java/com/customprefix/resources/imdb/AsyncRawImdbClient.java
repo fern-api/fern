@@ -7,6 +7,7 @@ import com.customprefix.core.BodyProperties;
 import com.customprefix.core.ClientOptions;
 import com.customprefix.core.MediaTypes;
 import com.customprefix.core.ObjectMappers;
+import com.customprefix.core.PathSegments;
 import com.customprefix.core.RequestOptions;
 import com.customprefix.core.RetryInterceptor;
 import com.customprefix.core.SeedApiApiException;
@@ -131,7 +132,7 @@ public class AsyncRawImdbClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("movies")
-                .addPathSegment(movieId);
+                .addPathSegment(PathSegments.validate(movieId));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);

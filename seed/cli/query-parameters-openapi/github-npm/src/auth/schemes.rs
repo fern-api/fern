@@ -239,22 +239,24 @@ impl AuthProvider for BasicAuthProvider {
 }
 
 // ---------------------------------------------------------------------------
-// HeaderAuthProvider — raw or bearer-prefixed token in a named header.
+// HeaderAuthProvider — raw or prefixed token in a named header.
 // ---------------------------------------------------------------------------
 
-/// Send the token verbatim in a named header. Used by APIs like Linear
+/// Send the token in a named header. Used by APIs like Linear
 /// (`Authorization: <api_key>` with no `Bearer ` prefix) and any custom
 /// `X-Api-Key` style scheme.
 ///
 /// If `bearer_prefix` is true, the value is prefixed with `Bearer ` —
 /// equivalent to a [`BearerAuthProvider`] but on a non-`Authorization`
-/// header (the Square pattern).
+/// header (the Square pattern). [`with_prefix`](Self::with_prefix) sets any
+/// other prefix (e.g. `Key` → `X-Api-Key: Key <token>`) and replaces the
+/// bearer one, so at most one prefix is ever applied.
 #[derive(Debug, Clone)]
 pub struct HeaderAuthProvider {
     name: String,
     header_name: String,
     token: AuthCredentialSource,
-    bearer_prefix: bool,
+    prefix: Option<String>,
 }
 
 impl HeaderAuthProvider {
@@ -268,8 +270,16 @@ impl HeaderAuthProvider {
             name: name.into(),
             header_name: header_name.into(),
             token,
-            bearer_prefix,
+            prefix: bearer_prefix.then(|| "Bearer".to_string()),
         }
+    }
+
+    /// Prefix the resolved token with `<prefix> ` (one space, matching the
+    /// SDK generators). An empty prefix sends the token verbatim.
+    pub fn with_prefix(mut self, prefix: impl Into<String>) -> Self {
+        let prefix = prefix.into();
+        self.prefix = (!prefix.is_empty()).then_some(prefix);
+        self
     }
 }
 
@@ -301,13 +311,15 @@ impl AuthProvider for HeaderAuthProvider {
         let Some(token) = self.token.try_resolve()? else {
             return Ok(request);
         };
-        let value = if self.bearer_prefix {
-            let mut s = String::with_capacity(7 + token.expose_secret().len());
-            s.push_str("Bearer ");
-            s.push_str(token.expose_secret());
-            s
-        } else {
-            token.expose_secret().to_string()
+        let value = match &self.prefix {
+            Some(prefix) => {
+                let mut s = String::with_capacity(prefix.len() + 1 + token.expose_secret().len());
+                s.push_str(prefix);
+                s.push(' ');
+                s.push_str(token.expose_secret());
+                s
+            }
+            None => token.expose_secret().to_string(),
         };
         let mut header_value =
             reqwest::header::HeaderValue::from_str(&value).map_err(|e| {
@@ -477,6 +489,45 @@ mod tests {
             AuthCredentialSource::literal("k"),
             false,
         );
+        let r = p.apply(req(), &EndpointAuthMetadata::unspecified()).unwrap();
+        assert_eq!(header(r, "x-api-key").as_deref(), Some("k"));
+    }
+
+    #[tokio::test]
+    async fn header_provider_custom_prefix() {
+        let p = HeaderAuthProvider::new(
+            "apiKey",
+            "X-Api-Key",
+            AuthCredentialSource::literal("k"),
+            false,
+        )
+        .with_prefix("Key");
+        let r = p.apply(req(), &EndpointAuthMetadata::unspecified()).unwrap();
+        assert_eq!(header(r, "x-api-key").as_deref(), Some("Key k"));
+    }
+
+    #[tokio::test]
+    async fn header_provider_custom_prefix_replaces_bearer_prefix() {
+        let p = HeaderAuthProvider::new(
+            "apiKey",
+            "Authorization",
+            AuthCredentialSource::literal("k"),
+            true,
+        )
+        .with_prefix("Token");
+        let r = p.apply(req(), &EndpointAuthMetadata::unspecified()).unwrap();
+        assert_eq!(auth_header(r).as_deref(), Some("Token k"));
+    }
+
+    #[tokio::test]
+    async fn header_provider_empty_prefix_sends_raw_value() {
+        let p = HeaderAuthProvider::new(
+            "apiKey",
+            "X-Api-Key",
+            AuthCredentialSource::literal("k"),
+            true,
+        )
+        .with_prefix("");
         let r = p.apply(req(), &EndpointAuthMetadata::unspecified()).unwrap();
         assert_eq!(header(r, "x-api-key").as_deref(), Some("k"));
     }

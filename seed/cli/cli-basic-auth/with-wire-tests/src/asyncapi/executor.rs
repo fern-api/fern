@@ -371,8 +371,17 @@ fn resolve_server_url(doc: &AsyncApiDescription, override_url: Option<&str>) -> 
 /// `<NAME>_LOG` instead of as an opaque server-side 401.
 fn resolve_ws_auth(auth_bindings: &[(String, SchemeBinding)]) -> WsAuth {
     if auth_bindings.len() == 1 {
-        if let (scheme_name, SchemeBinding::Token(source)) = &auth_bindings[0] {
-            return WsAuth::Header(scheme_name.clone(), source.clone());
+        match &auth_bindings[0] {
+            (scheme_name, SchemeBinding::Token(source)) => {
+                return WsAuth::Header(scheme_name.clone(), source.clone());
+            }
+            (scheme_name, SchemeBinding::PrefixedToken { source, prefix }) => {
+                return WsAuth::Header(
+                    scheme_name.clone(),
+                    crate::websocket::prefix_source(source.clone(), format!("{prefix} ")),
+                );
+            }
+            _ => {}
         }
     }
     if auth_bindings.len() > 1 {
@@ -779,6 +788,27 @@ mod tests {
         )];
         match resolve_ws_auth(&bindings) {
             WsAuth::Header(name, _) => assert_eq!(name, "xi-api-key"),
+            _ => panic!("expected WsAuth::Header variant"),
+        }
+    }
+
+    #[test]
+    fn resolve_ws_auth_applies_configured_prefix() {
+        use crate::auth::AuthCredentialSource;
+        use secrecy::ExposeSecret;
+
+        let bindings = vec![(
+            "xi-api-key".to_string(),
+            SchemeBinding::PrefixedToken {
+                source: AuthCredentialSource::literal("k"),
+                prefix: "Key".to_string(),
+            },
+        )];
+        match resolve_ws_auth(&bindings) {
+            WsAuth::Header(name, source) => {
+                assert_eq!(name, "xi-api-key");
+                assert_eq!(source.resolve().unwrap().expose_secret(), "Key k");
+            }
             _ => panic!("expected WsAuth::Header variant"),
         }
     }

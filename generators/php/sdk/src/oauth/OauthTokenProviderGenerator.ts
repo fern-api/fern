@@ -23,6 +23,7 @@ export declare namespace OauthTokenProviderGenerator {
 export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     private static readonly CLASS_NAME = "OAuthTokenProvider";
     private static readonly BUFFER_IN_MINUTES = 2;
+    private static readonly DEFAULT_EXPIRES_IN_SECONDS = 3600;
     private static readonly CLIENT_CREDENTIALS_GRANT_TYPE = "client_credentials";
 
     private readonly case: CaseConverter;
@@ -307,14 +308,41 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
                 writer.endControlFlow();
 
                 writer.newLine();
-                writer.writeLine(`$this->accessToken = $tokenResponse${accessTokenProperty};`);
+                if (this.isOptionalResponseProperty(responseProperties.accessToken)) {
+                    writer.writeLine(`$accessToken = $tokenResponse${accessTokenProperty};`);
+                    writer.controlFlow("if", php.codeblock("$accessToken === null"));
+                    writer.write("throw ");
+                    writer.writeNodeStatement(
+                        php.instantiateClass({
+                            classReference: this.context.getBaseExceptionClassReference(),
+                            arguments_: [
+                                {
+                                    name: "message",
+                                    assignment: php.codeblock(
+                                        '"Expected an access token in the token response, but received null."'
+                                    )
+                                }
+                            ]
+                        })
+                    );
+                    writer.endControlFlow();
+                    writer.writeLine("$this->accessToken = $accessToken;");
+                } else {
+                    writer.writeLine(`$this->accessToken = $tokenResponse${accessTokenProperty};`);
+                }
 
                 const expiresIn = responseProperties.expiresIn;
                 if (expiresIn != null) {
                     const expiresInProperty = this.getResponsePropertyAccess(expiresIn);
-                    writer.writeLine(
-                        `$this->expiresAt = $this->getExpiresAt($tokenResponse${expiresInProperty}, $this->BUFFER_IN_MINUTES);`
-                    );
+                    if (this.isOptionalResponseProperty(expiresIn)) {
+                        writer.writeLine(
+                            `$this->expiresAt = $this->getExpiresAt($tokenResponse${expiresInProperty} ?? ${OauthTokenProviderGenerator.DEFAULT_EXPIRES_IN_SECONDS}, $this->BUFFER_IN_MINUTES);`
+                        );
+                    } else {
+                        writer.writeLine(
+                            `$this->expiresAt = $this->getExpiresAt($tokenResponse${expiresInProperty}, $this->BUFFER_IN_MINUTES);`
+                        );
+                    }
                 }
 
                 writer.newLine();
@@ -402,6 +430,10 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
 
     private getPropertyName(name: FernIr.NameAndWireValue): string {
         return this.case.camelUnsafe(name.name);
+    }
+
+    private isOptionalResponseProperty(responseProperty: FernIr.ResponseProperty): boolean {
+        return this.context.phpTypeMapper.convert({ reference: responseProperty.property.valueType }).isOptional();
     }
 
     private getResponsePropertyAccess(responseProperty: FernIr.ResponseProperty): string {

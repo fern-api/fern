@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    SDK Config GitHub delivery through sdk-gen-api now reports its outcome. The CLI prints the pull
+    request link when one is created, says explicitly when no changes were detected and nothing was
+    delivered, and fails instead of reporting success when sdk-gen-api never confirms the delivery.
+  type: fix

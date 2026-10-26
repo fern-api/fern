@@ -127,6 +127,14 @@ describe("LazyFernWorkspace source specs", () => {
         await expect(workspace.getSourceSpecs()).rejects.toThrow(/exposes no source specs/);
     });
 
+    it("reports whether any composed dependency carries source specs", async () => {
+        const withSpecs = composedWorkspace(loadWorkspacesExposing({ "users-api": [users], "payments-api": [] }));
+        const withoutSpecs = composedWorkspace(loadWorkspacesExposing({ "users-api": [], "payments-api": [] }));
+
+        expect(await withSpecs.composesSourceSpecs()).toBe(true);
+        expect(await withoutSpecs.composesSourceSpecs()).toBe(false);
+    });
+
     it("rejects a dependency whose own specs are already namespaced, which composition cannot nest", async () => {
         const workspace = composedWorkspace(
             loadWorkspacesExposing({

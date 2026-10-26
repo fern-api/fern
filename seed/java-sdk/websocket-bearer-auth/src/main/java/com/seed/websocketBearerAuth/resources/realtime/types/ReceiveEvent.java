@@ -94,7 +94,6 @@ public final class ReceiveEvent {
 
         private int beta;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -123,6 +122,14 @@ public final class ReceiveEvent {
         @java.lang.Override
         public ReceiveEvent build() {
             return new ReceiveEvent(alpha, beta, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("alpha") || key.equalsIgnoreCase("beta")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

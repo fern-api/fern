@@ -33,6 +33,37 @@ describe("convertGeneratorsConfiguration", () => {
         expect(converted.groups[0]?.generators[0]?.absolutePathToLocalOutput).toEqual("/path/to/output");
     });
 
+    it.each([
+        ["fernapi/fern-rust-sdk", generatorsYml.GenerationLanguage.RUST],
+        ["fernapi/fern-rust-model", generatorsYml.GenerationLanguage.RUST],
+        ["fernapi/fern-swift-sdk", generatorsYml.GenerationLanguage.SWIFT],
+        ["fernapi/fern-go-sdk", generatorsYml.GenerationLanguage.GO]
+    ])("infers the language of %s", async (name, expectedLanguage) => {
+        const context = createMockTaskContext();
+        const converted = await convertGeneratorsConfiguration({
+            absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+            rawGeneratorsConfiguration: {
+                groups: {
+                    group1: {
+                        generators: [
+                            {
+                                name,
+                                version: "0.0.1",
+                                output: {
+                                    location: "local-file-system",
+                                    path: "/path/to/output"
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            context
+        });
+
+        expect(converted.groups[0]?.generators[0]?.language).toEqual(expectedLanguage);
+    });
+
     it("local-file-system always requests snippets so generators emit README.md/reference.md", async () => {
         const context = createMockTaskContext();
         const converted = await convertGeneratorsConfiguration({
@@ -1022,6 +1053,56 @@ describe("convertGeneratorsConfiguration", () => {
             });
 
             expect(converted.groups[0]?.generators[0]?.name).toEqual("fernapi/fern-typescript-sdk");
+        });
+
+        it("resolves the CLI generator to the CLI generation language", async () => {
+            const context = createMockTaskContext();
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    groups: {
+                        group1: {
+                            generators: [
+                                {
+                                    name: "fernapi/fern-cli-generator",
+                                    version: "0.0.1",
+                                    output: {
+                                        location: "local-file-system",
+                                        path: "/path/to/output"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                },
+                context
+            });
+
+            expect(converted.groups[0]?.generators[0]?.name).toEqual("fernapi/fern-cli-generator");
+            expect(converted.groups[0]?.generators[0]?.language).toEqual(generatorsYml.GenerationLanguage.CLI);
+        });
+
+        it("does not resolve a non-Fern *-cli-generator to the CLI language", async () => {
+            const context = createMockTaskContext();
+            const converted = await convertGeneratorsConfiguration({
+                absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of("/path/to/repo/fern/api/generators.yml"),
+                rawGeneratorsConfiguration: {
+                    groups: {
+                        group1: {
+                            generators: [
+                                {
+                                    name: "acme/go-cli-generator",
+                                    version: "0.0.1",
+                                    output: { location: "local-file-system", path: "/path/to/output" }
+                                }
+                            ]
+                        }
+                    }
+                },
+                context
+            });
+
+            expect(converted.groups[0]?.generators[0]?.language).not.toEqual(generatorsYml.GenerationLanguage.CLI);
         });
 
         it("preserves full generator names with fernapi/ prefix", async () => {

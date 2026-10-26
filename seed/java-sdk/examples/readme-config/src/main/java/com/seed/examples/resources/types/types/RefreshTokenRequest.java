@@ -79,7 +79,6 @@ public final class RefreshTokenRequest {
     public static final class Builder implements TtlStage, _FinalStage {
         private int ttl;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -100,6 +99,14 @@ public final class RefreshTokenRequest {
         @java.lang.Override
         public RefreshTokenRequest build() {
             return new RefreshTokenRequest(ttl, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("ttl")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

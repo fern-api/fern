@@ -51,7 +51,7 @@ anyhow = "1"
 base64 = "0.22"
 bytes = "1"
 clap = { version = "4", features = ["derive", "string", "env"] }
-clap_complete = "4"
+clap_complete = { version = "4", features = ["unstable-dynamic"] }
 clap_mangen = "0.2"
 hmac = "0.12"
 dotenvy = "0.15"
@@ -135,6 +135,11 @@ tokio-tungstenite = { version = "0.24", default-features = false, features = ["n
 # those binaries use the file-backed credential store (see ADR-0008 and the
 # matching `cfg(not(target_env = "musl"))` gates in src/auth/keyring_store.rs).
 keyring = { version = "3", features = ["apple-native", "windows-native", "sync-secret-service", "vendored"] }
+
+# Keychain writes/deletes that skip keyring's pre-read of the secret (see
+# `macos_keychain` in src/auth/keyring_store.rs). Same major as keyring's.
+[target.'cfg(target_os = "macos")'.dependencies]
+security-framework = "3"
 
 [package.metadata.dist]
 dist = true

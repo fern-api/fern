@@ -1,6 +1,6 @@
 [package]
 name = "server_url_templating_api_single_base_url_types"
-version = "0.0.0"
+version = "0.0.1"
 edition = "2021"
 
 [lib]

@@ -141,7 +141,6 @@ public final class GetDefaultStarterFilesRequest {
 
         private List<VariableTypeAndName> inputParams = new ArrayList<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -206,6 +205,16 @@ public final class GetDefaultStarterFilesRequest {
         @java.lang.Override
         public GetDefaultStarterFilesRequest build() {
             return new GetDefaultStarterFilesRequest(inputParams, outputType, methodName, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("inputParams")
+                    || key.equalsIgnoreCase("outputType")
+                    || key.equalsIgnoreCase("methodName")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

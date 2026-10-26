@@ -181,7 +181,6 @@ public final class GetFooRequest {
 
         private Optional<String> optionalBaz = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -302,6 +301,17 @@ public final class GetFooRequest {
         public GetFooRequest build() {
             return new GetFooRequest(
                     optionalBaz, optionalNullableBaz, requiredBaz, requiredNullableBaz, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("optional_baz")
+                    || key.equalsIgnoreCase("optional_nullable_baz")
+                    || key.equalsIgnoreCase("required_baz")
+                    || key.equalsIgnoreCase("required_nullable_baz")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

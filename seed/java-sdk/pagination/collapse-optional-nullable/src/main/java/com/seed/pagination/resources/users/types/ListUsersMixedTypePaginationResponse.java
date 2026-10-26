@@ -101,7 +101,6 @@ public final class ListUsersMixedTypePaginationResponse {
 
         private List<User> data = new ArrayList<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -147,6 +146,14 @@ public final class ListUsersMixedTypePaginationResponse {
         @java.lang.Override
         public ListUsersMixedTypePaginationResponse build() {
             return new ListUsersMixedTypePaginationResponse(next, data, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("next") || key.equalsIgnoreCase("data")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override
