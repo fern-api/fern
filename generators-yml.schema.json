@@ -4905,6 +4905,17 @@
             }
           ]
         },
+        "auto-merge": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Enable GitHub auto-merge (squash) on the pull request opened by Fern. Defaults to false. Auto-merge is skipped when the release contains breaking changes (MAJOR bump), and the repository must allow auto-merge for GitHub to accept it. Only applies when `mode` is `pull-request`."
+        },
         "workflows": {
           "oneOf": [
             {
@@ -5066,6 +5077,17 @@
               "type": "null"
             }
           ]
+        },
+        "auto-merge": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Enable GitHub auto-merge (squash) on the pull request opened by Fern. Defaults to false. Auto-merge is skipped when the release contains breaking changes (MAJOR bump), and the repository must allow auto-merge for GitHub to accept it."
         },
         "workflows": {
           "oneOf": [

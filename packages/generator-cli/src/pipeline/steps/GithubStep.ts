@@ -303,7 +303,7 @@ export class GithubStep extends BaseStep {
                 result.prUrl = pullRequest.html_url;
                 result.prNumber = pullRequest.number;
 
-                // In automation mode, enable GitHub automerge on non-breaking PRs.
+                // When autoMerge is requested, enable GitHub automerge on non-breaking PRs.
                 // Uses the built-in octokit.graphql() from @octokit/core (no extra dependency).
                 // The SDK repo's own branch protection rules govern whether the PR actually merges.
                 if (shouldEnableAutomerge(this.config, resolved) && pullRequest.node_id) {
@@ -675,6 +675,8 @@ export function enrichPrBodyForAutomation(
 
 /**
  * Determines whether automerge should be enabled on a PR.
+ * Independent of automationMode: callers opt in explicitly via autoMerge
+ * (`fern generate --auto-merge` or `github.auto-merge: true` in generators.yml).
  * Exported for testing.
  *
  * `breaking` carries the derived hasBreakingChanges that may come from either
@@ -682,17 +684,12 @@ export function enrichPrBodyForAutomation(
  * an empty object to preserve the config-only behavior.
  */
 export function shouldEnableAutomerge(
-    config: { automationMode?: boolean; autoMerge?: boolean; hasBreakingChanges?: boolean },
+    config: { autoMerge?: boolean; hasBreakingChanges?: boolean },
     breaking: { hasBreakingChanges?: boolean; analysisWarning?: string } = {}
 ): boolean {
     const hasBreakingChanges = breaking.hasBreakingChanges ?? config.hasBreakingChanges;
     const analysisUnavailable = breaking.analysisWarning != null && breaking.analysisWarning.length > 0;
-    return (
-        config.automationMode === true &&
-        config.autoMerge === true &&
-        hasBreakingChanges !== true &&
-        !analysisUnavailable
-    );
+    return config.autoMerge === true && hasBreakingChanges !== true && !analysisUnavailable;
 }
 
 /**

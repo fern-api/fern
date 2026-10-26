@@ -466,6 +466,8 @@ export async function runLocalGenerationForWorkspace({
                 //   - outputting to a self-hosted GitHub repo (full replay + GitHub flow), or
                 //   - `--verify` is set (verify-only flow; no replay, no GitHub).
                 const githubPipelineEnabled = selfhostedGithubConfig != null && shouldCommit;
+                const autoMergeEnabled =
+                    autoMerge === true || generatorsYml.isGithubAutoMergeEnabled(selfhostedGithubConfig);
                 const verifyOnlyPipelineEnabled = !githubPipelineEnabled && verify === true;
                 if (githubPipelineEnabled || verifyOnlyPipelineEnabled) {
                     const pipelineLogger: PipelineLogger = {
@@ -503,7 +505,7 @@ export async function runLocalGenerationForWorkspace({
                                           workflows: selfhostedGithubConfig.workflows ?? true,
                                           generatorName: generatorInvocation.name,
                                           automationMode,
-                                          autoMerge,
+                                          autoMerge: autoMergeEnabled,
                                           skipIfNoDiff,
                                           hasBreakingChanges,
                                           breakingChangesSummary: hasBreakingChanges
@@ -555,7 +557,7 @@ export async function runLocalGenerationForWorkspace({
                                     cliVersion: workspace.cliVersion,
                                     repoUri: selfhostedGithubConfig.uri,
                                     automationMode: automationMode === true,
-                                    autoMerge: autoMerge === true,
+                                    autoMerge: autoMergeEnabled,
                                     skipIfNoDiff: skipIfNoDiff === true,
                                     hasBreakingChanges,
                                     versionArg: version == null ? "none" : isAutoVersion(version) ? "auto" : "explicit",
