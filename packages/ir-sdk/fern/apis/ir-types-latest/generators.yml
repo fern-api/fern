@@ -70,7 +70,7 @@ groups:
   go:
     generators:
       - name: fernapi/fern-go-model
-        version: 0.9.3
+        version: 0.23.10
         config: {}
         github:
           repository: fern-api/ir-go
