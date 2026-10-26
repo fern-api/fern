@@ -388,7 +388,8 @@ export async function runAstroPreviewServer({
     });
 
     if (cleanedUp) {
-        // A signal arrived during startup; don't announce a server that has already stopped.
+        // Stopped during startup: don't announce it, but still wait for the renderer to exit.
+        await runUntilShutdown;
         return;
     }
     const url = `http://localhost:${port}${basepath}`;
