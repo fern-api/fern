@@ -5,7 +5,7 @@ import { extractErrorMessage, sanitizePreviewId } from "@fern-api/core-utils";
 import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { Rules } from "@fern-api/docs-validator";
 import { FdrAPI } from "@fern-api/fdr-sdk";
-import { basename, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { type AbsoluteFilePath, basename, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
 import { type ValidationViolation, validateOSSWorkspace } from "@fern-api/oss-validator";
 import { Project } from "@fern-api/project-loader";
@@ -16,6 +16,7 @@ import chalk from "chalk";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { detectCISource, detectDeployerAuthor, isCI } from "../../utils/environment.js";
 import { validateDocsWorkspaceAndLogIssues } from "../validate/validateDocsWorkspaceAndLogIssues.js";
+import { getSdkConfigSdkNames } from "./getSdkConfigSdkNames.js";
 
 const DOMAIN_SUFFIX = "docs.buildwithfern.com";
 const SUBDOMAIN_LIMIT = 62;
@@ -211,6 +212,10 @@ export async function generateDocsWorkspace({
             apiWorkspaces: project.apiWorkspaces,
             ossWorkspaces,
             usesSdkConfig: await projectUsesSdkConfig({ project, docsWorkspace }),
+            sdkNames: await getSdkConfigSdkNames({
+                directories: getSdkConfigDirectories({ project, docsWorkspace }),
+                logger: context.logger
+            }),
             docsWorkspace,
             context,
             token,
@@ -229,6 +234,21 @@ export async function generateDocsWorkspace({
     });
 }
 
+/** The folders an sdk-config.yml can sit in: the docs folder and the API workspaces' folders. */
+function getSdkConfigDirectories({
+    project,
+    docsWorkspace
+}: {
+    project: Project;
+    docsWorkspace: DocsWorkspace;
+}): AbsoluteFilePath[] {
+    return [
+        docsWorkspace.absoluteFilePath,
+        ...project.apiWorkspaces.map((workspace) => workspace.absoluteFilePath),
+        ...(project.sdkConfigWorkspaces ?? []).map((workspace) => workspace.absoluteFilePath)
+    ];
+}
+
 /**
  * Whether the project configures SDKs in an sdk-config.yml. `project.sdkConfigWorkspaces` only lists
  * workspaces that have no generators file at all, so a project that still has a generators.yml (or the
@@ -244,12 +264,10 @@ async function projectUsesSdkConfig({
     if ((project.sdkConfigWorkspaces?.length ?? 0) > 0) {
         return true;
     }
-    const directories = [
-        docsWorkspace.absoluteFilePath,
-        ...project.apiWorkspaces.map((workspace) => workspace.absoluteFilePath)
-    ];
     const exists = await Promise.all(
-        directories.map((directory) => doesPathExist(join(directory, RelativeFilePath.of(SDK_CONFIG_FILENAME))))
+        getSdkConfigDirectories({ project, docsWorkspace }).map((directory) =>
+            doesPathExist(join(directory, RelativeFilePath.of(SDK_CONFIG_FILENAME)))
+        )
     );
     return exists.some(Boolean);
 }
