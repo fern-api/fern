@@ -518,6 +518,13 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 .build());
 
         clientBuilder.addField(FieldSpec.builder(
+                        ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Integer.class)),
+                        "maxConcurrentRequests")
+                .addModifiers(Modifier.PRIVATE)
+                .initializer("$T.empty()", Optional.class)
+                .build());
+
+        clientBuilder.addField(FieldSpec.builder(
                         ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Long.class)),
                         "initialRetryDelayMillis")
                 .addModifiers(Modifier.PRIVATE)
@@ -682,6 +689,16 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 .addParameter(int.class, "maxRetries")
                 .returns(isExtensible ? TypeVariableName.get("T") : builderName)
                 .addStatement("this.maxRetries = $T.of(maxRetries)", Optional.class)
+                .addStatement(isExtensible ? "return self()" : "return this")
+                .build());
+
+        clientBuilder.addMethod(MethodSpec.methodBuilder("maxConcurrentRequests")
+                .addModifiers(Modifier.PUBLIC)
+                .addJavadoc("Caps the number of in-flight requests (sync and async) the client will have at once. "
+                        + "Unlimited unless set; must be positive.")
+                .addParameter(int.class, "maxConcurrentRequests")
+                .returns(isExtensible ? TypeVariableName.get("T") : builderName)
+                .addStatement("this.maxConcurrentRequests = $T.of(maxConcurrentRequests)", Optional.class)
                 .addStatement(isExtensible ? "return self()" : "return this")
                 .build());
 
@@ -942,6 +959,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
         buildClientOptionsMethodBuilder
                 .addStatement("setTimeouts(builder)")
                 .addStatement("setRetries(builder)")
+                .addStatement("setConcurrencyLimit(builder)")
                 .addStatement("setLogging(builder)");
 
         if (appInfoEnabled) {
@@ -1235,6 +1253,19 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 .build();
         clientBuilder.addMethod(setRetriesMethod);
 
+        MethodSpec setConcurrencyLimitMethod = MethodSpec.methodBuilder("setConcurrencyLimit")
+                .addModifiers(Modifier.PROTECTED)
+                .addParameter(generatedClientOptions.builderClassName(), "builder")
+                .addJavadoc("Applies the in-flight request cap, if one was configured.\n"
+                        + "Override this method to customize concurrency limiting.\n"
+                        + "\n"
+                        + "@param builder The ClientOptions.Builder to configure")
+                .beginControlFlow("if (this.maxConcurrentRequests.isPresent())")
+                .addStatement("builder.maxConcurrentRequests(this.maxConcurrentRequests.get())")
+                .endControlFlow()
+                .build();
+        clientBuilder.addMethod(setConcurrencyLimitMethod);
+
         MethodSpec setHttpClientMethod = MethodSpec.methodBuilder("setHttpClient")
                 .addModifiers(Modifier.PROTECTED)
                 .addParameter(generatedClientOptions.builderClassName(), "builder")
@@ -1394,7 +1425,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
     }
 
     private static final Set<String> RESERVED_BUILDER_PARAM_NAMES =
-            Set.of("environment", "url", "timeout", "maxRetries", "httpClient");
+            Set.of("environment", "url", "timeout", "maxRetries", "maxConcurrentRequests", "httpClient");
 
     private List<ServerVariable> getServerVariables() {
         Optional<EnvironmentsConfig> envConfig = generatorContext.getIr().getEnvironments();
@@ -2477,6 +2508,13 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .build());
 
                 builderStageBuilder.addField(FieldSpec.builder(
+                                ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Integer.class)),
+                                "maxConcurrentRequests")
+                        .addModifiers(Modifier.PRIVATE)
+                        .initializer("$T.empty()", Optional.class)
+                        .build());
+
+                builderStageBuilder.addField(FieldSpec.builder(
                                 ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Long.class)),
                                 "initialRetryDelayMillis")
                         .addModifiers(Modifier.PRIVATE)
@@ -2566,6 +2604,18 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .addParameter(int.class, "maxRetries")
                         .returns(builderStageClassName)
                         .addStatement("this.maxRetries = $T.of(maxRetries)", Optional.class)
+                        .addStatement("return this")
+                        .build());
+
+                // Add maxConcurrentRequests() method
+                builderStageBuilder.addMethod(MethodSpec.methodBuilder("maxConcurrentRequests")
+                        .addModifiers(Modifier.PUBLIC)
+                        .addJavadoc(
+                                "Caps the number of in-flight requests (sync and async) the client will have at once. "
+                                        + "Unlimited unless set; must be positive.")
+                        .addParameter(int.class, "maxConcurrentRequests")
+                        .returns(builderStageClassName)
+                        .addStatement("this.maxConcurrentRequests = $T.of(maxConcurrentRequests)", Optional.class)
                         .addStatement("return this")
                         .build());
 
@@ -2665,6 +2715,9 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .beginControlFlow("if (this.maxRetries.isPresent())")
                         .addStatement("auth.maxRetries(this.maxRetries.get())")
                         .endControlFlow()
+                        .beginControlFlow("if (this.maxConcurrentRequests.isPresent())")
+                        .addStatement("auth.maxConcurrentRequests(this.maxConcurrentRequests.get())")
+                        .endControlFlow()
                         .beginControlFlow("if (this.initialRetryDelayMillis.isPresent())")
                         .addStatement("auth.initialRetryDelayMillis(this.initialRetryDelayMillis.get())")
                         .endControlFlow()
@@ -2713,6 +2766,9 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .endControlFlow()
                         .beginControlFlow("if (this.maxRetries.isPresent())")
                         .addStatement("auth.maxRetries(this.maxRetries.get())")
+                        .endControlFlow()
+                        .beginControlFlow("if (this.maxConcurrentRequests.isPresent())")
+                        .addStatement("auth.maxConcurrentRequests(this.maxConcurrentRequests.get())")
                         .endControlFlow()
                         .beginControlFlow("if (this.initialRetryDelayMillis.isPresent())")
                         .addStatement("auth.initialRetryDelayMillis(this.initialRetryDelayMillis.get())")
