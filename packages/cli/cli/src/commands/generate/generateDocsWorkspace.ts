@@ -1,4 +1,4 @@
-import { createOrganizationIfDoesNotExist, FernToken, FernUserToken, getToken } from "@fern-api/auth";
+import { createOrganizationIfDoesNotExist, FernGuestToken, FernToken, FernUserToken, getToken } from "@fern-api/auth";
 import { SDK_CONFIG_FILENAME } from "@fern-api/configuration-loader";
 import { createFdrService } from "@fern-api/core";
 import { extractErrorMessage, sanitizePreviewId } from "@fern-api/core-utils";
@@ -16,7 +16,9 @@ import chalk from "chalk";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { detectCISource, detectDeployerAuthor, isCI } from "../../utils/environment.js";
 import { validateDocsWorkspaceAndLogIssues } from "../validate/validateDocsWorkspaceAndLogIssues.js";
+import { GUEST_DOCS_REQUIRE_PREVIEW_MESSAGE } from "./assertGuestCanGenerate.js";
 import { getSdkConfigSdkNames } from "./getSdkConfigSdkNames.js";
+import { resolveGuestProject } from "./resolveGuestProject.js";
 
 const DOMAIN_SUFFIX = "docs.buildwithfern.com";
 const SUBDOMAIN_LIMIT = 62;
@@ -59,7 +61,9 @@ export async function generateDocsWorkspace({
     disableTemplates,
     noPrompt,
     skipUpload,
-    includePrivate = false
+    includePrivate = false,
+    guest = false,
+    newSession = false
 }: {
     project: Project;
     cliContext: CliContext;
@@ -74,6 +78,10 @@ export async function generateDocsWorkspace({
     skipUpload: boolean | undefined;
     /** Include `x-twilio.docsVisibility: private` elements in the published API reference. */
     includePrivate?: boolean;
+    /** Publish under a Venus guest session instead of a login or FERN_TOKEN (`--guest`). */
+    guest?: boolean;
+    /** With `--guest`: ignore the session recorded for this repo and mint a new one (`--new-session`). */
+    newSession?: boolean;
 }): Promise<void> {
     const docsWorkspace = project.docsWorkspaces;
     if (docsWorkspace == null) {
@@ -81,6 +89,16 @@ export async function generateDocsWorkspace({
             code: CliError.Code.ConfigError
         });
         return;
+    }
+    let guestToken: FernGuestToken | undefined;
+    if (guest && !preview) {
+        cliContext.failAndThrow(GUEST_DOCS_REQUIRE_PREVIEW_MESSAGE, undefined, { code: CliError.Code.ConfigError });
+        return;
+    }
+    if (guest) {
+        const resolved = await resolveGuestProject({ project, cliContext, newSession });
+        project = resolved.project;
+        guestToken = resolved.token;
     }
     const hasFdrOriginOverride = !!process.env["FERN_FDR_ORIGIN"] || !!process.env["OVERRIDE_FDR_ORIGIN"];
 
@@ -99,7 +117,9 @@ export async function generateDocsWorkspace({
     }
 
     let token: FernToken | null = null;
-    if (hasFdrOriginOverride) {
+    if (guestToken != null) {
+        token = guestToken;
+    } else if (hasFdrOriginOverride) {
         const fernToken = await getToken();
         if (!fernToken) {
             cliContext.failAndThrow(
@@ -112,7 +132,7 @@ export async function generateDocsWorkspace({
         token = fernToken;
     } else {
         token = await cliContext.runTask(async (context) => {
-            return askToLogin(context);
+            return askToLogin(context, { suggestGuest: true });
         });
         if (token.type === "user") {
             const userToken = token as FernUserToken;

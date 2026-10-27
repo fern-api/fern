@@ -40,7 +40,7 @@ export interface ResolvedMigrationSourceSpec {
     idHint?: string;
     name?: string;
     namespace?: string;
-    type: SdkConfigV1SourceSpec["type"];
+    type: Exclude<SdkConfigV1SourceSpec, { proto: unknown }>["type"];
 }
 
 export interface SourceDerivedApiFields {

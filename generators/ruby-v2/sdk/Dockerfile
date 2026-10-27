@@ -66,6 +66,11 @@ RUN apk --no-cache upgrade && \
         -name 'Gemfile.lock' -delete && \
     apk del .build-deps
 
+# curl 8.23.0 strips credentials from CURLINFO_EFFECTIVE_URL, so git (<= 2.54) treats every
+# authenticated https clone as a redirect, drops the token and fails on private repositories
+# ("could not read Username"). Keep Alpine 3.22's libcurl until git/curl ship a fix.
+RUN apk add --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine/v3.22/main 'curl<8.23' 'libcurl<8.23'
+
 # Patch npm's bundled vulnerable packages. Following the same pattern used in
 # generators/java/sdk/Dockerfile.
 # - tar 7.5.9 -> 7.5.11 (GHSA-r6q2-hw4h-h46w, GHSA-9ppj-qmqm-q256, GHSA-qffp-2rhf-9h96).

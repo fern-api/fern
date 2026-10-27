@@ -18,6 +18,18 @@ module Seed
       xml_text :url, String, optional: false
       xml_attribute :method_, "method", String, optional: false
       xml_attribute :kind, "kind", Internal::Xml::Literal.new("redirect")
+
+      # The text content of this element (same as `url`).
+      #
+      # @return [String, nil]
+      def text
+        @data[:url]
+      end
+
+      # Sets the text content of this element (same as `url=`).
+      def text=(value)
+        self.url = value
+      end
     end
   end
 end

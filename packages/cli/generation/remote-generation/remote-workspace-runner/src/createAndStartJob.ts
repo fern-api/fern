@@ -1,5 +1,5 @@
 import { stripCliConfigKeys } from "@fern-api/api-workspace-commons";
-import { FernToken } from "@fern-api/auth";
+import { describeGuestRejection, FernToken, isGuestRejection, readGuestRejection } from "@fern-api/auth";
 import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { createFiddleService, getFiddleOrigin } from "@fern-api/core";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
@@ -296,6 +296,13 @@ async function createJob({
                 );
             },
             insufficientPermissions: () => {
+                if (token.type === "guest") {
+                    return context.failAndThrow(
+                        describeGuestRejection({ statusCode: 403, code: undefined, message: undefined }),
+                        undefined,
+                        { code: CliError.Code.AuthError }
+                    );
+                }
                 return context.failAndThrow(
                     `You do not have permission to run this generator for organization '${organization}'. Please run '${loginCommand}' to ensure you are logged in with the correct account.\n\n` +
                         "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not.",
@@ -324,6 +331,14 @@ async function createJob({
             },
             _other: (content) => {
                 context.logger.debug(`Failed to create job: ${JSON.stringify(content)}`);
+                if (token.type === "guest") {
+                    const rejection = readGuestRejection(content);
+                    if (isGuestRejection(rejection)) {
+                        return context.failAndThrow(describeGuestRejection(rejection), undefined, {
+                            code: CliError.Code.AuthError
+                        });
+                    }
+                }
                 // Try to extract a descriptive error message from the response body
                 const errorMessage = extractErrorMessage(content);
                 if (errorMessage != null) {

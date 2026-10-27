@@ -66,6 +66,7 @@ import { listPreviewGroups } from "./commands/automations/listPreviewGroups.js";
 import { executeAutomationsUpgrade } from "./commands/automations/upgrade/executeAutomationsUpgrade.js";
 import { diff } from "./commands/diff/diff.js";
 import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace.js";
+import { parseDocsDevDuration } from "./commands/docs-dev/parseDocsDevDuration.js";
 import { docsDiff } from "./commands/docs-diff/docsDiff.js";
 import { generateLibraryDocs } from "./commands/docs-md-generate/generateLibraryDocs.js";
 import { deleteDocsPreview } from "./commands/docs-preview/deleteDocsPreview.js";
@@ -78,6 +79,7 @@ import { uploadDocsTheme } from "./commands/docs-theme/uploadDocsTheme.js";
 import { downgrade } from "./commands/downgrade/downgrade.js";
 import { generateOpenAPIForWorkspaces } from "./commands/export/generateOpenAPIForWorkspaces.js";
 import { formatWorkspaces } from "./commands/format/formatWorkspaces.js";
+import { GUEST_DOCS_REQUIRE_PREVIEW_MESSAGE } from "./commands/generate/assertGuestCanGenerate.js";
 import { parseGeneratorArg } from "./commands/generate/filterGenerators.js";
 import { GenerationMode, generateAPIWorkspaces } from "./commands/generate/generateAPIWorkspaces.js";
 import { generateDocsWorkspace } from "./commands/generate/generateDocsWorkspace.js";
@@ -958,6 +960,18 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     description:
                         "Include OpenAPI elements marked `x-twilio.libraryVisibility: private` (SDKs) or `x-twilio.docsVisibility: private` (--docs) in the output. By default only `public` elements are generated; `hidden` elements are always excluded."
                 })
+                .option("guest", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Run without a Fern account: start (or reuse) a temporary guest session and generate under its guest organization. Claim the session from the printed link to keep the output. Cannot be combined with FERN_TOKEN or a saved login."
+                })
+                .option("new-session", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "With --guest: ignore the guest session recorded for this repo and start a new one (a new guest organization, so earlier guest output is not carried over). Use when the session was claimed, revoked or otherwise stopped working."
+                })
                 .example(
                     "$0 generate --api my-api",
                     "Generate the legacy default group and every target in the API's default sdk-config.yml"
@@ -1003,6 +1017,25 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     undefined,
                     { code: CliError.Code.ConfigError }
                 );
+            }
+            if (argv.guest && (argv.local || argv.runner != null)) {
+                return cliContext.failWithoutThrowing(
+                    "The --guest flag is not supported with local generation (--local or --runner); local generation needs no login.",
+                    undefined,
+                    { code: CliError.Code.ConfigError }
+                );
+            }
+            if (argv.newSession && !argv.guest) {
+                return cliContext.failWithoutThrowing(
+                    "The --new-session flag can only be used with --guest.",
+                    undefined,
+                    { code: CliError.Code.ConfigError }
+                );
+            }
+            if (argv.guest && argv.docs != null && !argv.preview) {
+                return cliContext.failWithoutThrowing(GUEST_DOCS_REQUIRE_PREVIEW_MESSAGE, undefined, {
+                    code: CliError.Code.ConfigError
+                });
             }
             if (argv.fernignore != null && (argv.local || argv.runner != null)) {
                 return cliContext.failWithoutThrowing(
@@ -1127,7 +1160,9 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     pack: shouldPackage,
                     packMode: argv.packageMode,
                     packOnly: argv.packageOnly,
-                    includePrivate: argv.private
+                    includePrivate: argv.private,
+                    guest: argv.guest,
+                    newSession: argv.newSession
                 });
             }
             if (argv.docs != null) {
@@ -1159,7 +1194,9 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     disableTemplates: argv.disableSnippets,
                     noPrompt: !argv.prompt,
                     skipUpload: argv.skipUpload,
-                    includePrivate: argv.private
+                    includePrivate: argv.private,
+                    guest: argv.guest,
+                    newSession: argv.newSession
                 });
             }
             // default to loading api workspace to preserve legacy behavior
@@ -1199,7 +1236,9 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 pack: shouldPackage,
                 packMode: argv.packageMode,
                 packOnly: argv.packageOnly,
-                includePrivate: argv.private
+                includePrivate: argv.private,
+                guest: argv.guest,
+                newSession: argv.newSession
             });
         }
     );
@@ -2468,6 +2507,22 @@ function addDocsDevCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                     default: false,
                     description:
                         "Skip validating the docs while previewing, so the preview is ready sooner on large sites. Docs errors will not be reported."
+                })
+                .option("timeout", {
+                    string: true,
+                    description:
+                        "Stop the server cleanly this long after it is ready, e.g. 30s, 10m, 1h (a plain number means seconds). Off by default."
+                })
+                .option("idle-timeout", {
+                    string: true,
+                    description:
+                        "Stop the server cleanly after this long with no HTTP requests, e.g. 30s, 10m, 1h (a plain number means seconds). Off by default."
+                })
+                .option("json", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Write ready/reload/stopped events to stdout as one JSON object per line; logs go to stderr."
                 }),
         async (argv) => {
             if (argv.beta) {
@@ -2483,6 +2538,15 @@ function addDocsDevCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                     code: CliError.Code.ConfigError
                 });
             }
+            if (legacy && (argv.timeout != null || argv.idleTimeout != null || argv.json)) {
+                throw new CliError({
+                    message: "--timeout, --idle-timeout and --json are not supported with --legacy.",
+                    code: CliError.Code.ConfigError
+                });
+            }
+            const timeoutMs = argv.timeout != null ? parseDocsDevDuration("timeout", argv.timeout) : undefined;
+            const idleTimeoutMs =
+                argv.idleTimeout != null ? parseDocsDevDuration("idle-timeout", argv.idleTimeout) : undefined;
 
             let port: number;
             let backendPort: number;
@@ -2524,7 +2588,10 @@ function addDocsDevCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                 forceDownload: argv.forceDownload,
                 includePrivate: argv.private,
                 skipApi: argv.skipApi,
-                skipValidation: argv.skipValidation
+                skipValidation: argv.skipValidation,
+                timeoutMs,
+                idleTimeoutMs,
+                json: argv.json
             });
         }
     );
