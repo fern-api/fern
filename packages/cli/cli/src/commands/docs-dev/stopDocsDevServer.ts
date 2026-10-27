@@ -14,6 +14,7 @@ import { CliContext } from "../../cli-context/CliContext.js";
 /** The first port `fern docs dev` tries. */
 export const DEFAULT_DOCS_DEV_PORT = 3000;
 const REQUEST_TIMEOUT_MS = 5_000;
+const PORT_PROBE_TIMEOUT_MS = 1_000;
 const PORT_CLOSE_TIMEOUT_MS = 10_000;
 const PORT_POLL_INTERVAL_MS = 100;
 
@@ -113,7 +114,7 @@ export async function stopDocsDevServer({
 function isPortOpen(port: number): Promise<boolean> {
     return new Promise((resolve) => {
         const socket = net.connect({ host: "127.0.0.1", port });
-        socket.setTimeout(REQUEST_TIMEOUT_MS);
+        socket.setTimeout(PORT_PROBE_TIMEOUT_MS);
         socket.once("connect", () => {
             socket.destroy();
             resolve(true);

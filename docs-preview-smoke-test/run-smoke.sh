@@ -132,10 +132,11 @@ set -e
 
 # Stop the server the way an agent would, without killing it; the EXIT trap's kill_tree is only a fallback
 echo "Stopping server with fern docs dev stop..."
-STOP_OUTPUT=$("$FERN_BIN" docs dev stop --port 3000 --json)
+STOP_EXIT=0
+STOP_OUTPUT=$("$FERN_BIN" docs dev stop --port 3000 --json) || STOP_EXIT=$?
 echo "$STOP_OUTPUT"
-if ! echo "$STOP_OUTPUT" | grep -q '"stopped": true'; then
-  echo "fern docs dev stop did not stop the server"
+if [ "$STOP_EXIT" -ne 0 ] || ! echo "$STOP_OUTPUT" | grep -qE '"stopped": ?true'; then
+  echo "fern docs dev stop did not stop the server (exit $STOP_EXIT)"
   cat "$LOG_FILE"
   exit 1
 fi
