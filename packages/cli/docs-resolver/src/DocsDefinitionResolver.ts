@@ -2051,7 +2051,7 @@ export class DocsDefinitionResolver {
         menu: docsYml.TabVariantMenuItem[] | undefined;
         parentSlug: FernNavigation.V1.SlugGenerator;
         contentSource: docsYml.VersionContentSource | undefined;
-        /** Keeps variant IDs unique when several dropdown items have variants with the same title. */
+        /** Keeps variant IDs unique when several tab-menu tabs have variants with the same title. */
         variantIdPrefix?: string;
     }): Promise<VariantedNodeWithMenu> {
         const variantNodes = await Promise.all(
@@ -2066,7 +2066,7 @@ export class DocsDefinitionResolver {
         });
         if (settings.fellBackToSidebar) {
             this.taskContext.logger.warn(
-                `${label} has a dropdown, but header tabs are off (set \`layout.tabs-placement: header\`). Showing its items in the sidebar instead.`
+                `${label} has a tab-menu, but header tabs are off (set \`layout.tabs-placement: header\`). Showing its tabs in the sidebar instead.`
             );
         }
         // Keyed by object identity: parseDocsConfiguration builds `variants` from the same TabVariant
@@ -2127,7 +2127,7 @@ export class DocsDefinitionResolver {
         if (item.nestedVariants != null) {
             const nested = await this.toVariantedNode({
                 id: this.#idgen.get(`${id}/varianted`),
-                label: `Dropdown item "${item.title}"`,
+                label: `Tab-menu tab "${item.title}"`,
                 variants: item.nestedVariants.variants,
                 location: "sidebar",
                 columnHeight: item.nestedVariants.columnHeight,

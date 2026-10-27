@@ -99,7 +99,7 @@ export interface ParsedDocsConfiguration {
     colors: CjsFdrSdk.docs.v1.write.ColorsConfigV3 | undefined;
     typography: TypographyConfig | undefined;
     layout: CjsFdrSdk.docs.v1.commons.DocsLayoutConfig | undefined;
-    /* layout.dropdown defaults, resolved per tab by `resolveVariantsSettings` */
+    /* layout.tab-menu defaults, resolved per tab by `resolveVariantsSettings` */
     variantsLayout?: VariantsLayout;
     settings: ParsedDocsSettingsConfig | undefined;
     context7File: AbsoluteFilePath | undefined;
@@ -372,9 +372,9 @@ export declare namespace TabbedNavigationChild {
         type: "variants";
         /** Every variant in menu order, groups flattened. */
         variants: TabVariant[];
-        /** `tab` when written as `dropdown` (header tab menu), `sidebar` when written as `variants`. */
+        /** `tab` when written as a `tab-menu` (header tab menu), `sidebar` when written as `variants`. */
         location: VariantsLocation;
-        /** `tabs.<id>.dropdown-column-height`. Sidebar selectors have no columns. */
+        /** `tabs.<id>.tab-menu-column-height`. Sidebar selectors have no columns. */
         columnHeight: VariantsColumnHeight | undefined;
         /** Groups and links around the variants. Undefined when the list only holds variants. */
         menu: TabVariantMenuItem[] | undefined;
@@ -387,10 +387,10 @@ export type VariantsLocation = "tab" | "sidebar";
 export type VariantsColumnHeight = number | "no-limit";
 
 export interface VariantsLayout {
-    /** `layout.dropdown.default-column-height` */
-    dropdownDefaultColumnHeight: VariantsColumnHeight | undefined;
-    /** `layout.dropdown.interact-on-click-only` */
-    dropdownInteractOnClickOnly: boolean | undefined;
+    /** `layout.tab-menu.default-column-height` */
+    tabMenuDefaultColumnHeight: VariantsColumnHeight | undefined;
+    /** `layout.tab-menu.interact-on-click-only` */
+    tabMenuInteractOnClickOnly: boolean | undefined;
 }
 
 export type TabVariantMenuEntry = TabVariantMenuEntry.Variant | TabVariantMenuEntry.Link;
@@ -429,8 +429,8 @@ export interface ResolvedVariantsSettings {
 }
 
 /**
- * Header tab menus: `tabs.<id>.dropdown-column-height` > `layout.dropdown.default-column-height` > single column.
- * Sidebar selectors (including a dropdown that fell back without header tabs) are always one list.
+ * Header tab menus: `tabs.<id>.tab-menu-column-height` > `layout.tab-menu.default-column-height` > single column.
+ * Sidebar selectors (including a tab menu that fell back without header tabs) are always one list.
  */
 export function resolveVariantsSettings({
     location,
@@ -445,13 +445,13 @@ export function resolveVariantsSettings({
 }): ResolvedVariantsSettings {
     const fellBackToSidebar = location === "tab" && !hasHeaderTabs;
     const effectiveLocation: VariantsLocation = fellBackToSidebar ? "sidebar" : location;
-    const height = effectiveLocation === "tab" ? (columnHeight ?? layout?.dropdownDefaultColumnHeight) : undefined;
+    const height = effectiveLocation === "tab" ? (columnHeight ?? layout?.tabMenuDefaultColumnHeight) : undefined;
     return {
         location: effectiveLocation,
         columnHeight: typeof height === "number" && height > 0 ? Math.floor(height) : undefined,
         fellBackToSidebar,
         interactOnClickOnly:
-            effectiveLocation === "tab" && layout?.dropdownInteractOnClickOnly === true ? true : undefined
+            effectiveLocation === "tab" && layout?.tabMenuInteractOnClickOnly === true ? true : undefined
     };
 }
 
@@ -466,7 +466,7 @@ export interface TabVariant
     skipUrlSlug: boolean | undefined;
     hidden: boolean | undefined;
     default: boolean | undefined;
-    /** A dropdown item with its own `variants`; `layout` is then empty. */
+    /** A tab-menu member with its own `variants`; `layout` is then empty. */
     nestedVariants: NestedTabVariants | undefined;
 }
 
@@ -476,7 +476,7 @@ export interface NestedTabVariants {
     menu: TabVariantMenuItem[] | undefined;
 }
 
-/** Every layout under these variants, including variants nested under dropdown items. */
+/** Every layout under these variants, including variants nested under tab-menu members. */
 export function flattenTabVariantLayouts(variants: TabVariant[]): DocsNavigationItem[][] {
     return variants.flatMap((variant) =>
         variant.nestedVariants != null ? flattenTabVariantLayouts(variant.nestedVariants.variants) : [variant.layout]

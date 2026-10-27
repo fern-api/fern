@@ -13,7 +13,6 @@ import { RobotsTxtOnInstanceUrlRequiresRobotsTxtRule } from "./rules/robots-txt-
 import { TranslationDirectoriesExistRule } from "./rules/translation-directories-exist/index.js";
 import { ValidChangelogSlugRule } from "./rules/valid-changelog-slug/index.js";
 import { ValidDocsEndpoints } from "./rules/valid-docs-endpoints/index.js";
-import { ValidDropdownRule } from "./rules/valid-dropdown/index.js";
 import { ValidEmbeddingOriginsRule } from "./rules/valid-embedding-origins/index.js";
 import { ValidFileTypes } from "./rules/valid-file-types/index.js";
 import { ValidFrontmatter } from "./rules/valid-frontmatter/index.js";
@@ -24,6 +23,7 @@ import { ValidMarkdownLinks } from "./rules/valid-markdown-link/index.js";
 import { ValidOpenApiExamples } from "./rules/valid-openapi-examples/index.js";
 import { ValidRedirectsFilesRule } from "./rules/valid-redirects-files/index.js";
 import { ValidSkillsPageActionRule } from "./rules/valid-skills-page-action/index.js";
+import { ValidTabMenuRule } from "./rules/valid-tab-menu/index.js";
 import { ValidTranslationsConfigRule } from "./rules/valid-translations-config/index.js";
 import { ValidVersionRefRule } from "./rules/valid-version-ref/index.js";
 import { ValidWellKnownSkillsRule } from "./rules/valid-well-known-skills/index.js";
@@ -58,7 +58,7 @@ const allRules = [
     ValidFrontmatter,
     TranslationDirectoriesExistRule,
     ValidChangelogSlugRule,
-    ValidDropdownRule, // Dropdown items need exactly one of layout/variants; warn when header tabs are off
+    ValidTabMenuRule, // tab-menu members need exactly one navigation entry with a layout or variants
     ValidWellKnownSkillsRule, // Validate author-supplied Agent Skills bundles under .well-known/
     ValidSkillsPageActionRule // Validate the "Install skills" page action display config
     // ValidMarkdownFileReferences

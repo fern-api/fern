@@ -350,7 +350,7 @@ export const BreadcrumbsConfig = z.object({
 
 export const VariantsColumnHeight = z.union([z.number().int().positive(), z.literal("no-limit")]);
 
-export const DropdownLayoutConfig = z.object({
+export const TabMenuLayoutConfig = z.object({
     "default-column-height": VariantsColumnHeight.nullable().optional(),
     "interact-on-click-only": z.boolean().optional()
 });
@@ -361,7 +361,7 @@ export const LayoutConfig = z.object({
     "sidebar-width": z.string().optional(),
     "header-height": z.string().optional(),
     "searchbar-placement": SearchbarPlacement.optional(),
-    dropdown: DropdownLayoutConfig.optional(),
+    "tab-menu": TabMenuLayoutConfig.optional(),
     "tabs-placement": TabsPlacement.optional(),
     "switcher-placement": SwitcherPlacement.optional(),
     "content-alignment": ContentAlignment.optional(),
@@ -1026,13 +1026,20 @@ export const TabbedNavigationItemWithVariants = z.object({
     variants: z.array(TabVariantItem)
 });
 
-export const DropdownItem = WithPermissions.merge(WithFeatureFlags).merge(
+export const TabbedNavigationItem = z.union([TabbedNavigationItemWithLayout, TabbedNavigationItemWithVariants]);
+
+export const TabbedNavigationConfig = z.array(TabbedNavigationItem);
+
+export const NavigationConfig = z.union([UntabbedNavigationConfig, TabbedNavigationConfig]);
+
+// ===== Tab Config =====
+
+export const TabMenuTab = WithPermissions.merge(WithFeatureFlags).merge(
     z.object({
-        title: z.string(),
+        tab: TabId,
+        "display-name": z.string(),
         subtitle: z.string().optional(),
         icon: z.string().optional(),
-        layout: z.array(NavigationItem).optional(),
-        variants: z.array(TabVariantItem).optional(),
         slug: z.string().optional(),
         "skip-slug": z.boolean().optional(),
         hidden: z.boolean().optional(),
@@ -1040,31 +1047,14 @@ export const DropdownItem = WithPermissions.merge(WithFeatureFlags).merge(
     })
 );
 
-export const DropdownGroupItem = z.union([DropdownItem, LinkConfiguration]);
+export const TabMenuGroupItem = z.union([TabMenuTab, LinkConfiguration]);
 
-export const DropdownGroup = z.object({
+export const TabMenuGroup = z.object({
     group: z.string(),
-    items: z.array(DropdownGroupItem)
+    tabs: z.array(TabMenuGroupItem)
 });
 
-export const DropdownEntry = z.union([DropdownItem, DropdownGroup, LinkConfiguration]);
-
-export const TabbedNavigationItemWithDropdown = z.object({
-    tab: TabId,
-    dropdown: z.array(DropdownEntry)
-});
-
-export const TabbedNavigationItem = z.union([
-    TabbedNavigationItemWithLayout,
-    TabbedNavigationItemWithVariants,
-    TabbedNavigationItemWithDropdown
-]);
-
-export const TabbedNavigationConfig = z.array(TabbedNavigationItem);
-
-export const NavigationConfig = z.union([UntabbedNavigationConfig, TabbedNavigationConfig]);
-
-// ===== Tab Config =====
+export const TabMenuEntry = z.union([TabMenuTab, TabMenuGroup, LinkConfiguration]);
 
 export const TabConfig = WithPermissions.merge(WithFeatureFlags).merge(
     z.object({
@@ -1077,7 +1067,8 @@ export const TabConfig = WithPermissions.merge(WithFeatureFlags).merge(
         target: Target.optional(),
         changelog: ChangelogFolderRelativePath.optional(),
         blog: ChangelogFolderRelativePath.optional(),
-        "dropdown-column-height": VariantsColumnHeight.nullable().optional()
+        "tab-menu": z.array(TabMenuEntry).optional(),
+        "tab-menu-column-height": VariantsColumnHeight.nullable().optional()
     })
 );
 

@@ -1,12 +1,13 @@
-# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
-
 - summary: |
-    A tab can now have a `dropdown`: a menu that opens from the header tab. Its entries are items
-    (`title` plus either a `layout` or their own `variants`, whose selector sits at the top of that
-    item's sidebar), top-level `group` entries with a header and `items`, and external links
-    (`link` + `href`). Without header tabs, the dropdown falls back to a sidebar selector and
-    `fern check` warns. Tab `variants` lists also accept `group` entries (a header plus `items`) and links. Split dropdowns
-    into columns with `dropdown-column-height` on the tab in `tabs:` (an integer or `no-limit`), with a site-wide default
-    in `layout.dropdown.default-column-height`; sidebar selectors stay a single list. Dropdowns open on hover; set
-    `layout.dropdown.interact-on-click-only: true` to open them on click only, with no animation.
+    A tab can now have a `tab-menu`: a menu of other tabs that opens from the header tab. Menu entries are tabs
+    (`tab` id plus `display-name`, optional `subtitle` and `icon`), top-level `group` entries with a header and
+    `tabs`, and external links (`link` + `href`). Each menu tab gets its own `- tab:` entry in `navigation` with a
+    `layout` or `variants` (whose selector sits at the top of that tab's sidebar), and the menu tab's own bare
+    `- tab:` entry sets where the menu sits in the header. Member URLs nest under the menu tab
+    (`/products/agents/...`). Without header tabs, the menu falls back to a sidebar selector and `fern check` warns;
+    it also errors on members missing from `navigation`, members listed twice, and undefined navigation tabs. Tab
+    `variants` lists also accept `group` entries (a header plus `items`). Split menus into columns with
+    `tab-menu-column-height` on the tab (an integer or `no-limit`), with a site-wide default in
+    `layout.tab-menu.default-column-height`; sidebar selectors stay a single list. Menus open on hover; set
+    `layout.tab-menu.interact-on-click-only: true` to open them on click only, with no animation.
   type: feat

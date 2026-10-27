@@ -5,15 +5,15 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { VariantsColumnHeight } from "./VariantsColumnHeight.js";
 
-export const DropdownLayoutConfig: core.serialization.ObjectSchema<
-    serializers.DropdownLayoutConfig.Raw,
-    FernDocsConfig.DropdownLayoutConfig
+export const TabMenuLayoutConfig: core.serialization.ObjectSchema<
+    serializers.TabMenuLayoutConfig.Raw,
+    FernDocsConfig.TabMenuLayoutConfig
 > = core.serialization.object({
     defaultColumnHeight: core.serialization.property("default-column-height", VariantsColumnHeight.optional()),
     interactOnClickOnly: core.serialization.property("interact-on-click-only", core.serialization.boolean().optional()),
 });
 
-export declare namespace DropdownLayoutConfig {
+export declare namespace TabMenuLayoutConfig {
     export interface Raw {
         "default-column-height"?: VariantsColumnHeight.Raw | null;
         "interact-on-click-only"?: boolean | null;

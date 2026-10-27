@@ -39,11 +39,13 @@ export function findTabSlugPrefix({
         if (!("tab" in item)) {
             continue;
         }
-        const tab = tabs?.[item.tab];
-        if (tab == null) {
+        const tabOwners = docsYml.getRawTabSlugOwners(tabs, item.tab);
+        if (tabOwners == null) {
             continue;
         }
-        const tabSlug = tab.skipSlug ? undefined : (tab.slug ?? kebabCase(tab.displayName));
+        const tabSlug = joinSlugs(
+            ...tabOwners.map((owner) => (owner.skipSlug ? undefined : (owner.slug ?? kebabCase(owner.title))))
+        );
         if (docsYml.isRawTabWithVariantLayouts(item)) {
             for (const { owners, layout } of docsYml.flattenRawTabLayouts(item)) {
                 if (listsOutputDir(layout, docsDirectoryPath, outputDir)) {

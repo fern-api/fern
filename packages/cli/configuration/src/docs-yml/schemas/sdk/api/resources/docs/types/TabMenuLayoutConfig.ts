@@ -2,11 +2,11 @@
 
 import type * as FernDocsConfig from "../../../index.js";
 
-export interface DropdownLayoutConfig {
-    /** Column height for every header tab dropdown that doesn't set `dropdown-column-height`. */
+export interface TabMenuLayoutConfig {
+    /** Column height for every header tab menu that doesn't set `tab-menu-column-height`. */
     defaultColumnHeight?: FernDocsConfig.VariantsColumnHeight;
     /**
-     * When true, header tab dropdowns open and close on click only, with no open animation.
+     * When true, header tab menus open and close on click only, with no open animation.
      * By default they open on hover and close when the pointer leaves the tab and menu.
      */
     interactOnClickOnly?: boolean;

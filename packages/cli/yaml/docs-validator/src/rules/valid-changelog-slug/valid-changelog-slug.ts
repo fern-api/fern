@@ -180,12 +180,10 @@ function collectFromNavigation(
         const out: ChangelogLocation[] = [];
         for (const item of navigation) {
             const next = `${breadcrumb} > tab "${item.tab}"`;
-            const tabConfig = tabs?.[item.tab];
-            const tabSegments = ancestorSlugSegments({
-                slug: tabConfig?.slug,
-                displayName: tabConfig?.displayName ?? item.tab,
-                skipSlug: tabConfig?.skipSlug
-            });
+            const tabOwners = docsYml.getRawTabSlugOwners(tabs, item.tab) ?? [{ title: item.tab }];
+            const tabSegments = tabOwners.flatMap((owner) =>
+                ancestorSlugSegments({ slug: owner.slug, displayName: owner.title, skipSlug: owner.skipSlug })
+            );
             const tabAncestors = [...ancestorSegments, ...tabSegments];
             if ("layout" in item && Array.isArray(item.layout)) {
                 out.push(...collectChangelogLocations(item.layout, next, tabAncestors));

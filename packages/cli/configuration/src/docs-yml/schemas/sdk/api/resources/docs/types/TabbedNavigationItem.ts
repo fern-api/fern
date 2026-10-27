@@ -4,5 +4,4 @@ import type * as FernDocsConfig from "../../../index.js";
 
 export type TabbedNavigationItem =
     | FernDocsConfig.TabbedNavigationItemWithLayout
-    | FernDocsConfig.TabbedNavigationItemWithVariants
-    | FernDocsConfig.TabbedNavigationItemWithDropdown;
+    | FernDocsConfig.TabbedNavigationItemWithVariants;

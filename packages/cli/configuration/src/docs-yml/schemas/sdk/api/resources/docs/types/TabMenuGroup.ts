@@ -2,8 +2,8 @@
 
 import type * as FernDocsConfig from "../../../index.js";
 
-export interface DropdownGroup {
-    /** Header shown above this group's items in the dropdown. */
+export interface TabMenuGroup {
+    /** Header shown above this group's tabs in the menu. */
     group: string;
-    items: FernDocsConfig.DropdownGroupItem[];
+    tabs: FernDocsConfig.TabMenuGroupItem[];
 }

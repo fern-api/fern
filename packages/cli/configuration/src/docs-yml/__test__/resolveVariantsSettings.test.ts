@@ -1,15 +1,20 @@
 import { describe, expect, it } from "vitest";
 
 import { resolveVariantsSettings, type VariantsLayout } from "../ParsedDocsConfiguration.js";
-import { flattenRawTabLayouts, flattenRawTabVariants } from "../tabVariants.js";
+import {
+    flattenRawTabMenu,
+    flattenRawTabVariants,
+    getRawTabMenuMemberships,
+    getRawTabSlugOwners
+} from "../tabVariants.js";
 
 const layout: VariantsLayout = {
-    dropdownDefaultColumnHeight: 4,
-    dropdownInteractOnClickOnly: undefined
+    tabMenuDefaultColumnHeight: 4,
+    tabMenuInteractOnClickOnly: undefined
 };
 
 describe("resolveVariantsSettings", () => {
-    it("keeps today's sidebar dropdown with one column when nothing is set", () => {
+    it("keeps today's sidebar selector with one column when nothing is set", () => {
         expect(
             resolveVariantsSettings({
                 location: "sidebar",
@@ -20,7 +25,7 @@ describe("resolveVariantsSettings", () => {
         ).toEqual({ location: "sidebar", columnHeight: undefined, fellBackToSidebar: false });
     });
 
-    it("prefers the tab's dropdown-column-height, then the layout default; sidebar selectors have no columns", () => {
+    it("prefers the tab's tab-menu-column-height, then the layout default; sidebar selectors have no columns", () => {
         const resolve = (location: "tab" | "sidebar", columnHeight: number | "no-limit" | undefined) =>
             resolveVariantsSettings({ location, columnHeight, layout, hasHeaderTabs: true });
         expect(resolve("tab", undefined)).toMatchObject({ location: "tab", columnHeight: 4 });
@@ -39,7 +44,7 @@ describe("resolveVariantsSettings", () => {
     });
 
     it("sets interactOnClickOnly only for header tab menus when the layout asks for it", () => {
-        const clickOnly: VariantsLayout = { ...layout, dropdownInteractOnClickOnly: true };
+        const clickOnly: VariantsLayout = { ...layout, tabMenuInteractOnClickOnly: true };
         const resolve = (location: "tab" | "sidebar", hasHeaderTabs: boolean) =>
             resolveVariantsSettings({ location, columnHeight: undefined, layout: clickOnly, hasHeaderTabs })
                 .interactOnClickOnly;
@@ -68,31 +73,48 @@ describe("flattenRawTabVariants", () => {
     });
 });
 
-describe("flattenRawTabLayouts", () => {
-    it("walks dropdown groups and variants nested under dropdown items", () => {
-        const result = flattenRawTabLayouts({
-            tab: "products",
-            dropdown: [
+describe("tab-menu helpers", () => {
+    const tabs = {
+        products: {
+            displayName: "Products",
+            tabMenu: [
                 {
                     group: "Platform",
-                    items: [
-                        {
-                            title: "Agents",
-                            variants: [
-                                { title: "Python", layout: [] },
-                                { title: "TypeScript", slug: "ts", layout: [] }
-                            ]
-                        },
-                        { title: "Studio", layout: [] }
+                    tabs: [
+                        { tab: "agents", displayName: "Agents", subtitle: "Build AI agents" },
+                        { link: "Status", href: "https://status.example.com" }
                     ]
                 },
-                { link: "Status", href: "https://status.example.com" }
+                { tab: "studio", displayName: "Studio", slug: "visual" }
             ]
-        });
-        expect(result.map(({ owners, path }) => [owners.map((o) => o.title).join("/"), path.join(".")])).toEqual([
-            ["Agents/Python", "dropdown.0.items.0.variants.0"],
-            ["Agents/TypeScript", "dropdown.0.items.0.variants.1"],
-            ["Studio", "dropdown.0.items.1"]
+        },
+        other: { displayName: "Other", tabMenu: [{ tab: "agents", displayName: "Agents again" }] },
+        guides: { displayName: "Guides", skipSlug: true }
+    };
+
+    it("flattens groups, skips links and keeps each member's path", () => {
+        expect(
+            flattenRawTabMenu(tabs.products.tabMenu).map(({ member, path }) => [member.tab, path.join(".")])
+        ).toEqual([
+            ["agents", "tab-menu.0.tabs.0"],
+            ["studio", "tab-menu.1"]
         ]);
+    });
+
+    it("maps each member to the first menu that lists it", () => {
+        const memberships = getRawTabMenuMemberships(tabs);
+        expect([...memberships.entries()].map(([id, m]) => [id, m.menuTabId])).toEqual([
+            ["agents", "products"],
+            ["studio", "products"]
+        ]);
+    });
+
+    it("nests member slugs under the menu tab", () => {
+        expect(getRawTabSlugOwners(tabs, "studio")).toEqual([
+            { title: "Products", slug: undefined, skipSlug: undefined },
+            { title: "Studio", slug: "visual", skipSlug: undefined }
+        ]);
+        expect(getRawTabSlugOwners(tabs, "guides")).toEqual([{ title: "Guides", slug: undefined, skipSlug: true }]);
+        expect(getRawTabSlugOwners(tabs, "missing")).toBeUndefined();
     });
 });

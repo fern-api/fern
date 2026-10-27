@@ -646,11 +646,17 @@ types:
       target: optional<Target>
       changelog: optional<ChangelogFolderRelativePath>
       blog: optional<ChangelogFolderRelativePath>
-      dropdown-column-height:
+      tab-menu:
+        type: optional<list<TabMenuEntry>>
+        docs: |
+          Turns this tab into a menu of other tabs that opens from the header tab. Entries are tabs (defined here,
+          with their pages under their own `- tab:` entry in `navigation`), `group` entries with a header and `tabs`,
+          and links. Without header tabs, the menu falls back to a selector at the top of the sidebar.
+      tab-menu-column-height:
         type: optional<VariantsColumnHeight>
         docs: |
-          Maximum number of items per column in this tab's header dropdown. `no-limit` keeps a single column.
-          Overrides `layout.dropdown.default-column-height`. Only applies when the tab has a `dropdown` in `navigation`.
+          Maximum number of items per column in this tab's header menu. `no-limit` keeps a single column.
+          Overrides `layout.tab-menu.default-column-height`. Only applies when the tab has a `tab-menu`.
 
   ChangelogFolderRelativePath:
     type: string
@@ -855,7 +861,6 @@ types:
     union:
       - TabbedNavigationItemWithLayout
       - TabbedNavigationItemWithVariants
-      - TabbedNavigationItemWithDropdown
 
   TabbedNavigationItemWithLayout:
     properties:
@@ -871,44 +876,36 @@ types:
         type: list<TabVariantItem>
         docs: Variants shown in a selector at the top of the tab's sidebar.
 
-  TabbedNavigationItemWithDropdown:
-    properties:
-      tab: TabId
-      dropdown:
-        type: list<DropdownEntry>
-        docs: |
-          Items shown in a menu that opens from the header tab. Requires header tabs; with `tabs-placement: sidebar`
-          the items fall back to a selector at the top of the sidebar.
-
-  DropdownEntry:
+  TabMenuEntry:
     discriminated: false
     union:
-      - DropdownItem
-      - DropdownGroup
+      - TabMenuTab
+      - TabMenuGroup
       - LinkConfiguration
 
-  DropdownGroup:
+  TabMenuGroup:
     properties:
       group:
         type: string
-        docs: Header shown above this group's items in the dropdown.
-      items: list<DropdownGroupItem>
+        docs: Header shown above this group's tabs in the menu.
+      tabs: list<TabMenuGroupItem>
 
-  DropdownGroupItem:
+  TabMenuGroupItem:
     discriminated: false
     union:
-      - DropdownItem
+      - TabMenuTab
       - LinkConfiguration
 
-  DropdownItem:
-    docs: A dropdown item has either a `layout` (one sidebar) or `variants` (a selector at the top of its sidebar).
+  TabMenuTab:
+    docs: |
+      A tab in a tab menu. Its pages come from the `- tab:` entry with the same id in `navigation`, which has either a
+      `layout` (one sidebar) or `variants` (a selector at the top of its sidebar).
     extends: [WithPermissions, WithFeatureFlags]
     properties:
-      title: string
+      tab: TabId
+      display-name: string
       subtitle: optional<string>
       icon: optional<string>
-      layout: optional<list<NavigationItem>>
-      variants: optional<list<TabVariantItem>>
       slug: optional<string>
       skip-slug: optional<boolean>
       hidden: optional<boolean>
@@ -1082,9 +1079,9 @@ types:
 
           Note: this setting is ignored when `disable-header` is set to true.
 
-      dropdown:
-        type: optional<DropdownLayoutConfig>
-        docs: Defaults for header tab dropdowns.
+      tab-menu:
+        type: optional<TabMenuLayoutConfig>
+        docs: Defaults for header tab menus.
 
       tabs-placement:
         type: optional<TabsPlacement>
@@ -2139,15 +2136,15 @@ types:
       hidden: optional<boolean>
       availability: optional<Availability>
 
-  DropdownLayoutConfig:
+  TabMenuLayoutConfig:
     properties:
       default-column-height:
         type: optional<VariantsColumnHeight>
-        docs: Column height for every header tab dropdown that doesn't set `dropdown-column-height`.
+        docs: Column height for every header tab menu that doesn't set `tab-menu-column-height`.
       interact-on-click-only:
         type: optional<boolean>
         docs: |
-          When true, header tab dropdowns open and close on click only, with no open animation.
+          When true, header tab menus open and close on click only, with no open animation.
           By default they open on hover and close when the pointer leaves the tab and menu.
 
   LinkConfiguration:

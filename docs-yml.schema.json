@@ -1024,6 +1024,196 @@
       "type": "string",
       "description": "The relative path to a folder containing markdown files broken down by date.\n\nExample:\n```\nchangelog: \"changelog\"\n```\n\nThis will look for markdown files in the `/fern/changelog` directory, which should contain files named like\n- `/fern/changelog/2024-04-29.mdx`.\n- `/fern/changelog/2023-01-02.mdx`."
     },
+    "docs.TabId": {
+      "type": "string"
+    },
+    "docs.TabMenuTab": {
+      "type": "object",
+      "properties": {
+        "viewers": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Role"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "orphaned": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "When `orphaned` is set to `true`, the roles will not inherit from parents."
+        },
+        "feature-flag": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.FeatureFlagConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tab": {
+          "$ref": "#/definitions/docs.TabId"
+        },
+        "display-name": {
+          "type": "string"
+        },
+        "subtitle": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "icon": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "slug": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "skip-slug": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "hidden": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "default": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "tab",
+        "display-name"
+      ],
+      "additionalProperties": false,
+      "description": "A tab in a tab menu. Its pages come from the `- tab:` entry with the same id in `navigation`, which has either a\n`layout` (one sidebar) or `variants` (a selector at the top of its sidebar)."
+    },
+    "docs.LinkConfiguration": {
+      "type": "object",
+      "properties": {
+        "link": {
+          "type": "string"
+        },
+        "href": {
+          "type": "string"
+        },
+        "icon": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "target": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Target"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "link",
+        "href"
+      ],
+      "additionalProperties": false
+    },
+    "docs.TabMenuGroupItem": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/docs.TabMenuTab"
+        },
+        {
+          "$ref": "#/definitions/docs.LinkConfiguration"
+        }
+      ]
+    },
+    "docs.TabMenuGroup": {
+      "type": "object",
+      "properties": {
+        "group": {
+          "type": "string",
+          "description": "Header shown above this group's tabs in the menu."
+        },
+        "tabs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/docs.TabMenuGroupItem"
+          }
+        }
+      },
+      "required": [
+        "group",
+        "tabs"
+      ],
+      "additionalProperties": false
+    },
+    "docs.TabMenuEntry": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/docs.TabMenuTab"
+        },
+        {
+          "$ref": "#/definitions/docs.TabMenuGroup"
+        },
+        {
+          "$ref": "#/definitions/docs.LinkConfiguration"
+        }
+      ]
+    },
     "docs.VariantsColumnHeightCount": {
       "type": "integer"
     },
@@ -1155,7 +1345,21 @@
             }
           ]
         },
-        "dropdown-column-height": {
+        "tab-menu": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/docs.TabMenuEntry"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Turns this tab into a menu of other tabs that opens from the header tab. Entries are tabs (defined here,\nwith their pages under their own `- tab:` entry in `navigation`), `group` entries with a header and `tabs`,\nand links. Without header tabs, the menu falls back to a selector at the top of the sidebar."
+        },
+        "tab-menu-column-height": {
           "oneOf": [
             {
               "$ref": "#/definitions/docs.VariantsColumnHeight"
@@ -1164,7 +1368,7 @@
               "type": "null"
             }
           ],
-          "description": "Maximum number of items per column in this tab's header dropdown. `no-limit` keeps a single column.\nOverrides `layout.dropdown.default-column-height`. Only applies when the tab has a `dropdown` in `navigation`."
+          "description": "Maximum number of items per column in this tab's header menu. `no-limit` keeps a single column.\nOverrides `layout.tab-menu.default-column-height`. Only applies when the tab has a `tab-menu`."
         }
       },
       "required": [
@@ -2913,42 +3117,6 @@
       "additionalProperties": false,
       "description": "Defines a GraphQL-native schema for selecting operations (REST -> Endpoint === GraphQL -> Operation)"
     },
-    "docs.LinkConfiguration": {
-      "type": "object",
-      "properties": {
-        "link": {
-          "type": "string"
-        },
-        "href": {
-          "type": "string"
-        },
-        "icon": {
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "target": {
-          "oneOf": [
-            {
-              "$ref": "#/definitions/docs.Target"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        }
-      },
-      "required": [
-        "link",
-        "href"
-      ],
-      "additionalProperties": false
-    },
     "docs.ApiReferenceLayoutItem": {
       "anyOf": [
         {
@@ -3615,9 +3783,6 @@
         "$ref": "#/definitions/docs.NavigationItem"
       }
     },
-    "docs.TabId": {
-      "type": "string"
-    },
     "docs.TabbedNavigationItemWithLayout": {
       "type": "object",
       "properties": {
@@ -3817,199 +3982,6 @@
       ],
       "additionalProperties": false
     },
-    "docs.DropdownItem": {
-      "type": "object",
-      "properties": {
-        "viewers": {
-          "oneOf": [
-            {
-              "$ref": "#/definitions/docs.Role"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "orphaned": {
-          "oneOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ],
-          "description": "When `orphaned` is set to `true`, the roles will not inherit from parents."
-        },
-        "feature-flag": {
-          "oneOf": [
-            {
-              "$ref": "#/definitions/docs.FeatureFlagConfiguration"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "title": {
-          "type": "string"
-        },
-        "subtitle": {
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "icon": {
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "layout": {
-          "oneOf": [
-            {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/docs.NavigationItem"
-              }
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "variants": {
-          "oneOf": [
-            {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/docs.TabVariantItem"
-              }
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "slug": {
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "skip-slug": {
-          "oneOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "hidden": {
-          "oneOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        },
-        "default": {
-          "oneOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        }
-      },
-      "required": [
-        "title"
-      ],
-      "additionalProperties": false,
-      "description": "A dropdown item has either a `layout` (one sidebar) or `variants` (a selector at the top of its sidebar)."
-    },
-    "docs.DropdownGroupItem": {
-      "anyOf": [
-        {
-          "$ref": "#/definitions/docs.DropdownItem"
-        },
-        {
-          "$ref": "#/definitions/docs.LinkConfiguration"
-        }
-      ]
-    },
-    "docs.DropdownGroup": {
-      "type": "object",
-      "properties": {
-        "group": {
-          "type": "string",
-          "description": "Header shown above this group's items in the dropdown."
-        },
-        "items": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/docs.DropdownGroupItem"
-          }
-        }
-      },
-      "required": [
-        "group",
-        "items"
-      ],
-      "additionalProperties": false
-    },
-    "docs.DropdownEntry": {
-      "anyOf": [
-        {
-          "$ref": "#/definitions/docs.DropdownItem"
-        },
-        {
-          "$ref": "#/definitions/docs.DropdownGroup"
-        },
-        {
-          "$ref": "#/definitions/docs.LinkConfiguration"
-        }
-      ]
-    },
-    "docs.TabbedNavigationItemWithDropdown": {
-      "type": "object",
-      "properties": {
-        "tab": {
-          "$ref": "#/definitions/docs.TabId"
-        },
-        "dropdown": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/docs.DropdownEntry"
-          },
-          "description": "Items shown in a menu that opens from the header tab. Requires header tabs; with `tabs-placement: sidebar`\nthe items fall back to a selector at the top of the sidebar."
-        }
-      },
-      "required": [
-        "tab",
-        "dropdown"
-      ],
-      "additionalProperties": false
-    },
     "docs.TabbedNavigationItem": {
       "anyOf": [
         {
@@ -4017,9 +3989,6 @@
         },
         {
           "$ref": "#/definitions/docs.TabbedNavigationItemWithVariants"
-        },
-        {
-          "$ref": "#/definitions/docs.TabbedNavigationItemWithDropdown"
         }
       ]
     },
@@ -6746,7 +6715,7 @@
         }
       ]
     },
-    "docs.DropdownLayoutConfig": {
+    "docs.TabMenuLayoutConfig": {
       "type": "object",
       "properties": {
         "default-column-height": {
@@ -6758,7 +6727,7 @@
               "type": "null"
             }
           ],
-          "description": "Column height for every header tab dropdown that doesn't set `dropdown-column-height`."
+          "description": "Column height for every header tab menu that doesn't set `tab-menu-column-height`."
         },
         "interact-on-click-only": {
           "oneOf": [
@@ -6769,7 +6738,7 @@
               "type": "null"
             }
           ],
-          "description": "When true, header tab dropdowns open and close on click only, with no open animation.\nBy default they open on hover and close when the pointer leaves the tab and menu."
+          "description": "When true, header tab menus open and close on click only, with no open animation.\nBy default they open on hover and close when the pointer leaves the tab and menu."
         }
       },
       "additionalProperties": false
@@ -6891,16 +6860,16 @@
           ],
           "description": "Sets the placement of the searchbar\n\n@default: `sidebar`\n\nNote: this setting is ignored when `disable-header` is set to true."
         },
-        "dropdown": {
+        "tab-menu": {
           "oneOf": [
             {
-              "$ref": "#/definitions/docs.DropdownLayoutConfig"
+              "$ref": "#/definitions/docs.TabMenuLayoutConfig"
             },
             {
               "type": "null"
             }
           ],
-          "description": "Defaults for header tab dropdowns."
+          "description": "Defaults for header tab menus."
         },
         "tabs-placement": {
           "oneOf": [

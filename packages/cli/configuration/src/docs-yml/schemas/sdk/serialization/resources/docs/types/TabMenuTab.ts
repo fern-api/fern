@@ -2,19 +2,18 @@
 
 import type * as FernDocsConfig from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
-import * as serializers from "../../../index.js";
-import { TabVariantItem } from "./TabVariantItem.js";
+import type * as serializers from "../../../index.js";
+import { TabId } from "./TabId.js";
 import { WithFeatureFlags } from "./WithFeatureFlags.js";
 import { WithPermissions } from "./WithPermissions.js";
 
-export const DropdownItem: core.serialization.ObjectSchema<serializers.DropdownItem.Raw, FernDocsConfig.DropdownItem> =
+export const TabMenuTab: core.serialization.ObjectSchema<serializers.TabMenuTab.Raw, FernDocsConfig.TabMenuTab> =
     core.serialization
         .object({
-            title: core.serialization.string(),
+            tab: TabId,
+            displayName: core.serialization.property("display-name", core.serialization.string()),
             subtitle: core.serialization.string().optional(),
             icon: core.serialization.string().optional(),
-            layout: core.serialization.list(core.serialization.lazy(() => serializers.NavigationItem)).optional(),
-            variants: core.serialization.list(TabVariantItem).optional(),
             slug: core.serialization.string().optional(),
             skipSlug: core.serialization.property("skip-slug", core.serialization.boolean().optional()),
             hidden: core.serialization.boolean().optional(),
@@ -23,13 +22,12 @@ export const DropdownItem: core.serialization.ObjectSchema<serializers.DropdownI
         .extend(WithPermissions)
         .extend(WithFeatureFlags);
 
-export declare namespace DropdownItem {
+export declare namespace TabMenuTab {
     export interface Raw extends WithPermissions.Raw, WithFeatureFlags.Raw {
-        title: string;
+        tab: TabId.Raw;
+        "display-name": string;
         subtitle?: string | null;
         icon?: string | null;
-        layout?: serializers.NavigationItem.Raw[] | null;
-        variants?: TabVariantItem.Raw[] | null;
         slug?: string | null;
         "skip-slug"?: boolean | null;
         hidden?: boolean | null;

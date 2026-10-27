@@ -2,4 +2,4 @@
 
 import type * as FernDocsConfig from "../../../index.js";
 
-export type DropdownGroupItem = FernDocsConfig.DropdownItem | FernDocsConfig.LinkConfiguration;
+export type TabMenuGroupItem = FernDocsConfig.TabMenuTab | FernDocsConfig.LinkConfiguration;
