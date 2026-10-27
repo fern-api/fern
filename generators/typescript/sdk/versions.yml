@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.108.1
+  changelogEntry:
+    - summary: |
+        Fix TS1484 compilation error in the generated XML (TwiML) runtime: `src/core/xml/builder.ts` imported the
+        `XmlSerializable` interface as a value, which the ESM build (`tsconfig.esm.json`, `verbatimModuleSyntax`)
+        rejects. The import is now type-only, so `pnpm build` succeeds for SDKs with xml-encoded types.
+      type: fix
+  createdAt: "2026-10-27"
+  irVersion: 67
 - version: 3.108.0
   changelogEntry:
     - summary: |
