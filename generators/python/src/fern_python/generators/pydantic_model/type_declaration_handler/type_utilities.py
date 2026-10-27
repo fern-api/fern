@@ -1,9 +1,10 @@
 from typing import Callable
 
-import fern.ir.resources as ir_types
 from ...context.pydantic_generator_context import PydanticGeneratorContext
 from ..custom_config import PydanticModelCustomConfig
 from fern_python.external_dependencies import PydanticVersionCompatibility
+
+import fern.ir.resources as ir_types
 
 
 def declared_type_name_to_named_type(declared_type_name: ir_types.DeclaredTypeName) -> ir_types.NamedType:
