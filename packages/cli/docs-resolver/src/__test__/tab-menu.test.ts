@@ -2,7 +2,7 @@ import { FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, resolve } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
 import { loadDocsWorkspace } from "@fern-api/workspace-loader";
-import { DocsDefinitionResolver } from "../DocsDefinitionResolver.js";
+import { DocsDefinitionResolver, type VariantedNodeWithMenu } from "../DocsDefinitionResolver.js";
 
 async function resolveFixture(fixture: string): Promise<FernNavigation.V1.RootNode> {
     const context = createMockTaskContext();
@@ -31,11 +31,11 @@ async function resolveFixture(fixture: string): Promise<FernNavigation.V1.RootNo
 
 function collect(root: FernNavigation.V1.RootNode): {
     tabs: FernNavigation.V1.TabNode[];
-    varianted: FernNavigation.V1.VariantedNode[];
+    varianted: VariantedNodeWithMenu[];
     pageSlugs: string[];
 } {
     const tabs: FernNavigation.V1.TabNode[] = [];
-    const varianted: FernNavigation.V1.VariantedNode[] = [];
+    const varianted: VariantedNodeWithMenu[] = [];
     const pageSlugs: string[] = [];
     FernNavigation.V1.traverseDF(root, (node) => {
         if (node.type === "tab") {

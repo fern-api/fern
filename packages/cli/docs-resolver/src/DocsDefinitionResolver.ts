@@ -110,7 +110,7 @@ type VariantMenuEntry =
           target: FernNavigation.V1.LinkTarget | undefined;
       };
 type VariantMenuItem = VariantMenuEntry | { type: "group"; title: string; children: VariantMenuEntry[] };
-interface VariantedNodeWithMenu extends FernNavigation.V1.VariantedNode {
+export interface VariantedNodeWithMenu extends FernNavigation.V1.VariantedNode {
     location?: "tab" | "sidebar";
     columnHeight?: number;
     interactOnClickOnly?: boolean;
