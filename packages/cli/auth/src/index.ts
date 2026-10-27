@@ -4,10 +4,13 @@ export { describeGuestRejection, isGuestRejection, readGuestRejection } from "./
 export type { StoredGuestSession } from "./guest/GuestSession.js";
 export {
     GUEST_SESSION_POINTER_FILENAME,
+    getClaimSecret,
     getPathToGuestSessionFile,
     getPathToGuestSessionPointer,
     isGuestSessionLive,
-    readStoredGuestSession
+    readStoredGuestSession,
+    removeStoredGuestSession,
+    writeStoredGuestSession
 } from "./guest/GuestSession.js";
 export type { CreateGuestSession } from "./guest/getOrCreateGuestSession.js";
 export { getOrCreateGuestSession } from "./guest/getOrCreateGuestSession.js";
