@@ -32,7 +32,15 @@ export function parseSvgPath(data: string): Polygon[] {
         }
         return value;
     };
-    const flag = (): boolean => number() !== 0;
+    // Arc flags are single digits that minifiers write without separators, as in "a1 1 0 00.5.5".
+    const flag = (): boolean => {
+        const token = tokens[index];
+        if (token !== undefined && token.length > 1 && (token[0] === "0" || token[0] === "1")) {
+            tokens[index] = token.slice(1);
+            return token[0] === "1";
+        }
+        return number() !== 0;
+    };
     const finishPolygon = (): void => {
         if (polygon.length > 2) {
             polygons.push(polygon);

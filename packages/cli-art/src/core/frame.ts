@@ -4,6 +4,8 @@ import type { Rgb } from "./color";
 export interface Cell {
     char: string;
     color?: Rgb;
+    /** Fills the rest of the cell, so a half block can show two pixels. */
+    background?: Rgb;
     bold?: boolean;
 }
 
@@ -97,13 +99,16 @@ const RESET = "\u001B[0m";
 
 function style(cell: Cell, mode: Exclude<ColorMode, "none">): string {
     const bold = cell.bold === true ? "\u001B[1m" : "\u001B[22m";
-    if (cell.color === undefined) {
-        return `${bold}\u001B[39m`;
-    }
-    const [red, green, blue] = cell.color;
+    const foreground = cell.color === undefined ? "\u001B[39m" : ansiColor(cell.color, mode, 38);
+    const background = cell.background === undefined ? "\u001B[49m" : ansiColor(cell.background, mode, 48);
+    return `${bold}${foreground}${background}`;
+}
+
+function ansiColor(color: Rgb, mode: Exclude<ColorMode, "none">, layer: 38 | 48): string {
+    const [red, green, blue] = color;
     return mode === "truecolor"
-        ? `${bold}\u001B[38;2;${red};${green};${blue}m`
-        : `${bold}\u001B[38;5;${toAnsi256(cell.color)}m`;
+        ? `\u001B[${layer};2;${red};${green};${blue}m`
+        : `\u001B[${layer};5;${toAnsi256(color)}m`;
 }
 
 /** The closest color in the xterm 256-color cube or grayscale ramp. */

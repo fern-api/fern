@@ -1,5 +1,6 @@
 // biome-ignore-all lint/suspicious/noConsole: a command-line preview tool.
 import { burst } from "./animations/burst";
+import { burstSpin } from "./animations/burst-spin";
 import { filings } from "./animations/filings";
 import { orb } from "./animations/orb";
 import { reveal } from "./animations/reveal";
@@ -15,6 +16,7 @@ const ANIMATIONS: Record<
     (shape: Shape, options: { width?: number; height?: number; glyph?: string }) => Animation
 > = {
     burst,
+    "burst-spin": burstSpin,
     filings,
     orb,
     reveal,

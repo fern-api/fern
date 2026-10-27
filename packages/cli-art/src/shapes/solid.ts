@@ -25,18 +25,24 @@ const CAMERA_DISTANCE = 3.5;
 const LIGHT = normalize({ x: -0.35, y: 0.45, z: -1 });
 const AMBIENT = 0.12;
 
-const surfaces = new WeakMap<Shape, SurfacePoint[]>();
+const surfaces = new WeakMap<Shape, Map<number, SurfacePoint[]>>();
 
 /**
  * Renders the shape as an extruded 3D solid, turned `angle` radians around its vertical axis (with a
- * slight tilt), lit from the upper left, into a grid of cells.
+ * slight tilt unless `tilt` is false), lit from the upper left, into a grid of cells, or of half-cell
+ * pixels when `subRows` is 2.
  */
 export function renderSolid({
     shape,
     angle,
     width,
     height,
-    size = 0.92
+    size = 0.92,
+    fitShape = false,
+    tilt = true,
+    perspective = true,
+    subRows = 1,
+    resolution = RESOLUTION
 }: {
     shape: Shape;
     angle: number;
@@ -44,22 +50,39 @@ export function renderSolid({
     height: number;
     /** Fraction of the grid the shape spans when facing forward. */
     size?: number;
+    /**
+     * Scale to the shape's own proportions, so a wide wordmark fills a wide grid. By default the
+     * shape's longer side spans the grid's shorter dimension, which keeps it inside a square frame.
+     */
+    fitShape?: boolean;
+    /** Wobble around the horizontal axis while turning. */
+    tilt?: boolean;
+    /** Nearer parts look larger. When false, the turn only narrows and widens the shape. */
+    perspective?: boolean;
+    /** Rows per cell: 2 returns twice as many rows, for half-block pixels. */
+    subRows?: 1 | 2;
+    /** Samples across the shape's longer side. */
+    resolution?: number;
 }): SolidFrame {
-    const frame: SolidFrame = Array.from({ length: height }, () =>
+    const rows = height * subRows;
+    const frame: SolidFrame = Array.from({ length: rows }, () =>
         new Array<SolidCell | undefined>(width).fill(undefined)
     );
-    const depth: number[][] = Array.from({ length: height }, () => new Array<number>(width).fill(0));
-    const tilt = 0.3 * Math.sin(angle);
-    const rotate = (vector: Vector3): Vector3 => rotateX(rotateY(vector, angle), tilt);
+    const depth: number[][] = Array.from({ length: rows }, () => new Array<number>(width).fill(0));
+    const tiltAngle = tilt ? 0.3 * Math.sin(angle) : 0;
+    const rotate = (vector: Vector3): Vector3 => rotateX(rotateY(vector, angle), tiltAngle);
+    const rowAspect = CELL_ASPECT / subRows;
     const gridHeight = height * CELL_ASPECT;
-    const scale = (Math.min(width, gridHeight) / 2) * size;
+    const spanX = Math.min(1, shape.aspectRatio);
+    const spanY = Math.min(1, 1 / shape.aspectRatio);
+    const scale = (fitShape ? Math.min(width / spanX, gridHeight / spanY) / 2 : Math.min(width, gridHeight) / 2) * size;
 
-    for (const point of getSurface(shape)) {
+    for (const point of getSurface(shape, resolution)) {
         const position = rotate(point.position);
         const inverseDepth = 1 / (CAMERA_DISTANCE + position.z);
-        const perspective = CAMERA_DISTANCE * inverseDepth;
-        const column = Math.floor(width / 2 + position.x * scale * perspective);
-        const row = Math.floor((gridHeight / 2 - position.y * scale * perspective) / CELL_ASPECT);
+        const projection = perspective ? CAMERA_DISTANCE * inverseDepth : 1;
+        const column = Math.floor(width / 2 + position.x * scale * projection);
+        const row = Math.floor((gridHeight / 2 - position.y * scale * projection) / rowAspect);
         const depthRow = depth[row];
         const frameRow = frame[row];
         if (depthRow === undefined || frameRow === undefined || column < 0 || column >= width) {
@@ -81,14 +104,16 @@ export function renderSolid({
  * Front and back faces of the shape, plus side walls along its outline, as a point cloud in
  * [-1, 1] coordinates (the longer side spans the full range).
  */
-function getSurface(shape: Shape): SurfacePoint[] {
-    const cached = surfaces.get(shape);
+function getSurface(shape: Shape, resolution: number): SurfacePoint[] {
+    const byResolution = surfaces.get(shape) ?? new Map<number, SurfacePoint[]>();
+    surfaces.set(shape, byResolution);
+    const cached = byResolution.get(resolution);
     if (cached !== undefined) {
         return cached;
     }
     const aspect = shape.aspectRatio;
-    const columns = aspect >= 1 ? RESOLUTION : Math.max(8, Math.round(RESOLUTION * aspect));
-    const rows = aspect >= 1 ? Math.max(8, Math.round(RESOLUTION / aspect)) : RESOLUTION;
+    const columns = aspect >= 1 ? resolution : Math.max(8, Math.round(resolution * aspect));
+    const rows = aspect >= 1 ? Math.max(8, Math.round(resolution / aspect)) : resolution;
     const spanX = aspect >= 1 ? 1 : aspect;
     const spanY = aspect >= 1 ? 1 / aspect : 1;
     const colors: Array<Rgb | undefined> = new Array(columns * rows).fill(undefined);
@@ -138,6 +163,6 @@ function getSurface(shape: Shape): SurfacePoint[] {
             }
         }
     }
-    surfaces.set(shape, points);
+    byResolution.set(resolution, points);
     return points;
 }

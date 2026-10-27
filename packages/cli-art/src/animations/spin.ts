@@ -42,11 +42,12 @@ export function renderSpinningShape(
         height,
         angle,
         size,
-        glyph
-    }: { width: number; height: number; angle: number; size: number; glyph?: string }
+        glyph,
+        fitShape
+    }: { width: number; height: number; angle: number; size: number; glyph?: string; fitShape?: boolean }
 ): Frame {
     const frame = emptyFrame(width, height);
-    renderSolid({ shape, angle, width, height, size }).forEach((row, rowIndex) =>
+    renderSolid({ shape, angle, width, height, size, fitShape }).forEach((row, rowIndex) =>
         row.forEach((cell, column) => {
             if (cell !== undefined) {
                 setCell(frame, rowIndex, column, solidCell(palette, cell.intensity, cell.color, glyph));

@@ -24,6 +24,11 @@ describe("parseSvgPath", () => {
         expect(curve?.some((point) => Math.abs(point.x - 10) < 1e-9 && Math.abs(point.y) < 1e-9)).toBe(true);
     });
 
+    it("reads arc flags that minifiers write without separators", () => {
+        expect(parseSvgPath("M0 0a1 1 0 00.5.5l1 1z")).toEqual(parseSvgPath("M0 0 a1 1 0 0 0 .5 .5 l1 1 z"));
+        expect(parseSvgPath("M0 0a1 1 0 11.5.5z")).toEqual(parseSvgPath("M0 0 a1 1 0 1 1 .5 .5 z"));
+    });
+
     it("honors fill rules for holes", () => {
         const ring = parseSvgPath("M0 0H10V10H0Z M3 3H7V7H3Z");
         expect(isInside({ x: 5, y: 5 }, ring, "evenodd")).toBe(false);

@@ -17,6 +17,7 @@ npx @fern-api/cli-art burst --logo ./logo.png --glyph "#"
 | `burst`   | A single dot explodes into ASCII sparks that swirl back in and land as the logo.                 |
 | `filings` | Loose iron filings shake until they line up into the logo, as if a magnet sat underneath.         |
 | `spin`    | The logo as an extruded 3D solid, turning around its vertical axis.                              |
+| `burst-spin` | A `burst` that lands as a 3D solid, then turns in place in half-block pixels for extra detail. |
 | `orb`     | The logo spinning inside a glass orb with a glowing rim, a glint, and turning grid lines.        |
 | `skyline` | The Manhattan skyline at night through the Brooklyn Bridge railing, with a logo and tagline.     |
 

@@ -1,6 +1,7 @@
 // cli-art: animated, colorful terminal art from any logo.
 
 export { burst } from "./animations/burst";
+export { type BurstSpinOptions, burstSpin } from "./animations/burst-spin";
 export type { LogoAnimationOptions } from "./animations/common";
 export { filings } from "./animations/filings";
 export { orb } from "./animations/orb";

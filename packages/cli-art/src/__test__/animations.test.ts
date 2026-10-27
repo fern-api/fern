@@ -1,12 +1,13 @@
 import { describe, expect, it } from "vitest";
-import { burst } from "../animations/burst";
+import { BURST_LANDED, burst } from "../animations/burst";
+import { burstSpin } from "../animations/burst-spin";
 import { filings } from "../animations/filings";
 import { orb } from "../animations/orb";
 import { reveal } from "../animations/reveal";
 import { SKYLINE_HEIGHT, skyline } from "../animations/skyline";
 import { spin } from "../animations/spin";
 import type { Animation } from "../core/animation";
-import { type Frame, frameToText } from "../core/frame";
+import { type Frame, frameToLines, frameToText } from "../core/frame";
 import { FERN_LOGO } from "../examples";
 import { dominantColors, paletteFromShape } from "../palette";
 import { fromSvg, fromSvgPath } from "../shapes/shape";
@@ -35,6 +36,8 @@ function misshapenFrames(animation: Animation): number[] {
 describe("animations", () => {
     it.each([
         ["burst", burst(fern)],
+        ["burst-spin", burstSpin(fern)],
+        ["burst-spin (wide logo)", burstSpin(twoTone)],
         ["filings", filings(fern)],
         ["orb", orb(fern)],
         ["spin", spin(fern)],
@@ -61,6 +64,42 @@ describe("animations", () => {
         expect(frameToText(fromFilings.render(fromFilings.restFrame))).toEqual(
             frameToText(fromBurst.render(fromBurst.restFrame))
         );
+    });
+
+    it("burst-spin starts as a single dot, lands facing forward, and ends a full turn later", () => {
+        const animation = burstSpin(fern);
+        expect(drawn(animation.render(0))).toHaveLength(1);
+        expect(frameToText(animation.render(BURST_LANDED))).toEqual(frameToText(animation.render(BURST_LANDED + 1)));
+        expect(frameToText(animation.render(animation.duration))).toEqual(frameToText(animation.render(BURST_LANDED)));
+    });
+
+    it("burst-spin turns in place, without tilting or bobbing", () => {
+        const stripes = fromSvg(
+            `<svg viewBox="0 0 20 10"><rect width="20" height="4" fill="#1e6bff"/><rect y="6" width="20" height="4" fill="#1e6bff"/></svg>`
+        );
+        const animation = burstSpin(stripes);
+        const rowsDrawn = (frame: number): number[] =>
+            animation.render(frame).flatMap((row, index) => (row.some((cell) => cell !== undefined) ? [index] : []));
+        const resting = rowsDrawn(animation.restFrame);
+        for (let frame = BURST_LANDED; frame <= animation.duration; frame += 3) {
+            expect(rowsDrawn(frame)).toEqual(resting);
+        }
+        expect(frameToText(animation.render(BURST_LANDED + 24))).not.toEqual(
+            frameToText(animation.render(BURST_LANDED))
+        );
+    });
+
+    it("burst-spin packs two pixels per cell with half blocks", () => {
+        const animation = burstSpin(twoTone);
+        const settled = drawn(animation.render(animation.restFrame));
+        expect(settled.length).toBeGreaterThan(50);
+        expect(settled.every((cell) => "▀▄█".includes(cell.char))).toBe(true);
+    });
+
+    it("draws a cell's background color for the lower half of a half block", () => {
+        const [line] = frameToLines([[{ char: "▀", color: [255, 0, 0], background: [0, 0, 255] }]], "truecolor");
+        expect(line).toContain("\u001B[38;2;255;0;0m");
+        expect(line).toContain("\u001B[48;2;0;0;255m");
     });
 
     it("reveal wipes the logo in from the left", () => {
