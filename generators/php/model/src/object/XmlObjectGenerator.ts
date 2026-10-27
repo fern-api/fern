@@ -847,17 +847,21 @@ export class XmlObjectGenerator {
                 methods.push(method);
                 if (method.name.toLowerCase() === textFieldName) {
                     // keep the `add<Name>()` builder the SDK had while the name belonged to the text field
-                    methods.push(this.getChildBuilderMethod(property, childType, taken));
+                    const legacy = this.getChildBuilderMethod(property, childType, taken, { prefixed: true });
+                    if (legacy.name.toLowerCase() === method.name.toLowerCase()) {
+                        throw new Error(`Duplicate XML child builder ${legacy.name} on ${this.classReference.name}`);
+                    }
+                    methods.push(legacy);
                 }
             }
         }
         return methods;
     }
 
-    private pickBuilderName(xmlName: string, taken: Set<string>): string {
+    private pickBuilderName(xmlName: string, taken: Set<string>, { prefixed = false } = {}): string {
         const camel = this.context.case.camelUnsafe(xmlName);
         let name = camel;
-        if (taken.has(name.toLowerCase())) {
+        if (prefixed || taken.has(name.toLowerCase())) {
             const prefixed = `add${this.context.case.pascalUnsafe(xmlName)}`;
             name = prefixed;
             for (let suffix = 2; taken.has(name.toLowerCase()); suffix++) {
@@ -871,7 +875,8 @@ export class XmlObjectGenerator {
     private getChildBuilderMethod(
         property: XmlProperty,
         childType: FernIr.TypeDeclaration,
-        taken: Set<string>
+        taken: Set<string>,
+        { prefixed = false } = {}
     ): php.Method {
         const childXmlName = this.getChildXmlName(childType);
         const childClass = this.getChildClassReference(childType);
@@ -948,7 +953,7 @@ export class XmlObjectGenerator {
 
         const field = `$this->${property.fieldName}`;
         return php.method({
-            name: this.pickBuilderName(childXmlName, taken),
+            name: this.pickBuilderName(childXmlName, taken, { prefixed }),
             access: "public",
             parameters,
             return_: php.Type.reference(childClass),
@@ -1023,7 +1028,7 @@ export class XmlObjectGenerator {
     /** `getText()` / `setText()` next to the field-named text property (`$dial->number`), as in the other SDKs. */
     private getTextAccessorMethods(clazz: php.DataClass): php.Method[] {
         const textProperty = this.properties.find((property) => property.kind === FernIr.XmlPropertyKind.Text);
-        if (textProperty == null || textProperty.fieldName.toLowerCase() === "text") {
+        if (textProperty == null) {
             return [];
         }
         const taken = new Set<string>([
@@ -1033,9 +1038,11 @@ export class XmlObjectGenerator {
         if (taken.has("gettext") || taken.has("settext")) {
             return [];
         }
-        const type =
-            clazz.fields.find((field) => field.name === textProperty.fieldName)?.type ??
-            php.Type.optional(php.Type.string());
+        // php.Field#name carries the `$` sigil
+        const type = clazz.fields.find((field) => field.name.replace(/^\$/, "") === textProperty.fieldName)?.type;
+        if (type == null) {
+            return [];
+        }
         return [
             php.method({
                 name: "getText",

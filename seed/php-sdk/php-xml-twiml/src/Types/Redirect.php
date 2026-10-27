@@ -96,9 +96,9 @@ class Redirect extends XmlSerializableType
     /**
      * The text content of this element (same as `$url`).
      *
-     * @return ?string
+     * @return string
      */
-    public function getText(): ?string
+    public function getText(): string
     {
         return $this->url;
     }
@@ -106,9 +106,9 @@ class Redirect extends XmlSerializableType
     /**
      * Sets the text content of this element (same as `$url`).
      *
-     * @param ?string $value
+     * @param string $value
      */
-    public function setText(?string $value = null): self
+    public function setText(string $value): self
     {
         $this->url = $value;
         return $this;
