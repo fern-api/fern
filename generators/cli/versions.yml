@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.57.4
+  changelogEntry:
+    - summary: |
+        Includes Rust SDK Generator 0.53.4 updates.
+      type: fix
+  createdAt: "2026-10-27"
+  irVersion: 67
 - version: 0.57.3
   changelogEntry:
     - summary: |
