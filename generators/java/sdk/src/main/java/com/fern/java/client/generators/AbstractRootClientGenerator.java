@@ -712,6 +712,9 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 .addJavadoc(RETRY_ON_STATUS_CODES_JAVADOC)
                 .addParameter(STATUS_CODE_SET_TYPE, "retryOnStatusCodes")
                 .returns(isExtensible ? TypeVariableName.get("T") : builderName)
+                .beginControlFlow("if (retryOnStatusCodes == null)")
+                .addStatement("throw new $T($S)", IllegalArgumentException.class, "retryOnStatusCodes must not be null")
+                .endControlFlow()
                 .addStatement("this.retryOnStatusCodes = $T.of(retryOnStatusCodes)", Optional.class)
                 .addStatement(isExtensible ? "return self()" : "return this")
                 .build());
@@ -2659,6 +2662,12 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .addJavadoc(RETRY_ON_STATUS_CODES_JAVADOC)
                         .addParameter(STATUS_CODE_SET_TYPE, "retryOnStatusCodes")
                         .returns(builderStageClassName)
+                        .beginControlFlow("if (retryOnStatusCodes == null)")
+                        .addStatement(
+                                "throw new $T($S)",
+                                IllegalArgumentException.class,
+                                "retryOnStatusCodes must not be null")
+                        .endControlFlow()
                         .addStatement("this.retryOnStatusCodes = $T.of(retryOnStatusCodes)", Optional.class)
                         .addStatement("return this")
                         .build());

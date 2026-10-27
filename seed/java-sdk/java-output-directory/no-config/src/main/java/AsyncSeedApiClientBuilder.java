@@ -8,6 +8,7 @@ import com.test.sdk.core.ClientOptions;
 import com.test.sdk.core.Environment;
 import com.test.sdk.core.LogConfig;
 import java.lang.Double;
+import java.lang.IllegalArgumentException;
 import java.lang.Integer;
 import java.lang.Long;
 import java.lang.String;
@@ -73,6 +74,9 @@ public class AsyncSeedApiClientBuilder {
    * Restricts automatic retries to responses with one of the given HTTP status codes (for example {@code 429} only, or {@code 429} and {@code 503}), replacing the default set of 408, 429 and 5xx. Codes not listed are returned as-is. Retry-After handling and the other retry settings are unchanged.
    */
   public AsyncSeedApiClientBuilder retryOnStatusCodes(Set<Integer> retryOnStatusCodes) {
+    if (retryOnStatusCodes == null) {
+      throw new IllegalArgumentException("retryOnStatusCodes must not be null");
+    }
     this.retryOnStatusCodes = Optional.of(retryOnStatusCodes);
     return this;
   }

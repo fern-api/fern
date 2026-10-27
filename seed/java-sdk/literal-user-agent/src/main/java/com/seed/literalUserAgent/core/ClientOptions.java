@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -14,6 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Supplier;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 
 public final class ClientOptions {
@@ -375,6 +377,19 @@ public final class ClientOptions {
                         .connectTimeout(0, TimeUnit.SECONDS)
                         .writeTimeout(0, TimeUnit.SECONDS)
                         .readTimeout(0, TimeUnit.SECONDS));
+                List<Interceptor> interceptors = httpClientBuilder.interceptors();
+                for (int i = 0; i < interceptors.size(); i++) {
+                    if (interceptors.get(i) instanceof RetryInterceptor) {
+                        interceptors.set(
+                                i,
+                                new RetryInterceptor(
+                                        this.maxRetries,
+                                        this.initialRetryDelayMillis,
+                                        this.maxRetryDelayMillis,
+                                        this.retryJitterFactor,
+                                        this.retryOnStatusCodes));
+                    }
+                }
             } else {
                 httpClientBuilder
                         .callTimeout(this.timeout.orElse(60), TimeUnit.SECONDS)

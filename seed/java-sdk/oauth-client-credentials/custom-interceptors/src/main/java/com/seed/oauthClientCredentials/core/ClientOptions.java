@@ -390,6 +390,19 @@ public final class ClientOptions {
                         .connectTimeout(0, TimeUnit.SECONDS)
                         .writeTimeout(0, TimeUnit.SECONDS)
                         .readTimeout(0, TimeUnit.SECONDS));
+                List<Interceptor> interceptors = httpClientBuilder.interceptors();
+                for (int i = 0; i < interceptors.size(); i++) {
+                    if (interceptors.get(i) instanceof RetryInterceptor) {
+                        interceptors.set(
+                                i,
+                                new RetryInterceptor(
+                                        this.maxRetries,
+                                        this.initialRetryDelayMillis,
+                                        this.maxRetryDelayMillis,
+                                        this.retryJitterFactor,
+                                        this.retryOnStatusCodes));
+                    }
+                }
             } else {
                 httpClientBuilder
                         .callTimeout(this.timeout.orElse(60), TimeUnit.SECONDS)

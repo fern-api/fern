@@ -275,7 +275,7 @@ public class RetryInterceptor implements Interceptor {
 
         @Override
         public void onResponse(Call call, Response response) throws IOException {
-            if (retryInterceptor != null && retryInterceptor.shouldRetry(response.code())) {
+            if (backoff != null && retryInterceptor.shouldRetry(response.code())) {
                 Optional<Duration> delay = backoff.nextBackoff(response);
                 if (delay.isPresent()) {
                     Response buffered = bufferResponse(response);

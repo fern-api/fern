@@ -105,6 +105,9 @@ public class AsyncSeedOauthClientCredentialsMandatoryAuthClientBuilder {
      */
     public AsyncSeedOauthClientCredentialsMandatoryAuthClientBuilder retryOnStatusCodes(
             Set<Integer> retryOnStatusCodes) {
+        if (retryOnStatusCodes == null) {
+            throw new IllegalArgumentException("retryOnStatusCodes must not be null");
+        }
         this.retryOnStatusCodes = Optional.of(retryOnStatusCodes);
         return this;
     }
@@ -422,6 +425,9 @@ public class AsyncSeedOauthClientCredentialsMandatoryAuthClientBuilder {
          * Restricts automatic retries to responses with one of the given HTTP status codes (for example {@code 429} only, or {@code 429} and {@code 503}), replacing the default set of 408, 429 and 5xx. Codes not listed are returned as-is. Retry-After handling and the other retry settings are unchanged.
          */
         public _Builder retryOnStatusCodes(Set<Integer> retryOnStatusCodes) {
+            if (retryOnStatusCodes == null) {
+                throw new IllegalArgumentException("retryOnStatusCodes must not be null");
+            }
             this.retryOnStatusCodes = Optional.of(retryOnStatusCodes);
             return this;
         }

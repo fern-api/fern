@@ -2003,6 +2003,28 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         TimeUnit.class,
                         TimeUnit.class,
                         TimeUnit.class)
+                // A client carried over by Builder.from(...) already has a RetryInterceptor baked in; swap it in place
+                // (keeping its position ahead of the limiter/logging) so the builder's retry settings take effect. A
+                // caller-supplied client without one keeps its own retry policy.
+                .addStatement(
+                        "$T<$T> interceptors = $L.interceptors()",
+                        List.class,
+                        Interceptor.class,
+                        OKHTTP_CLIENT_FIELD.name + "Builder")
+                .beginControlFlow("for (int i = 0; i < interceptors.size(); i++)")
+                .beginControlFlow(
+                        "if (interceptors.get(i) instanceof $T)",
+                        clientGeneratorContext.getPoetClassNameFactory().getRetryInterceptorClassName())
+                .addStatement(
+                        "interceptors.set(i, new $T(this.$L, this.$L, this.$L, this.$L, this.$L))",
+                        clientGeneratorContext.getPoetClassNameFactory().getRetryInterceptorClassName(),
+                        MAX_RETRIES_FIELD.name,
+                        INITIAL_RETRY_DELAY_MILLIS_FIELD.name,
+                        MAX_RETRY_DELAY_MILLIS_FIELD.name,
+                        RETRY_JITTER_FACTOR_FIELD.name,
+                        RETRY_ON_STATUS_CODES_FIELD.name)
+                .endControlFlow()
+                .endControlFlow()
                 .endControlFlow()
                 .beginControlFlow("else")
                 .addCode(

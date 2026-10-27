@@ -70,6 +70,9 @@ public class AsyncSeedUndiscriminatedUnionWithResponsePropertyClientBuilder {
      */
     public AsyncSeedUndiscriminatedUnionWithResponsePropertyClientBuilder retryOnStatusCodes(
             Set<Integer> retryOnStatusCodes) {
+        if (retryOnStatusCodes == null) {
+            throw new IllegalArgumentException("retryOnStatusCodes must not be null");
+        }
         this.retryOnStatusCodes = Optional.of(retryOnStatusCodes);
         return this;
     }
