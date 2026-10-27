@@ -191,6 +191,8 @@ describe("fern init", () => {
         const tmpDir = await tmp.dir();
         const result = await runFernCli(["init"], {
             cwd: AbsoluteFilePath.of(tmpDir.path),
+            // Opt out of CI detection so this exercises the non-TTY stdin path even on CI runners.
+            env: { CI: "false" },
             reject: false,
             timeout: 60_000,
             signal
