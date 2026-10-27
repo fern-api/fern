@@ -64,6 +64,7 @@ import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorT
 import { executeAutomationsGenerate } from "./commands/automations/generate/executeAutomationsGenerate.js";
 import { listPreviewGroups } from "./commands/automations/listPreviewGroups.js";
 import { executeAutomationsUpgrade } from "./commands/automations/upgrade/executeAutomationsUpgrade.js";
+import { claimGuestSession } from "./commands/claim/claimGuestSession.js";
 import { diff } from "./commands/diff/diff.js";
 import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace.js";
 import { parseDocsDevDuration } from "./commands/docs-dev/parseDocsDevDuration.js";
@@ -302,6 +303,7 @@ async function tryRunCli(cliContext: CliContext) {
     addRegisterV2Command(cli, cliContext);
     addLoginCommand(cli, cliContext);
     addLogoutCommand(cli, cliContext);
+    addClaimCommand(cli, cliContext);
     addMcpCommand(cli, cliContext);
     addFormatCommand(cli, cliContext);
     addWriteDefinitionCommand(cli, cliContext);
@@ -1838,6 +1840,24 @@ function addMcpCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
             )
             .demandCommand(1, "Specify a subcommand, e.g. `fern mcp install`.");
     });
+}
+
+function addClaimCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "claim",
+        "Claim this repo's guest session (from `fern generate --guest`) into your Fern organization",
+        (yargs) =>
+            yargs.option("org", {
+                alias: "organization",
+                string: true,
+                description:
+                    "Move the guest session's work into an organization you administer. Defaults to turning the guest organization into your own."
+            }),
+        async (argv) => {
+            cliContext.instrumentPostHogEvent({ command: "fern claim" });
+            await claimGuestSession({ cliContext, organization: argv.org });
+        }
+    );
 }
 
 function addLogoutCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {

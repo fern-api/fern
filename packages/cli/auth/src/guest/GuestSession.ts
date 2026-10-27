@@ -1,5 +1,6 @@
+import { isEnoentError } from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { chmod, mkdir, readFile, writeFile } from "fs/promises";
+import { chmod, mkdir, readFile, unlink, writeFile } from "fs/promises";
 import { homedir } from "os";
 
 import { FernGuestToken } from "../FernToken.js";
@@ -72,6 +73,44 @@ export async function writeStoredGuestSession({
     // Ignore the pointer before it exists, so a failure here never leaves a committable file behind.
     await ensureGitignored({ absolutePathToFernDirectory });
     await writeFile(getPathToGuestSessionPointer(absolutePathToFernDirectory), `${session.sessionId}\n`);
+}
+
+/** Forgets a session: removes the repo pointer and the credential file. Missing files are fine. */
+export async function removeStoredGuestSession({
+    sessionId,
+    absolutePathToFernDirectory
+}: {
+    sessionId: string;
+    absolutePathToFernDirectory: AbsoluteFilePath;
+}): Promise<void> {
+    // Credential first: a pointer without a file is harmless, a file without a pointer is unreachable.
+    await unlinkIfExists(getPathToGuestSessionFile(sessionId));
+    await unlinkIfExists(getPathToGuestSessionPointer(absolutePathToFernDirectory));
+}
+
+/** The claim secret travels in the fragment of the claim URL (`…/claim/<id>#<secret>`). */
+export function getClaimSecret(claimUrl: string): string | undefined {
+    const hash = claimUrl.indexOf("#");
+    if (hash < 0) {
+        return undefined;
+    }
+    let secret = claimUrl.slice(hash + 1).trim();
+    try {
+        secret = decodeURIComponent(secret);
+    } catch {
+        // not percent-encoded; use as-is
+    }
+    return secret.length > 0 ? secret : undefined;
+}
+
+async function unlinkIfExists(path: AbsoluteFilePath): Promise<void> {
+    try {
+        await unlink(path);
+    } catch (error) {
+        if (!isEnoentError(error)) {
+            throw error;
+        }
+    }
 }
 
 export function isGuestSessionLive(session: Pick<StoredGuestSession, "expiresAt">, now: Date = new Date()): boolean {
