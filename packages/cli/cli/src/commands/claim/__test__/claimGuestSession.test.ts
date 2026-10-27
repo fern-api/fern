@@ -84,6 +84,7 @@ describe("claimGuestSession", () => {
         });
 
         expect(claim).toHaveBeenCalledWith({
+            venusOrigin: "https://venus.buildwithfern.com",
             token: "user-jwt",
             sessionId: "gs_123",
             claimSecret: "the-secret",

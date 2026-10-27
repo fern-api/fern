@@ -12,7 +12,12 @@ vi.mock("os", async (importOriginal) => {
     return { ...actual, homedir: () => fakeHome.path };
 });
 
-import { GUEST_SESSION_POINTER_FILENAME, getPathToGuestSessionFile, isGuestSessionLive } from "../GuestSession.js";
+import {
+    GUEST_SESSION_POINTER_FILENAME,
+    getClaimSecret,
+    getPathToGuestSessionFile,
+    isGuestSessionLive
+} from "../GuestSession.js";
 import { getOrCreateGuestSession } from "../getOrCreateGuestSession.js";
 
 const NOW = new Date("2026-10-26T12:00:00Z");
@@ -234,6 +239,15 @@ describe("getOrCreateGuestSession", () => {
             })
         ).rejects.toThrow();
         expect(createGuestSession).toHaveBeenCalledTimes(1);
+    });
+});
+
+describe("getClaimSecret", () => {
+    it("reads the fragment and percent-decodes it", () => {
+        expect(getClaimSecret("https://d/claim/gs_1#abc_-XYZ")).toBe("abc_-XYZ");
+        expect(getClaimSecret("https://d/claim/gs_1#a%2Bb%2Fc%3D")).toBe("a+b/c=");
+        expect(getClaimSecret("https://d/claim/gs_1")).toBeUndefined();
+        expect(getClaimSecret("https://d/claim/gs_1#")).toBeUndefined();
     });
 });
 

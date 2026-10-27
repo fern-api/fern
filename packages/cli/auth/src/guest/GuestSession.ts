@@ -83,8 +83,9 @@ export async function removeStoredGuestSession({
     sessionId: string;
     absolutePathToFernDirectory: AbsoluteFilePath;
 }): Promise<void> {
-    await unlinkIfExists(getPathToGuestSessionPointer(absolutePathToFernDirectory));
+    // Credential first: a pointer without a file is harmless, a file without a pointer is unreachable.
     await unlinkIfExists(getPathToGuestSessionFile(sessionId));
+    await unlinkIfExists(getPathToGuestSessionPointer(absolutePathToFernDirectory));
 }
 
 /** The claim secret travels in the fragment of the claim URL (`…/claim/<id>#<secret>`). */
@@ -93,7 +94,12 @@ export function getClaimSecret(claimUrl: string): string | undefined {
     if (hash < 0) {
         return undefined;
     }
-    const secret = claimUrl.slice(hash + 1).trim();
+    let secret = claimUrl.slice(hash + 1).trim();
+    try {
+        secret = decodeURIComponent(secret);
+    } catch {
+        // not percent-encoded; use as-is
+    }
     return secret.length > 0 ? secret : undefined;
 }
 

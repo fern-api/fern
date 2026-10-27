@@ -22,6 +22,8 @@ import { CliContext } from "../../cli-context/CliContext.js";
 import { ensureFinalNewline } from "../../utils/ensureFinalNewline.js";
 
 export interface ClaimRequest {
+    /** The Venus the session was issued by; the claim has to go to the same one. */
+    venusOrigin: string;
     token: string;
     sessionId: string;
     claimSecret: string;
@@ -83,7 +85,13 @@ export async function claimGuestSession({
     }
 
     const result = await cliContext.runTask(() =>
-        claim({ token: token.value, sessionId: stored.sessionId, claimSecret, organizationId: organization })
+        claim({
+            venusOrigin: stored.venusOrigin,
+            token: token.value,
+            sessionId: stored.sessionId,
+            claimSecret,
+            organizationId: organization
+        })
     );
     if (!result.ok) {
         return cliContext.failAndThrow(describeClaimFailure(result, stored, organization), undefined, {
@@ -116,8 +124,14 @@ export async function claimGuestSession({
     }
 }
 
-async function claimWithVenus({ token, sessionId, claimSecret, organizationId }: ClaimRequest): Promise<ClaimResult> {
-    const response = await createVenusService({ token }).guestSession.claim(
+async function claimWithVenus({
+    venusOrigin,
+    token,
+    sessionId,
+    claimSecret,
+    organizationId
+}: ClaimRequest): Promise<ClaimResult> {
+    const response = await createVenusService({ environment: venusOrigin, token }).guestSession.claim(
         { sessionId, organizationId },
         { headers: { "X-Fern-Claim-Secret": claimSecret } }
     );
