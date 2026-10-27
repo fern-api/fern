@@ -120,6 +120,7 @@ import { upgrade } from "./commands/upgrade/upgrade.js";
 import { validateDocsBrokenLinks } from "./commands/validate/validateDocsBrokenLinks.js";
 import { logMdxValidationResults, validateMdxFiles } from "./commands/validate/validateMdx.js";
 import { validateWorkspaces } from "./commands/validate/validateWorkspaces.js";
+import { whoami } from "./commands/whoami/whoami.js";
 import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeDefinitionForWorkspaces.js";
 import { writeDocsDefinitionForProject } from "./commands/write-docs-definition/writeDocsDefinitionForProject.js";
 import { FERN_CWD_ENV_VAR } from "./cwd.js";
@@ -304,6 +305,7 @@ async function tryRunCli(cliContext: CliContext) {
     addLoginCommand(cli, cliContext);
     addLogoutCommand(cli, cliContext);
     addClaimCommand(cli, cliContext);
+    addWhoamiCommand(cli, cliContext);
     addMcpCommand(cli, cliContext);
     addFormatCommand(cli, cliContext);
     addWriteDefinitionCommand(cli, cliContext);
@@ -1856,6 +1858,23 @@ function addClaimCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         async (argv) => {
             cliContext.instrumentPostHogEvent({ command: "fern claim" });
             await claimGuestSession({ cliContext, organization: argv.org });
+        }
+    );
+}
+
+function addWhoamiCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "whoami",
+        "Show the login, FERN_TOKEN or guest session the CLI is using here",
+        (yargs) =>
+            yargs.option("json", {
+                boolean: true,
+                default: false,
+                description: "Print the report as JSON"
+            }),
+        async (argv) => {
+            cliContext.instrumentPostHogEvent({ command: "fern whoami" });
+            await whoami({ cliContext, json: argv.json });
         }
     );
 }

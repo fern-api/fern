@@ -4,9 +4,9 @@ import { hideBin } from "yargs/helpers";
 // policy that drives redirection, so it must run on the locally-invoked CLI:
 // otherwise an org whose floor points at a version predating `org` could not be
 // changed back (redirection would re-exec a CLI that lacks the command).
-// `claim` is a one-shot action on the repo's guest session that only talks to
-// Venus; it must work even when fern.config.json pins a CLI predating it.
-export const VERSION_REDIRECTION_EXEMPT_COMMANDS = new Set(["org", "claim"]);
+// `claim` and `whoami` act on the repo's guest session and only talk to Venus;
+// they must work even when fern.config.json pins a CLI predating them.
+export const VERSION_REDIRECTION_EXEMPT_COMMANDS = new Set(["org", "claim", "whoami"]);
 
 export function isVersionRedirectionExempt(argv: string[]): boolean {
     const command = getInvokedCommandName(argv);
