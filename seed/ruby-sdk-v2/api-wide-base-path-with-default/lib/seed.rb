@@ -3,6 +3,7 @@
 require "json"
 require "net/http"
 require "securerandom"
+require "time"
 
 require_relative "seed/internal/json/serializable"
 require_relative "seed/internal/types/type"
@@ -36,6 +37,11 @@ require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/connection_error"
-require_relative "seed/types/widget"
 require_relative "seed/client"
 require_relative "seed/widgets/client"
+
+module Seed
+  module Types
+    autoload :Widget, ::File.join(__dir__, "seed/types/widget")
+  end
+end

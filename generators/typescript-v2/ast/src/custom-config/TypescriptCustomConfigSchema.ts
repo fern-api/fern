@@ -70,6 +70,7 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     flattenRequestParameters: z.optional(z.boolean()),
     respectOptionalRequestBody: z.optional(z.boolean()),
     deepObjectMapQueryParameters: z.optional(z.boolean()),
+    includeMultipartPartContentType: z.optional(z.boolean()),
     exportAllRequestsAtRoot: z.optional(z.boolean()),
     customReadmeSections: z.optional(z.array(CustomReadmeSectionSchema)),
     testFramework: z.optional(z.enum(["jest", "vitest"])),
@@ -161,13 +162,14 @@ export type TypescriptCustomConfigSchema = z.infer<typeof TypescriptCustomConfig
 
 /**
  * Resolves the effective noSerdeLayer value from config.
- * `serdeLayer` takes precedence over `noSerdeLayer` when set.
+ * `serdeLayer` takes precedence over `noSerdeLayer` when set. Matches the
+ * TypeScript SDK generator, which omits the serde layer by default.
  */
 export function resolveNoSerdeLayer(config: TypescriptCustomConfigSchema | undefined): boolean {
     if (config?.serdeLayer != null) {
         return !config.serdeLayer;
     }
-    return !!config?.noSerdeLayer;
+    return config?.noSerdeLayer ?? true;
 }
 
 /**

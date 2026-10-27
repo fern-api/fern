@@ -329,7 +329,8 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
                     requestParameter: this.requestParameter,
                     includeSerdeLayer: this.includeSerdeLayer,
                     allowExtraFields: this.allowExtraFields,
-                    omitUndefined: this.omitUndefined
+                    omitUndefined: this.omitUndefined,
+                    requestContentType: this.requestBody.contentType
                 })
             );
         }

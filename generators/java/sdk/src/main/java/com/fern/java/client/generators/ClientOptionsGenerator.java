@@ -127,6 +127,10 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                     TypeName.INT, "maxRetries", Modifier.PRIVATE, Modifier.FINAL)
             .build();
 
+    // Builder-only: the cap is baked into the OkHttpClient as a ConcurrencyLimitingInterceptor, so Builder.from(...)
+    // inherits it through the copied httpClient and a derived ClientOptions shares the source's permits.
+    private static final String MAX_CONCURRENT_REQUESTS_FIELD_NAME = "maxConcurrentRequests";
+
     private static final FieldSpec INITIAL_RETRY_DELAY_MILLIS_FIELD = FieldSpec.builder(
                     ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Long.class)),
                     "initialRetryDelayMillis",
@@ -1264,6 +1268,12 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                                 Modifier.PRIVATE)
                         .initializer("$T.empty()", Optional.class)
                         .build())
+                .addField(FieldSpec.builder(
+                                ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Integer.class)),
+                                MAX_CONCURRENT_REQUESTS_FIELD_NAME,
+                                Modifier.PRIVATE)
+                        .initializer("$T.empty()", Optional.class)
+                        .build())
                 .addField(FieldSpec.builder(OkHttpClient.class, OKHTTP_CLIENT_FIELD.name, Modifier.PRIVATE)
                         .initializer(CodeBlock.builder().add("null").build())
                         .build())
@@ -1384,6 +1394,32 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                                 RETRY_JITTER_FACTOR_FIELD.name,
                                 Optional.class,
                                 RETRY_JITTER_FACTOR_FIELD.name)
+                        .addStatement("return this")
+                        .build())
+                .addMethod(MethodSpec.methodBuilder(MAX_CONCURRENT_REQUESTS_FIELD_NAME)
+                        .addModifiers(Modifier.PUBLIC)
+                        .addJavadoc(
+                                "Caps the number of requests that may be in flight at the same time, for both the\n"
+                                        + "synchronous and the asynchronous client. Defaults to no limit.\n"
+                                        + "A request holds a slot from the moment it is sent until its response body is\n"
+                                        + "closed; a caller that needs a slot waits (bounded by the call timeout) until one is\n"
+                                        + "free. Retries waiting for their backoff delay do not hold a slot. Also applies to\n"
+                                        + "an OkHttpClient supplied via $L(), whose own dispatcher limits still bound\n"
+                                        + "asynchronous calls.\n",
+                                OKHTTP_CLIENT_FIELD.name)
+                        .returns(builderClassName)
+                        .addParameter(TypeName.INT, MAX_CONCURRENT_REQUESTS_FIELD_NAME)
+                        .beginControlFlow("if ($L <= 0)", MAX_CONCURRENT_REQUESTS_FIELD_NAME)
+                        .addStatement(
+                                "throw new $T($S)",
+                                IllegalArgumentException.class,
+                                "maxConcurrentRequests must be positive")
+                        .endControlFlow()
+                        .addStatement(
+                                "this.$L = $T.of($L)",
+                                MAX_CONCURRENT_REQUESTS_FIELD_NAME,
+                                Optional.class,
+                                MAX_CONCURRENT_REQUESTS_FIELD_NAME)
                         .addStatement("return this")
                         .build())
                 .addMethod(MethodSpec.methodBuilder(OKHTTP_CLIENT_FIELD.name)
@@ -1928,6 +1964,20 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         MAX_RETRY_DELAY_MILLIS_FIELD.name,
                         RETRY_JITTER_FACTOR_FIELD.name)
                 .endControlFlow()
+                .addCode("\n")
+                // Placed after RetryInterceptor so a retry waiting out its backoff does not hold a permit, and before
+                // the logging/decompression interceptors so it wraps the body they hand back. A limiter already on the
+                // client (Builder.from(...) or a caller-supplied OkHttpClient) is replaced rather than stacked.
+                .beginControlFlow("this.$L.ifPresent(limit ->", MAX_CONCURRENT_REQUESTS_FIELD_NAME)
+                .addStatement(
+                        "$L.interceptors().removeIf(interceptor -> interceptor instanceof $T)",
+                        OKHTTP_CLIENT_FIELD.name + "Builder",
+                        clientGeneratorContext.getPoetClassNameFactory().getConcurrencyLimitingInterceptorClassName())
+                .addStatement(
+                        "$L.addInterceptor(new $T(limit))",
+                        OKHTTP_CLIENT_FIELD.name + "Builder",
+                        clientGeneratorContext.getPoetClassNameFactory().getConcurrencyLimitingInterceptorClassName())
+                .endControlFlow(")")
                 .addCode("\n")
                 .addStatement(
                         "$T $L = $T.from(this.$L)",

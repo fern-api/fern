@@ -1,4 +1,64 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.35.0
+  changelogEntry:
+    - summary: |
+        Expose `maxConcurrentRequests(int)` on the generated root client builders (`<Client>Builder`,
+        `Async<Client>Builder`, and the multi-auth builder stages) so the in-flight request cap added in
+        4.34.0 can be set without constructing `ClientOptions` by hand, matching `timeout` and `maxRetries`.
+        Subclasses can override the new `setConcurrencyLimit(ClientOptions.Builder)` hook.
+      type: feat
+  createdAt: "2026-10-26"
+  irVersion: 67
+- version: 4.34.0
+  changelogEntry:
+    - summary: |
+        Add `ClientOptions.Builder.maxConcurrentRequests(int)`, an opt-in cap on how many requests the SDK has in
+        flight at once. It applies to both the sync and the async client (OkHttp's dispatcher limits only bound async
+        calls, and its connection pool only bounds idle connections) and also to an OkHttpClient supplied via
+        `httpClient(...)`. A request holds a slot until its response body is closed; callers waiting for a slot are
+        bounded by the call timeout, and retries do not hold a slot during their backoff delay. Implemented by the new
+        generated `core/ConcurrencyLimitingInterceptor`.
+      type: feat
+  createdAt: "2026-10-26"
+  irVersion: 67
+- version: 4.33.0
+  changelogEntry:
+    - summary: |
+        Add the `legacy-input-stream-upload-overloads` option (default `false`). When `true`, single-file
+        upload endpoints get the `InputStream` overloads from before 4.23.2, such as
+        `create(InputStream stream, String filename)`. These leave out the request object, so companion
+        multipart fields are not sent, as before 4.23.2.
+      type: feat
+  createdAt: "2026-10-23"
+  irVersion: 67
+- version: 4.32.7
+  changelogEntry:
+    - summary: |
+        Dynamic snippets now pass a placeholder for a required file the example doesn't include
+        (`new File("path/to/file")`) and `Optional.empty()` for a missing optional file, instead of
+        `null`, which compiled but threw a `NullPointerException` in the SDK. This applies when
+        `inline-file-properties` is off and needs dynamic IR from a CLI that sets `isOptional` on file
+        properties; with older IR, missing files are still passed as `null`.
+      type: fix
+  createdAt: "2026-10-21"
+  irVersion: 67
+- version: 4.32.6
+  changelogEntry:
+    - summary: |
+        XML (TwiML) serialization drops characters outside the XML 1.0 `Char` production (e.g. `\u0001`) from text and attribute values instead of emitting XML that no parser accepts.
+      type: fix
+  createdAt: "2026-10-21"
+  irVersion: 67
+- version: 4.32.5
+  changelogEntry:
+    - summary: |
+        XML (TwiML) builders gain a varargs overload for list-valued attributes (`gather.input(GatherInputItem.DTMF,
+        GatherInputItem.SPEECH)`), a static `builder(text)` factory for types whose text content is required
+        (`Body.builder("hello")`), and typed child overloads under the legacy name when only the text setter used it
+        (`dial.number(Number)` next to `dial.number(String)`; `addNumber(Number)` is kept).
+      type: fix
+  createdAt: "2026-10-21"
+  irVersion: 67
 - version: 4.32.4
   changelogEntry:
     - summary: |

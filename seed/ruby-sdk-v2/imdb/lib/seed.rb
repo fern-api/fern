@@ -3,6 +3,7 @@
 require "json"
 require "net/http"
 require "securerandom"
+require "time"
 
 require_relative "seed/internal/json/serializable"
 require_relative "seed/internal/types/type"
@@ -36,9 +37,14 @@ require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/connection_error"
-require_relative "seed/types/movie_id"
-require_relative "seed/types/movie"
 require_relative "seed/client"
 require_relative "seed/imdb/client"
 require_relative "seed/imdb/types/create_movie_request"
 require_relative "seed/imdb/types/get_movie_imdb_request"
+
+module Seed
+  module Types
+    autoload :MovieID, ::File.join(__dir__, "seed/types/movie_id")
+    autoload :Movie, ::File.join(__dir__, "seed/types/movie")
+  end
+end

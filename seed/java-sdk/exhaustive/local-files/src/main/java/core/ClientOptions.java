@@ -7,6 +7,7 @@ package com.fern.sdk.core;
 import java.lang.AutoCloseable;
 import java.lang.Double;
 import java.lang.Exception;
+import java.lang.IllegalArgumentException;
 import java.lang.IllegalStateException;
 import java.lang.Integer;
 import java.lang.Long;
@@ -207,6 +208,8 @@ public final class ClientOptions {
 
     private Optional<Integer> timeout = Optional.empty();
 
+    private Optional<Integer> maxConcurrentRequests = Optional.empty();
+
     private OkHttpClient httpClient = null;
 
     private boolean ownsHttpClient = true;
@@ -283,6 +286,23 @@ public final class ClientOptions {
     }
 
     /**
+     * Caps the number of requests that may be in flight at the same time, for both the
+     * synchronous and the asynchronous client. Defaults to no limit.
+     * A request holds a slot from the moment it is sent until its response body is
+     * closed; a caller that needs a slot waits (bounded by the call timeout) until one is
+     * free. Retries waiting for their backoff delay do not hold a slot. Also applies to
+     * an OkHttpClient supplied via httpClient(), whose own dispatcher limits still bound
+     * asynchronous calls.
+     */
+    public Builder maxConcurrentRequests(int maxConcurrentRequests) {
+      if (maxConcurrentRequests <= 0) {
+        throw new IllegalArgumentException("maxConcurrentRequests must be positive");
+      }
+      this.maxConcurrentRequests = Optional.of(maxConcurrentRequests);
+      return this;
+    }
+
+    /**
      * Sets the underlying OkHttp client. The caller retains ownership of its lifecycle:
      * close() will not shut down its dispatcher executor or evict its connection pool.
      */
@@ -309,6 +329,11 @@ public final class ClientOptions {
       else {
         httpClientBuilder.callTimeout(this.timeout.orElse(60), TimeUnit.SECONDS).connectTimeout(0, TimeUnit.SECONDS).writeTimeout(0, TimeUnit.SECONDS).readTimeout(0, TimeUnit.SECONDS).addInterceptor(new RetryInterceptor(this.maxRetries, this.initialRetryDelayMillis, this.maxRetryDelayMillis, this.retryJitterFactor));
       }
+
+      this.maxConcurrentRequests.ifPresent(limit -> {
+        httpClientBuilder.interceptors().removeIf(interceptor -> interceptor instanceof ConcurrencyLimitingInterceptor);
+        httpClientBuilder.addInterceptor(new ConcurrencyLimitingInterceptor(limit));
+      } );
 
       Logger logger = Logger.from(this.logging);
       httpClientBuilder.addInterceptor(new LoggingInterceptor(logger));

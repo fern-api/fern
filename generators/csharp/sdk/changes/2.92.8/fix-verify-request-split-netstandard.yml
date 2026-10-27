@@ -1,0 +1,7 @@
+- summary: |
+    Fix `WebhooksHelper.VerifyRequest` failing to compile on `net462`/`netstandard2.0`
+    (`CS1503: cannot convert from 'string' to 'char'`) when `webhook-signature.algorithm-header`
+    uses `key-id-parameter`/`algorithm-parameter`: the settings header is now split with
+    `Split(new[] { "," }, StringSplitOptions.None)` instead of the `Split(string)` overload that
+    only exists on newer target frameworks.
+  type: fix

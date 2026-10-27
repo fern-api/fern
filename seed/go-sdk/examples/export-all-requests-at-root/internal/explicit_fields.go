@@ -61,7 +61,7 @@ func HandleExplicitFields(marshaler interface{}, explicitFields *big.Int) interf
 	typ := reflect.TypeOf(marshaler)
 
 	// Handle pointer types
-	if val.Kind() == reflect.Ptr {
+	if val.Kind() == reflect.Pointer {
 		if val.IsNil() {
 			return nil
 		}

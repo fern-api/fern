@@ -385,8 +385,11 @@ fixtures:
       customConfig:
         enableWireTests: true
   go-xml-twiml:
-    - outputFolder: .
+    - outputFolder: no-custom-config
       customConfig: null
+    - outputFolder: xml-text-first-builders
+      customConfig:
+        xmlTextFirstBuilders: true
   exhaustive:
     - outputFolder: no-custom-config
       customConfig:
@@ -440,7 +443,7 @@ fixtures:
       customConfig:
         applyQueryDefaultsOnNilRequest: true
 scripts:
-  - image: fernapi/go-seed:2.0.0
+  - image: fernapi/go-seed:fdc792df0
     commands:
       build:
         - |

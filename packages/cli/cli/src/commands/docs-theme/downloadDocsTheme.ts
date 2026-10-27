@@ -1,4 +1,6 @@
+import { isRecord } from "@fern-api/core-utils";
 import { resolveThemeFileUrls } from "@fern-api/docs-resolver";
+import { toPosixPath } from "@fern-api/fs-utils";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import { mkdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";
@@ -102,7 +104,7 @@ export function isThemeResponse(value: unknown): value is { config: Record<strin
         return false;
     }
     const config = (value as { config: unknown }).config;
-    return config != null && typeof config === "object" && !Array.isArray(config);
+    return isRecord(config);
 }
 
 /**
@@ -118,7 +120,7 @@ export function relativizeAssetPaths(value: unknown, outDir: string): unknown {
         if (rel === "" || rel.startsWith("..") || path.isAbsolute(rel)) {
             return value;
         }
-        return rel.split(path.sep).join("/");
+        return toPosixPath(rel);
     }
     if (Array.isArray(value)) {
         return value.map((item) => relativizeAssetPaths(item, outDir));

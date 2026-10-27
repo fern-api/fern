@@ -1,4 +1,4 @@
-import { extractErrorMessage } from "@fern-api/core-utils";
+import { extractErrorMessage, stripTrailingSlashes } from "@fern-api/core-utils";
 import { wrapWithHttps } from "@fern-api/docs-resolver";
 import { AbsoluteFilePath, dirname, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { runExeca } from "@fern-api/logging-execa";
@@ -16,6 +16,7 @@ import { isContentOnlyEdit } from "../reloadUtils.js";
 import { SnippetDependencyTracker } from "../SnippetDependencyTracker.js";
 import { buildAstroPreviewModel } from "./buildAstroPreviewModel.js";
 import { LocalLedgerMirror } from "./LocalLedgerMirror.js";
+import { getMirroredFilePath } from "./mirroredFilePath.js";
 
 const RELOAD_DEBOUNCE_MS = 500;
 const RENDERER_READY_TIMEOUT_MS = 60_000;
@@ -83,7 +84,7 @@ export async function runAstroPreviewServer({
 
     const instance = new URL(wrapWithHttps(docsWorkspace.config.instances[0]?.url ?? `http://localhost:${port}`));
     const domain = instance.host;
-    const basepath = instance.pathname.replace(/\/+$/, "");
+    const basepath = stripTrailingSlashes(instance.pathname);
     const orgId = initialProject.config.organization;
     // The renderer only accepts generated preview hosts (`<org>-preview-<id>.docs…`).
     const rendererHost = `${orgId.toLowerCase()}-preview-local.docs.buildwithfern.com`;
@@ -400,12 +401,6 @@ async function readBundle(root: AbsoluteFilePath): Promise<AstroBundle> {
  * Loopback proxy in front of the renderer. Adds `x-fern-host`, serves the
  * live-reload event stream, and appends the reload listener to HTML responses.
  */
-/**
- * The renderer emits uploaded assets as same-origin `{basepath}/_fern-files/{domain}/{hash}/{path}`
- * URLs (served by docs-router in production); here they are answered by the mirror's `/files` route.
- */
-const MIRRORED_FILES_DIR = "_fern-files";
-
 function createFrontProxy({
     rendererPort,
     rendererHost,
@@ -419,7 +414,6 @@ function createFrontProxy({
     basepath: string;
     reloadClients: Set<http.ServerResponse>;
 }): http.Server {
-    const mirroredFilesPrefix = `${basepath}/${MIRRORED_FILES_DIR}/`;
     return http.createServer((req, res) => {
         if (req.url === RELOAD_EVENTS_PATH) {
             res.writeHead(200, {
@@ -433,14 +427,14 @@ function createFrontProxy({
             return;
         }
 
-        const isMirroredFile = req.url != null && req.url.startsWith(mirroredFilesPrefix);
+        const mirroredFilePath = getMirroredFilePath(req.url, basepath);
         const upstream = http.request(
-            isMirroredFile
+            mirroredFilePath != null
                 ? {
                       host: "127.0.0.1",
                       port: mirrorPort,
                       method: req.method,
-                      path: `/files/${req.url?.slice(mirroredFilesPrefix.length) ?? ""}`,
+                      path: mirroredFilePath,
                       headers: req.headers
                   }
                 : {

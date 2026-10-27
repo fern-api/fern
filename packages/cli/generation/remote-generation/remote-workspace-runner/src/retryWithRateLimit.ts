@@ -1,3 +1,4 @@
+import { delay } from "@fern-api/core-utils";
 import { Logger } from "@fern-api/logger";
 import { CliError } from "@fern-api/task-context";
 
@@ -32,7 +33,7 @@ export async function retryWithRateLimit<T>({
     retryRateLimited,
     logger,
     onRateLimitedWithoutRetry,
-    delayFn = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+    delayFn = delay
 }: {
     fn: () => Promise<T>;
     retryRateLimited: boolean;

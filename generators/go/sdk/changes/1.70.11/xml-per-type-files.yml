@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    XML-encoded (TwiML) types are generated one file per type (e.g. `twimlvoice/say.go` with its
+    `say_test.go`) instead of all into the package's `types.go`, which grew to tens of thousands of
+    lines for TwiML. Same package and public API; a type whose file name would collide with a file the
+    generator writes for other purposes (`types.go`, `client.go`, `doc.go`, `*_test.go`, ...) stays in
+    `types.go`.
+  type: fix

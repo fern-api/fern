@@ -294,6 +294,7 @@ describe("TypeSchemaGenerator", () => {
         });
         const schema = generator.generateTypeSchema({
             typeName: "Status",
+            typeId: "type_Status",
             shape,
             getGeneratedType: createMockGeneratedEnumType,
             getReferenceToGeneratedType: () => ts.factory.createTypeReferenceNode("Status"),
@@ -320,6 +321,7 @@ describe("TypeSchemaGenerator", () => {
         });
         const schema = generator.generateTypeSchema({
             typeName: "User",
+            typeId: "type_User",
             shape,
             getGeneratedType: createMockGeneratedObjectType,
             getReferenceToGeneratedType: () => ts.factory.createTypeReferenceNode("User"),
@@ -346,6 +348,7 @@ describe("TypeSchemaGenerator", () => {
         });
         const schema = generator.generateTypeSchema({
             typeName: "UserId",
+            typeId: "type_UserId",
             shape,
             getGeneratedType: createMockGeneratedAliasType,
             getReferenceToGeneratedType: () => ts.factory.createTypeReferenceNode("UserId"),
@@ -374,6 +377,7 @@ describe("TypeSchemaGenerator", () => {
         });
         const schema = generator.generateTypeSchema({
             typeName: "Shape",
+            typeId: "type_Shape",
             shape,
             getGeneratedType: createMockGeneratedUnionType(),
             getReferenceToGeneratedType: () => ts.factory.createTypeReferenceNode("Shape"),
@@ -397,6 +401,7 @@ describe("TypeSchemaGenerator", () => {
         });
         const schema = generator.generateTypeSchema({
             typeName: "Value",
+            typeId: "type_Value",
             shape,
             getGeneratedType: createMockGeneratedUndiscriminatedUnionType,
             getReferenceToGeneratedType: () => ts.factory.createTypeReferenceNode("Value"),
@@ -423,6 +428,7 @@ describe("TypeSchemaGenerator", () => {
         });
         const schema = generator.generateTypeSchema({
             typeName: "User",
+            typeId: "type_User",
             shape,
             getGeneratedType: createMockGeneratedObjectType,
             getReferenceToGeneratedType: () => ts.factory.createTypeReferenceNode("User"),
@@ -455,6 +461,7 @@ describe("TypeSchemaGenerator", () => {
         });
         const schema = generator.generateTypeSchema({
             typeName: "Shape",
+            typeId: "type_Shape",
             shape,
             getGeneratedType: createMockGeneratedUnionType(),
             getReferenceToGeneratedType: () => ts.factory.createTypeReferenceNode("Shape"),
@@ -829,6 +836,7 @@ describe("GeneratedUndiscriminatedUnionTypeSchemaImpl", () => {
     }) {
         return new GeneratedUndiscriminatedUnionTypeSchemaImpl({
             typeName: opts.typeName,
+            typeId: `type_${opts.typeName}`,
             shape: { members: opts.members, baseProperties: undefined },
             getGeneratedType: createMockGeneratedUndiscriminatedUnionType,
             getReferenceToGeneratedType: () => ts.factory.createTypeReferenceNode(opts.typeName),
@@ -911,6 +919,141 @@ describe("GeneratedUndiscriminatedUnionTypeSchemaImpl", () => {
             });
             const output = writeSchemaAndGetText(schema);
             expect(output).toMatchSnapshot();
+        });
+
+        function createRawTypeContext() {
+            const context = createMockContext();
+            const rawTypeNode = (typeRef: FernIr.TypeReference): ts.TypeNode => {
+                if (typeRef.type === "named") {
+                    return ts.factory.createTypeReferenceNode(
+                        `serializers.${caseConverter.pascalUnsafe(typeRef.name)}.Raw`
+                    );
+                }
+                if (typeRef.type === "container" && typeRef.container.type === "map") {
+                    return ts.factory.createTypeReferenceNode("Record", [
+                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                        rawTypeNode(typeRef.container.valueType)
+                    ]);
+                }
+                if (typeRef.type === "container" && typeRef.container.type === "optional") {
+                    return ts.factory.createUnionTypeNode([
+                        rawTypeNode(typeRef.container.optional),
+                        ts.factory.createLiteralTypeNode(ts.factory.createNull()),
+                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+                    ]);
+                }
+                return ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
+            };
+            context.typeSchema.getReferenceToRawType = (typeRef: FernIr.TypeReference) => ({
+                typeNode: rawTypeNode(typeRef),
+                typeNodeWithoutUndefined: rawTypeNode(typeRef),
+                isOptional: false
+            });
+            return context;
+        }
+
+        function createMapMember(
+            valueTypeName: string,
+            keyType: FernIr.TypeReference = FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined })
+        ): FernIr.UndiscriminatedUnionMember {
+            return createUndiscriminatedMember(
+                FernIr.TypeReference.container(
+                    FernIr.ContainerType.map({
+                        keyType,
+                        valueType: FernIr.TypeReference.named({
+                            ...createDeclaredTypeName(valueTypeName),
+                            default: undefined,
+                            inline: undefined
+                        })
+                    })
+                )
+            );
+        }
+
+        it("uses an index signature in the raw type for a self-recursive map member", () => {
+            const schema = createUndiscriminatedUnionSchema({
+                typeName: "Node",
+                members: [
+                    createMapMember("Node"),
+                    createUndiscriminatedMember(FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }))
+                ]
+            });
+            const output = writeSchemaAndGetText(schema, createRawTypeContext());
+            expect(output).toContain("[key: string]: serializers.Node.Raw;");
+            expect(output).not.toContain("Record<string, serializers.Node.Raw>");
+        });
+
+        it("keeps Record in the raw type for a self-recursive map member with non-string keys", () => {
+            const colorKey = FernIr.TypeReference.named({
+                ...createDeclaredTypeName("Color"),
+                default: undefined,
+                inline: undefined
+            });
+            const schema = createUndiscriminatedUnionSchema({
+                typeName: "Node",
+                members: [createMapMember("Node", colorKey)]
+            });
+            const output = writeSchemaAndGetText(schema, createRawTypeContext());
+            expect(output).not.toContain("[key: string]");
+        });
+
+        it("uses an index signature in the raw type for an optional self-recursive map value", () => {
+            const schema = createUndiscriminatedUnionSchema({
+                typeName: "Node",
+                members: [
+                    createUndiscriminatedMember(
+                        FernIr.TypeReference.container(
+                            FernIr.ContainerType.map({
+                                keyType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                                valueType: FernIr.TypeReference.container(
+                                    FernIr.ContainerType.optional(
+                                        FernIr.TypeReference.named({
+                                            ...createDeclaredTypeName("Node"),
+                                            default: undefined,
+                                            inline: undefined
+                                        })
+                                    )
+                                )
+                            })
+                        )
+                    )
+                ]
+            });
+            const output = writeSchemaAndGetText(schema, createRawTypeContext());
+            expect(output).toContain("[key: string]: serializers.Node.Raw | null | undefined;");
+            expect(output).not.toContain("Record<");
+        });
+
+        it("keeps Record in the raw type for a map member of a same-named type in another package", () => {
+            const schema = createUndiscriminatedUnionSchema({
+                typeName: "Node",
+                members: [
+                    createUndiscriminatedMember(
+                        FernIr.TypeReference.container(
+                            FernIr.ContainerType.map({
+                                keyType: FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+                                valueType: FernIr.TypeReference.named({
+                                    ...createDeclaredTypeName("Node"),
+                                    typeId: "type_other:Node",
+                                    default: undefined,
+                                    inline: undefined
+                                })
+                            })
+                        )
+                    )
+                ]
+            });
+            const output = writeSchemaAndGetText(schema, createRawTypeContext());
+            expect(output).not.toContain("[key: string]");
+        });
+
+        it("keeps Record in the raw type for a map member of another type", () => {
+            const schema = createUndiscriminatedUnionSchema({
+                typeName: "Node",
+                members: [createMapMember("Leaf")]
+            });
+            const output = writeSchemaAndGetText(schema, createRawTypeContext());
+            expect(output).toContain("Record<string, serializers.Leaf.Raw>");
         });
     });
 });

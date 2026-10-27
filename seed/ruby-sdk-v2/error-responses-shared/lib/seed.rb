@@ -1,0 +1,66 @@
+# frozen_string_literal: true
+
+require "json"
+require "net/http"
+require "securerandom"
+require "time"
+
+require_relative "seed/internal/json/serializable"
+require_relative "seed/internal/types/type"
+require_relative "seed/internal/types/utils"
+require_relative "seed/internal/types/union"
+require_relative "seed/internal/errors/constraint_error"
+require_relative "seed/internal/errors/type_error"
+require_relative "seed/internal/http/base_request"
+require_relative "seed/internal/json/request"
+require_relative "seed/internal/http/raw_client"
+require_relative "seed/internal/multipart/multipart_encoder"
+require_relative "seed/internal/multipart/multipart_form_data_part"
+require_relative "seed/internal/multipart/multipart_form_data"
+require_relative "seed/internal/multipart/multipart_request"
+require_relative "seed/internal/types/model/field"
+require_relative "seed/internal/types/model"
+require_relative "seed/internal/types/array"
+require_relative "seed/internal/types/boolean"
+require_relative "seed/internal/types/enum"
+require_relative "seed/internal/types/hash"
+require_relative "seed/internal/types/unknown"
+require_relative "seed/errors/api_error"
+require_relative "seed/errors/response_error"
+require_relative "seed/errors/client_error"
+require_relative "seed/errors/redirect_error"
+require_relative "seed/errors/server_error"
+require_relative "seed/errors/timeout_error"
+require_relative "seed/internal/iterators/item_iterator"
+require_relative "seed/internal/iterators/cursor_item_iterator"
+require_relative "seed/internal/iterators/offset_item_iterator"
+require_relative "seed/internal/iterators/cursor_page_iterator"
+require_relative "seed/internal/iterators/offset_page_iterator"
+require_relative "seed/errors/connection_error"
+require_relative "seed/client"
+require_relative "seed/calls/client"
+require_relative "seed/calls/calls/client"
+require_relative "seed/messages/client"
+require_relative "seed/messages/messages/client"
+require_relative "seed/messages/messages/types/delete_message_request"
+require_relative "seed/environment"
+
+module Seed
+  module Calls
+    module Types
+      autoload :Call, ::File.join(__dir__, "seed/calls/types/call")
+      autoload :CallError, ::File.join(__dir__, "seed/calls/types/call_error")
+    end
+  end
+
+  module Messages
+    module Types
+      autoload :Message, ::File.join(__dir__, "seed/messages/types/message")
+    end
+  end
+
+  module Types
+    autoload :ServiceErrorResponseErrorsItem, ::File.join(__dir__, "seed/types/service_error_response_errors_item")
+    autoload :ServiceErrorResponse, ::File.join(__dir__, "seed/types/service_error_response")
+  end
+end

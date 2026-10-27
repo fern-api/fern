@@ -1229,7 +1229,7 @@ client.endpoints.object.get_and_return_nested_with_required_field(
 ```ruby
 client.endpoints.object.get_and_return_nested_with_required_field_as_list(request: [{
   string: "string",
-  nested_object: {
+  NestedObject: {
     string: "string",
     integer: 1,
     long: 1000000,
@@ -1248,7 +1248,7 @@ client.endpoints.object.get_and_return_nested_with_required_field_as_list(reques
   }
 }, {
   string: "string",
-  nested_object: {
+  NestedObject: {
     string: "string",
     integer: 1,
     long: 1000000,
@@ -1554,7 +1554,7 @@ client.endpoints.object.get_and_return_with_required_nested_object(
   required_string: "hello",
   required_object: {
     string: "nested",
-    nested_object: {}
+    NestedObject: {}
   }
 )
 ```

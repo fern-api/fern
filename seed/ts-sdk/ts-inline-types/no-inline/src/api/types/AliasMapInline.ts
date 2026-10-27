@@ -2,4 +2,6 @@
 
 import type * as SeedObject from "../index.js";
 
-export type AliasMapInline = Record<string, SeedObject.AliasInlineValue>;
+export type AliasMapInline = {
+    [key: string]: SeedObject.AliasInlineValue;
+};

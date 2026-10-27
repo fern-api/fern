@@ -34,6 +34,7 @@ import com.fern.java.client.generators.AsyncSubpackageClientGenerator;
 import com.fern.java.client.generators.BaseErrorGenerator;
 import com.fern.java.client.generators.BodyPropertiesGenerator;
 import com.fern.java.client.generators.ClientOptionsGenerator;
+import com.fern.java.client.generators.ConcurrencyLimitingInterceptorGenerator;
 import com.fern.java.client.generators.ConsoleLoggerGenerator;
 import com.fern.java.client.generators.CoreMediaTypesGenerator;
 import com.fern.java.client.generators.EnvironmentGenerator;
@@ -387,6 +388,10 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         ResponseDecompressionInterceptorGenerator responseDecompressionInterceptorGenerator =
                 new ResponseDecompressionInterceptorGenerator(context);
         this.addGeneratedFile(responseDecompressionInterceptorGenerator.generateFile());
+
+        ConcurrencyLimitingInterceptorGenerator concurrencyLimitingInterceptorGenerator =
+                new ConcurrencyLimitingInterceptorGenerator(context);
+        this.addGeneratedFile(concurrencyLimitingInterceptorGenerator.generateFile());
 
         ResponseBodyInputStreamGenerator responseBodyInputStreamGenerator =
                 new ResponseBodyInputStreamGenerator(context);

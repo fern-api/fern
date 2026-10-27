@@ -173,11 +173,13 @@ module Seed
         # @return [Hash[String, String]]
         def get_and_return_map_prim_to_prim(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
+          body_value = params.key?(:request) || params.empty? ? params[:request] : params
+
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
             path: "/container/map-prim-to-prim",
-            body: params[:request],
+            body: body_value,
             request_options: request_options
           )
           begin
@@ -212,11 +214,13 @@ module Seed
         # @return [Hash[String, Seed::Types::Object_::Types::ObjectWithRequiredField]]
         def get_and_return_map_of_prim_to_object(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
+          body_value = params.key?(:request) || params.empty? ? params[:request] : params
+
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
             path: "/container/map-prim-to-object",
-            body: params[:request]&.transform_values { |value| Seed::Types::Object_::Types::ObjectWithRequiredField.new(value).to_h },
+            body: body_value&.transform_values { |value| Seed::Types::Object_::Types::ObjectWithRequiredField.new(value).to_h },
             request_options: request_options
           )
           begin
@@ -249,11 +253,13 @@ module Seed
         # @return [Hash[String, Seed::Types::Union::Types::MixedType]]
         def get_and_return_map_of_prim_to_undiscriminated_union(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
+          body_value = params.key?(:request) || params.empty? ? params[:request] : params
+
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
             path: "/container/map-prim-to-union",
-            body: params[:request],
+            body: body_value,
             request_options: request_options
           )
           begin
@@ -288,11 +294,13 @@ module Seed
         # @return [Hash[Integer, Seed::Types::Object_::Types::ObjectWithRequiredField]]
         def get_and_return_map_of_integer_to_object(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.normalize_keys(params)
+          body_value = params.key?(:request) || params.empty? ? params[:request] : params
+
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
             path: "/container/map-integer-to-object",
-            body: params[:request]&.transform_values { |value| Seed::Types::Object_::Types::ObjectWithRequiredField.new(value).to_h },
+            body: body_value&.transform_values { |value| Seed::Types::Object_::Types::ObjectWithRequiredField.new(value).to_h },
             request_options: request_options
           )
           begin

@@ -301,7 +301,7 @@ client.union.nested_unions(request: "string")
 <dd>
 
 ```ruby
-client.union.nested_object_unions(request: "string")
+client.union.nested_object_unions(label: "string")
 ```
 </dd>
 </dl>
@@ -350,8 +350,8 @@ client.union.nested_object_unions(request: "string")
 
 ```ruby
 client.union.aliased_object_union(request: {
-  only_in_a: "onlyInA",
-  shared_number: 1
+  onlyInA: "onlyInA",
+  sharedNumber: 1
 })
 ```
 </dd>
@@ -456,8 +456,8 @@ client.union.get_with_base_properties(
 
 ```ruby
 client.union.test_camel_case_properties(payment_method: {
-  method_: "card",
-  card_number: "1234567890123456"
+  method: "card",
+  cardNumber: "1234567890123456"
 })
 ```
 </dd>

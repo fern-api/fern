@@ -1,4 +1,221 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.176.1
+  changelogEntry:
+    - summary: |
+        Fix `fern docs dev` returning 404 for the sidebar navigation, compiled MDX components and
+        optimized images with the latest docs renderer, which serves them under `_fern-files/_nav`,
+        `_fern-files/_mdx` and `_fern-files/_img`. The preview now sends `_`-prefixed `_fern-files/`
+        paths to the renderer and only sends uploaded files to the local file mirror.
+      type: fix
+  createdAt: "2026-10-27"
+  irVersion: 67
+- version: 5.176.0
+  changelogEntry:
+    - summary: |
+        SDK snippets from sdk-gen are now read from the `placeholdersSnippetsUrl` link of each artifact, the file whose
+        values carry editable placeholders for the docs "Try it" panel. The SDKs whose snippets were read are left out of
+        the `snippetsConfiguration` sent to FDR, so FDR no longer fails looking them up in its own snippet store.
+      type: feat
+  createdAt: "2026-10-27"
+  irVersion: 67
+- version: 5.175.0
+  changelogEntry:
+    - summary: |
+        C/C++ library docs: backslashes in generated `description:` frontmatter are now YAML-escaped
+        (a `\M` in a Doxygen comment no longer breaks the page or the site), and `fern docs md check`
+        fails on pages whose frontmatter does not parse instead of silently dropping it.
+      type: fix
+    - summary: |
+        C/C++ library docs: when two symbols sanitize to the same filename or URL (`s_dup` vs `__s_dup`,
+        `S_CASE` vs `s_case`), the public name now always gets the plain URL and `_`-prefixed names
+        get the `-2` suffix, independent of source order. New opt-in `config.slug-style: hyphenated`
+        on `lang: cpp` libraries keeps word boundaries in URLs (`/functions/doca-pcc-dev-get-port-counter-id`).
+      type: feat
+    - summary: |
+        `fern docs md generate --keep-logs` writes each library parser's logs to
+        `<fern folder>/.fern/library-docs-logs/<library>.log` instead of a temporary file that is
+        removed when the command exits.
+      type: feat
+  createdAt: "2026-10-27"
+  irVersion: 67
+- version: 5.174.1
+  changelogEntry:
+    - summary: |
+        Upgrade the Venus API client (`@fern-api/venus-api-sdk`) to 12.0.0 so the CLI
+        uses the current organization, token and registry endpoints.
+      type: chore
+  createdAt: "2026-10-26"
+  irVersion: 67
+- version: 5.174.0
+  changelogEntry:
+    - summary: |
+        Add `auto-merge: true` to the `github` block (pull-request mode) in generators.yml and a matching
+        `fern generate --auto-merge` flag. When set, Fern enables GitHub auto-merge (squash) on the pull
+        request it opens, so the SDK PR merges as soon as the repository's required checks pass. Auto-merge
+        is skipped when the release contains breaking changes (MAJOR bump) or version analysis is
+        unavailable, and the SDK repository must allow auto-merge. Applies to both `--local` and remote
+        generation (the flag is now forwarded to Fiddle).
+      type: feat
+  createdAt: "2026-10-26"
+  irVersion: 67
+- version: 5.173.0
+  changelogEntry:
+    - summary: |
+        At `fern generate --docs`, find the snippets of the SDKs that docs.yml `snippets:` names (TypeScript,
+        Python, Java, Go, Ruby, C# and PHP) through sdk-gen-api, by the sdkName in sdk-config.yml, the language
+        and the version, and add them to the endpoints as code samples, in both deploy modes. The target needs
+        `docs.snippets.enabled` in sdk-config.yml so sdk-gen saves a snippets file with the build. This needs no
+        build ID and no files from the machine that built the SDK.
+        Off unless `FERN_UPLOAD_SDK_GEN_SNIPPETS=true` is set. A snippet failure never fails the docs publish.
+      type: feat
+  createdAt: "2026-10-26"
+  irVersion: 67
+- version: 5.172.1
+  changelogEntry:
+    - summary: |
+        Fix a stack overflow during docs generation when an OpenAPI object declares a property
+        named `properties`.
+      type: fix
+  createdAt: "2026-10-26"
+  irVersion: 67
+- version: 5.172.0
+  changelogEntry:
+    - summary: |
+        `fern token` now mints the key through the managed api-keys path (same `fern_` token class), so the
+        key gets a `tokenId`, appears in `fern org token list` and the dashboard API Keys page, and is revocable.
+      type: feat
+    - summary: |
+        Add `fern org token` commands to manage organization API keys:
+        `list` (with `--json`/`--csv` output), `create` (prints the secret once), and `revoke <token-id>`.
+        `list` shows each key's creator by email when Venus can resolve it.
+      type: feat
+  createdAt: "2026-10-23"
+  irVersion: 67
+- version: 5.171.6
+  changelogEntry:
+    - summary: |
+        `fern generate --preview` now asks sdk-gen-api for a file download instead of the
+        generators.yml GitHub or registry output, matching Fiddle's dry-run preview. A
+        `github.branch` set from `${ENV_VAR}` no longer fails with "Too small: expected string
+        to have >=1 characters", and previews no longer request a push or publish.
+      type: fix
+  createdAt: "2026-10-23"
+  irVersion: 67
+- version: 5.171.5
+  changelogEntry:
+    - summary: |
+        Internal cleanup: trailing-slash stripping, forward-slash path conversion and first-letter
+        capitalization now use shared helpers instead of inline copies. No behavior change.
+      type: chore
+    - summary: |
+        Internal cleanup: `isRecord`, `sanitizePreviewId`, `decodeJsonPointerSegment` and a few other
+        helpers that were copied across packages now have a single shared definition. No behavior change.
+      type: chore
+  createdAt: "2026-10-23"
+  irVersion: 67
+- version: 5.171.4
+  changelogEntry:
+    - summary: |
+        Internal cleanup: the CLI migrations now share one fern-directory lookup and one
+        files-and-directories listing helper instead of per-migration copies. No behavior change.
+      type: chore
+  createdAt: "2026-10-23"
+  irVersion: 67
+- version: 5.171.3
+  changelogEntry:
+    - summary: |
+        `fern sdk migrate` carries a Go generator's `packageLayout` setting (`root` or `types`) over to the target's
+        `generation.packageLayout` instead of reporting it as unsupported and dropping it. Bumps
+        `@postman/sdk-config` to 0.16.0.
+      type: fix
+  createdAt: "2026-10-23"
+  irVersion: 67
+- version: 5.171.2
+  changelogEntry:
+    - summary: |
+        Internal cleanup: shared helpers for ENOENT checks, http(s) URL checks, delays,
+        `asyncPool` and `convertNumberToSnakeCase` now live in `core-utils` instead of being
+        copied across packages. No behavior change.
+      type: chore
+  createdAt: "2026-10-22"
+  irVersion: 67
+- version: 5.171.1
+  changelogEntry:
+    - summary: |
+        The `custom-domain` Vercel check now recognizes apex domains on all of Vercel's
+        IPv4 networks (per ARIN), not just a subset.
+      type: fix
+  createdAt: "2026-10-22"
+  irVersion: 67
+- version: 5.171.0
+  changelogEntry:
+    - summary: |
+        `fern generate --docs` (including `--preview`) now checks the DNS of each configured
+        `custom-domain`. If a domain still points to Vercel instead of `cname.ferndocs.com`
+        (or your own reverse proxy), the CLI prints a warning with migration steps. Starting
+        December 1, 2026 this becomes an error and publishing fails until the DNS is switched.
+      type: feat
+  createdAt: "2026-10-22"
+  irVersion: 67
+- version: 5.170.8
+  changelogEntry:
+    - summary: |
+        The dynamic IR now reports `hasResponseBody: false` for endpoints that have no response body
+        (previously every endpoint was reported as `response: json`). This lets dynamic snippet generators
+        distinguish `(response, error)` methods from `error`-only methods (e.g. Go deletes).
+      type: fix
+  createdAt: "2026-10-22"
+  irVersion: 67
+- version: 5.170.7
+  changelogEntry:
+    - summary: |
+        `error-responses` configured on `api.settings` (shared by every spec of the API) now declares
+        the error body type and the status-code errors once in the root package instead of duplicating
+        them under each namespaced spec. SDKs expose one `BadRequestError`, `NotFoundError`, ... that
+        every namespace throws. `error-responses` set on an individual spec is unchanged.
+      type: fix
+  createdAt: "2026-10-22"
+  irVersion: 67
+- version: 5.170.6
+  changelogEntry:
+    - summary: |
+        Fix `fern generate --docs` failing with `ENOENT` on Markdown images whose quoted title contains
+        an unbalanced `)`, e.g. `![Diagram](./diagram.png "Flow: 1) Input, 2) Output")`. The scanner
+        ended the destination at the first `)` inside the title and tried to upload a file named
+        `diagram.png "Flow: 1`. Page links with such titles are resolved the same way.
+      type: fix
+  createdAt: "2026-10-22"
+  irVersion: 67
+- version: 5.170.5
+  changelogEntry:
+    - summary: |
+        The v3 OpenAPI parser no longer crashes with `Maximum call stack size exceeded` on a
+        discriminated union that contains itself as a variant (for example a `Branch` whose
+        `parts` are a `Leaf` or another `Branch`) when the variants declare the discriminant property.
+      type: fix
+    - summary: |
+        `fern generate --docs` and `fern docs dev` now log a warning when the v3 OpenAPI parser fails
+        and the API Reference falls back to the v2 parser, instead of falling back silently.
+      type: fix
+    - summary: |
+        The v3 OpenAPI parser now honors `respect-per-spec-base-path`. Each spec's plain
+        `x-fern-base-path` is applied to that spec's endpoint paths, so it is no longer dropped
+        when `generators.yml` lists more than one spec (for example in docs API Reference URLs).
+        Set the option on every spec that has a base path: a spec without it still uses the API-wide
+        base path, and only one spec's API-wide base path is kept when specs are merged. A base path
+        with path parameters keeps the API-wide behavior and now logs a warning.
+      type: fix
+  createdAt: "2026-10-21"
+  irVersion: 67
+- version: 5.170.4
+  changelogEntry:
+    - summary: |
+        `fern sdk migrate` carries a Fern Python generator's `stream_abstraction` setting over to the target's
+        `generation.streamAbstraction` instead of reporting it as unsupported and dropping it. Bumps
+        `@postman/sdk-config` to 0.15.0.
+      type: fix
+  createdAt: "2026-10-21"
+  irVersion: 67
 - version: 5.170.3
   changelogEntry:
     - summary: |

@@ -25,7 +25,7 @@ module Seed
         # @return [Hash] The query parameters merged with additional query parameters from request options.
         def encode_query
           additional_query = @request_options&.dig(:additional_query_parameters) || @request_options&.dig("additional_query_parameters") || {}
-          @query.merge(additional_query)
+          Internal::Types::Utils.serialize_times(@query.merge(additional_query))
         end
 
         # @return [Hash] The additional body parameters from request options, keyed by wire-format name.

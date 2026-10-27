@@ -1,4 +1,5 @@
 import { FernToken } from "@fern-api/auth";
+import { isHttpUrl } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
@@ -497,7 +498,7 @@ function getProductionUrlInfo(docsConfig: {
     const instanceUrl = firstInstance["custom-domain"] ?? firstInstance.url;
 
     let normalizedUrl = instanceUrl;
-    if (!normalizedUrl.startsWith("https://") && !normalizedUrl.startsWith("http://")) {
+    if (!isHttpUrl(normalizedUrl)) {
         normalizedUrl = `https://${normalizedUrl}`;
     }
 
