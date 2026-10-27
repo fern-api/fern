@@ -437,11 +437,13 @@ export class WireTestGenerator {
             // Custom pagination returns a pager whose `current` is the response model; other
             // pagination kinds return iterators, so their response numbers are not checked.
             const isCustomPagination = endpoint.pagination?.type === "custom";
+            // With `legacyNumbersAsInteger`, decimals are truncated by design, so numbers are not checked.
+            const checkNumbers = this.context.customConfig.legacyNumbersAsInteger !== true;
             const responseNumbers =
-                expectedError == null && (endpoint.pagination == null || isCustomPagination)
+                checkNumbers && expectedError == null && (endpoint.pagination == null || isCustomPagination)
                     ? this.getExpectedResponseNumbers(endpoint, testId)
                     : [];
-            const requestBodyNumbers = this.getExpectedRequestBodyNumbers(endpoint, dynamicExample);
+            const requestBodyNumbers = checkNumbers ? this.getExpectedRequestBodyNumbers(endpoint, dynamicExample) : [];
 
             const callLines = buildWireTestCallLines({
                 snippetCode,
