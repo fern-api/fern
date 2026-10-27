@@ -28,6 +28,7 @@ import { PackMode } from "./packLocalOutput.js";
 import { resolveGroupsForWorkspace } from "./resolveGroupsForWorkspace.js";
 import { resolvePosthogCommandLabel } from "./resolvePosthogCommandLabel.js";
 import { getSdkConfigGeneratorName } from "./sdkConfigGeneratorName.js";
+import { assertNoProtobufSourcesForGeneration } from "./sdkConfigProtobufSources.js";
 import { shouldPreflightGenerator } from "./shouldPreflightGenerator.js";
 
 export const GenerationMode = {
@@ -444,6 +445,7 @@ async function prepareSdkConfigGenerations({
                 preview,
                 targetNames != null ? { targetNames } : sdkConfigPath != null ? { generatorName, generatorIndex } : {}
             );
+            assertNoProtobufSourcesForGeneration(loaded.config);
             const selectedTargetIndexes =
                 sdkConfigPath != null && targetNames == null
                     ? getGeneratorSelectedTargetIndexes(loaded.config, { generatorName, generatorIndex })
