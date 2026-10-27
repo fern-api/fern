@@ -1,5 +1,6 @@
 import http from "http";
 import net from "net";
+import { getGlobalDispatcher, ProxyAgent, setGlobalDispatcher } from "undici";
 import { afterEach, describe, expect, it } from "vitest";
 
 import { stopDocsDevServer } from "../stopDocsDevServer.js";
@@ -133,6 +134,20 @@ describe("stopDocsDevServer", () => {
         });
         expect(requests).toEqual(["GET /__fern/dev-server 1", "POST /__fern/shutdown 1"]);
         await expect(stopDocsDevServer({ port })).resolves.toMatchObject({ stopped: false, reason: "no-server" });
+    });
+
+    it("connects directly even when the CLI routes HTTP through a proxy", async () => {
+        const { port, requests } = await fakeDocsDev();
+        const deadProxyPort = await getUnusedPort();
+        const originalDispatcher = getGlobalDispatcher();
+        // What cli.ts installs when HTTP_PROXY is set.
+        setGlobalDispatcher(new ProxyAgent(`http://127.0.0.1:${deadProxyPort}`));
+        try {
+            await expect(stopDocsDevServer({ port })).resolves.toMatchObject({ stopped: true, port });
+        } finally {
+            setGlobalDispatcher(originalDispatcher);
+        }
+        expect(requests).toEqual(["GET /__fern/dev-server 1", "POST /__fern/shutdown 1"]);
     });
 
     it("fails when the server refuses the shutdown request", async () => {

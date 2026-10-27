@@ -8,6 +8,7 @@ import {
 } from "@fern-api/docs-preview";
 import { CliError } from "@fern-api/task-context";
 import net from "net";
+import { Agent, request } from "undici";
 
 import { CliContext } from "../../cli-context/CliContext.js";
 
@@ -60,15 +61,11 @@ export async function stopDocsDevServer({
         return { stopped: false, port, reason: "no-server" };
     }
     const baseUrl = `http://127.0.0.1:${port}`;
-    const headers = { [DOCS_DEV_CONTROL_HEADER]: DOCS_DEV_CONTROL_HEADER_VALUE };
 
     let info: unknown;
     try {
-        const response = await fetch(`${baseUrl}${DOCS_DEV_SERVER_INFO_PATH}`, {
-            headers,
-            signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS)
-        });
-        info = response.ok ? await response.json() : undefined;
+        const response = await requestDocsDevServer({ url: `${baseUrl}${DOCS_DEV_SERVER_INFO_PATH}`, method: "GET" });
+        info = response.status === 200 ? JSON.parse(response.body) : undefined;
     } catch {
         // Something is listening but didn't answer like a `fern docs dev` server (wrong protocol, hung, not JSON).
         info = undefined;
@@ -77,14 +74,9 @@ export async function stopDocsDevServer({
         return { stopped: false, port, reason: "not-fern-docs-dev" };
     }
 
-    let response: Response;
+    let response: { status: number; body: string };
     try {
-        response = await fetch(`${baseUrl}${DOCS_DEV_SHUTDOWN_PATH}`, {
-            method: "POST",
-            headers,
-            signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS)
-        });
-        await response.body?.cancel();
+        response = await requestDocsDevServer({ url: `${baseUrl}${DOCS_DEV_SHUTDOWN_PATH}`, method: "POST" });
     } catch (error) {
         throw new CliError({
             message: `Failed to send the shutdown request to fern docs dev on port ${port}: ${extractErrorMessage(error)}`,
@@ -109,6 +101,31 @@ export async function stopDocsDevServer({
         await delay(PORT_POLL_INTERVAL_MS);
     }
     return { stopped: true, port, url: info.url, pid: info.pid, fernDirectory: info.fernDirectory };
+}
+
+/**
+ * Sends a control request straight to the local server. It uses its own dispatcher because the CLI installs a global
+ * `ProxyAgent` when `HTTP_PROXY` is set, which would otherwise send these loopback requests to the proxy.
+ */
+async function requestDocsDevServer({
+    url,
+    method
+}: {
+    url: string;
+    method: "GET" | "POST";
+}): Promise<{ status: number; body: string }> {
+    const dispatcher = new Agent();
+    try {
+        const response = await request(url, {
+            method,
+            headers: { [DOCS_DEV_CONTROL_HEADER]: DOCS_DEV_CONTROL_HEADER_VALUE },
+            dispatcher,
+            signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS)
+        });
+        return { status: response.statusCode, body: await response.body.text() };
+    } finally {
+        await dispatcher.close();
+    }
 }
 
 function isPortOpen(port: number): Promise<boolean> {
