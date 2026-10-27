@@ -12,6 +12,16 @@ public record Number : IJsonOnDeserialized, IXmlNode
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
+    public Number() { }
+
+    /// <summary>
+    /// Creates a <c>&lt;Number&gt;</c> element with the given text content.
+    /// </summary>
+    public Number(string phoneNumber)
+    {
+        PhoneNumber = phoneNumber;
+    }
+
     [JsonPropertyName("phone_number")]
     public string? PhoneNumber { get; set; }
 

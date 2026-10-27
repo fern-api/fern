@@ -67,6 +67,147 @@ export interface XmlProperty {
     isUnion: boolean;
 }
 
+/** The uniform name of an element's text property when its own name is taken by a child element. */
+const TEXT_FIELD_NAME = "Text";
+
+/**
+ * The C# name of an xml-encoded object's text property, or undefined to keep the default. When the
+ * default name is also the name of one of the object's child elements (`Message.Body` text vs. the
+ * `<Body>` child), the child builder keeps the legacy name (`message.Body("hi")` adds the child) and
+ * the text property is renamed to `Text` (`<Name>Text` if `Text` is taken).
+ */
+export function getXmlTextFieldName(
+    context: ModelGeneratorContext,
+    declaration: TypeDeclaration,
+    property: ObjectProperty | FernIr.InlinedRequestBodyProperty
+): string | undefined {
+    const xml = declaration.encoding?.xml;
+    if (xml == null || declaration.shape.type !== "object" || !("xml" in property) || property.xml?.kind !== "TEXT") {
+        return undefined;
+    }
+    const classReference = context.csharpTypeMapper.convertToClassReference(declaration);
+    const defaultName = context.csharp.getPropertyName(classReference, property);
+    const properties = [...declaration.shape.properties, ...(declaration.shape.extendedProperties ?? [])];
+    const childNames = new Set<string>();
+    for (const candidate of properties) {
+        if ((candidate.xml?.kind ?? "ELEMENT") !== "ELEMENT") {
+            continue;
+        }
+        for (const childType of getXmlChildObjectTypes(context, unwrapContainers(candidate.valueType), xml.name)) {
+            childNames.add(context.case.pascalSafe(xmlNameOf(childType)));
+        }
+    }
+    if (!childNames.has(defaultName)) {
+        return undefined;
+    }
+    const taken = new Set(
+        properties
+            .filter((candidate) => candidate !== property)
+            .map((candidate) => context.case.pascalSafe(candidate.name))
+    );
+    return taken.has(TEXT_FIELD_NAME) || classReference.name === TEXT_FIELD_NAME
+        ? `${defaultName}${TEXT_FIELD_NAME}`
+        : TEXT_FIELD_NAME;
+}
+
+function unwrapContainers(typeReference: TypeReference): TypeReference {
+    let current = typeReference;
+    for (;;) {
+        if (current.type !== "container") {
+            return current;
+        }
+        const container = current.container;
+        switch (container.type) {
+            case "optional":
+                current = container.optional;
+                break;
+            case "nullable":
+                current = container.nullable;
+                break;
+            case "list":
+                current = container.list;
+                break;
+            case "set":
+                current = container.set;
+                break;
+            default:
+                return current;
+        }
+    }
+}
+
+function xmlNameOf(declaration: TypeDeclaration): string {
+    const xml = declaration.encoding?.xml;
+    if (xml == null) {
+        throw new Error(`Type ${declaration.name.typeId} is not xml-encoded`);
+    }
+    return xml.name;
+}
+
+/** Follows aliases and undiscriminated unions to the xml-encoded object types a child element can be. */
+function getXmlChildObjectTypes(
+    context: ModelGeneratorContext,
+    typeReference: TypeReference,
+    ownerXmlName: string,
+    seen = new Set<FernIr.TypeId>()
+): TypeDeclaration[] {
+    if (typeReference.type !== "named" || seen.has(typeReference.typeId)) {
+        return [];
+    }
+    seen.add(typeReference.typeId);
+    const declaration = context.model.dereferenceType(typeReference.typeId).typeDeclaration;
+    const shape = declaration.shape;
+    switch (shape.type) {
+        case "object":
+            if (declaration.encoding?.xml == null) {
+                throw new Error(
+                    `Type ${declaration.name.typeId} is used as a child element of xml-encoded type ${ownerXmlName} but has no xml encoding`
+                );
+            }
+            return [declaration];
+        case "alias":
+            return getXmlChildObjectTypes(context, shape.aliasOf, ownerXmlName, seen);
+        case "undiscriminatedUnion":
+            return shape.members.flatMap((member) => getXmlChildObjectTypes(context, member.type, ownerXmlName, seen));
+        case "enum":
+        case "union":
+            return [];
+        default:
+            assertNever(shape);
+    }
+}
+
+/** Whether `typeReference` is a string declared with `format: uri` (through optional/nullable wrappers and aliases). */
+function isUriString(context: ModelGeneratorContext, typeReference: TypeReference): boolean {
+    let current = typeReference;
+    for (;;) {
+        if (current.type === "container") {
+            if (current.container.type === "optional") {
+                current = current.container.optional;
+                continue;
+            }
+            if (current.container.type === "nullable") {
+                current = current.container.nullable;
+                continue;
+            }
+            return false;
+        }
+        if (current.type === "named") {
+            const shape = context.model.dereferenceType(current.typeId).typeDeclaration.shape;
+            if (shape.type !== "alias") {
+                return false;
+            }
+            current = shape.aliasOf;
+            continue;
+        }
+        return (
+            current.type === "primitive" &&
+            current.primitive.v2?.type === "string" &&
+            current.primitive.v2.validation?.format === "uri"
+        );
+    }
+}
+
 /**
  * Adds XML serialization (`ToXElement`/`ToXml`), parsing (`FromXml`/`FromXElement`), fluent child
  * builder methods and unknown attribute/child preservation to an xml-encoded object record.
@@ -110,6 +251,7 @@ export class XmlObjectGenerator {
 
     public generate(): void {
         this.class_.interfaceReferences.push(this.context.Types.IXmlNode);
+        this.addTextConstructors();
         this.addAdditionalFields();
         this.addToXElement();
         this.addToXml();
@@ -144,6 +286,33 @@ export class XmlObjectGenerator {
     // ---------------------------------------------------------------------------------------------
     // Property analysis
     // ---------------------------------------------------------------------------------------------
+
+    /**
+     * `new Say("hi")` next to the parameterless constructor, so an element with text content can be
+     * created in one call as in the legacy SDKs (the text property stays settable in an initializer).
+     */
+    private addTextConstructors(): void {
+        const text = this.properties.find((property) => property.kind === "TEXT");
+        if (text == null || text.isList) {
+            return;
+        }
+        const parameterName = this.context.case.camelSafe(text.field.name);
+        this.class_.addConstructor({
+            access: ast.Access.Public,
+            parameters: [],
+            body: this.csharp.codeblock("")
+        });
+        this.class_.addConstructor({
+            access: ast.Access.Public,
+            doc: {
+                summary: `Creates a <c>&lt;${this.xml.name}&gt;</c> element with the given text content.`
+            },
+            parameters: [this.csharp.parameter({ name: parameterName, type: text.itemCsType })],
+            body: this.csharp.codeblock((writer) => {
+                writer.writeLine(`${text.field.name} = ${parameterName};`);
+            })
+        });
+    }
 
     private toXmlProperty(property: ObjectProperty, field: GeneratedField): XmlProperty {
         const kind = property.xml?.kind ?? "ELEMENT";
@@ -218,32 +387,8 @@ export class XmlObjectGenerator {
         );
     }
 
-    /** Follows aliases and undiscriminated unions to the xml-encoded object types a child element can be. */
-    private getXmlChildObjectTypes(typeReference: TypeReference, seen = new Set<FernIr.TypeId>()): TypeDeclaration[] {
-        if (typeReference.type !== "named" || seen.has(typeReference.typeId)) {
-            return [];
-        }
-        seen.add(typeReference.typeId);
-        const declaration = this.getTypeDeclaration(typeReference.typeId);
-        const shape = declaration.shape;
-        switch (shape.type) {
-            case "object":
-                if (declaration.encoding?.xml == null) {
-                    throw new Error(
-                        `Type ${declaration.name.typeId} is used as a child element of xml-encoded type ${this.xml.name} but has no xml encoding`
-                    );
-                }
-                return [declaration];
-            case "alias":
-                return this.getXmlChildObjectTypes(shape.aliasOf, seen);
-            case "undiscriminatedUnion":
-                return shape.members.flatMap((member) => this.getXmlChildObjectTypes(member.type, seen));
-            case "enum":
-            case "union":
-                return [];
-            default:
-                assertNever(shape);
-        }
+    private getXmlChildObjectTypes(typeReference: TypeReference): TypeDeclaration[] {
+        return getXmlChildObjectTypes(this.context, typeReference, this.xml.name);
     }
 
     private getXmlName(declaration: TypeDeclaration): string {
@@ -1140,6 +1285,41 @@ export class XmlObjectGenerator {
                 writer.writeLine("});");
             })
         });
+
+        const [textScalar, ...otherScalars] = scalarProperties;
+        const [textParameter, ...otherParameters] = parameters;
+        if (
+            textScalar == null ||
+            textParameter == null ||
+            textScalar.kind !== "TEXT" ||
+            !isUriString(this.context, textScalar.irProperty.valueType)
+        ) {
+            return;
+        }
+        const uriParameter = this.csharp.parameter({
+            name: textParameter.name,
+            type: this.context.System.Uri,
+            docs: textScalar.irProperty.docs
+        });
+        this.class_.addMethod({
+            name,
+            access: ast.Access.Public,
+            return_: this.class_.reference,
+            parameters: [uriParameter, ...otherParameters],
+            doc: this.childBuilderDoc({
+                summary: `Adds a <c>&lt;${xmlName}&gt;</c> child element whose text is the given URI and returns this instance for chaining.`,
+                childType,
+                parameters: [uriParameter, ...otherParameters].map((parameter) => ({
+                    name: parameter.name,
+                    docs: parameter.docs
+                }))
+            }),
+            body: this.csharp.codeblock((writer) => {
+                writer.writeLine(
+                    `return ${name}(${[`${textParameter.name}.ToString()`, ...otherScalars.map((_, index) => otherParameters[index]?.name ?? "")].join(", ")});`
+                );
+            })
+        });
     }
 
     private asNullable(type: ast.Type): ast.Type {
@@ -1165,7 +1345,9 @@ export class XmlObjectGenerator {
         const scalars: XmlProperty[] = [];
         for (const property of childProperties) {
             const xmlProperty = this.toXmlProperty(property, {
-                name: this.csharp.getPropertyName(childClass, property),
+                name:
+                    getXmlTextFieldName(this.context, childType, property) ??
+                    this.csharp.getPropertyName(childClass, property),
                 type: this.context.csharpTypeMapper.convert({ reference: property.valueType })
             });
             if (xmlProperty.kind === "ELEMENT") {

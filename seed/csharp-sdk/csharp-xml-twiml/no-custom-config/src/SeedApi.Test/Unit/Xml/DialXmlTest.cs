@@ -28,7 +28,7 @@ public class DialXmlTest
             Is.EqualTo(new[] { "statusCallbackEvent", "statusCallbackEvent-2" }),
             "StatusCallbackEvent"
         );
-        Assert.That(parsed.Number, Is.EqualTo("text"), "Number");
+        Assert.That(parsed.Text, Is.EqualTo("text"), "Text");
         var serialized = parsed.ToXml(false);
         Assert.That(serialized, Does.Contain("record=\"record-from-answer record-from-ringing\""));
         Assert.That(
@@ -63,11 +63,11 @@ public class DialXmlTest
     [NUnit.Framework.Test]
     public void ToXml_EscapesSpecialCharacters()
     {
-        var model = new Dial { Number = "a & b < c > d \"q\" 'r'" };
+        var model = new Dial { Text = "a & b < c > d \"q\" 'r'" };
         var serialized = model.ToXml(false);
         Assert.That(serialized, Does.Not.Contain("a & b"));
         Assert.That(serialized, Does.Not.Contain("< c"));
-        Assert.That(Dial.FromXml(serialized).Number, Is.EqualTo("a & b < c > d \"q\" 'r'"));
+        Assert.That(Dial.FromXml(serialized).Text, Is.EqualTo("a & b < c > d \"q\" 'r'"));
     }
 
     [NUnit.Framework.Test]

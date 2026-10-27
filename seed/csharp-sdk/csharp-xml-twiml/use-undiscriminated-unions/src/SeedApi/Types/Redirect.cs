@@ -15,6 +15,16 @@ public record Redirect : IJsonOnDeserialized, IXmlNode
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
+    public Redirect() { }
+
+    /// <summary>
+    /// Creates a <c>&lt;Redirect&gt;</c> element with the given text content.
+    /// </summary>
+    public Redirect(string url)
+    {
+        Url = url;
+    }
+
     [JsonPropertyName("url")]
     public required string Url { get; set; }
 

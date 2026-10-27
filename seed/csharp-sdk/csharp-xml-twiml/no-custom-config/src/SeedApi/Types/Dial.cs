@@ -12,6 +12,16 @@ public record Dial : IJsonOnDeserialized, IXmlNode
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
+    public Dial() { }
+
+    /// <summary>
+    /// Creates a <c>&lt;Dial&gt;</c> element with the given text content.
+    /// </summary>
+    public Dial(string text)
+    {
+        Text = text;
+    }
+
     [JsonPropertyName("record")]
     public IEnumerable<DialRecordItem>? Record { get; set; }
 
@@ -22,7 +32,7 @@ public record Dial : IJsonOnDeserialized, IXmlNode
     public IEnumerable<string>? StatusCallbackEvent { get; set; }
 
     [JsonPropertyName("number")]
-    public string? Number { get; set; }
+    public string? Text { get; set; }
 
     [JsonIgnore]
     public ReadOnlyAdditionalProperties AdditionalProperties { get; private set; } = new();
@@ -78,7 +88,7 @@ public record Dial : IJsonOnDeserialized, IXmlNode
                 XmlUtils.GetAttribute(element, "statusCallbackEvent"),
                 " "
             ),
-            Number = XmlUtils.ParseValue<string?>(XmlUtils.GetLeadingText(element)),
+            Text = XmlUtils.ParseValue<string?>(XmlUtils.GetLeadingText(element)),
             AdditionalAttributes = XmlUtils.GetAdditionalAttributes(
                 element,
                 "record",
@@ -104,7 +114,7 @@ public record Dial : IJsonOnDeserialized, IXmlNode
             "statusCallbackEvent",
             XmlUtils.JoinValues(StatusCallbackEvent, " ")
         );
-        XmlUtils.SetText(element, XmlUtils.ToXmlString(Number));
+        XmlUtils.SetText(element, XmlUtils.ToXmlString(Text));
         XmlUtils.AddContent(
             element,
             XmlUtils.OrderContent(Content),
@@ -142,7 +152,7 @@ public record Dial : IJsonOnDeserialized, IXmlNode
     /// Adds a <c>&lt;Number&gt;</c> child element after any content added so far and returns this instance for chaining.
     /// </summary>
     /// <param name="number">The <c>&lt;Number&gt;</c> element to add.</param>
-    public Dial AddNumber(Number number)
+    public Dial Number(Number number)
     {
         Numbers = XmlUtils.Append<Number>(Numbers, number);
         return this;
@@ -151,9 +161,9 @@ public record Dial : IJsonOnDeserialized, IXmlNode
     /// <summary>
     /// Adds a <c>&lt;Number&gt;</c> child element built from the given values and returns this instance for chaining.
     /// </summary>
-    public Dial AddNumber(string? phoneNumber = null, string? sendDigits = null)
+    public Dial Number(string? phoneNumber = null, string? sendDigits = null)
     {
-        return AddNumber(
+        return Number(
             new global::SeedApi.Number { PhoneNumber = phoneNumber, SendDigits = sendDigits }
         );
     }
