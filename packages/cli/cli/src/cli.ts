@@ -2276,7 +2276,8 @@ function addDocsExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                 .option("output", {
                     type: "string",
                     default: "docs-export",
-                    description: "Folder to write the export into"
+                    description:
+                        "Folder to write the export into. Emptied first (except .git); must not contain the current folder"
                 })
                 .option("instance", {
                     type: "string",

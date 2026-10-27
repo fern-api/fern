@@ -1,8 +1,8 @@
-import { mkdtemp, readFile, rm } from "node:fs/promises";
+import { mkdir, mkdtemp, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { keepsFile, parseInstanceUrl, writeExport } from "../exportDocs.js";
+import { isSafeOutputDir, keepsFile, parseInstanceUrl, writeExport } from "../exportDocs.js";
 import type { ExportSource } from "../exportSources.js";
 
 function fakeSource(batches: Record<string, string>[]): ExportSource & { finished: boolean } {
@@ -63,9 +63,40 @@ describe("writeExport", () => {
         expect(source.finished).toBe(true);
     });
 
+    it("replaces a previous export but keeps .git", async () => {
+        await mkdir(path.join(outputDir, ".git"));
+        await writeFile(path.join(outputDir, ".git", "HEAD"), "ref");
+        await writeFile(path.join(outputDir, "deleted-page.html"), "stale");
+        await writeExport({ source: fakeSource([{ "index.md": "# Home" }]), format: "md", outputDir });
+        expect((await readdir(outputDir)).sort()).toEqual([".git", "index.md"]);
+        expect(await readFile(path.join(outputDir, ".git", "HEAD"), "utf8")).toBe("ref");
+    });
+
+    it("keeps a previous export when the source fails before its first batch", async () => {
+        await writeFile(path.join(outputDir, "index.html"), "previous");
+        const failing: ExportSource = {
+            // biome-ignore lint/correctness/useYield: fails before yielding on purpose
+            async *batches() {
+                throw new Error("network down");
+            }
+        };
+        await expect(writeExport({ source: failing, format: "html", outputDir })).rejects.toThrow("network down");
+        expect(await readFile(path.join(outputDir, "index.html"), "utf8")).toBe("previous");
+    });
+
     it("refuses paths that escape the output folder", async () => {
         const source = fakeSource([{ "../escape.html": "x" }]);
         await expect(writeExport({ source, format: "html", outputDir })).rejects.toThrow(/outside the output folder/);
         expect(source.finished).toBe(true);
+    });
+});
+
+describe("isSafeOutputDir", () => {
+    it("refuses the current folder and its parents", () => {
+        expect(isSafeOutputDir("docs-export", "/repo")).toBe(true);
+        expect(isSafeOutputDir("../sibling", "/repo")).toBe(true);
+        expect(isSafeOutputDir(".", "/repo")).toBe(false);
+        expect(isSafeOutputDir("..", "/repo")).toBe(false);
+        expect(isSafeOutputDir("/", "/repo")).toBe(false);
     });
 });

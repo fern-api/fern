@@ -1,4 +1,4 @@
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, readdir, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { getFernDirectory } from "@fern-api/configuration-loader";
 import { delay, replaceEnvVariables, stripTrailingSlashes } from "@fern-api/core-utils";
@@ -20,7 +20,17 @@ export function keepsFile(filePath: string, format: DocsExportFormat): boolean {
     return format === "html" || filePath.endsWith(".md") || path.posix.basename(filePath) === "llms.txt";
 }
 
-/** Writes every kept file of `source` under `outputDir`, keeping site-relative paths. Returns the count written. */
+/** The output folder is wiped on each run, so it must not hold the folder the command runs from. */
+export function isSafeOutputDir(outputDir: string, cwd: string): boolean {
+    const relative = path.relative(path.resolve(cwd, outputDir), cwd);
+    return relative.startsWith("..") || path.isAbsolute(relative);
+}
+
+/**
+ * Writes every kept file of `source` under `outputDir`, keeping site-relative paths. Like local
+ * generation, the folder is emptied first (except `.git`), but only once the first batch arrives,
+ * so a failed export leaves the previous one intact. Returns the count written.
+ */
 export async function writeExport({
     source,
     format,
@@ -34,7 +44,12 @@ export async function writeExport({
 }): Promise<number> {
     const root = path.resolve(outputDir);
     let written = 0;
+    let cleared = false;
     for await (const batch of source.batches()) {
+        if (!cleared) {
+            await emptyDir(root);
+            cleared = true;
+        }
         const kept = batch.filter((file) => keepsFile(file.path, format));
         await forEachConcurrently(kept, DOWNLOAD_CONCURRENCY, async (file) => {
             await writeFileUnder(root, file);
@@ -43,6 +58,15 @@ export async function writeExport({
         onProgress?.(written);
     }
     return written;
+}
+
+async function emptyDir(root: string): Promise<void> {
+    const entries = await readdir(root).catch(() => []);
+    await Promise.all(
+        entries
+            .filter((entry) => entry !== ".git")
+            .map((entry) => rm(path.join(root, entry), { recursive: true, force: true }))
+    );
 }
 
 async function writeFileUnder(root: string, file: ExportFile): Promise<void> {
@@ -105,6 +129,13 @@ export async function exportDocs({
     selfHostedUrl: string | undefined;
     adminToken: string | undefined;
 }): Promise<void> {
+    if (!isSafeOutputDir(output, process.cwd())) {
+        return cliContext.failAndThrow(
+            `--output ${output} contains the current folder. Each export empties the output folder; choose a new one.`,
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
+    }
     if (selfHostedUrl != null && adminToken == null) {
         return cliContext.failAndThrow("--admin-token is required with --url.", undefined, {
             code: CliError.Code.ConfigError
