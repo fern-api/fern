@@ -114,6 +114,7 @@ export class XmlObjectGenerator<Context extends BaseContext> {
     private readonly enableForwardCompatibleEnums: boolean;
     private readonly getPropertyKey: (property: FernIr.ObjectProperty) => string;
     private readonly getTypeForObjectProperty: (context: Context, property: FernIr.ObjectProperty) => TypeReferenceNode;
+    private readonly resolvedBuilderNames = new WeakMap<XmlProperty[], ResolvedBuilderNames>();
 
     constructor(init: XmlObjectGenerator.Init<Context>) {
         this.typeName = init.typeName;
@@ -270,6 +271,16 @@ export class XmlObjectGenerator<Context extends BaseContext> {
      * collision keeps the setter and prefixes the child builder with `add`.
      */
     private resolveBuilderNames(context: Context, properties: XmlProperty[]): ResolvedBuilderNames {
+        const cached = this.resolvedBuilderNames.get(properties);
+        if (cached != null) {
+            return cached;
+        }
+        const resolved = this.computeBuilderNames(context, properties);
+        this.resolvedBuilderNames.set(properties, resolved);
+        return resolved;
+    }
+
+    private computeBuilderNames(context: Context, properties: XmlProperty[]): ResolvedBuilderNames {
         const elementProperties = properties.filter((property) => property.childTypes.length > 0);
         const textProperty = properties.find((property) => property.kind === "TEXT");
         const legacyChildNames = new Set<string>();
