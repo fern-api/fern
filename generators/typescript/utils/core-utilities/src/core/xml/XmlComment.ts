@@ -1,4 +1,4 @@
-import type { XmlSerializable } from "./serialize";
+import { stripInvalidXmlChars, type XmlSerializable } from "./serialize";
 
 /** An XML comment (`<!--text-->`), kept in an element's ordered content like a text segment or child element. */
 export class XmlComment implements XmlSerializable {
@@ -18,7 +18,7 @@ export class XmlComment implements XmlSerializable {
  * and either would otherwise end the comment early and turn the rest into markup.
  */
 export function xmlCommentText(text: string): string {
-    const safe = text.replace(/-(?=-)/g, "- ");
+    const safe = stripInvalidXmlChars(text).replace(/-(?=-)/g, "- ");
     return safe.endsWith("-") ? `${safe} ` : safe;
 }
 

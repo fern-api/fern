@@ -7,7 +7,8 @@ enum Example1 {
 
         _ = try await client.submitFormData(request: .init(
             username: "username",
-            email: "email"
+            email: "email",
+            content: "Content"
         ))
     }
 }

@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    With `noSerdeLayer: false`, JSON-style parts of a multipart request are now serialized before they are
+    encoded, as JSON request bodies are. A part whose type is or contains a named type was sent as `toJson(value)`
+    with the SDK's camelCase property names instead of the wire names.
+  type: fix

@@ -28,11 +28,13 @@ module Seed
       # @return [String]
       def send_optional_body(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.normalize_keys(params)
+        body_value = params.key?(:request) || params.empty? ? params[:request] : params
+
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "send-optional-body",
-          body: params[:request],
+          body: body_value,
           request_options: request_options
         )
         begin
@@ -104,7 +106,7 @@ module Seed
       #     action_id: "actionId",
       #     id: "id",
       #     request: {
-      #       update_draft: true
+      #       updateDraft: true
       #     }
       #   )
       #

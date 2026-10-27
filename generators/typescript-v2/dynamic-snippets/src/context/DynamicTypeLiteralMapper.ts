@@ -308,7 +308,7 @@ export class DynamicTypeLiteralMapper {
             );
         }
         const discriminantProperty = {
-            name: this.context.getPropertyName(discriminatedUnion.discriminant.name),
+            name: this.context.getPropertyNameFromNameAndWireValue(discriminatedUnion.discriminant),
             value: ts.TypeLiteral.string(unionVariant.discriminantValue.wireValue)
         };
         return ts.TypeLiteral.object({
@@ -372,7 +372,7 @@ export class DynamicTypeLiteralMapper {
                     return [
                         ...baseFields,
                         {
-                            name: this.context.getPropertyName(unionVariant.discriminantValue.name),
+                            name: this.context.getPropertyNameFromNameAndWireValue(unionVariant.discriminantValue),
                             value: this.convert({
                                 typeReference: unionVariant.typeReference,
                                 value: record[unionVariant.discriminantValue.wireValue],
@@ -439,7 +439,7 @@ export class DynamicTypeLiteralMapper {
             this.context.errors.scope(property.name.wireValue);
             try {
                 return {
-                    name: this.context.getPropertyName(property.name.name),
+                    name: this.context.getPropertyNameFromNameAndWireValue(property.name),
                     value: this.convert({ ...property, convertOpts })
                 };
             } finally {
@@ -466,7 +466,7 @@ export class DynamicTypeLiteralMapper {
                 this.context.errors.scope(property.name.wireValue);
                 try {
                     return {
-                        name: this.context.getPropertyName(property.name.name),
+                        name: this.context.getPropertyNameFromNameAndWireValue(property.name),
                         value: this.convert({ ...property, convertOpts })
                     };
                 } finally {

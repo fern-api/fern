@@ -43,6 +43,7 @@ client = SeedApi(
 client.submit_form_data(
     username="johndoe",
     email="john@example.com",
+    content="{\"key\":\"value\"}",
 )
 ```
 
@@ -64,6 +65,7 @@ async def main() -> None:
     await client.submit_form_data(
         username="johndoe",
         email="john@example.com",
+        content="{\"key\":\"value\"}",
     )
 
 

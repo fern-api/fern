@@ -58,6 +58,7 @@ async fn main() {
             &PostSubmitRequest {
                 username: "johndoe".to_string(),
                 email: "john@example.com".to_string(),
+                content: "{\"key\":\"value\"}".to_string(),
             },
             None,
         )

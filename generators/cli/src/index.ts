@@ -14,6 +14,7 @@ export {
     type FernCliCustomConfig,
     type FernCliDistributionConfig,
     type FernCliGitHubAppConfig,
+    type FernCliGitHubAttestations,
     type FernCliHomebrewConfig,
     type FernCliScoopConfig,
     getCustomConfig,

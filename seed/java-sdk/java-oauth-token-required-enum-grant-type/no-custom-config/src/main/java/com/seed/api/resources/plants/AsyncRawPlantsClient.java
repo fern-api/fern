@@ -6,6 +6,7 @@ package com.seed.api.resources.plants;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.ObjectMappers;
+import com.seed.api.core.PathSegments;
 import com.seed.api.core.RequestOptions;
 import com.seed.api.core.RetryInterceptor;
 import com.seed.api.core.SeedApiApiException;
@@ -49,7 +50,7 @@ public class AsyncRawPlantsClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("plants")
-                .addPathSegment(plantId);
+                .addPathSegment(PathSegments.validate(plantId));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);

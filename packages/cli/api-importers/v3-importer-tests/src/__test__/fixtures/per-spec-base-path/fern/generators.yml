@@ -1,0 +1,9 @@
+api:
+  specs:
+    - openapi: ../plants.yml
+      settings:
+        respect-per-spec-base-path: true
+    - openapi: ../auth.yml
+      namespace: auth
+      settings:
+        respect-per-spec-base-path: true

@@ -2,6 +2,7 @@ import { assertNever } from "@fern-api/core-utils";
 import type { Dependency, SdkConfigIrV1 } from "@postman/sdk-config";
 
 import type { MapperRule, RuleContext } from "../types.js";
+import { GITHUB_ATTESTATIONS_MIN_GENERATOR_VERSION, supportsGithubAttestations } from "../versions.js";
 import { CLI_GENERATION_PATHS, cliGenerationConfig, DISTRIBUTION_PATHS, distributionConfig } from "./cliConfig.js";
 import { relativeToOutput } from "./output.js";
 
@@ -101,6 +102,7 @@ function generatorConfig(context: RuleContext, ir: SdkConfigIrV1): Record<string
     const distribution = distributionConfig(ir.output);
     if (distribution != null) {
         config.distribution = distribution;
+        warnIfAttestationsIgnored(context, distribution.githubAttestations);
     }
     const identity = packageIdentity(context, ir);
     if (Object.keys(identity).length > 0) {
@@ -119,6 +121,20 @@ function generatorConfig(context: RuleContext, ir: SdkConfigIrV1): Record<string
         );
     }
     return config;
+}
+
+/** Generators older than the attestations switch always attest, which matches only `githubAttestations: true`. */
+function warnIfAttestationsIgnored(context: RuleContext, githubAttestations: unknown): void {
+    const version = context.input.generatorVersion;
+    if (githubAttestations == null || githubAttestations === true || supportsGithubAttestations(version)) {
+        return;
+    }
+    context.warn(
+        "output.distribution.githubAttestations",
+        "CLI_TARGET_ATTESTATIONS_VERSION",
+        `fern-cli-generator ${version} ignores githubAttestations and always attests build provenance, so release builds on a private repository without GitHub Enterprise Cloud fail.`,
+        `Set target.generatorVersion to ${GITHUB_ATTESTATIONS_MIN_GENERATOR_VERSION} or later.`
+    );
 }
 
 function packageIdentity(context: RuleContext, ir: SdkConfigIrV1): Record<string, unknown> {

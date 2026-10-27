@@ -1,51 +1,44 @@
+import { FERN_GENERATOR_LATEST_VERSION } from "@fern-api/remote-workspace-runner";
 import semver from "semver";
 
 import type { CliTargetDiagnostic } from "./types.js";
 
 /**
- * fern-cli-generator version the translation uses when sdk-config.yml pins none (see README.md). It is
- * the newest version with a Fern pool in sdk-gen-api's production index, so it generates on both
- * remote routes. Bump it only together with a round-trip run (roundTrip.expected.json records it).
+ * First fern-cli-generator version that reads `distribution.githubAttestations` (fern-api/fern#18300). Older
+ * versions ignore the key and always attest build provenance, which fails on most private repositories.
  */
-export const DEFAULT_GENERATOR_VERSION = "0.49.0";
+export const GITHUB_ATTESTATIONS_MIN_GENERATOR_VERSION = "0.54.3";
 
-/** Versions with a Fern pool in sdk-gen-api's production index; others fail on that route. */
-export const POOLED_GENERATOR_VERSIONS: readonly string[] = ["0.49.0"];
+/** Whether the generator version honors `distribution.githubAttestations`; `latest` and unparsable versions count as yes. */
+export function supportsGithubAttestations(version: string): boolean {
+    return semver.valid(version) == null || semver.gte(version, GITHUB_ATTESTATIONS_MIN_GENERATOR_VERSION);
+}
 
-/** The cli target's pinned generator version, or the default. */
+/**
+ * The cli target's pinned generator version, or `latest` when sdk-config.yml pins none. `latest` is resolved
+ * the way an unpinned generators.yml generator is: sdk-gen-api's version discovery picks the newest version it
+ * can run, and Fiddle and `--local` use the newest published version.
+ */
 export function resolveGeneratorVersion({ pinned }: { pinned: string | undefined }): {
     version: string;
     diagnostics: CliTargetDiagnostic[];
 } {
-    const version = pinned ?? DEFAULT_GENERATOR_VERSION;
-    const path = "target.generatorVersion";
-    if (semver.valid(version) !== version) {
+    if (pinned == null) {
+        return { version: FERN_GENERATOR_LATEST_VERSION, diagnostics: [] };
+    }
+    if (semver.valid(pinned) !== pinned) {
         return {
-            version,
+            version: pinned,
             diagnostics: [
                 {
                     severity: "error",
-                    path,
+                    path: "target.generatorVersion",
                     code: "CLI_TARGET_GENERATOR_VERSION",
-                    message: `'${version}' is not an exact fern-cli-generator version.`,
-                    action: `Use an exact version such as ${DEFAULT_GENERATOR_VERSION}; \`latest\` resolves differently on each remote route.`
+                    message: `'${pinned}' is not an exact fern-cli-generator version.`,
+                    action: "Use an exact version, or remove target.generatorVersion to use the newest version the generation route can run."
                 }
             ]
         };
     }
-    if (!POOLED_GENERATOR_VERSIONS.includes(version)) {
-        return {
-            version,
-            diagnostics: [
-                {
-                    severity: "warning",
-                    path,
-                    code: "CLI_TARGET_UNPOOLED_VERSION",
-                    message: `fern-cli-generator ${version} has no Fern pool in sdk-gen-api, so FERN_USE_SDK_GEN_API=true generation fails; Fiddle may still generate it.`,
-                    action: `Use ${POOLED_GENERATOR_VERSIONS.join(" or ")} for the sdk-gen-api route.`
-                }
-            ]
-        };
-    }
-    return { version, diagnostics: [] };
+    return { version: pinned, diagnostics: [] };
 }

@@ -9,6 +9,7 @@ import {
     originalGeneratorsYml,
     prepareWorkspace,
     ROUND_TRIP_FIXTURES,
+    ROUND_TRIP_GENERATOR_VERSION,
     roundTripFixtures,
     runBuiltFern
 } from "./harness.js";
@@ -43,6 +44,18 @@ function run(args: string[], fern: string, timeoutMs?: number): string {
     return result.output;
 }
 
+/** Unpinned, the cli target generates at `latest`; pin it to the control's version so only the translation differs. */
+async function pinCliGeneratorVersion(path: string): Promise<void> {
+    const sdkConfig = record(YAML.parse(await readFile(path, "utf8")));
+    const targets = Array.isArray(sdkConfig.targets) ? sdkConfig.targets : [];
+    const pinned = targets.map((target: unknown) =>
+        record(target).language === "cli"
+            ? { ...record(target), generatorVersion: ROUND_TRIP_GENERATOR_VERSION }
+            : target
+    );
+    await writeFile(path, YAML.stringify({ ...sdkConfig, targets: pinned }));
+}
+
 function differingFiles(left: string, right: string): string[] {
     const result = spawnSync("diff", ["-rq", "--no-dereference", left, right], { encoding: "utf8" });
     return result.stdout.split("\n").filter((line) => line.length > 0);
@@ -70,6 +83,7 @@ describe.runIf(process.env.CLI_TARGET_ROUNDTRIP === "1")("round trip (Docker)", 
 
                 const migrated = await prepareWorkspace(fixture, join(folder, "migrated"));
                 run(["sdk", "migrate", "--group", "cli"], migrated);
+                await pinCliGeneratorVersion(join(migrated, "sdk-config.yml"));
                 const sdkConfigBefore = await readFile(join(migrated, "sdk-config.yml"), "utf8");
                 run(["generate", "--local", "--target", "cli", "--force"], migrated);
                 expect(await readFile(join(migrated, "sdk-config.yml"), "utf8")).toBe(sdkConfigBefore);

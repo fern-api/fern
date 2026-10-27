@@ -82,6 +82,11 @@ export interface AutoVersionStepConfig {
     fernToken?: string;
     /** Override for the FAI service base URL. Defaults to https://fai.buildwithfern.com. */
     faiBaseUrl?: string;
+    /**
+     * Fern organization that the FAI call is for, sent as `X-Fern-Org-Id`. A caller that uses a
+     * service token instead of the customer's token sets it, so FAI records usage under the customer.
+     */
+    faiOrgId?: string;
     /** Spec repository commit message included as additional AI context. */
     specCommitMessage?: string;
     /** When true, strips "🌿 Generated with Fern" trailers from commit messages (whitelabel customers). */
@@ -153,7 +158,7 @@ export interface GithubStepConfig {
     automationMode?: boolean;
     /** When true: skip opening a PR / pushing when the generated output has no diff from the base branch. */
     skipIfNoDiff?: boolean;
-    /** Enable GitHub automerge on the PR (only effective when automationMode && !hasBreakingChanges) */
+    /** Enable GitHub automerge on the PR (skipped when hasBreakingChanges or version analysis is unavailable) */
     autoMerge?: boolean;
     /** Pre-computed: version bump is MAJOR (from --version AUTO AI analysis) */
     hasBreakingChanges?: boolean;

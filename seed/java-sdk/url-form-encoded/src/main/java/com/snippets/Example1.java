@@ -8,7 +8,10 @@ public class Example1 {
         SeedApiClient client =
                 SeedApiClient.builder().url("https://api.fern.com").build();
 
-        client.submitFormData(
-                PostSubmitRequest.builder().username("username").email("email").build());
+        client.submitFormData(PostSubmitRequest.builder()
+                .username("username")
+                .email("email")
+                .content("Content")
+                .build());
     }
 }

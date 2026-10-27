@@ -226,6 +226,7 @@ fixtures:
     - outputFolder: serde
       customConfig:
         noSerdeLayer: false
+        includeMultipartPartContentType: true
     - outputFolder: wrapper
       customConfig:
         streamType: wrapper

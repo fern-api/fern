@@ -219,8 +219,7 @@ export class DynamicSnippetsConverter {
                     bytes: () => DynamicSnippets.Response.bytes(),
                     _other: () => DynamicSnippets.Response.json()
                 }) ?? DynamicSnippets.Response.json(),
-            // Defaults to 'json' because response is required (and it was hardcoded to that previously).
-
+            hasResponseBody: endpoint.response?.body != null,
             examples: !disableExamples ? this.getEndpointSnippetRequests({ endpoint, location }) : undefined
         };
     }
@@ -393,9 +392,15 @@ export class DynamicSnippetsConverter {
                 : { wireValue: key.wireValue, name: this.fullCasingsGenerator.generateName(key.name) };
         switch (fileProperty.type) {
             case "file":
-                return DynamicSnippets.FileUploadRequestBodyProperty.file(nameAndWireValue);
+                return DynamicSnippets.FileUploadRequestBodyProperty.file({
+                    ...nameAndWireValue,
+                    isOptional: fileProperty.isOptional
+                });
             case "fileArray":
-                return DynamicSnippets.FileUploadRequestBodyProperty.fileArray(nameAndWireValue);
+                return DynamicSnippets.FileUploadRequestBodyProperty.fileArray({
+                    ...nameAndWireValue,
+                    isOptional: fileProperty.isOptional
+                });
             default:
                 assertNever(fileProperty);
         }

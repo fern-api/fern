@@ -251,6 +251,63 @@ describe("generateCpp()", () => {
         expect(readdirSync(join(tmpDir, "generated"))).toEqual(["c"]);
     });
 
+    it("drops leading underscores from namespace directories", () => {
+        const ir = makeIr(
+            makeNamespace({
+                name: "__detail",
+                path: "__detail",
+                classes: [makeClass({ name: "Impl", path: "__detail::Impl" })]
+            })
+        );
+
+        generateCpp({ ir, outputDir: tmpDir, slug: "reference/lib" });
+
+        const relativePaths = collectMdxFiles(tmpDir).map((f) => f.substring(tmpDir.length + 1));
+        expect(relativePaths.some((f) => f.startsWith("detail/"))).toBe(true);
+        expect(relativePaths.some((f) => f.split("/").some((seg) => seg.startsWith("_")))).toBe(false);
+    });
+
+    it("gives sibling namespaces that sanitize to the same name distinct directories", () => {
+        const ir = makeIr(
+            makeNamespace({
+                namespaces: [
+                    makeNamespace({
+                        name: "lib",
+                        path: "lib",
+                        namespaces: [
+                            makeNamespace({
+                                name: "__detail",
+                                path: "lib::__detail",
+                                classes: [makeClass({ name: "Hidden", path: "lib::__detail::Hidden" })]
+                            }),
+                            makeNamespace({
+                                name: "detail",
+                                path: "lib::detail",
+                                classes: [makeClass({ name: "Shown", path: "lib::detail::Shown" })]
+                            })
+                        ]
+                    })
+                ]
+            })
+        );
+
+        generateCpp({ ir, outputDir: tmpDir, slug: "reference/lib" });
+
+        const relativePaths = collectMdxFiles(tmpDir).map((f) => f.substring(tmpDir.length + 1));
+        expect(relativePaths).toContain("detail-2/classes/Hidden.mdx");
+        expect(relativePaths).toContain("detail/classes/Shown.mdx");
+        expect(relativePaths).toContain("detail/index.mdx");
+        expect(relativePaths).toContain("detail-2/index.mdx");
+        expect(relativePaths.some((f) => f.split("/").some((seg) => seg.startsWith("_")))).toBe(false);
+
+        const detail2Index = readFileSync(join(tmpDir, "detail-2", "index.mdx"), "utf8");
+        expect(detail2Index).toContain("lib::__detail");
+        const nsList = readFileSync(join(tmpDir, "namespaces", "index.mdx"), "utf8");
+        expect(nsList).toContain("detail-2");
+        expect(nsList).toContain("lib::__detail");
+        expect(nsList).toContain("lib::detail");
+    });
+
     it("replaces the previous output tree so pages for removed entities do not linger", () => {
         const outputDir = join(tmpDir, "generated", "c");
         const irBefore = makeIr(
@@ -529,12 +586,93 @@ describe("generateCpp()", () => {
 
         const relativePaths = collectMdxFiles(tmpDir).map((f) => f.substring(tmpDir.length + 1));
         expect(relativePaths).toContain("macros/ALWAYS_INLINE.mdx");
-        expect(relativePaths).toContain("macros/__always_inline-2.mdx");
+        expect(relativePaths).toContain("macros/always_inline-2.mdx");
         expect(relativePaths).not.toContain("macros/__always_inline.mdx");
 
         const macroIndex = readFileSync(join(tmpDir, "macros/index.mdx"), "utf-8");
         expect(macroIndex).toContain("- [`ALWAYS_INLINE`](macros/alwaysinline)");
         expect(macroIndex).toContain("- [`__always_inline`](macros/alwaysinline-2)");
+    });
+
+    it("gives public symbols the plain URL ahead of _-prefixed ones that sanitize to the same filename", () => {
+        const internalDup = makeFunction({ name: "__s_dup", path: "__s_dup" });
+        const publicDup = makeFunction({ name: "s_dup", path: "s_dup" });
+        const upperCase = makeMacro({ name: "S_CASE", path: "S_CASE" });
+        const lowerCase = makeMacro({ name: "s_case", path: "s_case" });
+        const sab = makeFunction({ name: "s_a_b", path: "s_a_b" });
+        const saB = makeFunction({ name: "sa_b", path: "sa_b" });
+        // Internal name first in source order: it must still lose the plain URL.
+        const ir = makeIr(
+            makeNamespace({ functions: [internalDup, publicDup, saB, sab], macros: [lowerCase, upperCase] }),
+            {
+                packageName: "lib"
+            }
+        );
+
+        generateCpp({ ir, outputDir: tmpDir, slug: "reference/lib" });
+
+        const relativePaths = collectMdxFiles(tmpDir).map((f) => f.substring(tmpDir.length + 1));
+        expect(relativePaths).toContain("functions/s_dup.mdx");
+        expect(relativePaths).toContain("functions/s_dup-2.mdx");
+        expect(readFileSync(join(tmpDir, "functions/s_dup.mdx"), "utf-8")).toContain("title: s_dup");
+        expect(readFileSync(join(tmpDir, "functions/s_dup-2.mdx"), "utf-8")).toContain("title: __s_dup");
+        expect(relativePaths).toContain("macros/S_CASE.mdx");
+        expect(relativePaths).toContain("macros/s_case-2.mdx");
+        expect(relativePaths).toContain("functions/s_a_b.mdx");
+        expect(relativePaths).toContain("functions/sa_b-2.mdx");
+
+        const fnIndex = readFileSync(join(tmpDir, "functions/index.mdx"), "utf-8");
+        expect(fnIndex).toContain("- [`s_dup`](functions/sdup)");
+        expect(fnIndex).toContain("- [`__s_dup`](functions/sdup-2)");
+    });
+
+    it("slugStyle: hyphenated keeps word boundaries in filenames and URLs", () => {
+        const fn = makeFunction({ name: "doca_pcc_dev_get_port_counter_id", path: "doca_pcc_dev_get_port_counter_id" });
+        const sab = makeFunction({ name: "s_a_b", path: "s_a_b" });
+        const saB = makeFunction({ name: "sa_b", path: "sa_b" });
+        const ir = makeIr(makeNamespace({ functions: [fn, sab, saB] }), { packageName: "lib" });
+
+        generateCpp({ ir, outputDir: tmpDir, slug: "reference/lib", slugStyle: "hyphenated" });
+
+        const relativePaths = collectMdxFiles(tmpDir).map((f) => f.substring(tmpDir.length + 1));
+        expect(relativePaths).toContain("functions/doca-pcc-dev-get-port-counter-id.mdx");
+        expect(relativePaths).toContain("functions/s-a-b.mdx");
+        expect(relativePaths).toContain("functions/sa-b.mdx");
+        const fnIndex = readFileSync(join(tmpDir, "functions/index.mdx"), "utf-8");
+        expect(fnIndex).toContain("](functions/doca-pcc-dev-get-port-counter-id)");
+        expect(fnIndex).toContain("](functions/s-a-b)");
+        expect(fnIndex).toContain("](functions/sa-b)");
+    });
+
+    it("slugStyle: hyphenated still keeps colliding public/internal symbols on distinct pages", () => {
+        const internal = makeFunction({ name: "__s_dup", path: "__s_dup" });
+        const pub = makeFunction({ name: "s_dup", path: "s_dup" });
+        const ir = makeIr(makeNamespace({ functions: [internal, pub] }), { packageName: "lib" });
+
+        generateCpp({ ir, outputDir: tmpDir, slug: "reference/lib", slugStyle: "hyphenated" });
+
+        const relativePaths = collectMdxFiles(tmpDir).map((f) => f.substring(tmpDir.length + 1));
+        expect(relativePaths).toContain("functions/s-dup.mdx");
+        expect(relativePaths).toContain("functions/s-dup-2.mdx");
+        expect(readFileSync(join(tmpDir, "functions/s-dup.mdx"), "utf-8")).toContain("title: s_dup\n");
+        expect(readFileSync(join(tmpDir, "functions/s-dup-2.mdx"), "utf-8")).toContain("title: __s_dup\n");
+    });
+
+    it("drops leading underscores from page and group filenames so folder navigation includes them", () => {
+        const be16 = makeMacro({ name: "__be16", path: "__be16" });
+        const ir = makeIr(makeNamespace({ macros: [be16] }), { packageName: "lib" }, [
+            makeGroup({ id: "group____internal", name: "__internal", title: "Internal", macros: [be16] })
+        ]);
+
+        generateCpp({ ir, outputDir: tmpDir, slug: "reference/lib" });
+
+        const relativePaths = collectMdxFiles(tmpDir).map((f) => f.substring(tmpDir.length + 1));
+        expect(relativePaths).toContain("macros/be16.mdx");
+        expect(relativePaths.some((f) => f.startsWith("groups/internal/"))).toBe(true);
+        expect(relativePaths.some((f) => f.split("/").some((seg) => seg.startsWith("_")))).toBe(false);
+
+        const macroIndex = readFileSync(join(tmpDir, "macros/index.mdx"), "utf-8");
+        expect(macroIndex).toContain("- [`__be16`](macros/be16)");
     });
 
     it("gives slug-equivalent group names distinct folders and URLs", () => {

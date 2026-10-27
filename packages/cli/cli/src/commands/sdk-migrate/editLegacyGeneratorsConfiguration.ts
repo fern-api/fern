@@ -1,7 +1,7 @@
 import { generatorsYml } from "@fern-api/configuration-loader";
+import { isRecord } from "@fern-api/core-utils";
 import { CliError } from "@fern-api/task-context";
 import YAML, { isMap, isScalar, isSeq, type Pair, type YAMLMap } from "yaml";
-
 import type { MigrationGroupSelection } from "./selectMigrationTarget.js";
 
 interface Replacement {
@@ -302,14 +302,11 @@ function assertActiveReferences(value: unknown): void {
         throw configError("The migrated legacy generators configuration must remain a YAML map.");
     }
     const root = value as Record<string, unknown>;
-    const groups =
-        root.groups != null && typeof root.groups === "object" && !Array.isArray(root.groups)
-            ? new Set(Object.keys(root.groups))
-            : new Set<string>();
+    const groups = isRecord(root.groups) ? new Set(Object.keys(root.groups)) : new Set<string>();
     if (typeof root["default-group"] === "string" && !groups.has(root["default-group"])) {
         throw configError(`Active default-group '${root["default-group"]}' no longer references an active group.`);
     }
-    if (root.aliases != null && typeof root.aliases === "object" && !Array.isArray(root.aliases)) {
+    if (isRecord(root.aliases)) {
         for (const [alias, values] of Object.entries(root.aliases)) {
             if (!Array.isArray(values)) {
                 throw configError(`Active alias '${alias}' is not a list of groups.`);

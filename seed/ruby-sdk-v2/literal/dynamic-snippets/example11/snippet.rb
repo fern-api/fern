@@ -10,14 +10,14 @@ client.reference.send_(
   context: "You're super wise",
   maybe_context: "You're super wise",
   container_object: {
-    nested_objects: [{
+    nestedObjects: [{
       literal1: "literal1",
       literal2: "literal2",
-      str_prop: "strProp"
+      strProp: "strProp"
     }, {
       literal1: "literal1",
       literal2: "literal2",
-      str_prop: "strProp"
+      strProp: "strProp"
     }]
   }
 )

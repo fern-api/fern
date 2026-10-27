@@ -1,5 +1,5 @@
 import { docsYml } from "@fern-api/configuration";
-import { assertNever, isPlainObject, sanitizeNullValues } from "@fern-api/core-utils";
+import { assertNever, errorMessageOrString, isPlainObject, sanitizeNullValues } from "@fern-api/core-utils";
 import { FdrAPI as CjsFdrSdk } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, dirname, doesPathExist, listFiles, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { CliError, TaskContext } from "@fern-api/task-context";
@@ -15,6 +15,7 @@ import { materializeGitRef } from "./git-versions/materializeGitRef.js";
 import { type RefVersionScope, resolveRefContentRoot } from "./git-versions/resolveRefContentRoot.js";
 import { buildNavigationForDirectory, getFrontmatterMetadata, nameToSlug, nameToTitle } from "./navigationUtils.js";
 import { resolveRedirects } from "./resolveRedirects.js";
+import { tabbedNavigationItemHasLayout, tabbedNavigationItemHasVariants } from "./tabbedNavigationItemGuards.js";
 
 function shouldProcessIconPath(iconPath?: string): boolean {
     if (!iconPath || iconPath.startsWith("<")) {
@@ -583,7 +584,8 @@ function convertThemeConfig(
         footerNav: theme.footerNav ?? "default",
         languageSwitcher: theme.languageSwitcher ?? "default",
         productSwitcher: theme.productSwitcher ?? "default",
-        siteSwitcher: theme.siteSwitcher
+        siteSwitcher: theme.siteSwitcher,
+        codeBlocks: theme.codeBlocks
     };
 }
 
@@ -606,13 +608,13 @@ function convertSettingsConfig(
     // `search.default-filter-by-current-product`. Either one enables the behavior.
     const defaultFilterByCurrentProduct =
         (settings.search?.defaultFilterByCurrentProduct ?? false) || (settings.defaultSearchFilters ?? false);
-    const prioritizeCurrentProduct = settings.search?.prioritizeCurrentProduct ?? false;
 
     return {
         darkModeCode: settings.darkModeCode ?? false,
         defaultSearchFilters: defaultFilterByCurrentProduct,
         search: {
-            prioritizeCurrentProduct,
+            // Left undefined when unset so the docs renderer applies its default.
+            prioritizeCurrentProduct: settings.search?.prioritizeCurrentProduct,
             defaultFilterByCurrentProduct,
             externalSitemaps: undefined
         },
@@ -627,7 +629,8 @@ function convertSettingsConfig(
         disableAnalytics: settings.disableAnalytics ?? false,
         websocketOneofDisplay: settings.websocketOneofDisplay ?? undefined,
         embedding: settings.embedding,
-        showHeadersInExamples: settings.showHeadersInExamples ?? false
+        showHeadersInExamples: settings.showHeadersInExamples ?? false,
+        requireAnalyticsConsent: settings.requireAnalyticsConsent ?? false
     };
 }
 
@@ -667,11 +670,9 @@ async function parseContext7File({
     try {
         JSON.parse(contents);
     } catch (error) {
-        context.failAndThrow(
-            `Invalid JSON in Context7 config file: ${rawPath}`,
-            error instanceof Error ? error.message : String(error),
-            { code: CliError.Code.ConfigError }
-        );
+        context.failAndThrow(`Invalid JSON in Context7 config file: ${rawPath}`, errorMessageOrString(error), {
+            code: CliError.Code.ConfigError
+        });
     }
 
     return absolutePath;
@@ -836,6 +837,7 @@ async function loadWorkingTreeVersion({
         availability: version.availability,
         slug: version.slug,
         hidden: version.hidden,
+        default: version.default,
         viewers: parseRoles(version.viewers),
         orphaned: version.orphaned,
         featureFlags: convertFeatureFlag(version.featureFlag),
@@ -877,6 +879,7 @@ async function loadRefVersion({
         availability: version.availability,
         slug: version.slug,
         hidden: version.hidden,
+        default: version.default,
         viewers: parseRoles(version.viewers),
         orphaned: version.orphaned,
         featureFlags: convertFeatureFlag(version.featureFlag),
@@ -889,6 +892,34 @@ async function loadRefVersion({
             libraries: parseLibrariesConfiguration(contentRoot.rawLibraries)
         }
     };
+}
+
+/**
+ * Validated against the raw `versions` list, before git-ref-backed versions are skipped, so
+ * `fern check` and `fern docs dev` enforce the same default as a full publish.
+ */
+function assertValidDefaultVersion(versions: docsYml.RawSchemas.VersionConfig[]): void {
+    const defaults = versions.filter((version) => version.default === true);
+    // Covered end to end by fern-platform's fern-dev-tests/tests/version-default-flag.spec.ts.
+    if (defaults.length > 1) {
+        throw new CliError({
+            message:
+                `Only one version can set 'default: true', but ${defaults.length} do: ` +
+                `${defaults.map((version) => `'${version.displayName}'`).join(", ")}. ` +
+                "Remove 'default: true' from all but one version.",
+            code: CliError.Code.ConfigError
+        });
+    }
+    // Without an explicit default, the first version is the default.
+    const defaultVersion = defaults[0] ?? versions[0];
+    if (defaultVersion?.hidden === true) {
+        throw new CliError({
+            message:
+                `The default version '${defaultVersion.displayName}' cannot be hidden. ` +
+                "Remove 'hidden: true' from it, or set 'default: true' on a version that is not hidden.",
+            code: CliError.Code.ConfigError
+        });
+    }
 }
 
 async function getVersionedNavigationConfiguration({
@@ -907,6 +938,7 @@ async function getVersionedNavigationConfiguration({
     folderTitleSource?: docsYml.RawSchemas.TitleSource;
     buildRefVersions?: boolean;
 }): Promise<docsYml.VersionedDocsNavigation> {
+    assertValidDefaultVersion(versions);
     const versionedNavbars: docsYml.VersionInfo[] = [];
     for (const version of versions) {
         const ref = getVersionContentRef(version);
@@ -1982,22 +2014,6 @@ function isTabbedNavigationConfig(
         // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         (navigationConfig[0] as docsYml.RawSchemas.TabbedNavigationItem).tab != null
     );
-}
-
-function tabbedNavigationItemHasLayout(
-    item: docsYml.RawSchemas.TabbedNavigationItem
-): item is docsYml.RawSchemas.TabbedNavigationItemWithLayout & {
-    layout: docsYml.RawSchemas.NavigationItem[];
-} {
-    return "layout" in item && Array.isArray(item.layout);
-}
-
-function tabbedNavigationItemHasVariants(
-    item: docsYml.RawSchemas.TabbedNavigationItem
-): item is docsYml.RawSchemas.TabbedNavigationItemWithVariants & {
-    variants: docsYml.RawSchemas.TabVariant[];
-} {
-    return "variants" in item && Array.isArray(item.variants);
 }
 
 function convertNavbarLinks(

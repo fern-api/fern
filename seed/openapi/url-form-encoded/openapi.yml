@@ -40,14 +40,21 @@ paths:
                   description: The user's email address
                   examples:
                     - john@example.com
+                Content:
+                  type: string
+                  description: A JSON document carried as a form field
+                  examples:
+                    - '{"key":"value"}'
               required:
                 - username
                 - email
+                - Content
             examples:
               Example1:
                 value:
                   username: johndoe
                   email: john@example.com
+                  Content: '{"key":"value"}'
   /token:
     post:
       operationId: get_token

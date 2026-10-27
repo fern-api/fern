@@ -54,6 +54,28 @@ exports[`XmlObjectGenerator > distinguishes nullable from optional and supports 
     toString(): string {
         return this.toXml();
     }
+
+    /**
+     * Appends a \`<break>\` child to the ordered content of this element and returns its builder, which is rendered when this element is serialized (the typed \`breaks\` property is not updated).
+     * @param fields initial \`<break>\` attributes and children
+     * @returns the \`Break.Builder\` appended to this element
+     */
+    addBreak(fields?: Partial<Break.Fields>): Break.Builder {
+        const builder = new Break.Builder(fields);
+        this.content.push(builder);
+        return builder;
+    }
+
+    /**
+     * Appends a \`<break>\` child to the ordered content of this element and returns its builder, which is rendered when this element is serialized (the typed \`pause\` property is not updated).
+     * @param fields initial \`<break>\` attributes and children
+     * @returns the \`Break.Builder\` appended to this element
+     */
+    addBreak2(fields?: Partial<Break.Fields>): Break.Builder {
+        const builder = new Break.Builder(fields);
+        this.content.push(builder);
+        return builder;
+    }
 }
 
 export namespace Collections {
@@ -111,6 +133,12 @@ export namespace Collections {
         pause(pause: Break | core.xml.XmlBuilder<Break> | null): this {
             this.content = core.xml.replaceXmlContent(this.content, this.elements.pause, pause);
             this.elements.pause = pause;
+            return this;
+        }
+
+        /** Sets the text content of this element (same as \`note\`). */
+        text(note: string | null | undefined): this {
+            this.fields.note = note;
             return this;
         }
 
@@ -194,7 +222,7 @@ export namespace Collections {
 "
 `;
 
-exports[`XmlObjectGenerator > generates a nested element with namespace, wrapped list and separator, using add-prefix on collisions 1`] = `
+exports[`XmlObjectGenerator > generates a nested element with namespace, wrapped list and separator; the child builder wins the text field's name 1`] = `
 "export class Dial implements core.xml.XmlSerializable {
     number?: string;
     status_callback_event?: string[];
@@ -273,7 +301,7 @@ export namespace Dial {
             return new Dial.Builder(Dial.fromXml(xml));
         }
 
-        number(number: string | undefined): this {
+        setNumber(number: string | undefined): this {
             this.fields.number = number;
             return this;
         }
@@ -288,13 +316,19 @@ export namespace Dial {
             return this;
         }
 
+        /** Sets the text content of this element (same as \`setNumber\`). */
+        text(number: string | undefined): this {
+            this.fields.number = number;
+            return this;
+        }
+
         /**
          * Adds a \`<Number>\` child after any content added so far and returns its builder.
-         * @param fields initial \`<Number>\` attributes and children
+         * @param fields the \`<Number>\` text content, or its initial attributes and children
          * @returns the \`Number.Builder\` appended to this element
          */
-        addNumber(fields?: Partial<Number.Fields>): Number.Builder {
-            const builder = new Number.Builder(fields);
+        number(fields?: string | Partial<Number.Fields>): Number.Builder {
+            const builder = new Number.Builder(typeof fields === "string" ? { phone_number: fields } : fields);
             this.elements.numbers = [...(this.elements.numbers ?? []), builder];
             return builder;
         }
@@ -403,6 +437,17 @@ exports[`XmlObjectGenerator > generates a root element with text, attributes and
     toString(): string {
         return this.toXml();
     }
+
+    /**
+     * Appends a \`<break>\` child to the ordered content of this element and returns its builder, which is rendered when this element is serialized (the typed \`children\` property is not updated).
+     * @param fields initial \`<break>\` attributes and children
+     * @returns the \`Break.Builder\` appended to this element
+     */
+    addBreak(fields?: Partial<Break.Fields>): Break.Builder {
+        const builder = new Break.Builder(fields);
+        this.content.push(builder);
+        return builder;
+    }
 }
 
 export namespace Say {
@@ -453,6 +498,12 @@ export namespace Say {
         children(children: (Break | core.xml.XmlBuilder<Break>)[] | undefined): this {
             this.content = core.xml.replaceXmlContent(this.content, this.elements.children, children);
             this.elements.children = children;
+            return this;
+        }
+
+        /** Sets the text content of this element (same as \`message\`). */
+        text(message: string | undefined): this {
+            this.fields.message = message;
             return this;
         }
 
@@ -572,6 +623,17 @@ exports[`XmlObjectGenerator > keeps optional keys required when noOptionalProper
     toString(): string {
         return this.toXml();
     }
+
+    /**
+     * Appends a \`<break>\` child to the ordered content of this element and returns its builder, which is rendered when this element is serialized (the typed \`children\` property is not updated).
+     * @param fields initial \`<break>\` attributes and children
+     * @returns the \`Break.Builder\` appended to this element
+     */
+    addBreak(fields?: Partial<Break.Fields>): Break.Builder {
+        const builder = new Break.Builder(fields);
+        this.content.push(builder);
+        return builder;
+    }
 }
 
 export namespace Say {
@@ -622,6 +684,12 @@ export namespace Say {
         children(children: (Break | core.xml.XmlBuilder<Break>)[] | undefined): this {
             this.content = core.xml.replaceXmlContent(this.content, this.elements.children, children);
             this.elements.children = children;
+            return this;
+        }
+
+        /** Sets the text content of this element (same as \`message\`). */
+        text(message: string | undefined): this {
+            this.fields.message = message;
             return this;
         }
 
@@ -760,6 +828,28 @@ exports[`XmlObjectGenerator > uses bracket access and unique safe locals for pro
     toString(): string {
         return this.toXml();
     }
+
+    /**
+     * Appends a \`<break>\` child to the ordered content of this element and returns its builder, which is rendered when this element is serialized (the typed \`line-break\` property is not updated).
+     * @param fields initial \`<break>\` attributes and children
+     * @returns the \`Break.Builder\` appended to this element
+     */
+    addBreak(fields?: Partial<Break.Fields>): Break.Builder {
+        const builder = new Break.Builder(fields);
+        this.content.push(builder);
+        return builder;
+    }
+
+    /**
+     * Appends a \`<break>\` child to the ordered content of this element and returns its builder, which is rendered when this element is serialized (the typed \`lineBreak\` property is not updated).
+     * @param fields initial \`<break>\` attributes and children
+     * @returns the \`Break.Builder\` appended to this element
+     */
+    addBreak2(fields?: Partial<Break.Fields>): Break.Builder {
+        const builder = new Break.Builder(fields);
+        this.content.push(builder);
+        return builder;
+    }
 }
 
 export namespace Label {
@@ -835,6 +925,12 @@ export namespace Label {
         lineBreak(lineBreak: (Break | core.xml.XmlBuilder<Break>)[] | undefined): this {
             this.content = core.xml.replaceXmlContent(this.content, this.elements.lineBreak, lineBreak);
             this.elements.lineBreak = lineBreak;
+            return this;
+        }
+
+        /** Sets the text content of this element (same as \`"inner-text"\`). */
+        text(innerText: string | undefined): this {
+            this.fields["inner-text"] = innerText;
             return this;
         }
 

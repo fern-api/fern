@@ -423,6 +423,36 @@
                             },
                             "propertyAccess": null,
                             "variable": null
+                        },
+                        {
+                            "name": {
+                                "wireValue": "Content",
+                                "name": {
+                                    "originalName": "Content",
+                                    "camelCase": {
+                                        "unsafeName": "content",
+                                        "safeName": "content"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "content",
+                                        "safeName": "content"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "CONTENT",
+                                        "safeName": "CONTENT"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Content",
+                                        "safeName": "Content"
+                                    }
+                                }
+                            },
+                            "typeReference": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            },
+                            "propertyAccess": null,
+                            "variable": null
                         }
                     ]
                 },
@@ -434,6 +464,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_.get_token": {
@@ -483,6 +514,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         }
     },

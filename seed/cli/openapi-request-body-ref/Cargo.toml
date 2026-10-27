@@ -136,6 +136,11 @@ tokio-tungstenite = { version = "0.24", default-features = false, features = ["n
 # matching `cfg(not(target_env = "musl"))` gates in src/auth/keyring_store.rs).
 keyring = { version = "3", features = ["apple-native", "windows-native", "sync-secret-service", "vendored"] }
 
+# Keychain writes/deletes that skip keyring's pre-read of the secret (see
+# `macos_keychain` in src/auth/keyring_store.rs). Same major as keyring's.
+[target.'cfg(target_os = "macos")'.dependencies]
+security-framework = "3"
+
 [package.metadata.dist]
 dist = true
 

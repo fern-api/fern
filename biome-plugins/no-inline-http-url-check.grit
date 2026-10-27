@@ -1,0 +1,8 @@
+language js
+
+or {
+    `$value.startsWith("http://") || $value.startsWith("https://")`,
+    `$value.startsWith("https://") || $value.startsWith("http://")`
+} as $check where {
+    register_diagnostic(span=$check, message="Use `isHttpUrl` from `@fern-api/core-utils` instead of checking the `http://` and `https://` prefixes by hand.", severity="error")
+}

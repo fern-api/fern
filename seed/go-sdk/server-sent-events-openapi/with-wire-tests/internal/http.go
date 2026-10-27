@@ -45,7 +45,7 @@ func dereferenceArg(arg interface{}) interface{} {
 	v := reflect.ValueOf(arg)
 
 	// Keep dereferencing until we get to a non-pointer value or hit nil
-	for v.Kind() == reflect.Ptr {
+	for v.Kind() == reflect.Pointer {
 		if v.IsNil() {
 			return nil
 		}

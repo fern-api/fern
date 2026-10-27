@@ -1,4 +1,100 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.108.2
+  changelogEntry:
+    - summary: |
+        XML (TwiML) builders match the legacy call shapes: a child builder keeps the child's name even when it
+        collides with the element's text field (`dial().number("+1…")` adds a `<Number>` child; the text is set
+        with `text(...)` / `setNumber(...)`), every element builder has a uniform `text(...)` setter, and the
+        child-builder verbs are also available on the value itself (`new VoiceResponse().say("hi")`). Children added
+        through the value's verbs live in its ordered `content` (which `toXml()` renders); the typed child property
+        (`children`) is not updated by them.
+      type: fix
+  createdAt: "2026-10-27"
+  irVersion: 67
+- version: 3.108.1
+  changelogEntry:
+    - summary: |
+        Fix TS1484 compilation error in the generated XML (TwiML) runtime: `src/core/xml/builder.ts` imported the
+        `XmlSerializable` interface as a value, which the ESM build (`tsconfig.esm.json`, `verbatimModuleSyntax`)
+        rejects. The import is now type-only, so `pnpm build` succeeds for SDKs with xml-encoded types.
+      type: fix
+  createdAt: "2026-10-27"
+  irVersion: 67
+- version: 3.108.0
+  changelogEntry:
+    - summary: |
+        With `noSerdeLayer: false`, JSON-style parts of a multipart request are now serialized before they are
+        encoded, as JSON request bodies are. A part whose type is or contains a named type was sent as `toJson(value)`
+        with the SDK's camelCase property names instead of the wire names.
+      type: fix
+    - summary: |
+        Add the opt-in `includeMultipartPartContentType` config option. When enabled, non-file parts of a
+        multipart request carry their declared content type (e.g. OpenAPI
+        `encoding.<part>.contentType: application/json`) as the part's `Content-Type` header. It is off by
+        default because in browsers such parts are sent as a Blob, which also adds `filename=""`.
+      type: feat
+  createdAt: "2026-10-26"
+  irVersion: 67
+- version: 3.107.8
+  changelogEntry:
+    - summary: |
+        With `noSerdeLayer: false`, the serialization `Raw` type of an undiscriminated union with a
+        self-recursive map member (e.g. `map<string, JsonLike>`) now uses an index signature instead of
+        `Record<string, JsonLike.Raw>`, which TypeScript rejected as a circular type alias (TS2456).
+      type: fix
+    - summary: |
+        A named alias of a string-keyed map (e.g. `Branch = map<string, Node>`) is now emitted as
+        `{ [key: string]: Node }` instead of `Record<string, Node>`, in both the public type and the
+        serialization `Raw` type. The two are the same type, but TypeScript rejects a cycle that runs through
+        `Record` as a circular type alias (TS2456), so a map schema that is part of a recursive type now compiles.
+      type: fix
+  createdAt: "2026-10-26"
+  irVersion: 67
+- version: 3.107.7
+  changelogEntry:
+    - summary: |
+        Fix generated `WebhooksHelper.verifyRequest` failing to compile (`TS2550: Property 'hasOwn' does not
+        exist on type 'ObjectConstructor'`) under the SDK's default `target: ES6` tsconfig: the supported-algorithm
+        check used `Object.prototype.hasOwnProperty.call`, which the generator's Biome `--fix --unsafe` pass rewrote
+        to the ES2022-only `Object.hasOwn`. The check is now an `isSupportedAlgorithm` type guard over
+        `Object.keys(HMAC_ALGORITHMS)`, which Biome leaves alone and which compiles on ES6.
+      type: fix
+  createdAt: "2026-10-23"
+  irVersion: 67
+- version: 3.107.6
+  changelogEntry:
+    - summary: |
+        TypeScript dynamic snippets now follow the SDK generator's `noSerdeLayer` default (on unless `noSerdeLayer: false` or `serdeLayer: true` is set), so they use wire property names (e.g. `per_page`) that match the generated request types. Without a serde layer, query parameters, headers, file fields and object properties use the wire value, as the SDK does, even when a name override gives them a different original name. Property names that aren't valid identifiers (e.g. `org.iso.18013.5.1`) are now quoted, file values are always sent as a `Blob`, and a required file field (or file list) missing from the example gets a `fs.createReadStream("/path/to/your/file")` placeholder instead of being dropped. Optional file fields missing from the example are still left out; dynamic IR from CLIs that predate the `isOptional` flag treats every file as required. A config that never sets `noSerdeLayer` but pins a TypeScript generator older than 1.0 (where the serde layer was on by default) now gets wire-name snippets; `fern generator upgrade` sets the flag explicitly, so upgraded configs are unaffected.
+      type: fix
+  createdAt: "2026-10-21"
+  irVersion: 67
+- version: 3.107.5
+  changelogEntry:
+    - summary: |
+        XML (TwiML) serialization drops characters outside the XML 1.0 `Char` production (e.g. `\x01`) from text and attribute values instead of emitting XML that no parser accepts.
+      type: fix
+  createdAt: "2026-10-21"
+  irVersion: 67
+- version: 3.107.4
+  changelogEntry:
+    - summary: |
+        XML (TwiML) child builder methods accept the element's text content as a string, so legacy-style calls
+        such as `response.dial("+15551234567")` and `response.say("hi")` produce `<Dial>+15551234567</Dial>`
+        instead of an empty element. Element text no longer escapes double quotes as `&quot;` (attributes still do),
+        matching the legacy TwiML output.
+      type: fix
+  createdAt: "2026-10-21"
+  irVersion: 67
+- version: 3.107.3
+  changelogEntry:
+    - summary: |
+        `WebhooksHelper.verifyRequest` now parses `name=value` settings headers when
+        `webhook-signature.algorithm-header` sets `key-id-parameter`/`algorithm-parameter`
+        (e.g. Twilio's `X-Twilio-Webhooks-Signature-Settings: key=<id>,algorithm=HMAC_SHA256`),
+        so the key resolver receives the bare key ID instead of `key=<id>`. Requires IR 67.33.0.
+      type: fix
+  createdAt: "2026-10-16"
+  irVersion: 67
 - version: 3.107.2
   changelogEntry:
     - summary: |

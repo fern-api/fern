@@ -82,6 +82,11 @@ class SDKCustomConfig(pydantic.BaseModel):
     extra_dependencies: Dict[str, Union[str, DependencyCustomConfig]] = {}
     extra_dev_dependencies: Dict[str, Union[str, BaseDependencyCustomConfig]] = {}
     extras: Dict[str, List[str]] = {}
+    # When set, httpx (the HTTP client) is declared optional and exposed under the
+    # named extra (e.g. `http_client_extra: client` -> `pip install <pkg>[client]`), so a
+    # plain install of a package used for its models only (e.g. TwiML) does not pull in
+    # the HTTP stack. Off by default — the base install keeps httpx.
+    http_client_extra: Optional[str] = None
     skip_formatting: bool = False
     client: ClientConfiguration = ClientConfiguration()
     include_union_utils: bool = False
@@ -355,6 +360,22 @@ class SDKCustomConfig(pydantic.BaseModel):
         obj.pydantic_config.use_typeddict_requests = use_typeddict_requests
 
         return cast(SDKCustomConfig, obj)
+
+    @pydantic.model_validator(mode="after")
+    def validate_http_client_extra(self) -> "SDKCustomConfig":
+        if self.http_client_extra is None:
+            return self
+        if self.http_client_extra == "aiohttp":
+            raise ValueError(
+                "http_client_extra cannot be 'aiohttp': that extra is reserved for the aiohttp transport "
+                "(which already includes httpx when http_client_extra is set)."
+            )
+        if not self.lazy_imports:
+            raise ValueError(
+                "http_client_extra requires lazy_imports (the default): with eager imports the package "
+                "imports the HTTP client on `import <package>`, so a model-only install would fail."
+            )
+        return self
 
     @pydantic.model_validator(mode="after")
     def propagate_use_inheritance_for_extended_models(self) -> "SDKCustomConfig":

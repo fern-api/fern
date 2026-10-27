@@ -34,6 +34,7 @@ import com.fern.java.client.generators.AsyncSubpackageClientGenerator;
 import com.fern.java.client.generators.BaseErrorGenerator;
 import com.fern.java.client.generators.BodyPropertiesGenerator;
 import com.fern.java.client.generators.ClientOptionsGenerator;
+import com.fern.java.client.generators.ConcurrencyLimitingInterceptorGenerator;
 import com.fern.java.client.generators.ConsoleLoggerGenerator;
 import com.fern.java.client.generators.CoreMediaTypesGenerator;
 import com.fern.java.client.generators.EnvironmentGenerator;
@@ -81,6 +82,7 @@ import com.fern.java.generators.NullableNonemptyFilterGenerator;
 import com.fern.java.generators.ObjectMappersGenerator;
 import com.fern.java.generators.OptionalNullableGenerator;
 import com.fern.java.generators.PaginationCoreGenerator;
+import com.fern.java.generators.PathSegmentsGenerator;
 import com.fern.java.generators.QueryStringMapperGenerator;
 import com.fern.java.generators.Rfc2822DateTimeDeserializerGenerator;
 import com.fern.java.generators.SseEventGenerator;
@@ -90,6 +92,7 @@ import com.fern.java.generators.TypesGenerator;
 import com.fern.java.generators.TypesGenerator.Result;
 import com.fern.java.generators.WrappedAliasGenerator;
 import com.fern.java.generators.XmlCoreGenerator;
+import com.fern.java.generators.tests.PathSegmentsTestGenerator;
 import com.fern.java.generators.tests.QueryStringMapperTestGenerator;
 import com.fern.java.generators.tests.UndiscriminatedUnionDeserializationTestGenerator;
 import com.fern.java.output.GeneratedFile;
@@ -386,6 +389,10 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 new ResponseDecompressionInterceptorGenerator(context);
         this.addGeneratedFile(responseDecompressionInterceptorGenerator.generateFile());
 
+        ConcurrencyLimitingInterceptorGenerator concurrencyLimitingInterceptorGenerator =
+                new ConcurrencyLimitingInterceptorGenerator(context);
+        this.addGeneratedFile(concurrencyLimitingInterceptorGenerator.generateFile());
+
         ResponseBodyInputStreamGenerator responseBodyInputStreamGenerator =
                 new ResponseBodyInputStreamGenerator(context);
         this.addGeneratedFile(responseBodyInputStreamGenerator.generateFile());
@@ -469,6 +476,10 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         this.addGeneratedFile(queryStringMapperGenerator.generateFile());
         QueryStringMapperTestGenerator queryStringMapperTestGenerator = new QueryStringMapperTestGenerator(context);
         this.addGeneratedFile(queryStringMapperTestGenerator.generateFile());
+        PathSegmentsGenerator pathSegmentsGenerator = new PathSegmentsGenerator(context);
+        this.addGeneratedFile(pathSegmentsGenerator.generateFile());
+        PathSegmentsTestGenerator pathSegmentsTestGenerator = new PathSegmentsTestGenerator(context);
+        this.addGeneratedFile(pathSegmentsTestGenerator.generateFile());
 
         dependencies.add(ParsedGradleDependency.builder()
                 .type(GradleDependencyType.TEST_IMPLEMENTATION)

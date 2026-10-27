@@ -1,11 +1,12 @@
 import { VisibilityFilter } from "@fern-api/api-workspace-commons";
 import { FernToken } from "@fern-api/auth";
-import { replaceEnvVariables } from "@fern-api/core-utils";
+import { delay, replaceEnvVariables } from "@fern-api/core-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace } from "@fern-api/workspace-loader";
 import { stripCustomDomainProtocol, validateBasepathAlignment } from "./customDomainValidation.js";
 import { DocsPublishConflictError, publishDocs } from "./publishDocs.js";
+import { checkCustomDomainsNotOnVercel } from "./vercelDomainCheck.js";
 
 const PUBLISH_CONFLICT_RETRY_DELAYS_MS = [
     1 * 60 * 1000, // 1 minute
@@ -28,6 +29,7 @@ export async function runRemoteGenerationForDocsWorkspace({
     apiWorkspaces,
     ossWorkspaces,
     usesSdkConfig,
+    sdkNames,
     docsWorkspace,
     context,
     token,
@@ -47,6 +49,8 @@ export async function runRemoteGenerationForDocsWorkspace({
     ossWorkspaces: OSSWorkspace[];
     /** Whether the project configures SDKs in sdk-config.yml; only used to explain missing SDK snippets. */
     usesSdkConfig?: boolean;
+    /** The `sdkName` of each language's SDK in the sdk-config.yml, used to find its build for the SDK snippets. */
+    sdkNames?: Record<string, string[]>;
     docsWorkspace: DocsWorkspace;
     context: TaskContext;
     token: FernToken;
@@ -127,6 +131,7 @@ export async function runRemoteGenerationForDocsWorkspace({
 
     // The Fern instance url and every custom domain must share the same basepath.
     validateBasepathAlignment(maybeInstance.url, customDomains, context);
+    await checkCustomDomainsNotOnVercel({ customDomains, context });
 
     context.logger.info(`Starting docs publishing for ${preview ? "preview" : "production"}: ${maybeInstance.url}`);
     context.logger.debug(
@@ -147,6 +152,7 @@ export async function runRemoteGenerationForDocsWorkspace({
                 apiWorkspaces,
                 ossWorkspaces,
                 usesSdkConfig,
+                sdkNames,
                 preview,
                 previewId,
                 editThisPage: maybeInstance.editThisPage,
@@ -193,7 +199,7 @@ export async function runRemoteGenerationForDocsWorkspace({
                 context.logger.warn(
                     `Another docs publish is in progress. Retrying in ${delayMinutes} minute${delayMinutes === 1 ? "" : "s"} (attempt ${attempt + 1}/${PUBLISH_CONFLICT_RETRY_DELAYS_MS.length})...`
                 );
-                await new Promise((resolve) => setTimeout(resolve, delayMs));
+                await delay(delayMs);
             }
         }
 

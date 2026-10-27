@@ -599,6 +599,38 @@ describe("loadSdkConfigV1", () => {
         expect(loaded.payload.targets[0]?.body.toString("utf8")).not.toContain("MY_NUGET_KEY");
     });
 
+    it("forwards github.workflows false as requestedOutput.workflows", async () => {
+        const { configPath } = await writeSdkConfig(temporaryDirectories, {
+            language: "typescript",
+            package: { packageName: "acme-sdk" },
+            output: { delivery: "github", github: { repository: "acme/sdk", workflows: false } }
+        });
+
+        const loaded = await loadSdkConfigV1(configPath);
+
+        expect(loaded.payload.targets[0]?.requestedOutput).toEqual({
+            type: "github",
+            repository: "acme/sdk",
+            workflows: false
+        });
+    });
+
+    it.each([true, undefined])("omits requestedOutput.workflows when github.workflows is %s", async (workflows) => {
+        const { configPath } = await writeSdkConfig(temporaryDirectories, {
+            language: "typescript",
+            package: { packageName: "acme-sdk" },
+            output: {
+                delivery: "github",
+                github: { repository: "acme/sdk", ...(workflows == null ? {} : { workflows }) }
+            }
+        });
+
+        const loaded = await loadSdkConfigV1(configPath);
+
+        expect(loaded.payload.targets[0]?.requestedOutput).not.toHaveProperty("workflows");
+        expect(JSON.stringify(loaded.payload.targets[0]?.requestedOutput)).not.toContain("workflows");
+    });
+
     it("does not set a NuGet secret name when no apiKey is configured", async () => {
         const { configPath } = await writeSdkConfig(temporaryDirectories, {
             language: "csharp",

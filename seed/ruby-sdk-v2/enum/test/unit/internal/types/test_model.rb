@@ -46,6 +46,10 @@ describe Seed::Internal::Types::Model do
     field :counts, Seed::Internal::Types::Hash[Integer, String]
   end
 
+  class ExampleWithCoercedDefault < Seed::Internal::Types::Model
+    field :count, Integer, default: "3"
+  end
+
   describe ".field" do
     before do
       @example = ExampleModel.new(name: "Inception", rating: 4)
@@ -184,6 +188,24 @@ describe Seed::Internal::Types::Model do
 
       assert_equal 2014, example.year
       refute_respond_to example, :yearOfRelease
+    end
+
+    it "does not modify the input hash" do
+      input = { name: "Inception", yearOfRelease: 2014, extra: "kept" }
+      ExampleModel.new(input)
+
+      assert_equal({ name: "Inception", yearOfRelease: 2014, extra: "kept" }, input)
+    end
+
+    it "marks a field explicit when it is set through either key" do
+      assert_equal({ "name" => "Ruby", "yearOfRelease" => nil }, ExampleModel.new({ name: "Ruby", year: nil }).to_h)
+      assert_equal({ "name" => "Ruby", "yearOfRelease" => nil },
+                   ExampleModel.new({ name: "Ruby", yearOfRelease: nil, year: nil }).to_h)
+      assert_equal({ "name" => "Ruby" }, ExampleModel.new({ name: "Ruby" }).to_h)
+    end
+
+    it "coerces the default of a field whose value is nil" do
+      assert_equal 3, ExampleWithCoercedDefault.new(count: nil).count
     end
   end
 

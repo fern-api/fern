@@ -1,6 +1,6 @@
 import { readFile, writeFile } from "fs/promises";
 import path from "path";
-import type { FernCliHomebrewConfig } from "./customConfig.js";
+import type { FernCliGitHubAttestations, FernCliHomebrewConfig } from "./customConfig.js";
 
 /**
  * Strip Fern-specific identifiers from the shipped `dist-workspace.toml`.
@@ -45,8 +45,18 @@ export async function patchDistWorkspaceToml(args: {
     homebrew?: FernCliHomebrewConfig;
     /** Formula name fallback when `homebrew.formula` is unset. */
     binaryName?: string;
+    /** Kept in sync with the attest step `emitReleaseWorkflow` emits. */
+    githubAttestations?: FernCliGitHubAttestations;
 }): Promise<void> {
-    const { outputDir, typesCrateName, sdkCrateName, typePartitionMemberPaths = [], homebrew, binaryName } = args;
+    const {
+        outputDir,
+        typesCrateName,
+        sdkCrateName,
+        typePartitionMemberPaths = [],
+        homebrew,
+        binaryName,
+        githubAttestations
+    } = args;
     const distTomlPath = path.join(outputDir, "dist-workspace.toml");
     let contents: string;
     try {
@@ -73,6 +83,9 @@ export async function patchDistWorkspaceToml(args: {
     let patched = applyDistWorkspacePatch(contents);
     if (homebrew != null) {
         patched = applyHomebrewPatch(patched, homebrew, binaryName);
+    }
+    if (githubAttestations === false) {
+        patched = setDistRawKey(patched, "github-attestations", "false");
     }
     if (patched === contents) {
         return;

@@ -170,6 +170,51 @@ describe("generator rule", () => {
         expect(JSON.stringify(result.generatorsYml)).not.toMatch(/HOMEBREW_TAP_TOKEN|SCOOP_BUCKET_TOKEN/);
     });
 
+    describe("output.distribution.githubAttestations", () => {
+        function mapAttestations(githubAttestations: unknown, generatorVersion: string) {
+            return mapSdkConfigToGeneratorsYml(
+                cliIr({
+                    target: GITHUB_TARGET,
+                    output: {
+                        delivery: "github",
+                        github: { repository: "acme/cli", mode: "pull-request" },
+                        distribution: { githubAttestations }
+                    }
+                }),
+                { configDir: "/work", outDir: "/work", generatorVersion, specFacts: [facts()] }
+            );
+        }
+
+        it.each([["auto"], [true], [false]])("writes %s to config.distribution as-is", (value) => {
+            const result = mapAttestations(value, "0.54.3");
+            expect(errorCodes(result.diagnostics)).toEqual([]);
+            expect(codes(result.diagnostics)).not.toContain(
+                "warning CLI_TARGET_IGNORED_FIELD output.distribution.githubAttestations"
+            );
+            expect(codes(result.diagnostics)).not.toContain(
+                "warning CLI_TARGET_ATTESTATIONS_VERSION output.distribution.githubAttestations"
+            );
+            expect(generator(result).config).toEqual({ distribution: { githubAttestations: value } });
+        });
+
+        it.each([
+            ["auto"],
+            [false]
+        ])("warns CLI_TARGET_ATTESTATIONS_VERSION for %s on a generator that always attests", (value) => {
+            const result = mapAttestations(value, "0.54.2");
+            expect(codes(result.diagnostics)).toContain(
+                "warning CLI_TARGET_ATTESTATIONS_VERSION output.distribution.githubAttestations"
+            );
+            expect(generator(result).config).toEqual({ distribution: { githubAttestations: value } });
+        });
+
+        it("does not warn for true on an older generator, which always attests anyway", () => {
+            expect(codes(mapAttestations(true, "0.49.0").diagnostics)).not.toContain(
+                "warning CLI_TARGET_ATTESTATIONS_VERSION output.distribution.githubAttestations"
+            );
+        });
+    });
+
     it("writes local-file-system output at output.path", () => {
         expect(generator(map({ output: { delivery: "files", path: "./sdks/cli" } })).output).toEqual({
             location: "local-file-system",

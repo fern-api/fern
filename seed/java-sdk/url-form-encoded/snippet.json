@@ -1,7 +1,7 @@
 {
     "endpoints": [
         {
-            "example_identifier": "bbdabb08",
+            "example_identifier": "4ffb486b",
             "id": {
                 "method": "POST",
                 "path": "/submit",
@@ -9,8 +9,8 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.PostSubmitRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.submitFormData(\n            PostSubmitRequest\n                .builder()\n                .username(\"johndoe\")\n                .email(\"john@example.com\")\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.PostSubmitRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.submitFormData(\n            PostSubmitRequest\n                .builder()\n                .username(\"johndoe\")\n                .email(\"john@example.com\")\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.PostSubmitRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.submitFormData(\n            PostSubmitRequest\n                .builder()\n                .username(\"johndoe\")\n                .email(\"john@example.com\")\n                .content(\"{\\\"key\\\":\\\"value\\\"}\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.api.SeedApiClient;\nimport com.seed.api.requests.PostSubmitRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedApiClient client = SeedApiClient\n            .builder()\n            .build();\n\n        client.submitFormData(\n            PostSubmitRequest\n                .builder()\n                .username(\"johndoe\")\n                .email(\"john@example.com\")\n                .content(\"{\\\"key\\\":\\\"value\\\"}\")\n                .build()\n        );\n    }\n}\n"
             }
         },
         {

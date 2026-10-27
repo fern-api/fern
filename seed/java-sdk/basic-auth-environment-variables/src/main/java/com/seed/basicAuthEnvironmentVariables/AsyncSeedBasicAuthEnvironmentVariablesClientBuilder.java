@@ -17,6 +17,8 @@ public class AsyncSeedBasicAuthEnvironmentVariablesClientBuilder {
 
     private Optional<Integer> maxRetries = Optional.empty();
 
+    private Optional<Integer> maxConcurrentRequests = Optional.empty();
+
     private Optional<Long> initialRetryDelayMillis = Optional.empty();
 
     private Optional<Long> maxRetryDelayMillis = Optional.empty();
@@ -59,6 +61,14 @@ public class AsyncSeedBasicAuthEnvironmentVariablesClientBuilder {
      */
     public AsyncSeedBasicAuthEnvironmentVariablesClientBuilder maxRetries(int maxRetries) {
         this.maxRetries = Optional.of(maxRetries);
+        return this;
+    }
+
+    /**
+     * Caps the number of in-flight requests (sync and async) the client will have at once. Unlimited unless set; must be positive.
+     */
+    public AsyncSeedBasicAuthEnvironmentVariablesClientBuilder maxConcurrentRequests(int maxConcurrentRequests) {
+        this.maxConcurrentRequests = Optional.of(maxConcurrentRequests);
         return this;
     }
 
@@ -122,6 +132,7 @@ public class AsyncSeedBasicAuthEnvironmentVariablesClientBuilder {
         setHttpClient(builder);
         setTimeouts(builder);
         setRetries(builder);
+        setConcurrencyLimit(builder);
         setLogging(builder);
         for (Map.Entry<String, String> header : this.customHeaders.entrySet()) {
             builder.addHeader(header.getKey(), header.getValue());
@@ -193,6 +204,18 @@ public class AsyncSeedBasicAuthEnvironmentVariablesClientBuilder {
         }
         if (this.retryJitterFactor.isPresent()) {
             builder.retryJitterFactor(this.retryJitterFactor.get());
+        }
+    }
+
+    /**
+     * Applies the in-flight request cap, if one was configured.
+     * Override this method to customize concurrency limiting.
+     *
+     * @param builder The ClientOptions.Builder to configure
+     */
+    protected void setConcurrencyLimit(ClientOptions.Builder builder) {
+        if (this.maxConcurrentRequests.isPresent()) {
+            builder.maxConcurrentRequests(this.maxConcurrentRequests.get());
         }
     }
 

@@ -53,7 +53,7 @@ func MarshalJSONWithExtraProperties(marshaler interface{}, extraProperties map[s
 // ExtractExtraProperties extracts any extra properties from the given value.
 func ExtractExtraProperties(bytes []byte, value interface{}, exclude ...string) (map[string]interface{}, error) {
 	val := reflect.ValueOf(value)
-	for val.Kind() == reflect.Ptr {
+	for val.Kind() == reflect.Pointer {
 		if val.IsNil() {
 			return nil, fmt.Errorf("value must be non-nil to extract extra properties")
 		}
@@ -134,7 +134,7 @@ func HasObjectKeys(data []byte, required []string) bool {
 // a struct or a map with string keys.
 func getKeys(value interface{}) ([]string, error) {
 	val := reflect.ValueOf(value)
-	if val.Kind() == reflect.Ptr {
+	if val.Kind() == reflect.Pointer {
 		val = val.Elem()
 	}
 	if !val.IsValid() {

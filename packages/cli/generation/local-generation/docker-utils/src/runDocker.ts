@@ -1,7 +1,8 @@
 import { ContainerRunner } from "@fern-api/core-utils";
 import { Logger } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
-import { writeFile } from "fs/promises";
+import { mkdir, writeFile } from "fs/promises";
+import { dirname } from "path";
 import tmp from "tmp-promise";
 
 import { buildContainerEnvVars, FORWARDED_ENV_VARS } from "./buildContainerEnvVars.js";
@@ -16,6 +17,11 @@ export declare namespace runContainer {
         envVars?: Record<string, string>;
         ports?: Record<string, string>;
         writeLogsToFile?: boolean;
+        /**
+         * Write the container logs to this path instead of a temporary file. Parent
+         * directories are created. Use when the logs must outlive the command.
+         */
+        logFilePath?: string;
         removeAfterCompletion?: boolean;
         runner?: ContainerRunner;
         /**
@@ -52,6 +58,7 @@ export async function runContainer({
     envVars = {},
     ports = {},
     writeLogsToFile = true,
+    logFilePath,
     removeAfterCompletion = false,
     runner,
     pull = false,
@@ -69,6 +76,7 @@ export async function runContainer({
             ports,
             removeAfterCompletion,
             writeLogsToFile,
+            logFilePath,
             runner,
             pull,
             platform,
@@ -127,6 +135,7 @@ async function tryRunContainer({
     ports = {},
     removeAfterCompletion,
     writeLogsToFile,
+    logFilePath,
     runner,
     pull = false,
     platform,
@@ -141,6 +150,7 @@ async function tryRunContainer({
     ports?: Record<string, string>;
     removeAfterCompletion: boolean;
     writeLogsToFile: boolean;
+    logFilePath?: string;
     runner?: ContainerRunner;
     pull?: boolean;
     platform?: string;
@@ -178,9 +188,7 @@ async function tryRunContainer({
     const logs = stdout + stderr;
 
     if (writeLogsToFile) {
-        const tmpFile = await tmp.file();
-        await writeFile(tmpFile.path, logs);
-        logger.info(`Generator logs here: ${tmpFile.path}`);
+        await writeLogsFile({ logger, logs, logFilePath });
     }
 
     if (exitCode == null) {
@@ -325,9 +333,7 @@ export async function execInContainer({
     const logs = stdout + stderr;
 
     if (writeLogsToFile) {
-        const tmpFile = await tmp.file();
-        await writeFile(tmpFile.path, logs);
-        logger.info(`Generator logs here: ${tmpFile.path}`);
+        await writeLogsFile({ logger, logs });
     }
 
     const resolvedExitCode = exitCode ?? 1;
@@ -421,4 +427,28 @@ export async function stopContainer({
         reject: false,
         doNotPipeOutput: true
     });
+}
+
+async function writeLogsFile({
+    logger,
+    logs,
+    logFilePath
+}: {
+    logger: Logger;
+    logs: string;
+    logFilePath?: string;
+}): Promise<void> {
+    if (logFilePath != null) {
+        try {
+            await mkdir(dirname(logFilePath), { recursive: true });
+            await writeFile(logFilePath, logs);
+            logger.info(`Generator logs here: ${logFilePath}`);
+            return;
+        } catch (error) {
+            logger.warn(`Failed to write logs to ${logFilePath} (${String(error)}); using a temporary file instead.`);
+        }
+    }
+    const tmpFile = await tmp.file();
+    await writeFile(tmpFile.path, logs);
+    logger.info(`Generator logs here: ${tmpFile.path}`);
 }

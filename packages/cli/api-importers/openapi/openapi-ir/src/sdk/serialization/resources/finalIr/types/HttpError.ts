@@ -15,6 +15,7 @@ export const HttpError: core.serialization.ObjectSchema<serializers.HttpError.Ra
             schema: core.serialization.lazy(() => serializers.Schema).optional(),
             examples: core.serialization.list(ErrorExample).optional(),
             namespace: core.serialization.string().optional(),
+            isShared: core.serialization.boolean().optional(),
         })
         .extend(WithDescription)
         .extend(WithName)
@@ -26,5 +27,6 @@ export declare namespace HttpError {
         schema?: serializers.Schema.Raw | null;
         examples?: ErrorExample.Raw[] | null;
         namespace?: string | null;
+        isShared?: boolean | null;
     }
 }

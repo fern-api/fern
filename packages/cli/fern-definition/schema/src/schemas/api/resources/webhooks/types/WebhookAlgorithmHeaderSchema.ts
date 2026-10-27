@@ -11,6 +11,17 @@ export interface WebhookAlgorithmHeaderSchema {
      */
     "key-id-delimiter"?: string;
     /**
+     * When set together with `algorithm-parameter`, the header is a list of `<name>=<value>`
+     * pairs separated by `key-id-delimiter` and the key ID is the value of this parameter,
+     * e.g. `key` for Twilio's `key=<id>,algorithm=HMAC_SHA256`.
+     */
+    "key-id-parameter"?: string;
+    /**
+     * Name of the `<name>=<value>` pair that carries the algorithm when the header is
+     * parsed as named parameters, e.g. `algorithm`.
+     */
+    "algorithm-parameter"?: string;
+    /**
      * Allowed header values mapped to the HMAC algorithm they select, e.g.
      * `HMAC_SHA1: sha1`, `HMAC_SHA256: sha256`. These wire values also become the
      * algorithm enum exposed by the generated verifier.

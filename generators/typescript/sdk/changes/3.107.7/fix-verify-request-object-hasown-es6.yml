@@ -1,0 +1,7 @@
+- summary: |
+    Fix generated `WebhooksHelper.verifyRequest` failing to compile (`TS2550: Property 'hasOwn' does not
+    exist on type 'ObjectConstructor'`) under the SDK's default `target: ES6` tsconfig: the supported-algorithm
+    check used `Object.prototype.hasOwnProperty.call`, which the generator's Biome `--fix --unsafe` pass rewrote
+    to the ES2022-only `Object.hasOwn`. The check is now an `isSupportedAlgorithm` type guard over
+    `Object.keys(HMAC_ALGORITHMS)`, which Biome leaves alone and which compiles on ES6.
+  type: fix

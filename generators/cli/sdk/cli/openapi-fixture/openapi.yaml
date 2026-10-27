@@ -822,6 +822,69 @@ paths:
                   next:
                     type: string
 
+  # --- catalog: exercises `x-fern-cli-table`. `list` declares curated
+  # table columns on top of return-value extraction and cursor pagination;
+  # `listExports` has its own `columns` query parameter, so the column
+  # picker moves to `--table-columns`.
+  /catalog/datasets:
+    get:
+      x-fern-sdk-group-name:
+        - catalog
+      x-fern-sdk-method-name: list
+      operationId: catalog_list
+      summary: List datasets with curated table columns
+      x-fern-sdk-return-value: datasets
+      x-fern-pagination:
+        cursor: $request.cursor
+        next_cursor: $response.next
+        results: $response.datasets
+      x-fern-cli-table:
+        columns:
+          - { header: NAME, path: name }
+          - { header: V, path: version, align: right }
+          - { header: STAGE, path: stage }
+          - { header: ROWS, path: stats.rows, align: right }
+          - { header: CREATED, path: createdAt, format: date }
+          - { header: DESCRIPTION, path: description, maxWidth: 20, default: false }
+      parameters:
+        - name: cursor
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Page of datasets plus an envelope-level cursor
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  datasets:
+                    type: array
+                    items:
+                      type: object
+                  next:
+                    type: string
+
+  /catalog/exports:
+    get:
+      x-fern-sdk-group-name:
+        - catalog
+      x-fern-sdk-method-name: listExports
+      operationId: catalog_listExports
+      summary: List exports (has its own `columns` parameter)
+      x-fern-cli-table:
+        columns:
+          - { header: ID, path: id }
+      parameters:
+        - name: columns
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Export list
+
   # Exercises `x-fern-sdk-variable`: the `gardenId` path parameter binds to
   # the global `gardenId` variable declared at the spec root, so the CLI
   # exposes `--garden-id` / $GARDEN_ID instead of a per-op flag.

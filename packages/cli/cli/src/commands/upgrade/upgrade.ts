@@ -17,13 +17,10 @@ import { writeFile } from "fs/promises";
 import { produce } from "immer";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { RerunCliError, rerunFernCliAtVersion } from "../../rerunFernCliAtVersion.js";
+import { ensureFinalNewline } from "../../utils/ensureFinalNewline.js";
 import { clampVersionToOrgBounds, fetchOrgCliVersionBounds, ORG_BOUNDS_FETCH_TIMEOUT_MS } from "../org/orgConfig.js";
 
 export const PREVIOUS_VERSION_ENV_VAR = "FERN_PRE_UPGRADE_VERSION";
-
-function ensureFinalNewline(content: string): string {
-    return content.endsWith("\n") ? content : content + "\n";
-}
 
 interface GitVersionResult {
     version: string | null;

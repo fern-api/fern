@@ -234,8 +234,10 @@ exports[`ir > {"name":"api-webhook-signature"} 1`] = `
                         "legacyQueryEncoding": true
                     },
                     "algorithmHeader": {
-                        "headerName": "X-Twilio-Webhook-Signature-Settings",
-                        "keyIdDelimiter": ";",
+                        "headerName": "X-Twilio-Webhooks-Signature-Settings",
+                        "keyIdDelimiter": ",",
+                        "keyIdParameter": "key",
+                        "algorithmParameter": "algorithm",
                         "algorithms": [
                             {
                                 "wireValue": "HMAC_SHA1",
@@ -720,8 +722,10 @@ exports[`ir > {"name":"api-webhook-signature"} 1`] = `
                 "legacyQueryEncoding": true
             },
             "algorithmHeader": {
-                "headerName": "X-Twilio-Webhook-Signature-Settings",
-                "keyIdDelimiter": ";",
+                "headerName": "X-Twilio-Webhooks-Signature-Settings",
+                "keyIdDelimiter": ",",
+                "keyIdParameter": "key",
+                "algorithmParameter": "algorithm",
                 "algorithms": [
                     {
                         "wireValue": "HMAC_SHA1",
@@ -2051,6 +2055,7 @@ exports[`ir > {"name":"file-upload"} 1`] = `
                             },
                             {
                                 "type": "file",
+                                "isOptional": false,
                                 "wireValue": "file",
                                 "name": {
                                     "originalName": "file",
@@ -2074,6 +2079,7 @@ exports[`ir > {"name":"file-upload"} 1`] = `
                             },
                             {
                                 "type": "file",
+                                "isOptional": true,
                                 "wireValue": "optionalFile",
                                 "name": {
                                     "originalName": "optionalFile",
@@ -2136,6 +2142,7 @@ exports[`ir > {"name":"file-upload"} 1`] = `
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": false,
                 "examples": null
             }
         },
@@ -16564,6 +16571,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": false,
                 "examples": null
             },
             "endpoint_endpoint-urls.test2": {
@@ -16645,6 +16653,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": false,
                 "examples": null
             },
             "endpoint_service-url.test": {
@@ -16726,6 +16735,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": false,
                 "examples": null
             }
         },
@@ -18390,6 +18400,7 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             }
         },
@@ -19295,6 +19306,7 @@ exports[`ir > {"name":"packages"} 1`] = `
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": false,
                 "examples": null
             }
         },
@@ -20778,6 +20790,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_service.getMovieDocs": {
@@ -20865,6 +20878,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             }
         },
@@ -21919,6 +21933,7 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             }
         },
@@ -23956,6 +23971,7 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             }
         },
@@ -31473,6 +31489,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_imdb.createMovie": {
@@ -31560,6 +31577,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_imdb.getMovie": {
@@ -31775,6 +31793,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_imdb.delete": {
@@ -31887,6 +31906,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": false,
                 "examples": null
             }
         },
@@ -32492,6 +32512,7 @@ exports[`ir > {"name":"streaming"} 1`] = `
                 "response": {
                     "type": "streaming"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_streaming.maybeStreaming": {
@@ -32676,6 +32697,7 @@ exports[`ir > {"name":"streaming"} 1`] = `
                 "response": {
                     "type": "streaming"
                 },
+                "hasResponseBody": true,
                 "examples": null
             }
         },
@@ -33368,6 +33390,7 @@ exports[`ir > {"name":"variables"} 1`] = `
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": false,
                 "examples": null
             }
         },

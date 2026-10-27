@@ -3,6 +3,7 @@
 require "json"
 require "net/http"
 require "securerandom"
+require "time"
 
 require_relative "seed/internal/json/serializable"
 require_relative "seed/internal/types/type"
@@ -36,16 +37,31 @@ require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/connection_error"
-require_relative "seed/types/root_type"
-require_relative "seed/a/types/a"
-require_relative "seed/types/importing_a"
-require_relative "seed/ast/types/u"
-require_relative "seed/ast/types/t"
-require_relative "seed/ast/types/tor_u"
-require_relative "seed/ast/types/primitive_value"
-require_relative "seed/ast/types/object_value"
-require_relative "seed/ast/types/container_value"
-require_relative "seed/ast/types/field_value"
-require_relative "seed/ast/types/json_like"
-require_relative "seed/ast/types/json_like_with_null_and_undefined"
 require_relative "seed/client"
+
+module Seed
+  module Types
+    autoload :RootType, ::File.join(__dir__, "seed/types/root_type")
+    autoload :ImportingA, ::File.join(__dir__, "seed/types/importing_a")
+  end
+
+  module A
+    module Types
+      autoload :A, ::File.join(__dir__, "seed/a/types/a")
+    end
+  end
+
+  module Ast
+    module Types
+      autoload :U, ::File.join(__dir__, "seed/ast/types/u")
+      autoload :T, ::File.join(__dir__, "seed/ast/types/t")
+      autoload :TorU, ::File.join(__dir__, "seed/ast/types/tor_u")
+      autoload :PrimitiveValue, ::File.join(__dir__, "seed/ast/types/primitive_value")
+      autoload :ObjectValue, ::File.join(__dir__, "seed/ast/types/object_value")
+      autoload :ContainerValue, ::File.join(__dir__, "seed/ast/types/container_value")
+      autoload :FieldValue, ::File.join(__dir__, "seed/ast/types/field_value")
+      autoload :JSONLike, ::File.join(__dir__, "seed/ast/types/json_like")
+      autoload :JSONLikeWithNullAndUndefined, ::File.join(__dir__, "seed/ast/types/json_like_with_null_and_undefined")
+    end
+  end
+end
