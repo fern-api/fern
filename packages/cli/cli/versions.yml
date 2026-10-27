@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.180.0
+  changelogEntry:
+    - summary: |
+        Add `fern whoami [--json]`: shows whether the CLI is using a login, a `FERN_TOKEN` organization token or
+        nothing, and this repo's guest session (`fern generate --guest`) with its organization, expiry and claim
+        link. The guest token itself is never printed.
+      type: feat
+  createdAt: "2026-10-27"
+  irVersion: 67
 - version: 5.179.0
   changelogEntry:
     - summary: |
