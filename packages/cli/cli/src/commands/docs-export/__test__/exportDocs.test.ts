@@ -2,7 +2,7 @@ import { mkdir, mkdtemp, readdir, readFile, rm, writeFile } from "node:fs/promis
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { isSafeOutputDir, keepsFile, parseInstanceUrl, writeExport } from "../exportDocs.js";
+import { isSafeOutputDir, keepsFile, parseInstanceUrl, safeRelativePath, writeExport } from "../exportDocs.js";
 import type { ExportSource } from "../exportSources.js";
 
 function fakeSource(batches: Record<string, string>[]): ExportSource & { finished: boolean } {
@@ -98,5 +98,14 @@ describe("isSafeOutputDir", () => {
         expect(isSafeOutputDir(".", "/repo")).toBe(false);
         expect(isSafeOutputDir("..", "/repo")).toBe(false);
         expect(isSafeOutputDir("/", "/repo")).toBe(false);
+    });
+});
+
+describe("safeRelativePath", () => {
+    it("keeps plain site paths and rejects ones that could escape or misbehave on disk", () => {
+        expect(safeRelativePath("docs/quickstart/index.html")).toBe(path.join("docs", "quickstart", "index.html"));
+        for (const unsafe of ["/etc/passwd", "../x", "a/../../x", "a//b", "./a", "a\\b", "C:/x", "a\0b", ""]) {
+            expect(safeRelativePath(unsafe)).toBeUndefined();
+        }
     });
 });

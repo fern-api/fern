@@ -69,9 +69,25 @@ async function emptyDir(root: string): Promise<void> {
     );
 }
 
+/**
+ * A server-supplied site path (`docs/quickstart/index.html`) as a native relative path, or undefined
+ * when it is absolute, has empty, `.` or `..` segments, or holds a backslash, drive letter or NUL.
+ */
+export function safeRelativePath(filePath: string): string | undefined {
+    if (/[\\\0]/.test(filePath) || filePath.startsWith("/") || /^[a-zA-Z]:/.test(filePath)) {
+        return undefined;
+    }
+    const segments = filePath.split("/");
+    if (segments.some((segment) => segment === "" || segment === "." || segment === "..")) {
+        return undefined;
+    }
+    return segments.join(path.sep);
+}
+
 async function writeFileUnder(root: string, file: ExportFile): Promise<void> {
-    const destination = path.resolve(root, file.path);
-    if (!destination.startsWith(root + path.sep)) {
+    const relative = safeRelativePath(file.path);
+    const destination = relative == null ? undefined : path.resolve(root, relative);
+    if (destination == null || !destination.startsWith(root + path.sep)) {
         throw new Error(`Refusing to write outside the output folder: ${file.path}`);
     }
     const bytes = await withRetries(() => file.read());
