@@ -157,6 +157,8 @@ async function createJob({
     fiddlePreview,
     pushPreviewBranch,
     fernignoreContents,
+    automationMode,
+    autoMerge,
     skipIfNoDiff,
     verify,
     loginCommand
@@ -219,13 +221,12 @@ async function createJob({
         pushPreviewBranch,
         fernignoreContents,
         skipIfNoDiff,
-        verify
-        // TODO(FER-9671): Pass remaining automation flags to Fiddle once its API is updated:
-        //   automationMode,
-        //   autoMerge,
-        //   runId: process.env.FERN_RUN_ID
-        // Fiddle will use these for separate PRs, automerge, run_id correlation,
-        // and breaking change handling. (skipIfNoDiff is forwarded above — see fern-api/fiddle#708.)
+        verify,
+        automationMode,
+        // `--auto-merge` or `github.auto-merge: true` in generators.yml. Fiddle forwards this to
+        // generator-cli's GithubStep, which enables GitHub auto-merge on the PR it opens.
+        autoMerge: autoMerge === true || generatorsYml.isGithubAutoMergeEnabled(generatorInvocation.raw?.github),
+        runId: process.env.FERN_RUN_ID
     };
     const createResponse = await remoteGenerationService.remoteGen.createJobV3(createJobRequest);
 

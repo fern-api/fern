@@ -4,7 +4,7 @@
  * Generates MDX documentation from library IR (e.g., Python, C++).
  */
 
-export { type CppGenerateOptions, type CppGenerateResult, generateCpp } from "./CppDocsGenerator.js";
+export { type CppGenerateOptions, type CppGenerateResult, type CppSlugStyle, generateCpp } from "./CppDocsGenerator.js";
 export {
     createLibraryDocsClient,
     type LibraryDocsClient,

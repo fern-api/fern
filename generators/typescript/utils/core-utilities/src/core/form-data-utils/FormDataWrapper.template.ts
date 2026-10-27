@@ -36,7 +36,7 @@ interface FormDataRequest<Body> {
 export interface CrossPlatformFormData {
     setup(): Promise<void>;
 
-    append(key: string, value: unknown): void;
+    append(key: string, value: unknown, contentType?: string): void;
 
     appendFile(key: string, value: Uploadable): Promise<void>;
 
@@ -74,7 +74,11 @@ export class Node18FormData implements CrossPlatformFormData {
         this.fd = new (await import("formdata-node")).FormData();
     }
 
-    public append(key: string, value: any): void {
+    public append(key: string, value: any, contentType?: string): void {
+        if (contentType != null) {
+            this.fd?.append(key, new Blob([String(value)], { type: contentType }), "");
+            return;
+        }
         this.fd?.append(key, value);
     }
 
@@ -140,7 +144,11 @@ export class Node16FormData implements CrossPlatformFormData {
         this.fd = new (await import("form-data")).default();
     }
 
-    public append(key: string, value: any): void {
+    public append(key: string, value: any, contentType?: string): void {
+        if (contentType != null) {
+            this.fd?.append(key, typeof value === "string" ? value : String(value), { contentType });
+            return;
+        }
         this.fd?.append(key, value);
     }
 
@@ -186,7 +194,11 @@ export class WebFormData implements CrossPlatformFormData {
         this.fd = new FormData();
     }
 
-    public append(key: string, value: any): void {
+    public append(key: string, value: any, contentType?: string): void {
+        if (contentType != null) {
+            this.fd?.append(key, new Blob([String(value)], { type: contentType }), "");
+            return;
+        }
         this.fd?.append(key, value);
     }
 
@@ -231,7 +243,11 @@ export class FormDataWrapper {
         // noop
     }
 
-    public append(key: string, value: unknown): void {
+    public append(key: string, value: unknown, contentType?: string): void {
+        if (contentType != null) {
+            this.fd.append(key, new Blob([String(value)], { type: contentType }), "");
+            return;
+        }
         this.fd.append(key, String(value));
     }
 

@@ -154,6 +154,14 @@ describe("CrossPlatformFormData", () => {
             const request = formData.getRequest();
             expect(request.body.get("file").name).toBe("test.txt");
         });
+
+        it("should append a value with a part content type", async () => {
+            formData.append("metadata", '{"page_range":"1-2"}', "application/json");
+
+            const part = formData.getRequest().body.get("metadata");
+            expect(part.type).toBe("application/json");
+            expect(await part.text()).toBe('{"page_range":"1-2"}');
+        });
     });
 });
 <% } else { %>
@@ -399,6 +407,22 @@ describe("FormDataWrapper", () => {
             expect(serialized).toContain('name="text"');
             expect(serialized).not.toContain('filename=');
             expect(serialized).toContain("test string");
+        });
+
+        it("sets the part content type when one is given", async () => {
+            formData.append("metadata", '{"page_range":"1-2"}', "application/json");
+
+            const serialized = await serializeFormData(formData.getRequest().body);
+            expect(serialized).toContain('Content-Disposition: form-data; name="metadata"\r\nContent-Type: application/json');
+            expect(serialized).not.toContain("filename=");
+            expect(serialized).toContain('{"page_range":"1-2"}');
+        });
+
+        it("stringifies non-string values that have a part content type", async () => {
+            formData.append("count", 5, "text/plain");
+
+            const serialized = await serializeFormData(formData.getRequest().body);
+            expect(serialized).toContain('Content-Disposition: form-data; name="count"\r\nContent-Type: text/plain\r\n\r\n5\r\n');
         });
 
         it("serializes numbers and booleans as strings", async () => {

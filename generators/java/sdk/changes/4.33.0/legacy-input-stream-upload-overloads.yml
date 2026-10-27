@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add the `legacy-input-stream-upload-overloads` option (default `false`). When `true`, single-file
+    upload endpoints get the `InputStream` overloads from before 4.23.2, such as
+    `create(InputStream stream, String filename)`. These leave out the request object, so companion
+    multipart fields are not sent, as before 4.23.2.
+  type: feat

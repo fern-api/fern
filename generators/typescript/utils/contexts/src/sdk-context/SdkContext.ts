@@ -34,4 +34,5 @@ export interface SdkContext {
     flattenRequestParameters: boolean;
     respectOptionalRequestBody: boolean;
     deepObjectMapQueryParameters: boolean;
+    includeMultipartPartContentType: boolean;
 }

@@ -101,6 +101,7 @@ import {
     unsetOrgCliVersion,
     warnIfVersionOutsideOrgBounds
 } from "./commands/org/orgConfig.js";
+import { createOrgToken, listOrgTokens, revokeOrgToken } from "./commands/org/orgTokens.js";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1.js";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2.js";
 import { resolveSpecsForWorkspaces } from "./commands/resolve-specs/resolveSpecsForWorkspaces.js";
@@ -920,6 +921,13 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     description:
                         "Skip opening a PR / pushing when the generated output has no diff from the base branch."
                 })
+                .option("auto-merge", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Enable GitHub auto-merge on the pull request opened by Fern (github mode: pull-request). " +
+                        "Skipped when breaking changes (MAJOR bump) are detected. Equivalent to `github.auto-merge: true` in generators.yml."
+                })
                 .option("generate-tests", {
                     boolean: true,
                     default: false,
@@ -1114,6 +1122,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     retryRateLimited: argv["retry-rate-limited"],
                     requireEnvVars: argv["require-env-vars"],
                     skipIfNoDiff: argv["skip-if-no-diff"],
+                    autoMerge: argv["auto-merge"],
                     generateTests: argv["generate-tests"],
                     pack: shouldPackage,
                     packMode: argv.packageMode,
@@ -1185,6 +1194,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 retryRateLimited: argv["retry-rate-limited"],
                 requireEnvVars: argv["require-env-vars"],
                 skipIfNoDiff: argv["skip-if-no-diff"],
+                autoMerge: argv["auto-merge"],
                 generateTests: argv["generate-tests"],
                 pack: shouldPackage,
                 packMode: argv.packageMode,
@@ -2237,6 +2247,12 @@ function addDocsMdGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCo
                     boolean: true,
                     hidden: true,
                     description: "Deprecated: local generation is the default"
+                })
+                .option("keep-logs", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Keep the parser logs under <fern folder>/.fern/library-docs-logs/<library>.log instead of a temporary file"
                 }),
         async (argv) => {
             cliContext.instrumentPostHogEvent({
@@ -2252,7 +2268,8 @@ function addDocsMdGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCo
                 project,
                 cliContext,
                 library: argv.library,
-                local: !argv.remote
+                local: !argv.remote,
+                keepLogs: argv.keepLogs
             });
         }
     );
@@ -4205,6 +4222,73 @@ function addOrgCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                         }
                     )
                     .demandCommand(1, "Specify what to unset, e.g. `fern org unset cli-version`."),
+            () => {
+                /* handled by subcommand */
+            }
+        );
+
+        yargs.command(
+            "token",
+            "Manage organization API keys",
+            (tokenYargs) =>
+                tokenYargs
+                    .command(
+                        "list",
+                        "List API keys for the organization",
+                        (y) =>
+                            y
+                                .option("org", {
+                                    type: "string",
+                                    description: "Override org ID (defaults to the org in fern.config.json)"
+                                })
+                                .option("json", { type: "boolean", description: "Output as JSON" })
+                                .option("csv", { type: "boolean", description: "Output as CSV" }),
+                        async (argv) => {
+                            cliContext.instrumentPostHogEvent({ command: "fern org token list" });
+                            await listOrgTokens({ cliContext, org: argv.org, json: argv.json, csv: argv.csv });
+                        }
+                    )
+                    .command(
+                        "create",
+                        "Create an API key for the organization",
+                        (y) =>
+                            y
+                                .option("org", {
+                                    type: "string",
+                                    description: "Override org ID (defaults to the org in fern.config.json)"
+                                })
+                                .option("description", {
+                                    type: "string",
+                                    description: "Name/description for the key"
+                                })
+                                .option("json", { type: "boolean", description: "Output as JSON" }),
+                        async (argv) => {
+                            cliContext.instrumentPostHogEvent({ command: "fern org token create" });
+                            await createOrgToken({
+                                cliContext,
+                                org: argv.org,
+                                description: argv.description,
+                                json: argv.json
+                            });
+                        }
+                    )
+                    .command(
+                        "revoke <tokenId>",
+                        "Revoke an organization API key",
+                        (y) =>
+                            y
+                                .positional("tokenId", {
+                                    type: "string",
+                                    demandOption: true,
+                                    description: "Token ID to revoke"
+                                })
+                                .option("json", { type: "boolean", description: "Output as JSON" }),
+                        async (argv) => {
+                            cliContext.instrumentPostHogEvent({ command: "fern org token revoke" });
+                            await revokeOrgToken({ cliContext, tokenId: argv.tokenId, json: argv.json });
+                        }
+                    )
+                    .demandCommand(1, "Specify a token command, e.g. `fern org token list`."),
             () => {
                 /* handled by subcommand */
             }

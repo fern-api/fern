@@ -18,6 +18,8 @@ public class AsyncSeedOauthClientCredentialsWithVariablesClientBuilder {
 
     private Optional<Integer> maxRetries = Optional.empty();
 
+    private Optional<Integer> maxConcurrentRequests = Optional.empty();
+
     private Optional<Long> initialRetryDelayMillis = Optional.empty();
 
     private Optional<Long> maxRetryDelayMillis = Optional.empty();
@@ -90,6 +92,14 @@ public class AsyncSeedOauthClientCredentialsWithVariablesClientBuilder {
     }
 
     /**
+     * Caps the number of in-flight requests (sync and async) the client will have at once. Unlimited unless set; must be positive.
+     */
+    public AsyncSeedOauthClientCredentialsWithVariablesClientBuilder maxConcurrentRequests(int maxConcurrentRequests) {
+        this.maxConcurrentRequests = Optional.of(maxConcurrentRequests);
+        return this;
+    }
+
+    /**
      * Sets the initial delay (in milliseconds) used for exponential backoff between retries. Defaults to 1000 milliseconds.
      */
     public AsyncSeedOauthClientCredentialsWithVariablesClientBuilder initialRetryDelayMillis(
@@ -156,6 +166,7 @@ public class AsyncSeedOauthClientCredentialsWithVariablesClientBuilder {
         setHttpClient(builder);
         setTimeouts(builder);
         setRetries(builder);
+        setConcurrencyLimit(builder);
         setLogging(builder);
         for (Map.Entry<String, String> header : this.customHeaders.entrySet()) {
             builder.addHeader(header.getKey(), header.getValue());
@@ -233,6 +244,18 @@ public class AsyncSeedOauthClientCredentialsWithVariablesClientBuilder {
         }
         if (this.retryJitterFactor.isPresent()) {
             builder.retryJitterFactor(this.retryJitterFactor.get());
+        }
+    }
+
+    /**
+     * Applies the in-flight request cap, if one was configured.
+     * Override this method to customize concurrency limiting.
+     *
+     * @param builder The ClientOptions.Builder to configure
+     */
+    protected void setConcurrencyLimit(ClientOptions.Builder builder) {
+        if (this.maxConcurrentRequests.isPresent()) {
+            builder.maxConcurrentRequests(this.maxConcurrentRequests.get());
         }
     }
 
@@ -357,6 +380,8 @@ public class AsyncSeedOauthClientCredentialsWithVariablesClientBuilder {
 
         private Optional<Integer> maxRetries = Optional.empty();
 
+        private Optional<Integer> maxConcurrentRequests = Optional.empty();
+
         private Optional<Long> initialRetryDelayMillis = Optional.empty();
 
         private Optional<Long> maxRetryDelayMillis = Optional.empty();
@@ -385,6 +410,14 @@ public class AsyncSeedOauthClientCredentialsWithVariablesClientBuilder {
          */
         public _Builder maxRetries(int maxRetries) {
             this.maxRetries = Optional.of(maxRetries);
+            return this;
+        }
+
+        /**
+         * Caps the number of in-flight requests (sync and async) the client will have at once. Unlimited unless set; must be positive.
+         */
+        public _Builder maxConcurrentRequests(int maxConcurrentRequests) {
+            this.maxConcurrentRequests = Optional.of(maxConcurrentRequests);
             return this;
         }
 
@@ -450,6 +483,9 @@ public class AsyncSeedOauthClientCredentialsWithVariablesClientBuilder {
             if (this.maxRetries.isPresent()) {
                 auth.maxRetries(this.maxRetries.get());
             }
+            if (this.maxConcurrentRequests.isPresent()) {
+                auth.maxConcurrentRequests(this.maxConcurrentRequests.get());
+            }
             if (this.initialRetryDelayMillis.isPresent()) {
                 auth.initialRetryDelayMillis(this.initialRetryDelayMillis.get());
             }
@@ -486,6 +522,9 @@ public class AsyncSeedOauthClientCredentialsWithVariablesClientBuilder {
             }
             if (this.maxRetries.isPresent()) {
                 auth.maxRetries(this.maxRetries.get());
+            }
+            if (this.maxConcurrentRequests.isPresent()) {
+                auth.maxConcurrentRequests(this.maxConcurrentRequests.get());
             }
             if (this.initialRetryDelayMillis.isPresent()) {
                 auth.initialRetryDelayMillis(this.initialRetryDelayMillis.get());
