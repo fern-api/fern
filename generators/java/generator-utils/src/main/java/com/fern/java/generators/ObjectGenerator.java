@@ -189,10 +189,12 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
         List<EnrichedObjectProperty> renamed = new ArrayList<>();
         Map<ObjectProperty, EnrichedObjectProperty> getters = new java.util.LinkedHashMap<>(objectPropertyGetters);
         for (EnrichedObjectProperty property : enrichedObjectProperties) {
-            if (property.objectProperty() != yielding.get() || property.fromInterface()) {
+            if (!property.objectProperty().equals(yielding.get()) || property.fromInterface()) {
                 renamed.add(property);
                 continue;
             }
+            // ImmutableEnrichedObjectProperty has no from(...) copy method (Immutables style), so every attribute
+            // is carried over explicitly; keep in sync with EnrichedObjectProperty.
             EnrichedObjectProperty updated = EnrichedObjectProperty.builder()
                     .camelCaseKey(camelCaseKey)
                     .pascalCaseKey(pascalCaseKey)

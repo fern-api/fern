@@ -257,15 +257,15 @@ public final class Number implements XmlSerializable {
         /**
          * Sets the text content of this element (same as {@code phoneNumber(...)}).
          */
-        public Builder text(Optional<String> phoneNumber) {
-            return phoneNumber(phoneNumber);
+        public Builder text(Optional<String> text) {
+            return phoneNumber(text);
         }
 
         /**
          * Sets the text content of this element (same as {@code phoneNumber(...)}).
          */
-        public Builder text(String phoneNumber) {
-            return phoneNumber(phoneNumber);
+        public Builder text(String text) {
+            return phoneNumber(text);
         }
 
         /**

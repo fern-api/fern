@@ -359,15 +359,15 @@ public final class Say implements XmlSerializable {
         /**
          * Sets the text content of this element (same as {@code message(...)}).
          */
-        public Builder text(Optional<String> message) {
-            return message(message);
+        public Builder text(Optional<String> text) {
+            return message(text);
         }
 
         /**
          * Sets the text content of this element (same as {@code message(...)}).
          */
-        public Builder text(String message) {
-            return message(message);
+        public Builder text(String text) {
+            return message(text);
         }
 
         /**

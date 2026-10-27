@@ -172,7 +172,7 @@ public final class Redirect implements XmlSerializable {
         /**
          * Sets the text content of this element (same as {@code url(...)}).
          */
-        _FinalStage text(@NotNull String url);
+        _FinalStage text(@NotNull String text);
 
         /**
          * Sets {@code url} from a {@link URI}.
@@ -373,8 +373,8 @@ public final class Redirect implements XmlSerializable {
          * Sets the text content of this element (same as {@code url(...)}).
          */
         @Override
-        public _FinalStage text(@NotNull String url) {
-            return url(url);
+        public _FinalStage text(@NotNull String text) {
+            return url(text);
         }
 
         /**

@@ -158,8 +158,20 @@ public final class XmlObjectMethodsGenerator {
                 NameUtils.getName(property.getName()).getCamelCase().getSafeName());
     }
 
-    private static boolean isUriString(TypeReference type) {
-        return XmlTypeUtils.unwrapOptional(type)
+    /** {@code format: uri} strings, also when referenced through (nested) aliases. */
+    private boolean isUriString(TypeReference type) {
+        TypeReference unwrapped = XmlTypeUtils.unwrapOptional(type);
+        Optional<TypeId> typeId = unwrapped.getNamed().map(named -> named.getTypeId());
+        if (typeId.isPresent()) {
+            TypeDeclaration declaration = typeDeclarations.get(typeId.get());
+            return declaration != null
+                    && declaration
+                            .getShape()
+                            .getAlias()
+                            .map(alias -> isUriString(alias.getAliasOf()))
+                            .orElse(false);
+        }
+        return unwrapped
                 .getPrimitive()
                 .flatMap(primitive -> primitive.getV2())
                 .flatMap(v2 -> v2.getString())
@@ -749,8 +761,11 @@ public final class XmlObjectMethodsGenerator {
                 .map(method -> delegatingOverload(
                         method,
                         TEXT_FIELD_NAME,
-                        method.parameters.get(0),
-                        CodeBlock.of("$L", method.parameters.get(0).name),
+                        ParameterSpec.builder(method.parameters.get(0).type, TEXT_FIELD_NAME)
+                                .addModifiers(method.parameters.get(0).modifiers)
+                                .addAnnotations(method.parameters.get(0).annotations)
+                                .build(),
+                        CodeBlock.of("$L", TEXT_FIELD_NAME),
                         "Sets the text content of this element (same as {@code " + textField.get() + "(...)}).\n"))
                 .collect(Collectors.toList());
         return aliases.isEmpty()
