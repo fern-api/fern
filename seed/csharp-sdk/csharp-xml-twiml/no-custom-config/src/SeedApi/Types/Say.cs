@@ -22,7 +22,7 @@ public record Say : IJsonOnDeserialized, IXmlNode
     /// </summary>
     public Say(string message)
     {
-        Message = message;
+        this.Message = message;
     }
 
     /// <summary>

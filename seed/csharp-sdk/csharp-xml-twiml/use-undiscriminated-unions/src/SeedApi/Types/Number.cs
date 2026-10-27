@@ -19,7 +19,7 @@ public record Number : IJsonOnDeserialized, IXmlNode
     /// </summary>
     public Number(string phoneNumber)
     {
-        PhoneNumber = phoneNumber;
+        this.PhoneNumber = phoneNumber;
     }
 
     [JsonPropertyName("phone_number")]

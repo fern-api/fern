@@ -19,7 +19,7 @@ public record Dial : IJsonOnDeserialized, IXmlNode
     /// </summary>
     public Dial(string text)
     {
-        Text = text;
+        this.Text = text;
     }
 
     [JsonPropertyName("record")]

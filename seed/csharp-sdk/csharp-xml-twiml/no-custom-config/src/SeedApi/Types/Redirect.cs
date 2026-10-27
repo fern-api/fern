@@ -1,3 +1,4 @@
+using global::System.Diagnostics.CodeAnalysis;
 using global::System.Text.Json;
 using global::System.Text.Json.Serialization;
 using global::System.Xml.Linq;
@@ -20,9 +21,10 @@ public record Redirect : IJsonOnDeserialized, IXmlNode
     /// <summary>
     /// Creates a <c>&lt;Redirect&gt;</c> element with the given text content.
     /// </summary>
+    [SetsRequiredMembers]
     public Redirect(string url)
     {
-        Url = url;
+        this.Url = url;
     }
 
     [JsonPropertyName("url")]

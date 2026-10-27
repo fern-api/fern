@@ -103,7 +103,7 @@ export function getXmlTextFieldName(
     const taken = new Set(
         properties
             .filter((candidate) => candidate !== property)
-            .map((candidate) => context.case.pascalSafe(candidate.name))
+            .map((candidate) => context.csharp.getPropertyName(classReference, candidate))
     );
     return taken.has(TEXT_FIELD_NAME) || classReference.name === TEXT_FIELD_NAME
         ? `${defaultName}${TEXT_FIELD_NAME}`
@@ -307,9 +307,19 @@ export class XmlObjectGenerator {
             doc: {
                 summary: `Creates a <c>&lt;${this.xml.name}&gt;</c> element with the given text content.`
             },
+            annotations: this.isRequiredValue(text)
+                ? [
+                      this.csharp.annotation({
+                          reference: this.csharp.classReference({
+                              name: "SetsRequiredMembers",
+                              namespace: "System.Diagnostics.CodeAnalysis"
+                          })
+                      })
+                  ]
+                : [],
             parameters: [this.csharp.parameter({ name: parameterName, type: text.itemCsType })],
             body: this.csharp.codeblock((writer) => {
-                writer.writeLine(`${text.field.name} = ${parameterName};`);
+                writer.writeLine(`this.${text.field.name} = ${parameterName};`);
             })
         });
     }
@@ -1286,7 +1296,7 @@ export class XmlObjectGenerator {
             })
         });
 
-        const [textScalar, ...otherScalars] = scalarProperties;
+        const [textScalar] = scalarProperties;
         const [textParameter, ...otherParameters] = parameters;
         if (
             textScalar == null ||
@@ -1316,7 +1326,7 @@ export class XmlObjectGenerator {
             }),
             body: this.csharp.codeblock((writer) => {
                 writer.writeLine(
-                    `return ${name}(${[`${textParameter.name}.ToString()`, ...otherScalars.map((_, index) => otherParameters[index]?.name ?? "")].join(", ")});`
+                    `return ${name}(${[`${textParameter.name}.ToString()`, ...otherParameters.map((parameter) => parameter.name)].join(", ")});`
                 );
             })
         });
