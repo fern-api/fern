@@ -7,6 +7,8 @@ import com.seed.builderExtension.core.ClientOptions;
 import com.seed.builderExtension.core.Environment;
 import com.seed.builderExtension.core.LogConfig;
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -103,7 +105,12 @@ public abstract class AsyncBaseClientBuilder<T extends AsyncBaseClientBuilder<T>
         if (retryDelays == null) {
             throw new IllegalArgumentException("retryDelays must not be null");
         }
-        this.retryDelays = Optional.of(retryDelays);
+        for (Duration delay : retryDelays) {
+            if (delay == null || delay.isNegative()) {
+                throw new IllegalArgumentException("retryDelays must only contain non-negative durations: " + delay);
+            }
+        }
+        this.retryDelays = Optional.of(Collections.unmodifiableList(new ArrayList<>(retryDelays)));
         return self();
     }
 

@@ -513,9 +513,11 @@ public class RetryInterceptor implements Interceptor {
             }
         }
 
-        // An explicit schedule replaces exponential backoff (no jitter: the caller chose the exact delays)
-        if (retryDelays.isPresent()) {
-            return retryDelays.get().get(retryAttempt);
+        // An explicit schedule replaces exponential backoff (no jitter: the caller chose the exact delays). The
+        // attempt count is bounded by the schedule size in resolveMaxRetries; clamp defensively anyway.
+        if (retryDelays.isPresent() && !retryDelays.get().isEmpty()) {
+            List<Duration> schedule = retryDelays.get();
+            return schedule.get(Math.min(retryAttempt, schedule.size() - 1));
         }
 
         // Fall back to exponential backoff, with symmetric jitter

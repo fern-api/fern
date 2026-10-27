@@ -7,7 +7,9 @@ import com.seed.basicAuthEnvironmentVariables.core.ClientOptions;
 import com.seed.basicAuthEnvironmentVariables.core.Environment;
 import com.seed.basicAuthEnvironmentVariables.core.LogConfig;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -97,7 +99,12 @@ public class SeedBasicAuthEnvironmentVariablesClientBuilder {
         if (retryDelays == null) {
             throw new IllegalArgumentException("retryDelays must not be null");
         }
-        this.retryDelays = Optional.of(retryDelays);
+        for (Duration delay : retryDelays) {
+            if (delay == null || delay.isNegative()) {
+                throw new IllegalArgumentException("retryDelays must only contain non-negative durations: " + delay);
+            }
+        }
+        this.retryDelays = Optional.of(Collections.unmodifiableList(new ArrayList<>(retryDelays)));
         return this;
     }
 

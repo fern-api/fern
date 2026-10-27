@@ -11,6 +11,7 @@ import com.seed.javaEndpointSecurityOauthTokenOverride.core.OAuthAuthProvider;
 import com.seed.javaEndpointSecurityOauthTokenOverride.core.RoutingAuthProvider;
 import com.seed.javaEndpointSecurityOauthTokenOverride.resources.auth.AuthClient;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -137,7 +138,12 @@ public class SeedJavaEndpointSecurityOauthTokenOverrideClientBuilder {
         if (retryDelays == null) {
             throw new IllegalArgumentException("retryDelays must not be null");
         }
-        this.retryDelays = Optional.of(retryDelays);
+        for (Duration delay : retryDelays) {
+            if (delay == null || delay.isNegative()) {
+                throw new IllegalArgumentException("retryDelays must only contain non-negative durations: " + delay);
+            }
+        }
+        this.retryDelays = Optional.of(Collections.unmodifiableList(new ArrayList<>(retryDelays)));
         return this;
     }
 

@@ -730,10 +730,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 .addJavadoc(RETRY_DELAYS_JAVADOC)
                 .addParameter(RETRY_DELAY_LIST_TYPE, "retryDelays")
                 .returns(isExtensible ? TypeVariableName.get("T") : builderName)
-                .beginControlFlow("if (retryDelays == null)")
-                .addStatement("throw new $T($S)", IllegalArgumentException.class, "retryDelays must not be null")
-                .endControlFlow()
-                .addStatement("this.retryDelays = $T.of(retryDelays)", Optional.class)
+                .addCode(validateAndCopyRetryDelays())
                 .addStatement(isExtensible ? "return self()" : "return this")
                 .build());
 
@@ -1480,6 +1477,28 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
     private static final TypeName RETRY_DELAYS_TYPE =
             ParameterizedTypeName.get(ClassName.get(Optional.class), RETRY_DELAY_LIST_TYPE);
+
+    /** Same validation and defensive copy as {@code ClientOptions.Builder.retryDelays}, so failures are immediate. */
+    private static CodeBlock validateAndCopyRetryDelays() {
+        return CodeBlock.builder()
+                .beginControlFlow("if (retryDelays == null)")
+                .addStatement("throw new $T($S)", IllegalArgumentException.class, "retryDelays must not be null")
+                .endControlFlow()
+                .beginControlFlow("for ($T delay : retryDelays)", Duration.class)
+                .beginControlFlow("if (delay == null || delay.isNegative())")
+                .addStatement(
+                        "throw new $T($S + delay)",
+                        IllegalArgumentException.class,
+                        "retryDelays must only contain non-negative durations: ")
+                .endControlFlow()
+                .endControlFlow()
+                .addStatement(
+                        "this.retryDelays = $T.of($T.unmodifiableList(new $T<>(retryDelays)))",
+                        Optional.class,
+                        Collections.class,
+                        ArrayList.class)
+                .build();
+    }
 
     private static final String RETRY_DELAYS_JAVADOC =
             "Sets an explicit retry schedule: the n-th retry waits for the n-th duration and the request stops "
@@ -2723,11 +2742,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .addJavadoc(RETRY_DELAYS_JAVADOC)
                         .addParameter(RETRY_DELAY_LIST_TYPE, "retryDelays")
                         .returns(builderStageClassName)
-                        .beginControlFlow("if (retryDelays == null)")
-                        .addStatement(
-                                "throw new $T($S)", IllegalArgumentException.class, "retryDelays must not be null")
-                        .endControlFlow()
-                        .addStatement("this.retryDelays = $T.of(retryDelays)", Optional.class)
+                        .addCode(validateAndCopyRetryDelays())
                         .addStatement("return this")
                         .build());
 
