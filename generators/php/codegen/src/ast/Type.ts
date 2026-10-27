@@ -502,7 +502,7 @@ export class Type extends AstNode {
         const uniqueTypes = this.getUniqueTypes({ types: unionTypes, comment, writer });
         const types = this.unwrapOptionalTypes(uniqueTypes);
 
-        const hasMixed = types.filter((type) => type.underlyingType().internalType.type === "mixed").length > 0;
+        const hasMixed = this.unionHasMixed(types);
         if (hasMixed && !comment) {
             writer.write("mixed");
             return;

@@ -1,13 +1,12 @@
 import { describe, expect, it } from "vitest";
 import { Writer } from "../ast/core/Writer.js";
 import { Type } from "../ast/Type.js";
-import { BasePhpCustomConfigSchema } from "../custom-config/BasePhpCustomConfigSchema.js";
 
 function write(type: Type, comment = false): string {
     const writer = new Writer({
         namespace: "Seed",
         rootNamespace: "Seed",
-        customConfig: {} as BasePhpCustomConfigSchema
+        customConfig: {}
     });
     type.write(writer, { comment });
     return writer.toString(true);
