@@ -6,7 +6,9 @@ package com.customprefix;
 import com.customprefix.core.ClientOptions;
 import com.customprefix.core.Environment;
 import com.customprefix.core.LogConfig;
+import java.time.Duration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -20,6 +22,8 @@ public class AsyncSeedApiClientBuilder {
     private Optional<Integer> maxConcurrentRequests = Optional.empty();
 
     private Optional<Set<Integer>> retryOnStatusCodes = Optional.empty();
+
+    private Optional<List<Duration>> retryDelays = Optional.empty();
 
     private Optional<Long> initialRetryDelayMillis = Optional.empty();
 
@@ -82,6 +86,17 @@ public class AsyncSeedApiClientBuilder {
             throw new IllegalArgumentException("retryOnStatusCodes must not be null");
         }
         this.retryOnStatusCodes = Optional.of(retryOnStatusCodes);
+        return this;
+    }
+
+    /**
+     * Sets an explicit retry schedule: the n-th retry waits for the n-th duration and the request stops retrying once the list is exhausted, so the list size replaces {@code maxRetries} and the exponential backoff settings. Delays are used as-is (no jitter); a {@code Retry-After} / {@code X-RateLimit-Reset} header still takes precedence for that attempt.
+     */
+    public AsyncSeedApiClientBuilder retryDelays(List<Duration> retryDelays) {
+        if (retryDelays == null) {
+            throw new IllegalArgumentException("retryDelays must not be null");
+        }
+        this.retryDelays = Optional.of(retryDelays);
         return this;
     }
 
@@ -218,6 +233,9 @@ public class AsyncSeedApiClientBuilder {
         }
         if (this.retryOnStatusCodes.isPresent()) {
             builder.retryOnStatusCodes(this.retryOnStatusCodes.get());
+        }
+        if (this.retryDelays.isPresent()) {
+            builder.retryDelays(this.retryDelays.get());
         }
     }
 

@@ -3,6 +3,7 @@
  */
 package com.seed.pathParameters.core;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -45,6 +46,8 @@ public final class ClientOptions {
 
     private final Optional<Set<Integer>> retryOnStatusCodes;
 
+    private final Optional<List<Duration>> retryDelays;
+
     private final Optional<LogConfig> logging;
 
     private final String tenantId;
@@ -63,6 +66,7 @@ public final class ClientOptions {
             Optional<Long> maxRetryDelayMillis,
             Optional<Double> retryJitterFactor,
             Optional<Set<Integer>> retryOnStatusCodes,
+            Optional<List<Duration>> retryDelays,
             Optional<LogConfig> logging,
             String tenantId) {
         this.environment = environment;
@@ -87,6 +91,7 @@ public final class ClientOptions {
         this.maxRetryDelayMillis = maxRetryDelayMillis;
         this.retryJitterFactor = retryJitterFactor;
         this.retryOnStatusCodes = retryOnStatusCodes;
+        this.retryDelays = retryDelays;
         this.logging = logging;
         this.tenantId = tenantId;
     }
@@ -148,6 +153,10 @@ public final class ClientOptions {
 
     public Optional<Set<Integer>> retryOnStatusCodes() {
         return this.retryOnStatusCodes;
+    }
+
+    public Optional<List<Duration>> retryDelays() {
+        return this.retryDelays;
     }
 
     /**
@@ -240,6 +249,8 @@ public final class ClientOptions {
         private Optional<Double> retryJitterFactor = Optional.empty();
 
         private Optional<Set<Integer>> retryOnStatusCodes = Optional.empty();
+
+        private Optional<List<Duration>> retryDelays = Optional.empty();
 
         private Optional<Integer> timeout = Optional.empty();
 
@@ -344,6 +355,28 @@ public final class ClientOptions {
         }
 
         /**
+         * Sets an explicit retry schedule: the n-th retry waits for the n-th duration and the
+         * request stops retrying once the list is exhausted, e.g. {@code List.of(Duration.ofSeconds(1),
+         * Duration.ofSeconds(5), Duration.ofSeconds(30))} retries at most three times. The list size
+         * replaces maxRetries() and the exponential backoff settings; delays are used as-is (no jitter).
+         * A {@code Retry-After} / {@code X-RateLimit-Reset} header still takes precedence over the
+         * scheduled delay for that attempt. An empty list disables retries.
+         */
+        public Builder retryDelays(List<Duration> retryDelays) {
+            if (retryDelays == null) {
+                throw new IllegalArgumentException("retryDelays must not be null");
+            }
+            for (Duration delay : retryDelays) {
+                if (delay == null || delay.isNegative()) {
+                    throw new IllegalArgumentException(
+                            "retryDelays must only contain non-negative durations: " + delay);
+                }
+            }
+            this.retryDelays = Optional.of(Collections.unmodifiableList(new ArrayList<>(retryDelays)));
+            return this;
+        }
+
+        /**
          * Caps the number of requests that may be in flight at the same time, for both the
          * synchronous and the asynchronous client. Defaults to no limit.
          * A request holds a slot from the moment it is sent until its response body is
@@ -403,7 +436,8 @@ public final class ClientOptions {
                                         this.initialRetryDelayMillis,
                                         this.maxRetryDelayMillis,
                                         this.retryJitterFactor,
-                                        this.retryOnStatusCodes));
+                                        this.retryOnStatusCodes,
+                                        this.retryDelays));
                     }
                 }
             } else {
@@ -417,7 +451,8 @@ public final class ClientOptions {
                                 this.initialRetryDelayMillis,
                                 this.maxRetryDelayMillis,
                                 this.retryJitterFactor,
-                                this.retryOnStatusCodes));
+                                this.retryOnStatusCodes,
+                                this.retryDelays));
             }
 
             this.maxConcurrentRequests.ifPresent(limit -> {
@@ -452,6 +487,7 @@ public final class ClientOptions {
                     this.maxRetryDelayMillis,
                     this.retryJitterFactor,
                     this.retryOnStatusCodes,
+                    this.retryDelays,
                     this.logging,
                     this.tenantId);
         }
@@ -474,6 +510,7 @@ public final class ClientOptions {
             builder.maxRetryDelayMillis = clientOptions.maxRetryDelayMillis();
             builder.retryJitterFactor = clientOptions.retryJitterFactor();
             builder.retryOnStatusCodes = clientOptions.retryOnStatusCodes();
+            builder.retryDelays = clientOptions.retryDelays();
             builder.logging = clientOptions.logging();
             return builder;
         }

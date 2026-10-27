@@ -9,8 +9,10 @@ import java.time.Duration;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
@@ -38,6 +40,7 @@ public class RetryInterceptor implements Interceptor {
     private final Duration maxRetryDelay;
     private final double jitterFactor;
     private final Optional<Set<Integer>> retryOnStatusCodes;
+    private final Optional<List<Duration>> retryDelays;
     private final Random random = new Random();
 
     public RetryInterceptor(int maxRetries) {
@@ -62,6 +65,28 @@ public class RetryInterceptor implements Interceptor {
             Optional<Long> maxRetryDelayMillis,
             Optional<Double> jitterFactor,
             Optional<Set<Integer>> retryOnStatusCodes) {
+        this(
+                maxRetries,
+                initialRetryDelayMillis,
+                maxRetryDelayMillis,
+                jitterFactor,
+                retryOnStatusCodes,
+                Optional.empty());
+    }
+
+    /**
+     * @param retryDelays when present, an explicit retry schedule: the n-th retry waits for the n-th duration and the
+     *     call stops retrying once the list is exhausted, so its size replaces {@code maxRetries} (a per-request
+     *     {@link MaxRetriesOverride} can still lower the count). The exponential backoff settings are not used, but a
+     *     {@code Retry-After} / {@code X-RateLimit-Reset} header still takes precedence over the scheduled delay.
+     */
+    public RetryInterceptor(
+            int maxRetries,
+            Optional<Long> initialRetryDelayMillis,
+            Optional<Long> maxRetryDelayMillis,
+            Optional<Double> jitterFactor,
+            Optional<Set<Integer>> retryOnStatusCodes,
+            Optional<List<Duration>> retryDelays) {
         initialRetryDelayMillis.ifPresent(delay -> {
             if (delay < 0) {
                 throw new IllegalArgumentException("initialRetryDelayMillis must be non-negative");
@@ -82,6 +107,18 @@ public class RetryInterceptor implements Interceptor {
         this.maxRetryDelay = maxRetryDelayMillis.map(Duration::ofMillis).orElse(DEFAULT_MAX_RETRY_DELAY);
         this.jitterFactor = jitterFactor.orElse(DEFAULT_JITTER_FACTOR);
         this.retryOnStatusCodes = retryOnStatusCodes.map(RetryInterceptor::copyStatusCodes);
+        this.retryDelays = retryDelays.map(RetryInterceptor::copyRetryDelays);
+    }
+
+    private static List<Duration> copyRetryDelays(List<Duration> delays) {
+        List<Duration> copy = new ArrayList<>(delays.size());
+        for (Duration delay : delays) {
+            if (delay == null || delay.isNegative()) {
+                throw new IllegalArgumentException("retryDelays must only contain non-negative durations: " + delay);
+            }
+            copy.add(delay);
+        }
+        return Collections.unmodifiableList(copy);
     }
 
     private static Set<Integer> copyStatusCodes(Set<Integer> statusCodes) {
@@ -115,6 +152,10 @@ public class RetryInterceptor implements Interceptor {
 
     private int resolveMaxRetries(Request request) {
         MaxRetriesOverride override = request.tag(MaxRetriesOverride.class);
+        if (retryDelays.isPresent()) {
+            int scheduled = retryDelays.get().size();
+            return override != null ? Math.min(override.getValue(), scheduled) : scheduled;
+        }
         return override != null ? override.getValue() : this.maxRetries;
     }
 
@@ -470,6 +511,11 @@ public class RetryInterceptor implements Interceptor {
             if (rateLimitDelay.isPresent()) {
                 return rateLimitDelay.get();
             }
+        }
+
+        // An explicit schedule replaces exponential backoff (no jitter: the caller chose the exact delays)
+        if (retryDelays.isPresent()) {
+            return retryDelays.get().get(retryAttempt);
         }
 
         // Fall back to exponential backoff, with symmetric jitter
