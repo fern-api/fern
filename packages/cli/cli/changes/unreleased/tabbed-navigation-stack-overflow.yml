@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern check` and `fern generate --docs` no longer fail with "Maximum call stack size exceeded"
+    on large sites whose `docs.yml` uses `tabs`. The parser now tries the tabbed navigation shape
+    before the untabbed one, so a tab's `layout` is no longer validated as an API reference layout
+    first.
+  type: fix

@@ -1747,6 +1747,9 @@
       ],
       "additionalProperties": false
     },
+    "docs.TabId": {
+      "type": "string"
+    },
     "docs.CollapsedStringValue": {
       "type": "string",
       "enum": [
@@ -3603,15 +3606,6 @@
         }
       ]
     },
-    "docs.UntabbedNavigationConfig": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/docs.NavigationItem"
-      }
-    },
-    "docs.TabId": {
-      "type": "string"
-    },
     "docs.TabbedNavigationItemWithLayout": {
       "type": "object",
       "properties": {
@@ -3783,13 +3777,19 @@
         "$ref": "#/definitions/docs.TabbedNavigationItem"
       }
     },
+    "docs.UntabbedNavigationConfig": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/docs.NavigationItem"
+      }
+    },
     "docs.NavigationConfig": {
       "anyOf": [
         {
-          "$ref": "#/definitions/docs.UntabbedNavigationConfig"
+          "$ref": "#/definitions/docs.TabbedNavigationConfig"
         },
         {
-          "$ref": "#/definitions/docs.TabbedNavigationConfig"
+          "$ref": "#/definitions/docs.UntabbedNavigationConfig"
         }
       ]
     },
