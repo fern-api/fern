@@ -1,5 +1,5 @@
 import { resolveSnippetPackageName, VisibilityFilter } from "@fern-api/api-workspace-commons";
-import { FernToken, GUEST_SESSION_REJECTED_HINT } from "@fern-api/auth";
+import { describeGuestRejection, FernToken, isGuestRejection, readGuestRejection } from "@fern-api/auth";
 import { docsYml, generatorsYml } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
 import {
@@ -1495,7 +1495,16 @@ async function startDocsRegisterFailed(
         throw new DocsPublishConflictError();
     }
 
-    const authErrorMessage = getAuthenticationErrorMessage(error, organization, domain, loginCommand, tokenType);
+    if (tokenType === "guest") {
+        const rejection = readGuestRejection(error);
+        if (isGuestRejection(rejection)) {
+            return context.failAndThrow(describeGuestRejection(rejection), undefined, {
+                code: CliError.Code.AuthError
+            });
+        }
+    }
+
+    const authErrorMessage = getAuthenticationErrorMessage(error, organization, domain, loginCommand);
     if (authErrorMessage != null) {
         return context.failAndThrow(authErrorMessage, undefined, { code: CliError.Code.AuthError });
     }
@@ -1544,8 +1553,7 @@ function getAuthenticationErrorMessage(
     error: unknown,
     organization: string,
     domain: string,
-    loginCommand: string,
-    tokenType: FernToken["type"]
+    loginCommand: string
 ): string | undefined {
     if (typeof error !== "object" || error == null) {
         return undefined;
@@ -1558,9 +1566,6 @@ function getAuthenticationErrorMessage(
         const statusCode = typeof content.statusCode === "number" ? content.statusCode : undefined;
 
         if (statusCode === 401 || statusCode === 403) {
-            if (tokenType === "guest") {
-                return `Publishing docs to '${domain}' was rejected. ${GUEST_SESSION_REJECTED_HINT}`;
-            }
             return buildAuthFailureMessage(domain, organization, content, loginCommand);
         }
     }

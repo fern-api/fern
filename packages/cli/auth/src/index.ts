@@ -1,8 +1,9 @@
 export type { FernGuestToken, FernOrganizationToken, FernToken, FernUserToken } from "./FernToken.js";
+export type { GuestRejection } from "./guest/describeGuestRejection.js";
+export { describeGuestRejection, isGuestRejection, readGuestRejection } from "./guest/describeGuestRejection.js";
 export type { StoredGuestSession } from "./guest/GuestSession.js";
 export {
     GUEST_SESSION_POINTER_FILENAME,
-    GUEST_SESSION_REJECTED_HINT,
     getPathToGuestSessionFile,
     getPathToGuestSessionPointer,
     isGuestSessionLive,
