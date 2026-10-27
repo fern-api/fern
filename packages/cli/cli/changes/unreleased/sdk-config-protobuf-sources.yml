@@ -3,7 +3,7 @@
 - summary: |
     Load protobuf (`proto`) sources from `sdk-config.yml` into the SDK Config workspace with the same
     semantics as `proto` specs in `generators.yml`: local and git roots, an optional target, ordered
-    overrides, dependencies, `localGeneration` and `fromOpenApi`. `fern check` and `fern generate --local`
-    accept them; hosted SDK Config generation and the `cli` target reject them until conversion lands.
+    overrides, dependencies, `localGeneration` and `fromOpenApi`. `fern check` validates them; SDK Config
+    generation (hosted and `--local`) rejects them with a clear error until protobuf-to-OpenAPI conversion lands.
     Upgrades `@postman/sdk-config` to 0.17.0.
   type: feat

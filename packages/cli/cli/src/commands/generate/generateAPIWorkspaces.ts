@@ -27,9 +27,8 @@ import { getGeneratorSelectedTargetIndexes, loadSdkConfigV1 } from "./loadSdkCon
 import { PackMode } from "./packLocalOutput.js";
 import { resolveGroupsForWorkspace } from "./resolveGroupsForWorkspace.js";
 import { resolvePosthogCommandLabel } from "./resolvePosthogCommandLabel.js";
-import { resolveSdkConfigSourceRoot, type SdkConfigWorkspaceOwner } from "./resolveSdkConfigSourceRoot.js";
 import { getSdkConfigGeneratorName } from "./sdkConfigGeneratorName.js";
-import { assertNoHostedProtobufSources } from "./sdkConfigProtobufSources.js";
+import { assertNoProtobufSourcesForGeneration } from "./sdkConfigProtobufSources.js";
 import { shouldPreflightGenerator } from "./shouldPreflightGenerator.js";
 
 export const GenerationMode = {
@@ -63,6 +62,12 @@ interface WorkspaceGeneration {
 interface PreparedSdkConfigGeneration extends WorkspaceGeneration {
     configPath: string;
     cleanup: () => Promise<void>;
+}
+
+interface SdkConfigWorkspaceOwner {
+    absoluteFilePath: AbsoluteFilePath;
+    workspaceName: string | undefined;
+    getAbsoluteFilePaths?: () => AbsoluteFilePath[];
 }
 
 export async function generateAPIWorkspaces({
@@ -440,6 +445,7 @@ async function prepareSdkConfigGenerations({
                 preview,
                 targetNames != null ? { targetNames } : sdkConfigPath != null ? { generatorName, generatorIndex } : {}
             );
+            assertNoProtobufSourcesForGeneration(loaded.config);
             const selectedTargetIndexes =
                 sdkConfigPath != null && targetNames == null
                     ? getGeneratorSelectedTargetIndexes(loaded.config, { generatorName, generatorIndex })
@@ -486,7 +492,7 @@ async function prepareSdkConfigGenerations({
                     }
                 }
             }
-            const sourceRoot = resolveSdkConfigSourceRoot(candidate.owner, loaded.absolutePath);
+            const sourceRoot = resolveSourceRoot(candidate.owner, loaded.absolutePath);
             const selectedCliTargets = selectedTargets.filter(({ target }) => target.language === CLI_LANGUAGE);
             if (selectedCliTargets.length > 0) {
                 const cliTarget = await cliContext.runTask(async (context) =>
@@ -525,9 +531,6 @@ async function prepareSdkConfigGenerations({
                     targets: nonCliTargets.flatMap(({ payload }) => (payload != null ? [payload] : []))
                 }
             };
-            if (!useLocalDocker) {
-                assertNoHostedProtobufSources(sdkConfigTargets.config);
-            }
             const created = await cliContext.runTask(async (context) =>
                 createSdkConfigWorkspace({
                     sdkConfig: sdkConfigTargets.config,
@@ -573,6 +576,38 @@ async function findLocalRunnerSdkConfig(directory: string): Promise<string | und
         }
     }
     return undefined;
+}
+
+function resolveSourceRoot(
+    owner: SdkConfigWorkspaceOwner | undefined,
+    absolutePathToConfig: string
+): string | undefined {
+    if (owner == null) {
+        return undefined;
+    }
+    const boundary = commonAncestor(path.dirname(path.resolve(absolutePathToConfig)), owner.absoluteFilePath);
+    return (owner.getAbsoluteFilePaths?.() ?? []).reduce<string>(
+        (current, absoluteFilePath) => commonAncestor(current, absoluteFilePath),
+        boundary
+    );
+}
+
+function commonAncestor(candidateRoot: string, candidatePath: string): string {
+    const resolvedPath = path.resolve(candidatePath);
+    let root = path.resolve(candidateRoot);
+    while (!isWithin(root, resolvedPath)) {
+        const parent = path.dirname(root);
+        if (parent === root) {
+            return root;
+        }
+        root = parent;
+    }
+    return root;
+}
+
+function isWithin(directory: string, candidate: string): boolean {
+    const relativePath = path.relative(directory, candidate);
+    return relativePath === "" || (!relativePath.startsWith(`..${path.sep}`) && relativePath !== "..");
 }
 
 function validateUniqueLanguageOwnership({
