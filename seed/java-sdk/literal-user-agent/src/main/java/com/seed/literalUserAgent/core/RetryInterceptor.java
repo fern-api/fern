@@ -9,8 +9,11 @@ import java.time.Duration;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Random;
+import java.util.Set;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -34,6 +37,7 @@ public class RetryInterceptor implements Interceptor {
     private final Duration initialRetryDelay;
     private final Duration maxRetryDelay;
     private final double jitterFactor;
+    private final Optional<Set<Integer>> retryOnStatusCodes;
     private final Random random = new Random();
 
     public RetryInterceptor(int maxRetries) {
@@ -45,6 +49,19 @@ public class RetryInterceptor implements Interceptor {
             Optional<Long> initialRetryDelayMillis,
             Optional<Long> maxRetryDelayMillis,
             Optional<Double> jitterFactor) {
+        this(maxRetries, initialRetryDelayMillis, maxRetryDelayMillis, jitterFactor, Optional.empty());
+    }
+
+    /**
+     * @param retryOnStatusCodes when present, the only HTTP status codes that trigger a retry; when empty, the
+     *     generated default set (see {@link #shouldRetry(int)}) is used.
+     */
+    public RetryInterceptor(
+            int maxRetries,
+            Optional<Long> initialRetryDelayMillis,
+            Optional<Long> maxRetryDelayMillis,
+            Optional<Double> jitterFactor,
+            Optional<Set<Integer>> retryOnStatusCodes) {
         initialRetryDelayMillis.ifPresent(delay -> {
             if (delay < 0) {
                 throw new IllegalArgumentException("initialRetryDelayMillis must be non-negative");
@@ -64,6 +81,19 @@ public class RetryInterceptor implements Interceptor {
         this.initialRetryDelay = initialRetryDelayMillis.map(Duration::ofMillis).orElse(DEFAULT_INITIAL_RETRY_DELAY);
         this.maxRetryDelay = maxRetryDelayMillis.map(Duration::ofMillis).orElse(DEFAULT_MAX_RETRY_DELAY);
         this.jitterFactor = jitterFactor.orElse(DEFAULT_JITTER_FACTOR);
+        this.retryOnStatusCodes = retryOnStatusCodes.map(RetryInterceptor::copyStatusCodes);
+    }
+
+    private static Set<Integer> copyStatusCodes(Set<Integer> statusCodes) {
+        Set<Integer> copy = new HashSet<>();
+        for (Integer statusCode : statusCodes) {
+            if (statusCode == null || statusCode < 100 || statusCode > 599) {
+                throw new IllegalArgumentException(
+                        "retryOnStatusCodes contains an invalid HTTP status code: " + statusCode);
+            }
+            copy.add(statusCode);
+        }
+        return Collections.unmodifiableSet(copy);
     }
 
     @Override
@@ -171,6 +201,7 @@ public class RetryInterceptor implements Interceptor {
     }
 
     private static final class AsyncRetryingCall implements AsyncCall, Callback {
+        private final RetryInterceptor retryInterceptor;
         private final OkHttpClient client;
         private final Request request;
         private final ExponentialBackoff backoff;
@@ -186,6 +217,7 @@ public class RetryInterceptor implements Interceptor {
         private boolean completed;
 
         AsyncRetryingCall(RetryInterceptor retryInterceptor, OkHttpClient client, Request request, int maxRetries) {
+            this.retryInterceptor = retryInterceptor;
             this.client = client;
             this.request = request.newBuilder()
                     .tag(AsyncAttempt.class, AsyncAttempt.INSTANCE)
@@ -242,7 +274,7 @@ public class RetryInterceptor implements Interceptor {
 
         @Override
         public void onResponse(Call call, Response response) throws IOException {
-            if (backoff != null && shouldRetry(response.code())) {
+            if (retryInterceptor != null && retryInterceptor.shouldRetry(response.code())) {
                 Optional<Duration> delay = backoff.nextBackoff(response);
                 if (delay.isPresent()) {
                     Response buffered = bufferResponse(response);
@@ -499,7 +531,10 @@ public class RetryInterceptor implements Interceptor {
         return (long) (delayMs * jitterMultiplier);
     }
 
-    private static boolean shouldRetry(int statusCode) {
+    private boolean shouldRetry(int statusCode) {
+        if (retryOnStatusCodes.isPresent()) {
+            return retryOnStatusCodes.get().contains(statusCode);
+        }
         return statusCode == 408 || statusCode == 429 || statusCode >= 500;
     }
 

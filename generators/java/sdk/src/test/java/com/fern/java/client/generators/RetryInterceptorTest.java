@@ -40,6 +40,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -138,6 +139,17 @@ class RetryInterceptorTest {
                 .newInstance(maxRetries, Optional.of(1L), Optional.of(maxRetryDelayMillis), Optional.of(0.0));
     }
 
+    private static Interceptor newInterceptor(int maxRetries, Set<Integer> retryOnStatusCodes) throws Exception {
+        return (Interceptor) interceptorClass
+                .getConstructor(int.class, Optional.class, Optional.class, Optional.class, Optional.class)
+                .newInstance(
+                        maxRetries,
+                        Optional.of(1L),
+                        Optional.of(1L),
+                        Optional.of(0.0),
+                        Optional.of(retryOnStatusCodes));
+    }
+
     private static Response response(int code, String body) {
         return new Response.Builder()
                 .request(REQUEST)
@@ -191,6 +203,62 @@ class RetryInterceptorTest {
         assertThat(response.code()).isEqualTo(503);
         assertThat(response.body().string()).isEqualTo("third");
         verify(chain, times(3)).proceed(any());
+    }
+
+    @Test
+    void retryOnStatusCodesReplacesDefaultRetryableSet() throws Exception {
+        Interceptor.Chain chain = chain();
+        when(chain.proceed(any())).thenReturn(response(503, "Unavailable"));
+
+        Response response = newInterceptor(3, Set.of(429)).intercept(chain);
+
+        assertThat(response.code()).isEqualTo(503);
+        verify(chain, times(1)).proceed(any());
+    }
+
+    @Test
+    void retryOnStatusCodesStillRetriesListedCodes() throws Exception {
+        Interceptor.Chain chain = chain();
+        when(chain.proceed(any())).thenReturn(response(429, "Rate limited")).thenReturn(response(200, "OK"));
+
+        Response response = newInterceptor(3, Set.of(429)).intercept(chain);
+
+        assertThat(response.code()).isEqualTo(200);
+        verify(chain, times(2)).proceed(any());
+    }
+
+    @Test
+    void retryOnStatusCodesCanIncludeCodesOutsideTheDefaultSet() throws Exception {
+        Interceptor.Chain chain = chain();
+        when(chain.proceed(any())).thenReturn(response(409, "Conflict")).thenReturn(response(200, "OK"));
+
+        Response response = newInterceptor(3, Set.of(409)).intercept(chain);
+
+        assertThat(response.code()).isEqualTo(200);
+        verify(chain, times(2)).proceed(any());
+    }
+
+    @Test
+    void retryOnStatusCodesRejectsInvalidStatusCode() {
+        assertThatThrownBy(() -> newInterceptor(3, Set.of(429, 42))).hasCauseInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void asyncCallHonoursRetryOnStatusCodes() throws Exception {
+        try (TestServer server = new TestServer("1")) {
+            OkHttpClient client = new OkHttpClient.Builder()
+                    .addInterceptor(newInterceptor(3, Set.of(429)))
+                    .build();
+            try {
+                CapturingCallback callback = new CapturingCallback();
+                enqueue(newAsyncCall(client, server.request("/unavailable")), callback);
+
+                assertThat(callback.response().code()).isEqualTo(503);
+                assertThat(server.unavailableRequests.get()).isEqualTo(1);
+            } finally {
+                shutdown(client);
+            }
+        }
     }
 
     @Test
@@ -440,6 +508,7 @@ class RetryInterceptorTest {
     private static final class TestServer implements AutoCloseable {
         private final HttpServer server;
         private final AtomicInteger limitedRequests = new AtomicInteger();
+        private final AtomicInteger unavailableRequests = new AtomicInteger();
 
         TestServer(String retryAfter) throws IOException {
             server = HttpServer.create(new InetSocketAddress("127.0.0.1", 0), 0);
@@ -451,6 +520,11 @@ class RetryInterceptorTest {
                 } else {
                     exchange.sendResponseHeaders(200, -1);
                 }
+                exchange.close();
+            });
+            server.createContext("/unavailable", exchange -> {
+                unavailableRequests.incrementAndGet();
+                exchange.sendResponseHeaders(503, -1);
                 exchange.close();
             });
             server.createContext("/other", exchange -> {

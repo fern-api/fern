@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import okhttp3.OkHttpClient;
 
 public class AsyncSeedOauthClientCredentialsClientBuilder {
@@ -20,6 +21,8 @@ public class AsyncSeedOauthClientCredentialsClientBuilder {
     private Optional<Integer> maxRetries = Optional.empty();
 
     private Optional<Integer> maxConcurrentRequests = Optional.empty();
+
+    private Optional<Set<Integer>> retryOnStatusCodes = Optional.empty();
 
     private Optional<Long> initialRetryDelayMillis = Optional.empty();
 
@@ -95,6 +98,14 @@ public class AsyncSeedOauthClientCredentialsClientBuilder {
      */
     public AsyncSeedOauthClientCredentialsClientBuilder maxConcurrentRequests(int maxConcurrentRequests) {
         this.maxConcurrentRequests = Optional.of(maxConcurrentRequests);
+        return this;
+    }
+
+    /**
+     * Restricts automatic retries to responses with one of the given HTTP status codes (for example {@code 429} only, or {@code 429} and {@code 503}), replacing the default set of 408, 429 and 5xx. Codes not listed are returned as-is. Retry-After handling and the other retry settings are unchanged.
+     */
+    public AsyncSeedOauthClientCredentialsClientBuilder retryOnStatusCodes(Set<Integer> retryOnStatusCodes) {
+        this.retryOnStatusCodes = Optional.of(retryOnStatusCodes);
         return this;
     }
 
@@ -224,6 +235,9 @@ public class AsyncSeedOauthClientCredentialsClientBuilder {
         }
         if (this.retryJitterFactor.isPresent()) {
             builder.retryJitterFactor(this.retryJitterFactor.get());
+        }
+        if (this.retryOnStatusCodes.isPresent()) {
+            builder.retryOnStatusCodes(this.retryOnStatusCodes.get());
         }
     }
 
@@ -394,6 +408,8 @@ public class AsyncSeedOauthClientCredentialsClientBuilder {
 
         private Optional<Integer> maxConcurrentRequests = Optional.empty();
 
+        private Optional<Set<Integer>> retryOnStatusCodes = Optional.empty();
+
         private Optional<Long> initialRetryDelayMillis = Optional.empty();
 
         private Optional<Long> maxRetryDelayMillis = Optional.empty();
@@ -430,6 +446,14 @@ public class AsyncSeedOauthClientCredentialsClientBuilder {
          */
         public _Builder maxConcurrentRequests(int maxConcurrentRequests) {
             this.maxConcurrentRequests = Optional.of(maxConcurrentRequests);
+            return this;
+        }
+
+        /**
+         * Restricts automatic retries to responses with one of the given HTTP status codes (for example {@code 429} only, or {@code 429} and {@code 503}), replacing the default set of 408, 429 and 5xx. Codes not listed are returned as-is. Retry-After handling and the other retry settings are unchanged.
+         */
+        public _Builder retryOnStatusCodes(Set<Integer> retryOnStatusCodes) {
+            this.retryOnStatusCodes = Optional.of(retryOnStatusCodes);
             return this;
         }
 
@@ -498,6 +522,9 @@ public class AsyncSeedOauthClientCredentialsClientBuilder {
             if (this.maxConcurrentRequests.isPresent()) {
                 auth.maxConcurrentRequests(this.maxConcurrentRequests.get());
             }
+            if (this.retryOnStatusCodes.isPresent()) {
+                auth.retryOnStatusCodes(this.retryOnStatusCodes.get());
+            }
             if (this.initialRetryDelayMillis.isPresent()) {
                 auth.initialRetryDelayMillis(this.initialRetryDelayMillis.get());
             }
@@ -537,6 +564,9 @@ public class AsyncSeedOauthClientCredentialsClientBuilder {
             }
             if (this.maxConcurrentRequests.isPresent()) {
                 auth.maxConcurrentRequests(this.maxConcurrentRequests.get());
+            }
+            if (this.retryOnStatusCodes.isPresent()) {
+                auth.retryOnStatusCodes(this.retryOnStatusCodes.get());
             }
             if (this.initialRetryDelayMillis.isPresent()) {
                 auth.initialRetryDelayMillis(this.initialRetryDelayMillis.get());

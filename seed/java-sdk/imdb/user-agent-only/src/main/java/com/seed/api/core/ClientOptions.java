@@ -4,7 +4,9 @@
 package com.seed.api.core;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -41,6 +43,8 @@ public final class ClientOptions {
 
     private final Optional<Double> retryJitterFactor;
 
+    private final Optional<Set<Integer>> retryOnStatusCodes;
+
     private final Optional<LogConfig> logging;
 
     private ClientOptions(
@@ -56,6 +60,7 @@ public final class ClientOptions {
             Optional<Long> initialRetryDelayMillis,
             Optional<Long> maxRetryDelayMillis,
             Optional<Double> retryJitterFactor,
+            Optional<Set<Integer>> retryOnStatusCodes,
             Optional<LogConfig> logging) {
         this.environment = environment;
         this.headers = new HashMap<>();
@@ -75,6 +80,7 @@ public final class ClientOptions {
         this.initialRetryDelayMillis = initialRetryDelayMillis;
         this.maxRetryDelayMillis = maxRetryDelayMillis;
         this.retryJitterFactor = retryJitterFactor;
+        this.retryOnStatusCodes = retryOnStatusCodes;
         this.logging = logging;
     }
 
@@ -159,6 +165,10 @@ public final class ClientOptions {
 
     public Optional<Double> retryJitterFactor() {
         return this.retryJitterFactor;
+    }
+
+    public Optional<Set<Integer>> retryOnStatusCodes() {
+        return this.retryOnStatusCodes;
     }
 
     /**
@@ -246,6 +256,8 @@ public final class ClientOptions {
 
         private Optional<Double> retryJitterFactor = Optional.empty();
 
+        private Optional<Set<Integer>> retryOnStatusCodes = Optional.empty();
+
         private Optional<Integer> timeout = Optional.empty();
 
         private Optional<Integer> maxConcurrentRequests = Optional.empty();
@@ -326,6 +338,27 @@ public final class ClientOptions {
         }
 
         /**
+         * Restricts automatic retries to responses with one of the given HTTP status codes,
+         * for example {@code 429} only, or {@code 429} and {@code 503}. Replaces the default
+         * set, so codes not listed here (such as other 5xx) are returned as-is instead of being
+         * retried. An empty set disables status-based retries. Retry-After handling, maxRetries() and
+         * the backoff settings are unchanged.
+         */
+        public Builder retryOnStatusCodes(Set<Integer> retryOnStatusCodes) {
+            if (retryOnStatusCodes == null) {
+                throw new IllegalArgumentException("retryOnStatusCodes must not be null");
+            }
+            for (Integer statusCode : retryOnStatusCodes) {
+                if (statusCode == null || statusCode < 100 || statusCode > 599) {
+                    throw new IllegalArgumentException(
+                            "retryOnStatusCodes contains an invalid HTTP status code: " + statusCode);
+                }
+            }
+            this.retryOnStatusCodes = Optional.of(Collections.unmodifiableSet(new HashSet<>(retryOnStatusCodes)));
+            return this;
+        }
+
+        /**
          * Caps the number of requests that may be in flight at the same time, for both the
          * synchronous and the asynchronous client. Defaults to no limit.
          * A request holds a slot from the moment it is sent until its response body is
@@ -380,7 +413,8 @@ public final class ClientOptions {
                                 this.maxRetries,
                                 this.initialRetryDelayMillis,
                                 this.maxRetryDelayMillis,
-                                this.retryJitterFactor));
+                                this.retryJitterFactor,
+                                this.retryOnStatusCodes));
             }
 
             this.maxConcurrentRequests.ifPresent(limit -> {
@@ -414,6 +448,7 @@ public final class ClientOptions {
                     this.initialRetryDelayMillis,
                     this.maxRetryDelayMillis,
                     this.retryJitterFactor,
+                    this.retryOnStatusCodes,
                     this.logging);
         }
 
@@ -434,6 +469,7 @@ public final class ClientOptions {
             builder.initialRetryDelayMillis = clientOptions.initialRetryDelayMillis();
             builder.maxRetryDelayMillis = clientOptions.maxRetryDelayMillis();
             builder.retryJitterFactor = clientOptions.retryJitterFactor();
+            builder.retryOnStatusCodes = clientOptions.retryOnStatusCodes();
             builder.logging = clientOptions.logging();
             return builder;
         }
