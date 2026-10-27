@@ -28,6 +28,11 @@ RUN apk --no-cache upgrade && \
         gcc \
         libc-dev && \
     # Update the remaining vulnerable Ruby gems shipped with the base image:
+
+# curl 8.23.0 strips credentials from CURLINFO_EFFECTIVE_URL, so git (<= 2.54) treats every
+# authenticated https clone as a redirect, drops the token and fails on private repositories
+# ("could not read Username"). Keep Alpine 3.22's libcurl until git/curl ship a fix.
+RUN apk add --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine/v3.22/main 'curl<8.23' 'libcurl<8.23'
     # - erb 4.0.3 -> 4.0.3.1 (GHSA-q339-8rmv-2mhv: deserialization guard bypass)
     # - net-imap 0.4.21 -> 0.5.15 (0.4.24 fixed GHSA-vcgp-9326-pqcp STARTTLS
     #   stripping, GHSA-75xq-5h9v-w6px command injection, GHSA-87pf-fpwv-p7m7

@@ -9,6 +9,11 @@ FROM node:24.17-alpine3.23
 
 RUN apk update && apk upgrade --no-cache
 
+# curl 8.23.0 strips credentials from CURLINFO_EFFECTIVE_URL, so git (<= 2.54) treats every
+# authenticated https clone as a redirect, drops the token and fails on private repositories
+# ("could not read Username"). Keep Alpine 3.22's libcurl until git/curl ship a fix.
+RUN apk add --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine/v3.22/main 'curl<8.23' 'libcurl<8.23'
+
 # Update bundled npm to refresh transitive dependencies (picomatch, brace-expansion,
 # ip-address, etc.) that ship inside /usr/local/lib/node_modules/npm and otherwise
 # carry known CVEs into the image. We install into a fresh prefix and swap directories
