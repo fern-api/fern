@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.92.9
+  changelogEntry:
+    - summary: |
+        XML (TwiML) types match the legacy call shapes: when an element's text property has the same name as
+        one of its child elements, the child builder keeps the name (`message.Body("hi")` adds a `<Body>` child,
+        `dial.Number("+1…")` a `<Number>`) and the text property is renamed to `Text`; every element with text
+        content gets a `new Say("hi")` constructor next to the parameterless one; child builders whose text is a
+        `format: uri` string accept a `System.Uri` (`Redirect(new Uri("/voice", UriKind.Relative))`).
+      type: fix
+  createdAt: "2026-10-27"
+  irVersion: 67
 - version: 2.92.8
   changelogEntry:
     - summary: |
