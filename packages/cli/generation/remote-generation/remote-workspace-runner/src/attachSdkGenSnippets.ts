@@ -2,6 +2,7 @@ import { errorMessageOrString, nonEmpty } from "@fern-api/core-utils";
 import type { APIV1Write } from "@fern-api/fdr-sdk";
 import type { Logger } from "@fern-api/logger";
 import { targetLanguageSchema } from "@postman/sdk-config";
+import { omit } from "lodash-es";
 
 import { getFernSdkGenApiOrigin } from "./fernSdkGenApi.js";
 import { findSdkGenSnippetsUrls, type SdkGenSnippetsQuery } from "./findSdkGenSnippets.js";
@@ -63,6 +64,18 @@ function addCodeSamples(endpoint: Endpoint, codeByLanguage: ReadonlyMap<string, 
         codeSamples: mergeSamples(example.codeSamples ?? undefined, samples)
     }));
     return { ...endpoint, examples };
+}
+
+/**
+ * FDR looks up each SDK `snippetsConfiguration` names in its own snippet store, which holds no sdk-gen SDK, and fails
+ * the registration when it finds none. The SDKs whose snippets were read from sdk-gen are already in the code samples,
+ * so they are left out.
+ */
+function withoutLoadedSdks(
+    config: SnippetsConfig | null | undefined,
+    loadedLanguages: string[]
+): SnippetsConfig | undefined {
+    return config == null ? undefined : omit(config, ...loadedLanguages.map((language) => `${language}Sdk`));
 }
 
 function mapEndpoints(apiDefinition: ApiDefinition, update: (endpoint: Endpoint) => Endpoint): ApiDefinition {
@@ -197,8 +210,15 @@ export async function attachSdkGenSnippets(
         )
     );
     const counts = [...codeByLanguage].map(([language, codeByEndpoint]) => `${language}: ${codeByEndpoint.size}`);
-    if ([...codeByLanguage.values()].some((codeByEndpoint) => codeByEndpoint.size > 0)) {
+    const loadedLanguages = [...codeByLanguage].filter(([, codeByEndpoint]) => codeByEndpoint.size > 0);
+    if (loadedLanguages.length > 0) {
         logger.info(`Loaded SDK snippets (${counts.join(", ")})`);
     }
-    return mapEndpoints(apiDefinition, (endpoint) => addCodeSamples(endpoint, codeByLanguage));
+    return {
+        ...mapEndpoints(apiDefinition, (endpoint) => addCodeSamples(endpoint, codeByLanguage)),
+        snippetsConfiguration: withoutLoadedSdks(
+            apiDefinition.snippetsConfiguration,
+            loadedLanguages.map(([language]) => language)
+        )
+    };
 }

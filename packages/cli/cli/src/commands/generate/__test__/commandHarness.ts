@@ -402,7 +402,9 @@ export class FakeSdkGenApi {
                 sdkName: artifact.sdkName,
                 version: artifact.version,
                 status: artifact.status ?? "SUCCESS",
-                ...(artifact.snippets != null && { snippetsUrl: `https://s3.test/stored/${index}/snippets.json` })
+                ...(artifact.snippets != null && {
+                    placeholdersSnippetsUrl: `https://s3.test/stored/${index}/placeholders-snippets.json`
+                })
             }));
         return { data, count: data.length, pages: 1 };
     }
@@ -425,7 +427,9 @@ export class FakeSdkGenApi {
                 result: {
                     artifactUrl: `https://s3.test/artifact/${target.language}`,
                     actualVersion: outcome.actualVersion ?? target.sdk.version,
-                    ...(outcome.snippets != null && { snippetsUrl: `https://s3.test/snippets/${target.language}` })
+                    ...(outcome.snippets != null && {
+                        placeholdersSnippetsUrl: `https://s3.test/snippets/${target.language}`
+                    })
                 }
             };
         });
