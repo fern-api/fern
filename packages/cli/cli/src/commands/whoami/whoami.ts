@@ -1,7 +1,7 @@
 import { getToken, isGuestSessionLive, readStoredGuestSession } from "@fern-api/auth";
 import { getFernDirectory } from "@fern-api/configuration-loader";
 import { createVenusService } from "@fern-api/core";
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, errorMessageOrString } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import chalk from "chalk";
 
@@ -107,7 +107,7 @@ async function lookUpUser(token: string): Promise<WhoamiReport["login"]> {
     } catch (error) {
         return {
             kind: "user-unverified",
-            error: `Could not reach Venus: ${error instanceof Error ? error.message : String(error)}`
+            error: `Could not reach Venus: ${errorMessageOrString(error)}`
         };
     }
 }
