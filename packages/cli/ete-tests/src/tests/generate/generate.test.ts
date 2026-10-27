@@ -132,7 +132,7 @@ describe("fern generate", () => {
         });
         const output = stdout + stderr;
         expect(output).toContain(
-            "Authentication required. Please run 'fern login' or set the FERN_TOKEN environment variable."
+            "Authentication required. Please run 'fern login', set the FERN_TOKEN environment variable, or pass --guest to continue without an account."
         );
     }, 300_000);
 
