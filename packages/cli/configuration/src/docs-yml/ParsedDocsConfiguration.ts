@@ -468,6 +468,8 @@ export interface TabVariant
     default: boolean | undefined;
     /** A tab-menu member with its own `variants`; `layout` is then empty. */
     nestedVariants: NestedTabVariants | undefined;
+    /** The docs.yml tab id of a tab-menu member, used for its node and variant ids instead of its title. */
+    tabId: string | undefined;
 }
 
 export interface NestedTabVariants {

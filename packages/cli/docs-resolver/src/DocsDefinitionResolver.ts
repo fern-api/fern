@@ -2115,7 +2115,8 @@ export class DocsDefinitionResolver {
         contentSource?: docsYml.VersionContentSource,
         variantIdPrefix?: string
     ): Promise<FernNavigation.V1.VariantNode> {
-        const id = this.#idgen.get(`${prefix}/variant/${item.slug ?? kebabCase(item.title)}`);
+        const id = this.#idgen.get(`${prefix}/variant/${item.tabId ?? item.slug ?? kebabCase(item.title)}`);
+        const ownVariantId = item.tabId ?? item.title;
         const variantSlug = parentSlug.apply({
             urlSlug: item.slug ?? kebabCase(item.title),
             skipUrlSlug: item.skipUrlSlug
@@ -2134,7 +2135,7 @@ export class DocsDefinitionResolver {
                 menu: item.nestedVariants.menu,
                 parentSlug: variantSlug,
                 contentSource,
-                variantIdPrefix: item.title
+                variantIdPrefix: ownVariantId
             });
             // @ts-expect-error The pinned fdr-sdk's VariantChild predates varianted nodes under a variant; remove after bumping it.
             children.push(nested);
@@ -2144,7 +2145,7 @@ export class DocsDefinitionResolver {
             id,
             collapsed: undefined,
             variantId: FernNavigation.V1.VariantId(
-                variantIdPrefix != null ? `${variantIdPrefix}/${item.title}` : item.title
+                variantIdPrefix != null ? `${variantIdPrefix}/${ownVariantId}` : ownVariantId
             ),
             subtitle: item.subtitle ?? "",
             default: item.default ?? false,

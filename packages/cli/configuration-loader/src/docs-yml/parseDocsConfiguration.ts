@@ -1340,7 +1340,8 @@ async function convertNavigationTabConfiguration({
     const convertVariant = async (
         variant: Omit<docsYml.RawSchemas.TabVariant, "layout">,
         layout: docsYml.RawSchemas.NavigationItem[],
-        nestedVariants: docsYml.NestedTabVariants | undefined
+        nestedVariants: docsYml.NestedTabVariants | undefined,
+        tabId?: string
     ): Promise<docsYml.TabVariant> => ({
         title: variant.title,
         subtitle: variant.subtitle,
@@ -1353,7 +1354,8 @@ async function convertNavigationTabConfiguration({
         viewers: parseRoles(variant.viewers),
         orphaned: variant.orphaned,
         featureFlags: convertFeatureFlag(variant.featureFlag),
-        nestedVariants
+        nestedVariants,
+        tabId
     });
     // `variants` is built from the same TabVariant objects as `menu`, so the resolver can match them by identity.
     const variantsInMenu = (menu: docsYml.TabVariantMenuItem[]): docsYml.TabVariant[] =>
@@ -1405,10 +1407,13 @@ async function convertNavigationTabConfiguration({
         const variant = { ...member, title: member.displayName };
         if (docsYml.isRawTabWithVariantLayouts(memberItem)) {
             const nested = await convertVariantsList(memberItem.variants);
-            return { type: "variant", variant: await convertVariant(variant, [], nested) };
+            return { type: "variant", variant: await convertVariant(variant, [], nested, member.tab) };
         }
         if (tabbedNavigationItemHasLayout(memberItem)) {
-            return { type: "variant", variant: await convertVariant(variant, memberItem.layout, undefined) };
+            return {
+                type: "variant",
+                variant: await convertVariant(variant, memberItem.layout, undefined, member.tab)
+            };
         }
         throw new CliError({
             message: `Tab ${member.tab} in the tab-menu of ${item.tab} needs a layout or variants in navigation.`,

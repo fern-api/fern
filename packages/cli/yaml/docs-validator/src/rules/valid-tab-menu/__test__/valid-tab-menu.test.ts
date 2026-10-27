@@ -9,6 +9,36 @@ async function violationsFor(config: object) {
     return (await visitor.file?.({ config } as unknown as DocsConfigFileAstNodeTypes["file"])) ?? [];
 }
 
+async function versionFileViolationsFor(siteConfig: object, content: object) {
+    const visitor = await ValidTabMenuRule.create({ workspace: { config: siteConfig } } as unknown as RuleContext);
+    return (
+        (await visitor.versionFile?.({
+            path: "versions/v2.yml",
+            content,
+            version: { displayName: "v2", path: "versions/v2.yml" }
+        } as unknown as DocsConfigFileAstNodeTypes["versionFile"])) ?? []
+    );
+}
+
+async function productFileViolationsFor(siteConfig: object, content: object) {
+    const visitor = await ValidTabMenuRule.create({ workspace: { config: siteConfig } } as unknown as RuleContext);
+    return (
+        (await visitor.productFile?.({
+            path: "products/api.yml",
+            content,
+            product: { displayName: "API", path: "products/api.yml" }
+        } as unknown as DocsConfigFileAstNodeTypes["productFile"])) ?? []
+    );
+}
+
+const rawProducts = {
+    "display-name": "Products",
+    "tab-menu": [
+        { tab: "agents", "display-name": "Agents" },
+        { tab: "studio", "display-name": "Studio" }
+    ]
+};
+
 const headerTabs = { tabsPlacement: "header" };
 
 const products = {
@@ -124,5 +154,80 @@ describe("valid-tab-menu", () => {
             expect(violations[0]?.severity).toBe("warning");
             expect(violations[0]?.message).toContain("sidebar");
         }
+    });
+
+    it("uses theme.tabs.placement over layout.tabs-placement for the sidebar fallback", async () => {
+        expect(
+            await violationsFor({
+                layout: { tabsPlacement: "sidebar" },
+                theme: { tabs: { placement: "header" } },
+                tabs: { products },
+                navigation: validNavigation
+            })
+        ).toEqual([]);
+        const violations = await violationsFor({
+            layout: headerTabs,
+            theme: { tabs: { placement: "sidebar" } },
+            tabs: { products },
+            navigation: validNavigation
+        });
+        expect(violations).toHaveLength(1);
+        expect(violations[0]?.message).toContain("sidebar");
+    });
+
+    it("checks tab menus in version files", async () => {
+        const violations = await versionFileViolationsFor(
+            { layout: headerTabs },
+            { tabs: { products: rawProducts }, navigation: [{ tab: "products" }, { tab: "agents", layout: [] }] }
+        );
+        expect(violations).toHaveLength(1);
+        expect(violations[0]?.severity).toBe("fatal");
+        expect(violations[0]?.message).toContain('"studio"');
+        expect(
+            await versionFileViolationsFor(
+                { layout: headerTabs },
+                {
+                    tabs: { products: rawProducts },
+                    navigation: [{ tab: "products" }, { tab: "agents", layout: [] }, { tab: "studio", layout: [] }]
+                }
+            )
+        ).toEqual([]);
+    });
+
+    it("checks tab menus in product files, using the site's tab placement", async () => {
+        const content = {
+            tabs: { products: rawProducts },
+            navigation: [{ tab: "products" }, { tab: "agents", layout: [] }, { tab: "studio", layout: [] }]
+        };
+        expect(await productFileViolationsFor({ layout: headerTabs }, content)).toEqual([]);
+        const violations = await productFileViolationsFor({}, content);
+        expect(violations).toHaveLength(1);
+        expect(violations[0]?.severity).toBe("warning");
+    });
+
+    it("rejects menu tabs that would get the same URL slug", async () => {
+        const violations = await violationsFor({
+            layout: headerTabs,
+            tabs: {
+                products: {
+                    displayName: "Products",
+                    tabMenu: [
+                        { tab: "agents", displayName: "Agents" },
+                        { group: "More", tabs: [{ tab: "agents-v2", displayName: "Agents" }] },
+                        { tab: "studio", displayName: "Agents", slug: "studio" }
+                    ]
+                }
+            },
+            navigation: [
+                { tab: "products" },
+                { tab: "agents", layout: [] },
+                { tab: "agents-v2", layout: [] },
+                { tab: "studio", layout: [] }
+            ]
+        });
+        expect(violations).toHaveLength(1);
+        expect(violations[0]?.severity).toBe("fatal");
+        expect(violations[0]?.message).toContain('"agents", "agents-v2"');
+        expect(violations[0]?.message).toContain('"agents"');
     });
 });
