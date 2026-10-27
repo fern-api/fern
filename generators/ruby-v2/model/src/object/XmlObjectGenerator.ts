@@ -434,6 +434,11 @@ export class XmlObjectGenerator {
             ...this.properties.filter((property) => property !== textProperty).map((property) => property.fieldName),
             ...RESERVED_METHOD_NAMES
         ]);
+        // `text` / `text=` belong to the element's own text; a <Text> child builder yields (`add_text`).
+        const textAlias = textProperty != null && textProperty.fieldName !== "text" && !usedNames.has("text");
+        if (textAlias) {
+            usedNames.add("text");
+        }
         for (const property of this.properties) {
             if (property.kind !== FernIr.XmlPropertyKind.Element || property.value.type !== "object") {
                 continue;
@@ -465,7 +470,7 @@ export class XmlObjectGenerator {
                 }
             }
         }
-        if (textProperty != null && textProperty.fieldName !== "text" && !usedNames.has("text")) {
+        if (textProperty != null && textAlias) {
             methods.push(this.getTextAlias(textProperty));
         }
         return methods;
@@ -557,13 +562,28 @@ export class XmlObjectGenerator {
                 `@return [${childClass.name}]`
             ];
             ruby.comment({ docs: docs.join("\n") }).write(writer);
-            const params = textField != null ? `${textField} = nil, **attributes` : "**attributes";
-            writer.writeLine(`def ${methodName}(${params})`);
-            writer.indent();
-            if (attributeFallback != null) {
-                const noArguments = textField != null ? `${textField}.nil? && attributes.empty?` : "attributes.empty?";
-                writer.writeLine(`return @data[:${attributeFallback.fieldName}] if ${noArguments} && !block_given?`);
+            if (attributeFallback != null && textField != null) {
+                // `*args` so that an explicit `number(nil)` still adds the child; only a bare `number` reads the attribute
+                writer.writeLine(`def ${methodName}(*args, **attributes)`);
+                writer.indent();
+                writer.writeLine(
+                    `return @data[:${attributeFallback.fieldName}] if args.empty? && attributes.empty? && !block_given?`
+                );
+                writer.writeLine(
+                    `raise ArgumentError, "wrong number of arguments (given #{args.size}, expected 0..1)" if args.size > 1`
+                );
                 writer.newLine();
+                writer.writeLine(`${textField} = args.first`);
+            } else {
+                const params = textField != null ? `${textField} = nil, **attributes` : "**attributes";
+                writer.writeLine(`def ${methodName}(${params})`);
+                writer.indent();
+                if (attributeFallback != null) {
+                    writer.writeLine(
+                        `return @data[:${attributeFallback.fieldName}] if attributes.empty? && !block_given?`
+                    );
+                    writer.newLine();
+                }
             }
             if (textField != null) {
                 writer.writeLine(`if attributes.key?(:${textField})`);

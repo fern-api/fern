@@ -29,9 +29,11 @@ module Seed
       # @option attributes [String, nil] :send_digits
       # @yieldparam child [Number] the new element, for nesting children inline
       # @return [Number]
-      def number(phone_number = nil, **attributes)
-        return @data[:number] if phone_number.nil? && attributes.empty? && !block_given?
+      def number(*args, **attributes)
+        return @data[:number] if args.empty? && attributes.empty? && !block_given?
+        raise ArgumentError, "wrong number of arguments (given #{args.size}, expected 0..1)" if args.size > 1
 
+        phone_number = args.first
         if attributes.key?(:phone_number)
           raise ArgumentError, "phone_number given both positionally and as a keyword" unless phone_number.nil?
 
