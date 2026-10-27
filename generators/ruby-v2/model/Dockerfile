@@ -14,7 +14,7 @@ RUN apk --no-cache upgrade && \
 # authenticated https clone as a redirect, drops the token and fails on private repositories
 # ("could not read Username"). Keep Alpine 3.22's libcurl until git/curl ship a fix.
 RUN apk add --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine/v3.22/main 'curl<8.23' 'libcurl<8.23'
-    
+
 RUN gem install 'rubocop:~> 1.21' rubocop-minitest
 
 RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \
