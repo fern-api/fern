@@ -98,6 +98,12 @@ export namespace Number {
             return this;
         }
 
+        /** Sets the text content of this element (same as `phoneNumber`). */
+        text(phoneNumber: string | undefined): this {
+            this.fields.phoneNumber = phoneNumber;
+            return this;
+        }
+
         /** Sets an attribute that is not declared in the API definition. */
         attribute(name: string, value: string): this {
             this.fields.additionalAttributes = { ...this.fields.additionalAttributes, [name]: value };

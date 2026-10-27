@@ -5,7 +5,7 @@ const LIMIT = 50;
 const REQUEST_TIMEOUT_MS = 60_000;
 
 interface ArtifactPage {
-    data: Array<{ language: string; snippetsUrl?: string }>;
+    data: Array<{ language: string; placeholdersSnippetsUrl?: string }>;
 }
 
 export interface SdkGenSnippetsQuery {
@@ -41,10 +41,10 @@ export async function findSdkGenSnippetsUrls({
         timeout: REQUEST_TIMEOUT_MS
     });
     const urls = new Map<string, string>();
-    for (const { language, snippetsUrl } of listed.data) {
+    for (const { language, placeholdersSnippetsUrl } of listed.data) {
         // The newest build comes first, so a language keeps the first link it gets.
-        if (snippetsUrl != null && !urls.has(language)) {
-            urls.set(language, snippetsUrl);
+        if (placeholdersSnippetsUrl != null && !urls.has(language)) {
+            urls.set(language, placeholdersSnippetsUrl);
         }
     }
     return urls;

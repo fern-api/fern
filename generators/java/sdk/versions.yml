@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.35.1
+  changelogEntry:
+    - summary: |
+        XML (TwiML) builders match the legacy call shapes: when an element's text property is named like one of
+        its child elements, the child builder keeps the name (`message.body("hi")` / `body(Body)` add a `<Body>`
+        child, `dial.number("+1…")` a `<Number>`) and the text property is generated as `text` (`getText()`,
+        `text(...)`); every builder with text content also accepts `text(...)` next to the field-named setter; and
+        `format: uri` string setters get a `java.net.URI` overload (`redirect.url(URI.create("/voice"))`).
+      type: fix
+  createdAt: "2026-10-27"
+  irVersion: 67
 - version: 4.35.0
   changelogEntry:
     - summary: |

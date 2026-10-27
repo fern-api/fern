@@ -20,7 +20,7 @@ const query = {
     languages: ["typescript", "python"]
 };
 
-const page = (data: Array<{ language: string; snippetsUrl?: string }>) => ({
+const page = (data: Array<{ language: string; placeholdersSnippetsUrl?: string }>) => ({
     data: { data, count: data.length, pages: 1 }
 });
 
@@ -47,9 +47,9 @@ describe("findSdkGenSnippetsUrls", () => {
     it("takes the link of the newest SDK of each language", async () => {
         get.mockResolvedValue(
             page([
-                { language: "typescript", snippetsUrl: "https://s3/new-ts" },
-                { language: "python", snippetsUrl: "https://s3/new-py" },
-                { language: "typescript", snippetsUrl: "https://s3/old-ts" }
+                { language: "typescript", placeholdersSnippetsUrl: "https://s3/new-ts" },
+                { language: "python", placeholdersSnippetsUrl: "https://s3/new-py" },
+                { language: "typescript", placeholdersSnippetsUrl: "https://s3/old-ts" }
             ])
         );
 
@@ -61,7 +61,10 @@ describe("findSdkGenSnippetsUrls", () => {
 
     it("skips a newer SDK that saved no snippets file and takes an older one's", async () => {
         get.mockResolvedValue(
-            page([{ language: "typescript" }, { language: "typescript", snippetsUrl: "https://s3/older-ts" }])
+            page([
+                { language: "typescript" },
+                { language: "typescript", placeholdersSnippetsUrl: "https://s3/older-ts" }
+            ])
         );
 
         const urls = await findSdkGenSnippetsUrls({ ...query, languages: ["typescript"] });

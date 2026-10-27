@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.108.2
+  changelogEntry:
+    - summary: |
+        XML (TwiML) builders match the legacy call shapes: a child builder keeps the child's name even when it
+        collides with the element's text field (`dial().number("+1…")` adds a `<Number>` child; the text is set
+        with `text(...)` / `setNumber(...)`), every element builder has a uniform `text(...)` setter, and the
+        child-builder verbs are also available on the value itself (`new VoiceResponse().say("hi")`). Children added
+        through the value's verbs live in its ordered `content` (which `toXml()` renders); the typed child property
+        (`children`) is not updated by them.
+      type: fix
+  createdAt: "2026-10-27"
+  irVersion: 67
 - version: 3.108.1
   changelogEntry:
     - summary: |

@@ -196,7 +196,7 @@ public record Response : IJsonOnDeserialized, IXmlNode
     /// Adds a <c>&lt;Dial&gt;</c> child element built from the given values and returns this instance for chaining.
     /// </summary>
     public Response Dial(
-        string? number = null,
+        string? text = null,
         IEnumerable<DialRecordItem>? record_ = null,
         IEnumerable<string>? statusCallbackEvent = null
     )
@@ -204,7 +204,7 @@ public record Response : IJsonOnDeserialized, IXmlNode
         return Dial(
             new global::SeedApi.Dial
             {
-                Number = number,
+                Text = text,
                 Record = record_,
                 StatusCallbackEvent = statusCallbackEvent,
             }

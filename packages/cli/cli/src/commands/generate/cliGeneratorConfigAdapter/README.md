@@ -138,6 +138,7 @@ Paths are SDK Config paths, such as `api.auth.schemes[0].location`.
 | `CLI_TARGET_UNOWNED_FIELD` | error | A Map field no rule writes (a bug in this folder) |
 | `CLI_TARGET_URL_SOURCE` | error | A spec given by URL; download it and use `path` |
 | `CLI_TARGET_SPEC_TYPE` | error | An AsyncAPI or GraphQL spec; the generator needs OpenAPI |
+| `CLI_TARGET_PROTOBUF_SOURCE` | error | A protobuf (`proto`) source; the generator needs OpenAPI |
 | `CLI_TARGET_SPEC_MISSING` | error | A spec, override or overlay file does not exist |
 | `CLI_TARGET_SPEC_PARSE` | error | A spec does not load |
 | `CLI_TARGET_EXTERNAL_REF` | error | A reference to another file survived loading |

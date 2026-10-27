@@ -75,7 +75,7 @@ describe("CreateCommand", () => {
         await expect(cmd.handle(context, { name: "acme" } as CreateCommand.Args)).rejects.toThrow(CliError);
 
         expect(context.stderr.error).toHaveBeenCalledWith(
-            expect.stringContaining("Organization tokens cannot create organizations")
+            expect.stringContaining("Organization and guest tokens cannot create organizations")
         );
     });
 

@@ -218,6 +218,23 @@ describe("attachSdkGenSnippets", () => {
         expect(logger.info).toHaveBeenCalledWith("Loaded SDK snippets (typescript: 1, python: 1)");
     });
 
+    it("leaves the SDKs it read out of the snippetsConfiguration, so FDR does not look them up in its own store", async () => {
+        const { run } = setup();
+        const goSdk = { githubRepo: "github.com/acme/sdk-go", version: "1.0.0" };
+
+        const result = await run({ ...definition(), snippetsConfiguration: { ...snippetsConfig, goSdk } });
+
+        expect(result.snippetsConfiguration).toEqual({ goSdk });
+    });
+
+    it("keeps the SDKs it found no snippets for in the snippetsConfiguration", async () => {
+        const { run } = setup({ findSnippetsUrls: vi.fn<FindSnippetsUrls>(async () => new Map<string, string>()) });
+
+        const result = await run({ ...definition(), snippetsConfiguration: snippetsConfig });
+
+        expect(result.snippetsConfiguration).toEqual(snippetsConfig);
+    });
+
     it("also covers endpoints in subpackages", async () => {
         const { run } = setup();
 

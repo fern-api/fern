@@ -1,4 +1,53 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.178.0
+  changelogEntry:
+    - summary: |
+        Load protobuf (`proto`) sources from `sdk-config.yml` into the SDK Config workspace with the same
+        semantics as `proto` specs in `generators.yml`: local and git roots, an optional target, ordered
+        overrides, dependencies, `localGeneration` and `fromOpenApi`. `fern check` validates them; SDK Config
+        generation (hosted and `--local`) rejects them with a clear error until protobuf-to-OpenAPI conversion lands.
+        Upgrades `@postman/sdk-config` to 0.17.0.
+      type: feat
+  createdAt: "2026-10-27"
+  irVersion: 67
+- version: 5.177.0
+  changelogEntry:
+    - summary: |
+        `fern docs dev` can now stop itself and report its state in a machine-readable way, so agents and CI
+        no longer have to find and kill the process. All three flags are off by default and apply to the default
+        (Astro) preview server only:
+        - `--timeout <duration>` stops the server cleanly this long after it is ready.
+        - `--idle-timeout <duration>` stops it after this long with no HTTP requests (the live-reload stream doesn't count).
+        - `--json` writes `ready` (URL, ports, PID), `reload` and `stopped` events to stdout as one JSON object per line; logs go to stderr.
+        Durations accept `30s`, `10m` or `1h`; a plain number means seconds.
+      type: feat
+    - summary: |
+        `fern docs dev` (default Astro server) now exits and returns to the prompt after a clean stop (SIGTERM,
+        SIGHUP, `--timeout` or `--idle-timeout`) when run in an interactive terminal. Previously the server shut down
+        but the CLI process stayed alive. It now leaves through the CLI's normal exit path, after the renderer has
+        exited, and the renderer's 2s SIGKILL fallback now actually fires if it ignores SIGTERM.
+      type: fix
+  createdAt: "2026-10-27"
+  irVersion: 67
+- version: 5.176.1
+  changelogEntry:
+    - summary: |
+        Fix `fern docs dev` returning 404 for the sidebar navigation, compiled MDX components and
+        optimized images with the latest docs renderer, which serves them under `_fern-files/_nav`,
+        `_fern-files/_mdx` and `_fern-files/_img`. The preview now sends `_`-prefixed `_fern-files/`
+        paths to the renderer and only sends uploaded files to the local file mirror.
+      type: fix
+  createdAt: "2026-10-27"
+  irVersion: 67
+- version: 5.176.0
+  changelogEntry:
+    - summary: |
+        SDK snippets from sdk-gen are now read from the `placeholdersSnippetsUrl` link of each artifact, the file whose
+        values carry editable placeholders for the docs "Try it" panel. The SDKs whose snippets were read are left out of
+        the `snippetsConfiguration` sent to FDR, so FDR no longer fails looking them up in its own snippet store.
+      type: feat
+  createdAt: "2026-10-27"
+  irVersion: 67
 - version: 5.175.0
   changelogEntry:
     - summary: |

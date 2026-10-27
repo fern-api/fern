@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.57.3
+  changelogEntry:
+    - summary: |
+        Refresh the shipped `Cargo.lock` to clear the advisories `cargo audit` and
+        Dependabot report on every generated CLI: rustls 0.23.41 -> 0.23.46
+        (GHSA-2mjx-qc3c-rqvc / RUSTSEC-2026-0285, RUSTSEC-2026-0346, -0348, -0349),
+        rustls-webpki 0.103.13 -> 0.103.16 (RUSTSEC-2026-0382), and quinn-proto
+        0.11.15 -> 0.11.18 (RUSTSEC-2026-0338 to -0342). Regenerating no longer
+        reverts a Dependabot security bump of these crates.
+      type: fix
+  createdAt: "2026-10-27"
+  irVersion: 67
 - version: 0.57.2
   changelogEntry:
     - summary: |
