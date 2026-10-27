@@ -93,7 +93,11 @@ export function getXmlTextFieldName(
         if ((candidate.xml?.kind ?? "ELEMENT") !== "ELEMENT") {
             continue;
         }
-        for (const childType of getXmlChildObjectTypes(context, unwrapContainers(candidate.valueType), xml.name)) {
+        for (const childType of getXmlChildObjectTypes(
+            context,
+            unwrapContainers(context, candidate.valueType),
+            xml.name
+        )) {
             childNames.add(context.case.pascalSafe(xmlNameOf(childType)));
         }
     }
@@ -105,14 +109,29 @@ export function getXmlTextFieldName(
             .filter((candidate) => candidate !== property)
             .map((candidate) => context.csharp.getPropertyName(classReference, candidate))
     );
-    return taken.has(TEXT_FIELD_NAME) || classReference.name === TEXT_FIELD_NAME
-        ? `${defaultName}${TEXT_FIELD_NAME}`
-        : TEXT_FIELD_NAME;
+    taken.add(classReference.name);
+    if (!taken.has(TEXT_FIELD_NAME)) {
+        return TEXT_FIELD_NAME;
+    }
+    let name = `${defaultName}${TEXT_FIELD_NAME}`;
+    for (let suffix = 2; taken.has(name); suffix++) {
+        name = `${defaultName}${TEXT_FIELD_NAME}${suffix}`;
+    }
+    return name;
 }
 
-function unwrapContainers(typeReference: TypeReference): TypeReference {
+/** Strips optional/nullable/list/set wrappers, following aliases of containers, down to the item type. */
+function unwrapContainers(context: ModelGeneratorContext, typeReference: TypeReference): TypeReference {
     let current = typeReference;
     for (;;) {
+        if (current.type === "named") {
+            const shape = context.model.dereferenceType(current.typeId).typeDeclaration.shape;
+            if (shape.type === "alias" && shape.aliasOf.type === "container") {
+                current = shape.aliasOf;
+                continue;
+            }
+            return current;
+        }
         if (current.type !== "container") {
             return current;
         }
