@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.30.10
+  changelogEntry:
+    - summary: |
+        XML (TwiML) child builders keep the legacy names even when they match the element's text property:
+        `$response->dial()->number('+1…')` adds a `<Number>` child and `$response->message()->body('Hi')` a
+        `<Body>` child (the text stays on the `$number` / `$body` property, also reachable as `getText()` / `setText()`); `addNumber()` / `addBody()`
+        remain available.
+      type: fix
+  createdAt: "2026-10-27"
+  irVersion: 67
 - version: 2.30.9
   changelogEntry:
     - summary: |
