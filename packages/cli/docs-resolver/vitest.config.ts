@@ -25,7 +25,7 @@ const include = [
     "src/__test__/stitchGlobalTheme.test.ts",
     "src/__test__/sort-by-availability.test.ts",
     "src/__test__/ref-version-image-title.test.ts",
-            "src/__test__/tab-menu.test.ts"
+    "src/__test__/tab-menu.test.ts"
 ];
 
 export default defineConfig({
