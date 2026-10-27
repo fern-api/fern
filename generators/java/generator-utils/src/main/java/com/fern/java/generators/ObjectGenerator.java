@@ -59,8 +59,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public final class ObjectGenerator extends AbstractTypeGenerator {
-    private final List<EnrichedObjectProperty> enrichedObjectProperties;
-    private final Map<ObjectProperty, EnrichedObjectProperty> objectPropertyGetters;
+    private List<EnrichedObjectProperty> enrichedObjectProperties;
+    private Map<ObjectProperty, EnrichedObjectProperty> objectPropertyGetters;
     private final List<ImplementsInterface> implementsInterfaces;
     private final List<EnrichedObjectProperty> extendedPropertyGetters;
     private Optional<XmlObjectEncoding> xmlObjectEncoding = Optional.empty();
@@ -165,7 +165,57 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
      */
     public ObjectGenerator withXmlEncoding(TypeId typeId, XmlEncoding xmlEncoding) {
         this.xmlObjectEncoding = Optional.of(new XmlObjectEncoding(typeId, xmlEncoding));
+        renameTextPropertyYieldingToChild();
         return this;
+    }
+
+    /**
+     * When the text property is named like one of the child elements ({@code Message.body} vs {@code <Body>}), the
+     * child builder keeps the legacy name and the text property is generated as {@code text} (getter {@code getText()},
+     * setter {@code text(...)}). A text property inherited from an interface cannot be renamed here; the child builder
+     * then yields instead ({@code addBody}).
+     */
+    private void renameTextPropertyYieldingToChild() {
+        List<ObjectProperty> objectProperties = enrichedObjectProperties.stream()
+                .map(EnrichedObjectProperty::objectProperty)
+                .collect(Collectors.toList());
+        Optional<ObjectProperty> yielding = XmlObjectMethodsGenerator.textPropertyYieldingToChild(
+                generatorContext.getTypeDeclarations(), objectProperties);
+        if (yielding.isEmpty()) {
+            return;
+        }
+        String camelCaseKey = XmlObjectMethodsGenerator.renamedTextFieldName(yielding.get(), objectProperties);
+        String pascalCaseKey = Character.toUpperCase(camelCaseKey.charAt(0)) + camelCaseKey.substring(1);
+        List<EnrichedObjectProperty> renamed = new ArrayList<>();
+        Map<ObjectProperty, EnrichedObjectProperty> getters = new java.util.LinkedHashMap<>(objectPropertyGetters);
+        for (EnrichedObjectProperty property : enrichedObjectProperties) {
+            if (property.objectProperty() != yielding.get() || property.fromInterface()) {
+                renamed.add(property);
+                continue;
+            }
+            EnrichedObjectProperty updated = EnrichedObjectProperty.builder()
+                    .camelCaseKey(camelCaseKey)
+                    .pascalCaseKey(pascalCaseKey)
+                    .poetTypeName(property.poetTypeName())
+                    .fromInterface(property.fromInterface())
+                    .inline(property.inline())
+                    .wrappedAliases(property.wrappedAliases())
+                    .objectProperty(property.objectProperty())
+                    .nullableNonemptyFilterClassName(property.nullableNonemptyFilterClassName())
+                    .generator(property.generator())
+                    .allowMultiple(property.allowMultiple())
+                    .useNullableAnnotation(property.useNullableAnnotation())
+                    .wireKey(property.wireKey())
+                    .docs(property.docs())
+                    .literal(property.literal())
+                    .typeDeclaration(property.typeDeclaration())
+                    .queryParameter(property.queryParameter())
+                    .build();
+            renamed.add(updated);
+            getters.put(property.objectProperty(), updated);
+        }
+        this.enrichedObjectProperties = renamed;
+        this.objectPropertyGetters = getters;
     }
 
     @Override

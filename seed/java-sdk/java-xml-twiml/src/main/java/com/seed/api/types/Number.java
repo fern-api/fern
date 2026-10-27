@@ -255,6 +255,20 @@ public final class Number implements XmlSerializable {
         }
 
         /**
+         * Sets the text content of this element (same as {@code phoneNumber(...)}).
+         */
+        public Builder text(Optional<String> phoneNumber) {
+            return phoneNumber(phoneNumber);
+        }
+
+        /**
+         * Sets the text content of this element (same as {@code phoneNumber(...)}).
+         */
+        public Builder text(String phoneNumber) {
+            return phoneNumber(phoneNumber);
+        }
+
+        /**
          * Parses an xml document whose root element is <Number>.
          */
         public static Builder fromXml(String xml) {
