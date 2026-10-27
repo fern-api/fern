@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.40.2
+  changelogEntry:
+    - summary: |
+        XML (TwiML) child builders keep the legacy names even when they match the element's text attribute:
+        `dial { |d| d.number("+1…") }` adds a `<Number>` child and `message { |m| m.body("hi") }` a `<Body>` child,
+        while `d.number` without arguments still returns the attribute (`number=` sets it); every element with text
+        content also gets `text` / `text=` accessors. `add_number` / `add_body` remain available.
+      type: fix
+  createdAt: "2026-10-27"
+  irVersion: 67
 - version: 1.40.1
   changelogEntry:
     - summary: |
