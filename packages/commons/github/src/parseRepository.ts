@@ -55,17 +55,34 @@ function newRepositoryReference({
         repoUrl,
         cloneUrl,
         getAuthedCloneUrl: (installationToken: string) => {
-            // GitHub App installation tokens (`ghs_*`) and user-to-server tokens
-            // issued by GitHub Apps (`ghu_*`) authenticate as the special
-            // `x-access-token` user. OAuth user tokens (`gho_*`), classic PATs
-            // (`ghp_*`), fine-grained PATs (`github_pat_*`), and legacy 40-char
-            // hex PATs (pre-2021, no prefix) authenticate as the token itself —
-            // using `x-access-token` for those returns "Invalid username or token".
-            const isInstallationToken = installationToken.startsWith("ghs_") || installationToken.startsWith("ghu_");
-            const userPrefix = isInstallationToken ? "x-access-token:" : "";
+            const userPrefix = isGithubAppToken(installationToken) ? "x-access-token:" : "";
             return cloneUrl.replace("https://", `https://${userPrefix}${installationToken}@`);
         }
     };
+}
+
+/**
+ * Returns an `Authorization` header carrying the same credentials as `getAuthedCloneUrl`.
+ *
+ * Credentials embedded in the clone URL are lost when libcurl (8.23+) reports an effective URL
+ * without userinfo: git treats that as a redirect, rewrites the remote URL without credentials,
+ * and the next request fails with "could not read Username". A header survives that rewrite.
+ */
+export function getGitAuthorizationHeader(installationToken: string): string {
+    const credentials = isGithubAppToken(installationToken)
+        ? `x-access-token:${installationToken}`
+        : `${installationToken}:`;
+    return `Authorization: Basic ${Buffer.from(credentials).toString("base64")}`;
+}
+
+// GitHub App installation tokens (`ghs_*`) and user-to-server tokens
+// issued by GitHub Apps (`ghu_*`) authenticate as the special
+// `x-access-token` user. OAuth user tokens (`gho_*`), classic PATs
+// (`ghp_*`), fine-grained PATs (`github_pat_*`), and legacy 40-char
+// hex PATs (pre-2021, no prefix) authenticate as the token itself —
+// using `x-access-token` for those returns "Invalid username or token".
+function isGithubAppToken(token: string): boolean {
+    return token.startsWith("ghs_") || token.startsWith("ghu_");
 }
 
 function getRepoUrl({ remote, owner, repo }: { remote: string; owner: string; repo: string }): string {
