@@ -66,6 +66,7 @@ import { listPreviewGroups } from "./commands/automations/listPreviewGroups.js";
 import { executeAutomationsUpgrade } from "./commands/automations/upgrade/executeAutomationsUpgrade.js";
 import { diff } from "./commands/diff/diff.js";
 import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace.js";
+import { parseDocsDevDuration } from "./commands/docs-dev/parseDocsDevDuration.js";
 import { docsDiff } from "./commands/docs-diff/docsDiff.js";
 import { generateLibraryDocs } from "./commands/docs-md-generate/generateLibraryDocs.js";
 import { deleteDocsPreview } from "./commands/docs-preview/deleteDocsPreview.js";
@@ -2468,6 +2469,22 @@ function addDocsDevCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                     default: false,
                     description:
                         "Skip validating the docs while previewing, so the preview is ready sooner on large sites. Docs errors will not be reported."
+                })
+                .option("timeout", {
+                    string: true,
+                    description:
+                        "Stop the server cleanly this long after it is ready, e.g. 30s, 10m, 1h (a plain number means seconds). Off by default."
+                })
+                .option("idle-timeout", {
+                    string: true,
+                    description:
+                        "Stop the server cleanly after this long with no HTTP requests, e.g. 30s, 10m, 1h (a plain number means seconds). Off by default."
+                })
+                .option("json", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Write ready/reload/stopped events to stdout as one JSON object per line; logs go to stderr."
                 }),
         async (argv) => {
             if (argv.beta) {
@@ -2483,6 +2500,15 @@ function addDocsDevCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                     code: CliError.Code.ConfigError
                 });
             }
+            if (legacy && (argv.timeout != null || argv.idleTimeout != null || argv.json)) {
+                throw new CliError({
+                    message: "--timeout, --idle-timeout and --json are not supported with --legacy.",
+                    code: CliError.Code.ConfigError
+                });
+            }
+            const timeoutMs = argv.timeout != null ? parseDocsDevDuration("timeout", argv.timeout) : undefined;
+            const idleTimeoutMs =
+                argv.idleTimeout != null ? parseDocsDevDuration("idle-timeout", argv.idleTimeout) : undefined;
 
             let port: number;
             let backendPort: number;
@@ -2524,7 +2550,10 @@ function addDocsDevCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                 forceDownload: argv.forceDownload,
                 includePrivate: argv.private,
                 skipApi: argv.skipApi,
-                skipValidation: argv.skipValidation
+                skipValidation: argv.skipValidation,
+                timeoutMs,
+                idleTimeoutMs,
+                json: argv.json
             });
         }
     );

@@ -1,4 +1,23 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.176.1
+  changelogEntry:
+    - summary: |
+        Fix `fern docs dev` returning 404 for the sidebar navigation, compiled MDX components and
+        optimized images with the latest docs renderer, which serves them under `_fern-files/_nav`,
+        `_fern-files/_mdx` and `_fern-files/_img`. The preview now sends `_`-prefixed `_fern-files/`
+        paths to the renderer and only sends uploaded files to the local file mirror.
+      type: fix
+  createdAt: "2026-10-27"
+  irVersion: 67
+- version: 5.176.0
+  changelogEntry:
+    - summary: |
+        SDK snippets from sdk-gen are now read from the `placeholdersSnippetsUrl` link of each artifact, the file whose
+        values carry editable placeholders for the docs "Try it" panel. The SDKs whose snippets were read are left out of
+        the `snippetsConfiguration` sent to FDR, so FDR no longer fails looking them up in its own snippet store.
+      type: feat
+  createdAt: "2026-10-27"
+  irVersion: 67
 - version: 5.175.0
   changelogEntry:
     - summary: |

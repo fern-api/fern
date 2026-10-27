@@ -45,6 +45,10 @@
                 {
                     "type": "named",
                     "value": "type_:Hangup"
+                },
+                {
+                    "type": "named",
+                    "value": "type_:Redirect"
                 }
             ]
         },
@@ -108,6 +112,178 @@
                                 "type": "named",
                                 "value": "type_:ResponseChildrenItem"
                             }
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
+        },
+        "type_:RedirectMethod": {
+            "type": "enum",
+            "declaration": {
+                "name": {
+                    "originalName": "RedirectMethod",
+                    "camelCase": {
+                        "unsafeName": "redirectMethod",
+                        "safeName": "redirectMethod"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "redirect_method",
+                        "safeName": "redirect_method"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "REDIRECT_METHOD",
+                        "safeName": "REDIRECT_METHOD"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "RedirectMethod",
+                        "safeName": "RedirectMethod"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "values": [
+                {
+                    "wireValue": "GET",
+                    "name": {
+                        "originalName": "GET",
+                        "camelCase": {
+                            "unsafeName": "get",
+                            "safeName": "get"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "get",
+                            "safeName": "get"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "GET",
+                            "safeName": "GET"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Get",
+                            "safeName": "Get"
+                        }
+                    }
+                },
+                {
+                    "wireValue": "POST",
+                    "name": {
+                        "originalName": "POST",
+                        "camelCase": {
+                            "unsafeName": "post",
+                            "safeName": "post"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "post",
+                            "safeName": "post"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "POST",
+                            "safeName": "POST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Post",
+                            "safeName": "Post"
+                        }
+                    }
+                }
+            ]
+        },
+        "type_:Redirect": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "Redirect",
+                    "camelCase": {
+                        "unsafeName": "redirect",
+                        "safeName": "redirect"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "redirect",
+                        "safeName": "redirect"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "REDIRECT",
+                        "safeName": "REDIRECT"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Redirect",
+                        "safeName": "Redirect"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "url",
+                        "name": {
+                            "originalName": "url",
+                            "camelCase": {
+                                "unsafeName": "url",
+                                "safeName": "url"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "url",
+                                "safeName": "url"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "URL",
+                                "safeName": "URL"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "URL",
+                                "safeName": "URL"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "method",
+                        "name": {
+                            "originalName": "method",
+                            "camelCase": {
+                                "unsafeName": "method",
+                                "safeName": "method"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "method",
+                                "safeName": "method"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "METHOD",
+                                "safeName": "METHOD"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Method",
+                                "safeName": "Method"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "named",
+                            "value": "type_:RedirectMethod"
                         }
                     },
                     "propertyAccess": null,
