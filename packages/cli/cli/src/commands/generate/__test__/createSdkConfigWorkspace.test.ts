@@ -1,14 +1,17 @@
+import { execFile } from "node:child_process";
 import { access, mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
+import { promisify } from "node:util";
 import { getLatestGeneratorVersion } from "@fern-api/configuration-loader";
-import { bundleRemoteOpenAPI } from "@fern-api/lazy-fern-workspace";
+import { bundleRemoteOpenAPI, type OSSWorkspace } from "@fern-api/lazy-fern-workspace";
+import { createLogger, LogLevel } from "@fern-api/logger";
 import {
     createFernSdkGenApiRequest,
     prepareFernSdkGenApiRoutes,
     SDK_CONFIG_UNPINNED_GENERATOR_VERSION
 } from "@fern-api/remote-workspace-runner";
-import { createMockTaskContext } from "@fern-api/task-context";
+import { createMockTaskContext, type TaskContext } from "@fern-api/task-context";
 import { parseSdkConfigV1 } from "@postman/sdk-config/sdk-config/v1";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
@@ -454,5 +457,386 @@ describe("createSdkConfigWorkspace", () => {
                 } as never
             })
         ).rejects.toThrow(`SDK Config ${type} URL source 'payments' is not supported`);
+    });
+});
+
+describe("createSdkConfigWorkspace protobuf sources", () => {
+    const temporaryDirectories: string[] = [];
+    const PROTO = 'syntax = "proto3";\npackage acme.v1;\nservice Users {}\n';
+
+    afterEach(async () => {
+        await Promise.all(temporaryDirectories.splice(0).map((directory) => rm(directory, { recursive: true })));
+    });
+
+    async function createDirectory(): Promise<string> {
+        const directory = await mkdtemp(path.join(tmpdir(), "fern-sdk-config-proto-"));
+        temporaryDirectories.push(directory);
+        return directory;
+    }
+
+    async function writeFiles(directory: string, files: Record<string, string>): Promise<void> {
+        for (const [relativePath, contents] of Object.entries(files)) {
+            await mkdir(path.dirname(path.join(directory, relativePath)), { recursive: true });
+            await writeFile(path.join(directory, relativePath), contents);
+        }
+    }
+
+    function recordingContext(): { context: TaskContext; warnings: string[] } {
+        const warnings: string[] = [];
+        const logger = createLogger((level, ...args) => {
+            if (level === LogLevel.Warn) {
+                warnings.push(args.join(" "));
+            }
+        });
+        return {
+            warnings,
+            context: {
+                ...createMockTaskContext({ logger }),
+                failAndThrow: (message?: string, error?: unknown): never => {
+                    throw new Error(message, { cause: error });
+                }
+            }
+        };
+    }
+
+    function protoConfig(
+        specs: Array<Record<string, unknown>>,
+        apiImportSettings?: Record<string, unknown>
+    ): ReturnType<typeof parseSdkConfigV1> {
+        return parseSdkConfigV1({
+            schemaVersion: "sdk-config/v1",
+            sdkName: "acme",
+            source: { specs, ...(apiImportSettings != null ? { apiImportSettings } : {}) },
+            targets: [{ language: "typescript", output: { delivery: "files" } }]
+        });
+    }
+
+    async function load({
+        directory,
+        specs,
+        apiImportSettings,
+        sourceRoot,
+        context = recordingContext().context
+    }: {
+        directory: string;
+        specs: Array<Record<string, unknown>>;
+        apiImportSettings?: Record<string, unknown>;
+        sourceRoot?: string;
+        context?: TaskContext;
+    }): Promise<OSSWorkspace> {
+        const { workspace, cleanup } = await createSdkConfigWorkspace({
+            sdkConfig: protoConfig(specs, apiImportSettings),
+            absolutePathToConfig: path.join(directory, "sdk-config.yml"),
+            sourceRoot,
+            cliVersion: "0.0.0",
+            context
+        });
+        await cleanup();
+        return workspace;
+    }
+
+    it("loads a local root without a target, defaulting fromOpenApi to false", async () => {
+        const directory = await createDirectory();
+        await writeFiles(directory, { "proto/acme/v1/users.proto": PROTO });
+
+        const workspace = await load({ directory, specs: [{ id: "users", proto: { root: "./proto" } }] });
+
+        expect(workspace.allSpecs).toEqual([
+            {
+                type: "protobuf",
+                absoluteFilepathToProtobufRoot: path.join(directory, "proto"),
+                absoluteFilepathToProtobufTarget: undefined,
+                absoluteFilepathToOverrides: undefined,
+                relativeFilepathToProtobufRoot: "./proto",
+                dependencies: [],
+                generateLocally: false,
+                fromOpenAPI: false,
+                settings: expect.any(Object)
+            }
+        ]);
+        expect(workspace.specs).toEqual([]);
+    });
+
+    it("loads a local root with a target, dependencies and local generation", async () => {
+        const directory = await createDirectory();
+        await writeFiles(directory, { "proto/acme/v1/users.proto": PROTO });
+
+        const workspace = await load({
+            directory,
+            specs: [
+                {
+                    id: "users",
+                    proto: {
+                        root: "./proto",
+                        target: "./proto/acme/v1/users.proto",
+                        dependencies: ["buf.build/googleapis/googleapis"],
+                        localGeneration: true
+                    }
+                }
+            ]
+        });
+
+        expect(workspace.allSpecs[0]).toMatchObject({
+            type: "protobuf",
+            absoluteFilepathToProtobufRoot: path.join(directory, "proto"),
+            absoluteFilepathToProtobufTarget: path.join(directory, "proto", "acme", "v1", "users.proto"),
+            dependencies: ["buf.build/googleapis/googleapis"],
+            generateLocally: true,
+            fromOpenAPI: false
+        });
+    });
+
+    it("resolves a single override", async () => {
+        const directory = await createDirectory();
+        await writeFiles(directory, { "proto/acme/v1/users.proto": PROTO, "overrides/a.yml": "{}\n" });
+
+        const workspace = await load({
+            directory,
+            specs: [{ id: "users", proto: { root: "./proto", overrides: ["./overrides/a.yml"] } }]
+        });
+
+        expect(workspace.allSpecs[0]).toMatchObject({
+            absoluteFilepathToOverrides: [path.join(directory, "overrides", "a.yml")]
+        });
+    });
+
+    it("keeps multiple overrides in their configured order", async () => {
+        const directory = await createDirectory();
+        await writeFiles(directory, {
+            "proto/acme/v1/users.proto": PROTO,
+            "overrides/a.yml": "{}\n",
+            "overrides/b.yml": "{}\n",
+            "overrides/c.yml": "{}\n"
+        });
+
+        const workspace = await load({
+            directory,
+            specs: [
+                {
+                    id: "users",
+                    proto: {
+                        root: "./proto",
+                        overrides: ["./overrides/c.yml", "./overrides/a.yml", "./overrides/b.yml"]
+                    }
+                }
+            ]
+        });
+
+        expect(workspace.allSpecs[0]).toMatchObject({
+            absoluteFilepathToOverrides: [
+                path.join(directory, "overrides", "c.yml"),
+                path.join(directory, "overrides", "a.yml"),
+                path.join(directory, "overrides", "b.yml")
+            ]
+        });
+    });
+
+    it("puts a fromOpenApi: true source in specs only", async () => {
+        const directory = await createDirectory();
+        await writeFiles(directory, { "proto/acme/v1/users.proto": PROTO });
+
+        const workspace = await load({
+            directory,
+            specs: [{ id: "users", proto: { root: "./proto", fromOpenApi: true } }]
+        });
+
+        expect(workspace.specs).toMatchObject([{ type: "protobuf", fromOpenAPI: true }]);
+        expect(workspace.allSpecs).toEqual([]);
+    });
+
+    it("puts an explicit fromOpenApi: false source in allSpecs only", async () => {
+        const directory = await createDirectory();
+        await writeFiles(directory, { "proto/acme/v1/users.proto": PROTO });
+
+        const workspace = await load({
+            directory,
+            specs: [{ id: "users", proto: { root: "./proto", fromOpenApi: false } }]
+        });
+
+        expect(workspace.allSpecs).toMatchObject([{ type: "protobuf", fromOpenAPI: false }]);
+        expect(workspace.specs).toEqual([]);
+    });
+
+    it("resolves local paths against the source root, including parent segments", async () => {
+        const directory = await createDirectory();
+        const configDirectory = path.join(directory, "fern");
+        await writeFiles(directory, {
+            "protos/acme/v1/users.proto": PROTO,
+            "fern/overrides.yml": "{}\n"
+        });
+
+        const fromSourceRoot = await load({
+            directory: configDirectory,
+            sourceRoot: directory,
+            specs: [
+                {
+                    id: "users",
+                    proto: {
+                        root: "./protos",
+                        target: "./protos/acme/v1/users.proto",
+                        overrides: ["./fern/overrides.yml"]
+                    }
+                }
+            ]
+        });
+        const fromConfigDirectory = await load({
+            directory: configDirectory,
+            specs: [{ id: "users", proto: { root: "../protos", target: "../protos/acme/v1/users.proto" } }]
+        });
+
+        expect(fromSourceRoot.allSpecs[0]).toMatchObject({
+            absoluteFilepathToProtobufRoot: path.join(directory, "protos"),
+            absoluteFilepathToProtobufTarget: path.join(directory, "protos", "acme", "v1", "users.proto"),
+            absoluteFilepathToOverrides: [path.join(directory, "fern", "overrides.yml")]
+        });
+        expect(fromConfigDirectory.allSpecs[0]).toMatchObject({
+            absoluteFilepathToProtobufRoot: path.join(directory, "protos"),
+            absoluteFilepathToProtobufTarget: path.join(directory, "protos", "acme", "v1", "users.proto")
+        });
+    });
+
+    it.each([
+        ["root", { root: "./missing" }, "missing"],
+        ["target", { root: "./proto", target: "./proto/missing.proto" }, "proto/missing.proto"]
+    ])("fails with a config error when the %s does not exist", async (_, proto, missingPath) => {
+        const directory = await createDirectory();
+        await writeFiles(directory, { "proto/acme/v1/users.proto": PROTO });
+
+        await expect(load({ directory, specs: [{ id: "users", proto }] })).rejects.toThrow(
+            new RegExp(`SDK Config protobuf source 'users'.*${missingPath.replace(".", "\\.")}`)
+        );
+    });
+
+    describe("git roots", () => {
+        async function createRepository(): Promise<string> {
+            const repository = await createDirectory();
+            await writeFiles(repository, {
+                "protos/acme/v1/users.proto": PROTO,
+                "protos/acme/v1/orders.proto": PROTO.replace("Users", "Orders")
+            });
+            const git = (...args: string[]) =>
+                promisify(execFile)("git", ["-c", "user.name=test", "-c", "user.email=test@example.com", ...args], {
+                    cwd: repository
+                });
+            await git("init", "--quiet", "--initial-branch=main");
+            await git("add", ".");
+            await git("commit", "--quiet", "-m", "protos");
+            return `file://${repository}`;
+        }
+
+        it("clones the repository and resolves the target against the repository root", async () => {
+            const repository = await createRepository();
+            const directory = await createDirectory();
+            await writeFiles(directory, { "overrides.yml": "{}\n" });
+
+            const workspace = await load({
+                directory,
+                specs: [
+                    {
+                        id: "users",
+                        proto: {
+                            root: { git: { repo: repository, ref: "main", path: "protos" } },
+                            target: "protos/acme/v1/users.proto",
+                            overrides: ["./overrides.yml"],
+                            fromOpenApi: true
+                        }
+                    }
+                ]
+            });
+
+            const spec = workspace.specs[0];
+            if (spec?.type !== "protobuf") {
+                throw new Error("Expected a protobuf spec");
+            }
+            expect(path.basename(spec.absoluteFilepathToProtobufRoot)).toBe("protos");
+            expect(spec.absoluteFilepathToProtobufTarget).toBe(
+                path.join(spec.absoluteFilepathToProtobufRoot, "acme", "v1", "users.proto")
+            );
+            expect(spec.absoluteFilepathToOverrides).toEqual([path.join(directory, "overrides.yml")]);
+            expect(spec.relativeFilepathToProtobufRoot).toBe("protos");
+            expect(
+                await readFile(path.join(spec.absoluteFilepathToProtobufRoot, "acme", "v1", "users.proto"), "utf-8")
+            ).toBe(PROTO);
+        });
+
+        it("clones a git root without a ref or target", async () => {
+            const repository = await createRepository();
+            const directory = await createDirectory();
+
+            const workspace = await load({
+                directory,
+                specs: [{ id: "users", proto: { root: { git: { repo: repository, path: "protos" } } } }]
+            });
+
+            const spec = workspace.allSpecs[0];
+            if (spec?.type !== "protobuf") {
+                throw new Error("Expected a protobuf spec");
+            }
+            expect(spec.absoluteFilepathToProtobufTarget).toBeUndefined();
+            expect(spec.fromOpenAPI).toBe(false);
+            expect(
+                await readFile(path.join(spec.absoluteFilepathToProtobufRoot, "acme", "v1", "orders.proto"), "utf-8")
+            ).toContain("Orders");
+        });
+    });
+
+    it("maps merged import settings onto the protobuf spec", async () => {
+        const directory = await createDirectory();
+        await writeFiles(directory, { "proto/acme/v1/users.proto": PROTO });
+
+        const workspace = await load({
+            directory,
+            apiImportSettings: { respectReadonlySchemas: true, discriminatedUnionV2: true },
+            specs: [
+                {
+                    id: "users",
+                    proto: { root: "./proto" },
+                    apiImportSettings: { discriminatedUnionV2: false, idiomaticRequestNames: true }
+                }
+            ]
+        });
+
+        expect(workspace.allSpecs[0]).toMatchObject({
+            settings: {
+                respectReadonlySchemas: true,
+                discriminatedUnionV2: false,
+                shouldUseIdiomaticRequestNames: true
+            }
+        });
+    });
+
+    it("warns that a namespace is not applied to a protobuf source", async () => {
+        const directory = await createDirectory();
+        await writeFiles(directory, { "proto/acme/v1/users.proto": PROTO });
+        const { context, warnings } = recordingContext();
+
+        const workspace = await load({
+            directory,
+            context,
+            specs: [{ id: "users", namespace: "users", proto: { root: "./proto" } }]
+        });
+
+        expect(workspace.allSpecs).toHaveLength(1);
+        expect(warnings).toEqual([expect.stringContaining("SDK Config protobuf source 'users' sets namespace")]);
+    });
+
+    it("loads OpenAPI and protobuf sources together in configured order", async () => {
+        const directory = await createDirectory();
+        await writeFiles(directory, {
+            "proto/acme/v1/users.proto": PROTO,
+            "openapi.yml": "openapi: 3.0.0\ninfo:\n  title: Orders\n  version: 1.0.0\npaths: {}\n"
+        });
+
+        const workspace = await load({
+            directory,
+            specs: [
+                { id: "users", proto: { root: "./proto", fromOpenApi: true } },
+                { id: "orders", type: "openapi", path: "./openapi.yml" },
+                { id: "docs-only", proto: { root: "./proto" } }
+            ]
+        });
+
+        expect(workspace.specs.map((spec) => spec.type)).toEqual(["protobuf", "openapi"]);
+        expect(workspace.allSpecs.map((spec) => spec.type)).toEqual(["openapi", "protobuf"]);
     });
 });
