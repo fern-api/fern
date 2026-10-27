@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.176.1
+  changelogEntry:
+    - summary: |
+        Fix `fern docs dev` returning 404 for the sidebar navigation, compiled MDX components and
+        optimized images with the latest docs renderer, which serves them under `_fern-files/_nav`,
+        `_fern-files/_mdx` and `_fern-files/_img`. The preview now sends `_`-prefixed `_fern-files/`
+        paths to the renderer and only sends uploaded files to the local file mirror.
+      type: fix
+  createdAt: "2026-10-27"
+  irVersion: 67
 - version: 5.176.0
   changelogEntry:
     - summary: |
