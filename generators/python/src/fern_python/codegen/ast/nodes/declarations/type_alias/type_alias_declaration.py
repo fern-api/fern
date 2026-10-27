@@ -5,6 +5,8 @@ from ....references import Reference
 from ...type_hint import TypeHint
 from ...type_hint.type_hint import get_reference_to_typing_extensions_import
 
+_TYPE_ALIAS_TYPE = get_reference_to_typing_extensions_import("TypeAliasType")
+
 
 class TypeAliasDeclaration(AstNode):
     def __init__(
@@ -72,6 +74,3 @@ class TypeAliasDeclaration(AstNode):
         writer.write(f"{self.name} = ")
         self.type_hint.write(writer=writer)
         writer.write_newline_if_last_line_not()
-
-
-_TYPE_ALIAS_TYPE = get_reference_to_typing_extensions_import("TypeAliasType")
