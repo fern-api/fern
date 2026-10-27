@@ -922,6 +922,13 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     description:
                         "Skip opening a PR / pushing when the generated output has no diff from the base branch."
                 })
+                .option("auto-merge", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Enable GitHub auto-merge on the pull request opened by Fern (github mode: pull-request). " +
+                        "Skipped when breaking changes (MAJOR bump) are detected. Equivalent to `github.auto-merge: true` in generators.yml."
+                })
                 .option("generate-tests", {
                     boolean: true,
                     default: false,
@@ -1116,6 +1123,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     retryRateLimited: argv["retry-rate-limited"],
                     requireEnvVars: argv["require-env-vars"],
                     skipIfNoDiff: argv["skip-if-no-diff"],
+                    autoMerge: argv["auto-merge"],
                     generateTests: argv["generate-tests"],
                     pack: shouldPackage,
                     packMode: argv.packageMode,
@@ -1187,6 +1195,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 retryRateLimited: argv["retry-rate-limited"],
                 requireEnvVars: argv["require-env-vars"],
                 skipIfNoDiff: argv["skip-if-no-diff"],
+                autoMerge: argv["auto-merge"],
                 generateTests: argv["generate-tests"],
                 pack: shouldPackage,
                 packMode: argv.packageMode,
@@ -2239,6 +2248,12 @@ function addDocsMdGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCo
                     boolean: true,
                     hidden: true,
                     description: "Deprecated: local generation is the default"
+                })
+                .option("keep-logs", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Keep the parser logs under <fern folder>/.fern/library-docs-logs/<library>.log instead of a temporary file"
                 }),
         async (argv) => {
             cliContext.instrumentPostHogEvent({
@@ -2254,7 +2269,8 @@ function addDocsMdGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCo
                 project,
                 cliContext,
                 library: argv.library,
-                local: !argv.remote
+                local: !argv.remote,
+                keepLogs: argv.keepLogs
             });
         }
     );

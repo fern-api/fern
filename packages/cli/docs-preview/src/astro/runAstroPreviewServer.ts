@@ -17,6 +17,7 @@ import { SnippetDependencyTracker } from "../SnippetDependencyTracker.js";
 import { buildAstroPreviewModel } from "./buildAstroPreviewModel.js";
 import { DevServerLifetime, DocsDevLifecycleEvent, DocsDevStopReason } from "./DevServerLifetime.js";
 import { LocalLedgerMirror } from "./LocalLedgerMirror.js";
+import { getMirroredFilePath } from "./mirroredFilePath.js";
 
 const RELOAD_DEBOUNCE_MS = 500;
 const RENDERER_READY_TIMEOUT_MS = 60_000;
@@ -483,12 +484,6 @@ async function readBundle(root: AbsoluteFilePath): Promise<AstroBundle> {
  * Loopback proxy in front of the renderer. Adds `x-fern-host`, serves the
  * live-reload event stream, and appends the reload listener to HTML responses.
  */
-/**
- * The renderer emits uploaded assets as same-origin `{basepath}/_fern-files/{domain}/{hash}/{path}`
- * URLs (served by docs-router in production); here they are answered by the mirror's `/files` route.
- */
-const MIRRORED_FILES_DIR = "_fern-files";
-
 function createFrontProxy({
     rendererPort,
     rendererHost,
@@ -504,7 +499,6 @@ function createFrontProxy({
     reloadClients: Set<http.ServerResponse>;
     lifetime: DevServerLifetime;
 }): http.Server {
-    const mirroredFilesPrefix = `${basepath}/${MIRRORED_FILES_DIR}/`;
     return http.createServer((req, res) => {
         if (req.url === RELOAD_EVENTS_PATH) {
             res.writeHead(200, {
@@ -522,14 +516,14 @@ function createFrontProxy({
         lifetime.requestStarted();
         res.once("close", () => lifetime.requestFinished());
 
-        const isMirroredFile = req.url != null && req.url.startsWith(mirroredFilesPrefix);
+        const mirroredFilePath = getMirroredFilePath(req.url, basepath);
         const upstream = http.request(
-            isMirroredFile
+            mirroredFilePath != null
                 ? {
                       host: "127.0.0.1",
                       port: mirrorPort,
                       method: req.method,
-                      path: `/files/${req.url?.slice(mirroredFilesPrefix.length) ?? ""}`,
+                      path: mirroredFilePath,
                       headers: req.headers
                   }
                 : {

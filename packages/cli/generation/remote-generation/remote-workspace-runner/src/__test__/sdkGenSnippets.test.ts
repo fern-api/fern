@@ -71,9 +71,9 @@ describe("downloadSnippetsJson", () => {
     it("returns the text of the file the link points at, unparsed", async () => {
         vi.mocked(axios.get).mockResolvedValue({ data: SNIPPETS_JSON });
 
-        expect(await downloadSnippetsJson("https://example.com/snippets.json")).toBe(SNIPPETS_JSON);
+        expect(await downloadSnippetsJson("https://example.com/placeholders-snippets.json")).toBe(SNIPPETS_JSON);
         expect(axios.get).toHaveBeenCalledWith(
-            "https://example.com/snippets.json",
+            "https://example.com/placeholders-snippets.json",
             expect.objectContaining({ responseType: "text" })
         );
     });
@@ -81,6 +81,8 @@ describe("downloadSnippetsJson", () => {
     it("rejects when the download fails", async () => {
         vi.mocked(axios.get).mockRejectedValue(new Error("network down"));
 
-        await expect(downloadSnippetsJson("https://example.com/snippets.json")).rejects.toThrow("network down");
+        await expect(downloadSnippetsJson("https://example.com/placeholders-snippets.json")).rejects.toThrow(
+            "network down"
+        );
     });
 });

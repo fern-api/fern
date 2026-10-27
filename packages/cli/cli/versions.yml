@@ -1,4 +1,53 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.176.0
+  changelogEntry:
+    - summary: |
+        SDK snippets from sdk-gen are now read from the `placeholdersSnippetsUrl` link of each artifact, the file whose
+        values carry editable placeholders for the docs "Try it" panel. The SDKs whose snippets were read are left out of
+        the `snippetsConfiguration` sent to FDR, so FDR no longer fails looking them up in its own snippet store.
+      type: feat
+  createdAt: "2026-10-27"
+  irVersion: 67
+- version: 5.175.0
+  changelogEntry:
+    - summary: |
+        C/C++ library docs: backslashes in generated `description:` frontmatter are now YAML-escaped
+        (a `\M` in a Doxygen comment no longer breaks the page or the site), and `fern docs md check`
+        fails on pages whose frontmatter does not parse instead of silently dropping it.
+      type: fix
+    - summary: |
+        C/C++ library docs: when two symbols sanitize to the same filename or URL (`s_dup` vs `__s_dup`,
+        `S_CASE` vs `s_case`), the public name now always gets the plain URL and `_`-prefixed names
+        get the `-2` suffix, independent of source order. New opt-in `config.slug-style: hyphenated`
+        on `lang: cpp` libraries keeps word boundaries in URLs (`/functions/doca-pcc-dev-get-port-counter-id`).
+      type: feat
+    - summary: |
+        `fern docs md generate --keep-logs` writes each library parser's logs to
+        `<fern folder>/.fern/library-docs-logs/<library>.log` instead of a temporary file that is
+        removed when the command exits.
+      type: feat
+  createdAt: "2026-10-27"
+  irVersion: 67
+- version: 5.174.1
+  changelogEntry:
+    - summary: |
+        Upgrade the Venus API client (`@fern-api/venus-api-sdk`) to 12.0.0 so the CLI
+        uses the current organization, token and registry endpoints.
+      type: chore
+  createdAt: "2026-10-26"
+  irVersion: 67
+- version: 5.174.0
+  changelogEntry:
+    - summary: |
+        Add `auto-merge: true` to the `github` block (pull-request mode) in generators.yml and a matching
+        `fern generate --auto-merge` flag. When set, Fern enables GitHub auto-merge (squash) on the pull
+        request it opens, so the SDK PR merges as soon as the repository's required checks pass. Auto-merge
+        is skipped when the release contains breaking changes (MAJOR bump) or version analysis is
+        unavailable, and the SDK repository must allow auto-merge. Applies to both `--local` and remote
+        generation (the flag is now forwarded to Fiddle).
+      type: feat
+  createdAt: "2026-10-26"
+  irVersion: 67
 - version: 5.173.0
   changelogEntry:
     - summary: |
