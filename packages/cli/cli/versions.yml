@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.178.0
+  changelogEntry:
+    - summary: |
+        Load protobuf (`proto`) sources from `sdk-config.yml` into the SDK Config workspace with the same
+        semantics as `proto` specs in `generators.yml`: local and git roots, an optional target, ordered
+        overrides, dependencies, `localGeneration` and `fromOpenApi`. `fern check` validates them; SDK Config
+        generation (hosted and `--local`) rejects them with a clear error until protobuf-to-OpenAPI conversion lands.
+        Upgrades `@postman/sdk-config` to 0.17.0.
+      type: feat
+  createdAt: "2026-10-27"
+  irVersion: 67
 - version: 5.177.0
   changelogEntry:
     - summary: |
