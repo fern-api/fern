@@ -4,5 +4,8 @@
     Add `fern generate --guest` (SDKs and `--docs`): with no `fern login` or `FERN_TOKEN`, the CLI
     starts a temporary Venus guest session, generates under its `guest-<id>` organization and prints the
     claim link and expiry. The session is reused by every run in the same repo (`fern/.guest-session`,
-    gitignored; credential in `~/.fern/guest-sessions/`). The login error now mentions `--guest`.
+    gitignored; credential in `~/.fern/guest-sessions/`) and the CLI warns when it is about to expire.
+    A guest can only download: `--docs` requires `--preview`, and generators that push to GitHub or
+    publish to a registry are refused up front. `--guest --new-session` discards the recorded session
+    and starts another one. The login error now mentions `--guest`.
   type: feat

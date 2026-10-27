@@ -1,5 +1,5 @@
 import { stripCliConfigKeys } from "@fern-api/api-workspace-commons";
-import { FernToken } from "@fern-api/auth";
+import { FernToken, GUEST_SESSION_REJECTED_HINT } from "@fern-api/auth";
 import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { createFiddleService, getFiddleOrigin } from "@fern-api/core";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
@@ -296,6 +296,13 @@ async function createJob({
                 );
             },
             insufficientPermissions: () => {
+                if (token.type === "guest") {
+                    return context.failAndThrow(
+                        `You do not have permission to run this generator for organization '${organization}'. ${GUEST_SESSION_REJECTED_HINT}`,
+                        undefined,
+                        { code: CliError.Code.AuthError }
+                    );
+                }
                 return context.failAndThrow(
                     `You do not have permission to run this generator for organization '${organization}'. Please run '${loginCommand}' to ensure you are logged in with the correct account.\n\n` +
                         "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not.",
@@ -324,6 +331,11 @@ async function createJob({
             },
             _other: (content) => {
                 context.logger.debug(`Failed to create job: ${JSON.stringify(content)}`);
+                if (token.type === "guest" && isAuthFailureStatus(content)) {
+                    return context.failAndThrow(GUEST_SESSION_REJECTED_HINT, undefined, {
+                        code: CliError.Code.AuthError
+                    });
+                }
                 // Try to extract a descriptive error message from the response body
                 const errorMessage = extractErrorMessage(content);
                 if (errorMessage != null) {
@@ -432,6 +444,12 @@ async function startJob({
         context.logger.debug(`POST ${url} failed with ${JSON.stringify(error)}`);
         context.failAndThrow("Failed to start job", errorBody, { code: CliError.Code.NetworkError });
     }
+}
+
+function isAuthFailureStatus(error: unknown): boolean {
+    const record = error as { statusCode?: unknown; content?: { statusCode?: unknown } } | undefined;
+    const status = record?.statusCode ?? record?.content?.statusCode;
+    return status === 401 || status === 403;
 }
 
 /**

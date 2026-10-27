@@ -29,16 +29,22 @@ export async function getOrCreateGuestSession({
     cliVersion,
     context,
     createGuestSession = createGuestSessionWithVenus,
+    forceNew = false,
     now = new Date()
 }: {
     absolutePathToFernDirectory: AbsoluteFilePath;
     cliVersion: string;
     context: TaskContext;
     createGuestSession?: CreateGuestSession;
+    /**
+     * Skip the stored session even if it looks live (`--new-session`). The local file only knows `expiresAt`; a
+     * session claimed, revoked or killed on the Venus side still looks live here.
+     */
+    forceNew?: boolean;
     now?: Date;
 }): Promise<{ token: FernGuestToken; reused: boolean }> {
     const stored = await readStoredGuestSession({ absolutePathToFernDirectory });
-    if (stored != null && stored.venusOrigin === getVenusOrigin() && isGuestSessionLive(stored, now)) {
+    if (!forceNew && stored != null && stored.venusOrigin === getVenusOrigin() && isGuestSessionLive(stored, now)) {
         return { token: toGuestToken(stored), reused: true };
     }
 

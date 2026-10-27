@@ -2,6 +2,7 @@ export type { FernGuestToken, FernOrganizationToken, FernToken, FernUserToken } 
 export type { StoredGuestSession } from "./guest/GuestSession.js";
 export {
     GUEST_SESSION_POINTER_FILENAME,
+    GUEST_SESSION_REJECTED_HINT,
     getPathToGuestSessionFile,
     getPathToGuestSessionPointer,
     isGuestSessionLive,

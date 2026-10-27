@@ -16,6 +16,7 @@ import chalk from "chalk";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { detectCISource, detectDeployerAuthor, isCI } from "../../utils/environment.js";
 import { validateDocsWorkspaceAndLogIssues } from "../validate/validateDocsWorkspaceAndLogIssues.js";
+import { GUEST_DOCS_REQUIRE_PREVIEW_MESSAGE } from "./assertGuestCanGenerate.js";
 import { getSdkConfigSdkNames } from "./getSdkConfigSdkNames.js";
 import { resolveGuestProject } from "./resolveGuestProject.js";
 
@@ -61,7 +62,8 @@ export async function generateDocsWorkspace({
     noPrompt,
     skipUpload,
     includePrivate = false,
-    guest = false
+    guest = false,
+    newSession = false
 }: {
     project: Project;
     cliContext: CliContext;
@@ -78,6 +80,8 @@ export async function generateDocsWorkspace({
     includePrivate?: boolean;
     /** Publish under a Venus guest session instead of a login or FERN_TOKEN (`--guest`). */
     guest?: boolean;
+    /** With `--guest`: ignore the session recorded for this repo and mint a new one (`--new-session`). */
+    newSession?: boolean;
 }): Promise<void> {
     const docsWorkspace = project.docsWorkspaces;
     if (docsWorkspace == null) {
@@ -87,8 +91,12 @@ export async function generateDocsWorkspace({
         return;
     }
     let guestToken: FernGuestToken | undefined;
+    if (guest && !preview) {
+        cliContext.failAndThrow(GUEST_DOCS_REQUIRE_PREVIEW_MESSAGE, undefined, { code: CliError.Code.ConfigError });
+        return;
+    }
     if (guest) {
-        const resolved = await resolveGuestProject({ project, cliContext });
+        const resolved = await resolveGuestProject({ project, cliContext, newSession });
         project = resolved.project;
         guestToken = resolved.token;
     }

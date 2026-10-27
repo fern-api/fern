@@ -28,7 +28,7 @@ const GUEST_TOKEN = {
     sessionId: "gs_123",
     organizationId: "guest-gs_123",
     claimUrl: "https://dashboard.buildwithfern.com/claim/gs_123#secret",
-    expiresAt: new Date("2026-10-27T12:00:00Z")
+    expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000)
 };
 
 describe("resolveGuestProject", () => {
@@ -97,5 +97,40 @@ describe("resolveGuestProject", () => {
         await resolveGuestProject({ project: testProject.project, cliContext });
 
         expect(logged("Reusing guest session")).toBe(true);
+    });
+
+    it("mints a new session with --new-session and says so", async () => {
+        auth.getToken.mockResolvedValue(undefined);
+        auth.getOrCreateGuestSession.mockResolvedValue({ token: GUEST_TOKEN, reused: false });
+        const { cliContext, logged } = createTestCliContext();
+
+        await resolveGuestProject({ project: testProject.project, cliContext, newSession: true });
+
+        expect(auth.getOrCreateGuestSession).toHaveBeenCalledWith(expect.objectContaining({ forceNew: true }));
+        expect(logged("Started a new (--new-session) guest session")).toBe(true);
+    });
+
+    it("warns when the session expires within the hour, without rotating it", async () => {
+        auth.getToken.mockResolvedValue(undefined);
+        const now = new Date("2026-10-27T12:00:00Z");
+        const soon = { ...GUEST_TOKEN, expiresAt: new Date(now.getTime() + 25 * 60 * 1000) };
+        auth.getOrCreateGuestSession.mockResolvedValue({ token: soon, reused: true });
+        const { cliContext, logged } = createTestCliContext();
+
+        const resolved = await resolveGuestProject({ project: testProject.project, cliContext, now });
+
+        expect(resolved.token).toBe(soon);
+        expect(logged("expires in 25 minutes")).toBe(true);
+        expect(auth.getOrCreateGuestSession).toHaveBeenCalledWith(expect.objectContaining({ forceNew: false }));
+    });
+
+    it("does not warn while plenty of time is left", async () => {
+        auth.getToken.mockResolvedValue(undefined);
+        auth.getOrCreateGuestSession.mockResolvedValue({ token: GUEST_TOKEN, reused: true });
+        const { cliContext, logged } = createTestCliContext();
+
+        await resolveGuestProject({ project: testProject.project, cliContext });
+
+        expect(logged("expires in")).toBe(false);
     });
 });

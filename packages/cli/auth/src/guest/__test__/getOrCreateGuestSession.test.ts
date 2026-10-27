@@ -144,6 +144,35 @@ describe("getOrCreateGuestSession", () => {
         expect(second.token).toEqual(first.token);
     });
 
+    it("mints a new session when forceNew is set even though the stored one is live", async () => {
+        const first = vi.fn().mockResolvedValue(venusResponse());
+        await getOrCreateGuestSession({
+            absolutePathToFernDirectory: fernDirectory,
+            cliVersion: "1.2.3",
+            context: createMockTaskContext(),
+            createGuestSession: first,
+            now: NOW
+        });
+
+        const second = vi
+            .fn()
+            .mockResolvedValue(venusResponse({ sessionId: "gs_456", organizationId: "guest-gs_456" }));
+        const result = await getOrCreateGuestSession({
+            absolutePathToFernDirectory: fernDirectory,
+            cliVersion: "1.2.3",
+            context: createMockTaskContext(),
+            createGuestSession: second,
+            forceNew: true,
+            now: NOW
+        });
+
+        expect(second).toHaveBeenCalledTimes(1);
+        expect(result.reused).toBe(false);
+        expect(result.token.sessionId).toBe("gs_456");
+        const pointer = await readFile(path.join(fernDirectory, GUEST_SESSION_POINTER_FILENAME), "utf-8");
+        expect(pointer.trim()).toBe("gs_456");
+    });
+
     it("mints a new session once the stored one has expired", async () => {
         const createGuestSession = vi
             .fn()

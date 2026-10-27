@@ -17,6 +17,7 @@ import { CliError } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { PREVIEW_DIRECTORY } from "../../constants.js";
+import { assertGuestCanGenerate } from "./assertGuestCanGenerate.js";
 import { buildGeneratePosthogProperties, listRequestedGenerators } from "./buildGeneratePosthogProperties.js";
 import { checkOutputDirectory } from "./checkOutputDirectory.js";
 import { CLI_LANGUAGE, prepareCliTargetWorkspace } from "./cliGeneratorConfigAdapter/prepareCliTargetWorkspace.js";
@@ -105,7 +106,8 @@ export async function generateAPIWorkspaces({
     packMode,
     packOnly,
     includePrivate,
-    guest = false
+    guest = false,
+    newSession = false
 }: {
     project: Project;
     cliContext: CliContext;
@@ -153,13 +155,10 @@ export async function generateAPIWorkspaces({
     includePrivate?: boolean;
     /** Generate under a Venus guest session instead of a login or FERN_TOKEN (`--guest`). */
     guest?: boolean;
+    /** With `--guest`: ignore the session recorded for this repo and mint a new one (`--new-session`). */
+    newSession?: boolean;
 }): Promise<void> {
     let token: FernToken | undefined = undefined;
-    if (guest) {
-        const resolved = await resolveGuestProject({ project, cliContext });
-        project = resolved.project;
-        token = resolved.token;
-    }
     const cleanupSdkConfigWorkspaces: Array<() => Promise<void>> = [];
 
     try {
@@ -226,12 +225,20 @@ export async function generateAPIWorkspaces({
 
         validateUniqueLanguageOwnership({ generations, cliContext });
 
+        const isAutomation = automation != null;
+        if (guest) {
+            // Before minting a session: a guest organization can only download generated code.
+            assertGuestCanGenerate({ generations, isAutomation, preview, cliContext });
+            const resolved = await resolveGuestProject({ project, cliContext, newSession });
+            project = resolved.project;
+            token = resolved.token;
+        }
+
         // Start the per-generator flag requests now so they overlap login and the output-directory prompts.
         // Values are memoized per process, so the remote runner reuses them. Local (Docker) generation never
         // routes through sdk-gen-api, so it makes no flag request, and neither do SDK Config targets or
         // post-cutover versions, whose routing the flag does not decide. The helper never rejects, so the
         // promise cannot go unobserved if a prompt below throws first.
-        const isAutomation = automation != null;
         const sdkGenApiEnabledByGenerator = useLocalDocker
             ? undefined
             : resolveFernSdkGenApiEnabledByGenerator({

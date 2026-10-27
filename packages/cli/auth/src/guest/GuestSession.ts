@@ -9,6 +9,11 @@ const GUEST_SESSIONS_FOLDER = "guest-sessions";
 /** Written next to fern.config.json so every shell in the same repo reuses one guest org. */
 export const GUEST_SESSION_POINTER_FILENAME = ".guest-session";
 
+/** Appended to auth failures from a run that used a guest token; `fern login` advice does not fit a guest. */
+export const GUEST_SESSION_REJECTED_HINT =
+    "This run used a guest session that the server no longer accepts (expired, claimed, or revoked). " +
+    "Start a fresh one with 'fern generate --guest --new-session', or claim it / run 'fern login' to continue with an account.";
+
 export interface StoredGuestSession {
     sessionId: string;
     organizationId: string;

@@ -78,6 +78,7 @@ import { uploadDocsTheme } from "./commands/docs-theme/uploadDocsTheme.js";
 import { downgrade } from "./commands/downgrade/downgrade.js";
 import { generateOpenAPIForWorkspaces } from "./commands/export/generateOpenAPIForWorkspaces.js";
 import { formatWorkspaces } from "./commands/format/formatWorkspaces.js";
+import { GUEST_DOCS_REQUIRE_PREVIEW_MESSAGE } from "./commands/generate/assertGuestCanGenerate.js";
 import { parseGeneratorArg } from "./commands/generate/filterGenerators.js";
 import { GenerationMode, generateAPIWorkspaces } from "./commands/generate/generateAPIWorkspaces.js";
 import { generateDocsWorkspace } from "./commands/generate/generateDocsWorkspace.js";
@@ -964,6 +965,12 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     description:
                         "Run without a Fern account: start (or reuse) a temporary guest session and generate under its guest organization. Claim the session from the printed link to keep the output. Cannot be combined with FERN_TOKEN or a saved login."
                 })
+                .option("new-session", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "With --guest: ignore the guest session recorded for this repo and start a new one (a new guest organization, so earlier guest output is not carried over). Use when the session was claimed, revoked or otherwise stopped working."
+                })
                 .example(
                     "$0 generate --api my-api",
                     "Generate the legacy default group and every target in the API's default sdk-config.yml"
@@ -1016,6 +1023,18 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     undefined,
                     { code: CliError.Code.ConfigError }
                 );
+            }
+            if (argv.newSession && !argv.guest) {
+                return cliContext.failWithoutThrowing(
+                    "The --new-session flag can only be used with --guest.",
+                    undefined,
+                    { code: CliError.Code.ConfigError }
+                );
+            }
+            if (argv.guest && argv.docs != null && !argv.preview) {
+                return cliContext.failWithoutThrowing(GUEST_DOCS_REQUIRE_PREVIEW_MESSAGE, undefined, {
+                    code: CliError.Code.ConfigError
+                });
             }
             if (argv.fernignore != null && (argv.local || argv.runner != null)) {
                 return cliContext.failWithoutThrowing(
@@ -1141,7 +1160,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     packMode: argv.packageMode,
                     packOnly: argv.packageOnly,
                     includePrivate: argv.private,
-                    guest: argv.guest
+                    guest: argv.guest,
+                    newSession: argv.newSession
                 });
             }
             if (argv.docs != null) {
@@ -1174,7 +1194,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     noPrompt: !argv.prompt,
                     skipUpload: argv.skipUpload,
                     includePrivate: argv.private,
-                    guest: argv.guest
+                    guest: argv.guest,
+                    newSession: argv.newSession
                 });
             }
             // default to loading api workspace to preserve legacy behavior
@@ -1215,7 +1236,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 packMode: argv.packageMode,
                 packOnly: argv.packageOnly,
                 includePrivate: argv.private,
-                guest: argv.guest
+                guest: argv.guest,
+                newSession: argv.newSession
             });
         }
     );
