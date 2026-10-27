@@ -17,6 +17,7 @@ import { CliError } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { PREVIEW_DIRECTORY } from "../../constants.js";
+import { assertGuestCanGenerate } from "./assertGuestCanGenerate.js";
 import { buildGeneratePosthogProperties, listRequestedGenerators } from "./buildGeneratePosthogProperties.js";
 import { checkOutputDirectory } from "./checkOutputDirectory.js";
 import { CLI_LANGUAGE, prepareCliTargetWorkspace } from "./cliGeneratorConfigAdapter/prepareCliTargetWorkspace.js";
@@ -26,6 +27,7 @@ import { generateWorkspace } from "./generateAPIWorkspace.js";
 import { getGeneratorSelectedTargetIndexes, loadSdkConfigV1 } from "./loadSdkConfigV1.js";
 import { PackMode } from "./packLocalOutput.js";
 import { resolveGroupsForWorkspace } from "./resolveGroupsForWorkspace.js";
+import { resolveGuestProject } from "./resolveGuestProject.js";
 import { resolvePosthogCommandLabel } from "./resolvePosthogCommandLabel.js";
 import { getSdkConfigGeneratorName } from "./sdkConfigGeneratorName.js";
 import { assertNoProtobufSourcesForGeneration } from "./sdkConfigProtobufSources.js";
@@ -104,7 +106,9 @@ export async function generateAPIWorkspaces({
     pack,
     packMode,
     packOnly,
-    includePrivate
+    includePrivate,
+    guest = false,
+    newSession = false
 }: {
     project: Project;
     cliContext: CliContext;
@@ -150,6 +154,10 @@ export async function generateAPIWorkspaces({
     packOnly?: boolean;
     /** Include `x-twilio.libraryVisibility: private` OpenAPI elements in the generated SDK (`--private`). */
     includePrivate?: boolean;
+    /** Generate under a Venus guest session instead of a login or FERN_TOKEN (`--guest`). */
+    guest?: boolean;
+    /** With `--guest`: ignore the session recorded for this repo and mint a new one (`--new-session`). */
+    newSession?: boolean;
 }): Promise<void> {
     let token: FernToken | undefined = undefined;
     const cleanupSdkConfigWorkspaces: Array<() => Promise<void>> = [];
@@ -218,12 +226,20 @@ export async function generateAPIWorkspaces({
 
         validateUniqueLanguageOwnership({ generations, cliContext });
 
+        const isAutomation = automation != null;
+        if (guest) {
+            // Before minting a session: a guest organization can only download generated code.
+            assertGuestCanGenerate({ generations, isAutomation, preview, cliContext });
+            const resolved = await resolveGuestProject({ project, cliContext, newSession });
+            project = resolved.project;
+            token = resolved.token;
+        }
+
         // Start the per-generator flag requests now so they overlap login and the output-directory prompts.
         // Values are memoized per process, so the remote runner reuses them. Local (Docker) generation never
         // routes through sdk-gen-api, so it makes no flag request, and neither do SDK Config targets or
         // post-cutover versions, whose routing the flag does not decide. The helper never rejects, so the
         // promise cannot go unobserved if a prompt below throws first.
-        const isAutomation = automation != null;
         const sdkGenApiEnabledByGenerator = useLocalDocker
             ? undefined
             : resolveFernSdkGenApiEnabledByGenerator({
@@ -240,9 +256,10 @@ export async function generateAPIWorkspaces({
                       .map(({ name }) => name)
               });
 
-        if (!useLocalDocker) {
+        // As a guest, the credential and organization already come from the guest session.
+        if (!guest && !useLocalDocker) {
             const currentToken = await cliContext.runTask(async (context) => {
-                return askToLogin(context);
+                return askToLogin(context, { suggestGuest: true });
             });
             if (currentToken.type === "user") {
                 await cliContext.runTask(async (context) => {
@@ -254,7 +271,7 @@ export async function generateAPIWorkspaces({
                 });
             }
             token = currentToken;
-        } else {
+        } else if (!guest) {
             // Local generation must stay non-interactive: silently pick up an existing
             // token (FERN_TOKEN env var or saved login file) so Venus calls are
             // authenticated when possible, and leave `token` undefined otherwise.
