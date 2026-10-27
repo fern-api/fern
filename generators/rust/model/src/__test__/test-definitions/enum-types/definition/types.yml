@@ -18,3 +18,9 @@ types:
       - self
       - user
       - api
+
+  FieldPath:
+    enum:
+      - id
+      - value: "item.features.{feature_name}"
+        name: ItemFeature
