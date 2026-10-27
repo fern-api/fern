@@ -8,7 +8,7 @@ export type DocsDevLifecycleEvent =
     | { event: "reload"; ok: false; durationMs: number; error: string }
     | { event: "stopped"; reason: DocsDevStopReason };
 
-export type DocsDevStopReason = "signal" | "timeout" | "idle-timeout" | "renderer-exit";
+export type DocsDevStopReason = "signal" | "timeout" | "idle-timeout" | "shutdown-request" | "renderer-exit";
 
 export type DevServerExpiryReason = Extract<DocsDevStopReason, "timeout" | "idle-timeout">;
 

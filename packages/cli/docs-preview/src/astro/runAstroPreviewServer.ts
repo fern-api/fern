@@ -16,6 +16,13 @@ import { isContentOnlyEdit } from "../reloadUtils.js";
 import { SnippetDependencyTracker } from "../SnippetDependencyTracker.js";
 import { buildAstroPreviewModel } from "./buildAstroPreviewModel.js";
 import { DevServerLifetime, DocsDevLifecycleEvent, DocsDevStopReason } from "./DevServerLifetime.js";
+import {
+    DOCS_DEV_CONTROL_HEADER,
+    DOCS_DEV_SERVER_INFO_PATH,
+    DOCS_DEV_SHUTDOWN_PATH,
+    DocsDevServerInfo,
+    getControlRequestRejection
+} from "./devServerControl.js";
 import { LocalLedgerMirror } from "./LocalLedgerMirror.js";
 import { getMirroredFilePath } from "./mirroredFilePath.js";
 
@@ -244,13 +251,27 @@ export async function runAstroPreviewServer({
             stop(reason);
         }
     });
+    const url = `http://localhost:${port}${basepath}`;
     const proxy = createFrontProxy({
+        port,
         rendererPort,
         rendererHost,
         mirrorPort: backendPort,
         basepath,
         reloadClients,
-        lifetime
+        lifetime,
+        serverInfo: {
+            fernDocsDev: true,
+            pid: process.pid,
+            port,
+            backendPort,
+            url,
+            fernDirectory: absoluteFilePathToFern
+        },
+        onShutdownRequest: () => {
+            context.logger.info(`Received POST ${DOCS_DEV_SHUTDOWN_PATH}; shutting down server...`);
+            stop("shutdown-request");
+        }
     });
 
     let cleanedUp = false;
@@ -393,7 +414,6 @@ export async function runAstroPreviewServer({
         await runUntilShutdown;
         return;
     }
-    const url = `http://localhost:${port}${basepath}`;
     context.logger.info(`Docs preview server (Astro) ready on ${url}`);
     isReady = true;
     onLifecycleEvent?.({ event: "ready", url, port, backendPort, pid: process.pid });
@@ -482,24 +502,36 @@ async function readBundle(root: AbsoluteFilePath): Promise<AstroBundle> {
 
 /**
  * Loopback proxy in front of the renderer. Adds `x-fern-host`, serves the
- * live-reload event stream, and appends the reload listener to HTML responses.
+ * live-reload event stream and the local control routes used by `fern docs dev stop`,
+ * and appends the reload listener to HTML responses.
  */
 function createFrontProxy({
+    port,
     rendererPort,
     rendererHost,
     mirrorPort,
     basepath,
     reloadClients,
-    lifetime
+    lifetime,
+    serverInfo,
+    onShutdownRequest
 }: {
+    port: number;
     rendererPort: number;
     rendererHost: string;
     mirrorPort: number;
     basepath: string;
     reloadClients: Set<http.ServerResponse>;
     lifetime: DevServerLifetime;
+    serverInfo: DocsDevServerInfo;
+    onShutdownRequest: () => void;
 }): http.Server {
     return http.createServer((req, res) => {
+        const pathname = req.url?.split("?")[0];
+        if (pathname === DOCS_DEV_SERVER_INFO_PATH || pathname === DOCS_DEV_SHUTDOWN_PATH) {
+            handleControlRequest({ req, res, pathname, port, serverInfo, onShutdownRequest });
+            return;
+        }
         if (req.url === RELOAD_EVENTS_PATH) {
             res.writeHead(200, {
                 "content-type": "text/event-stream",
@@ -568,6 +600,55 @@ function createFrontProxy({
         });
         req.pipe(upstream);
     });
+}
+
+/** Serves the control routes in `devServerControl.ts`. They never reach the renderer or count as idle activity. */
+function handleControlRequest({
+    req,
+    res,
+    pathname,
+    port,
+    serverInfo,
+    onShutdownRequest
+}: {
+    req: http.IncomingMessage;
+    res: http.ServerResponse;
+    pathname: string;
+    port: number;
+    serverInfo: DocsDevServerInfo;
+    onShutdownRequest: () => void;
+}): void {
+    const sendJson = (status: number, body: unknown, headers: http.OutgoingHttpHeaders = {}): void => {
+        res.writeHead(status, { "content-type": "application/json", "cache-control": "no-store", ...headers });
+        res.end(`${JSON.stringify(body)}\n`);
+    };
+    const rejection = getControlRequestRejection({
+        remoteAddress: req.socket.remoteAddress,
+        host: req.headers.host,
+        origin: req.headers.origin,
+        controlHeader: req.headers[DOCS_DEV_CONTROL_HEADER],
+        serverPort: port
+    });
+    if (rejection != null) {
+        sendJson(403, { error: rejection });
+        return;
+    }
+    if (pathname === DOCS_DEV_SERVER_INFO_PATH) {
+        if (req.method !== "GET") {
+            sendJson(405, { error: "use GET" }, { allow: "GET" });
+            return;
+        }
+        sendJson(200, serverInfo);
+        return;
+    }
+    if (req.method !== "POST") {
+        sendJson(405, { error: "use POST" }, { allow: "POST" });
+        return;
+    }
+    // Stop only once the response is fully sent, and close the connection so a keep-alive client
+    // doesn't hold the server open.
+    res.once("finish", onShutdownRequest);
+    sendJson(202, { stopping: true }, { connection: "close" });
 }
 
 function getFreePort(): Promise<number> {

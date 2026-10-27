@@ -68,6 +68,7 @@ import { claimGuestSession } from "./commands/claim/claimGuestSession.js";
 import { diff } from "./commands/diff/diff.js";
 import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace.js";
 import { parseDocsDevDuration } from "./commands/docs-dev/parseDocsDevDuration.js";
+import { DEFAULT_DOCS_DEV_PORT, runDocsDevStop } from "./commands/docs-dev/stopDocsDevServer.js";
 import { docsDiff } from "./commands/docs-diff/docsDiff.js";
 import { generateLibraryDocs } from "./commands/docs-md-generate/generateLibraryDocs.js";
 import { deleteDocsPreview } from "./commands/docs-preview/deleteDocsPreview.js";
@@ -2562,7 +2563,33 @@ function addDocsDevCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) 
                     default: false,
                     description:
                         "Write ready/reload/stopped events to stdout as one JSON object per line; logs go to stderr."
-                }),
+                })
+                .command(
+                    "stop",
+                    "Cleanly stop the local docs development server on a port",
+                    (yargs) =>
+                        yargs
+                            .option("port", {
+                                number: true,
+                                description: `Port of the server to stop (default: ${DEFAULT_DOCS_DEV_PORT}). Use the port from the "ready on" log line or the --json ready event.`
+                            })
+                            .option("json", {
+                                boolean: true,
+                                default: false,
+                                description: "Write the result to stdout as JSON; logs go to stderr."
+                            }),
+                    async (argv) => {
+                        const port = argv.port ?? DEFAULT_DOCS_DEV_PORT;
+                        if (!Number.isInteger(port) || port < 1 || port > 65535) {
+                            throw new CliError({
+                                message: `--port must be a whole number between 1 and 65535, got ${argv.port}.`,
+                                code: CliError.Code.ConfigError
+                            });
+                        }
+                        cliContext.instrumentPostHogEvent({ command: "fern docs dev stop" });
+                        await runDocsDevStop({ cliContext, port });
+                    }
+                ),
         async (argv) => {
             if (argv.beta) {
                 cliContext.logger.warn(

@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `fern docs dev stop`, which cleanly stops the `fern docs dev` server on port 3000, or on the port given with
+    `--port`, so agents and CI can shut down local docs without finding and killing the process. It exits 0 with a
+    message when there is nothing to stop, and `--json` writes the result to stdout. It uses a new local-only
+    `POST /__fern/shutdown` route on the `fern docs dev` server, alongside `GET /__fern/dev-server`, which identifies
+    the server. Both routes only accept requests from the same machine that carry the `x-fern-docs-dev: 1` header.
+  type: feat

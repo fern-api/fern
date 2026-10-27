@@ -125,4 +125,28 @@ for k in $(seq 1 60); do
 done
 
 # Run Playwright tests
-cd docs-preview-smoke-test/playwright && npx playwright test smoke.spec.ts --config playwright.config.ts
+set +e
+(cd docs-preview-smoke-test/playwright && npx playwright test smoke.spec.ts --config playwright.config.ts)
+PLAYWRIGHT_EXIT=$?
+set -e
+
+# Stop the server the way an agent would, without killing it; the EXIT trap's kill_tree is only a fallback
+echo "Stopping server with fern docs dev stop..."
+STOP_OUTPUT=$("$FERN_BIN" docs dev stop --port 3000 --json)
+echo "$STOP_OUTPUT"
+if ! echo "$STOP_OUTPUT" | grep -q '"stopped": true'; then
+  echo "fern docs dev stop did not stop the server"
+  cat "$LOG_FILE"
+  exit 1
+fi
+for s in $(seq 1 30); do
+  kill -0 "$FERN_PID" 2>/dev/null || break
+  if [ "$s" -eq 30 ]; then
+    echo "Server still running 15s after fern docs dev stop"
+    cat "$LOG_FILE"
+    exit 1
+  fi
+  sleep 0.5
+done
+echo "Server exited after fern docs dev stop"
+exit "$PLAYWRIGHT_EXIT"
