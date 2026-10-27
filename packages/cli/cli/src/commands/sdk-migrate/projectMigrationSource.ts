@@ -475,32 +475,6 @@ function resolveWorkspaceProtobufSpec(
     };
 }
 
-function resolveRawProtobufSpec(
-    workspacePath: string,
-    proto: generatorsYml.ProtobufDefinitionSchema
-): ResolvedMigrationProtobufSpec {
-    const target = proto.target == null || proto.target.length === 0 ? undefined : proto.target;
-    const location: ResolvedProtobufLocation =
-        typeof proto.root === "string"
-            ? {
-                  type: "local",
-                  absoluteRootPath: path.resolve(workspacePath, proto.root),
-                  absoluteTargetPath: target == null ? undefined : path.resolve(workspacePath, target)
-              }
-            : { type: "git", remote: gitRemote(proto.root.git), target };
-    return {
-        absoluteOverridePaths: normalizeRawPaths(proto.overrides).map((override) =>
-            path.resolve(workspacePath, override)
-        ),
-        dependencies: proto.dependencies ?? [],
-        fromOpenApi: proto["from-openapi"] ?? false,
-        idHint: protobufIdHint(location),
-        localGeneration: proto["local-generation"] ?? false,
-        location,
-        type: "protobuf"
-    };
-}
-
 function gitRemote(source: generatorsYml.GitSource): SdkConfigV1GitRemote {
     return { repo: source.repo, ...(source.ref == null ? {} : { ref: source.ref }), path: source.path };
 }
@@ -611,6 +585,10 @@ function protobufMatchSpecificity({ location }: ConfiguredDefinition): number {
 
 function endsWithPath(absolutePath: string, relativePath: string): boolean {
     const normalized = path.normalize(relativePath).replace(/[\\/]+$/, "");
+    // `.` is the repository root, which is the clone directory itself.
+    if (normalized === "." || normalized === "") {
+        return true;
+    }
     return absolutePath === normalized || absolutePath.endsWith(`${path.sep}${normalized}`);
 }
 
@@ -673,9 +651,6 @@ function resolveGeneratorSpecOverrides(
         throw unsupportedSourceType("conjure");
     }
     return specs.map((spec): ResolvedMigrationSourceSpec => {
-        if (generatorsYml.isProtoSpecSchema(spec)) {
-            return resolveRawProtobufSpec(workspacePath, spec.proto);
-        }
         if (!generatorsYml.isOpenApiSpecSchema(spec) || typeof spec.openapi !== "string") {
             throw unsupportedSourceType("generator API override");
         }

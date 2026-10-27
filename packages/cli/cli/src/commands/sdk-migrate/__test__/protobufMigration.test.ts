@@ -1,6 +1,10 @@
 import type { AbstractAPIWorkspace, FernWorkspace, ProtobufSpec, Spec } from "@fern-api/api-workspace-commons";
+import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
 import type { generatorsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
+import { createMockTaskContext } from "@fern-api/task-context";
+import { loadAPIWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { validateSdkConfigV1 } from "@postman/sdk-config/sdk-config/v1";
 import path from "path";
@@ -285,39 +289,71 @@ describe("SDK Config migration of protobuf specs", () => {
         ]);
     });
 
-    it.each([
-        { label: "true", fromOpenApi: true, expected: true },
-        { label: "false", fromOpenApi: false, expected: false },
-        { label: "absent", fromOpenApi: undefined, expected: false }
-    ])("migrates a generator-level proto override with from-openapi $label", ({ fromOpenApi, expected }) => {
-        const generator = typescriptGenerator();
-        generator.apiOverride = {
-            specs: [
-                {
-                    proto: {
-                        root: "proto",
-                        target: "proto/user/v1/user.proto",
-                        overrides: "./overrides/user.yml",
-                        ...(fromOpenApi == null ? {} : { "from-openapi": fromOpenApi })
-                    }
-                }
-            ]
-        };
-        const workspace = ossWorkspace({ absoluteFilePath: "/repo/fern", allSpecs: [], specs: [], definitions: [] });
+    it("maps a git root at the repository root", () => {
+        const proto = protobufSpec({
+            root: "/tmp/fern-clone",
+            target: "/tmp/fern-clone/proto/user/v1/user.proto",
+            fromOpenAPI: true
+        });
+        const definition = protoDefinition({ root: ".", target: "proto/user/v1/user.proto", fromOpenAPI: true });
+        definition.gitSource = { repo: "https://github.com/acme/protos.git", path: "." };
+        const workspace = ossWorkspace({
+            absoluteFilePath: "/repo/fern",
+            allSpecs: [],
+            specs: [proto],
+            definitions: [definition]
+        });
 
-        const specs = resolveMigrationSourceSpecs({ workspace, fernWorkspace: {} as FernWorkspace, generator });
-
-        expect(serializeMigrationSource({ specs, workingDirectory: "/repo/fern" }).specs).toEqual([
+        expect(migrate(workspace, "/repo/fern").specs).toEqual([
             {
                 id: "user",
                 proto: {
-                    root: "./proto",
-                    target: "./proto/user/v1/user.proto",
-                    overrides: ["./overrides/user.yml"],
-                    fromOpenApi: expected
+                    root: { git: { repo: "https://github.com/acme/protos.git", path: "." } },
+                    target: "proto/user/v1/user.proto",
+                    fromOpenApi: true
                 }
             }
         ]);
+    });
+
+    it.each([
+        { label: "true", setting: "\n      from-openapi: true", expected: true },
+        { label: "false", setting: "\n      from-openapi: false", expected: false },
+        { label: "absent", setting: "", expected: false }
+    ])("migrates a generators.yml proto with from-openapi $label", async ({ setting, expected }) => {
+        const workspacePath = await mkdtemp(path.join(tmpdir(), "sdk-migrate-proto-"));
+        try {
+            await mkdir(path.join(workspacePath, "proto/user/v1"), { recursive: true });
+            await writeFile(path.join(workspacePath, "proto/user/v1/user.proto"), 'syntax = "proto3";\n');
+            await writeFile(path.join(workspacePath, "overrides.yml"), "{}\n");
+            await writeFile(
+                path.join(workspacePath, "generators.yml"),
+                `api:\n  specs:\n    - proto:\n        root: proto\n        target: proto/user/v1/user.proto\n        overrides: overrides.yml${setting.replaceAll("\n", "\n  ")}\n`
+            );
+            const loaded = await loadAPIWorkspace({
+                absolutePathToWorkspace: AbsoluteFilePath.of(workspacePath),
+                context: createMockTaskContext(),
+                cliVersion: "0.0.0",
+                workspaceName: undefined
+            });
+            if (!loaded.didSucceed) {
+                throw new Error(`Could not load the test workspace: ${JSON.stringify(loaded.failures)}`);
+            }
+
+            expect(migrate(loaded.workspace, workspacePath).specs).toEqual([
+                {
+                    id: "user",
+                    proto: {
+                        root: "./proto",
+                        target: "./proto/user/v1/user.proto",
+                        overrides: ["./overrides.yml"],
+                        fromOpenApi: expected
+                    }
+                }
+            ]);
+        } finally {
+            await rm(workspacePath, { recursive: true, force: true });
+        }
     });
 
     it("explains why a proto source of a workspace without its own specs cannot be migrated", () => {
