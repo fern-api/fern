@@ -1,8 +1,16 @@
 import { mkdir, mkdtemp, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
+import { ORPCError } from "@fern-api/fdr-sdk/orpc-client";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { isSafeOutputDir, keepsFile, parseInstanceUrl, safeRelativePath, writeExport } from "../exportDocs.js";
+import {
+    exportFailureMessage,
+    isSafeOutputDir,
+    keepsFile,
+    parseInstanceUrl,
+    safeRelativePath,
+    writeExport
+} from "../exportDocs.js";
 import type { ExportSource } from "../exportSources.js";
 
 function fakeSource(batches: Record<string, string>[]): ExportSource & { finished: boolean } {
@@ -107,5 +115,13 @@ describe("safeRelativePath", () => {
         for (const unsafe of ["/etc/passwd", "../x", "a/../../x", "a//b", "./a", "a\\b", "C:/x", "a\0b", ""]) {
             expect(safeRelativePath(unsafe)).toBeUndefined();
         }
+    });
+});
+
+describe("exportFailureMessage", () => {
+    it("says to re-run after a republish and to republish a broken build", () => {
+        expect(exportFailureMessage(new ORPCError("CONFLICT"))).toMatch(/republished during the export/);
+        expect(exportFailureMessage(new ORPCError("BAD_GATEWAY"))).toMatch(/live build is broken/);
+        expect(exportFailureMessage(new Error("boom"))).toBe("Docs export failed");
     });
 });

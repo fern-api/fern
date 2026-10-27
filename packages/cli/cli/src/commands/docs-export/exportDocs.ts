@@ -2,6 +2,7 @@ import { mkdir, readdir, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { getFernDirectory } from "@fern-api/configuration-loader";
 import { delay, replaceEnvVariables, stripTrailingSlashes } from "@fern-api/core-utils";
+import { ORPCError } from "@fern-api/fdr-sdk/orpc-client";
 import { askToLogin } from "@fern-api/login";
 import { CliError } from "@fern-api/task-context";
 import { loadDocsWorkspace } from "@fern-api/workspace-loader";
@@ -130,6 +131,19 @@ export function parseInstanceUrl(instanceUrl: string): { domain: string; basepat
     return { domain: url.hostname, basepath: basepath === "/" ? "" : basepath };
 }
 
+/** The headline for a failed export; FDR's error code says whether to re-run or republish. */
+export function exportFailureMessage(error: unknown): string {
+    if (error instanceof ORPCError) {
+        if (error.code === "CONFLICT") {
+            return "Docs export failed: the site was republished during the export. Run the export again.";
+        }
+        if (error.code === "BAD_GATEWAY") {
+            return "Docs export failed: the live build is broken. Republish the site, then export again.";
+        }
+    }
+    return "Docs export failed";
+}
+
 export async function exportDocs({
     cliContext,
     format,
@@ -180,7 +194,7 @@ export async function exportDocs({
                 context.logger.info(`Serve it locally with: npx serve ${output}`);
             }
         } catch (error) {
-            return context.failAndThrow("Docs export failed", error, { code: CliError.Code.NetworkError });
+            return context.failAndThrow(exportFailureMessage(error), error, { code: CliError.Code.NetworkError });
         }
     });
 }
