@@ -237,6 +237,54 @@ describe("SDK Config migration of protobuf specs", () => {
         ]);
     });
 
+    it("pairs git protos whose paths are suffixes of each other with their own entries", () => {
+        const nested = protobufSpec({
+            root: "/tmp/fern-clone-a/a/proto",
+            target: "/tmp/fern-clone-a/a/proto/user.proto",
+            generateLocally: true
+        });
+        const plain = protobufSpec({
+            root: "/tmp/fern-clone-b/proto",
+            target: "/tmp/fern-clone-b/proto/user.proto",
+            fromOpenAPI: true
+        });
+        const plainDefinition = protoDefinition({ root: "proto", target: "proto/user.proto", fromOpenAPI: true });
+        plainDefinition.gitSource = { repo: "https://github.com/acme/plain.git", path: "proto" };
+        const nestedDefinition = protoDefinition({
+            root: "a/proto",
+            target: "a/proto/user.proto",
+            localGeneration: true
+        });
+        nestedDefinition.gitSource = { repo: "https://github.com/acme/nested.git", path: "a/proto" };
+        const workspace = ossWorkspace({
+            absoluteFilePath: "/repo/fern",
+            // The from-openapi proto comes first in generators.yml but is only in `specs`.
+            allSpecs: [nested],
+            specs: [plain],
+            definitions: [plainDefinition, nestedDefinition]
+        });
+
+        expect(migrate(workspace, "/repo/fern").specs).toEqual([
+            {
+                id: "user",
+                proto: {
+                    root: { git: { repo: "https://github.com/acme/plain.git", path: "proto" } },
+                    target: "proto/user.proto",
+                    fromOpenApi: true
+                }
+            },
+            {
+                id: "user-2",
+                proto: {
+                    root: { git: { repo: "https://github.com/acme/nested.git", path: "a/proto" } },
+                    target: "a/proto/user.proto",
+                    localGeneration: true,
+                    fromOpenApi: false
+                }
+            }
+        ]);
+    });
+
     it.each([
         { label: "true", fromOpenApi: true, expected: true },
         { label: "false", fromOpenApi: false, expected: false },

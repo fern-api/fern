@@ -186,16 +186,14 @@ function inConfiguredOrder<T extends { configuredDefinition: ConfiguredDefinitio
     matched: T[],
     configuredDefinitions: ConfiguredDefinition[]
 ): T[] {
-    const indexes = matched.map(({ configuredDefinition }) =>
-        configuredDefinition == null ? -1 : configuredDefinitions.indexOf(configuredDefinition)
-    );
-    if (indexes.some((index) => index === -1)) {
+    const indexed = matched.map((entry) => ({
+        entry,
+        index: entry.configuredDefinition == null ? -1 : configuredDefinitions.indexOf(entry.configuredDefinition)
+    }));
+    if (indexed.some(({ index }) => index === -1)) {
         return matched;
     }
-    return matched
-        .map((entry, position) => ({ entry, index: indexes[position] ?? -1 }))
-        .sort((left, right) => left.index - right.index)
-        .map(({ entry }) => entry);
+    return indexed.sort((left, right) => left.index - right.index).map(({ entry }) => entry);
 }
 
 export function resolveMigrationSourceSpecs({
@@ -543,12 +541,20 @@ function findConfiguredDefinition(
 ): ConfiguredDefinition | undefined {
     if (spec.type === "protobuf") {
         // Fern ignores namespaces on protos, and identical proto entries are interchangeable, so each proto takes
-        // the first matching entry no earlier proto has taken.
-        const match = definitions.find(
-            (definition) =>
-                !claimedDefinitions.has(definition) &&
-                protobufDefinitionMatchesSpec(workspacePath, definition.location, spec)
-        );
+        // the most specific matching entry no earlier proto has taken (the first one among equals).
+        const match = definitions
+            .filter(
+                (definition) =>
+                    !claimedDefinitions.has(definition) &&
+                    protobufDefinitionMatchesSpec(workspacePath, definition.location, spec)
+            )
+            .reduce<ConfiguredDefinition | undefined>(
+                (best, candidate) =>
+                    best == null || protobufMatchSpecificity(candidate) > protobufMatchSpecificity(best)
+                        ? candidate
+                        : best,
+                undefined
+            );
         if (match != null) {
             claimedDefinitions.add(match);
         }
@@ -590,6 +596,17 @@ function protobufDefinitionMatchesSpec(
             ? specTarget == null
             : path.resolve(workspacePath, configuredTarget) === specTarget)
     );
+}
+
+/**
+ * A git entry matches the clone paths by suffix, so `proto` also matches a root at `a/proto`. Preferring the longest
+ * git path and target keeps such an entry from taking a spec that belongs to a more specific one.
+ */
+function protobufMatchSpecificity({ location }: ConfiguredDefinition): number {
+    if (location.gitSource == null || location.schema.type !== "protobuf") {
+        return 0;
+    }
+    return path.normalize(location.gitSource.path).length + path.normalize(location.schema.target).length;
 }
 
 function endsWithPath(absolutePath: string, relativePath: string): boolean {
