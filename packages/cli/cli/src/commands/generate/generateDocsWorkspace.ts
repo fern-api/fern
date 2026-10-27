@@ -108,7 +108,10 @@ export async function generateDocsWorkspace({
 
         const shouldContinue = await cliContext.confirmPrompt(
             `This will affect a production site${urlDisplay}. Run with --preview to generate docs for a preview instance.\n${chalk.yellow("?")} Are you sure you want to continue?`,
-            false
+            false,
+            {
+                nonInteractiveError: `This will affect a production site${urlDisplay}. Pass --no-prompt to confirm in non-interactive mode, or --preview to generate docs for a preview instance.`
+            }
         );
         if (!shouldContinue) {
             cliContext.logger.info("Docs generation cancelled.");
@@ -161,7 +164,10 @@ export async function generateDocsWorkspace({
         if (metadataExists) {
             const shouldOverwrite = await cliContext.confirmPrompt(
                 `This preview ID already exists for ${chalk.bold(project.config.organization)} (${chalk.cyan(`https://${expectedDomain}`)}). Are you sure you want to overwrite this?`,
-                false
+                false,
+                {
+                    nonInteractiveError: `Preview ID already exists (https://${expectedDomain}). Pass --force to overwrite it in non-interactive mode.`
+                }
             );
             if (!shouldOverwrite) {
                 cliContext.logger.info("Docs generation cancelled.");
