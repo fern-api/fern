@@ -137,12 +137,54 @@ class Dial extends XmlSerializableType
      * } $attributes Properties of the new <Number> (ignored when a Number is given).
      * @return Number
      */
+    public function number(Number|string|null $phoneNumber = null, array $attributes = []): Number
+    {
+        $phoneNumberElement = $phoneNumber instanceof Number ? $phoneNumber : new Number([...$attributes, 'phoneNumber' => $phoneNumber]);
+        $this->numbers = [...($this->numbers ?? []), $phoneNumberElement];
+        $this->recordContent($phoneNumberElement);
+        return $phoneNumberElement;
+    }
+
+    /**
+     * Adds a <Number> child element and returns it (for nesting further children).
+     *
+     * @param (
+     *    Number
+     *   |string
+     *   |null
+     * ) $phoneNumber The <Number> to add, or its text content.
+     * @param array{
+     *   sendDigits?: ?string,
+     * } $attributes Properties of the new <Number> (ignored when a Number is given).
+     * @return Number
+     */
     public function addNumber(Number|string|null $phoneNumber = null, array $attributes = []): Number
     {
         $phoneNumberElement = $phoneNumber instanceof Number ? $phoneNumber : new Number([...$attributes, 'phoneNumber' => $phoneNumber]);
         $this->numbers = [...($this->numbers ?? []), $phoneNumberElement];
         $this->recordContent($phoneNumberElement);
         return $phoneNumberElement;
+    }
+
+    /**
+     * The text content of this element (same as `$number`).
+     *
+     * @return ?string
+     */
+    public function getText(): ?string
+    {
+        return $this->number;
+    }
+
+    /**
+     * Sets the text content of this element (same as `$number`).
+     *
+     * @param ?string $value
+     */
+    public function setText(?string $value = null): self
+    {
+        $this->number = $value;
+        return $this;
     }
 
     /**
