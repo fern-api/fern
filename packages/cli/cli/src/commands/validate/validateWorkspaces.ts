@@ -9,6 +9,7 @@ import { CliContext } from "../../cli-context/CliContext.js";
 import { type CreatedSdkConfigWorkspace, createSdkConfigWorkspace } from "../generate/createSdkConfigWorkspace.js";
 import { assertNoSdkConfigDirectRubyGemsPublishing, loadSdkConfigV1 } from "../generate/loadSdkConfigV1.js";
 import { buildCheckJsonResult } from "./buildCheckJsonResult.js";
+import { checkNodeVersion, type SystemValidationResult } from "./checkNodeVersion.js";
 import { ApiValidationResult, DocsValidationResult, printCheckReport } from "./printCheckReport.js";
 import { collectDocsWorkspaceViolations } from "./validateDocsWorkspaceAndLogIssues.js";
 
@@ -37,6 +38,11 @@ export async function validateWorkspaces({
      */
     commandLineApiWorkspace?: string;
 }): Promise<void> {
+    const systemResult = checkNodeVersion();
+    if (systemResult.violations.length > 0) {
+        // Report before validating: on an unsupported runtime, validation itself may hang or exit early.
+        await reportUnsupportedRuntimeAndFail({ systemResult, cliContext, logWarnings });
+    }
     const preparedSdkConfigWorkspaces = await prepareSdkConfigWorkspacesForValidation({
         project,
         cliContext,
@@ -164,6 +170,7 @@ export async function validateWorkspaces({
         // Print the aggregated report (using runTask to get a proper TaskContext)
         const reportResult = await cliContext.runTask((context) => {
             return printCheckReport({
+                systemResult,
                 apiResults,
                 docsResult,
                 logWarnings,
@@ -175,7 +182,13 @@ export async function validateWorkspaces({
         if (cliContext.isJsonMode) {
             const showApiNames = apiResults.length > 1;
             cliContext.writeJsonToStdout(
-                buildCheckJsonResult({ apiResults, docsResult, hasErrors: hasErrors || hasAnyErrors, showApiNames })
+                buildCheckJsonResult({
+                    systemResult,
+                    apiResults,
+                    docsResult,
+                    hasErrors: hasErrors || hasAnyErrors,
+                    showApiNames
+                })
             );
         }
 
@@ -190,7 +203,11 @@ export async function validateWorkspaces({
         throw error;
     } finally {
         await Promise.all(preparedSdkConfigWorkspaces.map(({ cleanup }) => cleanup()));
-        const allViolations = [...apiResults.flatMap((r) => r.violations), ...(docsResult?.violations ?? [])];
+        const allViolations = [
+            ...systemResult.violations,
+            ...apiResults.flatMap((r) => r.violations),
+            ...(docsResult?.violations ?? [])
+        ];
         const firedRules = [
             ...new Set(allViolations.map((v) => v.name).filter((name): name is string => name != null))
         ];
@@ -207,6 +224,44 @@ export async function validateWorkspaces({
             }
         });
     }
+}
+
+async function reportUnsupportedRuntimeAndFail({
+    systemResult,
+    cliContext,
+    logWarnings
+}: {
+    systemResult: SystemValidationResult;
+    cliContext: CliContext;
+    logWarnings: boolean;
+}): Promise<never> {
+    await cliContext.runTask((context) =>
+        printCheckReport({ systemResult, apiResults: [], docsResult: undefined, logWarnings, context })
+    );
+    if (cliContext.isJsonMode) {
+        cliContext.writeJsonToStdout(
+            buildCheckJsonResult({
+                systemResult,
+                apiResults: [],
+                docsResult: undefined,
+                hasErrors: true,
+                showApiNames: false
+            })
+        );
+    }
+    cliContext.instrumentPostHogEvent({
+        command: "fern check",
+        properties: {
+            validationRules: [
+                ...new Set(systemResult.violations.map((v) => v.name).filter((name): name is string => name != null))
+            ],
+            numErrors: systemResult.violations.length,
+            numWarnings: 0,
+            passed: false,
+            abortReason: "unsupported node version"
+        }
+    });
+    return cliContext.failAndThrow(undefined, undefined, { code: CliError.Code.ValidationError });
 }
 
 /**
