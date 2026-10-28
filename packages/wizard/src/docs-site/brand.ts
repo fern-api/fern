@@ -2,11 +2,11 @@ import { execFile } from "child_process";
 import { mkdtemp, readFile, writeFile } from "fs/promises";
 import os from "os";
 import path from "path";
+import { dashboardOrigin } from "../fern-urls";
 
 // Pulls a company's logo, favicon, and accent color through the same Brandfetch-backed endpoints the
 // Fern Dashboard's onboarding uses, authenticated with the user's `fern login` token.
 
-const DEFAULT_DASHBOARD_URL = "https://dashboard.buildwithfern.com";
 const MAX_IMAGE_BYTES = 5 * 1024 * 1024;
 
 /** Email providers whose domain says nothing about the user's company. */
@@ -120,7 +120,7 @@ export async function searchBrands(
     fetchImpl: Fetch = fetch
 ): Promise<BrandSearchResult[]> {
     const response = await fetchImpl(
-        `${dashboardUrl()}/api/brand-assets/search?q=${encodeURIComponent(query.trim())}`,
+        `${dashboardOrigin()}/api/brand-assets/search?q=${encodeURIComponent(query.trim())}`,
         { headers: { Authorization: `Bearer ${token}`, Accept: "application/json" } }
     );
     if (response.status === 401) {
@@ -139,7 +139,7 @@ export async function searchBrands(
 }
 
 export async function fetchBrand(domain: string, token: string, fetchImpl: Fetch = fetch): Promise<Brand | undefined> {
-    const response = await fetchImpl(`${dashboardUrl()}/api/brand-assets/fetch`, {
+    const response = await fetchImpl(`${dashboardOrigin()}/api/brand-assets/fetch`, {
         method: "POST",
         headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({ identifier: domain })
@@ -273,10 +273,6 @@ export function imageExtension(buffer: Buffer): string | undefined {
         return ".ico";
     }
     return undefined;
-}
-
-function dashboardUrl(): string {
-    return (process.env.FERN_DASHBOARD_URL ?? DEFAULT_DASHBOARD_URL).replace(/\/$/, "");
 }
 
 async function git(dir: string, args: string[]): Promise<string | undefined> {

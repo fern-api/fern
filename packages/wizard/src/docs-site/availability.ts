@@ -2,9 +2,8 @@
 // onboarding does, so the wizard never publishes into a name or domain that belongs to another team.
 // A free organization name is created right away, before any setup depends on it.
 
-const DEFAULT_DASHBOARD_URL = "https://dashboard.buildwithfern.com";
-const DEFAULT_REGISTRY_URL = "https://registry.buildwithfern.com";
-const DEFAULT_VENUS_URL = "https://venus.buildwithfern.com";
+import { dashboardOrigin, registryOrigin, venusOrigin } from "../fern-urls";
+
 export const DOCS_DOMAIN = "docs.buildwithfern.com";
 const MAX_ATTEMPTS = 5;
 
@@ -77,7 +76,7 @@ export function createAvailabilityChecker(token: string, fetchImpl: Fetch = fetc
 
         async docsUrl(subdomain) {
             try {
-                const response = await fetchImpl(`${registryUrl()}/v2/registry/docs/metadata-for-url`, {
+                const response = await fetchImpl(`${registryOrigin()}/v2/registry/docs/metadata-for-url`, {
                     method: "POST",
                     headers: jsonHeaders(token),
                     body: JSON.stringify({ url: `${subdomain}.${DOCS_DOMAIN}` })
@@ -171,7 +170,7 @@ function defaultRandomSuffix(): string {
 
 async function loadMyOrganizations(token: string, fetchImpl: Fetch): Promise<Set<string> | undefined> {
     try {
-        const response = await fetchImpl(`${dashboardUrl()}/api/get-my-organizations`, {
+        const response = await fetchImpl(`${dashboardOrigin()}/api/get-my-organizations`, {
             headers: { Authorization: `Bearer ${token}`, Accept: "application/json" }
         });
         if (!response.ok) {
@@ -194,7 +193,7 @@ async function loadMyOrganizations(token: string, fetchImpl: Fetch): Promise<Set
 
 async function checkOrganizationExists(name: string, token: string, fetchImpl: Fetch): Promise<Availability> {
     try {
-        const response = await fetchImpl(`${dashboardUrl()}/api/organization/check-availability`, {
+        const response = await fetchImpl(`${dashboardOrigin()}/api/organization/check-availability`, {
             method: "POST",
             headers: jsonHeaders(token),
             body: JSON.stringify({ organizationId: name })
@@ -216,7 +215,7 @@ async function checkOrganizationExists(name: string, token: string, fetchImpl: F
 /** Creates the organization the way `fern generate` does, with the user as its first member. */
 async function createOrganization(name: string, token: string, fetchImpl: Fetch): Promise<boolean> {
     try {
-        const response = await fetchImpl(`${venusUrl()}/organizations/create`, {
+        const response = await fetchImpl(`${venusOrigin()}/organizations/create`, {
             method: "POST",
             headers: jsonHeaders(token),
             body: JSON.stringify({ organizationId: name })
@@ -231,7 +230,7 @@ async function createOrganization(name: string, token: string, fetchImpl: Fetch)
 /** Whether Fern lists the organization among the ones the user belongs to. */
 async function belongsToOrganization(name: string, token: string, fetchImpl: Fetch): Promise<boolean> {
     try {
-        const response = await fetchImpl(`${venusUrl()}/organizations`, {
+        const response = await fetchImpl(`${venusOrigin()}/organizations`, {
             method: "POST",
             headers: { Authorization: `Bearer ${token}`, Accept: "application/json" }
         });
@@ -248,18 +247,6 @@ async function belongsToOrganization(name: string, token: string, fetchImpl: Fet
 
 function jsonHeaders(token: string): Record<string, string> {
     return { Authorization: `Bearer ${token}`, "Content-Type": "application/json", Accept: "application/json" };
-}
-
-function dashboardUrl(): string {
-    return (process.env.FERN_DASHBOARD_URL ?? DEFAULT_DASHBOARD_URL).replace(/\/$/, "");
-}
-
-function venusUrl(): string {
-    return (process.env.DEFAULT_VENUS_ORIGIN ?? DEFAULT_VENUS_URL).replace(/\/$/, "");
-}
-
-function registryUrl(): string {
-    return (process.env.FERN_REGISTRY_URL ?? DEFAULT_REGISTRY_URL).replace(/\/$/, "");
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
