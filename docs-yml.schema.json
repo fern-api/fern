@@ -4926,6 +4926,17 @@
           ],
           "description": "Controls whether the MCP server endpoint (`/_mcp/server`) is enabled for this docs site.\nWhen set to `false`, the endpoint returns 404, the MCP server URL is omitted from\n`llms.txt` and agent prompts, and the \"Connect to Claude Code\" / \"Connect to Cursor\"\nbuttons are hidden. Useful for authenticated docs sites where unauthenticated AI agents\ndiscovering the endpoint would cause confusion.\n\n@default: true"
         },
+        "mcp-server-name": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Overrides the server name used by the \"Connect to Claude Code\" and \"Connect to Cursor\"\nbuttons, for example `my-product-docs`. Claude Code only accepts letters, numbers, `-` and `_`,\nso other characters are replaced with `-`. Defaults to a name derived from the docs hostname\n(`docs.example.com` becomes `docs-example-com`)."
+        },
         "vscode": {
           "oneOf": [
             {
