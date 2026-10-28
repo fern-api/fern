@@ -32,6 +32,7 @@ export declare namespace MethodConverter {
         queryParameters?: FernIr.QueryParameter[];
         headers?: FernIr.HttpHeader[];
         topLevelServers?: ServerObject[];
+        globalApiPlayground?: boolean;
     }
 
     export interface Output {
@@ -48,6 +49,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
     private readonly queryParameters: FernIr.QueryParameter[];
     private readonly headers: FernIr.HttpHeader[];
     private readonly topLevelServers: ServerObject[];
+    private readonly globalApiPlayground: boolean | undefined;
     constructor({
         context,
         breadcrumbs,
@@ -55,7 +57,8 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
         pathParameters = [],
         queryParameters = [],
         headers = [],
-        topLevelServers = []
+        topLevelServers = [],
+        globalApiPlayground
     }: MethodConverter.Args) {
         super({ context, breadcrumbs });
         this.method = method;
@@ -63,6 +66,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
         this.queryParameters = queryParameters;
         this.headers = headers;
         this.topLevelServers = topLevelServers;
+        this.globalApiPlayground = globalApiPlayground;
     }
 
     public convert(): MethodConverter.Output | undefined {
@@ -240,12 +244,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
             document: this.method,
             context: this.context
         }).convert();
-        const globalExplorer = new FernExplorerExtension({
-            breadcrumbs: [],
-            document: this.context.spec,
-            context: this.context
-        }).convert();
-        return methodExplorer ?? globalExplorer;
+        return methodExplorer ?? this.globalApiPlayground;
     }
 
     private filterOutTopLevelServers(servers: ServerObject[]): ServerObject[] {
