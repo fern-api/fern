@@ -113,11 +113,18 @@ export class EndpointSnippetGenerator {
                 go.func({
                     name: SNIPPET_FUNC_NAME,
                     parameters: [],
-                    return_: [],
+                    return_: [go.Type.error()],
                     body: go.codeblock((writer) => {
                         writer.writeNode(this.constructClient({ endpoint, snippet }));
                         writer.writeLine();
                         writer.writeNode(this.callMethod({ endpoint, snippet }));
+                        writer.writeLine();
+                        writer.writeLine("if err != nil {");
+                        writer.indent();
+                        writer.writeLine("return err");
+                        writer.dedent();
+                        writer.writeLine("}");
+                        writer.write("return nil");
                     })
                 })
             );
@@ -217,14 +224,22 @@ export class EndpointSnippetGenerator {
         writer,
         endpoint,
         snippet,
-        includeTestIdHeader
+        includeTestIdHeader,
+        captureReturnValues
     }: {
         writer: go.Writer;
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
         includeTestIdHeader?: boolean;
+        captureReturnValues?: boolean;
     }): void {
         const { otherArgs, requestArg } = this.getMethodArgs({ endpoint, snippet });
+        const writeCall = (invocation: go.MethodInvocation): void => {
+            if (captureReturnValues) {
+                writer.write(this.getReturnValuesAssignment({ endpoint }));
+            }
+            writer.writeNode(invocation);
+        };
         const optionArgsInvocation = includeTestIdHeader
             ? [
                   go.codeblock((writer) => {
@@ -243,7 +258,7 @@ export class EndpointSnippetGenerator {
 
         if (requestArg != null) {
             if (requestArg instanceof go.TypeInstantiation && go.TypeInstantiation.isNop(requestArg)) {
-                writer.writeNode(
+                writeCall(
                     go.invokeMethod({
                         on: go.codeblock(CLIENT_VAR_NAME),
                         method: this.getMethod({ endpoint }),
@@ -261,7 +276,7 @@ export class EndpointSnippetGenerator {
                 writer.writeLine();
 
                 const requestRef = go.codeblock("request");
-                writer.writeNode(
+                writeCall(
                     go.invokeMethod({
                         on: go.codeblock(CLIENT_VAR_NAME),
                         method: this.getMethod({ endpoint }),
@@ -275,7 +290,7 @@ export class EndpointSnippetGenerator {
                 );
             }
         } else {
-            writer.writeNode(
+            writeCall(
                 go.invokeMethod({
                     on: go.codeblock(CLIENT_VAR_NAME),
                     method: this.getMethod({ endpoint }),
@@ -293,8 +308,20 @@ export class EndpointSnippetGenerator {
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): go.CodeBlock {
         return go.codeblock((writer) => {
-            this.writeMethodInvocation({ writer, endpoint, snippet });
+            this.writeMethodInvocation({ writer, endpoint, snippet, captureReturnValues: true });
         });
+    }
+
+    private getReturnValuesAssignment({ endpoint }: { endpoint: FernIr.dynamic.Endpoint }): string {
+        return this.endpointReturnsResponse({ endpoint }) ? "_, err := " : "err := ";
+    }
+
+    private endpointReturnsResponse({ endpoint }: { endpoint: FernIr.dynamic.Endpoint }): boolean {
+        // `hasResponseBody` was added to the dynamic IR in 67.35.0 and is absent in older IRs;
+        // assume a response body unless it is explicitly `false`.
+        // TODO: drop the local type once @fern-api/dynamic-ir-sdk is bumped to >=67.35.0.
+        const { hasResponseBody } = endpoint as FernIr.dynamic.Endpoint & { hasResponseBody?: boolean };
+        return hasResponseBody !== false;
     }
 
     private getConstructorArgs({
