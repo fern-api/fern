@@ -38,6 +38,8 @@ import java.net.URLClassLoader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.Duration;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -150,6 +152,24 @@ class RetryInterceptorTest {
                         Optional.of(retryOnStatusCodes));
     }
 
+    private static Interceptor newScheduledInterceptor(int maxRetries, List<Duration> retryDelays) throws Exception {
+        return newScheduledInterceptor(maxRetries, 1L, retryDelays);
+    }
+
+    private static Interceptor newScheduledInterceptor(
+            int maxRetries, long maxRetryDelayMillis, List<Duration> retryDelays) throws Exception {
+        return (Interceptor) interceptorClass
+                .getConstructor(
+                        int.class, Optional.class, Optional.class, Optional.class, Optional.class, Optional.class)
+                .newInstance(
+                        maxRetries,
+                        Optional.of(1L),
+                        Optional.of(maxRetryDelayMillis),
+                        Optional.of(0.0),
+                        Optional.empty(),
+                        Optional.of(retryDelays));
+    }
+
     private static Response response(int code, String body) {
         return new Response.Builder()
                 .request(REQUEST)
@@ -255,6 +275,87 @@ class RetryInterceptorTest {
 
                 assertThat(callback.response().code()).isEqualTo(503);
                 assertThat(server.unavailableRequests.get()).isEqualTo(1);
+            } finally {
+                shutdown(client);
+            }
+        }
+    }
+
+    @Test
+    void retryDelaysScheduleReplacesMaxRetries() throws Exception {
+        Interceptor.Chain chain = chain();
+        when(chain.proceed(any())).thenReturn(response(503, "Unavailable"));
+
+        Response response = newScheduledInterceptor(
+                        0, List.of(Duration.ofMillis(1), Duration.ofMillis(2), Duration.ofMillis(3)))
+                .intercept(chain);
+
+        assertThat(response.code()).isEqualTo(503);
+        verify(chain, times(4)).proceed(any());
+    }
+
+    @Test
+    void retryDelaysScheduleStopsEarlyOnSuccess() throws Exception {
+        Interceptor.Chain chain = chain();
+        when(chain.proceed(any())).thenReturn(response(429, "Rate limited")).thenReturn(response(200, "OK"));
+
+        Response response = newScheduledInterceptor(5, List.of(Duration.ofMillis(1), Duration.ofMillis(1)))
+                .intercept(chain);
+
+        assertThat(response.code()).isEqualTo(200);
+        verify(chain, times(2)).proceed(any());
+    }
+
+    @Test
+    void retryDelaysWaitsScheduledDuration() throws Exception {
+        Interceptor.Chain chain = chain();
+        when(chain.proceed(any())).thenReturn(response(503, "Unavailable")).thenReturn(response(200, "OK"));
+
+        long start = System.nanoTime();
+        Response response =
+                newScheduledInterceptor(5, List.of(Duration.ofMillis(300))).intercept(chain);
+        long elapsedMillis = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - start);
+
+        assertThat(response.code()).isEqualTo(200);
+        assertThat(elapsedMillis).isGreaterThanOrEqualTo(250);
+    }
+
+    @Test
+    void retryDelaysStillHonoursRetryAfterHeader() throws Exception {
+        Interceptor.Chain chain = chain();
+        Response limited = response(429, "Rate limited")
+                .newBuilder()
+                .header("Retry-After", "1")
+                .build();
+        when(chain.proceed(any())).thenReturn(limited).thenReturn(response(200, "OK"));
+
+        long start = System.nanoTime();
+        Response response = newScheduledInterceptor(5, 60_000L, List.of(Duration.ofMillis(1)))
+                .intercept(chain);
+        long elapsedMillis = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - start);
+
+        assertThat(response.code()).isEqualTo(200);
+        assertThat(elapsedMillis).isGreaterThanOrEqualTo(900);
+    }
+
+    @Test
+    void retryDelaysRejectsNegativeDuration() {
+        assertThatThrownBy(() -> newScheduledInterceptor(0, List.of(Duration.ofMillis(-1))))
+                .hasCauseInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void asyncCallHonoursRetryDelaysSchedule() throws Exception {
+        try (TestServer server = new TestServer("1")) {
+            OkHttpClient client = new OkHttpClient.Builder()
+                    .addInterceptor(newScheduledInterceptor(0, List.of(Duration.ofMillis(1), Duration.ofMillis(1))))
+                    .build();
+            try {
+                CapturingCallback callback = new CapturingCallback();
+                enqueue(newAsyncCall(client, server.request("/unavailable")), callback);
+
+                assertThat(callback.response().code()).isEqualTo(503);
+                assertThat(server.unavailableRequests.get()).isEqualTo(3);
             } finally {
                 shutdown(client);
             }

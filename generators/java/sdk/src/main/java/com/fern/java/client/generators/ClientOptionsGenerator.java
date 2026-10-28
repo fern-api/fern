@@ -45,6 +45,7 @@ import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -160,6 +161,16 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
     private static final FieldSpec RETRY_ON_STATUS_CODES_FIELD = FieldSpec.builder(
                     ParameterizedTypeName.get(ClassName.get(Optional.class), STATUS_CODE_SET_TYPE),
                     "retryOnStatusCodes",
+                    Modifier.PRIVATE,
+                    Modifier.FINAL)
+            .build();
+
+    private static final TypeName RETRY_DELAY_LIST_TYPE =
+            ParameterizedTypeName.get(ClassName.get(List.class), ClassName.get(Duration.class));
+
+    private static final FieldSpec RETRY_DELAYS_FIELD = FieldSpec.builder(
+                    ParameterizedTypeName.get(ClassName.get(Optional.class), RETRY_DELAY_LIST_TYPE),
+                    "retryDelays",
                     Modifier.PRIVATE,
                     Modifier.FINAL)
             .build();
@@ -743,6 +754,8 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addParameter(ParameterSpec.builder(RETRY_JITTER_FACTOR_FIELD.type, RETRY_JITTER_FACTOR_FIELD.name)
                         .build())
                 .addParameter(ParameterSpec.builder(RETRY_ON_STATUS_CODES_FIELD.type, RETRY_ON_STATUS_CODES_FIELD.name)
+                        .build())
+                .addParameter(ParameterSpec.builder(RETRY_DELAYS_FIELD.type, RETRY_DELAYS_FIELD.name)
                         .build());
 
         // Only add the appInfo parameter when the opt-in `allowUserAgentAppInfo` config is enabled and a User-Agent is
@@ -802,7 +815,8 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         "this.$L = $L", INITIAL_RETRY_DELAY_MILLIS_FIELD.name, INITIAL_RETRY_DELAY_MILLIS_FIELD.name)
                 .addStatement("this.$L = $L", MAX_RETRY_DELAY_MILLIS_FIELD.name, MAX_RETRY_DELAY_MILLIS_FIELD.name)
                 .addStatement("this.$L = $L", RETRY_JITTER_FACTOR_FIELD.name, RETRY_JITTER_FACTOR_FIELD.name)
-                .addStatement("this.$L = $L", RETRY_ON_STATUS_CODES_FIELD.name, RETRY_ON_STATUS_CODES_FIELD.name);
+                .addStatement("this.$L = $L", RETRY_ON_STATUS_CODES_FIELD.name, RETRY_ON_STATUS_CODES_FIELD.name)
+                .addStatement("this.$L = $L", RETRY_DELAYS_FIELD.name, RETRY_DELAYS_FIELD.name);
 
         // Only add webSocketFactory assignment if WebSocket channels are present
         if (webSocketFactoryField != null) {
@@ -848,7 +862,8 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addField(INITIAL_RETRY_DELAY_MILLIS_FIELD)
                 .addField(MAX_RETRY_DELAY_MILLIS_FIELD)
                 .addField(RETRY_JITTER_FACTOR_FIELD)
-                .addField(RETRY_ON_STATUS_CODES_FIELD);
+                .addField(RETRY_ON_STATUS_CODES_FIELD)
+                .addField(RETRY_DELAYS_FIELD);
 
         // Only add webSocketFactory field if WebSocket channels are present
         if (webSocketFactoryField != null) {
@@ -973,6 +988,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         MethodSpec maxRetryDelayMillisGetter = createGetter(MAX_RETRY_DELAY_MILLIS_FIELD);
         MethodSpec retryJitterFactorGetter = createGetter(RETRY_JITTER_FACTOR_FIELD);
         MethodSpec retryOnStatusCodesGetter = createGetter(RETRY_ON_STATUS_CODES_FIELD);
+        MethodSpec retryDelaysGetter = createGetter(RETRY_DELAYS_FIELD);
 
         MethodSpec closeMethod = MethodSpec.methodBuilder("close")
                 .addModifiers(Modifier.PUBLIC)
@@ -1055,6 +1071,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addMethod(maxRetryDelayMillisGetter)
                 .addMethod(retryJitterFactorGetter)
                 .addMethod(retryOnStatusCodesGetter)
+                .addMethod(retryDelaysGetter)
                 .addMethod(closeMethod)
                 .addMethod(isClosedMethod)
                 .addMethod(registerWebSocketMethod)
@@ -1284,6 +1301,9 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                                 RETRY_ON_STATUS_CODES_FIELD.type, RETRY_ON_STATUS_CODES_FIELD.name, Modifier.PRIVATE)
                         .initializer("$T.empty()", Optional.class)
                         .build())
+                .addField(FieldSpec.builder(RETRY_DELAYS_FIELD.type, RETRY_DELAYS_FIELD.name, Modifier.PRIVATE)
+                        .initializer("$T.empty()", Optional.class)
+                        .build())
                 .addField(FieldSpec.builder(
                                 ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Integer.class)),
                                 TIMEOUT_FIELD.name,
@@ -1450,6 +1470,39 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                                 Collections.class,
                                 HashSet.class,
                                 RETRY_ON_STATUS_CODES_FIELD.name)
+                        .addStatement("return this")
+                        .build())
+                .addMethod(MethodSpec.methodBuilder(RETRY_DELAYS_FIELD.name)
+                        .addModifiers(Modifier.PUBLIC)
+                        .addJavadoc(
+                                "Sets an explicit retry schedule: the n-th retry waits for the n-th duration and the\n"
+                                        + "request stops retrying once the list is exhausted, e.g. {@code List.of(Duration.ofSeconds(1),\n"
+                                        + "Duration.ofSeconds(5), Duration.ofSeconds(30))} retries at most three times. The list size\n"
+                                        + "replaces $L() and the exponential backoff settings; delays are used as-is (no jitter).\n"
+                                        + "A {@code Retry-After} / {@code X-RateLimit-Reset} header still takes precedence over the\n"
+                                        + "scheduled delay for that attempt. An empty list disables retries.\n",
+                                MAX_RETRIES_FIELD.name)
+                        .returns(builderClassName)
+                        .addParameter(RETRY_DELAY_LIST_TYPE, RETRY_DELAYS_FIELD.name)
+                        .beginControlFlow("if ($L == null)", RETRY_DELAYS_FIELD.name)
+                        .addStatement(
+                                "throw new $T($S)", IllegalArgumentException.class, "retryDelays must not be null")
+                        .endControlFlow()
+                        .beginControlFlow("for ($T delay : $L)", Duration.class, RETRY_DELAYS_FIELD.name)
+                        .beginControlFlow("if (delay == null || delay.isNegative())")
+                        .addStatement(
+                                "throw new $T($S + delay)",
+                                IllegalArgumentException.class,
+                                "retryDelays must only contain non-negative durations: ")
+                        .endControlFlow()
+                        .endControlFlow()
+                        .addStatement(
+                                "this.$L = $T.of($T.unmodifiableList(new $T<>($L)))",
+                                RETRY_DELAYS_FIELD.name,
+                                Optional.class,
+                                Collections.class,
+                                ArrayList.class,
+                                RETRY_DELAYS_FIELD.name)
                         .addStatement("return this")
                         .build())
                 .addMethod(MethodSpec.methodBuilder(MAX_CONCURRENT_REQUESTS_FIELD_NAME)
@@ -1870,6 +1923,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         "builder.$L = clientOptions.$L()",
                         RETRY_ON_STATUS_CODES_FIELD.name,
                         RETRY_ON_STATUS_CODES_FIELD.name)
+                .addStatement("builder.$L = clientOptions.$L()", RETRY_DELAYS_FIELD.name, RETRY_DELAYS_FIELD.name)
                 .addStatement("builder.$L = clientOptions.$L()", LOGGING_FIELD_NAME, LOGGING_FIELD_NAME);
 
         // Forward the sanitized appInfo product token so a derived client keeps sending the caller's app token; the
@@ -1948,6 +2002,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
         returnStringBuilder.append(", this.").append(MAX_RETRY_DELAY_MILLIS_FIELD.name);
         returnStringBuilder.append(", this.").append(RETRY_JITTER_FACTOR_FIELD.name);
         returnStringBuilder.append(", this.").append(RETRY_ON_STATUS_CODES_FIELD.name);
+        returnStringBuilder.append(", this.").append(RETRY_DELAYS_FIELD.name);
 
         // Pass the sanitized appInfo product token in the same position as its constructor parameter, only when the
         // opt-in `allowUserAgentAppInfo` config is enabled and a User-Agent is actually written.
@@ -2016,13 +2071,14 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         "if (interceptors.get(i) instanceof $T)",
                         clientGeneratorContext.getPoetClassNameFactory().getRetryInterceptorClassName())
                 .addStatement(
-                        "interceptors.set(i, new $T(this.$L, this.$L, this.$L, this.$L, this.$L))",
+                        "interceptors.set(i, new $T(this.$L, this.$L, this.$L, this.$L, this.$L, this.$L))",
                         clientGeneratorContext.getPoetClassNameFactory().getRetryInterceptorClassName(),
                         MAX_RETRIES_FIELD.name,
                         INITIAL_RETRY_DELAY_MILLIS_FIELD.name,
                         MAX_RETRY_DELAY_MILLIS_FIELD.name,
                         RETRY_JITTER_FACTOR_FIELD.name,
-                        RETRY_ON_STATUS_CODES_FIELD.name)
+                        RETRY_ON_STATUS_CODES_FIELD.name,
+                        RETRY_DELAYS_FIELD.name)
                 .endControlFlow()
                 .endControlFlow()
                 .endControlFlow()
@@ -2040,13 +2096,14 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                         TimeUnit.class,
                         TimeUnit.class)
                 .addCode(
-                        ".addInterceptor(new $T(this.$L, this.$L, this.$L, this.$L, this.$L));\n",
+                        ".addInterceptor(new $T(this.$L, this.$L, this.$L, this.$L, this.$L, this.$L));\n",
                         clientGeneratorContext.getPoetClassNameFactory().getRetryInterceptorClassName(),
                         MAX_RETRIES_FIELD.name,
                         INITIAL_RETRY_DELAY_MILLIS_FIELD.name,
                         MAX_RETRY_DELAY_MILLIS_FIELD.name,
                         RETRY_JITTER_FACTOR_FIELD.name,
-                        RETRY_ON_STATUS_CODES_FIELD.name)
+                        RETRY_ON_STATUS_CODES_FIELD.name,
+                        RETRY_DELAYS_FIELD.name)
                 .endControlFlow()
                 .addCode("\n")
                 // Placed after RetryInterceptor so a retry waiting out its backoff does not hold a permit, and before
