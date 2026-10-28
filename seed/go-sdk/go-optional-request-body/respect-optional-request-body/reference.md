@@ -29,7 +29,7 @@ Water a plant, optionally with a specific amount.
 request := &fern.WaterPlantRequest{
     PlantID: "plant-id",
 }
-client.WaterPlant(
+_, err := client.WaterPlant(
     context.TODO(),
     request,
 )
@@ -94,7 +94,7 @@ Water every plant, optionally with a specific amount.
 <dd>
 
 ```go
-client.WaterAllPlants(
+_, err := client.WaterAllPlants(
     context.TODO(),
     nil,
 )
@@ -159,7 +159,7 @@ request := &fern.PrunePlantRequest{
         ),
     },
 }
-client.PrunePlant(
+_, err := client.PrunePlant(
     context.TODO(),
     request,
 )
@@ -227,7 +227,7 @@ Mist a plant, passing the body alongside a header.
 request := &fern.MistPlantRequest{
     PlantID: "plant-id",
 }
-client.MistPlant(
+_, err := client.MistPlant(
     context.TODO(),
     request,
 )

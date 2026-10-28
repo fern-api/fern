@@ -1,0 +1,60 @@
+openrpc: 1.2.6
+info:
+  title: Garden JSON-RPC API
+  version: 1.0.0
+servers:
+  - url: https://garden.example.com/rpc
+    name: Production
+methods:
+  - name: plants.water
+    paramStructure: by-name
+    params:
+      - name: plantId
+        required: true
+        schema:
+          type: string
+      - name: liters
+        required: true
+        schema:
+          type: number
+    result:
+      name: watered
+      schema:
+        type: boolean
+    examples:
+      - name: Water
+        params:
+          - name: plantId
+            value: fern-1
+          - name: liters
+            value: 2
+        result:
+          name: watered
+          value: true
+  - name: plants.prune
+    paramStructure: by-position
+    params:
+      - name: plantId
+        required: true
+        schema:
+          type: string
+    result:
+      name: pruned
+      schema:
+        type: boolean
+    examples:
+      - name: Prune
+        params:
+          - name: plantId
+            value: fern-1
+        result:
+          name: pruned
+          value: true
+  - name: plants.list
+    params: []
+    result:
+      name: plants
+      schema:
+        type: array
+        items:
+          type: string

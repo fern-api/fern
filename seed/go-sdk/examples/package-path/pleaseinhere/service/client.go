@@ -36,7 +36,7 @@ func NewClient(options *core.RequestOptions) *Client {
 
 // Example:
 //
-//	client.Service.GetMovie(
+//	_, err := client.Service.GetMovie(
 //	    context.TODO(),
 //	    "movie-c06a4ad7",
 //	)
@@ -81,7 +81,7 @@ func (c *Client) GetMovie(
 //	    },
 //	    Revenue: int64(1000000),
 //	}
-//	client.Service.CreateMovie(
+//	_, err := client.Service.CreateMovie(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -114,7 +114,7 @@ func (c *Client) CreateMovie(
 //	    },
 //	    XAPIVersion: "0.0.1",
 //	}
-//	client.Service.GetMetadata(
+//	_, err := client.Service.GetMetadata(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -355,7 +355,7 @@ func (c *Client) GetMetadata(
 //	        ),
 //	    },
 //	}
-//	client.Service.CreateBigEntity(
+//	_, err := client.Service.CreateBigEntity(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -377,7 +377,7 @@ func (c *Client) CreateBigEntity(
 
 // Example:
 //
-//	client.Service.RefreshToken(
+//	err := client.Service.RefreshToken(
 //	    context.TODO(),
 //	    nil,
 //	)

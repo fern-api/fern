@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Build `core/ObjectMappers.JSON_MAPPER` with `new ObjectMapper().registerModule(...)` instead of
+    `JsonMapper.builder()`, so generated SDKs run on Jackson 2.9.x (`JsonMapper` was the only
+    Jackson 2.10+ symbol in the generated code and failed with `NoClassDefFoundError` at runtime).
+    `ObjectMappers.stringify()` no longer mutates the shared mapper via
+    `setSerializationInclusion(ALWAYS)` (a no-op: `ALWAYS` is Jackson's default and generated
+    models declare `@JsonInclude(NON_ABSENT)` at class level), and `parseErrorBody()` catches
+    `IOException` (the supertype `readValue` declares on 2.9) instead of `JsonProcessingException`.
+    Mapper configuration and serialized output are unchanged.
+  type: fix

@@ -8,7 +8,7 @@ import (
     option "github.com/fern-api/sse-resumable-go/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -17,8 +17,12 @@ func do() {
     request := &sseresumable.StreamCompletionRequestNonResumable{
         Query: "bar",
     }
-    client.Completions.StreamNonResumable(
+    _, err := client.Completions.StreamNonResumable(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

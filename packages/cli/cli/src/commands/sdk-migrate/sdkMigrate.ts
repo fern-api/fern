@@ -29,6 +29,8 @@ import { mergeSdkConfig } from "./mergeSdkConfig.js";
 import { migrateDocsConfiguration } from "./migrateDocsConfiguration.js";
 import {
     identifySourceDerivedApiFields,
+    isResolvedMigrationFileSpec,
+    type ResolvedMigrationFileSpec,
     type ResolvedMigrationSourceSpec,
     resolveMigrationPathParameterStyle,
     resolveWorkspaceSourceSpecs,
@@ -213,7 +215,7 @@ export async function sdkMigrate({
  * Docs show the API itself, so they take the API's own specs. A generator can override its specs for its SDK only;
  * those must never reach docs.yml.
  */
-function resolveDocsSourceSpecs({
+export function resolveDocsSourceSpecs({
     cliContext,
     group,
     sourceSpecs,
@@ -223,11 +225,11 @@ function resolveDocsSourceSpecs({
     group: generatorsYml.GeneratorGroup;
     sourceSpecs: ResolvedMigrationSourceSpec[];
     workspace: Project["apiWorkspaces"][number];
-}): ResolvedMigrationSourceSpec[] {
+}): ResolvedMigrationFileSpec[] {
     try {
         const workspaceSpecs = resolveWorkspaceSourceSpecs(workspace);
         if (workspaceSpecs != null) {
-            return workspaceSpecs;
+            return docsSpecs(cliContext, workspaceSpecs);
         }
     } catch (error) {
         if (!(error instanceof CliError)) {
@@ -237,7 +239,24 @@ function resolveDocsSourceSpecs({
         return [];
     }
     // The API lists no specs of its own, so the SDK specs are the only source, unless a generator overrides them.
-    return group.generators.some((generator) => generator.apiOverride?.specs != null) ? [] : sourceSpecs;
+    return group.generators.some((generator) => generator.apiOverride?.specs != null)
+        ? []
+        : docsSpecs(cliContext, sourceSpecs);
+}
+
+/**
+ * docs.yml API references cannot list protobuf specs. Leaving docs.yml unchanged keeps the docs reading the whole
+ * API, protos included, from the renamed legacy generators configuration.
+ */
+function docsSpecs(cliContext: CliContext, specs: ResolvedMigrationSourceSpec[]): ResolvedMigrationFileSpec[] {
+    const fileSpecs = specs.filter(isResolvedMigrationFileSpec);
+    if (fileSpecs.length < specs.length) {
+        cliContext.stderr.warn(
+            "[warning] docs.yml was not updated: docs.yml API references cannot list protobuf specifications, so the docs keep reading this API from the legacy generators configuration."
+        );
+        return [];
+    }
+    return fileSpecs;
 }
 
 function resolveMigrationSdkName({ apiName, organization }: { apiName: string; organization: string }): string {

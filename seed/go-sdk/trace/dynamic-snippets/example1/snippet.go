@@ -9,7 +9,7 @@ import (
     option "github.com/trace/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -21,11 +21,15 @@ func do() {
     request := &fern.TestSubmissionStatus{
         Stopped: "stopped",
     }
-    client.Admin.UpdateTestSubmissionStatus(
+    err := client.Admin.UpdateTestSubmissionStatus(
         context.TODO(),
         uuid.MustParse(
             "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         ),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

@@ -44,7 +44,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 //	request := &fern.TestGetRequest{
 //	    Region: "region",
 //	}
-//	client.TestGet(
+//	_, err := client.TestGet(
 //	    context.TODO(),
 //	    request,
 //	)

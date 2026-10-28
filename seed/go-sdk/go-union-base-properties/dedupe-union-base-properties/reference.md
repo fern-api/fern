@@ -21,7 +21,7 @@ request := &fern.Shape{
         Radius: 1.5,
     },
 }
-client.Create(
+_, err := client.Create(
     context.TODO(),
     request,
 )

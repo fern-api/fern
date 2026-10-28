@@ -12,7 +12,7 @@
 <dd>
 
 ```go
-client.GetAccount(
+_, err := client.GetAccount(
     context.TODO(),
     "account_id",
 )

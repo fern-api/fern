@@ -40,8 +40,8 @@ catalogs:
       specifier: 0.10.3
       version: 0.10.3
     '@fern-api/venus-api-sdk':
-      specifier: 5.0.0
-      version: 5.0.0
+      specifier: 12.0.0
+      version: 12.0.0
     '@fern-fern/docs-config':
       specifier: 0.0.80
       version: 0.0.80
@@ -109,8 +109,8 @@ catalogs:
       specifier: ^1.14.9
       version: 1.14.9
     '@postman/sdk-config':
-      specifier: 0.16.0
-      version: 0.16.0
+      specifier: 0.17.0
+      version: 0.17.0
     '@redocly/openapi-core':
       specifier: ^1.4.1
       version: 1.34.11
@@ -4382,7 +4382,7 @@ importers:
         version: link:../task-context
       '@fern-api/venus-api-sdk':
         specifier: 'catalog:'
-        version: 5.0.0
+        version: 12.0.0
       jsonwebtoken:
         specifier: 'catalog:'
         version: 9.0.3
@@ -4566,7 +4566,7 @@ importers:
         version: link:../task-context
       '@fern-api/venus-api-sdk':
         specifier: 'catalog:'
-        version: 5.0.0
+        version: 12.0.0
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../workspace/loader
@@ -4581,7 +4581,7 @@ importers:
         version: 7.10.1(@types/node@22.19.17)
       '@postman/sdk-config':
         specifier: 'catalog:'
-        version: 0.16.0
+        version: 0.17.0
       '@sentry/cli':
         specifier: 'catalog:'
         version: 2.58.5
@@ -4719,24 +4719,21 @@ importers:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../commons/core-utils
+      '@fern-api/fs-utils':
+        specifier: workspace:*
+        version: link:../../commons/fs-utils
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../logger
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../task-context
-      '@types/is-ci':
-        specifier: 'catalog:'
-        version: 3.0.4
       '@types/node':
         specifier: 'catalog:'
         version: 22.19.17
       ansi-escapes:
         specifier: 'catalog:'
         version: 5.0.0
-      is-ci:
-        specifier: 'catalog:'
-        version: 3.0.1
       ora:
         specifier: 'catalog:'
         version: 7.0.1
@@ -4997,7 +4994,7 @@ importers:
         version: link:../task-context
       '@fern-api/venus-api-sdk':
         specifier: 'catalog:'
-        version: 5.0.0
+        version: 12.0.0
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../workspace/loader
@@ -6286,7 +6283,7 @@ importers:
         version: link:../../../../../generators/typescript-v2/dynamic-snippets
       '@fern-api/venus-api-sdk':
         specifier: 'catalog:'
-        version: 5.0.0
+        version: 12.0.0
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../../../workspace/loader
@@ -6298,7 +6295,7 @@ importers:
         version: 0.0.1167
       '@postman/sdk-config':
         specifier: 'catalog:'
-        version: 0.16.0
+        version: 0.17.0
       chalk:
         specifier: 'catalog:'
         version: 5.6.2
@@ -6476,7 +6473,7 @@ importers:
         version: link:../../../task-context
       '@fern-api/venus-api-sdk':
         specifier: 'catalog:'
-        version: 5.0.0
+        version: 12.0.0
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../../../workspace/loader
@@ -6488,7 +6485,7 @@ importers:
         version: 0.0.1167
       '@postman/sdk-config':
         specifier: 'catalog:'
-        version: 0.16.0
+        version: 0.17.0
       axios:
         specifier: 'catalog:'
         version: 1.16.0
@@ -6628,7 +6625,7 @@ importers:
         version: link:../workspace/loader
       '@postman/sdk-config':
         specifier: 'catalog:'
-        version: 0.16.0
+        version: 0.17.0
       axios:
         specifier: 'catalog:'
         version: 1.16.0
@@ -8101,7 +8098,7 @@ importers:
         version: 1.2.172-ef737b9982(@opentelemetry/api@1.9.1)(typescript@5.9.3)
       '@fern-api/venus-api-sdk':
         specifier: 'catalog:'
-        version: 5.0.0
+        version: 12.0.0
       '@fern-fern/fdr-test-sdk':
         specifier: 'catalog:'
         version: 0.0.5297
@@ -9670,8 +9667,8 @@ packages:
   '@fern-api/ui-core-utils@0.145.12-b50d999d1':
     resolution: {integrity: sha512-S1sE+Fs6kc/7F1Gzwsz7sZlAhMLIsaMeVDQ68038YXfzsLhrsg3DEVPvil5T3KxH/qV80Uso25q1D1W/LwXo6Q==}
 
-  '@fern-api/venus-api-sdk@5.0.0':
-    resolution: {integrity: sha512-RAV+NGOtSSgxA5T8HjoMCEqAjb4Px+CltiPRSQURpjqMA2/VSfdYrvVPoKWDYhRp+rtvZeAFVmHy+kgIMh0V+A==}
+  '@fern-api/venus-api-sdk@12.0.0':
+    resolution: {integrity: sha512-1J5iQ8wY4QNPb29V1+e5BQnUcCiN7HUk2eM1Zs8XhF97vRwg3bhbDbjC06ewdO5N1xQAzJZAmRJQrhw6VcO3Zw==}
     engines: {node: '>=18.0.0'}
 
   '@fern-fern/docs-config@0.0.80':
@@ -10529,8 +10526,8 @@ packages:
   '@posthog/types@1.415.1':
     resolution: {integrity: sha512-7Qs2wcqipl8KcFpIkIKE1Wcj1djX4dEB3cfq907HrNpKK7/xKh3U4N4bkOD6h9+8j3SxWWrj9JNpE8CZXsE35w==}
 
-  '@postman/sdk-config@0.16.0':
-    resolution: {integrity: sha512-2NsFqef3uTm6IZ7t7yK+OTBOntOqWy/wjEDlsYauhjJIyXthgFKZ9wiXTgECmIBu/kqpnPVftufEHfUEJj6xGA==}
+  '@postman/sdk-config@0.17.0':
+    resolution: {integrity: sha512-xPI6NI6pM28iNQTWHjTtDqAZkq1q4sngzKhD13MjzqRVLAXJr3DFiNXUa5KneReaylUFdkrqC0a/odGy7TzrxA==}
     engines: {node: '>=24'}
 
   '@prisma/instrumentation@7.6.0':
@@ -16679,7 +16676,7 @@ snapshots:
       title: 3.5.3
       ua-parser-js: 1.0.41
 
-  '@fern-api/venus-api-sdk@5.0.0': {}
+  '@fern-api/venus-api-sdk@12.0.0': {}
 
   '@fern-fern/docs-config@0.0.80': {}
 
@@ -17641,7 +17638,7 @@ snapshots:
 
   '@posthog/types@1.415.1': {}
 
-  '@postman/sdk-config@0.16.0':
+  '@postman/sdk-config@0.17.0':
     dependencies:
       semver: 7.8.4
       zod: 4.3.6

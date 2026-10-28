@@ -37,7 +37,7 @@ import (
     client "github.com/query-parameters-openapi/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &fern.SearchRequest{
         Limit: 1,
@@ -152,10 +152,14 @@ func do() {
             },
         },
     }
-    client.Search(
+    _, err := client.Search(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

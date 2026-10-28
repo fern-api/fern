@@ -8,7 +8,7 @@ import (
     option "github.com/client-side-params/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -46,8 +46,12 @@ func do() {
         },
         Connection: "connection",
     }
-    client.Service.CreateUser(
+    _, err := client.Service.CreateUser(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

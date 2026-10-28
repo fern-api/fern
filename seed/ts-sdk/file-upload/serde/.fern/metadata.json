@@ -3,7 +3,8 @@
     "generatorName": "fernapi/fern-typescript-sdk",
     "generatorVersion": "local",
     "generatorConfig": {
-        "noSerdeLayer": false
+        "noSerdeLayer": false,
+        "includeMultipartPartContentType": true
     },
     "originGitCommit": "DUMMY",
     "invokedBy": "ci",

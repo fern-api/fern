@@ -9,7 +9,7 @@ import (
     option "github.com/trace/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -25,10 +25,14 @@ func do() {
             "problems",
         },
     }
-    client.Playlist.UpdatePlaylist(
+    _, err := client.Playlist.UpdatePlaylist(
         context.TODO(),
         1,
         "playlistId",
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

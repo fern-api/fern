@@ -12,7 +12,7 @@
 <dd>
 
 ```go
-client.Ping(
+_, err := client.Ping(
     context.TODO(),
 )
 ```

@@ -8,7 +8,7 @@ import (
     option "github.com/client-side-params/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -22,9 +22,13 @@ func do() {
             "fields",
         ),
     }
-    client.Service.GetConnection(
+    _, err := client.Service.GetConnection(
         context.TODO(),
         "connectionId",
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

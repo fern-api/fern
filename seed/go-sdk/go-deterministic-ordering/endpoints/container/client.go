@@ -40,7 +40,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	    "string",
 //	    "string",
 //	}
-//	client.Endpoints.Container.GetAndReturnListOfPrimitives(
+//	_, err := client.Endpoints.Container.GetAndReturnListOfPrimitives(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -70,7 +70,7 @@ func (c *Client) GetAndReturnListOfPrimitives(
 //	        FieldString: "string",
 //	    },
 //	}
-//	client.Endpoints.Container.GetAndReturnListOfObjects(
+//	_, err := client.Endpoints.Container.GetAndReturnListOfObjects(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -95,7 +95,7 @@ func (c *Client) GetAndReturnListOfObjects(
 //	request := []string{
 //	    "string",
 //	}
-//	client.Endpoints.Container.GetAndReturnSetOfPrimitives(
+//	_, err := client.Endpoints.Container.GetAndReturnSetOfPrimitives(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -122,7 +122,7 @@ func (c *Client) GetAndReturnSetOfPrimitives(
 //	        FieldString: "string",
 //	    },
 //	}
-//	client.Endpoints.Container.GetAndReturnSetOfObjects(
+//	_, err := client.Endpoints.Container.GetAndReturnSetOfObjects(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -147,7 +147,7 @@ func (c *Client) GetAndReturnSetOfObjects(
 //	request := map[string]string{
 //	    "string": "string",
 //	}
-//	client.Endpoints.Container.GetAndReturnMapPrimToPrim(
+//	_, err := client.Endpoints.Container.GetAndReturnMapPrimToPrim(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -174,7 +174,7 @@ func (c *Client) GetAndReturnMapPrimToPrim(
 //	        FieldString: "string",
 //	    },
 //	}
-//	client.Endpoints.Container.GetAndReturnMapOfPrimToObject(
+//	_, err := client.Endpoints.Container.GetAndReturnMapOfPrimToObject(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -201,7 +201,7 @@ func (c *Client) GetAndReturnMapOfPrimToObject(
 //	        Double: 1.1,
 //	    },
 //	}
-//	client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnion(
+//	_, err := client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnion(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -226,7 +226,7 @@ func (c *Client) GetAndReturnMapOfPrimToUndiscriminatedUnion(
 //	request := &types.ObjectWithRequiredField{
 //	    FieldString: "string",
 //	}
-//	client.Endpoints.Container.GetAndReturnOptional(
+//	_, err := client.Endpoints.Container.GetAndReturnOptional(
 //	    context.TODO(),
 //	    request,
 //	)

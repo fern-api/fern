@@ -7,17 +7,21 @@ import (
     option "github.com/api-wide-base-path/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
         ),
     )
-    client.Service.Post(
+    err := client.Service.Post(
         context.TODO(),
         "pathParam",
         "serviceParam",
         1,
         "resourceParam",
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

@@ -1,5 +1,5 @@
 import { resolveSnippetPackageName, VisibilityFilter } from "@fern-api/api-workspace-commons";
-import { FernToken } from "@fern-api/auth";
+import { describeGuestRejection, FernToken, isGuestRejection, readGuestRejection } from "@fern-api/auth";
 import { docsYml, generatorsYml } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
 import {
@@ -72,10 +72,12 @@ import { camelCase, chunk } from "lodash-es";
 import * as mime from "mime-types";
 import { basename } from "path";
 import terminalLink from "terminal-link";
+import { attachSdkGenSnippets } from "./attachSdkGenSnippets.js";
 import { getDocsDeployMode } from "./docsDeployMode.js";
 import { computeDynamicIRs, type DynamicIrGeneratorJob } from "./dynamicIr/computeDynamicIRs.js";
 import { DynamicIrWorkerPool, parseDynamicIrResult } from "./dynamicIr/DynamicIrWorkerPool.js";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
+import { getFdrOrigin, readGuestPublishOutcome } from "./guestDocsSite.js";
 import { measureImageSizes } from "./measureImageSizes.js";
 import { normalizeRepoUrlToHttps } from "./normalizeRepoUrl.js";
 import { publishDocsViaLedger } from "./publishDocsLedger.js";
@@ -196,6 +198,7 @@ export async function publishDocs({
     apiWorkspaces,
     ossWorkspaces,
     usesSdkConfig = false,
+    sdkNames = {},
     context,
     preview,
     previewId,
@@ -221,6 +224,8 @@ export async function publishDocs({
     ossWorkspaces: OSSWorkspace[];
     /** Whether the project configures SDKs in sdk-config.yml; only used to explain missing SDK snippets. */
     usesSdkConfig?: boolean;
+    /** The `sdkName` of each language's SDK in the sdk-config.yml, used to find its build for the SDK snippets. */
+    sdkNames?: Record<string, string[]>;
     context: TaskContext;
     preview: boolean;
     previewId: string | undefined;
@@ -242,11 +247,7 @@ export async function publishDocs({
     loginCommand?: string;
     multiSource?: boolean;
 }): Promise<string> {
-    const fdrOrigin =
-        process.env.FERN_FDR_ORIGIN ??
-        process.env.OVERRIDE_FDR_ORIGIN ??
-        process.env.DEFAULT_FDR_ORIGIN ??
-        "https://registry.buildwithfern.com";
+    const fdrOrigin = getFdrOrigin();
     const isAirGapped = await detectAirGappedMode(`${fdrOrigin}/health`, context.logger);
     if (isAirGapped) {
         context.logger.debug("Detected air-gapped environment - skipping external FDR service calls");
@@ -492,14 +493,23 @@ export async function publishDocs({
         }) => {
             // apiName (docs.yml folder name) becomes the FDR API identifier, so users can
             // reference APIs by their folder name in docs components.
-            const apiDefinition = convertIrToFdrApi({
-                ir,
+            // Only adds anything when FERN_UPLOAD_SDK_GEN_SNIPPETS=true: the snippets sdk-gen saved with the builds of the
+            // SDKs docs.yml names become code samples in the definition, which both deploy modes publish.
+            const apiDefinition = await attachSdkGenSnippets({
+                token: token.value,
+                organization,
+                apiDefinition: convertIrToFdrApi({
+                    ir,
+                    snippetsConfig,
+                    playgroundConfig,
+                    graphqlOperations,
+                    graphqlTypes,
+                    context,
+                    apiNameOverride: apiName
+                }),
                 snippetsConfig,
-                playgroundConfig,
-                graphqlOperations,
-                graphqlTypes,
-                context,
-                apiNameOverride: apiName
+                sdkNames,
+                logger: context.logger
             });
 
             // create dynamic IR + metadata for each generator language
@@ -746,7 +756,14 @@ export async function publishDocs({
                             previewId: previewId != null ? sanitizePreviewId(previewId) : undefined
                         });
                     } catch (error) {
-                        return await startDocsRegisterFailed(error, context, organization, domain, loginCommand);
+                        return await startDocsRegisterFailed(
+                            error,
+                            context,
+                            organization,
+                            domain,
+                            loginCommand,
+                            token.type
+                        );
                     }
                     urlToOutput = startDocsRegisterResponse.previewUrl;
                     docsRegistrationId = startDocsRegisterResponse.docsRegistrationId;
@@ -796,7 +813,7 @@ export async function publishDocs({
                             ...(isBasepathAware && { basepathAware: true })
                         });
                     } catch (error) {
-                        return startDocsRegisterFailed(error, context, organization, domain, loginCommand);
+                        return startDocsRegisterFailed(error, context, organization, domain, loginCommand, token.type);
                     }
                     docsRegistrationId = startDocsRegisterResponse.docsRegistrationId;
                     deployLocked = true;
@@ -992,6 +1009,14 @@ export async function publishDocs({
                 context.logger.debug(
                     `[ledger] Deployment ${ledgerResult.reusedDeployment ? "reused" : "created"}: ${ledgerResult.deploymentId}`
                 );
+                if (token.type === "guest") {
+                    const outcome = readGuestPublishOutcome(ledgerResult);
+                    if (outcome.claimUrl != null) {
+                        const expiry =
+                            outcome.expiresAt != null ? ` (expires ${outcome.expiresAt.toLocaleString()})` : "";
+                        context.logger.info(`Claim this site to keep it: ${outcome.claimUrl}${expiry}`);
+                    }
+                }
             }
         };
 
@@ -1454,7 +1479,8 @@ async function startDocsRegisterFailed(
     context: TaskContext,
     organization: string,
     domain: string,
-    loginCommand: string
+    loginCommand: string,
+    tokenType: FernToken["type"]
 ): Promise<never> {
     context.instrumentPostHogEvent({
         command: "docs-generation",
@@ -1472,6 +1498,15 @@ async function startDocsRegisterFailed(
     const errorContent = errorObj?.content as Record<string, unknown> | undefined;
     if (errorContent?.reason === "status-code" && errorContent?.statusCode === 409) {
         throw new DocsPublishConflictError();
+    }
+
+    if (tokenType === "guest") {
+        const rejection = readGuestRejection(error);
+        if (isGuestRejection(rejection)) {
+            return context.failAndThrow(describeGuestRejection(rejection), undefined, {
+                code: CliError.Code.AuthError
+            });
+        }
     }
 
     const authErrorMessage = getAuthenticationErrorMessage(error, organization, domain, loginCommand);

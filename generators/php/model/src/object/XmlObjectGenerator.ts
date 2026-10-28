@@ -146,6 +146,9 @@ export class XmlObjectGenerator {
         for (const method of this.getChildBuilderMethods()) {
             clazz.addMethod(method);
         }
+        for (const method of this.getTextAccessorMethods(clazz)) {
+            clazz.addMethod(method);
+        }
         clazz.addMethod(this.getToStringMethod());
     }
 
@@ -818,10 +821,17 @@ export class XmlObjectGenerator {
         // PHP method names are case-insensitive, so names are compared lowercased.
         const taken = new Set<string>(RESERVED_METHOD_NAMES.map((name) => name.toLowerCase()));
         for (const property of this.properties) {
-            taken.add(property.fieldName.toLowerCase());
+            // A method may share its name with a property, so the text field's name stays available to a
+            // child builder (`$message->body("hi")` adds a <Body> child; the text is set with `setBody()`).
+            if (property.kind !== FernIr.XmlPropertyKind.Text) {
+                taken.add(property.fieldName.toLowerCase());
+            }
             taken.add(this.context.getPropertyGetterName(property.name).toLowerCase());
             taken.add(this.context.getPropertySetterName(property.name).toLowerCase());
         }
+        const textFieldName = this.properties
+            .find((property) => property.kind === FernIr.XmlPropertyKind.Text)
+            ?.fieldName.toLowerCase();
         const methods: php.Method[] = [];
         const seenChildTypes = new Set<FernIr.TypeId>();
         for (const property of this.properties) {
@@ -833,16 +843,25 @@ export class XmlObjectGenerator {
                     continue;
                 }
                 seenChildTypes.add(childType.name.typeId);
-                methods.push(this.getChildBuilderMethod(property, childType, taken));
+                const method = this.getChildBuilderMethod(property, childType, taken);
+                methods.push(method);
+                if (method.name.toLowerCase() === textFieldName) {
+                    // keep the `add<Name>()` builder the SDK had while the name belonged to the text field
+                    const legacy = this.getChildBuilderMethod(property, childType, taken, { prefixed: true });
+                    if (legacy.name.toLowerCase() === method.name.toLowerCase()) {
+                        throw new Error(`Duplicate XML child builder ${legacy.name} on ${this.classReference.name}`);
+                    }
+                    methods.push(legacy);
+                }
             }
         }
         return methods;
     }
 
-    private pickBuilderName(xmlName: string, taken: Set<string>): string {
+    private pickBuilderName(xmlName: string, taken: Set<string>, { prefixed = false } = {}): string {
         const camel = this.context.case.camelUnsafe(xmlName);
         let name = camel;
-        if (taken.has(name.toLowerCase())) {
+        if (prefixed || taken.has(name.toLowerCase())) {
             const prefixed = `add${this.context.case.pascalUnsafe(xmlName)}`;
             name = prefixed;
             for (let suffix = 2; taken.has(name.toLowerCase()); suffix++) {
@@ -856,7 +875,8 @@ export class XmlObjectGenerator {
     private getChildBuilderMethod(
         property: XmlProperty,
         childType: FernIr.TypeDeclaration,
-        taken: Set<string>
+        taken: Set<string>,
+        { prefixed = false } = {}
     ): php.Method {
         const childXmlName = this.getChildXmlName(childType);
         const childClass = this.getChildClassReference(childType);
@@ -933,7 +953,7 @@ export class XmlObjectGenerator {
 
         const field = `$this->${property.fieldName}`;
         return php.method({
-            name: this.pickBuilderName(childXmlName, taken),
+            name: this.pickBuilderName(childXmlName, taken, { prefixed }),
             access: "public",
             parameters,
             return_: php.Type.reference(childClass),
@@ -1004,6 +1024,49 @@ export class XmlObjectGenerator {
     // ---------------------------------------------------------------------------------------------
     // Misc
     // ---------------------------------------------------------------------------------------------
+
+    /** `getText()` / `setText()` next to the field-named text property (`$dial->number`), as in the other SDKs. */
+    private getTextAccessorMethods(clazz: php.DataClass): php.Method[] {
+        const textProperty = this.properties.find((property) => property.kind === FernIr.XmlPropertyKind.Text);
+        if (textProperty == null) {
+            return [];
+        }
+        const taken = new Set<string>([
+            ...this.properties.map((property) => property.fieldName.toLowerCase()),
+            ...clazz.methods.map((method) => method.name.toLowerCase())
+        ]);
+        if (taken.has("gettext") || taken.has("settext")) {
+            return [];
+        }
+        // php.Field#name carries the `$` sigil
+        const type = clazz.fields.find((field) => field.name.replace(/^\$/, "") === textProperty.fieldName)?.type;
+        if (type == null) {
+            return [];
+        }
+        return [
+            php.method({
+                name: "getText",
+                access: "public",
+                parameters: [],
+                return_: type,
+                docs: `The text content of this element (same as \`$${textProperty.fieldName}\`).`,
+                body: php.codeblock((writer) => {
+                    writer.writeLine(`return $this->${textProperty.fieldName};`);
+                })
+            }),
+            php.method({
+                name: "setText",
+                access: "public",
+                parameters: [php.parameter({ name: "value", type })],
+                return_: SELF,
+                docs: `Sets the text content of this element (same as \`$${textProperty.fieldName}\`).`,
+                body: php.codeblock((writer) => {
+                    writer.writeLine(`$this->${textProperty.fieldName} = $value;`);
+                    writer.writeLine("return $this;");
+                })
+            })
+        ];
+    }
 
     private getToStringMethod(): php.Method {
         return php.method({

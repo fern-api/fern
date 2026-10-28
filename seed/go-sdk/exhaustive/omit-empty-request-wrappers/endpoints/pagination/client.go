@@ -48,7 +48,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	        1,
 //	    ),
 //	}
-//	client.Endpoints.Pagination.ListItems(
+//	_, err := client.Endpoints.Pagination.ListItems(
 //	    context.TODO(),
 //	    request,
 //	)

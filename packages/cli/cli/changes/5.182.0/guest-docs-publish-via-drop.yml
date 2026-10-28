@@ -1,0 +1,5 @@
+- summary: |
+    `fern generate --docs --guest` publishes without `--preview`: the guest session publishes to the Fern Drop
+    site FDR holds for it (its own `drop-<id>` host, ignoring the docs.yml instance URL) and prints the drop URL
+    and the claim link, so a guest's docs can be claimed into an organization.
+  type: feat

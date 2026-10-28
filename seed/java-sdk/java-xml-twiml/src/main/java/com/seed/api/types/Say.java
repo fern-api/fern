@@ -357,6 +357,20 @@ public final class Say implements XmlSerializable {
         }
 
         /**
+         * Sets the text content of this element (same as {@code message(...)}).
+         */
+        public Builder text(Optional<String> text) {
+            return message(text);
+        }
+
+        /**
+         * Sets the text content of this element (same as {@code message(...)}).
+         */
+        public Builder text(String text) {
+            return message(text);
+        }
+
+        /**
          * Appends a &lt;break&gt; child element after any content added so far.
          * <p>Adding a Pause in &lt;Say&gt;</p>
          * @param _break the &lt;break&gt; element to append

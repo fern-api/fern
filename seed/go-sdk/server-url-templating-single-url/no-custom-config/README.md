@@ -36,11 +36,15 @@ import (
     client "github.com/server-url-templating-single-url/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
-    client.GetUsers(
+    _, err := client.GetUsers(
         context.TODO(),
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

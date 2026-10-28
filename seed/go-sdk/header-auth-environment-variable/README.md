@@ -37,15 +37,19 @@ import (
     option "github.com/header-auth-environment-variable/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithHeaderTokenAuth(
             "YOUR_HEADER_VALUE",
         ),
     )
-    client.Service.GetWithBearerToken(
+    _, err := client.Service.GetWithBearerToken(
         context.TODO(),
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

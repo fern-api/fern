@@ -37,15 +37,19 @@ import (
     client "github.com/literal/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &fern.SendLiteralsInHeadersRequest{
         Query: "What is the weather today",
     }
-    client.Headers.Send(
+    _, err := client.Headers.Send(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

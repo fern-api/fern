@@ -52,7 +52,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 //	        "tropical",
 //	    },
 //	}
-//	client.CreatePlant(
+//	_, err := client.CreatePlant(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -85,7 +85,7 @@ func (c *Client) CreatePlant(
 //	        "name": "Updated Venus Flytrap",
 //	    },
 //	}
-//	client.UpdatePlant(
+//	_, err := client.UpdatePlant(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -117,7 +117,7 @@ func (c *Client) UpdatePlant(
 //	        "Drosera capensis",
 //	    ),
 //	}
-//	client.CreatePlantWithSchema(
+//	_, err := client.CreatePlantWithSchema(
 //	    context.TODO(),
 //	    request,
 //	)

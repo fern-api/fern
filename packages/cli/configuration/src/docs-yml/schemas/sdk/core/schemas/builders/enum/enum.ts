@@ -41,3 +41,10 @@ export function enum_<U extends string, E extends U[]>(values: E): Schema<E[numb
 
     return schemaCreator();
 }
+
+export function forwardCompatibleEnum_<U extends string, E extends U[]>(values: E): Schema<E[number], string> {
+    return enum_(values).transform<string>({
+        transform: (val) => val,
+        untransform: (val) => val,
+    });
+}

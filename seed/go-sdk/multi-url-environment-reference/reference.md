@@ -13,7 +13,7 @@
 <dd>
 
 ```go
-client.Items.ListItems(
+_, err := client.Items.ListItems(
     context.TODO(),
 )
 ```
@@ -45,7 +45,7 @@ request := &fern.AuthGetTokenRequest{
     ClientID: "client_id",
     ClientSecret: "client_secret",
 }
-client.Auth.Gettoken(
+_, err := client.Auth.Gettoken(
     context.TODO(),
     request,
 )
@@ -101,7 +101,7 @@ request := &fern.FilesUploadRequest{
     Name: "name",
     ParentID: "parent_id",
 }
-client.Files.Upload(
+_, err := client.Files.Upload(
     context.TODO(),
     request,
 )

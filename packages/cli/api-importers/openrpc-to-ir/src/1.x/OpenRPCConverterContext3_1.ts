@@ -1,23 +1,14 @@
 import { TypeReference } from "@fern-api/ir-sdk";
 import { AbstractConverterContext, DisplayNameOverrideSource } from "@fern-api/v3-importer-commons";
-import {
-    ContentDescriptorObject,
-    ExampleObject,
-    ExamplePairingObject,
-    MethodObject,
-    OpenrpcDocument,
-    ReferenceObject
-} from "@open-rpc/meta-schema";
+import { OpenrpcDocument, ReferenceObject } from "@open-rpc/meta-schema";
 import { OpenAPIV3_1 } from "openapi-types";
 
 /**
  * Context class for converting OpenAPI 3.1 specifications
  */
 export class OpenRPCConverterContext3_1 extends AbstractConverterContext<OpenrpcDocument> {
-    public isReferenceObject(
-        parameter: ExampleObject | ExamplePairingObject | MethodObject | ContentDescriptorObject | ReferenceObject
-    ): parameter is ReferenceObject {
-        return parameter != null && "$ref" in parameter;
+    public isReferenceObject(parameter: unknown): parameter is ReferenceObject {
+        return parameter != null && typeof parameter === "object" && "$ref" in parameter;
     }
 
     public convertReferenceToTypeReference({

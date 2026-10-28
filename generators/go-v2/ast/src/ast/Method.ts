@@ -91,6 +91,9 @@ export class Method extends AstNode {
             if (this.return_.length > 1) {
                 writer.write(")");
             }
+            if (this.return_.length > 0) {
+                writer.write(" ");
+            }
         }
         writer.writeLine("{");
         writer.indent();

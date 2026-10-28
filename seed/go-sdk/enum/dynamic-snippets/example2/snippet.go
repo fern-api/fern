@@ -8,7 +8,7 @@ import (
     option "github.com/enum/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -24,8 +24,12 @@ func do() {
             Color: fern.ColorRed,
         },
     }
-    client.InlinedRequest.Send(
+    err := client.InlinedRequest.Send(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

@@ -41,7 +41,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	request := &fern.GetFileRequest{
 //	    XFileAPIVersion: "0.0.2",
 //	}
-//	client.File.Service.GetFile(
+//	_, err := client.File.Service.GetFile(
 //	    context.TODO(),
 //	    "file.txt",
 //	    request,

@@ -36,11 +36,15 @@ import (
     client "github.com/no-retries/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
-    client.Retries.GetUsers(
+    _, err := client.Retries.GetUsers(
         context.TODO(),
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

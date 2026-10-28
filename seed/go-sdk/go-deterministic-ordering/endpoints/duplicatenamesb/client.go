@@ -43,7 +43,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	    Description: "description",
 //	    Count: 1,
 //	}
-//	client.Endpoints.DuplicateNamesB.Create(
+//	_, err := client.Endpoints.DuplicateNamesB.Create(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -73,7 +73,7 @@ func (c *Client) Create(
 //	        true,
 //	    ),
 //	}
-//	client.Endpoints.DuplicateNamesB.Get(
+//	err := client.Endpoints.DuplicateNamesB.Get(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -105,7 +105,7 @@ func (c *Client) Get(
 //	        1,
 //	    ),
 //	}
-//	client.Endpoints.DuplicateNamesB.List(
+//	err := client.Endpoints.DuplicateNamesB.List(
 //	    context.TODO(),
 //	    request,
 //	)

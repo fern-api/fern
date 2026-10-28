@@ -7,7 +7,7 @@ import (
     option "github.com/examples/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewAcme(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -16,8 +16,12 @@ func do() {
             "<token>",
         ),
     )
-    client.Service.GetMovie(
+    _, err := client.Service.GetMovie(
         context.TODO(),
         "movieId",
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

@@ -47,7 +47,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	        1,
 //	    ),
 //	}
-//	client.Foo.Find(
+//	_, err := client.Foo.Find(
 //	    context.TODO(),
 //	    request,
 //	)

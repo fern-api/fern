@@ -46,7 +46,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	        1,
 //	    ),
 //	}
-//	client.User.Events.ListEvents(
+//	_, err := client.User.Events.ListEvents(
 //	    context.TODO(),
 //	    request,
 //	)

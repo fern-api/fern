@@ -19,6 +19,25 @@ components:
               - $ref: "#/components/schemas/Dial"
               - $ref: "#/components/schemas/Pause"
               - $ref: "#/components/schemas/Hangup"
+              - $ref: "#/components/schemas/Redirect"
+    Redirect:
+      type: object
+      description: <Redirect> TwiML Verb
+      xml:
+        name: Redirect
+      required: [url]
+      properties:
+        url:
+          type: string
+          format: uri
+          description: Redirect URL
+          x-fern-xml-text: true
+        method:
+          type: string
+          enum: [GET, POST]
+          description: Redirect URL method
+          xml:
+            attribute: true
     Say:
       type: object
       description: <Say> TwiML Verb

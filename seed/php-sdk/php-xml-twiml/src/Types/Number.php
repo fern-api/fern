@@ -81,6 +81,27 @@ class Number extends XmlSerializableType
     }
 
     /**
+     * The text content of this element (same as `$phoneNumber`).
+     *
+     * @return ?string
+     */
+    public function getText(): ?string
+    {
+        return $this->phoneNumber;
+    }
+
+    /**
+     * Sets the text content of this element (same as `$phoneNumber`).
+     *
+     * @param ?string $value
+     */
+    public function setText(?string $value = null): self
+    {
+        $this->phoneNumber = $value;
+        return $this;
+    }
+
+    /**
      * @return string
      */
     public function __toString(): string

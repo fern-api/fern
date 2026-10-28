@@ -13,7 +13,7 @@
 <dd>
 
 ```go
-client.Retries.GetUsers(
+_, err := client.Retries.GetUsers(
     context.TODO(),
 )
 ```

@@ -1,0 +1,35 @@
+{
+  "type": "object",
+  "properties": {
+    "url": {
+      "type": "string",
+      "description": "Redirect URL"
+    },
+    "method": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/RedirectMethod"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Redirect URL method"
+    }
+  },
+  "required": [
+    "url"
+  ],
+  "additionalProperties": false,
+  "description": "<Redirect> TwiML Verb",
+  "definitions": {
+    "RedirectMethod": {
+      "type": "string",
+      "enum": [
+        "GET",
+        "POST"
+      ],
+      "description": "Redirect URL method"
+    }
+  }
+}

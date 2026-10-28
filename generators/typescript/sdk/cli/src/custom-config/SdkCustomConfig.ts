@@ -82,6 +82,7 @@ export interface SdkCustomConfig {
     flattenRequestParameters: boolean | undefined;
     respectOptionalRequestBody: boolean | undefined;
     deepObjectMapQueryParameters: boolean | undefined;
+    includeMultipartPartContentType: boolean | undefined;
     exportAllRequestsAtRoot: boolean | undefined;
     testFramework: "jest" | "vitest";
     consolidateTypeFiles: boolean | undefined;
