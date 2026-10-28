@@ -4,7 +4,10 @@ import inquirer, { ConfirmQuestion } from "inquirer";
 
 import { login } from "./login.js";
 
-export async function askToLogin(context: TaskContext): Promise<FernToken> {
+export async function askToLogin(
+    context: TaskContext,
+    { suggestGuest = false }: { suggestGuest?: boolean } = {}
+): Promise<FernToken> {
     if (!(await isLoggedIn()) && process.stdout.isTTY) {
         await context.takeOverTerminal(async () => {
             if (!(await askForConfirmation("Login required. Continue?"))) {
@@ -16,7 +19,9 @@ export async function askToLogin(context: TaskContext): Promise<FernToken> {
     const token = await getToken();
     if (token == null) {
         context.failAndThrow(
-            "Authentication required. Please run 'fern login' or set the FERN_TOKEN environment variable.",
+            suggestGuest
+                ? "Authentication required. Please run 'fern login', set the FERN_TOKEN environment variable, or pass --guest to continue without an account."
+                : "Authentication required. Please run 'fern login' or set the FERN_TOKEN environment variable.",
             undefined,
             { code: CliError.Code.AuthError }
         );

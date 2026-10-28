@@ -524,6 +524,11 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 .initializer("$T.empty()", Optional.class)
                 .build());
 
+        clientBuilder.addField(FieldSpec.builder(RETRY_ON_STATUS_CODES_TYPE, "retryOnStatusCodes")
+                .addModifiers(Modifier.PRIVATE)
+                .initializer("$T.empty()", Optional.class)
+                .build());
+
         clientBuilder.addField(FieldSpec.builder(
                         ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Long.class)),
                         "initialRetryDelayMillis")
@@ -699,6 +704,18 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 .addParameter(int.class, "maxConcurrentRequests")
                 .returns(isExtensible ? TypeVariableName.get("T") : builderName)
                 .addStatement("this.maxConcurrentRequests = $T.of(maxConcurrentRequests)", Optional.class)
+                .addStatement(isExtensible ? "return self()" : "return this")
+                .build());
+
+        clientBuilder.addMethod(MethodSpec.methodBuilder("retryOnStatusCodes")
+                .addModifiers(Modifier.PUBLIC)
+                .addJavadoc(RETRY_ON_STATUS_CODES_JAVADOC)
+                .addParameter(STATUS_CODE_SET_TYPE, "retryOnStatusCodes")
+                .returns(isExtensible ? TypeVariableName.get("T") : builderName)
+                .beginControlFlow("if (retryOnStatusCodes == null)")
+                .addStatement("throw new $T($S)", IllegalArgumentException.class, "retryOnStatusCodes must not be null")
+                .endControlFlow()
+                .addStatement("this.retryOnStatusCodes = $T.of(retryOnStatusCodes)", Optional.class)
                 .addStatement(isExtensible ? "return self()" : "return this")
                 .build());
 
@@ -1250,6 +1267,9 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 .beginControlFlow("if (this.retryJitterFactor.isPresent())")
                 .addStatement("builder.retryJitterFactor(this.retryJitterFactor.get())")
                 .endControlFlow()
+                .beginControlFlow("if (this.retryOnStatusCodes.isPresent())")
+                .addStatement("builder.retryOnStatusCodes(this.retryOnStatusCodes.get())")
+                .endControlFlow()
                 .build();
         clientBuilder.addMethod(setRetriesMethod);
 
@@ -1424,8 +1444,20 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         generatorContext.getGeneratorConfig().getWorkspaceName());
     }
 
-    private static final Set<String> RESERVED_BUILDER_PARAM_NAMES =
-            Set.of("environment", "url", "timeout", "maxRetries", "maxConcurrentRequests", "httpClient");
+    private static final Set<String> RESERVED_BUILDER_PARAM_NAMES = Set.of(
+            "environment", "url", "timeout", "maxRetries", "maxConcurrentRequests", "retryOnStatusCodes", "httpClient");
+
+    private static final TypeName STATUS_CODE_SET_TYPE =
+            ParameterizedTypeName.get(ClassName.get(Set.class), ClassName.get(Integer.class));
+
+    private static final TypeName RETRY_ON_STATUS_CODES_TYPE =
+            ParameterizedTypeName.get(ClassName.get(Optional.class), STATUS_CODE_SET_TYPE);
+
+    private static final String RETRY_ON_STATUS_CODES_JAVADOC =
+            "Restricts automatic retries to responses with one of the given HTTP status codes (for example "
+                    + "{@code 429} only, or {@code 429} and {@code 503}), replacing the default set of 408, 429 and 5xx. "
+                    + "Codes not listed are returned as-is. Retry-After handling and the other retry settings are "
+                    + "unchanged.";
 
     private List<ServerVariable> getServerVariables() {
         Optional<EnvironmentsConfig> envConfig = generatorContext.getIr().getEnvironments();
@@ -2514,6 +2546,11 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .initializer("$T.empty()", Optional.class)
                         .build());
 
+                builderStageBuilder.addField(FieldSpec.builder(RETRY_ON_STATUS_CODES_TYPE, "retryOnStatusCodes")
+                        .addModifiers(Modifier.PRIVATE)
+                        .initializer("$T.empty()", Optional.class)
+                        .build());
+
                 builderStageBuilder.addField(FieldSpec.builder(
                                 ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Long.class)),
                                 "initialRetryDelayMillis")
@@ -2619,6 +2656,22 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .addStatement("return this")
                         .build());
 
+                // Add retryOnStatusCodes() method
+                builderStageBuilder.addMethod(MethodSpec.methodBuilder("retryOnStatusCodes")
+                        .addModifiers(Modifier.PUBLIC)
+                        .addJavadoc(RETRY_ON_STATUS_CODES_JAVADOC)
+                        .addParameter(STATUS_CODE_SET_TYPE, "retryOnStatusCodes")
+                        .returns(builderStageClassName)
+                        .beginControlFlow("if (retryOnStatusCodes == null)")
+                        .addStatement(
+                                "throw new $T($S)",
+                                IllegalArgumentException.class,
+                                "retryOnStatusCodes must not be null")
+                        .endControlFlow()
+                        .addStatement("this.retryOnStatusCodes = $T.of(retryOnStatusCodes)", Optional.class)
+                        .addStatement("return this")
+                        .build());
+
                 // Add initialRetryDelayMillis() method
                 builderStageBuilder.addMethod(MethodSpec.methodBuilder("initialRetryDelayMillis")
                         .addModifiers(Modifier.PUBLIC)
@@ -2718,6 +2771,9 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .beginControlFlow("if (this.maxConcurrentRequests.isPresent())")
                         .addStatement("auth.maxConcurrentRequests(this.maxConcurrentRequests.get())")
                         .endControlFlow()
+                        .beginControlFlow("if (this.retryOnStatusCodes.isPresent())")
+                        .addStatement("auth.retryOnStatusCodes(this.retryOnStatusCodes.get())")
+                        .endControlFlow()
                         .beginControlFlow("if (this.initialRetryDelayMillis.isPresent())")
                         .addStatement("auth.initialRetryDelayMillis(this.initialRetryDelayMillis.get())")
                         .endControlFlow()
@@ -2769,6 +2825,9 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .endControlFlow()
                         .beginControlFlow("if (this.maxConcurrentRequests.isPresent())")
                         .addStatement("auth.maxConcurrentRequests(this.maxConcurrentRequests.get())")
+                        .endControlFlow()
+                        .beginControlFlow("if (this.retryOnStatusCodes.isPresent())")
+                        .addStatement("auth.retryOnStatusCodes(this.retryOnStatusCodes.get())")
                         .endControlFlow()
                         .beginControlFlow("if (this.initialRetryDelayMillis.isPresent())")
                         .addStatement("auth.initialRetryDelayMillis(this.initialRetryDelayMillis.get())")

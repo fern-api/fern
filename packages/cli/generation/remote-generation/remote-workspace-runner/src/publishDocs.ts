@@ -1,5 +1,5 @@
 import { resolveSnippetPackageName, VisibilityFilter } from "@fern-api/api-workspace-commons";
-import { FernToken } from "@fern-api/auth";
+import { describeGuestRejection, FernToken, isGuestRejection, readGuestRejection } from "@fern-api/auth";
 import { docsYml, generatorsYml } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
 import {
@@ -759,7 +759,14 @@ export async function publishDocs({
                             previewId: previewId != null ? sanitizePreviewId(previewId) : undefined
                         });
                     } catch (error) {
-                        return await startDocsRegisterFailed(error, context, organization, domain, loginCommand);
+                        return await startDocsRegisterFailed(
+                            error,
+                            context,
+                            organization,
+                            domain,
+                            loginCommand,
+                            token.type
+                        );
                     }
                     urlToOutput = startDocsRegisterResponse.previewUrl;
                     docsRegistrationId = startDocsRegisterResponse.docsRegistrationId;
@@ -809,7 +816,7 @@ export async function publishDocs({
                             ...(isBasepathAware && { basepathAware: true })
                         });
                     } catch (error) {
-                        return startDocsRegisterFailed(error, context, organization, domain, loginCommand);
+                        return startDocsRegisterFailed(error, context, organization, domain, loginCommand, token.type);
                     }
                     docsRegistrationId = startDocsRegisterResponse.docsRegistrationId;
                     deployLocked = true;
@@ -1467,7 +1474,8 @@ async function startDocsRegisterFailed(
     context: TaskContext,
     organization: string,
     domain: string,
-    loginCommand: string
+    loginCommand: string,
+    tokenType: FernToken["type"]
 ): Promise<never> {
     context.instrumentPostHogEvent({
         command: "docs-generation",
@@ -1485,6 +1493,15 @@ async function startDocsRegisterFailed(
     const errorContent = errorObj?.content as Record<string, unknown> | undefined;
     if (errorContent?.reason === "status-code" && errorContent?.statusCode === 409) {
         throw new DocsPublishConflictError();
+    }
+
+    if (tokenType === "guest") {
+        const rejection = readGuestRejection(error);
+        if (isGuestRejection(rejection)) {
+            return context.failAndThrow(describeGuestRejection(rejection), undefined, {
+                code: CliError.Code.AuthError
+            });
+        }
     }
 
     const authErrorMessage = getAuthenticationErrorMessage(error, organization, domain, loginCommand);

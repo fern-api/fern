@@ -239,6 +239,7 @@ async function promptGroupSelection({
         message: "Select SDK groups to migrate (same API; one target per language):",
         required: true,
         validate: validateUniqueTargetLanguages,
+        nonInteractiveError,
         choices: choices.map((choice) => ({
             checked: choice.checked,
             name: `${choice.name.padEnd(longestName)}   ${chalk.dim(`[${targetLanguageLabel(choice.value)}]`)}   ${chalk.dim(`--group ${choice.name}`)}`,
@@ -343,6 +344,7 @@ async function promptSelect<T>({
     const longestName = Math.max(...choices.map((choice) => choice.name.length));
     return cliContext.selectPrompt({
         message,
+        nonInteractiveError,
         choices: choices.map((choice) => ({
             name: `${choice.name.padEnd(longestName)}   ${chalk.dim(flagHint(choice.value))}`,
             value: choice.value

@@ -34,6 +34,26 @@ const MINIMAL = {
 };
 
 describe("expandCliTarget", () => {
+    it("rejects a protobuf source, which the cli target cannot translate", async () => {
+        const result = await expandDocument({
+            ...MINIMAL,
+            source: {
+                specs: [
+                    { id: "main", type: "openapi", path: "./openapi.yml" },
+                    { id: "users", proto: { root: "./proto" } }
+                ]
+            }
+        });
+        expect(result.ir).toBeUndefined();
+        expect(result.diagnostics).toEqual([
+            expect.objectContaining({
+                severity: "error",
+                path: "source.specs[1]",
+                code: "CLI_TARGET_PROTOBUF_SOURCE"
+            })
+        ]);
+    });
+
     it("selects the cli target and returns SdkConfigIrV1 with schemaVersion sdk-config-ir/v1", async () => {
         const result = await expandDocument(MINIMAL);
         expect(result.diagnostics).toEqual([]);

@@ -1,18 +1,26 @@
 import { mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import { getOpenAPISettings, type OpenAPISpec, type Spec } from "@fern-api/api-workspace-commons";
+import {
+    getOpenAPISettings,
+    type OpenAPISettings,
+    type OpenAPISpec,
+    type ProtobufSpec,
+    type Spec
+} from "@fern-api/api-workspace-commons";
 import { generatorsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { bundleRemoteOpenAPI, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
+import { bundleRemoteOpenAPI, OSSWorkspace, WorkspaceLoaderFailureType } from "@fern-api/lazy-fern-workspace";
 import { getOnPremAdapterForLanguage, isOnPremAdapter } from "@fern-api/local-workspace-runner";
 import { resolveSdkConfigGeneratorVersion } from "@fern-api/remote-workspace-runner";
 import { CliError, TaskContext } from "@fern-api/task-context";
+import { loadSingleNamespaceAPIWorkspace, resolveRemoteSpecs } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import type { SdkConfigV1, SdkConfigV1SourceSpec } from "@postman/sdk-config/sdk-config/v1";
 
 import { getDuplicateTargetLanguageIndexes } from "./getDuplicateTargetLanguageIndexes.js";
 import { getSdkConfigGeneratorName } from "./sdkConfigGeneratorName.js";
+import { isProtobufSource, type SdkConfigV1ProtobufSourceSpec } from "./sdkConfigProtobufSources.js";
 
 const SDK_CONFIG_GROUP = "sdk-config";
 const DEFAULT_LOCAL_OUTPUT_DIRECTORY = "generated";
@@ -51,7 +59,11 @@ export async function createSdkConfigWorkspace({
     try {
         const specs: Spec[] = [];
         for (const spec of sdkConfig.source.specs) {
-            specs.push(await createSpec({ spec, sdkConfig, sourceDirectory, context, temporaryDirectories }));
+            specs.push(
+                isProtobufSource(spec)
+                    ? await createProtobufSpec({ spec, sdkConfig, sourceDirectory, context })
+                    : await createSpec({ spec, sdkConfig, sourceDirectory, context, temporaryDirectories })
+            );
         }
         const duplicateTargetLanguageIndexes = getDuplicateTargetLanguageIndexes(sdkConfig.targets);
         // ponytail: the local runner picks a target by language, so a repeated language would run the
@@ -101,8 +113,12 @@ export async function createSdkConfigWorkspace({
             absolutePathToConfiguration: AbsoluteFilePath.of(absolutePathToConfig)
         };
         const workspace = new OSSWorkspace({
-            allSpecs: specs,
-            specs: specs.filter((spec): spec is OpenAPISpec => spec.type === "openapi"),
+            // Same split as loadAPIWorkspace: a from-openapi protobuf source is converted to OpenAPI and
+            // generated from `specs`; any other protobuf source stays in `allSpecs`.
+            allSpecs: specs.filter((spec) => !isFromOpenAPIProtobufSpec(spec)),
+            specs: specs.filter(
+                (spec): spec is OpenAPISpec | ProtobufSpec => spec.type === "openapi" || isFromOpenAPIProtobufSpec(spec)
+            ),
             generatorsConfiguration,
             workspaceName,
             cliVersion,
@@ -117,6 +133,7 @@ export async function createSdkConfigWorkspace({
 }
 
 type SdkConfigTarget = SdkConfigV1["targets"][number];
+type SdkConfigV1PathOrUrlSourceSpec = Exclude<SdkConfigV1SourceSpec, SdkConfigV1ProtobufSourceSpec>;
 
 function resolveRemoteGenerator(target: SdkConfigTarget, context: TaskContext): { name: string; version: string } {
     const name = getSdkConfigGeneratorName(target.language);
@@ -213,7 +230,7 @@ async function createSpec({
     context,
     temporaryDirectories
 }: {
-    spec: SdkConfigV1SourceSpec;
+    spec: SdkConfigV1PathOrUrlSourceSpec;
     sdkConfig: SdkConfigV1;
     sourceDirectory: string;
     context: TaskContext;
@@ -237,8 +254,6 @@ async function createSpec({
             namespace: spec.namespace
         };
     }
-    const rootSettings = sdkConfig.source.apiImportSettings ?? {};
-    const settings = { ...rootSettings, ...spec.apiImportSettings };
     return {
         type: "openapi",
         absoluteFilepath,
@@ -246,15 +261,7 @@ async function createSpec({
         absoluteFilepathToOverlays:
             spec.overlays?.[0] == null ? undefined : resolveTransformPath(spec.overlays[0], sourceDirectory),
         namespace: spec.namespace,
-        settings: getOpenAPISettings({
-            overrides: {
-                ...settings,
-                useTitlesAsName: settings.titleAsSchemaName,
-                shouldUseIdiomaticRequestNames: settings.idiomaticRequestNames,
-                shouldUseUndiscriminatedUnionsWithLiterals: settings.undiscriminatedUnionsWithLiterals,
-                asyncApiNaming: settings.asyncApiMessageNaming
-            }
-        }),
+        settings: getImportSettings(sdkConfig, spec),
         source: {
             type: spec.type === "asyncapi" ? "asyncapi" : "openapi",
             file: absoluteFilepath
@@ -262,8 +269,100 @@ async function createSpec({
     };
 }
 
+/**
+ * Loads a protobuf source the way generators.yml loads a `proto:` spec: git roots are cloned by
+ * resolveRemoteSpecs (a git target is relative to the repository root), and local root, target and
+ * overrides resolve against the source directory.
+ */
+async function createProtobufSpec({
+    spec,
+    sdkConfig,
+    sourceDirectory,
+    context
+}: {
+    spec: SdkConfigV1ProtobufSourceSpec;
+    sdkConfig: SdkConfigV1;
+    sourceDirectory: string;
+    context: TaskContext;
+}): Promise<ProtobufSpec> {
+    if (spec.namespace != null) {
+        context.logger.warn(
+            `SDK Config protobuf source '${spec.id}' sets namespace '${spec.namespace}', which the Fern CLI does not apply to protobuf sources. It is ignored.`
+        );
+    }
+    const { root } = spec.proto;
+    const definition: generatorsYml.APIDefinitionLocation = {
+        schema: {
+            type: "protobuf",
+            root: typeof root === "string" ? root : root.git.path,
+            target: spec.proto.target ?? "",
+            localGeneration: spec.proto.localGeneration ?? false,
+            fromOpenAPI: spec.proto.fromOpenApi,
+            dependencies: spec.proto.dependencies ?? []
+        },
+        origin: undefined,
+        overrides: spec.proto.overrides,
+        overlays: undefined,
+        audiences: [],
+        settings: undefined,
+        gitSource:
+            typeof root === "string" ? undefined : { repo: root.git.repo, ref: root.git.ref, path: root.git.path }
+    };
+    let definitions: generatorsYml.APIDefinitionLocation[];
+    try {
+        definitions = await resolveRemoteSpecs({ definitions: [definition], context });
+    } catch (error) {
+        return context.failAndThrow(
+            `Could not resolve the git root of SDK Config protobuf source '${spec.id}'`,
+            error,
+            { code: CliError.Code.ConfigError }
+        );
+    }
+    const result = await loadSingleNamespaceAPIWorkspace({
+        absolutePathToWorkspace: AbsoluteFilePath.of(sourceDirectory),
+        namespace: undefined,
+        definitions
+    });
+    if (!Array.isArray(result)) {
+        const problems = result.didSucceed
+            ? []
+            : Object.entries(result.failures).map(([filepath, failure]) =>
+                  failure.type === WorkspaceLoaderFailureType.FILE_MISSING
+                      ? `${filepath} does not exist`
+                      : `${filepath} could not be loaded`
+              );
+        return context.failAndThrow(
+            `SDK Config protobuf source '${spec.id}' could not be loaded: ${problems.join(", ")}`,
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
+    }
+    const [loaded] = result;
+    if (loaded?.type !== "protobuf") {
+        throw new Error(`Expected SDK Config protobuf source '${spec.id}' to load as one protobuf spec`);
+    }
+    return { ...loaded, settings: getImportSettings(sdkConfig, spec) };
+}
+
+function getImportSettings(sdkConfig: SdkConfigV1, spec: SdkConfigV1SourceSpec): OpenAPISettings {
+    const settings = { ...sdkConfig.source.apiImportSettings, ...spec.apiImportSettings };
+    return getOpenAPISettings({
+        overrides: {
+            ...settings,
+            useTitlesAsName: settings.titleAsSchemaName,
+            shouldUseIdiomaticRequestNames: settings.idiomaticRequestNames,
+            shouldUseUndiscriminatedUnionsWithLiterals: settings.undiscriminatedUnionsWithLiterals,
+            asyncApiNaming: settings.asyncApiMessageNaming
+        }
+    });
+}
+
+function isFromOpenAPIProtobufSpec(spec: Spec): spec is ProtobufSpec {
+    return spec.type === "protobuf" && spec.fromOpenAPI;
+}
+
 async function resolveSourcePath(
-    spec: SdkConfigV1SourceSpec,
+    spec: SdkConfigV1PathOrUrlSourceSpec,
     sourceDirectory: string,
     context: TaskContext,
     temporaryDirectories: string[]

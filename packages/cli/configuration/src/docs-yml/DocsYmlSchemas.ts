@@ -1030,7 +1030,7 @@ export const TabbedNavigationItem = z.union([TabbedNavigationItemWithLayout, Tab
 
 export const TabbedNavigationConfig = z.array(TabbedNavigationItem);
 
-export const NavigationConfig = z.union([UntabbedNavigationConfig, TabbedNavigationConfig]);
+export const NavigationConfig = z.union([TabbedNavigationConfig, UntabbedNavigationConfig]);
 
 // ===== Tab Config =====
 

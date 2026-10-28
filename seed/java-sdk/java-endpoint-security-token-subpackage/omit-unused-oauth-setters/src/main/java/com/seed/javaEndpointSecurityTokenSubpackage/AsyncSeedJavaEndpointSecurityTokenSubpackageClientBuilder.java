@@ -15,6 +15,7 @@ import com.seed.javaEndpointSecurityTokenSubpackage.resources.token.TokenClient;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import okhttp3.OkHttpClient;
 
 public class AsyncSeedJavaEndpointSecurityTokenSubpackageClientBuilder {
@@ -23,6 +24,8 @@ public class AsyncSeedJavaEndpointSecurityTokenSubpackageClientBuilder {
     private Optional<Integer> maxRetries = Optional.empty();
 
     private Optional<Integer> maxConcurrentRequests = Optional.empty();
+
+    private Optional<Set<Integer>> retryOnStatusCodes = Optional.empty();
 
     private Optional<Long> initialRetryDelayMillis = Optional.empty();
 
@@ -120,6 +123,18 @@ public class AsyncSeedJavaEndpointSecurityTokenSubpackageClientBuilder {
      */
     public AsyncSeedJavaEndpointSecurityTokenSubpackageClientBuilder maxConcurrentRequests(int maxConcurrentRequests) {
         this.maxConcurrentRequests = Optional.of(maxConcurrentRequests);
+        return this;
+    }
+
+    /**
+     * Restricts automatic retries to responses with one of the given HTTP status codes (for example {@code 429} only, or {@code 429} and {@code 503}), replacing the default set of 408, 429 and 5xx. Codes not listed are returned as-is. Retry-After handling and the other retry settings are unchanged.
+     */
+    public AsyncSeedJavaEndpointSecurityTokenSubpackageClientBuilder retryOnStatusCodes(
+            Set<Integer> retryOnStatusCodes) {
+        if (retryOnStatusCodes == null) {
+            throw new IllegalArgumentException("retryOnStatusCodes must not be null");
+        }
+        this.retryOnStatusCodes = Optional.of(retryOnStatusCodes);
         return this;
     }
 
@@ -281,6 +296,9 @@ public class AsyncSeedJavaEndpointSecurityTokenSubpackageClientBuilder {
         }
         if (this.retryJitterFactor.isPresent()) {
             builder.retryJitterFactor(this.retryJitterFactor.get());
+        }
+        if (this.retryOnStatusCodes.isPresent()) {
+            builder.retryOnStatusCodes(this.retryOnStatusCodes.get());
         }
     }
 

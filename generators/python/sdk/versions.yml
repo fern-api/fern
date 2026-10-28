@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.41.11
+  changelogEntry:
+    - summary: |
+        Fix recursive aliases and undiscriminated unions under `pydantic_config.version: v2` without
+        `wrapped_aliases`. A plain alias that refers back to itself (e.g. `JsonLike = Union[List["JsonLike"], ...]`,
+        or a map whose values are a union containing that map) was expanded endlessly by Pydantic, so building
+        the model raised `RecursionError` or `... is not fully defined`. Such an alias is now a
+        `typing_extensions.TypeAliasType` at runtime, which Pydantic v2 resolves lazily, and stays a plain alias
+        under `TYPE_CHECKING` for mypy and pyright. Values come back as plain dicts and lists, with no root
+        model to unwrap. Other aliases, and SDKs on Pydantic v1, `both` or `wrapped_aliases`, are unchanged.
+      type: fix
+  createdAt: "2026-10-27"
+  irVersion: 67
 - version: 5.41.10
   changelogEntry:
     - summary: |

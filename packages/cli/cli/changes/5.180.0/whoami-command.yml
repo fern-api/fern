@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `fern whoami [--json]`: shows whether the CLI is using a login, a `FERN_TOKEN` organization token or
+    nothing, and this repo's guest session (`fern generate --guest`) with its organization, expiry and claim
+    link. The guest token itself is never printed.
+  type: feat
