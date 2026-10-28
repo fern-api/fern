@@ -22,6 +22,7 @@ import {
 } from "@open-rpc/meta-schema";
 import { OpenAPIV3 } from "openapi-types";
 
+import { FernExplorerExtension } from "../extensions/x-fern-explorer.js";
 import { OpenRPCConverterContext3_1 } from "../OpenRPCConverterContext3_1.js";
 
 export declare namespace MethodConverter {
@@ -221,7 +222,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
             audiences,
             retries: undefined,
             globalParameters: undefined,
-            apiPlayground: undefined,
+            apiPlayground: this.convertApiPlayground(),
             responseHeaders: []
         };
 
@@ -231,6 +232,20 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
             inlinedTypes,
             servers: this.filterOutTopLevelServers(this.method.servers ?? [])
         };
+    }
+
+    private convertApiPlayground(): boolean | undefined {
+        const methodExplorer = new FernExplorerExtension({
+            breadcrumbs: this.breadcrumbs,
+            document: this.method,
+            context: this.context
+        }).convert();
+        const globalExplorer = new FernExplorerExtension({
+            breadcrumbs: [],
+            document: this.context.spec,
+            context: this.context
+        }).convert();
+        return methodExplorer ?? globalExplorer;
     }
 
     private filterOutTopLevelServers(servers: ServerObject[]): ServerObject[] {
