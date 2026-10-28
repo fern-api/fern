@@ -4,17 +4,23 @@ import { stripAnchorsAndSearchParams } from "./url-utils.js";
 
 const FETCH_TIMEOUT_MS = 30_000;
 
-export type SiblingBasepathsResult = { type: "success"; basepaths: string[] } | { type: "skipped"; reason: string };
+/** A site live on the domain. `slugs` is undefined when FDR has no page list for it. */
+export interface SiblingSite {
+    basepath: string;
+    slugs: ReadonlySet<string> | undefined;
+}
+
+export type SiblingSitesResult = { type: "success"; sites: SiblingSite[] } | { type: "skipped"; reason: string };
 
 function trimSlashes(path: string): string {
     return path.replace(/^\/+|\/+$/g, "");
 }
 
 /**
- * Fetches the basepaths of every site live on `domain` from FDR (`POST /slugs/sites`).
- * Basepaths have no leading/trailing slash; the root site is `""`.
+ * Fetches every site live on `domain` with its published page slugs from FDR (`POST /slugs/sites`).
+ * Basepaths and slugs have no leading/trailing slash; the root site is `""`.
  */
-export async function fetchSiblingBasepaths({
+export async function fetchSiblingSites({
     fdrOrigin,
     domain,
     token
@@ -22,7 +28,7 @@ export async function fetchSiblingBasepaths({
     fdrOrigin: string;
     domain: string;
     token: string | undefined;
-}): Promise<SiblingBasepathsResult> {
+}): Promise<SiblingSitesResult> {
     if (token == null) {
         return { type: "skipped", reason: "not authenticated" };
     }
@@ -33,14 +39,14 @@ export async function fetchSiblingBasepaths({
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`
             },
-            body: JSON.stringify({ domain }),
+            body: JSON.stringify({ domain, includeSlugs: true }),
             signal: AbortSignal.timeout(FETCH_TIMEOUT_MS)
         });
         if (!response.ok) {
             return { type: "skipped", reason: `FDR returned ${response.status}` };
         }
         const data: unknown = await response.json();
-        return { type: "success", basepaths: parseBasepaths(data) };
+        return { type: "success", sites: parseSites(data) };
     } catch (error) {
         if (error instanceof Error && error.name === "TimeoutError") {
             return { type: "skipped", reason: `FDR timed out after ${FETCH_TIMEOUT_MS / 1000}s` };
@@ -49,17 +55,43 @@ export async function fetchSiblingBasepaths({
     }
 }
 
-function parseBasepaths(data: unknown): string[] {
+function parseSites(data: unknown): SiblingSite[] {
     if (typeof data !== "object" || data == null || !("sites" in data) || !Array.isArray(data.sites)) {
         return [];
     }
-    const basepaths: string[] = [];
+    const sites: SiblingSite[] = [];
     for (const site of data.sites) {
-        if (typeof site === "object" && site != null && "basepath" in site && typeof site.basepath === "string") {
-            basepaths.push(trimSlashes(site.basepath));
+        if (typeof site !== "object" || site == null || !("basepath" in site) || typeof site.basepath !== "string") {
+            continue;
+        }
+        const slugs = "slugs" in site && Array.isArray(site.slugs) ? parseSlugs(site.slugs) : undefined;
+        sites.push({ basepath: trimSlashes(site.basepath), slugs });
+    }
+    return sites;
+}
+
+function parseSlugs(values: unknown[]): Set<string> {
+    const slugs = new Set<string>();
+    for (const value of values) {
+        if (typeof value === "string") {
+            slugs.add(trimSlashes(value));
         }
     }
-    return basepaths;
+    return slugs;
+}
+
+export type SiblingLinkStatus = "found" | "missing" | "unverified";
+
+/**
+ * Whether a root-relative `pathname` under `site` is a page FDR has on record for that site's
+ * current production deployment. The site's own basepath always resolves (it is the site's root).
+ */
+export function checkSiblingLink(pathname: string, site: SiblingSite): SiblingLinkStatus {
+    if (site.slugs == null) {
+        return "unverified";
+    }
+    const path = trimSlashes(stripAnchorsAndSearchParams(pathname));
+    return path === site.basepath || site.slugs.has(path) ? "found" : "missing";
 }
 
 /**

@@ -1,6 +1,6 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { fetchSiblingBasepaths, getSiblingSiteBasepath } from "../sibling-sites.js";
+import { checkSiblingLink, fetchSiblingSites, getSiblingSiteBasepath } from "../sibling-sites.js";
 
 describe("getSiblingSiteBasepath", () => {
     const siblings = ["product-a", "product-b", "seeds", "seeds/sunflower"];
@@ -33,41 +33,56 @@ describe("getSiblingSiteBasepath", () => {
     });
 });
 
-describe("fetchSiblingBasepaths", () => {
+describe("fetchSiblingSites", () => {
     afterEach(() => {
         vi.unstubAllGlobals();
     });
 
-    it("posts the domain and normalizes basepaths", async () => {
+    it("posts the domain, asks for slugs and normalizes the response", async () => {
         const fetchMock = vi.fn().mockResolvedValue(
-            new Response(JSON.stringify({ sites: [{ basepath: "/product-b/" }, { basepath: "" }] }), {
-                status: 200
-            })
+            new Response(
+                JSON.stringify({
+                    sites: [
+                        { basepath: "/product-b/", slugs: ["product-b/overview/", "/product-b/api/get"] },
+                        { basepath: "" }
+                    ]
+                }),
+                { status: 200 }
+            )
         );
         vi.stubGlobal("fetch", fetchMock);
-        const result = await fetchSiblingBasepaths({
+        const result = await fetchSiblingSites({
             fdrOrigin: "https://fdr.example.com",
             domain: "docs.example.com",
             token: "token"
         });
-        expect(result).toEqual({ type: "success", basepaths: ["product-b", ""] });
+        expect(result).toEqual({
+            type: "success",
+            sites: [
+                { basepath: "product-b", slugs: new Set(["product-b/overview", "product-b/api/get"]) },
+                { basepath: "", slugs: undefined }
+            ]
+        });
         expect(fetchMock).toHaveBeenCalledWith(
             "https://fdr.example.com/slugs/sites",
-            expect.objectContaining({ method: "POST", body: JSON.stringify({ domain: "docs.example.com" }) })
+            expect.objectContaining({
+                method: "POST",
+                body: JSON.stringify({ domain: "docs.example.com", includeSlugs: true })
+            })
         );
     });
 
     it("skips without a token", async () => {
         const fetchMock = vi.fn();
         vi.stubGlobal("fetch", fetchMock);
-        const result = await fetchSiblingBasepaths({ fdrOrigin: "https://fdr", domain: "d", token: undefined });
+        const result = await fetchSiblingSites({ fdrOrigin: "https://fdr", domain: "d", token: undefined });
         expect(result).toEqual({ type: "skipped", reason: "not authenticated" });
         expect(fetchMock).not.toHaveBeenCalled();
     });
 
     it("skips when FDR fails", async () => {
         vi.stubGlobal("fetch", vi.fn().mockResolvedValue(new Response("forbidden", { status: 403 })));
-        const result = await fetchSiblingBasepaths({ fdrOrigin: "https://fdr", domain: "d", token: "t" });
+        const result = await fetchSiblingSites({ fdrOrigin: "https://fdr", domain: "d", token: "t" });
         expect(result).toEqual({ type: "skipped", reason: "FDR returned 403" });
     });
 
@@ -75,7 +90,30 @@ describe("fetchSiblingBasepaths", () => {
         const timeout = new Error("The operation was aborted due to timeout");
         timeout.name = "TimeoutError";
         vi.stubGlobal("fetch", vi.fn().mockRejectedValue(timeout));
-        const result = await fetchSiblingBasepaths({ fdrOrigin: "https://fdr", domain: "d", token: "t" });
+        const result = await fetchSiblingSites({ fdrOrigin: "https://fdr", domain: "d", token: "t" });
         expect(result).toEqual({ type: "skipped", reason: "FDR timed out after 30s" });
+    });
+});
+
+describe("checkSiblingLink", () => {
+    const site = { basepath: "product-b", slugs: new Set(["product-b/overview", "product-b/api/get-user"]) };
+
+    it("finds published pages, ignoring anchors, query params and trailing slashes", () => {
+        expect(checkSiblingLink("/product-b/overview", site)).toBe("found");
+        expect(checkSiblingLink("/product-b/api/get-user/#response", site)).toBe("found");
+        expect(checkSiblingLink("/product-b/overview?tab=1", site)).toBe("found");
+    });
+
+    it("treats the sibling's own root as found", () => {
+        expect(checkSiblingLink("/product-b", site)).toBe("found");
+        expect(checkSiblingLink("/product-b/", site)).toBe("found");
+    });
+
+    it("reports pages the sibling does not publish as missing", () => {
+        expect(checkSiblingLink("/product-b/does-not-exist", site)).toBe("missing");
+    });
+
+    it("is unverified when FDR has no page list for the sibling", () => {
+        expect(checkSiblingLink("/product-b/overview", { basepath: "product-b", slugs: undefined })).toBe("unverified");
     });
 });

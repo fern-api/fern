@@ -20,7 +20,7 @@ import { Rule, RuleViolation } from "../../Rule.js";
 import { getFdrOrigin } from "../../utils/fdr-origin.js";
 import { checkIfPathnameExists } from "./check-if-pathname-exists.js";
 import { collectPathnamesToCheck, PathnameToCheck } from "./collect-pathnames.js";
-import { fetchSiblingBasepaths, getSiblingSiteBasepath } from "./sibling-sites.js";
+import { checkSiblingLink, fetchSiblingSites, getSiblingSiteBasepath, type SiblingSite } from "./sibling-sites.js";
 import { getInstanceUrls, removeLeadingSlash, toBaseUrl } from "./url-utils.js";
 
 /**
@@ -237,13 +237,17 @@ export const ValidMarkdownLinks: Rule = {
             visitableSlugs.add(pageWithBasePath);
         }
 
-        const { siblingBasepaths, siblingLookupViolations } = await loadSiblingBasepaths({
+        const { siblingSites, siblingLookupViolations } = await loadSiblingSites({
             enabled: workspace.config.settings?.siblingSiteLinks === true,
             instanceUrl: instanceUrls[0],
             domain: baseUrl.domain
         });
-        const getSiblingBasepath = (pathname: string) =>
-            getSiblingSiteBasepath(pathname, baseUrl.basePath, siblingBasepaths);
+        const siblingSitesByBasepath = new Map(siblingSites.map((site) => [site.basepath, site]));
+        const getSiblingLink = (pathname: string): SiblingLink | undefined => {
+            const basepath = getSiblingSiteBasepath(pathname, baseUrl.basePath, [...siblingSitesByBasepath.keys()]);
+            const site = basepath != null ? siblingSitesByBasepath.get(basepath) : undefined;
+            return site != null ? { basepath: site.basepath, status: checkSiblingLink(pathname, site) } : undefined;
+        };
 
         return {
             file: () => siblingLookupViolations,
@@ -288,17 +292,20 @@ export const ValidMarkdownLinks: Rule = {
                             return [];
                         }
 
-                        const siblingBasepath = getSiblingBasepath(pathnameToCheck.pathname);
+                        const sibling = getSiblingLink(pathnameToCheck.pathname);
+                        if (sibling?.status === "found") {
+                            return [];
+                        }
                         return exists.map((brokenPathname) => {
                             const [message, relFilePath] = createLinkViolationMessage({
                                 pathnameToCheck,
                                 targetPathname: brokenPathname,
                                 absoluteFilepathToWorkspace: workspace.absoluteFilePath,
-                                siblingBasepath
+                                sibling
                             });
                             return {
                                 name: ValidMarkdownLinks.name,
-                                severity: siblingBasepath != null ? ("warning" as const) : ("error" as const),
+                                severity: siblingLinkSeverity(sibling),
                                 message,
                                 relativeFilepath: relFilePath
                             };
@@ -374,16 +381,19 @@ export const ValidMarkdownLinks: Rule = {
                         // links in endpoint, type, property, etc. docs are silently dropped
                         // (see FER-10165).
                         const numBrokenSourceContexts = exists.length > 0 ? exists.length : 1;
-                        const siblingBasepath = getSiblingBasepath(pathnameToCheck.pathname);
+                        const sibling = getSiblingLink(pathnameToCheck.pathname);
+                        if (sibling?.status === "found") {
+                            return [];
+                        }
                         return Array.from({ length: numBrokenSourceContexts }, () => {
                             const [message, relFilePath] = createApiReferenceLinkViolationMessage({
                                 pathnameToCheck,
                                 apiReferenceTitle,
-                                siblingBasepath
+                                sibling
                             });
                             return {
                                 name: ValidMarkdownLinks.name,
-                                severity: siblingBasepath != null ? ("warning" as const) : ("error" as const),
+                                severity: siblingLinkSeverity(sibling),
                                 message,
                                 relativeFilepath: relFilePath
                             };
@@ -400,11 +410,11 @@ export const ValidMarkdownLinks: Rule = {
 };
 
 /**
- * With docs.yml `settings.sibling-site-links`, looks up the basepaths of the other sites live on
- * this domain so links to them can be reported as unverifiable instead of broken. When the
- * lookup can't run, those links stay errors and a single warning explains why.
+ * With docs.yml `settings.sibling-site-links`, looks up the other sites live on this domain and
+ * their published pages, so links to them are checked against those pages. When the lookup can't
+ * run, those links stay errors and a single warning explains why.
  */
-async function loadSiblingBasepaths({
+async function loadSiblingSites({
     enabled,
     instanceUrl,
     domain
@@ -412,13 +422,13 @@ async function loadSiblingBasepaths({
     enabled: boolean;
     instanceUrl: string | undefined;
     domain: string;
-}): Promise<{ siblingBasepaths: string[]; siblingLookupViolations: RuleViolation[] }> {
+}): Promise<{ siblingSites: SiblingSite[]; siblingLookupViolations: RuleViolation[] }> {
     if (!enabled) {
-        return { siblingBasepaths: [], siblingLookupViolations: [] };
+        return { siblingSites: [], siblingLookupViolations: [] };
     }
     if (instanceUrl == null) {
         return {
-            siblingBasepaths: [],
+            siblingSites: [],
             siblingLookupViolations: [
                 {
                     name: ValidMarkdownLinks.name,
@@ -430,16 +440,16 @@ async function loadSiblingBasepaths({
             ]
         };
     }
-    const result = await fetchSiblingBasepaths({
+    const result = await fetchSiblingSites({
         fdrOrigin: getFdrOrigin(),
         domain,
         token: (await getToken())?.value
     });
     if (result.type === "success") {
-        return { siblingBasepaths: result.basepaths, siblingLookupViolations: [] };
+        return { siblingSites: result.sites, siblingLookupViolations: [] };
     }
     return {
-        siblingBasepaths: [],
+        siblingSites: [],
         siblingLookupViolations: [
             {
                 name: ValidMarkdownLinks.name,
@@ -452,24 +462,37 @@ async function loadSiblingBasepaths({
     };
 }
 
-function siblingLinkMessage(pathname: string, siblingBasepath: string): string {
-    return `link to ${chalk.bold(pathname)} points to the site at /${siblingBasepath} on this domain and can't be checked from this project`;
+/** A link into another site on this domain, and whether that site has the page. */
+interface SiblingLink {
+    basepath: string;
+    status: "found" | "missing" | "unverified";
+}
+
+/** Only links FDR has no page list for are warnings; a page missing from a sibling's list is broken. */
+function siblingLinkSeverity(sibling: SiblingLink | undefined): "warning" | "error" {
+    return sibling?.status === "unverified" ? "warning" : "error";
+}
+
+function siblingLinkMessage(pathname: string, sibling: SiblingLink): string {
+    return sibling.status === "unverified"
+        ? `link to ${chalk.bold(pathname)} points to the site at /${sibling.basepath} on this domain, which has no published page list to check it against`
+        : `broken link to ${chalk.bold(pathname)}: the site at /${sibling.basepath} on this domain has no published page at that path`;
 }
 
 function createLinkViolationMessage({
     pathnameToCheck,
     targetPathname,
     absoluteFilepathToWorkspace,
-    siblingBasepath
+    sibling
 }: {
     pathnameToCheck: PathnameToCheck;
     targetPathname: string;
     absoluteFilepathToWorkspace: AbsoluteFilePath;
-    siblingBasepath?: string;
+    sibling?: SiblingLink;
 }): [msg: string, relFilePath: RelativeFilePath] {
     let msg =
-        siblingBasepath != null
-            ? `${targetPathname}: ${siblingLinkMessage(pathnameToCheck.pathname, siblingBasepath)}`
+        sibling != null
+            ? `${targetPathname}: ${siblingLinkMessage(pathnameToCheck.pathname, sibling)}`
             : `${targetPathname} links to non-existent page ${chalk.bold(pathnameToCheck.pathname)}`;
     const { position, sourceFilepath } = pathnameToCheck;
     if (sourceFilepath == null || position == null) {
@@ -477,8 +500,8 @@ function createLinkViolationMessage({
     }
 
     msg =
-        siblingBasepath != null
-            ? siblingLinkMessage(pathnameToCheck.pathname, siblingBasepath)
+        sibling != null
+            ? siblingLinkMessage(pathnameToCheck.pathname, sibling)
             : `broken link to ${chalk.bold(pathnameToCheck.pathname)}`;
     if (pathnameToCheck.pathname.length > 0 && !path.isAbsolute(pathnameToCheck.pathname)) {
         // for relative paths, print out the resolved path that is broken
@@ -502,15 +525,15 @@ function createLinkViolationMessage({
 function createApiReferenceLinkViolationMessage({
     pathnameToCheck,
     apiReferenceTitle,
-    siblingBasepath
+    sibling
 }: {
     pathnameToCheck: PathnameToCheck;
     apiReferenceTitle: string;
-    siblingBasepath?: string;
+    sibling?: SiblingLink;
 }): [msg: string, relFilePath: RelativeFilePath] {
     const msg =
-        siblingBasepath != null
-            ? `${siblingLinkMessage(pathnameToCheck.pathname, siblingBasepath)} (in ${apiReferenceTitle} description)`
+        sibling != null
+            ? `${siblingLinkMessage(pathnameToCheck.pathname, sibling)} (in ${apiReferenceTitle} description)`
             : `broken link to ${chalk.bold(pathnameToCheck.pathname)} in ${apiReferenceTitle} description`;
     return [msg, RelativeFilePath.of("")];
 }
