@@ -1,3 +1,4 @@
+import { assertNever } from "@fern-api/core-utils";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 
 /**
@@ -16,7 +17,7 @@ export function getPackageName(config: FernGeneratorExec.GeneratorConfig): strin
         case "downloadFiles":
             return undefined;
         default:
-            throw new Error("Unrecognized output mode.");
+            assertNever(mode);
     }
 }
 
