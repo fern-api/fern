@@ -483,7 +483,7 @@ func do() error {
 			"",
 		),
 	}
-	_, err := client.Service.Post(
+	err := client.Service.Post(
 		context.TODO(),
 		request,
 	)
@@ -513,7 +513,7 @@ func do() error {
 			"Hello, world!",
 		),
 	}
-	_, err := client.Service.JustFile(
+	err := client.Service.JustFile(
 		context.TODO(),
 		request,
 	)
@@ -547,7 +547,7 @@ func do() error {
 			"Hello, world!",
 		),
 	}
-	_, err := client.Service.JustFileWithQueryParams(
+	err := client.Service.JustFileWithQueryParams(
 		context.TODO(),
 		request,
 	)
@@ -1585,7 +1585,7 @@ func do() error {
 			"",
 		),
 	}
-	_, err := client.Service.Post(
+	err := client.Service.Post(
 		context.TODO(),
 		request,
 	)
@@ -1615,7 +1615,7 @@ func do() error {
 			"Hello, world!",
 		),
 	}
-	_, err := client.Service.JustFile(
+	err := client.Service.JustFile(
 		context.TODO(),
 		request,
 	)
@@ -1649,7 +1649,7 @@ func do() error {
 			"Hello, world!",
 		),
 	}
-	_, err := client.Service.JustFileWithQueryParams(
+	err := client.Service.JustFileWithQueryParams(
 		context.TODO(),
 		request,
 	)
@@ -2687,7 +2687,7 @@ func do() error {
 			"",
 		),
 	}
-	_, err := client.Service.Post(
+	err := client.Service.Post(
 		context.TODO(),
 		request,
 	)
@@ -2717,7 +2717,7 @@ func do() error {
 			"Hello, world!",
 		),
 	}
-	_, err := client.Service.JustFile(
+	err := client.Service.JustFile(
 		context.TODO(),
 		request,
 	)
@@ -2751,7 +2751,7 @@ func do() error {
 			"Hello, world!",
 		),
 	}
-	_, err := client.Service.JustFileWithQueryParams(
+	err := client.Service.JustFileWithQueryParams(
 		context.TODO(),
 		request,
 	)
