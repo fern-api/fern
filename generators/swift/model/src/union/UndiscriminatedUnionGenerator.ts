@@ -91,8 +91,17 @@ export class UndiscriminatedUnionGenerator {
     }
 
     private generateIfStatementForDecodingAttempts(): swift.Statement {
-        const distinctMembers = this.getAllVariants();
-        const memberDecodeAttempts = distinctMembers.map((member) => {
+        // A forward-compatible enum decodes any string, so it first claims only the values it lists.
+        // Other members get a chance at the rest, and the first such enum keeps any value left over.
+        const variants = this.getAllVariants();
+        const firstForwardCompatibleEnum = variants.find((variant) => this.isForwardCompatibleEnum(variant));
+        const decodeAttempts = [
+            ...variants.map((member) => ({ member, requireListedValue: this.isForwardCompatibleEnum(member) })),
+            ...(firstForwardCompatibleEnum != null
+                ? [{ member: firstForwardCompatibleEnum, requireListedValue: false }]
+                : [])
+        ];
+        const memberDecodeAttempts = decodeAttempts.map(({ member, requireListedValue }) => {
             const decodeStatement = swift.Statement.constantDeclaration({
                 unsafeName: "value",
                 value: swift.Expression.optionalTry(
@@ -121,7 +130,16 @@ export class UndiscriminatedUnionGenerator {
                     ]
                 })
             );
-            return { decodeStatement, selfAssignment };
+            const additionalConditions = requireListedValue
+                ? [
+                      swift.Expression.methodCall({
+                          target: swift.Expression.memberAccess({ target: member.swiftType, memberName: "allCases" }),
+                          methodName: "contains",
+                          arguments_: [swift.functionArgument({ value: swift.Expression.reference("value") })]
+                      })
+                  ]
+                : undefined;
+            return { decodeStatement, additionalConditions, selfAssignment };
         });
         const throwDecodingErrorStatement = swift.Statement.throw(
             swift.Expression.methodCall({
@@ -147,13 +165,20 @@ export class UndiscriminatedUnionGenerator {
 
         return swift.Statement.if({
             condition: firstAttempt.decodeStatement,
+            additionalConditions: firstAttempt.additionalConditions,
             body: [firstAttempt.selfAssignment],
             elseIfs: remainingAttempts.map((attempt) => ({
                 condition: attempt.decodeStatement,
+                additionalConditions: attempt.additionalConditions,
                 body: [attempt.selfAssignment]
             })),
             else: [throwDecodingErrorStatement]
         });
+    }
+
+    private isForwardCompatibleEnum(variant: { swiftType: swift.TypeReference }): boolean {
+        const symbol = this.referencer.resolveToSymbolIfSymbolType(variant.swiftType);
+        return symbol != null && this.context.isForwardCompatibleEnum(symbol);
     }
 
     private generateMethods(): swift.Method[] {
