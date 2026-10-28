@@ -1,32 +1,55 @@
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 
+/**
+ * Reads the package name from the generator config's output mode.
+ *
+ * Switches on `type` rather than calling `_visit` so that it also works with a
+ * plain JSON config (e.g. the docs platform passes `JSON.parse`d configs, which have no `_visit`).
+ */
 export function getPackageName(config: FernGeneratorExec.GeneratorConfig): string | undefined {
-    return config.output.mode._visit<string | undefined>({
-        publish: (gpc: FernGeneratorExec.GeneratorPublishConfig) =>
-            gpc.publishTarget?._visit({
-                maven: (mrc: FernGeneratorExec.MavenRegistryConfigV2) => mrc.coordinate,
-                npm: (nrc: FernGeneratorExec.NpmRegistryConfigV2) => nrc.packageName,
-                pypi: (prc: FernGeneratorExec.PypiRegistryConfig) => prc.packageName,
-                rubygems: (rgrc: FernGeneratorExec.RubyGemsRegistryConfig) => rgrc.packageName,
-                nuget: (nrc: FernGeneratorExec.NugetRegistryConfig) => nrc.packageName,
-                crates: (crc: FernGeneratorExec.CratesRegistryConfig) => crc.packageName,
-                postman: () => undefined,
-                _other: () => undefined
-            }),
-        downloadFiles: () => undefined,
-        github: (gom: FernGeneratorExec.GithubOutputMode) =>
-            gom.publishInfo?._visit({
-                maven: (mrc: FernGeneratorExec.MavenGithubPublishInfo) => mrc.coordinate,
-                npm: (nrc: FernGeneratorExec.NpmGithubPublishInfo) => nrc.packageName,
-                pypi: (prc: FernGeneratorExec.PypiGithubPublishInfo) => prc.packageName,
-                rubygems: (rgrc: FernGeneratorExec.RubyGemsGithubPublishInfo) => rgrc.packageName,
-                nuget: (nrc: FernGeneratorExec.NugetGithubPublishInfo) => nrc.packageName,
-                crates: (crc: FernGeneratorExec.CratesGithubPublishInfo) => crc.packageName,
-                postman: () => undefined,
-                _other: () => undefined
-            }),
-        _other: () => {
+    const mode = config.output.mode;
+    switch (mode.type) {
+        case "publish":
+            return getPublishTargetPackageName(mode.publishTarget);
+        case "github":
+            return getGithubPublishInfoPackageName(mode.publishInfo);
+        case "downloadFiles":
+            return undefined;
+        default:
             throw new Error("Unrecognized output mode.");
-        }
-    });
+    }
+}
+
+function getPublishTargetPackageName(
+    publishTarget: FernGeneratorExec.GeneratorPublishTarget | undefined
+): string | undefined {
+    switch (publishTarget?.type) {
+        case "maven":
+            return publishTarget.coordinate;
+        case "npm":
+        case "pypi":
+        case "rubygems":
+        case "nuget":
+        case "crates":
+            return publishTarget.packageName;
+        default:
+            return undefined;
+    }
+}
+
+function getGithubPublishInfoPackageName(
+    publishInfo: FernGeneratorExec.GithubPublishInfo | undefined
+): string | undefined {
+    switch (publishInfo?.type) {
+        case "maven":
+            return publishInfo.coordinate;
+        case "npm":
+        case "pypi":
+        case "rubygems":
+        case "nuget":
+        case "crates":
+            return publishInfo.packageName;
+        default:
+            return undefined;
+    }
 }

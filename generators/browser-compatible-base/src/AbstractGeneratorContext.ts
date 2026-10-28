@@ -34,11 +34,17 @@ export abstract class AbstractGeneratorContext {
             }
         });
 
-        this.version = config?.output?.mode?._visit({
-            downloadFiles: () => undefined,
-            github: (github) => github.version,
-            publish: (publish) => publish.version,
-            _other: () => undefined
-        });
+        this.version = getOutputModeVersion(config?.output?.mode);
+    }
+}
+
+// Switches on `type` rather than `_visit` so plain JSON configs (no `_visit`) work too.
+function getOutputModeVersion(mode: FernGeneratorExec.OutputMode | undefined): string | undefined {
+    switch (mode?.type) {
+        case "github":
+        case "publish":
+            return mode.version;
+        default:
+            return undefined;
     }
 }
