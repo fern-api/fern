@@ -8,8 +8,9 @@ import { parseVersion } from "@fern-api/semver-utils";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import axios from "axios";
+import { randomUUID } from "crypto";
 import { createWriteStream } from "fs";
-import { mkdir, readFile, writeFile } from "fs/promises";
+import { mkdir, readFile, rm, writeFile } from "fs/promises";
 import { isEqual } from "lodash-es";
 import { homedir } from "os";
 import path from "path";
@@ -19,6 +20,7 @@ import tmp from "tmp-promise";
 
 import { OSSWorkspace } from "../OSSWorkspace.js";
 import { LoadAPIWorkspace } from "./loadAPIWorkspace.js";
+import { publishDirectory } from "./publishDirectory.js";
 import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./Result.js";
 
 const FIDDLE = createFiddleService();
@@ -286,14 +288,25 @@ async function validateVersionedDependencyAndGetDefinition({
         context.logger.info("Downloading...");
         context.logger.debug("Remote URL: " + response.body.definitionS3DownloadUrl);
 
-        await mkdir(pathToDefinition, { recursive: true });
+        // Stage in a sibling directory and publish atomically: generators run in parallel and each downloads the
+        // same dependency, so extracting straight into the cache lets one parse another's half-written files.
+        const stagingDir = `${pathToDependency}.tmp-${randomUUID()}`;
+        const stagingDefinition = path.join(stagingDir, DEPENDENCIES_FOLDER_NAME);
+        await mkdir(stagingDefinition, { recursive: true });
 
         try {
             await downloadDependency({
                 s3PreSignedReadUrl: response.body.definitionS3DownloadUrl,
-                absolutePathToLocalOutput: pathToDefinition
+                absolutePathToLocalOutput: AbsoluteFilePath.of(stagingDefinition)
+            });
+            await writeFile(path.join(stagingDir, METADATA_RESPONSE_FILENAME), JSON.stringify(response.body));
+            await publishDirectory({
+                stagingDir,
+                targetDir: pathToDependency,
+                isComplete: async () => (await doesPathExist(pathToDefinition)) && (await doesPathExist(pathToMetadata))
             });
         } catch (error) {
+            await rm(stagingDir, { recursive: true, force: true });
             context.failWithoutThrowing("Failed to download API", error, {
                 code: CliError.Code.NetworkError
             });
@@ -301,7 +314,6 @@ async function validateVersionedDependencyAndGetDefinition({
         }
 
         metadata = response.body;
-        await writeFile(pathToMetadata, JSON.stringify(metadata));
     } else {
         metadata = JSON.parse((await readFile(pathToMetadata)).toString());
     }
