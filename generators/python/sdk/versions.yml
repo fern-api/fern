@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.41.12
+  changelogEntry:
+    - summary: |
+        Generated SDKs now keep the original copyright and license notices for core files
+        adapted from open-source projects: `core/jsonable_encoder.py` (FastAPI, MIT), the four
+        `core/http_sse/` modules (httpx-sse, MIT), the `Retry-After` parsing in
+        `core/http_client.py` (urllib3, MIT) and the file types in `core/file.py` (httpx, BSD-3-Clause).
+      type: fix
+  createdAt: "2026-10-28"
+  irVersion: 67
 - version: 5.41.11
   changelogEntry:
     - summary: |
