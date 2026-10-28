@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern init` on its own in a terminal now starts the setup wizard: it finds your API spec and coding agents, checks your organization name, and sets up the project, a docs site with your company's branding, coding-agent instructions, docs publishing, and SDKs, asking before each step. `fern init` with flags, or outside a terminal, works as before.
+  type: feat
+- summary: |
+    Add standalone commands for the wizard's steps: `fern docs brand <company>` (your company's logo, favicon, and accent color in docs.yml), `fern docs url check <name>`, `fern org check <name>`, `fern org create <name>`, `fern agent setup`, and `fern detect`. `fern init --docs --template stacked|side-by-side|minimal` starts from Fern's docs starter, downloaded on first use.
+  type: feat
