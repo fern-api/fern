@@ -355,13 +355,14 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
                     response: {
                         docs: undefined,
                         statusCode: undefined,
-                        body: resolvedResult?.value
-                            ? FernIr.V2HttpEndpointResponseBody.json({
-                                  jsonrpc: "2.0",
-                                  id: resolvedExample.examplePairedRequest?.id || "1",
-                                  result: resolvedResult.value
-                              })
-                            : undefined
+                        body:
+                            resolvedResult?.value !== undefined
+                                ? FernIr.V2HttpEndpointResponseBody.json({
+                                      jsonrpc: "2.0",
+                                      id: resolvedExample.examplePairedRequest?.id || "1",
+                                      result: resolvedResult.value
+                                  })
+                                : undefined
                     },
                     codeSamples: []
                 };
