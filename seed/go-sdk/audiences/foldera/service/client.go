@@ -44,7 +44,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	        "tags",
 //	    },
 //	}
-//	client.FolderA.Service.GetDirectThread(
+//	_, err := client.FolderA.Service.GetDirectThread(
 //	    context.TODO(),
 //	    request,
 //	)

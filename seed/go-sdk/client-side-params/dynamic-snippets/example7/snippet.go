@@ -7,7 +7,7 @@ import (
     option "github.com/client-side-params/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -16,8 +16,12 @@ func do() {
             "<token>",
         ),
     )
-    client.Service.DeleteUser(
+    err := client.Service.DeleteUser(
         context.TODO(),
         "userId",
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

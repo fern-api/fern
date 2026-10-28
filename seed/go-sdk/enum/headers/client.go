@@ -43,7 +43,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	        Color: fern.ColorRed,
 //	    },
 //	}
-//	client.Headers.Send(
+//	err := client.Headers.Send(
 //	    context.TODO(),
 //	    request,
 //	)

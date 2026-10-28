@@ -8,7 +8,7 @@ import (
     option "github.com/go-required-nullable-round-trip/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -21,8 +21,12 @@ func do() {
             "account_ids",
         },
     }
-    client.GetAccounts(
+    _, err := client.GetAccounts(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

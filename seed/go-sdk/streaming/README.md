@@ -37,15 +37,19 @@ import (
     client "github.com/fern-api/stream-go/v2/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &stream.GenerateStreamRequest{
         NumEvents: 1,
     }
-    client.Dummy.GenerateStream(
+    _, err := client.Dummy.GenerateStream(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

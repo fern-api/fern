@@ -37,7 +37,7 @@ import (
     client "github.com/property-access/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &fern.User{
         ID: "id",
@@ -51,10 +51,14 @@ func do() {
             Ssn: "ssn",
         },
     }
-    client.CreateUser(
+    _, err := client.CreateUser(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

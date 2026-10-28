@@ -36,7 +36,7 @@ request := &fern.GetUsersRequest{
         true,
     ),
 }
-client.Nullable.GetUsers(
+_, err := client.Nullable.GetUsers(
     context.TODO(),
     request,
 )
@@ -143,7 +143,7 @@ request := &fern.CreateUserRequest{
         "avatar",
     ),
 }
-client.Nullable.CreateUser(
+_, err := client.Nullable.CreateUser(
     context.TODO(),
     request,
 )
@@ -215,7 +215,7 @@ request := &fern.DeleteUserRequest{
         "xy",
     ),
 }
-client.Nullable.DeleteUser(
+_, err := client.Nullable.DeleteUser(
     context.TODO(),
     request,
 )

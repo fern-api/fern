@@ -13,7 +13,7 @@
 <dd>
 
 ```go
-client.User.GetUser(
+_, err := client.User.GetUser(
     context.TODO(),
     "userId",
 )

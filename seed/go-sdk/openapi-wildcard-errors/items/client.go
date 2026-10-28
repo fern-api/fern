@@ -39,7 +39,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	request := &fern.CreateItemRequest{
 //	    Name: "name",
 //	}
-//	client.Items.CreateItem(
+//	_, err := client.Items.CreateItem(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -64,7 +64,7 @@ func (c *Client) CreateItem(
 //	request := &fern.GetItemRequest{
 //	    ItemID: "item_id",
 //	}
-//	client.Items.GetItem(
+//	_, err := client.Items.GetItem(
 //	    context.TODO(),
 //	    request,
 //	)

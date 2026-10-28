@@ -41,7 +41,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	request := &events.GetEventMetadataRequest{
 //	    ID: "id",
 //	}
-//	client.User.Events.Metadata.GetMetadata(
+//	_, err := client.User.Events.Metadata.GetMetadata(
 //	    context.TODO(),
 //	    request,
 //	)

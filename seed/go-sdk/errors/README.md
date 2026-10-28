@@ -37,15 +37,19 @@ import (
     client "github.com/errors/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &fern.FooRequest{
         Bar: "bar",
     }
-    client.Simple.FooWithoutEndpointError(
+    _, err := client.Simple.FooWithoutEndpointError(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

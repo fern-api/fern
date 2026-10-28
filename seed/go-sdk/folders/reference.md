@@ -12,7 +12,7 @@
 <dd>
 
 ```go
-client.Foo(
+err := client.Foo(
     context.TODO(),
 )
 ```
@@ -40,7 +40,7 @@ client.Foo(
 <dd>
 
 ```go
-client.A.B.Foo(
+err := client.A.B.Foo(
     context.TODO(),
 )
 ```
@@ -68,7 +68,7 @@ client.A.B.Foo(
 <dd>
 
 ```go
-client.A.C.Foo(
+err := client.A.C.Foo(
     context.TODO(),
 )
 ```
@@ -96,7 +96,7 @@ client.A.C.Foo(
 <dd>
 
 ```go
-client.Folder.Foo(
+err := client.Folder.Foo(
     context.TODO(),
 )
 ```
@@ -124,7 +124,7 @@ client.Folder.Foo(
 <dd>
 
 ```go
-client.Folder.Service.Endpoint(
+err := client.Folder.Service.Endpoint(
     context.TODO(),
 )
 ```
@@ -154,7 +154,7 @@ client.Folder.Service.Endpoint(
 request := map[string]any{
     "key": "value",
 }
-client.Folder.Service.UnknownRequest(
+err := client.Folder.Service.UnknownRequest(
     context.TODO(),
     request,
 )

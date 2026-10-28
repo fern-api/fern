@@ -7,13 +7,17 @@ import (
     option "github.com/cross-package-type-names/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
         ),
     )
-    client.FolderD.Service.GetDirectThread(
+    _, err := client.FolderD.Service.GetDirectThread(
         context.TODO(),
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

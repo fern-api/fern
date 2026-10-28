@@ -15,7 +15,7 @@
 request := &fern.RefundBody{
     ID: "refund-id",
 }
-client.Refund(
+err := client.Refund(
     context.TODO(),
     request,
 )
@@ -74,7 +74,7 @@ request := &fern.RequiredRefundRequest{
         ),
     },
 }
-client.RequiredRefund(
+err := client.RequiredRefund(
     context.TODO(),
     request,
 )
@@ -126,7 +126,7 @@ client.RequiredRefund(
 
 ```go
 request := &fern.RefundRequest{}
-client.BulkRefund(
+err := client.BulkRefund(
     context.TODO(),
     request,
 )

@@ -39,7 +39,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	request := &fern.GetPresignedURLRequest{
 //	    S3Key: "s3Key",
 //	}
-//	client.S3.GetPresignedURL(
+//	_, err := client.S3.GetPresignedURL(
 //	    context.TODO(),
 //	    request,
 //	)

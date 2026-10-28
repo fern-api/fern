@@ -13,7 +13,7 @@
 <dd>
 
 ```go
-client.Service.Post(
+err := client.Service.Post(
     context.TODO(),
 )
 ```

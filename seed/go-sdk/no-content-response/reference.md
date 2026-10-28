@@ -30,7 +30,7 @@ Creates a new contact. Returns 200 with the contact or 204 with no content.
 request := &fern.CreateContactRequest{
     Name: "name",
 }
-client.Contacts.Create(
+_, err := client.Contacts.Create(
     context.TODO(),
     request,
 )
@@ -98,7 +98,7 @@ Gets a contact by ID. Returns 200 with the contact.
 request := &fern.GetContactsRequest{
     ID: "id",
 }
-client.Contacts.Get(
+_, err := client.Contacts.Get(
     context.TODO(),
     request,
 )

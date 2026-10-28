@@ -30,7 +30,7 @@ Create a new organization.
 request := &fern.CreateOrganizationRequest{
     Name: "name",
 }
-client.Organization.Create(
+_, err := client.Organization.Create(
     context.TODO(),
     request,
 )
@@ -93,7 +93,7 @@ request := &fern.ListUsersRequest{
         1,
     ),
 }
-client.User.List(
+_, err := client.User.List(
     context.TODO(),
     request,
 )
@@ -156,7 +156,7 @@ request := &user.ListUserEventsRequest{
         1,
     ),
 }
-client.User.Events.ListEvents(
+_, err := client.User.Events.ListEvents(
     context.TODO(),
     request,
 )
@@ -217,7 +217,7 @@ Get event metadata.
 request := &events.GetEventMetadataRequest{
     ID: "id",
 }
-client.User.Events.Metadata.GetMetadata(
+_, err := client.User.Events.Metadata.GetMetadata(
     context.TODO(),
     request,
 )

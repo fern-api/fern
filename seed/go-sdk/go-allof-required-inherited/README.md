@@ -37,15 +37,19 @@ import (
     client "github.com/go-allof-required-inherited/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &fern.TransactionsGetRequest{
         AccessToken: "access_token",
     }
-    client.GetTransactions(
+    _, err := client.GetTransactions(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

@@ -17,7 +17,7 @@ request := &fern.CreatePaymentRequest{
     Amount: 1,
     Currency: fern.CurrencyUsd,
 }
-client.Payment.Create(
+_, err := client.Payment.Create(
     context.TODO(),
     request,
 )
@@ -68,7 +68,7 @@ client.Payment.Create(
 <dd>
 
 ```go
-client.Payment.Delete(
+err := client.Payment.Delete(
     context.TODO(),
     "paymentId",
 )

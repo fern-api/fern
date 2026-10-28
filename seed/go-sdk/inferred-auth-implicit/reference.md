@@ -23,7 +23,7 @@ request := &fern.GetTokenRequest{
         "scope",
     ),
 }
-client.Auth.GetTokenWithClientCredentials(
+_, err := client.Auth.GetTokenWithClientCredentials(
     context.TODO(),
     request,
 )
@@ -115,7 +115,7 @@ request := &fern.RefreshTokenRequest{
         "scope",
     ),
 }
-client.Auth.RefreshToken(
+_, err := client.Auth.RefreshToken(
     context.TODO(),
     request,
 )
@@ -207,7 +207,7 @@ client.Auth.RefreshToken(
 <dd>
 
 ```go
-client.NestedNoAuth.API.GetSomething(
+err := client.NestedNoAuth.API.GetSomething(
     context.TODO(),
 )
 ```
@@ -235,7 +235,7 @@ client.NestedNoAuth.API.GetSomething(
 <dd>
 
 ```go
-client.Nested.API.GetSomething(
+err := client.Nested.API.GetSomething(
     context.TODO(),
 )
 ```
@@ -263,7 +263,7 @@ client.Nested.API.GetSomething(
 <dd>
 
 ```go
-client.Simple.GetSomething(
+err := client.Simple.GetSomething(
     context.TODO(),
 )
 ```

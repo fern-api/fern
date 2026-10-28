@@ -13,7 +13,7 @@
 <dd>
 
 ```go
-client.Organizations.GetOrganization(
+_, err := client.Organizations.GetOrganization(
     context.TODO(),
     "tenant_id",
     "organization_id",
@@ -65,7 +65,7 @@ client.Organizations.GetOrganization(
 <dd>
 
 ```go
-client.Organizations.GetOrganizationUser(
+_, err := client.Organizations.GetOrganizationUser(
     context.TODO(),
     "tenant_id",
     "organization_id",
@@ -131,7 +131,7 @@ request := &fern.SearchOrganizationsRequest{
         1,
     ),
 }
-client.Organizations.SearchOrganizations(
+_, err := client.Organizations.SearchOrganizations(
     context.TODO(),
     "tenant_id",
     "organization_id",
@@ -193,7 +193,7 @@ client.Organizations.SearchOrganizations(
 <dd>
 
 ```go
-client.User.GetUser(
+_, err := client.User.GetUser(
     context.TODO(),
     "tenant_id",
     "user_id",
@@ -252,7 +252,7 @@ request := &fern.User{
         "tags",
     },
 }
-client.User.CreateUser(
+_, err := client.User.CreateUser(
     context.TODO(),
     "tenant_id",
     request,
@@ -313,7 +313,7 @@ request := &fern.UpdateUserRequest{
         },
     },
 }
-client.User.UpdateUser(
+_, err := client.User.UpdateUser(
     context.TODO(),
     "tenant_id",
     "user_id",
@@ -379,7 +379,7 @@ request := &fern.SearchUsersRequest{
         1,
     ),
 }
-client.User.SearchUsers(
+_, err := client.User.SearchUsers(
     context.TODO(),
     "tenant_id",
     "user_id",
@@ -454,7 +454,7 @@ Test endpoint with path parameter that has a text prefix (v{version})
 <dd>
 
 ```go
-client.User.GetUserMetadata(
+_, err := client.User.GetUserMetadata(
     context.TODO(),
     "tenant_id",
     "user_id",
@@ -529,7 +529,7 @@ Test endpoint with path parameters listed in different order than found in path
 <dd>
 
 ```go
-client.User.GetUserSpecifics(
+_, err := client.User.GetUserSpecifics(
     context.TODO(),
     "tenant_id",
     "user_id",

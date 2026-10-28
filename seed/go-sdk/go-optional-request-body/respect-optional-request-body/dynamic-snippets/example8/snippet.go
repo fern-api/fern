@@ -8,7 +8,7 @@ import (
     option "github.com/go-optional-request-body/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -25,8 +25,12 @@ func do() {
             ),
         },
     }
-    client.MistPlant(
+    _, err := client.MistPlant(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

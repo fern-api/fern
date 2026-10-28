@@ -13,7 +13,7 @@
 <dd>
 
 ```go
-client.Users.ListWithURIPagination(
+_, err := client.Users.ListWithURIPagination(
     context.TODO(),
 )
 ```
@@ -40,7 +40,7 @@ client.Users.ListWithURIPagination(
 <dd>
 
 ```go
-client.Users.ListWithPathPagination(
+_, err := client.Users.ListWithPathPagination(
     context.TODO(),
 )
 ```
