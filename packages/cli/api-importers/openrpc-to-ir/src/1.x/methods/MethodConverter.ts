@@ -240,7 +240,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
 
     private convertApiPlayground(): boolean | undefined {
         const methodExplorer = new FernExplorerExtension({
-            breadcrumbs: this.breadcrumbs,
+            breadcrumbs: [...this.breadcrumbs, this.method.name],
             document: this.method,
             context: this.context
         }).convert();

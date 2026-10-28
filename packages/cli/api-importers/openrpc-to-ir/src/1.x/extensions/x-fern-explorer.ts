@@ -2,12 +2,12 @@ import { AbstractExtension } from "@fern-api/v3-importer-commons";
 
 export declare namespace FernExplorerExtension {
     export interface Args extends AbstractExtension.Args {
-        document: object;
+        document: unknown;
     }
 }
 
 export class FernExplorerExtension extends AbstractExtension<boolean> {
-    private readonly document: object;
+    private readonly document: unknown;
     public readonly key = "x-fern-explorer";
 
     constructor({ breadcrumbs, document, context }: FernExplorerExtension.Args) {
