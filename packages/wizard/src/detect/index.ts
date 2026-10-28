@@ -9,7 +9,14 @@ import { detectFernProject } from "./project";
 import { detectApiSpecs } from "./specs";
 import { walkFiles } from "./walk";
 
-export async function detectRepository(dir: string): Promise<Detection> {
+/**
+ * Scans a repository for API specs, frameworks, docs tools, coding agents, and an existing Fern
+ * project. Pass `fernCliVersion` when the Fern CLI is known to be running, to skip looking for one.
+ */
+export async function detectRepository(
+    dir: string,
+    { fernCliVersion: knownFernCliVersion }: { fernCliVersion?: string } = {}
+): Promise<Detection> {
     const files = await walkFiles(dir);
     const [
         fernProject,
@@ -31,7 +38,7 @@ export async function detectRepository(dir: string): Promise<Detection> {
         detectPackageManager(dir),
         hasPackageJson(dir),
         isPnpmWorkspaceRoot(dir),
-        isFernCliInstalled(dir),
+        knownFernCliVersion ?? isFernCliInstalled(dir),
         hasDocsSkill(dir, files)
     ]);
     return {

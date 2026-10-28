@@ -51,6 +51,7 @@ import {
     runDynamicIrWorkerThread
 } from "@fern-api/remote-workspace-runner";
 import { CliError } from "@fern-api/task-context";
+import { LAYOUTS } from "@fern-api/wizard";
 import chalk from "chalk";
 import getPort from "get-port";
 import { Argv } from "yargs";
@@ -61,11 +62,14 @@ import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVers
 import { GlobalCliOptions, loadProjectAndRegisterWorkspacesWithContext } from "./cliCommons.js";
 import { addGeneratorCommands, addGetOrganizationCommand } from "./cliV2.js";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces.js";
+import { setupAgent } from "./commands/agent/setupAgent.js";
 import { executeAutomationsGenerate } from "./commands/automations/generate/executeAutomationsGenerate.js";
 import { listPreviewGroups } from "./commands/automations/listPreviewGroups.js";
 import { executeAutomationsUpgrade } from "./commands/automations/upgrade/executeAutomationsUpgrade.js";
 import { claimGuestSession } from "./commands/claim/claimGuestSession.js";
+import { detect } from "./commands/detect/detect.js";
 import { diff } from "./commands/diff/diff.js";
+import { applyDocsBrand } from "./commands/docs-brand/applyDocsBrand.js";
 import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace.js";
 import { parseDocsDevDuration } from "./commands/docs-dev/parseDocsDevDuration.js";
 import { docsDiff } from "./commands/docs-diff/docsDiff.js";
@@ -77,6 +81,7 @@ import { downloadDocsTheme } from "./commands/docs-theme/downloadDocsTheme.js";
 import { exportDocsTheme } from "./commands/docs-theme/exportDocsTheme.js";
 import { listDocsThemes } from "./commands/docs-theme/listDocsThemes.js";
 import { uploadDocsTheme } from "./commands/docs-theme/uploadDocsTheme.js";
+import { checkDocsUrl } from "./commands/docs-url/checkDocsUrl.js";
 import { downgrade } from "./commands/downgrade/downgrade.js";
 import { generateOpenAPIForWorkspaces } from "./commands/export/generateOpenAPIForWorkspaces.js";
 import { formatWorkspaces } from "./commands/format/formatWorkspaces.js";
@@ -91,12 +96,15 @@ import { generateOpenApiToFdrApiDefinitionForWorkspaces } from "./commands/gener
 import { generateOpenAPIIrForWorkspaces } from "./commands/generate-openapi-ir/generateOpenAPIIrForWorkspaces.js";
 import { compareOpenAPISpecs } from "./commands/generate-overrides/compareOpenAPISpecs.js";
 import { writeOverridesForWorkspaces } from "./commands/generate-overrides/writeOverridesForWorkspaces.js";
+import { initDocsFromStarter } from "./commands/init/initDocsFromStarter.js";
+import { runInitWizard } from "./commands/init/runInitWizard.js";
 import { installDependencies } from "./commands/install-dependencies/installDependencies.js";
 import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJsonschemaForWorkspace.js";
 import { installMcpServer } from "./commands/mcp/installMcpServer.js";
 import { MCP_CLIENTS, McpClient } from "./commands/mcp/mcpConfig.js";
 import { mergeOpenAPIWithOverrides } from "./commands/merge/mergeOpenAPIWithOverrides.js";
 import { mockServer } from "./commands/mock/mockServer.js";
+import { checkOrganization, createOrganization } from "./commands/org/orgAvailability.js";
 import {
     applyOrgBoundsToVersion,
     getOrgConfig,
@@ -129,7 +137,7 @@ import { resolveGroupGithubConfig } from "./resolveGroupGithubConfig.js";
 import { RUNTIME } from "./runtime.js";
 import { installProcessHandlers } from "./telemetry/processHandlers.js";
 import { isSdkConfigInitEnabled } from "./utils/isSdkConfigInitEnabled.js";
-import { getInvokedCommandName, isVersionRedirectionExempt } from "./utils/versionRedirection.js";
+import { getInvokedCommandName, isBareInit, isVersionRedirectionExempt } from "./utils/versionRedirection.js";
 
 // Node 26+ on Linux enables io_uring in libuv, which has a busy-loop bug that
 // hangs the process. UV_USE_IO_URING must be set before Node starts (libuv
@@ -338,6 +346,9 @@ async function tryRunCli(cliContext: CliContext) {
     addGeneratorCommands(cli, cliContext);
     addOrgCommand(cli, cliContext);
 
+    addAgentCommand(cli, cliContext);
+    addDetectCommand(cli, cliContext);
+
     addProtocGenFernCommand(cli, cliContext);
     addInstallDependenciesCommand(cli, cliContext);
 
@@ -410,7 +421,7 @@ async function getOrganization(cliContext: CliContext): Promise<string | undefin
 function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "init",
-        "Initialize a Fern API",
+        "Initialize a Fern API (on its own in a terminal, starts the setup wizard)",
         (yargs) =>
             yargs
                 .option("api", {
@@ -441,8 +452,23 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 .option("readme", {
                     type: "string",
                     description: "Migrate docs from Readme provided a URL to a Readme generated docs site"
+                })
+                .option("template", {
+                    type: "string",
+                    choices: LAYOUTS.map((layout) => layout.flag),
+                    description: "With --docs, start from Fern's docs starter in this layout"
                 }),
         async (argv) => {
+            if (isBareInit(process.argv) && cliContext.isInteractive) {
+                cliContext.instrumentPostHogEvent({ command: "fern init (wizard)" });
+                await runInitWizard({ cliContext });
+                return;
+            }
+            if (argv.template != null && argv.docs == null) {
+                return cliContext.failWithoutThrowing("--template only works with --docs.", undefined, {
+                    code: CliError.Code.ConfigError
+                });
+            }
             if (argv.organization == null) {
                 const projectConfig = await getOrganization(cliContext);
                 if (projectConfig != null) {
@@ -481,6 +507,12 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                         taskContext: context,
                         versionOfCli: await getLatestVersionOfCli({ cliEnvironment: cliContext.environment })
                     });
+                });
+            } else if (argv.docs != null && argv.template != null) {
+                await initDocsFromStarter({
+                    cliContext,
+                    organization: argv.organization ?? "fern",
+                    template: argv.template
                 });
             } else if (argv.docs != null) {
                 await cliContext.runTask(async (context) => {
@@ -2158,8 +2190,61 @@ function addDocsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         addDocsDiffCommand(yargs, cliContext);
         addDocsMdCommand(yargs, cliContext);
         addDocsThemeCommand(yargs, cliContext);
+        addDocsBrandCommand(yargs, cliContext);
+        addDocsUrlCommand(yargs, cliContext);
         return yargs;
     });
+}
+
+function addDocsBrandCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "brand <company>",
+        "Use a company's logo, favicon, and accent color in your docs",
+        (yargs) =>
+            yargs
+                .positional("company", {
+                    type: "string",
+                    demandOption: true,
+                    description: "The company's name or website, like stripe.com"
+                })
+                .option("yes", {
+                    boolean: true,
+                    default: false,
+                    description: "Use the exact match without asking"
+                })
+                .option("json", {
+                    boolean: true,
+                    default: false,
+                    description: "Print the brand as JSON instead of applying it"
+                }),
+        async (argv) => {
+            cliContext.instrumentPostHogEvent({ command: "fern docs brand" });
+            await applyDocsBrand({ cliContext, query: argv.company, yes: argv.yes, json: argv.json });
+        }
+    );
+}
+
+function addDocsUrlCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command("url", "Check docs URLs on docs.buildwithfern.com", (yargs) =>
+        yargs
+            .command(
+                "check <name>",
+                "Check whether <name>.docs.buildwithfern.com is free to publish to",
+                (checkYargs) =>
+                    checkYargs
+                        .positional("name", {
+                            type: "string",
+                            demandOption: true,
+                            description: "A name like acme, or a full URL like acme.docs.buildwithfern.com"
+                        })
+                        .option("json", { boolean: true, default: false, description: "Print the result as JSON" }),
+                async (argv) => {
+                    cliContext.instrumentPostHogEvent({ command: "fern docs url check" });
+                    await checkDocsUrl({ cliContext, name: argv.name, json: argv.json });
+                }
+            )
+            .demandCommand(1, "Specify a url command, e.g. `fern docs url check acme`.")
+    );
 }
 
 function addDocsThemeCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
@@ -4404,8 +4489,78 @@ function addOrgCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
             }
         );
 
+        yargs.command(
+            "check <name>",
+            "Check whether a Fern organization name is yours, free, or another team's",
+            (checkYargs) =>
+                checkYargs
+                    .positional("name", { type: "string", demandOption: true, description: "The organization name" })
+                    .option("json", { boolean: true, default: false, description: "Print the result as JSON" }),
+            async (argv) => {
+                cliContext.instrumentPostHogEvent({ command: "fern org check" });
+                await checkOrganization({ cliContext, name: argv.name, json: argv.json });
+            }
+        );
+
+        yargs.command(
+            "create <name>",
+            "Create a Fern organization, with you as its first member",
+            (createYargs) =>
+                createYargs
+                    .positional("name", { type: "string", demandOption: true, description: "The organization name" })
+                    .option("json", { boolean: true, default: false, description: "Print the result as JSON" }),
+            async (argv) => {
+                cliContext.instrumentPostHogEvent({ command: "fern org create" });
+                await createOrganization({ cliContext, name: argv.name, json: argv.json });
+            }
+        );
+
         return yargs;
     });
+}
+
+function addAgentCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command("agent", "Set up coding agents to work with Fern", (yargs) =>
+        yargs
+            .command(
+                "setup",
+                "Write Fern instructions for your coding agents and add the fern-docs skill",
+                (setupYargs) =>
+                    setupYargs
+                        .option("mcp", {
+                            boolean: true,
+                            default: false,
+                            description: "Also connect Fern's MCP server (signs you in to Fern)"
+                        })
+                        .option("skip-skill", {
+                            boolean: true,
+                            default: false,
+                            description: "Don't add the fern-docs skill"
+                        }),
+                async (argv) => {
+                    cliContext.instrumentPostHogEvent({ command: "fern agent setup" });
+                    await setupAgent({
+                        cliContext,
+                        organization: await getOrganization(cliContext),
+                        mcp: argv.mcp,
+                        skipSkill: argv["skip-skill"]
+                    });
+                }
+            )
+            .demandCommand(1, "Specify an agent command, e.g. `fern agent setup`.")
+    );
+}
+
+function addDetectCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "detect",
+        "Show the API specs, frameworks, docs tools, and coding agents Fern finds here",
+        (yargs) => yargs.option("json", { boolean: true, default: false, description: "Print the result as JSON" }),
+        async (argv) => {
+            cliContext.instrumentPostHogEvent({ command: "fern detect" });
+            await detect({ cliContext, json: argv.json });
+        }
+    );
 }
 
 function parseOwnerRepo(githubRepo: string): { owner: string; repo: string } {

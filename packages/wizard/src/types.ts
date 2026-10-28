@@ -42,6 +42,8 @@ export interface Detection {
     pnpmWorkspaceRoot: boolean;
     fernCliVersion: string | null;
     docsSkillInstalled: boolean;
+    /** How to run the Fern CLI, when the caller already knows (the Fern CLI running the wizard). */
+    fernCommand?: { executable: string; args: string[] };
 }
 
 /** What the user wants Fern to produce for this repository. */
@@ -113,4 +115,8 @@ export interface WizardFlags {
     spec?: string;
     /** Don't connect Fern's MCP server to the coding agents. */
     skipMcp?: boolean;
+    /** Set when the Fern CLI runs the wizard: the CLI version that new projects are pinned to. */
+    fernVersion?: string;
+    /** Set when the Fern CLI runs the wizard: how to run that same CLI for `fern` commands. */
+    fernCommand?: { executable: string; args: string[] };
 }

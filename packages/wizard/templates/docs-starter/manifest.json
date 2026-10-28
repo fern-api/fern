@@ -1,0 +1,179 @@
+{
+  "files": [
+    {
+      "path": "base/asyncapi.yaml",
+      "size": 6570,
+      "sha256": "17bfa2da01815c90e23f90f66d5adf39a0f44ef5983abbeba8ab7cc7878bb5f3"
+    },
+    {
+      "path": "base/docs.yml",
+      "size": 2296,
+      "sha256": "0bfc09a0067d5540ffa6683f6952f9e91fe405bffa5fa8d1d480237e5036607a"
+    },
+    {
+      "path": "base/docs/assets/favicon.svg",
+      "size": 1105,
+      "sha256": "174483b7da3cf515eb731654291c54f353a77d269d6c6f47dac901177e8347fb"
+    },
+    {
+      "path": "base/docs/assets/fern-logo-primary.svg",
+      "size": 2770,
+      "sha256": "d34f454f5aff85af3ac03156626e81fc89df09da22fd387ce798910adcd149b6"
+    },
+    {
+      "path": "base/docs/assets/fern-logo-white.svg",
+      "size": 2770,
+      "sha256": "b77e4e6650c4f8cc115ef2655cfdc4da1e2f7416887ddddd2cd1790e965fc927"
+    },
+    {
+      "path": "base/docs/assets/logo-dark.svg",
+      "size": 9638,
+      "sha256": "66bc7ef11dc1add6b045eab15ca3e2aee9153b9ddfc5e9632c4d2c8bf75bb447"
+    },
+    {
+      "path": "base/docs/assets/logo-light.svg",
+      "size": 23921,
+      "sha256": "2c4b29432801312558d9db1eb5d805a31ce2b73661151487dbbfb324cdc34aca"
+    },
+    {
+      "path": "base/docs/assets/logo.svg",
+      "size": 9626,
+      "sha256": "52488f6d198a3b32be19c62b741978398ce3bce5575b721f611b4e8b6b7b1361"
+    },
+    {
+      "path": "base/docs/assets/welcome-dark.jpg",
+      "size": 2380485,
+      "sha256": "4d361358bff3e3e7f70432bcb3de44bc94e8e41279f1171ae725f330c79fd016"
+    },
+    {
+      "path": "base/docs/assets/welcome-light.jpg",
+      "size": 1786046,
+      "sha256": "ca1f03dd8cf099a25abd95e9255222067b6b8b549574f9193f29cc67c6607263"
+    },
+    {
+      "path": "base/docs/changelog/09-01-2025.mdx",
+      "size": 936,
+      "sha256": "45837f78a75fdd3b0f0ab0239407333901c6aeeafe4aa048bcf312681550a0e4"
+    },
+    {
+      "path": "base/docs/changelog/09-15-2025.mdx",
+      "size": 937,
+      "sha256": "eb05c4f25bc0da1a4ac53ed9698a153a0931a869fcd51441d86f518f23efd0a7"
+    },
+    {
+      "path": "base/docs/changelog/10-01-2025.mdx",
+      "size": 960,
+      "sha256": "35c8f14fcde0e9435493674f65c24714f26a453b52804b9c3c643528b2826c12"
+    },
+    {
+      "path": "base/docs/changelog/10-15-2025.mdx",
+      "size": 684,
+      "sha256": "678053c40501cd3c68db7770ee4ef5eda7762eef8603706e0b6b02125f910cf0"
+    },
+    {
+      "path": "base/docs/changelog/10-29-2025.mdx",
+      "size": 596,
+      "sha256": "aaba6e5187f945b368d6f891a50744a3b463359d8eaa73564b4ab623fe09c59b"
+    },
+    {
+      "path": "base/docs/changelog/overview.mdx",
+      "size": 488,
+      "sha256": "4f80476c5ed6a1b420d7ec0d2da0d4229fc2ed03724e643280ba49724c2b5fb7"
+    },
+    {
+      "path": "base/docs/pages/api-reference-overview.mdx",
+      "size": 2875,
+      "sha256": "f4be695d0fbe84a47d2fdebc8afe49742fd856607b044b0864eae95c7c1732e3"
+    },
+    {
+      "path": "base/docs/pages/customization.mdx",
+      "size": 2222,
+      "sha256": "82d3e360d4f81294be104b253a4d0e3928103abac89b68f6a33956a8b9f3849e"
+    },
+    {
+      "path": "base/docs/pages/editing-your-docs.mdx",
+      "size": 1838,
+      "sha256": "d8f92a7a5d8596ce8710a839e2a7d6645bf5b0991e661c5980285deea7cacc20"
+    },
+    {
+      "path": "base/docs/pages/navigation.mdx",
+      "size": 2115,
+      "sha256": "fba47d40c3835d2467bcd01020b30fe80d195c550c586e48cde2a1434c94559e"
+    },
+    {
+      "path": "base/docs/pages/support.mdx",
+      "size": 477,
+      "sha256": "c771ad2188dcd8da8084d94891fdffe46c583eab3a2f6ed0b84f8901f0f2a088"
+    },
+    {
+      "path": "base/docs/pages/welcome.mdx",
+      "size": 1866,
+      "sha256": "31ed71bcddc2b771958cccf0212b69d178b6af4b08fcde32c7997c5603a7ceaa"
+    },
+    {
+      "path": "base/docs/pages/writing-content.mdx",
+      "size": 2428,
+      "sha256": "affc82e5e0d5ecccc539c6eeb6f39427971871bc14c0be146baf24273eb795b7"
+    },
+    {
+      "path": "base/fern.config.json",
+      "size": 52,
+      "sha256": "8d90a8f03c406938c53c2a75d1730d79b479189d0aa33f69dcf7b2cb09904b84"
+    },
+    {
+      "path": "base/generators.yml",
+      "size": 157,
+      "sha256": "9b86569468251162f09580ffe398e4b0a6d87052252574337092d0081068a0a7"
+    },
+    {
+      "path": "base/openapi.yaml",
+      "size": 10027,
+      "sha256": "cf12cd654df5b23e4bc34bb1d0aaeddf6c7ee226ba927183e2a0382eb28eedc5"
+    },
+    {
+      "path": "base/snippets/note.mdx",
+      "size": 196,
+      "sha256": "9913e13a75d3f170fc8a63dc66e926fb84d816093b5641095d86f4976002a3ce"
+    },
+    {
+      "path": "base/styles.css",
+      "size": 537,
+      "sha256": "6d7baeaca9a0dca6ecae9ac6fae6616436d9f66b12d2def64f1a7f879dac7c97"
+    },
+    {
+      "path": "layouts/layout-2/docs.partial.yml",
+      "size": 240,
+      "sha256": "f1e89d783ee95cb6494e0b8a3acbb328c83eb85b7731ec7838ee0eb2c01d76c5"
+    },
+    {
+      "path": "layouts/layout-2/fern/docs/pages/welcome.mdx",
+      "size": 1465,
+      "sha256": "a8e4ddbf5da0470a09a07f4ce5832732fae1aa2b3a1a0279459a0885a589168c"
+    },
+    {
+      "path": "layouts/layout-2/fern/styles.css",
+      "size": 357,
+      "sha256": "7a189cdff20678d18d5921dbb69117e2362cb184b6de9bb22c8660d57820d780"
+    },
+    {
+      "path": "layouts/layout-3/docs.partial.yml",
+      "size": 2320,
+      "sha256": "3ab71dbe4b481b4b86b1a21c0b1513f20c1eabee8d87f2aeac97ae9527fc4f12"
+    },
+    {
+      "path": "layouts/layout-3/fern/custom.js",
+      "size": 14670,
+      "sha256": "0f983e71d2de929a116d08b23871a907d64d4d3ac7b10929e9848b74cc985795"
+    },
+    {
+      "path": "layouts/layout-3/fern/docs/pages/welcome.mdx",
+      "size": 1356,
+      "sha256": "0fd323efc474e52b59153765d43577960b791ec8c8ea72996121d7c5312078c4"
+    },
+    {
+      "path": "layouts/layout-3/fern/styles.css",
+      "size": 2361,
+      "sha256": "af7c0924f8106d93ec4b8535989cae59e5e460c131d0a5abf333a07bbc33f806"
+    }
+  ]
+}
