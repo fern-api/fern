@@ -8,7 +8,7 @@ import (
     option "github.com/union-query-parameters/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -22,8 +22,12 @@ func do() {
             String: "tags",
         },
     }
-    client.Events.Subscribe(
+    _, err := client.Events.Subscribe(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
