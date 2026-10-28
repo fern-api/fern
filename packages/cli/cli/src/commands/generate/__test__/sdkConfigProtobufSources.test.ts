@@ -1,7 +1,7 @@
 import { parseSdkConfigV1 } from "@postman/sdk-config/sdk-config/v1";
 import { describe, expect, it } from "vitest";
 
-import { assertNoProtobufSourcesForGeneration, isProtobufSource } from "../sdkConfigProtobufSources.js";
+import { assertNoProtobufSourcesForLocalGeneration, isProtobufSource } from "../sdkConfigProtobufSources.js";
 
 function config(specs: Array<Record<string, unknown>>): ReturnType<typeof parseSdkConfigV1> {
     return parseSdkConfigV1({
@@ -23,22 +23,24 @@ describe("isProtobufSource", () => {
     });
 });
 
-describe("assertNoProtobufSourcesForGeneration", () => {
+describe("assertNoProtobufSourcesForLocalGeneration", () => {
     it("allows a config without protobuf sources", () => {
         expect(() =>
-            assertNoProtobufSourcesForGeneration(config([{ id: "orders", type: "openapi", path: "./openapi.yml" }]))
+            assertNoProtobufSourcesForLocalGeneration(
+                config([{ id: "orders", type: "openapi", path: "./openapi.yml" }])
+            )
         ).not.toThrow();
     });
 
     it("rejects protobuf sources, naming each one", () => {
         expect(() =>
-            assertNoProtobufSourcesForGeneration(
+            assertNoProtobufSourcesForLocalGeneration(
                 config([
                     { id: "users", proto: { root: "./proto", fromOpenApi: true } },
                     { id: "orders", type: "openapi", path: "./openapi.yml" },
                     { id: "billing", proto: { root: "./billing" } }
                 ])
             )
-        ).toThrow("SDK Config protobuf sources 'users', 'billing' cannot be generated from yet");
+        ).toThrow("SDK Config protobuf sources 'users', 'billing' cannot be generated with --local yet");
     });
 });
