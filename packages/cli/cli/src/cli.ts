@@ -80,7 +80,6 @@ import { uploadDocsTheme } from "./commands/docs-theme/uploadDocsTheme.js";
 import { downgrade } from "./commands/downgrade/downgrade.js";
 import { generateOpenAPIForWorkspaces } from "./commands/export/generateOpenAPIForWorkspaces.js";
 import { formatWorkspaces } from "./commands/format/formatWorkspaces.js";
-import { GUEST_DOCS_REQUIRE_PREVIEW_MESSAGE } from "./commands/generate/assertGuestCanGenerate.js";
 import { parseGeneratorArg } from "./commands/generate/filterGenerators.js";
 import { GenerationMode, generateAPIWorkspaces } from "./commands/generate/generateAPIWorkspaces.js";
 import { generateDocsWorkspace } from "./commands/generate/generateDocsWorkspace.js";
@@ -1039,11 +1038,6 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     undefined,
                     { code: CliError.Code.ConfigError }
                 );
-            }
-            if (argv.guest && argv.docs != null && !argv.preview) {
-                return cliContext.failWithoutThrowing(GUEST_DOCS_REQUIRE_PREVIEW_MESSAGE, undefined, {
-                    code: CliError.Code.ConfigError
-                });
             }
             if (argv.fernignore != null && (argv.local || argv.runner != null)) {
                 return cliContext.failWithoutThrowing(

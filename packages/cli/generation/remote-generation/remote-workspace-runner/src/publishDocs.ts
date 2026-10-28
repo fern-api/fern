@@ -79,6 +79,7 @@ import { DynamicIrWorkerPool, parseDynamicIrResult } from "./dynamicIr/DynamicIr
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
 import { measureImageSizes } from "./measureImageSizes.js";
 import { normalizeRepoUrlToHttps } from "./normalizeRepoUrl.js";
+import { readGuestPublishOutcome } from "./guestDocsSite.js";
 import { publishDocsViaLedger } from "./publishDocsLedger.js";
 import { publishDocsViaLedgerPreview } from "./publishDocsLedgerPreview.js";
 import { retryWithBackoff } from "./retryWithBackoff.js";
@@ -1012,6 +1013,16 @@ export async function publishDocs({
                 context.logger.debug(
                     `[ledger] Deployment ${ledgerResult.reusedDeployment ? "reused" : "created"}: ${ledgerResult.deploymentId}`
                 );
+                if (token.type === "guest") {
+                    const outcome = readGuestPublishOutcome(ledgerResult);
+                    if (outcome.claimUrl != null) {
+                        const expiry =
+                            outcome.expiresAt != null
+                                ? ` (expires ${new Date(outcome.expiresAt).toLocaleString()})`
+                                : "";
+                        context.logger.info(`Claim this site to keep it: ${outcome.claimUrl}${expiry}`);
+                    }
+                }
             }
         };
 

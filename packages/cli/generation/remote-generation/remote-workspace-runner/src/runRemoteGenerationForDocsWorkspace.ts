@@ -5,6 +5,7 @@ import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace } from "@fern-api/workspace-loader";
 import { stripCustomDomainProtocol, validateBasepathAlignment } from "./customDomainValidation.js";
+import { fetchGuestDocsSite } from "./guestDocsSite.js";
 import { DocsPublishConflictError, publishDocs } from "./publishDocs.js";
 import { checkCustomDomainsNotOnVercel } from "./vercelDomainCheck.js";
 
@@ -123,29 +124,48 @@ export async function runRemoteGenerationForDocsWorkspace({
         return;
     }
 
-    const customDomains = (
+    let customDomains = (
         typeof maybeInstance.customDomain === "string"
             ? [maybeInstance.customDomain]
             : (maybeInstance.customDomain ?? [])
     ).map(stripCustomDomainProtocol);
 
     // The Fern instance url and every custom domain must share the same basepath.
-    validateBasepathAlignment(maybeInstance.url, customDomains, context);
+    let publishUrl = maybeInstance.url;
+    if (token.type === "guest" && !preview) {
+        // A guest session publishes to the Fern Drop site FDR holds for it, not to the docs.yml URL.
+        const fdrOrigin =
+            process.env.FERN_FDR_ORIGIN ??
+            process.env.OVERRIDE_FDR_ORIGIN ??
+            process.env.DEFAULT_FDR_ORIGIN ??
+            "https://registry.buildwithfern.com";
+        const site = await fetchGuestDocsSite({ fdrOrigin, token });
+        context.logger.warn(
+            `Ignoring instance URL "${maybeInstance.url}" from docs.yml while running as a guest; publishing to ${site.url} instead.`
+        );
+        if (customDomains.length > 0) {
+            context.logger.warn("Custom domains are not applied to a guest docs site; claim the session to use them.");
+            customDomains = [];
+        }
+        publishUrl = site.domain;
+    }
+
+    validateBasepathAlignment(publishUrl, customDomains, context);
     await checkCustomDomainsNotOnVercel({ customDomains, context });
 
-    context.logger.info(`Starting docs publishing for ${preview ? "preview" : "production"}: ${maybeInstance.url}`);
+    context.logger.info(`Starting docs publishing for ${preview ? "preview" : "production"}: ${publishUrl}`);
     context.logger.debug(
         `Organization: ${organization}, Preview: ${preview}, APIs: ${apiWorkspaces.length}, OSS: ${ossWorkspaces.length}`
     );
 
     let publishedUrl: string | undefined;
-    await context.runInteractiveTask({ name: maybeInstance.url }, async () => {
+    await context.runInteractiveTask({ name: publishUrl }, async () => {
         const publishStart = performance.now();
         const attemptPublish = () =>
             publishDocs({
                 docsWorkspace,
                 customDomains,
-                domain: maybeInstance.url,
+                domain: publishUrl,
                 token,
                 organization,
                 context,
@@ -164,7 +184,7 @@ export async function runRemoteGenerationForDocsWorkspace({
                         ? maybeInstance.audiences
                         : [maybeInstance.audiences]
                     : undefined,
-                docsUrl: maybeInstance.url,
+                docsUrl: publishUrl,
                 cliVersion,
                 ciSource,
                 deployerAuthor,

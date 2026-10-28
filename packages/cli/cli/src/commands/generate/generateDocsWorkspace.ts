@@ -16,7 +16,6 @@ import chalk from "chalk";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { detectCISource, detectDeployerAuthor, isCI } from "../../utils/environment.js";
 import { validateDocsWorkspaceAndLogIssues } from "../validate/validateDocsWorkspaceAndLogIssues.js";
-import { GUEST_DOCS_REQUIRE_PREVIEW_MESSAGE } from "./assertGuestCanGenerate.js";
 import { getSdkConfigSdkNames } from "./getSdkConfigSdkNames.js";
 import { resolveGuestProject } from "./resolveGuestProject.js";
 
@@ -91,10 +90,6 @@ export async function generateDocsWorkspace({
         return;
     }
     let guestToken: FernGuestToken | undefined;
-    if (guest && !preview) {
-        cliContext.failAndThrow(GUEST_DOCS_REQUIRE_PREVIEW_MESSAGE, undefined, { code: CliError.Code.ConfigError });
-        return;
-    }
     if (guest) {
         const resolved = await resolveGuestProject({ project, cliContext, newSession });
         project = resolved.project;
@@ -102,7 +97,8 @@ export async function generateDocsWorkspace({
     }
     const hasFdrOriginOverride = !!process.env["FERN_FDR_ORIGIN"] || !!process.env["OVERRIDE_FDR_ORIGIN"];
 
-    if (!preview && !isCI() && !noPrompt) {
+    // A guest publishes to its own temporary drop site, so there is no production site to protect.
+    if (!preview && !guest && !isCI() && !noPrompt) {
         const productionUrl = instance ?? docsWorkspace.config.instances[0]?.url;
         const urlDisplay = productionUrl ? ` (${chalk.cyan(`https://${productionUrl}`)})` : "";
 
