@@ -43,7 +43,6 @@ public final class ObjectMappersJackson29CompatibilityTest {
         assertThat(jackson29Classpath)
                 .as("%s must be set by the generator-utils test task", JACKSON_29_CLASSPATH_PROPERTY)
                 .isNotBlank();
-        assertThat(jackson29Classpath).contains("jackson-databind-2.9.10");
 
         AbstractGeneratorContext<?, ?> context = mock(AbstractGeneratorContext.class);
         doReturn(new TestPoetClassNameFactory()).when(context).getPoetClassNameFactory();

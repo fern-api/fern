@@ -31,6 +31,7 @@ def jackson29Classpath = configurations.detachedConfiguration(
         dependencies.create('com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.10'))
 
 tasks.named('test') {
+    inputs.files(jackson29Classpath).withNormalizer(ClasspathNormalizer)
     doFirst {
         systemProperty 'fern.test.jackson29.classpath', jackson29Classpath.asPath
     }
