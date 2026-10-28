@@ -284,8 +284,12 @@ function convertService(
                 openapi: () => {
                     return { type: "rest" };
                 },
-                openrpc: () => {
-                    return { type: "openrpc", methodName: irEndpoint.id };
+                openrpc: (openrpcSource) => {
+                    return {
+                        type: "openrpc",
+                        methodName: irEndpoint.id,
+                        paramStructure: convertOpenRpcParamStructure(openrpcSource.paramStructure)
+                    };
                 },
                 proto: (protoSource) => {
                     return { type: "grpc", methodName: irEndpoint.id, methodType: protoSource.methodType };
@@ -633,6 +637,23 @@ function convertIrWebSocketEnvironments({
             });
         default:
             assertNever(environmentsConfigValue);
+    }
+}
+
+function convertOpenRpcParamStructure(
+    paramStructure: Ir.http.OpenRpcParamStructure | undefined
+): "by-name" | "by-position" | "either" | undefined {
+    switch (paramStructure) {
+        case "BY_NAME":
+            return "by-name";
+        case "BY_POSITION":
+            return "by-position";
+        case "EITHER":
+            return "either";
+        case undefined:
+            return undefined;
+        default:
+            assertNever(paramStructure);
     }
 }
 

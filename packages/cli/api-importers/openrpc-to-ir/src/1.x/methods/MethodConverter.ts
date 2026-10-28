@@ -1,3 +1,4 @@
+import { assertNeverNoThrow } from "@fern-api/core-utils";
 import {
     FernIr,
     HttpEndpoint,
@@ -222,7 +223,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
             },
             transport: undefined,
             availability: undefined,
-            source: HttpEndpointSource.openrpc(),
+            source: HttpEndpointSource.openrpc({ paramStructure: this.convertParamStructure() }),
             audiences,
             retries: undefined,
             globalParameters: undefined,
@@ -245,6 +246,31 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
             context: this.context
         }).convert();
         return methodExplorer ?? this.globalApiPlayground;
+    }
+
+    private convertParamStructure(): FernIr.OpenRpcParamStructure | undefined {
+        const paramStructure = this.method.paramStructure;
+        switch (paramStructure) {
+            case "by-name":
+                return FernIr.OpenRpcParamStructure.ByName;
+            case "by-position":
+                return FernIr.OpenRpcParamStructure.ByPosition;
+            case "either":
+                return FernIr.OpenRpcParamStructure.Either;
+            case undefined:
+                return undefined;
+            default:
+                // The OpenRPC loader doesn't validate method fields, so ignore unknown values instead of failing the import.
+                assertNeverNoThrow(paramStructure);
+                return undefined;
+        }
+    }
+
+    private convertExampleParams(params: ExampleObject[]): unknown[] | Record<string, unknown> {
+        if (this.method.paramStructure === "by-name") {
+            return Object.fromEntries(params.map((param) => [param.name, param.value]));
+        }
+        return params.map((param) => param.value);
     }
 
     private filterOutTopLevelServers(servers: ServerObject[]): ServerObject[] {
@@ -364,7 +390,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
                         pathParameters,
                         queryParameters: {},
                         headers: {},
-                        requestBody: resolvedParams.map((param) => param.value) ?? undefined
+                        requestBody: this.convertExampleParams(resolvedParams)
                     },
                     response: {
                         docs: undefined,
