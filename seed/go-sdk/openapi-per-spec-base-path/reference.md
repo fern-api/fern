@@ -12,7 +12,7 @@
 <dd>
 
 ```go
-client.ListItems(
+_, err := client.ListItems(
     context.TODO(),
 )
 ```
@@ -44,7 +44,7 @@ request := &oauth.GetTokenRequest{
     ClientID: "client_id",
     ClientSecret: "client_secret",
 }
-client.Oauth.GetToken(
+_, err := client.Oauth.GetToken(
     context.TODO(),
     request,
 )

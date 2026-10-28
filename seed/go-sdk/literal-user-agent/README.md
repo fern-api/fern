@@ -36,11 +36,15 @@ import (
     client "github.com/literal-user-agent/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
-    client.Ping(
+    _, err := client.Ping(
         context.TODO(),
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

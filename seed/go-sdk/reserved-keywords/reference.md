@@ -16,7 +16,7 @@
 request := &fern.TestRequest{
     For: "for",
 }
-client.Package.Test(
+err := client.Package.Test(
     context.TODO(),
     request,
 )

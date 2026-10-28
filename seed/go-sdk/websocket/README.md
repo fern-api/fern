@@ -36,11 +36,15 @@ import (
     client "github.com/websocket/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
-    client.Status.GetStatus(
+    _, err := client.Status.GetStatus(
         context.TODO(),
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

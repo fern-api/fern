@@ -36,11 +36,15 @@ import (
     client "github.com/go-multi-env-url-templating/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
-    client.Auth.GetToken(
+    _, err := client.Auth.GetToken(
         context.TODO(),
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

@@ -37,16 +37,20 @@ import (
     client "github.com/nullable-request-body/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &fern.TestMethodNameTestGroupRequest{
         PathParam: "path_param",
         Body: &fern.PlainObject{},
     }
-    client.TestGroup.TestMethodName(
+    _, err := client.TestGroup.TestMethodName(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

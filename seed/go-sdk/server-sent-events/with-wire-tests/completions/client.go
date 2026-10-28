@@ -40,7 +40,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	request := &sse.StreamCompletionRequest{
 //	    Query: "foo",
 //	}
-//	client.Completions.Stream(
+//	_, err := client.Completions.Stream(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -88,7 +88,7 @@ func (c *Client) Stream(
 //	request := &sse.StreamCompletionRequestWithoutTerminator{
 //	    Query: "query",
 //	}
-//	client.Completions.StreamWithoutTerminator(
+//	_, err := client.Completions.StreamWithoutTerminator(
 //	    context.TODO(),
 //	    request,
 //	)

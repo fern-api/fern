@@ -36,7 +36,7 @@ func NewClient(options *core.RequestOptions) *Client {
 
 // Example:
 //
-//	client.Service.Simple(
+//	err := client.Service.Simple(
 //	    context.TODO(),
 //	)
 func (c *Client) Simple(
@@ -55,7 +55,7 @@ func (c *Client) Simple(
 
 // Example:
 //
-//	client.Service.DownloadFile(
+//	_, err := client.Service.DownloadFile(
 //	    context.TODO(),
 //	)
 func (c *Client) DownloadFile(

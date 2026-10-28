@@ -37,15 +37,19 @@ import (
     client "github.com/x-fern-default/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &fern.TestGetRequest{
         Region: "region",
     }
-    client.TestGet(
+    _, err := client.TestGet(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

@@ -10,7 +10,7 @@ import (
     uuid "github.com/google/uuid"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -70,9 +70,13 @@ func do() {
             ),
         },
     }
-    client.Endpoints.Object.GetAndReturnNestedWithRequiredField(
+    _, err := client.Endpoints.Object.GetAndReturnNestedWithRequiredField(
         context.TODO(),
         "string",
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

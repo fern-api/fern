@@ -37,15 +37,19 @@ import (
     client "github.com/bytes-upload/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := bytes.NewReader(
         []byte(""),
     )
-    client.Service.Upload(
+    err := client.Service.Upload(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

@@ -15,7 +15,7 @@
 request := &fern.TransactionsGetRequest{
     AccessToken: "access_token",
 }
-client.GetTransactions(
+_, err := client.GetTransactions(
     context.TODO(),
     request,
 )
@@ -61,7 +61,7 @@ client.GetTransactions(
 request := &fern.PlantCreate{
     Species: "species",
 }
-client.CreatePlant(
+_, err := client.CreatePlant(
     context.TODO(),
     request,
 )
@@ -127,7 +127,7 @@ request := &fern.ExternalPaymentScheduleRequest{
     Interval: fern.PaymentScheduleIntervalWeekly,
     IntervalExecutionDay: 1,
 }
-client.CreatePaymentSchedule(
+_, err := client.CreatePaymentSchedule(
     context.TODO(),
     request,
 )

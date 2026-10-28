@@ -36,11 +36,15 @@ import (
     client "github.com/go-date-containers/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
-    client.Loans.GetLoan(
+    _, err := client.Loans.GetLoan(
         context.TODO(),
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

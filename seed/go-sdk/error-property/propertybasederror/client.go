@@ -37,7 +37,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //
 // Example:
 //
-//	client.PropertyBasedError.ThrowError(
+//	_, err := client.PropertyBasedError.ThrowError(
 //	    context.TODO(),
 //	)
 func (c *Client) ThrowError(

@@ -55,7 +55,7 @@ func NewClient(options *core.RequestOptions) *Client {
 
 // Example:
 //
-//	client.User.Get(
+//	_, err := client.User.Get(
 //	    context.TODO(),
 //	)
 func (c *Client) Get(
@@ -74,7 +74,7 @@ func (c *Client) Get(
 
 // Example:
 //
-//	client.User.GetAdmins(
+//	_, err := client.User.GetAdmins(
 //	    context.TODO(),
 //	)
 func (c *Client) GetAdmins(

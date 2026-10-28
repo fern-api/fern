@@ -7,13 +7,17 @@ import (
     option "github.com/plain-text/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
         ),
     )
-    client.Service.GetXML(
+    _, err := client.Service.GetXML(
         context.TODO(),
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

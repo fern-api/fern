@@ -37,7 +37,7 @@ import (
     client "github.com/go-required-nullable-round-trip/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &fern.GetAccountsRequest{
         AccessToken: "access_token",
@@ -46,10 +46,14 @@ func do() {
             "account_ids",
         },
     }
-    client.GetAccounts(
+    _, err := client.GetAccounts(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

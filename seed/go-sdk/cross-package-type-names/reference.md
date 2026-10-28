@@ -13,7 +13,7 @@
 <dd>
 
 ```go
-client.FolderA.Service.GetDirectThread(
+_, err := client.FolderA.Service.GetDirectThread(
     context.TODO(),
 )
 ```
@@ -41,7 +41,7 @@ client.FolderA.Service.GetDirectThread(
 <dd>
 
 ```go
-client.FolderD.Service.GetDirectThread(
+_, err := client.FolderD.Service.GetDirectThread(
     context.TODO(),
 )
 ```
@@ -80,7 +80,7 @@ request := &fern.FindRequest{
         1,
     ),
 }
-client.Foo.Find(
+_, err := client.Foo.Find(
     context.TODO(),
     request,
 )

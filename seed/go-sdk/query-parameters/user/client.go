@@ -112,7 +112,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	        "filter",
 //	    },
 //	}
-//	client.User.GetUsername(
+//	_, err := client.User.GetUsername(
 //	    context.TODO(),
 //	    request,
 //	)

@@ -13,7 +13,15 @@
 <dd>
 
 ```go
-client.Service.GetMovie(
+request := "string"
+_, err := client.Service.GetMovie(
+    context.TODO(),
+    request,
+)
+if err != nil {
+    return err
+}
+_, err := client.Service.GetMovie(
     context.TODO(),
     request,
 )
@@ -56,7 +64,15 @@ client.Service.GetMovie(
 <dd>
 
 ```go
-client.Service.GetMovieDocs(
+request := "string"
+_, err := client.Service.GetMovieDocs(
+    context.TODO(),
+    request,
+)
+if err != nil {
+    return err
+}
+_, err := client.Service.GetMovieDocs(
     context.TODO(),
     request,
 )
@@ -99,7 +115,15 @@ client.Service.GetMovieDocs(
 <dd>
 
 ```go
-client.Service.GetMovieName(
+request := "string"
+_, err := client.Service.GetMovieName(
+    context.TODO(),
+    request,
+)
+if err != nil {
+    return err
+}
+_, err := client.Service.GetMovieName(
     context.TODO(),
     request,
 )
@@ -142,7 +166,15 @@ client.Service.GetMovieName(
 <dd>
 
 ```go
-client.Service.GetMovieMetadata(
+request := "string"
+_, err := client.Service.GetMovieMetadata(
+    context.TODO(),
+    request,
+)
+if err != nil {
+    return err
+}
+_, err := client.Service.GetMovieMetadata(
     context.TODO(),
     request,
 )
@@ -185,7 +217,15 @@ client.Service.GetMovieMetadata(
 <dd>
 
 ```go
-client.Service.GetOptionalMovie(
+request := "string"
+_, err := client.Service.GetOptionalMovie(
+    context.TODO(),
+    request,
+)
+if err != nil {
+    return err
+}
+_, err := client.Service.GetOptionalMovie(
     context.TODO(),
     request,
 )
@@ -228,7 +268,15 @@ client.Service.GetOptionalMovie(
 <dd>
 
 ```go
-client.Service.GetOptionalMovieDocs(
+request := "string"
+_, err := client.Service.GetOptionalMovieDocs(
+    context.TODO(),
+    request,
+)
+if err != nil {
+    return err
+}
+_, err := client.Service.GetOptionalMovieDocs(
     context.TODO(),
     request,
 )
@@ -271,7 +319,15 @@ client.Service.GetOptionalMovieDocs(
 <dd>
 
 ```go
-client.Service.GetOptionalMovieName(
+request := "string"
+_, err := client.Service.GetOptionalMovieName(
+    context.TODO(),
+    request,
+)
+if err != nil {
+    return err
+}
+_, err := client.Service.GetOptionalMovieName(
     context.TODO(),
     request,
 )
