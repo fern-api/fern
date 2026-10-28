@@ -317,8 +317,10 @@ export class EndpointSnippetGenerator {
     }
 
     private endpointReturnsResponse({ endpoint }: { endpoint: FernIr.dynamic.Endpoint }): boolean {
-        // `hasResponseBody` is absent in IRs older than 67.35.0; assume a response body in that case.
-        return endpoint.hasResponseBody !== false;
+        // `hasResponseBody` was added to the dynamic IR in 67.35.0 (newer than the pinned SDK types),
+        // and is absent in older IRs; assume a response body unless it is explicitly `false`.
+        const { hasResponseBody } = endpoint as FernIr.dynamic.Endpoint & { hasResponseBody?: boolean };
+        return hasResponseBody !== false;
     }
 
     private getConstructorArgs({

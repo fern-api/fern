@@ -38,7 +38,7 @@ function withoutResponseBody(
         ...ir,
         endpoints: {
             ...ir.endpoints,
-            [endpointId]: { ...endpoint, hasResponseBody: false }
+            [endpointId]: { ...endpoint, hasResponseBody: false } as FernIr.dynamic.Endpoint
         }
     };
 }
