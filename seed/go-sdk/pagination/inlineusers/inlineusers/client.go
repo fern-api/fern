@@ -53,7 +53,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	        "starting_after",
 //	    ),
 //	}
-//	client.InlineUsers.InlineUsers.ListWithCursorPagination(
+//	_, err := client.InlineUsers.InlineUsers.ListWithCursorPagination(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -123,7 +123,7 @@ func (c *Client) ListWithCursorPagination(
 //	        "cursor",
 //	    ),
 //	}
-//	client.InlineUsers.InlineUsers.ListWithMixedTypeCursorPagination(
+//	_, err := client.InlineUsers.InlineUsers.ListWithMixedTypeCursorPagination(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -195,7 +195,7 @@ func (c *Client) ListWithMixedTypeCursorPagination(
 //	        ),
 //	    },
 //	}
-//	client.InlineUsers.InlineUsers.ListWithBodyCursorPagination(
+//	_, err := client.InlineUsers.InlineUsers.ListWithBodyCursorPagination(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -229,7 +229,7 @@ func (c *Client) ListWithBodyCursorPagination(
 //	        "starting_after",
 //	    ),
 //	}
-//	client.InlineUsers.InlineUsers.ListWithOffsetPagination(
+//	_, err := client.InlineUsers.InlineUsers.ListWithOffsetPagination(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -312,7 +312,7 @@ func (c *Client) ListWithOffsetPagination(
 //	        "starting_after",
 //	    ),
 //	}
-//	client.InlineUsers.InlineUsers.ListWithDoubleOffsetPagination(
+//	_, err := client.InlineUsers.InlineUsers.ListWithDoubleOffsetPagination(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -390,7 +390,7 @@ func (c *Client) ListWithDoubleOffsetPagination(
 //	        ),
 //	    },
 //	}
-//	client.InlineUsers.InlineUsers.ListWithBodyOffsetPagination(
+//	_, err := client.InlineUsers.InlineUsers.ListWithBodyOffsetPagination(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -421,7 +421,7 @@ func (c *Client) ListWithBodyOffsetPagination(
 //	    ),
 //	    Order: inlineusers.OrderAsc.Ptr(),
 //	}
-//	client.InlineUsers.InlineUsers.ListWithOffsetStepPagination(
+//	_, err := client.InlineUsers.InlineUsers.ListWithOffsetStepPagination(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -501,7 +501,7 @@ func (c *Client) ListWithOffsetStepPagination(
 //	    ),
 //	    Order: inlineusers.OrderAsc.Ptr(),
 //	}
-//	client.InlineUsers.InlineUsers.ListWithOffsetPaginationHasNextPage(
+//	_, err := client.InlineUsers.InlineUsers.ListWithOffsetPaginationHasNextPage(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -579,7 +579,7 @@ func (c *Client) ListWithOffsetPaginationHasNextPage(
 //	        ),
 //	    ),
 //	}
-//	client.InlineUsers.InlineUsers.ListWithExtendedResults(
+//	_, err := client.InlineUsers.InlineUsers.ListWithExtendedResults(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -651,7 +651,7 @@ func (c *Client) ListWithExtendedResults(
 //	        ),
 //	    ),
 //	}
-//	client.InlineUsers.InlineUsers.ListWithExtendedResultsAndOptionalData(
+//	_, err := client.InlineUsers.InlineUsers.ListWithExtendedResultsAndOptionalData(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -721,7 +721,7 @@ func (c *Client) ListWithExtendedResultsAndOptionalData(
 //	        "starting_after",
 //	    ),
 //	}
-//	client.InlineUsers.InlineUsers.ListUsernames(
+//	_, err := client.InlineUsers.InlineUsers.ListUsernames(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -794,7 +794,7 @@ func (c *Client) ListUsernames(
 //	        1,
 //	    ),
 //	}
-//	client.InlineUsers.InlineUsers.ListWithGlobalConfig(
+//	_, err := client.InlineUsers.InlineUsers.ListWithGlobalConfig(
 //	    context.TODO(),
 //	    request,
 //	)

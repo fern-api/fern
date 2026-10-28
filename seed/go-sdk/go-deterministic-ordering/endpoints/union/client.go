@@ -42,7 +42,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	        LikesToWoof: true,
 //	    },
 //	}
-//	client.Endpoints.Union.GetAndReturnUnion(
+//	_, err := client.Endpoints.Union.GetAndReturnUnion(
 //	    context.TODO(),
 //	    request,
 //	)

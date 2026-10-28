@@ -16,7 +16,7 @@
 request := &sseresumable.StreamCompletionRequest{
     Query: "foo",
 }
-client.Completions.Stream(
+_, err := client.Completions.Stream(
     context.TODO(),
     request,
 )
@@ -62,7 +62,7 @@ client.Completions.Stream(
 request := &sseresumable.StreamCompletionRequestNonResumable{
     Query: "bar",
 }
-client.Completions.StreamNonResumable(
+_, err := client.Completions.StreamNonResumable(
     context.TODO(),
     request,
 )

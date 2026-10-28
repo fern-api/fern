@@ -8,7 +8,7 @@ import (
     option "github.com/cross-package-type-names/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -25,8 +25,12 @@ func do() {
             1,
         ),
     }
-    client.Foo.Find(
+    _, err := client.Foo.Find(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

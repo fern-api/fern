@@ -35,7 +35,7 @@ func NewClient(options *core.RequestOptions) *Client {
 
 // Example:
 //
-//	client.Service.Post(
+//	err := client.Service.Post(
 //	    context.TODO(),
 //	    "pathParam",
 //	    "serviceParam",

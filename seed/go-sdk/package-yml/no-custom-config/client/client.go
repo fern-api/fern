@@ -44,7 +44,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 //	    Name: "Hello world!",
 //	    Size: 20,
 //	}
-//	client.Echo(
+//	_, err := client.Echo(
 //	    context.TODO(),
 //	    "id-ksfd9c1",
 //	    request,

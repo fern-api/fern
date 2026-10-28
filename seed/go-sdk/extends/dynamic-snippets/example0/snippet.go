@@ -8,7 +8,7 @@ import (
     option "github.com/extends/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -19,8 +19,12 @@ func do() {
         Docs: "docs",
         Unique: "unique",
     }
-    client.ExtendedInlineRequestBody(
+    err := client.ExtendedInlineRequestBody(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

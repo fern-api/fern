@@ -13,7 +13,7 @@
 <dd>
 
 ```go
-client.Loans.GetLoan(
+_, err := client.Loans.GetLoan(
     context.TODO(),
 )
 ```
@@ -53,7 +53,7 @@ request := &fern.ListLoansByDateRequest{
         ),
     },
 }
-client.Loans.ListLoansByDate(
+_, err := client.Loans.ListLoansByDate(
     context.TODO(),
     request,
 )
@@ -109,7 +109,7 @@ request := &fern.ListLoansByTimestampRequest{
         "2002-08-28T12:30:00Z",
     ),
 }
-client.Loans.ListLoansByTimestamp(
+_, err := client.Loans.ListLoansByTimestamp(
     context.TODO(),
     request,
 )

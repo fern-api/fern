@@ -106,7 +106,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	    },
 //	    MethodName: "methodName",
 //	}
-//	client.Problem.CreateProblem(
+//	_, err := client.Problem.CreateProblem(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -197,7 +197,7 @@ func (c *Client) CreateProblem(
 //	    },
 //	    MethodName: "methodName",
 //	}
-//	client.Problem.UpdateProblem(
+//	_, err := client.Problem.UpdateProblem(
 //	    context.TODO(),
 //	    "problemId",
 //	    request,
@@ -224,7 +224,7 @@ func (c *Client) UpdateProblem(
 //
 // Example:
 //
-//	client.Problem.DeleteProblem(
+//	err := client.Problem.DeleteProblem(
 //	    context.TODO(),
 //	    "problemId",
 //	)
@@ -268,7 +268,7 @@ func (c *Client) DeleteProblem(
 //	    },
 //	    MethodName: "methodName",
 //	}
-//	client.Problem.GetDefaultStarterFiles(
+//	_, err := client.Problem.GetDefaultStarterFiles(
 //	    context.TODO(),
 //	    request,
 //	)

@@ -44,7 +44,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 //	    OldValue: "+13175556789",
 //	    NewValue: "+13175556798",
 //	}
-//	client.UpdateProfileIdentifier(
+//	_, err := client.UpdateProfileIdentifier(
 //	    context.TODO(),
 //	    request,
 //	)

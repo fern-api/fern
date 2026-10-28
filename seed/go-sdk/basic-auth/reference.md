@@ -27,7 +27,7 @@ GET request with basic auth scheme
 <dd>
 
 ```go
-client.BasicAuth.GetWithBasicAuth(
+_, err := client.BasicAuth.GetWithBasicAuth(
     context.TODO(),
 )
 ```
@@ -71,7 +71,7 @@ POST request with basic auth scheme
 request := map[string]any{
     "key": "value",
 }
-client.BasicAuth.PostWithBasicAuth(
+_, err := client.BasicAuth.PostWithBasicAuth(
     context.TODO(),
     request,
 )

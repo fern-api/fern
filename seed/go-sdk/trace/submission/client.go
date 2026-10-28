@@ -39,7 +39,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //
 // Example:
 //
-//	client.Submission.CreateExecutionSession(
+//	_, err := client.Submission.CreateExecutionSession(
 //	    context.TODO(),
 //	    common.LanguageJava.Ptr(),
 //	)
@@ -63,7 +63,7 @@ func (c *Client) CreateExecutionSession(
 //
 // Example:
 //
-//	client.Submission.GetExecutionSession(
+//	_, err := client.Submission.GetExecutionSession(
 //	    context.TODO(),
 //	    "sessionId",
 //	)
@@ -87,7 +87,7 @@ func (c *Client) GetExecutionSession(
 //
 // Example:
 //
-//	client.Submission.StopExecutionSession(
+//	err := client.Submission.StopExecutionSession(
 //	    context.TODO(),
 //	    "sessionId",
 //	)
@@ -109,7 +109,7 @@ func (c *Client) StopExecutionSession(
 
 // Example:
 //
-//	client.Submission.GetExecutionSessionsState(
+//	_, err := client.Submission.GetExecutionSessionsState(
 //	    context.TODO(),
 //	)
 func (c *Client) GetExecutionSessionsState(

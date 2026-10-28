@@ -8,7 +8,7 @@ import (
     option "github.com/examples/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewAcmeClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -20,9 +20,13 @@ func do() {
     request := &file.GetFileRequest{
         XFileAPIVersion: "0.0.2",
     }
-    client.File.Service.GetFile(
+    _, err := client.File.Service.GetFile(
         context.TODO(),
         "file.txt",
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

@@ -8,7 +8,7 @@ import (
     option "github.com/discriminated-union-with-nested-oneof/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -19,8 +19,12 @@ func do() {
             Model: "model",
         },
     }
-    client.CreateAst(
+    _, err := client.CreateAst(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

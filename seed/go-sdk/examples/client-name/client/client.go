@@ -46,7 +46,15 @@ func NewAcme(opts ...option.RequestOption) *Acme {
 
 // Example:
 //
-//	client.Echo(
+//	request := "Hello world!\\n\\nwith\\n\\tnewlines"
+//	_, err := client.Echo(
+//	    context.TODO(),
+//	    request,
+//	)
+//	if err != nil {
+//	    return err
+//	}
+//	_, err := client.Echo(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -71,7 +79,7 @@ func (a *Acme) Echo(
 //	request := &fern.Type{
 //	    BasicType: fern.BasicTypePrimitive,
 //	}
-//	client.CreateType(
+//	_, err := client.CreateType(
 //	    context.TODO(),
 //	    request,
 //	)

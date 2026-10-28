@@ -43,7 +43,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 //	    ),
 //	    Query: "test query",
 //	}
-//	client.Search(
+//	_, err := client.Search(
 //	    context.TODO(),
 //	    request,
 //	)

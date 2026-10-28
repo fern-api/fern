@@ -17,7 +17,7 @@ request := &fern.GetTokenRequest{
     ClientID: "client_id",
     ClientSecret: "client_secret",
 }
-client.Auth.GetToken(
+_, err := client.Auth.GetToken(
     context.TODO(),
     request,
 )
@@ -85,7 +85,7 @@ client.Auth.GetToken(
 <dd>
 
 ```go
-client.User.GetWithBearer(
+_, err := client.User.GetWithBearer(
     context.TODO(),
 )
 ```
@@ -112,7 +112,7 @@ client.User.GetWithBearer(
 <dd>
 
 ```go
-client.User.GetWithAPIKey(
+_, err := client.User.GetWithAPIKey(
     context.TODO(),
 )
 ```
@@ -139,7 +139,7 @@ client.User.GetWithAPIKey(
 <dd>
 
 ```go
-client.User.GetWithOAuth(
+_, err := client.User.GetWithOAuth(
     context.TODO(),
 )
 ```
@@ -166,7 +166,7 @@ client.User.GetWithOAuth(
 <dd>
 
 ```go
-client.User.GetWithBasic(
+_, err := client.User.GetWithBasic(
     context.TODO(),
 )
 ```
@@ -193,7 +193,7 @@ client.User.GetWithBasic(
 <dd>
 
 ```go
-client.User.GetWithInferredAuth(
+_, err := client.User.GetWithInferredAuth(
     context.TODO(),
 )
 ```
@@ -220,7 +220,7 @@ client.User.GetWithInferredAuth(
 <dd>
 
 ```go
-client.User.GetWithAnyAuth(
+_, err := client.User.GetWithAnyAuth(
     context.TODO(),
 )
 ```
@@ -247,7 +247,7 @@ client.User.GetWithAnyAuth(
 <dd>
 
 ```go
-client.User.GetWithAllAuth(
+_, err := client.User.GetWithAllAuth(
     context.TODO(),
 )
 ```

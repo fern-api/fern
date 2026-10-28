@@ -37,15 +37,19 @@ import (
     client "github.com/no-content-response/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &fern.CreateContactRequest{
         Name: "name",
     }
-    client.Contacts.Create(
+    _, err := client.Contacts.Create(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

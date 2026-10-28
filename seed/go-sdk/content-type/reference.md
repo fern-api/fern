@@ -21,7 +21,7 @@ request := &fern.PatchProxyRequest{
         true,
     ),
 }
-client.Service.Patch(
+err := client.Service.Patch(
     context.TODO(),
     request,
 )
@@ -126,7 +126,7 @@ request := &fern.PatchComplexRequest{
         },
     },
 }
-client.Service.PatchComplex(
+err := client.Service.PatchComplex(
     context.TODO(),
     "id",
     request,
@@ -276,7 +276,7 @@ request := &fern.NamedMixedPatchRequest{
         true,
     ),
 }
-client.Service.NamedPatchWithMixed(
+err := client.Service.NamedPatchWithMixed(
     context.TODO(),
     "id",
     request,
@@ -376,7 +376,7 @@ request := &fern.OptionalMergePatchRequest{
         "nullableString",
     ),
 }
-client.Service.OptionalMergePatchTest(
+err := client.Service.OptionalMergePatchTest(
     context.TODO(),
     request,
 )
@@ -473,7 +473,7 @@ request := &fern.RegularPatchRequest{
         1,
     ),
 }
-client.Service.RegularPatch(
+err := client.Service.RegularPatch(
     context.TODO(),
     "id",
     request,

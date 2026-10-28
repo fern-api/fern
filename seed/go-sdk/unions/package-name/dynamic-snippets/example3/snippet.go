@@ -7,14 +7,18 @@ import (
     option "github.com/fern-api/unions-go/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
         ),
     )
-    client.Union.Get(
+    _, err := client.Union.Get(
         context.TODO(),
         "id",
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

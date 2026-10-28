@@ -37,15 +37,19 @@ import (
     client "github.com/undiscriminated-unions/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &fern.MyUnion{
         String: "string",
     }
-    client.Union.Get(
+    _, err := client.Union.Get(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

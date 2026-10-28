@@ -13,7 +13,7 @@
 
 ```go
 request := &fern.UploadDocumentRequest{}
-client.UploadJSONDocument(
+_, err := client.UploadJSONDocument(
     context.TODO(),
     request,
 )

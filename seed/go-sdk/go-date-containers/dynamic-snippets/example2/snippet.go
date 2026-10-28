@@ -8,7 +8,7 @@ import (
     option "github.com/go-date-containers/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -27,8 +27,12 @@ func do() {
             ),
         },
     }
-    client.Loans.ListLoansByDate(
+    _, err := client.Loans.ListLoansByDate(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

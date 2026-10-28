@@ -40,7 +40,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //
 // Example:
 //
-//	client.Endpoints.Params.GetWithPath(
+//	_, err := client.Endpoints.Params.GetWithPath(
 //	    context.TODO(),
 //	    "param",
 //	)
@@ -67,7 +67,7 @@ func (c *Client) GetWithPath(
 //	request := &fern.GetWithInlinePath{
 //	    Param: "param",
 //	}
-//	client.Endpoints.Params.GetWithInlinePath(
+//	_, err := client.Endpoints.Params.GetWithInlinePath(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -95,7 +95,7 @@ func (c *Client) GetWithInlinePath(
 //	    Query: "query",
 //	    Number: 1,
 //	}
-//	client.Endpoints.Params.GetWithQuery(
+//	err := client.Endpoints.Params.GetWithQuery(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -127,7 +127,7 @@ func (c *Client) GetWithQuery(
 //	        1,
 //	    },
 //	}
-//	client.Endpoints.Params.GetWithAllowMultipleQuery(
+//	err := client.Endpoints.Params.GetWithAllowMultipleQuery(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -154,7 +154,7 @@ func (c *Client) GetWithAllowMultipleQuery(
 //	request := &fern.GetWithPathAndQuery{
 //	    Query: "query",
 //	}
-//	client.Endpoints.Params.GetWithPathAndQuery(
+//	err := client.Endpoints.Params.GetWithPathAndQuery(
 //	    context.TODO(),
 //	    "param",
 //	    request,
@@ -185,7 +185,7 @@ func (c *Client) GetWithPathAndQuery(
 //	    Param: "param",
 //	    Query: "query",
 //	}
-//	client.Endpoints.Params.GetWithInlinePathAndQuery(
+//	err := client.Endpoints.Params.GetWithInlinePathAndQuery(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -209,7 +209,16 @@ func (c *Client) GetWithInlinePathAndQuery(
 //
 // Example:
 //
-//	client.Endpoints.Params.ModifyWithPath(
+//	request := "string"
+//	_, err := client.Endpoints.Params.ModifyWithPath(
+//	    context.TODO(),
+//	    "param",
+//	    request,
+//	)
+//	if err != nil {
+//	    return err
+//	}
+//	_, err := client.Endpoints.Params.ModifyWithPath(
 //	    context.TODO(),
 //	    "param",
 //	    request,
@@ -240,7 +249,7 @@ func (c *Client) ModifyWithPath(
 //	    Param: "param",
 //	    Body: "string",
 //	}
-//	client.Endpoints.Params.ModifyWithInlinePath(
+//	_, err := client.Endpoints.Params.ModifyWithInlinePath(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -264,7 +273,18 @@ func (c *Client) ModifyWithInlinePath(
 //
 // Example:
 //
-//	client.Endpoints.Params.UploadWithPath(
+//	request := bytes.NewReader(
+//	    []byte(""),
+//	)
+//	_, err := client.Endpoints.Params.UploadWithPath(
+//	    context.TODO(),
+//	    "upload-path",
+//	    request,
+//	)
+//	if err != nil {
+//	    return err
+//	}
+//	_, err := client.Endpoints.Params.UploadWithPath(
 //	    context.TODO(),
 //	    "upload-path",
 //	    request,

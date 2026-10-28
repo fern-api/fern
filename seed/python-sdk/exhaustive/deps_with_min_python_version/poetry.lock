@@ -1114,27 +1114,27 @@ xai = ["langchain-xai"]
 
 [[package]]
 name = "langchain-core"
-version = "1.7.0"
+version = "1.7.1"
 description = "Building applications with LLMs through composability"
 optional = false
 python-versions = "<4.0.0,>=3.10.0"
 groups = ["dev"]
 files = [
-    {file = "langchain_core-1.7.0-py3-none-any.whl", hash = "sha256:e82b24d7ac51fc74874baa29d6b3c0b8234880d4f3d897f8ff57fb80dfd9b07d"},
-    {file = "langchain_core-1.7.0.tar.gz", hash = "sha256:c34e53358b103cd73f43c63f5f46f9b5c6c3467efdffcdf134892b89020494e4"},
+    {file = "langchain_core-1.7.1-py3-none-any.whl", hash = "sha256:2d668788945e824832e19bca05788a25dbb864197d63ec48b583057cf8d975fa"},
+    {file = "langchain_core-1.7.1.tar.gz", hash = "sha256:5dc2a357e1aa40e84c7f29755182121b3acf04410e55fa3723915f645033fede"},
 ]
 
 [package.dependencies]
-httpx = ">=0.23.0,<1.0.0"
-jsonpatch = ">=1.33.0,<2.0.0"
+httpx = ">=0.23.0"
+jsonpatch = ">=1.33.0"
 langchain-protocol = ">=0.0.20"
 langsmith = ">=0.14.9,<1.0.0"
 packaging = ">=23.2.0"
 pydantic = ">=2.7.4,<3.0.0"
-pyyaml = ">=5.3.0,<7.0.0"
-tenacity = ">=8.1.0,<8.4.0 || >8.4.0,<10.0.0"
-typing-extensions = ">=4.7.0,<5.0.0"
-uuid-utils = ">=0.12.0,<1.0"
+pyyaml = ">=5.3.0"
+tenacity = ">=8.1.0,<8.4.0 || >8.4.0"
+typing-extensions = ">=4.7.0"
+uuid-utils = ">=0.12.0"
 
 [[package]]
 name = "langchain-openai"

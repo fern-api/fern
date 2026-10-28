@@ -40,7 +40,7 @@ request := &fern.ListResourcesRequest{
         "search",
     ),
 }
-client.Service.ListResources(
+_, err := client.Service.ListResources(
     context.TODO(),
     request,
 )
@@ -149,7 +149,7 @@ request := &fern.GetResourceRequest{
     IncludeMetadata: true,
     Format: "json",
 }
-client.Service.GetResource(
+_, err := client.Service.GetResource(
     context.TODO(),
     "resourceId",
     request,
@@ -235,7 +235,7 @@ request := &fern.SearchResourcesRequest{
         },
     },
 }
-client.Service.SearchResources(
+_, err := client.Service.SearchResources(
     context.TODO(),
     request,
 )
@@ -342,7 +342,7 @@ request := &fern.ListUsersRequest{
         "fields",
     ),
 }
-client.Service.ListUsers(
+_, err := client.Service.ListUsers(
     context.TODO(),
     request,
 )
@@ -463,7 +463,7 @@ request := &fern.GetUserRequest{
         true,
     ),
 }
-client.Service.GetUserByID(
+_, err := client.Service.GetUserByID(
     context.TODO(),
     "userId",
     request,
@@ -566,7 +566,7 @@ request := &fern.CreateUserRequest{
     },
     Connection: "connection",
 }
-client.Service.CreateUser(
+_, err := client.Service.CreateUser(
     context.TODO(),
     request,
 )
@@ -656,7 +656,7 @@ request := &fern.UpdateUserRequest{
         true,
     ),
 }
-client.Service.UpdateUser(
+_, err := client.Service.UpdateUser(
     context.TODO(),
     "userId",
     request,
@@ -722,7 +722,7 @@ Delete a user
 <dd>
 
 ```go
-client.Service.DeleteUser(
+err := client.Service.DeleteUser(
     context.TODO(),
     "userId",
 )
@@ -790,7 +790,7 @@ request := &fern.ListConnectionsRequest{
         "fields",
     ),
 }
-client.Service.ListConnections(
+_, err := client.Service.ListConnections(
     context.TODO(),
     request,
 )
@@ -868,7 +868,7 @@ request := &fern.GetConnectionRequest{
         "fields",
     ),
 }
-client.Service.GetConnection(
+_, err := client.Service.GetConnection(
     context.TODO(),
     "connectionId",
     request,
@@ -961,7 +961,7 @@ request := &fern.ListClientsRequest{
         "app_type",
     },
 }
-client.Service.ListClients(
+_, err := client.Service.ListClients(
     context.TODO(),
     request,
 )
@@ -1082,7 +1082,7 @@ request := &fern.GetClientRequest{
         true,
     ),
 }
-client.Service.GetClient(
+_, err := client.Service.GetClient(
     context.TODO(),
     "clientId",
     request,

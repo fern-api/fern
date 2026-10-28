@@ -32,7 +32,7 @@ request := &fern.SearchRequest{
         },
     },
 }
-client.Complex.Search(
+_, err := client.Complex.Search(
     context.TODO(),
     "index",
     request,
@@ -97,7 +97,7 @@ request := &inlineusers.ListUsersCursorPaginationRequest{
         "starting_after",
     ),
 }
-client.InlineUsers.InlineUsers.ListWithCursorPagination(
+_, err := client.InlineUsers.InlineUsers.ListWithCursorPagination(
     context.TODO(),
     request,
 )
@@ -172,7 +172,7 @@ request := &inlineusers.ListUsersMixedTypeCursorPaginationRequest{
         "cursor",
     ),
 }
-client.InlineUsers.InlineUsers.ListWithMixedTypeCursorPagination(
+_, err := client.InlineUsers.InlineUsers.ListWithMixedTypeCursorPagination(
     context.TODO(),
     request,
 )
@@ -222,7 +222,7 @@ request := &inlineusers.ListUsersBodyCursorPaginationRequest{
         ),
     },
 }
-client.InlineUsers.InlineUsers.ListWithBodyCursorPagination(
+_, err := client.InlineUsers.InlineUsers.ListWithBodyCursorPagination(
     context.TODO(),
     request,
 )
@@ -280,7 +280,7 @@ request := &inlineusers.ListUsersOffsetPaginationRequest{
         "starting_after",
     ),
 }
-client.InlineUsers.InlineUsers.ListWithOffsetPagination(
+_, err := client.InlineUsers.InlineUsers.ListWithOffsetPagination(
     context.TODO(),
     request,
 )
@@ -362,7 +362,7 @@ request := &inlineusers.ListUsersDoubleOffsetPaginationRequest{
         "starting_after",
     ),
 }
-client.InlineUsers.InlineUsers.ListWithDoubleOffsetPagination(
+_, err := client.InlineUsers.InlineUsers.ListWithDoubleOffsetPagination(
     context.TODO(),
     request,
 )
@@ -439,7 +439,7 @@ request := &inlineusers.ListUsersBodyOffsetPaginationRequest{
         ),
     },
 }
-client.InlineUsers.InlineUsers.ListWithBodyOffsetPagination(
+_, err := client.InlineUsers.InlineUsers.ListWithBodyOffsetPagination(
     context.TODO(),
     request,
 )
@@ -494,7 +494,7 @@ request := &inlineusers.ListUsersOffsetStepPaginationRequest{
     ),
     Order: inlineusers.OrderAsc.Ptr(),
 }
-client.InlineUsers.InlineUsers.ListWithOffsetStepPagination(
+_, err := client.InlineUsers.InlineUsers.ListWithOffsetStepPagination(
     context.TODO(),
     request,
 )
@@ -566,7 +566,7 @@ request := &inlineusers.ListWithOffsetPaginationHasNextPageRequest{
     ),
     Order: inlineusers.OrderAsc.Ptr(),
 }
-client.InlineUsers.InlineUsers.ListWithOffsetPaginationHasNextPage(
+_, err := client.InlineUsers.InlineUsers.ListWithOffsetPaginationHasNextPage(
     context.TODO(),
     request,
 )
@@ -636,7 +636,7 @@ request := &inlineusers.ListUsersExtendedRequest{
         ),
     ),
 }
-client.InlineUsers.InlineUsers.ListWithExtendedResults(
+_, err := client.InlineUsers.InlineUsers.ListWithExtendedResults(
     context.TODO(),
     request,
 )
@@ -686,7 +686,7 @@ request := &inlineusers.ListUsersExtendedRequestForOptionalData{
         ),
     ),
 }
-client.InlineUsers.InlineUsers.ListWithExtendedResultsAndOptionalData(
+_, err := client.InlineUsers.InlineUsers.ListWithExtendedResultsAndOptionalData(
     context.TODO(),
     request,
 )
@@ -734,7 +734,7 @@ request := &inlineusers.ListUsernamesRequest{
         "starting_after",
     ),
 }
-client.InlineUsers.InlineUsers.ListUsernames(
+_, err := client.InlineUsers.InlineUsers.ListUsernames(
     context.TODO(),
     request,
 )
@@ -785,7 +785,7 @@ request := &inlineusers.ListWithGlobalConfigRequest{
         1,
     ),
 }
-client.InlineUsers.InlineUsers.ListWithGlobalConfig(
+_, err := client.InlineUsers.InlineUsers.ListWithGlobalConfig(
     context.TODO(),
     request,
 )
@@ -841,7 +841,7 @@ request := &fern.ListUsersCursorPaginationRequest{
         "starting_after",
     ),
 }
-client.Users.ListWithCursorPagination(
+_, err := client.Users.ListWithCursorPagination(
     context.TODO(),
     request,
 )
@@ -916,7 +916,7 @@ request := &fern.ListUsersMixedTypeCursorPaginationRequest{
         "cursor",
     ),
 }
-client.Users.ListWithMixedTypeCursorPagination(
+_, err := client.Users.ListWithMixedTypeCursorPagination(
     context.TODO(),
     request,
 )
@@ -966,7 +966,7 @@ request := &fern.ListUsersBodyCursorPaginationRequest{
         ),
     },
 }
-client.Users.ListWithBodyCursorPagination(
+_, err := client.Users.ListWithBodyCursorPagination(
     context.TODO(),
     request,
 )
@@ -1036,7 +1036,7 @@ request := &fern.ListUsersTopLevelBodyCursorPaginationRequest{
         "active",
     ),
 }
-client.Users.ListWithTopLevelBodyCursorPagination(
+_, err := client.Users.ListWithTopLevelBodyCursorPagination(
     context.TODO(),
     request,
 )
@@ -1102,7 +1102,7 @@ request := &fern.ListUsersOffsetPaginationRequest{
         "starting_after",
     ),
 }
-client.Users.ListWithOffsetPagination(
+_, err := client.Users.ListWithOffsetPagination(
     context.TODO(),
     request,
 )
@@ -1184,7 +1184,7 @@ request := &fern.ListUsersDoubleOffsetPaginationRequest{
         "starting_after",
     ),
 }
-client.Users.ListWithDoubleOffsetPagination(
+_, err := client.Users.ListWithDoubleOffsetPagination(
     context.TODO(),
     request,
 )
@@ -1261,7 +1261,7 @@ request := &fern.ListUsersBodyOffsetPaginationRequest{
         ),
     },
 }
-client.Users.ListWithBodyOffsetPagination(
+_, err := client.Users.ListWithBodyOffsetPagination(
     context.TODO(),
     request,
 )
@@ -1316,7 +1316,7 @@ request := &fern.ListUsersOffsetStepPaginationRequest{
     ),
     Order: fern.OrderAsc.Ptr(),
 }
-client.Users.ListWithOffsetStepPagination(
+_, err := client.Users.ListWithOffsetStepPagination(
     context.TODO(),
     request,
 )
@@ -1388,7 +1388,7 @@ request := &fern.ListWithOffsetPaginationHasNextPageRequest{
     ),
     Order: fern.OrderAsc.Ptr(),
 }
-client.Users.ListWithOffsetPaginationHasNextPage(
+_, err := client.Users.ListWithOffsetPaginationHasNextPage(
     context.TODO(),
     request,
 )
@@ -1458,7 +1458,7 @@ request := &fern.ListUsersExtendedRequest{
         ),
     ),
 }
-client.Users.ListWithExtendedResults(
+_, err := client.Users.ListWithExtendedResults(
     context.TODO(),
     request,
 )
@@ -1508,7 +1508,7 @@ request := &fern.ListUsersExtendedRequestForOptionalData{
         ),
     ),
 }
-client.Users.ListWithExtendedResultsAndOptionalData(
+_, err := client.Users.ListWithExtendedResultsAndOptionalData(
     context.TODO(),
     request,
 )
@@ -1556,7 +1556,7 @@ request := &fern.ListUsernamesRequest{
         "starting_after",
     ),
 }
-client.Users.ListUsernames(
+_, err := client.Users.ListUsernames(
     context.TODO(),
     request,
 )
@@ -1607,7 +1607,7 @@ request := &fern.ListUsernamesWithOptionalResponseRequest{
         "starting_after",
     ),
 }
-client.Users.ListUsernamesWithOptionalResponse(
+_, err := client.Users.ListUsernamesWithOptionalResponse(
     context.TODO(),
     request,
 )
@@ -1658,7 +1658,7 @@ request := &fern.ListWithGlobalConfigRequest{
         1,
     ),
 }
-client.Users.ListWithGlobalConfig(
+_, err := client.Users.ListWithGlobalConfig(
     context.TODO(),
     request,
 )
@@ -1706,7 +1706,7 @@ request := &fern.ListUsersOptionalDataRequest{
         1,
     ),
 }
-client.Users.ListWithOptionalData(
+_, err := client.Users.ListWithOptionalData(
     context.TODO(),
     request,
 )
@@ -1760,7 +1760,7 @@ request := &fern.ListUsersAliasedDataRequest{
         "starting_after",
     ),
 }
-client.Users.ListWithAliasedData(
+_, err := client.Users.ListWithAliasedData(
     context.TODO(),
     request,
 )

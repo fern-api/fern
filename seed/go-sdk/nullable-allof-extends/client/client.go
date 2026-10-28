@@ -39,7 +39,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 //
 // Example:
 //
-//	client.GetTest(
+//	_, err := client.GetTest(
 //	    context.TODO(),
 //	)
 func (c *Client) GetTest(
@@ -61,7 +61,7 @@ func (c *Client) GetTest(
 // Example:
 //
 //	request := &fern.RootObject{}
-//	client.CreateTest(
+//	_, err := client.CreateTest(
 //	    context.TODO(),
 //	    request,
 //	)

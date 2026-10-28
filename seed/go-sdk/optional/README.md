@@ -36,17 +36,21 @@ import (
     client "github.com/optional/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := map[string]any{
         "string": map[string]any{
             "key": "value",
         },
     }
-    client.Optional.SendOptionalBody(
+    _, err := client.Optional.SendOptionalBody(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

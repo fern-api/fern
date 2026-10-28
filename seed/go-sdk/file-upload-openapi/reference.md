@@ -33,7 +33,7 @@ request := &fern.UploadFileRequest{
     ),
     Name: "name",
 }
-client.FileUploadExample.UploadFile(
+_, err := client.FileUploadExample.UploadFile(
     context.TODO(),
     request,
 )

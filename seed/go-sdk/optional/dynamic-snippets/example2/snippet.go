@@ -8,7 +8,7 @@ import (
     option "github.com/optional/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -19,10 +19,14 @@ func do() {
             true,
         ),
     }
-    client.Optional.SendOptionalNullableWithAllOptionalProperties(
+    _, err := client.Optional.SendOptionalNullableWithAllOptionalProperties(
         context.TODO(),
         "actionId",
         "id",
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

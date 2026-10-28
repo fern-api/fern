@@ -8,7 +8,7 @@ import (
     option "github.com/audiences/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -22,8 +22,12 @@ func do() {
             "tags",
         },
     }
-    client.FolderA.Service.GetDirectThread(
+    _, err := client.FolderA.Service.GetDirectThread(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
