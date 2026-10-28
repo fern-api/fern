@@ -93,7 +93,7 @@ export interface ActionPlanResult {
     notes: string[];
 }
 
-export type SplashStyle = "orb" | "burst" | "filings" | "brooklyn";
+export type SplashStyle = "burst-spin" | "burst" | "orb" | "filings" | "brooklyn";
 
 export interface WizardFlags {
     dir: string;

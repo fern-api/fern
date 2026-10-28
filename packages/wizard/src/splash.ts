@@ -1,6 +1,7 @@
 import {
     type Animation,
     burst,
+    burstSpin,
     FERN_LOGO,
     filings,
     fromSvgPath,
@@ -22,13 +23,15 @@ import type { ApiSpec, Detection, SplashStyle } from "./types";
 // Terminal cells are roughly 2.3 times taller than they are wide, so this grid draws a round orb.
 const ORB_WIDTH = 34;
 const ORB_HEIGHT = 15;
-// The particle animations (burst, filings) use a smaller canvas with the same proportions.
+// The particle animations (burst, burst-spin, filings) use a smaller canvas with the same proportions.
 const PARTICLE_ART_WIDTH = 28;
 const PARTICLE_ART_HEIGHT = 12;
 const GAP = 3;
 const MIN_INFO_WIDTH = 28;
 // One slow turn takes about 3.2 seconds.
 const FRAMES_PER_TURN = 96;
+// After the burst lands, the logo turns once more quickly (2 seconds), so the splash stays short.
+const BURST_SPIN_FRAMES_PER_TURN = 60;
 // The animation always runs at least this long while the progress bar fills.
 const MIN_FRAMES = FRAMES_PER_TURN;
 const PROGRESS_BLOCKS = 8;
@@ -65,7 +68,7 @@ const WORDMARK = ["  __                 ", " / _| ___  _ _  _ _  ", "|  _|/ -_)|
 export async function showSplash(
     dir: string,
     detectionPromise: Promise<Detection>,
-    style: SplashStyle = "burst"
+    style: SplashStyle = "burst-spin"
 ): Promise<Detection> {
     const animation = createAnimation(style);
     // Held in an object so composing the final frame sees the finished detection.
@@ -92,6 +95,14 @@ function createAnimation(style: SplashStyle): Animation {
                 height: ORB_HEIGHT,
                 framesPerTurn: FRAMES_PER_TURN,
                 glyph: GLYPH,
+                palette: FERN_PALETTE
+            });
+        case "burst-spin":
+            // Drawn in half-block pixels rather than "f"s, so the turning logo keeps its detail.
+            return burstSpin(logo, {
+                width: PARTICLE_ART_WIDTH,
+                height: PARTICLE_ART_HEIGHT,
+                framesPerTurn: BURST_SPIN_FRAMES_PER_TURN,
                 palette: FERN_PALETTE
             });
         case "burst":

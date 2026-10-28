@@ -2,7 +2,7 @@ import type { Options } from "yargs";
 import { LAYOUTS } from "./docs-site/options";
 import type { Product, SplashStyle } from "./types";
 
-export const SPLASH_STYLES: SplashStyle[] = ["orb", "burst", "filings", "brooklyn"];
+export const SPLASH_STYLES: SplashStyle[] = ["burst-spin", "burst", "orb", "filings", "brooklyn"];
 export const PRODUCTS: Product[] = ["docs", "sdks"];
 
 // The wizard prints HELP_TEXT itself instead of yargs' generated help, so keep the two in sync
@@ -27,7 +27,7 @@ export const CLI_OPTIONS = {
     "skip-mcp": { type: "boolean", default: false },
     help: { type: "boolean", alias: "h", default: false },
     // For comparing startup animations; not documented.
-    splash: { type: "string", choices: SPLASH_STYLES, default: "burst", hidden: true }
+    splash: { type: "string", choices: SPLASH_STYLES, default: "burst-spin", hidden: true }
 } satisfies Record<string, Options>;
 
 export const HELP_TEXT = `Usage: fern-wizard [options]
