@@ -326,7 +326,9 @@ export class EndpointSnippetsGenerator {
     }
 }
 
-const CLIENT_METHOD_CALL_START_REGEX = /^(?:(?:_|\w+)(?:,\s*(?:_|\w+))*\s*:=\s*)?client\.(?!NewClient\b)/;
+// Matches `client.X(`, `_, err := client.X(` or `err := client.X(`, but not the client construction
+// `client := client.NewClient(` (the constructor name is configurable, e.g. `NewIMDBClient`).
+const CLIENT_METHOD_CALL_START_REGEX = /^(?!client\s*:=)(?:(?:_|\w+)(?:,\s*(?:_|\w+))*\s*:=\s*)?client\./;
 
 function isClientMethodCallStart(trimmedLine: string): boolean {
     return CLIENT_METHOD_CALL_START_REGEX.test(trimmedLine);
