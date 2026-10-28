@@ -437,6 +437,7 @@ export declare namespace DocsNavigationItem {
         availability: Availability | undefined;
         showErrors: boolean;
         tagDescriptionPages: boolean;
+        endpointIndexPages: boolean;
         snippetsConfiguration: SnippetsConfiguration | undefined;
         postman: string | undefined;
         overviewAbsolutePath: AbsoluteFilePath | undefined;
