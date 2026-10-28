@@ -55,7 +55,7 @@ function newRepositoryReference({
         repoUrl,
         cloneUrl,
         getAuthedCloneUrl: (installationToken: string) => {
-            const userPrefix = isGithubAppToken(installationToken) ? "x-access-token:" : "";
+            const userPrefix = usesXAccessTokenUser(installationToken) ? "x-access-token:" : "";
             return cloneUrl.replace("https://", `https://${userPrefix}${installationToken}@`);
         }
     };
@@ -69,10 +69,34 @@ function newRepositoryReference({
  * and the next request fails with "could not read Username". A header survives that rewrite.
  */
 export function getGitAuthorizationHeader(installationToken: string): string {
-    const credentials = isGithubAppToken(installationToken)
+    return `Authorization: Basic ${getBasicCredentials(installationToken)}`;
+}
+
+/**
+ * Returns the git `-c`/`--config` setting that sends `getGitAuthorizationHeader` to the repository's host only.
+ * A bare `http.extraHeader` would also be sent to any other host the clone talks to.
+ */
+export function getGitAuthorizationConfig(remote: string, installationToken: string): string {
+    return `http.https://${remote}/.extraHeader=${getGitAuthorizationHeader(installationToken)}`;
+}
+
+/**
+ * Removes the token, in raw and Basic-encoded form, from a git error message.
+ */
+export function redactGitCredentials(message: string, installationToken: string): string {
+    return message
+        .split(installationToken)
+        .join("[REDACTED]")
+        .split(getBasicCredentials(installationToken))
+        .join("[REDACTED]")
+        .replace(/Authorization: Basic \S+/gi, "Authorization: Basic [REDACTED]");
+}
+
+function getBasicCredentials(installationToken: string): string {
+    const credentials = usesXAccessTokenUser(installationToken)
         ? `x-access-token:${installationToken}`
         : `${installationToken}:`;
-    return `Authorization: Basic ${Buffer.from(credentials).toString("base64")}`;
+    return Buffer.from(credentials).toString("base64");
 }
 
 // GitHub App installation tokens (`ghs_*`) and user-to-server tokens
@@ -81,7 +105,7 @@ export function getGitAuthorizationHeader(installationToken: string): string {
 // (`ghp_*`), fine-grained PATs (`github_pat_*`), and legacy 40-char
 // hex PATs (pre-2021, no prefix) authenticate as the token itself —
 // using `x-access-token` for those returns "Invalid username or token".
-function isGithubAppToken(token: string): boolean {
+function usesXAccessTokenUser(token: string): boolean {
     return token.startsWith("ghs_") || token.startsWith("ghu_");
 }
 

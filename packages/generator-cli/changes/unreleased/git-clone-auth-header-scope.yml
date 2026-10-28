@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    The `Authorization` header used when cloning a private repository is now only sent to that repository's host,
+    and the token (raw or Basic-encoded) is redacted from clone error messages.
+  type: fix
