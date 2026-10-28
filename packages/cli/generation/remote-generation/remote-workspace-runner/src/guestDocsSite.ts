@@ -1,5 +1,17 @@
 import { FernGuestToken } from "@fern-api/auth";
 
+const GUEST_SITE_TIMEOUT_MS = 15_000;
+
+/** The one FDR origin every docs publish call in this package uses, so the guest-site lookup and the ledger publish can never disagree. */
+export function getFdrOrigin(): string {
+    return (
+        process.env["FERN_FDR_ORIGIN"] ??
+        process.env["OVERRIDE_FDR_ORIGIN"] ??
+        process.env["DEFAULT_FDR_ORIGIN"] ??
+        "https://registry.buildwithfern.com"
+    );
+}
+
 /** The Fern Drop site FDR gives a Venus guest session (one per session, created on first use). */
 export interface GuestDocsSite {
     siteId: string;
@@ -38,12 +50,15 @@ export async function fetchGuestDocsSite({
 }): Promise<GuestDocsSite> {
     const url = new URL("/v2/registry/docs/anonymous/guest-site", fdrOrigin);
     url.searchParams.set("orgId", token.organizationId);
-    const response = await fetch(url, { headers: { Authorization: `Bearer ${token.value}` } });
+    const response = await fetch(url, {
+        headers: { Authorization: `Bearer ${token.value}` },
+        signal: AbortSignal.timeout(GUEST_SITE_TIMEOUT_MS)
+    });
     if (!response.ok) {
         const body = await response.text().catch(() => "");
         throw new Error(`FDR answered ${response.status} when resolving the guest docs site: ${body}`);
     }
-    const json: unknown = await response.json();
+    const json: unknown = await response.json().catch(() => undefined);
     if (!isGuestDocsSite(json)) {
         throw new Error("FDR returned an unexpected guest docs site payload");
     }
@@ -51,13 +66,14 @@ export async function fetchGuestDocsSite({
 }
 
 /** docs-ledger `finish` adds the claim link and expiry for a guest site; older FDRs do not. */
-export function readGuestPublishOutcome(result: unknown): { claimUrl?: string; expiresAt?: string } {
+export function readGuestPublishOutcome(result: unknown): { claimUrl?: string; expiresAt?: Date } {
     if (typeof result !== "object" || result == null) {
         return {};
     }
     const record: Record<string, unknown> = result as Record<string, unknown>;
+    const expiresAt = typeof record.expiresAt === "string" ? new Date(record.expiresAt) : undefined;
     return {
         claimUrl: typeof record.claimUrl === "string" ? record.claimUrl : undefined,
-        expiresAt: typeof record.expiresAt === "string" ? record.expiresAt : undefined
+        expiresAt: expiresAt != null && !Number.isNaN(expiresAt.getTime()) ? expiresAt : undefined
     };
 }
