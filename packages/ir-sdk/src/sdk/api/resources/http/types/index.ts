@@ -50,6 +50,8 @@ export * from "./JsonResponseBodyWithProperty.js";
 export * from "./JsonStreamChunk.js";
 export * from "./NonStreamHttpResponseBody.js";
 export * from "./OffsetPagination.js";
+export * from "./OpenRpcParamStructure.js";
+export * from "./OpenRpcSourceInfo.js";
 export * from "./Pagination.js";
 export * from "./PathPagination.js";
 export * from "./PathParameter.js";

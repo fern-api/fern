@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v67.36.0] - 2026-10-22
+
+- Add `OpenRpcSourceInfo` to the `openrpc` variant of `HttpEndpointSource`, with an optional
+  `paramStructure` (`OpenRpcParamStructure`: `BY_NAME` / `BY_POSITION` / `EITHER`) carried over from
+  the OpenRPC method. Lets consumers send JSON-RPC `params` as a named object for `by-name` methods.
+
 ## [v67.35.0] - 2026-10-21
 
 - Add `dynamic.Endpoint.hasResponseBody` (optional `boolean`), `false` when an endpoint has no
