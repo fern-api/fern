@@ -96,19 +96,19 @@ public final class UnionWithDuplicatePrimitive {
         return Optional.empty();
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof UnionWithDuplicatePrimitive
                 && value.equals(((UnionWithDuplicatePrimitive) other).value);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(value);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return value.toString();
     }
