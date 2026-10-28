@@ -317,8 +317,9 @@ export class EndpointSnippetGenerator {
     }
 
     private endpointReturnsResponse({ endpoint }: { endpoint: FernIr.dynamic.Endpoint }): boolean {
-        // `hasResponseBody` was added to the dynamic IR in 67.35.0 (newer than the pinned SDK types),
-        // and is absent in older IRs; assume a response body unless it is explicitly `false`.
+        // `hasResponseBody` was added to the dynamic IR in 67.35.0 and is absent in older IRs;
+        // assume a response body unless it is explicitly `false`.
+        // TODO: drop the local type once @fern-api/dynamic-ir-sdk is bumped to >=67.35.0.
         const { hasResponseBody } = endpoint as FernIr.dynamic.Endpoint & { hasResponseBody?: boolean };
         return hasResponseBody !== false;
     }
