@@ -10,7 +10,6 @@ export function getSdkVersion(config: FernGeneratorExec.GeneratorConfig): string
     const mode = config.output.mode;
     switch (mode.type) {
         case "publish":
-            return mode.version;
         case "github":
             return mode.version;
         case "downloadFiles":
