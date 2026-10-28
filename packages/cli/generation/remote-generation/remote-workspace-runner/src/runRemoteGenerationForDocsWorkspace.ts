@@ -5,7 +5,8 @@ import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace } from "@fern-api/workspace-loader";
 import { stripCustomDomainProtocol, validateBasepathAlignment } from "./customDomainValidation.js";
-import { fetchGuestDocsSite } from "./guestDocsSite.js";
+import { getDocsDeployMode } from "./docsDeployMode.js";
+import { fetchGuestDocsSite, getFdrOrigin } from "./guestDocsSite.js";
 import { DocsPublishConflictError, publishDocs } from "./publishDocs.js";
 import { checkCustomDomainsNotOnVercel } from "./vercelDomainCheck.js";
 
@@ -100,7 +101,10 @@ export async function runRemoteGenerationForDocsWorkspace({
         return;
     }
 
-    if (instances.length > 1 && instanceUrl == null) {
+    // A guest publishes to its own drop site, so the docs.yml instance only lends its config; no need to pick one.
+    const publishesToGuestDropSite = token.type === "guest" && !preview;
+
+    if (instances.length > 1 && instanceUrl == null && !publishesToGuestDropSite) {
         context.failAndThrow(
             `More than one docs instances. Please specify one (e.g. --instance ${instances[0]?.url})`,
             undefined,
@@ -132,22 +136,25 @@ export async function runRemoteGenerationForDocsWorkspace({
 
     // The Fern instance url and every custom domain must share the same basepath.
     let publishUrl = maybeInstance.url;
-    if (token.type === "guest" && !preview) {
+    if (publishesToGuestDropSite) {
         // A guest session publishes to the Fern Drop site FDR holds for it, not to the docs.yml URL.
-        const fdrOrigin =
-            process.env.FERN_FDR_ORIGIN ??
-            process.env.OVERRIDE_FDR_ORIGIN ??
-            process.env.DEFAULT_FDR_ORIGIN ??
-            "https://registry.buildwithfern.com";
-        const site = await fetchGuestDocsSite({ fdrOrigin, token });
+        if (getDocsDeployMode() === "legacy") {
+            context.failAndThrow(
+                "--guest publishes through the docs ledger, which FERN_DOCS_DEPLOY_MODE=legacy disables. Unset it to publish as a guest.",
+                undefined,
+                { code: CliError.Code.ConfigError }
+            );
+            return;
+        }
+        const site = await fetchGuestDocsSite({ fdrOrigin: getFdrOrigin(), token });
+        publishUrl = site.domain;
         context.logger.warn(
-            `Ignoring instance URL "${maybeInstance.url}" from docs.yml while running as a guest; publishing to ${site.url} instead.`
+            `Ignoring instance URL "${maybeInstance.url}" from docs.yml while running as a guest; publishing to https://${publishUrl} instead.`
         );
         if (customDomains.length > 0) {
             context.logger.warn("Custom domains are not applied to a guest docs site; claim the session to use them.");
             customDomains = [];
         }
-        publishUrl = site.domain;
     }
 
     validateBasepathAlignment(publishUrl, customDomains, context);
