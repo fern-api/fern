@@ -119,6 +119,22 @@ describe("emitGenerationAnnotations", () => {
         );
     });
 
+    it("renders a package identifier as plain publication metadata", async () => {
+        process.env.GITHUB_ACTIONS = "true";
+        await emitGenerationAnnotations({
+            ...BASE_CONTEXT,
+            publishTarget: {
+                registry: "npm",
+                label: "npm",
+                version: "1.0.0",
+                identifier: "@org/sdk"
+            }
+        });
+        expect(stdoutSpy).toHaveBeenCalledWith(
+            "::notice title=fernapi/fern-typescript-sdk (group=ts-sdk) → Published to npm::1.0.0 → @org/sdk\n"
+        );
+    });
+
     // ─── No changes detected ────────────────────────────────
 
     it("emits a ::notice:: annotation when no changes detected", async () => {

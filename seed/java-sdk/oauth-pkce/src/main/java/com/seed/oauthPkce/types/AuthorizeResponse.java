@@ -96,7 +96,6 @@ public final class AuthorizeResponse {
 
         private Optional<String> state = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -131,6 +130,14 @@ public final class AuthorizeResponse {
         @java.lang.Override
         public AuthorizeResponse build() {
             return new AuthorizeResponse(code, state, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("code") || key.equalsIgnoreCase("state")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

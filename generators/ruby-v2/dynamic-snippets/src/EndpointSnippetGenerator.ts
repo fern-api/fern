@@ -1,7 +1,7 @@
 import { AbstractFormatter, Options, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import { ruby } from "@fern-api/ruby-ast";
+import { getSdkVariableOptionNames, ruby } from "@fern-api/ruby-ast";
 
 import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext.js";
 
@@ -341,6 +341,8 @@ export class EndpointSnippetGenerator {
             builderArgs.push(...baseUrlArgs);
         }
 
+        builderArgs.push(...this.getRootClientSdkVariableArgs({ endpoint, snippet }));
+
         // Headers
         this.context.errors.scope("Headers");
         if (this.context.ir.headers != null && snippet.headers != null) {
@@ -351,6 +353,86 @@ export class EndpointSnippetGenerator {
         this.context.errors.unscope();
 
         return builderArgs;
+    }
+
+    /**
+     * Path parameters bound to an SDK variable are configured once on the root client
+     * (`Client.new(<variable>: ...)`) rather than passed to the endpoint method. When the
+     * snippet carries no value, the keyword is omitted so the client falls back to the
+     * variable's environment variable.
+     */
+
+    /** Keywords the root client already uses for credentials and global headers (mirrors the SDK generator). */
+    private getSdkVariableReservedOptionNames(endpoint: FernIr.dynamic.Endpoint): string[] {
+        const names: string[] = [];
+        for (const header of this.context.ir.headers ?? []) {
+            names.push(header.name.name.snakeCase.safeName);
+        }
+        const auth = endpoint.auth;
+        switch (auth?.type) {
+            case "basic":
+                names.push(auth.username.snakeCase.safeName, auth.password.snakeCase.safeName);
+                break;
+            case "bearer":
+                names.push(auth.token.snakeCase.safeName);
+                break;
+            case "header":
+                names.push(auth.header.name.name.snakeCase.safeName);
+                break;
+            case "oauth":
+                names.push(auth.clientId.snakeCase.safeName, auth.clientSecret.snakeCase.safeName);
+                break;
+            default:
+                break;
+        }
+        return names;
+    }
+    private getRootClientSdkVariableArgs({
+        endpoint,
+        snippet
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): ruby.KeywordArgument[] {
+        const pathParameterValues = snippet.pathParameters ?? {};
+        const boundParameters = [
+            ...(this.context.ir.pathParameters ?? []),
+            ...(endpoint.request.pathParameters ?? [])
+        ].filter((parameter) => parameter.variable != null && pathParameterValues[parameter.name.wireValue] != null);
+        if (boundParameters.length === 0) {
+            return [];
+        }
+        const variables = this.context.ir.variables ?? [];
+        const optionNames = getSdkVariableOptionNames(
+            variables.map((variable) => this.context.getPropertyName(variable.name)),
+            this.getSdkVariableReservedOptionNames(endpoint)
+        );
+        const args: ruby.KeywordArgument[] = [];
+        const seen = new Set<string>();
+        this.context.errors.scope("PathParameters");
+        const instances = this.context.associateByWireValue({
+            parameters: boundParameters,
+            values: pathParameterValues,
+            ignoreMissingParameters: true
+        });
+        const instancesByWireValue = new Map(instances.map((instance) => [instance.name.wireValue, instance]));
+        for (const parameter of boundParameters) {
+            const instance = instancesByWireValue.get(parameter.name.wireValue);
+            const variableId = parameter.variable;
+            if (instance == null || variableId == null || seen.has(variableId)) {
+                continue;
+            }
+            seen.add(variableId);
+            const variableIndex = variables.findIndex((candidate) => candidate.id === variableId);
+            const optionName = optionNames[variableIndex] ?? this.context.getPropertyName(parameter.name.name);
+            const value = this.context.dynamicTypeLiteralMapper.convert(instance);
+            if (ruby.TypeLiteral.isNop(value)) {
+                continue;
+            }
+            args.push(ruby.keywordArgument({ name: optionName, value }));
+        }
+        this.context.errors.unscope();
+        return args;
     }
 
     private callMethod({
@@ -513,7 +595,9 @@ export class EndpointSnippetGenerator {
         // Generated Ruby SDKs surface both root-level and endpoint-level path parameters
         // as keyword arguments on the endpoint method (via `**params`), so merge them here
         // in IR / URL order before rendering.
-        const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
+        const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])].filter(
+            (parameter) => parameter.variable == null
+        );
         args.push(
             ...this.getNamedParameterArgs({
                 kind: "PathParameters",
@@ -537,7 +621,7 @@ export class EndpointSnippetGenerator {
         );
 
         // Handle request.body if present
-        if (request.body != null && snippet.requestBody != null) {
+        if (request.body != null && (snippet.requestBody != null || request.body.type === "fileUpload")) {
             switch (request.body.type) {
                 case "properties":
                     args.push(...this.getMethodArgsForPropertiesRequest({ request: request.body, snippet }));
@@ -587,7 +671,7 @@ export class EndpointSnippetGenerator {
                     break;
                 }
                 case "fileUpload":
-                    // Not implemented for Ruby snippets yet
+                    args.push(...this.getFileUploadArgs({ body: request.body, value: snippet.requestBody }));
                     break;
                 default:
                     assertNever(request.body);
@@ -675,7 +759,9 @@ export class EndpointSnippetGenerator {
         // Add path parameters as keyword arguments (Ruby SDK uses **params).
         // Merge root-level and endpoint-level path params in IR / URL order so
         // root-level parameters (e.g. tenant_id) are not dropped from the call.
-        const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
+        const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])].filter(
+            (parameter) => parameter.variable == null
+        );
         args.push(
             ...this.getNamedParameterArgs({
                 kind: "PathParameters",
@@ -783,28 +869,21 @@ export class EndpointSnippetGenerator {
             case "undiscriminatedUnion": {
                 // For undiscriminated unions, the body value should match one of the variants
                 // Try to convert it and extract the fields as keyword arguments
-                const bodyRecord = this.context.getRecord(bodyValue);
+                if (!isRecord(bodyValue)) {
+                    // The SDK builds union bodies from keyword arguments, so a non-object example
+                    // (e.g. a string variant) is shown as the first object variant instead.
+                    const fallbackArgs = this.getRequiredFieldsOfFirstObjectVariant(namedType);
+                    if (fallbackArgs != null) {
+                        return fallbackArgs;
+                    }
+                }
+                const bodyRecord = isRecord(bodyValue) ? bodyValue : undefined;
                 if (bodyRecord != null) {
                     // The body is an object - try to find a matching variant and extract its fields
-                    for (const variant of namedType.types) {
-                        if (variant.type === "named") {
-                            const variantType = this.context.resolveNamedType({ typeId: variant.value });
-                            if (variantType != null && variantType.type === "object") {
-                                // Check if the body matches this variant's properties
-                                const variantProps = new Set(variantType.properties.map((p) => p.name.wireValue));
-                                const bodyKeys = Object.keys(bodyRecord);
-                                const allKeysMatch = bodyKeys.every((key) => variantProps.has(key));
-                                if (allKeysMatch && bodyKeys.length > 0) {
-                                    // This variant matches - flatten its fields
-                                    const bodyFields = this.getBodyFieldsAsKeywordArgs({
-                                        namedType: variantType,
-                                        bodyRecord
-                                    });
-                                    args.push(...bodyFields);
-                                    return args;
-                                }
-                            }
-                        }
+                    const variantType = this.findObjectVariantForRecord({ union: namedType, bodyRecord });
+                    if (variantType != null) {
+                        args.push(...this.getBodyFieldsAsKeywordArgs({ namedType: variantType, bodyRecord }));
+                        return args;
                     }
                 }
                 // If we couldn't match a variant or extract fields, convert the whole value
@@ -881,6 +960,158 @@ export class EndpointSnippetGenerator {
         return args;
     }
 
+    /**
+     * Finds the object variant whose properties cover every key of the body, looking through
+     * nested undiscriminated unions.
+     */
+    private findObjectVariantForRecord({
+        union,
+        bodyRecord,
+        seen = new Set()
+    }: {
+        union: FernIr.dynamic.UndiscriminatedUnionType;
+        bodyRecord: Record<string, unknown>;
+        seen?: Set<string>;
+    }): FernIr.dynamic.NamedType | undefined {
+        const bodyKeys = Object.keys(bodyRecord);
+        if (bodyKeys.length === 0) {
+            return undefined;
+        }
+        for (const variant of union.types) {
+            if (variant.type !== "named" || seen.has(variant.value)) {
+                continue;
+            }
+            seen.add(variant.value);
+            const variantType = this.context.resolveNamedType({ typeId: variant.value });
+            if (variantType?.type === "object") {
+                const variantProps = new Set(variantType.properties.map((p) => p.name.wireValue));
+                if (bodyKeys.every((key) => variantProps.has(key))) {
+                    return variantType;
+                }
+            } else if (variantType?.type === "undiscriminatedUnion") {
+                const nested = this.findObjectVariantForRecord({ union: variantType, bodyRecord, seen });
+                if (nested != null) {
+                    return nested;
+                }
+            }
+        }
+        return undefined;
+    }
+
+    private getRequiredFieldsOfFirstObjectVariant(
+        union: FernIr.dynamic.UndiscriminatedUnionType
+    ): ruby.KeywordArgument[] | undefined {
+        for (const variant of union.types) {
+            if (variant.type !== "named") {
+                continue;
+            }
+            const variantType = this.context.resolveNamedType({ typeId: variant.value });
+            if (variantType?.type !== "object") {
+                continue;
+            }
+            const args: ruby.KeywordArgument[] = [];
+            for (const property of variantType.properties) {
+                if (
+                    this.context.isOptional(property.typeReference) ||
+                    this.context.isNullable(property.typeReference)
+                ) {
+                    continue;
+                }
+                const value = this.context.dynamicTypeLiteralMapper.synthesizeDefaultValue(property.typeReference);
+                if (!ruby.TypeLiteral.isNop(value)) {
+                    args.push(ruby.keywordArgument({ name: this.context.getPropertyName(property.name.name), value }));
+                }
+            }
+            return args;
+        }
+        return undefined;
+    }
+
+    /**
+     * The SDK reads a String file argument as a path, so example file contents are wrapped in an IO.
+     */
+    private getInlineFileContent(content: string): ruby.AstNode {
+        return ruby.codeblock((writer) => {
+            writer.addRequire("stringio");
+            writer.write("StringIO.new(");
+            writer.writeNode(ruby.TypeLiteral.string(content));
+            writer.write(")");
+        });
+    }
+
+    private getFileUploadArgs({
+        body,
+        value
+    }: {
+        body: FernIr.dynamic.FileUploadRequestBody;
+        value: unknown;
+    }): ruby.KeywordArgument[] {
+        const record = isRecord(value) ? value : {};
+        const args: ruby.KeywordArgument[] = [];
+        for (const property of body.properties) {
+            switch (property.type) {
+                case "file": {
+                    const fileValue = this.context.getSingleFileValue({ property, record });
+                    if (fileValue == null && property.isOptional === true) {
+                        break;
+                    }
+                    args.push(
+                        ruby.keywordArgument({
+                            name: this.context.getPropertyName(property.name),
+                            value:
+                                fileValue != null
+                                    ? this.getInlineFileContent(fileValue)
+                                    : ruby.TypeLiteral.string(FILE_PLACEHOLDER_PATH)
+                        })
+                    );
+                    break;
+                }
+                case "fileArray": {
+                    const fileValues = this.context.getFileArrayValues({ property, record });
+                    const hasFileValues = fileValues != null && fileValues.length > 0;
+                    if (!hasFileValues && property.isOptional === true) {
+                        break;
+                    }
+                    args.push(
+                        ruby.keywordArgument({
+                            name: this.context.getPropertyName(property.name),
+                            value: ruby.TypeLiteral.list(
+                                hasFileValues
+                                    ? fileValues.map((fileValue) => this.getInlineFileContent(fileValue))
+                                    : [ruby.TypeLiteral.string(FILE_PLACEHOLDER_PATH)]
+                            )
+                        })
+                    );
+                    break;
+                }
+                case "bodyProperty": {
+                    const propertyValue = record[property.name.wireValue];
+                    if (propertyValue === undefined) {
+                        break;
+                    }
+                    this.context.errors.scope(property.name.wireValue);
+                    const convertedValue = this.context.dynamicTypeLiteralMapper.convert({
+                        typeReference: property.typeReference,
+                        value: propertyValue
+                    });
+                    this.context.errors.unscope();
+                    if (!ruby.TypeLiteral.isNop(convertedValue)) {
+                        args.push(
+                            ruby.keywordArgument({
+                                name: this.context.getPropertyName(property.name.name),
+                                value: convertedValue
+                            })
+                        );
+                    }
+                    break;
+                }
+                default:
+                    assertNever(property);
+            }
+        }
+        return args;
+    }
+
     private getBodyFieldsAsKeywordArgs({
         namedType,
         bodyRecord
@@ -940,6 +1171,13 @@ export class EndpointSnippetGenerator {
         }
         return this.context.getMethodName(endpoint.declaration.name);
     }
+}
+
+// The Ruby SDK reads a string file value as a path to the file.
+const FILE_PLACEHOLDER_PATH = "/path/to/your/file";
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+    return typeof value === "object" && value != null && !Array.isArray(value);
 }
 
 /**

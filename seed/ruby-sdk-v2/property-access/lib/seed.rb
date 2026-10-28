@@ -3,6 +3,7 @@
 require "json"
 require "net/http"
 require "securerandom"
+require "time"
 
 require_relative "seed/internal/json/serializable"
 require_relative "seed/internal/types/type"
@@ -35,11 +36,17 @@ require_relative "seed/internal/iterators/cursor_item_iterator"
 require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
-require_relative "seed/types/user_profile_verification"
-require_relative "seed/types/user_profile"
-require_relative "seed/types/user"
-require_relative "seed/types/admin"
-require_relative "seed/types/user_or_admin"
-require_relative "seed/types/foo"
-require_relative "seed/types/user_or_admin_discriminated"
+require_relative "seed/errors/connection_error"
 require_relative "seed/client"
+
+module Seed
+  module Types
+    autoload :UserProfileVerification, ::File.join(__dir__, "seed/types/user_profile_verification")
+    autoload :UserProfile, ::File.join(__dir__, "seed/types/user_profile")
+    autoload :User, ::File.join(__dir__, "seed/types/user")
+    autoload :Admin, ::File.join(__dir__, "seed/types/admin")
+    autoload :UserOrAdmin, ::File.join(__dir__, "seed/types/user_or_admin")
+    autoload :Foo, ::File.join(__dir__, "seed/types/foo")
+    autoload :UserOrAdminDiscriminated, ::File.join(__dir__, "seed/types/user_or_admin_discriminated")
+  end
+end

@@ -79,8 +79,13 @@ func (c *Client) StreamProtocolNoCollision(
 			Terminator:         internal.DefaultSSETerminator,
 			Format:             core.StreamFormatSSE,
 			EventDiscriminator: "event",
-			Request:            request,
-			ErrorDecoder:       internal.NewErrorDecoder(fern.ErrorCodes),
+			EnvelopeEvents: []string{
+				"string_data",
+				"number_data",
+				"object_data",
+			},
+			Request:      request,
+			ErrorDecoder: internal.NewErrorDecoder(fern.ErrorCodes),
 		},
 	)
 }
@@ -128,8 +133,13 @@ func (c *Client) StreamProtocolCollision(
 			Terminator:         internal.DefaultSSETerminator,
 			Format:             core.StreamFormatSSE,
 			EventDiscriminator: "event",
-			Request:            request,
-			ErrorDecoder:       internal.NewErrorDecoder(fern.ErrorCodes),
+			EnvelopeEvents: []string{
+				"string_data",
+				"number_data",
+				"object_data",
+			},
+			Request:      request,
+			ErrorDecoder: internal.NewErrorDecoder(fern.ErrorCodes),
 		},
 	)
 }
@@ -275,6 +285,58 @@ func (c *Client) StreamProtocolWithFlatSchema(
 			EventDiscriminator: "event",
 			Request:            request,
 			ErrorDecoder:       internal.NewErrorDecoder(fern.ErrorCodes),
+		},
+	)
+}
+
+// context=protocol where some variants use the envelope+data pattern and others use the flat allOf pattern. Envelope variants are parsed from {event, data}; flat variants are parsed from the data payload with the event discriminant injected.
+//
+// Example:
+//
+//	request := &fern.StreamRequest{}
+//	client.StreamProtocolMixedSchema(
+//	    context.TODO(),
+//	    request,
+//	)
+func (c *Client) StreamProtocolMixedSchema(
+	ctx context.Context,
+	request *fern.StreamRequest,
+	opts ...option.RequestOption,
+) (*core.Stream[fern.StreamProtocolMixedSchemaResponse], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/stream/protocol-mixed-schema"
+	headers := internal.MergeHeaders(
+		c.options.ToHeader(),
+		options.ToHeader(),
+	)
+	headers.Add("Accept", "text/event-stream")
+	streamer := internal.NewStreamer[fern.StreamProtocolMixedSchemaResponse](c.caller)
+	return streamer.Stream(
+		ctx,
+		&internal.StreamParams{
+			URL:                endpointURL,
+			Method:             http.MethodPost,
+			Headers:            headers,
+			MaxAttempts:        options.MaxAttempts,
+			DisableRetries:     options.DisableRetries,
+			BodyProperties:     options.BodyProperties,
+			QueryParameters:    options.QueryParameters,
+			Client:             options.HTTPClient,
+			MaxBufSize:         options.MaxBufSize,
+			Prefix:             internal.DefaultSSEDataPrefix,
+			Terminator:         internal.DefaultSSETerminator,
+			Format:             core.StreamFormatSSE,
+			EventDiscriminator: "event",
+			EnvelopeEvents: []string{
+				"object_data",
+			},
+			Request:      request,
+			ErrorDecoder: internal.NewErrorDecoder(fern.ErrorCodes),
 		},
 	)
 }

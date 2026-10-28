@@ -565,7 +565,6 @@ public final class ComplexProfile {
 
         private OptionalNullable<UserRole> nullableRole = OptionalNullable.absent();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -1127,6 +1126,32 @@ public final class ComplexProfile {
                     nullableListOfUnions,
                     optionalMapOfEnums,
                     additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("id")
+                    || key.equalsIgnoreCase("nullableRole")
+                    || key.equalsIgnoreCase("optionalRole")
+                    || key.equalsIgnoreCase("optionalNullableRole")
+                    || key.equalsIgnoreCase("nullableStatus")
+                    || key.equalsIgnoreCase("optionalStatus")
+                    || key.equalsIgnoreCase("optionalNullableStatus")
+                    || key.equalsIgnoreCase("nullableNotification")
+                    || key.equalsIgnoreCase("optionalNotification")
+                    || key.equalsIgnoreCase("optionalNullableNotification")
+                    || key.equalsIgnoreCase("nullableSearchResult")
+                    || key.equalsIgnoreCase("optionalSearchResult")
+                    || key.equalsIgnoreCase("nullableArray")
+                    || key.equalsIgnoreCase("optionalArray")
+                    || key.equalsIgnoreCase("optionalNullableArray")
+                    || key.equalsIgnoreCase("nullableListOfNullables")
+                    || key.equalsIgnoreCase("nullableMapOfNullables")
+                    || key.equalsIgnoreCase("nullableListOfUnions")
+                    || key.equalsIgnoreCase("optionalMapOfEnums")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

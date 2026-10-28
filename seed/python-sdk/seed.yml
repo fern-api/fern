@@ -83,12 +83,24 @@ fixtures:
     - customConfig:
         use_inheritance_for_extended_models: false
       outputFolder: no-inheritance-for-extended-models
+    - customConfig:
+        pydantic_config:
+          version: v2
+      outputFolder: pydantic-v2
+      skipScripts:
+        - test-pydantic-v1
   circular-references-advanced:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
         use_inheritance_for_extended_models: false
       outputFolder: no-inheritance-for-extended-models
+    - customConfig:
+        pydantic_config:
+          version: v2
+      outputFolder: pydantic-v2
+      skipScripts:
+        - test-pydantic-v1
   circular-references-extends:
     - customConfig: null
       outputFolder: no-custom-config
@@ -116,6 +128,10 @@ fixtures:
         include_platform_headers: true
         allow_user_agent_app_info: true
       outputFolder: include-platform-headers-app-info
+    - customConfig:
+        include_platform_headers: true
+        user_agent_only: true
+      outputFolder: user-agent-only
     - customConfig:
         additional_init_exports:
           - from: types.types
@@ -185,10 +201,17 @@ fixtures:
     - customConfig:
         enable_wire_tests: true
       outputFolder: .
+  errors:
+    - customConfig:
+        enable_wire_tests: true
+      outputFolder: .
   exhaustive:
     - customConfig:
         enable_wire_tests: true
       outputFolder: no-custom-config
+    - license:
+        custom: LICENSE
+      outputFolder: custom-license
     - customConfig:
         runtime_version: true
       outputFolder: runtime-version
@@ -377,6 +400,10 @@ fixtures:
     - customConfig:
         auto-generate-idempotency-key: true
       outputFolder: auto-generate-idempotency-key
+  inferred-auth-implicit:
+    - customConfig:
+        enable_wire_tests: true
+      outputFolder: .
   file-upload:
     - customConfig: null
       outputFolder: no-custom-config
@@ -524,6 +551,12 @@ fixtures:
   python-oauth-token-optional:
     - customConfig: null
       outputFolder: no-custom-config
+  python-inferred-auth-refresh-token:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        omit_unset_inferred_auth_params: true
+      outputFolder: omit-unset-inferred-auth-params
   oauth-pkce:
     - customConfig:
         enable_wire_tests: true
@@ -543,12 +576,21 @@ fixtures:
         pydantic_config:
           positional_single_property_constructors: true
       outputFolder: with-positional-constructors
+  python-file-upload-array-content-type:
+    - customConfig: null
+      outputFolder: no-custom-config
   python-optional-request-body:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
         respect_optional_request_body: true
       outputFolder: respect-optional-request-body
+  python-xml-twiml:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        http_client_extra: client
+      outputFolder: http-client-extra
   openapi-per-spec-base-path:
     - customConfig: null
       outputFolder: no-custom-config

@@ -5,6 +5,7 @@ package com.seed.api;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
+import com.seed.api.core.SeedApiHttpResponse;
 import com.seed.api.requests.FetchAccountRequest;
 import com.seed.api.requests.FetchMessageRequest;
 import com.seed.api.requests.UpdateMessageRequest;
@@ -12,7 +13,7 @@ import com.seed.api.types.Account;
 import com.seed.api.types.Message;
 import java.util.concurrent.CompletableFuture;
 
-public class AsyncSeedApiClient {
+public class AsyncSeedApiClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final AsyncRawSeedApiClient rawClient;
@@ -30,50 +31,133 @@ public class AsyncSeedApiClient {
     }
 
     public CompletableFuture<Message> fetchMessage(String accountSid, String sid) {
-        return this.rawClient.fetchMessage(accountSid, sid).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Message>> rawFuture = this.rawClient.fetchMessage(accountSid, sid);
+        CompletableFuture<Message> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Message> fetchMessage(String accountSid, String sid, RequestOptions requestOptions) {
-        return this.rawClient.fetchMessage(accountSid, sid, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Message>> rawFuture =
+                this.rawClient.fetchMessage(accountSid, sid, requestOptions);
+        CompletableFuture<Message> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Message> fetchMessage(String accountSid, String sid, FetchMessageRequest request) {
-        return this.rawClient.fetchMessage(accountSid, sid, request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Message>> rawFuture =
+                this.rawClient.fetchMessage(accountSid, sid, request);
+        CompletableFuture<Message> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Message> fetchMessage(
             String accountSid, String sid, FetchMessageRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .fetchMessage(accountSid, sid, request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Message>> rawFuture =
+                this.rawClient.fetchMessage(accountSid, sid, request, requestOptions);
+        CompletableFuture<Message> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Message> updateMessage(String accountSid, String sid, UpdateMessageRequest request) {
-        return this.rawClient.updateMessage(accountSid, sid, request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Message>> rawFuture =
+                this.rawClient.updateMessage(accountSid, sid, request);
+        CompletableFuture<Message> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Message> updateMessage(
             String accountSid, String sid, UpdateMessageRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .updateMessage(accountSid, sid, request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Message>> rawFuture =
+                this.rawClient.updateMessage(accountSid, sid, request, requestOptions);
+        CompletableFuture<Message> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Account> fetchAccount(String accountSid) {
-        return this.rawClient.fetchAccount(accountSid).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Account>> rawFuture = this.rawClient.fetchAccount(accountSid);
+        CompletableFuture<Account> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Account> fetchAccount(String accountSid, RequestOptions requestOptions) {
-        return this.rawClient.fetchAccount(accountSid, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Account>> rawFuture =
+                this.rawClient.fetchAccount(accountSid, requestOptions);
+        CompletableFuture<Account> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Account> fetchAccount(String accountSid, FetchAccountRequest request) {
-        return this.rawClient.fetchAccount(accountSid, request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Account>> rawFuture = this.rawClient.fetchAccount(accountSid, request);
+        CompletableFuture<Account> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Account> fetchAccount(
             String accountSid, FetchAccountRequest request, RequestOptions requestOptions) {
-        return this.rawClient.fetchAccount(accountSid, request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Account>> rawFuture =
+                this.rawClient.fetchAccount(accountSid, request, requestOptions);
+        CompletableFuture<Account> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedApiClientBuilder builder() {

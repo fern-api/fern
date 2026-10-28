@@ -1,7 +1,8 @@
 import {
     GENERATORS_CONFIGURATION_FILENAME,
     GENERATORS_CONFIGURATION_FILENAME_ALTERNATIVE,
-    generatorsYml
+    generatorsYml,
+    LEGACY_GENERATORS_CONFIGURATION_FILENAME
 } from "@fern-api/configuration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { CliError, TaskContext } from "@fern-api/task-context";
@@ -123,12 +124,27 @@ export async function getPathToGeneratorsConfiguration({
 }): Promise<AbsoluteFilePath | undefined> {
     const ymlPath = join(absolutePathToWorkspace, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME));
     const yamlPath = join(absolutePathToWorkspace, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME_ALTERNATIVE));
+    const legacyPath = join(absolutePathToWorkspace, RelativeFilePath.of(LEGACY_GENERATORS_CONFIGURATION_FILENAME));
 
-    if (await doesPathExist(ymlPath)) {
+    const [ymlExists, yamlExists, legacyExists] = await Promise.all([
+        doesPathExist(ymlPath),
+        doesPathExist(yamlPath),
+        doesPathExist(legacyPath)
+    ]);
+    if ((ymlExists || yamlExists) && legacyExists) {
+        throw new CliError({
+            message: `Found both ${ymlExists ? GENERATORS_CONFIGURATION_FILENAME : GENERATORS_CONFIGURATION_FILENAME_ALTERNATIVE} and ${LEGACY_GENERATORS_CONFIGURATION_FILENAME} in ${absolutePathToWorkspace}. Keep only one active legacy generators configuration.`,
+            code: CliError.Code.ConfigError
+        });
+    }
+    if (ymlExists) {
         return ymlPath;
     }
-    if (await doesPathExist(yamlPath)) {
+    if (yamlExists) {
         return yamlPath;
+    }
+    if (legacyExists) {
+        return legacyPath;
     }
     return undefined;
 }

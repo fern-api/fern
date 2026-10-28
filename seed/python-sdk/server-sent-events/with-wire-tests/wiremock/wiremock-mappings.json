@@ -27,6 +27,37 @@
       }
     },
     {
+      "id": "eb2e0f33-64d0-4122-bf18-f316fed532f2",
+      "name": "stream - Stream completions - completions.stream.0",
+      "request": {
+        "urlPathTemplate": "/stream",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "completions.stream.0"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "event: completion\ndata: {\"delta\":\"hello\",\"tokens\":1}\n\nevent: completion\ndata: {\"delta\":\" world\",\"tokens\":2}\n",
+        "headers": {
+          "Content-Type": "text/event-stream"
+        }
+      },
+      "uuid": "eb2e0f33-64d0-4122-bf18-f316fed532f2",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "392a038a-4138-4153-a873-41da36997679",
       "name": "streamWithoutTerminator - Stream without terminator",
       "request": {
@@ -51,9 +82,40 @@
           }
         }
       }
+    },
+    {
+      "id": "203b891c-088c-45fc-91eb-f501ff4acf9a",
+      "name": "streamWithoutTerminator - Stream without terminator - completions.stream_without_terminator.0",
+      "request": {
+        "urlPathTemplate": "/stream-no-terminator",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "completions.stream_without_terminator.0"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "event: completion\ndata: {\"delta\":\"delta\",\"tokens\":1}\n",
+        "headers": {
+          "Content-Type": "text/event-stream"
+        }
+      },
+      "uuid": "203b891c-088c-45fc-91eb-f501ff4acf9a",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
     }
   ],
   "meta": {
-    "total": 2
+    "total": 4
   }
 }

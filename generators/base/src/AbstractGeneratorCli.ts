@@ -42,7 +42,7 @@ export abstract class AbstractGeneratorCli<
             });
             await generatorNotificationService.sendUpdate(
                 FernGeneratorExec.GeneratorUpdate.initV2({
-                    publishingToRegistry: "MAVEN"
+                    publishingToRegistry: getPublishingToRegistry(config)
                 })
             );
             const irStartTime = Date.now();
@@ -153,6 +153,27 @@ export abstract class AbstractGeneratorCli<
      * @param context
      */
     protected abstract generateMetadata(context: GeneratorContext): Promise<void>;
+}
+
+function getPublishingToRegistry(
+    config: FernGeneratorExec.GeneratorConfig
+): FernGeneratorExec.RegistryType | undefined {
+    return config.output.mode._visit<FernGeneratorExec.RegistryType | undefined>({
+        publish: (publish) =>
+            publish.publishTarget?._visit<FernGeneratorExec.RegistryType | undefined>({
+                maven: () => FernGeneratorExec.RegistryType.Maven,
+                npm: () => FernGeneratorExec.RegistryType.Npm,
+                pypi: () => FernGeneratorExec.RegistryType.Pypi,
+                rubygems: () => FernGeneratorExec.RegistryType.Rubygems,
+                nuget: () => FernGeneratorExec.RegistryType.Nuget,
+                crates: () => FernGeneratorExec.RegistryType.Crates,
+                postman: () => undefined,
+                _other: () => undefined
+            }),
+        github: () => undefined,
+        downloadFiles: () => undefined,
+        _other: () => undefined
+    });
 }
 
 async function getGeneratorConfig(): Promise<FernGeneratorExec.GeneratorConfig> {

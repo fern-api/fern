@@ -31,7 +31,7 @@ module Seed
         base_url: request_options[:base_url],
         method: "POST",
         path: "plants",
-        body: params,
+        body: params[:request],
         request_options: request_options
       )
       begin
@@ -73,14 +73,11 @@ module Seed
     # @return [Seed::Types::UpdatePlantResponse]
     def update_plant(request_options: {}, **params)
       params = Seed::Internal::Types::Utils.normalize_keys(params)
-      path_param_names = %i[plant_id]
-      body_params = params.except(*path_param_names)
-
       request = Seed::Internal::JSON::Request.new(
         base_url: request_options[:base_url],
         method: "PUT",
         path: "plants/#{URI.encode_uri_component(params[:plant_id].to_s)}",
-        body: body_params,
+        body: params[:body],
         request_options: request_options
       )
       begin
@@ -139,16 +136,18 @@ module Seed
 
     # @param base_url [String, nil]
     # @param max_retries [Integer]
+    # @param timeout [Numeric]
     #
     # @return [void]
-    def initialize(base_url: nil, max_retries: 2)
+    def initialize(base_url: nil, max_retries: 2, timeout: 60)
       @raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: {
           "User-Agent" => "fern_schemaless-request-body-examples/0.0.1",
           "X-Fern-Language" => "Ruby"
         },
-        max_retries: max_retries
+        max_retries: max_retries,
+        timeout: timeout
       )
     end
   end

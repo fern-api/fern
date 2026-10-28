@@ -1,7 +1,7 @@
 package com.snippets;
 
 import com.seed.pagination.SeedPaginationClient;
-import com.seed.pagination.resources.users.requests.ListUsersAliasedDataRequest;
+import com.seed.pagination.resources.users.requests.ListUsersOptionalDataRequest;
 
 public class Example33 {
     public static void main(String[] args) {
@@ -11,10 +11,7 @@ public class Example33 {
                 .build();
 
         client.users()
-                .listWithAliasedData(ListUsersAliasedDataRequest.builder()
-                        .page(1)
-                        .perPage(1)
-                        .startingAfter("starting_after")
-                        .build());
+                .listWithOptionalData(
+                        ListUsersOptionalDataRequest.builder().page(1).build());
     }
 }

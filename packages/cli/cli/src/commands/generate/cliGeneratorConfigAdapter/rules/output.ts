@@ -1,0 +1,50 @@
+import { isAbsolute, relative, resolve } from "node:path";
+import { isRecord } from "@fern-api/core-utils";
+import { toPosixPath } from "@fern-api/fs-utils";
+import type { RuleContext } from "../types.js";
+
+/** The generators.yml `api` section, created on first use. */
+export function apiSection(context: RuleContext): Record<string, unknown> {
+    const existing = context.output.generatorsYml.api;
+    if (isRecord(existing)) {
+        return existing;
+    }
+    const created: Record<string, unknown> = {};
+    context.output.generatorsYml.api = created;
+    return created;
+}
+
+/** The generators.yml `auth-schemes` section, created on first use. */
+export function authSchemes(context: RuleContext): Record<string, unknown> {
+    const existing = context.output.generatorsYml["auth-schemes"];
+    if (isRecord(existing)) {
+        return existing;
+    }
+    const created: Record<string, unknown> = {};
+    context.output.generatorsYml["auth-schemes"] = created;
+    return created;
+}
+
+/** A path from sdk-config.yml's folder, rewritten relative to the generators.yml folder. */
+export function relativeToOutput(context: RuleContext, path: string): string {
+    const target = toPosixPath(relative(context.input.outDir, resolveFromConfig(context, path)));
+    return target.startsWith(".") ? target : `./${target}`;
+}
+
+export function resolveFromConfig(context: RuleContext, path: string): string {
+    return resolveFromConfigDir(context.input.configDir, path);
+}
+
+/** A source path rewritten relative to the generators.yml folder. */
+export function relativeSourceToOutput(context: RuleContext, path: string): string {
+    const target = toPosixPath(relative(context.input.outDir, resolveFromSource(context, path)));
+    return target.startsWith(".") ? target : `./${target}`;
+}
+
+export function resolveFromSource(context: RuleContext, path: string): string {
+    return resolveFromConfigDir(context.input.sourceDir ?? context.input.configDir, path);
+}
+
+export function resolveFromConfigDir(configDir: string, path: string): string {
+    return isAbsolute(path) ? path : resolve(configDir, path);
+}

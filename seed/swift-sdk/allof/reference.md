@@ -300,6 +300,8 @@ private func main() async throws {
         species: "species",
         family: "family",
         genus: "genus",
+        commonName: "commonName",
+        wateringFrequency: .daily,
         sunExposure: .full
     ))
 }
@@ -373,7 +375,9 @@ private func main() async throws {
     let client = ApiClient()
 
     _ = try await client.createTree(request: TreeRecord(
-        id: "id"
+        id: "id",
+        treeName: "treeName",
+        treeSpecies: "treeSpecies"
     ))
 }
 

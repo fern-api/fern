@@ -1,4 +1,5 @@
 import { FernToken } from "@fern-api/auth";
+import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { runLibraryDocsGeneration } from "@fern-api/library-docs-generator";
 import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
@@ -14,23 +15,26 @@ export interface GenerateLibraryDocsOptions {
     library: string | undefined;
     /** Run the parser(s) locally in Docker instead of using Fern's servers. */
     local: boolean;
+    /** Persist parser logs under `<fern folder>/.fern/library-docs-logs/` instead of a temporary file. */
+    keepLogs?: boolean;
 }
 
 /**
  * Generate library documentation from source code.
  *
  * Loads the docs workspace and delegates to the shared orchestrator in
- * `@fern-api/library-docs-generator`. By default it authenticates with FDR,
- * starts server-side parsing, polls for completion, downloads the resulting IR
- * from S3, and runs the local MDX generator. With `local`, it skips
+ * `@fern-api/library-docs-generator`. With `local` (the CLI default; `--remote` turns it off), it skips
  * authentication and runs the parser Docker images directly on the user's
- * machine.
+ * machine. Otherwise it authenticates with FDR, starts server-side parsing,
+ * polls for completion, downloads the resulting IR from S3, and runs the local
+ * MDX generator.
  */
 export async function generateLibraryDocs({
     project,
     cliContext,
     library,
-    local
+    local,
+    keepLogs = false
 }: GenerateLibraryDocsOptions): Promise<void> {
     const docsWorkspace = project.docsWorkspaces;
 
@@ -84,7 +88,11 @@ export async function generateLibraryDocs({
             orgId: project.config.organization,
             tokenValue,
             context,
-            local
+            local,
+            docsConfig: docsWorkspace.config,
+            logsDir: keepLogs
+                ? join(docsWorkspace.absoluteFilePath, RelativeFilePath.of(".fern/library-docs-logs"))
+                : undefined
         });
 
         if (successful > 0) {

@@ -59,6 +59,21 @@ types:
       endpoint: commons.EndpointReference
       expiryProperty: optional<http.ResponseProperty>
       authenticatedRequestHeaders: list<InferredAuthenticatedRequestHeader>
+      grantType:
+        type: optional<InferredAuthGrantType>
+        docs: |
+          When set, the SDK sends this fixed value for the grant type request property
+          and does not expose that property as a client option.
+          Populated when the auth scheme is configured with `type: refresh-token`.
+
+  InferredAuthGrantType:
+    properties:
+      requestProperty:
+        type: http.RequestProperty
+        docs: The token endpoint request property that holds the grant type (e.g. `grant_type`).
+      value:
+        type: string
+        docs: The value the SDK sends for the grant type (e.g. `refresh_token`).
 
   # InferredAuthSchemeRefreshEndpoint:
   #   properties:

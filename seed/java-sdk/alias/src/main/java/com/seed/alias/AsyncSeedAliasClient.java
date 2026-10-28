@@ -5,9 +5,10 @@ package com.seed.alias;
 
 import com.seed.alias.core.ClientOptions;
 import com.seed.alias.core.RequestOptions;
+import com.seed.alias.core.SeedAliasHttpResponse;
 import java.util.concurrent.CompletableFuture;
 
-public class AsyncSeedAliasClient {
+public class AsyncSeedAliasClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final AsyncRawSeedAliasClient rawClient;
@@ -25,11 +26,35 @@ public class AsyncSeedAliasClient {
     }
 
     public CompletableFuture<Void> get(String typeId) {
-        return this.rawClient.get(typeId).thenApply(response -> response.body());
+        CompletableFuture<SeedAliasHttpResponse<Void>> rawFuture = this.rawClient.get(typeId);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> get(String typeId, RequestOptions requestOptions) {
-        return this.rawClient.get(typeId, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedAliasHttpResponse<Void>> rawFuture = this.rawClient.get(typeId, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedAliasClientBuilder builder() {

@@ -132,7 +132,6 @@ public final class PushNotification {
 
         private Optional<Integer> badge = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -183,6 +182,17 @@ public final class PushNotification {
         @java.lang.Override
         public PushNotification build() {
             return new PushNotification(deviceToken, title, body, badge, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("deviceToken")
+                    || key.equalsIgnoreCase("title")
+                    || key.equalsIgnoreCase("body")
+                    || key.equalsIgnoreCase("badge")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

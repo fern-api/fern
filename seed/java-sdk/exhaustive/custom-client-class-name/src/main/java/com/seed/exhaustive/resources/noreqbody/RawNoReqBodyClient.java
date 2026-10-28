@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.exhaustive.core.BestApiException;
 import com.seed.exhaustive.core.BestException;
 import com.seed.exhaustive.core.BestHttpResponse;
+import com.seed.exhaustive.core.BodyProperties;
 import com.seed.exhaustive.core.ClientOptions;
 import com.seed.exhaustive.core.ObjectMappers;
 import com.seed.exhaustive.core.RequestOptions;
@@ -93,7 +94,11 @@ public class RawNoReqBodyClient {
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
-                .method("POST", RequestBody.create("", null))
+                .method(
+                        "POST",
+                        BodyProperties.toRequestBody(
+                                requestOptions != null ? requestOptions.getBodyProperties() : null,
+                                RequestBody.create("", null)))
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json")
                 .build();

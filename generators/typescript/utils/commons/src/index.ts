@@ -1,6 +1,7 @@
 export { getOriginalName, getWireValue } from "@fern-api/base-generator";
 export * from "@fern-api/typescript-base";
 export { AsIsManager } from "./asIs/AsIsManager.js";
+export { convertRecordToIndexSignature } from "./codegen-utils/convertRecordToIndexSignature.js";
 export {
     createNumericLiteralSafe,
     createNumericLiteralSafeTypeNode
@@ -30,6 +31,15 @@ export { isExpressionUndefined } from "./codegen-utils/isExpressionUndefined.js"
 export { maybeAddDocsNode, maybeAddDocsStructure } from "./codegen-utils/maybeAddDocs.js";
 export { toCamelCase } from "./codegen-utils/toCamelCase.js";
 export { writerToString } from "./codegen-utils/writerToString.js";
+export {
+    type GetTypeDeclaration,
+    getXmlChildObjectTypes,
+    getXmlEncoding,
+    getXmlPropertyKind,
+    getXmlValueShape,
+    isXmlDependentType,
+    type XmlValueShape
+} from "./codegen-utils/xmlTypes.js";
 export { type CoreUtilities } from "./core-utilities/CoreUtilities.js";
 export * from "./core-utilities/index.js";
 export { type Zurg } from "./core-utilities/Zurg.js";

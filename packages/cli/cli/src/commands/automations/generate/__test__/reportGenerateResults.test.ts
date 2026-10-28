@@ -203,6 +203,22 @@ describe("renderMarkdownSummary", () => {
         expect(md).toContain('📦 <a href="https://pypi.org/project/acme-sdk/0.1.0/">PyPI</a>');
     });
 
+    it("renders a package identifier without creating a hyperlink", () => {
+        const md = renderMarkdownSummary([
+            successResult({
+                pullRequestUrl: null,
+                publishTarget: {
+                    registry: "npm",
+                    label: "npm",
+                    version: "0.1.0",
+                    identifier: "@acme/sdk"
+                }
+            })
+        ]);
+        expect(md).toContain("📦 npm (@acme/sdk)");
+        expect(md).not.toContain('href="@acme/sdk"');
+    });
+
     it("prefers the publish-target status over 'PR created' when both are present", () => {
         // When an SDK is published AND a PR was opened (e.g. npm publish + GitHub PR), the
         // user cares most about the publish result. Matches autopilot precedence.

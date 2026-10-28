@@ -94,7 +94,6 @@ public final class NestedUser {
 
         private User nestedUser;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -123,6 +122,14 @@ public final class NestedUser {
         @java.lang.Override
         public NestedUser build() {
             return new NestedUser(name, nestedUser, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("Name") || key.equalsIgnoreCase("NestedUser")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

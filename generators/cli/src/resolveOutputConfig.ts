@@ -4,17 +4,25 @@ import { assertNeverNoThrow } from "@fern-api/core-utils";
 /**
  * Resolved output configuration the CLI pipeline consumes.
  *
- * `version` follows the Rust SDK's `getCrateVersion()` precedence:
- *   1. `customConfig` version override (future — not wired yet)
- *   2. `config.output.mode` version (github / publish modes)
- *   3. default "0.0.0"
+ * `version` is the version stamped into every generated crate:
+ *   1. `config.output.mode` version (github / publish modes)
+ *   2. the IR's `generationMetadata.requestedVersion` — the only carrier
+ *      for `--version` / SDK Config `sdkVersion` in `downloadFiles` mode
+ *      (local-file-system output), whose generator config has no version
+ *   3. `undefined`, leaving each crate on its existing default
  *
  * `npmPublishInfo` is present only in github output mode when the
  * upstream config includes npm publish metadata. The pipeline uses it
  * to gate workflow emission and stamp the npm package name.
  */
 export interface ResolvedOutputConfig {
-    version: string;
+    version: string | undefined;
+    /**
+     * The IR's requested version when it was set but dropped because Cargo
+     * would reject it. Always `undefined` when the output mode supplies the
+     * version, or when the requested version is `AUTO`.
+     */
+    ignoredRequestedVersion: string | undefined;
     /**
      * True when the output mode is `github` — the pipeline uses this
      * to decide whether to emit `.github/workflows/ci.yml` at all
@@ -46,24 +54,51 @@ export interface ResolvedNpmPublishInfo {
     useOidc: boolean;
 }
 
-const DEFAULT_VERSION = "0.0.0";
-
 type OutputMode = GeneratorConfig["output"]["mode"];
+
+/** semver.org's reference pattern — Cargo rejects any `[package] version` outside it. */
+const SEMVER_PATTERN =
+    /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/;
+
+export interface RequestedVersionResolution {
+    version: string | undefined;
+    ignored: string | undefined;
+}
+
+/**
+ * The IR's raw `requestedVersion`, if it can be stamped into `Cargo.toml`.
+ * `AUTO` and anything else that is not semver are dropped rather than
+ * written into a manifest `cargo build` would then reject; non-`AUTO`
+ * values are reported in `ignored` so the caller can warn.
+ */
+export function resolveRequestedVersion(requestedVersion: string | undefined): RequestedVersionResolution {
+    if (requestedVersion == null) {
+        return { version: undefined, ignored: undefined };
+    }
+    if (SEMVER_PATTERN.test(requestedVersion)) {
+        return { version: requestedVersion, ignored: undefined };
+    }
+    return { version: undefined, ignored: requestedVersion === "AUTO" ? undefined : requestedVersion };
+}
 
 /**
  * Visit `config.output.mode` to extract version + npm publish info.
  *
  * Mirrors the Rust SDK's `getCrateVersion()` pattern: the resolved
  * version comes from the mode union (`github.version`,
- * `publish.version`), falling back to a default when no version is
- * supplied (e.g. `downloadFiles` / `local_files` mode).
+ * `publish.version`), then from the IR's `requestedVersion` when the mode
+ * carries none (`downloadFiles` / local-file-system output).
  */
-export function resolveOutputConfig(output: GeneratorConfig["output"]): ResolvedOutputConfig {
+export function resolveOutputConfig(
+    output: GeneratorConfig["output"],
+    requestedVersion?: string
+): ResolvedOutputConfig {
     const mode: OutputMode = output.mode;
     switch (mode.type) {
         case "github": {
             return {
                 version: mode.version,
+                ignoredRequestedVersion: undefined,
                 isGithubOutput: true,
                 repoUrl: mode.repoUrl,
                 npmPublishInfo: resolveNpmPublishInfo(mode.publishInfo)
@@ -72,27 +107,29 @@ export function resolveOutputConfig(output: GeneratorConfig["output"]): Resolved
         case "publish":
             return {
                 version: mode.version,
+                ignoredRequestedVersion: undefined,
                 isGithubOutput: false,
                 repoUrl: undefined,
                 npmPublishInfo: undefined
             };
         case "downloadFiles":
-            return {
-                version: DEFAULT_VERSION,
-                isGithubOutput: false,
-                repoUrl: undefined,
-                npmPublishInfo: undefined
-            };
+            return resolveFromRequestedVersion(requestedVersion);
         default:
-            // Forward-compatible: unknown output modes fall back to default version with no npm publishing.
+            // Forward-compatible: unknown output modes fall back to the requested version with no npm publishing.
             assertNeverNoThrow(mode as never);
-            return {
-                version: DEFAULT_VERSION,
-                isGithubOutput: false,
-                repoUrl: undefined,
-                npmPublishInfo: undefined
-            };
+            return resolveFromRequestedVersion(requestedVersion);
     }
+}
+
+function resolveFromRequestedVersion(requestedVersion: string | undefined): ResolvedOutputConfig {
+    const { version, ignored } = resolveRequestedVersion(requestedVersion);
+    return {
+        version,
+        ignoredRequestedVersion: ignored,
+        isGithubOutput: false,
+        repoUrl: undefined,
+        npmPublishInfo: undefined
+    };
 }
 
 type GithubPublishInfo = NonNullable<Extract<OutputMode, { type: "github" }>["publishInfo"]>;

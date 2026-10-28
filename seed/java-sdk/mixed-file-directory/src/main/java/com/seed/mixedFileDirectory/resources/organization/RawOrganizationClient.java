@@ -4,6 +4,7 @@
 package com.seed.mixedFileDirectory.resources.organization;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.mixedFileDirectory.core.BodyProperties;
 import com.seed.mixedFileDirectory.core.ClientOptions;
 import com.seed.mixedFileDirectory.core.MediaTypes;
 import com.seed.mixedFileDirectory.core.ObjectMappers;
@@ -53,7 +54,9 @@ public class RawOrganizationClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedMixedFileDirectoryException("Failed to serialize request", e);
         }

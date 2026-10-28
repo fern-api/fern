@@ -4,10 +4,12 @@
 package com.seed.exhaustive.resources.endpoints.params;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.exhaustive.core.BodyProperties;
 import com.seed.exhaustive.core.ClientOptions;
 import com.seed.exhaustive.core.InputStreamRequestBody;
 import com.seed.exhaustive.core.MediaTypes;
 import com.seed.exhaustive.core.ObjectMappers;
+import com.seed.exhaustive.core.PathSegments;
 import com.seed.exhaustive.core.QueryStringMapper;
 import com.seed.exhaustive.core.RequestOptions;
 import com.seed.exhaustive.core.RetryInterceptor;
@@ -60,7 +62,7 @@ public class RawParamsClient {
                 .newBuilder()
                 .addPathSegments("params")
                 .addPathSegments("path")
-                .addPathSegment(param);
+                .addPathSegment(PathSegments.validate(param));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -118,7 +120,7 @@ public class RawParamsClient {
                 .newBuilder()
                 .addPathSegments("params")
                 .addPathSegments("path")
-                .addPathSegment(request.getParam());
+                .addPathSegment(PathSegments.validate(request.getParam()));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -287,7 +289,7 @@ public class RawParamsClient {
                 .newBuilder()
                 .addPathSegments("params")
                 .addPathSegments("path-query")
-                .addPathSegment(param);
+                .addPathSegment(PathSegments.validate(param));
         QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), false);
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
@@ -344,7 +346,7 @@ public class RawParamsClient {
                 .newBuilder()
                 .addPathSegments("params")
                 .addPathSegments("path-query")
-                .addPathSegment(request.getParam());
+                .addPathSegment(PathSegments.validate(request.getParam()));
         QueryStringMapper.addQueryParameter(httpUrl, "query", request.getQuery(), false);
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
@@ -401,7 +403,7 @@ public class RawParamsClient {
                 .newBuilder()
                 .addPathSegments("params")
                 .addPathSegments("path")
-                .addPathSegment(param);
+                .addPathSegment(PathSegments.validate(param));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -410,7 +412,9 @@ public class RawParamsClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedExhaustiveException("Failed to serialize request", e);
         }
@@ -467,7 +471,7 @@ public class RawParamsClient {
                 .newBuilder()
                 .addPathSegments("params")
                 .addPathSegments("path")
-                .addPathSegment(request.getParam());
+                .addPathSegment(PathSegments.validate(request.getParam()));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -476,7 +480,9 @@ public class RawParamsClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request.getBody(), requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedExhaustiveException("Failed to serialize request", e);
         }
@@ -533,7 +539,7 @@ public class RawParamsClient {
                 .newBuilder()
                 .addPathSegments("params")
                 .addPathSegments("path")
-                .addPathSegment(param);
+                .addPathSegment(PathSegments.validate(param));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -636,7 +642,9 @@ public class RawParamsClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request.getBody(), requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -721,7 +729,9 @@ public class RawParamsClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request.getBody(), requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -778,7 +788,7 @@ public class RawParamsClient {
                 .newBuilder()
                 .addPathSegments("params")
                 .addPathSegments("path-bool")
-                .addPathSegment(Boolean.toString(param));
+                .addPathSegment(PathSegments.validate(Boolean.toString(param)));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -835,7 +845,7 @@ public class RawParamsClient {
                 .newBuilder()
                 .addPathSegments("params")
                 .addPathSegments("path")
-                .addPathSegment(param);
+                .addPathSegment(PathSegments.validate(param));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);

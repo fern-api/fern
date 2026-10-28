@@ -1,15 +1,19 @@
 import { Rule } from "./Rule.js";
 import { AccentColorContrastRule } from "./rules/accent-color-contrast/index.js";
 import { AllRolesMustBeDeclaredRule } from "./rules/all-roles-must-be-declared/index.js";
+import { ApiSectionHasDefinitionRule } from "./rules/api-section-has-definition/index.js";
 import { FilepathsExistRule } from "./rules/filepaths-exist/index.js";
+import { LibraryFoldersInNavigationRule } from "./rules/library-folders-in-navigation/index.js";
 import { MissingRedirectsRule } from "./rules/missing-redirects/index.js";
 import { NavigationConflicts } from "./rules/navigation-conflicts/index.js";
 import { NoCircularRedirectsRule } from "./rules/no-circular-redirects/index.js";
 import { NoNonComponentRefsRule } from "./rules/no-non-component-refs/index.js";
 import { NoOpenApiV2InDocsRule } from "./rules/no-openapi-v2-in-docs/index.js";
+import { RobotsTxtOnInstanceUrlRequiresRobotsTxtRule } from "./rules/robots-txt-on-instance-url-requires-robots-txt/index.js";
 import { TranslationDirectoriesExistRule } from "./rules/translation-directories-exist/index.js";
 import { ValidChangelogSlugRule } from "./rules/valid-changelog-slug/index.js";
 import { ValidDocsEndpoints } from "./rules/valid-docs-endpoints/index.js";
+import { ValidEmbeddingOriginsRule } from "./rules/valid-embedding-origins/index.js";
 import { ValidFileTypes } from "./rules/valid-file-types/index.js";
 import { ValidFrontmatter } from "./rules/valid-frontmatter/index.js";
 import { ValidInstanceUrlRule } from "./rules/valid-instance-url/index.js";
@@ -28,6 +32,7 @@ import { ValidateVersionFileRule } from "./rules/validate-version-file/index.js"
 const allRules = [
     ValidRedirectsFilesRule, // Report redirects files that could not be read
     FilepathsExistRule,
+    ApiSectionHasDefinitionRule, // Every `api:` navigation item must resolve to a loadable API definition
     NoOpenApiV2InDocsRule, // Check OpenAPI v2 first (more fundamental issue)
     ValidOpenApiExamples, // Validate human examples in OpenAPI specs
     NoNonComponentRefsRule, // Check non-component references (will skip v2 files)
@@ -38,11 +43,14 @@ const allRules = [
     ValidVersionRefRule, // Reject a version entry that declares both 'ref' and 'path'
     ValidateProductFileRule,
     ValidInstanceUrlRule, // Validate instance URLs have valid subdomains
+    ValidEmbeddingOriginsRule, // Validate settings.embedding.allowed-origins are well-formed CSP frame-ancestors sources
+    RobotsTxtOnInstanceUrlRequiresRobotsTxtRule, // Warn when experimental.robots-txt-on-instance-url is set without agents.robots-txt
     NoCircularRedirectsRule, // Detect circular redirect chains
     ValidTranslationsConfigRule,
     MissingRedirectsRule, // Check if any previously published URLs disappear without a redirect
     AccentColorContrastRule,
     ValidMarkdownLinks,
+    LibraryFoldersInNavigationRule, // Warn when only some generated library folders are wired into navigation
     ValidFileTypes,
     ValidDocsEndpoints,
     AllRolesMustBeDeclaredRule,

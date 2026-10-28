@@ -49,12 +49,12 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
     }
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
-        if (context.config.output.snippetFilepath != null) {
-            const dynamicIr = context.ir.dynamic;
-            if (!dynamicIr) {
-                throw GeneratorError.internalError("Cannot generate dynamic snippets without dynamic IR");
-            }
-
+        const snippetFilepath = context.config.output.snippetFilepath;
+        const dynamicIr = context.ir.dynamic;
+        if (dynamicIr == null && snippetFilepath != null) {
+            throw GeneratorError.internalError("Cannot generate dynamic snippets without dynamic IR");
+        }
+        if (dynamicIr != null) {
             // Single IR conversion and generator instance shared across all snippet consumers.
             // Previously, populateSnippetsCache() and generateSnippets() each created their own
             // DynamicSnippetsGenerator (duplicating convertIr() and constructor work).
@@ -79,7 +79,6 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
             // Pre-populate snippets cache with the shared generator (used by reference.md)
             await context.snippetGenerator.populateSnippetsCache(sharedSnippetsGenerator);
 
-            const snippetFilepath = context.config.output.snippetFilepath;
             let endpointSnippets: Endpoint[] = [];
             try {
                 endpointSnippets = await this.generateSnippets({
@@ -94,7 +93,7 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
             // Run README and reference generation in parallel
             context.logger.debug("Starting README.md and reference.md generation...");
             const [readmeResult, referenceResult] = await Promise.allSettled([
-                this.generateReadme({ context, endpointSnippets }),
+                snippetFilepath != null ? this.generateReadme({ context, endpointSnippets }) : Promise.resolve(),
                 this.generateReference({ context })
             ]);
 
@@ -110,14 +109,16 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
             }
             context.logger.debug("Successfully generated README.md and reference.md");
 
-            try {
-                await this.generateSnippetsJson({
-                    context,
-                    endpointSnippets,
-                    snippetFilepath
-                });
-            } catch (e) {
-                context.logger.warn("Failed to generate snippets.json, this is OK");
+            if (snippetFilepath != null) {
+                try {
+                    await this.generateSnippetsJson({
+                        context,
+                        endpointSnippets,
+                        snippetFilepath
+                    });
+                } catch (e) {
+                    context.logger.warn("Failed to generate snippets.json, this is OK");
+                }
             }
         }
 

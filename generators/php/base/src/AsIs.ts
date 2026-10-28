@@ -81,6 +81,15 @@ export enum AsIsFiles {
     WebhookSignature = "WebhookSignature.Template.php",
     WebhookSignatureTest = "WebhookSignatureTest.Template.php",
 
+    // Core/Xml files.
+    XmlElement = "Xml/XmlElement.Template.php",
+    XmlNode = "Xml/XmlNode.Template.php",
+    XmlText = "Xml/XmlText.Template.php",
+    XmlComment = "Xml/XmlComment.Template.php",
+    XmlSerializableType = "Xml/XmlSerializableType.Template.php",
+    XmlUtils = "Xml/XmlUtils.Template.php",
+    XmlElementTest = "Xml/XmlElementTest.Template.php",
+
     // Utils files.
     // TODO: Should add explicit "core" and "utils" prefixes to organize better
     File = "File.Template.php"

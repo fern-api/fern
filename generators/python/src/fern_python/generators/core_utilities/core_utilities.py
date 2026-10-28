@@ -21,6 +21,7 @@ class CoreUtilities:
         use_typeddict_requests: bool,
         use_pydantic_field_aliases: bool,
         pydantic_compatibility: PydanticVersionCompatibility,
+        has_xml_types: bool = False,
     ) -> None:
         self.filepath = (Filepath.DirectoryFilepathPart(module_name="core"),)
         self._module_path = tuple(part.module_name for part in self.filepath)
@@ -28,6 +29,7 @@ class CoreUtilities:
         self._use_typeddict_requests = use_typeddict_requests
         self._use_pydantic_field_aliases = use_pydantic_field_aliases
         self._pydantic_compatibility = pydantic_compatibility
+        self._has_xml_types = has_xml_types
 
     def copy_to_project(self, *, project: Project) -> None:
         is_v1_on_v2 = self._pydantic_compatibility == PydanticVersionCompatibility.V1_ON_V2
@@ -95,6 +97,17 @@ class CoreUtilities:
             exports={"FieldMetadata"},
         )
 
+        if self._has_xml_types:
+            self._copy_file_to_project(
+                project=project,
+                relative_filepath_on_disk="xml_utilities.py",
+                filepath_in_project=Filepath(
+                    directories=self.filepath,
+                    file=Filepath.FilepathPart(module_name="xml_utilities"),
+                ),
+                exports=set(),
+            )
+
         if self._allow_skipping_validation:
             self._copy_file_to_project(
                 project=project,
@@ -145,6 +158,14 @@ class CoreUtilities:
         return AST.ClassReference(
             qualified_name_excluding_import=("StrEnum",),
             import_=AST.ReferenceImport(module=AST.Module.local(*self._module_path), named_import="enum"),
+        )
+
+    def get_xml_utility(self, name: str) -> AST.Reference:
+        return AST.Reference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "xml_utilities"), named_import=name
+            ),
         )
 
     def get_field_metadata(self) -> FieldMetadata:

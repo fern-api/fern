@@ -466,6 +466,64 @@ class ContainerClient
     /**
      * Example:
      * ```php
+     * $client->endpoints->container->getAndReturnMapOfIntegerToObject(
+     *     [
+     *         1 => new ObjectWithRequiredField([
+     *             'string' => 'string',
+     *         ]),
+     *     ],
+     * );
+     * ```
+     *
+     * @param array<int, ObjectWithRequiredField> $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return ?array<int, ObjectWithRequiredField>
+     * @throws SeedException
+     * @throws SeedApiException
+     */
+    public function getAndReturnMapOfIntegerToObject(array $request, ?array $options = null): ?array
+    {
+        $options = array_merge($this->options, $options ?? []);
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "/container/map-integer-to-object",
+                    method: HttpMethod::POST,
+                    body: JsonSerializer::serializeArray($request, ['integer' => ObjectWithRequiredField::class]),
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return JsonDecoder::decodeArray($json, ['integer' => ObjectWithRequiredField::class]); // @phpstan-ignore-line
+            }
+        } catch (JsonException $e) {
+            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new SeedException(message: $e->getMessage(), previous: $e);
+        }
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * Example:
+     * ```php
      * $client->endpoints->container->getAndReturnOptional(
      *     new ObjectWithRequiredField([
      *         'string' => 'string',

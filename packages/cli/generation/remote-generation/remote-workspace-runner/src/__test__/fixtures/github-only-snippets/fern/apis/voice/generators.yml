@@ -1,0 +1,34 @@
+# Mirrors a customer config: github-only SDKs (no `output: pypi/npm` block), no version pin.
+api:
+  specs:
+    - openapi: openapi.yml
+groups:
+  python-sdk:
+    generators:
+      - name: fernapi/fern-python-sdk
+        version: 4.49.1
+        github:
+          repository: smallest-inc/smallest-python-sdk
+          mode: pull-request
+        config:
+          package_name: smallestai
+          client:
+            class_name: Smallest
+  ts-sdk:
+    generators:
+      - name: fernapi/fern-typescript-sdk
+        version: 3.0.0
+        github:
+          repository: smallest-inc/smallest-typescript-sdk
+          mode: pull-request
+        config:
+          namespaceExport: Smallest
+  php-sdk:
+    generators:
+      - name: fernapi/fern-php-sdk
+        version: 1.0.0
+        github:
+          repository: smallest-inc/smallest-php-sdk
+          mode: pull-request
+        config:
+          packageName: smallest/smallestai

@@ -13,6 +13,11 @@ var (
 	nestedFieldInner = big.NewInt(1 << 0)
 )
 
+// nestedNullableFields maps the wire names of Nested's nullable fields (required or optional) to their field bits.
+var nestedNullableFields = map[string]*big.Int{
+	"inner": nestedFieldInner,
+}
+
 type Nested struct {
 	Inner *string `json:"inner,omitempty" url:"inner,omitempty"`
 
@@ -38,10 +43,12 @@ func (n *Nested) GetExtraProperties() map[string]interface{} {
 }
 
 func (n *Nested) require(field *big.Int) {
-	if n.explicitFields == nil {
-		n.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if n.explicitFields != nil {
+		next.Set(n.explicitFields)
 	}
-	n.explicitFields.Or(n.explicitFields, field)
+	next.Or(next, field)
+	n.explicitFields = next
 }
 
 // SetInner sets the Inner field and marks it as non-optional;
@@ -63,6 +70,13 @@ func (n *Nested) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	n.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, nestedNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		n.require(presentFields)
+	}
 	n.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -99,6 +113,13 @@ var (
 	thingFieldRank   = big.NewInt(1 << 2)
 	thingFieldNested = big.NewInt(1 << 3)
 )
+
+// thingNullableFields maps the wire names of Thing's nullable fields (required or optional) to their field bits.
+var thingNullableFields = map[string]*big.Int{
+	"logo":   thingFieldLogo,
+	"rank":   thingFieldRank,
+	"nested": thingFieldNested,
+}
 
 type Thing struct {
 	ID     string  `json:"id" url:"id"`
@@ -150,10 +171,12 @@ func (t *Thing) GetExtraProperties() map[string]interface{} {
 }
 
 func (t *Thing) require(field *big.Int) {
-	if t.explicitFields == nil {
-		t.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if t.explicitFields != nil {
+		next.Set(t.explicitFields)
 	}
-	t.explicitFields.Or(t.explicitFields, field)
+	next.Or(next, field)
+	t.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -200,6 +223,13 @@ func (t *Thing) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	t.ExtraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, thingNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		t.require(presentFields)
+	}
 	t.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -259,10 +289,12 @@ func (t *ThingResponse) GetExtraProperties() map[string]interface{} {
 }
 
 func (t *ThingResponse) require(field *big.Int) {
-	if t.explicitFields == nil {
-		t.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if t.explicitFields != nil {
+		next.Set(t.explicitFields)
 	}
-	t.explicitFields.Or(t.explicitFields, field)
+	next.Or(next, field)
+	t.explicitFields = next
 }
 
 // SetThing sets the Thing field and marks it as non-optional;

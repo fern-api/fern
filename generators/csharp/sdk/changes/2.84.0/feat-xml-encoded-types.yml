@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Object types with XML encoding metadata (e.g. TwiML) now implement `IXmlNode` with `ToXml()`/`ToXElement()`,
+    static `FromXml(string)`/`FromXElement(XElement)` parsers, and fluent child builder methods
+    (`response.Say("Hello", voice: "man").Dial(...)`). Unknown attributes and child elements are preserved in
+    `AdditionalAttributes`/`AdditionalChildren` and re-emitted; `AddChild(XmlElement)` adds arbitrary elements.
+    Parsing rejects malformed XML, mismatched root elements and DTDs. Types without XML metadata are unchanged.
+  type: feat

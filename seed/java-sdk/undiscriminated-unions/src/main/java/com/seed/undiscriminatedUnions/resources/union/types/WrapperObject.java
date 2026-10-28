@@ -94,7 +94,6 @@ public final class WrapperObject {
 
         private String label;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -123,6 +122,14 @@ public final class WrapperObject {
         @java.lang.Override
         public WrapperObject build() {
             return new WrapperObject(inner, label, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("inner") || key.equalsIgnoreCase("label")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

@@ -94,7 +94,6 @@ public final class LeafObjectA {
 
         private int sharedNumber;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -123,6 +122,14 @@ public final class LeafObjectA {
         @java.lang.Override
         public LeafObjectA build() {
             return new LeafObjectA(onlyInA, sharedNumber, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("onlyInA") || key.equalsIgnoreCase("sharedNumber")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

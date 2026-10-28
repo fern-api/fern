@@ -5,6 +5,7 @@ package com.seed.mixedFileDirectory.resources.user.events.metadata;
 
 import com.seed.mixedFileDirectory.core.ClientOptions;
 import com.seed.mixedFileDirectory.core.RequestOptions;
+import com.seed.mixedFileDirectory.core.SeedMixedFileDirectoryHttpResponse;
 import com.seed.mixedFileDirectory.resources.user.events.metadata.requests.GetEventMetadataRequest;
 import com.seed.mixedFileDirectory.resources.user.events.metadata.types.Metadata;
 import java.util.concurrent.CompletableFuture;
@@ -30,13 +31,28 @@ public class AsyncMetadataClient {
      * Get event metadata.
      */
     public CompletableFuture<Metadata> getMetadata(GetEventMetadataRequest request) {
-        return this.rawClient.getMetadata(request).thenApply(response -> response.body());
+        CompletableFuture<SeedMixedFileDirectoryHttpResponse<Metadata>> rawFuture = this.rawClient.getMetadata(request);
+        CompletableFuture<Metadata> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Get event metadata.
      */
     public CompletableFuture<Metadata> getMetadata(GetEventMetadataRequest request, RequestOptions requestOptions) {
-        return this.rawClient.getMetadata(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedMixedFileDirectoryHttpResponse<Metadata>> rawFuture =
+                this.rawClient.getMetadata(request, requestOptions);
+        CompletableFuture<Metadata> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

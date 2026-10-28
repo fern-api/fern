@@ -66,6 +66,10 @@ export class UnionGenerator extends FileGenerator<RubyFile, ModelCustomConfigSch
             node: ruby.codeblock((writer) => {
                 ruby.comment({ docs: "frozen_string_literal: true" }).write(writer);
                 writer.newLine();
+                writer.writeLine(
+                    `require_relative "${this.context.getRequireRelativePathToRootFile(this.typeDeclaration.name.typeId)}"`
+                );
+                writer.newLine();
                 ruby.wrapInModules(classNode, this.context.getModulesForTypeId(this.typeDeclaration.name.typeId)).write(
                     writer
                 );
@@ -78,7 +82,7 @@ export class UnionGenerator extends FileGenerator<RubyFile, ModelCustomConfigSch
 
     private unionMemberFromUnionType(type: FernIr.SingleUnionType): UnionMember {
         return {
-            keyName: this.case.screamingSnakeSafe(type.discriminantValue),
+            keyName: this.case.screamingSnakeUnsafe(type.discriminantValue),
             typeReference: this.typeReferenceFromUnionType(type)
         };
     }

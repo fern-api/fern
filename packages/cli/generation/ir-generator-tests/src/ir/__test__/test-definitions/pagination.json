@@ -39366,7 +39366,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -39482,6 +39483,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_inline-users/inline-users.listWithCursorPagination": {
@@ -39506,7 +39508,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -39865,6 +39868,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_inline-users/inline-users.listWithMixedTypeCursorPagination": {
@@ -39889,7 +39893,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -40149,6 +40154,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_inline-users/inline-users.listWithBodyCursorPagination": {
@@ -40173,7 +40179,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -40436,6 +40443,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_inline-users/inline-users.listWithOffsetPagination": {
@@ -40460,7 +40468,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -40819,6 +40828,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_inline-users/inline-users.listWithDoubleOffsetPagination": {
@@ -40843,7 +40853,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -41202,6 +41213,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_inline-users/inline-users.listWithBodyOffsetPagination": {
@@ -41226,7 +41238,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -41489,6 +41502,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_inline-users/inline-users.listWithOffsetStepPagination": {
@@ -41513,7 +41527,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -41839,6 +41854,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_inline-users/inline-users.listWithOffsetPaginationHasNextPage": {
@@ -41863,7 +41879,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -42189,6 +42206,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_inline-users/inline-users.listWithExtendedResults": {
@@ -42213,7 +42231,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -42473,6 +42492,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_inline-users/inline-users.listWithExtendedResultsAndOptionalData": {
@@ -42497,7 +42517,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -42757,6 +42778,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_inline-users/inline-users.listUsernames": {
@@ -42781,7 +42803,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -43041,6 +43064,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_inline-users/inline-users.listWithGlobalConfig": {
@@ -43065,7 +43089,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -43325,6 +43350,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_users.listWithCursorPagination": {
@@ -43349,7 +43375,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -43630,6 +43657,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_users.listWithMixedTypeCursorPagination": {
@@ -43654,7 +43682,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -43836,6 +43865,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_users.listWithBodyCursorPagination": {
@@ -43860,7 +43890,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -44045,6 +44076,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_users.listWithTopLevelBodyCursorPagination": {
@@ -44069,7 +44101,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -44287,6 +44320,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_users.listWithOffsetPagination": {
@@ -44311,7 +44345,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -44592,6 +44627,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_users.listWithDoubleOffsetPagination": {
@@ -44616,7 +44652,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -44897,6 +44934,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_users.listWithBodyOffsetPagination": {
@@ -44921,7 +44959,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -45106,6 +45145,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_users.listWithOffsetStepPagination": {
@@ -45130,7 +45170,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -45378,6 +45419,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_users.listWithOffsetPaginationHasNextPage": {
@@ -45402,7 +45444,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -45650,6 +45693,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_users.listWithExtendedResults": {
@@ -45674,7 +45718,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -45856,6 +45901,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_users.listWithExtendedResultsAndOptionalData": {
@@ -45880,7 +45926,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -46062,6 +46109,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_users.listUsernames": {
@@ -46086,7 +46134,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -46268,6 +46317,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_users.listUsernamesWithOptionalResponse": {
@@ -46292,7 +46342,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -46474,6 +46525,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_users.listWithGlobalConfig": {
@@ -46498,7 +46550,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -46680,6 +46733,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_users.listWithOptionalData": {
@@ -46704,7 +46758,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -46886,6 +46941,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_users.listWithAliasedData": {
@@ -46910,7 +46966,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -47158,6 +47215,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             }
         },
@@ -47348,6 +47406,7 @@
         "hasPaginatedEndpoints": true,
         "hasFileDownloadEndpoints": false,
         "idempotencyKeyGeneration": null,
+        "webhookSignatureVerification": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",

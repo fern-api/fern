@@ -5,10 +5,11 @@ package com.seed.aliasExtends;
 
 import com.seed.aliasExtends.core.ClientOptions;
 import com.seed.aliasExtends.core.RequestOptions;
+import com.seed.aliasExtends.core.SeedAliasExtendsHttpResponse;
 import com.seed.aliasExtends.requests.InlinedChildRequest;
 import java.util.concurrent.CompletableFuture;
 
-public class AsyncSeedAliasExtendsClient {
+public class AsyncSeedAliasExtendsClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final AsyncRawSeedAliasExtendsClient rawClient;
@@ -26,12 +27,38 @@ public class AsyncSeedAliasExtendsClient {
     }
 
     public CompletableFuture<Void> extendedInlineRequestBody(InlinedChildRequest request) {
-        return this.rawClient.extendedInlineRequestBody(request).thenApply(response -> response.body());
+        CompletableFuture<SeedAliasExtendsHttpResponse<Void>> rawFuture =
+                this.rawClient.extendedInlineRequestBody(request);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> extendedInlineRequestBody(
             InlinedChildRequest request, RequestOptions requestOptions) {
-        return this.rawClient.extendedInlineRequestBody(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedAliasExtendsHttpResponse<Void>> rawFuture =
+                this.rawClient.extendedInlineRequestBody(request, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedAliasExtendsClientBuilder builder() {

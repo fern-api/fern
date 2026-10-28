@@ -13,6 +13,7 @@ import Api
             )
         )
         let client = ApiClient(
+            baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )
@@ -31,6 +32,7 @@ import Api
             )
         )
         let client = ApiClient(
+            baseURL: "https://api.fern.com",
             token: "<token>",
             urlSession: stub.urlSession
         )

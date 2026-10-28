@@ -211,6 +211,7 @@ name: api
   messages:
     testChannel_sendMessage:
       body: string
+      docs: Message with marked data information.
       origin: client
   path: /test
   url: websocket
@@ -228,6 +229,7 @@ name: api
   messages:
     testChannel2_sendMessage:
       body: string
+      docs: Message with marked data information.
       origin: client
   path: /test2
   url: websocket2
@@ -347,6 +349,7 @@ name: api
   messages:
     testChannel_sendMessage:
       body: string
+      docs: Message with marked data information.
       origin: client
   path: /test
   url: websocket
@@ -364,6 +367,7 @@ name: api
   messages:
     testChannel2_sendMessage:
       body: string
+      docs: Message with marked data information.
       origin: client
   path: /test2
   url: websocket2
@@ -741,6 +745,10 @@ channel:
   messages:
     marketData:
       body: streamRoot.Market
+      docs: >
+        The initial response message will show the existing state of the order
+        book. Subsequent messages will show all executed trades, as well as all
+        other changes to the order book from orders placed or canceled.
       origin: client
   path: /v1/marketdata/{symbol}
   query-parameters:
@@ -1963,6 +1971,7 @@ name: api
   messages:
     testChannel_sendMessage:
       body: string
+      docs: Message with marked data information.
       origin: client
   path: /test
   url: websocket
@@ -1980,6 +1989,7 @@ name: api
   messages:
     testChannel2_sendMessage:
       body: string
+      docs: Message with marked data information.
       origin: client
   path: /test2
   url: websocket2
@@ -3015,6 +3025,7 @@ name: api
   messages:
     testChannel_sendMessage:
       body: string
+      docs: Message with marked data information.
       origin: client
   path: /test
   url: websocket
@@ -3032,6 +3043,7 @@ name: api
   messages:
     testChannel2_sendMessage:
       body: string
+      docs: Message with marked data information.
       origin: client
   path: /test2
   url: websocket2
@@ -3141,6 +3153,7 @@ name: api
   messages:
     testChannel_sendMessage:
       body: string
+      docs: Message with marked data information.
       origin: client
   path: /test
   url: websocket
@@ -3158,6 +3171,7 @@ name: api
   messages:
     testChannel2_sendMessage:
       body: string
+      docs: Message with marked data information.
       origin: client
   path: /test2
   url: websocket2

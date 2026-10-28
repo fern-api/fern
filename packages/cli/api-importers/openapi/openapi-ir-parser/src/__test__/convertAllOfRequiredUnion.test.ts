@@ -224,6 +224,174 @@ describe.each([false, true])("allOf required union (inlineAllOfSchemas=%s)", (in
         expect(types.extra).toBe("optional");
     });
 
+    it("marks a parent-defined nullable property required-nullable when only the child branch requires it", () => {
+        const document = createDocument({
+            TransactionBase: {
+                type: "object",
+                properties: {
+                    transaction_id: { type: "string" },
+                    pending_transaction_id: { type: "string", nullable: true },
+                    account_owner: { type: "string", nullable: true },
+                    iso_currency_code: { type: "string", nullable: true },
+                    merchant_name: { type: "string", nullable: true }
+                },
+                required: ["transaction_id", "iso_currency_code"]
+            },
+            Transaction: {
+                allOf: [
+                    { $ref: "#/components/schemas/TransactionBase" },
+                    {
+                        type: "object",
+                        properties: {
+                            authorized_date: { type: "string", format: "date", nullable: true }
+                        },
+                        required: ["account_owner", "pending_transaction_id", "authorized_date"]
+                    }
+                ]
+            }
+        });
+        const types = getPropertyTypes(document, "Transaction", inlineAllOfSchemas);
+        expect(types.account_owner).toBe("nullable");
+        expect(types.pending_transaction_id).toBe("nullable");
+        expect(types.authorized_date).toBe("nullable");
+        expect(types.merchant_name).toBe(inlineAllOfSchemas ? "optional" : undefined);
+        if (inlineAllOfSchemas) {
+            expect(types.transaction_id).toBe("primitive");
+            expect(types.iso_currency_code).toBe("nullable");
+        }
+    });
+
+    it("marks a parent-defined non-nullable property required when only the child's top-level required lists it", () => {
+        const document = createDocument({
+            Parent: {
+                type: "object",
+                properties: {
+                    name: { type: "string" },
+                    note: { type: "string" }
+                }
+            },
+            Child: {
+                allOf: [
+                    { $ref: "#/components/schemas/Parent" },
+                    {
+                        type: "object",
+                        properties: {
+                            extra: { type: "string" }
+                        }
+                    }
+                ],
+                required: ["name"]
+            }
+        });
+        const types = getPropertyTypes(document, "Child", inlineAllOfSchemas);
+        expect(types.name).toBe("primitive");
+        expect(types.extra).toBe("optional");
+        expect(types.note).toBe(inlineAllOfSchemas ? "optional" : undefined);
+    });
+
+    it("marks a grandparent-defined property required when only the grandchild branch requires it", () => {
+        const document = createDocument({
+            Grandparent: {
+                type: "object",
+                properties: {
+                    gp_nullable: { type: "string", nullable: true },
+                    gp_plain: { type: "string" },
+                    gp_untouched: { type: "string", nullable: true }
+                }
+            },
+            Parent: {
+                allOf: [
+                    { $ref: "#/components/schemas/Grandparent" },
+                    {
+                        type: "object",
+                        properties: {
+                            p: { type: "string" }
+                        }
+                    }
+                ]
+            },
+            Child: {
+                allOf: [
+                    { $ref: "#/components/schemas/Parent" },
+                    {
+                        type: "object",
+                        properties: {
+                            c: { type: "string" }
+                        },
+                        required: ["gp_nullable", "gp_plain", "p"]
+                    }
+                ]
+            }
+        });
+        const types = getPropertyTypes(document, "Child", inlineAllOfSchemas);
+        expect(types.gp_nullable).toBe("nullable");
+        expect(types.gp_plain).toBe("primitive");
+        expect(types.p).toBe("primitive");
+        expect(types.c).toBe("optional");
+        expect(types.gp_untouched).toBe(inlineAllOfSchemas ? "optional" : undefined);
+    });
+
+    it("does not redeclare a parent property that the parent already requires", () => {
+        const document = createDocument({
+            Parent: {
+                type: "object",
+                properties: {
+                    mask: { type: "string", nullable: true }
+                },
+                required: ["mask"]
+            },
+            Child: {
+                allOf: [
+                    { $ref: "#/components/schemas/Parent" },
+                    {
+                        type: "object",
+                        properties: {
+                            extra: { type: "string" }
+                        },
+                        required: ["mask"]
+                    }
+                ]
+            }
+        });
+        const types = getPropertyTypes(document, "Child", inlineAllOfSchemas);
+        expect(types.mask).toBe(inlineAllOfSchemas ? "nullable" : undefined);
+        expect(types.extra).toBe("optional");
+    });
+
+    it("leaves a property optional when no allOf branch requires it", () => {
+        const document = createDocument({
+            Parent: {
+                type: "object",
+                properties: {
+                    id: { type: "string" },
+                    nullable_note: { type: "string", nullable: true },
+                    plain_note: { type: "string" }
+                },
+                required: ["id"]
+            },
+            Child: {
+                allOf: [
+                    { $ref: "#/components/schemas/Parent" },
+                    {
+                        type: "object",
+                        properties: {
+                            child_nullable: { type: "string", nullable: true },
+                            child_plain: { type: "string" }
+                        }
+                    }
+                ]
+            }
+        });
+        const types = getPropertyTypes(document, "Child", inlineAllOfSchemas);
+        expect(types.child_nullable).toBe("optional");
+        expect(types.child_plain).toBe("optional");
+        expect(types.nullable_note).toBe(inlineAllOfSchemas ? "optional" : undefined);
+        expect(types.plain_note).toBe(inlineAllOfSchemas ? "optional" : undefined);
+        if (inlineAllOfSchemas) {
+            expect(types.id).toBe("primitive");
+        }
+    });
+
     it("does not change behavior for schemas without allOf", () => {
         const document = createDocument({
             Plain: {

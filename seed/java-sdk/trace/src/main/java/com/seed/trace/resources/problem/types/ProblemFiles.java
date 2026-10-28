@@ -101,7 +101,6 @@ public final class ProblemFiles {
 
         private List<FileInfo> readOnlyFiles = new ArrayList<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -147,6 +146,14 @@ public final class ProblemFiles {
         @java.lang.Override
         public ProblemFiles build() {
             return new ProblemFiles(solutionFile, readOnlyFiles, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("solutionFile") || key.equalsIgnoreCase("readOnlyFiles")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

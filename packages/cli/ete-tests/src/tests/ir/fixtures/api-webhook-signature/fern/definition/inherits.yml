@@ -1,0 +1,21 @@
+# No `webhook-signature` in this file: both webhooks fall back to api.settings.webhook-signature.
+types:
+  MessageStatusPayload:
+    properties:
+      MessageSid: string
+      MessageStatus: string
+
+webhooks:
+  messageStatus:
+    method: POST
+    payload: MessageStatusPayload
+
+  # Per-webhook override wins over the API-wide scheme.
+  signedDifferently:
+    method: POST
+    payload: MessageStatusPayload
+    signature:
+      type: hmac
+      header: x-other-signature
+      algorithm: sha256
+      encoding: hex

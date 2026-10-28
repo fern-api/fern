@@ -8,7 +8,7 @@ import com.seed.objectsWithImports.core.Suppliers;
 import com.seed.objectsWithImports.resources.optional.AsyncOptionalClient;
 import java.util.function.Supplier;
 
-public class AsyncSeedObjectsWithImportsClient {
+public class AsyncSeedObjectsWithImportsClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AsyncOptionalClient> optionalClient;
@@ -20,6 +20,16 @@ public class AsyncSeedObjectsWithImportsClient {
 
     public AsyncOptionalClient optional() {
         return this.optionalClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedObjectsWithImportsClientBuilder builder() {

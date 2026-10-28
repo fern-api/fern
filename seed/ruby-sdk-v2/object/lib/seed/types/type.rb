@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
+require_relative "../../seed"
+
 module Seed
   module Types
     # Exercises all of the built-in types.
     class Type < Internal::Types::Model
       field :one, -> { Integer }, optional: false, nullable: false
 
-      field :two, -> { Integer }, optional: false, nullable: false
+      field :two, -> { Float }, optional: false, nullable: false
 
       field :three, -> { String }, optional: false, nullable: false
 
@@ -24,7 +26,7 @@ module Seed
 
       field :ten, -> { Internal::Types::Array[Integer] }, optional: false, nullable: false
 
-      field :eleven, -> { Internal::Types::Array[Integer] }, optional: false, nullable: false
+      field :eleven, -> { Internal::Types::Array[Float] }, optional: false, nullable: false
 
       field :twelve, -> { Internal::Types::Hash[String, Internal::Types::Boolean] }, optional: false, nullable: false
 
@@ -46,7 +48,7 @@ module Seed
 
       field :twentyone, -> { Integer }, optional: false, nullable: false
 
-      field :twentytwo, -> { Integer }, optional: false, nullable: false
+      field :twentytwo, -> { Float }, optional: false, nullable: false
 
       field :twentythree, -> { String }, optional: false, nullable: false
 

@@ -3,6 +3,7 @@ import {
     applyTranslatedNavigationOverlays,
     type DocsDefinitionResolver,
     getTranslatedAnnouncement,
+    markUntranslatedNavNodesNoindex,
     replaceImagePathsAndUrls,
     replaceReferencedCode,
     replaceReferencedMarkdown,
@@ -129,7 +130,7 @@ export async function buildTranslatedDocsDefinition({
                         editThisPageUrl,
                         editThisPageLaunch: basePage?.editThisPageLaunch
                     }
-                ];
+                ] as const;
             } catch (pageError) {
                 context.logger.warn(
                     `Failed to process translated page "${path}" for locale "${locale}": ${String(pageError)}. Falling back to base page.`
@@ -139,11 +140,12 @@ export async function buildTranslatedDocsDefinition({
         })
     );
 
+    const successfulTranslatedPageEntries = translatedPageEntries.filter(
+        (entry): entry is NonNullable<typeof entry> => entry != null
+    );
     const translatedPages = {
         ...docsDefinition.pages,
-        ...Object.fromEntries(
-            translatedPageEntries.filter((entry): entry is NonNullable<typeof entry> => entry != null)
-        )
+        ...Object.fromEntries(successfulTranslatedPageEntries)
     };
 
     let updatedRoot = applyTranslatedFrontmatterToNavTree(
@@ -162,6 +164,10 @@ export async function buildTranslatedDocsDefinition({
             translatedNavbarLinks = localeNavOverlay.navbarLinks;
         }
     }
+
+    updatedRoot = markUntranslatedNavNodesNoindex(updatedRoot, {
+        translatedPageIds: new Set(successfulTranslatedPageEntries.map(([path]) => path))
+    });
 
     return {
         ...docsDefinition,

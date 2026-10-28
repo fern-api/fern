@@ -4,9 +4,11 @@
 package com.seed.api.resources.testgroup;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.api.core.BodyProperties;
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.MediaTypes;
 import com.seed.api.core.ObjectMappers;
+import com.seed.api.core.PathSegments;
 import com.seed.api.core.QueryStringMapper;
 import com.seed.api.core.RequestOptions;
 import com.seed.api.core.RetryInterceptor;
@@ -65,7 +67,7 @@ public class RawTestGroupClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("optional-request-body")
-                .addPathSegment(pathParam);
+                .addPathSegment(PathSegments.validate(pathParam));
         if (request.getQueryParamObject().isPresent()) {
             QueryStringMapper.addQueryParameter(
                     httpUrl, "query_param_object", request.getQueryParamObject().get(), false);
@@ -85,7 +87,9 @@ public class RawTestGroupClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request.getBody(), requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

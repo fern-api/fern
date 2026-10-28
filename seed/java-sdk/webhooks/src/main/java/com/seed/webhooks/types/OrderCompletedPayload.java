@@ -109,7 +109,6 @@ public final class OrderCompletedPayload {
 
         private String currency;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -146,6 +145,14 @@ public final class OrderCompletedPayload {
         @java.lang.Override
         public OrderCompletedPayload build() {
             return new OrderCompletedPayload(orderId, total, currency, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("orderId") || key.equalsIgnoreCase("total") || key.equalsIgnoreCase("currency")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

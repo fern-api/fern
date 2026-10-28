@@ -3,11 +3,19 @@
  */
 package com.seed.publicObject.core;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Supplier;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 
 public final class ClientOptions {
@@ -19,6 +27,12 @@ public final class ClientOptions {
 
     private final OkHttpClient httpClient;
 
+    private final boolean ownsHttpClient;
+
+    private final AtomicBoolean closed;
+
+    private final Set<AutoCloseable> openWebSockets;
+
     private final int timeout;
 
     private final int maxRetries;
@@ -29,6 +43,8 @@ public final class ClientOptions {
 
     private final Optional<Double> retryJitterFactor;
 
+    private final Optional<Set<Integer>> retryOnStatusCodes;
+
     private final Optional<LogConfig> logging;
 
     private ClientOptions(
@@ -36,11 +52,15 @@ public final class ClientOptions {
             Map<String, String> headers,
             Map<String, Supplier<String>> headerSuppliers,
             OkHttpClient httpClient,
+            boolean ownsHttpClient,
+            AtomicBoolean closed,
+            Set<AutoCloseable> openWebSockets,
             int timeout,
             int maxRetries,
             Optional<Long> initialRetryDelayMillis,
             Optional<Long> maxRetryDelayMillis,
             Optional<Double> retryJitterFactor,
+            Optional<Set<Integer>> retryOnStatusCodes,
             Optional<LogConfig> logging) {
         this.environment = environment;
         this.headers = new HashMap<>();
@@ -55,11 +75,15 @@ public final class ClientOptions {
         });
         this.headerSuppliers = headerSuppliers;
         this.httpClient = httpClient;
+        this.ownsHttpClient = ownsHttpClient;
+        this.closed = closed;
+        this.openWebSockets = openWebSockets;
         this.timeout = timeout;
         this.maxRetries = maxRetries;
         this.initialRetryDelayMillis = initialRetryDelayMillis;
         this.maxRetryDelayMillis = maxRetryDelayMillis;
         this.retryJitterFactor = retryJitterFactor;
+        this.retryOnStatusCodes = retryOnStatusCodes;
         this.logging = logging;
     }
 
@@ -118,6 +142,72 @@ public final class ClientOptions {
         return this.retryJitterFactor;
     }
 
+    public Optional<Set<Integer>> retryOnStatusCodes() {
+        return this.retryOnStatusCodes;
+    }
+
+    /**
+     * Releases resources owned by this client. Only shuts down the underlying OkHttpClient's
+     * dispatcher executor and evicts its connection pool when this client created that
+     * OkHttpClient itself; an OkHttpClient supplied via httpClient is left running, since the
+     * caller owns its lifecycle.
+     * <p>
+     * In-flight calls are not cancelled or awaited, and any request issued after this method
+     * returns fails with a {@code RejectedExecutionException}. Options derived from this one via
+     * {@code Builder.from(...)} share the same dispatcher and connection pool, so closing either
+     * releases them for both. Calling this method more than once has no further effect.
+     * <p>
+     * WebSocket clients created from this client that are still connected are disconnected
+     * first (whether or not the OkHttpClient is owned), so they stop reconnecting before the
+     * dispatcher goes away. Any WebSocket connect or reconnect attempted afterwards fails with
+     * an {@code IllegalStateException} explaining that the client has been closed.
+     */
+    public void close() {
+        if (!this.closed.compareAndSet(false, true)) {
+            return;
+        }
+        for (AutoCloseable webSocket : new ArrayList<>(this.openWebSockets)) {
+            try {
+                webSocket.close();
+            } catch (Exception e) {
+                // best effort; keep closing the remaining sockets and the HTTP client
+            }
+        }
+        this.openWebSockets.clear();
+        if (!this.ownsHttpClient) {
+            return;
+        }
+        this.httpClient.dispatcher().executorService().shutdown();
+        this.httpClient.connectionPool().evictAll();
+    }
+
+    /**
+     * Returns whether {@link #close()} has been called on this client.
+     */
+    public boolean isClosed() {
+        return this.closed.get();
+    }
+
+    /**
+     * Tracks a connected WebSocket client so that {@link #close()} disconnects it.
+     *
+     * @throws IllegalStateException if this client has already been closed
+     */
+    public void registerWebSocket(AutoCloseable webSocket) {
+        this.openWebSockets.add(webSocket);
+        if (this.closed.get()) {
+            this.openWebSockets.remove(webSocket);
+            throw new IllegalStateException("root client has been closed");
+        }
+    }
+
+    /**
+     * Stops tracking a WebSocket client that has been disconnected.
+     */
+    public void unregisterWebSocket(AutoCloseable webSocket) {
+        this.openWebSockets.remove(webSocket);
+    }
+
     public Optional<LogConfig> logging() {
         return this.logging;
     }
@@ -141,9 +231,19 @@ public final class ClientOptions {
 
         private Optional<Double> retryJitterFactor = Optional.empty();
 
+        private Optional<Set<Integer>> retryOnStatusCodes = Optional.empty();
+
         private Optional<Integer> timeout = Optional.empty();
 
+        private Optional<Integer> maxConcurrentRequests = Optional.empty();
+
         private OkHttpClient httpClient = null;
+
+        private boolean ownsHttpClient = true;
+
+        private AtomicBoolean closed;
+
+        private Set<AutoCloseable> openWebSockets;
 
         private Optional<LogConfig> logging = Optional.empty();
 
@@ -212,8 +312,51 @@ public final class ClientOptions {
             return this;
         }
 
+        /**
+         * Restricts automatic retries to responses with one of the given HTTP status codes,
+         * for example {@code 429} only, or {@code 429} and {@code 503}. Replaces the default
+         * set, so codes not listed here (such as other 5xx) are returned as-is instead of being
+         * retried. An empty set disables status-based retries. Retry-After handling, maxRetries() and
+         * the backoff settings are unchanged.
+         */
+        public Builder retryOnStatusCodes(Set<Integer> retryOnStatusCodes) {
+            if (retryOnStatusCodes == null) {
+                throw new IllegalArgumentException("retryOnStatusCodes must not be null");
+            }
+            for (Integer statusCode : retryOnStatusCodes) {
+                if (statusCode == null || statusCode < 100 || statusCode > 599) {
+                    throw new IllegalArgumentException(
+                            "retryOnStatusCodes contains an invalid HTTP status code: " + statusCode);
+                }
+            }
+            this.retryOnStatusCodes = Optional.of(Collections.unmodifiableSet(new HashSet<>(retryOnStatusCodes)));
+            return this;
+        }
+
+        /**
+         * Caps the number of requests that may be in flight at the same time, for both the
+         * synchronous and the asynchronous client. Defaults to no limit.
+         * A request holds a slot from the moment it is sent until its response body is
+         * closed; a caller that needs a slot waits (bounded by the call timeout) until one is
+         * free. Retries waiting for their backoff delay do not hold a slot. Also applies to
+         * an OkHttpClient supplied via httpClient(), whose own dispatcher limits still bound
+         * asynchronous calls.
+         */
+        public Builder maxConcurrentRequests(int maxConcurrentRequests) {
+            if (maxConcurrentRequests <= 0) {
+                throw new IllegalArgumentException("maxConcurrentRequests must be positive");
+            }
+            this.maxConcurrentRequests = Optional.of(maxConcurrentRequests);
+            return this;
+        }
+
+        /**
+         * Sets the underlying OkHttp client. The caller retains ownership of its lifecycle:
+         * close() will not shut down its dispatcher executor or evict its connection pool.
+         */
         public Builder httpClient(OkHttpClient httpClient) {
             this.httpClient = httpClient;
+            this.ownsHttpClient = httpClient == null;
             return this;
         }
 
@@ -235,6 +378,19 @@ public final class ClientOptions {
                         .connectTimeout(0, TimeUnit.SECONDS)
                         .writeTimeout(0, TimeUnit.SECONDS)
                         .readTimeout(0, TimeUnit.SECONDS));
+                List<Interceptor> interceptors = httpClientBuilder.interceptors();
+                for (int i = 0; i < interceptors.size(); i++) {
+                    if (interceptors.get(i) instanceof RetryInterceptor) {
+                        interceptors.set(
+                                i,
+                                new RetryInterceptor(
+                                        this.maxRetries,
+                                        this.initialRetryDelayMillis,
+                                        this.maxRetryDelayMillis,
+                                        this.retryJitterFactor,
+                                        this.retryOnStatusCodes));
+                    }
+                }
             } else {
                 httpClientBuilder
                         .callTimeout(this.timeout.orElse(60), TimeUnit.SECONDS)
@@ -245,8 +401,16 @@ public final class ClientOptions {
                                 this.maxRetries,
                                 this.initialRetryDelayMillis,
                                 this.maxRetryDelayMillis,
-                                this.retryJitterFactor));
+                                this.retryJitterFactor,
+                                this.retryOnStatusCodes));
             }
+
+            this.maxConcurrentRequests.ifPresent(limit -> {
+                httpClientBuilder
+                        .interceptors()
+                        .removeIf(interceptor -> interceptor instanceof ConcurrencyLimitingInterceptor);
+                httpClientBuilder.addInterceptor(new ConcurrencyLimitingInterceptor(limit));
+            });
 
             Logger logger = Logger.from(this.logging);
             httpClientBuilder.addInterceptor(new LoggingInterceptor(logger));
@@ -255,16 +419,24 @@ public final class ClientOptions {
             this.httpClient = httpClientBuilder.build();
             this.timeout = Optional.of(httpClient.callTimeoutMillis() / 1000);
 
+            AtomicBoolean closedToUse = this.closed != null ? this.closed : new AtomicBoolean(false);
+            Set<AutoCloseable> openWebSocketsToUse =
+                    this.openWebSockets != null ? this.openWebSockets : ConcurrentHashMap.newKeySet();
+
             return new ClientOptions(
                     environment,
                     headers,
                     headerSuppliers,
                     httpClient,
+                    this.ownsHttpClient,
+                    closedToUse,
+                    openWebSocketsToUse,
                     this.timeout.get(),
                     this.maxRetries,
                     this.initialRetryDelayMillis,
                     this.maxRetryDelayMillis,
                     this.retryJitterFactor,
+                    this.retryOnStatusCodes,
                     this.logging);
         }
 
@@ -276,12 +448,16 @@ public final class ClientOptions {
             builder.environment = clientOptions.environment();
             builder.timeout = Optional.of(clientOptions.timeout(null));
             builder.httpClient = clientOptions.httpClient();
+            builder.ownsHttpClient = clientOptions.ownsHttpClient;
+            builder.closed = clientOptions.closed;
+            builder.openWebSockets = clientOptions.openWebSockets;
             builder.headers.putAll(clientOptions.headers);
             builder.headerSuppliers.putAll(clientOptions.headerSuppliers);
             builder.maxRetries = clientOptions.maxRetries();
             builder.initialRetryDelayMillis = clientOptions.initialRetryDelayMillis();
             builder.maxRetryDelayMillis = clientOptions.maxRetryDelayMillis();
             builder.retryJitterFactor = clientOptions.retryJitterFactor();
+            builder.retryOnStatusCodes = clientOptions.retryOnStatusCodes();
             builder.logging = clientOptions.logging();
             return builder;
         }

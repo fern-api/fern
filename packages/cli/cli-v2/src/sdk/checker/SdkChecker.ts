@@ -1,3 +1,4 @@
+import { generatorsYml } from "@fern-api/configuration";
 import { type ValidationViolation } from "@fern-api/fern-definition-validator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FernRegistryClient as GeneratorsClient } from "@fern-fern/generators-sdk";
@@ -75,6 +76,7 @@ export class SdkChecker {
         this.validateDefaultGroup({ sdks, fernYmlRelativePath, violations });
         this.validateEmptyVersions({ sdks, violations });
         this.validateGraphQlSpecs({ workspace, sdks, violations });
+        this.validateMavenPublishSignatures({ sdks, violations });
         await this.validateVersions({ sdks, violations });
 
         return {
@@ -223,6 +225,41 @@ export class SdkChecker {
                 relativeFilepath: target.sourceLocation.relativeFilePath,
                 nodePath: ["sdks", "targets", target.name, "api"],
                 message: `API '${target.api}' contains a GraphQL spec. GraphQL SDKs are not supported and graphql specs will be skipped for this target.`,
+                displayRelativeFilepath: target.sourceLocation.relativeFilePath,
+                line: target.sourceLocation.line,
+                column: target.sourceLocation.column
+            });
+        }
+    }
+
+    /**
+     * Warns for a Maven publish target with no `signature` and no `url`. The adapter defaults its upload URL to the
+     * Central Portal staging service (see LegacyGeneratorInvocationAdapter.buildMavenPublishInfo), but Maven Central
+     * only releases signed artifacts, so the generated workflow's upload stays staged. Mirrors the generators.yml
+     * `unsigned-maven-publishing` rule. Only targets delivered through git publish, and the adapter picks npm and
+     * pypi ahead of maven, so the warning is limited to targets where the Maven publish info is actually used.
+     */
+    private validateMavenPublishSignatures({
+        sdks,
+        violations
+    }: {
+        sdks: SdkConfig;
+        violations: SdkChecker.ResolvedViolation[];
+    }): void {
+        for (const target of sdks.targets) {
+            const publish = target.publish;
+            const maven = publish?.maven;
+            if (target.output.git == null || maven == null || publish?.npm != null || publish?.pypi != null) {
+                continue;
+            }
+            if (maven.signature != null || maven.url != null) {
+                continue;
+            }
+            violations.push({
+                severity: "warning",
+                relativeFilepath: target.sourceLocation.relativeFilePath,
+                nodePath: ["sdks", "targets", target.name, "publish", "maven"],
+                message: generatorsYml.getUnsignedMavenPublishingWithoutUrlMessage(target.name),
                 displayRelativeFilepath: target.sourceLocation.relativeFilePath,
                 line: target.sourceLocation.line,
                 column: target.sourceLocation.column

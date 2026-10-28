@@ -57,8 +57,10 @@ export async function generateEmbeddedTypes(args: {
      * rather than to the whole workspace.
      */
     splitTypeCrates?: boolean;
+    /** `[package] version` for every types crate; defaults to `0.0.0`. */
+    version?: string;
 }): Promise<EmbeddedTypesResult> {
-    const { irFilepath, outputDir, binaryName, splitTypeCrates = false } = args;
+    const { irFilepath, outputDir, binaryName, splitTypeCrates = false, version = DEFAULT_TYPES_CRATE_VERSION } = args;
     const typesCrateName = `${binaryName}-types`;
     const typesOutputDir = path.join(outputDir, typesCrateName);
     await mkdir(typesOutputDir, { recursive: true });
@@ -116,7 +118,13 @@ export async function generateEmbeddedTypes(args: {
     // produce Cargo.toml or the prelude module that its types import.
     // Patch the crate so it compiles as a workspace member.
     const needsReqwest = await sourceFilesContain(path.join(typesOutputDir, "src"), "reqwest::multipart");
-    await patchTypesCrate({ typesOutputDir, typesCrateName, needsReqwest, keepFernDirectory: splitTypeCrates });
+    await patchTypesCrate({
+        typesOutputDir,
+        typesCrateName,
+        version,
+        needsReqwest,
+        keepFernDirectory: splitTypeCrates
+    });
 
     if (!splitTypeCrates) {
         return { typesCrateName, partitionCrates: [] };
@@ -132,10 +140,13 @@ export async function generateEmbeddedTypes(args: {
         typesOutputDir,
         typesCrateName,
         plan,
-        needsReqwest
+        needsReqwest,
+        version
     });
     return { typesCrateName, partitionCrates };
 }
+
+const DEFAULT_TYPES_CRATE_VERSION = "0.0.0";
 
 /**
  * Upper bound on the rust-model subprocess. Generous enough for very large APIs
@@ -181,16 +192,20 @@ export interface EmbeddedTypesResult {
 async function patchTypesCrate(args: {
     typesOutputDir: string;
     typesCrateName: string;
+    version: string;
     /** Whether any generated file uses `reqwest::multipart` (file uploads). */
     needsReqwest: boolean;
     keepFernDirectory: boolean;
 }): Promise<void> {
-    const { typesOutputDir, typesCrateName, needsReqwest, keepFernDirectory } = args;
+    const { typesOutputDir, typesCrateName, version, needsReqwest, keepFernDirectory } = args;
     const crateName = typesCrateName.replace(/-/g, "_");
 
     // 1. Cargo.toml — minimal lib crate with serde derives and
     //    the extra deps required by the core serde helper modules.
-    await writeFile(path.join(typesOutputDir, "Cargo.toml"), buildTypesCrateCargoToml({ crateName, needsReqwest }));
+    await writeFile(
+        path.join(typesOutputDir, "Cargo.toml"),
+        buildTypesCrateCargoToml({ crateName, version, needsReqwest })
+    );
 
     // 2. src/prelude.rs — re-exports the derives that every generated
     //    type file imports via `use crate::prelude::*`.

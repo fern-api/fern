@@ -79,7 +79,6 @@ public final class DeployResponse {
     public static final class Builder implements SuccessStage, _FinalStage {
         private boolean success;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -100,6 +99,14 @@ public final class DeployResponse {
         @java.lang.Override
         public DeployResponse build() {
             return new DeployResponse(success, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("success")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

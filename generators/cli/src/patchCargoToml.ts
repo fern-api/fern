@@ -34,8 +34,9 @@ import { TEMPLATE_BINARY_NAME } from "./identity.js";
  *
  * What stays:
  *   - `[package] name = "fern-cli-sdk"` — unless `packageIdentity.name`
- *     overrides it; the shipped Cargo.lock pins the name, so a rename
- *     has to patch both files together.
+ *     overrides it (see {@link withDistributionDefaults} for the GitHub
+ *     default); the shipped Cargo.lock pins the name, so a rename has to
+ *     patch both files together.
  *   - `[lib] name = "fern_cli_sdk"` — every `use fern_cli_sdk::...`
  *     in the shipped src/ tree depends on it, so it is never renamed.
  *   - All dependency versions, features, and the `[profile.dist]` block.
@@ -47,8 +48,19 @@ export async function patchCargoToml(args: {
     typesCrateName?: string;
     sdkCrateName?: string;
     packageIdentity?: CargoPackageIdentity;
+    extraDependencies?: Record<string, CargoDependencyValue>;
+    extraDevDependencies?: Record<string, CargoDependencyValue>;
 }): Promise<void> {
-    const { outputDir, binaryName, version, typesCrateName, sdkCrateName, packageIdentity } = args;
+    const {
+        outputDir,
+        binaryName,
+        version,
+        typesCrateName,
+        sdkCrateName,
+        packageIdentity,
+        extraDependencies,
+        extraDevDependencies
+    } = args;
     const cargoTomlPath = path.join(outputDir, "Cargo.toml");
     const contents = await readFile(cargoTomlPath, "utf-8");
 
@@ -66,33 +78,34 @@ export async function patchCargoToml(args: {
         return;
     }
 
-    const patched = applyCargoTomlPatch(contents, binaryName, version ?? "0.0.0", packageIdentity);
+    const packageVersion = version ?? DEFAULT_PACKAGE_VERSION;
+    let patched = applyCargoTomlPatch(contents, binaryName, packageVersion, packageIdentity);
     if (patched === contents) {
         throw new Error(
             `Cargo.toml at ${cargoTomlPath} did not match the expected template — no substitutions made. ` +
                 "Did the SDK template's identity tokens change?"
         );
     }
+    patched = addExtraDependencies(patched, extraDependencies, "dependencies");
+    patched = addExtraDependencies(patched, extraDevDependencies, "dev-dependencies");
     await writeFile(cargoTomlPath, patched);
 
     // Cargo.lock records the package's own version alongside its
-    // dependencies.  When we stamp a resolved version into Cargo.toml,
-    // the lockfile entry must match — otherwise `cargo build --locked`
-    // rejects the build.
+    // dependencies. Cargo.toml always gets a version stamped (the default
+    // when none was resolved), so the lockfile entry must always follow —
+    // otherwise `cargo build --locked` rejects the build.
+    const cargoLockPath = path.join(outputDir, "Cargo.lock");
+    let patchedLock = patchCargoLockVersion(await readFile(cargoLockPath, "utf-8"), packageVersion);
+    patchedLock = addExtraDependenciesToCargoLock(patchedLock, extraDependencies);
     const packageName = packageIdentity?.name;
-    if (version != null || packageName != null) {
-        const cargoLockPath = path.join(outputDir, "Cargo.lock");
-        const lockContents = await readFile(cargoLockPath, "utf-8");
-        let patchedLock = lockContents;
-        if (version != null) {
-            patchedLock = patchCargoLockVersion(patchedLock, version);
-        }
-        if (packageName != null) {
-            patchedLock = renameCargoLockPackage(patchedLock, packageName);
-        }
-        await writeFile(cargoLockPath, patchedLock);
+    if (packageName != null) {
+        patchedLock = renameCargoLockPackage(patchedLock, packageName);
     }
+    await writeFile(cargoLockPath, patchedLock);
 }
+
+/** Root `[package] version` when the invocation supplied no version. */
+export const DEFAULT_PACKAGE_VERSION = "0.0.0";
 
 /**
  * Customer-supplied `[package]` identity for the generated crate. Every
@@ -108,35 +121,191 @@ export interface CargoPackageIdentity {
     keywords?: string[];
 }
 
+/**
+ * A consumer-declared cargo dependency table. Field names follow the
+ * Rust SDK generator's `extraDependencies` (camelCase `defaultFeatures`
+ * is rendered as cargo's `default-features`).
+ */
+export interface CargoDependencySpec {
+    version?: string;
+    features?: string[];
+    optional?: boolean;
+    defaultFeatures?: boolean;
+    package?: string;
+    path?: string;
+    git?: string;
+    branch?: string;
+    rev?: string;
+    registry?: string;
+}
+
+/** A bare version requirement (`"1.16"`) or a full dependency table. */
+export type CargoDependencyValue = string | CargoDependencySpec;
+
+export type CargoDependencyTable = "dependencies" | "dev-dependencies";
+
+/**
+ * Append consumer-declared crates to `Cargo.toml` as
+ * `[<table>.<name>]` sub-tables, inserted before the first `[profile.`
+ * section (same placement as {@link addCrateDependency}).
+ *
+ * Throws when a name is already declared in the template's `[<table>]`
+ * or `[<table>.<name>]`: TOML forbids redefining a key, and the
+ * bundled crates' feature sets are relied on by the vendored `src/`.
+ */
+export function addExtraDependencies(
+    cargoToml: string,
+    dependencies: Record<string, CargoDependencyValue> | undefined,
+    table: CargoDependencyTable
+): string {
+    if (dependencies == null) {
+        return cargoToml;
+    }
+    const names = Object.keys(dependencies);
+    if (names.length === 0) {
+        return cargoToml;
+    }
+    const declared = declaredDependencyNames(cargoToml, table);
+    const configKey = table === "dependencies" ? "extraDependencies" : "extraDevDependencies";
+    let block = "";
+    for (const name of names) {
+        if (declared.has(name)) {
+            throw new Error(
+                `Invalid customConfig.${configKey}: "${name}" is already a [${table}] entry of the generated CLI ` +
+                    "and cannot be redeclared. Remove it from the config to use the bundled version."
+            );
+        }
+        const value = dependencies[name];
+        if (value == null) {
+            continue;
+        }
+        block += renderDependencyTable(table, name, value);
+    }
+    const at = insertionIndex(cargoToml, table);
+    return cargoToml.slice(0, at) + "\n" + block + cargoToml.slice(at);
+}
+
+/**
+ * Where to splice consumer sub-tables: directly after the template's own
+ * `[<table>]` block when it has one (so the manifest reads top-down),
+ * otherwise before the first `[profile.` section, otherwise EOF.
+ */
+function insertionIndex(cargoToml: string, table: CargoDependencyTable): number {
+    const header = `\n[${table}]\n`;
+    const headerIdx = cargoToml.indexOf(header);
+    if (headerIdx !== -1) {
+        const nextHeader = cargoToml.indexOf("\n[", headerIdx + header.length);
+        const next = nextHeader === -1 ? cargoToml.length : nextHeader;
+        // Don't split a comment block that introduces the next section from
+        // the section it describes.
+        const body = cargoToml.slice(headerIdx + header.length, next);
+        const lines = body.split("\n");
+        let cut = lines.length;
+        while (cut > 0) {
+            const trimmed = (lines[cut - 1] ?? "").trim();
+            if (trimmed !== "" && !trimmed.startsWith("#")) {
+                break;
+            }
+            cut--;
+        }
+        return headerIdx + header.length + lines.slice(0, cut).join("\n").length;
+    }
+    const profileIdx = cargoToml.indexOf("\n[profile.");
+    return profileIdx === -1 ? cargoToml.length : profileIdx;
+}
+
+function renderDependencyTable(table: CargoDependencyTable, name: string, value: CargoDependencyValue): string {
+    const spec: CargoDependencySpec = typeof value === "string" ? { version: value } : value;
+    const lines: string[] = [`\n[${table}.${name}]`];
+    const scalars: [string, string | undefined][] = [
+        ["version", spec.version],
+        ["package", spec.package],
+        ["path", spec.path],
+        ["git", spec.git],
+        ["branch", spec.branch],
+        ["rev", spec.rev],
+        ["registry", spec.registry]
+    ];
+    for (const [key, scalar] of scalars) {
+        if (scalar != null) {
+            lines.push(`${key} = ${toTomlString(scalar)}`);
+        }
+    }
+    if (spec.features != null && spec.features.length > 0) {
+        lines.push(`features = [${spec.features.map(toTomlString).join(", ")}]`);
+    }
+    if (spec.optional != null) {
+        lines.push(`optional = ${spec.optional ? "true" : "false"}`);
+    }
+    if (spec.defaultFeatures != null) {
+        lines.push(`default-features = ${spec.defaultFeatures ? "true" : "false"}`);
+    }
+    return `${lines.join("\n")}\n`;
+}
+
+/**
+ * Crate names declared under `[<table>]`, `[<table>.<name>]`, or a
+ * `[target.'cfg(...)'.<table>]` block. Same line-oriented scan as
+ * {@link parseGeneratedCrateManifest}.
+ */
+function declaredDependencyNames(cargoToml: string, table: CargoDependencyTable): Set<string> {
+    const names = new Set<string>();
+    let inTable = false;
+    for (const rawLine of cargoToml.split("\n")) {
+        const line = rawLine.trim();
+        if (line.startsWith("#") || line.length === 0) {
+            continue;
+        }
+        const header = line.match(/^\[([^\]]+)\]$/);
+        if (header?.[1] != null) {
+            const section = header[1];
+            const suffix = section.startsWith("target.") ? section.slice(section.lastIndexOf(".") + 1) : section;
+            inTable = suffix === table;
+            const subTable = section.match(new RegExp(`^${table}\\."?([A-Za-z0-9_-]+)"?$`));
+            if (subTable?.[1] != null) {
+                names.add(subTable[1]);
+            }
+            continue;
+        }
+        if (!inTable) {
+            continue;
+        }
+        const key = line.match(/^"?([A-Za-z0-9_-]+)"?\s*=/)?.[1];
+        if (key != null) {
+            names.add(key);
+        }
+    }
+    return names;
+}
+
 /** The crate name the SDK template ships with. */
 export const TEMPLATE_PACKAGE_NAME = "fern-cli-sdk";
 
 /**
- * Point the crate's `[package]` identity at the consumer when a Homebrew
- * formula will be published and they didn't pin these fields themselves.
+ * Point the crate's `[package]` identity at the consumer's GitHub repo for
+ * every field they didn't pin themselves. Explicit values always win.
  *
  * `packageIdentity` only rewrites the fields you set, so anything unset
- * keeps the SDK template's Fern-owned value. That is harmless while it
- * only lives in a `Cargo.toml` nobody reads — but cargo-dist renders the
- * published `.rb` straight off this block, and each field lands
- * somewhere different:
+ * keeps the SDK template's Fern-owned value — and cargo-dist builds every
+ * published artifact straight off this block:
  *
- * | `[package]`   | Where it surfaces in the formula          |
- * |---------------|-------------------------------------------|
- * | `repository`  | the per-arch **release download URLs**     |
- * | `homepage`    | `homepage "..."`                          |
- * | `description` | `desc "..."`                              |
+ * | `[package]`   | Where it surfaces                                          |
+ * |---------------|------------------------------------------------------------|
+ * | `name`        | archive names and `<name>-installer.sh` / `.ps1`            |
+ * | `repository`  | the installers' and Homebrew formula's **download URLs**    |
+ * | `homepage`    | the formula's `homepage "..."`                              |
+ * | `description` | the formula's `desc "..."`                                  |
  *
- * `repository` is the load-bearing one: left at the template's value the
- * formula's `url`s resolve to `github.com/fern-api/cli-sdk/releases/...`,
- * where the consumer's archives do not exist — so every `brew install`
- * 404s. The other two are cosmetic but publish Fern's branding on the
- * consumer's own tap.
+ * Left at the template's values, the shell/PowerShell installers (and
+ * every `brew install`) fetch from `github.com/fern-api/cli-sdk/releases/...`,
+ * where the consumer's archives do not exist, and the release assets ship as
+ * `fern-cli-sdk-*`. So with a `repoUrl`, `repository` and `homepage` default
+ * to it and `name` defaults to `binaryName` — unless that is not a valid
+ * crate name, or would collide with a crate the shipped `Cargo.lock` already
+ * resolves (`lockedPackageNames`), in which case it stays the template's.
  *
- * Scoped to the Homebrew case on purpose: applying it unconditionally
- * would change the `Cargo.toml` of every existing github-mode
- * generation, which is exactly the silent-default churn the
- * breaking-changes policy exists to prevent. Explicit values always win.
+ * `description` only defaults when a Homebrew formula is published.
+ * Without a `repoUrl` (non-GitHub output) nothing but that changes.
  *
  * Scoop needs no equivalent — its manifest reads `repoUrl` and the
  * resolved asset name directly rather than going through `[package]`.
@@ -145,22 +314,67 @@ export function withDistributionDefaults(args: {
     packageIdentity: CargoPackageIdentity | undefined;
     publishesHomebrew: boolean;
     repoUrl: string | undefined;
+    binaryName: string;
     /** Fallback `desc` for the formula, e.g. "CLI for the Acme API". */
     description: string | undefined;
+    lockedPackageNames?: ReadonlySet<string>;
 }): CargoPackageIdentity | undefined {
-    const { packageIdentity, publishesHomebrew, repoUrl, description } = args;
-    if (!publishesHomebrew) {
-        return packageIdentity;
-    }
+    const { packageIdentity, publishesHomebrew, repoUrl, binaryName, description, lockedPackageNames } = args;
     const resolved: CargoPackageIdentity = { ...packageIdentity };
     if (repoUrl != null) {
         resolved.repository ??= repoUrl;
         resolved.homepage ??= repoUrl;
+        if (resolved.name == null && canDefaultCrateName(binaryName, lockedPackageNames)) {
+            resolved.name = binaryName;
+        }
     }
-    if (description != null) {
+    if (publishesHomebrew && description != null) {
         resolved.description ??= description;
     }
     return Object.keys(resolved).length > 0 ? resolved : packageIdentity;
+}
+
+const CRATE_NAME_PATTERN = /^[A-Za-z][A-Za-z0-9_-]{0,63}$/;
+
+/** Cargo's package-name rule: ASCII alphanumerics, `-` and `_`, starting with a letter, at most 64 chars. */
+export function isValidCrateName(name: string): boolean {
+    return CRATE_NAME_PATTERN.test(name);
+}
+
+function canDefaultCrateName(name: string, lockedPackageNames: ReadonlySet<string> | undefined): boolean {
+    if (!isValidCrateName(name)) {
+        return false;
+    }
+    const normalized = normalizeCrateName(name);
+    for (const locked of lockedPackageNames ?? []) {
+        if (locked !== TEMPLATE_PACKAGE_NAME && normalizeCrateName(locked) === normalized) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function normalizeCrateName(name: string): string {
+    return name.toLowerCase().replace(/-/g, "_");
+}
+
+/** Every `[[package]] name` recorded in a Cargo.lock, wherever it sits in its block and with LF or CRLF endings. */
+export function cargoLockPackageNames(cargoLock: string): Set<string> {
+    const names = new Set<string>();
+    let inPackage = false;
+    for (const rawLine of cargoLock.split(/\r?\n/)) {
+        const line = rawLine.trim();
+        if (line.startsWith("[")) {
+            inPackage = line === "[[package]]";
+            continue;
+        }
+        const name = inPackage ? /^name\s*=\s*"([^"]+)"/.exec(line)?.[1] : undefined;
+        if (name != null) {
+            names.add(name);
+            inPackage = false;
+        }
+    }
+    return names;
 }
 
 /**
@@ -296,6 +510,12 @@ export function applyCargoTomlPatch(
  */
 export function addCrateDependency(cargoToml: string, crateName: string): string {
     const snakeName = crateName.replace(/-/g, "_");
+    if (declaredDependencyNames(cargoToml, "dependencies").has(snakeName)) {
+        throw new Error(
+            `Invalid customConfig.extraDependencies: "${snakeName}" is the generated \`${crateName}\` crate, ` +
+                "which the CLI generator declares itself. Remove it from the config."
+        );
+    }
     const depBlock = `\n[dependencies.${snakeName}]\npath = "${crateName}"\n`;
     // Append before [profile] sections if present, else at the end.
     const profileIdx = cargoToml.indexOf("\n[profile.");
@@ -322,6 +542,95 @@ function replaceVersion(cargoToml: string, version: string): string {
         throw new Error('patchCargoToml anchor missing — could not find version = "..." field');
     }
     return cargoToml.replace(versionRe, `$1"${version}"`);
+}
+
+const CARGO_LOCK_ROOT_DEPENDENCIES =
+    /(\[\[package\]\]\nname = "fern-cli-sdk"\nversion = "[^"]*"\n(?:(?!\[\[package\]\])[^\n]*\n)*?dependencies = \[\n)((?: "[^"\n]*",\n)*)(\])/;
+
+/**
+ * Whether `version` satisfies a bare or `^` Cargo requirement (`"0.10"`,
+ * `"^1.2.3"`). Other operators and pre-releases return false, leaving the
+ * crate for cargo to resolve.
+ */
+function caretRequirementMatches(requirement: string, version: string): boolean {
+    const req = /^\^?(\d+)(?:\.(\d+))?(?:\.(\d+))?$/.exec(requirement.trim());
+    const ver = /^(\d+)\.(\d+)\.(\d+)$/.exec(version);
+    if (req == null || ver == null) {
+        return false;
+    }
+    const [major, minor, patch] = [req[1], req[2], req[3]].map((part) => (part == null ? undefined : Number(part)));
+    const [vMajor, vMinor, vPatch] = [ver[1], ver[2], ver[3]].map(Number);
+    if (major == null || vMajor == null || vMinor == null || vPatch == null) {
+        return false;
+    }
+    const atLeast =
+        vMajor !== major ? vMajor > major : vMinor !== (minor ?? 0) ? vMinor > (minor ?? 0) : vPatch >= (patch ?? 0);
+    if (!atLeast || vMajor !== major) {
+        return false;
+    }
+    if (major > 0 || minor == null) {
+        return true;
+    }
+    if (minor > 0 || patch == null) {
+        return vMinor === minor;
+    }
+    return vMinor === 0 && vPatch === patch;
+}
+
+/** Crate name of a lockfile dependency line: ` "tokio 1.0.0",` → `tokio`. */
+function lockDependencyName(line: string): string {
+    return line.trim().replace(/^"/, "").replace(/",$/, "").split(" ")[0] ?? "";
+}
+
+/**
+ * List `extraDependencies` under the root `fern-cli-sdk` entry of
+ * Cargo.lock when the shipped lockfile already resolves the crate (e.g.
+ * `sha1`, pulled in transitively), so a regenerated lockfile keeps it and
+ * `cargo build --locked` accepts the output. Crates the lockfile does not
+ * contain exactly once at a version matching the requirement, plus
+ * `path`/`git`/`registry`/`optional` ones, are left for
+ * the first `cargo build` to resolve, as is a root entry without a
+ * `dependencies` list (the template always has one).
+ */
+export function addExtraDependenciesToCargoLock(
+    cargoLock: string,
+    extraDependencies: Record<string, CargoDependencyValue> | undefined
+): string {
+    if (extraDependencies == null) {
+        return cargoLock;
+    }
+    const match = CARGO_LOCK_ROOT_DEPENDENCIES.exec(cargoLock);
+    if (match == null) {
+        return cargoLock;
+    }
+    const lines = (match[2] ?? "").split("\n").filter((line) => line.length > 0);
+    const listed = new Set(lines.map(lockDependencyName));
+    for (const [name, value] of Object.entries(extraDependencies)) {
+        const spec: CargoDependencySpec = typeof value === "string" ? { version: value } : value;
+        if (spec.path != null || spec.git != null || spec.registry != null || spec.optional === true) {
+            continue;
+        }
+        const crate = spec.package ?? name;
+        const lockedVersions = lockPackageVersions(cargoLock, crate);
+        const lockedVersion = lockedVersions.length === 1 ? lockedVersions[0] : undefined;
+        if (
+            lockedVersion == null ||
+            spec.version == null ||
+            !caretRequirementMatches(spec.version, lockedVersion) ||
+            listed.has(crate)
+        ) {
+            continue;
+        }
+        const line = ` "${crate}",`;
+        const insertAt = lines.findIndex((existing) => lockDependencyName(existing) > crate);
+        lines.splice(insertAt === -1 ? lines.length : insertAt, 0, line);
+        listed.add(crate);
+    }
+    return cargoLock.replace(
+        CARGO_LOCK_ROOT_DEPENDENCIES,
+        (_whole, head: string, _body: string, tail: string) =>
+            `${head}${lines.map((line) => `${line}\n`).join("")}${tail}`
+    );
 }
 
 /**

@@ -45,8 +45,9 @@ export declare namespace ReconnectingWebSocket {
         startClosed?: boolean;
         debug?: boolean;
         /**
-         * Decides whether a close event should trigger a reconnect. Return `false` to treat the close as terminal.
-         * Not consulted when `close()` was called or the abort signal fired. Defaults to `event.code !== 1000`.
+         * Decides whether a server close event should trigger a reconnect. Return `false` to treat the close as terminal.
+         * Not consulted for internal closes, when `close()` was called, or when the abort signal fired.
+         * Defaults to `event.code !== 1000`.
          */
         shouldReconnect?: (event: Events.CloseEvent) => boolean;
     };
@@ -96,6 +97,7 @@ export class ReconnectingWebSocket {
     private _binaryType: BinaryType = "blob";
     private _closeCalled = false;
     private _messageQueue: ReconnectingWebSocket.Message[] = [];
+    private _openWaiters = new Set<() => void>();
 
     private readonly _url: ReconnectingWebSocket.UrlProvider;
     private readonly _protocols?: string | string[];
@@ -192,9 +194,10 @@ export class ReconnectingWebSocket {
         if (this._ws) {
             return this._ws.readyState as ReconnectingWebSocket.ReadyState;
         }
-        return this._options.startClosed
-            ? ReconnectingWebSocket.ReadyState.CLOSED
-            : ReconnectingWebSocket.ReadyState.CONNECTING;
+        if (this._options.startClosed || this._closeCalled || this._abortSignal?.aborted) {
+            return ReconnectingWebSocket.ReadyState.CLOSED;
+        }
+        return ReconnectingWebSocket.ReadyState.CONNECTING;
     }
 
     /**
@@ -233,6 +236,7 @@ export class ReconnectingWebSocket {
         this._closeCalled = true;
         this._shouldReconnect = false;
         this._clearTimeouts();
+        this._notifyOpenWaiters();
         if (!this._ws) {
             this._debug("close enqueued: no ws instance");
             return;
@@ -287,6 +291,63 @@ export class ReconnectingWebSocket {
             // @ts-ignore
             this._listeners[type].push(listener);
         }
+    }
+
+    /**
+     * Resolves once the connection is open. Rejects on an error event, or once the connection is closed and no
+     * connection attempt or reconnect is pending (for example after close(), an abort, or a terminal close).
+     */
+    public waitForOpen(): Promise<void> {
+        if (this.readyState === ReconnectingWebSocket.ReadyState.OPEN) {
+            return Promise.resolve();
+        }
+        if (this._willNotOpen()) {
+            return Promise.reject(new Error("WebSocket closed before the connection was opened"));
+        }
+        return new Promise((resolve, reject) => {
+            const cleanup = () => {
+                this._openWaiters.delete(check);
+                this.removeEventListener("open", onOpen);
+                this.removeEventListener("error", onError);
+                this.removeEventListener("close", check);
+            };
+            const onOpen = () => {
+                cleanup();
+                resolve();
+            };
+            const onError = (event: Events.ErrorEvent) => {
+                cleanup();
+                reject(event);
+            };
+            // Deferred so that a reconnect or error triggered by the same close is accounted for first
+            const check = () => {
+                Promise.resolve().then(() => {
+                    if (this._openWaiters.has(check) && this._willNotOpen()) {
+                        cleanup();
+                        reject(new Error("WebSocket closed before the connection was opened"));
+                    }
+                });
+            };
+            this._openWaiters.add(check);
+            this.addEventListener("open", onOpen);
+            this.addEventListener("error", onError);
+            this.addEventListener("close", check);
+        });
+    }
+
+    /**
+     * Returns whether the given listener is registered for the event type
+     */
+    public hasEventListener<T extends keyof Events.WebSocketEventListenerMap>(
+        type: T,
+        listener: Events.WebSocketEventListenerMap[T],
+    ): boolean {
+        const listeners = this._listeners[type];
+        if (!listeners) {
+            return false;
+        }
+        // @ts-ignore
+        return listeners.some((l) => l === listener);
     }
 
     public dispatchEvent(event: Event) {
@@ -372,8 +433,6 @@ export class ReconnectingWebSocket {
             this._debug("connect aborted");
             return;
         }
-        this._connectLock = true;
-
         const {
             maxRetries = DEFAULT_OPTIONS.maxRetries,
             connectionTimeout = DEFAULT_OPTIONS.connectionTimeout,
@@ -385,6 +444,7 @@ export class ReconnectingWebSocket {
             return;
         }
 
+        this._connectLock = true;
         this._retryCount++;
 
         this._debug("connect", this._retryCount);
@@ -415,6 +475,16 @@ export class ReconnectingWebSocket {
                 this._addListeners();
 
                 this._connectTimeout = setTimeout(() => this._handleTimeout(), connectionTimeout);
+            })
+            .catch((error: unknown) => {
+                this._debug("connect failed", error);
+                this._connectLock = false;
+                const event = new Events.ErrorEvent(error instanceof Error ? error : new Error(String(error)), this);
+                if (this.onerror) {
+                    this.onerror(event);
+                }
+                this._listeners.error.forEach((listener) => this._callEventListener(event, listener));
+                this._connect();
             });
     }
 
@@ -426,18 +496,40 @@ export class ReconnectingWebSocket {
         this._shouldReconnect = false;
         this._closeCalled = true;
         this._clearTimeouts();
-        if (this._ws) {
-            this._removeListeners();
-            // Absorb async errors emitted by ws when closing during CONNECTING state
-            this._ws.addEventListener("error", () => {});
-            try {
-                this._ws.close(1000, "aborted");
-                this._handleClose(new Events.CloseEvent(1000, "aborted", this));
-            } catch (_error) {
-                // ignore
-            }
+        this._notifyOpenWaiters();
+        if (!this._ws) {
+            this._emitClose(new Events.CloseEvent(1000, "aborted", this));
+            return;
+        }
+        this._removeListeners();
+        // Absorb async errors emitted by ws when closing during CONNECTING state
+        this._ws.addEventListener("error", () => {});
+        try {
+            this._ws.close(1000, "aborted");
+            this._emitClose(new Events.CloseEvent(1000, "aborted", this));
+        } catch (_error) {
+            // ignore
         }
     };
+
+    private _willNotOpen(): boolean {
+        if (this._closeCalled || this._abortSignal?.aborted) {
+            return true;
+        }
+        if (this._connectLock) {
+            return false;
+        }
+        if (!this._ws) {
+            return true;
+        }
+        return this._ws.readyState === ReconnectingWebSocket.ReadyState.CLOSED;
+    }
+
+    private _notifyOpenWaiters(): void {
+        for (const waiter of [...this._openWaiters]) {
+            waiter();
+        }
+    }
 
     private _handleTimeout() {
         this._debug("timeout event");
@@ -454,7 +546,7 @@ export class ReconnectingWebSocket {
         this._ws.addEventListener("error", () => {});
         try {
             this._ws.close(code, reason);
-            this._handleClose(new Events.CloseEvent(code, reason, this));
+            this._emitClose(new Events.CloseEvent(code, reason, this));
         } catch (_error) {
             // ignore
         }
@@ -531,11 +623,15 @@ export class ReconnectingWebSocket {
             this._connect();
         }
 
+        this._emitClose(event);
+    };
+
+    private _emitClose(event: Events.CloseEvent): void {
         if (this.onclose) {
             this.onclose(event);
         }
         this._listeners.close.forEach((listener) => this._callEventListener(event, listener));
-    };
+    }
 
     private _isReconnectableClose(event: Events.CloseEvent): boolean {
         const { shouldReconnect = DEFAULT_OPTIONS.shouldReconnect } = this._options;

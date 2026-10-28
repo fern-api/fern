@@ -62,6 +62,18 @@ describe Seed::Internal::Types::Utils do
           Utils.coerce(String, Object.new, strict: true)
         end
       end
+
+      it "converts String subclasses through to_s" do
+        normalized = Class.new(String) do
+          def to_s
+            strip
+          end
+        end
+        result = Utils.coerce(String, normalized.new(" padded "))
+
+        assert_equal "padded", result
+        assert_instance_of String, result
+      end
     end
 
     describe "Symbol" do
@@ -93,6 +105,13 @@ describe Seed::Internal::Types::Utils do
         assert_equal 1_713_916_800, Utils.coerce(Integer, Time.utc(2024, 4, 24))
       end
 
+      it "coerces numeric Symbols such as symbolized JSON keys" do
+        assert_equal 1, Utils.coerce(Integer, :"1")
+        assert_equal(-20, Utils.coerce(Integer, :"-20"))
+        assert_equal :foo, Utils.coerce(Integer, :foo)
+        assert_equal :"1.5", Utils.coerce(Integer, :"1.5")
+      end
+
       it "passes through value if it cannot be coerced and not strict" do
         obj = Object.new
 
@@ -113,6 +132,12 @@ describe Seed::Internal::Types::Utils do
         assert_in_delta(1.0, Utils.coerce(Float, Complex.rect(1)))
         assert_in_delta(1.0, Utils.coerce(Float, Rational(1)))
         assert_in_delta(1_713_916_800.0, Utils.coerce(Integer, Time.utc(2024, 4, 24)))
+      end
+
+      it "coerces numeric Symbols such as symbolized JSON keys" do
+        assert_in_delta(1.5, Utils.coerce(Float, :"1.5"))
+        assert_in_delta(2.0, Utils.coerce(Float, :"2"))
+        assert_equal :foo, Utils.coerce(Float, :foo)
       end
 
       it "passes through value if it cannot be coerced and not strict" do
@@ -207,6 +232,30 @@ describe Seed::Internal::Types::Utils do
 
         assert_equal TestUtils::M.new(value: "foo"), smh_res[:foo]
       end
+    end
+  end
+
+  describe ".serialize_times" do
+    it "converts Time values to RFC 3339 strings with millisecond precision" do
+      assert_equal "2026-10-16T01:40:16.000Z", Utils.serialize_times(Time.utc(2026, 10, 16, 1, 40, 16))
+      assert_equal "2026-01-02T03:04:05.000+05:00", Utils.serialize_times(Time.new(2026, 1, 2, 3, 4, 5, "+05:00"))
+    end
+
+    it "converts Time values nested in hashes and arrays" do
+      value = { begin_time: Time.utc(2026, 10, 16, 1, 40, 16), nested: { times: [Time.utc(2026, 1, 2, 3, 4, 5)] } }
+
+      assert_equal(
+        { begin_time: "2026-10-16T01:40:16.000Z", nested: { times: ["2026-01-02T03:04:05.000Z"] } },
+        Utils.serialize_times(value)
+      )
+    end
+
+    it "leaves Date, DateTime, and non-time values unchanged" do
+      date = Date.new(2026, 10, 16)
+      date_time = DateTime.new(2026, 10, 16, 1, 40, 16)
+      value = { date: date, date_time: date_time, name: "plant", count: 3, active: true, missing: nil }
+
+      assert_equal value, Utils.serialize_times(value)
     end
   end
 end

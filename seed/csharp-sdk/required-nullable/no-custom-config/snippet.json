@@ -22,7 +22,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.UpdateFooAsync(\n    \"id\",\n    new UpdateFooRequest\n    {\n        XIdempotencyKey = \"X-Idempotency-Key\",\n        NullableText = \"nullable_text\",\n        NullableNumber = 1.1,\n        NonNullableText = \"non_nullable_text\",\n    }\n);\n"
+                "client": "using SeedApi;\n\nvar client = new SeedApiClient();\nawait client.UpdateFooAsync(\n    \"id\",\n    new UpdateFooRequest\n    {\n        XIdempotencyKey = \"X-Idempotency-Key\",\n        NullableText = \"nullable_text\",\n        NullableNumber = 1.1,\n        NonNullableText = \"non_nullable_text\",\n        RequiredNullableText = \"required_nullable_text\",\n    }\n);\n"
             }
         }
     ]

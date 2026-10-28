@@ -40,12 +40,14 @@ import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.ObjectMethodFactory;
 import com.fern.java.ObjectMethodFactory.EqualsMethod;
 import com.fern.java.PoetTypeNameMapper;
+import com.fern.java.generators.object.XmlObjectMethodsGenerator;
 import com.fern.java.utils.InlineTypeIdResolver;
 import com.fern.java.utils.NameUtils;
 import com.fern.java.utils.NamedTypeId;
 import com.fern.java.utils.TypeReferenceUtils;
 import com.fern.java.utils.TypeReferenceUtils.ContainerTypeEnum;
 import com.fern.java.utils.TypeReferenceUtils.TypeReferenceToName;
+import com.fern.java.utils.XmlTypeUtils;
 import com.google.common.collect.ImmutableSet;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
@@ -70,6 +72,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
+import org.w3c.dom.Element;
 
 public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
     private static final String VISITOR_CLASS_NAME = "Visitor";
@@ -430,7 +433,63 @@ public final class UndiscriminatedUnionGenerator extends AbstractTypeGenerator {
                 .addMethods(getStaticFactories())
                 .addType(getVisitor())
                 .addType(getDeserializer());
+        if (XmlTypeUtils.isXmlUnion(generatorContext.getTypeDeclarations(), undiscriminatedUnion)) {
+            unionTypeSpec
+                    .addSuperinterface(XmlCoreGenerator.getXmlSerializableClassName(generatorContext))
+                    .addMethod(getXmlToXml(false))
+                    .addMethod(getXmlToXml(true))
+                    .addMethod(getXmlFromXml());
+        }
         return unionTypeSpec.build();
+    }
+
+    private MethodSpec getXmlToXml(boolean withDeclarationParameter) {
+        MethodSpec.Builder method = MethodSpec.methodBuilder(XmlObjectMethodsGenerator.TO_XML_METHOD_NAME)
+                .addAnnotation(Override.class)
+                .addModifiers(Modifier.PUBLIC)
+                .returns(String.class);
+        ClassName xmlSerializable = XmlCoreGenerator.getXmlSerializableClassName(generatorContext);
+        if (withDeclarationParameter) {
+            method.addParameter(boolean.class, "xmlDeclaration")
+                    .addStatement("return (($T) this.$N).toXml(xmlDeclaration)", xmlSerializable, VALUE_FIELD_SPEC);
+        } else {
+            method.addStatement("return (($T) this.$N).toXml()", xmlSerializable, VALUE_FIELD_SPEC);
+        }
+        return method.build();
+    }
+
+    /** Parses a child element into whichever member type declares that element name. */
+    private MethodSpec getXmlFromXml() {
+        ClassName xmlReader = XmlCoreGenerator.getXmlReaderClassName(generatorContext);
+        MethodSpec.Builder method = MethodSpec.methodBuilder(XmlObjectMethodsGenerator.FROM_XML_METHOD_NAME)
+                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                .addParameter(Element.class, "element")
+                .returns(className)
+                .addStatement("String name = $T.localName(element)", xmlReader)
+                .beginControlFlow("switch (name)");
+        Set<String> seen = new HashSet<>();
+        for (UndiscriminatedUnionMember member : undiscriminatedUnion.getMembers()) {
+            for (String elementName :
+                    XmlTypeUtils.getElementNames(generatorContext.getTypeDeclarations(), member.getType())) {
+                if (!seen.add(elementName)) {
+                    continue;
+                }
+                method.addCode("case $S:\n", elementName)
+                        .addStatement(
+                                "$>return $L($T.$L(element))$<",
+                                getDeConflictedMemberName(member, STATIC_FACTORY_METHOD_NAME),
+                                memberTypeNames.get(member),
+                                XmlObjectMethodsGenerator.FROM_XML_METHOD_NAME);
+            }
+        }
+        method.addCode("default:\n")
+                .addStatement(
+                        "$>throw new $T($S + name + $S)$<",
+                        IllegalArgumentException.class,
+                        "Unexpected element <",
+                        "> in " + className.simpleName())
+                .endControlFlow();
+        return method.build();
     }
 
     private MethodSpec getRetriever() {

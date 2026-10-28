@@ -10,8 +10,8 @@ async fn main() {
     let client = PaginationClient::new(config).expect("Failed to build client");
     client
         .users
-        .list_usernames_with_optional_response(
-            &ListUsernamesWithOptionalResponseQueryRequest {
+        .list_usernames(
+            &UsersListUsernamesQueryRequest {
                 starting_after: Some("starting_after".to_string()),
                 ..Default::default()
             },

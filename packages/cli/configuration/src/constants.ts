@@ -9,6 +9,14 @@ export const FERN_PACKAGE_MARKER_FILENAME = `${FERN_PACKAGE_MARKER_FILENAME_NO_E
 export const DEPENDENCIES_FILENAME = "dependencies.yml";
 export const GENERATORS_CONFIGURATION_FILENAME = "generators.yml";
 export const GENERATORS_CONFIGURATION_FILENAME_ALTERNATIVE = "generators.yaml";
+/**
+ * Filename used by projects that keep legacy generator groups alongside SDK Config.
+ *
+ * Keep this name centralized: the migration filename is intentionally provisional, and
+ * configuration discovery should not require a repository-wide rewrite if it changes.
+ */
+export const LEGACY_GENERATORS_CONFIGURATION_FILENAME = "generators.legacy.yml";
+export const SDK_CONFIG_FILENAME = "sdk-config.yml";
 export const DEPENDENCIES_CONFIGURATION_FILENAME = "dependencies.yml";
 export const DOCS_CONFIGURATION_FILENAME = "docs.yml";
 export const PROJECT_CONFIG_FILENAME = "fern.config.json";

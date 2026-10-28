@@ -74,9 +74,10 @@ module Seed
     # @param region [String, nil]
     # @param server_url_environment [String, nil]
     # @param max_retries [Integer]
+    # @param timeout [Numeric]
     #
     # @return [void]
-    def initialize(base_url: nil, region: nil, server_url_environment: nil, max_retries: 2)
+    def initialize(base_url: nil, region: nil, server_url_environment: nil, max_retries: 2, timeout: 60)
       if !region.nil? || !server_url_environment.nil?
         region_value = region.nil? ? "us-east-1" : region
         server_url_environment_value = server_url_environment.nil? ? "prod" : server_url_environment
@@ -92,7 +93,8 @@ module Seed
           "User-Agent" => "fern_server-url-templating-single-url/0.0.1",
           "X-Fern-Language" => "Ruby"
         },
-        max_retries: max_retries
+        max_retries: max_retries,
+        timeout: timeout
       )
     end
   end

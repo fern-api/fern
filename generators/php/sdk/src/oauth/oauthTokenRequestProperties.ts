@@ -1,7 +1,7 @@
 import { getOriginalName } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 
-import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import type { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 /**
  * A non-literal request property (beyond client id / client secret) that the

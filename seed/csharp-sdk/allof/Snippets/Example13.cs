@@ -11,12 +11,12 @@ public partial class Examples
 
         await client.CreateTreeAsync(
             new TreeRecord {
-                TreeSpecies = "treeSpecies",
-                HeightInFeet = 1.1,
                 Id = "id",
                 TreeName = "treeName",
-                TreeDescription = "treeDescription",
-                PlantedDate = DateOnly.Parse("2023-01-15")
+                TreeSpecies = "treeSpecies",
+                PlantedDate = DateOnly.Parse("2023-01-15"),
+                HeightInFeet = 1.1,
+                TreeDescription = "treeDescription"
             }
         );
     }

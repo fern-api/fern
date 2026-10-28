@@ -48,10 +48,10 @@ groups:
 Adapter invocations are configured by `sdk-config.yml`, not `generators.yml`:
 
 ```bash
-fern sdk migrate
+fern sdk migrate --group onprem
 ```
 
-Writes `fern/sdk-config.yml` and archives `generators.yml` as `generators.archived.yml`. Other generators keep running from `generators.yml`. Skip this and generation fails with a message telling you to run it.
+Writes `fern/sdk-config.yml`, renames `generators.yml` to `generators.legacy.yml`, and keeps the migrated group as commented rollback YAML. Unmigrated groups remain active in `generators.legacy.yml`. Use repeatable `--language` flags to migrate selected languages from a multi-language group, `--output` to choose another SDK Config, or `--dry-run` to validate and preview the operations without changing files.
 
 ## 4. Generate against the RC image
 

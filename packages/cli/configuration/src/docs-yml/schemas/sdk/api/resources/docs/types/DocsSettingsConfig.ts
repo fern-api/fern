@@ -100,10 +100,24 @@ export interface DocsSettingsConfig {
      */
     websocketOneofDisplay?: FernDocsConfig.WebSocketOneofDisplay;
     /**
+     * Controls which third-party sites may embed your documentation in an iframe.
+     * By default only your docs site itself (and the Fern dashboard) may frame it.
+     */
+    embedding?: FernDocsConfig.EmbeddingConfig;
+    /**
      * If set to true, response examples in the API Reference include a raw HTTP block
      * showing the response status line and response headers alongside the body.
      *
      * @default: false
      */
     showHeadersInExamples?: boolean;
+    /**
+     * If set to true, Fern's built-in docs analytics (PostHog) stays off until visitor consent is given:
+     * no script, cookies, local storage or events. Grant consent from a custom script (e.g. your consent
+     * manager's callback) by setting `window.fernAnalyticsConsent = true` and dispatching
+     * `new Event("fern-analytics-consent")` on `window`.
+     *
+     * @default: false
+     */
+    requireAnalyticsConsent?: boolean;
 }

@@ -3,12 +3,17 @@ import { FernOpenapiIr, ResponseWithExample, SchemaWithExample, Source } from "@
 import { OpenAPIV3 } from "openapi-types";
 
 import { getExtension } from "../../../../getExtension.js";
-import { convertSchema } from "../../../../schema/convertSchemas.js";
+import { convertSchema, getSchemaIdFromReference } from "../../../../schema/convertSchemas.js";
 import { isReferenceObject } from "../../../../schema/utils/isReferenceObject.js";
+import { getSharedErrorResponsesSchemaName } from "../../../../utils/getErrorResponsesSchemaName.js";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext.js";
 import { FernOpenAPIExtension } from "../../extensions/fernExtensions.js";
 import { OperationContext } from "../contexts.js";
-import { ERROR_NAMES_BY_STATUS_CODE } from "../convertToHttpError.js";
+import {
+    ERROR_NAMES_BY_STATUS_CODE,
+    parseWildcardStatusCode,
+    WILDCARD_ERROR_NAMES_BY_STATUS_CODE
+} from "../convertToHttpError.js";
 import {
     getApplicationJsonSchemaMediaObjectFromContent,
     getSchemaMediaObject,
@@ -21,7 +26,7 @@ const SUCCESSFUL_STATUS_CODES = ["200", "201", "202", "204"];
 
 export interface ConvertedResponse {
     value: ResponseWithExample | undefined;
-    errors: Record<FernOpenapiIr.StatusCode, FernOpenapiIr.HttpErrorWithExample>;
+    errors: Record<FernOpenapiIr.ErrorStatusCodeKey, FernOpenapiIr.HttpErrorWithExample>;
 }
 
 export function convertResponse({
@@ -391,20 +396,25 @@ function markErrorSchemas({
     context: AbstractOpenAPIV3ParserContext;
     source: Source;
     namespace: string | undefined;
-}): Record<FernOpenapiIr.StatusCode, FernOpenapiIr.HttpErrorWithExample> {
-    const errors: Record<FernOpenapiIr.StatusCode, FernOpenapiIr.HttpErrorWithExample> = {};
+}): Record<FernOpenapiIr.ErrorStatusCodeKey, FernOpenapiIr.HttpErrorWithExample> {
+    const errors: Record<FernOpenapiIr.ErrorStatusCodeKey, FernOpenapiIr.HttpErrorWithExample> = {};
+    const sharedErrorSchemaName = namespace != null ? getSharedErrorResponsesSchemaName(context.options) : undefined;
     for (const [statusCode, response] of Object.entries(responses)) {
         if (statusCode === "default") {
             continue;
         }
-        const parsedStatusCode = parseInt(statusCode);
+        const wildcardStatusCode = parseWildcardStatusCode(statusCode);
+        const isWildcardStatusCode = wildcardStatusCode != null;
+        const parsedStatusCode = wildcardStatusCode ?? parseInt(statusCode);
         if (parsedStatusCode < 400 || parsedStatusCode > 600) {
             // if status code is not between [400, 600], then it won't count as an error
             continue;
         }
         const resolvedResponse = isReferenceObject(response) ? context.resolveResponseReference(response) : response;
         const mediaObject = getSchemaMediaObject(resolvedResponse.content ?? {}, context);
-        const errorName = ERROR_NAMES_BY_STATUS_CODE[parsedStatusCode];
+        const errorName = isWildcardStatusCode
+            ? WILDCARD_ERROR_NAMES_BY_STATUS_CODE[parsedStatusCode]
+            : ERROR_NAMES_BY_STATUS_CODE[parsedStatusCode];
         if (errorName == null) {
             context.logger.warn(`No error name found for status code ${statusCode}`);
             continue;
@@ -412,8 +422,16 @@ function markErrorSchemas({
         const responseNamespace = context.options.namespacedErrors
             ? getExtension<string>(resolvedResponse, FernOpenAPIExtension.SDK_NAMESPACE)
             : undefined;
-        errors[parsedStatusCode] = {
+        const errorKey = isWildcardStatusCode ? statusCode.toUpperCase() : parsedStatusCode.toString();
+        const isShared =
+            sharedErrorSchemaName != null &&
+            responseNamespace == null &&
+            mediaObject?.schema != null &&
+            isReferenceObject(mediaObject.schema) &&
+            getSchemaIdFromReference(mediaObject.schema) === sharedErrorSchemaName;
+        errors[errorKey] = {
             statusCode: parsedStatusCode,
+            isWildcardStatusCode: isWildcardStatusCode ? true : undefined,
             nameOverride: undefined,
             generatedName: errorName,
             description: resolvedResponse.description,
@@ -424,10 +442,11 @@ function markErrorSchemas({
                 context,
                 [errorName, "Body"],
                 source,
-                responseNamespace ?? namespace
+                isShared ? undefined : (responseNamespace ?? namespace)
             ),
             fullExamples: mediaObject?.examples,
             namespace: responseNamespace,
+            isShared: isShared ? true : undefined,
             source
         };
     }

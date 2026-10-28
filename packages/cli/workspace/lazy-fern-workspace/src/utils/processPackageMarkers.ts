@@ -1,4 +1,4 @@
-import { FernDefinition, ParsedFernFile } from "@fern-api/api-workspace-commons";
+import { FernDefinition, type IdentifiableSource, ParsedFernFile, type Spec } from "@fern-api/api-workspace-commons";
 import { dependenciesYml } from "@fern-api/configuration-loader";
 import { entries, keys } from "@fern-api/core-utils";
 import { PackageMarkerFileSchema } from "@fern-api/fern-definition-schema";
@@ -19,6 +19,15 @@ export declare namespace processPackageMarkers {
         didSucceed: true;
         packageMarkers: Record<RelativeFilePath, ParsedFernFile<PackageMarkerFileSchema>>;
         importedDefinitions: Record<RelativeFilePath, ImportedDefinition>;
+        specs: Spec[];
+        sources: IdentifiableSource[];
+        namespaceCollisions: NamespaceCollision[];
+        namespacesWithoutSpecs: RelativeFilePath[];
+    }
+
+    export interface NamespaceCollision {
+        compositionNamespace: RelativeFilePath;
+        dependencyNamespace: string;
     }
 
     export interface FailedResult {
@@ -49,6 +58,9 @@ export async function processPackageMarkers({
 }): Promise<processPackageMarkers.Return> {
     const packageMarkers: Record<RelativeFilePath, ParsedFernFile<PackageMarkerFileSchema>> = {};
     const importedDefinitions: Record<RelativeFilePath, processPackageMarkers.ImportedDefinition> = {};
+    const specsByNamespace: Record<RelativeFilePath, Spec[]> = {};
+    const sourcesByNamespace: Record<RelativeFilePath, IdentifiableSource[]> = {};
+    const namespaceCollisions: processPackageMarkers.NamespaceCollision[] = [];
     const failures: Record<RelativeFilePath, WorkspaceLoader.DependencyFailure> = {};
 
     await Promise.all(
@@ -86,13 +98,21 @@ export async function processPackageMarkers({
                             loadAPIWorkspace
                         });
                         if (loadDependencyResult.didSucceed) {
-                            importedDefinitions[dirname(pathOfPackageMarker)] = {
+                            const namespace = dirname(pathOfPackageMarker);
+                            importedDefinitions[namespace] = {
                                 definition: loadDependencyResult.definition,
                                 url:
                                     typeof packageMarker.contents.export === "object"
                                         ? packageMarker.contents.export.url
                                         : undefined
                             };
+                            namespaceCollisions.push(
+                                ...collectNamespaceCollisions(loadDependencyResult.specs, namespace)
+                            );
+                            specsByNamespace[namespace] = loadDependencyResult.specs.map((spec) =>
+                                withNamespace(spec, namespace)
+                            );
+                            sourcesByNamespace[namespace] = loadDependencyResult.sources;
                         } else {
                             failures[pathOfPackageMarker] = loadDependencyResult.failure;
                         }
@@ -111,7 +131,36 @@ export async function processPackageMarkers({
         return {
             didSucceed: true,
             packageMarkers,
-            importedDefinitions
+            importedDefinitions,
+            specs: flattenInNamespaceOrder(specsByNamespace),
+            sources: flattenInNamespaceOrder(sourcesByNamespace),
+            namespaceCollisions,
+            namespacesWithoutSpecs: keys(specsByNamespace)
+                .filter((namespace) => (specsByNamespace[namespace] ?? []).length === 0)
+                .sort()
         };
     }
+}
+
+function collectNamespaceCollisions(
+    specs: Spec[],
+    compositionNamespace: RelativeFilePath
+): processPackageMarkers.NamespaceCollision[] {
+    const dependencyNamespaces = new Set(
+        specs.flatMap((spec) => (spec.type !== "protobuf" && spec.namespace != null ? [spec.namespace] : []))
+    );
+    return [...dependencyNamespaces].sort().map((dependencyNamespace) => ({
+        compositionNamespace,
+        dependencyNamespace
+    }));
+}
+
+function withNamespace(spec: Spec, namespace: string): Spec {
+    return spec.type === "protobuf" ? spec : { ...spec, namespace };
+}
+
+function flattenInNamespaceOrder<T>(byNamespace: Record<RelativeFilePath, T[]>): T[] {
+    return keys(byNamespace)
+        .sort()
+        .flatMap((namespace) => byNamespace[namespace] ?? []);
 }

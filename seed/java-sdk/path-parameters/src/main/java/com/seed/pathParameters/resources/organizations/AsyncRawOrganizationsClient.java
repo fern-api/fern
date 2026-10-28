@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.seed.pathParameters.core.ClientOptions;
 import com.seed.pathParameters.core.ObjectMappers;
+import com.seed.pathParameters.core.PathSegments;
 import com.seed.pathParameters.core.QueryStringMapper;
 import com.seed.pathParameters.core.RequestOptions;
 import com.seed.pathParameters.core.RetryInterceptor;
@@ -45,9 +46,9 @@ public class AsyncRawOrganizationsClient {
             String organizationId, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegment(clientOptions.tenantId())
+                .addPathSegment(PathSegments.validate(clientOptions.tenantId()))
                 .addPathSegments("organizations")
-                .addPathSegment(organizationId);
+                .addPathSegment(PathSegments.validate(organizationId));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -73,7 +74,8 @@ public class AsyncRawOrganizationsClient {
                     .build();
         }
         CompletableFuture<SeedPathParametersHttpResponse<Organization>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -102,6 +104,11 @@ public class AsyncRawOrganizationsClient {
                         new SeedPathParametersException("Network error executing HTTP request", e));
             }
         });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
+            }
+        });
         return future;
     }
 
@@ -126,11 +133,11 @@ public class AsyncRawOrganizationsClient {
             String organizationId, String userId, GetOrganizationUserRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegment(clientOptions.tenantId())
+                .addPathSegment(PathSegments.validate(clientOptions.tenantId()))
                 .addPathSegments("organizations")
-                .addPathSegment(organizationId)
+                .addPathSegment(PathSegments.validate(organizationId))
                 .addPathSegments("users")
-                .addPathSegment(userId);
+                .addPathSegment(PathSegments.validate(userId));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -156,7 +163,8 @@ public class AsyncRawOrganizationsClient {
                     .build();
         }
         CompletableFuture<SeedPathParametersHttpResponse<User>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -185,6 +193,11 @@ public class AsyncRawOrganizationsClient {
                         new SeedPathParametersException("Network error executing HTTP request", e));
             }
         });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
+            }
+        });
         return future;
     }
 
@@ -209,9 +222,9 @@ public class AsyncRawOrganizationsClient {
             String organizationId, SearchOrganizationsRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegment(clientOptions.tenantId())
+                .addPathSegment(PathSegments.validate(clientOptions.tenantId()))
                 .addPathSegments("organizations")
-                .addPathSegment(organizationId)
+                .addPathSegment(PathSegments.validate(organizationId))
                 .addPathSegments("search");
         if (request.getLimit().isPresent()) {
             QueryStringMapper.addQueryParameter(
@@ -242,7 +255,8 @@ public class AsyncRawOrganizationsClient {
                     .build();
         }
         CompletableFuture<SeedPathParametersHttpResponse<List<Organization>>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -271,6 +285,11 @@ public class AsyncRawOrganizationsClient {
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(
                         new SeedPathParametersException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;

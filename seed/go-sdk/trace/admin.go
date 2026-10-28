@@ -23,10 +23,12 @@ type StoreTracedTestCaseRequest struct {
 }
 
 func (s *StoreTracedTestCaseRequest) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetResult sets the Result field and marks it as non-optional;
@@ -78,10 +80,12 @@ type StoreTracedWorkspaceRequest struct {
 }
 
 func (s *StoreTracedWorkspaceRequest) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetWorkspaceRunDetails sets the WorkspaceRunDetails field and marks it as non-optional;

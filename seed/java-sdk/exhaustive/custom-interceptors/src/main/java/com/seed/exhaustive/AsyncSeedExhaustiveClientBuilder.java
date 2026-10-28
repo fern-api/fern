@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 
@@ -18,6 +19,10 @@ public class AsyncSeedExhaustiveClientBuilder {
     private Optional<Integer> timeout = Optional.empty();
 
     private Optional<Integer> maxRetries = Optional.empty();
+
+    private Optional<Integer> maxConcurrentRequests = Optional.empty();
+
+    private Optional<Set<Integer>> retryOnStatusCodes = Optional.empty();
 
     private Optional<Long> initialRetryDelayMillis = Optional.empty();
 
@@ -63,6 +68,25 @@ public class AsyncSeedExhaustiveClientBuilder {
      */
     public AsyncSeedExhaustiveClientBuilder maxRetries(int maxRetries) {
         this.maxRetries = Optional.of(maxRetries);
+        return this;
+    }
+
+    /**
+     * Caps the number of in-flight requests (sync and async) the client will have at once. Unlimited unless set; must be positive.
+     */
+    public AsyncSeedExhaustiveClientBuilder maxConcurrentRequests(int maxConcurrentRequests) {
+        this.maxConcurrentRequests = Optional.of(maxConcurrentRequests);
+        return this;
+    }
+
+    /**
+     * Restricts automatic retries to responses with one of the given HTTP status codes (for example {@code 429} only, or {@code 429} and {@code 503}), replacing the default set of 408, 429 and 5xx. Codes not listed are returned as-is. Retry-After handling and the other retry settings are unchanged.
+     */
+    public AsyncSeedExhaustiveClientBuilder retryOnStatusCodes(Set<Integer> retryOnStatusCodes) {
+        if (retryOnStatusCodes == null) {
+            throw new IllegalArgumentException("retryOnStatusCodes must not be null");
+        }
+        this.retryOnStatusCodes = Optional.of(retryOnStatusCodes);
         return this;
     }
 
@@ -137,6 +161,7 @@ public class AsyncSeedExhaustiveClientBuilder {
         setInterceptors(builder);
         setTimeouts(builder);
         setRetries(builder);
+        setConcurrencyLimit(builder);
         setLogging(builder);
         for (Map.Entry<String, String> header : this.customHeaders.entrySet()) {
             builder.addHeader(header.getKey(), header.getValue());
@@ -206,6 +231,21 @@ public class AsyncSeedExhaustiveClientBuilder {
         }
         if (this.retryJitterFactor.isPresent()) {
             builder.retryJitterFactor(this.retryJitterFactor.get());
+        }
+        if (this.retryOnStatusCodes.isPresent()) {
+            builder.retryOnStatusCodes(this.retryOnStatusCodes.get());
+        }
+    }
+
+    /**
+     * Applies the in-flight request cap, if one was configured.
+     * Override this method to customize concurrency limiting.
+     *
+     * @param builder The ClientOptions.Builder to configure
+     */
+    protected void setConcurrencyLimit(ClientOptions.Builder builder) {
+        if (this.maxConcurrentRequests.isPresent()) {
+            builder.maxConcurrentRequests(this.maxConcurrentRequests.get());
         }
     }
 

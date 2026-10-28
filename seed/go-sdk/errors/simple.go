@@ -38,10 +38,12 @@ func (f *FooRequest) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *FooRequest) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetBar sets the Bar field and marks it as non-optional;
@@ -122,10 +124,12 @@ func (f *FooResponse) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *FooResponse) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetBar sets the Bar field and marks it as non-optional;

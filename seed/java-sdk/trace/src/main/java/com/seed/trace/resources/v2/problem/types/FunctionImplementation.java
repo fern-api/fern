@@ -96,7 +96,6 @@ public final class FunctionImplementation {
 
         private Optional<String> imports = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -131,6 +130,14 @@ public final class FunctionImplementation {
         @java.lang.Override
         public FunctionImplementation build() {
             return new FunctionImplementation(impl, imports, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("impl") || key.equalsIgnoreCase("imports")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

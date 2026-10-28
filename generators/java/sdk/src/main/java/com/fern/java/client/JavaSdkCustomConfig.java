@@ -159,6 +159,18 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
         return false;
     }
 
+    /**
+     * If true, the generated client sends only the {@code User-Agent} platform header (in whatever form the other
+     * configs produce, e.g. the structured value from {@link #includePlatformHeaders()}) and omits the
+     * {@code X-Fern-Language}, {@code X-Fern-SDK-Name}, and {@code X-Fern-SDK-Version} headers. Opt-in and disabled by
+     * default so existing generated output is unchanged. Still subject to {@link #omitFernHeaders()}.
+     */
+    @Value.Default
+    @JsonProperty("userAgentOnly")
+    default Boolean userAgentOnly() {
+        return false;
+    }
+
     @Value.Default
     @JsonProperty("retry-status-codes")
     default String retryStatusCodes() {
@@ -173,6 +185,27 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
     @Value.Default
     @JsonProperty("respect-optional-request-body")
     default Boolean respectOptionalRequestBody() {
+        return false;
+    }
+
+    /**
+     * When true, clients with endpoint-level security skip builder setters for OAuth token-request properties other
+     * than clientId/clientSecret (e.g. code, redirectUri), which the client-credentials flow never sends there. Off by
+     * default, so existing builder methods are unchanged.
+     */
+    @Value.Default
+    @JsonProperty("omit-unused-oauth-setters")
+    default Boolean omitUnusedOAuthSetters() {
+        return false;
+    }
+
+    /**
+     * When true, single-file upload endpoints get the {@code InputStream} overloads from before 4.23.2: they leave out
+     * the request object, so companion multipart fields are not sent. Off by default.
+     */
+    @Value.Default
+    @JsonProperty("legacy-input-stream-upload-overloads")
+    default Boolean legacyInputStreamUploadOverloads() {
         return false;
     }
 

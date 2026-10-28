@@ -4,6 +4,7 @@
 package com.seed.aliasExtends;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.aliasExtends.core.BodyProperties;
 import com.seed.aliasExtends.core.ClientOptions;
 import com.seed.aliasExtends.core.MediaTypes;
 import com.seed.aliasExtends.core.ObjectMappers;
@@ -47,7 +48,9 @@ public class RawSeedAliasExtendsClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedAliasExtendsException("Failed to serialize request", e);
         }

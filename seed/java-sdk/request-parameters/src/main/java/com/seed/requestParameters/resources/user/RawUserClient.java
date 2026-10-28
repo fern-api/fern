@@ -4,6 +4,7 @@
 package com.seed.requestParameters.resources.user;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.requestParameters.core.BodyProperties;
 import com.seed.requestParameters.core.ClientOptions;
 import com.seed.requestParameters.core.MediaTypes;
 import com.seed.requestParameters.core.ObjectMappers;
@@ -54,7 +55,9 @@ public class RawUserClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -113,7 +116,9 @@ public class RawUserClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request.getBody(), requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -179,9 +184,12 @@ public class RawUserClient {
         RequestBody body;
         try {
             body = RequestBody.create("", null);
-            if (request.isPresent()) {
+            if (request.isPresent()
+                    || BodyProperties.isPresent(requestOptions != null ? requestOptions.getBodyProperties() : null)) {
                 body = RequestBody.create(
-                        ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                        ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                                request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                        MediaTypes.APPLICATION_JSON);
             }
         } catch (JsonProcessingException e) {
             throw new SeedRequestParametersException("Failed to serialize request", e);

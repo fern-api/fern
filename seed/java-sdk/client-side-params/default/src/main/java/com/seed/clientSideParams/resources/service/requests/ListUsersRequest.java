@@ -185,7 +185,6 @@ public final class ListUsersRequest {
 
         private Optional<String> fields = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -317,6 +316,21 @@ public final class ListUsersRequest {
         public ListUsersRequest build() {
             return new ListUsersRequest(
                     page, perPage, includeTotals, sort, connection, q, searchEngine, fields, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("page")
+                    || key.equalsIgnoreCase("per_page")
+                    || key.equalsIgnoreCase("include_totals")
+                    || key.equalsIgnoreCase("sort")
+                    || key.equalsIgnoreCase("connection")
+                    || key.equalsIgnoreCase("q")
+                    || key.equalsIgnoreCase("search_engine")
+                    || key.equalsIgnoreCase("fields")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

@@ -3850,6 +3850,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": false,
                 "examples": null
             },
             "endpoint_user.createUsernameWithReferencedType": {
@@ -4062,6 +4063,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": false,
                 "examples": null
             },
             "endpoint_user.createUsernameOptional": {
@@ -4155,6 +4157,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": false,
                 "examples": null
             },
             "endpoint_user.getUsername": {
@@ -4811,6 +4814,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             }
         },
@@ -4882,6 +4886,7 @@
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
         "idempotencyKeyGeneration": null,
+        "webhookSignatureVerification": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",

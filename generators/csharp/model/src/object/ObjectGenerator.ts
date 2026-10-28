@@ -14,6 +14,7 @@ type TypeReference = FernIr.TypeReference;
 import { generateFields, getGeneratedPropertyName } from "../generateFields.js";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 import { ExampleGenerator } from "../snippets/ExampleGenerator.js";
+import { getXmlTextFieldName, XmlObjectGenerator } from "./XmlObjectGenerator.js";
 
 export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorContext> {
     private readonly typeDeclaration: TypeDeclaration;
@@ -60,7 +61,15 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
             annotations: [this.System.Serializable]
         });
         const properties = this.getPropertiesToGenerate();
-        generateFields(class_, {
+        if (this.typeDeclaration.encoding?.xml != null) {
+            for (const property of properties) {
+                const textFieldName = getXmlTextFieldName(this.context, this.typeDeclaration, property);
+                if (textFieldName != null) {
+                    class_.reference.registerField(textFieldName, property);
+                }
+            }
+        }
+        const fields = generateFields(class_, {
             properties,
             className: this.classReference.name,
             context: this.context
@@ -70,13 +79,20 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
         const additionalProperties = this.addAdditionalPropertiesProperty(class_);
         this.addOnDeserialized(class_, additionalProperties);
         this.addOnSerializing(class_, additionalProperties);
-        this.context.getToStringMethod(class_);
+        const xml = this.typeDeclaration.encoding?.xml;
+        if (xml == null) {
+            this.context.getToStringMethod(class_);
+        }
 
         if (this.shouldAddProtobufMappers(this.typeDeclaration)) {
             this.addProtobufMappers({
                 class_,
                 properties
             });
+        }
+
+        if (xml != null) {
+            new XmlObjectGenerator(this.context, class_, properties, fields, xml).generate();
         }
 
         return new CSharpFile({

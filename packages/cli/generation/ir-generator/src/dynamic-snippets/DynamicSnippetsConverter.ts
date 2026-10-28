@@ -219,8 +219,7 @@ export class DynamicSnippetsConverter {
                     bytes: () => DynamicSnippets.Response.bytes(),
                     _other: () => DynamicSnippets.Response.json()
                 }) ?? DynamicSnippets.Response.json(),
-            // Defaults to 'json' because response is required (and it was hardcoded to that previously).
-
+            hasResponseBody: endpoint.response?.body != null,
             examples: !disableExamples ? this.getEndpointSnippetRequests({ endpoint, location }) : undefined
         };
     }
@@ -393,9 +392,15 @@ export class DynamicSnippetsConverter {
                 : { wireValue: key.wireValue, name: this.fullCasingsGenerator.generateName(key.name) };
         switch (fileProperty.type) {
             case "file":
-                return DynamicSnippets.FileUploadRequestBodyProperty.file(nameAndWireValue);
+                return DynamicSnippets.FileUploadRequestBodyProperty.file({
+                    ...nameAndWireValue,
+                    isOptional: fileProperty.isOptional
+                });
             case "fileArray":
-                return DynamicSnippets.FileUploadRequestBodyProperty.fileArray(nameAndWireValue);
+                return DynamicSnippets.FileUploadRequestBodyProperty.fileArray({
+                    ...nameAndWireValue,
+                    isOptional: fileProperty.isOptional
+                });
             default:
                 assertNever(fileProperty);
         }
@@ -769,10 +774,12 @@ export class DynamicSnippetsConverter {
         }
         const scheme = auth.schemes[0];
         const wrapperProperty = this.getAuthWrapperProperty(auth, scheme);
+        const requirement = auth.requirement;
         switch (scheme.type) {
             case "basic": {
                 const basicAuth = {
                     wrapperProperty,
+                    requirement,
                     username: this.inflateName(scheme.username),
                     usernameOmit: scheme.usernameOmit,
                     password: this.inflateName(scheme.password),
@@ -783,6 +790,7 @@ export class DynamicSnippetsConverter {
             case "bearer": {
                 const bearerAuth = {
                     wrapperProperty,
+                    requirement,
                     token: this.inflateName(scheme.token)
                 };
                 return DynamicSnippets.Auth.bearer(bearerAuth);
@@ -790,6 +798,7 @@ export class DynamicSnippetsConverter {
             case "header": {
                 const headerAuth = {
                     wrapperProperty,
+                    requirement,
                     header: {
                         name: this.inflateNameAndWireValue(scheme.name),
                         typeReference: this.convertTypeReference(scheme.valueType),
@@ -803,6 +812,7 @@ export class DynamicSnippetsConverter {
                 const customProperties = this.getOAuthCustomProperties(scheme);
                 const oauth = {
                     wrapperProperty,
+                    requirement,
                     clientId: this.fullCasingsGenerator.generateName("clientId"),
                     clientSecret: this.fullCasingsGenerator.generateName("clientSecret"),
                     customProperties: customProperties.length > 0 ? customProperties : undefined
@@ -812,6 +822,7 @@ export class DynamicSnippetsConverter {
             case "inferred": {
                 const inferredAuth = {
                     wrapperProperty,
+                    requirement,
                     parameters: this.getInferredAuthParameters(scheme)
                 };
                 return DynamicSnippets.Auth.inferred(inferredAuth);
@@ -886,7 +897,7 @@ export class DynamicSnippetsConverter {
 
         // Extract credentials from request body
         if (tokenEndpoint.requestBody != null) {
-            const properties = this.getRequestBodyProperties(tokenEndpoint.requestBody);
+            const properties = this.getInferredAuthRequestBodyProperties(scheme, tokenEndpoint.requestBody);
             for (const property of properties) {
                 if (property.valueType.type !== "container" || property.valueType.container.type !== "literal") {
                     parameters.push({
@@ -926,7 +937,7 @@ export class DynamicSnippetsConverter {
 
         // Extract credentials from request body - use wireValue as key
         if (tokenEndpoint.requestBody != null) {
-            const properties = this.getRequestBodyProperties(tokenEndpoint.requestBody);
+            const properties = this.getInferredAuthRequestBodyProperties(scheme, tokenEndpoint.requestBody);
             for (const property of properties) {
                 if (property.valueType.type !== "container" || property.valueType.container.type !== "literal") {
                     const propWireValue = getWireValue(property.name);
@@ -936,6 +947,23 @@ export class DynamicSnippetsConverter {
         }
 
         return values;
+    }
+
+    private getInferredAuthRequestBodyProperties(
+        scheme: InferredAuthScheme,
+        requestBody: HttpRequestBody
+    ): Pick<ObjectProperty, "name" | "valueType" | "propertyAccess">[] {
+        const properties = this.getRequestBodyProperties(requestBody);
+        const grantTypeProperty = scheme.tokenEndpoint.grantType?.requestProperty;
+        if (
+            grantTypeProperty == null ||
+            grantTypeProperty.property.type !== "body" ||
+            (grantTypeProperty.propertyPath?.length ?? 0) > 0
+        ) {
+            return properties;
+        }
+        const grantTypeWireValue = getWireValue(grantTypeProperty.property.name);
+        return properties.filter((property) => getWireValue(property.name) !== grantTypeWireValue);
     }
 
     private getRequestBodyProperties(

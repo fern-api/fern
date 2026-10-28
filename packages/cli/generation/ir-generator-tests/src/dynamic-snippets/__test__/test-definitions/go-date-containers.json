@@ -1,6 +1,106 @@
 {
     "version": "1.0.0",
     "types": {
+        "type_:PageRequest": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "PageRequest",
+                    "camelCase": {
+                        "unsafeName": "pageRequest",
+                        "safeName": "pageRequest"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "page_request",
+                        "safeName": "page_request"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "PAGE_REQUEST",
+                        "safeName": "PAGE_REQUEST"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "PageRequest",
+                        "safeName": "PageRequest"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "wireValue": "number",
+                        "name": {
+                            "originalName": "number",
+                            "camelCase": {
+                                "unsafeName": "number",
+                                "safeName": "number"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "number",
+                                "safeName": "number"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NUMBER",
+                                "safeName": "NUMBER"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Number",
+                                "safeName": "Number"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "INTEGER"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "size",
+                        "name": {
+                            "originalName": "size",
+                            "camelCase": {
+                                "unsafeName": "size",
+                                "safeName": "size"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "size",
+                                "safeName": "size"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SIZE",
+                                "safeName": "SIZE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Size",
+                                "safeName": "Size"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "INTEGER"
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "extends": null,
+            "additionalProperties": false,
+            "deferredUnionBaseProperties": null
+        },
         "type_:DateList": {
             "type": "alias",
             "declaration": {
@@ -497,6 +597,402 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
+            "examples": null
+        },
+        "endpoint_loans.listLoansByDate": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "listLoansByDate",
+                    "camelCase": {
+                        "unsafeName": "listLoansByDate",
+                        "safeName": "listLoansByDate"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "list_loans_by_date",
+                        "safeName": "list_loans_by_date"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "LIST_LOANS_BY_DATE",
+                        "safeName": "LIST_LOANS_BY_DATE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ListLoansByDate",
+                        "safeName": "ListLoansByDate"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "loans",
+                            "camelCase": {
+                                "unsafeName": "loans",
+                                "safeName": "loans"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "loans",
+                                "safeName": "loans"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "LOANS",
+                                "safeName": "LOANS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Loans",
+                                "safeName": "Loans"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "loans",
+                        "camelCase": {
+                            "unsafeName": "loans",
+                            "safeName": "loans"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "loans",
+                            "safeName": "loans"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "LOANS",
+                            "safeName": "LOANS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Loans",
+                            "safeName": "Loans"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/loans/by-date/{as_of}"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "ListLoansByDateRequest",
+                        "camelCase": {
+                            "unsafeName": "listLoansByDateRequest",
+                            "safeName": "listLoansByDateRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "list_loans_by_date_request",
+                            "safeName": "list_loans_by_date_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "LIST_LOANS_BY_DATE_REQUEST",
+                            "safeName": "LIST_LOANS_BY_DATE_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "ListLoansByDateRequest",
+                            "safeName": "ListLoansByDateRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "loans",
+                                "camelCase": {
+                                    "unsafeName": "loans",
+                                    "safeName": "loans"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "loans",
+                                    "safeName": "loans"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "LOANS",
+                                    "safeName": "LOANS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Loans",
+                                    "safeName": "Loans"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "loans",
+                            "camelCase": {
+                                "unsafeName": "loans",
+                                "safeName": "loans"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "loans",
+                                "safeName": "loans"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "LOANS",
+                                "safeName": "LOANS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Loans",
+                                "safeName": "Loans"
+                            }
+                        }
+                    }
+                },
+                "pathParameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "as_of",
+                                "camelCase": {
+                                    "unsafeName": "asOf",
+                                    "safeName": "asOf"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "as_of",
+                                    "safeName": "as_of"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "AS_OF",
+                                    "safeName": "AS_OF"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "AsOf",
+                                    "safeName": "AsOf"
+                                }
+                            },
+                            "wireValue": "as_of"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "DATE"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "queryParameters": [
+                    {
+                        "name": {
+                            "wireValue": "page",
+                            "name": {
+                                "originalName": "page",
+                                "camelCase": {
+                                    "unsafeName": "page",
+                                    "safeName": "page"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "page",
+                                    "safeName": "page"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "PAGE",
+                                    "safeName": "PAGE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Page",
+                                    "safeName": "Page"
+                                }
+                            }
+                        },
+                        "typeReference": {
+                            "type": "named",
+                            "value": "type_:PageRequest"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "headers": [],
+                "body": null,
+                "metadata": {
+                    "includePathParameters": true,
+                    "onlyPathParameters": false
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "hasResponseBody": true,
+            "examples": null
+        },
+        "endpoint_loans.listLoansByTimestamp": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "listLoansByTimestamp",
+                    "camelCase": {
+                        "unsafeName": "listLoansByTimestamp",
+                        "safeName": "listLoansByTimestamp"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "list_loans_by_timestamp",
+                        "safeName": "list_loans_by_timestamp"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "LIST_LOANS_BY_TIMESTAMP",
+                        "safeName": "LIST_LOANS_BY_TIMESTAMP"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "ListLoansByTimestamp",
+                        "safeName": "ListLoansByTimestamp"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "loans",
+                            "camelCase": {
+                                "unsafeName": "loans",
+                                "safeName": "loans"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "loans",
+                                "safeName": "loans"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "LOANS",
+                                "safeName": "LOANS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Loans",
+                                "safeName": "Loans"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "loans",
+                        "camelCase": {
+                            "unsafeName": "loans",
+                            "safeName": "loans"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "loans",
+                            "safeName": "loans"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "LOANS",
+                            "safeName": "LOANS"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Loans",
+                            "safeName": "Loans"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/loans/by-timestamp/{as_of}"
+            },
+            "request": {
+                "type": "inlined",
+                "declaration": {
+                    "name": {
+                        "originalName": "ListLoansByTimestampRequest",
+                        "camelCase": {
+                            "unsafeName": "listLoansByTimestampRequest",
+                            "safeName": "listLoansByTimestampRequest"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "list_loans_by_timestamp_request",
+                            "safeName": "list_loans_by_timestamp_request"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "LIST_LOANS_BY_TIMESTAMP_REQUEST",
+                            "safeName": "LIST_LOANS_BY_TIMESTAMP_REQUEST"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "ListLoansByTimestampRequest",
+                            "safeName": "ListLoansByTimestampRequest"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "loans",
+                                "camelCase": {
+                                    "unsafeName": "loans",
+                                    "safeName": "loans"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "loans",
+                                    "safeName": "loans"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "LOANS",
+                                    "safeName": "LOANS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Loans",
+                                    "safeName": "Loans"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "loans",
+                            "camelCase": {
+                                "unsafeName": "loans",
+                                "safeName": "loans"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "loans",
+                                "safeName": "loans"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "LOANS",
+                                "safeName": "LOANS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Loans",
+                                "safeName": "Loans"
+                            }
+                        }
+                    }
+                },
+                "pathParameters": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "as_of",
+                                "camelCase": {
+                                    "unsafeName": "asOf",
+                                    "safeName": "asOf"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "as_of",
+                                    "safeName": "as_of"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "AS_OF",
+                                    "safeName": "AS_OF"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "AsOf",
+                                    "safeName": "AsOf"
+                                }
+                            },
+                            "wireValue": "as_of"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "DATE_TIME"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    }
+                ],
+                "queryParameters": [],
+                "headers": [],
+                "body": null,
+                "metadata": {
+                    "includePathParameters": true,
+                    "onlyPathParameters": true
+                }
+            },
+            "response": {
+                "type": "json"
+            },
+            "hasResponseBody": true,
             "examples": null
         }
     },

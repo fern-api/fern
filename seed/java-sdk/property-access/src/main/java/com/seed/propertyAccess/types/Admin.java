@@ -181,7 +181,6 @@ public final class Admin implements IUser {
 
         private String adminLevel;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -254,6 +253,18 @@ public final class Admin implements IUser {
         @java.lang.Override
         public Admin build() {
             return new Admin(id, email, password, profile, adminLevel, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("id")
+                    || key.equalsIgnoreCase("email")
+                    || key.equalsIgnoreCase("password")
+                    || key.equalsIgnoreCase("profile")
+                    || key.equalsIgnoreCase("adminLevel")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

@@ -67,7 +67,6 @@ public final class DoubleOptional {
     public static final class Builder {
         private Optional<String> optionalAlias = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -90,6 +89,14 @@ public final class DoubleOptional {
 
         public DoubleOptional build() {
             return new DoubleOptional(optionalAlias, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("optionalAlias")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

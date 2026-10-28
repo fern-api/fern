@@ -1,0 +1,4 @@
+- summary: |
+    The "unknown package" warning from `fern generate --docs` now explains that SDK snippets are not
+    supported yet for SDKs configured in `sdk-config.yml`.
+  type: fix

@@ -1,5 +1,5 @@
 import { generatorsYml } from "@fern-api/configuration";
-import { assertNever, isNonNullish } from "@fern-api/core-utils";
+import { assertNever, isNonNullish, stripTrailingSlashes } from "@fern-api/core-utils";
 import {
     Endpoint,
     EndpointExample,
@@ -31,6 +31,7 @@ import { ExampleTypeFactory } from "../../schema/examples/ExampleTypeFactory.js"
 import { convertSchemaWithExampleToSchema } from "../../schema/utils/convertSchemaWithExampleToSchema.js";
 import { getGeneratedTypeName } from "../../schema/utils/getSchemaName.js";
 import { isReferenceObject } from "../../schema/utils/isReferenceObject.js";
+import { getSharedErrorResponsesSchemaName } from "../../utils/getErrorResponsesSchemaName.js";
 import { getSchemas } from "../../utils/getSchemas.js";
 import { sanitizeSecurityScopes } from "../../utils/sanitizeSecurityScopes.js";
 import { createSchemaCollisionTracker } from "../../utils/schemaCollision.js";
@@ -49,6 +50,7 @@ import { getGlobalHeaders } from "./extensions/getGlobalHeaders.js";
 import { getGlobalParameters } from "./extensions/getGlobalParameters.js";
 import { getIdempotencyHeaders } from "./extensions/getIdempotencyHeaders.js";
 import { getVariableDefinitions } from "./extensions/getVariableDefinitions.js";
+import { applyTwilioVisibility } from "./extensions/twilioVisibility.js";
 import { getWebhooksPathsObject } from "./getWebhookPathsObject.js";
 import { hasIncompleteExample } from "./hasIncompleteExample.js";
 import { OpenAPIV3ParserContext } from "./OpenAPIV3ParserContext.js";
@@ -67,6 +69,7 @@ export function generateIr({
     source: Source;
     namespace: string | undefined;
 }): OpenApiIntermediateRepresentation {
+    openApi = applyTwilioVisibility({ document: openApi, options, logger: taskContext.logger });
     openApi = runResolutions({ openapi: openApi });
 
     // Reset title collision tracker for this document processing
@@ -128,6 +131,20 @@ export function generateIr({
         source,
         namespace
     });
+    const sharedErrorSchemaName = namespace != null ? getSharedErrorResponsesSchemaName(options) : undefined;
+    // The API-wide `error-responses` body is declared in the root package, so it is converted without
+    // this spec's namespace (which would otherwise be prepended to its group name).
+    const rootContext =
+        sharedErrorSchemaName != null && openApi.components?.schemas?.[sharedErrorSchemaName] != null
+            ? new OpenAPIV3ParserContext({
+                  document: openApi,
+                  taskContext,
+                  authHeaders,
+                  options,
+                  source,
+                  namespace: undefined
+              })
+            : context;
 
     if (context.filter.hasEndpoints()) {
         taskContext.logger.debug("Endpoint filter applied...");
@@ -199,6 +216,9 @@ export function generateIr({
     const schemasWithExample: Record<string, SchemaWithExample> = Object.fromEntries(
         Object.entries(openApi.components?.schemas ?? {})
             .map(([key, schema]) => {
+                if (key === sharedErrorSchemaName) {
+                    return [key, convertSchema(schema, false, false, rootContext, [key], source, undefined)];
+                }
                 const schemaNamespace = getExtension<string>(schema, FernOpenAPIExtension.SDK_NAMESPACE);
                 if (!isReferenceObject(schema)) {
                     const ignoreSchema = getExtension<boolean>(schema, FernOpenAPIExtension.IGNORE);
@@ -395,11 +415,13 @@ export function generateIr({
                 return {
                     generatedName: error.generatedName,
                     nameOverride: error.nameOverride,
+                    isWildcardStatusCode: error.isWildcardStatusCode,
                     schema: convertSchemaWithExampleToSchema(error.schema),
                     description: error.description,
                     source: error.source,
                     examples,
-                    namespace: error.namespace
+                    namespace: error.namespace,
+                    isShared: error.isShared
                 };
             }),
             retries: endpointWithExample.retries,
@@ -462,7 +484,7 @@ export function generateIr({
         endpoints,
         webhooks,
         channels: {},
-        groupedSchemas: getSchemas(namespace, schemas),
+        groupedSchemas: getSchemas(namespace, schemas, sharedErrorSchemaName),
         securitySchemes,
         security,
         hasEndpointsMarkedInternal: endpoints.some((endpoint) => endpoint.internal),
@@ -552,7 +574,7 @@ function prependBasePath(path: string, basePath: string | undefined): string {
         return path;
     }
 
-    const normalizedBasePath = basePath.replace(/\/+$/, "");
+    const normalizedBasePath = stripTrailingSlashes(basePath);
     if (path === normalizedBasePath || path.startsWith(`${normalizedBasePath}/`)) {
         return path;
     }

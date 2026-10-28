@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Decouple SDK Config initialization from SDK Gen API generation routing so each can be rolled out independently.
+  type: fix

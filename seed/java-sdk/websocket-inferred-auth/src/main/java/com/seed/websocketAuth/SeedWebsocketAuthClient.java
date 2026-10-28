@@ -9,7 +9,7 @@ import com.seed.websocketAuth.resources.auth.AuthClient;
 import com.seed.websocketAuth.resources.realtime.RealtimeClient;
 import java.util.function.Supplier;
 
-public class SeedWebsocketAuthClient {
+public class SeedWebsocketAuthClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AuthClient> authClient;
@@ -28,6 +28,16 @@ public class SeedWebsocketAuthClient {
 
     public RealtimeClient realtime() {
         return this.realtimeClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedWebsocketAuthClientBuilder builder() {

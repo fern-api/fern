@@ -73,7 +73,10 @@ export class ModelGeneratorContext extends AbstractRubyGeneratorContext<ModelCus
             AsIsFiles.TypesType,
             AsIsFiles.TypesUnion,
             AsIsFiles.TypesUnknown,
-            AsIsFiles.TypesUtils
+            AsIsFiles.TypesUtils,
+
+            // XML
+            ...(this.hasXmlTypes() ? [AsIsFiles.XmlElement, AsIsFiles.XmlUtils, AsIsFiles.XmlSerializable] : [])
         ];
 
         return files;

@@ -25,3 +25,28 @@ client.service().simple();
 </dl>
 </details>
 
+<details><summary><code>client.service.downloadFile() -> InputStream</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.service().downloadFile();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+

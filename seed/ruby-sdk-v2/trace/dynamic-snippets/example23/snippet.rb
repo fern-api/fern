@@ -7,10 +7,10 @@ client = Seed::Client.new(
 
 client.problem.get_default_starter_files(
   input_params: [{
-    variable_type: {},
+    variableType: {},
     name: "name"
   }, {
-    variable_type: {},
+    variableType: {},
     name: "name"
   }],
   output_type: {},

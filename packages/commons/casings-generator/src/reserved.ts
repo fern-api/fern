@@ -301,6 +301,8 @@ export const RESERVED_KEYWORDS: Record<generatorsYml.GenerationLanguage, Set<str
         "__ENCODING__",
         "__LINE__",
         "__FILE__",
+        "BEGIN",
+        "END",
         "alias",
         "and",
         "begin",
@@ -573,5 +575,8 @@ export const RESERVED_KEYWORDS: Record<generatorsYml.GenerationLanguage, Set<str
         "BTreeSet"
     ]),
     // TODO(mikemilla): add reserved keywords for Swift
-    [generatorsYml.GenerationLanguage.SWIFT]: new Set([])
+    [generatorsYml.GenerationLanguage.SWIFT]: new Set([]),
+    // CLI snippet names derive from the dynamic IR's originalName (command/flag kebab-casing is
+    // done in @fern-api/cli-dynamic-snippets), not from casings safeName, so no reserved words apply.
+    [generatorsYml.GenerationLanguage.CLI]: new Set([])
 };

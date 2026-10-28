@@ -22,7 +22,8 @@ function buildContext(
                         signatureVerification: verification
                     }
                 ]
-            }
+            },
+            sdkConfig: { webhookSignatureVerification: undefined }
         },
         customConfig: {},
         case: {
@@ -46,6 +47,7 @@ function hmacConfig(
     return FernIr.WebhookSignatureVerification.hmac({
         signatureHeaderName: "x-webhook-signature",
         algorithm: "SHA256",
+        algorithmHeader: undefined,
         encoding: "HEX",
         signaturePrefix: undefined,
         timestamp: undefined,
@@ -75,7 +77,50 @@ const twilioConfig = (
         notificationUrlNormalization: normalization
     });
 
+const twilioSettingsConfig = (): FernIr.WebhookSignatureVerification =>
+    hmacConfig({
+        signatureHeaderName: "X-Twilio-Signature",
+        algorithm: "SHA1",
+        encoding: "BASE64",
+        payloadFormat: {
+            components: ["NOTIFICATION_URL", "BODY"],
+            delimiter: "",
+            bodySort: "ALPHABETICAL"
+        },
+        bodyHashBinding: {
+            algorithm: "SHA256",
+            encoding: "HEX",
+            location: FernIr.WebhookBodyHashLocation.queryParameter({ name: "bodySHA256" })
+        },
+        notificationUrlNormalization: { portVariants: true, legacyQueryEncoding: true },
+        algorithmHeader: {
+            headerName: "X-Twilio-Webhook-Signature-Settings",
+            keyIdDelimiter: ";",
+            keyIdParameter: undefined,
+            algorithmParameter: undefined,
+            algorithms: [
+                { wireValue: "HMAC_SHA1", algorithm: "SHA1" },
+                { wireValue: "HMAC_SHA256", algorithm: "SHA256" }
+            ]
+        }
+    });
+
 describe("WebhooksHelperGenerator", () => {
+    it("generates verifyRequest reading the configured algorithm header", () => {
+        const contents = generate(twilioSettingsConfig());
+        expect(contents).toContain("public static function verifyRequest(");
+        expect(contents).toContain('"X-Twilio-Signature"');
+        expect(contents).toContain('"X-Twilio-Webhook-Signature-Settings"');
+        expect(contents).toContain('"HMAC_SHA1" => "sha1", "HMAC_SHA256" => "sha256"');
+        expect(contents).toContain("string|null $algorithm = null");
+        expect(contents).toContain("'HMAC_SHA256'");
+        expect(contents).not.toContain("'sha384'");
+        expect(contents).toContain('strrpos($settingsHeader, ";")');
+        expect(contents).toContain("Webhook signature verification could not run: unsupported algorithm");
+        expect(contents).toContain("Webhook signature verification could not run: signing key could not be resolved");
+        expect(contents).toMatchSnapshot();
+    });
+
     it("includes a timestamp parameter when the payload uses a timestamp without validation config", () => {
         const contents = generate(
             hmacConfig({
@@ -274,7 +319,11 @@ runtimeDescribe("WebhooksHelper PHP runtime", () => {
     }
     const runner = phpRunner;
 
-    function materialize(verification: FernIr.WebhookSignatureVerification, script: string): string {
+    function materialize(
+        verification: FernIr.WebhookSignatureVerification,
+        script: string,
+        scriptContents: string = buildScript()
+    ): string {
         const dir = mkdtempSync(join(tmpdir(), "php-webhook-"));
         try {
             const [helperFile] = new WebhooksHelperGenerator(
@@ -291,7 +340,7 @@ runtimeDescribe("WebhooksHelper PHP runtime", () => {
 
             writeFileSync(join(dir, "WebhookSignature.php"), core);
             writeFileSync(join(dir, "WebhooksHelper.php"), helperContents);
-            writeFileSync(join(dir, script), buildScript());
+            writeFileSync(join(dir, script), scriptContents);
             try {
                 return runner.run(dir, script).trim();
             } catch (error) {
@@ -372,6 +421,47 @@ assert($unparseable === ['not-a-url'], 'candidate-unparseable');
 echo "OK\\n";
 `;
     }
+
+    it("verifyRequest selects the key and algorithm from the settings header", () => {
+        const script = `<?php
+require __DIR__ . '/WebhookSignature.php';
+require __DIR__ . '/WebhooksHelper.php';
+use Seed\\WebhooksHelper;
+use Seed\\WebhookSignature;
+
+$authToken = 'auth-token';
+$sharedKeys = ['key-1' => 'shared-secret'];
+$resolver = function (?string $keyId) use ($authToken, $sharedKeys): ?string {
+    return $keyId === null ? $authToken : ($sharedKeys[$keyId] ?? null);
+};
+$body = '{"messageSid":"SM123","status":"delivered"}';
+$url = 'https://example.com/webhooks/sms?bodySHA256=' . WebhookSignature::computeHash($body, 'sha256', 'hex');
+
+$sha256 = base64_encode(hash_hmac('sha256', $url, 'shared-secret', true));
+$headers = ['x-twilio-signature' => $sha256, 'X-Twilio-Webhook-Signature-Settings' => 'key-1;HMAC_SHA256'];
+assert(WebhooksHelper::verifyRequest($headers, $body, $url, $resolver) === true, 'shared-sha256');
+
+$sha1 = base64_encode(hash_hmac('sha1', $url, 'shared-secret', true));
+$headers = ['X-Twilio-Signature' => $sha1, 'X-Twilio-Webhook-Signature-Settings' => 'key-1;HMAC_SHA1'];
+assert(WebhooksHelper::verifyRequest($headers, $body, $url, $resolver) === true, 'shared-sha1');
+
+$legacy = base64_encode(hash_hmac('sha1', $url, $authToken, true));
+assert(WebhooksHelper::verifyRequest(['X-Twilio-Signature' => $legacy], $body, $url, $resolver) === true, 'legacy');
+assert(WebhooksHelper::verifyRequest(['X-Twilio-Signature' => $legacy], $body, $url, $authToken) === true, 'legacy-string-key');
+
+assert(WebhooksHelper::verifyRequest([], $body, $url, $resolver) === false, 'missing-signature');
+$headers = ['X-Twilio-Signature' => $sha256, 'X-Twilio-Webhook-Signature-Settings' => 'key-1;HMAC_SHA512'];
+assert(WebhooksHelper::verifyRequest($headers, $body, $url, $resolver) === false, 'unsupported-algorithm');
+$headers = ['X-Twilio-Signature' => $sha256, 'X-Twilio-Webhook-Signature-Settings' => 'unknown;HMAC_SHA256'];
+assert(WebhooksHelper::verifyRequest($headers, $body, $url, $resolver) === false, 'unresolved-key');
+$headers = ['X-Twilio-Signature' => $sha1, 'X-Twilio-Webhook-Signature-Settings' => 'key-1;HMAC_SHA256'];
+assert(WebhooksHelper::verifyRequest($headers, $body, $url, $resolver) === false, 'mismatch');
+
+echo "OK\\n";
+`;
+        const output = materialize(twilioSettingsConfig(), "run_request.php", script);
+        expect(output).toContain("OK");
+    });
 
     it("verifies a known-good Twilio-style HMAC-SHA1 signature end-to-end", () => {
         const output = materialize(twilioConfig({ portVariants: true, legacyQueryEncoding: true }), "run.php");

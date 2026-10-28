@@ -17,15 +17,15 @@ client.nullable_optional.test_deserialization(
     street: "street",
     city: "city",
     state: "state",
-    zip_code: "zipCode",
+    zipCode: "zipCode",
     country: "country",
-    building_id: "buildingId",
-    tenant_id: "tenantId"
+    buildingId: "buildingId",
+    tenantId: "tenantId"
   },
   optional_object: {
     id: "id",
     name: "name",
     domain: "domain",
-    employee_count: 1
+    employeeCount: 1
   }
 )

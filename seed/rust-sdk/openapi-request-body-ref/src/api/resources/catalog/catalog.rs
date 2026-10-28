@@ -27,7 +27,7 @@ impl CatalogClient {
     ///     client
     ///         .catalog
     ///         .create_catalog_image(
-    ///             &CreateCatalogImageRequest {
+    ///             &CreateCatalogImageRequest2 {
     ///                 image_file: b"test file content".to_vec(),
     ///                 request: CreateCatalogImageRequest {
     ///                     catalog_object_id: "catalog_object_id".to_string(),

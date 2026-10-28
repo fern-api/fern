@@ -1,5 +1,6 @@
 using SeedExhaustive;
 using SeedExhaustive.Core;
+using SeedExhaustive.Types;
 
 public partial class Examples
 {
@@ -11,8 +12,8 @@ public partial class Examples
             }
         );
 
-        await client.Endpoints.HttpMethods.TestGetAsync(
-            "id"
+        await client.Endpoints.Enum.GetAndReturnEnumAsync(
+            WeatherReport.Sunny
         );
     }
 

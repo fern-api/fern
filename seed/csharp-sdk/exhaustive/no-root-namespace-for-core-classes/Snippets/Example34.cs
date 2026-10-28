@@ -1,6 +1,5 @@
 using SeedExhaustive;
 using SeedExhaustive.Core;
-using SeedExhaustive.Endpoints;
 
 public partial class Examples
 {
@@ -12,10 +11,8 @@ public partial class Examples
             }
         );
 
-        await client.Endpoints.Params.GetWithInlinePathAsync(
-            new GetWithInlinePath {
-                Param = "param"
-            }
+        await client.Endpoints.Params.GetWithPathAsync(
+            "param"
         );
     }
 

@@ -105,11 +105,12 @@ function convertSchemeReference({
     endpointResolver: EndpointResolver;
     typeResolver: TypeResolver;
 }): AuthScheme {
-    const convertNamedAuthSchemeReference = (reference: string, docs: string | undefined) => {
+    const convertNamedAuthSchemeReference = (reference: string, referenceDocs: string | undefined) => {
         const declaration = authSchemeDeclarations?.[reference];
         if (declaration == null) {
             throw new CliError({ message: "Unknown auth scheme: " + reference, code: CliError.Code.ReferenceError });
         }
+        const docs = referenceDocs ?? (typeof declaration === "object" ? declaration.docs : undefined);
         const playgroundDocs = typeof declaration === "object" ? declaration["playground-docs"] : undefined;
         return visitRawAuthSchemeDeclaration<AuthScheme>(declaration, {
             header: (rawHeader) =>
@@ -167,6 +168,12 @@ function convertSchemeReference({
     };
 
     const scheme = typeof reference === "string" ? reference : reference.scheme;
+
+    // A declared scheme whose name collides with a built-in shorthand (`bearer`, `basic`, `oauth`)
+    // must win, or its env var, token name and placeholder are silently dropped.
+    if (authSchemeDeclarations?.[scheme] != null) {
+        return convertNamedAuthSchemeReference(scheme, typeof reference !== "string" ? reference.docs : undefined);
+    }
 
     switch (scheme) {
         case "bearer":
@@ -451,10 +458,64 @@ function getInferredTokenEndpoint({
             tokenEndpoint,
             getTokenEndpointConfig,
             propertyResolver
-        })
+        }),
+        grantType:
+            rawScheme.type === "refresh-token"
+                ? getRefreshTokenGrantType({
+                      tokenEndpoint,
+                      endpoint: getTokenEndpointConfig.endpoint,
+                      propertyResolver
+                  })
+                : undefined
     };
 
     return result;
+}
+
+const GRANT_TYPE_REQUEST_PROPERTY = "grant_type";
+const REFRESH_TOKEN_GRANT_TYPE = "refresh_token";
+
+function getRefreshTokenGrantType({
+    tokenEndpoint,
+    endpoint,
+    propertyResolver
+}: {
+    tokenEndpoint: ResolvedEndpoint;
+    endpoint: string;
+    propertyResolver: PropertyResolver;
+}): FernIr.InferredAuthGrantType {
+    let requestProperty: FernIr.RequestProperty | undefined;
+    try {
+        requestProperty = propertyResolver.resolveRequestProperty({
+            file: tokenEndpoint.file,
+            endpoint: tokenEndpoint.endpointId,
+            propertyComponents: [GRANT_TYPE_REQUEST_PROPERTY]
+        });
+    } catch {
+        requestProperty = undefined;
+    }
+    if (requestProperty == null) {
+        throw new CliError({
+            message: `Inferred auth with type 'refresh-token' requires the get-token endpoint '${endpoint}' to have a '${GRANT_TYPE_REQUEST_PROPERTY}' request property`,
+            code: CliError.Code.ValidationError
+        });
+    }
+    const valueType = requestProperty.property.valueType;
+    if (
+        valueType.type === "container" &&
+        valueType.container.type === "literal" &&
+        (valueType.container.literal.type !== "string" ||
+            valueType.container.literal.string !== REFRESH_TOKEN_GRANT_TYPE)
+    ) {
+        throw new CliError({
+            message: `Inferred auth with type 'refresh-token' requires '${GRANT_TYPE_REQUEST_PROPERTY}' on the get-token endpoint '${endpoint}' to accept '${REFRESH_TOKEN_GRANT_TYPE}'`,
+            code: CliError.Code.ValidationError
+        });
+    }
+    return {
+        requestProperty,
+        value: REFRESH_TOKEN_GRANT_TYPE
+    };
 }
 
 const commonAuthTokenProperties = [

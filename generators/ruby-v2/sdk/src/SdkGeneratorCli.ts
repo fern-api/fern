@@ -3,7 +3,7 @@ import { extractErrorMessage } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractRubyGeneratorCli } from "@fern-api/ruby-base";
 import { DynamicSnippetsGenerator } from "@fern-api/ruby-dynamic-snippets";
-import { generateModels } from "@fern-api/ruby-model";
+import { generateModels, generateXmlTests } from "@fern-api/ruby-model";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
 import { FernIr } from "@fern-fern/ir-sdk";
@@ -66,6 +66,11 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
         const models = generateModels({ context });
         for (const file of models) {
             context.project.addRawFiles(file);
+        }
+        if (context.hasXmlTypes()) {
+            for (const file of generateXmlTests({ context })) {
+                context.project.addRawFiles(file);
+            }
         }
 
         const rootClient = new RootClientGenerator(context);

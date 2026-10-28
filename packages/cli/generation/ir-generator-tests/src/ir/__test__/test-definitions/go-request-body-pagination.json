@@ -10465,6 +10465,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_users.listWithRequiredBodyCursorPagination": {
@@ -10649,6 +10650,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_users.listWithUuidBodyCursorPagination": {
@@ -10836,6 +10838,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_users.listWithAliasBodyCursorPagination": {
@@ -11020,6 +11023,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_users.listWithRequiredAliasBodyCursorPagination": {
@@ -11204,6 +11208,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_users.listWithNullableAliasBodyCursorPagination": {
@@ -11388,6 +11393,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_users.listWithBodyOffsetPagination": {
@@ -11608,6 +11614,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_users.listWithNestedBodyCursorPagination": {
@@ -11795,6 +11802,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_users.listWithNestedRequiredBodyCursorPagination": {
@@ -11979,6 +11987,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_users.listWithDeeplyNestedBodyCursorPagination": {
@@ -12166,6 +12175,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_users.listWithNestedBodyOffsetPagination": {
@@ -12353,6 +12363,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_users.listWithAliasedNestedBodyOffsetPagination": {
@@ -12537,6 +12548,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             }
         },
@@ -12619,6 +12631,7 @@
         "hasPaginatedEndpoints": true,
         "hasFileDownloadEndpoints": false,
         "idempotencyKeyGeneration": null,
+        "webhookSignatureVerification": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",

@@ -161,13 +161,33 @@ function getReturnValue({
 
 function getGoTypeString({
     context,
+    typeReference,
+    enumsAsValues = false
+}: {
+    context: SdkGeneratorContext;
+    typeReference: FernIr.TypeReference;
+    enumsAsValues?: boolean;
+}): string {
+    const goType = context.goTypeMapper.convert({ reference: typeReference, enumsAsValues });
+    return getSimpleTypeName(goType, context);
+}
+
+/**
+ * Renders the type string for a parameter that is exposed as a field on a
+ * generated request struct (query parameters, headers, and inlined request body
+ * properties). Those structs are emitted by the v1 Go generator, which
+ * represents enums as values rather than pointers, so the type is resolved with
+ * v1's pointer conventions instead of the default `goTypeMapper` (which is used
+ * for v2-owned method signatures like path parameters and referenced bodies).
+ */
+function getRequestFieldTypeString({
+    context,
     typeReference
 }: {
     context: SdkGeneratorContext;
     typeReference: FernIr.TypeReference;
 }): string {
-    const goType = context.goTypeMapper.convert({ reference: typeReference });
-    return getSimpleTypeName(goType, context);
+    return getGoTypeString({ context, typeReference, enumsAsValues: true });
 }
 
 function getSimpleTypeName(goType: go.Type, context: SdkGeneratorContext): string {
@@ -209,7 +229,7 @@ function getEndpointParameters({
         const qpNameVal = queryParam.name;
         parameters.push({
             name: context.caseConverter.camelSafe(qpNameVal),
-            type: getGoTypeString({ context, typeReference: queryParam.valueType }),
+            type: getRequestFieldTypeString({ context, typeReference: queryParam.valueType }),
             description: queryParam.docs,
             required: !queryParam.allowMultiple
         });
@@ -219,7 +239,7 @@ function getEndpointParameters({
         const hNameVal = header.name;
         parameters.push({
             name: context.caseConverter.camelSafe(hNameVal),
-            type: getGoTypeString({ context, typeReference: header.valueType }),
+            type: getRequestFieldTypeString({ context, typeReference: header.valueType }),
             description: header.docs,
             required: true
         });
@@ -230,7 +250,7 @@ function getEndpointParameters({
             const propNameVal = property.name;
             parameters.push({
                 name: context.caseConverter.camelSafe(propNameVal),
-                type: getGoTypeString({ context, typeReference: property.valueType }),
+                type: getRequestFieldTypeString({ context, typeReference: property.valueType }),
                 description: property.docs,
                 required: true
             });

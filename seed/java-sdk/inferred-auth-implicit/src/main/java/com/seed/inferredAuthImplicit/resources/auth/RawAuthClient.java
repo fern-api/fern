@@ -4,6 +4,7 @@
 package com.seed.inferredAuthImplicit.resources.auth;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.inferredAuthImplicit.core.BodyProperties;
 import com.seed.inferredAuthImplicit.core.ClientOptions;
 import com.seed.inferredAuthImplicit.core.MediaTypes;
 import com.seed.inferredAuthImplicit.core.ObjectMappers;
@@ -48,7 +49,9 @@ public class RawAuthClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -107,7 +110,9 @@ public class RawAuthClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

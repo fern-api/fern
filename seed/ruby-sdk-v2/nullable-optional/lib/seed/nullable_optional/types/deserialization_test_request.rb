@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "../../../seed"
+
 module Seed
   module NullableOptional
     module Types
@@ -11,7 +13,7 @@ module Seed
 
         field :optional_string, -> { String }, optional: true, nullable: false, api_name: "optionalString"
 
-        field :optional_nullable_string, -> { String }, optional: true, nullable: false, api_name: "optionalNullableString"
+        field :optional_nullable_string, -> { String }, optional: true, nullable: true, api_name: "optionalNullableString"
 
         field :nullable_enum, -> { Seed::NullableOptional::Types::UserRole }, optional: false, nullable: true, api_name: "nullableEnum"
 

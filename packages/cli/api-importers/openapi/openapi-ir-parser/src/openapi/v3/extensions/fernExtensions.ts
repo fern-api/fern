@@ -261,6 +261,7 @@ export const FernOpenAPIExtension = {
      * x-fern-sdk-variables:
      *   appName:
      *     type: string
+     *     x-fern-env: APP_NAME  # optional: fall back to this env var when not passed to the client
      * paths:
      *   /path/to/my/endpoint/{id}:
      *     parameters:
@@ -271,6 +272,7 @@ export const FernOpenAPIExtension = {
      */
     SDK_VARIABLES: "x-fern-sdk-variables",
     SDK_VARIABLE: "x-fern-sdk-variable",
+    SDK_VARIABLE_ENV: "x-fern-env",
 
     /**
      * Used to customize the name of the parameter used for a header.

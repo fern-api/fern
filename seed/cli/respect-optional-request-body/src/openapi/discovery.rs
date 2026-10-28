@@ -798,6 +798,10 @@ pub struct RestMethod {
     /// `x-fern-pagination`'s `next_*` / `results` paths.
     #[serde(default)]
     pub return_value: Option<String>,
+    /// Parsed `x-fern-cli-table` extension: the columns `table` output shows
+    /// for this operation. `None` keeps the generic every-field table.
+    #[serde(skip)]
+    pub table: Option<crate::table_columns::TableSpec>,
     /// Resolved `x-fern-streaming` extension. `None` means the operation
     /// returns a unary response and the executor reads/buffers the body
     /// normally. `Some(_)` opts the executor into incremental
@@ -1162,6 +1166,14 @@ pub struct MethodParameter {
     /// while its scalar twin was checked — `--event-types bogus` went to the
     /// API, `--direction bogus` did not.
     pub item_enum_values: Option<Vec<String>>,
+    /// The sole required property of an object-valued parameter (or of each
+    /// element of an array of objects) when that property is a string, e.g.
+    /// `email` on `{email (required), name}`. A plain, non-JSON flag value
+    /// fills it: `--to a@x.com,b@x.com` sends
+    /// `[{"email":"a@x.com"},{"email":"b@x.com"}]`. Derived from the spec;
+    /// `None` when the object has zero or several required properties.
+    #[serde(default)]
+    pub shorthand_field: Option<String>,
     /// True for `oneOf/anyOf [string, array<string>]` unions where a single
     /// value should be sent as a scalar string, not wrapped in a length-1
     /// array. Pure `type: array` params leave this `false`.
@@ -1302,6 +1314,10 @@ pub struct JsonSchema {
     /// enforced. Mirrors [`JsonSchemaProperty::enum_values`].
     #[serde(rename = "enum")]
     pub enum_values: Option<Vec<String>>,
+    /// The component's own `format` (`Email: {type: string, format: email}`),
+    /// so a `$ref`'d format is checked like an inline one. Mirrors
+    /// [`JsonSchemaProperty::format`].
+    pub format: Option<String>,
     #[serde(default)]
     pub required: Vec<String>,
     /// JSON Schema composition branches at the component-schema root. Mirrors

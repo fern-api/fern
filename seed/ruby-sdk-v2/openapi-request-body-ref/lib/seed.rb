@@ -3,6 +3,7 @@
 require "json"
 require "net/http"
 require "securerandom"
+require "time"
 
 require_relative "seed/internal/json/serializable"
 require_relative "seed/internal/types/type"
@@ -35,13 +36,7 @@ require_relative "seed/internal/iterators/cursor_item_iterator"
 require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
-require_relative "seed/types/update_vendor_request_status"
-require_relative "seed/types/update_vendor_request"
-require_relative "seed/types/vendor_status"
-require_relative "seed/types/vendor"
-require_relative "seed/types/create_catalog_image_request"
-require_relative "seed/types/catalog_image"
-require_relative "seed/types/team_member"
+require_relative "seed/errors/connection_error"
 require_relative "seed/client"
 require_relative "seed/vendor/client"
 require_relative "seed/vendor/types/update_vendor_body"
@@ -51,3 +46,15 @@ require_relative "seed/catalog/types/create_catalog_image_body"
 require_relative "seed/catalog/types/get_catalog_image_request"
 require_relative "seed/team_member/client"
 require_relative "seed/team_member/types/update_team_member_request"
+
+module Seed
+  module Types
+    autoload :UpdateVendorRequestStatus, ::File.join(__dir__, "seed/types/update_vendor_request_status")
+    autoload :UpdateVendorRequest, ::File.join(__dir__, "seed/types/update_vendor_request")
+    autoload :VendorStatus, ::File.join(__dir__, "seed/types/vendor_status")
+    autoload :Vendor, ::File.join(__dir__, "seed/types/vendor")
+    autoload :CreateCatalogImageRequest, ::File.join(__dir__, "seed/types/create_catalog_image_request")
+    autoload :CatalogImage, ::File.join(__dir__, "seed/types/catalog_image")
+    autoload :TeamMember, ::File.join(__dir__, "seed/types/team_member")
+  end
+end

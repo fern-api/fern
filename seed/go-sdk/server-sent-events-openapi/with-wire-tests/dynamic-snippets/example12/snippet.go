@@ -15,7 +15,7 @@ func do() {
         ),
     )
     request := &fern.StreamRequest{}
-    client.StreamOasSpecNative(
+    client.StreamDataContextWithEnvelopeSchema(
         context.TODO(),
         request,
     )

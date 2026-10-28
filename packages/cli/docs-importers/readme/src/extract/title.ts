@@ -1,3 +1,4 @@
+import { capitalizeFirstLetter } from "@fern-api/core-utils";
 import type { Element, ElementContent, Root as HastRoot } from "hast";
 import type { BlockContent, Root as MdastRoot } from "mdast";
 import { CONTINUE, EXIT, visit } from "unist-util-visit";
@@ -70,7 +71,7 @@ export function getTitleFromLink(url: string): string {
     const lastPathname = url.split("/").at(-1) ?? "";
     const dashSplitPathname = lastPathname.split("-").flatMap((i) => i.split("_"));
     dashSplitPathname.forEach((str, index) => {
-        dashSplitPathname[index] = str[0] ? `${str[0].toUpperCase()}${str.substring(1)}` : str;
+        dashSplitPathname[index] = capitalizeFirstLetter(str);
     });
 
     return dashSplitPathname.join(" ");

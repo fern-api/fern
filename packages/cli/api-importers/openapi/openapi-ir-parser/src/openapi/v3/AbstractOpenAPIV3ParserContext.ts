@@ -9,6 +9,7 @@ import type { ParseOpenAPIOptions } from "../../options.js";
 import type { SchemaParserContext } from "../../schema/SchemaParserContext.js";
 import { getReferenceOccurrences } from "../../schema/utils/getReferenceOccurrences.js";
 import { isReferenceObject } from "../../schema/utils/isReferenceObject.js";
+import { getSharedErrorResponsesSchemaName } from "../../utils/getErrorResponsesSchemaName.js";
 import { FernOpenAPIExtension } from "./extensions/fernExtensions.js";
 import { OpenAPIFilter } from "./OpenAPIFilter.js";
 
@@ -34,7 +35,7 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
     public readonly taskContext: TaskContext;
     public readonly authHeaders: Set<string>;
     public readonly refOccurrences: Record<string, number>;
-    public readonly DUMMY: SchemaParserContext;
+    public readonly DUMMY: AbstractOpenAPIV3ParserContext;
     public readonly options: ParseOpenAPIOptions;
     public readonly source: Source;
     public readonly filter: OpenAPIFilter;
@@ -46,7 +47,8 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
         authHeaders,
         options,
         source,
-        namespace
+        namespace,
+        refOccurrences
     }: {
         document: OpenAPIV3.Document;
         taskContext: TaskContext;
@@ -54,12 +56,14 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
         options: ParseOpenAPIOptions;
         source: Source;
         namespace: string | undefined;
+        /** Precomputed `getReferenceOccurrences(document)`, reused by contexts over the same document. */
+        refOccurrences?: Record<string, number>;
     }) {
         this.document = document;
         this.logger = taskContext.logger;
         this.taskContext = taskContext;
         this.authHeaders = authHeaders;
-        this.refOccurrences = getReferenceOccurrences(document);
+        this.refOccurrences = refOccurrences ?? getReferenceOccurrences(document);
         this.options = options;
         this.source = source;
         this.filter = new OpenAPIFilter({ context: taskContext, options });
@@ -281,7 +285,7 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
 
     public abstract getReferencedSchemas(): Set<SchemaId>;
 
-    public abstract getDummy(): SchemaParserContext;
+    public abstract getDummy(): AbstractOpenAPIV3ParserContext;
 
     public abstract markReferencedByDiscriminatedUnion(
         schema: OpenAPIV3.ReferenceObject,
@@ -314,8 +318,15 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
             return mapping;
         }
 
+        const sharedErrorSchemaName =
+            this.namespace != null ? getSharedErrorResponsesSchemaName(this.options) : undefined;
         for (const [schemaName, schemaDefinition] of Object.entries(this.document.components.schemas)) {
             if (!schemaDefinition || isReferenceObject(schemaDefinition)) {
+                continue;
+            }
+            if (schemaName === sharedErrorSchemaName) {
+                // The API-wide `error-responses` body lives in the root package, not in this spec's namespace.
+                mapping.set(schemaName, undefined);
                 continue;
             }
             mapping.set(

@@ -95,7 +95,6 @@ public final class VariableTypeAndName {
 
         private String name;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -124,6 +123,14 @@ public final class VariableTypeAndName {
         @java.lang.Override
         public VariableTypeAndName build() {
             return new VariableTypeAndName(variableType, name, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("variableType") || key.equalsIgnoreCase("name")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

@@ -95,7 +95,6 @@ public final class Entity {
 
         private String name;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -124,6 +123,14 @@ public final class Entity {
         @java.lang.Override
         public Entity build() {
             return new Entity(type, name, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("type") || key.equalsIgnoreCase("name")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

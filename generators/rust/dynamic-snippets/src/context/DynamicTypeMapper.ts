@@ -84,7 +84,7 @@ export class DynamicTypeMapper {
             case "enum":
             case "discriminatedUnion":
             case "undiscriminatedUnion":
-                return this.context.getStructName(namedType.declaration.name);
+                return this.context.getStructName(namedType.declaration);
             default:
                 return "String";
         }

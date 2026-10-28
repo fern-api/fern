@@ -1,17 +1,25 @@
 import { FernVenusApiClient } from "@fern-api/venus-api-sdk";
 
+import { getCodingAgentHeaders } from "../codingAgent.js";
+
+// `BearerAuthProvider.getAuthRequest` in @fern-api/venus-api-sdk returns no headers when its token supplier
+// yields null/undefined; a plain `undefined` is rejected at construction, hence the supplier. Pinned by
+// __test__/venus.test.ts.
+const NO_TOKEN = (): string => undefined as unknown as string;
+
 export function createVenusService({
     environment = process.env.DEFAULT_VENUS_ORIGIN ?? "https://venus.buildwithfern.com",
     token,
     headers
 }: {
     environment?: string;
-    token: string;
+    /** Omit for the few unauthenticated routes (guest-session issuance); no Authorization header is sent then. */
+    token: string | undefined;
     headers?: Record<string, string>;
 }): FernVenusApiClient {
     return new FernVenusApiClient({
         environment,
-        token,
-        headers
+        token: token ?? NO_TOKEN,
+        headers: { ...getCodingAgentHeaders(), ...headers }
     });
 }

@@ -4,8 +4,10 @@
 package com.seed.literal.resources.path;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.literal.core.BodyProperties;
 import com.seed.literal.core.ClientOptions;
 import com.seed.literal.core.ObjectMappers;
+import com.seed.literal.core.PathSegments;
 import com.seed.literal.core.RequestOptions;
 import com.seed.literal.core.RetryInterceptor;
 import com.seed.literal.core.SeedLiteralApiException;
@@ -40,7 +42,7 @@ public class AsyncRawPathClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("path")
-                .addPathSegment(id);
+                .addPathSegment(PathSegments.validate(id));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -48,7 +50,11 @@ public class AsyncRawPathClient {
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl.build())
-                .method("POST", RequestBody.create("", null))
+                .method(
+                        "POST",
+                        BodyProperties.toRequestBody(
+                                requestOptions != null ? requestOptions.getBodyProperties() : null,
+                                RequestBody.create("", null)))
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json")
                 .build();
@@ -66,7 +72,8 @@ public class AsyncRawPathClient {
                     .build();
         }
         CompletableFuture<SeedLiteralHttpResponse<SendResponse>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -91,6 +98,11 @@ public class AsyncRawPathClient {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(new SeedLiteralException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;

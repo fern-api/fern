@@ -2880,6 +2880,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_folder-d/service.getDirectThread": {
@@ -3000,6 +3001,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_foo.find": {
@@ -3251,6 +3253,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             }
         },
@@ -3612,6 +3615,7 @@
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
         "idempotencyKeyGeneration": null,
+        "webhookSignatureVerification": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",

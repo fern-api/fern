@@ -79,7 +79,6 @@ public final class WorkspaceTracedUpdate {
     public static final class Builder implements TraceResponsesSizeStage, _FinalStage {
         private int traceResponsesSize;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -100,6 +99,14 @@ public final class WorkspaceTracedUpdate {
         @java.lang.Override
         public WorkspaceTracedUpdate build() {
             return new WorkspaceTracedUpdate(traceResponsesSize, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("traceResponsesSize")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

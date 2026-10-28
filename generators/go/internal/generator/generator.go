@@ -201,10 +201,13 @@ func (g *Generator) generateModelTypes(ir *fernir.IntermediateRepresentation, mo
 			g.config.ServerURLVariables,
 			g.config.ExportAllRequestsAtRoot,
 			g.config.OmitEmptyRequestWrappers,
+			g.config.LegacyNullableAliasPointers,
+			g.config.XmlTextFirstBuilders,
 			userAgentConfig{
 				omitFernHeaders:        g.config.OmitFernHeaders,
 				includePlatformHeaders: g.config.IncludePlatformHeaders,
 				allowUserAgentAppInfo:  g.config.AllowUserAgentAppInfo,
+				userAgentOnly:          g.config.UserAgentOnly,
 			},
 			g.config.UnionVersion,
 			g.config.CustomPagerName,
@@ -340,10 +343,13 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.ServerURLVariables,
 			g.config.ExportAllRequestsAtRoot,
 			g.config.OmitEmptyRequestWrappers,
+			g.config.LegacyNullableAliasPointers,
+			g.config.XmlTextFirstBuilders,
 			userAgentConfig{
 				omitFernHeaders:        g.config.OmitFernHeaders,
 				includePlatformHeaders: g.config.IncludePlatformHeaders,
 				allowUserAgentAppInfo:  g.config.AllowUserAgentAppInfo,
+				userAgentOnly:          g.config.UserAgentOnly,
 			},
 			g.config.UnionVersion,
 			g.config.CustomPagerName,
@@ -374,10 +380,13 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.ServerURLVariables,
 			g.config.ExportAllRequestsAtRoot,
 			g.config.OmitEmptyRequestWrappers,
+			g.config.LegacyNullableAliasPointers,
+			g.config.XmlTextFirstBuilders,
 			userAgentConfig{
 				omitFernHeaders:        g.config.OmitFernHeaders,
 				includePlatformHeaders: g.config.IncludePlatformHeaders,
 				allowUserAgentAppInfo:  g.config.AllowUserAgentAppInfo,
+				userAgentOnly:          g.config.UserAgentOnly,
 			},
 			g.config.UnionVersion,
 			g.config.CustomPagerName,
@@ -409,6 +418,10 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 	files = append(files, newExplicitFieldsTestFile(g.coordinator))
 	files = append(files, newExtraPropertiesFile(g.coordinator))
 	files = append(files, newExtraPropertiesTestFile(g.coordinator))
+	if hasXmlTypes(ir) {
+		files = append(files, newXmlFile(g.coordinator))
+		files = append(files, newXmlTestFile(g.coordinator))
+	}
 	// Then handle mode-specific generation tasks.
 	switch mode {
 	case ModeClient:
@@ -432,10 +445,13 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.ServerURLVariables,
 			g.config.ExportAllRequestsAtRoot,
 			g.config.OmitEmptyRequestWrappers,
+			g.config.LegacyNullableAliasPointers,
+			g.config.XmlTextFirstBuilders,
 			userAgentConfig{
 				omitFernHeaders:        g.config.OmitFernHeaders,
 				includePlatformHeaders: g.config.IncludePlatformHeaders,
 				allowUserAgentAppInfo:  g.config.AllowUserAgentAppInfo,
+				userAgentOnly:          g.config.UserAgentOnly,
 			},
 			g.config.UnionVersion,
 			g.config.CustomPagerName,
@@ -453,6 +469,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.Version,
 			ir.Environments,
 			inferredParams,
+			ir.Variables,
 		); err != nil {
 			return nil, err
 		}
@@ -478,10 +495,13 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.ServerURLVariables,
 				g.config.ExportAllRequestsAtRoot,
 				g.config.OmitEmptyRequestWrappers,
+				g.config.LegacyNullableAliasPointers,
+				g.config.XmlTextFirstBuilders,
 				userAgentConfig{
 					omitFernHeaders:        g.config.OmitFernHeaders,
 					includePlatformHeaders: g.config.IncludePlatformHeaders,
 					allowUserAgentAppInfo:  g.config.AllowUserAgentAppInfo,
+					userAgentOnly:          g.config.UserAgentOnly,
 				},
 				g.config.UnionVersion,
 				g.config.CustomPagerName,
@@ -515,10 +535,13 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.ServerURLVariables,
 			g.config.ExportAllRequestsAtRoot,
 			g.config.OmitEmptyRequestWrappers,
+			g.config.LegacyNullableAliasPointers,
+			g.config.XmlTextFirstBuilders,
 			userAgentConfig{
 				omitFernHeaders:        g.config.OmitFernHeaders,
 				includePlatformHeaders: g.config.IncludePlatformHeaders,
 				allowUserAgentAppInfo:  g.config.AllowUserAgentAppInfo,
+				userAgentOnly:          g.config.UserAgentOnly,
 			},
 			g.config.UnionVersion,
 			g.config.CustomPagerName,
@@ -526,7 +549,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			ir.Errors,
 			g.coordinator,
 		)
-		generatedAuth, err = writer.WriteRequestOptions(ir.Auth, ir.Headers, ir.Environments, inferredParams)
+		generatedAuth, err = writer.WriteRequestOptions(ir.Auth, ir.Headers, ir.Environments, inferredParams, ir.Variables)
 		if err != nil {
 			return nil, err
 		}
@@ -558,10 +581,13 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.ServerURLVariables,
 				g.config.ExportAllRequestsAtRoot,
 				g.config.OmitEmptyRequestWrappers,
+				g.config.LegacyNullableAliasPointers,
+				g.config.XmlTextFirstBuilders,
 				userAgentConfig{
 					omitFernHeaders:        g.config.OmitFernHeaders,
 					includePlatformHeaders: g.config.IncludePlatformHeaders,
 					allowUserAgentAppInfo:  g.config.AllowUserAgentAppInfo,
+					userAgentOnly:          g.config.UserAgentOnly,
 				},
 				g.config.UnionVersion,
 				g.config.CustomPagerName,
@@ -592,10 +618,13 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.ServerURLVariables,
 				g.config.ExportAllRequestsAtRoot,
 				g.config.OmitEmptyRequestWrappers,
+				g.config.LegacyNullableAliasPointers,
+				g.config.XmlTextFirstBuilders,
 				userAgentConfig{
 					omitFernHeaders:        g.config.OmitFernHeaders,
 					includePlatformHeaders: g.config.IncludePlatformHeaders,
 					allowUserAgentAppInfo:  g.config.AllowUserAgentAppInfo,
+					userAgentOnly:          g.config.UserAgentOnly,
 				},
 				g.config.UnionVersion,
 				g.config.CustomPagerName,
@@ -629,10 +658,13 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.ServerURLVariables,
 				g.config.ExportAllRequestsAtRoot,
 				g.config.OmitEmptyRequestWrappers,
+				g.config.LegacyNullableAliasPointers,
+				g.config.XmlTextFirstBuilders,
 				userAgentConfig{
 					omitFernHeaders:        g.config.OmitFernHeaders,
 					includePlatformHeaders: g.config.IncludePlatformHeaders,
 					allowUserAgentAppInfo:  g.config.AllowUserAgentAppInfo,
+					userAgentOnly:          g.config.UserAgentOnly,
 				},
 				g.config.UnionVersion,
 				g.config.CustomPagerName,
@@ -665,10 +697,13 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			g.config.ServerURLVariables,
 			g.config.ExportAllRequestsAtRoot,
 			g.config.OmitEmptyRequestWrappers,
+			g.config.LegacyNullableAliasPointers,
+			g.config.XmlTextFirstBuilders,
 			userAgentConfig{
 				omitFernHeaders:        g.config.OmitFernHeaders,
 				includePlatformHeaders: g.config.IncludePlatformHeaders,
 				allowUserAgentAppInfo:  g.config.AllowUserAgentAppInfo,
+				userAgentOnly:          g.config.UserAgentOnly,
 			},
 			g.config.UnionVersion,
 			g.config.CustomPagerName,
@@ -729,10 +764,13 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				g.config.ServerURLVariables,
 				g.config.ExportAllRequestsAtRoot,
 				g.config.OmitEmptyRequestWrappers,
+				g.config.LegacyNullableAliasPointers,
+				g.config.XmlTextFirstBuilders,
 				userAgentConfig{
 					omitFernHeaders:        g.config.OmitFernHeaders,
 					includePlatformHeaders: g.config.IncludePlatformHeaders,
 					allowUserAgentAppInfo:  g.config.AllowUserAgentAppInfo,
+					userAgentOnly:          g.config.UserAgentOnly,
 				},
 				g.config.UnionVersion,
 				g.config.CustomPagerName,
@@ -895,10 +933,13 @@ func (g *Generator) generateRootService(
 		g.config.ServerURLVariables,
 		g.config.ExportAllRequestsAtRoot,
 		g.config.OmitEmptyRequestWrappers,
+		g.config.LegacyNullableAliasPointers,
+		g.config.XmlTextFirstBuilders,
 		userAgentConfig{
 			omitFernHeaders:        g.config.OmitFernHeaders,
 			includePlatformHeaders: g.config.IncludePlatformHeaders,
 			allowUserAgentAppInfo:  g.config.AllowUserAgentAppInfo,
+			userAgentOnly:          g.config.UserAgentOnly,
 		},
 		g.config.UnionVersion,
 		g.config.CustomPagerName,
@@ -921,6 +962,7 @@ func (g *Generator) generateRootService(
 		g.config.InlineFileProperties,
 		g.config.ClientName,
 		g.config.ClientConstructorName,
+		ir.Variables,
 	)
 	if err != nil {
 		return nil, nil, err
@@ -954,10 +996,13 @@ func (g *Generator) generateService(
 		g.config.ServerURLVariables,
 		g.config.ExportAllRequestsAtRoot,
 		g.config.OmitEmptyRequestWrappers,
+		g.config.LegacyNullableAliasPointers,
+		g.config.XmlTextFirstBuilders,
 		userAgentConfig{
 			omitFernHeaders:        g.config.OmitFernHeaders,
 			includePlatformHeaders: g.config.IncludePlatformHeaders,
 			allowUserAgentAppInfo:  g.config.AllowUserAgentAppInfo,
+			userAgentOnly:          g.config.UserAgentOnly,
 		},
 		g.config.UnionVersion,
 		g.config.CustomPagerName,
@@ -980,6 +1025,7 @@ func (g *Generator) generateService(
 		g.config.InlineFileProperties,
 		"",
 		"",
+		ir.Variables,
 	)
 	if err != nil {
 		return nil, nil, err
@@ -1016,10 +1062,13 @@ func (g *Generator) generateServiceWithoutEndpoints(
 		g.config.ServerURLVariables,
 		g.config.ExportAllRequestsAtRoot,
 		g.config.OmitEmptyRequestWrappers,
+		g.config.LegacyNullableAliasPointers,
+		g.config.XmlTextFirstBuilders,
 		userAgentConfig{
 			omitFernHeaders:        g.config.OmitFernHeaders,
 			includePlatformHeaders: g.config.IncludePlatformHeaders,
 			allowUserAgentAppInfo:  g.config.AllowUserAgentAppInfo,
+			userAgentOnly:          g.config.UserAgentOnly,
 		},
 		g.config.UnionVersion,
 		g.config.CustomPagerName,
@@ -1042,6 +1091,7 @@ func (g *Generator) generateServiceWithoutEndpoints(
 		g.config.InlineFileProperties,
 		"",
 		"",
+		ir.Variables,
 	); err != nil {
 		return nil, err
 	}
@@ -1073,10 +1123,13 @@ func (g *Generator) generateRootServiceWithoutEndpoints(
 		g.config.ServerURLVariables,
 		g.config.ExportAllRequestsAtRoot,
 		g.config.OmitEmptyRequestWrappers,
+		g.config.LegacyNullableAliasPointers,
+		g.config.XmlTextFirstBuilders,
 		userAgentConfig{
 			omitFernHeaders:        g.config.OmitFernHeaders,
 			includePlatformHeaders: g.config.IncludePlatformHeaders,
 			allowUserAgentAppInfo:  g.config.AllowUserAgentAppInfo,
+			userAgentOnly:          g.config.UserAgentOnly,
 		},
 		g.config.UnionVersion,
 		g.config.CustomPagerName,
@@ -1099,6 +1152,7 @@ func (g *Generator) generateRootServiceWithoutEndpoints(
 		g.config.InlineFileProperties,
 		g.config.ClientName,
 		g.config.ClientConstructorName,
+		ir.Variables,
 	)
 	if err != nil {
 		return nil, nil, err
@@ -1453,6 +1507,8 @@ func newClientTestFile(
 		true,
 		false,
 		false,
+		false,
+		false,
 		userAgentConfig{},
 		UnionVersionUnspecified,
 		"",
@@ -1463,6 +1519,32 @@ func newClientTestFile(
 	content := replaceClientTestConstructorName(clientTestFile, clientNameOverride, exportedClientNameOverride, clientConstructorNameOverride)
 	f.WriteRaw(content)
 	return f.File()
+}
+
+// hasXmlTypes returns true if any type in the IR is xml-encoded.
+func hasXmlTypes(ir *fernir.IntermediateRepresentation) bool {
+	for _, typeDeclaration := range ir.Types {
+		if typeDeclaration.Encoding.GetXml() != nil {
+			return true
+		}
+	}
+	return false
+}
+
+func newXmlFile(coordinator *coordinator.Client) *File {
+	return NewFile(
+		coordinator,
+		"core/xml.go",
+		[]byte(xmlFile),
+	)
+}
+
+func newXmlTestFile(coordinator *coordinator.Client) *File {
+	return NewFile(
+		coordinator,
+		"core/xml_test.go",
+		[]byte(xmlTestFile),
+	)
 }
 
 func newApiErrorFile(coordinator *coordinator.Client) *File {
@@ -1750,6 +1832,110 @@ func fileInfoForType(rootPackageName string, fernFilepath *common.FernFilepath) 
 	}
 }
 
+// fileInfoForTypeDeclaration returns the file the given type declaration is
+// generated into, placing xml-encoded types in their own file.
+func fileInfoForTypeDeclaration(
+	rootPackageName string,
+	typeDeclaration *fernir.TypeDeclaration,
+	serviceFilenames map[string]struct{},
+) fileInfo {
+	return fileInfoForXmlType(fileInfoForType(rootPackageName, typeDeclaration.Name.FernFilepath), typeDeclaration, serviceFilenames)
+}
+
+// fileInfoForXmlType routes an xml-encoded type declaration to its own file
+// (e.g. twimlvoice/say.go) in the same package as the given fileInfo. Types
+// that aren't xml-encoded, or whose filename would collide with a file the
+// generator writes for other purposes (including the per-service files listed
+// in serviceFilenames), keep the given fileInfo.
+func fileInfoForXmlType(
+	info fileInfo,
+	typeDeclaration *fernir.TypeDeclaration,
+	serviceFilenames map[string]struct{},
+) fileInfo {
+	if typeDeclaration.Encoding == nil || typeDeclaration.Encoding.GetXml() == nil {
+		return info
+	}
+	if typeDeclaration.Name == nil || typeDeclaration.Name.Name == nil || typeDeclaration.Name.Name.SnakeCase == nil {
+		return info
+	}
+	basename := typeDeclaration.Name.Name.SnakeCase.UnsafeName
+	if basename == "" || strings.HasPrefix(basename, "_") || strings.HasSuffix(basename, "_test") {
+		return info
+	}
+	if hasGoBuildConstraintSuffix(basename) {
+		return info
+	}
+	filename := basename + ".go"
+	if isReservedFilename(filename) || isReservedTypeFilename(filename) {
+		return info
+	}
+	fullFilename := filepath.Join(filepath.Dir(info.filename), filename)
+	if _, ok := serviceFilenames[fullFilename]; ok {
+		return info
+	}
+	return fileInfo{
+		filename:    fullFilename,
+		packageName: info.packageName,
+	}
+}
+
+// serviceFilenamesForTypes returns the files that are written for the given
+// services (e.g. twimlvoice/say.go for a 'say' service), which per-type files
+// must not reuse.
+func serviceFilenamesForTypes(rootPackageName string, irServices map[fernir.ServiceId]*fernir.HttpService) map[string]struct{} {
+	serviceFilenames := make(map[string]struct{}, len(irServices))
+	for _, irService := range irServices {
+		serviceFilenames[fileInfoForType(rootPackageName, irService.Name.FernFilepath).filename] = struct{}{}
+	}
+	return serviceFilenames
+}
+
+// reservedTypeFilenames are files that the generator writes alongside type
+// files in the same package, so a per-type file must never reuse them.
+var reservedTypeFilenames = map[string]struct{}{
+	sharedTypesFilename: {},
+	packageDocsFilename: {},
+	"client.go":         {},
+	"raw_client.go":     {},
+	"errors.go":         {},
+	"error_codes.go":    {},
+	"file_param.go":     {},
+	"optional.go":       {},
+	"environments.go":   {},
+	"pointer.go":        {},
+}
+
+func isReservedTypeFilename(filename string) bool {
+	_, ok := reservedTypeFilenames[filename]
+	return ok
+}
+
+// goBuildConstraintSuffixes are the GOOS and GOARCH values that the Go tool
+// treats as implicit build constraints when they appear as a `_<value>`
+// suffix of a filename (e.g. foo_linux.go, foo_arm64.go, foo_linux_arm64.go).
+var goBuildConstraintSuffixes = map[string]struct{}{
+	// GOOS
+	"aix": {}, "android": {}, "darwin": {}, "dragonfly": {}, "freebsd": {}, "hurd": {}, "illumos": {},
+	"ios": {}, "js": {}, "linux": {}, "nacl": {}, "netbsd": {}, "openbsd": {}, "plan9": {}, "solaris": {},
+	"wasip1": {}, "windows": {}, "zos": {},
+	// GOARCH
+	"386": {}, "amd64": {}, "amd64p32": {}, "arm": {}, "armbe": {}, "arm64": {}, "arm64be": {}, "loong64": {},
+	"mips": {}, "mipsle": {}, "mips64": {}, "mips64le": {}, "mips64p32": {}, "mips64p32le": {}, "ppc": {},
+	"ppc64": {}, "ppc64le": {}, "riscv": {}, "riscv64": {}, "s390": {}, "s390x": {}, "sparc": {}, "sparc64": {},
+	"wasm": {},
+}
+
+// hasGoBuildConstraintSuffix reports whether a file named <basename>.go would
+// only be compiled for a particular GOOS/GOARCH.
+func hasGoBuildConstraintSuffix(basename string) bool {
+	index := strings.LastIndex(basename, "_")
+	if index < 0 {
+		return false
+	}
+	_, ok := goBuildConstraintSuffixes[basename[index+1:]]
+	return ok
+}
+
 func fileInfoForPackageDocs(fernFilepath *common.FernFilepath) *fileInfo {
 	packagePath := packagePathForDocs(fernFilepath)
 	return &fileInfo{
@@ -1906,6 +2092,7 @@ func fileInfoToTypes(
 	omitEmptyRequestWrappers bool,
 ) (map[fileInfo][]*typeToGenerate, error) {
 	result := make(map[fileInfo][]*typeToGenerate)
+	serviceFilenames := serviceFilenamesForTypes(rootPackageName, irServices)
 
 	for _, serviceId := range sortedMapKeys(irServices) {
 		irService := irServices[serviceId]
@@ -1943,7 +2130,7 @@ func fileInfoToTypes(
 		// to the file-per-type naming convention.
 		for _, typeId := range sortedMapKeys(irTypes) {
 			irType := irTypes[typeId]
-			fileInfo := fileInfoForType(rootPackageName, irType.Name.FernFilepath)
+			fileInfo := fileInfoForTypeDeclaration(rootPackageName, irType, serviceFilenames)
 			result[fileInfo] = append(
 				result[fileInfo],
 				&typeToGenerate{
@@ -1969,6 +2156,7 @@ func fileInfoToTypes(
 			if isReservedFilename(filepath.Base(fileInfo.filename)) {
 				fileInfo.filename = filepath.Join(filepath.Dir(fileInfo.filename), sharedTypesFilename)
 			}
+			fileInfo = fileInfoForXmlType(fileInfo, typeDeclaration, serviceFilenames)
 			result[fileInfo] = append(
 				result[fileInfo],
 				&typeToGenerate{
@@ -1999,6 +2187,7 @@ func fileInfoToTypes(
 				if shouldSetFileInfoToMatchService(typeDeclaration.Name.FernFilepath, service.Name.FernFilepath) {
 					fileInfo.filename = filepath.Join(filepath.Dir(fileInfo.filename), service.Name.FernFilepath.File.SnakeCase.UnsafeName+".go")
 				}
+				fileInfo = fileInfoForXmlType(fileInfo, typeDeclaration, serviceFilenames)
 				result[fileInfo] = append(
 					result[fileInfo],
 					&typeToGenerate{

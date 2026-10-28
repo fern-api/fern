@@ -5,8 +5,10 @@
 package com.fern.sdk.resources.endpoints.put;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fern.sdk.core.BodyProperties;
 import com.fern.sdk.core.ClientOptions;
 import com.fern.sdk.core.ObjectMappers;
+import com.fern.sdk.core.PathSegments;
 import com.fern.sdk.core.RequestOptions;
 import com.fern.sdk.core.RetryInterceptor;
 import com.fern.sdk.core.SeedExhaustiveApiException;
@@ -49,14 +51,14 @@ public class RawPutClient {
     HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl()).newBuilder()
 
 
-      .addPathSegment(id);if (requestOptions != null) {
+      .addPathSegment(PathSegments.validate(id));if (requestOptions != null) {
         requestOptions.getQueryParameters().forEach((_key, _value) -> {
           httpUrl.addQueryParameter(_key, _value);
         } );
       }
       Request.Builder _requestBuilder = new Request.Builder()
         .url(httpUrl.build())
-        .method("PUT", RequestBody.create("", null))
+        .method("PUT", BodyProperties.toRequestBody(requestOptions != null ? requestOptions.getBodyProperties() : null, RequestBody.create("", null)))
         .headers(Headers.of(clientOptions.headers(requestOptions)))
         .addHeader("Accept", "application/json");
       Request okhttpRequest = _requestBuilder.build();

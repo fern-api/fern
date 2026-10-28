@@ -89,6 +89,10 @@ public final class ClientPoetClassNameFactory extends AbstractNonModelPoetClassN
         return ClassName.get(getCorePackage(), "ResponseDecompressionInterceptor");
     }
 
+    public ClassName getConcurrencyLimitingInterceptorClassName() {
+        return ClassName.get(getCorePackage(), "ConcurrencyLimitingInterceptor");
+    }
+
     public ClassName getResponseBodyInputStreamClassName() {
         return ClassName.get(getCorePackage(), "ResponseBodyInputStream");
     }
@@ -107,6 +111,10 @@ public final class ClientPoetClassNameFactory extends AbstractNonModelPoetClassN
 
     public ClassName getIdempotentRequestOptionsClassName() {
         return ClassName.get(getCorePackage(), "IdempotentRequestOptions");
+    }
+
+    public ClassName getBodyPropertiesClassName() {
+        return ClassName.get(getCorePackage(), "BodyProperties");
     }
 
     public ClassName getMediaTypesClassName() {

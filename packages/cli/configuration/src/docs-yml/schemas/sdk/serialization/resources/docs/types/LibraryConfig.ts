@@ -3,16 +3,24 @@
 import type * as FernDocsConfig from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { LibrarySlugStyle } from "./LibrarySlugStyle.js";
 
 export const LibraryConfig: core.serialization.ObjectSchema<
     serializers.LibraryConfig.Raw,
     FernDocsConfig.LibraryConfig
 > = core.serialization.object({
     doxyfile: core.serialization.string().optional(),
+    includeUndocumentedMacros: core.serialization.property(
+        "include-undocumented-macros",
+        core.serialization.boolean().optional(),
+    ),
+    slugStyle: core.serialization.property("slug-style", LibrarySlugStyle.optional()),
 });
 
 export declare namespace LibraryConfig {
     export interface Raw {
         doxyfile?: string | null;
+        "include-undocumented-macros"?: boolean | null;
+        "slug-style"?: LibrarySlugStyle.Raw | null;
     }
 }

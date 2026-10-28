@@ -12,7 +12,7 @@ public partial class Examples
             }
         );
 
-        await client.Endpoints.ContentType.PostJsonPatchContentWithCharsetTypeAsync(
+        await client.Endpoints.ContentType.PostJsonPatchContentTypeAsync(
             new ObjectWithOptionalField {
                 String = "string",
                 Integer = 1,

@@ -122,7 +122,6 @@ public final class AuditInfo implements IAuditInfo {
 
         private Optional<OffsetDateTime> modifiedDateTime = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -193,6 +192,17 @@ public final class AuditInfo implements IAuditInfo {
 
         public AuditInfo build() {
             return new AuditInfo(createdBy, createdDateTime, modifiedBy, modifiedDateTime, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("createdBy")
+                    || key.equalsIgnoreCase("createdDateTime")
+                    || key.equalsIgnoreCase("modifiedBy")
+                    || key.equalsIgnoreCase("modifiedDateTime")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

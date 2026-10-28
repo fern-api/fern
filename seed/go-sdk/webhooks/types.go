@@ -56,10 +56,12 @@ func (o *OrderCompletedPayload) GetExtraProperties() map[string]interface{} {
 }
 
 func (o *OrderCompletedPayload) require(field *big.Int) {
-	if o.explicitFields == nil {
-		o.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if o.explicitFields != nil {
+		next.Set(o.explicitFields)
 	}
-	o.explicitFields.Or(o.explicitFields, field)
+	next.Or(next, field)
+	o.explicitFields = next
 }
 
 // SetOrderID sets the OrderID field and marks it as non-optional;
@@ -172,10 +174,12 @@ func (p *PaymentNotificationPayload) GetExtraProperties() map[string]interface{}
 }
 
 func (p *PaymentNotificationPayload) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetPaymentID sets the PaymentID field and marks it as non-optional;
@@ -288,10 +292,12 @@ func (r *RefundProcessedPayload) GetExtraProperties() map[string]interface{} {
 }
 
 func (r *RefundProcessedPayload) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
 	}
-	r.explicitFields.Or(r.explicitFields, field)
+	next.Or(next, field)
+	r.explicitFields = next
 }
 
 // SetRefundID sets the RefundID field and marks it as non-optional;
@@ -395,10 +401,12 @@ func (s *SmsStatusPayload) GetExtraProperties() map[string]interface{} {
 }
 
 func (s *SmsStatusPayload) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetMessageSid sets the MessageSid field and marks it as non-optional;
@@ -504,10 +512,12 @@ func (u *UserCreatedPayload) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UserCreatedPayload) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetUserID sets the UserID field and marks it as non-optional;

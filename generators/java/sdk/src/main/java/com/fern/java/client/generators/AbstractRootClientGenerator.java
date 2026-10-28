@@ -78,6 +78,7 @@ import com.squareup.javapoet.TypeSpec;
 import com.squareup.javapoet.TypeVariableName;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -92,6 +93,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
     private static final String CLIENT_OPTIONS_BUILDER_NAME = "clientOptionsBuilder";
     private static final String ENVIRONMENT_FIELD_NAME = "environment";
+    private static final String ON_REFRESH_TOKEN_ROTATED_FIELD_NAME = "onRefreshTokenRotated";
     private static final String APP_INFO_NAME_FIELD_NAME = "appInfoName";
     private static final String APP_INFO_VERSION_FIELD_NAME = "appInfoVersion";
     private static final String APP_INFO_COMMENT_FIELD_NAME = "appInfoComment";
@@ -249,6 +251,23 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 addWebSocketFactoryMethod(result.getClientImpl(), websocketChannel);
             }
         }
+
+        // Make the root client AutoCloseable so callers can release the OkHttpClient the SDK created for them
+        // (dispatcher executor + connection pool). Delegates to ClientOptions.close(), which first disconnects any
+        // WebSocket clients still connected through these options (so they stop reconnecting), then only tears the
+        // HTTP client down when the client owns it — a client supplied via Builder.httpClient(...) is left running,
+        // since the caller owns its lifecycle.
+        result.getClientImpl()
+                .addSuperinterface(AutoCloseable.class)
+                .addMethod(MethodSpec.methodBuilder("close")
+                        .addAnnotation(Override.class)
+                        .addModifiers(Modifier.PUBLIC)
+                        .addJavadoc(
+                                "Releases resources owned by this client: any WebSocket clients still connected through\n"
+                                        + "it are disconnected first, then the SDK-owned HTTP client is shut down. See\n"
+                                        + "{@code ClientOptions.close()} for what is and is not released.\n")
+                        .addStatement("this.clientOptions.close()")
+                        .build());
 
         TypeSpec builderTypeSpec = getClientBuilder();
 
@@ -499,6 +518,18 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 .build());
 
         clientBuilder.addField(FieldSpec.builder(
+                        ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Integer.class)),
+                        "maxConcurrentRequests")
+                .addModifiers(Modifier.PRIVATE)
+                .initializer("$T.empty()", Optional.class)
+                .build());
+
+        clientBuilder.addField(FieldSpec.builder(RETRY_ON_STATUS_CODES_TYPE, "retryOnStatusCodes")
+                .addModifiers(Modifier.PRIVATE)
+                .initializer("$T.empty()", Optional.class)
+                .build());
+
+        clientBuilder.addField(FieldSpec.builder(
                         ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Long.class)),
                         "initialRetryDelayMillis")
                 .addModifiers(Modifier.PRIVATE)
@@ -666,6 +697,28 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 .addStatement(isExtensible ? "return self()" : "return this")
                 .build());
 
+        clientBuilder.addMethod(MethodSpec.methodBuilder("maxConcurrentRequests")
+                .addModifiers(Modifier.PUBLIC)
+                .addJavadoc("Caps the number of in-flight requests (sync and async) the client will have at once. "
+                        + "Unlimited unless set; must be positive.")
+                .addParameter(int.class, "maxConcurrentRequests")
+                .returns(isExtensible ? TypeVariableName.get("T") : builderName)
+                .addStatement("this.maxConcurrentRequests = $T.of(maxConcurrentRequests)", Optional.class)
+                .addStatement(isExtensible ? "return self()" : "return this")
+                .build());
+
+        clientBuilder.addMethod(MethodSpec.methodBuilder("retryOnStatusCodes")
+                .addModifiers(Modifier.PUBLIC)
+                .addJavadoc(RETRY_ON_STATUS_CODES_JAVADOC)
+                .addParameter(STATUS_CODE_SET_TYPE, "retryOnStatusCodes")
+                .returns(isExtensible ? TypeVariableName.get("T") : builderName)
+                .beginControlFlow("if (retryOnStatusCodes == null)")
+                .addStatement("throw new $T($S)", IllegalArgumentException.class, "retryOnStatusCodes must not be null")
+                .endControlFlow()
+                .addStatement("this.retryOnStatusCodes = $T.of(retryOnStatusCodes)", Optional.class)
+                .addStatement(isExtensible ? "return self()" : "return this")
+                .build());
+
         clientBuilder.addMethod(MethodSpec.methodBuilder("initialRetryDelayMillis")
                 .addModifiers(Modifier.PUBLIC)
                 .addJavadoc("Sets the initial delay (in milliseconds) used for exponential backoff between retries. "
@@ -806,13 +859,16 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
             String variableName = NameUtils.toName(variableDeclaration.getName())
                     .getCamelCase()
                     .getSafeName();
-            clientBuilder.addField(FieldSpec.builder(
+            FieldSpec.Builder variableField = FieldSpec.builder(
                             generatorContext
                                     .getPoetTypeNameMapper()
                                     .convertToTypeName(true, variableDeclaration.getType()),
                             variableName)
-                    .addModifiers(Modifier.PRIVATE)
-                    .build());
+                    .addModifiers(Modifier.PRIVATE);
+            variableDeclaration
+                    .getEnvVar()
+                    .ifPresent(envVar -> variableField.initializer("$T.getenv($S)", System.class, envVar));
+            clientBuilder.addField(variableField.build());
         });
 
         generatorContext.getIr().getVariables().stream()
@@ -920,6 +976,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
         buildClientOptionsMethodBuilder
                 .addStatement("setTimeouts(builder)")
                 .addStatement("setRetries(builder)")
+                .addStatement("setConcurrencyLimit(builder)")
                 .addStatement("setLogging(builder)");
 
         if (appInfoEnabled) {
@@ -1127,6 +1184,18 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .getSafeName();
                 MethodSpec variableMethod =
                         generatedClientOptions.variableGetters().get(variableDeclaration.getId());
+                if (variableDeclaration.getEnvVar().isPresent()) {
+                    setVariablesMethodBuilder
+                            .beginControlFlow("if (this.$L == null)", variableName)
+                            .addStatement(
+                                    "throw new $T($S)",
+                                    IllegalStateException.class,
+                                    variableName + " is required. Pass it to the builder or set the "
+                                            + variableDeclaration.getEnvVar().get() + " environment variable.")
+                            .endControlFlow()
+                            .addStatement("builder.$N(this.$L)", variableMethod, variableName);
+                    return;
+                }
                 setVariablesMethodBuilder
                         .beginControlFlow("if (this.$L != null)", variableName)
                         .addStatement("builder.$N(this.$L)", variableMethod, variableName)
@@ -1198,8 +1267,24 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 .beginControlFlow("if (this.retryJitterFactor.isPresent())")
                 .addStatement("builder.retryJitterFactor(this.retryJitterFactor.get())")
                 .endControlFlow()
+                .beginControlFlow("if (this.retryOnStatusCodes.isPresent())")
+                .addStatement("builder.retryOnStatusCodes(this.retryOnStatusCodes.get())")
+                .endControlFlow()
                 .build();
         clientBuilder.addMethod(setRetriesMethod);
+
+        MethodSpec setConcurrencyLimitMethod = MethodSpec.methodBuilder("setConcurrencyLimit")
+                .addModifiers(Modifier.PROTECTED)
+                .addParameter(generatedClientOptions.builderClassName(), "builder")
+                .addJavadoc("Applies the in-flight request cap, if one was configured.\n"
+                        + "Override this method to customize concurrency limiting.\n"
+                        + "\n"
+                        + "@param builder The ClientOptions.Builder to configure")
+                .beginControlFlow("if (this.maxConcurrentRequests.isPresent())")
+                .addStatement("builder.maxConcurrentRequests(this.maxConcurrentRequests.get())")
+                .endControlFlow()
+                .build();
+        clientBuilder.addMethod(setConcurrencyLimitMethod);
 
         MethodSpec setHttpClientMethod = MethodSpec.methodBuilder("setHttpClient")
                 .addModifiers(Modifier.PROTECTED)
@@ -1359,8 +1444,20 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         generatorContext.getGeneratorConfig().getWorkspaceName());
     }
 
-    private static final Set<String> RESERVED_BUILDER_PARAM_NAMES =
-            Set.of("environment", "url", "timeout", "maxRetries", "httpClient");
+    private static final Set<String> RESERVED_BUILDER_PARAM_NAMES = Set.of(
+            "environment", "url", "timeout", "maxRetries", "maxConcurrentRequests", "retryOnStatusCodes", "httpClient");
+
+    private static final TypeName STATUS_CODE_SET_TYPE =
+            ParameterizedTypeName.get(ClassName.get(Set.class), ClassName.get(Integer.class));
+
+    private static final TypeName RETRY_ON_STATUS_CODES_TYPE =
+            ParameterizedTypeName.get(ClassName.get(Optional.class), STATUS_CODE_SET_TYPE);
+
+    private static final String RETRY_ON_STATUS_CODES_JAVADOC =
+            "Restricts automatic retries to responses with one of the given HTTP status codes (for example "
+                    + "{@code 429} only, or {@code 429} and {@code 503}), replacing the default set of 408, 429 and 5xx. "
+                    + "Codes not listed are returned as-is. Retry-After handling and the other retry settings are "
+                    + "unchanged.";
 
     private List<ServerVariable> getServerVariables() {
         Optional<EnvironmentsConfig> envConfig = generatorContext.getIr().getEnvironments();
@@ -1435,6 +1532,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
         private final boolean useStagedBuilder;
         private final List<AuthProviderInfo> authProviderInfos = new ArrayList<>();
         private final Set<String> createdFields = new HashSet<>();
+        private final Set<String> optionalFields = new HashSet<>();
 
         private class AuthProviderInfo {
             final String schemeKey;
@@ -1451,6 +1549,18 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
             // endpoint, resolved from the token endpoint's subpackage id. Used to build the auth
             // client in the RoutingAuthProvider setup. Null for schemes that don't need it.
             ClassName tokenEndpointAuthClientClassName;
+            // For InferredAuth with a fixed grant type: the condition for adding the provider and the token
+            // supplier constructor arguments. Null otherwise (the first two credential fields are used).
+            String inferredCondition;
+            String inferredConstructorArgs;
+            // For InferredAuth with a refresh token grant: the refresh token field, which takes precedence over
+            // OAuth client credentials when both are provided.
+            String refreshTokenUnsetCondition;
+            // For OAuth: the pre-generated access token builder field (e.g. "token") and the header it is
+            // sent in. Null for schemes without a token override.
+            String tokenOverrideFieldName;
+            String tokenOverrideHeader;
+            String tokenOverridePrefix;
 
             AuthProviderInfo(
                     String schemeKey,
@@ -1560,8 +1670,8 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .map(env -> "Please provide " + fieldName + " via ." + fieldName + "() or set " + env.get()
                                 + " environment variable")
                         .orElse("Please provide " + fieldName + " via ." + fieldName + "()");
-                authProviderInfos.add(
-                        new AuthProviderInfo("Bearer", "BearerAuthProvider", fieldName, null, envVarHint, false));
+                authProviderInfos.add(new AuthProviderInfo(
+                        bearer.getKey().get(), "BearerAuthProvider", fieldName, null, envVarHint, false));
             } else if (this.configureAuthMethod != null) {
                 this.configureAuthMethod
                         .beginControlFlow("if (this.$L != null)", fieldName)
@@ -1665,7 +1775,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                             + basic.getPasswordEnvVar().get().get() + " environment variables";
                 }
                 authProviderInfos.add(new AuthProviderInfo(
-                        "Basic",
+                        basic.getKey().get(),
                         "BasicAuthProvider",
                         usernameFieldName,
                         passwordFieldName,
@@ -1710,7 +1820,8 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
         @Override
         public Void visitOauth(OAuthScheme oauth) {
-            return oauth.getConfiguration().visit(new OAuthSchemeHandler());
+            return oauth.getConfiguration()
+                    .visit(new OAuthSchemeHandler(oauth.getKey().get()));
         }
 
         @Override
@@ -1728,11 +1839,18 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
             List<String> credentialPropertyNames = new ArrayList<>();
             List<String> requiredCredentialPropertyNames = new ArrayList<>();
+            String[] refreshTokenFieldName = new String[1];
 
             for (var header : httpEndpoint.getHeaders()) {
                 String headerName =
                         NameUtils.getName(header.getName()).getCamelCase().getSafeName();
-                if (!isLiteralType(header.getValueType())) {
+                String headerWireValue = NameUtils.getWireValue(header.getName());
+                if (!isLiteralType(header.getValueType())
+                        && InferredAuthGrantTypes.isCredentialProperty(
+                                inferred, headerWireValue, isOptionalType(header.getValueType()))) {
+                    if (InferredAuthGrantTypes.isRefreshTokenProperty(headerWireValue)) {
+                        refreshTokenFieldName[0] = headerName;
+                    }
                     credentialPropertyNames.add(headerName);
                     if (!isOptionalType(header.getValueType())) {
                         requiredCredentialPropertyNames.add(headerName);
@@ -1750,7 +1868,13 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                             String propName = NameUtils.getName(prop.getName())
                                     .getCamelCase()
                                     .getSafeName();
-                            if (!isLiteralType(prop.getValueType())) {
+                            String wireValue = NameUtils.getWireValue(prop.getName());
+                            if (!isLiteralType(prop.getValueType())
+                                    && InferredAuthGrantTypes.isCredentialProperty(
+                                            inferred, wireValue, isOptionalType(prop.getValueType()))) {
+                                if (InferredAuthGrantTypes.isRefreshTokenProperty(wireValue)) {
+                                    refreshTokenFieldName[0] = propName;
+                                }
                                 credentialPropertyNames.add(propName);
                                 if (!isOptionalType(prop.getValueType())) {
                                     requiredCredentialPropertyNames.add(propName);
@@ -1773,7 +1897,13 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                                         String propName = NameUtils.getName(prop.getName())
                                                 .getCamelCase()
                                                 .getSafeName();
-                                        if (!isLiteralType(prop.getValueType())) {
+                                        String wireValue = NameUtils.getWireValue(prop.getName());
+                                        if (!isLiteralType(prop.getValueType())
+                                                && InferredAuthGrantTypes.isCredentialProperty(
+                                                        inferred, wireValue, isOptionalType(prop.getValueType()))) {
+                                            if (InferredAuthGrantTypes.isRefreshTokenProperty(wireValue)) {
+                                                refreshTokenFieldName[0] = propName;
+                                            }
                                             credentialPropertyNames.add(propName);
                                             if (!isOptionalType(prop.getValueType())) {
                                                 requiredCredentialPropertyNames.add(propName);
@@ -1800,6 +1930,26 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         return null;
                     }
                 });
+            }
+
+            // A refresh token grant is used when a refresh token is provided, even if it's an optional property.
+            boolean isRefreshTokenGrant = InferredAuthGrantTypes.isRefreshTokenGrant(inferred);
+            List<String> conditionPropertyNames = new ArrayList<>(requiredCredentialPropertyNames);
+            if (isRefreshTokenGrant
+                    && refreshTokenFieldName[0] != null
+                    && !conditionPropertyNames.contains(refreshTokenFieldName[0])) {
+                conditionPropertyNames.add(refreshTokenFieldName[0]);
+            }
+            boolean rotatesRefreshToken = InferredAuthGrantTypes.getRotatedRefreshTokenProperty(
+                            clientGeneratorContext, inferred, refreshTokenFieldName[0] != null)
+                    .isPresent();
+            if (rotatesRefreshToken) {
+                createSetter(
+                        ON_REFRESH_TOKEN_ROTATED_FIELD_NAME,
+                        Optional.empty(),
+                        Optional.empty(),
+                        Optional.of(ParameterizedTypeName.get(
+                                ClassName.get(java.util.function.Consumer.class), ClassName.get(String.class))));
             }
 
             // Get the auth client class name from the subpackage
@@ -1830,10 +1980,26 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 // Resolve the auth client from the token endpoint's actual subpackage (not a
                 // hardcoded "auth" subpackage, which may not exist).
                 inferredInfo.tokenEndpointAuthClientClassName = authClientClassName;
+                if (InferredAuthGrantTypes.getGrantType(inferred).isPresent()) {
+                    inferredInfo.inferredCondition = conditionPropertyNames.stream()
+                            .map(name -> fieldIsSet(name))
+                            .reduce((a, b) -> a + " && " + b)
+                            .orElse("true");
+                    List<String> args = new ArrayList<>();
+                    credentialPropertyNames.forEach(name -> args.add(fieldValueOrNull(name)));
+                    args.add("inferredAuthClient");
+                    if (rotatesRefreshToken) {
+                        args.add("this." + ON_REFRESH_TOKEN_ROTATED_FIELD_NAME);
+                    }
+                    inferredInfo.inferredConstructorArgs = String.join(", ", args);
+                    if (isRefreshTokenGrant) {
+                        inferredInfo.refreshTokenUnsetCondition = fieldIsUnset(refreshTokenFieldName[0]);
+                    }
+                }
                 authProviderInfos.add(inferredInfo);
             } else if (configureAuthMethod != null) {
-                String condition = requiredCredentialPropertyNames.stream()
-                        .map(name -> "this." + name + " != null")
+                String condition = conditionPropertyNames.stream()
+                        .map(name -> isRefreshTokenGrant ? fieldIsSet(name) : "this." + name + " != null")
                         .reduce((a, b) -> a + " && " + b)
                         .orElse("true");
 
@@ -1868,13 +2034,16 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                     if (!first) {
                         constructorArgs.add(", ");
                     }
-                    constructorArgs.add("this.$L", propName);
+                    constructorArgs.add("$L", isRefreshTokenGrant ? fieldValueOrNull(propName) : "this." + propName);
                     first = false;
                 }
                 if (!first) {
                     constructorArgs.add(", ");
                 }
                 constructorArgs.add("authClient");
+                if (rotatesRefreshToken) {
+                    constructorArgs.add(", this.$L", ON_REFRESH_TOKEN_ROTATED_FIELD_NAME);
+                }
 
                 configureAuthMethod.addStatement(
                         "$T inferredAuthTokenSupplier = new $T($L)",
@@ -1922,6 +2091,12 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
         }
 
         public class OAuthSchemeHandler implements OAuthConfiguration.Visitor<Void> {
+
+            private final String schemeKey;
+
+            public OAuthSchemeHandler(String schemeKey) {
+                this.schemeKey = schemeKey;
+            }
 
             @Override
             public Void visitClientCredentials(OAuthClientCredentials clientCredentials) {
@@ -2043,9 +2218,15 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                     createSetter("clientId", clientCredentials.getClientIdEnvVar(), Optional.empty());
                     createSetter("clientSecret", clientCredentials.getClientSecretEnvVar(), Optional.empty());
 
-                    // Create setters for custom properties
-                    for (OAuthCustomProperty customProp : customPropertyNames) {
-                        createSetter(customProp.name, Optional.empty(), Optional.empty(), Optional.of(customProp.type));
+                    // Under endpoint security the routing setup only passes clientId/clientSecret to the OAuth
+                    // provider, so custom token-request setters would be write-only there.
+                    boolean omitCustomPropertySetters = generatorContext.isEndpointSecurity()
+                            && clientGeneratorContext.getCustomConfig().omitUnusedOAuthSetters();
+                    if (!omitCustomPropertySetters) {
+                        for (OAuthCustomProperty customProp : customPropertyNames) {
+                            createSetter(
+                                    customProp.name, Optional.empty(), Optional.empty(), Optional.of(customProp.type));
+                        }
                     }
 
                     if (generatorContext.isEndpointSecurity()) {
@@ -2068,7 +2249,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                                     .append(" environment variables");
                         }
                         AuthProviderInfo oauthInfo = new AuthProviderInfo(
-                                "OAuth",
+                                schemeKey,
                                 "OAuthAuthProvider",
                                 "clientId",
                                 "clientSecret",
@@ -2079,6 +2260,9 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         // Resolve the auth client from the token endpoint's actual subpackage (not
                         // a hardcoded "auth" subpackage, which may not exist).
                         oauthInfo.tokenEndpointAuthClientClassName = authClientClassName;
+                        oauthInfo.tokenOverrideFieldName = tokenOverridePropertyName;
+                        oauthInfo.tokenOverrideHeader = tokenHeader;
+                        oauthInfo.tokenOverridePrefix = tokenPrefix.orElse("");
                         authProviderInfos.add(oauthInfo);
                     } else if (configureAuthMethod != null) {
                         // Token override is always enabled - check for token first
@@ -2356,6 +2540,18 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .build());
 
                 builderStageBuilder.addField(FieldSpec.builder(
+                                ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Integer.class)),
+                                "maxConcurrentRequests")
+                        .addModifiers(Modifier.PRIVATE)
+                        .initializer("$T.empty()", Optional.class)
+                        .build());
+
+                builderStageBuilder.addField(FieldSpec.builder(RETRY_ON_STATUS_CODES_TYPE, "retryOnStatusCodes")
+                        .addModifiers(Modifier.PRIVATE)
+                        .initializer("$T.empty()", Optional.class)
+                        .build());
+
+                builderStageBuilder.addField(FieldSpec.builder(
                                 ParameterizedTypeName.get(ClassName.get(Optional.class), ClassName.get(Long.class)),
                                 "initialRetryDelayMillis")
                         .addModifiers(Modifier.PRIVATE)
@@ -2445,6 +2641,34 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .addParameter(int.class, "maxRetries")
                         .returns(builderStageClassName)
                         .addStatement("this.maxRetries = $T.of(maxRetries)", Optional.class)
+                        .addStatement("return this")
+                        .build());
+
+                // Add maxConcurrentRequests() method
+                builderStageBuilder.addMethod(MethodSpec.methodBuilder("maxConcurrentRequests")
+                        .addModifiers(Modifier.PUBLIC)
+                        .addJavadoc(
+                                "Caps the number of in-flight requests (sync and async) the client will have at once. "
+                                        + "Unlimited unless set; must be positive.")
+                        .addParameter(int.class, "maxConcurrentRequests")
+                        .returns(builderStageClassName)
+                        .addStatement("this.maxConcurrentRequests = $T.of(maxConcurrentRequests)", Optional.class)
+                        .addStatement("return this")
+                        .build());
+
+                // Add retryOnStatusCodes() method
+                builderStageBuilder.addMethod(MethodSpec.methodBuilder("retryOnStatusCodes")
+                        .addModifiers(Modifier.PUBLIC)
+                        .addJavadoc(RETRY_ON_STATUS_CODES_JAVADOC)
+                        .addParameter(STATUS_CODE_SET_TYPE, "retryOnStatusCodes")
+                        .returns(builderStageClassName)
+                        .beginControlFlow("if (retryOnStatusCodes == null)")
+                        .addStatement(
+                                "throw new $T($S)",
+                                IllegalArgumentException.class,
+                                "retryOnStatusCodes must not be null")
+                        .endControlFlow()
+                        .addStatement("this.retryOnStatusCodes = $T.of(retryOnStatusCodes)", Optional.class)
                         .addStatement("return this")
                         .build());
 
@@ -2544,6 +2768,12 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .beginControlFlow("if (this.maxRetries.isPresent())")
                         .addStatement("auth.maxRetries(this.maxRetries.get())")
                         .endControlFlow()
+                        .beginControlFlow("if (this.maxConcurrentRequests.isPresent())")
+                        .addStatement("auth.maxConcurrentRequests(this.maxConcurrentRequests.get())")
+                        .endControlFlow()
+                        .beginControlFlow("if (this.retryOnStatusCodes.isPresent())")
+                        .addStatement("auth.retryOnStatusCodes(this.retryOnStatusCodes.get())")
+                        .endControlFlow()
                         .beginControlFlow("if (this.initialRetryDelayMillis.isPresent())")
                         .addStatement("auth.initialRetryDelayMillis(this.initialRetryDelayMillis.get())")
                         .endControlFlow()
@@ -2592,6 +2822,12 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         .endControlFlow()
                         .beginControlFlow("if (this.maxRetries.isPresent())")
                         .addStatement("auth.maxRetries(this.maxRetries.get())")
+                        .endControlFlow()
+                        .beginControlFlow("if (this.maxConcurrentRequests.isPresent())")
+                        .addStatement("auth.maxConcurrentRequests(this.maxConcurrentRequests.get())")
+                        .endControlFlow()
+                        .beginControlFlow("if (this.retryOnStatusCodes.isPresent())")
+                        .addStatement("auth.retryOnStatusCodes(this.retryOnStatusCodes.get())")
                         .endControlFlow()
                         .beginControlFlow("if (this.initialRetryDelayMillis.isPresent())")
                         .addStatement("auth.initialRetryDelayMillis(this.initialRetryDelayMillis.get())")
@@ -2840,6 +3076,9 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
             createdFields.add(fieldName);
 
             TypeName fieldType = customType.orElse(ClassName.get(String.class));
+            if (isOptionalTypeName(fieldType)) {
+                optionalFields.add(fieldName);
+            }
             FieldSpec.Builder field = FieldSpec.builder(fieldType, fieldName).addModifiers(Modifier.PRIVATE);
             Optional<String> clientDefaultValue = clientDefault.map(AbstractRootClientGenerator::literalToString);
             if (environmentVariable.isPresent()) {
@@ -2922,6 +3161,23 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                     clientBuilder.addMethod(unwrappedSetter.build());
                 }
             }
+        }
+
+        // Builder fields may be Optional<String> when an earlier scheme created them for an optional property.
+        private String fieldIsSet(String fieldName) {
+            return optionalFields.contains(fieldName)
+                    ? "this." + fieldName + ".isPresent()"
+                    : "this." + fieldName + " != null";
+        }
+
+        private String fieldIsUnset(String fieldName) {
+            return optionalFields.contains(fieldName)
+                    ? "!this." + fieldName + ".isPresent()"
+                    : "this." + fieldName + " == null";
+        }
+
+        private String fieldValueOrNull(String fieldName) {
+            return optionalFields.contains(fieldName) ? "this." + fieldName + ".orElse(null)" : "this." + fieldName;
         }
 
         private void createTokenOverrideSetter(String fieldName, String tokenHeader) {
@@ -3028,9 +3284,36 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                     ClassName oauthAuthClientClassName = info.tokenEndpointAuthClientClassName != null
                             ? info.tokenEndpointAuthClientClassName
                             : clientGeneratorContext.getPoetClassNameFactory().getCoreClassName("AuthClient");
+                    String oauthCondition =
+                            "this." + info.fieldName + " != null && this." + info.secondaryFieldName + " != null";
+                    for (AuthProviderInfo other : authProviderInfos) {
+                        if (other.refreshTokenUnsetCondition != null) {
+                            oauthCondition += " && " + other.refreshTokenUnsetCondition;
+                        }
+                    }
+                    // The token override field may be shared with a bearer scheme's field of the same
+                    // name, which already registers its own provider; only wire it when OAuth owns it.
+                    boolean useTokenOverride = info.tokenOverrideFieldName != null
+                            && authProviderInfos.stream()
+                                    .noneMatch(other ->
+                                            other != info && info.tokenOverrideFieldName.equals(other.fieldName));
+                    if (useTokenOverride) {
+                        this.configureAuthMethod
+                                .beginControlFlow("if (this.$L != null)", info.tokenOverrideFieldName)
+                                // Capture the value so later builder changes don't affect clients already built.
+                                .addStatement("String oauthAccessToken = this.$L", info.tokenOverrideFieldName)
+                                .addStatement(
+                                        "routingBuilder.addAuthProvider($S, endpointMetadata -> $T.singletonMap($S, $S + oauthAccessToken), $S)",
+                                        info.schemeKey,
+                                        Collections.class,
+                                        info.tokenOverrideHeader,
+                                        info.tokenOverridePrefix,
+                                        info.envVarHint)
+                                .nextControlFlow("else if ($L)", oauthCondition);
+                    } else {
+                        this.configureAuthMethod.beginControlFlow("if ($L)", oauthCondition);
+                    }
                     this.configureAuthMethod
-                            .beginControlFlow(
-                                    "if (this.$L != null && this.$L != null)", info.fieldName, info.secondaryFieldName)
                             .addComment("OAuth requires building an auth client for token fetching")
                             .addStatement(
                                     "$T.Builder oauthClientOptionsBuilder = $T.builder().environment(this.$L)",
@@ -3063,9 +3346,14 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                     ClassName authClientClassName = info.tokenEndpointAuthClientClassName != null
                             ? info.tokenEndpointAuthClientClassName
                             : clientGeneratorContext.getPoetClassNameFactory().getCoreClassName("AuthClient");
+                    String inferredCondition = info.inferredCondition != null
+                            ? info.inferredCondition
+                            : "this." + info.fieldName + " != null && this." + info.secondaryFieldName + " != null";
+                    String inferredConstructorArgs = info.inferredConstructorArgs != null
+                            ? info.inferredConstructorArgs
+                            : "this." + info.fieldName + ", this." + info.secondaryFieldName + ", inferredAuthClient";
                     this.configureAuthMethod
-                            .beginControlFlow(
-                                    "if (this.$L != null && this.$L != null)", info.fieldName, info.secondaryFieldName)
+                            .beginControlFlow("if ($L)", inferredCondition)
                             .addComment("InferredAuth requires building an auth client for token fetching")
                             .addStatement(
                                     "$T.Builder inferredClientOptionsBuilder = $T.builder().environment(this.$L)",
@@ -3077,11 +3365,10 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                                     authClientClassName,
                                     authClientClassName)
                             .addStatement(
-                                    "$T inferredTokenSupplier = new $T(this.$L, this.$L, inferredAuthClient)",
+                                    "$T inferredTokenSupplier = new $T($L)",
                                     inferredAuthTokenSupplierClassName,
                                     inferredAuthTokenSupplierClassName,
-                                    info.fieldName,
-                                    info.secondaryFieldName)
+                                    inferredConstructorArgs)
                             .addStatement(
                                     "routingBuilder.addAuthProvider($S, new $T(inferredTokenSupplier), $S)",
                                     info.schemeKey,

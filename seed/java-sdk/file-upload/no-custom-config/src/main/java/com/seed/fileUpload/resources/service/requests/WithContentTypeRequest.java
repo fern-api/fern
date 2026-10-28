@@ -112,7 +112,6 @@ public final class WithContentTypeRequest {
 
         private Optional<MyObject> fooBar = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -155,6 +154,14 @@ public final class WithContentTypeRequest {
         @java.lang.Override
         public WithContentTypeRequest build() {
             return new WithContentTypeRequest(foo, bar, fooBar, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("foo") || key.equalsIgnoreCase("bar") || key.equalsIgnoreCase("foo_bar")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

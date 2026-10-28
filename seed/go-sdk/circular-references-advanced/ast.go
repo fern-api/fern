@@ -38,10 +38,12 @@ func (a *Acai) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *Acai) require(field *big.Int) {
-	if a.explicitFields == nil {
-		a.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if a.explicitFields != nil {
+		next.Set(a.explicitFields)
 	}
-	a.explicitFields.Or(a.explicitFields, field)
+	next.Or(next, field)
+	a.explicitFields = next
 }
 
 // SetAnimal sets the Animal field and marks it as non-optional;
@@ -115,6 +117,38 @@ func (a *Animal) GetDog() *Dog {
 }
 
 func (a *Animal) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"fruit"}, []string{"fruit"}) {
+		valueCat := new(Cat)
+		if err := json.Unmarshal(data, &valueCat); err == nil {
+			a.typ = "Cat"
+			a.Cat = valueCat
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"fruit"}, []string{"fruit"}) {
+		valueDog := new(Dog)
+		if err := json.Unmarshal(data, &valueDog); err == nil {
+			a.typ = "Dog"
+			a.Dog = valueDog
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"fruit"}) {
+		valueCat := new(Cat)
+		if err := json.Unmarshal(data, &valueCat); err == nil {
+			a.typ = "Cat"
+			a.Cat = valueCat
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"fruit"}) {
+		valueDog := new(Dog)
+		if err := json.Unmarshal(data, &valueDog); err == nil {
+			a.typ = "Dog"
+			a.Dog = valueDog
+			return nil
+		}
+	}
 	valueCat := new(Cat)
 	if err := json.Unmarshal(data, &valueCat); err == nil {
 		a.typ = "Cat"
@@ -184,10 +218,12 @@ func (b *Berry) GetExtraProperties() map[string]interface{} {
 }
 
 func (b *Berry) require(field *big.Int) {
-	if b.explicitFields == nil {
-		b.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if b.explicitFields != nil {
+		next.Set(b.explicitFields)
 	}
-	b.explicitFields.Or(b.explicitFields, field)
+	next.Or(next, field)
+	b.explicitFields = next
 }
 
 // SetAnimal sets the Animal field and marks it as non-optional;
@@ -268,10 +304,12 @@ func (b *BranchNode) GetExtraProperties() map[string]interface{} {
 }
 
 func (b *BranchNode) require(field *big.Int) {
-	if b.explicitFields == nil {
-		b.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if b.explicitFields != nil {
+		next.Set(b.explicitFields)
 	}
-	b.explicitFields.Or(b.explicitFields, field)
+	next.Or(next, field)
+	b.explicitFields = next
 }
 
 // SetChildren sets the Children field and marks it as non-optional;
@@ -352,10 +390,12 @@ func (c *Cat) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *Cat) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetFruit sets the Fruit field and marks it as non-optional;
@@ -580,10 +620,12 @@ func (d *Dog) GetExtraProperties() map[string]interface{} {
 }
 
 func (d *Dog) require(field *big.Int) {
-	if d.explicitFields == nil {
-		d.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if d.explicitFields != nil {
+		next.Set(d.explicitFields)
 	}
-	d.explicitFields.Or(d.explicitFields, field)
+	next.Or(next, field)
+	d.explicitFields = next
 }
 
 // SetFruit sets the Fruit field and marks it as non-optional;
@@ -834,10 +876,12 @@ func (f *Fig) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *Fig) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetAnimal sets the Animal field and marks it as non-optional;
@@ -911,6 +955,38 @@ func (f *Fruit) GetFig() *Fig {
 }
 
 func (f *Fruit) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"animal"}, []string{"animal"}) {
+		valueAcai := new(Acai)
+		if err := json.Unmarshal(data, &valueAcai); err == nil {
+			f.typ = "Acai"
+			f.Acai = valueAcai
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"animal"}, []string{"animal"}) {
+		valueFig := new(Fig)
+		if err := json.Unmarshal(data, &valueFig); err == nil {
+			f.typ = "Fig"
+			f.Fig = valueFig
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"animal"}) {
+		valueAcai := new(Acai)
+		if err := json.Unmarshal(data, &valueAcai); err == nil {
+			f.typ = "Acai"
+			f.Acai = valueAcai
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"animal"}) {
+		valueFig := new(Fig)
+		if err := json.Unmarshal(data, &valueFig); err == nil {
+			f.typ = "Fig"
+			f.Fig = valueFig
+			return nil
+		}
+	}
 	valueAcai := new(Acai)
 	if err := json.Unmarshal(data, &valueAcai); err == nil {
 		f.typ = "Acai"
@@ -968,10 +1044,12 @@ func (l *LeafNode) GetExtraProperties() map[string]interface{} {
 }
 
 func (l *LeafNode) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 func (l *LeafNode) UnmarshalJSON(data []byte) error {
@@ -1038,6 +1116,30 @@ func (n *Node) GetLeafNode() *LeafNode {
 }
 
 func (n *Node) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"children"}, []string{"children"}) {
+		valueBranchNode := new(BranchNode)
+		if err := json.Unmarshal(data, &valueBranchNode); err == nil {
+			n.typ = "BranchNode"
+			n.BranchNode = valueBranchNode
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{}, []string{}) {
+		valueLeafNode := new(LeafNode)
+		if err := json.Unmarshal(data, &valueLeafNode); err == nil {
+			n.typ = "LeafNode"
+			n.LeafNode = valueLeafNode
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"children"}) {
+		valueBranchNode := new(BranchNode)
+		if err := json.Unmarshal(data, &valueBranchNode); err == nil {
+			n.typ = "BranchNode"
+			n.BranchNode = valueBranchNode
+			return nil
+		}
+	}
 	valueBranchNode := new(BranchNode)
 	if err := json.Unmarshal(data, &valueBranchNode); err == nil {
 		n.typ = "BranchNode"
@@ -1107,10 +1209,12 @@ func (n *NodesWrapper) GetExtraProperties() map[string]interface{} {
 }
 
 func (n *NodesWrapper) require(field *big.Int) {
-	if n.explicitFields == nil {
-		n.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if n.explicitFields != nil {
+		next.Set(n.explicitFields)
 	}
-	n.explicitFields.Or(n.explicitFields, field)
+	next.Or(next, field)
+	n.explicitFields = next
 }
 
 // SetNodes sets the Nodes field and marks it as non-optional;
@@ -1162,12 +1266,12 @@ func (n *NodesWrapper) String() string {
 	return fmt.Sprintf("%#v", n)
 }
 
-// This type allows us to test a circular reference with a union type (see FieldValue).
 var (
 	objectFieldValueFieldName  = big.NewInt(1 << 0)
 	objectFieldValueFieldValue = big.NewInt(1 << 1)
 )
 
+// This type allows us to test a circular reference with a union type (see FieldValue).
 type ObjectFieldValue struct {
 	Name  FieldName   `json:"name" url:"name"`
 	Value *FieldValue `json:"value" url:"value"`
@@ -1201,10 +1305,12 @@ func (o *ObjectFieldValue) GetExtraProperties() map[string]interface{} {
 }
 
 func (o *ObjectFieldValue) require(field *big.Int) {
-	if o.explicitFields == nil {
-		o.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if o.explicitFields != nil {
+		next.Set(o.explicitFields)
 	}
-	o.explicitFields.Or(o.explicitFields, field)
+	next.Or(next, field)
+	o.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -1280,10 +1386,12 @@ func (o *ObjectValue) GetExtraProperties() map[string]interface{} {
 }
 
 func (o *ObjectValue) require(field *big.Int) {
-	if o.explicitFields == nil {
-		o.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if o.explicitFields != nil {
+		next.Set(o.explicitFields)
 	}
-	o.explicitFields.Or(o.explicitFields, field)
+	next.Or(next, field)
+	o.explicitFields = next
 }
 
 func (o *ObjectValue) UnmarshalJSON(data []byte) error {

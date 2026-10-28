@@ -1,0 +1,6 @@
+- summary: |
+    An undiscriminated union with a single member no longer emits an unreachable
+    `_ => None` arm in its `as_*` / `into_*` accessors. That arm produced an
+    `unreachable_patterns` warning in the generated crate, which blocks users who
+    publish with `-D warnings`.
+  type: fix

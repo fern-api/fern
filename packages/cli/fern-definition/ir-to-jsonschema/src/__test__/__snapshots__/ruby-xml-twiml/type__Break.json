@@ -1,0 +1,43 @@
+{
+  "type": "object",
+  "properties": {
+    "strength": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/BreakStrength"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Set a pause based on strength"
+    },
+    "time": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Set a pause to a specific length of time in seconds or milliseconds"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Adding a Pause in <Say>",
+  "definitions": {
+    "BreakStrength": {
+      "type": "string",
+      "enum": [
+        "none",
+        "x-weak",
+        "weak",
+        "medium",
+        "strong",
+        "x-strong"
+      ],
+      "description": "Set a pause based on strength"
+    }
+  }
+}

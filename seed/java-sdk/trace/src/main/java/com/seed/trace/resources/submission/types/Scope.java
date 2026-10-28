@@ -68,7 +68,6 @@ public final class Scope {
     public static final class Builder {
         private Map<String, DebugVariableValue> variables = new LinkedHashMap<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -101,6 +100,14 @@ public final class Scope {
 
         public Scope build() {
             return new Scope(variables, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("variables")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

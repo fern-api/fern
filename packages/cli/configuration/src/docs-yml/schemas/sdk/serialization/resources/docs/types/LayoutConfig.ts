@@ -4,6 +4,7 @@ import type * as FernDocsConfig from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { ApiReferenceLayout } from "./ApiReferenceLayout.js";
+import { BreadcrumbsConfig } from "./BreadcrumbsConfig.js";
 import { ChangelogLayout } from "./ChangelogLayout.js";
 import { ContentAlignment } from "./ContentAlignment.js";
 import { HeaderPosition } from "./HeaderPosition.js";
@@ -36,6 +37,11 @@ export const LayoutConfig: core.serialization.ObjectSchema<serializers.LayoutCon
             "show-nav-availability-badges",
             core.serialization.boolean().optional(),
         ),
+        hideWebhookMethodBadges: core.serialization.property(
+            "hide-webhook-method-badges",
+            core.serialization.boolean().optional(),
+        ),
+        breadcrumbs: BreadcrumbsConfig.optional(),
     });
 
 export declare namespace LayoutConfig {
@@ -57,5 +63,7 @@ export declare namespace LayoutConfig {
         "api-reference-layout"?: ApiReferenceLayout.Raw | null;
         "api-reference-expand-properties"?: boolean | null;
         "show-nav-availability-badges"?: boolean | null;
+        "hide-webhook-method-badges"?: boolean | null;
+        breadcrumbs?: BreadcrumbsConfig.Raw | null;
     }
 }

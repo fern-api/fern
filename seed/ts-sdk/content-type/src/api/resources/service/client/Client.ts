@@ -131,7 +131,7 @@ export class ServiceClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `complex/${core.url.encodePathParam(id)}`,
+                `complex/${core.url.encodePathParam(id, errors.SeedContentTypesError)}`,
             ),
             method: "PATCH",
             headers: _headers,
@@ -196,7 +196,7 @@ export class ServiceClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `named-mixed/${core.url.encodePathParam(id)}`,
+                `named-mixed/${core.url.encodePathParam(id, errors.SeedContentTypesError)}`,
             ),
             method: "PATCH",
             headers: _headers,
@@ -325,7 +325,7 @@ export class ServiceClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `regular/${core.url.encodePathParam(id)}`,
+                `regular/${core.url.encodePathParam(id, errors.SeedContentTypesError)}`,
             ),
             method: "PATCH",
             headers: _headers,

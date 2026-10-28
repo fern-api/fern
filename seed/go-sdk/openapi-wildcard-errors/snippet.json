@@ -1,0 +1,26 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/items",
+                "method": "POST",
+                "identifier_override": "endpoint_items.createItem"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/openapi-wildcard-errors/fern\"\n\tfernclient \"github.com/openapi-wildcard-errors/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Items.CreateItem(\n\tcontext.TODO(),\n\t\u0026fern.CreateItemRequest{\n\t\tName: \"name\",\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/items/{item_id}",
+                "method": "GET",
+                "identifier_override": "endpoint_items.getItem"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/openapi-wildcard-errors/fern\"\n\tfernclient \"github.com/openapi-wildcard-errors/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Items.GetItem(\n\tcontext.TODO(),\n\t\u0026fern.GetItemRequest{\n\t\tItemID: \"item_id\",\n\t},\n)\n"
+            }
+        }
+    ]
+}

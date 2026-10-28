@@ -8,6 +8,16 @@ import (
 
 const dateFormat = "2006-01-02"
 
+// dateTimeLayouts are the date-time layouts accepted by Date.UnmarshalJSON
+// when the input is not a plain date. The .999999999 fractional-second
+// directive also matches input without a fractional part.
+var dateTimeLayouts = []string{
+	time.RFC3339Nano,
+	"2006-01-02T15:04:05.999999999",
+	"2006-01-02 15:04:05.999999999Z07:00",
+	"2006-01-02 15:04:05.999999999",
+}
+
 // DateTime wraps time.Time and adapts its JSON representation
 // to conform to a RFC3339 date (e.g. 2006-01-02).
 //
@@ -65,12 +75,25 @@ func (d *Date) UnmarshalJSON(data []byte) error {
 	}
 
 	parsedTime, err := time.Parse(dateFormat, raw)
-	if err != nil {
-		return err
+	if err == nil {
+		*d = Date{t: &parsedTime}
+		return nil
+	}
+	dateErr := err
+
+	// Fall back to date-time layouts, keeping the calendar date exactly as
+	// written and discarding the time-of-day.
+	for _, layout := range dateTimeLayouts {
+		t, layoutErr := time.Parse(layout, raw)
+		if layoutErr != nil {
+			continue
+		}
+		date := time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0, 0, time.UTC)
+		*d = Date{t: &date}
+		return nil
 	}
 
-	*d = Date{t: &parsedTime}
-	return nil
+	return dateErr
 }
 
 // NewDateList returns a slice of *Date for the given times. If the given
@@ -209,7 +232,7 @@ func (d *DateTime) MarshalJSON() ([]byte, error) {
 	if d == nil || d.t == nil {
 		return nil, nil
 	}
-	return json.Marshal(d.t.Format(time.RFC3339))
+	return json.Marshal(d.t.Format(time.RFC3339Nano))
 }
 
 func (d *DateTime) UnmarshalJSON(data []byte) error {

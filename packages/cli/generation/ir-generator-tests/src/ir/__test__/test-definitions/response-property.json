@@ -3827,6 +3827,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_service.getMovieDocs": {
@@ -3914,6 +3915,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_service.getMovieName": {
@@ -4001,6 +4003,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_service.getMovieMetadata": {
@@ -4088,6 +4091,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_service.getOptionalMovie": {
@@ -4175,6 +4179,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_service.getOptionalMovieDocs": {
@@ -4262,6 +4267,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_service.getOptionalMovieName": {
@@ -4349,6 +4355,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             }
         },
@@ -4424,6 +4431,7 @@
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
         "idempotencyKeyGeneration": null,
+        "webhookSignatureVerification": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",

@@ -1,0 +1,7 @@
+- summary: |
+    `profiles list`, `profiles show`, and `profiles current` now report an OAuth2
+    client id stored in the keyring — what `profiles set <name> <CLIENT_ID_VAR>=…`
+    and `auth login --with-token` write — instead of only the plaintext
+    `oauth_client_id` from `profiles create --oauth-client-id`. The keyring id
+    takes precedence, matching the order requests resolve it in.
+  type: fix

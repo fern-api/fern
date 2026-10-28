@@ -4313,6 +4313,7 @@
                             },
                             {
                                 "type": "file",
+                                "isOptional": false,
                                 "wireValue": "file",
                                 "name": {
                                     "originalName": "file",
@@ -4336,6 +4337,7 @@
                             },
                             {
                                 "type": "fileArray",
+                                "isOptional": false,
                                 "wireValue": "file_list",
                                 "name": {
                                     "originalName": "file_list",
@@ -4359,6 +4361,7 @@
                             },
                             {
                                 "type": "file",
+                                "isOptional": true,
                                 "wireValue": "maybe_file",
                                 "name": {
                                     "originalName": "maybe_file",
@@ -4382,6 +4385,7 @@
                             },
                             {
                                 "type": "fileArray",
+                                "isOptional": true,
                                 "wireValue": "maybe_file_list",
                                 "name": {
                                     "originalName": "maybe_file_list",
@@ -4715,6 +4719,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": false,
                 "examples": null
             },
             "endpoint_service.justFile": {
@@ -4861,6 +4866,7 @@
                         "properties": [
                             {
                                 "type": "file",
+                                "isOptional": false,
                                 "wireValue": "file",
                                 "name": {
                                     "originalName": "file",
@@ -4892,6 +4898,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": false,
                 "examples": null
             },
             "endpoint_service.justFileWithQueryParams": {
@@ -5204,6 +5211,7 @@
                         "properties": [
                             {
                                 "type": "file",
+                                "isOptional": false,
                                 "wireValue": "file",
                                 "name": {
                                     "originalName": "file",
@@ -5235,6 +5243,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": false,
                 "examples": null
             },
             "endpoint_service.justFileWithOptionalQueryParams": {
@@ -5448,6 +5457,7 @@
                         "properties": [
                             {
                                 "type": "file",
+                                "isOptional": false,
                                 "wireValue": "file",
                                 "name": {
                                     "originalName": "file",
@@ -5479,6 +5489,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": false,
                 "examples": null
             },
             "endpoint_service.withContentType": {
@@ -5625,6 +5636,7 @@
                         "properties": [
                             {
                                 "type": "file",
+                                "isOptional": false,
                                 "wireValue": "file",
                                 "name": {
                                     "originalName": "file",
@@ -5752,6 +5764,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": false,
                 "examples": null
             },
             "endpoint_service.withFormEncoding": {
@@ -5898,6 +5911,7 @@
                         "properties": [
                             {
                                 "type": "file",
+                                "isOptional": false,
                                 "wireValue": "file",
                                 "name": {
                                     "originalName": "file",
@@ -5991,6 +6005,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": false,
                 "examples": null
             },
             "endpoint_service.withFormEncodedContainers": {
@@ -6202,6 +6217,7 @@
                             },
                             {
                                 "type": "file",
+                                "isOptional": false,
                                 "wireValue": "file",
                                 "name": {
                                     "originalName": "file",
@@ -6225,6 +6241,7 @@
                             },
                             {
                                 "type": "fileArray",
+                                "isOptional": false,
                                 "wireValue": "file_list",
                                 "name": {
                                     "originalName": "file_list",
@@ -6248,6 +6265,7 @@
                             },
                             {
                                 "type": "file",
+                                "isOptional": true,
                                 "wireValue": "maybe_file",
                                 "name": {
                                     "originalName": "maybe_file",
@@ -6271,6 +6289,7 @@
                             },
                             {
                                 "type": "fileArray",
+                                "isOptional": true,
                                 "wireValue": "maybe_file_list",
                                 "name": {
                                     "originalName": "maybe_file_list",
@@ -6638,6 +6657,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": false,
                 "examples": null
             },
             "endpoint_service.optionalArgs": {
@@ -6784,6 +6804,7 @@
                         "properties": [
                             {
                                 "type": "file",
+                                "isOptional": true,
                                 "wireValue": "image_file",
                                 "name": {
                                     "originalName": "image_file",
@@ -6848,6 +6869,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_service.withInlineType": {
@@ -6994,6 +7016,7 @@
                         "properties": [
                             {
                                 "type": "file",
+                                "isOptional": false,
                                 "wireValue": "file",
                                 "name": {
                                     "originalName": "file",
@@ -7056,6 +7079,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_service.withJsonProperty": {
@@ -7202,6 +7226,7 @@
                         "properties": [
                             {
                                 "type": "file",
+                                "isOptional": false,
                                 "wireValue": "file",
                                 "name": {
                                     "originalName": "file",
@@ -7267,6 +7292,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_service.withRefBody": {
@@ -7413,6 +7439,7 @@
                         "properties": [
                             {
                                 "type": "file",
+                                "isOptional": true,
                                 "wireValue": "image_file",
                                 "name": {
                                     "originalName": "image_file",
@@ -7475,6 +7502,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_service.simple": {
@@ -7556,6 +7584,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": false,
                 "examples": null
             },
             "endpoint_service.withLiteralAndEnumTypes": {
@@ -7702,6 +7731,7 @@
                         "properties": [
                             {
                                 "type": "file",
+                                "isOptional": false,
                                 "wireValue": "file",
                                 "name": {
                                     "originalName": "file",
@@ -7835,6 +7865,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             }
         },
@@ -7911,6 +7942,7 @@
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
         "idempotencyKeyGeneration": null,
+        "webhookSignatureVerification": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",

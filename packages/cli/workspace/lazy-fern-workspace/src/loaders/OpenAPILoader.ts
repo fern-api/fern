@@ -5,6 +5,7 @@ import { Document, getParseOptions } from "@fern-api/openapi-ir-parser";
 import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 
+import { applyErrorResponsesSettings } from "../utils/applyErrorResponsesSettings.js";
 import { convertOpenAPIV2ToV3 } from "../utils/convertOpenAPIV2ToV3.js";
 import { loadAsyncAPI } from "../utils/loadAsyncAPI.js";
 import { loadOpenAPI } from "../utils/loadOpenAPI.js";
@@ -55,12 +56,16 @@ export class OpenAPILoader {
                         loadAiExamples
                     });
                     if (isOpenAPIV3(openAPI)) {
+                        const { document, errorResponses } = await applyErrorResponsesSettings({
+                            document: openAPI,
+                            settings: spec.settings
+                        });
                         return {
                             type: "openapi",
-                            value: openAPI,
+                            value: document,
                             source,
                             namespace: spec.namespace,
-                            settings: getParseOptions({ options: spec.settings })
+                            settings: getParseOptions({ options: spec.settings, overrides: { errorResponses } })
                         };
                     } else if (isOpenAPIV2(openAPI)) {
                         // default to https to produce a valid URL
@@ -68,12 +73,16 @@ export class OpenAPILoader {
                             openAPI.schemes = ["https"];
                         }
                         const convertedOpenAPI = await convertOpenAPIV2ToV3(openAPI, { context });
+                        const { document, errorResponses } = await applyErrorResponsesSettings({
+                            document: convertedOpenAPI,
+                            settings: spec.settings
+                        });
                         return {
                             type: "openapi",
-                            value: convertedOpenAPI,
+                            value: document,
                             source,
                             namespace: spec.namespace,
-                            settings: getParseOptions({ options: spec.settings })
+                            settings: getParseOptions({ options: spec.settings, overrides: { errorResponses } })
                         };
                     }
                 } catch (error) {

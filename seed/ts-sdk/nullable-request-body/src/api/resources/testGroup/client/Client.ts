@@ -64,7 +64,7 @@ export class TestGroupClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `optional-request-body/${core.url.encodePathParam(pathParam)}`,
+                `optional-request-body/${core.url.encodePathParam(pathParam, errors.SeedApiError)}`,
             ),
             method: "POST",
             headers: _headers,

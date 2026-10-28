@@ -15,6 +15,8 @@ import { globalHeaderParameterName } from "../utils/credentialNames.js";
 
 /** Client keyword exposed when `allowUserAgentAppInfo` is enabled. */
 const APP_INFO_PARAMETER_NAME = "app_info";
+/** Client keyword exposed when `allowCustomHttpClient` is enabled. */
+const HTTP_CLIENT_PARAMETER_NAME = "http_client";
 
 /** Instance member the single flat auth provider is assigned to (ALL/ANY auth). */
 const AUTH_PROVIDER_MEMBER = "@auth_provider";
@@ -31,6 +33,7 @@ const RESERVED_OPTION_NAMES = new Set<string>([
     "base_url",
     "environment",
     "max_retries",
+    "timeout",
     "token",
     "client",
     "request_options",
@@ -151,6 +154,8 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             );
         }
 
+        parameters.push(...this.getSdkVariableParameters());
+
         const maxRetriesParameter = ruby.parameters.keyword({
             name: "max_retries",
             type: ruby.Type.integer(),
@@ -158,6 +163,15 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             docs: "The default maximum number of retries for failed requests."
         });
         parameters.push(maxRetriesParameter);
+
+        parameters.push(
+            ruby.parameters.keyword({
+                name: "timeout",
+                type: ruby.Type.class_({ name: "Numeric" }),
+                initializer: ruby.TypeLiteral.integer(60),
+                docs: "The default timeout in seconds for each request."
+            })
+        );
 
         // When the opt-in `allowUserAgentAppInfo` config is enabled, expose an optional
         // `app_info` keyword whose product token is appended to the User-Agent header.
@@ -169,6 +183,20 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     type: ruby.Type.nilable(ruby.Type.hash(ruby.Type.class_({ name: "Symbol" }), ruby.Type.string())),
                     initializer: ruby.nilValue(),
                     docs: "Optional application info ({ name:, version:, comment: }) appended to the User-Agent header."
+                })
+            );
+        }
+
+        // When the opt-in `allowCustomHttpClient` config is enabled, expose an optional
+        // `http_client` keyword that replaces the RawClient's Net::HTTP transport.
+        // Gated so flag-off client.rb keeps byte-identical output.
+        if (this.emitHttpClientOption()) {
+            parameters.push(
+                ruby.parameters.keyword({
+                    name: HTTP_CLIENT_PARAMETER_NAME,
+                    type: ruby.Type.nilable(ruby.Type.object("Object")),
+                    initializer: ruby.nilValue(),
+                    docs: "Optional HTTP transport responding to `request(url, http_request)` and returning a Net::HTTPResponse. Replaces the built-in Net::HTTP connection, e.g. to add a proxy, custom TLS, or request/response interceptors; the transport owns its own timeouts."
                 })
             );
         }
@@ -194,6 +222,19 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             method.addStatement(serverVariableInterpolation);
         }
 
+        const sdkVariableOptions = this.context.getSdkVariableOptions();
+        if (sdkVariableOptions.length > 0) {
+            method.addStatement(
+                ruby.codeblock((writer) => {
+                    for (const option of sdkVariableOptions) {
+                        writer.writeLine(
+                            `${this.context.getSdkVariableInstanceVariable(option)} = ${option.optionName}`
+                        );
+                    }
+                })
+            );
+        }
+
         // Both inferred-auth and OAuth attach their Authorization header through a
         // single `@auth_provider`. When BOTH schemes are present (e.g. `auth: any`
         // with an OAuth and an InferredAuth scheme), emitting both init blocks makes
@@ -215,6 +256,15 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
         // that scheme's credentials were actually provided. For a single mandatory
         // provider scheme we keep the existing eager behavior.
         const anyAuthMultiScheme = this.isAnyAuthWithMultipleSchemes();
+
+        const requiredCredentialChecks = this.getRequiredCredentialChecks({ isEndpointSecurity, anyAuthMultiScheme });
+        if (requiredCredentialChecks.length > 0) {
+            method.addStatement(
+                ruby.codeblock((writer) => {
+                    writer.writeLine(`${requiredCredentialChecks.join("\n")}\n`);
+                })
+            );
+        }
 
         if (isEndpointSecurity) {
             // Under endpoint-security every provider-based scheme may be routed to by
@@ -399,13 +449,52 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                     // and the RawClient simply resolves no auth headers.
                     writer.writeLine(`auth_provider: @auth_provider,`);
                 }
-                writer.writeLine(`max_retries: max_retries`);
+                if (this.emitHttpClientOption()) {
+                    writer.writeLine(`${HTTP_CLIENT_PARAMETER_NAME}: ${HTTP_CLIENT_PARAMETER_NAME},`);
+                }
+                writer.writeLine(`max_retries: max_retries,`);
+                writer.writeLine(`timeout: timeout`);
                 writer.dedent();
                 writer.writeLine(`)`);
             })
         );
 
         return method;
+    }
+
+    /**
+     * Under `requireAuthCredentials`, raises `ArgumentError` from the constructor when a
+     * mandatory bearer or header credential is neither passed nor set in its environment
+     * variable, instead of sending an empty auth header on every request.
+     */
+    private getRequiredCredentialChecks({
+        isEndpointSecurity,
+        anyAuthMultiScheme
+    }: {
+        isEndpointSecurity: boolean;
+        anyAuthMultiScheme: boolean;
+    }): string[] {
+        if (this.context.customConfig.requireAuthCredentials !== true || isEndpointSecurity || anyAuthMultiScheme) {
+            return [];
+        }
+        const checks: string[] = [];
+        for (const scheme of this.context.ir.auth.schemes) {
+            let paramName: string;
+            let envVar: string | undefined;
+            if (scheme.type === "bearer") {
+                paramName = this.context.getBearerTokenParameterName(scheme.token);
+                envVar = scheme.tokenEnvVar;
+            } else if (scheme.type === "header") {
+                paramName = this.context.getCredentialParameterName(scheme.name);
+                envVar = scheme.headerEnvVar;
+            } else {
+                continue;
+            }
+            const hint =
+                envVar != null ? `pass ${paramName}: or set the ${envVar} environment variable` : `pass ${paramName}:`;
+            checks.push(`raise ArgumentError, "${paramName} is required; ${hint}" if ${paramName}.to_s.empty?`);
+        }
+        return checks;
     }
 
     /**
@@ -568,7 +657,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
 
             // Add X-Fern-Language header
             const hasParams = inferredParams.length > 0;
-            writer.writeLine(`"X-Fern-Language" => "Ruby"${hasParams ? "," : ""}`);
+            writer.writeLine(`${this.getAuthClientPlatformHeaderEntry()}${hasParams ? "," : ""}`);
 
             // Add any header-based auth params to the auth client headers
             for (let i = 0; i < inferredParams.length; i++) {
@@ -582,7 +671,11 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             }
 
             writer.dedent();
-            writer.writeLine(`}`);
+            writer.writeLine(`},`);
+            if (this.emitHttpClientOption()) {
+                writer.writeLine(`${HTTP_CLIENT_PARAMETER_NAME}: ${HTTP_CLIENT_PARAMETER_NAME},`);
+            }
+            writer.writeLine(`timeout: timeout`);
             writer.dedent();
             writer.writeLine(`)`);
             writer.newLine();
@@ -742,9 +835,13 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             }
             writer.writeLine(`headers: {`);
             writer.indent();
-            writer.writeLine(`"X-Fern-Language" => "Ruby"`);
+            writer.writeLine(this.getAuthClientPlatformHeaderEntry());
             writer.dedent();
-            writer.writeLine(`}`);
+            writer.writeLine(`},`);
+            if (this.emitHttpClientOption()) {
+                writer.writeLine(`${HTTP_CLIENT_PARAMETER_NAME}: ${HTTP_CLIENT_PARAMETER_NAME},`);
+            }
+            writer.writeLine(`timeout: timeout`);
             writer.dedent();
             writer.writeLine(`)`);
             writer.newLine();
@@ -1251,10 +1348,12 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 }
             }
 
-            headers.push({
-                key: ruby.TypeLiteral.string(this.context.ir.sdkConfig.platformHeaders.language),
-                value: ruby.TypeLiteral.string("Ruby")
-            });
+            if (!this.userAgentOnlyDropsDiscreteHeaders()) {
+                headers.push({
+                    key: ruby.TypeLiteral.string(this.context.ir.sdkConfig.platformHeaders.language),
+                    value: ruby.TypeLiteral.string("Ruby")
+                });
+            }
         }
 
         // In endpoint-security mode, auth headers are NOT baked into the RawClient's
@@ -1347,12 +1446,52 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
      * when `omitFernHeaders` is set (no User-Agent is sent in that case), so flag-off
      * output stays byte-identical.
      */
+    /**
+     * Whether `userAgentOnly` drops the discrete X-Fern-* headers. Only when a User-Agent
+     * is actually emitted, so the SDK is never left without any identification header.
+     */
+    private userAgentOnlyDropsDiscreteHeaders(): boolean {
+        return (
+            this.context.customConfig.userAgentOnly === true &&
+            !this.context.customConfig.omitFernHeaders &&
+            this.context.ir.sdkConfig.platformHeaders.userAgent != null
+        );
+    }
+
+    /**
+     * The platform header entry sent on the unauthenticated client used for OAuth /
+     * inferred-auth token requests: the User-Agent when `userAgentOnly` drops the
+     * discrete headers, otherwise `X-Fern-Language`.
+     */
+    private getAuthClientPlatformHeaderEntry(): string {
+        const userAgent = this.context.ir.sdkConfig.platformHeaders.userAgent;
+        if (!this.userAgentOnlyDropsDiscreteHeaders() || userAgent == null) {
+            return `"X-Fern-Language" => "Ruby"`;
+        }
+        const escapedUserAgent = JSON.stringify(userAgent.value).replace(/#(?=[{$@])/g, "\\#");
+        if (this.context.customConfig.includePlatformHeaders) {
+            const rootModuleName = this.context.getRootModule().name;
+            return `"User-Agent" => ${rootModuleName}::Internal::Http::RawClient.user_agent(${escapedUserAgent})`;
+        }
+        return `"User-Agent" => ${escapedUserAgent}`;
+    }
+
     private emitAppInfoOption(): boolean {
         return (
             this.context.customConfig.allowUserAgentAppInfo === true &&
             !this.context.customConfig.omitFernHeaders &&
             this.context.ir.sdkConfig.platformHeaders.userAgent != null
         );
+    }
+
+    /**
+     * Whether to expose the opt-in `http_client` client keyword and pass it through to
+     * every RawClient the client constructs (including the unauthenticated client used
+     * for OAuth / inferred-auth token requests). Gated on `allowCustomHttpClient` so
+     * flag-off output stays byte-identical.
+     */
+    private emitHttpClientOption(): boolean {
+        return this.context.customConfig.allowCustomHttpClient === true;
     }
 
     /**
@@ -1371,6 +1510,10 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
 
     private getSubpackageClientGetter(subpackage: FernIr.Subpackage, rootModule: ruby.Module_): ruby.Method {
         const isMultiUrl = this.context.isMultipleBaseUrlsEnvironment();
+        const sdkVariableArgs = this.context
+            .getSdkVariableOptions()
+            .map((option) => `, ${option.optionName}: ${this.context.getSdkVariableInstanceVariable(option)}`)
+            .join("");
         return new ruby.Method({
             name: this.case.snakeSafe(subpackage.name),
             kind: ruby.MethodKind.Instance,
@@ -1388,14 +1531,14 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                             `@${this.case.snakeSafe(subpackage.name)} ||= ` +
                                 `${rootModule.name}::` +
                                 `${this.case.pascalSafe(subpackage.name)}::` +
-                                `Client.new(client: @raw_client, base_url: @base_url, environment: @environment)`
+                                `Client.new(client: @raw_client, base_url: @base_url, environment: @environment${sdkVariableArgs})`
                         );
                     } else {
                         writer.writeLine(
                             `@${this.case.snakeSafe(subpackage.name)} ||= ` +
                                 `${rootModule.name}::` +
                                 `${this.case.pascalSafe(subpackage.name)}::` +
-                                `Client.new(client: @raw_client)`
+                                `Client.new(client: @raw_client${sdkVariableArgs})`
                         );
                     }
                 })
@@ -1410,18 +1553,50 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
     }
 
     /**
+     * Returns one optional keyword per SDK variable. String variables declared with an env
+     * var fall back to `ENV.fetch(<ENV_VAR>, nil)`; everything else defaults to nil and the
+     * bound endpoints raise when the value is still missing at call time.
+     */
+    private getSdkVariableParameters(): ruby.KeywordParameter[] {
+        return this.context.getSdkVariableOptions().map(({ variable, optionName, isString }) => {
+            const docLines: string[] = [];
+            if (variable.docs != null) {
+                docLines.push(variable.docs);
+            }
+            const envVar = isString ? variable.envVar : undefined;
+            if (envVar != null) {
+                docLines.push(`Defaults to the ${envVar} environment variable when not passed.`);
+            }
+            return ruby.parameters.keyword({
+                name: optionName,
+                type: ruby.Type.nilable(this.context.typeMapper.convert({ reference: variable.type })),
+                initializer: envVar != null ? ruby.codeblock(`ENV.fetch("${envVar}", nil)`) : ruby.nilValue(),
+                docs: docLines.length > 0 ? docLines.join(" ") : undefined
+            });
+        });
+    }
+
+    /**
      * Returns the server URL variables (e.g. region) declared on the API's environments,
      * each paired with the initializer keyword it is exposed under. Variables are
      * de-duplicated by id and de-collided against existing initializer keyword names.
      */
     private getServerVariableOptions(): ServerVariableOption[] {
-        const reservedNames = this.context.respectsAuthSchemeNames()
-            ? new Set([
-                  ...RESERVED_OPTION_NAMES,
-                  ...this.getCredentialParameterNames(),
-                  ...this.getNonLiteralGlobalHeaders().map((header) => this.getGlobalHeaderOptionName(header))
-              ])
-            : RESERVED_OPTION_NAMES;
+        const reservedNames = new Set(RESERVED_OPTION_NAMES);
+        if (this.emitHttpClientOption()) {
+            reservedNames.add(HTTP_CLIENT_PARAMETER_NAME);
+        }
+        if (this.context.respectsAuthSchemeNames()) {
+            for (const name of this.getCredentialParameterNames()) {
+                reservedNames.add(name);
+            }
+            for (const header of this.getNonLiteralGlobalHeaders()) {
+                reservedNames.add(this.getGlobalHeaderOptionName(header));
+            }
+        }
+        for (const option of this.context.getSdkVariableOptions()) {
+            reservedNames.add(option.optionName);
+        }
         return this.collectServerVariables().map((variable) => {
             const snake = this.case.snakeSafe(variable.name);
             const optionName = reservedNames.has(snake) ? `server_url_${snake}` : snake;

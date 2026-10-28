@@ -7,6 +7,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.seed.trace.core.ClientOptions;
 import com.seed.trace.core.ObjectMappers;
+import com.seed.trace.core.PathSegments;
 import com.seed.trace.core.RequestOptions;
 import com.seed.trace.core.RetryInterceptor;
 import com.seed.trace.core.SeedTraceApiException;
@@ -75,7 +76,8 @@ public class AsyncRawProblemClient {
                     .build();
         }
         CompletableFuture<SeedTraceHttpResponse<List<LightweightProblemInfoV2>>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -102,6 +104,11 @@ public class AsyncRawProblemClient {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(new SeedTraceException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;
@@ -147,7 +154,8 @@ public class AsyncRawProblemClient {
                     .build();
         }
         CompletableFuture<SeedTraceHttpResponse<List<ProblemInfoV2>>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -176,6 +184,11 @@ public class AsyncRawProblemClient {
                 future.completeExceptionally(new SeedTraceException("Network error executing HTTP request", e));
             }
         });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
+            }
+        });
         return future;
     }
 
@@ -195,7 +208,7 @@ public class AsyncRawProblemClient {
                 .newBuilder()
                 .addPathSegments("problems-v2")
                 .addPathSegments("problem-info")
-                .addPathSegment(problemId);
+                .addPathSegment(PathSegments.validate(problemId));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -221,7 +234,8 @@ public class AsyncRawProblemClient {
                     .build();
         }
         CompletableFuture<SeedTraceHttpResponse<ProblemInfoV2>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -249,6 +263,11 @@ public class AsyncRawProblemClient {
                 future.completeExceptionally(new SeedTraceException("Network error executing HTTP request", e));
             }
         });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
+            }
+        });
         return future;
     }
 
@@ -269,9 +288,9 @@ public class AsyncRawProblemClient {
                 .newBuilder()
                 .addPathSegments("problems-v2")
                 .addPathSegments("problem-info")
-                .addPathSegment(problemId)
+                .addPathSegment(PathSegments.validate(problemId))
                 .addPathSegments("version")
-                .addPathSegment(Integer.toString(problemVersion));
+                .addPathSegment(PathSegments.validate(Integer.toString(problemVersion)));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -297,7 +316,8 @@ public class AsyncRawProblemClient {
                     .build();
         }
         CompletableFuture<SeedTraceHttpResponse<ProblemInfoV2>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -323,6 +343,11 @@ public class AsyncRawProblemClient {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(new SeedTraceException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;

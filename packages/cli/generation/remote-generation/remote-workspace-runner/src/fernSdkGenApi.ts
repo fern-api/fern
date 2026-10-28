@@ -2,16 +2,33 @@
 import { stripCliConfigKeys } from "@fern-api/api-workspace-commons";
 import { FernToken } from "@fern-api/auth";
 import { generatorsYml } from "@fern-api/configuration";
+import { delay } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { isAutoVersion } from "@fern-api/generator-cli/autoversion";
+import { type FeatureFlagContext, getFeatureFlagClient } from "@fern-api/posthog-manager";
 import { CliError, InteractiveTaskContext } from "@fern-api/task-context";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import axios, { AxiosError } from "axios";
-import { createHash } from "crypto";
+import { createHash, randomUUID } from "crypto";
 import FormData from "form-data";
-import path from "path";
 import { gunzipSync } from "zlib";
+import {
+    type FernSdkGenApiPublishCredentialSource,
+    MAX_PUBLISH_CREDENTIALS_BYTES,
+    parseSecretNameExpression,
+    resolveFernSdkGenApiPublishCredentialSource,
+    validateFernSdkGenApiPublishUrl,
+    validateFernSdkGenApiPublishTargets as validatePublishTargets
+} from "./directPublishCredentials.js";
+import { getSdkGenApiPreviewOutputDirectoryName } from "./previewOutputDirectory.js";
+import { type PublishTarget } from "./publishTarget.js";
 import { downloadArchiveForTask, downloadFilesForTask } from "./RemoteTaskHandler.js";
+import {
+    normalizeSensitiveValues,
+    redactPublicationIdentifier,
+    redactSensitiveValues
+} from "./redactSensitiveValues.js";
+import { parseExactSemver } from "./sdk-gen-client/exactSemver.js";
 import {
     type GenerationConfigKind,
     type GenerationConfigRoute,
@@ -19,11 +36,14 @@ import {
     GeneratorConfigCompatibilityError,
     type GeneratorLanguage,
     getGeneratorLanguage,
+    selectGeneratorConfigRoute,
+    selectUnpinnedGeneratorConfigRoute,
     validateGeneratorConfigCompatibility
 } from "./sdk-gen-client/index.js";
+import { FERN_GENERATOR_LATEST_VERSION, isGeneratorVersionForUnpinnedRoute } from "./sdkConfigGeneratorVersion.js";
 
 const POLL_INTERVAL_MS = 2_000;
-const POLL_TIMEOUT_MS = 15 * 60 * 1_000;
+const POLL_TIMEOUT_MS = 18 * 60 * 1_000;
 const REQUEST_TIMEOUT_MS = 60_000;
 const MAX_PAYLOADS = 64;
 const MAX_SOURCE_COMPRESSED_BYTES = 25 * 1024 * 1024;
@@ -36,6 +56,8 @@ const MAX_RUNTIME_BUNDLE_DECOMPRESSED_BYTES = MAX_TOTAL_PAYLOAD_BYTES;
 const MAX_TOTAL_UPLOAD_FILE_BYTES = 50 * 1024 * 1024;
 const MAX_REQUEST_FIELD_BYTES = 1024 * 1024;
 const MAX_MULTIPART_BODY_BYTES = 60 * 1024 * 1024;
+const MAX_DEBUG_LOG_BYTES = 20 * 1024;
+const UNPINNED_FERN_GENERATOR_VERSION_KEY = "unpinned";
 const LOOPBACK_HOSTNAMES = new Set(["localhost", "127.0.0.1", "[::1]", "::1"]);
 const TARGET_ID_SEED_COLLATOR = new Intl.Collator("en", { numeric: true });
 
@@ -49,11 +71,16 @@ export type FernSdkGenApiPublishRegistry =
     | "rubygems"
     | "crates"
     | "go"
-    | "composer";
+    | "composer"
+    | "postman";
 
 export interface FernSdkGenApiPublishConfig {
     registry: FernSdkGenApiPublishRegistry;
     url?: string;
+    /** Name of the repository secret the generated release workflow reads the API key from. */
+    apiKeyEnvironmentVariable?: string;
+    /** Authenticate the generated release workflow with an OIDC token instead of an API key secret. */
+    trustedPublishing?: boolean;
 }
 
 export interface FernSdkGenApiPackageConfig {
@@ -65,9 +92,19 @@ export interface FernSdkGenApiPackageConfig {
     artifactId?: string;
 }
 
+export interface FernSdkGenApiReplayConfig {
+    enabled: boolean;
+}
+
+export interface FernSdkGenApiGithubOptions {
+    replay?: FernSdkGenApiReplayConfig;
+    verify?: boolean;
+    skipIfNoDiff?: boolean;
+}
+
 export type FernSdkGenApiRequestedOutput =
     | { type: "download" }
-    | {
+    | ({
           type: "github";
           repository: string;
           host?: string;
@@ -75,7 +112,12 @@ export type FernSdkGenApiRequestedOutput =
           mode?: "release" | "pull-request" | "push";
           reviewers?: { teams?: string[]; users?: string[] };
           publish?: FernSdkGenApiPublishConfig;
-      }
+          /**
+           * `false` keeps generated `.github/workflows/*` files out of the commit and leaves existing
+           * ones untouched. Omitted means the default, committing them.
+           */
+          workflows?: boolean;
+      } & FernSdkGenApiGithubOptions)
     | { type: "publish"; publish: FernSdkGenApiPublishConfig };
 
 export function resolveSdkConfigRequestedOutput(
@@ -90,11 +132,60 @@ interface FernBuildStatus {
     status: "queued" | "running" | "succeeded" | "failed" | "partial_failure";
     targets: Array<{
         targetId: string;
-        status: "queued" | "running" | "succeeded" | "failed";
+        status: "queued" | "running" | "publishing" | "succeeded" | "failed";
         logs: Array<{ level: string; message: string }>;
         result?: { artifactUrl: string; actualVersion?: string };
-        error?: { message: string };
+        error?: { code?: string; message: string };
+        publication?:
+            | {
+                  status: "success";
+                  publishTarget: {
+                      type: "github" | "npm" | "maven" | "pypi" | "crates" | "unsupported";
+                      identifier: string;
+                  };
+                  output: {
+                      packageName?: string;
+                      pullRequestUrl?: string;
+                      branchUrl?: string;
+                      commitSha?: string;
+                      noChangesDetected?: boolean;
+                  };
+              }
+            | {
+                  status: "failure";
+                  publishTarget: {
+                      type: "github" | "npm" | "maven" | "pypi" | "crates" | "unsupported";
+                      identifier: string;
+                  };
+                  error: FernPublicationError;
+              };
     }>;
+}
+
+interface FernPublicationError {
+    code: string;
+    message: string;
+    /**
+     * Optional machine-readable failure category (e.g. `package_name_mismatch`). Older sdk-gen-api
+     * servers omit it; values that don't match {@link PUBLICATION_ERROR_REASON_PATTERN} are dropped.
+     */
+    reason?: string;
+    /** Optional human-readable explanation (<= 512 chars). Older sdk-gen-api servers omit it. */
+    detail?: string;
+}
+
+const PUBLICATION_ERROR_REASON_PATTERN = /^[a-z][a-z0-9_]{0,63}$/;
+
+class FernSdkGenApiSubmissionError extends Error {
+    public readonly status: number | undefined;
+    public readonly code: string | undefined;
+
+    public constructor(message: string, status: number | undefined, code: string | undefined) {
+        super(message);
+        this.name = "FernSdkGenApiSubmissionError";
+        this.status = status;
+        this.code = code;
+    }
 }
 
 export interface FernSdkGenApiRequest {
@@ -102,13 +193,14 @@ export interface FernSdkGenApiRequest {
     apiName: string;
     cliVersion?: string;
     idempotencyKey: string;
+    credentialSetId?: string;
     apiInputs: Array<{ id: string; specIndexes: "all" | number[] }>;
     targets: Array<{
         targetId: string;
         apiInputId: string;
         language: FernSdkGenApiLanguage;
         sdk: { name: string; version: string; apiVersion?: string };
-        fernGenerator: { id: string; version: string };
+        fernGenerator: { id: string; version?: string };
         payloadKind: GenerationPayloadKind;
         package?: FernSdkGenApiPackageConfig;
         invocation: {
@@ -126,9 +218,186 @@ export interface FernSdkGenApiRequest {
     }>;
 }
 
-export function isFernSdkGenApiEnabled(): boolean {
-    const configured = process.env.FERN_USE_SDK_GEN_API ?? process.env.DEFAULT_USE_SDK_GEN_API ?? "false";
-    return configured.trim().toLowerCase() === "true";
+export type FernSdkGenApiPublishCredential =
+    | { targetId: string; registry: "npm"; token: string }
+    | { targetId: string; registry: "crates"; token: string }
+    | { targetId: string; registry: "pypi"; username: string; password: string }
+    | {
+          targetId: string;
+          registry: "maven";
+          username: string;
+          password: string;
+          signature?: { keyId: string; password: string; secretKey: string };
+      };
+
+export interface FernSdkGenApiPublishCredentials {
+    schemaVersion: "fern-publish-credentials/v1";
+    credentialSetId: string;
+    targets: FernSdkGenApiPublishCredential[];
+}
+
+/**
+ * PostHog feature flag that routes generation through sdk-gen-api. It is evaluated once per
+ * (organization, generator) with these properties, so release conditions can target any combination:
+ *
+ * - `org`: the Fern organization
+ * - `generator`: the generator name, e.g. `fernapi/fern-python-sdk`
+ * - `language`: the generator's sdk-gen-api language, e.g. `python` (absent for generators sdk-gen-api does not know)
+ * - `environment`: the CLI release environment (`prod`, `pre-prod`, `beta`, ...)
+ *
+ * Configure it as a multivariate flag with `true` / `false` variants and give every condition set a
+ * variant override. PostHog uses the first matching set, so order them most specific first: an
+ * org + language set, then an org-wide set (all languages for one org), then a language-wide set (one
+ * language for every org), then a catch-all set holding the default. A flag that is missing, off, or
+ * unreachable keeps every generator on Fiddle.
+ */
+export const USE_SDK_GEN_API_FEATURE_FLAG = "use-sdk-gen-api";
+
+/** One generator in one organization: the unit the `use-sdk-gen-api` flag is evaluated for. */
+export interface FernSdkGenApiFlagTarget {
+    organization: string;
+    /** The full generator name, e.g. `fernapi/fern-python-sdk`. */
+    generatorName: string;
+}
+
+/** Runtime override of the `use-sdk-gen-api` flag; see {@link getFernSdkGenApiEnvOverride}. Never defined at build time. */
+export const USE_SDK_GEN_API_ENV_VAR = "FERN_USE_SDK_GEN_API";
+
+/**
+ * Runtime override for tests and debugging. `FERN_USE_SDK_GEN_API=true` routes every generator through
+ * sdk-gen-api and `false` keeps every generator off it (generation on Fiddle, upgrades on FDR versions),
+ * whatever the flag says, without a flag request. Unset or any other value defers to the flag.
+ */
+export function getFernSdkGenApiEnvOverride(): boolean | undefined {
+    const value = process.env[USE_SDK_GEN_API_ENV_VAR]?.trim().toLowerCase();
+    if (value === "true") {
+        return true;
+    }
+    if (value === "false") {
+        return false;
+    }
+    return undefined;
+}
+
+export function isFernSdkGenApiEnabled(target: FernSdkGenApiFlagTarget): Promise<boolean> {
+    const override = getFernSdkGenApiEnvOverride();
+    if (override != null) {
+        return Promise.resolve(override);
+    }
+    return getFeatureFlagClient().isEnabled(USE_SDK_GEN_API_FEATURE_FLAG, getFlagContext(target));
+}
+
+/**
+ * The flag value already resolved in this process, without a network request. For latency-bound
+ * paths such as the exit-time upgrade nudge; `undefined` means the flag has not been evaluated.
+ */
+export function getResolvedFernSdkGenApiEnabled(target: FernSdkGenApiFlagTarget): boolean | undefined {
+    const override = getFernSdkGenApiEnvOverride();
+    if (override != null) {
+        return override;
+    }
+    return getFeatureFlagClient().getCachedValue(USE_SDK_GEN_API_FEATURE_FLAG, getFlagContext(target));
+}
+
+/**
+ * Evaluates the flag for each distinct generator in parallel. Never rejects: the flag client already
+ * resolves failures to off, and the catch keeps that guarantee for callers that start this early.
+ */
+export async function resolveFernSdkGenApiEnabledByGenerator({
+    organization,
+    generatorNames
+}: {
+    organization: string;
+    generatorNames: readonly string[];
+}): Promise<ReadonlyMap<string, boolean>> {
+    const uniqueGeneratorNames = [...new Set(generatorNames)];
+    const enabled = await Promise.all(
+        uniqueGeneratorNames.map(async (generatorName) => {
+            try {
+                return await isFernSdkGenApiEnabled({ organization, generatorName });
+            } catch {
+                // Routing falls back to Fiddle rather than failing generation on a flag error.
+                return false;
+            }
+        })
+    );
+    return new Map(uniqueGeneratorNames.map((generatorName, index) => [generatorName, enabled[index] === true]));
+}
+
+function getFlagContext({ organization, generatorName }: FernSdkGenApiFlagTarget): FeatureFlagContext {
+    const language = getFernSdkGenApiLanguage(generatorName);
+    return { org: organization, generator: generatorName, ...(language != null ? { language } : {}) };
+}
+
+/**
+ * Generators that only run through sdk-gen-api and have no Fiddle fallback.
+ * When sdk-gen-api is disabled, these generators must fail fast with a clear
+ * message instead of falling through to Fiddle where they would fail opaquely.
+ */
+const SDK_GEN_API_ONLY_GENERATORS: ReadonlySet<string> = new Set(["fernapi/fern-mcp-server"]);
+
+export function isSdkGenApiOnly(generatorName: string): boolean {
+    return SDK_GEN_API_ONLY_GENERATORS.has(generatorName);
+}
+
+/**
+ * Whether a first-party generator version is at or past its SDK Config cutover (a Postman-built
+ * generator). Those versions have no Fiddle route, so `use-sdk-gen-api` only governs earlier (Fern-built)
+ * versions. False for generators outside the cutover table and for versions it cannot classify
+ * (`latest`, ranges, partial versions), which keep their flag-based routing.
+ */
+export function isPostCutoverGeneratorVersion({
+    generatorName,
+    version
+}: {
+    generatorName: string;
+    version: string;
+}): boolean {
+    const language = getFernSdkGenApiLanguage(generatorName);
+    if (language == null || parseExactSemver(version) == null) {
+        return false;
+    }
+    return (
+        selectGeneratorConfigRoute({ generatorId: generatorName, language, requestedVersion: version }).configKind ===
+        "sdk-config-v1"
+    );
+}
+
+/**
+ * Routing that does not depend on `use-sdk-gen-api`. SDK Config runs and post-cutover versions have no
+ * Fiddle route, so they use sdk-gen-api unless `FERN_USE_SDK_GEN_API=false` turns it off (returns `false`,
+ * which callers must reject rather than send to Fiddle). Returns `undefined` when the flag decides:
+ * pre-cutover versions, unclassifiable versions, generators outside the cutover table, and
+ * sdk-gen-api-only generators, whose access the flag still gates.
+ */
+export function getFlagIndependentSdkGenApiRouting({
+    generatorName,
+    version,
+    usesSdkConfig
+}: {
+    generatorName: string;
+    version: string;
+    usesSdkConfig: boolean;
+}): boolean | undefined {
+    if (isSdkGenApiOnly(generatorName)) {
+        return undefined;
+    }
+    if (!usesSdkConfig && !isPostCutoverGeneratorVersion({ generatorName, version })) {
+        return undefined;
+    }
+    return getFernSdkGenApiEnvOverride() !== false;
+}
+
+/**
+ * Whether `fern generate` builds this generator's SDK Config v1 payload from generators.yml
+ * in memory when no `--sdk-config` document is given. Deliberately limited to sdk-gen-api-only
+ * generators: they have no legacy route and generators.yml is their configuration surface, so
+ * demanding a migrated document would be a step with nothing to migrate. Every other generator
+ * keeps the explicit `fern sdk migrate` → `--sdk-config` flow. Widening this to all generators
+ * at or past their cutover is a one-line change here, and a product decision.
+ */
+export function synthesizesSdkConfig(generatorName: string): boolean {
+    return isSdkGenApiOnly(generatorName);
 }
 
 export function getFernSdkGenApiOrigin(): string | undefined {
@@ -157,7 +426,7 @@ export function getFernSdkGenApiLanguage(generatorName: string): FernSdkGenApiLa
     return getGeneratorLanguage(generatorName);
 }
 
-/** Validates a legacy Fern target and selects its compatible payload route without remote work. */
+/** Validates a legacy Fern target and selects its pinned or unpinned payload route without remote work. */
 export function selectFernSdkGenApiRoute(
     generatorInvocation: generatorsYml.GeneratorInvocation,
     configKind: GenerationConfigKind = "legacy-fern"
@@ -166,6 +435,18 @@ export function selectFernSdkGenApiRoute(
     if (language == null) {
         return undefined;
     }
+    if (generatorInvocation.version === FERN_GENERATOR_LATEST_VERSION && configKind === "legacy-fern") {
+        return selectUnpinnedGeneratorConfigRoute({
+            generatorId: generatorInvocation.name,
+            language: generatorInvocation.language ?? language,
+            configKind,
+            versionSource: "fern-latest"
+        });
+    }
+    // `configKind` is what the caller can supply for this generator: "sdk-config-v1" when a
+    // `--sdk-config` document was given or the generator synthesizes one from generators.yml
+    // (see synthesizesSdkConfig), else "legacy-fern". A mismatch with the version's expected
+    // kind is the "run `fern sdk migrate`" error.
     return validateGeneratorConfigCompatibility({
         generatorId: generatorInvocation.name,
         language: generatorInvocation.language ?? language,
@@ -185,7 +466,8 @@ interface FernSdkGenApiOutputMapping {
  * those references belongs to the downstream distribution workstream.
  */
 export function mapFernSdkGenApiOutput(
-    generatorInvocation: generatorsYml.GeneratorInvocation
+    generatorInvocation: generatorsYml.GeneratorInvocation,
+    githubOptions?: FernSdkGenApiGithubOptions
 ): FernSdkGenApiOutputMapping {
     const outputMode = generatorInvocation.outputMode;
     switch (outputMode.type) {
@@ -197,7 +479,8 @@ export function mapFernSdkGenApiOutput(
                 repo: outputMode.repo,
                 branch: outputMode.branch,
                 mode: outputMode.makePr === true ? "pull-request" : "release",
-                publishInfo: outputMode.publishInfo
+                publishInfo: outputMode.publishInfo,
+                githubOptions
             });
         case "githubV2": {
             const github = outputMode.githubV2;
@@ -208,7 +491,9 @@ export function mapFernSdkGenApiOutput(
                 branch: github.branch,
                 mode: github.type === "pullRequest" ? "pull-request" : github.type === "push" ? "push" : "release",
                 reviewers: github.type === "pullRequest" ? mapGithubReviewers(github.reviewers) : undefined,
-                publishInfo: github.publishInfo
+                publishInfo: github.publishInfo,
+                workflows: github.workflows,
+                githubOptions
             });
         }
         case "publishV2": {
@@ -235,7 +520,9 @@ function mapGithubOutput({
     branch,
     mode,
     reviewers,
-    publishInfo
+    publishInfo,
+    workflows,
+    githubOptions
 }: {
     owner: string;
     repo: string;
@@ -244,6 +531,8 @@ function mapGithubOutput({
     mode: "release" | "pull-request" | "push";
     reviewers?: { teams?: string[]; users?: string[] };
     publishInfo?: FernFiddle.GithubPublishInfo;
+    workflows?: boolean;
+    githubOptions?: FernSdkGenApiGithubOptions;
 }): FernSdkGenApiOutputMapping {
     const publication = publishInfo != null ? mapGithubPublishInfo(publishInfo) : undefined;
     // TODO: Before broadly enabling this route, require downstream credential resolution to bind
@@ -257,9 +546,22 @@ function mapGithubOutput({
             ...(branch != null ? { branch } : {}),
             mode,
             ...(reviewers != null ? { reviewers } : {}),
-            ...(publication != null ? { publish: publication.publish } : {})
+            ...(publication != null ? { publish: publication.publish } : {}),
+            // generators.yml resolves an unset `github.workflows` to true, so only the opt-out is
+            // sent. Every request that keeps the default stays unchanged on the wire.
+            ...(workflows === false ? { workflows: false } : {}),
+            ...githubOptions
         }
     };
+}
+
+function applyGithubOptionsToRequestedOutput(
+    requestedOutput: FernSdkGenApiRequestedOutput,
+    githubOptions: FernSdkGenApiGithubOptions | undefined
+): FernSdkGenApiRequestedOutput {
+    return requestedOutput.type === "github" && githubOptions != null
+        ? { ...requestedOutput, ...githubOptions }
+        : requestedOutput;
 }
 
 function mapGithubReviewers(
@@ -363,15 +665,34 @@ function mapMavenPublish(
     };
 }
 
+/** Fern states trusted publishing in the `api-key` field, as a marker rather than a secret name. */
+const TRUSTED_PUBLISHING_API_KEYS = new Set(["OIDC", "<USE_OIDC>"]);
+
+/**
+ * A literal `api-key` is dropped here, while the same value in sdk-config.yml is rejected outright.
+ * The asymmetry is deliberate. generators.yml is Fern's own format and may legitimately carry one,
+ * so failing would break a config that is valid where it was written; sdk-config.yml documents this
+ * field as a secret name and its schema accepts nothing else. `fern sdk migrate` never carries a
+ * literal across, so a migrated config cannot reach the stricter path with one.
+ *
+ * A trusted publishing marker is not dropped. It is the one non-expression value with somewhere to
+ * go, and dropping it left the generated workflow reading a secret that was never meant to exist.
+ */
 function mapNamedPublish(
     registry: "nuget" | "rubygems" | "crates",
-    output: { registryUrl: string; packageName: string } | undefined
+    output: { registryUrl: string; packageName: string; apiKey?: string } | undefined
 ): FernSdkGenApiPublicationMapping {
+    const namesSecret = registry === "nuget" || registry === "rubygems";
+    const trustedPublishing = namesSecret && output?.apiKey != null && TRUSTED_PUBLISHING_API_KEYS.has(output.apiKey);
+    const apiKeyEnvironmentVariable =
+        namesSecret && !trustedPublishing ? parseSecretNameExpression(output?.apiKey) : undefined;
     return {
         ...(output?.packageName ? { package: { packageName: output.packageName } } : {}),
         publish: {
             registry,
-            ...(output?.registryUrl ? { url: output.registryUrl } : {})
+            ...(output?.registryUrl ? { url: output.registryUrl } : {}),
+            ...(apiKeyEnvironmentVariable != null ? { apiKeyEnvironmentVariable } : {}),
+            ...(trustedPublishing ? { trustedPublishing: true } : {})
         }
     };
 }
@@ -389,7 +710,7 @@ function mapLegacyPublishOutput(
     overrides: FernFiddle.RegistryOverrides
 ): FernSdkGenApiPublicationMapping {
     const language = getFernSdkGenApiLanguage(generatorInvocation.name);
-    if (language === "typescript" && overrides.npm != null) {
+    if ((language === "typescript" || language === "mcp") && overrides.npm != null) {
         return mapNpmPublish(overrides.npm);
     }
     if ((language === "java" || language === "kotlin") && overrides.maven != null) {
@@ -430,11 +751,218 @@ function defaultPublishRegistry(language: FernSdkGenApiLanguage | undefined): Fe
     }
 }
 
+function getDirectPublishCredential(
+    targetId: string,
+    generatorInvocation: generatorsYml.GeneratorInvocation
+): FernSdkGenApiPublishCredential | undefined {
+    const outputMode = generatorInvocation.outputMode;
+    if (outputMode.type !== "publish" && outputMode.type !== "publishV2") {
+        return undefined;
+    }
+    const requestedOutput = mapFernSdkGenApiOutput(generatorInvocation).requestedOutput;
+    if (requestedOutput.type === "publish" && requestedOutput.publish.url != null) {
+        validateFernSdkGenApiPublishUrl(requestedOutput.publish.url);
+    }
+    if (outputMode.type === "publish") {
+        const language = getFernSdkGenApiLanguage(generatorInvocation.name);
+        if ((language === "typescript" || language === "mcp") && outputMode.registryOverrides.npm != null) {
+            return npmCredential(targetId, outputMode.registryOverrides.npm.token);
+        }
+        if ((language === "java" || language === "kotlin") && outputMode.registryOverrides.maven != null) {
+            return mavenCredential(targetId, outputMode.registryOverrides.maven);
+        }
+        const registry = defaultPublishRegistry(language);
+        if (registry == null || !isSupportedDirectRegistry(registry)) {
+            throw new Error(`sdk-gen-api does not support direct ${registry ?? "unknown"} registry publication`);
+        }
+        throw new Error(`Direct ${registry} publication through sdk-gen-api requires publish credentials`);
+    }
+    const publish = outputMode.publishV2;
+    switch (publish.type) {
+        case "npmOverride": {
+            const output = requirePublishOverride("npm", publish.npmOverride);
+            return npmCredential(targetId, output.token);
+        }
+        case "mavenOverride": {
+            const output = requirePublishOverride("maven", publish.mavenOverride);
+            return mavenCredential(targetId, output);
+        }
+        case "pypiOverride": {
+            const output = requirePublishOverride("pypi", publish.pypiOverride);
+            return pypiCredential(targetId, output.username, output.password);
+        }
+        case "cratesOverride": {
+            const output = requirePublishOverride("crates", publish.cratesOverride);
+            return tokenCredential(targetId, "crates", output.token);
+        }
+        case "rubyGemsOverride":
+            throw new Error("sdk-gen-api does not support direct rubygems registry publication");
+        case "nugetOverride":
+            throw new Error("sdk-gen-api does not support direct nuget registry publication");
+        case "postman":
+            throw new Error("sdk-gen-api does not support Postman collection publication as an SDK output");
+    }
+}
+
+function getDirectPublishCredentialFromSource(
+    targetId: string,
+    source: FernSdkGenApiPublishCredentialSource,
+    publishUrl?: string,
+    publishRegistry?: string
+): FernSdkGenApiPublishCredential {
+    return { targetId, ...resolveFernSdkGenApiPublishCredentialSource(source, publishUrl, publishRegistry) };
+}
+
+function requirePublishOverride<T>(registry: string, output: T | undefined): T {
+    if (output == null) {
+        throw new Error(`Direct ${registry} publication through sdk-gen-api is missing its registry configuration`);
+    }
+    return output;
+}
+
+function npmCredential(targetId: string, token: string): FernSdkGenApiPublishCredential {
+    return tokenCredential(targetId, "npm", token);
+}
+
+function tokenCredential(
+    targetId: string,
+    registry: "npm" | "crates",
+    token: string | undefined
+): FernSdkGenApiPublishCredential {
+    return getDirectPublishCredentialFromSource(targetId, { registry, token });
+}
+
+function pypiCredential(
+    targetId: string,
+    username: string | undefined,
+    password: string | undefined
+): FernSdkGenApiPublishCredential {
+    return getDirectPublishCredentialFromSource(targetId, { registry: "pypi", username, password });
+}
+
+function mavenCredential(
+    targetId: string,
+    output: {
+        username?: string;
+        password?: string;
+        signature?: { keyId?: string; password?: string; secretKey?: string } | null;
+    }
+): FernSdkGenApiPublishCredential {
+    return getDirectPublishCredentialFromSource(targetId, {
+        registry: "maven",
+        username: output.username,
+        password: output.password,
+        ...(output.signature == null ? {} : { signature: output.signature })
+    });
+}
+
+function isSupportedDirectRegistry(
+    registry: FernSdkGenApiPublishRegistry
+): registry is "npm" | "maven" | "pypi" | "crates" {
+    return registry === "npm" || registry === "maven" || registry === "pypi" || registry === "crates";
+}
+
+export function createFernSdkGenApiPublishCredentials(
+    request: FernSdkGenApiRequest,
+    generatorInvocations: generatorsYml.GeneratorInvocation[],
+    credentialSources?: Array<FernSdkGenApiPublishCredentialSource | undefined>
+): FernSdkGenApiPublishCredentials | undefined {
+    const targets = request.targets.flatMap((target, index) => {
+        if (target.requestedOutput.type !== "publish") {
+            return [];
+        }
+        const generatorInvocation = generatorInvocations[index];
+        if (generatorInvocation == null) {
+            throw new Error(`Cannot pair sdk-gen-api target ${target.targetId} with publish credentials`);
+        }
+        const source = credentialSources?.[index];
+        const { publishUrl, publishRegistry } = publicationValidationMetadata(target.requestedOutput);
+        const credential =
+            source != null
+                ? getDirectPublishCredentialFromSource(target.targetId, source, publishUrl, publishRegistry)
+                : getDirectPublishCredential(target.targetId, generatorInvocation);
+        return credential != null ? [credential] : [];
+    });
+    if (targets.length === 0) {
+        return undefined;
+    }
+    if (targets.length > MAX_PAYLOADS) {
+        throw new Error(`sdk-gen-api supports at most ${MAX_PAYLOADS} direct publish credential targets`);
+    }
+    if (request.credentialSetId == null) {
+        throw new Error("sdk-gen-api direct registry targets require a credentialSetId");
+    }
+    return {
+        schemaVersion: "fern-publish-credentials/v1",
+        credentialSetId: request.credentialSetId,
+        targets
+    };
+}
+
+export function validateFernSdkGenApiDirectPublishCredentials(
+    generatorInvocation: generatorsYml.GeneratorInvocation
+): void {
+    getDirectPublishCredential("preflight", generatorInvocation);
+}
+
+export function validateFernSdkGenApiPublishCredentialSource(
+    source: FernSdkGenApiPublishCredentialSource,
+    publishUrl?: string
+): void {
+    resolveFernSdkGenApiPublishCredentialSource(source, publishUrl);
+}
+
+export function validateFernSdkGenApiPublishCredentialSources(
+    sources: Array<FernSdkGenApiPublishCredentialSource | undefined>
+): void {
+    validatePublishTargets(
+        sources.map((source) => ({
+            publicationRequested: source != null,
+            credentialsRequired: source != null,
+            ...(source == null ? {} : { publishCredential: source })
+        }))
+    );
+}
+
+export function validateFernSdkGenApiPublishTargets(
+    targets: Array<{
+        requestedOutput?: FernSdkGenApiRequestedOutput;
+        publishCredential?: FernSdkGenApiPublishCredentialSource;
+    }>
+): void {
+    validatePublishTargets(
+        targets.map((target) => ({
+            publicationRequested:
+                target.requestedOutput?.type === "publish" ||
+                (target.requestedOutput?.type === "github" && target.requestedOutput.publish != null),
+            credentialsRequired: target.requestedOutput?.type === "publish",
+            ...publicationValidationMetadata(target.requestedOutput),
+            ...(target.publishCredential == null ? {} : { publishCredential: target.publishCredential })
+        }))
+    );
+}
+
+function publicationValidationMetadata(requestedOutput: FernSdkGenApiRequestedOutput | undefined): {
+    publishRegistry?: string;
+    publishUrl?: string;
+} {
+    const publish =
+        requestedOutput?.type === "publish" || requestedOutput?.type === "github" ? requestedOutput.publish : undefined;
+    return publish == null
+        ? {}
+        : {
+              publishRegistry: publish.registry,
+              ...(publish.url == null ? {} : { publishUrl: publish.url })
+          };
+}
+
 export interface FernSdkGenApiCandidate {
     generatorInvocation: generatorsYml.GeneratorInvocation;
     sdkVersion: string | undefined;
     specsTarGzBuffer: Buffer | undefined;
     whitelabel?: FernFiddle.WhitelabelConfig;
+    /** The resolved SDK Config output. Absent for generators.yml groups. */
+    sdkConfigRequestedOutput?: FernSdkGenApiRequestedOutput;
 }
 
 export interface EligibleFernSdkGenApiCandidate extends FernSdkGenApiCandidate {
@@ -447,10 +975,47 @@ export function isEligibleForFernSdkGenApi(
 ): candidate is EligibleFernSdkGenApiCandidate {
     const { generatorInvocation, sdkVersion, specsTarGzBuffer, whitelabel } = candidate;
     const language = getFernSdkGenApiLanguage(generatorInvocation.name);
-    // Fiddle currently replaces AUTO after generation. Until that step moves into the shared
-    // pipeline, forwarding AUTO would write the literal placeholder into generated packages.
-    const hasConcreteVersion = sdkVersion != null && sdkVersion.trim().length > 0 && !isAutoVersion(sdkVersion);
-    return language != null && hasConcreteVersion && specsTarGzBuffer != null && whitelabel == null;
+    const hasVersion =
+        sdkVersion != null &&
+        sdkVersion.trim().length > 0 &&
+        (!isAutoVersion(sdkVersion) || supportsAutoVersion(candidate.sdkConfigRequestedOutput));
+    return language != null && hasVersion && specsTarGzBuffer != null && whitelabel == null;
+}
+
+/** Only Fiddle's GitHub delivery replaces the AUTO placeholder; other outputs would ship it. */
+export function supportsAutoVersion(sdkConfigRequestedOutput: FernSdkGenApiRequestedOutput | undefined): boolean {
+    return sdkConfigRequestedOutput?.type === "github";
+}
+
+/** The reason that isEligibleForFernSdkGenApi rejected a candidate. */
+export function describeFernSdkGenApiIneligibility({
+    candidate,
+    isSdkConfigTarget,
+    isPreview
+}: {
+    candidate: FernSdkGenApiCandidate;
+    isSdkConfigTarget: boolean;
+    isPreview: boolean;
+}): string {
+    const { generatorInvocation, sdkVersion, specsTarGzBuffer, whitelabel } = candidate;
+    if (sdkVersion == null) {
+        return "the SDK version could not be resolved. Pass one with --version (for example, --version 1.0.0)";
+    }
+    if (whitelabel != null) {
+        return "whitelabel generation has not yet moved from Fiddle to the shared pipeline";
+    }
+    if (isAutoVersion(sdkVersion) && !supportsAutoVersion(candidate.sdkConfigRequestedOutput)) {
+        if (!isSdkConfigTarget) {
+            return "automatic SDK versioning has not yet moved from Fiddle to the shared pipeline";
+        }
+        return isPreview
+            ? "preview generation only downloads files, so it cannot use --version AUTO"
+            : "automatic SDK versioning (--version AUTO) through sdk-gen-api requires GitHub output";
+    }
+    if (specsTarGzBuffer == null) {
+        return "the source archive is unavailable";
+    }
+    return `generator language ${generatorInvocation.language ?? "unknown"} does not match ${getFernSdkGenApiLanguage(generatorInvocation.name)}`;
 }
 
 export interface FernSdkGenApiPayload {
@@ -461,7 +1026,6 @@ export interface FernSdkGenApiPayload {
 
 /** Validated customer SDK Config metadata plus its JSON wire payload for sdk-gen-api. */
 export interface FernSdkConfigV1Payload {
-    body: Buffer;
     sdkName: string;
     sdkVersion: string;
     apiVersion?: string;
@@ -469,6 +1033,7 @@ export interface FernSdkConfigV1Payload {
     audiences?: string[];
     clientPathParameterStyle?: "inline" | "wrapped" | "language-default";
     targets: Array<{
+        body: Buffer;
         language: string;
         generatorVersion?: string;
         sdkName?: string;
@@ -478,6 +1043,7 @@ export interface FernSdkConfigV1Payload {
         /** Local-only destination for a requested ZIP artifact; never serialized to sdk-gen-api. */
         absolutePathToLocalOutputArchive?: AbsoluteFilePath;
         package?: FernSdkGenApiPackageConfig;
+        publishCredential?: FernSdkGenApiPublishCredentialSource;
     }>;
 }
 
@@ -486,6 +1052,8 @@ export interface FernSdkGenApiBuildParameters {
     organization: string;
     cliVersion: string | undefined;
     generatorInvocation: generatorsYml.GeneratorInvocation;
+    resolvedGeneratorVersion?: string;
+    sdkGenApiRoute?: GenerationConfigRoute;
     sdkName?: string;
     sdkVersion: string;
     apiVersion?: string;
@@ -493,6 +1061,8 @@ export interface FernSdkGenApiBuildParameters {
     specsTarGzBuffer: Buffer;
     payload: FernSdkGenApiPayload;
     requestedOutput?: FernSdkGenApiRequestedOutput;
+    publishCredential?: FernSdkGenApiPublishCredentialSource;
+    githubOptions?: FernSdkGenApiGithubOptions;
     absolutePathToLocalOutputArchive?: AbsoluteFilePath;
     absolutePathToPreview: AbsoluteFilePath | undefined;
     context: InteractiveTaskContext;
@@ -505,10 +1075,10 @@ export interface FernSdkGenApiBuildParameters {
 export interface FernSdkGenApiBuildResponse {
     createdSnippets: false;
     snippetsS3PreSignedReadUrl: undefined;
-    actualVersion: string;
-    pullRequestUrl: undefined;
-    noChangesDetected: undefined;
-    publishTarget: undefined;
+    actualVersion: string | undefined;
+    pullRequestUrl: string | undefined;
+    noChangesDetected: boolean | undefined;
+    publishTarget: PublishTarget | undefined;
 }
 
 interface FernSdkGenApiBatchParticipant extends FernSdkGenApiBuildParameters {
@@ -628,7 +1198,10 @@ export class FernSdkGenApiBatch {
 export class FernSdkGenApiPreparationBatch {
     private readonly expectedTargetIds: Set<string>;
     private readonly settledTargetIds = new Set<string>();
-    private readonly waiters: Array<{ resolve: () => void; reject: (error: unknown) => void }> = [];
+    private readonly waiters: Array<{
+        resolve: () => void;
+        reject: (error: unknown) => void;
+    }> = [];
     private readonly preflightParticipants: FernSdkGenApiBuildParameters[] = [];
     private terminalError: unknown;
     private didRunPreflight = false;
@@ -725,6 +1298,7 @@ function prepareFernSdkGenApiSubmission(participants: FernSdkGenApiBuildParamete
     origin: string;
     request: FernSdkGenApiRequest;
     form: FormData;
+    sensitiveValues: string[];
 } {
     const first = participants[0];
     if (first == null) {
@@ -745,7 +1319,7 @@ function prepareFernSdkGenApiSubmission(participants: FernSdkGenApiBuildParamete
     }
     if (!origin) {
         return first.context.failAndThrow(
-            "FERN_SDK_GEN_API_ORIGIN is required when FERN_USE_SDK_GEN_API=true",
+            "FERN_SDK_GEN_API_ORIGIN is required when sdk-gen-api generation is enabled",
             undefined,
             { code: CliError.Code.ConfigError }
         );
@@ -760,6 +1334,8 @@ function prepareFernSdkGenApiSubmission(participants: FernSdkGenApiBuildParamete
         specsTarGzBuffer: first.specsTarGzBuffer,
         targets: participants.map((participant) => ({
             generatorInvocation: participant.generatorInvocation,
+            resolvedGeneratorVersion: participant.resolvedGeneratorVersion,
+            sdkGenApiRoute: participant.sdkGenApiRoute,
             sdkName: participant.sdkName,
             sdkVersion: participant.sdkVersion,
             apiVersion: participant.apiVersion,
@@ -767,9 +1343,35 @@ function prepareFernSdkGenApiSubmission(participants: FernSdkGenApiBuildParamete
             sourceSpecIndexes: participant.sourceSpecIndexes,
             audiences: participant.audiences,
             payload: participant.payload,
-            requestedOutput: participant.requestedOutput
+            requestedOutput: participant.requestedOutput,
+            publishCredential: participant.publishCredential,
+            githubOptions: participant.githubOptions
         }))
     });
+    const credentials = createFernSdkGenApiPublishCredentials(
+        request,
+        participants.map((participant) => participant.generatorInvocation),
+        participants.map((participant) => participant.publishCredential)
+    );
+    const credentialsBody = credentials != null ? Buffer.from(JSON.stringify(credentials)) : undefined;
+    if (credentialsBody != null && credentialsBody.length > MAX_PUBLISH_CREDENTIALS_BYTES) {
+        return first.context.failAndThrow(
+            `sdk-gen-api publish credentials file is ${formatKiB(credentialsBody.length)}, exceeding the 64 KiB limit`,
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
+    }
+    const aggregateUploadBytes =
+        first.specsTarGzBuffer.length +
+        participants.reduce((total, participant) => total + participant.payload.body.length, 0) +
+        (credentialsBody?.length ?? 0);
+    if (aggregateUploadBytes > MAX_TOTAL_UPLOAD_FILE_BYTES) {
+        return first.context.failAndThrow(
+            `sdk-gen-api source archive, target payloads, and publish credentials total ${formatMiB(aggregateUploadBytes)}, exceeding the 50 MiB in-memory upload limit`,
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
+    }
     const serializedRequest = JSON.stringify(request);
     const serializedRequestBytes = Buffer.byteLength(serializedRequest, "utf8");
     if (serializedRequestBytes > MAX_REQUEST_FIELD_BYTES) {
@@ -798,6 +1400,12 @@ function prepareFernSdkGenApiSubmission(participants: FernSdkGenApiBuildParamete
             contentType: isRuntimeBundle ? "application/gzip" : "application/json"
         });
     });
+    if (credentialsBody != null) {
+        form.append("credentials", credentialsBody, {
+            filename: "publish-credentials.v1.json",
+            contentType: "application/json"
+        });
+    }
     const multipartBodyLength = form.getLengthSync();
     if (multipartBodyLength > MAX_MULTIPART_BODY_BYTES) {
         return first.context.failAndThrow(
@@ -806,13 +1414,21 @@ function prepareFernSdkGenApiSubmission(participants: FernSdkGenApiBuildParamete
             { code: CliError.Code.ConfigError }
         );
     }
-    return { first, origin, request, form };
+    return {
+        first,
+        origin,
+        request,
+        form,
+        sensitiveValues: normalizeSensitiveValues([first.token.value, ...getCredentialSecretValues(credentials)])
+    };
 }
 
 async function executeFernSdkGenApiBuild(
     participants: FernSdkGenApiBuildParameters[]
 ): Promise<PromiseSettledResult<FernSdkGenApiBuildResponse>[]> {
-    const { first, origin, request, form } = prepareFernSdkGenApiSubmission(participants);
+    const { first, origin, request, form, sensitiveValues } = prepareFernSdkGenApiSubmission(participants);
+
+    logFernSdkGenApiSubmissionDebug({ first, origin, request, participants, sensitiveValues });
 
     let buildId: string;
     try {
@@ -829,10 +1445,11 @@ async function executeFernSdkGenApiBuild(
         });
         buildId = response.data.buildId;
     } catch (error) {
-        const axiosError = error as AxiosError<{ message?: string }>;
+        logFernSdkGenApiSubmissionFailureDebug(first.context, error, sensitiveValues);
+        const sanitizedError = sanitizeFernSdkGenApiSubmissionError(error, sensitiveValues);
         return first.context.failAndThrow(
-            `Failed to submit sdk-gen-api build: ${axiosError.response?.data?.message ?? axiosError.message}`,
-            error,
+            `Failed to submit sdk-gen-api build: ${sanitizedError.message}`,
+            sanitizedError,
             { code: CliError.Code.NetworkError }
         );
     }
@@ -843,6 +1460,7 @@ async function executeFernSdkGenApiBuild(
     const loggedByTarget = new Map<string, number>();
     const pollDeadline = Date.now() + POLL_TIMEOUT_MS;
     for (;;) {
+        const isFinalPoll = Date.now() >= pollDeadline;
         let status: FernBuildStatus;
         try {
             const response = await axios.get<FernBuildStatus>(`${origin}/v1/fern/build/${buildId}`, {
@@ -852,9 +1470,10 @@ async function executeFernSdkGenApiBuild(
                 },
                 timeout: REQUEST_TIMEOUT_MS
             });
-            status = response.data;
+            status = sanitizeFernBuildStatus(response.data, sensitiveValues);
         } catch (error) {
-            return first.context.failAndThrow("Failed to poll sdk-gen-api build", error, {
+            const sanitizedError = sanitizeFernSdkGenApiSubmissionError(error, sensitiveValues);
+            return first.context.failAndThrow("Failed to poll sdk-gen-api build", sanitizedError, {
                 code: CliError.Code.NetworkError
             });
         }
@@ -878,7 +1497,7 @@ async function executeFernSdkGenApiBuild(
             }
             const logged = loggedByTarget.get(target.targetId) ?? 0;
             for (const log of target.logs.slice(logged)) {
-                context.logger.info(log.message);
+                logFernSdkGenApiMessage(context, log);
             }
             loggedByTarget.set(target.targetId, target.logs.length);
         }
@@ -887,19 +1506,289 @@ async function executeFernSdkGenApiBuild(
         if (allTargetsTerminal || status.status === "failed" || status.status === "succeeded") {
             return Promise.allSettled(
                 participants.map((participant, index) =>
-                    finishFernSdkGenApiTarget(participant, request.targets[index]?.targetId, status)
+                    finishFernSdkGenApiTarget(
+                        participant,
+                        request.targets[index]?.targetId,
+                        status,
+                        request.targets[index]?.requestedOutput
+                    )
                 )
             );
         }
-        if (Date.now() >= pollDeadline) {
+        if (isFinalPoll) {
             return first.context.failAndThrow(
                 `Timed out waiting for sdk-gen-api build ${buildId} after ${POLL_TIMEOUT_MS / 60_000} minutes`,
                 undefined,
-                { code: CliError.Code.NetworkError }
+                { code: CliError.Code.InternalError }
             );
         }
-        await new Promise((resolve) => setTimeout(resolve, POLL_INTERVAL_MS));
+        await delay(POLL_INTERVAL_MS);
     }
+}
+
+function logFernSdkGenApiSubmissionDebug({
+    first,
+    origin,
+    request,
+    participants,
+    sensitiveValues
+}: {
+    first: FernSdkGenApiBuildParameters;
+    origin: string;
+    request: FernSdkGenApiRequest;
+    participants: FernSdkGenApiBuildParameters[];
+    sensitiveValues: string[];
+}): void {
+    const payloadsByTargetId = new Map(
+        request.targets.map((target, index) => {
+            const participant = participants[index];
+            return [
+                target.targetId,
+                {
+                    uploadBytes: participant?.payload.body.length ?? 0,
+                    targetIdSeed: participant?.targetIdSeed,
+                    sourceSpecIndexes: participant?.sourceSpecIndexes
+                }
+            ];
+        })
+    );
+    first.context.logger.debug(
+        `Submitting sdk-gen-api build: ${serializeSdkGenApiDebugValue(
+            {
+                origin,
+                sourceArchiveBytes: first.specsTarGzBuffer.length,
+                request: {
+                    protocolVersion: request.protocolVersion,
+                    apiName: request.apiName,
+                    cliVersion: request.cliVersion,
+                    idempotencyKey: redactIdentifierForDebug(request.idempotencyKey),
+                    credentialSetId:
+                        request.credentialSetId == null ? undefined : redactIdentifierForDebug(request.credentialSetId),
+                    apiInputs: request.apiInputs,
+                    targets: request.targets.map((target) => ({
+                        targetId: target.targetId,
+                        apiInputId: target.apiInputId,
+                        language: target.language,
+                        sdk: target.sdk,
+                        fernGenerator: target.fernGenerator,
+                        payloadKind: target.payloadKind,
+                        package: target.package,
+                        requestedOutput: target.requestedOutput,
+                        invocation: {
+                            customConfigKeys: Object.keys(target.invocation.customConfig).sort(),
+                            keywords: target.invocation.keywords,
+                            smartCasing: target.invocation.smartCasing,
+                            smartCasingDigitWordBoundary: target.invocation.smartCasingDigitWordBoundary,
+                            disableExamples: target.invocation.disableExamples,
+                            audiences: target.invocation.audiences,
+                            hasReadme: target.invocation.readme != null,
+                            hasSettings: target.invocation.settings != null,
+                            hasApiOverride: target.invocation.apiOverride != null
+                        },
+                        payload: payloadsByTargetId.get(target.targetId)
+                    }))
+                }
+            },
+            sensitiveValues
+        )}`
+    );
+}
+
+function logFernSdkGenApiSubmissionFailureDebug(
+    context: InteractiveTaskContext,
+    error: unknown,
+    sensitiveValues: string[]
+): void {
+    if (!(error instanceof AxiosError)) {
+        context.logger.debug(
+            `sdk-gen-api submission failed before receiving an HTTP response: ${serializeSdkGenApiDebugValue(
+                error instanceof Error ? { name: error.name, message: error.message } : { error: String(error) },
+                sensitiveValues
+            )}`
+        );
+        return;
+    }
+    context.logger.debug(
+        `sdk-gen-api submission HTTP failure: ${serializeSdkGenApiDebugValue(
+            {
+                status: error.response?.status ?? error.status,
+                statusText: error.response?.statusText,
+                code: error.code,
+                responseBody: error.response?.data
+            },
+            sensitiveValues
+        )}`
+    );
+}
+
+function redactIdentifierForDebug(value: string): string {
+    return value.length <= 12 ? value : `${value.slice(0, 12)}...`;
+}
+
+function serializeSdkGenApiDebugValue(value: unknown, sensitiveValues: string[]): string {
+    let serialized: string;
+    try {
+        serialized = typeof value === "string" ? value : JSON.stringify(value);
+    } catch (error) {
+        serialized = error instanceof Error ? `Failed to serialize debug value: ${error.message}` : String(value);
+    }
+    const redacted = redactSensitiveValues(serialized, sensitiveValues);
+    return redacted.length > MAX_DEBUG_LOG_BYTES
+        ? `${redacted.slice(0, MAX_DEBUG_LOG_BYTES)}... [truncated ${redacted.length - MAX_DEBUG_LOG_BYTES} bytes]`
+        : redacted;
+}
+
+function logFernSdkGenApiMessage(
+    context: InteractiveTaskContext,
+    log: FernBuildStatus["targets"][number]["logs"][number]
+): void {
+    switch (log.level.toLowerCase()) {
+        case "error":
+            context.logger.error(log.message);
+            return;
+        case "warn":
+        case "warning":
+            context.logger.warn(log.message);
+            return;
+        case "debug":
+        case "trace":
+            context.logger.debug(log.message);
+            return;
+        default:
+            context.logger.info(log.message);
+    }
+}
+
+function sanitizeFernSdkGenApiSubmissionError(error: unknown, sensitiveValues: string[]): FernSdkGenApiSubmissionError {
+    if (!(error instanceof AxiosError)) {
+        return new FernSdkGenApiSubmissionError(
+            redactSensitiveValues(error instanceof Error ? error.message : "Unknown submission error", sensitiveValues),
+            undefined,
+            undefined
+        );
+    }
+    const responseMessage = getFernSdkGenApiResponseMessage(error, sensitiveValues);
+    return new FernSdkGenApiSubmissionError(
+        responseMessage ?? redactSensitiveValues(error.message, sensitiveValues),
+        error.response?.status ?? error.status,
+        error.code
+    );
+}
+
+function getFernSdkGenApiResponseMessage(error: AxiosError, sensitiveValues: string[]): string | undefined {
+    const data = error.response?.data;
+    if (typeof data === "object" && data != null && "message" in data && typeof data.message === "string") {
+        return redactSensitiveValues(data.message, sensitiveValues);
+    }
+    if (data == null) {
+        return undefined;
+    }
+    return `sdk-gen-api response body: ${serializeSdkGenApiDebugValue(data, sensitiveValues)}`;
+}
+
+function getCredentialSecretValues(credentials: FernSdkGenApiPublishCredentials | undefined): string[] {
+    return (credentials?.targets ?? []).flatMap((target) => {
+        if (target.registry === "npm" || target.registry === "crates") {
+            return [target.token];
+        }
+        if (target.registry === "pypi") {
+            return [target.username, target.password];
+        }
+        return [
+            target.username,
+            target.password,
+            ...(target.signature != null
+                ? [target.signature.keyId, target.signature.password, target.signature.secretKey]
+                : [])
+        ];
+    });
+}
+
+function sanitizeFernBuildStatus(status: FernBuildStatus, sensitiveValues: string[]): FernBuildStatus {
+    return {
+        ...status,
+        targets: status.targets.map((target) => ({
+            ...target,
+            logs: target.logs.map((log) => ({
+                ...log,
+                message: redactSensitiveValues(log.message, sensitiveValues)
+            })),
+            ...(target.error == null
+                ? {}
+                : {
+                      error: {
+                          ...(typeof target.error.code === "string"
+                              ? { code: redactSensitiveValues(target.error.code, sensitiveValues) }
+                              : {}),
+                          message: redactSensitiveValues(target.error.message, sensitiveValues)
+                      }
+                  }),
+            ...(target.publication == null
+                ? {}
+                : target.publication.status === "success"
+                  ? {
+                        publication: {
+                            ...target.publication,
+                            publishTarget: {
+                                ...target.publication.publishTarget,
+                                identifier: redactPublicationIdentifier(
+                                    target.publication.publishTarget.identifier,
+                                    sensitiveValues
+                                )
+                            }
+                        }
+                    }
+                  : {
+                        publication: {
+                            ...target.publication,
+                            publishTarget: {
+                                ...target.publication.publishTarget,
+                                identifier: redactPublicationIdentifier(
+                                    target.publication.publishTarget.identifier,
+                                    sensitiveValues
+                                )
+                            },
+                            error: sanitizePublicationError(target.publication.error, sensitiveValues)
+                        }
+                    })
+        }))
+    };
+}
+
+/**
+ * Redacts the publication error's free-text fields. The build status response is not schema-validated,
+ * so the optional `reason`/`detail` fields are type-checked here: anything malformed is dropped rather
+ * than failing the build, keeping older and newer sdk-gen-api servers compatible.
+ */
+function sanitizePublicationError(error: FernPublicationError, sensitiveValues: string[]): FernPublicationError {
+    const { reason, detail, ...rest } = error;
+    const redactedDetail =
+        typeof detail === "string" ? redactSensitiveValues(detail, sensitiveValues).trim() : undefined;
+    // A reason is a fixed identifier; drop it entirely if it would need redaction.
+    const safeReason =
+        typeof reason === "string" &&
+        PUBLICATION_ERROR_REASON_PATTERN.test(reason) &&
+        redactSensitiveValues(reason, sensitiveValues) === reason
+            ? reason
+            : undefined;
+    return {
+        ...rest,
+        message: redactSensitiveValues(error.message, sensitiveValues),
+        ...(safeReason != null ? { reason: safeReason } : {}),
+        ...(redactedDetail != null && redactedDetail.length > 0 ? { detail: redactedDetail } : {})
+    };
+}
+
+/**
+ * `sdk-gen-api publication failed (<code>): <message>`, followed by `: <detail> [<reason>]` when the
+ * server supplied a detail. Expects an error that has already passed through {@link sanitizePublicationError}.
+ */
+function formatFernSdkGenApiPublicationFailure(error: FernPublicationError): string {
+    const summary = `sdk-gen-api publication failed (${error.code}): ${error.message}`;
+    if (error.detail == null || error.detail === error.message) {
+        return summary;
+    }
+    return error.reason != null ? `${summary}: ${error.detail} [${error.reason}]` : `${summary}: ${error.detail}`;
 }
 
 function assertGeneratorConfigCompatibility(participants: FernSdkGenApiBuildParameters[]): void {
@@ -913,13 +1802,9 @@ function assertGeneratorConfigCompatibility(participants: FernSdkGenApiBuildPara
                 { code: CliError.Code.ConfigError }
             );
         }
+        let route: GenerationConfigRoute;
         try {
-            validateGeneratorConfigCompatibility({
-                generatorId: generatorInvocation.name,
-                language,
-                requestedVersion: generatorInvocation.version,
-                configKind: participant.payload.payloadKind === "fern-runtime-bundle" ? "legacy-fern" : "sdk-config-v1"
-            });
+            route = validateParticipantRoute(participant, language);
         } catch (error) {
             if (!(error instanceof GeneratorConfigCompatibilityError)) {
                 throw error;
@@ -928,7 +1813,46 @@ function assertGeneratorConfigCompatibility(participants: FernSdkGenApiBuildPara
                 code: CliError.Code.ConfigError
             });
         }
+        if (route.payloadKind !== participant.payload.payloadKind) {
+            participant.context.failAndThrow(
+                `Cannot submit SDK generation to sdk-gen-api: selected route payload ${route.payloadKind} does not match participant payload ${participant.payload.payloadKind}`,
+                undefined,
+                { code: CliError.Code.ConfigError }
+            );
+        }
     }
+}
+
+function validateParticipantRoute(
+    participant: FernSdkGenApiBuildParameters,
+    language: FernSdkGenApiLanguage
+): GenerationConfigRoute {
+    const { generatorInvocation, sdkGenApiRoute } = participant;
+    if (sdkGenApiRoute?.requestedVersion == null) {
+        if (sdkGenApiRoute != null) {
+            if (!isGeneratorVersionForUnpinnedRoute(sdkGenApiRoute, generatorInvocation.version)) {
+                throw unpinnedRouteVersionMismatchError(sdkGenApiRoute, generatorInvocation.version);
+            }
+            return selectUnpinnedGeneratorConfigRoute({
+                generatorId: generatorInvocation.name,
+                language,
+                configKind: sdkGenApiRoute.configKind,
+                versionSource: sdkGenApiRoute.versionSource
+            });
+        }
+        return validateGeneratorConfigCompatibility({
+            generatorId: generatorInvocation.name,
+            language,
+            requestedVersion: generatorInvocation.version,
+            configKind: participant.payload.payloadKind === "fern-runtime-bundle" ? "legacy-fern" : "sdk-config-v1"
+        });
+    }
+    return validateGeneratorConfigCompatibility({
+        generatorId: generatorInvocation.name,
+        language,
+        requestedVersion: sdkGenApiRoute.requestedVersion,
+        configKind: sdkGenApiRoute.configKind
+    });
 }
 
 export function formatGeneratorConfigCompatibilityError(error: GeneratorConfigCompatibilityError): string {
@@ -951,6 +1875,40 @@ export function formatGeneratorConfigCompatibilityError(error: GeneratorConfigCo
     return `Cannot submit SDK generation to sdk-gen-api: ${error.message} [${diagnostic}].${migrationHint}`;
 }
 
+function resolveFernGeneratorWireVersion(
+    route: GenerationConfigRoute | undefined,
+    invocation: generatorsYml.GeneratorInvocation,
+    resolvedGeneratorVersion?: string
+): string | undefined {
+    if (route == null) {
+        return invocation.version;
+    }
+    if (route.requestedVersion != null) {
+        return route.requestedVersion;
+    }
+    if (!isGeneratorVersionForUnpinnedRoute(route, invocation.version)) {
+        throw unpinnedRouteVersionMismatchError(route, invocation.version);
+    }
+    return resolvedGeneratorVersion;
+}
+
+function unpinnedRouteVersionMismatchError(route: GenerationConfigRoute, invocationVersion: string): Error {
+    return new Error(
+        `An unpinned sdk-gen-api route does not match its generator version representation: invocationVersion=${JSON.stringify(invocationVersion)}; configKind=${route.configKind}; versionSource=${route.requestedVersion == null ? route.versionSource : "pinned"}`
+    );
+}
+
+function resolveFernGeneratorVersionKey(
+    route: GenerationConfigRoute | undefined,
+    invocation: generatorsYml.GeneratorInvocation,
+    resolvedGeneratorVersion?: string
+): string {
+    return (
+        resolveFernGeneratorWireVersion(route, invocation, resolvedGeneratorVersion) ??
+        UNPINNED_FERN_GENERATOR_VERSION_KEY
+    );
+}
+
 function compareFernSdkGenApiParticipants(
     left: FernSdkGenApiBuildParameters,
     right: FernSdkGenApiBuildParameters
@@ -963,7 +1921,10 @@ function compareFernSdkGenApiParticipants(
     if (generatorComparison !== 0) {
         return generatorComparison;
     }
-    const versionComparison = left.generatorInvocation.version.localeCompare(right.generatorInvocation.version);
+    const versionComparison = resolveFernGeneratorVersionKey(
+        left.sdkGenApiRoute,
+        left.generatorInvocation
+    ).localeCompare(resolveFernGeneratorVersionKey(right.sdkGenApiRoute, right.generatorInvocation));
     if (versionComparison !== 0) {
         return versionComparison;
     }
@@ -1106,6 +2067,10 @@ function formatMiB(bytes: number): string {
     return `${(bytes / (1024 * 1024)).toFixed(2)} MiB`;
 }
 
+function formatKiB(bytes: number): string {
+    return `${(bytes / 1024).toFixed(2)} KiB`;
+}
+
 function isTerminal(status: FernBuildStatus, targetId: string): boolean {
     const target = status.targets.find((candidate) => candidate.targetId === targetId);
     return target?.status === "failed" || target?.status === "succeeded";
@@ -1114,7 +2079,8 @@ function isTerminal(status: FernBuildStatus, targetId: string): boolean {
 async function finishFernSdkGenApiTarget(
     participant: FernSdkGenApiBuildParameters,
     targetId: string | undefined,
-    status: FernBuildStatus
+    status: FernBuildStatus,
+    requestedOutput: FernSdkGenApiRequestedOutput | undefined
 ): Promise<FernSdkGenApiBuildResponse> {
     const target = status.targets.find((candidate) => candidate.targetId === targetId);
     if (target == null) {
@@ -1127,7 +2093,14 @@ async function finishFernSdkGenApiTarget(
         );
     }
     if (target.status === "failed") {
-        return participant.context.failAndThrow(target.error?.message ?? "sdk-gen-api generation failed", undefined, {
+        if (target.publication?.status === "failure") {
+            return participant.context.failAndThrow(
+                formatFernSdkGenApiPublicationFailure(target.publication.error),
+                undefined,
+                { code: CliError.Code.ContainerError }
+            );
+        }
+        return participant.context.failAndThrow(formatFernSdkGenApiTargetError(target.error), undefined, {
             code: CliError.Code.ContainerError
         });
     }
@@ -1148,7 +2121,12 @@ async function finishFernSdkGenApiTarget(
             s3PreSignedReadUrl: target.result.artifactUrl,
             absolutePathToLocalOutput: join(
                 participant.absolutePathToPreview,
-                RelativeFilePath.of(path.basename(participant.generatorInvocation.name))
+                RelativeFilePath.of(
+                    getSdkGenApiPreviewOutputDirectoryName(
+                        participant.generatorInvocation.name,
+                        getSdkConfigTargetIndex(participant.generatorInvocation)
+                    )
+                )
             ),
             context: participant.context,
             skipFernignore: participant.skipFernignore
@@ -1167,14 +2145,158 @@ async function finishFernSdkGenApiTarget(
             skipFernignore: participant.skipFernignore
         });
     }
+    // An AUTO build that released nothing has no version, and "AUTO" itself is not one.
+    const actualVersion =
+        target.result.actualVersion ?? (isAutoVersion(participant.sdkVersion) ? undefined : participant.sdkVersion);
+    const githubDelivery = resolveGithubDelivery(participant, target, requestedOutput);
+    if (isAutoVersion(participant.sdkVersion) && actualVersion != null) {
+        // Fern Autorelease reads the version from this phrase, which the legacy Fiddle path also logs.
+        participant.context.logger.info(`AUTO versioning picked new version: ${actualVersion}`);
+    }
     return {
         createdSnippets: false,
         snippetsS3PreSignedReadUrl: undefined,
-        actualVersion: target.result.actualVersion ?? participant.sdkVersion,
-        pullRequestUrl: undefined,
-        noChangesDetected: undefined,
-        publishTarget: undefined
+        actualVersion,
+        ...githubDelivery,
+        publishTarget: actualVersion == null ? undefined : mapFernSdkGenApiPublishTarget(target, actualVersion)
     };
+}
+
+function formatFernSdkGenApiTargetError(error: FernBuildStatus["targets"][number]["error"]): string {
+    const message = error?.message || "sdk-gen-api generation failed";
+    return error?.code != null && error.code !== "" ? `${error.code}: ${message}` : message;
+}
+
+type GithubDeliveryOutcome = Pick<FernSdkGenApiBuildResponse, "pullRequestUrl" | "noChangesDetected">;
+
+/**
+ * Reports what sdk-gen-api did with a requested GitHub delivery. A target that succeeded without a
+ * publication result never confirmed delivery, so it fails instead of reporting success; a skip for
+ * "no changes" is reported explicitly so it cannot be mistaken for a created pull request.
+ */
+function resolveGithubDelivery(
+    participant: FernSdkGenApiBuildParameters,
+    target: FernBuildStatus["targets"][number],
+    requestedOutput: FernSdkGenApiRequestedOutput | undefined
+): GithubDeliveryOutcome {
+    if (requestedOutput?.type !== "github") {
+        return { pullRequestUrl: undefined, noChangesDetected: undefined };
+    }
+    const { publication } = target;
+    if (publication?.status !== "success" || publication.publishTarget.type !== "github") {
+        return participant.context.failAndThrow(
+            `sdk-gen-api reported the build as succeeded but did not confirm the GitHub delivery to ${requestedOutput.repository}`,
+            undefined,
+            { code: CliError.Code.InternalError }
+        );
+    }
+    const pullRequestUrl = toPullRequestLink(publication.output.pullRequestUrl);
+    const noChangesDetected = publication.output.noChangesDetected === true;
+    // A run that delivered nothing never created a pull request, so "no changes" wins over any link.
+    const outcome: GithubDeliveryOutcome = {
+        pullRequestUrl: noChangesDetected ? undefined : pullRequestUrl,
+        noChangesDetected: noChangesDetected ? true : undefined
+    };
+    const linkRejected = publication.output.pullRequestUrl != null && pullRequestUrl == null;
+    logGithubDelivery(participant.context.logger, requestedOutput, outcome, linkRejected);
+    return outcome;
+}
+
+/** Keeps only the origin and path of a safe HTTPS link, so a query string or fragment is never printed. */
+function toPullRequestLink(value: string | undefined): string | undefined {
+    const safeUrl = value == null ? undefined : getSafePublicationUrl(value);
+    if (safeUrl == null) {
+        return undefined;
+    }
+    const { origin, pathname } = new URL(safeUrl);
+    return `${origin}${pathname}`;
+}
+
+function logGithubDelivery(
+    logger: InteractiveTaskContext["logger"],
+    { repository, mode }: Extract<FernSdkGenApiRequestedOutput, { type: "github" }>,
+    { pullRequestUrl, noChangesDetected }: GithubDeliveryOutcome,
+    linkRejected: boolean
+): void {
+    if (noChangesDetected) {
+        logger.info(`No changes detected for ${repository}; nothing was delivered to GitHub.`);
+        return;
+    }
+    if (pullRequestUrl != null) {
+        logger.info(`Pull request: ${pullRequestUrl}`);
+        return;
+    }
+    if (linkRejected) {
+        logger.warn(`sdk-gen-api returned a pull request link for ${repository} that was not a safe HTTPS URL.`);
+        return;
+    }
+    if (mode === "pull-request") {
+        logger.warn(`sdk-gen-api did not return a pull request link for ${repository}.`);
+    }
+}
+
+function getSdkConfigTargetIndex(generatorInvocation: generatorsYml.GeneratorInvocation): number | undefined {
+    return generatorInvocation.sdkConfigTargetIndex;
+}
+
+function mapFernSdkGenApiPublishTarget(
+    target: FernBuildStatus["targets"][number],
+    version: string
+): PublishTarget | undefined {
+    if (target.publication?.status !== "success") {
+        return undefined;
+    }
+    const registry = target.publication.publishTarget.type;
+    const identifier = target.publication.publishTarget.identifier;
+    const url = getSafePublicationUrl(identifier);
+    switch (registry) {
+        case "npm":
+            return {
+                registry,
+                label: "npm",
+                version,
+                identifier,
+                ...(url != null ? { url } : {})
+            };
+        case "pypi":
+            return {
+                registry,
+                label: "PyPI",
+                version,
+                identifier,
+                ...(url != null ? { url } : {})
+            };
+        case "crates":
+            return {
+                registry,
+                label: "crates.io",
+                version,
+                identifier,
+                ...(url != null ? { url } : {})
+            };
+        case "maven":
+            return {
+                registry,
+                label: "Maven Central",
+                version,
+                identifier,
+                ...(url != null ? { url } : {})
+            };
+        case "github":
+        case "unsupported":
+            return undefined;
+    }
+}
+
+function getSafePublicationUrl(identifier: string): string | undefined {
+    try {
+        const url = new URL(identifier);
+        return url.protocol === "https:" && url.username.length === 0 && url.password.length === 0
+            ? identifier
+            : undefined;
+    } catch {
+        return undefined;
+    }
 }
 
 function assertSameBatchInput(participants: FernSdkGenApiBuildParameters[]): void {
@@ -1201,30 +2323,51 @@ export function createFernSdkGenApiRequest({
     organization,
     cliVersion,
     generatorInvocation,
+    resolvedGeneratorVersion,
+    sdkGenApiRoute,
     sdkName,
     sdkVersion,
     apiVersion,
     specsTarGzBuffer,
     payload,
-    requestedOutput
+    requestedOutput,
+    publishCredential,
+    githubOptions
 }: {
     apiName: string;
     organization: string;
     cliVersion: string | undefined;
     generatorInvocation: generatorsYml.GeneratorInvocation;
+    resolvedGeneratorVersion?: string;
+    sdkGenApiRoute?: GenerationConfigRoute;
     sdkName?: string;
     sdkVersion: string;
     apiVersion?: string;
     specsTarGzBuffer: Buffer;
     payload: FernSdkGenApiPayload;
     requestedOutput?: FernSdkGenApiRequestedOutput;
+    publishCredential?: FernSdkGenApiPublishCredentialSource;
+    githubOptions?: FernSdkGenApiGithubOptions;
 }): FernSdkGenApiRequest {
     return createFernSdkGenApiBatchRequest({
         apiName,
         organization,
         cliVersion,
         specsTarGzBuffer,
-        targets: [{ generatorInvocation, sdkName, sdkVersion, apiVersion, payload, requestedOutput }]
+        targets: [
+            {
+                generatorInvocation,
+                resolvedGeneratorVersion,
+                sdkGenApiRoute,
+                sdkName,
+                sdkVersion,
+                apiVersion,
+                payload,
+                requestedOutput,
+                publishCredential,
+                githubOptions
+            }
+        ]
     });
 }
 
@@ -1241,6 +2384,8 @@ export function createFernSdkGenApiBatchRequest({
     specsTarGzBuffer: Buffer;
     targets: Array<{
         generatorInvocation: generatorsYml.GeneratorInvocation;
+        resolvedGeneratorVersion?: string;
+        sdkGenApiRoute?: GenerationConfigRoute;
         sdkName?: string;
         sdkVersion: string;
         apiVersion?: string;
@@ -1249,6 +2394,8 @@ export function createFernSdkGenApiBatchRequest({
         audiences?: string[];
         payload: FernSdkGenApiPayload;
         requestedOutput?: FernSdkGenApiRequestedOutput;
+        publishCredential?: FernSdkGenApiPublishCredentialSource;
+        githubOptions?: FernSdkGenApiGithubOptions;
     }>;
 }): FernSdkGenApiRequest {
     if (targets.length === 0) {
@@ -1268,20 +2415,46 @@ export function createFernSdkGenApiBatchRequest({
     });
     const requestTargets = targets.map(
         (
-            { generatorInvocation, sdkName, sdkVersion, apiVersion, targetIdSeed, audiences, payload, requestedOutput },
+            {
+                generatorInvocation,
+                resolvedGeneratorVersion,
+                sdkGenApiRoute,
+                sdkName,
+                sdkVersion,
+                apiVersion,
+                targetIdSeed,
+                audiences,
+                payload,
+                requestedOutput,
+                githubOptions
+            },
             index
         ) => {
             const language = getFernSdkGenApiLanguage(generatorInvocation.name);
             if (language == null) {
                 throw new Error(`Unsupported Fern SDK generator: ${generatorInvocation.name}`);
             }
-            const output = mapFernSdkGenApiOutput(generatorInvocation);
+            const output = mapFernSdkGenApiOutput(generatorInvocation, githubOptions);
+            const targetRequestedOutput = applyGithubOptionsToRequestedOutput(
+                requestedOutput ?? output.requestedOutput,
+                githubOptions
+            );
             // SDK Config is the package configuration authority. Legacy output-derived package
             // identity must not overwrite a customer-edited SDK Config document.
             const packageConfig = payload.payloadKind === "fern-runtime-bundle" ? output.package : payload.package;
+            const fernGeneratorVersion = resolveFernGeneratorWireVersion(
+                sdkGenApiRoute,
+                generatorInvocation,
+                resolvedGeneratorVersion
+            );
+            const fernGeneratorVersionKey = resolveFernGeneratorVersionKey(
+                sdkGenApiRoute,
+                generatorInvocation,
+                resolvedGeneratorVersion
+            );
             const targetId = createHash("sha256")
                 .update(
-                    `${apiName}:${generatorInvocation.name}:${generatorInvocation.version}:${targetIdSeed ?? index.toString()}`
+                    `${apiName}:${generatorInvocation.name}:${fernGeneratorVersionKey}:${targetIdSeed ?? index.toString()}`
                 )
                 .digest("hex")
                 .slice(0, 20);
@@ -1296,7 +2469,7 @@ export function createFernSdkGenApiBatchRequest({
                 },
                 fernGenerator: {
                     id: generatorInvocation.name,
-                    version: generatorInvocation.version
+                    ...(fernGeneratorVersion != null ? { version: fernGeneratorVersion } : {})
                 },
                 payloadKind: payload.payloadKind,
                 ...(packageConfig != null ? { package: packageConfig } : {}),
@@ -1321,11 +2494,28 @@ export function createFernSdkGenApiBatchRequest({
                           }
                         : {})
                 },
-                requestedOutput: requestedOutput ?? output.requestedOutput
+                requestedOutput: targetRequestedOutput
             };
         }
     );
     const payloadHashes = targets.map((target) => createHash("sha256").update(target.payload.body).digest("hex"));
+    const stableRequestIdentity = JSON.stringify({
+        protocolVersion: 2,
+        organization,
+        apiName,
+        apiInputs,
+        targets: requestTargets,
+        payloadHashes,
+        sourceHash: createHash("sha256").update(specsTarGzBuffer).digest("hex")
+    });
+    const credentialSetId = requestTargets.some((target) => target.requestedOutput.type === "publish")
+        ? deterministicUuid(stableRequestIdentity)
+        : undefined;
+    // An AUTO result depends on the SDK repository, which the inputs do not capture, so a rerun must not
+    // replay an earlier build (its pull request may be closed, or its publish may have failed).
+    const autoVersionRunId = requestTargets.some((target) => isAutoVersion(target.sdk.version))
+        ? randomUUID()
+        : undefined;
     const idempotencyKey = createHash("sha256")
         .update(specsTarGzBuffer)
         .update(
@@ -1333,9 +2523,11 @@ export function createFernSdkGenApiBatchRequest({
                 protocolVersion: 2,
                 organization,
                 apiName,
+                credentialSetId,
                 apiInputs,
                 targets: requestTargets,
-                payloadHashes
+                payloadHashes,
+                ...(autoVersionRunId != null ? { autoVersionRunId } : {})
             })
         )
         .digest("hex");
@@ -1345,7 +2537,16 @@ export function createFernSdkGenApiBatchRequest({
         apiName,
         ...(cliVersion ? { cliVersion } : {}),
         idempotencyKey,
+        ...(credentialSetId != null ? { credentialSetId } : {}),
         apiInputs,
         targets: requestTargets
     };
+}
+
+function deterministicUuid(value: string): string {
+    const bytes = createHash("sha256").update(value).digest().subarray(0, 16);
+    bytes[6] = ((bytes[6] ?? 0) & 0x0f) | 0x80;
+    bytes[8] = ((bytes[8] ?? 0) & 0x3f) | 0x80;
+    const hex = bytes.toString("hex");
+    return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`;
 }

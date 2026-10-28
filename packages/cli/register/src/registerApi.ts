@@ -8,7 +8,6 @@ import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { CliError, TaskContext } from "@fern-api/task-context";
 
-import { AIExampleEnhancerConfig, enhanceExamplesWithAI } from "./ai-example-enhancer/index.js";
 import { PlaygroundConfig } from "./ir-to-fdr-converter/convertAuth.js";
 import { convertIrToFdrApi } from "./ir-to-fdr-converter/convertIrToFdrApi.js";
 import { getOriginalName } from "./ir-to-fdr-converter/nameUtils.js";
@@ -22,8 +21,7 @@ export async function registerApi({
     snippetsConfig,
     playgroundConfig,
     graphqlOperations = {},
-    graphqlTypes = {},
-    aiEnhancerConfig
+    graphqlTypes = {}
 }: {
     organization: string;
     workspace: FernWorkspace;
@@ -34,7 +32,6 @@ export async function registerApi({
     playgroundConfig?: PlaygroundConfig;
     graphqlOperations?: Record<FdrCjsSdk.GraphQlOperationId, FdrCjsSdk.api.v1.register.GraphQlOperation>;
     graphqlTypes?: Record<FdrCjsSdk.TypeId, FdrCjsSdk.api.v1.register.TypeDefinition>;
-    aiEnhancerConfig?: AIExampleEnhancerConfig;
 }): Promise<{ id: FdrCjsSdk.ApiDefinitionId; ir: IntermediateRepresentation }> {
     const ir = generateIntermediateRepresentation({
         workspace,
@@ -54,7 +51,7 @@ export async function registerApi({
         token: token.value
     });
 
-    let apiDefinition = convertIrToFdrApi({
+    const apiDefinition = convertIrToFdrApi({
         ir,
         snippetsConfig,
         playgroundConfig,
@@ -62,26 +59,6 @@ export async function registerApi({
         graphqlTypes,
         context
     });
-
-    if (aiEnhancerConfig) {
-        const sources = workspace.getSources();
-        const openApiSources = sources
-            .filter((source) => source.type === "openapi")
-            .map((source) => ({
-                absoluteFilePath: source.absoluteFilePath,
-                absoluteFilePathToOverrides: source.absoluteFilePathToOverrides
-            }));
-
-        apiDefinition = await enhanceExamplesWithAI(
-            apiDefinition,
-            aiEnhancerConfig,
-            context,
-            token,
-            organization,
-            openApiSources.length > 0 ? openApiSources : undefined,
-            getOriginalName(ir.apiName)
-        );
-    }
 
     try {
         const response = await fdrService.api.register.registerApiDefinition({

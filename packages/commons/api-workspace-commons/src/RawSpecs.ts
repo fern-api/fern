@@ -3,6 +3,14 @@ export type RawSpecType = "openapi" | "asyncapi" | "protobuf" | "openrpc" | "gra
 export interface RawSpecImportSettings {
     respectNullableSchemas?: boolean;
     titleAsSchemaName?: boolean;
+    ignoreTags?: boolean;
+    disambiguateRequestNames?: boolean;
+    respectReadonlySchemas?: boolean;
+    discriminatedUnionV2?: boolean;
+    undiscriminatedUnionsWithLiterals?: boolean;
+    inlineAllOfSchemas?: boolean;
+    resolveSchemaCollisions?: boolean;
+    asyncApiMessageNaming?: "v1" | "v2";
     coerceEnumsToLiterals?: boolean;
     idiomaticRequestNames?: boolean;
     wrapReferencesToNullableInOptional?: boolean;

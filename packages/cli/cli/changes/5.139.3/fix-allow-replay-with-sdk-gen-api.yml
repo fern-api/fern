@@ -1,0 +1,5 @@
+- summary: |
+    Allow replay to be enabled for SDK generators routed through sdk-gen-api.
+    Previously, generators with both sdkGenApiRoute and replay.enabled: true failed
+    with a configuration error.
+  type: fix

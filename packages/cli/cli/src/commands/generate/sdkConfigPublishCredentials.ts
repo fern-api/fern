@@ -1,0 +1,391 @@
+import { isRecord, replaceEnvVariables } from "@fern-api/core-utils";
+import {
+    type FernSdkGenApiPublishCredentialSource,
+    parseSecretNameExpression
+} from "@fern-api/remote-workspace-runner/direct-publish-credentials";
+
+interface CredentialFields {
+    token?: unknown;
+    username?: unknown;
+    password?: unknown;
+    signature?: unknown;
+}
+
+export function sanitizeSdkConfigPublishCredentials(
+    input: unknown,
+    isPreview: boolean
+): {
+    sanitizedInput: unknown;
+    credentials: Array<FernSdkGenApiPublishCredentialSource | undefined>;
+    /** Per target, the repository secret a NuGet release workflow reads its API key from. */
+    apiKeySecretNames: Array<string | undefined>;
+} {
+    if (!isRecord(input) || !Array.isArray(input.targets)) {
+        return { sanitizedInput: input, credentials: [], apiKeySecretNames: [] };
+    }
+    const rootOutput = sanitizeOutput(input.output, isRootOutputInheritedOnlyByCliTargets(input.targets));
+    const sanitizedTargets = input.targets.map((target) => {
+        if (!isRecord(target)) {
+            return { target, credential: undefined, apiKeySecretName: undefined };
+        }
+        const sanitized = sanitizeOutput(target.output, isCliTarget(target));
+        const targetOutput = isRecord(target) ? target.output : undefined;
+        const output = targetOutput ?? input.output;
+        return {
+            target: sanitized.output === target.output ? target : { ...target, output: sanitized.output },
+            credential: isPreview ? undefined : extractPublishCredential(output),
+            // A preview downloads files instead of publishing, so the secret name is discarded
+            // anyway. Reading it would only add a way for a preview to fail; schema validation
+            // still rejects a literal key on a real run, with a better message than this throws.
+            apiKeySecretName: isPreview ? undefined : extractApiKeySecretName(output)
+        };
+    });
+    return {
+        sanitizedInput: {
+            ...input,
+            ...(rootOutput.output === input.output ? {} : { output: rootOutput.output }),
+            targets: sanitizedTargets.map(({ target }) => target)
+        },
+        credentials: sanitizedTargets.map(({ credential }) => credential),
+        apiKeySecretNames: sanitizedTargets.map(({ apiKeySecretName }) => apiKeySecretName)
+    };
+}
+
+/**
+ * The unresolved npm `token` of each target whose effective output is GitHub delivery, aligned with `targets`. The
+ * cli target translation writes it to generators.yml as the token reference; it is never resolved here.
+ */
+export function extractSdkConfigGithubNpmTokens(input: unknown): Array<string | undefined> {
+    if (!isRecord(input) || !Array.isArray(input.targets)) {
+        return [];
+    }
+    return input.targets.map((target) => {
+        const output = isRecord(target) && target.output != null ? target.output : input.output;
+        if (!isRecord(output) || output.delivery !== "github" || !isRecord(output.publish)) {
+            return undefined;
+        }
+        if (output.publish.registry !== "npm") {
+            return undefined;
+        }
+        const token = credentialFields(output.publish).token;
+        return typeof token === "string" ? token : undefined;
+    });
+}
+
+function isCliTarget(target: unknown): boolean {
+    return isRecord(target) && target.language === "cli";
+}
+
+function isRootOutputInheritedOnlyByCliTargets(targets: unknown[]): boolean {
+    const inheritingTargets = targets.filter((target) => !isRecord(target) || target.output == null);
+    const isInheritedAtAll = inheritingTargets.length > 0;
+    return isInheritedAtAll && inheritingTargets.every(isCliTarget);
+}
+
+/**
+ * A NuGet `apiKey` names the repository secret the generated release workflow reads, so it is
+ * forwarded as a name and never resolved. Anything else could be a literal key and is rejected.
+ */
+const API_KEY_SECRET_REGISTRIES = new Set(["nuget", "rubygems"]);
+
+function extractApiKeySecretName(output: unknown): string | undefined {
+    if (!isRecord(output) || !isRecord(output.publish) || typeof output.publish.registry !== "string") {
+        return undefined;
+    }
+    const { registry, apiKey, trustedPublishing } = output.publish;
+    if (!API_KEY_SECRET_REGISTRIES.has(registry) || apiKey == null) {
+        return undefined;
+    }
+    // The schema enforces this too, but it never sees the apiKey: sanitizeOutput removes it first.
+    if (trustedPublishing === true) {
+        throw new Error(`output.publish for ${registry}: apiKey must be omitted when trustedPublishing is true`);
+    }
+    const secretName = typeof apiKey === "string" ? parseSecretNameExpression(apiKey) : undefined;
+    if (secretName == null) {
+        throw new Error(
+            `output.publish.apiKey for ${registry} must be an environment expression naming a repository secret, such as \${NUGET_API_KEY}`
+        );
+    }
+    return secretName;
+}
+
+// The cli target publishes to npm from its generated GitHub workflow, which supports trusted publishing; direct
+// publication through sdk-gen-api does not.
+function sanitizeOutput(value: unknown, cliTarget: boolean): { output: unknown } {
+    if (!isRecord(value)) {
+        return { output: value };
+    }
+    const github = sanitizeGithub(value.github);
+    const withGithub = github === value.github ? value : { ...value, github };
+    if (!isRecord(value.publish)) {
+        return { output: withGithub };
+    }
+    return {
+        output: {
+            ...withGithub,
+            publish: sanitizePublish(value.publish, cliTarget && value.delivery === "github")
+        }
+    };
+}
+
+// sdk-gen-api discards output.github.credentials on receipt and Fiddle delivers through Fern's GitHub App, so the
+// CLI never forwards them; stripping here keeps ${ENV} expressions and literals out of the uploaded body.
+function sanitizeGithub(github: unknown): unknown {
+    if (!isRecord(github) || !("credentials" in github)) {
+        return github;
+    }
+    const { credentials, ...intent } = github;
+    validateGithubCredentialShape(credentials);
+    return intent;
+}
+
+function validateGithubCredentialShape(credentials: unknown): void {
+    if (!isRecord(credentials)) {
+        throw new Error("GitHub output credentials must be an object");
+    }
+    for (const [field, value] of Object.entries(credentials)) {
+        if (field !== "username" && field !== "password" && field !== "token" && field !== "apiKey") {
+            throw new Error(`GitHub output does not support credential field ${field}`);
+        }
+        if (typeof value !== "string") {
+            throw new Error(`GitHub output credential ${field} must be a string`);
+        }
+    }
+}
+
+function sanitizePublish(publish: Record<string, unknown>, allowTrustedPublishing: boolean): Record<string, unknown> {
+    const registry = publish.registry;
+    if (registry !== "npm" && registry !== "crates" && registry !== "pypi" && registry !== "maven") {
+        const {
+            credentials: _credentials,
+            token: _token,
+            username: _username,
+            password: _password,
+            apiKey: _apiKey,
+            signature: _signature,
+            keyId: _keyId,
+            secretKey: _secretKey,
+            ...intent
+        } = publish;
+        return intent;
+    }
+    const {
+        credentials: _credentials,
+        token: _token,
+        username: _username,
+        password: _password,
+        signature: _signature,
+        ...intent
+    } = publish;
+    validateCredentialFieldShape(registry, publish, credentialFields(publish), allowTrustedPublishing);
+    return intent;
+}
+
+function extractPublishCredential(output: unknown): FernSdkGenApiPublishCredentialSource | undefined {
+    if (!isRecord(output) || (output.delivery !== "files" && output.delivery !== "zip") || !isRecord(output.publish)) {
+        return undefined;
+    }
+    const publish = output.publish;
+    const fields = credentialFields(publish);
+    const registry = publish.registry;
+    if (typeof registry !== "string") {
+        return undefined;
+    }
+    if (registry === "npm" || registry === "crates") {
+        return { registry, token: credentialValue(registry, "token", fields.token) };
+    }
+    if (registry === "pypi") {
+        return {
+            registry,
+            username: credentialValue(registry, "username", fields.username),
+            password: credentialValue(registry, "password", fields.password)
+        };
+    }
+    if (registry === "maven") {
+        const signature = fields.signature;
+        if (signature != null && !isRecord(signature)) {
+            throw new Error("Direct maven publication signature must be an object");
+        }
+        return {
+            registry,
+            username: credentialValue(registry, "username", fields.username),
+            password: credentialValue(registry, "password", fields.password),
+            ...(signature == null
+                ? {}
+                : {
+                      signature: {
+                          keyId: credentialValue(registry, "signature.keyId", signature.keyId),
+                          password: credentialValue(registry, "signature.password", signature.password),
+                          secretKey: credentialValue(registry, "signature.secretKey", signature.secretKey)
+                      }
+                  })
+        };
+    }
+    switch (registry) {
+        case "nuget":
+        case "rubygems":
+        case "go":
+        case "composer":
+        case "postman":
+            return { registry };
+        default:
+            return undefined;
+    }
+}
+
+export function resolveSdkConfigPublishCredential(
+    credential: FernSdkGenApiPublishCredentialSource
+): FernSdkGenApiPublishCredentialSource {
+    switch (credential.registry) {
+        case "npm":
+        case "crates":
+            return {
+                registry: credential.registry,
+                token: resolveCredentialValue(credential.registry, "token", credential.token)
+            };
+        case "pypi":
+            return {
+                registry: credential.registry,
+                username: resolveCredentialValue(credential.registry, "username", credential.username),
+                password: resolveCredentialValue(credential.registry, "password", credential.password)
+            };
+        case "maven":
+            return {
+                registry: credential.registry,
+                username: resolveCredentialValue(credential.registry, "username", credential.username),
+                password: resolveCredentialValue(credential.registry, "password", credential.password),
+                ...(credential.signature == null
+                    ? {}
+                    : {
+                          signature: {
+                              keyId: resolveCredentialValue(
+                                  credential.registry,
+                                  "signature.keyId",
+                                  credential.signature.keyId
+                              ),
+                              password: resolveCredentialValue(
+                                  credential.registry,
+                                  "signature.password",
+                                  credential.signature.password
+                              ),
+                              secretKey: resolveCredentialValue(
+                                  credential.registry,
+                                  "signature.secretKey",
+                                  credential.signature.secretKey
+                              )
+                          }
+                      })
+            };
+        default:
+            return credential;
+    }
+}
+
+function credentialValue(registry: string, field: string, value: unknown): string | undefined {
+    if (value == null) {
+        return undefined;
+    }
+    if (typeof value !== "string") {
+        throw new Error(`Direct ${registry} publication credential ${field} must be a string`);
+    }
+    return value;
+}
+
+function resolveCredentialValue(registry: string, field: string, value: string | undefined): string | undefined {
+    if (value == null) {
+        return undefined;
+    }
+    return replaceEnvVariables(value, {
+        onError: (message) => {
+            throw new Error(message ?? `Could not resolve direct ${registry} publication credential ${field}`);
+        }
+    });
+}
+
+function credentialFields(publish: Record<string, unknown>): CredentialFields {
+    const nested = isRecord(publish.credentials) ? publish.credentials : {};
+    return {
+        token: publish.token ?? nested.token,
+        username: publish.username ?? nested.username,
+        password: publish.password ?? nested.password,
+        signature: publish.signature
+    };
+}
+
+function validateCredentialFieldShape(
+    registry: string,
+    publish: CredentialFields & Record<string, unknown>,
+    fields: CredentialFields,
+    allowTrustedPublishing: boolean
+): void {
+    if (publish.credentials != null && !isRecord(publish.credentials)) {
+        throw new Error(`Direct ${registry} publication credentials must be an object`);
+    }
+    const allowed =
+        registry === "npm" || registry === "crates"
+            ? new Set(["registry", "url", "releaseBranch", "tolerateRepublish", "credentials", "token"])
+            : registry === "pypi"
+              ? new Set([
+                    "registry",
+                    "url",
+                    "releaseBranch",
+                    "tolerateRepublish",
+                    "credentials",
+                    "username",
+                    "password"
+                ])
+              : new Set([
+                    "registry",
+                    "url",
+                    "releaseBranch",
+                    "tolerateRepublish",
+                    "credentials",
+                    "username",
+                    "password",
+                    "signature"
+                ]);
+    if (allowTrustedPublishing && registry === "npm") {
+        allowed.add("trustedPublishing");
+    }
+    const unknown = Object.keys(publish).find((key) => !allowed.has(key));
+    if (unknown != null) {
+        throw new Error(`Direct ${registry} publication does not support option ${unknown}`);
+    }
+    const allowedCredentialFields =
+        registry === "npm" || registry === "crates" ? new Set(["token"]) : new Set(["username", "password"]);
+    const unknownNested = isRecord(publish.credentials)
+        ? Object.keys(publish.credentials).find((key) => !allowedCredentialFields.has(key))
+        : undefined;
+    if (unknownNested != null) {
+        throw new Error(`Direct ${registry} publication does not support credential field ${unknownNested}`);
+    }
+    const credentialValues: Array<[string, unknown]> =
+        registry === "npm" || registry === "crates"
+            ? [["token", fields.token]]
+            : [
+                  ["username", fields.username],
+                  ["password", fields.password]
+              ];
+    for (const [field, value] of credentialValues) {
+        if (value != null && typeof value !== "string") {
+            throw new Error(`Direct ${registry} publication credential ${field} must be a string`);
+        }
+    }
+    if (registry === "maven" && fields.signature != null) {
+        if (!isRecord(fields.signature)) {
+            throw new Error("Direct maven publication signature must be an object");
+        }
+        const unknownSignatureField = Object.keys(fields.signature).find(
+            (key) => key !== "keyId" && key !== "password" && key !== "secretKey"
+        );
+        if (unknownSignatureField != null) {
+            throw new Error(`Direct maven publication does not support signature field ${unknownSignatureField}`);
+        }
+        for (const field of ["keyId", "password", "secretKey"]) {
+            const value = fields.signature[field];
+            if (value != null && typeof value !== "string") {
+                throw new Error(`Direct maven publication credential signature.${field} must be a string`);
+            }
+        }
+    }
+}

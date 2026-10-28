@@ -115,7 +115,6 @@ public final class Node {
 
         private Optional<List<Node>> nodes = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -164,6 +163,14 @@ public final class Node {
         @java.lang.Override
         public Node build() {
             return new Node(name, nodes, trees, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("name") || key.equalsIgnoreCase("nodes") || key.equalsIgnoreCase("trees")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

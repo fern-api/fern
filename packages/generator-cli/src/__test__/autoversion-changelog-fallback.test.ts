@@ -1,0 +1,193 @@
+import { describe, expect, it } from "vitest";
+import {
+    aggregateChunkAnalyses,
+    mergeMarkdownSections,
+    resolveChangelogEntryFallback
+} from "../pipeline/steps/AutoVersionStep";
+
+const TRAILER = "\n\n🌿 Generated with Fern";
+
+describe("aggregateChunkAnalyses", () => {
+    it("keeps entries as-is when the winning bump's chunk has an entry", () => {
+        const result = aggregateChunkAnalyses([
+            { versionBump: "MINOR", message: "feat: add listWidgets", changelogEntry: "### Added\n- listWidgets" },
+            {
+                versionBump: "MAJOR",
+                message: "feat!: remove getWidget",
+                changelogEntry: "### Removed\n- getWidget",
+                versionBumpReason: "Removed getWidget"
+            }
+        ]);
+        expect(result.bestBump).toBe("MAJOR");
+        expect(result.bestMessage).toBe("feat!: remove getWidget");
+        expect(result.changelogEntries).toEqual(["### Added\n- listWidgets", "### Removed\n- getWidget"]);
+        expect(result.usedBumpReasonAsEntry).toBe(false);
+    });
+
+    it("prepends the bump reason when only lower-severity chunks produced entries", () => {
+        const result = aggregateChunkAnalyses([
+            { versionBump: "MINOR", message: "feat: add listWidgets", changelogEntry: "### Added\n- listWidgets" },
+            {
+                versionBump: "MAJOR",
+                message: "feat!: remove getWidget",
+                changelogEntry: "",
+                versionBumpReason: "Removed getWidget"
+            }
+        ]);
+        expect(result.bestBump).toBe("MAJOR");
+        expect(result.changelogEntries).toEqual(["Removed getWidget", "### Added\n- listWidgets"]);
+        expect(result.usedBumpReasonAsEntry).toBe(true);
+    });
+
+    it("does not prepend when another chunk at the same level has an entry", () => {
+        const result = aggregateChunkAnalyses([
+            { versionBump: "MAJOR", message: "feat!: a", changelogEntry: "", versionBumpReason: "a" },
+            { versionBump: "MAJOR", message: "feat!: b", changelogEntry: "### Removed\n- b" }
+        ]);
+        expect(result.changelogEntries).toEqual(["### Removed\n- b"]);
+        expect(result.usedBumpReasonAsEntry).toBe(false);
+    });
+
+    it("leaves PATCH bumps and missing reasons alone", () => {
+        expect(
+            aggregateChunkAnalyses([{ versionBump: "PATCH", message: "fix: x", versionBumpReason: "x" }])
+                .changelogEntries
+        ).toEqual([]);
+        expect(
+            aggregateChunkAnalyses([{ versionBump: "MINOR", message: "feat: y", changelogEntry: "  " }])
+                .changelogEntries
+        ).toEqual([]);
+    });
+});
+
+describe("resolveChangelogEntryFallback", () => {
+    it("returns undefined when FAI already provided a changelog entry", () => {
+        expect(
+            resolveChangelogEntryFallback({
+                versionBump: "MAJOR",
+                message: "feat!: remove foo",
+                changelogEntry: "### Removed\n- foo",
+                prDescription: "Removed foo"
+            })
+        ).toBeUndefined();
+    });
+
+    it("returns undefined for PATCH bumps (patch changes intentionally have no entry)", () => {
+        expect(
+            resolveChangelogEntryFallback({
+                versionBump: "PATCH",
+                message: "fix: typo",
+                changelogEntry: "",
+                prDescription: "Fixed a typo"
+            })
+        ).toBeUndefined();
+    });
+
+    it("falls back to the PR description for a MAJOR bump with an empty entry", () => {
+        expect(
+            resolveChangelogEntryFallback({
+                versionBump: "MAJOR",
+                message: "feat!: paginate list_items()",
+                changelogEntry: "",
+                prDescription: "list_items() now returns a SyncPager.\n",
+                versionBumpReason: "Return type changed"
+            })
+        ).toBe("list_items() now returns a SyncPager.");
+    });
+
+    it("falls back to the version bump reason when there is no PR description", () => {
+        expect(
+            resolveChangelogEntryFallback({
+                versionBump: "MINOR",
+                message: "feat: add bar",
+                changelogEntry: "   ",
+                versionBumpReason: "New bar() method added"
+            })
+        ).toBe("New bar() method added");
+    });
+
+    it("falls back to the commit message body, stripping the Fern trailer", () => {
+        expect(
+            resolveChangelogEntryFallback({
+                versionBump: "MINOR",
+                message: `feat: add bar\n\nAdds a bar() helper.${TRAILER}`
+            })
+        ).toBe("Adds a bar() helper.");
+    });
+
+    it("returns undefined when nothing usable is available", () => {
+        expect(
+            resolveChangelogEntryFallback({
+                versionBump: "MINOR",
+                message: `feat: add bar${TRAILER}`
+            })
+        ).toBeUndefined();
+    });
+});
+
+describe("mergeMarkdownSections", () => {
+    it("folds chunks that share a heading under one header, in first-seen order", () => {
+        const merged = mergeMarkdownSections([
+            "### Breaking Changes\n\n- `A` removed",
+            "### Added\n\n- `B`\n\n### Breaking Changes\n\n- `C` removed\n- `D` removed",
+            "### breaking changes\n\n- `E` removed"
+        ]);
+        expect(merged).toBe(
+            "### Breaking Changes\n\n- `A` removed\n- `C` removed\n- `D` removed\n- `E` removed\n\n### Added\n\n- `B`"
+        );
+    });
+
+    it("keeps different heading levels separate and ignores headings inside code fences", () => {
+        const merged = mergeMarkdownSections([
+            "## Breaking Changes\n\n```ts\n# not a heading\nclient.a()\n```",
+            "### Breaking Changes\n\n- x"
+        ]);
+        expect(merged).toBe(
+            "## Breaking Changes\n\n```ts\n# not a heading\nclient.a()\n```\n\n### Breaking Changes\n\n- x"
+        );
+    });
+
+    it("leaves heading-less entries joined by blank lines", () => {
+        expect(mergeMarkdownSections(["- one", "- two"])).toBe("- one\n\n- two");
+    });
+
+    it("separates a paragraph from a following list with a blank line", () => {
+        const merged = mergeMarkdownSections(["### Notes\n\nSome prose.", "### Notes\n\n- item"]);
+        expect(merged).toBe("### Notes\n\nSome prose.\n\n- item");
+    });
+
+    it("only closes a fence on a bare marker at least as long as the opener", () => {
+        const merged = mergeMarkdownSections([
+            "### Example\n\n````md\n```ts\n# still code\n```\n````\n\n### Other\n\n- x",
+            "### Other\n\n- y"
+        ]);
+        expect(merged).toBe("### Example\n\n````md\n```ts\n# still code\n```\n````\n\n### Other\n\n- x\n- y");
+    });
+
+    it("keeps an empty parent heading and merges repeated parents with their children in order", () => {
+        const merged = mergeMarkdownSections([
+            "## Breaking Changes\n\n### removeFoo\n\n**Migration:** Use bar",
+            "## Breaking Changes\n\n### removeBaz\n\n**Migration:** Use qux\n\n## What's New\n\n- x"
+        ]);
+        expect(merged).toBe(
+            "## Breaking Changes\n\n### removeFoo\n\n**Migration:** Use bar\n\n### removeBaz\n\n**Migration:** Use qux\n\n## What's New\n\n- x"
+        );
+    });
+
+    it("does not merge same-named headings that live under different parents", () => {
+        const merged = mergeMarkdownSections(["## A\n\n### Notes\n\n- a", "## B\n\n### Notes\n\n- b"]);
+        expect(merged).toBe("## A\n\n### Notes\n\n- a\n\n## B\n\n### Notes\n\n- b");
+    });
+
+    it("keeps a later chunk's intro text next to that chunk's own section", () => {
+        const merged = mergeMarkdownSections(["### Added\n- A", "B is a breaking change\n\n### Breaking Changes\n- B"]);
+        expect(merged).toBe("### Added\n\n- A\n\n### Breaking Changes\n\nB is a breaking change\n\n- B");
+    });
+
+    it("closes a fence with a longer run of the same marker and then recognizes later headings", () => {
+        const merged = mergeMarkdownSections([
+            "## Breaking Changes\n\n````ts\nold()\n`````\n\n## What's New\n\nAdded bar"
+        ]);
+        expect(merged).toBe("## Breaking Changes\n\n````ts\nold()\n`````\n\n## What's New\n\nAdded bar");
+    });
+});

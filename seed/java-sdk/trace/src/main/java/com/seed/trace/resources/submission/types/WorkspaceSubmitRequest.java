@@ -138,7 +138,6 @@ public final class WorkspaceSubmitRequest {
 
         private List<SubmissionFileInfo> submissionFiles = new ArrayList<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -206,6 +205,17 @@ public final class WorkspaceSubmitRequest {
         @java.lang.Override
         public WorkspaceSubmitRequest build() {
             return new WorkspaceSubmitRequest(submissionId, language, submissionFiles, userId, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("submissionId")
+                    || key.equalsIgnoreCase("language")
+                    || key.equalsIgnoreCase("submissionFiles")
+                    || key.equalsIgnoreCase("userId")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

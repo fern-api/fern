@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern generate` now routes SDK Config runs and generator versions at or past their SDK Config
+    cutover (for example TypeScript 4.0.0+, Python 6.0.0+) through sdk-gen-api regardless of the
+    `use-sdk-gen-api` feature flag, which now only governs earlier versions. A post-cutover version
+    configured in generators.yml always fails before generation with the `fern sdk migrate` /
+    `--sdk-config` error, instead of being sent to legacy generation when the flag is off.
+    `FERN_USE_SDK_GEN_API=false` still turns sdk-gen-api off, and `fernapi/fern-mcp-server` remains
+    gated by the flag.
+  type: fix

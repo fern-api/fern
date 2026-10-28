@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "../../../../seed"
+
 module Seed
   module Types
     module Object_
@@ -11,7 +13,7 @@ module Seed
 
           field :long, -> { Integer }, optional: true, nullable: false
 
-          field :double, -> { Integer }, optional: true, nullable: false
+          field :double, -> { Float }, optional: true, nullable: false
 
           field :bool, -> { Internal::Types::Boolean }, optional: true, nullable: false
 

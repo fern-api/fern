@@ -96,7 +96,6 @@ public final class StreamedCompletion {
 
         private Optional<Integer> tokens = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -131,6 +130,14 @@ public final class StreamedCompletion {
         @java.lang.Override
         public StreamedCompletion build() {
             return new StreamedCompletion(delta, tokens, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("delta") || key.equalsIgnoreCase("tokens")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

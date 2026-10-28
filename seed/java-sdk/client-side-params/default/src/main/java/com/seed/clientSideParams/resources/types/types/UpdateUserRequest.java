@@ -174,7 +174,6 @@ public final class UpdateUserRequest {
 
         private Optional<Boolean> blocked = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -303,6 +302,22 @@ public final class UpdateUserRequest {
                     password,
                     blocked,
                     additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("email")
+                    || key.equalsIgnoreCase("email_verified")
+                    || key.equalsIgnoreCase("username")
+                    || key.equalsIgnoreCase("phone_number")
+                    || key.equalsIgnoreCase("phone_verified")
+                    || key.equalsIgnoreCase("user_metadata")
+                    || key.equalsIgnoreCase("app_metadata")
+                    || key.equalsIgnoreCase("password")
+                    || key.equalsIgnoreCase("blocked")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

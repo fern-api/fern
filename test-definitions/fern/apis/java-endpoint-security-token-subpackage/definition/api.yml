@@ -9,6 +9,11 @@ name: java-endpoint-security-token-subpackage
 # token endpoint is grouped under a subpackage named `token` (NOT `auth`). Previously
 # the Java generator located the OAuth auth client by scanning for a subpackage named
 # `auth`, which returned null here and threw a NullPointerException during generation.
+#
+# The bearer and basic scheme keys (`tokenAuth`, `passwordAuth`) intentionally differ from
+# the scheme types: the RoutingAuthProvider must register each provider under the key that the
+# endpoint metadata references (regression: OAuth/bearer/basic were hardcoded as "OAuth"/"Bearer"/"Basic").
+# `OAuth` keeps its name because the TS dynamic-snippets AuthWrapperProperty test relies on it.
 auth:
   endpoint-security: {}
 
@@ -30,3 +35,13 @@ auth-schemes:
     header: X-API-Key
     type: string
     env: MY_API_KEY
+  tokenAuth:
+    scheme: bearer
+    token:
+      env: MY_TOKEN
+  passwordAuth:
+    scheme: basic
+    username:
+      env: MY_USERNAME
+    password:
+      env: MY_PASSWORD

@@ -5,6 +5,7 @@ package com.seed.errors.resources.simple;
 
 import com.seed.errors.core.ClientOptions;
 import com.seed.errors.core.RequestOptions;
+import com.seed.errors.core.SeedErrorsHttpResponse;
 import com.seed.errors.resources.simple.types.FooRequest;
 import com.seed.errors.resources.simple.types.FooResponse;
 import java.util.concurrent.CompletableFuture;
@@ -27,26 +28,71 @@ public class AsyncSimpleClient {
     }
 
     public CompletableFuture<FooResponse> fooWithoutEndpointError(FooRequest request) {
-        return this.rawClient.fooWithoutEndpointError(request).thenApply(response -> response.body());
+        CompletableFuture<SeedErrorsHttpResponse<FooResponse>> rawFuture =
+                this.rawClient.fooWithoutEndpointError(request);
+        CompletableFuture<FooResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<FooResponse> fooWithoutEndpointError(FooRequest request, RequestOptions requestOptions) {
-        return this.rawClient.fooWithoutEndpointError(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedErrorsHttpResponse<FooResponse>> rawFuture =
+                this.rawClient.fooWithoutEndpointError(request, requestOptions);
+        CompletableFuture<FooResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<FooResponse> foo(FooRequest request) {
-        return this.rawClient.foo(request).thenApply(response -> response.body());
+        CompletableFuture<SeedErrorsHttpResponse<FooResponse>> rawFuture = this.rawClient.foo(request);
+        CompletableFuture<FooResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<FooResponse> foo(FooRequest request, RequestOptions requestOptions) {
-        return this.rawClient.foo(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedErrorsHttpResponse<FooResponse>> rawFuture = this.rawClient.foo(request, requestOptions);
+        CompletableFuture<FooResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<FooResponse> fooWithExamples(FooRequest request) {
-        return this.rawClient.fooWithExamples(request).thenApply(response -> response.body());
+        CompletableFuture<SeedErrorsHttpResponse<FooResponse>> rawFuture = this.rawClient.fooWithExamples(request);
+        CompletableFuture<FooResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<FooResponse> fooWithExamples(FooRequest request, RequestOptions requestOptions) {
-        return this.rawClient.fooWithExamples(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedErrorsHttpResponse<FooResponse>> rawFuture =
+                this.rawClient.fooWithExamples(request, requestOptions);
+        CompletableFuture<FooResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

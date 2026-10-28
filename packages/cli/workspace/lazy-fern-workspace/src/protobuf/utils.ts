@@ -1,4 +1,4 @@
-import { extractErrorMessage } from "@fern-api/core-utils";
+import { delay, extractErrorMessage } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { createLoggingExecutable, runExeca } from "@fern-api/logging-execa";
@@ -84,7 +84,7 @@ async function performAirGapDetection(url: string, logger: Logger, timeoutMs: nu
                 logger.debug(
                     `Network check attempt ${attempt}/${maxAttempts} failed: ${lastErrorMessage} — retrying in ${delayMs}ms`
                 );
-                await new Promise((resolve) => setTimeout(resolve, delayMs));
+                await delay(delayMs);
             }
         }
     }

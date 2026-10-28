@@ -52,3 +52,65 @@ func (c *Client) GetLoan(
 	}
 	return response.Body, nil
 }
+
+// Example:
+//
+//	request := &fern.ListLoansByDateRequest{
+//	    AsOf: fern.MustParseDate(
+//	        "2023-01-15",
+//	    ),
+//	    Page: &fern.PageRequest{
+//	        Number: fern.Int(
+//	            1,
+//	        ),
+//	        Size: fern.Int(
+//	            1,
+//	        ),
+//	    },
+//	}
+//	client.Loans.ListLoansByDate(
+//	    context.TODO(),
+//	    request,
+//	)
+func (c *Client) ListLoansByDate(
+	ctx context.Context,
+	request *fern.ListLoansByDateRequest,
+	opts ...option.RequestOption,
+) ([]*fern.Loan, error) {
+	response, err := c.WithRawResponse.ListLoansByDate(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
+// Example:
+//
+//	request := &fern.ListLoansByTimestampRequest{
+//	    AsOf: fern.MustParseDateTime(
+//	        "2002-08-28T12:30:00Z",
+//	    ),
+//	}
+//	client.Loans.ListLoansByTimestamp(
+//	    context.TODO(),
+//	    request,
+//	)
+func (c *Client) ListLoansByTimestamp(
+	ctx context.Context,
+	request *fern.ListLoansByTimestampRequest,
+	opts ...option.RequestOption,
+) ([]*fern.Loan, error) {
+	response, err := c.WithRawResponse.ListLoansByTimestamp(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "../../../seed"
+
 module Seed
   module Nullable
     module Types
@@ -8,11 +10,11 @@ module Seed
 
         member -> { Integer }
 
-        member -> { Integer }
+        member -> { Float }
 
         member -> { String }
 
-        member -> { Integer }
+        member -> { Float }
       end
     end
   end

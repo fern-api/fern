@@ -58,7 +58,7 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedOauthClientCredentialsWithVariables;\n\nvar client = new SeedOauthClientCredentialsWithVariablesClient(\"client_id\", \"client_secret\");\nawait client.Service.PostAsync(\"endpointParam\");\n"
+                "client": "using SeedOauthClientCredentialsWithVariables;\n\nvar client = new SeedOauthClientCredentialsWithVariablesClient(\n    \"client_id\",\n    \"client_secret\",\n    clientOptions: new ClientOptions { RootVariable = \"endpointParam\" }\n);\nawait client.Service.PostAsync();\n"
             }
         },
         {

@@ -16,11 +16,15 @@ export async function generateToken({
         await createOrganizationIfDoesNotExist({ organization: orgId, token, context: taskContext });
     }
     const venus = createVenusService({ token: token.value });
-    const response = await venus.registry.generateRegistryTokens({
-        organizationId: orgId
+    // Same token class as before (prefix "fern"), minted through the managed
+    // api-keys path so it carries a tokenId, shows up in `fern org token list`,
+    // and is revocable from the dashboard.
+    const response = await venus.apiKeys.create({
+        organizationId: orgId,
+        prefix: "fern"
     });
     if (response.ok) {
-        taskContext.logger.info(chalk.green(`Generated a FERN_TOKEN for ${orgId}: ${response.body.npm.token}`));
+        taskContext.logger.info(chalk.green(`Generated a FERN_TOKEN for ${orgId}: ${response.body.token}`));
         return;
     }
     const status = response.rawResponse.status;

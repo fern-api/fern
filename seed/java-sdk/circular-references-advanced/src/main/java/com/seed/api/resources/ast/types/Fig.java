@@ -80,7 +80,6 @@ public final class Fig {
     public static final class Builder implements AnimalStage, _FinalStage {
         private Animal animal;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -101,6 +100,14 @@ public final class Fig {
         @java.lang.Override
         public Fig build() {
             return new Fig(animal, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("animal")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

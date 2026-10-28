@@ -11,3 +11,4 @@ export * from "./stream/index";
 export * as url from "./url/index";
 export * from "./utils/index";
 export * from "./websocket/index";
+export * as xml from "./xml/index";

@@ -1,0 +1,6 @@
+- summary: |
+    Pages served in a translated locale with default-locale content (no
+    translated source file, or an API without a translated spec) are now
+    published as `noindex`, so they are excluded from that locale's sitemap and
+    `llms.txt` instead of being indexed as the locale.
+  type: fix

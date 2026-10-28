@@ -41,6 +41,15 @@ describe Seed::Internal::Types::Model do
     field :child, ExampleChild
   end
 
+  class ExampleWithNumericKeyMaps < Seed::Internal::Types::Model
+    field :rates, Seed::Internal::Types::Hash[Float, Integer]
+    field :counts, Seed::Internal::Types::Hash[Integer, String]
+  end
+
+  class ExampleWithCoercedDefault < Seed::Internal::Types::Model
+    field :count, Integer, default: "3"
+  end
+
   describe ".field" do
     before do
       @example = ExampleModel.new(name: "Inception", rating: 4)
@@ -97,6 +106,29 @@ describe Seed::Internal::Types::Model do
       assert_equal "Christopher Nolan", example.director
     end
 
+    it "drops extra keys that match a declared field case-insensitively" do
+      example = ExampleModel.load({ name: "Inception", NAME: "Other", YearOfRelease: 1999, Year: 1998 }.to_json)
+
+      assert_equal "Inception", example.name
+      assert_equal({ "name" => "Inception" }, example.to_h)
+      refute_respond_to example, :NAME
+    end
+
+    it "drops case-insensitive collisions even when the declared field is absent" do
+      example = ExampleModel.new({ "NAME" => "Other", "yearofrelease" => 1999 })
+
+      assert_nil example.name
+      refute example.to_h.key?("NAME")
+      refute example.to_h.key?("yearofrelease")
+    end
+
+    it "keeps non-colliding extra keys" do
+      example = ExampleModel.load({ name: "Inception", brand_new_field: "kept" }.to_json)
+
+      assert_equal "kept", example.brand_new_field
+      assert_equal({ "name" => "Inception", "brand_new_field" => "kept" }, example.to_h)
+    end
+
     it "sets the defaults where applicable" do
       example_using_defaults = ExampleWithDefaults.new
 
@@ -105,6 +137,13 @@ describe Seed::Internal::Types::Model do
       example_without_defaults = ExampleWithDefaults.new(type: "not example")
 
       assert_equal "not example", example_without_defaults.type
+    end
+
+    it "coerces numeric map keys when loading JSON" do
+      model = ExampleWithNumericKeyMaps.load('{"rates":{"1.5":10},"counts":{"2":"two"}}')
+
+      assert_equal({ 1.5 => 10 }, model.rates)
+      assert_equal({ 2 => "two" }, model.counts)
     end
 
     it "coerces child models" do
@@ -149,6 +188,24 @@ describe Seed::Internal::Types::Model do
 
       assert_equal 2014, example.year
       refute_respond_to example, :yearOfRelease
+    end
+
+    it "does not modify the input hash" do
+      input = { name: "Inception", yearOfRelease: 2014, extra: "kept" }
+      ExampleModel.new(input)
+
+      assert_equal({ name: "Inception", yearOfRelease: 2014, extra: "kept" }, input)
+    end
+
+    it "marks a field explicit when it is set through either key" do
+      assert_equal({ "name" => "Ruby", "yearOfRelease" => nil }, ExampleModel.new({ name: "Ruby", year: nil }).to_h)
+      assert_equal({ "name" => "Ruby", "yearOfRelease" => nil },
+                   ExampleModel.new({ name: "Ruby", yearOfRelease: nil, year: nil }).to_h)
+      assert_equal({ "name" => "Ruby" }, ExampleModel.new({ name: "Ruby" }).to_h)
+    end
+
+    it "coerces the default of a field whose value is nil" do
+      assert_equal 3, ExampleWithCoercedDefault.new(count: nil).count
     end
   end
 

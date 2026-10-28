@@ -8,7 +8,7 @@ import com.seed.nurseryApi.core.Suppliers;
 import com.seed.nurseryApi.resources.package_.PackageClient;
 import java.util.function.Supplier;
 
-public class SeedNurseryApiClient {
+public class SeedNurseryApiClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<PackageClient> packageClient;
@@ -20,6 +20,16 @@ public class SeedNurseryApiClient {
 
     public PackageClient package_() {
         return this.packageClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedNurseryApiClientBuilder builder() {

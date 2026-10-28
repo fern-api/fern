@@ -1,7 +1,7 @@
 package com.snippets;
 
 import com.seed.pagination.SeedPaginationClient;
-import com.seed.pagination.resources.users.requests.ListUsernamesWithOptionalResponseRequest;
+import com.seed.pagination.resources.users.requests.ListUsernamesRequest;
 
 public class Example28 {
     public static void main(String[] args) {
@@ -11,7 +11,7 @@ public class Example28 {
                 .build();
 
         client.users()
-                .listUsernamesWithOptionalResponse(ListUsernamesWithOptionalResponseRequest.builder()
+                .listUsernames(ListUsernamesRequest.builder()
                         .startingAfter("starting_after")
                         .build());
     }

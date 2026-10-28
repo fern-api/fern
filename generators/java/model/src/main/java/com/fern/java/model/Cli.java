@@ -16,9 +16,11 @@ import com.fern.java.generators.ObjectMappersGenerator;
 import com.fern.java.generators.Rfc2822DateTimeDeserializerGenerator;
 import com.fern.java.generators.TypesGenerator;
 import com.fern.java.generators.TypesGenerator.Result;
+import com.fern.java.generators.XmlCoreGenerator;
 import com.fern.java.output.gradle.AbstractGradleDependency;
 import com.fern.java.output.gradle.GradleDependencyType;
 import com.fern.java.output.gradle.ParsedGradleDependency;
+import com.fern.java.utils.XmlTypeUtils;
 import java.util.Collections;
 import java.util.List;
 
@@ -75,6 +77,10 @@ public final class Cli extends AbstractGeneratorCli<CustomConfig, DownloadFilesC
 
         DoubleSerializerGenerator doubleSerializerGenerator = new DoubleSerializerGenerator(context);
         this.addGeneratedFile(doubleSerializerGenerator.generateFile());
+
+        if (XmlTypeUtils.hasXmlTypes(ir)) {
+            new XmlCoreGenerator(context).generateFiles().forEach(this::addGeneratedFile);
+        }
 
         // types
         TypesGenerator typesGenerator = new TypesGenerator(context);

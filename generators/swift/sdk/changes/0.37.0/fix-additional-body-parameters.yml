@@ -1,0 +1,11 @@
+- summary: |
+    The `additionalBodyParameters` request option (`[String: String]`) is now applied to requests;
+    previously it was accepted but ignored. Add a new `additionalBodyProperties` request option
+    (`[String: JSONValue]`) for sending non-string JSON values (booleans, numbers, arrays, objects,
+    and `null`). Both are merged into the serialized JSON request body using wire-format keys,
+    override generated fields on collision, and create a JSON body when the endpoint has none
+    (except GET and HEAD requests, which are still sent without a body);
+    `additionalBodyProperties` wins when both set the same key. Multipart and raw `Data` bodies are
+    left unchanged. `JSONValue` now supports string, integer, float, boolean, array, and dictionary
+    literals.
+  type: feat

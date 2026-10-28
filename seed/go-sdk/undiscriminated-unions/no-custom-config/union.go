@@ -21,10 +21,12 @@ type PaymentRequest struct {
 }
 
 func (p *PaymentRequest) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetPaymentMethod sets the PaymentMethod field and marks it as non-optional;
@@ -88,6 +90,38 @@ func (a *AliasedObjectUnion) GetAliasedLeafB() AliasedLeafB {
 }
 
 func (a *AliasedObjectUnion) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"onlyInA", "sharedNumber"}, []string{"onlyInA", "sharedNumber"}) {
+		var valueAliasedLeafA AliasedLeafA
+		if err := json.Unmarshal(data, &valueAliasedLeafA); err == nil {
+			a.typ = "AliasedLeafA"
+			a.AliasedLeafA = valueAliasedLeafA
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"onlyInB"}, []string{"onlyInB"}) {
+		var valueAliasedLeafB AliasedLeafB
+		if err := json.Unmarshal(data, &valueAliasedLeafB); err == nil {
+			a.typ = "AliasedLeafB"
+			a.AliasedLeafB = valueAliasedLeafB
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"onlyInA", "sharedNumber"}) {
+		var valueAliasedLeafA AliasedLeafA
+		if err := json.Unmarshal(data, &valueAliasedLeafA); err == nil {
+			a.typ = "AliasedLeafA"
+			a.AliasedLeafA = valueAliasedLeafA
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"onlyInB"}) {
+		var valueAliasedLeafB AliasedLeafB
+		if err := json.Unmarshal(data, &valueAliasedLeafB); err == nil {
+			a.typ = "AliasedLeafB"
+			a.AliasedLeafB = valueAliasedLeafB
+			return nil
+		}
+	}
 	var valueAliasedLeafA AliasedLeafA
 	if err := json.Unmarshal(data, &valueAliasedLeafA); err == nil {
 		a.typ = "AliasedLeafA"
@@ -166,10 +200,12 @@ func (c *ConvertToken) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConvertToken) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetMethod sets the Method field and marks it as non-optional;
@@ -350,10 +386,12 @@ func (l *LeafObjectA) GetExtraProperties() map[string]interface{} {
 }
 
 func (l *LeafObjectA) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetOnlyInA sets the OnlyInA field and marks it as non-optional;
@@ -441,10 +479,12 @@ func (l *LeafObjectB) GetExtraProperties() map[string]interface{} {
 }
 
 func (l *LeafObjectB) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetOnlyInB sets the OnlyInB field and marks it as non-optional;
@@ -534,10 +574,12 @@ func (l *LeafTypeA) GetExtraProperties() map[string]interface{} {
 }
 
 func (l *LeafTypeA) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetAlpha sets the Alpha field and marks it as non-optional;
@@ -625,10 +667,12 @@ func (l *LeafTypeB) GetExtraProperties() map[string]interface{} {
 }
 
 func (l *LeafTypeB) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetGamma sets the Gamma field and marks it as non-optional;
@@ -712,6 +756,22 @@ func (m *MetadataUnion) UnmarshalJSON(data []byte) error {
 		m.typ = "OptionalMetadata"
 		m.OptionalMetadata = valueOptionalMetadata
 		return nil
+	}
+	if internal.MatchesObjectKeys(data, []string{"name", "value"}, []string{"name", "value"}) {
+		valueNamedMetadata := new(NamedMetadata)
+		if err := json.Unmarshal(data, &valueNamedMetadata); err == nil {
+			m.typ = "NamedMetadata"
+			m.NamedMetadata = valueNamedMetadata
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"name", "value"}) {
+		valueNamedMetadata := new(NamedMetadata)
+		if err := json.Unmarshal(data, &valueNamedMetadata); err == nil {
+			m.typ = "NamedMetadata"
+			m.NamedMetadata = valueNamedMetadata
+			return nil
+		}
 	}
 	valueNamedMetadata := new(NamedMetadata)
 	if err := json.Unmarshal(data, &valueNamedMetadata); err == nil {
@@ -935,10 +995,12 @@ func (n *NamedMetadata) GetExtraProperties() map[string]interface{} {
 }
 
 func (n *NamedMetadata) require(field *big.Int) {
-	if n.explicitFields == nil {
-		n.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if n.explicitFields != nil {
+		next.Set(n.explicitFields)
 	}
-	n.explicitFields.Or(n.explicitFields, field)
+	next.Or(next, field)
+	n.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -1021,6 +1083,38 @@ func (n *NestedObjectUnion) GetLeafTypeB() *LeafTypeB {
 }
 
 func (n *NestedObjectUnion) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"alpha", "beta"}, []string{"alpha", "beta"}) {
+		valueLeafTypeA := new(LeafTypeA)
+		if err := json.Unmarshal(data, &valueLeafTypeA); err == nil {
+			n.typ = "LeafTypeA"
+			n.LeafTypeA = valueLeafTypeA
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"gamma"}, []string{"gamma"}) {
+		valueLeafTypeB := new(LeafTypeB)
+		if err := json.Unmarshal(data, &valueLeafTypeB); err == nil {
+			n.typ = "LeafTypeB"
+			n.LeafTypeB = valueLeafTypeB
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"alpha", "beta"}) {
+		valueLeafTypeA := new(LeafTypeA)
+		if err := json.Unmarshal(data, &valueLeafTypeA); err == nil {
+			n.typ = "LeafTypeA"
+			n.LeafTypeA = valueLeafTypeA
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"gamma"}) {
+		valueLeafTypeB := new(LeafTypeB)
+		if err := json.Unmarshal(data, &valueLeafTypeB); err == nil {
+			n.typ = "LeafTypeB"
+			n.LeafTypeB = valueLeafTypeB
+			return nil
+		}
+	}
 	valueLeafTypeA := new(LeafTypeA)
 	if err := json.Unmarshal(data, &valueLeafTypeA); err == nil {
 		n.typ = "LeafTypeA"
@@ -1366,6 +1460,22 @@ func (o *OuterNestedUnion) UnmarshalJSON(data []byte) error {
 		o.String = valueString
 		return nil
 	}
+	if internal.MatchesObjectKeys(data, []string{"inner", "label"}, []string{"inner", "label"}) {
+		valueWrapperObject := new(WrapperObject)
+		if err := json.Unmarshal(data, &valueWrapperObject); err == nil {
+			o.typ = "WrapperObject"
+			o.WrapperObject = valueWrapperObject
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"inner", "label"}) {
+		valueWrapperObject := new(WrapperObject)
+		if err := json.Unmarshal(data, &valueWrapperObject); err == nil {
+			o.typ = "WrapperObject"
+			o.WrapperObject = valueWrapperObject
+			return nil
+		}
+	}
 	valueWrapperObject := new(WrapperObject)
 	if err := json.Unmarshal(data, &valueWrapperObject); err == nil {
 		o.typ = "WrapperObject"
@@ -1424,6 +1534,38 @@ func (p *PaymentMethodUnion) GetConvertToken() *ConvertToken {
 }
 
 func (p *PaymentMethodUnion) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"method", "cardNumber"}, []string{"method", "cardNumber"}) {
+		valueTokenizeCard := new(TokenizeCard)
+		if err := json.Unmarshal(data, &valueTokenizeCard); err == nil {
+			p.typ = "TokenizeCard"
+			p.TokenizeCard = valueTokenizeCard
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"method", "tokenId"}, []string{"method", "tokenId"}) {
+		valueConvertToken := new(ConvertToken)
+		if err := json.Unmarshal(data, &valueConvertToken); err == nil {
+			p.typ = "ConvertToken"
+			p.ConvertToken = valueConvertToken
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"method", "cardNumber"}) {
+		valueTokenizeCard := new(TokenizeCard)
+		if err := json.Unmarshal(data, &valueTokenizeCard); err == nil {
+			p.typ = "TokenizeCard"
+			p.TokenizeCard = valueTokenizeCard
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"method", "tokenId"}) {
+		valueConvertToken := new(ConvertToken)
+		if err := json.Unmarshal(data, &valueConvertToken); err == nil {
+			p.typ = "ConvertToken"
+			p.ConvertToken = valueConvertToken
+			return nil
+		}
+	}
 	valueTokenizeCard := new(TokenizeCard)
 	if err := json.Unmarshal(data, &valueTokenizeCard); err == nil {
 		p.typ = "TokenizeCard"
@@ -1493,10 +1635,12 @@ func (r *Request) GetExtraProperties() map[string]interface{} {
 }
 
 func (r *Request) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
 	}
-	r.explicitFields.Or(r.explicitFields, field)
+	next.Or(next, field)
+	r.explicitFields = next
 }
 
 // SetUnion sets the Union field and marks it as non-optional;
@@ -1586,10 +1730,12 @@ func (t *TokenizeCard) GetExtraProperties() map[string]interface{} {
 }
 
 func (t *TokenizeCard) require(field *big.Int) {
-	if t.explicitFields == nil {
-		t.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if t.explicitFields != nil {
+		next.Set(t.explicitFields)
 	}
-	t.explicitFields.Or(t.explicitFields, field)
+	next.Or(next, field)
+	t.explicitFields = next
 }
 
 // SetMethod sets the Method field and marks it as non-optional;
@@ -1677,10 +1823,12 @@ func (t *TypeWithOptionalUnion) GetExtraProperties() map[string]interface{} {
 }
 
 func (t *TypeWithOptionalUnion) require(field *big.Int) {
-	if t.explicitFields == nil {
-		t.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if t.explicitFields != nil {
+		next.Set(t.explicitFields)
 	}
-	t.explicitFields.Or(t.explicitFields, field)
+	next.Or(next, field)
+	t.explicitFields = next
 }
 
 // SetMyUnion sets the MyUnion field and marks it as non-optional;
@@ -1756,16 +1904,32 @@ func (u *UnionWithBaseProperties) GetOptionalMetadata() OptionalMetadata {
 }
 
 func (u *UnionWithBaseProperties) UnmarshalJSON(data []byte) error {
-	valueNamedMetadata := new(NamedMetadata)
-	if err := json.Unmarshal(data, &valueNamedMetadata); err == nil {
-		u.typ = "NamedMetadata"
-		u.NamedMetadata = valueNamedMetadata
-		return nil
+	if internal.MatchesObjectKeys(data, []string{"name", "value"}, []string{"name", "value"}) {
+		valueNamedMetadata := new(NamedMetadata)
+		if err := json.Unmarshal(data, &valueNamedMetadata); err == nil {
+			u.typ = "NamedMetadata"
+			u.NamedMetadata = valueNamedMetadata
+			return nil
+		}
 	}
 	var valueOptionalMetadata OptionalMetadata
 	if err := json.Unmarshal(data, &valueOptionalMetadata); err == nil {
 		u.typ = "OptionalMetadata"
 		u.OptionalMetadata = valueOptionalMetadata
+		return nil
+	}
+	if internal.HasObjectKeys(data, []string{"name", "value"}) {
+		valueNamedMetadata := new(NamedMetadata)
+		if err := json.Unmarshal(data, &valueNamedMetadata); err == nil {
+			u.typ = "NamedMetadata"
+			u.NamedMetadata = valueNamedMetadata
+			return nil
+		}
+	}
+	valueNamedMetadata := new(NamedMetadata)
+	if err := json.Unmarshal(data, &valueNamedMetadata); err == nil {
+		u.typ = "NamedMetadata"
+		u.NamedMetadata = valueNamedMetadata
 		return nil
 	}
 	return fmt.Errorf("%s cannot be deserialized as a %T", data, u)
@@ -2244,10 +2408,12 @@ func (w *WrapperObject) GetExtraProperties() map[string]interface{} {
 }
 
 func (w *WrapperObject) require(field *big.Int) {
-	if w.explicitFields == nil {
-		w.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if w.explicitFields != nil {
+		next.Set(w.explicitFields)
 	}
-	w.explicitFields.Or(w.explicitFields, field)
+	next.Or(next, field)
+	w.explicitFields = next
 }
 
 // SetInner sets the Inner field and marks it as non-optional;

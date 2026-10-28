@@ -3,6 +3,7 @@
 require "json"
 require "net/http"
 require "securerandom"
+require "time"
 
 require_relative "seed/internal/json/serializable"
 require_relative "seed/internal/types/type"
@@ -35,7 +36,20 @@ require_relative "seed/internal/iterators/cursor_item_iterator"
 require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
-require_relative "seed/common/types/child_type"
-require_relative "seed/common/types/base_type"
-require_relative "seed/derived/types/derived_type"
+require_relative "seed/errors/connection_error"
 require_relative "seed/client"
+
+module Seed
+  module Common
+    module Types
+      autoload :ChildType, ::File.join(__dir__, "seed/common/types/child_type")
+      autoload :BaseType, ::File.join(__dir__, "seed/common/types/base_type")
+    end
+  end
+
+  module Derived
+    module Types
+      autoload :DerivedType, ::File.join(__dir__, "seed/derived/types/derived_type")
+    end
+  end
+end

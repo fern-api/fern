@@ -1,0 +1,23 @@
+openapi: 3.1.0
+info: { title: Acme, version: "1" }
+paths:
+  /token:
+    post:
+      operationId: getToken
+      responses:
+        "201":
+          description: created
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Base"
+                  - type: object
+                    properties: { expires_in: { type: integer } }
+components:
+  schemas:
+    Base:
+      type: object
+      properties: { access_token: { type: string } }
+    Loop:
+      $ref: "#/components/schemas/Loop"

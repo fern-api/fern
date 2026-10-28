@@ -1,0 +1,5 @@
+- summary: |
+    Bump bundled @fern-api/generator-cli to 0.10.1. Auto-versioned MAJOR/MINOR bumps no longer
+    produce a version-only `changelog.md` block when the AI analysis returns an empty changelog
+    entry; the PR description, version bump reason, or commit message body is used instead.
+  type: chore

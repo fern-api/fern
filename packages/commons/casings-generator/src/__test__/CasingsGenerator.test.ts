@@ -159,6 +159,12 @@ describe("CasingsGenerator underscore preservation with preserveUnderscores opti
             expect(result.camelCase.unsafeName).toBe("_internal");
             expect(result.snakeCase.unsafeName).toBe("_internal");
         });
+
+        it("escapes the uppercase BEGIN/END reserved words in screaming snake case", () => {
+            expect(generator.generateName("end").screamingSnakeCase.safeName).toBe("END_");
+            expect(generator.generateName("begin").screamingSnakeCase.safeName).toBe("BEGIN_");
+            expect(generator.generateName("start").screamingSnakeCase.safeName).toBe("START");
+        });
     });
 
     describe("with preserveUnderscores: true and smartCasing + undefined language (default)", () => {

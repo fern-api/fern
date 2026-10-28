@@ -140,6 +140,7 @@
           "messages": {
             "testChannel_sendMessage": {
               "body": "string",
+              "docs": "Message with marked data information.",
               "origin": "client",
             },
           },
@@ -155,6 +156,7 @@
     testChannel_sendMessage:
       origin: client
       body: string
+      docs: Message with marked data information.
   examples:
     - messages:
         - type: testChannel_sendMessage
@@ -179,6 +181,7 @@
           "messages": {
             "testChannel2_sendMessage": {
               "body": "string",
+              "docs": "Message with marked data information.",
               "origin": "client",
             },
           },
@@ -194,6 +197,7 @@
     testChannel2_sendMessage:
       origin: client
       body: string
+      docs: Message with marked data information.
   examples:
     - messages:
         - type: testChannel2_sendMessage
@@ -218,6 +222,7 @@
           "messages": {
             "testChannels_sendMessage": {
               "body": "string",
+              "docs": "Message with marked data information.",
               "origin": "client",
             },
           },
@@ -233,6 +238,7 @@
     testChannels_sendMessage:
       origin: client
       body: string
+      docs: Message with marked data information.
   examples:
     - messages:
         - type: testChannels_sendMessage
@@ -257,6 +263,7 @@
           "messages": {
             "testChannels2_sendMessage": {
               "body": "string",
+              "docs": "Message with marked data information.",
               "origin": "client",
             },
           },
@@ -272,6 +279,7 @@
     testChannels2_sendMessage:
       origin: client
       body: string
+      docs: Message with marked data information.
   examples:
     - messages:
         - type: testChannels2_sendMessage

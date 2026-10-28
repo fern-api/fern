@@ -15,9 +15,11 @@ export const HttpErrorWithExample: core.serialization.ObjectSchema<
 > = core.serialization
     .objectWithoutOptionalProperties({
         statusCode: StatusCode,
+        isWildcardStatusCode: core.serialization.boolean().optional(),
         schema: core.serialization.lazy(() => serializers.SchemaWithExample),
         fullExamples: core.serialization.list(NamedFullExample).optional(),
         namespace: core.serialization.string().optional(),
+        isShared: core.serialization.boolean().optional(),
     })
     .extend(WithDescription)
     .extend(WithName)
@@ -26,8 +28,10 @@ export const HttpErrorWithExample: core.serialization.ObjectSchema<
 export declare namespace HttpErrorWithExample {
     export interface Raw extends WithDescription.Raw, WithName.Raw, WithSource.Raw {
         statusCode: StatusCode.Raw;
+        isWildcardStatusCode?: boolean | null;
         schema: serializers.SchemaWithExample.Raw;
         fullExamples?: NamedFullExample.Raw[] | null;
         namespace?: string | null;
+        isShared?: boolean | null;
     }
 }

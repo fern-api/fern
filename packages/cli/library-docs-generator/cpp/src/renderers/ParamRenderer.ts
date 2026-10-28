@@ -9,7 +9,14 @@
  * - [optional] and [inferred] prefixes
  */
 
-import type { CppDocstringIr, CppFunctionIr, CppTemplateParamIr } from "../../../src/types/CppLibraryDocsIr.js";
+import type {
+    CppDocstringIr,
+    CppFunctionIr,
+    CppMacroIr,
+    CppParamDoc,
+    CppTemplateParamIr,
+    CppTypedefIr
+} from "../../../src/types/CppLibraryDocsIr.js";
 import { renderSegmentsTrimmed } from "./DescriptionRenderer.js";
 import { normalizeAngleBracketSpacing } from "./SignatureRenderer.js";
 
@@ -67,7 +74,10 @@ function renderParamField(
     defaultValue: string | undefined,
     description: string | undefined
 ): string {
-    const props: string[] = [`path="${name}"`, `type="${type}"`];
+    const props: string[] = [`path="${name}"`];
+    if (type) {
+        props.push(`type="${type}"`);
+    }
     if (defaultValue) {
         props.push(`default="${defaultValue}"`);
     }
@@ -366,6 +376,142 @@ export function renderMethodParams(func: CppFunctionIr, docstring: CppDocstringI
 }
 
 /**
+ * Render a function-like macro's parameters (**Parameters** heading).
+ * Macro parameters are untyped, so only the name and description are shown.
+ */
+export function renderMacroParams(macro: CppMacroIr, docstring: CppDocstringIr | undefined): string {
+    const documented = (macro.parameters ?? []).flatMap((name) => {
+        const description = findParamDescription(name, docstring);
+        return description ? [{ name, description }] : [];
+    });
+    if (documented.length === 0) {
+        return "";
+    }
+    const lines = ["**Parameters**", ""];
+    for (const { name, description } of documented) {
+        lines.push(renderParamField(name, "", undefined, description));
+        lines.push("");
+    }
+    lines.pop();
+    return lines.join("\n");
+}
+
+// ---------------------------------------------------------------------------
+// Function-pointer typedef parameters
+// ---------------------------------------------------------------------------
+
+const FUNCTION_POINTER_RE = /^(.*?)\(\s*\*\s*\)\s*\((.*)\)\s*$/s;
+
+export interface FunctionPointerParts {
+    returnType: string;
+    params: string[];
+}
+
+/**
+ * Split a function-pointer type display such as `void(*)(int a, void *ctx)`
+ * into its return type and top-level parameter declarations.
+ */
+export function parseFunctionPointerType(display: string): FunctionPointerParts | undefined {
+    const match = display.match(FUNCTION_POINTER_RE);
+    if (match?.[1] == null || match[2] == null) {
+        return undefined;
+    }
+    const returnType = match[1].trim();
+    const paramList = match[2].trim();
+    if (!paramList || paramList === "void") {
+        return { returnType, params: [] };
+    }
+    const params: string[] = [];
+    let depth = 0;
+    let current = "";
+    for (const ch of paramList) {
+        if (ch === "(" || ch === "<" || ch === "[") {
+            depth++;
+        } else if (ch === ")" || ch === ">" || ch === "]") {
+            depth--;
+        }
+        if (ch === "," && depth === 0) {
+            params.push(current.trim());
+            current = "";
+        } else {
+            current += ch;
+        }
+    }
+    if (current.trim()) {
+        params.push(current.trim());
+    }
+    return { returnType, params };
+}
+
+/**
+ * Split a parameter declaration (`const float *solution`) into type and name.
+ */
+function splitParamDeclaration(decl: string): { type: string; name: string | undefined } {
+    // Function-pointer parameter: the name sits inside the declarator, `void (*name)(int)`.
+    const fnPtr = decl.match(/^(.*?\(\s*\*\s*)([A-Za-z_]\w*)(\s*\)\s*\(.*\))$/s);
+    if (fnPtr?.[1] != null && fnPtr[2] != null && fnPtr[3] != null) {
+        return { type: normalizeAngleBracketSpacing(fnPtr[1] + fnPtr[3]), name: fnPtr[2] };
+    }
+    const match = decl.match(/^(.*?[\s*&])\s*([A-Za-z_]\w*)(\[[^\]]*\])?$/s);
+    if (match?.[1] == null || match[2] == null) {
+        return { type: decl, name: undefined };
+    }
+    return { type: normalizeAngleBracketSpacing(match[1].trim()) + (match[3] ?? ""), name: match[2] };
+}
+
+/**
+ * Render the documented parameters of a function-pointer typedef (**Parameters** heading).
+ */
+export function renderTypedefParams(typedef: CppTypedefIr, docstring: CppDocstringIr | undefined): string {
+    if (!docstring || docstring.params.length === 0 || !typedef.typeInfo?.display) {
+        return "";
+    }
+    const parsed = parseFunctionPointerType(typedef.typeInfo.display);
+    if (!parsed) {
+        return "";
+    }
+    const declared = parsed.params.map(splitParamDeclaration);
+    const lines = ["**Parameters**", ""];
+    let rendered = 0;
+    for (const decl of declared) {
+        if (!decl.name) {
+            continue;
+        }
+        const description = findParamDescription(decl.name, docstring);
+        if (!description) {
+            continue;
+        }
+        lines.push(renderParamField(decl.name, decl.type, undefined, description));
+        lines.push("");
+        rendered++;
+    }
+    if (rendered === 0) {
+        return "";
+    }
+    lines.pop();
+    return lines.join("\n");
+}
+
+/**
+ * Build the rendered description for a documented parameter: optional Doxygen
+ * direction marker (`[in]`, `[out]`, `[in,out]`) followed by the description text.
+ */
+function formatParamDoc(p: CppParamDoc): string | undefined {
+    let desc = renderSegmentsTrimmed(p.description);
+    if (!desc) {
+        return undefined;
+    }
+    // Doxygen keeps the author's `@param name - text` dash; the ParamField already separates them.
+    desc = desc.replace(/^[-–—]\s+/, "");
+    desc = capitalizeDescription(desc);
+    if (p.direction) {
+        const marker = p.direction === "inout" ? "in,out" : p.direction;
+        return `**[${marker}]** ${desc}`;
+    }
+    return desc;
+}
+
+/**
  * Find a parameter's description from docstring.
  */
 function findParamDescription(name: string, docstring: CppDocstringIr | undefined): string | undefined {
@@ -375,9 +521,7 @@ function findParamDescription(name: string, docstring: CppDocstringIr | undefine
 
     for (const p of docstring.params) {
         if (p.name === name) {
-            const desc = renderSegmentsTrimmed(p.description);
-            // Capitalize the first character of the description
-            return desc ? capitalizeDescription(desc) : undefined;
+            return formatParamDoc(p);
         }
     }
 

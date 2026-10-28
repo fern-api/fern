@@ -82,7 +82,6 @@ public final class DeleteUserRequest {
     public static final class Builder {
         private Optional<String> username = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -119,6 +118,14 @@ public final class DeleteUserRequest {
 
         public DeleteUserRequest build() {
             return new DeleteUserRequest(username, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("username")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

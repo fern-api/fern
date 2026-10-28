@@ -12,7 +12,7 @@ func ResolveEnvironmentBaseURL(environment interface{}, fieldName string) string
 		return ""
 	}
 	v := reflect.ValueOf(environment)
-	if v.Kind() == reflect.Ptr {
+	if v.Kind() == reflect.Pointer {
 		if v.IsNil() {
 			return ""
 		}

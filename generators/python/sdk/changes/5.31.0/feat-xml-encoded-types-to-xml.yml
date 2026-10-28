@@ -1,0 +1,32 @@
+- summary: |
+    Object types carrying IR `encoding.xml` metadata (e.g. Twilio TwiML verbs imported from an OpenAPI
+    `xml` object) now generate a `to_xml()` method (and `__str__`) that serializes the model as an XML
+    element: properties marked as attributes become XML attributes, the text property becomes the element
+    body, and remaining properties are emitted as ordered child elements, honoring wire names,
+    namespaces/prefixes, wrapped lists and attribute list separators. A `core/xml_utilities.py` helper is
+    emitted only when the API contains XML-encoded types.
+  type: feat
+- summary: |
+    XML-encoded object types with a list-valued child element property also generate fluent builder
+    methods: `append(child)` and one `<tag>(text, *, attributes...)` method per child element type that
+    constructs the child, appends it and returns it (e.g. `response.say("Hello", voice="Polly.Joanna")`,
+    `say.break_(time="100ms")`). Method names derive from the XML tag; on a clash with a field they get an
+    `add_` prefix (`Dial.add_number`, `Message.add_body`).
+  type: feat
+- summary: |
+    XML-encoded types match the ergonomics of hand-written XML helper libraries: text-bearing elements
+    accept their body positionally (`Say("Hello", voice="man")`), constructors and builder methods accept
+    arbitrary `**extra_attributes: str` that are rendered as XML attributes (`Say("Hi", foo="bar")` ->
+    `<Say foo="bar">Hi</Say>`), and `str()` of a root element (one never nested in another XML type)
+    includes the `<?xml version="1.0" encoding="UTF-8"?>` declaration. `to_xml(xml_declaration=...)` is unchanged.
+  type: feat
+- summary: |
+    XML-encoded object types also generate a `from_xml(xml)` classmethod that parses an XML string (or a
+    parsed element) back into the model: the root element name is validated, attributes/text/child
+    elements map to their properties (honoring namespaces, wrapped lists and list separators), child
+    unions dispatch on the element name, and scalar/enum values are converted by the model's normal
+    validation. Attributes the schema does not declare are kept as extra attributes and child elements it
+    does not declare are preserved as `XmlElement` nodes (also addable via `add_child(...)`), so
+    `Model.from_xml(model.to_xml())` round-trips. Parsing uses the standard library with DOCTYPE
+    declarations rejected; malformed input raises `ValueError`.
+  type: feat

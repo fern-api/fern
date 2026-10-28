@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "../../../seed"
+
 module Seed
   module NullableOptional
     module Types
@@ -10,7 +12,7 @@ module Seed
 
         field :phone, -> { String }, optional: true, nullable: false
 
-        field :address, -> { Seed::NullableOptional::Types::Address }, optional: true, nullable: false
+        field :address, -> { Seed::NullableOptional::Types::Address }, optional: true, nullable: true
       end
     end
   end

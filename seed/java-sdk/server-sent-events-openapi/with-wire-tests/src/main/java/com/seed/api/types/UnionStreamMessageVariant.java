@@ -133,7 +133,6 @@ public final class UnionStreamMessageVariant implements IUnionStreamRequestBase 
 
         private Optional<Boolean> streamResponse = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -191,6 +190,16 @@ public final class UnionStreamMessageVariant implements IUnionStreamRequestBase 
         @java.lang.Override
         public UnionStreamMessageVariant build() {
             return new UnionStreamMessageVariant(streamResponse, prompt, message, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("stream_response")
+                    || key.equalsIgnoreCase("prompt")
+                    || key.equalsIgnoreCase("message")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

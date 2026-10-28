@@ -22,11 +22,13 @@ import com.fern.ir.model.types.NamedType;
 import com.fern.ir.model.types.ObjectProperty;
 import com.fern.ir.model.types.ObjectTypeDeclaration;
 import com.fern.ir.model.types.TypeDeclaration;
+import com.fern.ir.model.types.XmlEncoding;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.PoetTypeNameMapper;
 import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.generators.object.ImplementsInterface;
 import com.fern.java.generators.object.ObjectTypeSpecGenerator;
+import com.fern.java.generators.object.XmlObjectMethodsGenerator;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
 import com.fern.java.output.GeneratedObject;
@@ -57,10 +59,11 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public final class ObjectGenerator extends AbstractTypeGenerator {
-    private final List<EnrichedObjectProperty> enrichedObjectProperties;
-    private final Map<ObjectProperty, EnrichedObjectProperty> objectPropertyGetters;
+    private List<EnrichedObjectProperty> enrichedObjectProperties;
+    private Map<ObjectProperty, EnrichedObjectProperty> objectPropertyGetters;
     private final List<ImplementsInterface> implementsInterfaces;
     private final List<EnrichedObjectProperty> extendedPropertyGetters;
+    private Optional<XmlObjectEncoding> xmlObjectEncoding = Optional.empty();
 
     public ObjectGenerator(
             ObjectTypeDeclaration objectTypeDeclaration,
@@ -156,6 +159,67 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                 .build();
     }
 
+    /**
+     * Marks this object as an xml element so that {@code toXml()}/{@code fromXml()} and child builder methods are
+     * generated.
+     */
+    public ObjectGenerator withXmlEncoding(TypeId typeId, XmlEncoding xmlEncoding) {
+        this.xmlObjectEncoding = Optional.of(new XmlObjectEncoding(typeId, xmlEncoding));
+        renameTextPropertyYieldingToChild();
+        return this;
+    }
+
+    /**
+     * When the text property is named like one of the child elements ({@code Message.body} vs {@code <Body>}), the
+     * child builder keeps the legacy name and the text property is generated as {@code text} (getter {@code getText()},
+     * setter {@code text(...)}). A text property inherited from an interface cannot be renamed here; the child builder
+     * then yields instead ({@code addBody}).
+     */
+    private void renameTextPropertyYieldingToChild() {
+        List<ObjectProperty> objectProperties = enrichedObjectProperties.stream()
+                .map(EnrichedObjectProperty::objectProperty)
+                .collect(Collectors.toList());
+        Optional<ObjectProperty> yielding = XmlObjectMethodsGenerator.textPropertyYieldingToChild(
+                generatorContext.getTypeDeclarations(), objectProperties);
+        if (yielding.isEmpty()) {
+            return;
+        }
+        String camelCaseKey = XmlObjectMethodsGenerator.renamedTextFieldName(yielding.get(), objectProperties);
+        String pascalCaseKey = Character.toUpperCase(camelCaseKey.charAt(0)) + camelCaseKey.substring(1);
+        List<EnrichedObjectProperty> renamed = new ArrayList<>();
+        Map<ObjectProperty, EnrichedObjectProperty> getters = new java.util.LinkedHashMap<>(objectPropertyGetters);
+        for (EnrichedObjectProperty property : enrichedObjectProperties) {
+            if (!property.objectProperty().equals(yielding.get()) || property.fromInterface()) {
+                renamed.add(property);
+                continue;
+            }
+            // ImmutableEnrichedObjectProperty has no from(...) copy method (Immutables style), so every attribute
+            // is carried over explicitly; keep in sync with EnrichedObjectProperty.
+            EnrichedObjectProperty updated = EnrichedObjectProperty.builder()
+                    .camelCaseKey(camelCaseKey)
+                    .pascalCaseKey(pascalCaseKey)
+                    .poetTypeName(property.poetTypeName())
+                    .fromInterface(property.fromInterface())
+                    .inline(property.inline())
+                    .wrappedAliases(property.wrappedAliases())
+                    .objectProperty(property.objectProperty())
+                    .nullableNonemptyFilterClassName(property.nullableNonemptyFilterClassName())
+                    .generator(property.generator())
+                    .allowMultiple(property.allowMultiple())
+                    .useNullableAnnotation(property.useNullableAnnotation())
+                    .wireKey(property.wireKey())
+                    .docs(property.docs())
+                    .literal(property.literal())
+                    .typeDeclaration(property.typeDeclaration())
+                    .queryParameter(property.queryParameter())
+                    .build();
+            renamed.add(updated);
+            getters.put(property.objectProperty(), updated);
+        }
+        this.enrichedObjectProperties = renamed;
+        this.objectPropertyGetters = getters;
+    }
+
     @Override
     public List<TypeDeclaration> getInlineTypeDeclarations() {
         return new ArrayList<>(overriddenTypeDeclarations(
@@ -176,8 +240,33 @@ public final class ObjectGenerator extends AbstractTypeGenerator {
                 generatorContext.deserializeWithAdditionalProperties(),
                 generatorContext.getCustomConfig().jsonInclude(),
                 generatorContext.getCustomConfig().disableRequiredPropertyBuilderChecks(),
-                generatorContext.builderNotNullChecks());
-        return genericObjectGenerator.generate();
+                generatorContext.builderNotNullChecks(),
+                xmlObjectEncoding.map(_encoding -> XmlCoreGenerator.getXmlElementClassName(generatorContext)));
+        TypeSpec typeSpec = genericObjectGenerator.generate();
+        if (xmlObjectEncoding.isEmpty()) {
+            return typeSpec;
+        }
+        XmlObjectMethodsGenerator xmlMethodsGenerator = new XmlObjectMethodsGenerator(
+                generatorContext,
+                className,
+                xmlObjectEncoding.get().typeId,
+                xmlObjectEncoding.get().xmlEncoding,
+                genericObjectGenerator.getAllEnrichedProperties(),
+                genericObjectGenerator.getAdditionalPropertiesFieldNameIfSupported(),
+                genericObjectGenerator.getContentFieldNameIfSupported().get(),
+                genericObjectGenerator.getContentGetterNameIfSupported().get(),
+                genericObjectGenerator.usesBuilderConstructor());
+        return xmlMethodsGenerator.addXmlSupport(typeSpec);
+    }
+
+    private static final class XmlObjectEncoding {
+        private final TypeId typeId;
+        private final XmlEncoding xmlEncoding;
+
+        private XmlObjectEncoding(TypeId typeId, XmlEncoding xmlEncoding) {
+            this.typeId = typeId;
+            this.xmlEncoding = xmlEncoding;
+        }
     }
 
     public GeneratedObject generateObject() {

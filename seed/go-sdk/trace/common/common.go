@@ -65,10 +65,12 @@ func (b *BinaryTreeNodeValue) GetExtraProperties() map[string]interface{} {
 }
 
 func (b *BinaryTreeNodeValue) require(field *big.Int) {
-	if b.explicitFields == nil {
-		b.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if b.explicitFields != nil {
+		next.Set(b.explicitFields)
 	}
-	b.explicitFields.Or(b.explicitFields, field)
+	next.Or(next, field)
+	b.explicitFields = next
 }
 
 // SetNodeID sets the NodeID field and marks it as non-optional;
@@ -179,10 +181,12 @@ func (b *BinaryTreeValue) GetExtraProperties() map[string]interface{} {
 }
 
 func (b *BinaryTreeValue) require(field *big.Int) {
-	if b.explicitFields == nil {
-		b.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if b.explicitFields != nil {
+		next.Set(b.explicitFields)
 	}
-	b.explicitFields.Or(b.explicitFields, field)
+	next.Or(next, field)
+	b.explicitFields = next
 }
 
 // SetRoot sets the Root field and marks it as non-optional;
@@ -297,10 +301,12 @@ func (d *DoublyLinkedListNodeValue) GetExtraProperties() map[string]interface{} 
 }
 
 func (d *DoublyLinkedListNodeValue) require(field *big.Int) {
-	if d.explicitFields == nil {
-		d.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if d.explicitFields != nil {
+		next.Set(d.explicitFields)
 	}
-	d.explicitFields.Or(d.explicitFields, field)
+	next.Or(next, field)
+	d.explicitFields = next
 }
 
 // SetNodeID sets the NodeID field and marks it as non-optional;
@@ -411,10 +417,12 @@ func (d *DoublyLinkedListValue) GetExtraProperties() map[string]interface{} {
 }
 
 func (d *DoublyLinkedListValue) require(field *big.Int) {
-	if d.explicitFields == nil {
-		d.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if d.explicitFields != nil {
+		next.Set(d.explicitFields)
 	}
-	d.explicitFields.Or(d.explicitFields, field)
+	next.Or(next, field)
+	d.explicitFields = next
 }
 
 // SetHead sets the Head field and marks it as non-optional;
@@ -511,10 +519,12 @@ func (k *KeyValuePair) GetExtraProperties() map[string]interface{} {
 }
 
 func (k *KeyValuePair) require(field *big.Int) {
-	if k.explicitFields == nil {
-		k.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if k.explicitFields != nil {
+		next.Set(k.explicitFields)
 	}
-	k.explicitFields.Or(k.explicitFields, field)
+	next.Or(next, field)
+	k.explicitFields = next
 }
 
 // SetKey sets the Key field and marks it as non-optional;
@@ -637,10 +647,12 @@ func (l *ListType) GetExtraProperties() map[string]interface{} {
 }
 
 func (l *ListType) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetValueType sets the ValueType field and marks it as non-optional;
@@ -737,10 +749,12 @@ func (m *MapType) GetExtraProperties() map[string]interface{} {
 }
 
 func (m *MapType) require(field *big.Int) {
-	if m.explicitFields == nil {
-		m.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if m.explicitFields != nil {
+		next.Set(m.explicitFields)
 	}
-	m.explicitFields.Or(m.explicitFields, field)
+	next.Or(next, field)
+	m.explicitFields = next
 }
 
 // SetKeyType sets the KeyType field and marks it as non-optional;
@@ -828,10 +842,12 @@ func (m *MapValue) GetExtraProperties() map[string]interface{} {
 }
 
 func (m *MapValue) require(field *big.Int) {
-	if m.explicitFields == nil {
-		m.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if m.explicitFields != nil {
+		next.Set(m.explicitFields)
 	}
-	m.explicitFields.Or(m.explicitFields, field)
+	next.Or(next, field)
+	m.explicitFields = next
 }
 
 // SetKeyValuePairs sets the KeyValuePairs field and marks it as non-optional;
@@ -934,10 +950,12 @@ func (s *SinglyLinkedListNodeValue) GetExtraProperties() map[string]interface{} 
 }
 
 func (s *SinglyLinkedListNodeValue) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetNodeID sets the NodeID field and marks it as non-optional;
@@ -1041,10 +1059,12 @@ func (s *SinglyLinkedListValue) GetExtraProperties() map[string]interface{} {
 }
 
 func (s *SinglyLinkedListValue) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetHead sets the Head field and marks it as non-optional;
@@ -1909,10 +1929,12 @@ func (p *ProblemDescription) GetExtraProperties() map[string]interface{} {
 }
 
 func (p *ProblemDescription) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetBoards sets the Boards field and marks it as non-optional;

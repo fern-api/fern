@@ -81,7 +81,6 @@ public final class SubmissionIdNotFound {
     public static final class Builder implements MissingSubmissionIdStage, _FinalStage {
         private UUID missingSubmissionId;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -103,6 +102,14 @@ public final class SubmissionIdNotFound {
         @java.lang.Override
         public SubmissionIdNotFound build() {
             return new SubmissionIdNotFound(missingSubmissionId, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("missingSubmissionId")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

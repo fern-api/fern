@@ -3,6 +3,7 @@
 require "json"
 require "net/http"
 require "securerandom"
+require "time"
 
 require_relative "seed/internal/json/serializable"
 require_relative "seed/internal/types/type"
@@ -35,9 +36,17 @@ require_relative "seed/internal/iterators/cursor_item_iterator"
 require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
-require_relative "seed/events/types/event_type_enum"
-require_relative "seed/events/types/event_type_param"
-require_relative "seed/events/types/string_or_list_param"
+require_relative "seed/errors/connection_error"
 require_relative "seed/client"
 require_relative "seed/events/client"
 require_relative "seed/events/types/subscribe_events_request"
+
+module Seed
+  module Events
+    module Types
+      autoload :EventTypeEnum, ::File.join(__dir__, "seed/events/types/event_type_enum")
+      autoload :EventTypeParam, ::File.join(__dir__, "seed/events/types/event_type_param")
+      autoload :StringOrListParam, ::File.join(__dir__, "seed/events/types/string_or_list_param")
+    end
+  end
+end

@@ -8,7 +8,7 @@ import com.seed.undiscriminatedUnions.core.Suppliers;
 import com.seed.undiscriminatedUnions.resources.union.AsyncUnionClient;
 import java.util.function.Supplier;
 
-public class AsyncSeedUndiscriminatedUnionsClient {
+public class AsyncSeedUndiscriminatedUnionsClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AsyncUnionClient> unionClient;
@@ -20,6 +20,16 @@ public class AsyncSeedUndiscriminatedUnionsClient {
 
     public AsyncUnionClient union() {
         return this.unionClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedUndiscriminatedUnionsClientBuilder builder() {

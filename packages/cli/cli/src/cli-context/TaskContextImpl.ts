@@ -110,7 +110,9 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
     public failAndThrow(message?: string, error?: unknown, options?: { code?: CliError.Code }): never {
         this.failWithoutThrowing(message, error, options);
         this.finish();
-        throw new TaskAbortSignal();
+        throw new TaskAbortSignal(
+            message ?? (error instanceof TaskAbortSignal ? error.failureMessage : this.lastFailureMessage)
+        );
     }
 
     public failWithoutThrowing(message?: string, error?: unknown, options?: { code?: CliError.Code }): void {
@@ -207,7 +209,11 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
         } finally {
             subtask.finish();
         }
-        return subtask.getResult() === TaskResult.Success;
+        const didSucceed = subtask.getResult() === TaskResult.Success;
+        if (!didSucceed) {
+            this.lastFailureMessage = subtask.getLastFailureMessage() ?? this.lastFailureMessage;
+        }
+        return didSucceed;
     }
 
     public printInteractiveTasks({ spinner }: { spinner: string }): string {

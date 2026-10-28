@@ -11,16 +11,12 @@ async fn main() {
     client
         .endpoints
         .object
-        .get_and_return_with_required_nested_object(
-            &ObjectWithRequiredNestedObject {
-                required_string: "hello".to_string(),
-                required_object: NestedObjectWithRequiredField {
-                    string: "nested".to_string(),
-                    nested_object: ObjectWithOptionalField {
-                        ..Default::default()
-                    },
-                    ..Default::default()
-                },
+        .get_and_return_with_mixed_required_and_optional_fields(
+            &ObjectWithMixedRequiredAndOptionalFields {
+                required_string: "requiredString".to_string(),
+                required_integer: 1,
+                optional_string: Some("optionalString".to_string()),
+                required_long: 1000000,
                 ..Default::default()
             },
             None,

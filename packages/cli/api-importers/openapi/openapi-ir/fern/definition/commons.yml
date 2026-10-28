@@ -151,6 +151,12 @@ types:
   StatusCode:
     type: integer
 
+  ErrorStatusCodeKey:
+    type: string
+    docs: |
+      Key of an endpoint's error map: a concrete status code (e.g. "404") or a
+      wildcard status code pattern ("4XX" or "5XX").
+
   Server:
     extends: WithDescription
     properties:

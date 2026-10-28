@@ -10,7 +10,7 @@ import com.seed.api.resources.teammember.AsyncTeamMemberClient;
 import com.seed.api.resources.vendor.AsyncVendorClient;
 import java.util.function.Supplier;
 
-public class AsyncSeedApiClient {
+public class AsyncSeedApiClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<AsyncVendorClient> vendorClient;
@@ -36,6 +36,16 @@ public class AsyncSeedApiClient {
 
     public AsyncTeamMemberClient teamMember() {
         return this.teamMemberClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedApiClientBuilder builder() {

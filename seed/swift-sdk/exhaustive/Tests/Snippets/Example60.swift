@@ -8,6 +8,6 @@ enum Example60 {
             token: "<token>"
         )
 
-        _ = try await client.endpoints.urls.withUnderscores()
+        _ = try await client.endpoints.urls.withEndingSlash()
     }
 }

@@ -6,9 +6,10 @@ module Seed
     # @param environment [Hash[Symbol, String], nil]
     # @param region [String, nil]
     # @param max_retries [Integer]
+    # @param timeout [Numeric]
     #
     # @return [void]
-    def initialize(base_url: nil, environment: Seed::Environment::PRODUCTION, region: nil, max_retries: 2)
+    def initialize(base_url: nil, environment: Seed::Environment::PRODUCTION, region: nil, max_retries: 2, timeout: 60)
       unless region.nil?
         region_value = region.nil? ? "us1" : region
         environment_url_templates = {
@@ -41,7 +42,8 @@ module Seed
           "User-Agent" => "fern_ruby-multi-env-url-templating/0.0.1",
           "X-Fern-Language" => "Ruby"
         },
-        max_retries: max_retries
+        max_retries: max_retries,
+        timeout: timeout
       )
     end
 

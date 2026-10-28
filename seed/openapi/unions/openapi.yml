@@ -955,6 +955,36 @@ components:
               format: date-time
           required:
             - type
+    UnionWithGlobalNameCollisions:
+      title: UnionWithGlobalNameCollisions
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              const: Date
+            value:
+              type: string
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              const: Error
+            value:
+              type: string
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              const: Aim
+            value:
+              type: string
+          required:
+            - type
     UnionWithOptionalTime:
       title: UnionWithOptionalTime
       oneOf:

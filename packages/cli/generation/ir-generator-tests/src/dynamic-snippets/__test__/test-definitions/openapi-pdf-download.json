@@ -374,6 +374,7 @@
             "response": {
                 "type": "fileDownload"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_assetReport.get": {
@@ -461,6 +462,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         }
     },

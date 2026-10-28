@@ -117,10 +117,6 @@ export class TypeLiteral extends AstNode {
                 break;
             }
             case "blob": {
-                if (noSerdeLayer) {
-                    writer.writeNode(TypeLiteral.string(this.internalType.value));
-                    return;
-                }
                 writer.write("new Blob([");
                 writer.writeNode(TypeLiteral.string(this.internalType.value));
                 writer.write("])");

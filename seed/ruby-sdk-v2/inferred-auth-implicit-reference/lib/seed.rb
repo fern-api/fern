@@ -3,6 +3,7 @@
 require "json"
 require "net/http"
 require "securerandom"
+require "time"
 
 require_relative "seed/internal/json/serializable"
 require_relative "seed/internal/types/type"
@@ -35,9 +36,7 @@ require_relative "seed/internal/iterators/cursor_item_iterator"
 require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
-require_relative "seed/auth/types/get_token_request"
-require_relative "seed/auth/types/refresh_token_request"
-require_relative "seed/auth/types/token_response"
+require_relative "seed/errors/connection_error"
 require_relative "seed/client"
 require_relative "seed/auth/client"
 require_relative "seed/nested_no_auth/client"
@@ -46,3 +45,13 @@ require_relative "seed/nested/client"
 require_relative "seed/nested/api/client"
 require_relative "seed/simple/client"
 require_relative "seed/internal/inferred_auth_provider"
+
+module Seed
+  module Auth
+    module Types
+      autoload :GetTokenRequest, ::File.join(__dir__, "seed/auth/types/get_token_request")
+      autoload :RefreshTokenRequest, ::File.join(__dir__, "seed/auth/types/refresh_token_request")
+      autoload :TokenResponse, ::File.join(__dir__, "seed/auth/types/token_response")
+    end
+  end
+end

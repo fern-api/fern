@@ -265,7 +265,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                     type: `(event: ${getTextOfTsNode(context.coreUtilities.websocket.CloseEvent._getReferenceToType())}) => boolean`,
                     hasQuestionToken: true,
                     docs: [
-                        "Decides whether a close event should trigger a reconnect. Return false to treat the close as terminal. Defaults to reconnecting on any close code other than 1000."
+                        "Decides whether a server close event should trigger a reconnect. Not consulted for connection errors, timeouts, or internal closes. Return false to treat the close as terminal. Defaults to reconnecting on any server close code other than 1000."
                     ]
                 }
             ],

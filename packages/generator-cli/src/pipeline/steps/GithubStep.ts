@@ -266,6 +266,7 @@ export class GithubStep extends BaseStep {
         );
         const replaySection = formatReplayPrBody(replayResult, { branchName: prBranch, repoUri: this.config.uri });
         let enrichedBody = replaySection != null ? prBody + "\n\n---\n\n" + replaySection : prBody;
+        enrichedBody = appendAutoVersionWarning(enrichedBody, resolved.analysisWarning);
         enrichedBody = enrichPrBodyForAutomation(enrichedBody, this.config, resolved);
 
         if (isUpdatingExistingPR && existingPR != null) {
@@ -285,6 +286,9 @@ export class GithubStep extends BaseStep {
             } catch (error) {
                 this.logger.debug(`Failed to update PR title/body: ${extractErrorMessage(error)}`);
             }
+            if (shouldEnableAutomerge(this.config, resolved)) {
+                await this.tryEnableAutomerge(octokit, existingPR.nodeId, existingPR.number, result);
+            }
         } else {
             const head = `${owner}:${prBranch}`;
 
@@ -302,26 +306,8 @@ export class GithubStep extends BaseStep {
                 result.prUrl = pullRequest.html_url;
                 result.prNumber = pullRequest.number;
 
-                // In automation mode, enable GitHub automerge on non-breaking PRs.
-                // Uses the built-in octokit.graphql() from @octokit/core (no extra dependency).
-                // The SDK repo's own branch protection rules govern whether the PR actually merges.
                 if (shouldEnableAutomerge(this.config, resolved) && pullRequest.node_id) {
-                    try {
-                        await octokit.graphql(
-                            `mutation($pullRequestId: ID!) {
-                                enablePullRequestAutoMerge(input: {
-                                    pullRequestId: $pullRequestId,
-                                    mergeMethod: SQUASH
-                                }) { clientMutationId }
-                            }`,
-                            { pullRequestId: pullRequest.node_id }
-                        );
-                        this.logger.info(`Enabled automerge on PR #${pullRequest.number}`);
-                        result.autoMergeEnabled = true;
-                    } catch (autoMergeError) {
-                        // Automerge may not be available (repo settings, branch protection, permissions)
-                        this.logger.warn(`Could not enable automerge: ${extractErrorMessage(autoMergeError)}`);
-                    }
+                    await this.tryEnableAutomerge(octokit, pullRequest.node_id, pullRequest.number, result);
                 }
             } catch (error) {
                 const message = extractErrorMessage(error);
@@ -334,6 +320,35 @@ export class GithubStep extends BaseStep {
         }
 
         return result;
+    }
+
+    /**
+     * Enables GitHub automerge on a non-breaking PR (newly created or updated) via the built-in
+     * octokit.graphql() from @octokit/core. The SDK repo's own branch protection rules govern
+     * whether the PR actually merges.
+     */
+    private async tryEnableAutomerge(
+        octokit: Octokit,
+        pullRequestNodeId: string,
+        pullRequestNumber: number,
+        result: GithubStepResult
+    ): Promise<void> {
+        try {
+            await octokit.graphql(
+                `mutation($pullRequestId: ID!) {
+                    enablePullRequestAutoMerge(input: {
+                        pullRequestId: $pullRequestId,
+                        mergeMethod: SQUASH
+                    }) { clientMutationId }
+                }`,
+                { pullRequestId: pullRequestNodeId }
+            );
+            this.logger.info(`Enabled automerge on PR #${pullRequestNumber}`);
+            result.autoMergeEnabled = true;
+        } catch (autoMergeError) {
+            // Automerge may not be available (repo settings, branch protection, permissions)
+            this.logger.warn(`Could not enable automerge: ${extractErrorMessage(autoMergeError)}`);
+        }
     }
 
     private async executePushMode(repository: ClonedRepository, resolved: ResolvedPrFields): Promise<GithubStepResult> {
@@ -575,6 +590,8 @@ export interface ResolvedPrFields {
     versionBump: string | undefined;
     hasBreakingChanges: boolean;
     breakingChangesSummary: string | undefined;
+    /** Why autoversion fell back to PATCH without an FAI analysis, if it did. */
+    analysisWarning: string | undefined;
 }
 
 /**
@@ -609,8 +626,34 @@ export function resolvePrFields(
         newVersion: config.newVersion ?? autoVersion?.version,
         versionBump: config.versionBump ?? autoVersion?.versionBump,
         hasBreakingChanges: config.hasBreakingChanges ?? autoVersionBreaking,
-        breakingChangesSummary: config.breakingChangesSummary ?? autoVersion?.prDescription
+        breakingChangesSummary: config.breakingChangesSummary ?? autoVersion?.prDescription,
+        analysisWarning: autoVersion?.analysisWarning
     };
+}
+
+/**
+ * Appends a visible notice when autoversion could not fully analyze the diff (FAI
+ * unavailable → PATCH fallback, or only part of the diff was analyzed). Rendered in
+ * every mode (not just automation) so the reviewer knows the version and changelog
+ * need a manual check.
+ * Exported for testing.
+ */
+export function appendAutoVersionWarning(body: string, analysisWarning: string | undefined): string {
+    if (analysisWarning == null || analysisWarning.trim().length === 0) {
+        return body;
+    }
+    const reason = analysisWarning
+        .replace(/[`\s]+/g, " ")
+        .trim()
+        .slice(0, 300);
+    return (
+        body +
+        "\n\n---\n\n## ⚠️ Version bump not verified\n\n" +
+        "Automatic version analysis was unavailable or incomplete for this generation, so the version bump " +
+        "and changelog may understate the changes (a **PATCH** bump with no changelog is applied when no analysis " +
+        "is available). If this change is breaking or adds features, adjust the version and changelog before merging.\n\n" +
+        `Reason: \`${reason}\``
+    );
 }
 
 /**
@@ -646,6 +689,8 @@ export function enrichPrBodyForAutomation(
 
 /**
  * Determines whether automerge should be enabled on a PR.
+ * Independent of automationMode: callers opt in explicitly via autoMerge
+ * (`fern generate --auto-merge` or `github.auto-merge: true` in generators.yml).
  * Exported for testing.
  *
  * `breaking` carries the derived hasBreakingChanges that may come from either
@@ -653,11 +698,12 @@ export function enrichPrBodyForAutomation(
  * an empty object to preserve the config-only behavior.
  */
 export function shouldEnableAutomerge(
-    config: { automationMode?: boolean; autoMerge?: boolean; hasBreakingChanges?: boolean },
-    breaking: { hasBreakingChanges?: boolean } = {}
+    config: { autoMerge?: boolean; hasBreakingChanges?: boolean },
+    breaking: { hasBreakingChanges?: boolean; analysisWarning?: string } = {}
 ): boolean {
     const hasBreakingChanges = breaking.hasBreakingChanges ?? config.hasBreakingChanges;
-    return config.automationMode === true && config.autoMerge === true && hasBreakingChanges !== true;
+    const analysisUnavailable = breaking.analysisWarning != null && breaking.analysisWarning.length > 0;
+    return config.autoMerge === true && hasBreakingChanges !== true && !analysisUnavailable;
 }
 
 /**

@@ -47,10 +47,12 @@ func (r *ReceiveEvent) GetExtraProperties() map[string]interface{} {
 }
 
 func (r *ReceiveEvent) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
 	}
-	r.explicitFields.Or(r.explicitFields, field)
+	next.Or(next, field)
+	r.explicitFields = next
 }
 
 // SetData sets the Data field and marks it as non-optional;
@@ -147,10 +149,12 @@ func (s *SendEvent) GetExtraProperties() map[string]interface{} {
 }
 
 func (s *SendEvent) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetText sets the Text field and marks it as non-optional;

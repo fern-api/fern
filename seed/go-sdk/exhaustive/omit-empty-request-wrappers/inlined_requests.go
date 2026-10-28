@@ -22,10 +22,12 @@ type PostWithArrayBodyAndHeaders struct {
 }
 
 func (p *PostWithArrayBodyAndHeaders) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetXCustomHeader sets the XCustomHeader field and marks it as non-optional;
@@ -64,10 +66,12 @@ type PostWithObjectBody struct {
 }
 
 func (p *PostWithObjectBody) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetFieldString sets the FieldString field and marks it as non-optional;

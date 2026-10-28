@@ -51,6 +51,9 @@ fixtures:
     - outputFolder: .
       customConfig:
         enable-wire-tests: true
+  php-xml-twiml:
+    - outputFolder: .
+      customConfig: null
   exhaustive:
     - outputFolder: no-custom-config
       customConfig: null
@@ -131,6 +134,10 @@ fixtures:
       customConfig:
         includePlatformHeaders: true
         allowUserAgentAppInfo: true
+    - outputFolder: user-agent-only
+      customConfig:
+        includePlatformHeaders: true
+        userAgentOnly: true
   package-yml:
     - outputFolder: no-custom-config
       customConfig: null

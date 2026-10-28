@@ -3,7 +3,7 @@
 import type * as FernOpenapiIr from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { StatusCode } from "../../commons/types/StatusCode.js";
+import { ErrorStatusCodeKey } from "../../commons/types/ErrorStatusCodeKey.js";
 import { TagId } from "../../commons/types/TagId.js";
 import { WithAvailability } from "../../commons/types/WithAvailability.js";
 import { WithDescription } from "../../commons/types/WithDescription.js";
@@ -47,7 +47,7 @@ export const EndpointWithExample: core.serialization.ObjectSchema<
         requestNameOverride: core.serialization.string().optional(),
         request: RequestWithExample.optional(),
         response: ResponseWithExample.optional(),
-        errors: core.serialization.record(StatusCode, HttpErrorWithExample),
+        errors: core.serialization.record(ErrorStatusCodeKey, HttpErrorWithExample),
         servers: core.serialization.list(HttpEndpointServer),
         examples: core.serialization.list(EndpointExample),
         pagination: Pagination.optional(),
@@ -80,7 +80,7 @@ export declare namespace EndpointWithExample {
         requestNameOverride?: string | null;
         request?: RequestWithExample.Raw | null;
         response?: ResponseWithExample.Raw | null;
-        errors: Record<StatusCode.Raw, HttpErrorWithExample.Raw>;
+        errors: Record<ErrorStatusCodeKey.Raw, HttpErrorWithExample.Raw>;
         servers: HttpEndpointServer.Raw[];
         examples: EndpointExample.Raw[];
         pagination?: Pagination.Raw | null;

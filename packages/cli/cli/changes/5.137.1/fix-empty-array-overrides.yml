@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    An explicitly empty array in an OpenAPI overrides file (e.g. `security: []` to opt an
+    endpoint out of global auth) now replaces the original array instead of being ignored.
+  type: fix

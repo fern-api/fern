@@ -13,6 +13,7 @@ import (
 	"net/url"
 	"strconv"
 	"strings"
+	"sync/atomic"
 	"testing"
 
 	"github.com/multiple-request-bodies/fern/core"
@@ -164,6 +165,26 @@ func TestCall(t *testing.T) {
 			},
 		},
 		{
+			description: "POST body properties override declared fields",
+			giveMethod:  http.MethodPost,
+			giveHeader: http.Header{
+				"X-API-Status": []string{"success"},
+			},
+			giveRequest: &InternalTestRequest{
+				Id: "123",
+			},
+			giveBodyProperties: map[string]interface{}{
+				"id":  "456",
+				"key": "value",
+			},
+			wantResponse: &InternalTestResponse{
+				Id: "456",
+				ExtraBodyProperties: map[string]interface{}{
+					"key": "value",
+				},
+			},
+		},
+		{
 			description: "GET extra query parameters",
 			giveMethod:  http.MethodGet,
 			giveHeader: http.Header{
@@ -273,6 +294,307 @@ func TestCallWithGzipResponse(t *testing.T) {
 	)
 	require.NoError(t, err)
 	assert.Equal(t, &InternalTestResponse{Id: "123"}, response)
+}
+
+// cancelAfterRoundTripTransport cancels the call's context once the wrapped
+// transport returns, modeling instrumentation (e.g. logging) whose scope ends
+// before control returns to the caller. When buffer is true, the response body
+// is fully read into memory first.
+type cancelAfterRoundTripTransport struct {
+	base   http.RoundTripper
+	cancel context.CancelFunc
+	buffer bool
+}
+
+func (c *cancelAfterRoundTripTransport) RoundTrip(req *http.Request) (*http.Response, error) {
+	resp, err := c.base.RoundTrip(req)
+	if err != nil {
+		return nil, err
+	}
+	if c.buffer {
+		body, readErr := io.ReadAll(resp.Body)
+		_ = resp.Body.Close()
+		if readErr != nil {
+			return nil, readErr
+		}
+		resp.Body = io.NopCloser(bytes.NewReader(body))
+	}
+	if c.cancel != nil {
+		c.cancel()
+	}
+	return resp, nil
+}
+
+func newJSONTestServer(t *testing.T, statusCode int, body string) (*httptest.Server, *int32) {
+	var requests int32
+	server := httptest.NewServer(
+		http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			atomic.AddInt32(&requests, 1)
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(statusCode)
+			_, _ = w.Write([]byte(body))
+		}),
+	)
+	t.Cleanup(server.Close)
+	return server, &requests
+}
+
+func TestCallReturnsCompletedResponseWhenContextCanceledAfterResponse(t *testing.T) {
+	server, _ := newJSONTestServer(t, http.StatusOK, `{"id":"123"}`)
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	caller := NewCaller(
+		&CallerParams{
+			Client: &http.Client{
+				Transport: &cancelAfterRoundTripTransport{
+					base:   server.Client().Transport,
+					cancel: cancel,
+					buffer: true,
+				},
+			},
+		},
+	)
+	var response *InternalTestResponse
+	callResponse, err := caller.Call(
+		ctx,
+		&CallParams{
+			URL:      server.URL,
+			Method:   http.MethodGet,
+			Response: &response,
+		},
+	)
+	require.Error(t, ctx.Err(), "precondition: the context must be canceled before decoding")
+	require.NoError(t, err)
+	require.NotNil(t, callResponse)
+	assert.Equal(t, http.StatusOK, callResponse.StatusCode)
+	assert.Equal(t, &InternalTestResponse{Id: "123"}, response)
+}
+
+func TestCallReturnsCompletedErrorResponseWhenContextCanceledAfterResponse(t *testing.T) {
+	server, _ := newJSONTestServer(t, http.StatusNotFound, `{"message":"not found"}`)
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	caller := NewCaller(
+		&CallerParams{
+			Client: &http.Client{
+				Transport: &cancelAfterRoundTripTransport{
+					base:   server.Client().Transport,
+					cancel: cancel,
+					buffer: true,
+				},
+			},
+		},
+	)
+	var response *InternalTestResponse
+	_, err := caller.Call(
+		ctx,
+		&CallParams{
+			URL:      server.URL,
+			Method:   http.MethodGet,
+			Response: &response,
+		},
+	)
+	require.Error(t, ctx.Err(), "precondition: the context must be canceled before decoding")
+	var apiError *core.APIError
+	require.ErrorAs(t, err, &apiError)
+	assert.Equal(t, http.StatusNotFound, apiError.StatusCode)
+	assert.False(t, errors.Is(err, context.Canceled))
+}
+
+func TestCallReturnsBufferedResponseWithoutCancellation(t *testing.T) {
+	server, _ := newJSONTestServer(t, http.StatusOK, `{"id":"123"}`)
+
+	caller := NewCaller(
+		&CallerParams{
+			Client: &http.Client{
+				Transport: &cancelAfterRoundTripTransport{
+					base:   server.Client().Transport,
+					buffer: true,
+				},
+			},
+		},
+	)
+	var response *InternalTestResponse
+	_, err := caller.Call(
+		context.Background(),
+		&CallParams{
+			URL:      server.URL,
+			Method:   http.MethodGet,
+			Response: &response,
+		},
+	)
+	require.NoError(t, err)
+	assert.Equal(t, &InternalTestResponse{Id: "123"}, response)
+}
+
+// Guardrail: a context canceled before the call must fail the call without
+// sending any request.
+func TestCallGuardrailContextCanceledBeforeCallSendsNoRequest(t *testing.T) {
+	server, requests := newJSONTestServer(t, http.StatusOK, `{"id":"123"}`)
+	ctx, cancel := context.WithCancel(context.Background())
+	cancel()
+
+	caller := NewCaller(
+		&CallerParams{
+			Client: server.Client(),
+		},
+	)
+	var response *InternalTestResponse
+	callResponse, err := caller.Call(
+		ctx,
+		&CallParams{
+			URL:      server.URL,
+			Method:   http.MethodGet,
+			Response: &response,
+		},
+	)
+	assert.ErrorIs(t, err, context.Canceled)
+	assert.Nil(t, callResponse)
+	assert.Nil(t, response)
+	assert.Equal(t, int32(0), atomic.LoadInt32(requests))
+}
+
+// Guardrail: a context canceled while the response body is still in flight
+// must fail the call rather than return a partial response, whether or not the
+// endpoint decodes the body.
+func TestCallGuardrailContextCanceledDuringUnfinishedResponseBodyReturnsError(t *testing.T) {
+	tests := []struct {
+		desc        string
+		statusCode  int
+		partialBody string
+		decode      bool
+	}{
+		{
+			desc:        "incomplete JSON value",
+			statusCode:  http.StatusOK,
+			partialBody: `{"id":`,
+			decode:      true,
+		},
+		{
+			desc:        "complete JSON value with unfinished trailing body",
+			statusCode:  http.StatusOK,
+			partialBody: `{"id":"123"} `,
+			decode:      true,
+		},
+		{
+			desc:        "endpoint without a response body",
+			statusCode:  http.StatusOK,
+			partialBody: `{"id":`,
+		},
+		{
+			desc:        "error response",
+			statusCode:  http.StatusInternalServerError,
+			partialBody: `{"message":`,
+			decode:      true,
+		},
+	}
+	for _, test := range tests {
+		t.Run(test.desc, func(t *testing.T) {
+			release := make(chan struct{})
+			server := httptest.NewServer(
+				http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+					w.Header().Set("Content-Type", "application/json")
+					w.WriteHeader(test.statusCode)
+					_, _ = w.Write([]byte(test.partialBody))
+					w.(http.Flusher).Flush()
+					select {
+					case <-release:
+					case <-r.Context().Done():
+					}
+				}),
+			)
+			t.Cleanup(server.Close)
+			t.Cleanup(func() { close(release) })
+
+			ctx, cancel := context.WithCancel(context.Background())
+			defer cancel()
+
+			caller := NewCaller(
+				&CallerParams{
+					Client: &http.Client{
+						Transport: &cancelAfterRoundTripTransport{
+							base:   server.Client().Transport,
+							cancel: cancel,
+						},
+					},
+				},
+			)
+			var response *InternalTestResponse
+			params := &CallParams{
+				URL:    server.URL,
+				Method: http.MethodGet,
+			}
+			if test.decode {
+				params.Response = &response
+			}
+			callResponse, err := caller.Call(ctx, params)
+			assert.ErrorIs(t, err, context.Canceled)
+			assert.Nil(t, callResponse)
+		})
+	}
+}
+
+func TestCallReturnsBufferedResponseWithoutDecodingWhenContextCanceledAfterResponse(t *testing.T) {
+	server, _ := newJSONTestServer(t, http.StatusOK, `{"id":"123"}`)
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	caller := NewCaller(
+		&CallerParams{
+			Client: &http.Client{
+				Transport: &cancelAfterRoundTripTransport{
+					base:   server.Client().Transport,
+					cancel: cancel,
+					buffer: true,
+				},
+			},
+		},
+	)
+	callResponse, err := caller.Call(
+		ctx,
+		&CallParams{
+			URL:    server.URL,
+			Method: http.MethodPost,
+		},
+	)
+	require.Error(t, ctx.Err(), "precondition: the context must be canceled before the call returns")
+	require.NoError(t, err)
+	require.NotNil(t, callResponse)
+	assert.Equal(t, http.StatusOK, callResponse.StatusCode)
+}
+
+// Guardrail: a context canceled after a retryable response must not cause
+// another attempt.
+func TestCallGuardrailContextCanceledAfterRetryableResponseDoesNotRetry(t *testing.T) {
+	server, requests := newJSONTestServer(t, http.StatusServiceUnavailable, `{}`)
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	caller := NewCaller(
+		&CallerParams{
+			Client: &http.Client{
+				Transport: &cancelAfterRoundTripTransport{
+					base:   server.Client().Transport,
+					cancel: cancel,
+					buffer: true,
+				},
+			},
+			MaxAttempts: 3,
+		},
+	)
+	var response *InternalTestResponse
+	_, err := caller.Call(
+		ctx,
+		&CallParams{
+			URL:      server.URL,
+			Method:   http.MethodGet,
+			Response: &response,
+		},
+	)
+	assert.ErrorIs(t, err, context.Canceled)
+	assert.Equal(t, int32(1), atomic.LoadInt32(requests))
 }
 
 func TestMergeHeaders(t *testing.T) {
@@ -737,5 +1059,162 @@ func TestNewRequestBodyFormURLEncoded(t *testing.T) {
 
 		assert.Equal(t, "test_client_id", values.Get("client_id"))
 		assert.Equal(t, "test_client_secret", values.Get("client_secret"))
+	})
+}
+
+// BodyPropertiesTestRequest is a request with both required and optional fields.
+type BodyPropertiesTestRequest struct {
+	Name     string                 `json:"name"`
+	Model    *string                `json:"model,omitempty"`
+	Settings map[string]interface{} `json:"settings,omitempty"`
+}
+
+// nullTestRequest is a request that serializes to the JSON null value.
+type nullTestRequest struct{}
+
+func (nullTestRequest) MarshalJSON() ([]byte, error) {
+	return []byte("null"), nil
+}
+
+func readRequestBody(t *testing.T, reader io.Reader) string {
+	require.NotNil(t, reader)
+	body, err := io.ReadAll(reader)
+	require.NoError(t, err)
+	return string(body)
+}
+
+func TestNewRequestBodyWithBodyProperties(t *testing.T) {
+	t.Run("without body properties marshals request unchanged", func(t *testing.T) {
+		request := &BodyPropertiesTestRequest{Name: "voice"}
+		reader, err := newRequestBody(request, nil, contentType)
+		require.NoError(t, err)
+		assert.Equal(t, `{"name":"voice"}`, readRequestBody(t, reader))
+	})
+
+	t.Run("adds new properties after declared properties", func(t *testing.T) {
+		request := &BodyPropertiesTestRequest{Name: "voice"}
+		reader, err := newRequestBody(request, map[string]interface{}{
+			"beta_flag": true,
+			"another":   1,
+		}, contentType)
+		require.NoError(t, err)
+		assert.Equal(t, `{"name":"voice","another":1,"beta_flag":true}`, readRequestBody(t, reader))
+	})
+
+	t.Run("overrides a set field in place", func(t *testing.T) {
+		model := "v1"
+		request := &BodyPropertiesTestRequest{Name: "voice", Model: &model}
+		reader, err := newRequestBody(request, map[string]interface{}{
+			"name": "override",
+		}, contentType)
+		require.NoError(t, err)
+		assert.Equal(t, `{"name":"override","model":"v1"}`, readRequestBody(t, reader))
+	})
+
+	t.Run("overrides an unset omitempty field", func(t *testing.T) {
+		request := &BodyPropertiesTestRequest{Name: "voice"}
+		reader, err := newRequestBody(request, map[string]interface{}{
+			"model": "v2",
+		}, contentType)
+		require.NoError(t, err)
+		assert.Equal(t, `{"name":"voice","model":"v2"}`, readRequestBody(t, reader))
+	})
+
+	t.Run("overrides with explicit null", func(t *testing.T) {
+		model := "v1"
+		request := &BodyPropertiesTestRequest{Name: "voice", Model: &model}
+		reader, err := newRequestBody(request, map[string]interface{}{
+			"model": nil,
+		}, contentType)
+		require.NoError(t, err)
+		assert.Equal(t, `{"name":"voice","model":null}`, readRequestBody(t, reader))
+	})
+
+	t.Run("replaces nested values without deep merging", func(t *testing.T) {
+		request := &BodyPropertiesTestRequest{
+			Name: "voice",
+			Settings: map[string]interface{}{
+				"stability": 0.5,
+				"style":     0.1,
+			},
+		}
+		reader, err := newRequestBody(request, map[string]interface{}{
+			"settings": map[string]interface{}{
+				"stability": 0.9,
+			},
+			"metadata": map[string]interface{}{
+				"tags": []interface{}{"a", "b"},
+			},
+		}, contentType)
+		require.NoError(t, err)
+		assert.Equal(
+			t,
+			`{"name":"voice","settings":{"stability":0.9},"metadata":{"tags":["a","b"]}}`,
+			readRequestBody(t, reader),
+		)
+	})
+
+	t.Run("nil request uses body properties as the body", func(t *testing.T) {
+		reader, err := newRequestBody(nil, map[string]interface{}{
+			"name": "voice",
+		}, contentType)
+		require.NoError(t, err)
+		assert.Equal(t, `{"name":"voice"}`, readRequestBody(t, reader))
+	})
+
+	t.Run("typed nil request uses body properties as the body", func(t *testing.T) {
+		var request *BodyPropertiesTestRequest
+		reader, err := newRequestBody(request, map[string]interface{}{
+			"name": "voice",
+		}, contentType)
+		require.NoError(t, err)
+		assert.Equal(t, `{"name":"voice"}`, readRequestBody(t, reader))
+	})
+
+	t.Run("nil request without body properties has no body", func(t *testing.T) {
+		reader, err := newRequestBody(nil, nil, contentType)
+		require.NoError(t, err)
+		assert.Nil(t, reader)
+	})
+
+	t.Run("request that serializes to null uses body properties as the body", func(t *testing.T) {
+		reader, err := newRequestBody(nullTestRequest{}, map[string]interface{}{
+			"name": "voice",
+		}, contentType)
+		require.NoError(t, err)
+		assert.Equal(t, `{"name":"voice"}`, readRequestBody(t, reader))
+	})
+
+	t.Run("non-object request is sent unchanged", func(t *testing.T) {
+		reader, err := newRequestBody([]string{"a", "b"}, map[string]interface{}{
+			"name": "voice",
+		}, contentType)
+		require.NoError(t, err)
+		assert.Equal(t, `["a","b"]`, readRequestBody(t, reader))
+	})
+
+	t.Run("io.Reader request is sent unchanged", func(t *testing.T) {
+		reader, err := newRequestBody(bytes.NewBufferString("raw"), map[string]interface{}{
+			"name": "voice",
+		}, contentType)
+		require.NoError(t, err)
+		assert.Equal(t, "raw", readRequestBody(t, reader))
+	})
+
+	t.Run("form URL encoded body properties override declared fields", func(t *testing.T) {
+		request := &FormURLEncodedTestRequest{
+			ClientID:     "test_client_id",
+			ClientSecret: "test_client_secret",
+		}
+		reader, err := newRequestBody(request, map[string]interface{}{
+			"client_id": "override",
+			"audience":  "api",
+		}, contentTypeFormURLEncoded)
+		require.NoError(t, err)
+		values, err := url.ParseQuery(readRequestBody(t, reader))
+		require.NoError(t, err)
+		assert.Equal(t, "override", values.Get("client_id"))
+		assert.Equal(t, "test_client_secret", values.Get("client_secret"))
+		assert.Equal(t, "api", values.Get("audience"))
 	})
 }

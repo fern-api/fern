@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "../../../seed"
+
 module Seed
   module Nullable
     module Types
@@ -10,7 +12,7 @@ module Seed
 
         field :avatar, -> { String }, optional: false, nullable: true
 
-        field :activated, -> { Internal::Types::Boolean }, optional: true, nullable: false
+        field :activated, -> { Internal::Types::Boolean }, optional: true, nullable: true
 
         field :status, -> { Seed::Nullable::Types::Status }, optional: false, nullable: false
 

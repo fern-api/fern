@@ -1,11 +1,13 @@
 import { collectAPIWorkspaceViolations } from "@fern-api/api-workspace-validator";
-import { DEFINITION_DIRECTORY, ROOT_API_FILENAME } from "@fern-api/configuration-loader";
+import { DEFINITION_DIRECTORY, ROOT_API_FILENAME, SDK_CONFIG_FILENAME } from "@fern-api/configuration-loader";
 import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { LazyFernWorkspace, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { Project } from "@fern-api/project-loader";
 import { CliError } from "@fern-api/task-context";
 import { CliContext } from "../../cli-context/CliContext.js";
+import { type CreatedSdkConfigWorkspace, createSdkConfigWorkspace } from "../generate/createSdkConfigWorkspace.js";
+import { assertNoSdkConfigDirectRubyGemsPublishing, loadSdkConfigV1 } from "../generate/loadSdkConfigV1.js";
 import { buildCheckJsonResult } from "./buildCheckJsonResult.js";
 import { ApiValidationResult, DocsValidationResult, printCheckReport } from "./printCheckReport.js";
 import { collectDocsWorkspaceViolations } from "./validateDocsWorkspaceAndLogIssues.js";
@@ -35,6 +37,15 @@ export async function validateWorkspaces({
      */
     commandLineApiWorkspace?: string;
 }): Promise<void> {
+    const preparedSdkConfigWorkspaces = await prepareSdkConfigWorkspacesForValidation({
+        project,
+        cliContext,
+        commandLineApiWorkspace
+    });
+    const projectForValidation: Project = {
+        ...project,
+        apiWorkspaces: [...project.apiWorkspaces, ...preparedSdkConfigWorkspaces.map(({ workspace }) => workspace)]
+    };
     const apiResults: ApiValidationResult[] = [];
     let docsResult: DocsValidationResult | undefined;
     let hasAnyErrors = false;
@@ -42,24 +53,26 @@ export async function validateWorkspaces({
 
     const apiWorkspacesToValidate =
         commandLineApiWorkspace != null
-            ? project.apiWorkspaces.filter((workspace) => workspace.workspaceName === commandLineApiWorkspace)
-            : project.apiWorkspaces;
+            ? projectForValidation.apiWorkspaces.filter(
+                  (workspace) => workspace.workspaceName === commandLineApiWorkspace
+              )
+            : projectForValidation.apiWorkspaces;
 
     let hasErrors = false;
 
     try {
         // Collect docs violations first (using runTaskForWorkspace to preserve [docs]: prefix for fatal errors)
-        const docsWorkspace = project.docsWorkspaces;
+        const docsWorkspace = projectForValidation.docsWorkspaces;
         if (docsWorkspace != null) {
             const excludeRules = brokenLinks || errorOnBrokenLinks ? [] : ["valid-markdown-links"];
-            const ossWorkspaces = await filterOssWorkspaces(project);
+            const ossWorkspaces = await filterOssWorkspaces(projectForValidation);
 
             let collected: Awaited<ReturnType<typeof collectDocsWorkspaceViolations>> | undefined;
             await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
                 collected = await collectDocsWorkspaceViolations({
                     workspace: docsWorkspace,
                     context,
-                    apiWorkspaces: project.apiWorkspaces,
+                    apiWorkspaces: projectForValidation.apiWorkspaces,
                     ossWorkspaces,
                     errorOnBrokenLinks,
                     excludeRules
@@ -176,6 +189,7 @@ export async function validateWorkspaces({
         }
         throw error;
     } finally {
+        await Promise.all(preparedSdkConfigWorkspaces.map(({ cleanup }) => cleanup()));
         const allViolations = [...apiResults.flatMap((r) => r.violations), ...(docsResult?.violations ?? [])];
         const firedRules = [
             ...new Set(allViolations.map((v) => v.name).filter((name): name is string => name != null))
@@ -192,5 +206,62 @@ export async function validateWorkspaces({
                 abortReason
             }
         });
+    }
+}
+
+/**
+ * `loadProject` classifies a directory that has both generators.yml and sdk-config.yml as an API workspace rather
+ * than an SDK Config workspace, so it never reaches {@link prepareSdkConfigWorkspacesForValidation}. `fern generate`
+ * still reads that sdk-config.yml (see `prepareSdkConfigGenerations` in generateAPIWorkspaces.ts) and rejects direct
+ * RubyGems publishing in it, so check those files through the same loader. The generators.yml side is covered by the
+ * `no-direct-rubygems-publishing` rule.
+ */
+async function assertNoDirectRubyGemsPublishingInApiWorkspaceSdkConfigs(
+    apiWorkspaces: Project["apiWorkspaces"]
+): Promise<void> {
+    for (const workspace of apiWorkspaces) {
+        const absolutePathToConfig = join(workspace.absoluteFilePath, RelativeFilePath.of(SDK_CONFIG_FILENAME));
+        if (await doesPathExist(absolutePathToConfig)) {
+            assertNoSdkConfigDirectRubyGemsPublishing(await loadSdkConfigV1(absolutePathToConfig, true));
+        }
+    }
+}
+
+async function prepareSdkConfigWorkspacesForValidation({
+    project,
+    cliContext,
+    commandLineApiWorkspace
+}: {
+    project: Project;
+    cliContext: CliContext;
+    commandLineApiWorkspace: string | undefined;
+}): Promise<CreatedSdkConfigWorkspace[]> {
+    await assertNoDirectRubyGemsPublishingInApiWorkspaceSdkConfigs(
+        commandLineApiWorkspace != null
+            ? project.apiWorkspaces.filter((workspace) => workspace.workspaceName === commandLineApiWorkspace)
+            : project.apiWorkspaces
+    );
+    const prepared: CreatedSdkConfigWorkspace[] = [];
+    try {
+        for (const workspace of project.sdkConfigWorkspaces ?? []) {
+            const absolutePathToConfig = join(workspace.absoluteFilePath, RelativeFilePath.of(SDK_CONFIG_FILENAME));
+            const loaded = await loadSdkConfigV1(absolutePathToConfig, true);
+            assertNoSdkConfigDirectRubyGemsPublishing(loaded);
+            prepared.push(
+                await cliContext.runTask((context) =>
+                    createSdkConfigWorkspace({
+                        sdkConfig: loaded.config,
+                        absolutePathToConfig: loaded.absolutePath,
+                        cliVersion: cliContext.environment.packageVersion,
+                        workspaceName: workspace.workspaceName,
+                        context
+                    })
+                )
+            );
+        }
+        return prepared;
+    } catch (error) {
+        await Promise.all(prepared.map(({ cleanup }) => cleanup()));
+        throw error;
     }
 }

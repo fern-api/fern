@@ -8,7 +8,7 @@ import com.seed.unknownAsAny.core.Suppliers;
 import com.seed.unknownAsAny.resources.unknown.UnknownClient;
 import java.util.function.Supplier;
 
-public class SeedUnknownAsAnyClient {
+public class SeedUnknownAsAnyClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<UnknownClient> unknownClient;
@@ -20,6 +20,16 @@ public class SeedUnknownAsAnyClient {
 
     public UnknownClient unknown() {
         return this.unknownClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static SeedUnknownAsAnyClientBuilder builder() {

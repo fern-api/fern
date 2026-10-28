@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    The `x-displayName` extension on OpenAPI tags now sets the API Reference section name
+    in the v3 parser. Previously it was only applied when the display name differed from
+    the tag by letter casing, so a display name such as `Plants` for tag `plant`, or any
+    multi-word tag, fell back to the title-cased tag name.
+  type: fix

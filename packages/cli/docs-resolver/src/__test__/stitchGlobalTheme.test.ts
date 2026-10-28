@@ -227,6 +227,26 @@ describe("mergeThemeOverride", () => {
         });
     });
 
+    it("camelCases theme keys but preserves basepath keys in site-switcher labels", () => {
+        const globalTheme = {
+            theme: {
+                "site-switcher": {
+                    enabled: true,
+                    "show-products": true,
+                    labels: { "/holoscan/sdk-user-guide": "Holoscan SDK" }
+                }
+            }
+        };
+        const result = mergeThemeOverride({} as never, globalTheme) as unknown as Record<string, unknown>;
+        expect(result.theme).toEqual({
+            siteSwitcher: {
+                enabled: true,
+                showProducts: true,
+                labels: { "/holoscan/sdk-user-guide": "Holoscan SDK" }
+            }
+        });
+    });
+
     it("global scalar replaces local scalar (favicon)", () => {
         const local = { favicon: "local-favicon.ico" } as never;
         const result = mergeThemeOverride(local, { favicon: "global-favicon.ico" }) as unknown as Record<
@@ -337,6 +357,57 @@ describe("resolveThemeFileUrls (non-presigned)", () => {
         const config = { favicon: "https://example.com/favicon.ico" };
         await resolveThemeFileUrls(config, "/tmp/test");
         expect(config).toEqual({ favicon: "https://example.com/favicon.ico" });
+    });
+});
+
+// ---------------------------------------------------------------------------
+// resolveThemeFileUrls — presigned downloads
+// ---------------------------------------------------------------------------
+
+describe("resolveThemeFileUrls (presigned)", () => {
+    let dir: string;
+
+    function presigned(filename: string): string {
+        const rcd = encodeURIComponent(`attachment; filename="${filename}"`);
+        return `https://s3.example.com/cas/abc?X-Amz-Signature=sig&response-content-disposition=${rcd}`;
+    }
+
+    beforeEach(async () => {
+        dir = await mkdtemp(path.join(tmpdir(), "fern-theme-test-"));
+        vi.stubGlobal(
+            "fetch",
+            vi.fn().mockResolvedValue({
+                ok: true,
+                status: 200,
+                headers: { get: () => null },
+                arrayBuffer: () => Promise.resolve(new TextEncoder().encode("data").buffer)
+            })
+        );
+    });
+
+    afterEach(async () => {
+        vi.unstubAllGlobals();
+        await rm(dir, { recursive: true, force: true });
+    });
+
+    it("downloads plain-string js entries that are presigned", async () => {
+        const result = await resolveThemeFileUrls({ js: presigned("app.js") }, dir);
+        expect(result.js).toEqual([path.join(dir, "app.js")]);
+    });
+
+    it("never writes outside the target directory", async () => {
+        const result = await resolveThemeFileUrls({ favicon: presigned("../../evil.ico") }, dir);
+        expect(result.favicon).toBe(path.join(dir, "evil.ico"));
+    });
+
+    it("keeps colliding basenames as distinct files", async () => {
+        const result = await resolveThemeFileUrls(
+            { logo: { dark: presigned("logo.svg"), light: presigned("logo.svg") } },
+            dir
+        );
+        const logo = result.logo as Record<string, string>;
+        expect(logo.dark).toBe(path.join(dir, "logo.svg"));
+        expect(logo.light).toBe(path.join(dir, "logo-1.svg"));
     });
 });
 

@@ -80,7 +80,6 @@ public final class StatusResponse {
     public static final class Builder implements StatusStage, _FinalStage {
         private String status;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -101,6 +100,14 @@ public final class StatusResponse {
         @java.lang.Override
         public StatusResponse build() {
             return new StatusResponse(status, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("status")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

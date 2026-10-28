@@ -250,6 +250,8 @@ export class Generation {
         includePlatformHeaders: () => this.customConfig["include-platform-headers"] ?? false,
         /** When true, exposes an `AppInfo` client option whose sanitized product token is appended to the `User-Agent` header (RFC 9110). Default: false. Independent of includePlatformHeaders; still subject to omitFernHeaders. */
         allowUserAgentAppInfo: () => this.customConfig["allow-user-agent-app-info"] ?? false,
+        /** When true, sends only the `User-Agent` platform header, omitting X-Fern-Language and X-Fern-SDK-Name/Version. Default: false. Still subject to omitFernHeaders. */
+        userAgentOnly: () => this.customConfig["user-agent-only"] ?? false,
         /** When true, falls back to `<NuGetPackageId>/<version>` for the `User-Agent` header when the IR doesn't supply one. Default: false. */
         userAgentNameFromPackage: () => this.customConfig["user-agent-name-from-package"] ?? false,
         /** When true, moves auth params and IR headers into ClientOptions so the constructor takes only named arguments. Default: false. */
@@ -718,6 +720,32 @@ export class Generation {
             this.csharp.classReference({
                 origin: this.model.staticExplicit("DateTimeSerializer"),
                 namespace: this.namespaces.core
+            }),
+        /** Utility methods for XML serialization/deserialization */
+        XmlUtils: () =>
+            this.csharp.classReference({
+                origin: this.model.staticExplicit("XmlUtils"),
+                namespace: this.namespaces.core
+            }),
+        /** Generic XML element used to carry unknown child elements */
+        XmlElement: () =>
+            this.csharp.classReference({
+                origin: this.model.staticExplicit("XmlElement"),
+                namespace: this.namespaces.publicCore,
+                isReferenceType: true
+            }),
+        /** XML comment node held in an element's ordered content */
+        XmlComment: () =>
+            this.csharp.classReference({
+                origin: this.model.staticExplicit("XmlComment"),
+                namespace: this.namespaces.publicCore,
+                isReferenceType: true
+            }),
+        /** Interface implemented by XML-encoded models */
+        IXmlNode: () =>
+            this.csharp.classReference({
+                origin: this.model.staticExplicit("IXmlNode"),
+                namespace: this.namespaces.publicCore
             }),
         /** Utility methods for JSON serialization/deserialization */
         JsonUtils: () =>

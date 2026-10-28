@@ -1,0 +1,6 @@
+- summary: |
+    C/C++ library docs: unqualified member references inside a namespace now resolve
+    against the enclosing scopes; function-pointer parameters of callback typedefs are
+    documented; and libraries with C++-only root members (`constexpr`, scoped enums,
+    `noexcept`) keep `using` typedef syntax.
+  type: fix

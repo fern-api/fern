@@ -57,18 +57,21 @@ class BaseClientWrapper:
         if not security:
             return {}
         available_auth_headers: typing.Dict[str, typing.Dict[str, str]] = {}
-        _token = self._get_token()
-        if _token is not None:
-            available_auth_headers["Bearer"] = {"Authorization": f"Bearer {_token}"}
-            available_auth_headers["OAuth"] = {"Authorization": f"Bearer {_token}"}
+        _required_scheme_keys = {scheme_key for requirement in security for scheme_key in requirement}
+        if "Bearer" in _required_scheme_keys or "OAuth" in _required_scheme_keys:
+            _token = self._get_token()
+            if _token is not None:
+                available_auth_headers["Bearer"] = {"Authorization": f"Bearer {_token}"}
+                available_auth_headers["OAuth"] = {"Authorization": f"Bearer {_token}"}
         if self.api_key is not None:
             available_auth_headers["ApiKey"] = {"X-API-Key": self.api_key}
         _username = self._get_username()
         _password = self._get_password()
         if _username is not None and _password is not None:
             available_auth_headers["Basic"] = {"Authorization": httpx.BasicAuth(_username, _password)._auth_header}
-        if self._auth_headers is not None:
-            available_auth_headers["InferredAuth"] = dict(self._auth_headers())
+        if "InferredAuth" in _required_scheme_keys:
+            if self._auth_headers is not None:
+                available_auth_headers["InferredAuth"] = dict(self._auth_headers())
         for requirement in security:
             if all(scheme_key in available_auth_headers for scheme_key in requirement):
                 combined_headers: typing.Dict[str, str] = {}
@@ -219,24 +222,27 @@ class AsyncClientWrapper(BaseClientWrapper):
         if not security:
             return {}
         available_auth_headers: typing.Dict[str, typing.Dict[str, str]] = {}
-        _token: typing.Optional[str]
-        if self._async_token is not None:
-            _token = await self._async_token()
-        else:
-            _token = self._get_token()
-        if _token is not None:
-            available_auth_headers["Bearer"] = {"Authorization": f"Bearer {_token}"}
-            available_auth_headers["OAuth"] = {"Authorization": f"Bearer {_token}"}
+        _required_scheme_keys = {scheme_key for requirement in security for scheme_key in requirement}
+        if "Bearer" in _required_scheme_keys or "OAuth" in _required_scheme_keys:
+            _token: typing.Optional[str]
+            if self._async_token is not None:
+                _token = await self._async_token()
+            else:
+                _token = self._get_token()
+            if _token is not None:
+                available_auth_headers["Bearer"] = {"Authorization": f"Bearer {_token}"}
+                available_auth_headers["OAuth"] = {"Authorization": f"Bearer {_token}"}
         if self.api_key is not None:
             available_auth_headers["ApiKey"] = {"X-API-Key": self.api_key}
         _username = self._get_username()
         _password = self._get_password()
         if _username is not None and _password is not None:
             available_auth_headers["Basic"] = {"Authorization": httpx.BasicAuth(_username, _password)._auth_header}
-        if self._async_auth_headers is not None:
-            available_auth_headers["InferredAuth"] = dict(await self._async_auth_headers())
-        elif self._auth_headers is not None:
-            available_auth_headers["InferredAuth"] = dict(self._auth_headers())
+        if "InferredAuth" in _required_scheme_keys:
+            if self._async_auth_headers is not None:
+                available_auth_headers["InferredAuth"] = dict(await self._async_auth_headers())
+            elif self._auth_headers is not None:
+                available_auth_headers["InferredAuth"] = dict(self._auth_headers())
         for requirement in security:
             if all(scheme_key in available_auth_headers for scheme_key in requirement):
                 combined_headers: typing.Dict[str, str] = {}

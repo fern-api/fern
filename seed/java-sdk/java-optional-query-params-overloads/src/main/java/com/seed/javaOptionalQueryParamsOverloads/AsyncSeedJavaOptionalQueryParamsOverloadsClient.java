@@ -5,13 +5,14 @@ package com.seed.javaOptionalQueryParamsOverloads;
 
 import com.seed.javaOptionalQueryParamsOverloads.core.ClientOptions;
 import com.seed.javaOptionalQueryParamsOverloads.core.RequestOptions;
+import com.seed.javaOptionalQueryParamsOverloads.core.SeedJavaOptionalQueryParamsOverloadsHttpResponse;
 import com.seed.javaOptionalQueryParamsOverloads.requests.SearchPoliciesRequest;
 import com.seed.javaOptionalQueryParamsOverloads.requests.UserGetLatestInsuranceRequest;
 import com.seed.javaOptionalQueryParamsOverloads.types.InsurancePolicy;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-public class AsyncSeedJavaOptionalQueryParamsOverloadsClient {
+public class AsyncSeedJavaOptionalQueryParamsOverloadsClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final AsyncRawSeedJavaOptionalQueryParamsOverloadsClient rawClient;
@@ -32,21 +33,45 @@ public class AsyncSeedJavaOptionalQueryParamsOverloadsClient {
      * Get latest insurance for a user. All query params are optional.
      */
     public CompletableFuture<InsurancePolicy> getLatestInsurance(String userId) {
-        return this.rawClient.getLatestInsurance(userId).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaOptionalQueryParamsOverloadsHttpResponse<InsurancePolicy>> rawFuture =
+                this.rawClient.getLatestInsurance(userId);
+        CompletableFuture<InsurancePolicy> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Get latest insurance for a user. All query params are optional.
      */
     public CompletableFuture<InsurancePolicy> getLatestInsurance(String userId, RequestOptions requestOptions) {
-        return this.rawClient.getLatestInsurance(userId, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaOptionalQueryParamsOverloadsHttpResponse<InsurancePolicy>> rawFuture =
+                this.rawClient.getLatestInsurance(userId, requestOptions);
+        CompletableFuture<InsurancePolicy> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Get latest insurance for a user. All query params are optional.
      */
     public CompletableFuture<InsurancePolicy> getLatestInsurance(String userId, UserGetLatestInsuranceRequest request) {
-        return this.rawClient.getLatestInsurance(userId, request).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaOptionalQueryParamsOverloadsHttpResponse<InsurancePolicy>> rawFuture =
+                this.rawClient.getLatestInsurance(userId, request);
+        CompletableFuture<InsurancePolicy> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -54,16 +79,30 @@ public class AsyncSeedJavaOptionalQueryParamsOverloadsClient {
      */
     public CompletableFuture<InsurancePolicy> getLatestInsurance(
             String userId, UserGetLatestInsuranceRequest request, RequestOptions requestOptions) {
-        return this.rawClient
-                .getLatestInsurance(userId, request, requestOptions)
-                .thenApply(response -> response.body());
+        CompletableFuture<SeedJavaOptionalQueryParamsOverloadsHttpResponse<InsurancePolicy>> rawFuture =
+                this.rawClient.getLatestInsurance(userId, request, requestOptions);
+        CompletableFuture<InsurancePolicy> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * Search policies with required query params
      */
     public CompletableFuture<List<InsurancePolicy>> searchPolicies(SearchPoliciesRequest request) {
-        return this.rawClient.searchPolicies(request).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaOptionalQueryParamsOverloadsHttpResponse<List<InsurancePolicy>>> rawFuture =
+                this.rawClient.searchPolicies(request);
+        CompletableFuture<List<InsurancePolicy>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
@@ -71,21 +110,55 @@ public class AsyncSeedJavaOptionalQueryParamsOverloadsClient {
      */
     public CompletableFuture<List<InsurancePolicy>> searchPolicies(
             SearchPoliciesRequest request, RequestOptions requestOptions) {
-        return this.rawClient.searchPolicies(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaOptionalQueryParamsOverloadsHttpResponse<List<InsurancePolicy>>> rawFuture =
+                this.rawClient.searchPolicies(request, requestOptions);
+        CompletableFuture<List<InsurancePolicy>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * List all policies
      */
     public CompletableFuture<List<InsurancePolicy>> listAllPolicies() {
-        return this.rawClient.listAllPolicies().thenApply(response -> response.body());
+        CompletableFuture<SeedJavaOptionalQueryParamsOverloadsHttpResponse<List<InsurancePolicy>>> rawFuture =
+                this.rawClient.listAllPolicies();
+        CompletableFuture<List<InsurancePolicy>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     /**
      * List all policies
      */
     public CompletableFuture<List<InsurancePolicy>> listAllPolicies(RequestOptions requestOptions) {
-        return this.rawClient.listAllPolicies(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedJavaOptionalQueryParamsOverloadsHttpResponse<List<InsurancePolicy>>> rawFuture =
+                this.rawClient.listAllPolicies(requestOptions);
+        CompletableFuture<List<InsurancePolicy>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedJavaOptionalQueryParamsOverloadsClientBuilder builder() {

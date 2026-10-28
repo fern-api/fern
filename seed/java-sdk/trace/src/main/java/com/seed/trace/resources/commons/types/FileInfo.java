@@ -94,7 +94,6 @@ public final class FileInfo {
 
         private String contents;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -123,6 +122,14 @@ public final class FileInfo {
         @java.lang.Override
         public FileInfo build() {
             return new FileInfo(filename, contents, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("filename") || key.equalsIgnoreCase("contents")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

@@ -65,7 +65,7 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from seed import AsyncSeedPythonPositionalSingleProperty
+from seed import AsyncSeedPythonPositionalSingleProperty, BondSingleLeg, Isin, Quantity, TakerParty, Trader
 
 client = AsyncSeedPythonPositionalSingleProperty(
     base_url="https://yourhost.com/path/to/api",

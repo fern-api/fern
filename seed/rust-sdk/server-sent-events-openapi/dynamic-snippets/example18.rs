@@ -8,11 +8,10 @@ async fn main() {
     };
     let client = ApiClient::new(config).expect("Failed to build client");
     client
-        .stream_x_fern_streaming_shared_schema_stream(
-            &StreamXFernStreamingSharedSchemaStreamRequest {
-                prompt: "prompt".to_string(),
-                model: "model".to_string(),
-                stream: true,
+        .stream_x_fern_streaming_condition(
+            &StreamXFernStreamingConditionRequest {
+                query: "query".to_string(),
+                stream: false,
             },
             None,
         )

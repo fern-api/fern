@@ -1,0 +1,45 @@
+{
+  "type": "object",
+  "properties": {
+    "nickname": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "id": {
+      "type": "string"
+    },
+    "created_at": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date-time"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "legacy_tag": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "nickname",
+    "id"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

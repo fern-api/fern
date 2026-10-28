@@ -2,7 +2,10 @@ import { assertNever } from "@fern-api/core-utils";
 import type { DocsV1Write } from "@fern-api/fdr-sdk";
 import type { FileManifestEntry, ImageRef, LedgerConfig, PathOrUrl } from "@fern-api/fdr-sdk/orpc-client";
 
-type DocsConfig = DocsV1Write.DocsConfig;
+// TODO: Drop the `embedding` shim once the published @fern-api/fdr-sdk
+// DocsConfig / LedgerConfig types include it.
+type EmbeddingConfig = { allowedOrigins: string[] };
+type DocsConfig = DocsV1Write.DocsConfig & { embedding?: EmbeddingConfig };
 
 /**
  * Resolve a FileId reference produced by the classic docs publish flow
@@ -218,11 +221,15 @@ function mapAgents(agents: DocsConfig["agents"]): LedgerConfig["agents"] {
     // llmsTxt / llmsFullTxt are intentionally dropped — the ledger contract
     // serves these well-known files by convention via file artifact lookup
     // (see LedgerConfigSchema doc comment in docs-ledger/contract.ts).
-    return {
+    const mapped: NonNullable<LedgerConfig["agents"]> = {
         pageDirective: agents.pageDirective,
         pageDescriptionSource: agents.pageDescriptionSource,
         siteDescription: agents.siteDescription
     };
+    // TODO: drop this untyped read once the published fdr-sdk types include
+    // `agents.robotsTxtOnInstanceUrl` (docs.yml `experimental.robots-txt-on-instance-url`).
+    const { robotsTxtOnInstanceUrl } = agents as { robotsTxtOnInstanceUrl?: boolean };
+    return robotsTxtOnInstanceUrl != null ? Object.assign(mapped, { robotsTxtOnInstanceUrl }) : mapped;
 }
 
 function mapIntegrations(integrations: DocsConfig["integrations"]): LedgerConfig["integrations"] {
@@ -274,7 +281,10 @@ export function mapDocsConfigToLedgerConfig({
     fileManifest: Record<string, FileManifestEntry> | undefined;
     fileIdToPath: Map<string, string> | undefined;
     editThisPage?: { github?: { owner: string; repo: string; branch?: string; host?: string } };
-}): LedgerConfig & { editThisPageGithub?: { owner: string; repo: string; branch: string; host: string } } {
+}): LedgerConfig & {
+    editThisPageGithub?: { owner: string; repo: string; branch: string; host: string };
+    embedding?: EmbeddingConfig;
+} {
     return {
         title: docsConfig.title,
         defaultLanguage: docsConfig.defaultLanguage,
@@ -300,6 +310,7 @@ export function mapDocsConfigToLedgerConfig({
         aiChatConfig: docsConfig.aiChatConfig,
         pageActions: docsConfig.pageActions,
         editThisPageLaunch: docsConfig.editThisPageLaunch,
+        embedding: docsConfig.embedding,
         editThisPageGithub:
             editThisPage?.github != null
                 ? {

@@ -2056,6 +2056,7 @@
                 "response": {
                     "type": "fileDownload"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_assetReport.get": {
@@ -2143,6 +2144,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             }
         },
@@ -2217,6 +2219,7 @@
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": true,
         "idempotencyKeyGeneration": null,
+        "webhookSignatureVerification": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",

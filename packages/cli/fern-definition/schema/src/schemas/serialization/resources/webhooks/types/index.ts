@@ -1,6 +1,7 @@
 export * from "./AsymmetricAlgorithmSchema.js";
 export * from "./AsymmetricSignatureSchema.js";
 export * from "./HmacSignatureSchema.js";
+export * from "./WebhookAlgorithmHeaderSchema.js";
 export * from "./WebhookBodyHashAlgorithmSchema.js";
 export * from "./WebhookBodyHashBindingSchema.js";
 export * from "./WebhookBodyHashLocationSchema.js";

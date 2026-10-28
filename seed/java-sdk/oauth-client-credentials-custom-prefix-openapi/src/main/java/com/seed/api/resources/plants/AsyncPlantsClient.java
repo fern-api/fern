@@ -5,6 +5,7 @@ package com.seed.api.resources.plants;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
+import com.seed.api.core.SeedApiHttpResponse;
 import com.seed.api.resources.plants.requests.GetPlantsRequest;
 import com.seed.api.types.Plant;
 import java.util.List;
@@ -28,26 +29,68 @@ public class AsyncPlantsClient {
     }
 
     public CompletableFuture<List<Plant>> list() {
-        return this.rawClient.list().thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<List<Plant>>> rawFuture = this.rawClient.list();
+        CompletableFuture<List<Plant>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<List<Plant>> list(RequestOptions requestOptions) {
-        return this.rawClient.list(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<List<Plant>>> rawFuture = this.rawClient.list(requestOptions);
+        CompletableFuture<List<Plant>> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Plant> get(String plantId) {
-        return this.rawClient.get(plantId).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Plant>> rawFuture = this.rawClient.get(plantId);
+        CompletableFuture<Plant> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Plant> get(String plantId, RequestOptions requestOptions) {
-        return this.rawClient.get(plantId, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Plant>> rawFuture = this.rawClient.get(plantId, requestOptions);
+        CompletableFuture<Plant> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Plant> get(String plantId, GetPlantsRequest request) {
-        return this.rawClient.get(plantId, request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Plant>> rawFuture = this.rawClient.get(plantId, request);
+        CompletableFuture<Plant> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Plant> get(String plantId, GetPlantsRequest request, RequestOptions requestOptions) {
-        return this.rawClient.get(plantId, request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<Plant>> rawFuture = this.rawClient.get(plantId, request, requestOptions);
+        CompletableFuture<Plant> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

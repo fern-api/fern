@@ -47,7 +47,7 @@ export class ServiceClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/resource/${core.url.encodePathParam(ResourceID)}`,
+                `/resource/${core.url.encodePathParam(ResourceID, errors.SeedMixedCaseError)}`,
             ),
             method: "GET",
             headers: _headers,

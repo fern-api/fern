@@ -3,6 +3,7 @@
 require "json"
 require "net/http"
 require "securerandom"
+require "time"
 
 require_relative "seed/internal/json/serializable"
 require_relative "seed/internal/types/type"
@@ -35,12 +36,7 @@ require_relative "seed/internal/iterators/cursor_item_iterator"
 require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
-require_relative "seed/types/id"
-require_relative "seed/user/types/user"
-require_relative "seed/organization/types/organization"
-require_relative "seed/organization/types/create_organization_request"
-require_relative "seed/user/events/types/event"
-require_relative "seed/user/events/metadata/types/metadata"
+require_relative "seed/errors/connection_error"
 require_relative "seed/client"
 require_relative "seed/organization/client"
 require_relative "seed/user/client"
@@ -49,3 +45,34 @@ require_relative "seed/user/events/client"
 require_relative "seed/user/events/types/list_user_events_request"
 require_relative "seed/user/events/metadata/client"
 require_relative "seed/user/events/metadata/types/get_event_metadata_request"
+
+module Seed
+  module Types
+    autoload :ID, ::File.join(__dir__, "seed/types/id")
+  end
+
+  module User
+    module Types
+      autoload :User, ::File.join(__dir__, "seed/user/types/user")
+    end
+
+    module Events
+      module Types
+        autoload :Event, ::File.join(__dir__, "seed/user/events/types/event")
+      end
+
+      module Metadata
+        module Types
+          autoload :Metadata, ::File.join(__dir__, "seed/user/events/metadata/types/metadata")
+        end
+      end
+    end
+  end
+
+  module Organization
+    module Types
+      autoload :Organization, ::File.join(__dir__, "seed/organization/types/organization")
+      autoload :CreateOrganizationRequest, ::File.join(__dir__, "seed/organization/types/create_organization_request")
+    end
+  end
+end

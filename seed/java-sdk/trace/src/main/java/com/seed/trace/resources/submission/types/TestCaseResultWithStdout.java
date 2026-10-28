@@ -94,7 +94,6 @@ public final class TestCaseResultWithStdout {
 
         private String stdout;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -123,6 +122,14 @@ public final class TestCaseResultWithStdout {
         @java.lang.Override
         public TestCaseResultWithStdout build() {
             return new TestCaseResultWithStdout(result, stdout, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("result") || key.equalsIgnoreCase("stdout")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

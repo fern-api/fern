@@ -1,7 +1,14 @@
 import { describe, expect, it } from "vitest";
 import { z } from "zod";
 
-import { AIChatConfig, DocsConfiguration, ProductFileConfig, VersionFileConfig } from "../DocsYmlSchemas.js";
+import {
+    AIChatConfig,
+    ApiSpecImportSettings,
+    DocsConfiguration,
+    ProductFileConfig,
+    ThemeConfig,
+    VersionFileConfig
+} from "../DocsYmlSchemas.js";
 
 describe("DocsYmlSchemas", () => {
     it("should produce JSON Schema for DocsConfiguration", () => {
@@ -57,6 +64,55 @@ describe("DocsYmlSchemas", () => {
     it("AIChatConfig preserves an explicit mask-pii opt-in", () => {
         expect(AIChatConfig.parse({ "mask-pii": true })["mask-pii"]).toBe(true);
         expect(AIChatConfig.parse({ "mask-pii": false })["mask-pii"]).toBe(false);
+    });
+
+    it("ThemeConfig accepts site-switcher presentation options", () => {
+        const parsed = ThemeConfig.parse({
+            "site-switcher": {
+                enabled: true,
+                order: ["/dynamo", "/nemo"],
+                hide: ["/internal"],
+                labels: { "/holoscan/sdk-user-guide": "Holoscan SDK" },
+                "show-products": true
+            }
+        });
+        expect(parsed["site-switcher"]).toEqual({
+            enabled: true,
+            order: ["/dynamo", "/nemo"],
+            hide: ["/internal"],
+            labels: { "/holoscan/sdk-user-guide": "Holoscan SDK" },
+            "show-products": true
+        });
+        expect(ThemeConfig.parse({})["site-switcher"]).toBeUndefined();
+    });
+
+    it("ThemeConfig accepts supported code-block themes", () => {
+        const parsed = ThemeConfig.parse({
+            "code-blocks": { light: "github-light-default", dark: "github-dark-high-contrast" }
+        });
+        expect(parsed["code-blocks"]).toEqual({ light: "github-light-default", dark: "github-dark-high-contrast" });
+        expect(ThemeConfig.parse({ "code-blocks": { dark: "material-theme-darker" } })["code-blocks"]).toEqual({
+            dark: "material-theme-darker"
+        });
+        expect(ThemeConfig.parse({})["code-blocks"]).toBeUndefined();
+    });
+
+    it("ThemeConfig rejects unsupported code-block themes", () => {
+        expect(ThemeConfig.safeParse({ "code-blocks": { light: "dracula" } }).success).toBe(false);
+    });
+
+    it("validates ensured API error response status codes", () => {
+        const settings = (statusCode: number) => ({
+            "error-responses": {
+                schema: { type: "object" },
+                ensure: [{ "status-code": statusCode }]
+            }
+        });
+
+        expect(ApiSpecImportSettings.safeParse(settings(400)).success).toBe(true);
+        expect(ApiSpecImportSettings.safeParse(settings(599)).success).toBe(true);
+        expect(ApiSpecImportSettings.safeParse(settings(399)).success).toBe(false);
+        expect(ApiSpecImportSettings.safeParse(settings(600)).success).toBe(false);
     });
 
     it("should preserve explicitly configured check rule severities", () => {

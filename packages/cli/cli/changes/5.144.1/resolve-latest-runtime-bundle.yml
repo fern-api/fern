@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Resolve generators.yml `latest` to an exact generator version before preparing and submitting SDK Gen API runtime bundles.
+  type: fix

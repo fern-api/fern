@@ -1,6 +1,6 @@
+import { isHttpUrl } from "@fern-api/core-utils";
 import { wrapWithHttps } from "@fern-api/docs-resolver";
 import { AbsoluteFilePath, dirname, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
-
 import { isDynamicSpecialDocPage } from "./dynamic-special-doc-page.js";
 import { getRedirectForPath } from "./redirect-for-path.js";
 import { addLeadingSlash, removeLeadingSlash, removeTrailingSlash } from "./url-utils.js";
@@ -187,5 +187,5 @@ function withoutAnchors(slug: string): string {
  * which should be considered valid without checking if it exists in the docs navigation.
  */
 function isExternalUrl(path: string): boolean {
-    return path.startsWith("http://") || path.startsWith("https://");
+    return isHttpUrl(path);
 }

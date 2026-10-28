@@ -5,9 +5,11 @@ package com.seed.javaOptionalRequestBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.seed.javaOptionalRequestBody.core.BodyProperties;
 import com.seed.javaOptionalRequestBody.core.ClientOptions;
 import com.seed.javaOptionalRequestBody.core.MediaTypes;
 import com.seed.javaOptionalRequestBody.core.ObjectMappers;
+import com.seed.javaOptionalRequestBody.core.PathSegments;
 import com.seed.javaOptionalRequestBody.core.RequestOptions;
 import com.seed.javaOptionalRequestBody.core.RetryInterceptor;
 import com.seed.javaOptionalRequestBody.core.SeedJavaOptionalRequestBodyApiException;
@@ -68,7 +70,7 @@ public class AsyncRawSeedJavaOptionalRequestBodyClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("refunds")
-                .addPathSegment(id);
+                .addPathSegment(PathSegments.validate(id));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -77,9 +79,12 @@ public class AsyncRawSeedJavaOptionalRequestBodyClient {
         RequestBody body;
         try {
             body = RequestBody.create("", null);
-            if (request != null) {
+            if (request != null
+                    || BodyProperties.isPresent(requestOptions != null ? requestOptions.getBodyProperties() : null)) {
                 body = RequestBody.create(
-                        ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                        ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                                request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                        MediaTypes.APPLICATION_JSON);
             }
         } catch (JsonProcessingException e) {
             throw new SeedJavaOptionalRequestBodyException("Failed to serialize request", e);
@@ -89,7 +94,8 @@ public class AsyncRawSeedJavaOptionalRequestBodyClient {
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json");
-        if (request != null) {
+        if (request != null
+                || BodyProperties.isPresent(requestOptions != null ? requestOptions.getBodyProperties() : null)) {
             _requestBuilder.addHeader("Content-Type", "application/json");
         }
         Request okhttpRequest = _requestBuilder.build();
@@ -107,7 +113,8 @@ public class AsyncRawSeedJavaOptionalRequestBodyClient {
                     .build();
         }
         CompletableFuture<SeedJavaOptionalRequestBodyHttpResponse<Refund>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -134,6 +141,11 @@ public class AsyncRawSeedJavaOptionalRequestBodyClient {
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(
                         new SeedJavaOptionalRequestBodyException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;
@@ -177,9 +189,12 @@ public class AsyncRawSeedJavaOptionalRequestBodyClient {
         RequestBody body;
         try {
             body = RequestBody.create("", null);
-            if (request != null) {
+            if (request != null
+                    || BodyProperties.isPresent(requestOptions != null ? requestOptions.getBodyProperties() : null)) {
                 body = RequestBody.create(
-                        ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                        ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                                request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                        MediaTypes.APPLICATION_JSON);
             }
         } catch (JsonProcessingException e) {
             throw new SeedJavaOptionalRequestBodyException("Failed to serialize request", e);
@@ -189,7 +204,8 @@ public class AsyncRawSeedJavaOptionalRequestBodyClient {
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json");
-        if (request != null) {
+        if (request != null
+                || BodyProperties.isPresent(requestOptions != null ? requestOptions.getBodyProperties() : null)) {
             _requestBuilder.addHeader("Content-Type", "application/json");
         }
         Request okhttpRequest = _requestBuilder.build();
@@ -207,7 +223,8 @@ public class AsyncRawSeedJavaOptionalRequestBodyClient {
                     .build();
         }
         CompletableFuture<SeedJavaOptionalRequestBodyHttpResponse<List<Refund>>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -236,6 +253,11 @@ public class AsyncRawSeedJavaOptionalRequestBodyClient {
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(
                         new SeedJavaOptionalRequestBodyException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;
@@ -281,7 +303,9 @@ public class AsyncRawSeedJavaOptionalRequestBodyClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request.getBody(), requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -310,7 +334,8 @@ public class AsyncRawSeedJavaOptionalRequestBodyClient {
                     .build();
         }
         CompletableFuture<SeedJavaOptionalRequestBodyHttpResponse<Refund>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -337,6 +362,11 @@ public class AsyncRawSeedJavaOptionalRequestBodyClient {
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(
                         new SeedJavaOptionalRequestBodyException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;
@@ -373,7 +403,7 @@ public class AsyncRawSeedJavaOptionalRequestBodyClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("refunds")
-                .addPathSegment(id)
+                .addPathSegment(PathSegments.validate(id))
                 .addPathSegments("exact");
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
@@ -383,9 +413,12 @@ public class AsyncRawSeedJavaOptionalRequestBodyClient {
         RequestBody body;
         try {
             body = RequestBody.create("", null);
-            if (request != null) {
+            if (request != null
+                    || BodyProperties.isPresent(requestOptions != null ? requestOptions.getBodyProperties() : null)) {
                 body = RequestBody.create(
-                        ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                        ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                                request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                        MediaTypes.APPLICATION_JSON);
             }
         } catch (JsonProcessingException e) {
             throw new SeedJavaOptionalRequestBodyException("Failed to serialize request", e);
@@ -395,7 +428,8 @@ public class AsyncRawSeedJavaOptionalRequestBodyClient {
                 .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json");
-        if (request != null) {
+        if (request != null
+                || BodyProperties.isPresent(requestOptions != null ? requestOptions.getBodyProperties() : null)) {
             _requestBuilder.addHeader("Content-Type", "application/json");
         }
         Request okhttpRequest = _requestBuilder.build();
@@ -413,7 +447,8 @@ public class AsyncRawSeedJavaOptionalRequestBodyClient {
                     .build();
         }
         CompletableFuture<SeedJavaOptionalRequestBodyHttpResponse<Refund>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -440,6 +475,11 @@ public class AsyncRawSeedJavaOptionalRequestBodyClient {
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(
                         new SeedJavaOptionalRequestBodyException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;
@@ -476,7 +516,7 @@ public class AsyncRawSeedJavaOptionalRequestBodyClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("refunds")
-                .addPathSegment(id)
+                .addPathSegment(PathSegments.validate(id))
                 .addPathSegments("required");
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
@@ -486,7 +526,9 @@ public class AsyncRawSeedJavaOptionalRequestBodyClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedJavaOptionalRequestBodyException("Failed to serialize request", e);
         }
@@ -511,7 +553,8 @@ public class AsyncRawSeedJavaOptionalRequestBodyClient {
                     .build();
         }
         CompletableFuture<SeedJavaOptionalRequestBodyHttpResponse<Refund>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -538,6 +581,11 @@ public class AsyncRawSeedJavaOptionalRequestBodyClient {
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(
                         new SeedJavaOptionalRequestBodyException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;

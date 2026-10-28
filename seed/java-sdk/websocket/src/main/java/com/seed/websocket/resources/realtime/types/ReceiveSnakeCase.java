@@ -94,7 +94,6 @@ public final class ReceiveSnakeCase {
 
         private int receiveInt;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -123,6 +122,14 @@ public final class ReceiveSnakeCase {
         @java.lang.Override
         public ReceiveSnakeCase build() {
             return new ReceiveSnakeCase(receiveText, receiveInt, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("receive_text") || key.equalsIgnoreCase("receive_int")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

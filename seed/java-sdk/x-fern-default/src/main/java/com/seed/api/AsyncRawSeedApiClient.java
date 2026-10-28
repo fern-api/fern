@@ -6,6 +6,7 @@ package com.seed.api;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.ObjectMappers;
+import com.seed.api.core.PathSegments;
 import com.seed.api.core.QueryStringMapper;
 import com.seed.api.core.RequestOptions;
 import com.seed.api.core.RetryInterceptor;
@@ -51,7 +52,7 @@ public class AsyncRawSeedApiClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("test")
-                .addPathSegment(region)
+                .addPathSegment(PathSegments.validate(region))
                 .addPathSegments("resource");
         QueryStringMapper.addQueryParameter(httpUrl, "limit", request.getLimit().orElse("100"), false);
         if (requestOptions != null) {
@@ -79,7 +80,8 @@ public class AsyncRawSeedApiClient {
                     .build();
         }
         CompletableFuture<SeedApiHttpResponse<TestGetResponse>> future = new CompletableFuture<>();
-        client.newCall(okhttpRequest).enqueue(new Callback() {
+        RetryInterceptor.AsyncCall okhttpCall = RetryInterceptor.newAsyncCall(client, okhttpRequest);
+        okhttpCall.enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
@@ -105,6 +107,11 @@ public class AsyncRawSeedApiClient {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 future.completeExceptionally(new SeedApiException("Network error executing HTTP request", e));
+            }
+        });
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                okhttpCall.cancel();
             }
         });
         return future;

@@ -130,7 +130,6 @@ public final class User {
 
         private Optional<Object> deletedAt = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -196,6 +195,14 @@ public final class User {
         @java.lang.Override
         public User build() {
             return new User(id, name, deletedAt, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("id") || key.equalsIgnoreCase("name") || key.equalsIgnoreCase("deleted_at")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

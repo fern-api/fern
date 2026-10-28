@@ -8,7 +8,8 @@ class EndpointsEnumWireTest < WireMockTestCase
 
     @client = Seed::MyClient.new(
       token: "<token>",
-      base_url: WIREMOCK_BASE_URL
+      base_url: WIREMOCK_BASE_URL,
+      max_retries: 0
     )
   end
 
@@ -30,6 +31,13 @@ class EndpointsEnumWireTest < WireMockTestCase
       url_path: "/enum",
       query_params: nil,
       expected: 1
+    )
+
+    verify_request_body(
+      test_id: test_id,
+      method: "POST",
+      url_path: "/enum",
+      expected_body: JSON.parse('"SUNNY"')
     )
   end
 end

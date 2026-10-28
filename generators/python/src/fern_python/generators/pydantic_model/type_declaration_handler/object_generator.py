@@ -17,6 +17,7 @@ class ObjectProperty:
     name: Union[str, ir_types.NameAndWireValue]
     value_type: ir_types.TypeReference
     docs: Optional[str]
+    xml: Optional[ir_types.XmlPropertyEncoding] = None
 
 
 class AbstractObjectGenerator(AbstractTypeGenerator, ABC):

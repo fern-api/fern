@@ -1,0 +1,6 @@
+- summary: |
+    Bump bundled @fern-api/generator-cli to 0.10.3. When the hosted auto-version analysis of the
+    full SDK diff fails, generator-cli now retries chunk-by-chunk instead of silently applying a
+    PATCH bump; any remaining unavailable or incomplete analysis adds a "Version bump not verified"
+    notice to the SDK PR body and disables automerge.
+  type: chore

@@ -1,7 +1,7 @@
 import stripAnsi from "strip-ansi";
 
 import { runFernCli } from "../../utils/runFernCli.js";
-import { init } from "../init/init.js";
+import { init, LEGACY_CONFIG_ENV } from "../init/init.js";
 
 const envWithCI = {
     CI: "true"
@@ -9,7 +9,7 @@ const envWithCI = {
 
 describe("output directory prompts", () => {
     it("doesn't show prompts for CI environment", async ({ signal }) => {
-        const pathOfDirectory = await init({ signal });
+        const pathOfDirectory = await init({ env: LEGACY_CONFIG_ENV, signal });
 
         const { stdout } = await runFernCli(["generate", "--local", "--keepDocker"], {
             cwd: pathOfDirectory,

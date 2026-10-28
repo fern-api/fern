@@ -151905,7 +151905,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -151986,6 +151987,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": false,
                 "examples": null
             },
             "endpoint_admin.updateTestSubmissionStatus": {
@@ -152010,7 +152012,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -152126,6 +152129,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": false,
                 "examples": null
             },
             "endpoint_admin.sendTestSubmissionUpdate": {
@@ -152150,7 +152154,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -152266,6 +152271,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": false,
                 "examples": null
             },
             "endpoint_admin.updateWorkspaceSubmissionStatus": {
@@ -152290,7 +152296,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -152406,6 +152413,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": false,
                 "examples": null
             },
             "endpoint_admin.sendWorkspaceSubmissionUpdate": {
@@ -152430,7 +152438,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -152546,6 +152555,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": false,
                 "examples": null
             },
             "endpoint_admin.storeTracedTestCase": {
@@ -152570,7 +152580,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -152846,6 +152857,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": false,
                 "examples": null
             },
             "endpoint_admin.storeTracedTestCaseV2": {
@@ -152870,7 +152882,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -153019,6 +153032,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": false,
                 "examples": null
             },
             "endpoint_admin.storeTracedWorkspace": {
@@ -153043,7 +153057,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -153289,6 +153304,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": false,
                 "examples": null
             },
             "endpoint_admin.storeTracedWorkspaceV2": {
@@ -153313,7 +153329,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -153432,6 +153449,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": false,
                 "examples": null
             },
             "endpoint_homepage.getHomepageProblems": {
@@ -153456,7 +153474,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -153535,6 +153554,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_homepage.setHomepageProblems": {
@@ -153559,7 +153579,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -153647,6 +153668,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": false,
                 "examples": null
             },
             "endpoint_migration.getAttemptedMigrations": {
@@ -153671,7 +153693,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -153850,6 +153873,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_playlist.createPlaylist": {
@@ -153874,7 +153898,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -154145,6 +154170,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_playlist.getPlaylists": {
@@ -154169,7 +154195,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -154511,6 +154538,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_playlist.getPlaylist": {
@@ -154535,7 +154563,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -154675,6 +154704,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_playlist.updatePlaylist": {
@@ -154699,7 +154729,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -154848,6 +154879,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_playlist.deletePlaylist": {
@@ -154872,7 +154904,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -155012,6 +155045,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": false,
                 "examples": null
             },
             "endpoint_problem.createProblem": {
@@ -155036,7 +155070,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -155121,6 +155156,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_problem.updateProblem": {
@@ -155145,7 +155181,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -155261,6 +155298,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_problem.deleteProblem": {
@@ -155285,7 +155323,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -155395,6 +155434,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": false,
                 "examples": null
             },
             "endpoint_problem.getDefaultStarterFiles": {
@@ -155419,7 +155459,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -155664,6 +155705,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_submission.createExecutionSession": {
@@ -155688,7 +155730,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -155798,6 +155841,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_submission.getExecutionSession": {
@@ -155822,7 +155866,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -155932,6 +155977,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_submission.stopExecutionSession": {
@@ -155956,7 +156002,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -156066,6 +156113,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": false,
                 "examples": null
             },
             "endpoint_submission.getExecutionSessionsState": {
@@ -156090,7 +156138,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -156169,6 +156218,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_sysprop.setNumWarmInstances": {
@@ -156193,7 +156243,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -156333,6 +156384,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": false,
                 "examples": null
             },
             "endpoint_sysprop.getNumWarmInstances": {
@@ -156357,7 +156409,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -156436,6 +156489,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_v2/problem.getLightweightProblems": {
@@ -156460,7 +156514,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -156578,6 +156633,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_v2/problem.getProblems": {
@@ -156602,7 +156658,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -156720,6 +156777,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_v2/problem.getLatestProblem": {
@@ -156744,7 +156802,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -156893,6 +156952,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_v2/problem.getProblemVersion": {
@@ -156917,7 +156977,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -157096,6 +157157,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_v2/v3/problem.getLightweightProblems": {
@@ -157120,7 +157182,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -157276,6 +157339,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_v2/v3/problem.getProblems": {
@@ -157300,7 +157364,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -157456,6 +157521,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_v2/v3/problem.getLatestProblem": {
@@ -157480,7 +157546,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -157667,6 +157734,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_v2/v3/problem.getProblemVersion": {
@@ -157691,7 +157759,8 @@
                             "safeName": "Token"
                         }
                     },
-                    "wrapperProperty": null
+                    "wrapperProperty": null,
+                    "requirement": "ALL"
                 },
                 "declaration": {
                     "name": {
@@ -157908,6 +157977,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             }
         },
@@ -158507,6 +158577,7 @@
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
         "idempotencyKeyGeneration": null,
+        "webhookSignatureVerification": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",

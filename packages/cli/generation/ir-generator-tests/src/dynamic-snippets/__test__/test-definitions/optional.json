@@ -407,6 +407,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_optional.sendOptionalTypedBody": {
@@ -497,6 +498,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_optional.sendOptionalNullableWithAllOptionalProperties": {
@@ -651,6 +653,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         }
     },

@@ -115,7 +115,6 @@ public final class SearchResourcesRequest {
 
         private Optional<Map<String, Object>> filters = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -183,6 +182,14 @@ public final class SearchResourcesRequest {
 
         public SearchResourcesRequest build() {
             return new SearchResourcesRequest(limit, offset, query, filters, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("query") || key.equalsIgnoreCase("filters")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

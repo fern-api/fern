@@ -194,6 +194,8 @@ module Seed
     #     species: "species",
     #     family: "family",
     #     genus: "genus",
+    #     common_name: "commonName",
+    #     watering_frequency: "daily",
     #     sun_exposure: "full"
     #   )
     #
@@ -233,7 +235,11 @@ module Seed
     # @option request_options [Integer] :timeout_in_seconds
     #
     # @example
-    #   client.create_tree(id: "id")
+    #   client.create_tree(
+    #     id: "id",
+    #     tree_name: "treeName",
+    #     tree_species: "treeSpecies"
+    #   )
     #
     # @return [Seed::Types::TreeRecord]
     def create_tree(request_options: {}, **params)
@@ -261,16 +267,18 @@ module Seed
 
     # @param base_url [String, nil]
     # @param max_retries [Integer]
+    # @param timeout [Numeric]
     #
     # @return [void]
-    def initialize(base_url: nil, max_retries: 2)
+    def initialize(base_url: nil, max_retries: 2, timeout: 60)
       @raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url || Seed::Environment::DEFAULT,
         headers: {
           "User-Agent" => "fern_allof/0.0.1",
           "X-Fern-Language" => "Ruby"
         },
-        max_retries: max_retries
+        max_retries: max_retries,
+        timeout: timeout
       )
     end
   end

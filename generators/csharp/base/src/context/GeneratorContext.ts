@@ -219,6 +219,10 @@ export abstract class GeneratorContext extends AbstractGeneratorContext {
         return Object.values(this.ir.services).some((service) => service.transport?.type === "grpc");
     }
 
+    public hasXmlTypes(): boolean {
+        return Object.values(this.ir.types).some((type) => type.encoding?.xml != null);
+    }
+
     public getIdempotencyHeaders(): HttpHeader[] {
         return this.ir.idempotencyHeaders;
     }

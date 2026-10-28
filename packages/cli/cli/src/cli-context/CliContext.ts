@@ -1,6 +1,8 @@
 import { Log, logErrorMessage, TtyAwareLogger } from "@fern-api/cli-logger";
+import { extractErrorMessage } from "@fern-api/core-utils";
+import { isCI } from "@fern-api/fs-utils";
 import { createLogger, LOG_LEVELS, LogLevel } from "@fern-api/logger";
-import { getPosthogManager, type PosthogManager } from "@fern-api/posthog-manager";
+import { flushFeatureFlagClient, getPosthogManager, type PosthogManager } from "@fern-api/posthog-manager";
 import { Project } from "@fern-api/project-loader";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import {
@@ -16,7 +18,7 @@ import {
 } from "@fern-api/task-context";
 
 import { Workspace } from "@fern-api/workspace-loader";
-import { input, select } from "@inquirer/prompts";
+import { checkbox, input, select } from "@inquirer/prompts";
 import chalk from "chalk";
 import { maxBy } from "lodash-es";
 import {
@@ -136,7 +138,14 @@ export class CliContext {
 
     public failAndThrow(message?: string, error?: unknown, options?: { code?: CliError.Code }): never {
         this.failWithoutThrowing(message, error, options);
-        throw new TaskAbortSignal();
+        throw new TaskAbortSignal(
+            message ??
+                (error instanceof TaskAbortSignal
+                    ? error.failureMessage
+                    : error != null
+                      ? extractErrorMessage(error)
+                      : undefined)
+        );
     }
 
     public failWithoutThrowing(message?: string, error?: unknown, options?: { code?: CliError.Code }): void {
@@ -193,7 +202,7 @@ export class CliContext {
         }
         this.ttyAwareLogger.finish();
         try {
-            await this.posthogManager.flush();
+            await Promise.all([this.posthogManager.flush(), flushFeatureFlagClient()]);
         } catch {
             // Silently swallow – analytics should never block the CLI
         }
@@ -205,7 +214,7 @@ export class CliContext {
     private async nudgeUpgradeIfAvailable() {
         try {
             const upgradeInfo = await Promise.race<[Promise<FernUpgradeInfo>, Promise<never>]>([
-                this.isUpgradeAvailable(),
+                this.isUpgradeAvailable({ skipFeatureFlagRequest: true }),
                 new Promise((_resolve, reject) => setTimeout(() => reject("Request timed out"), 300))
             ]);
 
@@ -282,10 +291,14 @@ export class CliContext {
         try {
             result = await run(context);
         } catch (error) {
+            const failureMessage =
+                error instanceof TaskAbortSignal
+                    ? (error.failureMessage ?? context.getLastFailureMessage())
+                    : extractErrorMessage(error);
             context.failWithoutThrowing(undefined, error);
 
             // We need to throw a TaskAbortSignal to stop execution.
-            throw new TaskAbortSignal();
+            throw new TaskAbortSignal(failureMessage);
         } finally {
             context.finish();
         }
@@ -399,9 +412,12 @@ export class CliContext {
 
     private _isUpgradeAvailable: FernUpgradeInfo | undefined;
     public async isUpgradeAvailable({
-        includePreReleases = false
+        includePreReleases = false,
+        skipFeatureFlagRequest = false
     }: {
         includePreReleases?: boolean;
+        /** Reuse an already-resolved sdk-gen-api flag instead of requesting it (exit-time nudge). */
+        skipFeatureFlagRequest?: boolean;
     } = {}): Promise<FernUpgradeInfo> {
         if (this._isUpgradeAvailable == null) {
             // Check if the CLI is upgradable
@@ -426,7 +442,8 @@ export class CliContext {
             // Check if the generators are upgradable
             const generatorUpgrades: FernGeneratorUpgradeInfo[] = await getProjectGeneratorUpgrades({
                 project: this.project,
-                cliContext: this
+                cliContext: this,
+                skipFeatureFlagRequest
             });
 
             this._isUpgradeAvailable = {
@@ -446,9 +463,14 @@ export class CliContext {
      * @param defaultValue Optional default value (defaults to false - "No")
      * @returns Promise<boolean> representing the user's choice
      */
-    public async confirmPrompt(message: string, defaultValue = false): Promise<boolean> {
+    public async confirmPrompt(
+        message: string,
+        defaultValue = false,
+        { nonInteractiveError }: { nonInteractiveError?: string } = {}
+    ): Promise<boolean> {
         return this.selectPrompt({
             message,
+            nonInteractiveError,
             choices: [
                 { name: "No", value: false },
                 { name: "Yes", value: true }
@@ -460,12 +482,15 @@ export class CliContext {
     public async selectPrompt<T>({
         message,
         choices,
-        default: defaultValue
+        default: defaultValue,
+        nonInteractiveError
     }: {
         message: string;
         choices: Array<{ name: string; value: T }>;
         default?: T;
+        nonInteractiveError?: string;
     }): Promise<T> {
+        this.assertInteractive(message, nonInteractiveError);
         try {
             return await select({
                 message,
@@ -483,8 +508,47 @@ export class CliContext {
         } catch (error) {
             // User pressed Ctrl+C
             if ((error as Error)?.name === "ExitPromptError") {
-                this.logger.info("\nCancelled by user.");
-                throw new TaskAbortSignal();
+                this.abortCancelledPrompt();
+            }
+            throw error;
+        }
+    }
+
+    public async checkboxPrompt<T>({
+        message,
+        choices,
+        required = false,
+        validate,
+        nonInteractiveError
+    }: {
+        message: string;
+        choices: Array<{ name: string; value: T; short?: string; checked?: boolean }>;
+        required?: boolean;
+        validate?: (values: T[]) => boolean | string | Promise<boolean | string>;
+        nonInteractiveError?: string;
+    }): Promise<T[]> {
+        this.assertInteractive(message, nonInteractiveError);
+        try {
+            return await checkbox({
+                message,
+                choices,
+                required,
+                validate:
+                    validate == null
+                        ? undefined
+                        : (selectedChoices) => validate(selectedChoices.map((choice) => choice.value)),
+                theme: {
+                    prefix: chalk.yellow("?"),
+                    style: {
+                        answer: (text: string) => chalk.cyan(text),
+                        message: (text: string) => chalk.bold(text),
+                        highlight: (text: string) => chalk.cyan(text)
+                    }
+                }
+            });
+        } catch (error) {
+            if ((error as Error)?.name === "ExitPromptError") {
+                this.abortCancelledPrompt();
             }
             throw error;
         }
@@ -494,18 +558,50 @@ export class CliContext {
      * Prompts the user for text input
      * @param message The message to display to the user
      * @param default Optional default value (defaults to undefined)
+     * @param nonInteractiveError Optional error to show instead of prompting when stdin is not a TTY or in CI
      * @returns Promise<string> representing the user's input
      */
-    public async getInput(config: { message: string; default?: string }): Promise<string> {
+    public async getInput(config: {
+        message: string;
+        default?: string;
+        nonInteractiveError?: string;
+    }): Promise<string> {
+        this.assertInteractive(config.message, config.nonInteractiveError);
         try {
             return await input({ message: config.message, default: config.default });
         } catch (error) {
             if ((error as Error)?.name === "ExitPromptError") {
-                this.logger.info("\nCancelled by user.");
-                throw new TaskAbortSignal();
+                this.abortCancelledPrompt();
             }
             throw error;
         }
+    }
+
+    private abortCancelledPrompt(): never {
+        this.logger.info("\nCancelled by user.");
+        this.didSucceed = false;
+        throw new TaskAbortSignal();
+    }
+
+    /** Whether the CLI can show interactive prompts: stdin is a terminal and we're not in CI. */
+    public get isInteractive(): boolean {
+        return process.stdin.isTTY === true && !isCI();
+    }
+
+    /**
+     * Fails fast instead of prompting when nobody can answer, since an
+     * interactive prompt on a non-TTY stdin waits forever (e.g. under an agent).
+     */
+    private assertInteractive(promptMessage: string, nonInteractiveError: string | undefined): void {
+        if (this.isInteractive) {
+            return;
+        }
+        this.failAndThrow(
+            nonInteractiveError ??
+                `Cannot prompt "${promptMessage}" in non-interactive mode (stdin is not a TTY or CI is set). Pass the value as a flag instead.`,
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
     }
 }
 

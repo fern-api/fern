@@ -415,6 +415,7 @@
                 "response": {
                     "type": "text"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_service.getCsv": {
@@ -496,6 +497,7 @@
                 "response": {
                     "type": "text"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_service.getXml": {
@@ -577,6 +579,7 @@
                 "response": {
                     "type": "text"
                 },
+                "hasResponseBody": true,
                 "examples": null
             }
         },
@@ -643,6 +646,7 @@
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
         "idempotencyKeyGeneration": null,
+        "webhookSignatureVerification": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",

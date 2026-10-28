@@ -9,10 +9,10 @@ enum Example27 {
         )
 
         _ = try await client.endpoints.object.getAndReturnWithMixedRequiredAndOptionalFields(request: ObjectWithMixedRequiredAndOptionalFields(
-            requiredString: "requiredString",
-            requiredInteger: 1,
-            optionalString: "optionalString",
-            requiredLong: 1000000
+            requiredString: "hello",
+            requiredInteger: 0,
+            optionalString: "world",
+            requiredLong: 0
         ))
     }
 }

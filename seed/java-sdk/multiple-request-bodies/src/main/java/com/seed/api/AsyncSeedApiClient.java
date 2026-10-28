@@ -5,12 +5,13 @@ package com.seed.api;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.RequestOptions;
+import com.seed.api.core.SeedApiHttpResponse;
 import com.seed.api.requests.UploadDocumentRequest;
 import com.seed.api.types.UploadDocumentResponse;
 import java.io.InputStream;
 import java.util.concurrent.CompletableFuture;
 
-public class AsyncSeedApiClient {
+public class AsyncSeedApiClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     private final AsyncRawSeedApiClient rawClient;
@@ -28,37 +29,110 @@ public class AsyncSeedApiClient {
     }
 
     public CompletableFuture<UploadDocumentResponse> uploadJsonDocument() {
-        return this.rawClient.uploadJsonDocument().thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<UploadDocumentResponse>> rawFuture = this.rawClient.uploadJsonDocument();
+        CompletableFuture<UploadDocumentResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<UploadDocumentResponse> uploadJsonDocument(RequestOptions requestOptions) {
-        return this.rawClient.uploadJsonDocument(requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<UploadDocumentResponse>> rawFuture =
+                this.rawClient.uploadJsonDocument(requestOptions);
+        CompletableFuture<UploadDocumentResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<UploadDocumentResponse> uploadJsonDocument(UploadDocumentRequest request) {
-        return this.rawClient.uploadJsonDocument(request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<UploadDocumentResponse>> rawFuture =
+                this.rawClient.uploadJsonDocument(request);
+        CompletableFuture<UploadDocumentResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<UploadDocumentResponse> uploadJsonDocument(
             UploadDocumentRequest request, RequestOptions requestOptions) {
-        return this.rawClient.uploadJsonDocument(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<UploadDocumentResponse>> rawFuture =
+                this.rawClient.uploadJsonDocument(request, requestOptions);
+        CompletableFuture<UploadDocumentResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<UploadDocumentResponse> uploadPdfDocument(InputStream request) {
-        return this.rawClient.uploadPdfDocument(request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<UploadDocumentResponse>> rawFuture =
+                this.rawClient.uploadPdfDocument(request);
+        CompletableFuture<UploadDocumentResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<UploadDocumentResponse> uploadPdfDocument(
             InputStream request, RequestOptions requestOptions) {
-        return this.rawClient.uploadPdfDocument(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<UploadDocumentResponse>> rawFuture =
+                this.rawClient.uploadPdfDocument(request, requestOptions);
+        CompletableFuture<UploadDocumentResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<UploadDocumentResponse> uploadPdfDocument(byte[] request) {
-        return this.rawClient.uploadPdfDocument(request).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<UploadDocumentResponse>> rawFuture =
+                this.rawClient.uploadPdfDocument(request);
+        CompletableFuture<UploadDocumentResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<UploadDocumentResponse> uploadPdfDocument(byte[] request, RequestOptions requestOptions) {
-        return this.rawClient.uploadPdfDocument(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<SeedApiHttpResponse<UploadDocumentResponse>> rawFuture =
+                this.rawClient.uploadPdfDocument(request, requestOptions);
+        CompletableFuture<UploadDocumentResponse> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static AsyncSeedApiClientBuilder builder() {

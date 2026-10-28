@@ -300,6 +300,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": false,
                 "examples": null
             },
             "endpoint_service.downloadFile": {
@@ -381,6 +382,7 @@
                 "response": {
                     "type": "fileDownload"
                 },
+                "hasResponseBody": true,
                 "examples": null
             }
         },
@@ -447,6 +449,7 @@
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": true,
         "idempotencyKeyGeneration": null,
+        "webhookSignatureVerification": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",

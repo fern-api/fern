@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    With endpoint-level security, the client builder's `token(...)` override for an OAuth
+    client-credentials scheme now authenticates that scheme with the given access token, taking
+    precedence over `clientId`/`clientSecret`. Previously the value was stored but never read, so
+    calls that only accept the OAuth scheme failed with a missing-credentials error.
+  type: fix

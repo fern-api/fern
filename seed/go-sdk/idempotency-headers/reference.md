@@ -43,7 +43,7 @@ client.Payment.Create(
 <dl>
 <dd>
 
-**currency:** `*fern.Currency` 
+**currency:** `fern.Currency` 
     
 </dd>
 </dl>

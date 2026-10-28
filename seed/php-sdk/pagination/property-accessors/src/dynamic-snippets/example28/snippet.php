@@ -3,7 +3,7 @@
 namespace Example;
 
 use Seed\SeedClient;
-use Seed\Users\Requests\ListUsernamesWithOptionalResponseRequest;
+use Seed\Users\Requests\ListUsernamesRequest;
 
 $client = new SeedClient(
     token: '<token>',
@@ -11,8 +11,8 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->users->listUsernamesWithOptionalResponse(
-    new ListUsernamesWithOptionalResponseRequest([
+$client->users->listUsernames(
+    new ListUsernamesRequest([
         'startingAfter' => 'starting_after',
     ]),
 );

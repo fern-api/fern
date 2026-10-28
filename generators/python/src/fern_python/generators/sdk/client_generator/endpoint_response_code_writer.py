@@ -1,4 +1,4 @@
-from typing import Any, Callable, Optional, Sequence, Tuple
+from typing import Any, Callable, List, Optional, Sequence, Tuple
 
 from ..context.sdk_generator_context import SdkGeneratorContext
 from fern_python.codegen import AST
@@ -672,31 +672,44 @@ class EndpointResponseCodeWriter:
                     f"await {RESPONSE_VARIABLE}.aread()" if self._is_async else f"{RESPONSE_VARIABLE}.read()"
                 )
 
-            for error in self._errors:
+            # Concrete status codes take precedence over 4XX/5XX wildcard ranges.
+            sorted_errors = sorted(
+                self._errors,
+                key=lambda e: self._context.ir.errors[e.error.error_id].is_wildcard_status_code is True,
+            )
+            for error in sorted_errors:
                 error_declaration = self._context.ir.errors[error.error.error_id]
+                is_wildcard = error_declaration.is_wildcard_status_code is True
 
-                writer.write_line(f"if {RESPONSE_VARIABLE}.status_code == {error_declaration.status_code}:")
+                if is_wildcard:
+                    writer.write_line(
+                        f"if {error_declaration.status_code} <= {RESPONSE_VARIABLE}.status_code < {error_declaration.status_code + 100}:"
+                    )
+                else:
+                    writer.write_line(f"if {RESPONSE_VARIABLE}.status_code == {error_declaration.status_code}:")
                 with writer.indent():
+                    kwargs: List[Tuple[str, AST.Expression]] = [
+                        ("headers", AST.Expression(f"dict({RESPONSE_VARIABLE}.headers)")),
+                    ]
+                    if error_declaration.type is not None:
+                        kwargs.append(
+                            (
+                                "body",
+                                self._context.core_utilities.get_construct(
+                                    self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                                        error_declaration.type
+                                    ),
+                                    AST.Expression(f"{RESPONSE_VARIABLE}.json()"),
+                                ),
+                            )
+                        )
+                    if is_wildcard:
+                        kwargs.append(("status_code", AST.Expression(f"{RESPONSE_VARIABLE}.status_code")))
                     writer.write("raise ")
                     writer.write_node(
                         AST.ClassInstantiation(
                             class_=self._context.get_reference_to_error(error.error),
-                            kwargs=[
-                                ("headers", AST.Expression(f"dict({RESPONSE_VARIABLE}.headers)")),
-                                (
-                                    "body",
-                                    self._context.core_utilities.get_construct(
-                                        self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                                            error_declaration.type
-                                        ),
-                                        AST.Expression(f"{RESPONSE_VARIABLE}.json()"),
-                                    ),
-                                ),
-                            ]
-                            if error_declaration.type is not None
-                            else [
-                                ("headers", AST.Expression(f"dict({RESPONSE_VARIABLE}.headers)")),
-                            ],
+                            kwargs=kwargs,
                         ),
                     )
                     writer.write_newline_if_last_line_not()
@@ -906,11 +919,12 @@ class EndpointResponseCodeWriter:
 
     def _get_protocol_discriminated_union_info(
         self, payload: ir_types.TypeReference
-    ) -> Optional[Sequence[Tuple[str, ir_types.SingleUnionType]]]:
+    ) -> Optional[Sequence[Tuple[str, ir_types.SingleUnionType, bool]]]:
         """Check if payload is a protocol-discriminated union and return variant info.
 
-        Returns a list of (wire_value, SingleUnionType) tuples if the payload is
-        a named union type with discriminator_context == "protocol", else None.
+        Returns a list of (wire_value, SingleUnionType, is_envelope) tuples if the payload is
+        a named union type with discriminator_context == "protocol", else None. is_envelope is True
+        for variants that model the SSE envelope ({data, id?, retry?}) rather than the data payload.
         """
         payload_union = payload.get_as_union()
         if payload_union.type != "named":
@@ -922,7 +936,30 @@ class EndpointResponseCodeWriter:
         union_decl: ir_types.UnionTypeDeclaration = shape_union
         if union_decl.discriminator_context is None or union_decl.discriminator_context.value != "protocol":
             return None
-        return [(get_wire_value(variant.discriminant_value), variant) for variant in union_decl.types]
+        discriminant = get_wire_value(union_decl.discriminant)
+        return [
+            (
+                get_wire_value(variant.discriminant_value),
+                variant,
+                self._is_sse_envelope_variant(variant, discriminant),
+            )
+            for variant in union_decl.types
+        ]
+
+    def _is_sse_envelope_variant(self, variant: ir_types.SingleUnionType, discriminant: str) -> bool:
+        shape_union = variant.shape.get_as_union()
+        if shape_union.properties_type != "samePropertiesAsObject":
+            return False
+        declaration = self._context.pydantic_generator_context.get_declaration_for_type_id(shape_union.type_id)
+        object_shape = declaration.shape.get_as_union()
+        if object_shape.type != "object":
+            return False
+        property_names = [
+            get_wire_value(property.name)
+            for property in [*(object_shape.extended_properties or []), *object_shape.properties]
+            if get_wire_value(property.name) != discriminant
+        ]
+        return "data" in property_names and all(name in ("data", "id", "retry") for name in property_names)
 
     def _get_variant_type_hint(self, variant: ir_types.SingleUnionType) -> AST.TypeHint:
         """Get the type hint for a single union variant's data shape."""
@@ -946,7 +983,7 @@ class EndpointResponseCodeWriter:
         *,
         stream_response: ir_types.StreamingResponse,
         stream_response_union: Any,
-        protocol_info: Optional[Sequence[Tuple[str, ir_types.SingleUnionType]]],
+        protocol_info: Optional[Sequence[Tuple[str, ir_types.SingleUnionType, bool]]],
     ) -> list[AST.AstNode]:
         """Build the list of AST nodes inside the SSE for-loop body.
 
@@ -1049,15 +1086,20 @@ class EndpointResponseCodeWriter:
 
     def _build_protocol_level_sse_body(
         self,
-        protocol_info: Sequence[Tuple[str, ir_types.SingleUnionType]],
+        protocol_info: Sequence[Tuple[str, ir_types.SingleUnionType, bool]],
     ) -> list[AST.AstNode]:
         """Generate an if/elif chain dispatching on _sse.event for protocol-level discrimination."""
         conditions: list[AST.IfConditionLeaf] = []
-        for wire_value, variant in protocol_info:
+        for wire_value, variant, is_envelope in protocol_info:
             variant_type_hint = self._get_variant_type_hint(variant)
+            parsed_data = AST.Expression(Json.loads(AST.Expression(f"{EndpointResponseCodeWriter.SSE_VARIABLE}.data")))
             yield_expr = self._context.core_utilities.get_construct(
                 variant_type_hint,
-                AST.Expression(Json.loads(AST.Expression(f"{EndpointResponseCodeWriter.SSE_VARIABLE}.data"))),
+                (
+                    AST.Expression(AST.DictionaryInstantiation([(AST.Expression('"data"'), parsed_data)]))
+                    if is_envelope
+                    else parsed_data
+                ),
             )
             conditions.append(
                 AST.IfConditionLeaf(

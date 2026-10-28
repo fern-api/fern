@@ -98,7 +98,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "PATCH",
           path: "/many",
-          body: params,
+          body: params[:request],
           request_options: request_options
         )
         begin

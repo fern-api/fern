@@ -289,6 +289,64 @@ client.streamProtocolWithFlatSchema(
 </dl>
 </details>
 
+<details><summary><code>client.streamProtocolMixedSchema(request) -> Iterable&amp;lt;StreamProtocolMixedSchemaResponse&amp;gt;</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+context=protocol where some variants use the envelope+data pattern and others use the flat allOf pattern. Envelope variants are parsed from {event, data}; flat variants are parsed from the data payload with the event discriminant injected.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.streamProtocolMixedSchema(
+    StreamRequest
+        .builder()
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `StreamRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.streamDataContextWithEnvelopeSchema(request) -> Iterable&amp;lt;StreamDataContextWithEnvelopeSchemaResponse&amp;gt;</code></summary>
 <dl>
 <dd>

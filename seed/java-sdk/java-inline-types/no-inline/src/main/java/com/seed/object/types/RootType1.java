@@ -210,7 +210,6 @@ public final class RootType1 {
 
         private Map<String, RootType1FooMapValue> fooMap = new LinkedHashMap<>();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -367,6 +366,19 @@ public final class RootType1 {
         @java.lang.Override
         public RootType1 build() {
             return new RootType1(foo, bar, fooMap, fooList, fooSet, ref, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("foo")
+                    || key.equalsIgnoreCase("bar")
+                    || key.equalsIgnoreCase("fooMap")
+                    || key.equalsIgnoreCase("fooList")
+                    || key.equalsIgnoreCase("fooSet")
+                    || key.equalsIgnoreCase("ref")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

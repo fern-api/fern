@@ -81,7 +81,6 @@ public final class RootType implements IRootType {
     public static final class Builder implements SStage, _FinalStage {
         private String s;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -102,6 +101,14 @@ public final class RootType implements IRootType {
         @java.lang.Override
         public RootType build() {
             return new RootType(s, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("s")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

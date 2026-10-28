@@ -4,9 +4,11 @@
 package com.seed.packageYml;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.packageYml.core.BodyProperties;
 import com.seed.packageYml.core.ClientOptions;
 import com.seed.packageYml.core.MediaTypes;
 import com.seed.packageYml.core.ObjectMappers;
+import com.seed.packageYml.core.PathSegments;
 import com.seed.packageYml.core.RequestOptions;
 import com.seed.packageYml.core.RetryInterceptor;
 import com.seed.packageYml.core.SeedPackageYmlApiException;
@@ -36,7 +38,7 @@ public class RawSeedPackageYmlClient {
     public SeedPackageYmlHttpResponse<String> echo(EchoRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegment(clientOptions.id());
+                .addPathSegment(PathSegments.validate(clientOptions.id()));
 
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
@@ -46,7 +48,9 @@ public class RawSeedPackageYmlClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (JsonProcessingException e) {
             throw new SeedPackageYmlException("Failed to serialize request", e);
         }

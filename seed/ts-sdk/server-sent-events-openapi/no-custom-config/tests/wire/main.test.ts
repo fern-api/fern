@@ -142,6 +142,34 @@ describe("SeedApiClient", () => {
         ]);
     });
 
+    test("streamProtocolMixedSchema", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
+        const rawRequestBody = {};
+        const rawResponseBody = 'event: heartbeat\ndata: {"timestamp":"2024-01-15T09:30:00Z"}\n\n';
+
+        server
+            .mockEndpoint()
+            .post("/stream/protocol-mixed-schema")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .sseBody(rawResponseBody)
+            .build();
+
+        const response = await client.streamProtocolMixedSchema({});
+        const events: unknown[] = [];
+        for await (const event of response) {
+            events.push(event);
+        }
+        expect(events).toEqual([
+            {
+                event: "heartbeat",
+                timestamp: "2024-01-15T09:30:00Z",
+            },
+        ]);
+    });
+
     test("streamDataContextWithEnvelopeSchema", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });

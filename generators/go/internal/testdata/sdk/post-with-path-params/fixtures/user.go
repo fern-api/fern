@@ -16,12 +16,20 @@ type SetNameRequest struct {
 }
 
 func (s *SetNameRequest) UnmarshalJSON(data []byte) error {
-	type unmarshaler SetNameRequest
-	var body unmarshaler
+	type embed SetNameRequest
+	var body = struct {
+		embed
+		Date     *internal.Date     `json:"date"`
+		Datetime *internal.DateTime `json:"datetime"`
+	}{
+		embed: embed(*s),
+	}
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*s = SetNameRequest(body)
+	*s = SetNameRequest(body.embed)
+	s.Date = body.Date.Time()
+	s.Datetime = body.Datetime.Time()
 	return nil
 }
 
@@ -437,12 +445,20 @@ type UpdateRequest struct {
 }
 
 func (u *UpdateRequest) UnmarshalJSON(data []byte) error {
-	type unmarshaler UpdateRequest
-	var body unmarshaler
+	type embed UpdateRequest
+	var body = struct {
+		embed
+		OptionalDate     *internal.Date     `json:"optionalDate,omitempty"`
+		OptionalDatetime *internal.DateTime `json:"optionalDatetime,omitempty"`
+	}{
+		embed: embed(*u),
+	}
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*u = UpdateRequest(body)
+	*u = UpdateRequest(body.embed)
+	u.OptionalDate = body.OptionalDate.TimePtr()
+	u.OptionalDatetime = body.OptionalDatetime.TimePtr()
 	return nil
 }
 

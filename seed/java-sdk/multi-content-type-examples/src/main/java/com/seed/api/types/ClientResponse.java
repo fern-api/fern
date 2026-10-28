@@ -67,7 +67,6 @@ public final class ClientResponse {
     public static final class Builder {
         private Optional<ClientWithId> client = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -90,6 +89,14 @@ public final class ClientResponse {
 
         public ClientResponse build() {
             return new ClientResponse(client, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("client")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

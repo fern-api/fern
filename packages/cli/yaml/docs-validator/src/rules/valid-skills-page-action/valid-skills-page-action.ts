@@ -1,5 +1,5 @@
 import { docsYml } from "@fern-api/configuration";
-
+import { isURL } from "@fern-api/fs-utils";
 import { Rule, RuleViolation } from "../../Rule.js";
 
 /**
@@ -55,7 +55,7 @@ export function validateSkillsPageAction(
                 message: `page-actions.options.skills.skills[${index}].name must not be empty.`
             });
         }
-        if (skill.url != null && !isValidUrl(skill.url)) {
+        if (skill.url != null && !isURL(skill.url)) {
             violations.push({
                 severity: "warning",
                 message: `page-actions.options.skills.skills[${index}].url is not a valid URL: "${skill.url}"`
@@ -63,14 +63,14 @@ export function validateSkillsPageAction(
         }
     });
 
-    if (skills.learnMoreUrl != null && !isValidUrl(skills.learnMoreUrl)) {
+    if (skills.learnMoreUrl != null && !isURL(skills.learnMoreUrl)) {
         violations.push({
             severity: "warning",
             message: `page-actions.options.skills.learn-more-url is not a valid URL: "${skills.learnMoreUrl}"`
         });
     }
 
-    if (skills.repository != null && !isValidUrl(skills.repository)) {
+    if (skills.repository != null && !isURL(skills.repository)) {
         violations.push({
             severity: "warning",
             message: `page-actions.options.skills.repository is not a valid URL: "${skills.repository}"`
@@ -78,13 +78,4 @@ export function validateSkillsPageAction(
     }
 
     return violations;
-}
-
-function isValidUrl(value: string): boolean {
-    try {
-        new URL(value);
-        return true;
-    } catch {
-        return false;
-    }
 }

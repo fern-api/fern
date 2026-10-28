@@ -80,7 +80,6 @@ public final class SendOptionalBodyRequest {
     public static final class Builder implements MessageStage, _FinalStage {
         private String message;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -101,6 +100,14 @@ public final class SendOptionalBodyRequest {
         @java.lang.Override
         public SendOptionalBodyRequest build() {
             return new SendOptionalBodyRequest(message, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("message")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

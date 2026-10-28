@@ -876,6 +876,35 @@ describe("generateHeaders", () => {
         expect(text).toMatchSnapshot();
     });
 
+    it.each([false, true])("reads a root header's env var with guardProcessEnvAccess=%s", (guardProcessEnvAccess) => {
+        const envRootHeader = createHttpHeader(
+            "X-Api-Version",
+            FernIr.TypeReference.primitive({ v1: "STRING", v2: undefined }),
+            { wireValue: "X-Api-Version", env: "API_VERSION" }
+        );
+
+        const result = generateHeaders({
+            context: createMockContext(),
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
+            intermediateRepresentation: { headers: [envRootHeader], sdkConfig: {} } as any,
+            generatedSdkClientClass: createMockGeneratedSdkClientClass({ guardProcessEnvAccess }),
+            requestParameter: createMockRequestParameter(),
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
+            service: { headers: [] } as any,
+            // biome-ignore lint/suspicious/noExplicitAny: test mock with minimal interface
+            endpoint: { headers: [], auth: false, idempotent: false } as any,
+            idempotencyHeaders: []
+        });
+
+        const text = statementsToString(result);
+        if (guardProcessEnvAccess) {
+            expect(text).toContain('(typeof process !== "undefined" ? process.env?.["API_VERSION"] : undefined)');
+        } else {
+            expect(text).toContain('process.env?.["API_VERSION"]');
+            expect(text).not.toContain("typeof process");
+        }
+    });
+
     it("skips auth headers when alwaysSendAuth is false and endpoint.auth is false", () => {
         const result = generateHeaders({
             context: createMockContext(),

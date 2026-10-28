@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Auto-versioned MAJOR/MINOR bumps no longer produce a version-only `changelog.md` block when
+    the AI analysis returns an empty `changelog_entry`. AutoVersionStep now falls back to the
+    PR description, version bump reason, or commit message body so the changelog describes
+    the (often breaking) change. In chunked analysis, if no chunk at the winning bump level
+    produced an entry, that chunk's version bump reason is added alongside the lower-severity
+    entries so the breaking change is not omitted.
+  type: fix

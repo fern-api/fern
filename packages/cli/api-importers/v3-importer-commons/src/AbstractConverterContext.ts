@@ -1,6 +1,7 @@
 import { OpenAPISettings } from "@fern-api/api-workspace-commons";
 import { CasingsGenerator, constructCasingsGenerator } from "@fern-api/casings-generator";
 import { generatorsYml } from "@fern-api/configuration";
+import { capitalizeFirstLetter, decodeJsonPointerSegment, isHttpUrl, isRecord } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import {
     Availability,
@@ -62,6 +63,9 @@ export abstract class AbstractConverterContext<Spec extends object> {
     public readonly enableUniqueErrorsPerEndpoint: boolean;
     public readonly generateV1Examples: boolean;
     public readonly documentBaseDir?: string;
+    private readonly externalDocuments = new Map<string, Promise<unknown>>();
+    /** Type ids of discriminated union variants currently being inlined, to break self-referencing cycles. */
+    public readonly discriminatedVariantsInProgress = new Set<string>();
 
     constructor(protected readonly args: Spec.Args<Spec>) {
         this.spec = args.spec;
@@ -107,7 +111,17 @@ export abstract class AbstractConverterContext<Spec extends object> {
      * @returns A string suitable for use as a schema name or type id
      */
     public convertBreadcrumbsToName(breadcrumbs: string[]): string {
+        const propertyNameIndices = AbstractConverterContext.getPropertyNameIndices(breadcrumbs);
+
         const filteredBreadcrumbs = breadcrumbs.filter((crumb, index) => {
+            // A property's own name is user-defined, so it is kept verbatim even when it
+            // collides with a crumb we would otherwise drop. Without this, a property named
+            // `properties` gets the same name -- and therefore the same type id -- as the
+            // object declaring it, producing a self-referential type.
+            if (propertyNameIndices.has(index)) {
+                return true;
+            }
+
             // Ignore numeric indices
             if (/^\d+$/.test(crumb)) {
                 return false;
@@ -153,7 +167,24 @@ export abstract class AbstractConverterContext<Spec extends object> {
         });
 
         const camelCased = camelCase(filteredBreadcrumbs.join("_"));
-        return camelCased.charAt(0).toUpperCase() + camelCased.slice(1);
+        return capitalizeFirstLetter(camelCased);
+    }
+
+    /**
+     * Returns the indices of breadcrumbs that hold a user-defined property name, i.e. the crumb
+     * immediately following a structural `properties` crumb.
+     */
+    private static getPropertyNameIndices(breadcrumbs: string[]): Set<number> {
+        const propertyNameIndices = new Set<number>();
+        for (const [index, crumb] of breadcrumbs.entries()) {
+            // Skipping crumbs already claimed as a property name is what keeps the alternation
+            // right across a consecutive run: in ["properties", "properties", "properties", "foo"]
+            // the second crumb is a name, so only the third introduces `foo`.
+            if (crumb === "properties" && !propertyNameIndices.has(index) && index + 1 < breadcrumbs.length) {
+                propertyNameIndices.add(index + 1);
+            }
+        }
+        return propertyNameIndices;
     }
 
     /**
@@ -260,24 +291,9 @@ export abstract class AbstractConverterContext<Spec extends object> {
             }
             baseUrl = url;
 
-            const response = await fetch(url);
-
-            if (!response.ok) {
-                return { resolved: false };
-            }
-            try {
-                const responseText = await response.text();
-                try {
-                    externalDoc = JSON.parse(responseText);
-                    resolvedReference = externalDoc;
-                } catch {
-                    externalDoc = yaml.load(responseText);
-                    resolvedReference = externalDoc;
-                }
-                if (resolvedReference == null) {
-                    return { resolved: false };
-                }
-            } catch (error) {
+            externalDoc = await this.loadExternalDocument(url);
+            resolvedReference = externalDoc;
+            if (resolvedReference == null) {
                 return { resolved: false };
             }
 
@@ -321,6 +337,36 @@ export abstract class AbstractConverterContext<Spec extends object> {
         }
 
         return { resolved: true, value: resolvedReference as unknown as T };
+    }
+
+    /**
+     * Fetches and parses the JSON or YAML document at `url`, or returns undefined if the response
+     * isn't ok or can't be parsed. Each document is fetched once per conversion, however many refs
+     * point into it. Every caller gets its own copy because refs are resolved by mutating the
+     * document. Failures aren't cached, so the next ref to the same URL fetches it again.
+     */
+    private async loadExternalDocument(url: string): Promise<unknown> {
+        let document = this.externalDocuments.get(url);
+        if (document == null) {
+            document = fetchExternalDocument(url);
+            this.externalDocuments.set(url, document);
+        }
+        try {
+            const value = await document;
+            if (value == null) {
+                this.forgetExternalDocument(url, document);
+            }
+            return structuredClone(value);
+        } catch (error) {
+            this.forgetExternalDocument(url, document);
+            throw error;
+        }
+    }
+
+    private forgetExternalDocument(url: string, document: Promise<unknown>): void {
+        if (this.externalDocuments.get(url) === document) {
+            this.externalDocuments.delete(url);
+        }
     }
 
     /**
@@ -370,7 +416,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
                 const refPath = refValue
                     .substring(2) // Remove leading "#/"
                     .split("/")
-                    .map((seg) => seg.replace(/~1/g, "/").replace(/~0/g, "~"));
+                    .map(decodeJsonPointerSegment);
 
                 for (const segment of refPath) {
                     if (typeof tempRef !== "object" || tempRef === null) {
@@ -818,7 +864,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
     }
 
     public isExternalReference($ref: string): boolean {
-        return typeof $ref === "string" && ($ref.startsWith("http://") || $ref.startsWith("https://"));
+        return typeof $ref === "string" && isHttpUrl($ref);
     }
 
     public isReferenceObjectWithIdentifier(
@@ -911,7 +957,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
     }
 
     public getAsObject(value: unknown): Record<string, unknown> | undefined {
-        if (typeof value === "object" && value !== null && !Array.isArray(value)) {
+        if (isRecord(value)) {
             return value as Record<string, unknown>;
         }
         return undefined;
@@ -939,4 +985,21 @@ export abstract class AbstractConverterContext<Spec extends object> {
 
 function isMarkedDeprecated(node: object): boolean {
     return "deprecated" in node && node.deprecated === true;
+}
+
+async function fetchExternalDocument(url: string): Promise<unknown> {
+    const response = await fetch(url);
+    if (!response.ok) {
+        return undefined;
+    }
+    try {
+        const responseText = await response.text();
+        try {
+            return JSON.parse(responseText);
+        } catch {
+            return yaml.load(responseText);
+        }
+    } catch {
+        return undefined;
+    }
 }

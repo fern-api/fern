@@ -1,0 +1,182 @@
+openapi: 3.0.3
+info:
+  title: Test spec for a oneOf that only marks sibling properties as required.
+  version: 1.0.0
+
+paths:
+  /inbound/routes:
+    post:
+      operationId: ListInboundRoutes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InboundRoutesRequest"
+      responses:
+        "200":
+          description: OK.
+  /inbound/add-route:
+    post:
+      operationId: AddInboundRoute
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/InboundAddRouteRequest"
+      responses:
+        "200":
+          description: OK.
+  /shapes:
+    post:
+      operationId: PostShapes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                contact:
+                  $ref: "#/components/schemas/Contact"
+                narrowsProperty:
+                  $ref: "#/components/schemas/OneOfBranchNarrowsProperty"
+                addsProperty:
+                  $ref: "#/components/schemas/OneOfBranchAddsProperty"
+                singleBranch:
+                  $ref: "#/components/schemas/OneOfSingleBranch"
+                withNot:
+                  $ref: "#/components/schemas/OneOfBranchWithNot"
+      responses:
+        "204":
+          description: Accepted.
+
+components:
+  schemas:
+    ApiKey:
+      type: object
+      properties:
+        key:
+          type: string
+      required:
+        - key
+
+    # Reproduces the Mailchimp Transactional shape: an inline allOf member that
+    # declares properties and a sibling oneOf whose branches only list which of
+    # those properties must be present. Every declared property must survive.
+    InboundRoutesRequest:
+      allOf:
+        - $ref: "#/components/schemas/ApiKey"
+        - type: object
+          properties:
+            domain:
+              type: string
+              description: The domain to list routes for.
+            phone:
+              type: string
+              description: The phone number to list routes for.
+          oneOf:
+            - required: [domain]
+            - required: [phone]
+          additionalProperties: false
+
+    InboundAddRouteRequest:
+      allOf:
+        - $ref: "#/components/schemas/ApiKey"
+        - type: object
+          properties:
+            domain:
+              type: string
+            phone:
+              type: string
+            pattern:
+              type: string
+            url:
+              type: string
+              format: uri
+          oneOf:
+            - required: [domain, pattern, url]
+            - required: [phone, url]
+          additionalProperties: false
+
+    # The same constraint on a standalone (non-allOf) schema.
+    Contact:
+      type: object
+      properties:
+        email:
+          type: string
+        phone:
+          type: string
+      oneOf:
+        - required: [email]
+        - required: [phone]
+
+    # Branches narrowing a shared property to different values are variants,
+    # so this stays a union.
+    OneOfBranchNarrowsProperty:
+      type: object
+      properties:
+        kind:
+          type: string
+        value:
+          type: string
+      oneOf:
+        - properties:
+            kind:
+              enum:
+                - a
+          required:
+            - kind
+        - properties:
+            kind:
+              enum:
+                - b
+          required:
+            - kind
+
+    # A branch introducing a property the siblings do not declare is a real
+    # variant, so this stays a union.
+    OneOfBranchAddsProperty:
+      type: object
+      properties:
+        a:
+          type: boolean
+      oneOf:
+        - required:
+            - a
+        - properties:
+            b:
+              type: boolean
+          required:
+            - b
+
+    # A single presence branch is just a required list; `a` must stay required.
+    OneOfSingleBranch:
+      type: object
+      properties:
+        a:
+          type: string
+        b:
+          type: string
+      oneOf:
+        - required:
+            - a
+
+    # A branch carrying any other constraint keyword is not a presence
+    # constraint and must remain a union.
+    OneOfBranchWithNot:
+      type: object
+      properties:
+        a:
+          type: string
+        b:
+          type: string
+      oneOf:
+        - required:
+            - a
+          not:
+            required:
+              - b
+        - required:
+            - b

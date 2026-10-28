@@ -3,6 +3,7 @@
  */
 package com.seed.exhaustive.resources.reqwithheaders;
 
+import com.seed.exhaustive.core.BestHttpResponse;
 import com.seed.exhaustive.core.ClientOptions;
 import com.seed.exhaustive.core.RequestOptions;
 import com.seed.exhaustive.resources.reqwithheaders.requests.ReqWithHeaders;
@@ -26,10 +27,25 @@ public class AsyncReqWithHeadersClient {
     }
 
     public CompletableFuture<Void> getWithCustomHeader(ReqWithHeaders request) {
-        return this.rawClient.getWithCustomHeader(request).thenApply(response -> response.body());
+        CompletableFuture<BestHttpResponse<Void>> rawFuture = this.rawClient.getWithCustomHeader(request);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 
     public CompletableFuture<Void> getWithCustomHeader(ReqWithHeaders request, RequestOptions requestOptions) {
-        return this.rawClient.getWithCustomHeader(request, requestOptions).thenApply(response -> response.body());
+        CompletableFuture<BestHttpResponse<Void>> rawFuture =
+                this.rawClient.getWithCustomHeader(request, requestOptions);
+        CompletableFuture<Void> future = rawFuture.thenApply(response -> response.body());
+        future.whenComplete((result_, throwable_) -> {
+            if (future.isCancelled()) {
+                rawFuture.cancel(true);
+            }
+        });
+        return future;
     }
 }

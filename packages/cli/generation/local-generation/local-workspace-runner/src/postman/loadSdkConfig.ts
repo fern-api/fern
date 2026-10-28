@@ -1,3 +1,5 @@
+import { SDK_CONFIG_FILENAME } from "@fern-api/configuration";
+import { errorMessageOrString } from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import type { SdkConfigV1 } from "@postman/sdk-config/sdk-config/v1";
 import { parseSdkConfigV1 } from "@postman/sdk-config/sdk-config/v1";
@@ -7,11 +9,11 @@ import yaml from "js-yaml";
 /**
  * The migrated external configuration, written by `fern sdk migrate` beside `fern.config.json`.
  *
- * `generators.yml` is not replaced in place: the migration archives it as `generators.archived.yml`
- * and lands this file next to it, so a workspace mid-migration has both on disk and the presence of
- * this one is what selects the new configuration.
+ * `generators.yml` is not replaced in place: the migration renames it to the centrally configured
+ * legacy filename, comments migrated declarations for rollback, and lands this file next to it.
+ * A workspace mid-migration therefore has both active legacy generators and SDK Config targets.
  */
-export const SDK_CONFIG_FILENAME = "sdk-config.yml";
+export { SDK_CONFIG_FILENAME } from "@fern-api/configuration";
 
 /** `.yaml` is accepted on read only. The migration writes `.yml`, matching every other Fern file. */
 const SDK_CONFIG_FILENAMES: readonly string[] = [SDK_CONFIG_FILENAME, "sdk-config.yaml"];
@@ -58,7 +60,7 @@ export async function loadSdkConfig({ absolutePathToFernConfig }: loadSdkConfig.
             return {
                 type: "invalid",
                 absolutePath,
-                message: `${filename} is not valid YAML: ${errorMessage(error)}`
+                message: `${filename} is not valid YAML: ${errorMessageOrString(error)}`
             };
         }
 
@@ -68,14 +70,10 @@ export async function loadSdkConfig({ absolutePathToFernConfig }: loadSdkConfig.
             return {
                 type: "invalid",
                 absolutePath,
-                message: `${filename} is not a valid SDK Config: ${errorMessage(error)}`
+                message: `${filename} is not a valid SDK Config: ${errorMessageOrString(error)}`
             };
         }
     }
 
     return { type: "absent" };
-}
-
-function errorMessage(error: unknown): string {
-    return error instanceof Error ? error.message : String(error);
 }

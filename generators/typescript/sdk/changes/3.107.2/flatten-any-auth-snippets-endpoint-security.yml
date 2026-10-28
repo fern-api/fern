@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    With `flattenAnyAuthOptions` enabled, dynamic snippets now keep nested auth options for APIs that use
+    endpoint-level security, which matches the generated SDK. Only `auth: any` snippets are flattened.
+  type: fix

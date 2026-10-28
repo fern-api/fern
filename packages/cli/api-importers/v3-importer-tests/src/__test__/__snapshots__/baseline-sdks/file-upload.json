@@ -591,6 +591,7 @@
                     "safeName": "File"
                   }
                 },
+                "isOptional": false,
                 "type": "file"
               },
               {
@@ -614,6 +615,7 @@
                     "safeName": "MaybeFile"
                   }
                 },
+                "isOptional": true,
                 "type": "file"
               }
             ],
@@ -712,6 +714,7 @@
                     "safeName": "ListFile"
                   }
                 },
+                "isOptional": false,
                 "type": "fileArray"
               },
               {
@@ -735,6 +738,7 @@
                     "safeName": "MaybeListFile"
                   }
                 },
+                "isOptional": true,
                 "type": "fileArray"
               }
             ],
@@ -833,6 +837,7 @@
                     "safeName": "File"
                   }
                 },
+                "isOptional": false,
                 "type": "file"
               },
               {
@@ -856,6 +861,7 @@
                     "safeName": "MaybeFile"
                   }
                 },
+                "isOptional": true,
                 "type": "file"
               },
               {
@@ -1088,6 +1094,7 @@
                     "safeName": "File"
                   }
                 },
+                "isOptional": true,
                 "type": "file"
               }
             ],

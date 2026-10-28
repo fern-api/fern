@@ -585,6 +585,7 @@
                     "safeName": "File"
                   }
                 },
+                "isOptional": false,
                 "type": "file"
               }
             ],

@@ -84,7 +84,6 @@ public final class GetUserRequest {
 
         private Optional<Boolean> includeFields = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -125,6 +124,14 @@ public final class GetUserRequest {
 
         public GetUserRequest build() {
             return new GetUserRequest(fields, includeFields, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("fields") || key.equalsIgnoreCase("include_fields")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

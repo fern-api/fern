@@ -28,3 +28,37 @@ export function hasUrlEncodedRequestBody(ir: FernIr.IntermediateRepresentation):
         service.endpoints.some((endpoint) => isUrlEncodedRequestBody(endpoint.requestBody))
     );
 }
+
+/**
+ * Follows aliases and optional/nullable wrappers to the underlying type reference.
+ */
+export function unwrapTypeReference(
+    typeReference: FernIr.TypeReference,
+    getTypeDeclaration: (typeId: FernIr.TypeId) => FernIr.TypeDeclaration
+): FernIr.TypeReference {
+    const seen = new Set<FernIr.TypeId>();
+    let current = typeReference;
+    while (true) {
+        if (current.type === "container") {
+            const container = current.container;
+            if (container.type === "optional") {
+                current = container.optional;
+                continue;
+            }
+            if (container.type === "nullable") {
+                current = container.nullable;
+                continue;
+            }
+            return current;
+        }
+        if (current.type === "named" && !seen.has(current.typeId)) {
+            seen.add(current.typeId);
+            const shape = getTypeDeclaration(current.typeId).shape;
+            if (shape.type === "alias") {
+                current = shape.aliasOf;
+                continue;
+            }
+        }
+        return current;
+    }
+}

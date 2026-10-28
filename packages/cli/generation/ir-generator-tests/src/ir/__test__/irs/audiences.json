@@ -588,7 +588,8 @@
                         "tolerance": 300
                     },
                     "bodyHashBinding": null,
-                    "notificationUrlNormalization": null
+                    "notificationUrlNormalization": null,
+                    "algorithmHeader": null
                 },
                 "fileUploadPayload": null,
                 "responses": null,
@@ -999,6 +1000,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             }
         },
@@ -1127,6 +1129,7 @@
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
         "idempotencyKeyGeneration": null,
+        "webhookSignatureVerification": null,
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",

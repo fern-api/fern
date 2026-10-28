@@ -4,10 +4,15 @@ import path from "path";
 import url from "url";
 import { afterEach, beforeAll, beforeEach, describe, expect, it } from "vitest";
 import {
+    addCrateDependency,
+    addExtraDependencies,
+    addExtraDependenciesToCargoLock,
     addSdkCrateToLock,
     addTypesCrateToLock,
     applyCargoTomlPatch,
     applyPackageIdentityPatch,
+    cargoLockPackageNames,
+    isValidCrateName,
     parseGeneratedCrateManifest,
     patchCargoLockVersion,
     patchCargoToml,
@@ -190,6 +195,74 @@ describe("applyPackageIdentityPatch", () => {
     });
 });
 
+describe("addExtraDependencies", () => {
+    it("appends [dependencies.<name>] sub-tables right after the template's [dependencies] block", () => {
+        const patched = addExtraDependencies(
+            TEMPLATE_CARGO_TOML,
+            {
+                "google-cloud-auth": "1.16",
+                "google-cloud-iam-credentials-v1": { version: "1.12", features: ["a", "b"], defaultFeatures: false }
+            },
+            "dependencies"
+        );
+        expect(patched).toContain('\n[dependencies.google-cloud-auth]\nversion = "1.16"\n');
+        expect(patched).toContain(
+            '\n[dependencies.google-cloud-iam-credentials-v1]\nversion = "1.12"\nfeatures = ["a", "b"]\ndefault-features = false\n'
+        );
+        const depsIdx = patched.indexOf("\n[dependencies]\n");
+        const extraIdx = patched.indexOf("[dependencies.google-cloud-auth]");
+        const targetIdx = patched.indexOf("\n[target.");
+        expect(depsIdx).toBeLessThan(extraIdx);
+        expect(extraIdx).toBeLessThan(targetIdx);
+    });
+
+    it("renders git / path / package / optional fields", () => {
+        const patched = addExtraDependencies(
+            TEMPLATE_CARGO_TOML,
+            { helper: { git: "https://example.com/helper.git", rev: "abc", package: "real-helper", optional: true } },
+            "dev-dependencies"
+        );
+        expect(patched).toContain(
+            '\n[dev-dependencies.helper]\npackage = "real-helper"\ngit = "https://example.com/helper.git"\nrev = "abc"\noptional = true\n'
+        );
+        expect(patched.indexOf("\n[dev-dependencies]\n")).toBeLessThan(patched.indexOf("[dev-dependencies.helper]"));
+    });
+
+    it("is a no-op for an absent or empty map", () => {
+        expect(addExtraDependencies(TEMPLATE_CARGO_TOML, undefined, "dependencies")).toBe(TEMPLATE_CARGO_TOML);
+        expect(addExtraDependencies(TEMPLATE_CARGO_TOML, {}, "dependencies")).toBe(TEMPLATE_CARGO_TOML);
+    });
+
+    it("rejects a crate the template already depends on", () => {
+        expect(() => addExtraDependencies(TEMPLATE_CARGO_TOML, { clap: "4" }, "dependencies")).toThrow(
+            /extraDependencies: "clap" is already a \[dependencies\] entry/
+        );
+        expect(() => addExtraDependencies(TEMPLATE_CARGO_TOML, { wiremock: "0.6" }, "dev-dependencies")).toThrow(
+            /extraDevDependencies: "wiremock" is already a \[dev-dependencies\] entry/
+        );
+    });
+
+    it("detects collisions with quoted keys and appends after a block that ends at EOF", () => {
+        const toml = '[package]\nname = "x"\n\n[dependencies]\n"serde" = "1"\n# trailing comment\n';
+        expect(() => addExtraDependencies(toml, { serde: "1" }, "dependencies")).toThrow(/already a \[dependencies\]/);
+        expect(addExtraDependencies(toml, { anyhow: "1" }, "dependencies")).toBe(
+            '[package]\nname = "x"\n\n[dependencies]\n"serde" = "1"\n\n[dependencies.anyhow]\nversion = "1"\n\n# trailing comment\n'
+        );
+    });
+
+    it("rejects an extra dependency that shadows a generated crate when the path dep is added later", () => {
+        const withExtra = addExtraDependencies(TEMPLATE_CARGO_TOML, { acme_sdk: "1" }, "dependencies");
+        expect(() => addCrateDependency(withExtra, "acme-sdk")).toThrow(
+            /extraDependencies: "acme_sdk" is the generated `acme-sdk` crate/
+        );
+        expect(() => addCrateDependency(TEMPLATE_CARGO_TOML, "acme-sdk")).not.toThrow();
+    });
+
+    it("only checks collisions within the same table", () => {
+        expect(() => addExtraDependencies(TEMPLATE_CARGO_TOML, { wiremock: "0.6" }, "dependencies")).not.toThrow();
+    });
+});
+
 describe("renameCargoLockPackage", () => {
     it("renames the template's package entry so --locked still resolves the crate", () => {
         const patched = renameCargoLockPackage(TEMPLATE_CARGO_LOCK, "agentmail-cli");
@@ -252,6 +325,76 @@ describe("generated crate lockfile entries after a package rename", () => {
                 "agentmail-cli"
             )
         ).toThrow(/totally-absent-crate/);
+    });
+});
+
+// `renameCargoLockPackage` rewrites only the root's own `name = ` line. That is
+// complete because nothing in the lock can depend on the root: the generated
+// types/SDK/partition crates are path dependencies *of* the root, so a reverse
+// edge would be a cycle cargo rejects, and no registry crate depends on it.
+describe("Cargo.lock references to the root package", () => {
+    const SEED_DIR = path.resolve(SDK_DIR, "../../../seed/cli/query-parameters-openapi");
+
+    function dependentsOf(cargoLock: string, crate: string): string[] {
+        return cargoLock
+            .split(/^\[\[package\]\]$/m)
+            .filter((block) => {
+                const deps = /^dependencies = \[\n((?: "[^"\n]*",\n)*)\]/m.exec(block)?.[1] ?? "";
+                return deps.split("\n").some(
+                    (line) =>
+                        line
+                            .trim()
+                            .replace(/^"|",?$/g, "")
+                            .split(" ")[0] === crate
+                );
+            })
+            .map((block) => /^name = "([^"]+)"/m.exec(block)?.[1] ?? "");
+    }
+
+    it("has no dependents in the shipped template lock", () => {
+        expect(dependentsOf(TEMPLATE_CARGO_LOCK, "fern-cli-sdk")).toEqual([]);
+        expect(dependentsOf(TEMPLATE_CARGO_LOCK, "clap")).toContain("fern-cli-sdk");
+    });
+
+    it("gains no dependents once the generated crates are added to a renamed lock", () => {
+        const renamed = renameCargoLockPackage(TEMPLATE_CARGO_LOCK, "agentmail");
+        const withTypes = addTypesCrateToLock(
+            renamed,
+            "agentmail-types",
+            { version: "0.0.0", dependencies: [{ name: "serde", versionReq: "1" }] },
+            true,
+            "agentmail"
+        );
+        const patched = addSdkCrateToLock(
+            withTypes,
+            "agentmail-sdk",
+            "agentmail-types",
+            {
+                version: "0.1.0",
+                dependencies: [
+                    { name: "agentmail_types", versionReq: undefined },
+                    { name: "serde", versionReq: "1.0" }
+                ]
+            },
+            "agentmail"
+        );
+        expect(patched).not.toContain("fern-cli-sdk");
+        expect(dependentsOf(patched, "agentmail")).toEqual([]);
+        expect(dependentsOf(patched, "agentmail_sdk")).toEqual(["agentmail"]);
+        expect(dependentsOf(patched, "agentmail_types")).toEqual(["agentmail_sdk"]);
+    });
+
+    it.each([
+        ["github-npm", "query-parameters-api"],
+        ["github-no-publish", "query-parameters-api"],
+        ["github-distribution", "query-parameters-api"],
+        ["github-distribution-app", "query-parameters-api"],
+        ["github-npm-identity", "query-params-cli"]
+    ])("has no dependents in the committed %s seed lock", async (fixture, rootName) => {
+        const lock = await readFile(path.join(SEED_DIR, fixture, "Cargo.lock"), "utf-8");
+        expect(cargoLockPackageNames(lock).has(rootName)).toBe(true);
+        expect(lock).not.toContain("fern-cli-sdk");
+        expect(dependentsOf(lock, rootName)).toEqual([]);
     });
 });
 
@@ -346,6 +489,102 @@ describe("patchCargoLockVersion", () => {
     });
 });
 
+describe("addExtraDependenciesToCargoLock", () => {
+    const LOCK = [
+        "version = 4",
+        "",
+        "[[package]]",
+        'name = "base64"',
+        'version = "0.22.1"',
+        "",
+        "[[package]]",
+        'name = "fern-cli-sdk"',
+        'version = "0.1.0"',
+        "dependencies = [",
+        ' "base64",',
+        ' "tokio",',
+        ' "twice 2.0.0",',
+        "]",
+        "",
+        "[[package]]",
+        'name = "sha1"',
+        'version = "0.10.6"',
+        "",
+        "[[package]]",
+        'name = "tokio"',
+        'version = "1.0.0"',
+        "",
+        "[[package]]",
+        'name = "twice"',
+        'version = "1.0.0"',
+        "",
+        "[[package]]",
+        'name = "twice"',
+        'version = "2.0.0"',
+        ""
+    ].join("\n");
+
+    it("lists a crate the lockfile already resolves under the root package, in order", () => {
+        const patched = addExtraDependenciesToCargoLock(LOCK, { sha1: "0.10" });
+        expect(patched).toContain('dependencies = [\n "base64",\n "sha1",\n "tokio",\n "twice 2.0.0",\n]');
+    });
+
+    it("resolves renamed crates by their package name", () => {
+        const patched = addExtraDependenciesToCargoLock(LOCK, { hash: { version: "0.10", package: "sha1" } });
+        expect(patched).toContain(' "sha1",\n "tokio",');
+    });
+
+    it("leaves crates that are missing, ambiguous, optional, path or git for cargo to resolve", () => {
+        const patched = addExtraDependenciesToCargoLock(LOCK, {
+            missing: "1",
+            twice: "1",
+            sha1: { version: "0.10", optional: true },
+            local: { path: "../local" },
+            remote: { git: "https://example.com/remote.git" }
+        });
+        expect(patched).toBe(LOCK);
+    });
+
+    it("does not duplicate a crate the root already lists", () => {
+        expect(addExtraDependenciesToCargoLock(LOCK, { tokio: "1" })).toBe(LOCK);
+    });
+
+    it("accepts caret-compatible requirements on the locked version", () => {
+        for (const requirement of ["0.10", "^0.10", "0.10.6", "^0.10.2"]) {
+            expect(addExtraDependenciesToCargoLock(LOCK, { sha1: requirement })).toContain(' "sha1",\n "tokio",');
+        }
+    });
+
+    it("skips requirements the locked version does not satisfy, or that it cannot check", () => {
+        for (const requirement of ["0.9", "0.11", "1", "0.10.7", ">=0.10", "~0.10", "*"]) {
+            expect(addExtraDependenciesToCargoLock(LOCK, { sha1: requirement })).toBe(LOCK);
+        }
+        expect(addExtraDependenciesToCargoLock(LOCK, { sha1: { version: "0.10", registry: "internal" } })).toBe(LOCK);
+        expect(addExtraDependenciesToCargoLock(LOCK, { sha1: { features: ["std"] } })).toBe(LOCK);
+    });
+
+    it("treats a version-suffixed root entry as already listed", () => {
+        const lock = LOCK.replace(' "base64",\n', ' "base64",\n "sha1 0.10.6",\n');
+        expect(addExtraDependenciesToCargoLock(lock, { sha1: "0.10" })).toBe(lock);
+    });
+
+    it("counts only [[package]] entries when checking a crate resolves once", () => {
+        const lock = `${LOCK}\n[metadata]\nname = "sha1"\n`;
+        expect(addExtraDependenciesToCargoLock(lock, { sha1: "0.10" })).toContain(' "sha1",\n "tokio",');
+    });
+
+    it("keeps the shipped lockfile's sha1 for the twilio-style config", () => {
+        expect(TEMPLATE_CARGO_LOCK.split('[[package]]\nname = "sha1"\n')).toHaveLength(2);
+        const patched = addExtraDependenciesToCargoLock(TEMPLATE_CARGO_LOCK, { sha1: "0.10" });
+        expect(rootLockDependencies(patched)).toContain('"sha1"');
+    });
+});
+
+function rootLockDependencies(lock: string): string {
+    const start = lock.indexOf('name = "fern-cli-sdk"');
+    return lock.slice(start, lock.indexOf("]", start));
+}
+
 describe("patchCargoToml (filesystem)", () => {
     let tmpDir: string;
 
@@ -402,6 +641,25 @@ describe("patchCargoToml (filesystem)", () => {
         expect(lockResult).not.toContain('name = "fern-cli-sdk"');
     });
 
+    it("writes extra dependencies into Cargo.toml without touching Cargo.lock", async () => {
+        await writeFile(path.join(tmpDir, "Cargo.toml"), TEMPLATE_CARGO_TOML);
+        await writeFile(path.join(tmpDir, "Cargo.lock"), TEMPLATE_CARGO_LOCK);
+
+        await patchCargoToml({
+            outputDir: tmpDir,
+            binaryName: "acme-cli",
+            version: "2.0.0",
+            extraDependencies: { "google-cloud-auth": "1.16" },
+            extraDevDependencies: { mockall: "0.11" }
+        });
+
+        const result = await readFile(path.join(tmpDir, "Cargo.toml"), "utf-8");
+        expect(result).toContain('[dependencies.google-cloud-auth]\nversion = "1.16"');
+        expect(result).toContain('[dev-dependencies.mockall]\nversion = "0.11"');
+        const lockResult = await readFile(path.join(tmpDir, "Cargo.lock"), "utf-8");
+        expect(lockResult).not.toContain("google-cloud-auth");
+    });
+
     it("keeps Fern's package identity when the customer sets none", async () => {
         await writeFile(path.join(tmpDir, "Cargo.toml"), TEMPLATE_CARGO_TOML);
         await writeFile(path.join(tmpDir, "Cargo.lock"), TEMPLATE_CARGO_LOCK);
@@ -425,13 +683,14 @@ describe("patchCargoToml (filesystem)", () => {
 describe("withDistributionDefaults", () => {
     const repoUrl = "https://github.com/acme/acme-cli";
     const description = "CLI for the Acme API";
-    const base = { publishesHomebrew: true, repoUrl, description };
+    const base = { publishesHomebrew: true, repoUrl, binaryName: "acme", description };
 
-    // The load-bearing one: cargo-dist builds the formula's per-arch release
+    // The load-bearing one: cargo-dist builds the installers' and formula's
     // download URLs from `repository`. Left at the template's value every
-    // `brew install` 404s against github.com/fern-api/cli-sdk.
-    it("points repository, homepage and description at the consumer", () => {
+    // install 404s against github.com/fern-api/cli-sdk.
+    it("points name, repository, homepage and description at the consumer", () => {
         expect(withDistributionDefaults({ ...base, packageIdentity: undefined })).toEqual({
+            name: "acme",
             repository: repoUrl,
             homepage: repoUrl,
             description
@@ -453,31 +712,121 @@ describe("withDistributionDefaults", () => {
             withDistributionDefaults({
                 ...base,
                 packageIdentity: {
+                    name: "acme-tool",
                     repository: "https://github.com/acme/other",
                     homepage: "https://acme.com",
                     description: "Mine"
                 }
             })
         ).toEqual({
+            name: "acme-tool",
             repository: "https://github.com/acme/other",
             homepage: "https://acme.com",
             description: "Mine"
         });
     });
 
-    // Scoped to the Homebrew case: applying it unconditionally would change
-    // the Cargo.toml of every existing github-mode generation.
-    it("is inert when Homebrew is off", () => {
-        const packageIdentity = { name: "acme-cli" };
-        expect(withDistributionDefaults({ ...base, publishesHomebrew: false, packageIdentity })).toBe(packageIdentity);
+    it("defaults name, repository and homepage for every GitHub output, Homebrew or not", () => {
+        expect(withDistributionDefaults({ ...base, publishesHomebrew: false, packageIdentity: undefined })).toEqual({
+            name: "acme",
+            repository: repoUrl,
+            homepage: repoUrl
+        });
+    });
+
+    it("leaves the template name when binaryName is not a valid crate name", () => {
+        for (const binaryName of ["1acme", "acme.cli", "acme cli", "_acme", "a".repeat(65)]) {
+            expect(withDistributionDefaults({ ...base, binaryName, packageIdentity: undefined })).toEqual({
+                repository: repoUrl,
+                homepage: repoUrl,
+                description
+            });
+        }
+    });
+
+    it("leaves the template name when binaryName collides with a crate in the shipped Cargo.lock", () => {
+        const lockedPackageNames = new Set(["fern-cli-sdk", "serde_json", "clap"]);
+        for (const binaryName of ["clap", "serde-json"]) {
+            expect(
+                withDistributionDefaults({ ...base, binaryName, lockedPackageNames, packageIdentity: undefined })
+            ).not.toHaveProperty("name");
+        }
         expect(
-            withDistributionDefaults({ ...base, publishesHomebrew: false, packageIdentity: undefined })
+            withDistributionDefaults({
+                ...base,
+                binaryName: "fern-cli-sdk",
+                lockedPackageNames,
+                packageIdentity: undefined
+            })
+        ).toHaveProperty("name", "fern-cli-sdk");
+    });
+
+    it("is inert without a repo url and Homebrew (non-GitHub output)", () => {
+        const packageIdentity = { license: "MIT" };
+        expect(
+            withDistributionDefaults({ ...base, repoUrl: undefined, publishesHomebrew: false, packageIdentity })
+        ).toEqual(packageIdentity);
+        expect(
+            withDistributionDefaults({
+                ...base,
+                repoUrl: undefined,
+                publishesHomebrew: false,
+                packageIdentity: undefined
+            })
         ).toBeUndefined();
     });
 
-    it("fills only what it can when the repo url is unknown", () => {
+    it("fills only the description when the repo url is unknown", () => {
         expect(withDistributionDefaults({ ...base, repoUrl: undefined, packageIdentity: undefined })).toEqual({
             description
         });
+    });
+});
+
+describe("isValidCrateName", () => {
+    it("accepts cargo package names", () => {
+        for (const name of ["acme", "acme-cli", "acme_cli", "Acme2", "a".repeat(64)]) {
+            expect(isValidCrateName(name)).toBe(true);
+        }
+    });
+
+    it("rejects names cargo refuses", () => {
+        for (const name of ["", "1acme", "-acme", "_acme", "acme.cli", "acme/cli", "acme+cli", "a".repeat(65)]) {
+            expect(isValidCrateName(name)).toBe(false);
+        }
+    });
+});
+
+describe("cargoLockPackageNames", () => {
+    it("collects every [[package]] name", () => {
+        const names = cargoLockPackageNames(TEMPLATE_CARGO_LOCK);
+        expect(names.size).toBe(new Set(TEMPLATE_CARGO_LOCK.match(/^\[\[package\]\]\nname = "[^"]+"/gm)).size);
+        for (const name of ["fern-cli-sdk", "clap", "tokio"]) {
+            expect(names.has(name)).toBe(true);
+        }
+    });
+
+    it("reads CRLF lockfiles", () => {
+        const crlf = TEMPLATE_CARGO_LOCK.replace(/\n/g, "\r\n");
+        expect(cargoLockPackageNames(crlf)).toEqual(cargoLockPackageNames(TEMPLATE_CARGO_LOCK));
+    });
+
+    it("finds a name that is not the first key of its [[package]] block", () => {
+        const lock = [
+            "version = 4",
+            "",
+            "[[package]]",
+            'version = "1.0.0"',
+            'source = "registry+https://github.com/rust-lang/crates.io-index"',
+            'name = "clap"',
+            "",
+            "[[package]]",
+            '  name   =   "tokio"',
+            "",
+            "[metadata]",
+            'name = "not-a-package"',
+            ""
+        ].join("\n");
+        expect(cargoLockPackageNames(lock)).toEqual(new Set(["clap", "tokio"]));
     });
 });

@@ -1,0 +1,15 @@
+{
+  "oneOf": [
+    {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    {
+      "type": "null"
+    }
+  ],
+  "description": "A list of tags, or null.",
+  "definitions": {}
+}

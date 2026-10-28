@@ -24,10 +24,10 @@ class AsyncEmptyRealtimeSocketClient(EventEmitterMixin):
         super().__init__()
         self._websocket = websocket
 
-    async def __aiter__(self):
+    async def __aiter__(self) -> typing.AsyncIterator[EmptyRealtimeSocketClientResponse]:
         async for message in self._websocket:
             if isinstance(message, bytes):
-                yield message
+                yield message  # type: ignore
             else:
                 try:
                     yield construct_type(type_=EmptyRealtimeSocketClientResponse, object_=json.loads(message))  # type: ignore
@@ -101,10 +101,10 @@ class EmptyRealtimeSocketClient(EventEmitterMixin):
         super().__init__()
         self._websocket = websocket
 
-    def __iter__(self):
+    def __iter__(self) -> typing.Iterator[EmptyRealtimeSocketClientResponse]:
         for message in self._websocket:
             if isinstance(message, bytes):
-                yield message
+                yield message  # type: ignore
             else:
                 try:
                     yield construct_type(type_=EmptyRealtimeSocketClientResponse, object_=json.loads(message))  # type: ignore

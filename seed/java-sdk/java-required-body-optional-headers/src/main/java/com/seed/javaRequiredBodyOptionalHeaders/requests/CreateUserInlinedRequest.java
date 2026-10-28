@@ -145,7 +145,6 @@ public final class CreateUserInlinedRequest {
 
         private Optional<String> xTraceId = Optional.empty();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -215,6 +214,14 @@ public final class CreateUserInlinedRequest {
         @java.lang.Override
         public CreateUserInlinedRequest build() {
             return new CreateUserInlinedRequest(xTraceId, name, email, age, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("name") || key.equalsIgnoreCase("email") || key.equalsIgnoreCase("age")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

@@ -29,11 +29,21 @@ class WebhooksHelper
      *    string
      *   |null
      * ) $timestampHeader
+     * @param (
+     *    'sha1'
+     *   |'sha256'
+     *   |'sha384'
+     *   |'sha512'
+     * )|null $algorithm
      * @return bool
      */
-    public static function verifySignature(string|null $requestBody, string|null $signatureHeader, string|null $signatureKey, string|null $timestampHeader): bool
+    public static function verifySignature(string|null $requestBody, string|null $signatureHeader, string|null $signatureKey, string|null $timestampHeader, string|null $algorithm = null): bool
     {
-        if ($requestBody === null || $requestBody === '' || $signatureHeader === null || $signatureHeader === '' || $signatureKey === null || $signatureKey === '') {
+        if ($signatureHeader === null || $signatureHeader === '') {
+            error_log("Webhook signature verification could not run: missing signature header");
+            return false;
+        }
+        if ($requestBody === null || $requestBody === '' || $signatureKey === null || $signatureKey === '') {
             return false;
         }
 
@@ -61,10 +71,14 @@ class WebhooksHelper
         $expected = WebhookSignature::computeHmacSignature(
             payload: $payload,
             secret: $signatureKey,
-            algorithm: "sha256",
+            algorithm: $algorithm ?? "sha256",
             encoding: "hex",
         );
 
-        return WebhookSignature::timingSafeEqual($signature, $expected);
+        $valid = WebhookSignature::timingSafeEqual($signature, $expected);
+        if (!$valid) {
+            error_log("Webhook signature verification failed: signature mismatch");
+        }
+        return $valid;
     }
 }

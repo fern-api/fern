@@ -127,6 +127,7 @@ types:
       pypi: PypiOutputLocationSchema
       postman: PostmanOutputLocationSchema
       local-file-system: LocalFileSystemOutputLocationSchema
+      fern-hosted: FernHostedOutputLocationSchema
       nuget: NugetOutputLocationSchema
       rubygems: RubyGemsOutputLocationSchema
       crates: CratesOutputLocationSchema
@@ -149,6 +150,9 @@ types:
       workflows:
         type: optional<boolean>
         docs: Whether generated `.github/workflows/*` files are committed. Defaults to true. When false, existing workflow files are left untouched and newly generated ones are skipped.
+      auto-merge:
+        type: optional<boolean>
+        docs: Enable GitHub auto-merge (squash) on the pull request opened by Fern. Defaults to false. Auto-merge is skipped when the release contains breaking changes (MAJOR bump), and the repository must allow auto-merge for GitHub to accept it. Only applies when `mode` is `pull-request`.
 
   GithubSelfhostedMode:
     enum:
@@ -200,6 +204,9 @@ types:
       workflows:
         type: optional<boolean>
         docs: Whether generated `.github/workflows/*` files are committed. Defaults to true. When false, existing workflow files are left untouched and newly generated ones are skipped.
+      auto-merge:
+        type: optional<boolean>
+        docs: Enable GitHub auto-merge (squash) on the pull request opened by Fern. Defaults to false. Auto-merge is skipped when the release contains breaking changes (MAJOR bump), and the repository must allow auto-merge for GitHub to accept it.
       # Add properties for pull request configuration
 
   GithubPushSchema:
@@ -258,6 +265,13 @@ types:
   LocalFileSystemOutputLocationSchema:
     properties:
       path: string
+
+  FernHostedOutputLocationSchema:
+    docs: Deploys the generated MCP server to Fern's hosted platform.
+    properties:
+      slug:
+        type: optional<string>
+        docs: Path of the hosted server, https://<org>.fernmcp.dev/<slug>. Defaults to "mcp".
 
   NugetOutputLocationSchema:
     properties:

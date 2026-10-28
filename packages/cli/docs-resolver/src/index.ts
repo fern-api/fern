@@ -17,15 +17,18 @@ export {
     applyTranslatedNavigationOverlays,
     getTranslatedAnnouncement
 } from "./applyTranslatedNavigationOverlays.js";
+export { markUntranslatedNavNodesNoindex } from "./markUntranslatedNavNodesNoindex.js";
 export type TranslationNavigationOverlay = docsYml.TranslationNavigationOverlay;
 export { bundleMdxComponents } from "./bundleMdxComponents.js";
 export {
     DocsDefinitionResolver,
+    getApiRegistrationConcurrency,
+    type OnApiRegistrationQueuedFn,
     type RegisterApiFn,
     type TranslatedApiSpec,
     type UploadedFile
 } from "./DocsDefinitionResolver.js";
-export { stitchGlobalTheme } from "./stitchGlobalTheme.js";
+export { resolveThemeFileUrls, stitchGlobalTheme } from "./stitchGlobalTheme.js";
 export { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition.js";
 export { filterOssWorkspaces } from "./utils/filterOssWorkspaces.js";
 export { generateFdrFromOpenApiWorkspaceV3 } from "./utils/generateFdrFromOpenAPIWorkspaceV3.js";

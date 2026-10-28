@@ -1,6 +1,11 @@
 import { describe, expect, it } from "vitest";
 import { parseCommitMessageForPR } from "../pipeline/github/parseCommitMessage.js";
-import { enrichPrBodyForAutomation, resolvePrFields, shouldEnableAutomerge } from "../pipeline/steps/GithubStep.js";
+import {
+    appendAutoVersionWarning,
+    enrichPrBodyForAutomation,
+    resolvePrFields,
+    shouldEnableAutomerge
+} from "../pipeline/steps/GithubStep.js";
 import type { AutoVersionStepResult, GithubStepConfig } from "../pipeline/types.js";
 
 // Regression coverage for FER-10029: GithubStep must read autoVersion results
@@ -69,7 +74,8 @@ describe("resolvePrFields", () => {
             newVersion: "10.0.0",
             versionBump: "PATCH",
             hasBreakingChanges: false,
-            breakingChangesSummary: "manual summary"
+            breakingChangesSummary: "manual summary",
+            analysisWarning: undefined
         });
     });
 
@@ -152,5 +158,51 @@ describe("PR body composition with autoVersion fallback", () => {
                 { hasBreakingChanges: resolved.hasBreakingChanges }
             )
         ).toBe(true);
+    });
+});
+
+describe("autoVersion analysisWarning (FAI unavailable, PATCH fallback)", () => {
+    const fallbackAutoVersion: AutoVersionStepResult = {
+        executed: true,
+        success: true,
+        version: "8.0.1",
+        previousVersion: "8.0.0",
+        versionBump: "PATCH",
+        commitMessage: "SDK regeneration",
+        analysisWarning: "FAI analysis failed (Error: FAI analyze-commit-diff failed with status 502)"
+    };
+
+    it("resolvePrFields carries analysisWarning through from the autoVersion result", () => {
+        expect(resolvePrFields(baseConfig, fallbackAutoVersion).analysisWarning).toBe(
+            fallbackAutoVersion.analysisWarning
+        );
+        expect(resolvePrFields(baseConfig, undefined).analysisWarning).toBeUndefined();
+    });
+
+    it("appendAutoVersionWarning adds a visible notice with the reason", () => {
+        const body = appendAutoVersionWarning("## SDK regeneration", fallbackAutoVersion.analysisWarning);
+        expect(body).toContain("## SDK regeneration");
+        expect(body).toContain("Version bump not verified");
+        expect(body).toContain("Automatic version analysis was unavailable or incomplete");
+        expect(body).toContain("status 502");
+    });
+
+    it("appendAutoVersionWarning neutralizes backticks and newlines in the reason", () => {
+        const body = appendAutoVersionWarning("body", "line one\n```injected``` line two");
+        expect(body).toContain("Reason: `line one injected line two`");
+        expect(body).not.toContain("```");
+        expect(body.match(/`/g)?.length).toBe(2);
+    });
+
+    it("appendAutoVersionWarning leaves the body untouched without a warning", () => {
+        expect(appendAutoVersionWarning("body", undefined)).toBe("body");
+        expect(appendAutoVersionWarning("body", "  ")).toBe("body");
+    });
+
+    it("analysisWarning blocks automerge even for a non-breaking bump", () => {
+        const config = { ...baseConfig, automationMode: true, autoMerge: true };
+        const resolved = resolvePrFields(config, fallbackAutoVersion);
+        expect(shouldEnableAutomerge(config, resolved)).toBe(false);
+        expect(shouldEnableAutomerge(config, { hasBreakingChanges: false })).toBe(true);
     });
 });

@@ -193,6 +193,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": false,
             "examples": null
         },
         "endpoint_a/b.foo": {
@@ -314,6 +315,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": false,
             "examples": null
         },
         "endpoint_a/c.foo": {
@@ -435,6 +437,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": false,
             "examples": null
         },
         "endpoint_folder.foo": {
@@ -518,6 +521,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": false,
             "examples": null
         },
         "endpoint_folder/service.endpoint": {
@@ -638,6 +642,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": false,
             "examples": null
         },
         "endpoint_folder/service.unknownRequest": {
@@ -763,6 +768,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": false,
             "examples": null
         }
     },

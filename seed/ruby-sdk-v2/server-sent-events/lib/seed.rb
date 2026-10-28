@@ -3,6 +3,7 @@
 require "json"
 require "net/http"
 require "securerandom"
+require "time"
 
 require_relative "seed/internal/json/serializable"
 require_relative "seed/internal/types/type"
@@ -35,8 +36,16 @@ require_relative "seed/internal/iterators/cursor_item_iterator"
 require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
-require_relative "seed/completions/types/streamed_completion"
+require_relative "seed/errors/connection_error"
 require_relative "seed/client"
 require_relative "seed/completions/client"
 require_relative "seed/completions/types/stream_completion_request"
 require_relative "seed/completions/types/stream_completion_request_without_terminator"
+
+module Seed
+  module Completions
+    module Types
+      autoload :StreamedCompletion, ::File.join(__dir__, "seed/completions/types/streamed_completion")
+    end
+  end
+end

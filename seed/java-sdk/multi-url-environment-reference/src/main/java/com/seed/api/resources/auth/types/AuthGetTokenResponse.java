@@ -80,7 +80,6 @@ public final class AuthGetTokenResponse {
     public static final class Builder implements AccessTokenStage, _FinalStage {
         private String accessToken;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -101,6 +100,14 @@ public final class AuthGetTokenResponse {
         @java.lang.Override
         public AuthGetTokenResponse build() {
             return new AuthGetTokenResponse(accessToken, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("access_token")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

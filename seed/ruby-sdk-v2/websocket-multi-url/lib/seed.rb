@@ -3,6 +3,7 @@
 require "json"
 require "net/http"
 require "securerandom"
+require "time"
 
 require_relative "seed/internal/json/serializable"
 require_relative "seed/internal/types/type"
@@ -35,7 +36,15 @@ require_relative "seed/internal/iterators/cursor_item_iterator"
 require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
-require_relative "seed/realtime/types/send_event"
-require_relative "seed/realtime/types/receive_event"
+require_relative "seed/errors/connection_error"
 require_relative "seed/client"
 require_relative "seed/environment"
+
+module Seed
+  module Realtime
+    module Types
+      autoload :SendEvent, ::File.join(__dir__, "seed/realtime/types/send_event")
+      autoload :ReceiveEvent, ::File.join(__dir__, "seed/realtime/types/receive_event")
+    end
+  end
+end

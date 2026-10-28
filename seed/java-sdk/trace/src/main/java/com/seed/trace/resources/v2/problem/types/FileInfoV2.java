@@ -131,7 +131,6 @@ public final class FileInfoV2 {
 
         private boolean editable;
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -176,6 +175,17 @@ public final class FileInfoV2 {
         @java.lang.Override
         public FileInfoV2 build() {
             return new FileInfoV2(filename, directory, contents, editable, additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("filename")
+                    || key.equalsIgnoreCase("directory")
+                    || key.equalsIgnoreCase("contents")
+                    || key.equalsIgnoreCase("editable")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         @java.lang.Override

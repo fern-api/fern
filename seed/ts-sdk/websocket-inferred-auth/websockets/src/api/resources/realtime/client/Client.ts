@@ -4,6 +4,7 @@ import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import * as errors from "../../../../errors/index.js";
 import { RealtimeSocket } from "./Socket.js";
 
 export declare namespace RealtimeClient {
@@ -27,7 +28,7 @@ export declare namespace RealtimeClient {
         connectionTimeoutInSeconds?: number;
         /** A signal to abort the WebSocket connection. */
         abortSignal?: AbortSignal;
-        /** Decides whether a close event should trigger a reconnect. Return false to treat the close as terminal. Defaults to reconnecting on any close code other than 1000. */
+        /** Decides whether a server close event should trigger a reconnect. Not consulted for connection errors, timeouts, or internal closes. Return false to treat the close as terminal. Defaults to reconnecting on any server close code other than 1000. */
         shouldReconnect?: (event: core.CloseEvent) => boolean;
     }
 }
@@ -63,7 +64,7 @@ export class RealtimeClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/realtime/${core.url.encodePathParam(sessionId)}`,
+                `/realtime/${core.url.encodePathParam(sessionId, errors.SeedWebsocketAuthError)}`,
             ),
             protocols: protocols ?? [],
             queryParameters: { ..._queryParams, ...queryParams },

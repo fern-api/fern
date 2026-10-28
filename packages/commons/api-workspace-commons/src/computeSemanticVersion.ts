@@ -1,5 +1,5 @@
 import type { generatorsYml } from "@fern-api/configuration";
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, stripTrailingSlashes } from "@fern-api/core-utils";
 import { getFileContent, getLatestRelease as getLatestReleaseFromGithub } from "@fern-api/github";
 import type { FernFiddle } from "@fern-fern/fiddle-sdk";
 import latestVersion from "latest-version";
@@ -121,6 +121,29 @@ export async function computeSemanticVersion({
     const nextVersion = semver.inc(existingVersion, "patch");
 
     return nextVersion ?? undefined;
+}
+
+/**
+ * Returns the highest version of `packageName` currently published to its registry
+ * or tagged on GitHub, without incrementing it. Used to confirm which version a
+ * remote generation actually released.
+ */
+export async function getPublishedVersion({
+    packageName,
+    generatorInvocation
+}: {
+    packageName: string;
+    generatorInvocation: generatorsYml.GeneratorInvocation;
+}): Promise<string | undefined> {
+    if (generatorInvocation.language == null) {
+        return undefined;
+    }
+    return await getExistingVersion({
+        packageName,
+        language: generatorInvocation.language,
+        githubRepository: getGithubRepository(generatorInvocation),
+        registryInfo: getRegistryInfoFromOutputMode(generatorInvocation.outputMode)
+    });
 }
 
 /**
@@ -449,8 +472,7 @@ function resolvePypiLookupUrl(registryInfo: RegistryInfo): string {
     }
     // For custom PyPI servers, try to use the base URL with /pypi path
     // Strip trailing slashes and common suffixes
-    const baseUrl = configuredUrl
-        .replace(/\/+$/, "")
+    const baseUrl = stripTrailingSlashes(configuredUrl)
         .replace(/\/legacy$/, "")
         .replace(/\/simple$/, "");
     return `${baseUrl}/pypi`;
@@ -593,7 +615,7 @@ function resolveNugetFlatContainerUrl(registryInfo: RegistryInfo): string {
         return DEFAULT_NUGET_FLAT_CONTAINER_URL;
     }
     // For custom NuGet feeds, try appending the flat container path
-    const baseUrl = configuredUrl.replace(/\/+$/, "");
+    const baseUrl = stripTrailingSlashes(configuredUrl);
     return `${baseUrl}/v3-flatcontainer`;
 }
 
@@ -665,7 +687,7 @@ function resolveRubyGemsApiUrl(registryInfo: RegistryInfo): string {
         return DEFAULT_RUBYGEMS_API_URL;
     }
     // For custom gem servers, append the API path
-    const baseUrl = configuredUrl.replace(/\/+$/, "");
+    const baseUrl = stripTrailingSlashes(configuredUrl);
     return `${baseUrl}/api/v1/gems`;
 }
 
@@ -820,7 +842,7 @@ function resolveCratesApiUrl(registryInfo: RegistryInfo): string {
         return DEFAULT_CRATES_API_URL;
     }
     // For custom registries, use the configured URL directly
-    return configuredUrl.replace(/\/+$/, "");
+    return stripTrailingSlashes(configuredUrl);
 }
 
 /**

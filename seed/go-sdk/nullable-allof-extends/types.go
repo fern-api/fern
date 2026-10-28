@@ -9,11 +9,11 @@ import (
 	big "math/big"
 )
 
-// A standard object with no nullable issues.
 var (
 	normalObjectFieldNormalField = big.NewInt(1 << 0)
 )
 
+// A standard object with no nullable issues.
 type NormalObject struct {
 	NormalField *string `json:"normalField,omitempty" url:"normalField,omitempty"`
 
@@ -39,10 +39,12 @@ func (n *NormalObject) GetExtraProperties() map[string]interface{} {
 }
 
 func (n *NormalObject) require(field *big.Int) {
-	if n.explicitFields == nil {
-		n.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if n.explicitFields != nil {
+		next.Set(n.explicitFields)
 	}
-	n.explicitFields.Or(n.explicitFields, field)
+	next.Or(next, field)
+	n.explicitFields = next
 }
 
 // SetNormalField sets the NormalField field and marks it as non-optional;
@@ -94,11 +96,11 @@ func (n *NormalObject) String() string {
 	return fmt.Sprintf("%#v", n)
 }
 
-// This schema has nullable:true at the top level.
 var (
 	nullableObjectFieldNullableField = big.NewInt(1 << 0)
 )
 
+// This schema has nullable:true at the top level.
 type NullableObject struct {
 	NullableField *string `json:"nullableField,omitempty" url:"nullableField,omitempty"`
 
@@ -124,10 +126,12 @@ func (n *NullableObject) GetExtraProperties() map[string]interface{} {
 }
 
 func (n *NullableObject) require(field *big.Int) {
-	if n.explicitFields == nil {
-		n.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if n.explicitFields != nil {
+		next.Set(n.explicitFields)
 	}
-	n.explicitFields.Or(n.explicitFields, field)
+	next.Or(next, field)
+	n.explicitFields = next
 }
 
 // SetNullableField sets the NullableField field and marks it as non-optional;
@@ -179,12 +183,12 @@ func (n *NullableObject) String() string {
 	return fmt.Sprintf("%#v", n)
 }
 
-// Object inheriting from a nullable schema via allOf.
 var (
 	rootObjectFieldNormalField   = big.NewInt(1 << 0)
 	rootObjectFieldNullableField = big.NewInt(1 << 1)
 )
 
+// Object inheriting from a nullable schema via allOf.
 type RootObject struct {
 	NormalField   *string `json:"normalField,omitempty" url:"normalField,omitempty"`
 	NullableField *string `json:"nullableField,omitempty" url:"nullableField,omitempty"`
@@ -218,10 +222,12 @@ func (r *RootObject) GetExtraProperties() map[string]interface{} {
 }
 
 func (r *RootObject) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
 	}
-	r.explicitFields.Or(r.explicitFields, field)
+	next.Or(next, field)
+	r.explicitFields = next
 }
 
 // SetNormalField sets the NormalField field and marks it as non-optional;

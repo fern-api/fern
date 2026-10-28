@@ -8,7 +8,7 @@ import com.seed.builderExtension.core.Suppliers;
 import com.seed.builderExtension.resources.service.ServiceClient;
 import java.util.function.Supplier;
 
-public class BaseClient {
+public class BaseClient implements AutoCloseable {
     protected final ClientOptions clientOptions;
 
     protected final Supplier<ServiceClient> serviceClient;
@@ -20,6 +20,16 @@ public class BaseClient {
 
     public ServiceClient service() {
         return this.serviceClient.get();
+    }
+
+    /**
+     * Releases resources owned by this client: any WebSocket clients still connected through
+     * it are disconnected first, then the SDK-owned HTTP client is shut down. See
+     * {@code ClientOptions.close()} for what is and is not released.
+     */
+    @Override
+    public void close() {
+        this.clientOptions.close();
     }
 
     public static BaseClientBuilder.Impl builder() {

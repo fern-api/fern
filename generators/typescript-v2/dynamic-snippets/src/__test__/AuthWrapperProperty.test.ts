@@ -148,6 +148,53 @@ describe("auth wrapperProperty", () => {
         expect(response.snippet).toContain('token: "<token>"');
     });
 
+    it("keeps auth constructor options flat when flattenAnyAuthOptions is enabled", async () => {
+        const generator = buildDynamicSnippetsGenerator({
+            irFilepath: REAL_FIXTURE_IR_FILEPATH,
+            config: buildGeneratorConfig({
+                customConfig: {
+                    flattenAnyAuthOptions: true
+                }
+            })
+        });
+
+        const response = await generator.generate(REAL_FIXTURE_REQUEST);
+
+        expect(response.snippet).toContain('token: "<token>"');
+        expect(response.snippet).not.toContain("bearerAuth: {");
+    });
+
+    it("keeps endpoint security auth options nested when flattenAnyAuthOptions is enabled", async () => {
+        const generator = buildDynamicSnippetsGenerator({
+            irFilepath: OAUTH_FIXTURE_IR_FILEPATH,
+            config: buildGeneratorConfig({
+                customConfig: {
+                    flattenAnyAuthOptions: true
+                }
+            })
+        });
+
+        const response = await generator.generate({
+            endpoint: {
+                method: "GET",
+                path: "/users/mixed"
+            },
+            baseURL: undefined,
+            environment: undefined,
+            auth: {
+                type: "oauth",
+                clientId: "<clientId>",
+                clientSecret: "<clientSecret>"
+            },
+            pathParameters: undefined,
+            queryParameters: undefined,
+            headers: undefined,
+            requestBody: undefined
+        });
+
+        expect(response.snippet).toContain("oauth: {");
+    });
+
     it("uses camelCase auth wrapper options with noSerdeLayer", async () => {
         const generator = buildDynamicSnippetsGenerator({
             irFilepath: REAL_FIXTURE_IR_FILEPATH,

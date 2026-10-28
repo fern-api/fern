@@ -4,6 +4,7 @@
 package com.seed.websocketAuth.resources.auth;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.websocketAuth.core.BodyProperties;
 import com.seed.websocketAuth.core.ClientOptions;
 import com.seed.websocketAuth.core.MediaTypes;
 import com.seed.websocketAuth.core.ObjectMappers;
@@ -48,7 +49,9 @@ public class RawAuthClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -107,7 +110,9 @@ public class RawAuthClient {
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                            request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                    MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

@@ -4,7 +4,7 @@ import { readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 
 import { Migration } from "../../../types/Migration.js";
-import { getAllGeneratorYamlFiles } from "./getAllGeneratorYamlFiles.js";
+import { getAllGeneratorYamlFiles } from "../../../utils/getAllGeneratorYamlFiles.js";
 import * as NewSchemas from "./new-generators-configuration/index.js";
 import * as OldSchemas from "./old-generators-configuration/index.js";
 

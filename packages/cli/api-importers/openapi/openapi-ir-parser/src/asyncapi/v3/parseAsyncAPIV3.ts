@@ -1,4 +1,4 @@
-import { extractErrorMessage } from "@fern-api/core-utils";
+import { decodeJsonPointerSegment, extractErrorMessage } from "@fern-api/core-utils";
 import {
     HeaderWithExample,
     PathParameterWithExample,
@@ -638,10 +638,6 @@ export function parseAsyncAPIV3({
     };
 }
 
-function decodeJsonPointerSegment(segment: string): string {
-    return segment.replace(/~1/g, "/").replace(/~0/g, "~");
-}
-
 function getChannelPathFromOperation(operation: AsyncAPIV3.Operation): string {
     if (!operation.channel) {
         throw new CliError({
@@ -736,6 +732,7 @@ function convertMessageReferencesToWebsocketSchemas({
     messages.forEach((message, i) => {
         try {
             const channelMessage = context.resolveMessageReference(message.ref, true);
+            const resolvedMessage = context.resolveMessageReference(message.ref);
             let schemaId = channelMessage.name as string;
 
             if (duplicatedMessageIds.includes(schemaId)) {
@@ -748,6 +745,7 @@ function convertMessageReferencesToWebsocketSchemas({
                     origin,
                     name: schemaId ?? `${origin}Message${i + 1}`,
                     displayName: message.displayName,
+                    description: resolvedMessage.description ?? resolvedMessage.summary,
                     body: convertSchemaWithExampleToSchema(schema),
                     methodName: message.methodName
                 });

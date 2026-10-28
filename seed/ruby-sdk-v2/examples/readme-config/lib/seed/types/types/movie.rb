@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "../../../seed"
+
 module Seed
   module Types
     module Types
@@ -12,7 +14,7 @@ module Seed
 
         field :from, -> { String }, optional: false, nullable: false
 
-        field :rating, -> { Integer }, optional: false, nullable: false
+        field :rating, -> { Float }, optional: false, nullable: false
 
         field :type, -> { String }, optional: false, nullable: false
 

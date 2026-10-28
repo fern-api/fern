@@ -152,8 +152,8 @@ client.inlined.send_(
   aliased_context: "You're super wise",
   maybe_context: "You're super wise",
   object_with_literal: {
-    nested_literal: {
-      my_literal: "How super cool"
+    nestedLiteral: {
+      myLiteral: "How super cool"
     }
   }
 )
@@ -195,7 +195,7 @@ client.inlined.send_(
 <dl>
 <dd>
 
-**temperature:** `Integer` 
+**temperature:** `Float` 
     
 </dd>
 </dl>
@@ -439,10 +439,10 @@ client.reference.send_(
   stream: false,
   context: "You're super wise",
   container_object: {
-    nested_objects: [{
+    nestedObjects: [{
       literal1: "literal1",
       literal2: "literal2",
-      str_prop: "strProp"
+      strProp: "strProp"
     }]
   }
 )

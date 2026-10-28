@@ -211,10 +211,17 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                     omitFernHeaders: this.rubyContext.customConfig.omitFernHeaders,
                     includePlatformHeaders: this.rubyContext.customConfig.includePlatformHeaders,
                     allowUserAgentAppInfo: this.rubyContext.customConfig.allowUserAgentAppInfo,
+                    // Only drops the default X-Fern-* headers when a User-Agent is emitted.
+                    userAgentOnly:
+                        this.rubyContext.customConfig.userAgentOnly === true &&
+                        this.rubyContext.ir.sdkConfig.platformHeaders.userAgent != null,
+                    allowCustomHttpClient: this.rubyContext.customConfig.allowCustomHttpClient,
                     maxRetries: this.rubyContext.customConfig.maxRetries,
                     retryStatusCodes: this.rubyContext.customConfig.retryStatusCodes,
                     respectOptionalRequestBody: this.rubyContext.customConfig.respectOptionalRequestBody,
                     respectNullableUnionFields: this.rubyContext.customConfig.respectNullableUnionFields,
+                    serializeTimeAsIso8601: this.rubyContext.customConfig.serializeTimeAsIso8601,
+                    omitUnsetModelFields: this.rubyContext.customConfig.omitUnsetModelFields,
                     endpointSecurity: this.rubyContext.ir.auth.requirement === "ENDPOINT_SECURITY",
                     requestLevelMaxRetries: hasEndpointWithRetriesDisabled(
                         Object.values(this.rubyContext.ir.services).flatMap((service) => service.endpoints)
@@ -232,10 +239,14 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         omitFernHeaders,
         includePlatformHeaders,
         allowUserAgentAppInfo,
+        userAgentOnly,
+        allowCustomHttpClient,
         maxRetries,
         retryStatusCodes,
         respectOptionalRequestBody,
         respectNullableUnionFields,
+        serializeTimeAsIso8601,
+        omitUnsetModelFields,
         endpointSecurity,
         requestLevelMaxRetries
     }: {
@@ -246,10 +257,14 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         omitFernHeaders?: boolean;
         includePlatformHeaders?: boolean;
         allowUserAgentAppInfo?: boolean;
+        userAgentOnly?: boolean;
+        allowCustomHttpClient?: boolean;
         maxRetries?: number;
         retryStatusCodes?: string;
         respectOptionalRequestBody?: boolean;
         respectNullableUnionFields?: boolean;
+        serializeTimeAsIso8601?: boolean;
+        omitUnsetModelFields?: boolean;
         endpointSecurity?: boolean;
         requestLevelMaxRetries?: boolean;
     }): Promise<File> {
@@ -262,19 +277,33 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                 omitFernHeaders,
                 includePlatformHeaders,
                 allowUserAgentAppInfo,
+                userAgentOnly,
+                allowCustomHttpClient,
                 maxRetries,
                 respectOptionalRequestBody,
                 respectNullableUnionFields,
+                serializeTimeAsIso8601,
+                omitUnsetModelFields,
                 endpointSecurity,
                 requestLevelMaxRetries
             })
         });
 
-        const retryStatusCodesArray =
+        const retryStatuses =
             retryStatusCodes === "recommended"
-                ? "[408, 429, 502, 503, 504].freeze"
-                : "[408, 429, 500, 502, 503, 504, 521, 522, 524].freeze";
-        rendered = rendered.replace(/\{\{RETRY_STATUS_CODES_ARRAY\}\}/g, retryStatusCodesArray);
+                ? [408, 429, 502, 503, 504]
+                : [408, 429, 500, 502, 503, 504, 521, 522, 524];
+        const tested5xxStatuses = [500, 501, 502, 503, 504, 505, 510, 521, 522, 524, 599];
+        const toRubyArray = (statuses: number[]) => `[${statuses.join(", ")}]`;
+        rendered = rendered.replace(/\{\{RETRY_STATUS_CODES_ARRAY\}\}/g, `${toRubyArray(retryStatuses)}.freeze`);
+        rendered = rendered.replace(
+            /\{\{RETRYABLE_5XX_STATUSES\}\}/g,
+            toRubyArray(tested5xxStatuses.filter((status) => retryStatuses.includes(status)))
+        );
+        rendered = rendered.replace(
+            /\{\{NON_RETRYABLE_5XX_STATUSES\}\}/g,
+            toRubyArray(tested5xxStatuses.filter((status) => !retryStatuses.includes(status)))
+        );
 
         return new File(this.getAsIsOutputFilename(filename), this.getAsIsOutputDirectory(filename), rendered);
     }
@@ -328,9 +357,13 @@ function getTemplateVariables({
     omitFernHeaders,
     includePlatformHeaders,
     allowUserAgentAppInfo,
+    userAgentOnly,
+    allowCustomHttpClient,
     maxRetries,
     respectOptionalRequestBody,
     respectNullableUnionFields,
+    serializeTimeAsIso8601,
+    omitUnsetModelFields,
     endpointSecurity,
     requestLevelMaxRetries
 }: {
@@ -340,9 +373,13 @@ function getTemplateVariables({
     omitFernHeaders?: boolean;
     includePlatformHeaders?: boolean;
     allowUserAgentAppInfo?: boolean;
+    userAgentOnly?: boolean;
+    allowCustomHttpClient?: boolean;
     maxRetries?: number;
     respectOptionalRequestBody?: boolean;
     respectNullableUnionFields?: boolean;
+    serializeTimeAsIso8601?: boolean;
+    omitUnsetModelFields?: boolean;
     endpointSecurity?: boolean;
     requestLevelMaxRetries?: boolean;
 }): Record<string, unknown> {
@@ -358,6 +395,11 @@ function getTemplateVariables({
         // Emits the RawClient.append_app_info helper only when the opt-in flag is on,
         // so flag-off raw_client.rb stays byte-identical.
         allowUserAgentAppInfo: allowUserAgentAppInfo ?? false,
+        // Drops the default X-Fern-Language/SDK-Name/SDK-Version headers.
+        userAgentOnly: userAgentOnly ?? false,
+        // Emits the RawClient `http_client:` transport override only when the opt-in
+        // flag is on, so flag-off raw_client.rb stays byte-identical.
+        allowCustomHttpClient: allowCustomHttpClient ?? false,
         defaultMaxRetries: maxRetries ?? 2,
         // Emits the JSON::Request omit_content_type_without_body parameter only when the
         // opt-in flag is on, so flag-off json/request.rb stays byte-identical.
@@ -366,6 +408,12 @@ function getTemplateVariables({
         // the opt-in flag is on, so flag-off internal/types/union.rb stays
         // byte-identical.
         respectNullableUnionFields: respectNullableUnionFields ?? false,
+        // On by default; `false` restores the previous `Time#to_s` request serialization
+        // byte-for-byte.
+        serializeTimeAsIso8601: serializeTimeAsIso8601 ?? true,
+        // Drops never-set required fields from `Model#to_h` only when the opt-in flag is on,
+        // so flag-off internal/types/model.rb stays byte-identical.
+        omitUnsetModelFields: omitUnsetModelFields ?? false,
         // Emits the RawClient#auth_headers_for_endpoint delegator only for
         // endpoint-security SDKs, so ALL/ANY SDKs see zero change to raw_client.rb.
         endpointSecurity: endpointSecurity ?? false,
@@ -392,9 +440,12 @@ class GemspecFile {
 
     public constructor({ context, project }: GemspecFile.Args) {
         this.context = context;
-        this.baseDependencies = hasBasicAuth(context.ir)
-            ? [...BASE_DEPENDENCIES, { name: "base64" }]
-            : BASE_DEPENDENCIES;
+        this.baseDependencies = [
+            ...BASE_DEPENDENCIES,
+            ...(hasBasicAuth(context.ir) ? [{ name: "base64" }] : []),
+            // rexml is a bundled (not default) gem since Ruby 3.0, so it must be declared explicitly.
+            ...(context.hasXmlTypes() ? [{ name: "rexml", versionConstraint: ">= 3.3.9" }] : [])
+        ];
     }
 
     public async toString(): Promise<string> {
@@ -726,8 +777,14 @@ class ModuleFile {
     private get baseContents(): string {
         const hasBasicAuth = this.context.ir.auth.schemes.some((s) => s.type === "basic");
         const requires = ['"json"', '"net/http"', '"securerandom"'];
+        if (this.context.customConfig.serializeTimeAsIso8601 !== false) {
+            requires.push('"time"');
+        }
         if (hasBasicAuth) {
             requires.push('"base64"');
+        }
+        if (this.context.hasXmlTypes()) {
+            requires.push('"rexml/document"');
         }
         return dedent`
             # frozen_string_literal: true
@@ -781,13 +838,23 @@ class ModuleFile {
 
         const { sorted, cycles } = topologicalSortWithCycleDetection(filteredTypeDeclarations, dependsOn);
 
+        // Types are registered with `autoload` rather than required eagerly, so loading the
+        // gem only pays for the (small) runtime; each type file is read on first reference.
+        const autoloads = new Map<string, string[]>();
+        const typeFilePaths = new Set<AbsoluteFilePath>();
         sorted.forEach((typeDeclaration) => {
             const typeFilePath = join(
                 this.project.absolutePathToOutputDirectory,
                 this.context.getLocationForTypeId(typeDeclaration.name.typeId),
                 RelativeFilePath.of(this.context.getFileNameForTypeId(typeDeclaration.name.typeId))
             );
-            relativeImportPaths.add(relative(this.filePath, typeFilePath));
+            typeFilePaths.add(typeFilePath);
+            const classReference = this.context.getClassReferenceForTypeId(typeDeclaration.name.typeId);
+            const requirePath = relative(this.filePath, typeFilePath).replace(/\.rb$/, "");
+            const key = classReference.modules.join("::");
+            const entries = autoloads.get(key) ?? [];
+            entries.push(`autoload :${classReference.name}, ::File.join(__dir__, "${requirePath}")`);
+            autoloads.set(key, entries);
         });
 
         rubyFilePaths.forEach((filePath) => {
@@ -796,6 +863,7 @@ class ModuleFile {
             // The barrel lives in lib/, so test paths resolve to ../test/wire/…
             const relativePath = relative(this.filePath, filePath);
             if (
+                typeFilePaths.has(filePath) ||
                 relativePath.startsWith("spec/") ||
                 relativePath.startsWith("test/") ||
                 relativePath.startsWith("../test/") ||
@@ -813,6 +881,7 @@ class ModuleFile {
                 .filter((importPath) => importPath.endsWith(".rb"))
                 .map((importPath) => `require_relative "${importPath.replaceAll(".rb", "")}"`)
                 .join("\n");
+        const autoloadContents = this.renderAutoloads(autoloads);
 
         // Add optional user require paths hook at the end (only if configured)
         // This allows users to add custom code (e.g., Sentry integration) without fernignoring generated files
@@ -831,15 +900,59 @@ class ModuleFile {
   require_relative relative_path if File.exist?(absolute_path)
 end`;
 
-            return dedent`${contents}` + requirePathsHook + "\n";
+            return dedent`${contents}` + autoloadContents + requirePathsHook + "\n";
         }
 
-        return dedent`${contents}` + "\n";
+        return dedent`${contents}` + autoloadContents + "\n";
+    }
+
+    private renderAutoloads(autoloads: Map<string, string[]>): string {
+        const root: AutoloadModule = { children: new Map(), entries: [] };
+        for (const [key, entries] of autoloads) {
+            let node = root;
+            for (const moduleName of key.split("::")) {
+                let child = node.children.get(moduleName);
+                if (child == null) {
+                    child = { children: new Map(), entries: [] };
+                    node.children.set(moduleName, child);
+                }
+                node = child;
+            }
+            node.entries.push(...entries);
+        }
+        const blocks: string[] = [];
+        for (const [moduleName, node] of root.children) {
+            blocks.push(this.renderAutoloadModule(moduleName, node, 0).join("\n"));
+        }
+        return blocks.length === 0 ? "" : `\n\n${blocks.join("\n\n")}`;
+    }
+
+    private renderAutoloadModule(moduleName: string, node: AutoloadModule, depth: number): string[] {
+        const indent = "  ".repeat(depth);
+        const lines = [`${indent}module ${moduleName}`];
+        for (const entry of node.entries) {
+            lines.push(`${indent}  ${entry}`);
+        }
+        let first = node.entries.length === 0;
+        for (const [childName, child] of node.children) {
+            if (!first) {
+                lines.push("");
+            }
+            first = false;
+            lines.push(...this.renderAutoloadModule(childName, child, depth + 1));
+        }
+        lines.push(`${indent}end`);
+        return lines;
     }
 
     public async writeFile(): Promise<void> {
         await writeFile(join(this.filePath, RelativeFilePath.of(this.fileName)), this.toString());
     }
+}
+
+interface AutoloadModule {
+    children: Map<string, AutoloadModule>;
+    entries: string[];
 }
 
 function dependsOn(a: FernIr.TypeDeclaration, b: FernIr.TypeDeclaration): boolean {

@@ -9,8 +9,11 @@ import { DisplayNameExtension } from "../extensions/x-display-name.js";
  * Context class for converting OpenAPI 3.1 specifications
  */
 export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPIV3_1.Document> {
+    /** Plain `x-fern-base-path` applied to each endpoint when `respect-per-spec-base-path` is set. */
+    public perSpecBasePath: string | undefined;
     public globalHeaderNames: string[] | undefined;
     private readonly tagToDisplayName: Record<string, string> = {};
+    private readonly tagsWithExplicitDisplayName = new Set<string>();
     private readonly tagToDescription = new Map<string, string>();
     private tagDescriptionsIndexed = false;
 
@@ -119,11 +122,19 @@ export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPI
                     tag,
                     context: this
                 });
-                const tagDisplayName = displayNameExtension.convert()?.displayName ?? tag.name;
-                this.tagToDisplayName[tag.name] = tagDisplayName;
+                const explicitDisplayName = displayNameExtension.convert()?.displayName;
+                if (explicitDisplayName != null) {
+                    this.tagsWithExplicitDisplayName.add(tag.name);
+                }
+                this.tagToDisplayName[tag.name] = explicitDisplayName ?? tag.name;
             }
         }
         return this.tagToDisplayName[tag] ?? tag;
+    }
+
+    public hasExplicitDisplayNameForTag(tag: string): boolean {
+        this.getDisplayNameForTag(tag);
+        return this.tagsWithExplicitDisplayName.has(tag);
     }
 
     public getDescriptionForTag(tag: string): string | undefined {

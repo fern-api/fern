@@ -318,6 +318,52 @@ $client->endpoints->container->getAndReturnMapOfPrimToUndiscriminatedUnion(
 </dl>
 </details>
 
+<details><summary><code>$client-&gt;endpoints-&gt;container-&gt;getAndReturnMapOfIntegerToObject($request) -> ?array</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->endpoints->container->getAndReturnMapOfIntegerToObject(
+    [
+        1 => new ObjectWithRequiredField([
+            'string' => 'string',
+        ]),
+    ],
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$request:** `array` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>$client-&gt;endpoints-&gt;container-&gt;getAndReturnOptional($request) -> ?ObjectWithRequiredField</code></summary>
 <dl>
 <dd>

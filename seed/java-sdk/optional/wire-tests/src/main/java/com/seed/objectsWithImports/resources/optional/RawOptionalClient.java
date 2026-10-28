@@ -4,9 +4,11 @@
 package com.seed.objectsWithImports.resources.optional;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.seed.objectsWithImports.core.BodyProperties;
 import com.seed.objectsWithImports.core.ClientOptions;
 import com.seed.objectsWithImports.core.MediaTypes;
 import com.seed.objectsWithImports.core.ObjectMappers;
+import com.seed.objectsWithImports.core.PathSegments;
 import com.seed.objectsWithImports.core.RequestOptions;
 import com.seed.objectsWithImports.core.RetryInterceptor;
 import com.seed.objectsWithImports.core.SeedObjectsWithImportsApiException;
@@ -58,9 +60,12 @@ public class RawOptionalClient {
         RequestBody body;
         try {
             body = RequestBody.create("", null);
-            if (request.isPresent()) {
+            if (request.isPresent()
+                    || BodyProperties.isPresent(requestOptions != null ? requestOptions.getBodyProperties() : null)) {
                 body = RequestBody.create(
-                        ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                        ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                                request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                        MediaTypes.APPLICATION_JSON);
             }
         } catch (JsonProcessingException e) {
             throw new SeedObjectsWithImportsException("Failed to serialize request", e);
@@ -127,9 +132,12 @@ public class RawOptionalClient {
         RequestBody body;
         try {
             body = RequestBody.create("", null);
-            if (request.isPresent()) {
+            if (request.isPresent()
+                    || BodyProperties.isPresent(requestOptions != null ? requestOptions.getBodyProperties() : null)) {
                 body = RequestBody.create(
-                        ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                        ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                                request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                        MediaTypes.APPLICATION_JSON);
             }
         } catch (JsonProcessingException e) {
             throw new SeedObjectsWithImportsException("Failed to serialize request", e);
@@ -207,9 +215,9 @@ public class RawOptionalClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("deploy")
-                .addPathSegment(actionId)
+                .addPathSegment(PathSegments.validate(actionId))
                 .addPathSegments("versions")
-                .addPathSegment(id);
+                .addPathSegment(PathSegments.validate(id));
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {
                 httpUrl.addQueryParameter(_key, _value);
@@ -218,9 +226,12 @@ public class RawOptionalClient {
         RequestBody body;
         try {
             body = RequestBody.create("", null);
-            if (request.isPresent()) {
+            if (request.isPresent()
+                    || BodyProperties.isPresent(requestOptions != null ? requestOptions.getBodyProperties() : null)) {
                 body = RequestBody.create(
-                        ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+                        ObjectMappers.JSON_MAPPER.writeValueAsBytes(BodyProperties.merge(
+                                request, requestOptions != null ? requestOptions.getBodyProperties() : null)),
+                        MediaTypes.APPLICATION_JSON);
             }
         } catch (JsonProcessingException e) {
             throw new SeedObjectsWithImportsException("Failed to serialize request", e);

@@ -1,9 +1,10 @@
 # Stage 1: Pull wiremock image as tar (no daemon needed)
 FROM alpine:3.23 AS wiremock-pull
+ARG TARGETARCH
 RUN apk add --no-cache curl && \
     ARCH=$(uname -m) && if [ "$ARCH" = "aarch64" ]; then ARCH="arm64"; fi && \
     curl -sL "https://github.com/google/go-containerregistry/releases/download/v0.21.2/go-containerregistry_Linux_${ARCH}.tar.gz" | tar xz -C /usr/local/bin crane && \
-    crane pull wiremock/wiremock:3.9.1 /wiremock.tar
+    crane pull --platform "linux/${TARGETARCH:?TARGETARCH not set}" wiremock/wiremock:3.9.1 /wiremock.tar
 
 # Stage 2: Rebuild containerd + runc + moby + docker CLI from source with
 # go1.26.4 so the embedded stdlib clears vulnerability scanners. The
@@ -13,13 +14,14 @@ ARG CONTAINERD_VERSION=2.3.2
 ARG RUNC_VERSION=1.3.6
 ARG MOBY_VERSION=29.5.2
 ARG DOCKER_CLI_VERSION=29.5.2
+ARG COMPOSE_VERSION=5.1.4
 ARG XNET_VERSION=0.55.0
 ARG XCRYPTO_VERSION=0.53.0
 ARG XSYS_VERSION=0.46.0
 ARG OTEL_SDK_VERSION=1.43.0
 ARG IN_TOTO_VERSION=0.11.0
 ENV GOTOOLCHAIN=go1.26.4
-RUN apk add --no-cache git make gcc musl-dev linux-headers libseccomp-dev libseccomp-static bash ca-certificates && \
+RUN apk add --no-cache git make gcc musl-dev linux-headers libseccomp-dev libseccomp-static bash ca-certificates binutils && \
     mkdir -p /overlay/usr/local/bin
 RUN git clone --depth 1 --branch v${CONTAINERD_VERSION} https://github.com/containerd/containerd.git /src/containerd && \
     cd /src/containerd && \
@@ -84,6 +86,31 @@ RUN git clone --depth 1 --branch v${DOCKER_CLI_VERSION} https://github.com/docke
       -tags "osusergo netgo static_build pkcs11" \
       -trimpath -ldflags "-s -w" \
       -o /overlay/usr/local/bin/docker ./cmd/docker
+# Rebuild docker-compose with bumped x/net, x/crypto, x/sys, in-toto and otel.
+# .go.buildinfo is stripped like in Dockerfile.php/python, which hides compose's
+# other module versions from grype/trivy; keep them in buildinfo.txt instead.
+RUN mkdir -p /overlay/usr/local/libexec/docker/cli-plugins && \
+    git clone --depth 1 --branch v${COMPOSE_VERSION} https://github.com/docker/compose.git /src/compose && \
+    cd /src/compose && \
+    go get golang.org/x/net@v${XNET_VERSION} \
+           golang.org/x/crypto@v${XCRYPTO_VERSION} \
+           golang.org/x/sys@v${XSYS_VERSION} \
+           github.com/in-toto/in-toto-golang@v${IN_TOTO_VERSION} \
+           go.opentelemetry.io/otel/sdk@v${OTEL_SDK_VERSION} \
+           go.opentelemetry.io/otel@v${OTEL_SDK_VERSION} \
+           go.opentelemetry.io/otel/trace@v${OTEL_SDK_VERSION} \
+           go.opentelemetry.io/otel/metric@v${OTEL_SDK_VERSION} \
+           go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp@v${OTEL_SDK_VERSION} \
+           go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetrichttp@v${OTEL_SDK_VERSION} && \
+    go mod tidy && \
+    CGO_ENABLED=0 go build \
+      -trimpath -ldflags "-s -w -X github.com/docker/compose/v5/internal.Version=v${COMPOSE_VERSION}" \
+      -o /overlay/usr/local/libexec/docker/cli-plugins/docker-compose ./cmd && \
+    mkdir -p /overlay/usr/share/doc/docker-compose && \
+    go version -m /overlay/usr/local/libexec/docker/cli-plugins/docker-compose \
+      > /overlay/usr/share/doc/docker-compose/buildinfo.txt && \
+    objcopy --remove-section .go.buildinfo \
+      /overlay/usr/local/libexec/docker/cli-plugins/docker-compose
 
 # Stage 3: Build the seed image
 FROM docker:29.5.2-dind-alpine3.23
@@ -92,9 +119,12 @@ FROM docker:29.5.2-dind-alpine3.23
 # binaries (see stage 2). These replace the upstream go1.26.2 builds.
 COPY --from=overlay-binaries /overlay/ /
 
-# Drop unused docker CLI plugins (buildx, compose) that ship vulnerable
-# embedded Go modules; seed only uses `docker load` and `docker run`.
-RUN rm -rf /usr/local/libexec/docker/cli-plugins /usr/local/bin/docker-compose
+# Drop unused buildx CLI plugin that ships vulnerable embedded Go modules.
+# Keep docker-compose: go-sdk wire-test scripts (seed/go-sdk/seed.yml) run
+# `docker compose -p … -f wiremock/docker-compose.test.yml` to start WireMock.
+# go-sdk and go-model still pin go-seed:2.0.0; this applies once they move.
+RUN rm -f /usr/local/libexec/docker/cli-plugins/docker-buildx && \
+    docker compose version
 
 # Copy pre-pulled wiremock image
 COPY --from=wiremock-pull /wiremock.tar /wiremock.tar

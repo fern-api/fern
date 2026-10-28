@@ -133,7 +133,6 @@ public final class ObjectWithMixedRequiredAndOptionalFields {
 
     private Optional<String> optionalString = Optional.empty();
 
-    @JsonAnySetter
     private Map<String, Object> additionalProperties = new HashMap<>();
 
     private Builder() {
@@ -188,6 +187,14 @@ public final class ObjectWithMixedRequiredAndOptionalFields {
     @java.lang.Override
     public ObjectWithMixedRequiredAndOptionalFields build() {
       return new ObjectWithMixedRequiredAndOptionalFields(requiredString, requiredInteger, optionalString, requiredLong, additionalProperties);
+    }
+
+    @JsonAnySetter
+    private void putAdditionalPropertyFromJson(String key, Object value) {
+      if (key.equalsIgnoreCase("requiredString") || key.equalsIgnoreCase("requiredInteger") || key.equalsIgnoreCase("optionalString") || key.equalsIgnoreCase("requiredLong")) {
+        return;
+      }
+      this.additionalProperties.put(key, value);
     }
 
     @java.lang.Override

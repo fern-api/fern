@@ -1,7 +1,8 @@
+import { stripTrailingSlashes } from "@fern-api/core-utils";
 import { isEndpointSecurityAuthSchemes } from "@fern-api/fern-definition-schema";
 import { AuthScheme, FernIr, IntermediateRepresentation, Literal } from "@fern-api/ir-sdk";
 import { constructHttpPath, convertApiAuth, convertEnvironments } from "@fern-api/ir-utils";
-import { stripBasePathFromPaths } from "@fern-api/openapi-ir-parser";
+import { applyTwilioVisibility, stripBasePathFromPaths } from "@fern-api/openapi-ir-parser";
 import {
     AbstractConverter,
     AbstractSpecConverter,
@@ -41,6 +42,12 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
         this.context.spec = (await this.resolveAllExternalRefs({
             spec: this.context.spec
         })) as OpenAPIV3_1.Document;
+
+        this.context.spec = applyTwilioVisibility({
+            document: this.context.spec,
+            options: this.context.settings,
+            logger: this.context.logger
+        });
 
         validateOpenApiSpec({
             spec: this.context.spec,
@@ -152,6 +159,24 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
         const parsed = basePathExtension.convert();
         if (parsed == null) {
             return;
+        }
+
+        // With respect-per-spec-base-path, a plain base path belongs to this spec's endpoints rather
+        // than the whole API, so it survives merging with other specs.
+        if (this.context.settings.respectPerSpecBasePath && parsed.parameters.length === 0) {
+            if (!parsed.pathsIncludeBasePath) {
+                this.context.perSpecBasePath = stripTrailingSlashes(parsed.path);
+            }
+            return;
+        }
+
+        if (this.context.settings.respectPerSpecBasePath && parsed.parameters.length > 0) {
+            this.context.errorCollector.collect({
+                message:
+                    "respect-per-spec-base-path only applies to an x-fern-base-path without path parameters; " +
+                    "this base path is used as the API-wide base path instead, which only one spec keeps when multiple specs are merged",
+                path: ["x-fern-base-path"]
+            });
         }
 
         this.ir.basePath = constructHttpPath(parsed.path);

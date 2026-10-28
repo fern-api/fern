@@ -243,7 +243,6 @@ public final class SearchRequest {
 
         private OptionalNullable<String> regularOptionalNoDefault = OptionalNullable.absent();
 
-        @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
@@ -507,6 +506,20 @@ public final class SearchRequest {
                     regularOptional,
                     regularOptionalNoDefault,
                     additionalProperties);
+        }
+
+        @JsonAnySetter
+        private void putAdditionalPropertyFromJson(String key, Object value) {
+            if (key.equalsIgnoreCase("query")
+                    || key.equalsIgnoreCase("limit")
+                    || key.equalsIgnoreCase("includeArchived")
+                    || key.equalsIgnoreCase("sortOrder")
+                    || key.equalsIgnoreCase("optionalWithoutDefault")
+                    || key.equalsIgnoreCase("regularOptional")
+                    || key.equalsIgnoreCase("regularOptionalNoDefault")) {
+                return;
+            }
+            this.additionalProperties.put(key, value);
         }
 
         public Builder additionalProperty(String key, Object value) {

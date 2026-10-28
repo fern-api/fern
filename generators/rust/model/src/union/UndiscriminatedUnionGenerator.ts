@@ -308,6 +308,11 @@ export class UndiscriminatedUnionGenerator {
     }
 
     private generateConversionMethods(writer: rust.Writer, variants: ResolvedVariant[]): void {
+        const writeFallbackArm = (): void => {
+            if (variants.length > 1) {
+                writer.writeLine("            _ => None,");
+            }
+        };
         variants.forEach((variant) => {
             // Use innerTypeRef (optional/nullable stripped) for return types to avoid double-Option
             const isRecursive =
@@ -334,7 +339,7 @@ export class UndiscriminatedUnionGenerator {
                     () => {
                         writer.writeLine("match self {");
                         writer.writeLine(`            Self::${variant.variantName}(value) => ${asRefExpr},`);
-                        writer.writeLine("            _ => None,");
+                        writeFallbackArm();
                         writer.writeLine("        }");
                     }
                 );
@@ -344,7 +349,7 @@ export class UndiscriminatedUnionGenerator {
                     () => {
                         writer.writeLine("match self {");
                         writer.writeLine(`            Self::${variant.variantName}(value) => Some(value),`);
-                        writer.writeLine("            _ => None,");
+                        writeFallbackArm();
                         writer.writeLine("        }");
                     }
                 );
@@ -359,7 +364,7 @@ export class UndiscriminatedUnionGenerator {
                     () => {
                         writer.writeLine("match self {");
                         writer.writeLine(`            Self::${variant.variantName}(value) => ${returnValue},`);
-                        writer.writeLine("            _ => None,");
+                        writeFallbackArm();
                         writer.writeLine("        }");
                     }
                 );
@@ -370,7 +375,7 @@ export class UndiscriminatedUnionGenerator {
                     () => {
                         writer.writeLine("match self {");
                         writer.writeLine(`            Self::${variant.variantName}(value) => ${returnValue},`);
-                        writer.writeLine("            _ => None,");
+                        writeFallbackArm();
                         writer.writeLine("        }");
                     }
                 );

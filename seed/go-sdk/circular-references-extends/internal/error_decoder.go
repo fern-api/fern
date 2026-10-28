@@ -12,7 +12,21 @@ import (
 )
 
 // ErrorCodes maps HTTP status codes to error constructors.
+//
+// In addition to concrete status codes, the map may contain the
+// ClientErrorWildcard and ServerErrorWildcard keys, which match any
+// 4XX or 5XX status code (respectively) that has no concrete entry.
 type ErrorCodes map[int]func(*core.APIError) error
+
+const (
+	// ClientErrorWildcard is the ErrorCodes key that matches any 4XX status code
+	// not explicitly present in the map.
+	ClientErrorWildcard = 4
+
+	// ServerErrorWildcard is the ErrorCodes key that matches any 5XX status code
+	// not explicitly present in the map.
+	ServerErrorWildcard = 5
+)
 
 // ErrorDecoder decodes *http.Response errors and returns a
 // typed API error (e.g. *core.APIError).
@@ -47,7 +61,7 @@ func NewErrorDecoder(errorCodes ErrorCodes, errorCodesOverrides ...ErrorCodes) E
 			header,
 			errors.New(string(raw)),
 		)
-		newErrorFunc, ok := mergedErrorCodes[statusCode]
+		newErrorFunc, ok := lookupErrorFunc(mergedErrorCodes, statusCode)
 		if !ok {
 			// This status code isn't recognized, so we return
 			// the API error as-is.
@@ -61,4 +75,22 @@ func NewErrorDecoder(errorCodes ErrorCodes, errorCodesOverrides ...ErrorCodes) E
 		}
 		return customError
 	}
+}
+
+// lookupErrorFunc returns the error constructor for the given status code.
+// A concrete status code always takes precedence over a wildcard; wildcards
+// only apply to status codes in the 4XX and 5XX ranges.
+func lookupErrorFunc(errorCodes ErrorCodes, statusCode int) (func(*core.APIError) error, bool) {
+	if statusCode < 100 {
+		// Not a valid HTTP status code; never match a wildcard key literally.
+		return nil, false
+	}
+	if errorFunc, ok := errorCodes[statusCode]; ok {
+		return errorFunc, true
+	}
+	if statusCode < 400 || statusCode > 599 {
+		return nil, false
+	}
+	errorFunc, ok := errorCodes[statusCode/100]
+	return errorFunc, ok
 }

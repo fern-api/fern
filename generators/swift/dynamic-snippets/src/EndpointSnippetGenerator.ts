@@ -192,17 +192,78 @@ export class EndpointSnippetGenerator {
             return null;
         }
         if (snippet.baseURL != null) {
-            if (this.context.ir.environments?.environments.type === "multipleBaseUrls") {
-                // TODO(kafkas): Not implemented yet
-                return null;
-            } else {
+            return swift.functionArgument({
+                label: "baseURL",
+                value: swift.Expression.escapedStringLiteral(snippet.baseURL)
+            });
+        }
+        const environments = this.context.ir.environments;
+        if (environments?.environments.type === "multipleBaseUrls") {
+            // The root client has no environment enum or default for multiple base URLs, so `baseURL` is required.
+            const baseURL = this.getMultipleBaseUrlsEnvironmentURL({
+                environments: environments.environments,
+                defaultEnvironment: environments.defaultEnvironment,
+                environment: snippet.environment
+            });
+            if (baseURL != null) {
                 return swift.functionArgument({
                     label: "baseURL",
-                    value: swift.Expression.escapedStringLiteral(snippet.baseURL)
+                    value: swift.Expression.escapedStringLiteral(baseURL)
                 });
             }
         }
         return null;
+    }
+
+    private getMultipleBaseUrlsEnvironmentURL({
+        environments,
+        defaultEnvironment,
+        environment
+    }: {
+        environments: FernIr.dynamic.MultipleBaseUrlsEnvironments;
+        defaultEnvironment: FernIr.dynamic.EnvironmentId | undefined;
+        environment: FernIr.dynamic.EnvironmentValues | undefined;
+    }): string | undefined {
+        // TODO: the dynamic IR doesn't say which base URL an endpoint uses, and the root client takes a single
+        // `baseURL`, so this picks the first base URL even for endpoints served from another one.
+        const firstBaseUrlId = environments.baseUrls[0]?.id;
+        if (environment != null && typeof environment !== "string") {
+            return this.pickBaseUrl(environment, firstBaseUrlId) ?? this.addMissingBaseUrlError("the provided URLs");
+        }
+        const resolved =
+            environment != null
+                ? environments.environments.find((env) => env.id === environment)
+                : (environments.environments.find((env) => env.id === defaultEnvironment) ??
+                  environments.environments[0]);
+        if (resolved == null) {
+            if (environment != null) {
+                this.context.errors.add({
+                    severity: Severity.Critical,
+                    message: `Environment "${environment}" was not found`
+                });
+                return undefined;
+            }
+            return this.addMissingBaseUrlError("any environment");
+        }
+        return (
+            this.pickBaseUrl(resolved.urls, firstBaseUrlId) ??
+            this.addMissingBaseUrlError(`environment "${resolved.id}"`)
+        );
+    }
+
+    private pickBaseUrl(
+        urls: FernIr.dynamic.MultipleEnvironmentUrlValues,
+        firstBaseUrlId: FernIr.dynamic.EnvironmentBaseUrlId | undefined
+    ): string | undefined {
+        return (firstBaseUrlId != null ? urls[firstBaseUrlId] : undefined) ?? Object.values(urls)[0];
+    }
+
+    private addMissingBaseUrlError(source: string): undefined {
+        this.context.errors.add({
+            severity: Severity.Critical,
+            message: `No base URL found in ${source}; the client requires a baseURL`
+        });
+        return undefined;
     }
 
     private getRootClientAuthArgs({

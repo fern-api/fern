@@ -1,12 +1,54 @@
 package com.fern.java.client.generators.endpoint;
 
+import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.ParameterizedTypeName;
+import com.squareup.javapoet.TypeName;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 public final class AsyncDelegatingHttpEndpointMethodSpecs extends AbstractDelegatingHttpEndpointMethodSpecs {
+    private static final String RAW_FUTURE = "rawFuture";
+    private static final String FUTURE = "future";
+
+    private final ClassName rawHttpResponseClassName;
+
     public AsyncDelegatingHttpEndpointMethodSpecs(
-            HttpEndpointMethodSpecs httpEndpointMethodSpecs, String rawClientName, String bodyGetterName) {
+            HttpEndpointMethodSpecs httpEndpointMethodSpecs,
+            String rawClientName,
+            String bodyGetterName,
+            ClassName rawHttpResponseClassName) {
         super(httpEndpointMethodSpecs, rawClientName, bodyGetterName);
+        this.rawHttpResponseClassName = rawHttpResponseClassName;
+    }
+
+    private CodeBlock delegatingBody(MethodSpec methodSpec) {
+        TypeName bodyType = ((ParameterizedTypeName) methodSpec.returnType).typeArguments.get(0);
+        TypeName rawFutureType = ParameterizedTypeName.get(
+                ClassName.get(CompletableFuture.class), ParameterizedTypeName.get(rawHttpResponseClassName, bodyType));
+        return CodeBlock.builder()
+                .addStatement(
+                        "$T $L = this.$L.$L" + paramString(methodSpec),
+                        rawFutureType,
+                        RAW_FUTURE,
+                        rawClientName,
+                        methodSpec.name)
+                .addStatement(
+                        "$T $L = $L.thenApply(response -> response.$L())",
+                        methodSpec.returnType,
+                        FUTURE,
+                        RAW_FUTURE,
+                        bodyGetterName)
+                .add("$L.whenComplete((result_, throwable_) -> {\n", FUTURE)
+                .indent()
+                .beginControlFlow("if ($L.isCancelled())", FUTURE)
+                .addStatement("$L.cancel(true)", RAW_FUTURE)
+                .endControlFlow()
+                .unindent()
+                .addStatement("})")
+                .addStatement("return $L", FUTURE)
+                .build();
     }
 
     @Override
@@ -17,11 +59,7 @@ public final class AsyncDelegatingHttpEndpointMethodSpecs extends AbstractDelega
                 .returns(methodSpec.returnType)
                 .addModifiers(methodSpec.modifiers)
                 .addParameters(methodSpec.parameters)
-                .addStatement(
-                        "return this.$L.$L" + paramString(methodSpec) + ".thenApply(response -> response.$L())",
-                        rawClientName,
-                        methodSpec.name,
-                        bodyGetterName)
+                .addCode(delegatingBody(methodSpec))
                 .build();
     }
 
@@ -33,11 +71,7 @@ public final class AsyncDelegatingHttpEndpointMethodSpecs extends AbstractDelega
                 .returns(methodSpec.returnType)
                 .addModifiers(methodSpec.modifiers)
                 .addParameters(methodSpec.parameters)
-                .addStatement(
-                        "return this.$L.$L" + paramString(methodSpec) + ".thenApply(response -> response.$L())",
-                        rawClientName,
-                        methodSpec.name,
-                        bodyGetterName)
+                .addCode(delegatingBody(methodSpec))
                 .build();
     }
 
@@ -49,11 +83,7 @@ public final class AsyncDelegatingHttpEndpointMethodSpecs extends AbstractDelega
                 .returns(methodSpec.returnType)
                 .addModifiers(methodSpec.modifiers)
                 .addParameters(methodSpec.parameters)
-                .addStatement(
-                        "return this.$L.$L" + paramString(methodSpec) + ".thenApply(response -> response.$L())",
-                        rawClientName,
-                        methodSpec.name,
-                        bodyGetterName)
+                .addCode(delegatingBody(methodSpec))
                 .build());
     }
 
@@ -66,11 +96,7 @@ public final class AsyncDelegatingHttpEndpointMethodSpecs extends AbstractDelega
                         .returns(methodSpec.returnType)
                         .addModifiers(methodSpec.modifiers)
                         .addParameters(methodSpec.parameters)
-                        .addStatement(
-                                "return this.$L.$L" + paramString(methodSpec) + ".thenApply(response -> response.$L())",
-                                rawClientName,
-                                methodSpec.name,
-                                bodyGetterName)
+                        .addCode(delegatingBody(methodSpec))
                         .build());
     }
 
@@ -82,11 +108,7 @@ public final class AsyncDelegatingHttpEndpointMethodSpecs extends AbstractDelega
                 .returns(methodSpec.returnType)
                 .addModifiers(methodSpec.modifiers)
                 .addParameters(methodSpec.parameters)
-                .addStatement(
-                        "return this.$L.$L" + paramString(methodSpec) + ".thenApply(response -> response.$L())",
-                        rawClientName,
-                        methodSpec.name,
-                        bodyGetterName)
+                .addCode(delegatingBody(methodSpec))
                 .build());
     }
 
@@ -99,11 +121,7 @@ public final class AsyncDelegatingHttpEndpointMethodSpecs extends AbstractDelega
                         .returns(methodSpec.returnType)
                         .addModifiers(methodSpec.modifiers)
                         .addParameters(methodSpec.parameters)
-                        .addStatement(
-                                "return this.$L.$L" + paramString(methodSpec) + ".thenApply(response -> response.$L())",
-                                rawClientName,
-                                methodSpec.name,
-                                bodyGetterName)
+                        .addCode(delegatingBody(methodSpec))
                         .build());
     }
 
@@ -115,11 +133,7 @@ public final class AsyncDelegatingHttpEndpointMethodSpecs extends AbstractDelega
                 .returns(methodSpec.returnType)
                 .addModifiers(methodSpec.modifiers)
                 .addParameters(methodSpec.parameters)
-                .addStatement(
-                        "return this.$L.$L" + paramString(methodSpec) + ".thenApply(response -> response.$L())",
-                        rawClientName,
-                        methodSpec.name,
-                        bodyGetterName)
+                .addCode(delegatingBody(methodSpec))
                 .build());
     }
 
@@ -132,11 +146,7 @@ public final class AsyncDelegatingHttpEndpointMethodSpecs extends AbstractDelega
                         .returns(methodSpec.returnType)
                         .addModifiers(methodSpec.modifiers)
                         .addParameters(methodSpec.parameters)
-                        .addStatement(
-                                "return this.$L.$L" + paramString(methodSpec) + ".thenApply(response -> response.$L())",
-                                rawClientName,
-                                methodSpec.name,
-                                bodyGetterName)
+                        .addCode(delegatingBody(methodSpec))
                         .build());
     }
 
@@ -148,11 +158,7 @@ public final class AsyncDelegatingHttpEndpointMethodSpecs extends AbstractDelega
                 .returns(methodSpec.returnType)
                 .addModifiers(methodSpec.modifiers)
                 .addParameters(methodSpec.parameters)
-                .addStatement(
-                        "return this.$L.$L" + paramString(methodSpec) + ".thenApply(response -> response.$L())",
-                        rawClientName,
-                        methodSpec.name,
-                        bodyGetterName)
+                .addCode(delegatingBody(methodSpec))
                 .build());
     }
 
@@ -165,11 +171,7 @@ public final class AsyncDelegatingHttpEndpointMethodSpecs extends AbstractDelega
                         .returns(methodSpec.returnType)
                         .addModifiers(methodSpec.modifiers)
                         .addParameters(methodSpec.parameters)
-                        .addStatement(
-                                "return this.$L.$L" + paramString(methodSpec) + ".thenApply(response -> response.$L())",
-                                rawClientName,
-                                methodSpec.name,
-                                bodyGetterName)
+                        .addCode(delegatingBody(methodSpec))
                         .build());
     }
 
@@ -182,11 +184,7 @@ public final class AsyncDelegatingHttpEndpointMethodSpecs extends AbstractDelega
                         .returns(methodSpec.returnType)
                         .addModifiers(methodSpec.modifiers)
                         .addParameters(methodSpec.parameters)
-                        .addStatement(
-                                "return this.$L.$L" + paramString(methodSpec) + ".thenApply(response -> response.$L())",
-                                rawClientName,
-                                methodSpec.name,
-                                bodyGetterName)
+                        .addCode(delegatingBody(methodSpec))
                         .build());
     }
 
@@ -199,11 +197,7 @@ public final class AsyncDelegatingHttpEndpointMethodSpecs extends AbstractDelega
                         .returns(methodSpec.returnType)
                         .addModifiers(methodSpec.modifiers)
                         .addParameters(methodSpec.parameters)
-                        .addStatement(
-                                "return this.$L.$L" + paramString(methodSpec) + ".thenApply(response -> response.$L())",
-                                rawClientName,
-                                methodSpec.name,
-                                bodyGetterName)
+                        .addCode(delegatingBody(methodSpec))
                         .build());
     }
 }

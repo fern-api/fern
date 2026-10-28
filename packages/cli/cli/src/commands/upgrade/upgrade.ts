@@ -3,8 +3,10 @@ import { runMigrations } from "@fern-api/cli-migrations";
 import {
     FERN_DIRECTORY,
     getFernDirectory,
+    isValidProjectConfigVersion,
     loadProjectConfig,
-    PROJECT_CONFIG_FILENAME
+    PROJECT_CONFIG_FILENAME,
+    PROJECT_CONFIG_VERSION_REQUIREMENT
 } from "@fern-api/configuration-loader";
 import { Logger } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
@@ -15,13 +17,10 @@ import { writeFile } from "fs/promises";
 import { produce } from "immer";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { RerunCliError, rerunFernCliAtVersion } from "../../rerunFernCliAtVersion.js";
+import { ensureFinalNewline } from "../../utils/ensureFinalNewline.js";
 import { clampVersionToOrgBounds, fetchOrgCliVersionBounds, ORG_BOUNDS_FETCH_TIMEOUT_MS } from "../org/orgConfig.js";
 
 export const PREVIOUS_VERSION_ENV_VAR = "FERN_PRE_UPGRADE_VERSION";
-
-function ensureFinalNewline(content: string): string {
-    return content.endsWith("\n") ? content : content + "\n";
-}
 
 interface GitVersionResult {
     version: string | null;
@@ -316,6 +315,13 @@ export async function upgrade({
 
     // Determine target version
     let resolvedTargetVersion = targetVersion?.trim();
+    if (resolvedTargetVersion && !isValidProjectConfigVersion(resolvedTargetVersion)) {
+        return cliContext.failAndThrow(
+            `Invalid version "${resolvedTargetVersion}": must be ${PROJECT_CONFIG_VERSION_REQUIREMENT}`,
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
+    }
     if (!resolvedTargetVersion) {
         const fernUpgradeInfo = await cliContext.isUpgradeAvailable({ includePreReleases });
         const cliUpgradeInfo = fernUpgradeInfo.cliUpgradeInfo;
