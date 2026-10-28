@@ -52,7 +52,10 @@ export async function checkOutputDirectory(
     // Prompt user for confirmation since directory has files
     const shouldOverwrite = await cliContext.confirmPrompt(
         `Directory ${outputPath} contains existing files that may be overwritten. Continue?`,
-        false
+        false,
+        {
+            nonInteractiveError: `Directory ${outputPath} contains existing files that may be overwritten. Pass --force to continue in non-interactive mode.`
+        }
     );
 
     if (!shouldOverwrite) {

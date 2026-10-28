@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.180.1
+  changelogEntry:
+    - summary: |
+        Interactive prompts now fail fast with a non-zero exit code when stdin is not a TTY or CI is set,
+        instead of waiting forever for input (for example, `fern init` run by an agent without
+        `--organization`). Cancelling a prompt (Ctrl+C or stdin closing) now also exits non-zero
+        instead of reporting success. `CI=false` and `CI=0` are now treated as not running in CI.
+      type: fix
+  createdAt: "2026-10-27"
+  irVersion: 67
 - version: 5.180.0
   changelogEntry:
     - summary: |

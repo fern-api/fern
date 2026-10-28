@@ -1,8 +1,8 @@
 import { addPrefixToString, assertNever, noop } from "@fern-api/core-utils";
+import { isCI } from "@fern-api/fs-utils";
 import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import ansiEscapes from "ansi-escapes";
 import chalk from "chalk";
-import IS_CI from "is-ci";
 import ora, { Ora } from "ora";
 
 import {
@@ -196,7 +196,7 @@ export class TtyAwareLogger {
     }
 
     public get isTTY(): boolean {
-        return this.stdout.isTTY && !IS_CI;
+        return this.stdout.isTTY && !isCI();
     }
 }
 
