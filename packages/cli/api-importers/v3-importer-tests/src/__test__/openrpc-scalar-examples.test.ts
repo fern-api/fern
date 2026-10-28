@@ -43,11 +43,13 @@ describe("openrpc scalar examples", () => {
         expect(endpoints).toHaveLength(2);
 
         const getStatus = endpoints.find((endpoint) => endpoint.id.includes("getStatus"));
+        expect(getStatus).toBeDefined();
         const statusExample = getStatus?.v2Examples?.userSpecifiedExamples["getStatus example"];
         expect(statusExample?.request?.requestBody).toEqual(["abc-123", true]);
         expect(getResponseBodyValue(statusExample)).toEqual({ jsonrpc: "2.0", id: "1", result: "active" });
 
         const getCount = endpoints.find((endpoint) => endpoint.id.includes("getCount"));
+        expect(getCount).toBeDefined();
         const countExample = getCount?.v2Examples?.userSpecifiedExamples["getCount example"];
         expect(getResponseBodyValue(countExample)).toEqual({ jsonrpc: "2.0", id: "1", result: 0 });
     }, 90_000);
