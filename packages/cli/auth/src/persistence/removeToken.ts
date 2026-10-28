@@ -1,3 +1,4 @@
+import { isEnoentError } from "@fern-api/core-utils";
 import { unlink } from "fs/promises";
 import { getPathToTokenFile } from "./getPathToTokenFile.js";
 
@@ -7,7 +8,7 @@ export async function removeToken(): Promise<void> {
         await unlink(pathToTokenFile);
     } catch (error) {
         // If the file doesn't exist, that's fine - the user is already logged out
-        if ((error as NodeJS.ErrnoException).code !== "ENOENT") {
+        if (!isEnoentError(error)) {
             throw error;
         }
     }

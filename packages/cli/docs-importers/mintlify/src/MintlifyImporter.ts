@@ -1,4 +1,4 @@
-import { stripLeadingSlash } from "@fern-api/core-utils";
+import { isRecord, stripLeadingSlash } from "@fern-api/core-utils";
 import {
     DEFAULT_LAYOUT,
     DocsImporter,
@@ -21,10 +21,6 @@ export declare namespace MintlifyImporter {
     interface Args {
         absolutePathToMintJson: AbsoluteFilePath;
     }
-}
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-    return typeof value === "object" && value != null && !Array.isArray(value);
 }
 
 function hasNavigationArray(value: unknown): value is MintJsonSchema {

@@ -10,6 +10,23 @@ module <%= gem_namespace %>
         include Type
 
         class << self
+          # Serializes models nested in a hash, including inside arrays and nested hashes.
+          #
+          # @api private
+          def serialize_hash_values(hash)
+            hash.transform_values { |item| serialize_nested_value(item) }
+          end
+
+          # @api private
+          def serialize_nested_value(value)
+            case value
+            when Model then value.to_h
+            when ::Array then value.map { |item| serialize_nested_value(item) }
+            when ::Hash then serialize_hash_values(value)
+            else value
+            end
+          end
+
           # The defined fields for this model
           #
           # @api private
@@ -138,7 +155,7 @@ module <%= gem_namespace %>
           end
 
           def ===(instance)
-            instance.class.ancestors.include?(self)
+            instance.is_a?(self)
           end
         end
 
@@ -152,15 +169,18 @@ module <%= gem_namespace %>
           @data = {}
           @explicit_fields = {}
 
-          values = Utils.symbolize_keys(values.dup)
+          values = Utils.symbolize_keys(values)
 
           self.class.fields.each do |field_name, field|
             value = nil
-            [field.api_name.to_sym, field_name].uniq.each do |key|
-              next unless values.key?(key)
-
+            api_key = field.api_name.to_sym
+            if values.key?(api_key)
               @explicit_fields[field_name] = true
-              candidate = values.delete(key)
+              value = values.delete(api_key)
+            end
+            if api_key != field_name && values.key?(field_name)
+              @explicit_fields[field_name] = true
+              candidate = values.delete(field_name)
               value = candidate if value.nil?
             end
 
@@ -172,7 +192,7 @@ module <%= gem_namespace %>
                             field.default
                           end
 
-            @data[field_name] = Utils.coerce(field.type, field_value)
+            @data[field_name] = field_value.nil? ? nil : Utils.coerce(field.type, field_value)
           end
 
           # Any remaining values in the input become extra fields, except keys that match a declared field
@@ -189,7 +209,13 @@ module <%= gem_namespace %>
 
         def to_h
           result = self.class.fields.merge(self.class.extra_fields).each_with_object({}) do |(name, field), acc|
-            # If there is a value present in the data, use that value
+<% if (omitUnsetModelFields) { %>            # A field that was never provided is excluded, even when required, so sparse payloads only carry
+            # what the caller set. An explicit `nil` is sent as `null` unless the field is optional but NOT nullable.
+
+            value = @data[name]
+
+            next if value.nil? && (!@explicit_fields&.key?(name) || (field.optional && !field.nullable))
+<% } else { %>            # If there is a value present in the data, use that value
             # If there is a `nil` value present in the data, and it is optional but NOT nullable, exclude key altogether
             # If there is a `nil` value present in the data, and it is optional and nullable, use the nil value
             # only when it was explicitly provided; an omitted optional field is excluded
@@ -197,9 +223,11 @@ module <%= gem_namespace %>
             value = @data[name]
 
             next if value.nil? && field.optional && (!field.nullable || !@explicit_fields&.key?(name))
-
+<% } %>
             if value.is_a?(::Array)
               value = value.map { |item| !item.nil? && item.respond_to?(:to_h) ? item.to_h : item }
+            elsif value.is_a?(::Hash)
+              value = Model.serialize_hash_values(value)
             elsif !value.nil? && value.respond_to?(:to_h)
               value = value.to_h
             end

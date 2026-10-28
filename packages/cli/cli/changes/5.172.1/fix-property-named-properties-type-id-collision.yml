@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix a stack overflow during docs generation when an OpenAPI object declares a property
+    named `properties`.
+  type: fix

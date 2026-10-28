@@ -1,0 +1,4 @@
+- summary: |
+    `GithubStep` enables GitHub auto-merge whenever `github.autoMerge` is set, instead of requiring
+    `automationMode` as well. Breaking-change (MAJOR bump) and unavailable-analysis safeguards are unchanged.
+  type: feat

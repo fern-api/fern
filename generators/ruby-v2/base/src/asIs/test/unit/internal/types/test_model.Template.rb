@@ -46,6 +46,10 @@ describe <%= gem_namespace %>::Internal::Types::Model do
     field :counts, <%= gem_namespace %>::Internal::Types::Hash[Integer, String]
   end
 
+  class ExampleWithCoercedDefault < <%= gem_namespace %>::Internal::Types::Model
+    field :count, Integer, default: "3"
+  end
+
   describe ".field" do
     before do
       @example = ExampleModel.new(name: "Inception", rating: 4)
@@ -184,6 +188,44 @@ describe <%= gem_namespace %>::Internal::Types::Model do
 
       assert_equal 2014, example.year
       refute_respond_to example, :yearOfRelease
+    end
+
+    it "does not modify the input hash" do
+      input = { name: "Inception", yearOfRelease: 2014, extra: "kept" }
+      ExampleModel.new(input)
+
+      assert_equal({ name: "Inception", yearOfRelease: 2014, extra: "kept" }, input)
+    end
+
+    it "marks a field explicit when it is set through either key" do
+      assert_equal({ "name" => "Ruby", "yearOfRelease" => nil }, ExampleModel.new({ name: "Ruby", year: nil }).to_h)
+      assert_equal({ "name" => "Ruby", "yearOfRelease" => nil },
+                   ExampleModel.new({ name: "Ruby", yearOfRelease: nil, year: nil }).to_h)
+      assert_equal({ "name" => "Ruby" }, ExampleModel.new({ name: "Ruby" }).to_h)
+    end
+
+<% if (omitUnsetModelFields) { %>    it "omits required fields that were never provided" do
+      assert_equal({}, ExampleModel.new.to_h)
+      assert_equal({ "child" => {} }, ExampleParent.new(child: {}).to_h)
+      assert_equal({ "rating" => 4 }, ExampleModel.new(rating: 4).to_h)
+    end
+
+    it "sends an explicit nil for a required field as null" do
+      assert_equal({ "name" => nil }, ExampleModel.new(name: nil).to_h)
+
+      example = ExampleModel.new
+      example.name = nil
+
+      assert_equal({ "name" => nil }, example.to_h)
+    end
+
+    it "keeps a null required field when loading JSON" do
+      assert_equal({ "name" => nil }, ExampleModel.load({ name: nil }.to_json).to_h)
+      assert_equal({ "child" => { "value" => nil } }, ExampleParent.load({ child: { value: nil } }.to_json).to_h)
+    end
+
+<% } %>    it "coerces the default of a field whose value is nil" do
+      assert_equal 3, ExampleWithCoercedDefault.new(count: nil).count
     end
   end
 

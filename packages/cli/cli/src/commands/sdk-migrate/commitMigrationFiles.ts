@@ -1,6 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { access, chmod, mkdir, open, rename, rmdir, stat, unlink } from "node:fs/promises";
 import { dirname } from "node:path";
+import { hasErrnoCode, isEnoentError } from "@fern-api/core-utils";
 import { CliError } from "@fern-api/task-context";
 
 interface MigrationFile {
@@ -80,7 +81,7 @@ export async function fileMode(path: string): Promise<number | undefined> {
     try {
         return (await stat(path)).mode;
     } catch (error) {
-        if (isMissing(error)) {
+        if (isEnoentError(error)) {
             return undefined;
         }
         throw error;
@@ -103,7 +104,7 @@ async function rollback({
         try {
             await unlink(path);
         } catch (error) {
-            if (!isMissing(error)) {
+            if (!isEnoentError(error)) {
                 rollbackErrors.push(error);
             }
         }
@@ -119,7 +120,7 @@ async function rollback({
         try {
             await unlink(temporaryPath);
         } catch (error) {
-            if (!isMissing(error)) {
+            if (!isEnoentError(error)) {
                 rollbackErrors.push(error);
             }
         }
@@ -128,7 +129,7 @@ async function rollback({
         try {
             await rmdir(directory);
         } catch (error) {
-            if (!isMissing(error)) {
+            if (!isEnoentError(error)) {
                 rollbackErrors.push(error);
             }
         }
@@ -166,19 +167,15 @@ async function exists(path: string): Promise<boolean> {
         await access(path);
         return true;
     } catch (error) {
-        if (isMissing(error)) {
+        if (isEnoentError(error)) {
             return false;
         }
         throw error;
     }
 }
 
-function isMissing(error: unknown): boolean {
-    return typeof error === "object" && error != null && "code" in error && error.code === "ENOENT";
-}
-
 function isAlreadyExists(error: unknown): boolean {
-    return typeof error === "object" && error != null && "code" in error && error.code === "EEXIST";
+    return hasErrnoCode(error, "EEXIST");
 }
 
 function configError(message: string): CliError {

@@ -18,7 +18,8 @@ import { loadCompatibleMigrationGroups } from "../loadCompatibleMigrationGroups.
 import { mapFernDefinitionToSdkConfigApi, mapFernGroupToSdkConfig } from "../mapFernGroupToSdkConfig.js";
 import {
     identifySourceDerivedApiFields,
-    type ResolvedMigrationSourceSpec,
+    isResolvedMigrationFileSpec,
+    type ResolvedMigrationFileSpec,
     resolveMigrationPathParameterStyle,
     resolveMigrationSourceSpecs,
     resolveWorkspaceSourceSpecs,
@@ -264,7 +265,8 @@ describe("SDK Config migration", () => {
             default_bytes_stream_chunk_size: 1024,
             recursion_limit: 10_000,
             extras: { pyaudio: ["audio-runtime"] },
-            additional_init_exports: [{ from: "types", imports: ["ApiError"] }]
+            additional_init_exports: [{ from: "types", imports: ["ApiError"] }],
+            stream_abstraction: true
         };
 
         const result = mapFernGroupToSdkConfig({
@@ -283,8 +285,23 @@ describe("SDK Config migration", () => {
             defaultBytesStreamChunkSize: 1024,
             recursionLimit: 10_000,
             extras: { pyaudio: ["audio-runtime"] },
-            additionalInitExports: [{ from: "types", imports: ["ApiError"] }]
+            additionalInitExports: [{ from: "types", imports: ["ApiError"] }],
+            streamAbstraction: true
         });
+        expect(result.diagnostics).toEqual([]);
+    });
+
+    it("maps the Go generator packageLayout setting into SDK Config", () => {
+        const generator = createGenerator("fernapi/fern-go-sdk", "go", "1.0.0");
+        generator.config = { packageLayout: "types" };
+
+        const result = mapFernGroupToSdkConfig({
+            fernWorkspace: { definition: createDefinition() },
+            group: createGroup([generator]),
+            source: createSource()
+        });
+
+        expect(result.sdkConfig.targets[0]?.generation).toMatchObject({ packageLayout: "types" });
         expect(result.diagnostics).toEqual([]);
     });
 
@@ -605,7 +622,7 @@ describe("SDK Config migration", () => {
             workspace,
             fernWorkspace: {} as FernWorkspace,
             generator: createGenerator("fernapi/fern-typescript-sdk", "typescript", "3.63.3")
-        });
+        }).filter(isResolvedMigrationFileSpec);
 
         expect(specs.map(({ namespace, apiImportSettings }) => ({ namespace, apiImportSettings }))).toEqual([
             { namespace: "Second", apiImportSettings: { titleAsSchemaName: false } },
@@ -664,7 +681,7 @@ describe("SDK Config migration", () => {
             workspace,
             fernWorkspace: {} as FernWorkspace,
             generator: createGenerator("fernapi/fern-python-sdk", "python", "4.3.10")
-        });
+        }).filter(isResolvedMigrationFileSpec);
 
         expect(spec?.apiImportSettings).toEqual({
             titleAsSchemaName: false,
@@ -719,7 +736,7 @@ describe("SDK Config migration", () => {
             workspace,
             fernWorkspace: {} as FernWorkspace,
             generator
-        });
+        }).filter(isResolvedMigrationFileSpec);
 
         expect(spec?.apiImportSettings).toEqual({
             respectReadonlySchemas: true,
@@ -755,13 +772,15 @@ describe("SDK Config migration", () => {
             }
         } as unknown as AbstractAPIWorkspace<unknown>;
 
-        expect(resolveWorkspaceSourceSpecs(workspace)?.map((spec) => spec.absolutePath)).toEqual([
-            "/tmp/fern/public.yml"
-        ]);
         expect(
-            resolveMigrationSourceSpecs({ workspace, fernWorkspace: {} as FernWorkspace, generator }).map(
-                (spec) => spec.absolutePath
-            )
+            resolveWorkspaceSourceSpecs(workspace)
+                ?.filter(isResolvedMigrationFileSpec)
+                .map((spec) => spec.absolutePath)
+        ).toEqual(["/tmp/fern/public.yml"]);
+        expect(
+            resolveMigrationSourceSpecs({ workspace, fernWorkspace: {} as FernWorkspace, generator })
+                .filter(isResolvedMigrationFileSpec)
+                .map((spec) => spec.absolutePath)
         ).toEqual(["/tmp/fern/internal.yml"]);
     });
 
@@ -1310,8 +1329,8 @@ function createSource() {
 
 function createResolvedSourceSpec(
     name: string,
-    apiImportSettings: ResolvedMigrationSourceSpec["apiImportSettings"]
-): ResolvedMigrationSourceSpec {
+    apiImportSettings: ResolvedMigrationFileSpec["apiImportSettings"]
+): ResolvedMigrationFileSpec {
     return {
         absolutePath: `/tmp/${name}.yml`,
         absoluteOverlayPaths: [],

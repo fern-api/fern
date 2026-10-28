@@ -31,7 +31,7 @@ import org.w3c.dom.Element;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Dial.Builder.class)
 public final class Dial implements XmlSerializable {
-    private final Optional<String> number;
+    private final Optional<String> text;
 
     private final Optional<List<String>> statusCallbackEvent;
 
@@ -44,13 +44,13 @@ public final class Dial implements XmlSerializable {
     private final List<XmlNode> content;
 
     private Dial(
-            Optional<String> number,
+            Optional<String> text,
             Optional<List<String>> statusCallbackEvent,
             Optional<List<DialRecordItem>> record,
             Optional<List<Number>> numbers,
             Map<String, Object> additionalProperties,
             List<XmlNode> content) {
-        this.number = number;
+        this.text = text;
         this.statusCallbackEvent = statusCallbackEvent;
         this.record = record;
         this.numbers = numbers;
@@ -59,8 +59,8 @@ public final class Dial implements XmlSerializable {
     }
 
     @JsonProperty("number")
-    public Optional<String> getNumber() {
-        return number;
+    public Optional<String> getText() {
+        return text;
     }
 
     @JsonProperty("status_callback_event")
@@ -106,7 +106,7 @@ public final class Dial implements XmlSerializable {
     }
 
     private boolean equalTo(Dial other) {
-        return number.equals(other.number)
+        return text.equals(other.text)
                 && statusCallbackEvent.equals(other.statusCallbackEvent)
                 && record.equals(other.record)
                 && numbers.equals(other.numbers);
@@ -114,7 +114,7 @@ public final class Dial implements XmlSerializable {
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.number, this.statusCallbackEvent, this.record, this.numbers);
+        return Objects.hash(this.text, this.statusCallbackEvent, this.record, this.numbers);
     }
 
     public static Builder builder() {
@@ -134,7 +134,7 @@ public final class Dial implements XmlSerializable {
     @Override
     public String toXml(boolean xmlDeclaration) {
         XmlWriter writer = new XmlWriter("Dial", "https://www.twilio.com/twiml", "tw");
-        writer.text(this.number);
+        writer.text(this.text);
         writer.attribute("statusCallbackEvent", this.statusCallbackEvent, " ");
         writer.attribute("record", this.record, " ");
         writer.wrappedChildren("Numbers", "Number", this.numbers);
@@ -171,7 +171,7 @@ public final class Dial implements XmlSerializable {
 
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static final class Builder {
-        private Optional<String> number = Optional.empty();
+        private Optional<String> text = Optional.empty();
 
         private Optional<List<String>> statusCallbackEvent = Optional.empty();
 
@@ -187,7 +187,7 @@ public final class Dial implements XmlSerializable {
         private Builder() {}
 
         public Builder from(Dial other) {
-            number(other.getNumber());
+            text(other.getText());
             statusCallbackEvent(other.getStatusCallbackEvent());
             record(other.getRecord());
             numbers(other.getNumbers());
@@ -196,13 +196,13 @@ public final class Dial implements XmlSerializable {
         }
 
         @JsonSetter(value = "number", nulls = Nulls.SKIP)
-        public Builder number(Optional<String> number) {
-            this.number = number;
+        public Builder text(Optional<String> text) {
+            this.text = text;
             return this;
         }
 
-        public Builder number(String number) {
-            this.number = Optional.ofNullable(number);
+        public Builder text(String text) {
+            this.text = Optional.ofNullable(text);
             return this;
         }
 
@@ -240,7 +240,7 @@ public final class Dial implements XmlSerializable {
         }
 
         public Dial build() {
-            return new Dial(number, statusCallbackEvent, record, numbers, additionalProperties, content);
+            return new Dial(text, statusCallbackEvent, record, numbers, additionalProperties, content);
         }
 
         @JsonAnySetter
@@ -319,18 +319,35 @@ public final class Dial implements XmlSerializable {
             return this;
         }
 
+        public Builder statusCallbackEvent(String... statusCallbackEvent) {
+            return statusCallbackEvent(Arrays.asList(statusCallbackEvent));
+        }
+
+        public Builder record(DialRecordItem... record) {
+            return record(Arrays.asList(record));
+        }
+
         /**
          * Appends a &lt;Number&gt; child element after any content added so far.
          * @param number the &lt;Number&gt; element to append
          * @return this builder
          */
-        public Builder addNumber(Number number) {
+        public Builder number(Number number) {
             Number item = number;
             List<Number> updated = new ArrayList<>(this.numbers.orElseGet(Collections::emptyList));
             updated.add(item);
             this.numbers = Optional.of(updated);
             this.content.add(XmlNode.element(item));
             return this;
+        }
+
+        /**
+         * Appends a &lt;Number&gt; child element with the given text content after any content added so far.
+         * @param text the text content of the &lt;Number&gt; element
+         * @return this builder
+         */
+        public Builder number(String text) {
+            return number(Number.builder().phoneNumber(text).build());
         }
 
         /**

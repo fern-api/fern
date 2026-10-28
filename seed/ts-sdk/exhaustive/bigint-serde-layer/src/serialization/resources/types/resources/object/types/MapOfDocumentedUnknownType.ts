@@ -11,5 +11,7 @@ export const MapOfDocumentedUnknownType: core.serialization.Schema<
 > = core.serialization.record(core.serialization.string(), DocumentedUnknownType);
 
 export declare namespace MapOfDocumentedUnknownType {
-    export type Raw = Record<string, DocumentedUnknownType.Raw>;
+    export type Raw = {
+        [key: string]: DocumentedUnknownType.Raw;
+    };
 }

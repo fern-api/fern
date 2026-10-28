@@ -6,11 +6,25 @@ import { ModuleDeclaration, ts } from "ts-morph";
 
 import { AbstractGeneratedTypeSchema } from "../AbstractGeneratedTypeSchema.js";
 
+export declare namespace GeneratedUndiscriminatedUnionTypeSchemaImpl {
+    export interface Init<Context>
+        extends AbstractGeneratedTypeSchema.Init<FernIr.UndiscriminatedUnionTypeDeclaration, Context> {
+        typeId: FernIr.TypeId;
+    }
+}
+
 export class GeneratedUndiscriminatedUnionTypeSchemaImpl<Context extends ModelContext>
     extends AbstractGeneratedTypeSchema<FernIr.UndiscriminatedUnionTypeDeclaration, Context>
     implements GeneratedUndiscriminatedUnionTypeSchema<Context>
 {
     public readonly type = "undiscriminatedUnion";
+
+    private readonly typeId: FernIr.TypeId;
+
+    constructor({ typeId, ...superInit }: GeneratedUndiscriminatedUnionTypeSchemaImpl.Init<Context>) {
+        super(superInit);
+        this.typeId = typeId;
+    }
 
     protected override buildSchema(context: Context): Zurg.Schema {
         return context.coreUtilities.zurg.undiscriminatedUnion(
@@ -23,10 +37,60 @@ export class GeneratedUndiscriminatedUnionTypeSchemaImpl<Context extends ModelCo
             name: AbstractGeneratedSchema.RAW_TYPE_NAME,
             type: getTextOfTsNode(
                 ts.factory.createUnionTypeNode(
-                    this.shape.members.map((value) => context.typeSchema.getReferenceToRawType(value.type).typeNode)
+                    this.shape.members.map((member) => this.getRawTypeNodeForMember(context, member))
                 )
             ),
             isExported: true
         });
     }
+
+    private getRawTypeNodeForMember(context: Context, member: FernIr.UndiscriminatedUnionMember): ts.TypeNode {
+        if (
+            member.type.type !== "container" ||
+            member.type.container.type !== "map" ||
+            !isStringKey(member.type.container.keyType) ||
+            !this.isSelfRecursive(member.type.container.valueType)
+        ) {
+            return context.typeSchema.getReferenceToRawType(member.type).typeNode;
+        }
+
+        // A type alias can't reference itself through Record (TS2456), but it can through an index signature.
+        return ts.factory.createTypeLiteralNode([
+            ts.factory.createIndexSignature(
+                undefined,
+                [
+                    ts.factory.createParameterDeclaration(
+                        undefined,
+                        undefined,
+                        "key",
+                        undefined,
+                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+                    )
+                ],
+                context.typeSchema.getReferenceToRawType(member.type.container.valueType).typeNode
+            )
+        ]);
+    }
+
+    private isSelfRecursive(typeRef: FernIr.TypeReference): boolean {
+        const unwrapped = unwrapOptionalAndNullable(typeRef);
+        return unwrapped.type === "named" && unwrapped.typeId === this.typeId;
+    }
+}
+
+function isStringKey(keyType: FernIr.TypeReference): boolean {
+    return keyType.type === "primitive" && keyType.primitive.v1 === "STRING";
+}
+
+function unwrapOptionalAndNullable(typeReference: FernIr.TypeReference): FernIr.TypeReference {
+    if (typeReference.type === "container") {
+        if (typeReference.container.type === "optional") {
+            return unwrapOptionalAndNullable(typeReference.container.optional);
+        }
+        if (typeReference.container.type === "nullable") {
+            return unwrapOptionalAndNullable(typeReference.container.nullable);
+        }
+    }
+
+    return typeReference;
 }

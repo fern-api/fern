@@ -1,5 +1,5 @@
 import { docsYml } from "@fern-api/configuration";
-import { isURL } from "@fern-api/fs-utils";
+import { isURL, toPosixPath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { DocsWorkspace } from "@fern-api/workspace-loader";
 import { copyFile, mkdir, readFile, writeFile } from "fs/promises";
@@ -55,7 +55,7 @@ async function copyLocalFiles(obj: unknown, sourceDir: string, assetsDir: string
             try {
                 await mkdir(path.dirname(dest), { recursive: true });
                 await copyFile(abs, dest);
-                return `./assets/${destRelative.split(path.sep).join("/")}`;
+                return `./assets/${toPosixPath(destRelative)}`;
             } catch {
                 return obj;
             }

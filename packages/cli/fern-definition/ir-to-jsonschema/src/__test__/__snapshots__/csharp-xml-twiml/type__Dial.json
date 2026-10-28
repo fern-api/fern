@@ -1,29 +1,6 @@
 {
   "type": "object",
   "properties": {
-    "number": {
-      "oneOf": [
-        {
-          "type": "string"
-        },
-        {
-          "type": "null"
-        }
-      ]
-    },
-    "status_callback_event": {
-      "oneOf": [
-        {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        {
-          "type": "null"
-        }
-      ]
-    },
     "record": {
       "oneOf": [
         {
@@ -44,6 +21,29 @@
           "items": {
             "$ref": "#/definitions/Number"
           }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "status_callback_event": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "number": {
+      "oneOf": [
+        {
+          "type": "string"
         },
         {
           "type": "null"

@@ -1,4 +1,74 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.41.11
+  changelogEntry:
+    - summary: |
+        Fix recursive aliases and undiscriminated unions under `pydantic_config.version: v2` without
+        `wrapped_aliases`. A plain alias that refers back to itself (e.g. `JsonLike = Union[List["JsonLike"], ...]`,
+        or a map whose values are a union containing that map) was expanded endlessly by Pydantic, so building
+        the model raised `RecursionError` or `... is not fully defined`. Such an alias is now a
+        `typing_extensions.TypeAliasType` at runtime, which Pydantic v2 resolves lazily, and stays a plain alias
+        under `TYPE_CHECKING` for mypy and pyright. Values come back as plain dicts and lists, with no root
+        model to unwrap. Other aliases, and SDKs on Pydantic v1, `both` or `wrapped_aliases`, are unchanged.
+      type: fix
+  createdAt: "2026-10-27"
+  irVersion: 67
+- version: 5.41.10
+  changelogEntry:
+    - summary: |
+        Fix the README "Async Client" snippet dropping types imported from the package root.
+        Previously the whole `from <package> import <Client>, <Type>, ...` line of the sync
+        snippet was discarded, so the async example only imported the async client and
+        referenced request types that were never imported. The async snippet now imports
+        those names alongside the async client.
+      type: fix
+  createdAt: "2026-10-26"
+  irVersion: 67
+- version: 5.41.9
+  changelogEntry:
+    - summary: |
+        `update_forward_refs` now passes its namespace to `model_rebuild` under Pydantic v2. Models whose
+        forward references go through a union alias (e.g. a recursive `Union["Branch", Leaf, "Items"]` whose
+        members are imported under `TYPE_CHECKING`) were left incomplete, and parsing them raised
+        `PydanticUserError: ... is not fully defined`.
+      type: fix
+  createdAt: "2026-10-26"
+  irVersion: 67
+- version: 5.41.8
+  changelogEntry:
+    - summary: |
+        Fix SDKs generated with `tcp_keepalive.enabled: true` ignoring the `HTTP_PROXY`, `HTTPS_PROXY`,
+        `ALL_PROXY` and `NO_PROXY` environment variables. httpx skips environment proxies whenever a
+        custom `transport` is passed, so the default sync and async clients now also pass `mounts`
+        built from the environment proxies, each carrying the keepalive socket options.
+      type: fix
+  createdAt: "2026-10-22"
+  irVersion: 67
+- version: 5.41.7
+  changelogEntry:
+    - summary: |
+        Add the `http_client_extra` option. When set (e.g. `http_client_extra: client`), `httpx` is
+        declared as an optional dependency exposed under that extra (`pip install <pkg>[client]`), so a
+        plain install of a package used for its models only (e.g. TwiML) does not pull in the HTTP stack.
+        Off by default; existing SDKs are unchanged.
+      type: fix
+  createdAt: "2026-10-22"
+  irVersion: 67
+- version: 5.41.6
+  changelogEntry:
+    - summary: |
+        Respect the `retry-after-ms` response header when computing retry delays. The header value was
+        compared to `0` before being converted to a number, raising a `TypeError` that was silently
+        swallowed, so the client always fell back to `Retry-After` or exponential backoff.
+      type: fix
+  createdAt: "2026-10-22"
+  irVersion: 67
+- version: 5.41.5
+  changelogEntry:
+    - summary: |
+        XML (TwiML) serialization drops characters outside the XML 1.0 `Char` production (e.g. `\x01`) from text and attribute values instead of emitting XML that no parser accepts.
+      type: fix
+  createdAt: "2026-10-21"
+  irVersion: 67
 - version: 5.41.4
   changelogEntry:
     - summary: |

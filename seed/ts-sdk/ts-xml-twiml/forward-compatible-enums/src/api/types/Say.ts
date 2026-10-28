@@ -92,6 +92,19 @@ export class Say implements core.xml.XmlSerializable {
     toString(): string {
         return this.toXml();
     }
+
+    /**
+     * Appends a `<break>` child to the ordered content of this element and returns its builder, which is rendered when this element is serialized (the typed `children` property is not updated).
+     *
+     * Adding a Pause in <Say>
+     * @param fields initial `<break>` attributes and children
+     * @returns the `SeedApi.Break.Builder` appended to this element
+     */
+    addBreak(fields?: Partial<SeedApi.Break.Fields>): SeedApi.Break.Builder {
+        const builder = new SeedApi.Break.Builder(fields);
+        this.content.push(builder);
+        return builder;
+    }
 }
 
 export namespace Say {
@@ -166,6 +179,12 @@ export namespace Say {
         children(children: (SeedApi.Break | core.xml.XmlBuilder<SeedApi.Break>)[] | undefined): this {
             this.content = core.xml.replaceXmlContent(this.content, this.elements.children, children);
             this.elements.children = children;
+            return this;
+        }
+
+        /** Sets the text content of this element (same as `message`). */
+        text(message: string | undefined): this {
+            this.fields.message = message;
             return this;
         }
 

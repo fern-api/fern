@@ -33,6 +33,13 @@ jobs:
         uses: actions/checkout@v6
         with:
           fetch-depth: 10
+      # Gradle 7.4.2 in generators/java cannot run on the JDK 25 that ships with ubuntu-latest (ubuntu-26.04);
+      # pin the JDK like java-generator.yml does.
+      - name: Set up JDK
+        uses: actions/setup-java@v5
+        with:
+          distribution: "temurin"
+          java-version: "17"
       - name: automated publish
         if: ${{ github.event_name == 'push' }}
         uses: ./.github/actions/publish-generator

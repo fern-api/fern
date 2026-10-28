@@ -10,7 +10,16 @@ import {
     OPENAPI_DIRECTORY
 } from "@fern-api/configuration-loader";
 import { extractErrorMessage, titleCase } from "@fern-api/core-utils";
-import { AbsoluteFilePath, cwd, doesPathExist, isURL, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
+import {
+    AbsoluteFilePath,
+    cwd,
+    doesPathExist,
+    isURL,
+    join,
+    RelativeFilePath,
+    resolve,
+    toPosixPath
+} from "@fern-api/fs-utils";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import { loadAPIWorkspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
@@ -158,7 +167,7 @@ async function getSpecPathInDocsYml({
     const [firstSegment] = pathInFernDirectory.split(path.sep);
     const isInFernDirectory = firstSegment !== ".." && !path.isAbsolute(pathInFernDirectory);
     return isInFernDirectory
-        ? `./${pathInFernDirectory.split(path.sep).join("/")}`
+        ? `./${toPosixPath(pathInFernDirectory)}`
         : await copySpecIntoFernDirectory({ absolutePathToFernDirectory, openApiPath, taskContext });
 }
 

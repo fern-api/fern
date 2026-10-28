@@ -1,6 +1,7 @@
 export { getOriginalName, getWireValue } from "@fern-api/base-generator";
 export * from "@fern-api/typescript-base";
 export { AsIsManager } from "./asIs/AsIsManager.js";
+export { convertRecordToIndexSignature } from "./codegen-utils/convertRecordToIndexSignature.js";
 export {
     createNumericLiteralSafe,
     createNumericLiteralSafeTypeNode

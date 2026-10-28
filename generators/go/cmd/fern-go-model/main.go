@@ -43,6 +43,7 @@ func run(config *cmd.Config, coordinator *coordinator.Client) ([]*generator.File
 		config.AllowUserAgentAppInfo,
 		config.UserAgentOnly,
 		config.LegacyNullableAliasPointers,
+		config.XmlTextFirstBuilders,
 		config.Organization,
 		config.Version,
 		config.IrFilepath,
