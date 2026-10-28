@@ -3,6 +3,7 @@
     links in page content to another site's basepath on the same domain (e.g. `/product-b/overview` from
     `/product-a`) are left as written. The broken-link check, including with `--preview`, looks up the
     sites live on the domain and their published pages, and checks links to them against those pages:
-    a link to a page the other site has not published is an error. If the other site has no page list,
+    a link to a page the other site has not published is an error (parents of published pages, such as a
+    changelog overview, count as published). If the other site has no page list,
     its links are warnings.
   type: feat

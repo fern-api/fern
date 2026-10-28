@@ -59,7 +59,10 @@ describe("fetchSiblingSites", () => {
         expect(result).toEqual({
             type: "success",
             sites: [
-                { basepath: "product-b", slugs: new Set(["product-b/overview", "product-b/api/get"]) },
+                {
+                    basepath: "product-b",
+                    slugs: new Set(["product-b/overview", "product-b", "product-b/api/get", "product-b/api"])
+                },
                 { basepath: "", slugs: undefined }
             ]
         });
@@ -96,6 +99,10 @@ describe("fetchSiblingSites", () => {
 });
 
 describe("checkSiblingLink", () => {
+    afterEach(() => {
+        vi.unstubAllGlobals();
+    });
+
     const site = { basepath: "product-b", slugs: new Set(["product-b/overview", "product-b/api/get-user"]) };
 
     it("finds published pages, ignoring anchors, query params and trailing slashes", () => {
@@ -111,6 +118,31 @@ describe("checkSiblingLink", () => {
 
     it("reports pages the sibling does not publish as missing", () => {
         expect(checkSiblingLink("/product-b/does-not-exist", site)).toBe("missing");
+    });
+
+    it("treats ancestors of published pages (changelog overviews, sections) as found", async () => {
+        const fetchMock = vi.fn().mockResolvedValue(
+            new Response(
+                JSON.stringify({
+                    sites: [{ basepath: "product-b", slugs: ["product-b/changelog/2026/10/26", "product-b/overview"] }]
+                }),
+                { status: 200 }
+            )
+        );
+        vi.stubGlobal("fetch", fetchMock);
+        const result = await fetchSiblingSites({
+            fdrOrigin: "https://fdr.example.com",
+            domain: "docs.example.com",
+            token: "token"
+        });
+        const fetched = result.type === "success" ? result.sites[0] : undefined;
+        expect(fetched).toBeDefined();
+        if (fetched == null) {
+            return;
+        }
+        expect(checkSiblingLink("/product-b/changelog", fetched)).toBe("found");
+        expect(checkSiblingLink("/product-b/changelog/2026", fetched)).toBe("found");
+        expect(checkSiblingLink("/product-b/changelogs", fetched)).toBe("missing");
     });
 
     it("is unverified when FDR has no page list for the sibling", () => {

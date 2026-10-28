@@ -70,11 +70,20 @@ function parseSites(data: unknown): SiblingSite[] {
     return sites;
 }
 
+/**
+ * FDR lists pages only. Structural nodes such as a changelog overview, its year/month pages or
+ * a section without an overview are routable too but have no page row, so every ancestor path of
+ * a listed page also counts as published.
+ */
 function parseSlugs(values: unknown[]): Set<string> {
     const slugs = new Set<string>();
     for (const value of values) {
-        if (typeof value === "string") {
-            slugs.add(trimSlashes(value));
+        if (typeof value !== "string") {
+            continue;
+        }
+        const parts = trimSlashes(value).split("/");
+        for (let i = parts.length; i > 0; i--) {
+            slugs.add(parts.slice(0, i).join("/"));
         }
     }
     return slugs;
