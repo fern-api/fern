@@ -6,7 +6,7 @@ import {
 import { assertNever, Values } from "@fern-api/core-utils";
 import { Project } from "@fern-api/project-loader";
 import { CliError } from "@fern-api/task-context";
-import type { SdkConfigV1OutputConfig } from "@postman/sdk-config/sdk-config/v1";
+import type { SdkConfigV1McpOutputConfig, SdkConfigV1OutputConfig } from "@postman/sdk-config/sdk-config/v1";
 import { writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import { CliContext } from "../../cli-context/CliContext.js";
@@ -196,7 +196,9 @@ function getGeneratorInvocationMode(generator: generatorsYml.GeneratorInvocation
  * Maps SDK Config delivery onto the legacy output modes. GitHub delivery stays `github` even when it also publishes,
  * matching a legacy github output with publish settings; files or zip delivery that publishes is a direct publish.
  */
-function getSdkConfigOutputMode(output: SdkConfigV1OutputConfig | undefined): GenerationModeFilter {
+function getSdkConfigOutputMode(
+    output: SdkConfigV1OutputConfig | SdkConfigV1McpOutputConfig | undefined
+): GenerationModeFilter {
     // `fern generate` downloads a target without output, the same as files delivery
     if (output == null) {
         return GenerationModeFilter.Local;
@@ -204,6 +206,9 @@ function getSdkConfigOutputMode(output: SdkConfigV1OutputConfig | undefined): Ge
     switch (output.delivery) {
         case "github":
             return GenerationModeFilter.GitHub;
+        case "hosted":
+            // A legacy `fern-hosted` generator is a download that the CLI deploys, so it lists as local
+            return GenerationModeFilter.Local;
         case "files":
         case "zip":
             return output.publish != null ? GenerationModeFilter.PackageRegistry : GenerationModeFilter.Local;
