@@ -1,3 +1,4 @@
+import { assertNeverNoThrow } from "@fern-api/core-utils";
 import { CONSOLE_LOGGER, createLogger, Logger, LogLevel } from "@fern-api/logger";
 
 import { FernGeneratorExec, GeneratorNotificationService } from "./GeneratorNotificationService.js";
@@ -34,11 +35,24 @@ export abstract class AbstractGeneratorContext {
             }
         });
 
-        this.version = config?.output?.mode?._visit({
-            downloadFiles: () => undefined,
-            github: (github) => github.version,
-            publish: (publish) => publish.version,
-            _other: () => undefined
-        });
+        this.version = getOutputModeVersion(config?.output?.mode);
+    }
+}
+
+// Switches on `type` rather than `_visit` so plain JSON configs (no `_visit`) work too.
+function getOutputModeVersion(mode: FernGeneratorExec.OutputMode | undefined): string | undefined {
+    if (mode == null) {
+        return undefined;
+    }
+    switch (mode.type) {
+        case "github":
+        case "publish":
+            return mode.version;
+        case "downloadFiles":
+            return undefined;
+        default:
+            // Keep the previous `_other: () => undefined` behaviour for modes this SDK does not know.
+            assertNeverNoThrow(mode);
+            return undefined;
     }
 }
