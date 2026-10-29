@@ -1,6 +1,7 @@
 # yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
 
 - summary: |
-    `fern check` now warns when a docs page uses Mintlify's `<ResponseField>` component,
-    and suggests `<ParamField path="...">` instead.
+    `fern check` now warns when a docs page uses Mintlify-only components (`<ResponseField>`,
+    `<Danger>`, `<Columns>`, `<Tree>`, `<RequestExample>`, `<ResponseExample>`, `<Visibility>`)
+    and suggests the Fern component to use instead.
   type: fix

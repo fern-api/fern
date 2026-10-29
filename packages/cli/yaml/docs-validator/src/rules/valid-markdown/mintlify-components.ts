@@ -6,7 +6,15 @@ import { visit } from "unist-util-visit";
  * keeps the page portable across renderer versions.
  */
 const MINTLIFY_COMPONENT_HINTS: Record<string, string> = {
-    ResponseField: 'Use <ParamField path="..."> instead; <ResponseField name="..."> is rendered as a ParamField alias.'
+    ResponseField: 'Use <ParamField path="..."> instead; <ResponseField name="..."> is rendered as a ParamField alias.',
+    Danger: "Use <Error> instead; <Danger> is rendered as an Error callout.",
+    Columns: "Use <CardGroup cols={...}> instead; <Columns> is rendered as a CardGroup.",
+    Tree: "Use <Files>, <Folder> and <File> instead; <Tree> is rendered as Files.",
+    FileTree: "Use <Files>, <Folder> and <File> instead; <FileTree> is rendered as Files.",
+    RequestExample: "Use <CodeGroup> instead; <RequestExample> is rendered inline as a CodeGroup.",
+    ResponseExample: "Use <CodeGroup> instead; <ResponseExample> is rendered inline as a CodeGroup.",
+    Visibility:
+        'Use <llms-ignore> or <llms-only> instead; <Visibility for="humans|agents"> is rendered as those, and other `for` values are not supported.'
 };
 
 export function getMintlifyComponentWarnings(content: string): string[] {

@@ -32,6 +32,14 @@ title: Research tools
         expect(getMintlifyComponentWarnings(content)).toEqual([]);
     });
 
+    it("warns on other Mintlify-only components", () => {
+        const content = '<Danger>x</Danger>\n\n<Visibility for="agents">y</Visibility>\n';
+        expect(getMintlifyComponentWarnings(content)).toEqual([
+            "<Danger> is a Mintlify component, not a Fern component (1 occurrence). Use <Error> instead; <Danger> is rendered as an Error callout.",
+            '<Visibility> is a Mintlify component, not a Fern component (1 occurrence). Use <llms-ignore> or <llms-only> instead; <Visibility for="humans|agents"> is rendered as those, and other `for` values are not supported.'
+        ]);
+    });
+
     it("does not warn on ParamField", () => {
         expect(getMintlifyComponentWarnings('<ParamField path="rows" type="array">x</ParamField>')).toEqual([]);
     });
