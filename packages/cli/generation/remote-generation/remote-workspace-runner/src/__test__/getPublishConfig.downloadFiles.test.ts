@@ -1,7 +1,8 @@
 import { generatorsYml } from "@fern-api/configuration";
 import { InteractiveTaskContext } from "@fern-api/task-context";
 import { describe, expect, it } from "vitest";
-import { getPublishConfig } from "../runRemoteGenerationForGenerator.js";
+import { type GenerationConfigRoute } from "../sdk-gen-client/index.js";
+import { getPublishConfig, getUserProvidedVersionForPublishConfig } from "../runRemoteGenerationForGenerator.js";
 
 // Minimal context stub — getPublishConfig only reads `logger.debug`/`logger.warn`.
 const mockContext = {
@@ -11,6 +12,15 @@ const mockContext = {
     }
     // Test mock: getPublishConfig only touches the logger.
 } as unknown as InteractiveTaskContext;
+
+const runtimeBundleRoute: GenerationConfigRoute = {
+    generatorId: "fernapi/fern-typescript-node-sdk",
+    language: "typescript",
+    cutoverVersion: "999.0.0",
+    requestedVersion: "2.0.0",
+    configKind: "legacy-fern",
+    payloadKind: "fern-runtime-bundle"
+};
 
 function buildLocalFileSystemInvocation(fields: {
     name: string;
@@ -33,6 +43,73 @@ function buildLocalFileSystemInvocation(fields: {
 }
 
 describe("getPublishConfig — local-file-system output on the cloud generation path", () => {
+    it("mirrors the resolved TypeScript version into legacy sdk-gen-api runtime bundles", () => {
+        const generatorInvocation = buildLocalFileSystemInvocation({
+            name: "fernapi/fern-typescript-node-sdk",
+            language: "typescript"
+        });
+
+        expect(
+            getUserProvidedVersionForPublishConfig({
+                generatorInvocation,
+                sdkGenApiRoute: runtimeBundleRoute,
+                resolvedVersion: "1.2.22",
+                userProvidedVersion: undefined
+            })
+        ).toBe("1.2.22");
+    });
+
+    it("does not mirror computed TypeScript versions outside legacy sdk-gen-api runtime bundles", () => {
+        const generatorInvocation = buildLocalFileSystemInvocation({
+            name: "fernapi/fern-typescript-node-sdk",
+            language: "typescript"
+        });
+
+        expect(
+            getUserProvidedVersionForPublishConfig({
+                generatorInvocation,
+                sdkGenApiRoute: undefined,
+                resolvedVersion: "1.2.22",
+                userProvidedVersion: undefined
+            })
+        ).toBeUndefined();
+    });
+
+    it("threads the sdk-gen-api runtime-bundle npm package identity for typescript", () => {
+        const userProvidedVersion = getUserProvidedVersionForPublishConfig({
+            generatorInvocation: buildLocalFileSystemInvocation({
+                name: "fernapi/fern-typescript-node-sdk",
+                language: "typescript",
+                config: { packageJson: { name: "api" } }
+            }),
+            sdkGenApiRoute: runtimeBundleRoute,
+            resolvedVersion: "1.2.22",
+            userProvidedVersion: undefined
+        });
+
+        const publishConfig = getPublishConfig({
+            generatorInvocation: buildLocalFileSystemInvocation({
+                name: "fernapi/fern-typescript-node-sdk",
+                language: "typescript",
+                config: { packageJson: { name: "api" } }
+            }),
+            version: "1.2.22",
+            userProvidedVersion,
+            packageName: undefined,
+            selfHosted: false,
+            context: mockContext
+        });
+
+        expect(publishConfig?.type).toBe("filesystem");
+        if (publishConfig?.type === "filesystem") {
+            expect(publishConfig.publishTarget?.type).toBe("npm");
+            if (publishConfig.publishTarget?.type === "npm") {
+                expect(publishConfig.publishTarget.packageName).toBe("api");
+                expect(publishConfig.publishTarget.version).toBe("1.2.22");
+            }
+        }
+    });
+
     it("threads the npm package identity for typescript when --version is passed", () => {
         const publishConfig = getPublishConfig({
             generatorInvocation: buildLocalFileSystemInvocation({
