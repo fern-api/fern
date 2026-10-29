@@ -32,6 +32,11 @@ pub fn handle_error_response<T>(
     provider: &dyn AuthProvider,
     endpoint: &EndpointAuthMetadata,
 ) -> Result<T, CliError> {
+    // `security: []` never carries credentials (e.g. a token-issuing endpoint),
+    // so a 401 there is about the request itself, not a missing token.
+    if endpoint.is_explicit_anonymous() {
+        return Err(parse_api_error(status, error_body));
+    }
     if status.as_u16() == 401 || status.as_u16() == 403 {
         if !provider.has_credentials_for(endpoint) {
             let hints = provider.credential_hints();
@@ -269,6 +274,27 @@ mod tests {
         match err {
             CliError::Auth(msg) => assert!(msg.contains("Access denied")),
             _ => panic!("Expected Auth"),
+        }
+    }
+
+    #[test]
+    fn passes_through_for_explicit_anonymous_endpoint() {
+        let p = BearerAuthProvider::new("bearer", AuthCredentialSource::Missing);
+        for status in [reqwest::StatusCode::UNAUTHORIZED, reqwest::StatusCode::NOT_FOUND] {
+            let err = handle_error_response::<()>(
+                status,
+                r#"{"error":{"code":401,"message":"invalid client","reason":"x"}}"#,
+                &p,
+                &EndpointAuthMetadata::explicit_anonymous(),
+            )
+            .unwrap_err();
+            match err {
+                CliError::Api { message, help, .. } => {
+                    assert_eq!(message, "invalid client");
+                    assert!(help.is_none(), "unexpected credential hint: {help:?}");
+                }
+                other => panic!("Expected Api, got {other:?}"),
+            }
         }
     }
 
