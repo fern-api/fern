@@ -1,3 +1,3 @@
 - summary: |
-    Make the "custom domain still points to Vercel" publishing error easier to read: the first line is now white on a red background and the rest of the message uses the terminal's default text color instead of red.
+    Make the "custom domain still points to Vercel" publishing error easier to read: the first line now starts with `[SEVERE]` and is white on a red background and the rest of the message uses the terminal's default text color instead of red.
   type: fix

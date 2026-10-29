@@ -129,7 +129,7 @@ export function getVercelDnsMessage(domains: { host: string; target: string }[],
     const plural = domains.length > 1;
     const deadline = "December 1, 2026";
     const title = isHardError
-        ? `Publishing is blocked: your custom domain${plural ? "s" : ""} still point${plural ? "" : "s"} to Vercel.`
+        ? `[SEVERE] Publishing is blocked: your custom domain${plural ? "s" : ""} still point${plural ? "" : "s"} to Vercel.`
         : `Action required by ${deadline}: your custom domain${plural ? "s" : ""} still point${plural ? "" : "s"} to Vercel.`;
     const body = [
         ...domains.map(({ host, target }) => `  ${host}  →  ${target}`),
