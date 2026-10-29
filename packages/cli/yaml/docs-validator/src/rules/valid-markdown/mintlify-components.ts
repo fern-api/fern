@@ -23,12 +23,17 @@ export function getMintlifyComponentWarnings(content: string): string[] {
             }
         });
     } catch {
-        return [];
+        // Fall back to a raw-text count so a parser mismatch doesn't hide the warning.
+        for (const name of names) {
+            counts.set(name, content.match(new RegExp(`<${name}\\b`, "g"))?.length ?? 0);
+        }
     }
 
-    return [...counts.entries()].map(([name, count]) => {
-        const hint = MINTLIFY_COMPONENT_HINTS[name] ?? "Use a Fern component instead.";
-        const occurrences = count === 1 ? "1 occurrence" : `${count} occurrences`;
-        return `<${name}> is a Mintlify component, not a Fern component (${occurrences}). ${hint}`;
-    });
+    return [...counts.entries()]
+        .filter(([, count]) => count > 0)
+        .map(([name, count]) => {
+            const hint = MINTLIFY_COMPONENT_HINTS[name] ?? "Use a Fern component instead.";
+            const occurrences = count === 1 ? "1 occurrence" : `${count} occurrences`;
+            return `<${name}> is a Mintlify component, not a Fern component (${occurrences}). ${hint}`;
+        });
 }
