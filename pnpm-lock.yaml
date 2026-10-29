@@ -109,8 +109,8 @@ catalogs:
       specifier: ^1.14.9
       version: 1.14.9
     '@postman/sdk-config':
-      specifier: 0.17.0
-      version: 0.17.0
+      specifier: 0.18.0
+      version: 0.18.0
     '@redocly/openapi-core':
       specifier: ^1.4.1
       version: 1.34.11
@@ -4584,7 +4584,7 @@ importers:
         version: 7.10.1(@types/node@22.19.17)
       '@postman/sdk-config':
         specifier: 'catalog:'
-        version: 0.17.0
+        version: 0.18.0
       '@sentry/cli':
         specifier: 'catalog:'
         version: 2.58.5
@@ -6298,7 +6298,7 @@ importers:
         version: 0.0.1167
       '@postman/sdk-config':
         specifier: 'catalog:'
-        version: 0.17.0
+        version: 0.18.0
       chalk:
         specifier: 'catalog:'
         version: 5.6.2
@@ -6488,7 +6488,7 @@ importers:
         version: 0.0.1167
       '@postman/sdk-config':
         specifier: 'catalog:'
-        version: 0.17.0
+        version: 0.18.0
       axios:
         specifier: 'catalog:'
         version: 1.16.0
@@ -6628,7 +6628,7 @@ importers:
         version: link:../workspace/loader
       '@postman/sdk-config':
         specifier: 'catalog:'
-        version: 0.17.0
+        version: 0.18.0
       axios:
         specifier: 'catalog:'
         version: 1.16.0
@@ -10557,8 +10557,8 @@ packages:
   '@posthog/types@1.415.1':
     resolution: {integrity: sha512-7Qs2wcqipl8KcFpIkIKE1Wcj1djX4dEB3cfq907HrNpKK7/xKh3U4N4bkOD6h9+8j3SxWWrj9JNpE8CZXsE35w==}
 
-  '@postman/sdk-config@0.17.0':
-    resolution: {integrity: sha512-xPI6NI6pM28iNQTWHjTtDqAZkq1q4sngzKhD13MjzqRVLAXJr3DFiNXUa5KneReaylUFdkrqC0a/odGy7TzrxA==}
+  '@postman/sdk-config@0.18.0':
+    resolution: {integrity: sha512-k28PeppSsYYfZx6mr+5VciOcNy8pnR98mZKN65K8aBVFDZKJ1RdrYNS8VaTZoKz2pZ5GaszDAQ0k0K4YM+Gorw==}
     engines: {node: '>=24'}
 
   '@prisma/instrumentation@7.6.0':
@@ -17749,7 +17749,7 @@ snapshots:
 
   '@posthog/types@1.415.1': {}
 
-  '@postman/sdk-config@0.17.0':
+  '@postman/sdk-config@0.18.0':
     dependencies:
       semver: 7.8.4
       zod: 4.3.6

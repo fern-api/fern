@@ -330,6 +330,70 @@ describe("createSdkConfigWorkspace", () => {
         await cleanup();
     });
 
+    it("turns a hosted MCP target into a fern-hosted generator with no output directory", async () => {
+        const directory = await mkdtemp(path.join(tmpdir(), "fern-sdk-config-workspace-"));
+        temporaryDirectories.push(directory);
+        await writeFile(
+            path.join(directory, "openapi.yml"),
+            "openapi: 3.0.0\ninfo:\n  title: Payments\n  version: 1.0.0\npaths: {}\n"
+        );
+        const sdkConfig = parseSdkConfigV1({
+            schemaVersion: "sdk-config/v1",
+            sdkName: "payments",
+            source: { specs: [{ id: "payments", type: "openapi", path: "./openapi.yml" }] },
+            api: {},
+            client: {},
+            package: {},
+            docs: {},
+            generation: {},
+            targets: [{ language: "mcp", output: { delivery: "hosted", slug: "payments" } }]
+        });
+
+        const { workspace, cleanup } = await createSdkConfigWorkspace({
+            sdkConfig,
+            absolutePathToConfig: path.join(directory, "sdk-config.yml"),
+            cliVersion: "0.0.0",
+            context: createMockTaskContext()
+        });
+
+        const [generator] = workspace.generatorsConfiguration?.groups[0]?.generators ?? [];
+        expect(generator?.fernHostedOutput).toEqual({ slug: "payments" });
+        // The generated bundle lands in a managed temporary directory that the deploy step assigns.
+        expect(generator?.absolutePathToLocalOutput).toBeUndefined();
+        await cleanup();
+    });
+
+    it("does not mark a files or zip MCP target as fern-hosted", async () => {
+        const directory = await mkdtemp(path.join(tmpdir(), "fern-sdk-config-workspace-"));
+        temporaryDirectories.push(directory);
+        await writeFile(
+            path.join(directory, "openapi.yml"),
+            "openapi: 3.0.0\ninfo:\n  title: Payments\n  version: 1.0.0\npaths: {}\n"
+        );
+        const sdkConfig = parseSdkConfigV1({
+            schemaVersion: "sdk-config/v1",
+            sdkName: "payments",
+            source: { specs: [{ id: "payments", type: "openapi", path: "./openapi.yml" }] },
+            api: {},
+            client: {},
+            package: {},
+            docs: {},
+            generation: {},
+            targets: [{ language: "mcp", output: { delivery: "zip" } }]
+        });
+
+        const { workspace, cleanup } = await createSdkConfigWorkspace({
+            sdkConfig,
+            absolutePathToConfig: path.join(directory, "sdk-config.yml"),
+            cliVersion: "0.0.0",
+            context: createMockTaskContext()
+        });
+
+        const [generator] = workspace.generatorsConfiguration?.groups[0]?.generators ?? [];
+        expect(generator?.fernHostedOutput).toBeUndefined();
+        await cleanup();
+    });
+
     it("maps SDK Config import settings to the Fern importer settings", async () => {
         const directory = await mkdtemp(path.join(tmpdir(), "fern-sdk-config-workspace-"));
         temporaryDirectories.push(directory);
