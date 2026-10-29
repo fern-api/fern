@@ -184,8 +184,9 @@ fn keyring_read_failure_message(failure: &KeyringReadFailure, consequence: &str)
     };
     if failure.backend == "macOS Keychain" {
         format!(
-            "Access to {credential} was denied by the macOS Keychain, so {consequence}. \
-             Run the command again and click \"Always Allow\"."
+            "Couldn't read {credential} from the macOS Keychain (access was denied, or \
+             the Keychain is locked), so {consequence}. Run the command again, then click \
+             \"Always Allow\" or enter your Keychain password."
         )
     } else {
         format!(
@@ -895,9 +896,10 @@ mod tests {
         match err {
             CliError::Auth(msg) => assert_eq!(
                 msg,
-                "Access to the saved credential for profile `lb2` was denied by the macOS \
-                 Keychain, so the request was not sent. Run the command again and click \
-                 \"Always Allow\"."
+                "Couldn't read the saved credential for profile `lb2` from the macOS \
+                 Keychain (access was denied, or the Keychain is locked), so the request was \
+                 not sent. Run the command again, then click \"Always Allow\" or enter your \
+                 Keychain password."
             ),
             other => panic!("expected Auth, got: {other:?}"),
         }
@@ -938,7 +940,7 @@ mod tests {
         .unwrap_err();
         match err {
             CliError::Auth(msg) => {
-                assert!(msg.contains("denied by the macOS Keychain"), "got: {msg}");
+                assert!(msg.contains("from the macOS Keychain"), "got: {msg}");
                 assert!(msg.contains("no credentials were sent"), "got: {msg}");
             }
             other => panic!("expected Auth, got: {other:?}"),
