@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.184.0
+  changelogEntry:
+    - summary: |
+        Support `x-fern-explorer` in OpenRPC specs. Set it at the document root to
+        enable or disable the API Explorer for every method, or on a method to
+        override the root value.
+      type: feat
+  createdAt: "2026-10-29"
+  irVersion: 67
 - version: 5.183.2
   changelogEntry:
     - summary: |
