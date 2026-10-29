@@ -1,4 +1,25 @@
 # yaml-language-server: $schema=../../fern-versions-yml.schema.json
+- version: 0.58.0
+  changelogEntry:
+    - summary: |
+        Add `banner.animate`. When `true`, root `--help` on an interactive terminal plays a short
+        shimmer across the banner, then prints it statically. Pipes, captured output, `NO_COLOR`,
+        `TERM=dumb` and terminals too small for the banner skip the animation.
+      type: feat
+    - summary: |
+        Generated CLIs can opt into a startup banner on root `--help`: a solid colour, a multi-stop RGB gradient
+        (`direction`: `horizontal`, `vertical`, or `diagonal`), one colour per line (`lineColors`), or pre-coloured
+        ANSI art printed as given. Keep the art as an asset next to `generators.yml` with `file`, or inline it with `text`:
+        ```yaml
+        config:
+          banner:
+            file: ./assets/cli-banner.txt
+            colors: ["#2929CC", "#4949F2", "#30F2B1"]
+            direction: diagonal
+        ```
+      type: feat
+  createdAt: "2026-10-29"
+  irVersion: 67
 - version: 0.57.4
   changelogEntry:
     - summary: |
