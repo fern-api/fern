@@ -23,6 +23,7 @@ import {
 } from "@open-rpc/meta-schema";
 import { OpenAPIV3 } from "openapi-types";
 
+import { FernExplorerExtension } from "../extensions/x-fern-explorer.js";
 import { OpenRPCConverterContext3_1 } from "../OpenRPCConverterContext3_1.js";
 
 export declare namespace MethodConverter {
@@ -32,6 +33,7 @@ export declare namespace MethodConverter {
         queryParameters?: FernIr.QueryParameter[];
         headers?: FernIr.HttpHeader[];
         topLevelServers?: ServerObject[];
+        globalApiPlayground?: boolean;
     }
 
     export interface Output {
@@ -48,6 +50,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
     private readonly queryParameters: FernIr.QueryParameter[];
     private readonly headers: FernIr.HttpHeader[];
     private readonly topLevelServers: ServerObject[];
+    private readonly globalApiPlayground: boolean | undefined;
     constructor({
         context,
         breadcrumbs,
@@ -55,7 +58,8 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
         pathParameters = [],
         queryParameters = [],
         headers = [],
-        topLevelServers = []
+        topLevelServers = [],
+        globalApiPlayground
     }: MethodConverter.Args) {
         super({ context, breadcrumbs });
         this.method = method;
@@ -63,6 +67,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
         this.queryParameters = queryParameters;
         this.headers = headers;
         this.topLevelServers = topLevelServers;
+        this.globalApiPlayground = globalApiPlayground;
     }
 
     public convert(): MethodConverter.Output | undefined {
@@ -222,7 +227,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
             audiences,
             retries: undefined,
             globalParameters: undefined,
-            apiPlayground: undefined,
+            apiPlayground: this.convertApiPlayground(),
             responseHeaders: []
         };
 
@@ -232,6 +237,15 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
             inlinedTypes,
             servers: this.filterOutTopLevelServers(this.method.servers ?? [])
         };
+    }
+
+    private convertApiPlayground(): boolean | undefined {
+        const methodExplorer = new FernExplorerExtension({
+            breadcrumbs: [...this.breadcrumbs, this.method.name],
+            document: this.method,
+            context: this.context
+        }).convert();
+        return methodExplorer ?? this.globalApiPlayground;
     }
 
     private convertParamStructure(): FernIr.OpenRpcParamStructure | undefined {

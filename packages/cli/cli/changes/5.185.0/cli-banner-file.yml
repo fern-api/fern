@@ -1,0 +1,5 @@
+- summary: |
+    The CLI generator's `config.banner.file` in `generators.yml` points at a text asset (resolved relative to
+    `generators.yml`) whose contents become the generated CLI's startup banner, so logo art can live in the
+    config repo instead of inline in YAML.
+  type: feat

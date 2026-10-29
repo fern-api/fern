@@ -1,6 +1,6 @@
 import { cp, mkdir, readFile, writeFile } from "fs/promises";
 import path from "path";
-import type { FernCliProfilesProvisionConfig } from "./customConfig.js";
+import type { FernCliCustomConfig, FernCliProfilesProvisionConfig } from "./customConfig.js";
 import type { AuthStrategyVariant, DetectedAuthBinding } from "./detectAuth.js";
 import type { DetectedGlobalParam } from "./detectGlobalParams.js";
 
@@ -86,6 +86,8 @@ export async function copySpecs(args: {
     customCommands?: boolean;
     /** When set, emit `.command_namespace("<rootGroup>")` on the OpenApiBinding chain. */
     rootGroup?: string;
+    /** When set, emit a root help banner on the CliApp builder. */
+    banner?: FernCliCustomConfig["banner"];
     /**
      * When set, emit `.user_agent_suffix_flag("<name>")` on the CliApp
      * chain so the generated CLI exposes the consumer suffix under this
@@ -119,6 +121,7 @@ export async function copySpecs(args: {
         specsDir,
         customCommands,
         rootGroup,
+        banner,
         userAgentSuffixFlag,
         profilesCommandName,
         profilesRevokeOperation,
@@ -154,6 +157,7 @@ export async function copySpecs(args: {
             globalParamBindings,
             customCommands: customCommands ?? false,
             rootGroup,
+            banner,
             userAgentSuffixFlag,
             profilesCommandName,
             profilesRevokeOperation,
@@ -250,6 +254,7 @@ function renderMainRs(args: {
     globalParamBindings: DetectedGlobalParam[];
     customCommands: boolean;
     rootGroup?: string;
+    banner?: FernCliCustomConfig["banner"];
     userAgentSuffixFlag?: string;
     profilesCommandName?: string;
     profilesRevokeOperation?: string;
@@ -263,6 +268,7 @@ function renderMainRs(args: {
         globalParamBindings,
         customCommands,
         rootGroup,
+        banner,
         userAgentSuffixFlag,
         profilesCommandName,
         profilesRevokeOperation,
@@ -280,6 +286,13 @@ function renderMainRs(args: {
 
     // Collect needed imports
     const imports: string[] = ["use fern_cli_sdk::app::CliApp;", "use fern_cli_sdk::openapi::OpenApiBinding;"];
+    const bannerDirection = typeof banner === "object" ? banner.direction : undefined;
+    const emitBannerDirection = bannerDirection != null && bannerDirection !== "horizontal";
+    if (banner != null) {
+        imports.push(
+            emitBannerDirection ? "use fern_cli_sdk::app::{Banner, BannerDirection};" : "use fern_cli_sdk::app::Banner;"
+        );
+    }
     if (profilesCommandName != null) {
         imports.push(
             profilesProvisionOperation != null
@@ -326,6 +339,27 @@ function renderMainRs(args: {
     }
 
     lines.push(...imports, "", "fn main() {", `    let app = CliApp::new("${binaryName}")`);
+
+    if (banner != null) {
+        const config = typeof banner === "string" ? { text: banner } : banner;
+        // Colours are already hex-validated in customConfig; escaping anyway keeps every Rust literal here safe on its own.
+        const colorList = (colors: string[]) =>
+            `&[${colors.map((color) => `"${escapeRustStringLiteral(color)}"`).join(", ")}]`;
+        let bannerBuilder = `Banner::new("${escapeRustStringLiteral(config.text)}")`;
+        if (config.colors != null && config.colors.length > 0) {
+            bannerBuilder += `.colors(${colorList(config.colors)})`;
+        }
+        if (config.lineColors != null && config.lineColors.length > 0) {
+            bannerBuilder += `.line_colors(${colorList(config.lineColors)})`;
+        }
+        if (emitBannerDirection) {
+            bannerBuilder += `.direction(BannerDirection::${bannerDirection === "vertical" ? "Vertical" : "Diagonal"})`;
+        }
+        if (config.animate === true) {
+            bannerBuilder += ".animate(true)";
+        }
+        lines.push(`        .banner(${bannerBuilder})`);
+    }
 
     // Consumer User-Agent suffix flag/env override (defaults to
     // `user-agent-suffix` in the SDK when this is absent). Emitted before
@@ -426,6 +460,37 @@ function renderMainRs(args: {
     lines.push("}");
     lines.push("");
     return lines.join("\n");
+}
+function escapeRustStringLiteral(value: string): string {
+    let escaped = "";
+    for (const character of value) {
+        switch (character) {
+            case "\\":
+                escaped += "\\\\";
+                break;
+            case '"':
+                escaped += '\\"';
+                break;
+            case "\n":
+                escaped += "\\n";
+                break;
+            case "\r":
+                escaped += "\\r";
+                break;
+            case "\t":
+                escaped += "\\t";
+                break;
+            default: {
+                const codePoint = character.codePointAt(0);
+                if (codePoint != null && (codePoint < 0x20 || (codePoint >= 0x7f && codePoint <= 0x9f))) {
+                    escaped += `\\u{${codePoint.toString(16)}}`;
+                } else {
+                    escaped += character;
+                }
+            }
+        }
+    }
+    return escaped;
 }
 
 function rustStringLiteral(value: string, label: string): string {

@@ -73,3 +73,4 @@ export {
     resolveSdkConfigGeneratorVersion,
     SDK_CONFIG_UNPINNED_GENERATOR_VERSION
 } from "./sdkConfigGeneratorVersion.js";
+export { toSdkGenApiTarget } from "./sdkConfigWireOutput.js";
