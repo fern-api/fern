@@ -69,6 +69,7 @@ import { diff } from "./commands/diff/diff.js";
 import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace.js";
 import { parseDocsDevDuration } from "./commands/docs-dev/parseDocsDevDuration.js";
 import { docsDiff } from "./commands/docs-diff/docsDiff.js";
+import { exportDocs } from "./commands/docs-export/exportDocs.js";
 import { generateLibraryDocs } from "./commands/docs-md-generate/generateLibraryDocs.js";
 import { deleteDocsPreview } from "./commands/docs-preview/deleteDocsPreview.js";
 import { listDocsPreview } from "./commands/docs-preview/listDocsPreview.js";
@@ -2151,6 +2152,7 @@ function addDocsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         addDocsPreviewCommand(yargs, cliContext);
         addDocsDiffCommand(yargs, cliContext);
         addDocsMdCommand(yargs, cliContext);
+        addDocsExportCommand(yargs, cliContext);
         addDocsThemeCommand(yargs, cliContext);
         return yargs;
     });
@@ -2346,6 +2348,62 @@ function addDocsMdGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCo
                 library: argv.library,
                 local: !argv.remote,
                 keepLogs: argv.keepLogs
+            });
+        }
+    );
+}
+
+function addDocsExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "export",
+        "Download a copy of your live docs site as static HTML, or as a folder of Markdown",
+        (yargs) =>
+            yargs
+                .option("format", {
+                    choices: ["html", "md"] as const,
+                    default: "html" as const,
+                    description:
+                        "html: the full site, served with any static file server. md: per-page Markdown and llms.txt"
+                })
+                .option("output", {
+                    type: "string",
+                    default: "docs-export",
+                    description:
+                        "Folder to write the export into. Emptied first (except .git); must not contain the current folder"
+                })
+                .option("instance", {
+                    type: "string",
+                    description: "The docs.yml instance url to export. Required when docs.yml has more than one"
+                })
+                .option("url", {
+                    type: "string",
+                    description: "Base url of a self-hosted docs container to export from, instead of Fern-hosted docs"
+                })
+                .option("admin-token", {
+                    type: "string",
+                    description: "The self-hosted container's ADMIN_TOKEN. Required with --url"
+                })
+                .check((argv) => {
+                    if (argv.url != null && argv.adminToken == null) {
+                        throw new CliError({
+                            message: "--admin-token is required with --url.",
+                            code: CliError.Code.ConfigError
+                        });
+                    }
+                    return true;
+                }),
+        async (argv) => {
+            cliContext.instrumentPostHogEvent({
+                command: "fern docs export",
+                properties: { format: argv.format, selfHosted: argv.url != null }
+            });
+            await exportDocs({
+                cliContext,
+                format: argv.format,
+                output: argv.output,
+                instance: argv.instance,
+                selfHostedUrl: argv.url,
+                adminToken: argv.adminToken
             });
         }
     );
