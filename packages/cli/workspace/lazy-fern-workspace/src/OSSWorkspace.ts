@@ -40,12 +40,15 @@ import { v4 as uuidv4 } from "uuid";
 import { loadOpenRpc } from "./loaders/index.js";
 import { OpenAPILoader } from "./loaders/OpenAPILoader.js";
 import { ProtobufIRGenerator } from "./protobuf/ProtobufIRGenerator.js";
-import { getAllOpenAPISpecs } from "./utils/getAllOpenAPISpecs.js";
+import { type ConvertedProtobufSpec, convertProtobufSpecs } from "./utils/convertProtobufSpecs.js";
+import { combineOpenAPISpecs } from "./utils/getAllOpenAPISpecs.js";
 
 export declare namespace OSSWorkspace {
     export interface Args extends AbstractAPIWorkspace.Args {
         allSpecs: Spec[];
         specs: (OpenAPISpec | ProtobufSpec)[];
+        /** Every spec in definition order, from-openapi protobuf specs included. Defaults to `allSpecs` then them. */
+        sourceSpecs?: Spec[];
     }
 
     export type Settings = BaseOpenAPIWorkspace.Settings;
@@ -149,13 +152,16 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
     // This avoids running buf generate twice when both toFernWorkspace() and
     // validateOSSWorkspace() need the same OpenAPI specs.
     private openApiSpecsCache: Map<string, Promise<OpenAPISpec[]>> = new Map();
+    // Shared by every relativePathToDependency key above and by SDK source preparation.
+    private convertedProtobufSpecsCache: Promise<ConvertedProtobufSpec[]> | undefined;
+    private readonly sourceSpecs: Spec[];
     /** Guards the orphaned-`auth-schemes` warning so one command warns once. */
     private hasWarnedOrphanedAuthSchemes = false;
     // Set by `enableResultCaching()`, keyed by the call's arguments.
     private intermediateRepresentationCache: Map<string, Promise<IntermediateRepresentation>> | undefined;
     private fernWorkspaceCache: Map<string, Promise<FernWorkspace>> | undefined;
 
-    constructor({ allSpecs, specs, ...superArgs }: OSSWorkspace.Args) {
+    constructor({ allSpecs, specs, sourceSpecs, ...superArgs }: OSSWorkspace.Args) {
         const openapiSpecs = specs.filter((spec) => spec.type === "openapi" && spec.source.type === "openapi");
         super({
             ...superArgs,
@@ -215,6 +221,10 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         });
         this.specs = specs;
         this.allSpecs = allSpecs;
+        this.sourceSpecs = sourceSpecs ?? [
+            ...allSpecs,
+            ...specs.filter((spec) => spec.type === "protobuf" && spec.fromOpenAPI)
+        ];
         this.sources = this.convertSpecsToIdentifiableSources(specs);
         this.loader = new OpenAPILoader(this.absoluteFilePath);
         this.groupMultiApiEnvironments = this.specs.some((spec) => spec.settings?.groupMultiApiEnvironments);
@@ -311,10 +321,32 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
         const key = relativePathToDependency ?? "";
         let cached = this.openApiSpecsCache.get(key);
         if (cached == null) {
-            cached = getAllOpenAPISpecs({ context, specs: this.specs, relativePathToDependency });
+            cached = this.buildOpenAPISpecs({ context, relativePathToDependency });
             this.openApiSpecsCache.set(key, cached);
         }
         return cached;
+    }
+
+    private async buildOpenAPISpecs({
+        context,
+        relativePathToDependency
+    }: {
+        context: TaskContext;
+        relativePathToDependency?: RelativeFilePath;
+    }): Promise<OpenAPISpec[]> {
+        const converted = await this.getConvertedProtobufSpecsCached({ context });
+        return combineOpenAPISpecs({ specs: this.specs, converted, relativePathToDependency });
+    }
+
+    /** Protobuf → OpenAPI conversions of this workspace's protobuf specs, run once per workspace. */
+    public getConvertedProtobufSpecsCached({ context }: { context: TaskContext }): Promise<ConvertedProtobufSpec[]> {
+        if (this.convertedProtobufSpecsCache == null) {
+            this.convertedProtobufSpecsCache = convertProtobufSpecs({
+                context,
+                specs: this.specs.filter((spec): spec is ProtobufSpec => spec.type === "protobuf")
+            });
+        }
+        return this.convertedProtobufSpecsCache;
     }
 
     public async getOpenAPIIr(
@@ -769,6 +801,19 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
 
     public async getSourceSpecs(): Promise<Spec[]> {
         return this.allSpecs;
+    }
+
+    /**
+     * Every source spec a generator selects, in definition order, including from-openapi protobuf specs
+     * (which `getAllSpecsForGenerator` leaves out). SDK Config generation converts and uploads them.
+     */
+    public async getSdkSourceSpecs(
+        specsOverride: generatorsYml.ApiConfigurationV2SpecsSchema | undefined
+    ): Promise<Spec[]> {
+        if (specsOverride == null) {
+            return this.sourceSpecs;
+        }
+        return this.convertSpecsOverrideToSpecs(specsOverride);
     }
 
     public async getAllSpecsForGenerator(

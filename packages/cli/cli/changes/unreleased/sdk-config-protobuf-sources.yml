@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Hosted SDK Config generation now supports protobuf sources. `from-openapi: true` protos (in
+    `generators.yml` or as `proto` sources in `sdk-config.yml`) are converted to OpenAPI and uploaded as
+    OpenAPI marked as converted from protobuf, with their overrides forwarded. A proto without a `target`
+    uploads one OpenAPI source per `.proto` file. Docs-only protos (`from-openapi: false`) are left out
+    of the SDK with a warning. `fern generate --local` still rejects SDK Config protobuf sources.
+  type: feat

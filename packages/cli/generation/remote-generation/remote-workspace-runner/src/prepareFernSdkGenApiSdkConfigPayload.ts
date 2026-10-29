@@ -92,15 +92,21 @@ function sdkConfigSourceFromArchive(archive: FernSdkGenApiSourceArchive): SdkCon
             type: entry.type,
             // SDK Config v1 requires relative paths; sdk-gen-api matches sources by type and
             // namespace, so the container path's leading slash is the only thing to drop.
-            path: entry.specPath.replace(/^\/+/, ""),
+            path: toRelativeArchivePath(entry.specPath),
             ...(entry.namespace == null ? {} : { namespace: entry.namespace }),
             ...(entry.apiImportSettings == null ? {} : { apiImportSettings: entry.apiImportSettings }),
+            // Override paths are forwarded for OpenAPI converted from protobuf; sdk-gen-api reads them from
+            // the manifest, and SDK Config v1 needs them relative too.
             ...(entry.overridePaths == null || entry.overridePaths.length === 0
                 ? {}
-                : { overrides: entry.overridePaths })
+                : { overrides: entry.overridePaths.map(toRelativeArchivePath) })
         };
     });
     return { specs };
+}
+
+function toRelativeArchivePath(containerPath: string): string {
+    return containerPath.replace(/^\/+/, "");
 }
 
 function isSdkConfigSourceType(
