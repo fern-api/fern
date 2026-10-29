@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.185.0
+  changelogEntry:
+    - summary: |
+        The CLI generator's `config.banner.file` in `generators.yml` points at a text asset (resolved relative to
+        `generators.yml`) whose contents become the generated CLI's startup banner, so logo art can live in the
+        config repo instead of inline in YAML.
+      type: feat
+  createdAt: "2026-10-29"
+  irVersion: 67
 - version: 5.184.0
   changelogEntry:
     - summary: |
