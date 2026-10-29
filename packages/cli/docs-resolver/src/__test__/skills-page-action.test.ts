@@ -27,6 +27,7 @@ function makeParsedPageActions(
             claudeCode: true,
             vscode: false,
             mcp: true,
+            mcpServerName: undefined,
             custom: [],
             skills
         }
@@ -94,5 +95,21 @@ describe("DocsDefinitionResolver page actions skills config", () => {
             options: { skills: unknown };
         };
         expect(config.options.skills).toBeUndefined();
+    });
+});
+
+describe("DocsDefinitionResolver page actions mcp server name", () => {
+    it("emits mcpServerName when configured", () => {
+        const pageActions = makeParsedPageActions(undefined);
+        pageActions.options.mcpServerName = "unleash-docs";
+        const config = convertPageActionsFor(pageActions) as { options: Record<string, unknown> };
+        expect(config.options.mcpServerName).toBe("unleash-docs");
+    });
+
+    it("omits mcpServerName when not configured", () => {
+        const config = convertPageActionsFor(makeParsedPageActions(undefined)) as {
+            options: Record<string, unknown>;
+        };
+        expect(config.options).not.toHaveProperty("mcpServerName");
     });
 });

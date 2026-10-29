@@ -3187,6 +3187,9 @@ export class DocsDefinitionResolver {
                 claudeCode: this.parsedDocsConfig.pageActions.options.claudeCode,
                 vscode: this.parsedDocsConfig.pageActions.options.vscode,
                 ...(!this.parsedDocsConfig.pageActions.options.mcp ? { mcp: false } : {}),
+                ...(this.parsedDocsConfig.pageActions.options.mcpServerName != null
+                    ? { mcpServerName: this.parsedDocsConfig.pageActions.options.mcpServerName }
+                    : {}),
                 custom: this.parsedDocsConfig.pageActions.options.custom.map((customAction) => ({
                     title: customAction.title,
                     subtitle: customAction.subtitle,
