@@ -15,6 +15,7 @@ export const AiChatConfig: core.serialization.ObjectSchema<serializers.AiChatCon
         datasources: core.serialization.list(AiChatDatasource).optional(),
         maskPii: core.serialization.property("mask-pii", core.serialization.boolean().optional()),
         disclaimer: core.serialization.string().optional(),
+        buttonText: core.serialization.property("button-text", core.serialization.string().optional()),
     });
 
 export declare namespace AiChatConfig {
@@ -25,5 +26,6 @@ export declare namespace AiChatConfig {
         datasources?: AiChatDatasource.Raw[] | null;
         "mask-pii"?: boolean | null;
         disclaimer?: string | null;
+        "button-text"?: string | null;
     }
 }
