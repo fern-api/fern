@@ -295,3 +295,23 @@ fn the_keyring_client_id_outranks_the_plaintext_one_in_show() {
         assert_eq!(shown["oauth_client_id"], "keyring-id", "{shown:#?}");
     });
 }
+
+#[test]
+#[serial]
+fn a_keyring_client_id_stored_by_an_older_binary_is_recorded_by_the_next_request() {
+    // `profiles show` no longer reads the keyring, so the client id of an
+    // entry stored without a `profiles.toml` copy comes from the provider's
+    // own read when a request authenticates.
+    with_clean_env(|| {
+        run(&["oa", "profiles", "create", "prod", "--use"]);
+        store("prod", "keyring-id", "s");
+        let before = json(&["oa", "profiles", "show", "prod", "--format", "json"]);
+        assert!(before["oauth_client_id"].is_null(), "{before:#?}");
+
+        // The token endpoint is unreachable; the keyring read comes first.
+        run(&["oa", "things", "list"]);
+
+        let shown = json(&["oa", "profiles", "show", "prod", "--format", "json"]);
+        assert_eq!(shown["oauth_client_id"], "keyring-id", "{shown:#?}");
+    });
+}

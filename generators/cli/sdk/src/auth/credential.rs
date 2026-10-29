@@ -460,7 +460,7 @@ fn read_json_field(field: &str) -> impl Fn(&str) -> Option<String> + '_ {
 
 /// Read a keyring entry and let `profiles.toml` copy its public identifiers,
 /// so `profiles list` / `show` / `current` never have to read it themselves.
-fn read_keyring(service: &str, account: &str) -> Result<Option<String>, CliError> {
+pub(crate) fn read_keyring(service: &str, account: &str) -> Result<Option<String>, CliError> {
     let store = active_store();
     let value = store.get(service, account)?;
     if store.answers_from_storage(account) {
