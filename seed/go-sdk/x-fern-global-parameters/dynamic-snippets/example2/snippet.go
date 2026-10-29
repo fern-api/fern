@@ -8,7 +8,7 @@ import (
     option "github.com/x-fern-global-parameters/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -18,8 +18,12 @@ func do() {
         RegionID: "regionId",
         ProductID: "productId",
     }
-    client.Products.Get(
+    _, err := client.Products.Get(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

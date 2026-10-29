@@ -38,7 +38,7 @@ import (
     option "github.com/go-undiscriminated-union-wire-tests/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithToken(
             "<token>",
@@ -59,10 +59,14 @@ func do() {
         },
         Query: "What is the capital of the United States?",
     }
-    client.Service.Rerank(
+    _, err := client.Service.Rerank(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

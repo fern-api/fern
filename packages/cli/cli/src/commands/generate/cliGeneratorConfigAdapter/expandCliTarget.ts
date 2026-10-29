@@ -1,6 +1,7 @@
-import { errorMessageOrString } from "@fern-api/core-utils";
+import { errorMessageOrString, isRecord } from "@fern-api/core-utils";
 import { parseSdkConfigIrV1, type SdkConfigIrV1 } from "@postman/sdk-config";
 import { type SdkConfigV1, splitSdkConfigV1TargetGeneration } from "@postman/sdk-config/sdk-config/v1";
+import { isProtobufSource } from "../sdkConfigProtobufSources.js";
 import type { CliTargetDiagnostic } from "./types.js";
 
 const LANGUAGE = "cli";
@@ -40,6 +41,24 @@ export function expandCliTarget(
         );
     }
 
+    const protobufDiagnostics = config.source.specs.flatMap((spec, index) =>
+        isProtobufSource(spec)
+            ? [
+                  {
+                      severity: "error" as const,
+                      path: `source.specs[${index}]`,
+                      code: "CLI_TARGET_PROTOBUF_SOURCE",
+                      message: `Source '${spec.id}' is a protobuf source, which the cli target does not support yet.`,
+                      action: "Generate the cli target from an OpenAPI source."
+                  }
+              ]
+            : []
+    );
+    if (protobufDiagnostics.length > 0) {
+        return { ir: undefined, diagnostics: protobufDiagnostics };
+    }
+    const sourceSpecs = config.source.specs.filter((spec): spec is SourceSpec => !isProtobufSource(spec));
+
     const split = splitSdkConfigV1TargetGeneration(target.generation);
     const generation = {
         ...mergeObjects(config.generation, split.common),
@@ -57,7 +76,7 @@ export function expandCliTarget(
         schemaVersion: "sdk-config-ir/v1",
         source: {
             // Local paths stay paths: the translation reads the files from disk.
-            specs: config.source.specs.map((spec) => ({
+            specs: sourceSpecs.map((spec) => ({
                 specType: spec.type,
                 specUrl: specLocation(spec),
                 ...(spec.id != null ? { id: spec.id } : {}),
@@ -98,7 +117,7 @@ export function expandCliTarget(
     }
 }
 
-type SourceSpec = SdkConfigV1["source"]["specs"][number];
+type SourceSpec = Exclude<SdkConfigV1["source"]["specs"][number], { proto: unknown }>;
 type Output = NonNullable<SdkConfigV1["targets"][number]["output"]>;
 
 const ENV_REFERENCE = /^\$\{(\w+)\}$/;
@@ -157,8 +176,4 @@ function mergeObjects(base: object, override: object | undefined): Record<string
         merged[key] = isRecord(inherited) && isRecord(value) ? mergeObjects(inherited, value) : value;
     }
     return merged;
-}
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-    return value !== null && typeof value === "object" && !Array.isArray(value);
 }

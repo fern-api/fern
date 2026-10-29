@@ -18,7 +18,9 @@ export {
     assertVoidNoThrow
 } from "./assert.js";
 export { asyncPool } from "./asyncPool.js";
+export { capitalizeFirstLetter } from "./capitalizeFirstLetter.js";
 export { convertNumberToSnakeCase } from "./convertNumberToSnakeCase.js";
+export { decodeJsonPointerSegment } from "./decodeJsonPointerSegment.js";
 export { delay } from "./delay/delay.js";
 export { withMinimumTime } from "./delay/withMinimumTime.js";
 export { EMPTY_ARRAY, EMPTY_OBJECT } from "./empty.js";
@@ -35,6 +37,7 @@ export { isHttpUrl } from "./isHttpUrl.js";
 export { isNonNullish } from "./isNonNullish.js";
 export { MediaType } from "./mediaType.js";
 export { mergeWithOverrides } from "./mergeWithOverrides.js";
+export { nonEmpty } from "./nonEmpty.js";
 export { noop } from "./noop.js";
 export {
     haveSameNullishness,
@@ -46,6 +49,7 @@ export {
 export { type ObjectPropertiesVisitor, visitObject, visitObjectAsync } from "./ObjectPropertiesVisitor.js";
 export { type Entries, entries } from "./objects/entries.js";
 export { isPlainObject } from "./objects/isPlainObject.js";
+export { isRecord } from "./objects/isRecord.js";
 export { keys } from "./objects/keys.js";
 export { mapValues } from "./objects/mapValues.js";
 export { type Values, values } from "./objects/values.js";
@@ -56,9 +60,11 @@ export { replaceEnvVariables } from "./replaceEnvVars.js";
 export { SymbolRegistry, type SymbolRegistryOptions } from "./SymbolRegistry.js";
 export { sanitizeChangelogEntry } from "./sanitizeChangelogEntry.js";
 export { SKIP_MARKER, sanitizeNullValues } from "./sanitizeNullValues.js";
+export { sanitizePreviewId } from "./sanitizePreviewId.js";
 export { diffSemverOrThrow, parseSemverOrThrow } from "./semverUtils.js";
 export { type SetRequired } from "./setRequired.js";
 export { stripLeadingSlash } from "./stripLeadingSlash.js";
+export { stripTrailingSlashes } from "./stripTrailingSlashes.js";
 export { titleCase } from "./titleCase.js";
 export { tokenizeOperationId } from "./tokenizeOperationId.js";
 export type { ContainerRunner, Digit, Letter, LowercaseLetter, UppercaseLetter } from "./types.js";

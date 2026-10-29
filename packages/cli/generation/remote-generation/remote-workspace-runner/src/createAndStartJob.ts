@@ -1,5 +1,5 @@
 import { stripCliConfigKeys } from "@fern-api/api-workspace-commons";
-import { FernToken } from "@fern-api/auth";
+import { describeGuestRejection, FernToken, isGuestRejection, readGuestRejection } from "@fern-api/auth";
 import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { createFiddleService, getFiddleOrigin } from "@fern-api/core";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
@@ -157,6 +157,8 @@ async function createJob({
     fiddlePreview,
     pushPreviewBranch,
     fernignoreContents,
+    automationMode,
+    autoMerge,
     skipIfNoDiff,
     verify,
     loginCommand
@@ -219,13 +221,12 @@ async function createJob({
         pushPreviewBranch,
         fernignoreContents,
         skipIfNoDiff,
-        verify
-        // TODO(FER-9671): Pass remaining automation flags to Fiddle once its API is updated:
-        //   automationMode,
-        //   autoMerge,
-        //   runId: process.env.FERN_RUN_ID
-        // Fiddle will use these for separate PRs, automerge, run_id correlation,
-        // and breaking change handling. (skipIfNoDiff is forwarded above — see fern-api/fiddle#708.)
+        verify,
+        automationMode,
+        // `--auto-merge` or `github.auto-merge: true` in generators.yml. Fiddle forwards this to
+        // generator-cli's GithubStep, which enables GitHub auto-merge on the PR it opens.
+        autoMerge: autoMerge === true || generatorsYml.isGithubAutoMergeEnabled(generatorInvocation.raw?.github),
+        runId: process.env.FERN_RUN_ID
     };
     const createResponse = await remoteGenerationService.remoteGen.createJobV3(createJobRequest);
 
@@ -295,6 +296,13 @@ async function createJob({
                 );
             },
             insufficientPermissions: () => {
+                if (token.type === "guest") {
+                    return context.failAndThrow(
+                        describeGuestRejection({ statusCode: 403, code: undefined, message: undefined }),
+                        undefined,
+                        { code: CliError.Code.AuthError }
+                    );
+                }
                 return context.failAndThrow(
                     `You do not have permission to run this generator for organization '${organization}'. Please run '${loginCommand}' to ensure you are logged in with the correct account.\n\n` +
                         "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not.",
@@ -323,6 +331,14 @@ async function createJob({
             },
             _other: (content) => {
                 context.logger.debug(`Failed to create job: ${JSON.stringify(content)}`);
+                if (token.type === "guest") {
+                    const rejection = readGuestRejection(content);
+                    if (isGuestRejection(rejection)) {
+                        return context.failAndThrow(describeGuestRejection(rejection), undefined, {
+                            code: CliError.Code.AuthError
+                        });
+                    }
+                }
                 // Try to extract a descriptive error message from the response body
                 const errorMessage = extractErrorMessage(content);
                 if (errorMessage != null) {

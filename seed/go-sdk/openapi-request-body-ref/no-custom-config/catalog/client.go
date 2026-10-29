@@ -44,7 +44,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	        CatalogObjectID: "catalog_object_id",
 //	    },
 //	}
-//	client.Catalog.CreateCatalogImage(
+//	_, err := client.Catalog.CreateCatalogImage(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -69,7 +69,7 @@ func (c *Client) CreateCatalogImage(
 //	request := &fern.GetCatalogImageRequest{
 //	    ImageID: "image_id",
 //	}
-//	client.Catalog.GetCatalogImage(
+//	_, err := client.Catalog.GetCatalogImage(
 //	    context.TODO(),
 //	    request,
 //	)

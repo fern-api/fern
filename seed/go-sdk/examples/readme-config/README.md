@@ -61,7 +61,7 @@ import (
     uuid "github.com/google/uuid"
 )
 
-func do() {
+func do() error {
     client := client.New(
         option.WithToken(
             "<token>",
@@ -286,10 +286,14 @@ func do() {
             ),
         },
     }
-    client.Service.CreateBigEntity(
+    _, err := client.Service.CreateBigEntity(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

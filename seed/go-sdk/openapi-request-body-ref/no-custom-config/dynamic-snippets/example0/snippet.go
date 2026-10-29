@@ -8,7 +8,7 @@ import (
     option "github.com/openapi-request-body-ref/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -20,8 +20,12 @@ func do() {
             Name: "name",
         },
     }
-    client.Vendor.UpdateVendor(
+    _, err := client.Vendor.UpdateVendor(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

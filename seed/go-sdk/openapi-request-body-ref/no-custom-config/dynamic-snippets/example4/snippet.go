@@ -9,7 +9,7 @@ import (
     option "github.com/openapi-request-body-ref/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -23,8 +23,12 @@ func do() {
             CatalogObjectID: "catalog_object_id",
         },
     }
-    client.Catalog.CreateCatalogImage(
+    _, err := client.Catalog.CreateCatalogImage(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

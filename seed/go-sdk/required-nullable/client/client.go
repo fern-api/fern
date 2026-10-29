@@ -43,7 +43,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 //	        "required_nullable_baz",
 //	    ),
 //	}
-//	client.GetFoo(
+//	_, err := client.GetFoo(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -80,7 +80,7 @@ func (c *Client) GetFoo(
 //	        "required_nullable_text",
 //	    ),
 //	}
-//	client.UpdateFoo(
+//	_, err := client.UpdateFoo(
 //	    context.TODO(),
 //	    "id",
 //	    request,

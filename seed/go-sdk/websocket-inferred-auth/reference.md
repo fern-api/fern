@@ -21,7 +21,7 @@ request := &fern.GetTokenRequest{
         "scope",
     ),
 }
-client.Auth.GetTokenWithClientCredentials(
+_, err := client.Auth.GetTokenWithClientCredentials(
     context.TODO(),
     request,
 )
@@ -113,7 +113,7 @@ request := &fern.RefreshTokenRequest{
         "scope",
     ),
 }
-client.Auth.RefreshToken(
+_, err := client.Auth.RefreshToken(
     context.TODO(),
     request,
 )

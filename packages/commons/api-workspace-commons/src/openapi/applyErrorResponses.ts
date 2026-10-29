@@ -1,4 +1,5 @@
 import { generatorsYml } from "@fern-api/configuration";
+import { isRecord } from "@fern-api/core-utils";
 import { DEFAULT_ERROR_RESPONSE_TYPE_NAME, getErrorResponsesSchemaName } from "@fern-api/openapi-ir-parser";
 import { cloneDeep, isEqual } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
@@ -336,10 +337,6 @@ function collectNonLocalRefs(value: unknown, found: string[] = []): string[] {
         }
     }
     return found;
-}
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-    return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
 /**

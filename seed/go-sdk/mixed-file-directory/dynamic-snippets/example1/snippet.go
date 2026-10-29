@@ -8,7 +8,7 @@ import (
     option "github.com/mixed-file-directory/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -19,8 +19,12 @@ func do() {
             1,
         ),
     }
-    client.User.List(
+    _, err := client.User.List(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

@@ -36,7 +36,7 @@ func NewClient(options *core.RequestOptions) *Client {
 
 // Example:
 //
-//	client.Union.Get(
+//	_, err := client.Union.Get(
 //	    context.TODO(),
 //	    "id",
 //	)
@@ -64,7 +64,7 @@ func (c *Client) Get(
 //	    },
 //	    ID: "id",
 //	}
-//	client.Union.Update(
+//	_, err := client.Union.Update(
 //	    context.TODO(),
 //	    request,
 //	)

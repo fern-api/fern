@@ -42,7 +42,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	        Email: "contact@acme.com",
 //	    },
 //	}
-//	client.Clients.Create(
+//	_, err := client.Clients.Create(
 //	    context.TODO(),
 //	    request,
 //	)

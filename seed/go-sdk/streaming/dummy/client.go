@@ -40,7 +40,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	request := &stream.GenerateStreamRequest{
 //	    NumEvents: 1,
 //	}
-//	client.Dummy.GenerateStream(
+//	_, err := client.Dummy.GenerateStream(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -84,7 +84,7 @@ func (c *Client) GenerateStream(
 //	request := &stream.Generateequest{
 //	    NumEvents: 5,
 //	}
-//	client.Dummy.Generate(
+//	_, err := client.Dummy.Generate(
 //	    context.TODO(),
 //	    request,
 //	)

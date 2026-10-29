@@ -53,7 +53,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	    },
 //	    Query: "What is the capital of the United States?",
 //	}
-//	client.Service.Rerank(
+//	_, err := client.Service.Rerank(
 //	    context.TODO(),
 //	    request,
 //	)

@@ -1,5 +1,6 @@
 import { applyErrorResponses, type OpenAPISettings } from "@fern-api/api-workspace-commons";
 import { generatorsYml } from "@fern-api/configuration";
+import { isRecord } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { CliError } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
@@ -39,15 +40,11 @@ export async function applyErrorResponsesSettings({
 async function loadErrorSchemaFile(absoluteFilePath: AbsoluteFilePath): Promise<Record<string, unknown>> {
     const contents = (await readFile(absoluteFilePath)).toString();
     const parsed: unknown = yaml.load(contents);
-    if (!isMapping(parsed)) {
+    if (!isRecord(parsed)) {
         throw new CliError({
             message: `Expected ${absoluteFilePath} to contain an OpenAPI schema object.`,
             code: CliError.Code.ConfigError
         });
     }
     return parsed;
-}
-
-function isMapping(value: unknown): value is Record<string, unknown> {
-    return typeof value === "object" && value != null && !Array.isArray(value);
 }

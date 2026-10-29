@@ -42,7 +42,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	    Title: "title",
 //	    Rating: 1.1,
 //	}
-//	client.Imdb.CreateMovie(
+//	_, err := client.Imdb.CreateMovie(
 //	    context.TODO(),
 //	    request,
 //	)

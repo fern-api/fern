@@ -37,11 +37,6 @@ require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/connection_error"
-require_relative "seed/calls/types/call"
-require_relative "seed/calls/types/call_error"
-require_relative "seed/messages/types/message"
-require_relative "seed/types/service_error_response_errors_item"
-require_relative "seed/types/service_error_response"
 require_relative "seed/client"
 require_relative "seed/calls/client"
 require_relative "seed/calls/calls/client"
@@ -49,3 +44,23 @@ require_relative "seed/messages/client"
 require_relative "seed/messages/messages/client"
 require_relative "seed/messages/messages/types/delete_message_request"
 require_relative "seed/environment"
+
+module Seed
+  module Calls
+    module Types
+      autoload :Call, ::File.join(__dir__, "seed/calls/types/call")
+      autoload :CallError, ::File.join(__dir__, "seed/calls/types/call_error")
+    end
+  end
+
+  module Messages
+    module Types
+      autoload :Message, ::File.join(__dir__, "seed/messages/types/message")
+    end
+  end
+
+  module Types
+    autoload :ServiceErrorResponseErrorsItem, ::File.join(__dir__, "seed/types/service_error_response_errors_item")
+    autoload :ServiceErrorResponse, ::File.join(__dir__, "seed/types/service_error_response")
+  end
+end

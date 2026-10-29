@@ -1,7 +1,7 @@
 import { OpenAPISettings } from "@fern-api/api-workspace-commons";
 import { CasingsGenerator, constructCasingsGenerator } from "@fern-api/casings-generator";
 import { generatorsYml } from "@fern-api/configuration";
-import { isHttpUrl } from "@fern-api/core-utils";
+import { capitalizeFirstLetter, decodeJsonPointerSegment, isHttpUrl, isRecord } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import {
     Availability,
@@ -111,7 +111,17 @@ export abstract class AbstractConverterContext<Spec extends object> {
      * @returns A string suitable for use as a schema name or type id
      */
     public convertBreadcrumbsToName(breadcrumbs: string[]): string {
+        const propertyNameIndices = AbstractConverterContext.getPropertyNameIndices(breadcrumbs);
+
         const filteredBreadcrumbs = breadcrumbs.filter((crumb, index) => {
+            // A property's own name is user-defined, so it is kept verbatim even when it
+            // collides with a crumb we would otherwise drop. Without this, a property named
+            // `properties` gets the same name -- and therefore the same type id -- as the
+            // object declaring it, producing a self-referential type.
+            if (propertyNameIndices.has(index)) {
+                return true;
+            }
+
             // Ignore numeric indices
             if (/^\d+$/.test(crumb)) {
                 return false;
@@ -157,7 +167,24 @@ export abstract class AbstractConverterContext<Spec extends object> {
         });
 
         const camelCased = camelCase(filteredBreadcrumbs.join("_"));
-        return camelCased.charAt(0).toUpperCase() + camelCased.slice(1);
+        return capitalizeFirstLetter(camelCased);
+    }
+
+    /**
+     * Returns the indices of breadcrumbs that hold a user-defined property name, i.e. the crumb
+     * immediately following a structural `properties` crumb.
+     */
+    private static getPropertyNameIndices(breadcrumbs: string[]): Set<number> {
+        const propertyNameIndices = new Set<number>();
+        for (const [index, crumb] of breadcrumbs.entries()) {
+            // Skipping crumbs already claimed as a property name is what keeps the alternation
+            // right across a consecutive run: in ["properties", "properties", "properties", "foo"]
+            // the second crumb is a name, so only the third introduces `foo`.
+            if (crumb === "properties" && !propertyNameIndices.has(index) && index + 1 < breadcrumbs.length) {
+                propertyNameIndices.add(index + 1);
+            }
+        }
+        return propertyNameIndices;
     }
 
     /**
@@ -389,7 +416,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
                 const refPath = refValue
                     .substring(2) // Remove leading "#/"
                     .split("/")
-                    .map((seg) => seg.replace(/~1/g, "/").replace(/~0/g, "~"));
+                    .map(decodeJsonPointerSegment);
 
                 for (const segment of refPath) {
                     if (typeof tempRef !== "object" || tempRef === null) {
@@ -930,7 +957,7 @@ export abstract class AbstractConverterContext<Spec extends object> {
     }
 
     public getAsObject(value: unknown): Record<string, unknown> | undefined {
-        if (typeof value === "object" && value !== null && !Array.isArray(value)) {
+        if (isRecord(value)) {
             return value as Record<string, unknown>;
         }
         return undefined;

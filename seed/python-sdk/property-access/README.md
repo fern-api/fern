@@ -61,7 +61,7 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from seed import AsyncSeedPropertyAccess
+from seed import AsyncSeedPropertyAccess, UserProfile, UserProfileVerification
 
 client = AsyncSeedPropertyAccess(
     base_url="https://yourhost.com/path/to/api",

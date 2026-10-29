@@ -39,7 +39,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	request := &undiscriminated.MyUnion{
 //	    String: "string",
 //	}
-//	client.Union.Get(
+//	_, err := client.Union.Get(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -61,7 +61,7 @@ func (c *Client) Get(
 
 // Example:
 //
-//	client.Union.GetMetadata(
+//	_, err := client.Union.GetMetadata(
 //	    context.TODO(),
 //	)
 func (c *Client) GetMetadata(
@@ -87,7 +87,7 @@ func (c *Client) GetMetadata(
 //	        },
 //	    },
 //	}
-//	client.Union.UpdateMetadata(
+//	_, err := client.Union.UpdateMetadata(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -118,7 +118,7 @@ func (c *Client) UpdateMetadata(
 //	        },
 //	    },
 //	}
-//	client.Union.Call(
+//	_, err := client.Union.Call(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -143,7 +143,7 @@ func (c *Client) Call(
 //	request := &undiscriminated.UnionWithDuplicateTypes{
 //	    String: "string",
 //	}
-//	client.Union.DuplicateTypesUnion(
+//	_, err := client.Union.DuplicateTypesUnion(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -168,7 +168,7 @@ func (c *Client) DuplicateTypesUnion(
 //	request := &undiscriminated.NestedUnionRoot{
 //	    String: "string",
 //	}
-//	client.Union.NestedUnions(
+//	_, err := client.Union.NestedUnions(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -193,7 +193,7 @@ func (c *Client) NestedUnions(
 //	request := &undiscriminated.OuterNestedUnion{
 //	    String: "string",
 //	}
-//	client.Union.NestedObjectUnions(
+//	_, err := client.Union.NestedObjectUnions(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -221,7 +221,7 @@ func (c *Client) NestedObjectUnions(
 //	        SharedNumber: 1,
 //	    },
 //	}
-//	client.Union.AliasedObjectUnion(
+//	_, err := client.Union.AliasedObjectUnion(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -253,7 +253,7 @@ func (c *Client) AliasedObjectUnion(
 //	        },
 //	    },
 //	}
-//	client.Union.GetWithBaseProperties(
+//	_, err := client.Union.GetWithBaseProperties(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -283,7 +283,7 @@ func (c *Client) GetWithBaseProperties(
 //	        },
 //	    },
 //	}
-//	client.Union.TestCamelCaseProperties(
+//	_, err := client.Union.TestCamelCaseProperties(
 //	    context.TODO(),
 //	    request,
 //	)

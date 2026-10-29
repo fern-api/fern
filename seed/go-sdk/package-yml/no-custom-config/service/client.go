@@ -35,7 +35,7 @@ func NewClient(options *core.RequestOptions) *Client {
 
 // Example:
 //
-//	client.Service.Nop(
+//	err := client.Service.Nop(
 //	    context.TODO(),
 //	    "id-a2ijs82",
 //	    "id-219xca8",

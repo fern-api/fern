@@ -40,7 +40,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 //	request := &fern.RefundBody{
 //	    ID: "refund-id",
 //	}
-//	client.Refund(
+//	err := client.Refund(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -70,7 +70,7 @@ func (c *Client) Refund(
 //	        ),
 //	    },
 //	}
-//	client.RequiredRefund(
+//	err := client.RequiredRefund(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -93,7 +93,7 @@ func (c *Client) RequiredRefund(
 // Example:
 //
 //	request := &fern.RefundRequest{}
-//	client.BulkRefund(
+//	err := client.BulkRefund(
 //	    context.TODO(),
 //	    request,
 //	)

@@ -7,13 +7,17 @@ import (
     option "github.com/no-retries/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
         ),
     )
-    client.Retries.GetUsers(
+    _, err := client.Retries.GetUsers(
         context.TODO(),
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

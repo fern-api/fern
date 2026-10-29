@@ -1,0 +1,16 @@
+- summary: |
+    C/C++ library docs: backslashes in generated `description:` frontmatter are now YAML-escaped
+    (a `\M` in a Doxygen comment no longer breaks the page or the site), and `fern docs md check`
+    fails on pages whose frontmatter does not parse instead of silently dropping it.
+  type: fix
+- summary: |
+    C/C++ library docs: when two symbols sanitize to the same filename or URL (`s_dup` vs `__s_dup`,
+    `S_CASE` vs `s_case`), the public name now always gets the plain URL and `_`-prefixed names
+    get the `-2` suffix, independent of source order. New opt-in `config.slug-style: hyphenated`
+    on `lang: cpp` libraries keeps word boundaries in URLs (`/functions/doca-pcc-dev-get-port-counter-id`).
+  type: feat
+- summary: |
+    `fern docs md generate --keep-logs` writes each library parser's logs to
+    `<fern folder>/.fern/library-docs-logs/<library>.log` instead of a temporary file that is
+    removed when the command exits.
+  type: feat

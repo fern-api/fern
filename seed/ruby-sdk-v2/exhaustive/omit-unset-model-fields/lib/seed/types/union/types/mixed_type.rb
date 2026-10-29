@@ -1,0 +1,23 @@
+# frozen_string_literal: true
+
+require_relative "../../../../seed"
+
+module Seed
+  module Types
+    module Union
+      module Types
+        class MixedType < Internal::Types::Model
+          extend Seed::Internal::Types::Union
+
+          member -> { Float }
+
+          member -> { Internal::Types::Boolean }
+
+          member -> { String }
+
+          member -> { Internal::Types::Array[String] }
+        end
+      end
+    end
+  end
+end

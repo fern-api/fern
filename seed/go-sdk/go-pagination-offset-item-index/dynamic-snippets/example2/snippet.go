@@ -8,7 +8,7 @@ import (
     option "github.com/go-pagination-offset-item-index/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -22,8 +22,12 @@ func do() {
             1,
         ),
     }
-    client.Plants.ListWithBodyOffset(
+    _, err := client.Plants.ListWithBodyOffset(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

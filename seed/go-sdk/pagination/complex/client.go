@@ -55,7 +55,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	        },
 //	    },
 //	}
-//	client.Complex.Search(
+//	_, err := client.Complex.Search(
 //	    context.TODO(),
 //	    "index",
 //	    request,

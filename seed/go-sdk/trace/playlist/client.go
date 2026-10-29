@@ -55,7 +55,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	        },
 //	    },
 //	}
-//	client.Playlist.CreatePlaylist(
+//	_, err := client.Playlist.CreatePlaylist(
 //	    context.TODO(),
 //	    1,
 //	    request,
@@ -97,7 +97,7 @@ func (c *Client) CreatePlaylist(
 //	        "multipleField",
 //	    },
 //	}
-//	client.Playlist.GetPlaylists(
+//	_, err := client.Playlist.GetPlaylists(
 //	    context.TODO(),
 //	    1,
 //	    request,
@@ -124,7 +124,7 @@ func (c *Client) GetPlaylists(
 //
 // Example:
 //
-//	client.Playlist.GetPlaylist(
+//	_, err := client.Playlist.GetPlaylist(
 //	    context.TODO(),
 //	    1,
 //	    "playlistId",
@@ -158,7 +158,7 @@ func (c *Client) GetPlaylist(
 //	        "problems",
 //	    },
 //	}
-//	client.Playlist.UpdatePlaylist(
+//	_, err := client.Playlist.UpdatePlaylist(
 //	    context.TODO(),
 //	    1,
 //	    "playlistId",
@@ -188,7 +188,7 @@ func (c *Client) UpdatePlaylist(
 //
 // Example:
 //
-//	client.Playlist.DeletePlaylist(
+//	err := client.Playlist.DeletePlaylist(
 //	    context.TODO(),
 //	    1,
 //	    "playlist_id",

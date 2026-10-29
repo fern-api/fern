@@ -1,0 +1,8 @@
+language js
+
+or {
+    `$value.split(path.sep).join("/")`,
+    `$value.split(sep).join("/")`
+} as $convert where {
+    register_diagnostic(span=$convert, message="Use `toPosixPath` from `@fern-api/fs-utils` instead of splitting on `path.sep` by hand.", severity="error")
+}

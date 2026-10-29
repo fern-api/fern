@@ -13,7 +13,7 @@
 <dd>
 
 ```go
-client.Status.GetStatus(
+_, err := client.Status.GetStatus(
     context.TODO(),
 )
 ```

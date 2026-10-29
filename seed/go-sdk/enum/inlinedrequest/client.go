@@ -42,7 +42,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	        Color: fern.ColorRed,
 //	    },
 //	}
-//	client.InlinedRequest.Send(
+//	err := client.InlinedRequest.Send(
 //	    context.TODO(),
 //	    request,
 //	)

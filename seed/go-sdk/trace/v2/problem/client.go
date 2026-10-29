@@ -40,7 +40,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //
 // Example:
 //
-//	client.V2.Problem.GetLightweightProblems(
+//	_, err := client.V2.Problem.GetLightweightProblems(
 //	    context.TODO(),
 //	)
 func (c *Client) GetLightweightProblems(
@@ -61,7 +61,7 @@ func (c *Client) GetLightweightProblems(
 //
 // Example:
 //
-//	client.V2.Problem.GetProblems(
+//	_, err := client.V2.Problem.GetProblems(
 //	    context.TODO(),
 //	)
 func (c *Client) GetProblems(
@@ -82,7 +82,7 @@ func (c *Client) GetProblems(
 //
 // Example:
 //
-//	client.V2.Problem.GetLatestProblem(
+//	_, err := client.V2.Problem.GetLatestProblem(
 //	    context.TODO(),
 //	    "problemId",
 //	)
@@ -106,7 +106,7 @@ func (c *Client) GetLatestProblem(
 //
 // Example:
 //
-//	client.V2.Problem.GetProblemVersion(
+//	_, err := client.V2.Problem.GetProblemVersion(
 //	    context.TODO(),
 //	    "problemId",
 //	    1,

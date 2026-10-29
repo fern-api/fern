@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Large untabbed docs sites with very big API reference layouts (tens of thousands of endpoints) no longer fail
+    `fern check` / `fern generate --docs` with "Maximum call stack size exceeded". The docs.yml parser is now
+    generated with TypeScript SDK generator 3.108.3, which collects validation errors without spreading them.
+  type: fix

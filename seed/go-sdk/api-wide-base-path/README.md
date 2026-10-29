@@ -36,15 +36,19 @@ import (
     client "github.com/api-wide-base-path/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
-    client.Service.Post(
+    err := client.Service.Post(
         context.TODO(),
         "pathParam",
         "serviceParam",
         1,
         "resourceParam",
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

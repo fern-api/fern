@@ -1,3 +1,4 @@
+import { isRecord } from "@fern-api/core-utils";
 import { FdrAPI as CjsFdrSdk, DocsV1Write } from "@fern-api/fdr-sdk";
 import {
     AbsoluteFilePath,
@@ -941,12 +942,7 @@ function findBalancedBraceEnd(content: string, start: number, limit: number): nu
 }
 
 function isStringRecord(value: unknown): value is Record<string, string> {
-    return (
-        typeof value === "object" &&
-        value != null &&
-        !Array.isArray(value) &&
-        Object.values(value).every((v) => typeof v === "string")
-    );
+    return isRecord(value) && Object.values(value).every((v) => typeof v === "string");
 }
 
 /**

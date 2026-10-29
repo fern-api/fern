@@ -35,7 +35,7 @@ func NewClient(options *core.RequestOptions) *Client {
 
 // Example:
 //
-//	client.Service.Endpoint(
+//	err := client.Service.Endpoint(
 //	    context.TODO(),
 //	)
 func (c *Client) Endpoint(

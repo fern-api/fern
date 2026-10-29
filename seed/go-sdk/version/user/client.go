@@ -36,7 +36,7 @@ func NewClient(options *core.RequestOptions) *Client {
 
 // Example:
 //
-//	client.User.GetUser(
+//	_, err := client.User.GetUser(
 //	    context.TODO(),
 //	    "userId",
 //	)
