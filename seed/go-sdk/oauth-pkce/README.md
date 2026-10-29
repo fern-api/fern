@@ -37,7 +37,7 @@ import (
     client "github.com/oauth-pkce/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &fern.AuthorizeRequest{
         ClientID: "client_abc123",
@@ -53,10 +53,14 @@ func do() {
             "xyz",
         ),
     }
-    client.Oauth.Authorize(
+    _, err := client.Oauth.Authorize(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

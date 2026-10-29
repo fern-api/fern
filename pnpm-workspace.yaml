@@ -68,7 +68,7 @@ catalog:
   "@fern-api/fdr-sdk": 1.2.172-ef737b9982
   "@fern-api/generator-cli": 0.10.3
   "@fern-api/ui-core-utils": 0.129.4-b6c699ad2
-  "@fern-api/venus-api-sdk": 5.0.0
+  "@fern-api/venus-api-sdk": 12.0.0
   "@fern-fern/docs-config": 0.0.80
   "@fern-fern/fdr-test-sdk": ^0.0.5297
   "@fern-fern/fiddle-sdk": 1.2.0
@@ -92,7 +92,7 @@ catalog:
   "@inquirer/prompts": ^7.1.0
   "@octokit/rest": ^22.0.1
   "@open-rpc/meta-schema": ^1.14.9
-  "@postman/sdk-config": 0.16.0
+  "@postman/sdk-config": 0.17.0
   "@redocly/openapi-core": ^1.4.1
   "@rolldown/binding-darwin-arm64": 1.1.3
   "@sentry/cli": ^2.42.2

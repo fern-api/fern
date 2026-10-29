@@ -43,7 +43,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	        "read:users",
 //	    ),
 //	}
-//	client.Auth.GetTokenWithClientCredentials(
+//	_, err := client.Auth.GetTokenWithClientCredentials(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -73,7 +73,7 @@ func (c *Client) GetTokenWithClientCredentials(
 //	        "read:users",
 //	    ),
 //	}
-//	client.Auth.RefreshToken(
+//	_, err := client.Auth.RefreshToken(
 //	    context.TODO(),
 //	    request,
 //	)

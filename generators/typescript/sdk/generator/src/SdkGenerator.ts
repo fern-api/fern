@@ -173,6 +173,7 @@ export declare namespace SdkGenerator {
         flattenRequestParameters: boolean;
         respectOptionalRequestBody: boolean;
         deepObjectMapQueryParameters: boolean;
+        includeMultipartPartContentType: boolean;
         exportAllRequestsAtRoot: boolean;
         testFramework: "jest" | "vitest";
         consolidateTypeFiles: boolean;
@@ -2258,6 +2259,7 @@ export class SdkGenerator {
                 flattenRequestParameters: this.config.flattenRequestParameters,
                 respectOptionalRequestBody: this.config.respectOptionalRequestBody,
                 deepObjectMapQueryParameters: this.config.deepObjectMapQueryParameters,
+                includeMultipartPartContentType: this.config.includeMultipartPartContentType,
                 parameterNaming: this.config.parameterNaming,
                 resolveQueryParameterNameConflicts: this.config.resolveQueryParameterNameConflicts
             } satisfies Omit<FileContextImpl.Init, "sourceFile" | "importsManager" | "isForSnippet">;

@@ -36,7 +36,7 @@ func NewClient(options *core.RequestOptions) *Client {
 
 // Example:
 //
-//	client.Path.Send(
+//	_, err := client.Path.Send(
 //	    context.TODO(),
 //	    "123",
 //	)

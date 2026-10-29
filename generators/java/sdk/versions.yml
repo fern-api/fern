@@ -1,4 +1,82 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.37.2
+  changelogEntry:
+    - summary: |
+        Build `core/ObjectMappers.JSON_MAPPER` with `new ObjectMapper().registerModule(...)` instead of
+        `JsonMapper.builder()`, so generated SDKs run on Jackson 2.9.x (`JsonMapper` was the only
+        Jackson 2.10+ symbol in the generated code and failed with `NoClassDefFoundError` at runtime).
+        `ObjectMappers.stringify()` no longer mutates the shared mapper via
+        `setSerializationInclusion(ALWAYS)` (a no-op: `ALWAYS` is Jackson's default and generated
+        models declare `@JsonInclude(NON_ABSENT)` at class level), and `parseErrorBody()` catches
+        `IOException` (the supertype `readValue` declares on 2.9) instead of `JsonProcessingException`.
+        Mapper configuration and serialized output are unchanged.
+      type: fix
+  createdAt: "2026-10-28"
+  irVersion: 67
+- version: 4.37.1
+  changelogEntry:
+    - summary: |
+        Re-publish the Java SDK generator: the 4.36.0 (`retryOnStatusCodes`) and 4.37.0 (`retryDelays`) images were never
+        pushed because the publish workflow broke on the new `ubuntu-latest` runner image (JDK 25); this release carries both
+        features with no further code changes.
+      type: chore
+  createdAt: "2026-10-28"
+  irVersion: 67
+- version: 4.37.0
+  changelogEntry:
+    - summary: |
+        Add `retryDelays(List<Duration>)` to `ClientOptions.Builder` and the generated root client builders (sync, async
+        and multi-auth stages) for an explicit retry schedule: the n-th retry waits for the n-th duration and the request
+        stops retrying once the list is exhausted, so the list size replaces `maxRetries` and the exponential backoff
+        settings. Delays are used as-is (no jitter); `Retry-After` / `X-RateLimit-Reset` headers still take precedence
+        for that attempt. Default behaviour is unchanged.
+      type: feat
+  createdAt: "2026-10-28"
+  irVersion: 67
+- version: 4.36.0
+  changelogEntry:
+    - summary: |
+        Add `retryOnStatusCodes(Set<Integer>)` to `ClientOptions.Builder` and the generated root client builders
+        (sync, async and multi-auth stages). It replaces the default set of HTTP status codes that trigger an automatic
+        retry (408, 429 and 5xx), so a consumer can retry only `429`, or `429` and `503`, and have other 5xx responses
+        returned as-is. The default is unchanged; `maxRetries`, the backoff settings and Retry-After handling are
+        unaffected.
+      type: feat
+  createdAt: "2026-10-28"
+  irVersion: 67
+- version: 4.35.1
+  changelogEntry:
+    - summary: |
+        XML (TwiML) builders match the legacy call shapes: when an element's text property is named like one of
+        its child elements, the child builder keeps the name (`message.body("hi")` / `body(Body)` add a `<Body>`
+        child, `dial.number("+1…")` a `<Number>`) and the text property is generated as `text` (`getText()`,
+        `text(...)`); every builder with text content also accepts `text(...)` next to the field-named setter; and
+        `format: uri` string setters get a `java.net.URI` overload (`redirect.url(URI.create("/voice"))`).
+      type: fix
+  createdAt: "2026-10-27"
+  irVersion: 67
+- version: 4.35.0
+  changelogEntry:
+    - summary: |
+        Expose `maxConcurrentRequests(int)` on the generated root client builders (`<Client>Builder`,
+        `Async<Client>Builder`, and the multi-auth builder stages) so the in-flight request cap added in
+        4.34.0 can be set without constructing `ClientOptions` by hand, matching `timeout` and `maxRetries`.
+        Subclasses can override the new `setConcurrencyLimit(ClientOptions.Builder)` hook.
+      type: feat
+  createdAt: "2026-10-26"
+  irVersion: 67
+- version: 4.34.0
+  changelogEntry:
+    - summary: |
+        Add `ClientOptions.Builder.maxConcurrentRequests(int)`, an opt-in cap on how many requests the SDK has in
+        flight at once. It applies to both the sync and the async client (OkHttp's dispatcher limits only bound async
+        calls, and its connection pool only bounds idle connections) and also to an OkHttpClient supplied via
+        `httpClient(...)`. A request holds a slot until its response body is closed; callers waiting for a slot are
+        bounded by the call timeout, and retries do not hold a slot during their backoff delay. Implemented by the new
+        generated `core/ConcurrencyLimitingInterceptor`.
+      type: feat
+  createdAt: "2026-10-26"
+  irVersion: 67
 - version: 4.33.0
   changelogEntry:
     - summary: |

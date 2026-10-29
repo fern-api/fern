@@ -117,6 +117,25 @@ describe("RemoveMemberCommand", () => {
         expect(context.stderr.error).toHaveBeenCalledWith(expect.stringContaining("was not found"));
     });
 
+    it("should fail when the organization has no Auth0 organization", async () => {
+        const { createVenusService } = await import("@fern-api/core");
+        const mockGet = vi.fn().mockResolvedValue({ ok: true, body: { auth0Id: null } });
+        const mockRemoveUser = vi.fn();
+        vi.mocked(createVenusService).mockReturnValue({
+            organization: { get: mockGet, removeUser: mockRemoveUser }
+        } as unknown as ReturnType<typeof createVenusService>);
+
+        const context = createMockContext();
+        await expect(
+            cmd.handle(context, { userId: "user123", org: "acme" } as RemoveMemberCommand.Args)
+        ).rejects.toThrow(CliError);
+
+        expect(mockRemoveUser).not.toHaveBeenCalled();
+        expect(context.stderr.error).toHaveBeenCalledWith(
+            expect.stringContaining("is not linked to an Auth0 organization")
+        );
+    });
+
     it("should handle UnauthorizedError from removeUser", async () => {
         const { createVenusService } = await import("@fern-api/core");
         const mockGet = mockOrgLookupSuccess();

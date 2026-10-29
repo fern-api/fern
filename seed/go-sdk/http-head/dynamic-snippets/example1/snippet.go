@@ -8,7 +8,7 @@ import (
     option "github.com/http-head/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -17,8 +17,12 @@ func do() {
     request := &fern.ListUsersRequest{
         Limit: 1,
     }
-    client.User.List(
+    _, err := client.User.List(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

@@ -12,7 +12,15 @@
 <dd>
 
 ```go
-client.Echo(
+request := "Hello world!\\n\\nwith\\n\\tnewlines"
+_, err := client.Echo(
+    context.TODO(),
+    request,
+)
+if err != nil {
+    return err
+}
+_, err := client.Echo(
     context.TODO(),
     request,
 )
@@ -58,7 +66,7 @@ client.Echo(
 request := &pleaseinhere.Type{
     BasicType: pleaseinhere.BasicTypePrimitive,
 }
-client.CreateType(
+_, err := client.CreateType(
     context.TODO(),
     request,
 )
@@ -102,7 +110,7 @@ client.CreateType(
 <dd>
 
 ```go
-client.File.Notification.Service.GetException(
+_, err := client.File.Notification.Service.GetException(
     context.TODO(),
     "notification-hsy129x",
 )
@@ -163,7 +171,7 @@ This endpoint returns a file by its name.
 request := &file.GetFileRequest{
     XFileAPIVersion: "0.0.2",
 }
-client.File.Service.GetFile(
+_, err := client.File.Service.GetFile(
     context.TODO(),
     "file.txt",
     request,
@@ -222,7 +230,7 @@ This endpoint checks the health of a resource.
 <dd>
 
 ```go
-client.Health.Service.Check(
+err := client.Health.Service.Check(
     context.TODO(),
     "id-2sdx82h",
 )
@@ -279,7 +287,7 @@ This endpoint checks the health of the service.
 <dd>
 
 ```go
-client.Health.Service.Ping(
+_, err := client.Health.Service.Ping(
     context.TODO(),
 )
 ```
@@ -307,7 +315,7 @@ client.Health.Service.Ping(
 <dd>
 
 ```go
-client.Service.GetMovie(
+_, err := client.Service.GetMovie(
     context.TODO(),
     "movie-c06a4ad7",
 )
@@ -373,7 +381,7 @@ request := &pleaseinhere.Movie{
     },
     Revenue: int64(1000000),
 }
-client.Service.CreateMovie(
+_, err := client.Service.CreateMovie(
     context.TODO(),
     request,
 )
@@ -427,7 +435,7 @@ request := &pleaseinhere.GetMetadataRequest{
     },
     XAPIVersion: "0.0.1",
 }
-client.Service.GetMetadata(
+_, err := client.Service.GetMetadata(
     context.TODO(),
     request,
 )
@@ -705,7 +713,7 @@ request := &pleaseinhere.BigEntity{
         ),
     },
 }
-client.Service.CreateBigEntity(
+_, err := client.Service.CreateBigEntity(
     context.TODO(),
     request,
 )
@@ -748,7 +756,7 @@ client.Service.CreateBigEntity(
 <dd>
 
 ```go
-client.Service.RefreshToken(
+err := client.Service.RefreshToken(
     context.TODO(),
     nil,
 )

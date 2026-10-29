@@ -256,6 +256,12 @@ const dialDeclaration = xmlObjectDeclaration(
     { name: "Dial", namespace: "https://www.twilio.com/twiml", prefix: "tw" }
 );
 
+const responseDeclaration = xmlObjectDeclaration(
+    "Response",
+    [xmlProperty("children", optional(list(createNamedTypeReference("Say"))), { kind: "ELEMENT" })],
+    { name: "Response", namespace: undefined, prefix: undefined }
+);
+
 const collectionsDeclaration = xmlObjectDeclaration(
     "Collections",
     [
@@ -303,8 +309,30 @@ describe("XmlObjectGenerator", () => {
         expect(generate(sayDeclaration, [breakDeclaration])).toMatchSnapshot();
     });
 
-    it("generates a nested element with namespace, wrapped list and separator, using add-prefix on collisions", () => {
-        expect(generate(dialDeclaration, [numberDeclaration])).toMatchSnapshot();
+    it("generates a nested element with namespace, wrapped list and separator; the child builder wins the text field's name", () => {
+        const output = generate(dialDeclaration, [numberDeclaration]);
+        expect(output).toContain("number(fields?: string | Partial<Number.Fields>): Number.Builder");
+        expect(output).toContain("setNumber(number: string | undefined): this");
+        expect(output).toContain("text(number: string | undefined): this");
+        expect(output).not.toContain("addNumber(");
+        expect(output).toMatchSnapshot();
+    });
+
+    it("aliases the text setter as text() and prefixes reserved child names with add", () => {
+        const output = generate(sayDeclaration, [breakDeclaration]);
+        expect(output).toContain("message(message: string | undefined): this");
+        expect(output).toContain("text(message: string | undefined): this");
+        expect(output).toContain("addBreak(fields?: Partial<Break.Fields>): Break.Builder");
+        expect(output).not.toMatch(/\bbreak\(/);
+    });
+
+    it("exposes the child builders on the value itself, appending to its content", () => {
+        const output = generate(responseDeclaration, [sayDeclaration]);
+        expect(syntaxErrors(output)).toEqual([]);
+        const [instanceVerb, builderVerb] = output.split("export namespace Response");
+        expect(instanceVerb).toContain("say(fields?: string | Partial<Say.Fields>): Say.Builder");
+        expect(instanceVerb).toContain("this.content.push(builder);");
+        expect(builderVerb).toContain("say(fields?: string | Partial<Say.Fields>): Say.Builder");
     });
 
     it("distinguishes nullable from optional and supports set-valued properties", () => {

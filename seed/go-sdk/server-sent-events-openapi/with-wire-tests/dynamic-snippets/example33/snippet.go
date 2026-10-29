@@ -8,7 +8,7 @@ import (
     option "github.com/server-sent-events-openapi/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -17,8 +17,12 @@ func do() {
     request := &fern.StreamXFernStreamingNullableConditionStreamRequest{
         Query: "query",
     }
-    client.StreamXFernStreamingNullableConditionStream(
+    _, err := client.StreamXFernStreamingNullableConditionStream(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

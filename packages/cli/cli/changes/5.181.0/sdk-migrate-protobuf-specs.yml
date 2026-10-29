@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern sdk migrate` now carries every `proto` spec in `generators.yml` into `sdk-config.yml` as a
+    `proto` source, with its root (local or git), target, overrides, dependencies, `localGeneration` and an
+    explicit `fromOpenApi`. Proto-only APIs no longer fail to migrate, and `from-openapi: true` protos are no
+    longer dropped when the API also has OpenAPI specs. `docs.yml` is left unchanged, with a warning, for APIs
+    with proto specs, because docs API references cannot list them.
+  type: feat

@@ -36,12 +36,16 @@ import (
     client "github.com/unions-with-local-date/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
-    client.Bigunion.Get(
+    _, err := client.Bigunion.Get(
         context.TODO(),
         "id",
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

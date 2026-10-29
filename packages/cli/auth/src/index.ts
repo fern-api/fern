@@ -1,4 +1,19 @@
-export type { FernOrganizationToken, FernToken, FernUserToken } from "./FernToken.js";
+export type { FernGuestToken, FernOrganizationToken, FernToken, FernUserToken } from "./FernToken.js";
+export type { GuestRejection } from "./guest/describeGuestRejection.js";
+export { describeGuestRejection, isGuestRejection, readGuestRejection } from "./guest/describeGuestRejection.js";
+export type { StoredGuestSession } from "./guest/GuestSession.js";
+export {
+    GUEST_SESSION_POINTER_FILENAME,
+    getClaimSecret,
+    getPathToGuestSessionFile,
+    getPathToGuestSessionPointer,
+    isGuestSessionLive,
+    readStoredGuestSession,
+    removeStoredGuestSession,
+    writeStoredGuestSession
+} from "./guest/GuestSession.js";
+export type { CreateGuestSession } from "./guest/getOrCreateGuestSession.js";
+export { getOrCreateGuestSession } from "./guest/getOrCreateGuestSession.js";
 export type { OrganizationCheckResult } from "./orgs/checkOrganizationMembership.js";
 export { checkOrganizationMembership } from "./orgs/checkOrganizationMembership.js";
 export { createOrganizationIfDoesNotExist } from "./orgs/createOrganizationIfDoesNotExist.js";

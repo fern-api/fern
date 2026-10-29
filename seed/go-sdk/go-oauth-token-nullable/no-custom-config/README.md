@@ -39,7 +39,7 @@ import (
     option "github.com/go-oauth-token-nullable/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithClientCredentials(
             "<clientId>",
@@ -50,10 +50,14 @@ func do() {
         ClientID: "my_oauth_app_123",
         ClientSecret: "sk_live_abcdef123456789",
     }
-    client.Auth.GetTokenWithClientCredentials(
+    _, err := client.Auth.GetTokenWithClientCredentials(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

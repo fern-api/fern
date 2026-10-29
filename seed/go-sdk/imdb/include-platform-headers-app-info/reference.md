@@ -31,7 +31,7 @@ request := &fern.CreateMovieRequest{
     Title: "title",
     Rating: 1.1,
 }
-client.Imdb.CreateMovie(
+_, err := client.Imdb.CreateMovie(
     context.TODO(),
     request,
 )
@@ -85,7 +85,7 @@ client.Imdb.CreateMovie(
 request := &fern.GetMovieImdbRequest{
     MovieID: "movieId",
 }
-client.Imdb.GetMovie(
+_, err := client.Imdb.GetMovie(
     context.TODO(),
     request,
 )

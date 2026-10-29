@@ -13,6 +13,7 @@ import com.seed.api.core.ObjectMappers;
 import com.seed.api.core.XmlReader;
 import com.seed.api.core.XmlSerializable;
 import java.io.IOException;
+import java.util.Map;
 import java.util.Objects;
 import org.w3c.dom.Element;
 
@@ -42,6 +43,8 @@ public final class ResponseChildrenItem implements XmlSerializable {
             return visitor.visit((Pause) this.value);
         } else if (this.type == 3) {
             return visitor.visit((Hangup) this.value);
+        } else if (this.type == 4) {
+            return visitor.visit((Redirect) this.value);
         }
         throw new IllegalStateException("Failed to visit value. This should never happen.");
     }
@@ -82,6 +85,10 @@ public final class ResponseChildrenItem implements XmlSerializable {
         return new ResponseChildrenItem(value, 3);
     }
 
+    public static ResponseChildrenItem of(Redirect value) {
+        return new ResponseChildrenItem(value, 4);
+    }
+
     @Override
     public String toXml() {
         return ((XmlSerializable) this.value).toXml();
@@ -103,6 +110,8 @@ public final class ResponseChildrenItem implements XmlSerializable {
                 return of(Pause.fromXml(element));
             case "Hangup":
                 return of(Hangup.fromXml(element));
+            case "Redirect":
+                return of(Redirect.fromXml(element));
             default:
                 throw new IllegalArgumentException("Unexpected element <" + name + "> in ResponseChildrenItem");
         }
@@ -116,6 +125,8 @@ public final class ResponseChildrenItem implements XmlSerializable {
         T visit(Pause value);
 
         T visit(Hangup value);
+
+        T visit(Redirect value);
     }
 
     static final class Deserializer extends StdDeserializer<ResponseChildrenItem> {
@@ -126,6 +137,12 @@ public final class ResponseChildrenItem implements XmlSerializable {
         @java.lang.Override
         public ResponseChildrenItem deserialize(JsonParser p, DeserializationContext context) throws IOException {
             Object value = p.readValueAs(Object.class);
+            if (value instanceof Map<?, ?> && ((Map<?, ?>) value).containsKey("url")) {
+                try {
+                    return of(ObjectMappers.JSON_MAPPER.convertValue(value, Redirect.class));
+                } catch (RuntimeException e) {
+                }
+            }
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, Say.class));
             } catch (RuntimeException e) {

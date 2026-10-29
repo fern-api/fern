@@ -1,4 +1,4 @@
-import { parseRepository } from "../parseRepository.js";
+import { getGitAuthorizationHeader, parseRepository } from "../parseRepository.js";
 
 describe("parseRepository", () => {
     it("fern-api/fern", async () => {
@@ -77,5 +77,18 @@ describe("parseRepository", () => {
         expect(reference.getAuthedCloneUrl("ghs_xyz")).toBe(
             "https://x-access-token:ghs_xyz@github.acme.com/engineering/api-client-sdk.git"
         );
+    });
+
+    it("getGitAuthorizationHeader uses the same credentials as getAuthedCloneUrl", () => {
+        const decode = (header: string): string =>
+            Buffer.from(header.replace("Authorization: Basic ", ""), "base64").toString();
+        expect(decode(getGitAuthorizationHeader("ghs_install_token_value"))).toBe(
+            "x-access-token:ghs_install_token_value"
+        );
+        expect(decode(getGitAuthorizationHeader("ghu_user_to_server_value"))).toBe(
+            "x-access-token:ghu_user_to_server_value"
+        );
+        expect(decode(getGitAuthorizationHeader("ghp_pat_value"))).toBe("ghp_pat_value:");
+        expect(decode(getGitAuthorizationHeader("github_pat_value"))).toBe("github_pat_value:");
     });
 });

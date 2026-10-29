@@ -39,7 +39,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	request := &fern.BootInstanceRequest{
 //	    Size: "size",
 //	}
-//	client.Ec2.BootInstance(
+//	err := client.Ec2.BootInstance(
 //	    context.TODO(),
 //	    request,
 //	)

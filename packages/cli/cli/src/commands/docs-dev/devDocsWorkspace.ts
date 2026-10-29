@@ -18,7 +18,10 @@ export async function previewDocsWorkspace({
     forceDownload,
     includePrivate = false,
     skipApi = false,
-    skipValidation = false
+    skipValidation = false,
+    timeoutMs,
+    idleTimeoutMs,
+    json = false
 }: {
     loadProject: () => Promise<Project>;
     cliContext: CliContext;
@@ -35,6 +38,12 @@ export async function previewDocsWorkspace({
     skipApi?: boolean;
     /** Skip validating the docs (faster startup; docs errors are not reported). */
     skipValidation?: boolean;
+    /** Astro only: stop this long after the server is ready. */
+    timeoutMs?: number;
+    /** Astro only: stop after this long with no HTTP requests. */
+    idleTimeoutMs?: number;
+    /** Astro only: write lifecycle events to stdout as NDJSON (JSON mode is enabled by the global middleware). */
+    json?: boolean;
 }): Promise<void> {
     const project = await loadProject();
     const docsWorkspace = project.docsWorkspaces;
@@ -114,7 +123,10 @@ export async function previewDocsWorkspace({
             backendPort,
             forceDownload,
             includePrivate,
-            skipApi
+            skipApi,
+            timeoutMs,
+            idleTimeoutMs,
+            onLifecycleEvent: json ? (event) => cliContext.writeTextToStdout(`${JSON.stringify(event)}\n`) : undefined
         });
     });
 }

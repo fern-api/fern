@@ -6,7 +6,7 @@ import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import YAML from "yaml";
 
 import { migrateDocsConfiguration } from "../migrateDocsConfiguration.js";
-import type { ResolvedMigrationSourceSpec } from "../projectMigrationSource.js";
+import type { ResolvedMigrationFileSpec } from "../projectMigrationSource.js";
 
 // The migrator only computes edits; apply them here so the assertions can inspect the resulting files.
 async function migrate(args: Parameters<typeof migrateDocsConfiguration>[0]): Promise<number> {
@@ -470,7 +470,7 @@ describe("migrateDocsConfiguration", () => {
     });
 });
 
-function createSourceSpec(temporaryDirectory: string): ResolvedMigrationSourceSpec {
+function createSourceSpec(temporaryDirectory: string): ResolvedMigrationFileSpec {
     return {
         absolutePath: AbsoluteFilePath.of(join(temporaryDirectory, "specs", "openapi.yml")),
         absoluteOverlayPaths: [AbsoluteFilePath.of(join(temporaryDirectory, "specs", "overlay.yml"))],

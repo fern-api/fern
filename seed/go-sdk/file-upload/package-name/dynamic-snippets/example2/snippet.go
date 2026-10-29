@@ -9,7 +9,7 @@ import (
     option "github.com/fern-api/file-upload-go/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -23,8 +23,12 @@ func do() {
             Foo: "bar",
         },
     }
-    client.Service.WithRefBody(
+    _, err := client.Service.WithRefBody(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

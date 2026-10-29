@@ -37,7 +37,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //
 // Example:
 //
-//	client.Health.Service.Check(
+//	err := client.Health.Service.Check(
 //	    context.TODO(),
 //	    "id-2sdx82h",
 //	)
@@ -62,7 +62,7 @@ func (c *Client) Check(
 //
 // Example:
 //
-//	client.Health.Service.Ping(
+//	_, err := client.Health.Service.Ping(
 //	    context.TODO(),
 //	)
 func (c *Client) Ping(

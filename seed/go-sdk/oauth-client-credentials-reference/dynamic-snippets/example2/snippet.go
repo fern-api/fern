@@ -7,7 +7,7 @@ import (
     option "github.com/oauth-client-credentials-reference/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -17,7 +17,11 @@ func do() {
             "<clientSecret>",
         ),
     )
-    client.Simple.GetSomething(
+    err := client.Simple.GetSomething(
         context.TODO(),
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

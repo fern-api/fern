@@ -37,17 +37,21 @@ import (
     option "github.com/examples/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewAcmeClient(
         option.WithToken(
             "<token>",
         ),
     )
     request := "Hello world!\\n\\nwith\\n\\tnewlines"
-    client.Echo(
+    _, err := client.Echo(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

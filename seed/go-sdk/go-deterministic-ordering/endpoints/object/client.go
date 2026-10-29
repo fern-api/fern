@@ -84,7 +84,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	        "1000000",
 //	    ),
 //	}
-//	client.Endpoints.Object.GetAndReturnWithOptionalField(
+//	_, err := client.Endpoints.Object.GetAndReturnWithOptionalField(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -109,7 +109,7 @@ func (c *Client) GetAndReturnWithOptionalField(
 //	request := &types.ObjectWithRequiredField{
 //	    FieldString: "string",
 //	}
-//	client.Endpoints.Object.GetAndReturnWithRequiredField(
+//	_, err := client.Endpoints.Object.GetAndReturnWithRequiredField(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -138,7 +138,7 @@ func (c *Client) GetAndReturnWithRequiredField(
 //	        },
 //	    },
 //	}
-//	client.Endpoints.Object.GetAndReturnWithMapOfMap(
+//	_, err := client.Endpoints.Object.GetAndReturnWithMapOfMap(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -213,7 +213,7 @@ func (c *Client) GetAndReturnWithMapOfMap(
 //	        ),
 //	    },
 //	}
-//	client.Endpoints.Object.GetAndReturnNestedWithOptionalField(
+//	_, err := client.Endpoints.Object.GetAndReturnNestedWithOptionalField(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -286,7 +286,7 @@ func (c *Client) GetAndReturnNestedWithOptionalField(
 //	        ),
 //	    },
 //	}
-//	client.Endpoints.Object.GetAndReturnNestedWithRequiredField(
+//	_, err := client.Endpoints.Object.GetAndReturnNestedWithRequiredField(
 //	    context.TODO(),
 //	    "string",
 //	    request,
@@ -415,7 +415,7 @@ func (c *Client) GetAndReturnNestedWithRequiredField(
 //	        },
 //	    },
 //	}
-//	client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsList(
+//	_, err := client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsList(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -442,7 +442,7 @@ func (c *Client) GetAndReturnNestedWithRequiredFieldAsList(
 //	        "$ref": "https://example.com/schema",
 //	    },
 //	}
-//	client.Endpoints.Object.GetAndReturnWithUnknownField(
+//	_, err := client.Endpoints.Object.GetAndReturnWithUnknownField(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -474,7 +474,7 @@ func (c *Client) GetAndReturnWithUnknownField(
 //	        "2023-08-31T14:15:22Z",
 //	    ),
 //	}
-//	client.Endpoints.Object.GetAndReturnWithDatetimeLikeString(
+//	_, err := client.Endpoints.Object.GetAndReturnWithDatetimeLikeString(
 //	    context.TODO(),
 //	    request,
 //	)

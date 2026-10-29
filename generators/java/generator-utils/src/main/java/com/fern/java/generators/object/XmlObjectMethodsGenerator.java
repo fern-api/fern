@@ -2,6 +2,7 @@ package com.fern.java.generators.object;
 
 import com.fern.ir.model.commons.TypeId;
 import com.fern.ir.model.types.ObjectProperty;
+import com.fern.ir.model.types.ObjectTypeDeclaration;
 import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.ir.model.types.TypeReference;
 import com.fern.ir.model.types.XmlEncoding;
@@ -21,6 +22,7 @@ import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -71,6 +73,113 @@ public final class XmlObjectMethodsGenerator {
     private final ClassName xmlReaderClassName;
     private final ClassName xmlSerializableClassName;
     private final ClassName xmlNodeClassName;
+
+    /** The uniform setter for an element's text content when its own name is taken by a child builder. */
+    public static final String TEXT_FIELD_NAME = "text";
+
+    /** The names the child builders of an xml object take: the camelCase name of each typed child element. */
+    public static Set<String> childBuilderNames(
+            Map<TypeId, TypeDeclaration> typeDeclarations, List<ObjectProperty> properties) {
+        Set<String> names = new HashSet<>();
+        for (ObjectProperty property : properties) {
+            if (XmlTypeUtils.getPropertyKind(property).getEnumValue() != XmlPropertyKind.Value.ELEMENT) {
+                continue;
+            }
+            Optional<TypeReference> item =
+                    XmlTypeUtils.getListItemType(XmlTypeUtils.unwrapOptional(property.getValueType()));
+            Optional<TypeId> typeId = item.flatMap(TypeReference::getNamed).map(named -> named.getTypeId());
+            if (typeId.isEmpty()) {
+                continue;
+            }
+            TypeDeclaration declaration = typeDeclarations.get(typeId.get());
+            if (declaration == null) {
+                continue;
+            }
+            if (XmlTypeUtils.getXmlObjectEncoding(typeDeclarations, typeId.get())
+                    .isPresent()) {
+                names.add(childBuilderName(declaration));
+                continue;
+            }
+            declaration.getShape().getUndiscriminatedUnion().ifPresent(union -> union.getMembers()
+                    .forEach(member -> member.getType()
+                            .getNamed()
+                            .map(named -> typeDeclarations.get(named.getTypeId()))
+                            .filter(memberDeclaration -> memberDeclaration != null
+                                    && XmlTypeUtils.getXmlObjectEncoding(
+                                                    typeDeclarations,
+                                                    memberDeclaration.getName().getTypeId())
+                                            .isPresent())
+                            .ifPresent(memberDeclaration -> names.add(childBuilderName(memberDeclaration)))));
+        }
+        return names;
+    }
+
+    private static String childBuilderName(TypeDeclaration declaration) {
+        return KeyWordUtils.getKeyWordCompatibleMethodName(
+                NameUtils.toName(declaration.getName().getName()).getCamelCase().getSafeName());
+    }
+
+    /**
+     * The text property whose name is also a child builder's name ({@code Message.body} vs {@code <Body>}). As in the
+     * legacy SDKs the child builder keeps the name, so the text property is generated as {@code text}.
+     */
+    public static Optional<ObjectProperty> textPropertyYieldingToChild(
+            Map<TypeId, TypeDeclaration> typeDeclarations, List<ObjectProperty> properties) {
+        Set<String> childNames = childBuilderNames(typeDeclarations, properties);
+        return properties.stream()
+                .filter(property -> XmlTypeUtils.getPropertyKind(property).getEnumValue() == XmlPropertyKind.Value.TEXT)
+                .filter(property -> childNames.contains(fieldName(property)))
+                .findFirst();
+    }
+
+    /** The generated field/setter name of an xml object's text property, or empty when it has none. */
+    public static Optional<String> textFieldName(
+            Map<TypeId, TypeDeclaration> typeDeclarations, List<ObjectProperty> properties) {
+        Optional<ObjectProperty> yielding = textPropertyYieldingToChild(typeDeclarations, properties);
+        if (yielding.isPresent()) {
+            return Optional.of(renamedTextFieldName(yielding.get(), properties));
+        }
+        return properties.stream()
+                .filter(property -> XmlTypeUtils.getPropertyKind(property).getEnumValue() == XmlPropertyKind.Value.TEXT)
+                .map(XmlObjectMethodsGenerator::fieldName)
+                .findFirst();
+    }
+
+    /** {@code text}, or {@code <name>Text} when another property is already called {@code text}. */
+    public static String renamedTextFieldName(ObjectProperty textProperty, List<ObjectProperty> properties) {
+        boolean textTaken = properties.stream()
+                .filter(property -> property != textProperty)
+                .anyMatch(property -> fieldName(property).equals(TEXT_FIELD_NAME));
+        return textTaken ? fieldName(textProperty) + "Text" : TEXT_FIELD_NAME;
+    }
+
+    private static String fieldName(ObjectProperty property) {
+        return KeyWordUtils.getKeyWordCompatibleName(
+                NameUtils.getName(property.getName()).getCamelCase().getSafeName());
+    }
+
+    /** {@code format: uri} strings, also when referenced through (nested) aliases. */
+    private boolean isUriString(TypeReference type) {
+        TypeReference unwrapped = XmlTypeUtils.unwrapOptional(type);
+        Optional<TypeId> typeId = unwrapped.getNamed().map(named -> named.getTypeId());
+        if (typeId.isPresent()) {
+            TypeDeclaration declaration = typeDeclarations.get(typeId.get());
+            return declaration != null
+                    && declaration
+                            .getShape()
+                            .getAlias()
+                            .map(alias -> isUriString(alias.getAliasOf()))
+                            .orElse(false);
+        }
+        return unwrapped
+                .getPrimitive()
+                .flatMap(primitive -> primitive.getV2())
+                .flatMap(v2 -> v2.getString())
+                .flatMap(string -> string.getValidation())
+                .flatMap(validation -> validation.getFormat())
+                .filter("uri"::equals)
+                .isPresent();
+    }
 
     public XmlObjectMethodsGenerator(
             AbstractGeneratorContext<?, ?> generatorContext,
@@ -125,12 +234,24 @@ public final class XmlObjectMethodsGenerator {
         List<MethodSpec> childBuilderMethods = generateChildBuilderMethods(typeSpec);
         boolean hasFinalStage =
                 typeSpec.typeSpecs.stream().anyMatch(nested -> nested.name.equals(FINAL_STAGE_INTERFACE_NAME));
-        generateTextBuilderFactory(typeSpec).ifPresent(builder::addMethod);
+        Set<String> uriFieldNames = getUriFieldNames();
+        generateTextBuilderFactory(typeSpec).ifPresent(factory -> {
+            builder.addMethod(factory);
+            if (uriFieldNames.contains(factory.parameters.get(0).name)
+                    && factory.parameters.get(0).type.equals(ClassName.get(String.class))) {
+                builder.addMethod(uriDelegatingFactory(factory));
+            }
+        });
         Set<String> listAttributeNames = getListAttributeNames();
+        Optional<String> textAliasTarget = getTextAliasTarget(typeSpec);
         builder.typeSpecs.clear();
         for (TypeSpec nested : typeSpec.typeSpecs) {
             TypeSpec updated = withChildBuilderMethods(
-                    withListAttributeVarargs(withSetterJavadocs(nested), listAttributeNames),
+                    withUriOverloads(
+                            withTextAlias(
+                                    withListAttributeVarargs(withSetterJavadocs(nested), listAttributeNames),
+                                    textAliasTarget),
+                            uriFieldNames),
                     childBuilderMethods,
                     hasFinalStage);
             if (nested.name.equals(BUILDER_CLASS_NAME)) {
@@ -555,9 +676,147 @@ public final class XmlObjectMethodsGenerator {
                             .addStatement("return $L($L)", methodName, variant.parameterName)
                             .build());
                 }
+                String childMethodName = methodName;
+                childTextSetter(variant).ifPresent(textSetter -> {
+                    ParameterSpec textParameter =
+                            ParameterSpec.builder(String.class, TEXT_FIELD_NAME).build();
+                    String textMethodName =
+                            takenSignatures.add(signature(legacyName, Collections.singletonList(textParameter)))
+                                    ? legacyName
+                                    : childMethodName;
+                    if (!textMethodName.equals(legacyName)
+                            && !takenSignatures.add(
+                                    signature(childMethodName, Collections.singletonList(textParameter)))) {
+                        return;
+                    }
+                    methods.add(MethodSpec.methodBuilder(textMethodName)
+                            .addJavadoc(
+                                    "Appends a &lt;$L&gt; child element with the given text content after any content added so far.\n",
+                                    variant.elementName)
+                            .addJavadoc(JavaDocUtils.getParameterJavadoc(
+                                    TEXT_FIELD_NAME,
+                                    "the text content of the &lt;" + variant.elementName + "&gt; element"))
+                            .addJavadoc(JavaDocUtils.getReturnDocs("this builder"))
+                            .addModifiers(Modifier.PUBLIC)
+                            .addParameter(textParameter)
+                            .returns(objectClassName.nestedClass(BUILDER_CLASS_NAME))
+                            .addStatement(
+                                    "return $L($T.builder().$L($L).build())",
+                                    childMethodName,
+                                    variant.typeName,
+                                    textSetter,
+                                    TEXT_FIELD_NAME)
+                            .build());
+                });
             }
         }
         return methods;
+    }
+
+    /**
+     * The text setter of a child type whose only required property is its text, so {@code body("hi")} can build the
+     * child from a string ({@code Body.builder().text("hi").build()}); empty otherwise.
+     */
+    private Optional<String> childTextSetter(ChildVariant variant) {
+        Optional<ObjectTypeDeclaration> object = variant.declaration.getShape().getObject();
+        if (object.isEmpty()
+                || variant.isUnionMember && !object.get().getExtends().isEmpty()) {
+            return Optional.empty();
+        }
+        List<ObjectProperty> childProperties = new ArrayList<>(object.get().getProperties());
+        object.get().getExtendedProperties().ifPresent(childProperties::addAll);
+        boolean othersOptional = childProperties.stream()
+                .filter(property -> XmlTypeUtils.getPropertyKind(property).getEnumValue() != XmlPropertyKind.Value.TEXT)
+                .allMatch(property -> XmlTypeUtils.isOptional(property.getValueType()));
+        if (!othersOptional) {
+            return Optional.empty();
+        }
+        return textFieldName(typeDeclarations, childProperties);
+    }
+
+    /** The text field's setter name when a {@code text(...)} alias should be generated for it. */
+    private Optional<String> getTextAliasTarget(TypeSpec typeSpec) {
+        Optional<String> textField = properties.stream()
+                .filter(property ->
+                        XmlTypeUtils.getPropertyKind(property.objectProperty()).getEnumValue()
+                                == XmlPropertyKind.Value.TEXT)
+                .map(property -> property.fieldSpec().get().name)
+                .findFirst();
+        if (textField.isEmpty() || textField.get().equals(TEXT_FIELD_NAME)) {
+            return Optional.empty();
+        }
+        boolean textTaken = typeSpec.typeSpecs.stream()
+                .flatMap(nested -> nested.methodSpecs.stream())
+                .anyMatch(method -> method.name.equals(TEXT_FIELD_NAME));
+        return textTaken ? Optional.empty() : textField;
+    }
+
+    /** {@code text(...)} next to every single-argument setter of the text field, in stages and the builder alike. */
+    private static TypeSpec withTextAlias(TypeSpec nested, Optional<String> textField) {
+        if (textField.isEmpty()) {
+            return nested;
+        }
+        List<MethodSpec> aliases = nested.methodSpecs.stream()
+                .filter(method -> method.name.equals(textField.get()) && method.parameters.size() == 1)
+                .map(method -> delegatingOverload(
+                        method,
+                        TEXT_FIELD_NAME,
+                        ParameterSpec.builder(method.parameters.get(0).type, TEXT_FIELD_NAME)
+                                .addModifiers(method.parameters.get(0).modifiers)
+                                .addAnnotations(method.parameters.get(0).annotations)
+                                .build(),
+                        CodeBlock.of("$L", TEXT_FIELD_NAME),
+                        "Sets the text content of this element (same as {@code " + textField.get() + "(...)}).\n"))
+                .collect(Collectors.toList());
+        return aliases.isEmpty()
+                ? nested
+                : nested.toBuilder().addMethods(aliases).build();
+    }
+
+    private Set<String> getUriFieldNames() {
+        return properties.stream()
+                .filter(property -> isUriString(property.objectProperty().getValueType()))
+                .map(property -> property.fieldSpec().get().name)
+                .collect(Collectors.toSet());
+    }
+
+    /** {@code url(URI)} next to every {@code url(String)} setter of a {@code format: uri} string property. */
+    private static TypeSpec withUriOverloads(TypeSpec nested, Set<String> uriFieldNames) {
+        if (uriFieldNames.isEmpty()) {
+            return nested;
+        }
+        List<MethodSpec> overloads = nested.methodSpecs.stream()
+                .filter(method -> uriFieldNames.contains(method.name)
+                        && method.parameters.size() == 1
+                        && method.parameters.get(0).type.equals(ClassName.get(String.class)))
+                .map(method -> delegatingOverload(
+                        method,
+                        method.name,
+                        ParameterSpec.builder(URI.class, method.parameters.get(0).name)
+                                .build(),
+                        CodeBlock.of("$L.toString()", method.parameters.get(0).name),
+                        "Sets {@code " + method.name + "} from a {@link URI}.\n"))
+                .collect(Collectors.toList());
+        return overloads.isEmpty()
+                ? nested
+                : nested.toBuilder().addMethods(overloads).build();
+    }
+
+    /** A method with the same return type as {@code target} that delegates to it; abstract when {@code target} is. */
+    private static MethodSpec delegatingOverload(
+            MethodSpec target, String name, ParameterSpec parameter, CodeBlock argument, String javadoc) {
+        MethodSpec.Builder method = MethodSpec.methodBuilder(name)
+                .addJavadoc(javadoc)
+                .addParameter(parameter)
+                .returns(target.returnType);
+        if (target.modifiers.contains(Modifier.ABSTRACT)) {
+            return method.addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT).build();
+        }
+        method.addModifiers(Modifier.PUBLIC);
+        if (target.annotations.stream().anyMatch(annotation -> annotation.type.equals(ClassName.get(Override.class)))) {
+            method.addAnnotation(Override.class);
+        }
+        return method.addStatement("return $L($L)", target.name, argument).build();
     }
 
     private static String signature(String name, List<ParameterSpec> parameters) {
@@ -602,6 +861,18 @@ public final class XmlObjectMethodsGenerator {
                         .returns(stageMethod.returnType)
                         .addStatement("return builder().$L($L)", textFieldName.get(), textFieldName.get())
                         .build());
+    }
+
+    /** {@code builder(URI)} next to {@code builder(String)} when the required text is a URL. */
+    private static MethodSpec uriDelegatingFactory(MethodSpec factory) {
+        String parameterName = factory.parameters.get(0).name;
+        return MethodSpec.methodBuilder(factory.name)
+                .addJavadoc("Starts a builder with the element's text content set from a {@link $T}.\n", URI.class)
+                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                .addParameter(URI.class, parameterName)
+                .returns(factory.returnType)
+                .addStatement("return $L($L.toString())", factory.name, parameterName)
+                .build();
     }
 
     private Set<String> getListAttributeNames() {
@@ -718,11 +989,13 @@ public final class XmlObjectMethodsGenerator {
         private final String parameterName;
         private final boolean isUnionMember;
         private final Optional<String> docs;
+        private final TypeDeclaration declaration;
 
         private ChildVariant(
                 TypeName typeName, String elementName, TypeDeclaration declaration, boolean isUnionMember) {
             this.typeName = typeName;
             this.elementName = elementName;
+            this.declaration = declaration;
             this.docs = declaration.getDocs();
             this.camelCaseName = NameUtils.toName(declaration.getName().getName())
                     .getCamelCase()

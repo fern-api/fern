@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern generate --docs --guest` no longer prints the published site's own "Claim this site to keep it" link
+    next to the guest session's claim link. A guest session owns its docs site, so claiming the session (the
+    `Claim it to keep this work` link, or `fern claim`) is what keeps the site; the second link did not work.
+  type: fix

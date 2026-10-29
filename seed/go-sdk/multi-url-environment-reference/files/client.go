@@ -40,7 +40,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	    Name: "name",
 //	    ParentID: "parent_id",
 //	}
-//	client.Files.Upload(
+//	_, err := client.Files.Upload(
 //	    context.TODO(),
 //	    request,
 //	)

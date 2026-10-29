@@ -38,7 +38,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //
 // Example:
 //
-//	client.NullableOptional.GetUser(
+//	_, err := client.NullableOptional.GetUser(
 //	    context.TODO(),
 //	    "userId",
 //	)
@@ -90,7 +90,7 @@ func (c *Client) GetUser(
 //	        ),
 //	    },
 //	}
-//	client.NullableOptional.CreateUser(
+//	_, err := client.NullableOptional.CreateUser(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -144,7 +144,7 @@ func (c *Client) CreateUser(
 //	        ),
 //	    },
 //	}
-//	client.NullableOptional.UpdateUser(
+//	_, err := client.NullableOptional.UpdateUser(
 //	    context.TODO(),
 //	    "userId",
 //	    request,
@@ -185,7 +185,7 @@ func (c *Client) UpdateUser(
 //	        "sortBy",
 //	    ),
 //	}
-//	client.NullableOptional.ListUsers(
+//	_, err := client.NullableOptional.ListUsers(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -221,7 +221,7 @@ func (c *Client) ListUsers(
 //	        true,
 //	    ),
 //	}
-//	client.NullableOptional.SearchUsers(
+//	_, err := client.NullableOptional.SearchUsers(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -423,7 +423,7 @@ func (c *Client) SearchUsers(
 //	        "optionalMapOfEnums": fern.UserRoleAdmin,
 //	    },
 //	}
-//	client.NullableOptional.CreateComplexProfile(
+//	_, err := client.NullableOptional.CreateComplexProfile(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -447,7 +447,7 @@ func (c *Client) CreateComplexProfile(
 //
 // Example:
 //
-//	client.NullableOptional.GetComplexProfile(
+//	_, err := client.NullableOptional.GetComplexProfile(
 //	    context.TODO(),
 //	    "profileId",
 //	)
@@ -527,7 +527,7 @@ func (c *Client) GetComplexProfile(
 //	        "nullableArray",
 //	    },
 //	}
-//	client.NullableOptional.UpdateComplexProfile(
+//	_, err := client.NullableOptional.UpdateComplexProfile(
 //	    context.TODO(),
 //	    "profileId",
 //	    request,
@@ -652,7 +652,7 @@ func (c *Client) UpdateComplexProfile(
 //	        ),
 //	    },
 //	}
-//	client.NullableOptional.TestDeserialization(
+//	_, err := client.NullableOptional.TestDeserialization(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -681,7 +681,7 @@ func (c *Client) TestDeserialization(
 //	    Status: fern.UserStatusActive.Ptr(),
 //	    SecondaryRole: fern.UserRoleAdmin.Ptr(),
 //	}
-//	client.NullableOptional.FilterByRole(
+//	_, err := client.NullableOptional.FilterByRole(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -705,7 +705,7 @@ func (c *Client) FilterByRole(
 //
 // Example:
 //
-//	client.NullableOptional.GetNotificationSettings(
+//	_, err := client.NullableOptional.GetNotificationSettings(
 //	    context.TODO(),
 //	    "userId",
 //	)
@@ -743,7 +743,7 @@ func (c *Client) GetNotificationSettings(
 //	        "labels",
 //	    },
 //	}
-//	client.NullableOptional.UpdateTags(
+//	_, err := client.NullableOptional.UpdateTags(
 //	    context.TODO(),
 //	    "userId",
 //	    request,
@@ -782,7 +782,7 @@ func (c *Client) UpdateTags(
 //	        "includeTypes",
 //	    },
 //	}
-//	client.NullableOptional.GetSearchResults(
+//	_, err := client.NullableOptional.GetSearchResults(
 //	    context.TODO(),
 //	    request,
 //	)

@@ -16,7 +16,7 @@
 request := &fern.GetTokenRequest{
     APIKey: "api_key",
 }
-client.Auth.GetToken(
+_, err := client.Auth.GetToken(
     context.TODO(),
     request,
 )
@@ -60,7 +60,7 @@ client.Auth.GetToken(
 <dd>
 
 ```go
-client.NestedNoAuth.API.GetSomething(
+err := client.NestedNoAuth.API.GetSomething(
     context.TODO(),
 )
 ```
@@ -88,7 +88,7 @@ client.NestedNoAuth.API.GetSomething(
 <dd>
 
 ```go
-client.Nested.API.GetSomething(
+err := client.Nested.API.GetSomething(
     context.TODO(),
 )
 ```
@@ -116,7 +116,7 @@ client.Nested.API.GetSomething(
 <dd>
 
 ```go
-client.Simple.GetSomething(
+err := client.Simple.GetSomething(
     context.TODO(),
 )
 ```

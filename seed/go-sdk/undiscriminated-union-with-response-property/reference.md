@@ -12,7 +12,7 @@
 <dd>
 
 ```go
-client.GetUnion(
+_, err := client.GetUnion(
     context.TODO(),
 )
 ```
@@ -39,7 +39,7 @@ client.GetUnion(
 <dd>
 
 ```go
-client.ListUnions(
+_, err := client.ListUnions(
     context.TODO(),
 )
 ```

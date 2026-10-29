@@ -39,7 +39,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	request := &fern.CreateUserRequest{
 //	    Name: "Alice",
 //	}
-//	client.User.CreateUser(
+//	_, err := client.User.CreateUser(
 //	    context.TODO(),
 //	    request,
 //	)

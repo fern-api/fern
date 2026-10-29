@@ -41,7 +41,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //
 // Example:
 //
-//	client.Service.Get(
+//	_, err := client.Service.Get(
 //	    context.TODO(),
 //	)
 func (c *Client) Get(

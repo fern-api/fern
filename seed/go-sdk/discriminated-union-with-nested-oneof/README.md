@@ -37,17 +37,21 @@ import (
     client "github.com/discriminated-union-with-nested-oneof/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &fern.AstNode{
         Llm: &fern.AstNodeLlm{
             Model: "model",
         },
     }
-    client.CreateAst(
+    _, err := client.CreateAst(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

@@ -13,7 +13,7 @@
 <dd>
 
 ```go
-client.Service.GetResource(
+_, err := client.Service.GetResource(
     context.TODO(),
     "rsc-xyz",
 )
@@ -62,7 +62,7 @@ request := &fern.ListResourcesRequest{
         "2023-01-01",
     ),
 }
-client.Service.ListResources(
+_, err := client.Service.ListResources(
     context.TODO(),
     request,
 )

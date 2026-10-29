@@ -1,4 +1,24 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.70.13
+  changelogEntry:
+    - summary: |
+        Generated Go snippets (docs snippets, `reference.md`, `snippet.json`) no longer discard the
+        SDK call result. The snippet function now returns `error`, assigns `_, err := client.X(...)`
+        (or `err := client.X(...)` for endpoints without a response body) and checks `if err != nil`.
+        Uses `hasResponseBody` from IR 67.35.0 to tell the two method shapes apart; older IRs get `_, err`.
+      type: fix
+  createdAt: "2026-10-28"
+  irVersion: 67
+- version: 1.70.12
+  changelogEntry:
+    - summary: |
+        The generator image keeps Alpine 3.22's libcurl (< 8.23). curl 8.23.0 strips credentials from the
+        effective URL it reports, which made git treat every authenticated https clone as a redirect and drop
+        the token, so README generation and GitHub output for private repositories failed inside the
+        container with "could not read Username for 'https://github.com'".
+      type: fix
+  createdAt: "2026-10-27"
+  irVersion: 67
 - version: 1.70.11
   changelogEntry:
     - summary: |

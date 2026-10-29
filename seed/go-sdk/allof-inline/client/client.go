@@ -38,7 +38,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 // Example:
 //
 //	request := &fern.SearchRuleTypesRequest{}
-//	client.SearchRuleTypes(
+//	_, err := client.SearchRuleTypes(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -64,7 +64,7 @@ func (c *Client) SearchRuleTypes(
 //	    Name: "name",
 //	    ExecutionContext: fern.RuleCreateRequestExecutionContextProd,
 //	}
-//	client.CreateRule(
+//	_, err := client.CreateRule(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -86,7 +86,7 @@ func (c *Client) CreateRule(
 
 // Example:
 //
-//	client.ListUsers(
+//	_, err := client.ListUsers(
 //	    context.TODO(),
 //	)
 func (c *Client) ListUsers(
@@ -105,7 +105,7 @@ func (c *Client) ListUsers(
 
 // Example:
 //
-//	client.GetEntity(
+//	_, err := client.GetEntity(
 //	    context.TODO(),
 //	)
 func (c *Client) GetEntity(
@@ -124,7 +124,7 @@ func (c *Client) GetEntity(
 
 // Example:
 //
-//	client.GetOrganization(
+//	_, err := client.GetOrganization(
 //	    context.TODO(),
 //	)
 func (c *Client) GetOrganization(
@@ -153,7 +153,7 @@ func (c *Client) GetOrganization(
 //	    WateringFrequency: fern.PlantPostWateringFrequencyDaily,
 //	    SunExposure: fern.PlantPostSunExposureFull,
 //	}
-//	client.CreatePlant(
+//	_, err := client.CreatePlant(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -182,7 +182,7 @@ func (c *Client) CreatePlant(
 //	    TreeName: "treeName",
 //	    TreeSpecies: "treeSpecies",
 //	}
-//	client.CreateTree(
+//	_, err := client.CreateTree(
 //	    context.TODO(),
 //	    request,
 //	)

@@ -38,7 +38,7 @@ import (
     client "github.com/query-parameters/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &fern.GetUsersRequest{
         Limit: 1,
@@ -116,10 +116,14 @@ func do() {
             "filter",
         },
     }
-    client.User.GetUsername(
+    _, err := client.User.GetUsername(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

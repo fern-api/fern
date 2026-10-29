@@ -8,7 +8,7 @@ import (
     option "github.com/nullable-optional/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -70,9 +70,13 @@ func do() {
             "nullableArray",
         },
     }
-    client.NullableOptional.UpdateComplexProfile(
+    _, err := client.NullableOptional.UpdateComplexProfile(
         context.TODO(),
         "profileId",
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

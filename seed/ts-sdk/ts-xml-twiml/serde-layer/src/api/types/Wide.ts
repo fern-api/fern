@@ -1348,6 +1348,19 @@ export class Wide implements core.xml.XmlSerializable {
     toString(): string {
         return this.toXml();
     }
+
+    /**
+     * Appends a `<Pause>` child to the ordered content of this element and returns its builder, which is rendered when this element is serialized (the typed `children` property is not updated).
+     *
+     * XML element without an explicit xml.name; falls back to the schema name.
+     * @param fields initial `<Pause>` attributes and children
+     * @returns the `SeedApi.Pause.Builder` appended to this element
+     */
+    pause(fields?: Partial<SeedApi.Pause.Fields>): SeedApi.Pause.Builder {
+        const builder = new SeedApi.Pause.Builder(fields);
+        this.content.push(builder);
+        return builder;
+    }
 }
 
 export namespace Wide {

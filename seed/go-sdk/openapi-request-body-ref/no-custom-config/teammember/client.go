@@ -39,7 +39,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	request := &fern.UpdateTeamMemberRequest{
 //	    TeamMemberID: "team_member_id",
 //	}
-//	client.TeamMember.UpdateTeamMember(
+//	_, err := client.TeamMember.UpdateTeamMember(
 //	    context.TODO(),
 //	    request,
 //	)

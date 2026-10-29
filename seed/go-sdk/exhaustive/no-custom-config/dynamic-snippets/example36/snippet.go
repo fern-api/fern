@@ -8,7 +8,7 @@ import (
     option "github.com/exhaustive/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -21,8 +21,12 @@ func do() {
         Query: "query",
         Number: 1,
     }
-    client.Endpoints.Params.GetWithQuery(
+    err := client.Endpoints.Params.GetWithQuery(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
