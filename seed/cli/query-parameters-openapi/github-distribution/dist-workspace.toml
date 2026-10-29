@@ -36,3 +36,4 @@ default-features = false
 features = ["rustls"]
 tap = "acme/homebrew-tap"
 formula = "query-parameters-api"
+macos-sign = true

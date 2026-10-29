@@ -63,6 +63,12 @@ pub trait KeyringStore: Send + Sync + std::fmt::Debug {
     /// Short human-readable name of this backend for `auth status` output.
     /// e.g. `"macOS Keychain"`, `"~/.config/elevenlabs/auth-keyring.json"`.
     fn backend_label(&self) -> String;
+    /// Whether [`get`](Self::get) for `account` answers with what is actually
+    /// stored, as opposed to a value substituted for one call (a typed
+    /// credential used only to authenticate a key mint).
+    fn answers_from_storage(&self, _account: &str) -> bool {
+        true
+    }
 }
 
 // ---------------------------------------------------------------------------

@@ -217,16 +217,14 @@ impl AuthCredentialSource {
             AuthCredentialSource::Closure(f, _) => {
                 f().filter(|v| !v.is_empty()).map(SecretString::from)
             }
-            AuthCredentialSource::Keyring { service, account } => active_store()
-                .get(service, account)?
+            AuthCredentialSource::Keyring { service, account } => read_keyring(service, account)?
                 .filter(|v| !v.is_empty())
                 .map(SecretString::from),
             AuthCredentialSource::KeyringField {
                 service,
                 account,
                 field,
-            } => active_store()
-                .get(service, account)?
+            } => read_keyring(service, account)?
                 .as_deref()
                 .and_then(read_json_field(field))
                 .filter(|v| !v.is_empty())
@@ -458,6 +456,17 @@ fn read_json_field(field: &str) -> impl Fn(&str) -> Option<String> + '_ {
             .as_str()
             .map(str::to_string)
     }
+}
+
+/// Read a keyring entry and let `profiles.toml` copy its public identifiers,
+/// so `profiles list` / `show` / `current` never have to read it themselves.
+fn read_keyring(service: &str, account: &str) -> Result<Option<String>, CliError> {
+    let store = active_store();
+    let value = store.get(service, account)?;
+    if store.answers_from_storage(account) {
+        crate::profiles::note_read_credential(service, account, value.as_deref());
+    }
+    Ok(value)
 }
 
 fn read_credential_file(path: &Path) -> Option<SecretString> {

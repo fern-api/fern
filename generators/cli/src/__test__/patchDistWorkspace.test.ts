@@ -11,7 +11,8 @@ import {
     applyRustlsPatch,
     patchDistWorkspaceToml,
     removeWorkspaceMember,
-    setDistKey
+    setDistKey,
+    setDistRawKey
 } from "../index.js";
 
 const SDK_DIST_WORKSPACE_PATH = path.resolve(
@@ -311,9 +312,19 @@ describe("patchDistWorkspaceToml — distribution", () => {
     it("writes nothing homebrew-related when no distribution is configured", async () => {
         await patchDistWorkspaceToml({ outputDir, binaryName: "acme-cli" });
         const written = await readFile(path.join(outputDir, "dist-workspace.toml"), "utf-8");
-        expect(written).toBe(applyDistWorkspacePatch(TEMPLATE_DIST_TOML));
+        expect(written).toBe(setDistRawKey(applyDistWorkspacePatch(TEMPLATE_DIST_TOML), "macos-sign", "true"));
         expect(written).not.toContain("homebrew");
         expect(written).not.toContain("tap =");
+    });
+
+    // dist only signs when the CODESIGN_* secrets are present, so this is a
+    // no-op for every repo that has not configured them.
+    it("enables macOS signing in the [dist] table", async () => {
+        await patchDistWorkspaceToml({ outputDir, binaryName: "acme-cli" });
+        const written = await readFile(path.join(outputDir, "dist-workspace.toml"), "utf-8");
+        const distTable = written.slice(written.indexOf("[dist]"));
+        expect(distTable).toMatch(/^macos-sign = true$/m);
+        expect(written.match(/^macos-sign =/gm)).toHaveLength(1);
     });
 
     // runPipeline calls this twice: once bare, then again with the generated

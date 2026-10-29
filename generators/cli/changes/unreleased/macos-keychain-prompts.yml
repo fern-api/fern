@@ -1,0 +1,14 @@
+- summary: |
+    `profiles list`, `show` and `current` no longer read the OS keychain. A profile
+    saved by an older release used to be read once from them to fill its ACCOUNT
+    column, and a denied macOS prompt came back on every listing; that account is
+    now recorded by the next request that uses the profile, which reads the
+    credential anyway.
+  type: fix
+- summary: |
+    The generated release workflow signs the macOS binaries when the repository
+    has the `CODESIGN_CERTIFICATE`, `CODESIGN_CERTIFICATE_PASSWORD` and
+    `CODESIGN_IDENTITY` secrets (an Apple Developer ID certificate), so the macOS
+    keychain's "Always Allow" survives upgrades instead of prompting after every
+    release. Without the secrets the binaries are built unsigned, as before.
+  type: fix

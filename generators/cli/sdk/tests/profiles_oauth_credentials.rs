@@ -286,6 +286,10 @@ fn the_keyring_client_id_outranks_the_plaintext_one_in_show() {
     with_clean_env(|| {
         run(&["oa", "profiles", "create", "prod", "--oauth-client-id", "plain-id", "--use"]);
         store("prod", "keyring-id", "s");
+        // The entry was stored without a `profiles.toml` copy, as an older
+        // binary did; resolving it for `auth status` records one.
+        let (code, output) = run(&["oa", "auth", "status"]);
+        assert_eq!(code, 0, "{output}");
 
         let shown = json(&["oa", "profiles", "show", "prod", "--format", "json"]);
         assert_eq!(shown["oauth_client_id"], "keyring-id", "{shown:#?}");

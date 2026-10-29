@@ -297,6 +297,58 @@ pub(crate) fn note_removed_credential(cli_name: &str, scheme: &str) {
     });
 }
 
+/// Copy what a request's keyring read found under `account` into the record
+/// for its slot, when the record does not already say so.
+///
+/// This is how a credential stored by an older binary, before `profiles.toml`
+/// kept a copy, gets one: from a read the request makes anyway, never from an
+/// extra read by `profiles list` / `show` / `current`. Only slots a profile
+/// uses are recorded, and only into an existing `profiles.toml`.
+pub(crate) fn note_read_credential(cli_name: &str, account: &str, stored: Option<&str>) {
+    let Some(mut store) = ProfileStore::for_cli(cli_name) else {
+        return;
+    };
+    // Only the display copy is lost; the request itself is unaffected.
+    if record_read_credential(&mut store, account, stored) {
+        if let Err(e) = store.save() {
+            tracing::debug!("could not update {}: {e}", store.path().display());
+        }
+    }
+}
+
+/// [`note_read_credential`] against `store`; whether the record changed.
+fn record_read_credential(store: &mut ProfileStore, account: &str, stored: Option<&str>) -> bool {
+    let Some((scheme, credential)) = account.split_once('#') else {
+        return false;
+    };
+    let slot_in_use = store.entries().into_iter().any(|entry| {
+        store::resolve(store, &entry.name)
+            .ok()
+            .and_then(|profile| profile.credential)
+            .as_deref()
+            == Some(credential)
+    });
+    if !slot_in_use {
+        return false;
+    }
+    let record = store.credential_record(credential).unwrap_or_default();
+    match stored {
+        Some(stored) => {
+            if record.schemes.get(scheme) == Some(&store::StoredIdentity::of(stored)) {
+                return false;
+            }
+            store.record_credential(credential, scheme, stored);
+        }
+        None => {
+            if !record.schemes.contains_key(scheme) && record.checked.iter().any(|s| s == scheme) {
+                return false;
+            }
+            store.mark_credential_absent(credential, scheme);
+        }
+    }
+    true
+}
+
 fn update_active_credential_record(cli_name: &str, update: impl FnOnce(&mut ProfileStore, &str)) {
     let Some(credential) = active().and_then(|p| p.credential.clone()) else {
         return;
@@ -473,5 +525,50 @@ mod tests {
             ProfilesConfig::new().command_name("tenants").command_name,
             "tenants",
         );
+    }
+
+    fn store_with_profile(dir: &std::path::Path, profile: &str) -> ProfileStore {
+        let path = dir.join("profiles.toml");
+        std::fs::write(&path, format!("version = 1\n\n[profiles.{profile}]\n")).unwrap();
+        ProfileStore::at_path(path)
+    }
+
+    #[test]
+    fn a_read_records_the_slot_once() {
+        let dir = tempfile::tempdir().unwrap();
+        let mut store = store_with_profile(dir.path(), "prod");
+        let stored = r#"{"username":"AC1","password":"tok"}"#;
+        assert!(record_read_credential(&mut store, "basic#prod", Some(stored)));
+        assert_eq!(
+            store.credential_record("prod").unwrap().schemes["basic"].account.as_deref(),
+            Some("AC1")
+        );
+        assert!(!record_read_credential(&mut store, "basic#prod", Some(stored)));
+    }
+
+    #[test]
+    fn a_read_updates_a_changed_account_and_an_absent_entry() {
+        let dir = tempfile::tempdir().unwrap();
+        let mut store = store_with_profile(dir.path(), "prod");
+        record_read_credential(&mut store, "basic#prod", Some(r#"{"username":"AC1"}"#));
+        assert!(record_read_credential(&mut store, "basic#prod", Some(r#"{"username":"AC2"}"#)));
+        assert_eq!(
+            store.credential_record("prod").unwrap().schemes["basic"].account.as_deref(),
+            Some("AC2")
+        );
+        assert!(record_read_credential(&mut store, "basic#prod", None));
+        let record = store.credential_record("prod").unwrap();
+        assert!(record.schemes.is_empty());
+        assert_eq!(record.checked, vec!["basic".to_string()]);
+        assert!(!record_read_credential(&mut store, "basic#prod", None));
+    }
+
+    #[test]
+    fn a_read_outside_any_profile_slot_records_nothing() {
+        let dir = tempfile::tempdir().unwrap();
+        let mut store = store_with_profile(dir.path(), "prod");
+        assert!(!record_read_credential(&mut store, "basic", Some("tok")));
+        assert!(!record_read_credential(&mut store, "basic#gone", Some("tok")));
+        assert!(store.credential_record("gone").is_none());
     }
 }
