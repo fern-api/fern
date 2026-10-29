@@ -322,9 +322,20 @@ describe("patchDistWorkspaceToml — distribution", () => {
     it("enables macOS signing in the [dist] table", async () => {
         await patchDistWorkspaceToml({ outputDir, binaryName: "acme-cli" });
         const written = await readFile(path.join(outputDir, "dist-workspace.toml"), "utf-8");
-        const distTable = written.slice(written.indexOf("[dist]"));
-        expect(distTable).toMatch(/^macos-sign = true$/m);
         expect(written.match(/^macos-sign =/gm)).toHaveLength(1);
+        expect(tablesBeforeMacosSign(written)).toEqual(["[dist]"]);
+    });
+
+    it("keeps macOS signing in the [dist] table alongside the homebrew keys", async () => {
+        await patchDistWorkspaceToml({
+            outputDir,
+            binaryName: "acme-cli",
+            homebrew: { tap: "acme/homebrew-tap" }
+        });
+        const written = await readFile(path.join(outputDir, "dist-workspace.toml"), "utf-8");
+        expect(written).toContain("tap =");
+        expect(written.match(/^macos-sign =/gm)).toHaveLength(1);
+        expect(tablesBeforeMacosSign(written)).toEqual(["[dist]"]);
     });
 
     // runPipeline calls this twice: once bare, then again with the generated
@@ -352,3 +363,12 @@ describe("patchDistWorkspaceToml — distribution", () => {
         expect(written).toContain('"cargo:acme-cli-sdk"');
     });
 });
+
+/**
+ * The tables `macos-sign` could belong to: every header from `[dist]` up to
+ * the key. Only `["[dist]"]` puts it where dist reads it.
+ */
+function tablesBeforeMacosSign(distToml: string): string[] {
+    const head = distToml.slice(0, distToml.indexOf("\nmacos-sign = true\n"));
+    return (head.match(/^\[[^\]]+\]$/gm) ?? []).filter((_, i, all) => i >= all.indexOf("[dist]"));
+}

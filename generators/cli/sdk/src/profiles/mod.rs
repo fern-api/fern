@@ -305,6 +305,9 @@ pub(crate) fn note_removed_credential(cli_name: &str, scheme: &str) {
 /// extra read by `profiles list` / `show` / `current`. Only slots a profile
 /// uses are recorded, and only into an existing `profiles.toml`.
 pub(crate) fn note_read_credential(cli_name: &str, account: &str, stored: Option<&str>) {
+    if !account.contains('#') {
+        return;
+    }
     let Some(mut store) = ProfileStore::for_cli(cli_name) else {
         return;
     };
@@ -321,6 +324,15 @@ fn record_read_credential(store: &mut ProfileStore, account: &str, stored: Optio
     let Some((scheme, credential)) = account.split_once('#') else {
         return false;
     };
+    // Checked first: a record that already matches is the common case.
+    let record = store.credential_record(credential).unwrap_or_default();
+    let up_to_date = match stored {
+        Some(stored) => record.schemes.get(scheme) == Some(&store::StoredIdentity::of(stored)),
+        None => !record.schemes.contains_key(scheme) && record.checked.iter().any(|s| s == scheme),
+    };
+    if up_to_date {
+        return false;
+    }
     let slot_in_use = store.entries().into_iter().any(|entry| {
         store::resolve(store, &entry.name)
             .ok()
@@ -331,20 +343,9 @@ fn record_read_credential(store: &mut ProfileStore, account: &str, stored: Optio
     if !slot_in_use {
         return false;
     }
-    let record = store.credential_record(credential).unwrap_or_default();
     match stored {
-        Some(stored) => {
-            if record.schemes.get(scheme) == Some(&store::StoredIdentity::of(stored)) {
-                return false;
-            }
-            store.record_credential(credential, scheme, stored);
-        }
-        None => {
-            if !record.schemes.contains_key(scheme) && record.checked.iter().any(|s| s == scheme) {
-                return false;
-            }
-            store.mark_credential_absent(credential, scheme);
-        }
+        Some(stored) => store.record_credential(credential, scheme, stored),
+        None => store.mark_credential_absent(credential, scheme),
     }
     true
 }
