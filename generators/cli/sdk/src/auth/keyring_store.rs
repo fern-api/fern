@@ -104,6 +104,10 @@ impl OsKeyringStore {
 #[cfg(not(target_env = "musl"))]
 impl KeyringStore for OsKeyringStore {
     fn get(&self, service: &str, account: &str) -> Result<Option<String>, CliError> {
+        #[cfg(target_os = "macos")]
+        if let Some(read) = macos_security_tool::get(service, account) {
+            return read;
+        }
         let entry = keyring::Entry::new(service, account)
             .map_err(|e| CliError::Auth(format!("keyring open failed: {e}")))?;
         match entry.get_password() {
@@ -165,6 +169,15 @@ mod macos_keychain {
     const ERR_SEC_ITEM_NOT_FOUND: i32 = -25300;
 
     pub(super) fn set(service: &str, account: &str, value: &str) -> Result<(), CliError> {
+        // Recreated rather than updated, so the item trusts `security` (see
+        // `macos_security_tool`) instead of keeping an older binary's access
+        // list. If the tool cannot add it, the in-process write still does.
+        if super::macos_security_tool::can_add(service, account) {
+            delete(service, account)?;
+            if super::macos_security_tool::add(service, account, value) {
+                return Ok(());
+            }
+        }
         passwords::set_generic_password(service, account, value.as_bytes())
             .map_err(|e| CliError::Auth(format!("keyring set failed: {e}")))
     }
@@ -175,6 +188,136 @@ mod macos_keychain {
             Err(e) if e.code() == ERR_SEC_ITEM_NOT_FOUND => Ok(()),
             Err(e) => Err(CliError::Auth(format!("keyring delete failed: {e}"))),
         }
+    }
+}
+
+/// Keychain reads and writes made through Apple's `/usr/bin/security`.
+///
+/// macOS ties "Always Allow" to the program that reads an item. For this
+/// CLI's own binary that is its code hash, which every build and release
+/// changes, so the prompt comes back after each upgrade. Through
+/// `security`, the program asking is always that Apple-signed tool, so one
+/// "Always Allow" lasts. `None` means the tool could not be run and the
+/// caller should go to the keychain itself.
+#[cfg(target_os = "macos")]
+mod macos_security_tool {
+    use super::security_tool_text::{encode_hex, parse_password, quote};
+    use crate::error::CliError;
+    use std::io::Write;
+    use std::process::{Command, Stdio};
+
+    const SECURITY: &str = "/usr/bin/security";
+    /// `security`'s exit status for errSecItemNotFound.
+    const EXIT_ITEM_NOT_FOUND: i32 = 44;
+
+    pub(super) fn get(service: &str, account: &str) -> Option<Result<Option<String>, CliError>> {
+        let output = Command::new(SECURITY)
+            .args(["find-generic-password", "-s", service, "-a", account, "-g"])
+            .stdin(Stdio::null())
+            .output()
+            .ok()?;
+        if output.status.code() == Some(EXIT_ITEM_NOT_FOUND) {
+            return Some(Ok(None));
+        }
+        // `-g` prints the password on stderr, after the item's attributes on
+        // stdout.
+        let stderr = String::from_utf8_lossy(&output.stderr);
+        if !output.status.success() {
+            return Some(Err(CliError::Auth(format!(
+                "keyring get failed: {}",
+                stderr.trim()
+            ))));
+        }
+        Some(parse_password(&stderr).map(Some).ok_or_else(|| {
+            CliError::Auth("keyring get failed: unrecognized `security` output".to_string())
+        }))
+    }
+
+    /// Whether [`add`] can name this item on a `security -i` command line.
+    pub(super) fn can_add(service: &str, account: &str) -> bool {
+        quote(service).is_some()
+            && quote(account).is_some()
+            && std::path::Path::new(SECURITY).exists()
+    }
+
+    /// Add the item; whether it was added. The value goes in as hex on
+    /// `security`'s stdin, so it is never on a command line.
+    pub(super) fn add(service: &str, account: &str, value: &str) -> bool {
+        let (Some(service), Some(account)) = (quote(service), quote(account)) else {
+            return false;
+        };
+        let command = format!(
+            "add-generic-password -s {service} -a {account} -X {}\n",
+            encode_hex(value.as_bytes())
+        );
+        let Ok(mut child) = Command::new(SECURITY)
+            .arg("-i")
+            .stdin(Stdio::piped())
+            .stdout(Stdio::null())
+            .stderr(Stdio::piped())
+            .spawn()
+        else {
+            return false;
+        };
+        let written = child
+            .stdin
+            .take()
+            .is_some_and(|mut stdin| stdin.write_all(command.as_bytes()).is_ok());
+        let Ok(output) = child.wait_with_output() else {
+            return false;
+        };
+        // `-i` reports a failed command on stderr, not always in its status.
+        written && output.status.success() && output.stderr.iter().all(u8::is_ascii_whitespace)
+    }
+}
+
+/// The text `/usr/bin/security` reads and prints, apart from running it so
+/// it is testable on any platform.
+#[cfg(any(target_os = "macos", test))]
+mod security_tool_text {
+    /// The password in `find-generic-password -g` output: `password: "…"`
+    /// when every byte is printable, else `password: 0x<HEX>  "…"`.
+    pub(super) fn parse_password(stderr: &str) -> Option<String> {
+        let rest = stderr
+            .lines()
+            .find_map(|line| line.strip_prefix("password:"))?;
+        let rest = rest.strip_prefix(' ').unwrap_or(rest);
+        if rest.is_empty() {
+            return Some(String::new());
+        }
+        if let Some(hex) = rest.strip_prefix("0x") {
+            return String::from_utf8(decode_hex(hex.split_whitespace().next()?)?).ok();
+        }
+        rest.strip_prefix('"')?
+            .strip_suffix('"')
+            .map(str::to_string)
+    }
+
+    pub(super) fn encode_hex(bytes: &[u8]) -> String {
+        bytes.iter().map(|b| format!("{b:02x}")).collect()
+    }
+
+    fn decode_hex(hex: &str) -> Option<Vec<u8>> {
+        if !hex.len().is_multiple_of(2) {
+            return None;
+        }
+        (0..hex.len())
+            .step_by(2)
+            .map(|i| u8::from_str_radix(hex.get(i..i + 2)?, 16).ok())
+            .collect()
+    }
+
+    /// `value` single-quoted for a `security -i` command line, or `None`
+    /// when it holds a character that quoting cannot carry.
+    pub(super) fn quote(value: &str) -> Option<String> {
+        if value.is_empty()
+            || value
+                .chars()
+                .any(|c| c == '\'' || c == '\\' || c.is_control())
+        {
+            return None;
+        }
+        Some(format!("'{value}'"))
     }
 }
 
@@ -1177,6 +1320,41 @@ mod tests {
     fn chunked_store_backend_label_delegates() {
         let store = ChunkedKeyringStore::new(MockKeyringStore::new());
         assert_eq!(store.backend_label(), "mock (in-memory)");
+    }
+
+    #[test]
+    fn security_tool_password_output_is_parsed() {
+        use super::security_tool_text::parse_password;
+        assert_eq!(
+            parse_password("password: \"{\"username\":\"AC1\"}\"\n").as_deref(),
+            Some("{\"username\":\"AC1\"}")
+        );
+        // Printable hex is a password, not an encoding of one.
+        assert_eq!(
+            parse_password("password: \"deadbeef\"\n").as_deref(),
+            Some("deadbeef")
+        );
+        assert_eq!(
+            parse_password("password: 0x68C3A90A  \"h\\303\\251\\012\"\n").as_deref(),
+            Some("h\u{e9}\n")
+        );
+        assert_eq!(parse_password("password: \n").as_deref(), Some(""));
+        assert_eq!(parse_password("keychain: \"login.keychain-db\"\n"), None);
+        assert_eq!(parse_password("password: 0xZZ\n"), None);
+    }
+
+    #[test]
+    fn security_tool_input_is_encoded() {
+        use super::security_tool_text::{encode_hex, quote};
+        assert_eq!(encode_hex("h\u{e9}\n".as_bytes()), "68c3a90a");
+        assert_eq!(quote("twilio").as_deref(), Some("'twilio'"));
+        assert_eq!(
+            quote("accountSid_authToken#prod").as_deref(),
+            Some("'accountSid_authToken#prod'")
+        );
+        assert_eq!(quote("it's"), None);
+        assert_eq!(quote("a\nb"), None);
+        assert_eq!(quote(""), None);
     }
 
     #[test]
