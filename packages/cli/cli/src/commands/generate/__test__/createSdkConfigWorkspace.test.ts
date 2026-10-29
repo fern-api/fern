@@ -5,13 +5,13 @@ import path from "node:path";
 import { promisify } from "node:util";
 import { getLatestGeneratorVersion } from "@fern-api/configuration-loader";
 import { bundleRemoteOpenAPI, type OSSWorkspace } from "@fern-api/lazy-fern-workspace";
-import { createLogger, LogLevel } from "@fern-api/logger";
+import { CONSOLE_LOGGER, createLogger, LogLevel } from "@fern-api/logger";
 import {
     createFernSdkGenApiRequest,
     prepareFernSdkGenApiRoutes,
     SDK_CONFIG_UNPINNED_GENERATOR_VERSION
 } from "@fern-api/remote-workspace-runner";
-import { createMockTaskContext, type TaskContext } from "@fern-api/task-context";
+import { createMockTaskContext, TaskAbortSignal, type TaskContext } from "@fern-api/task-context";
 import { parseSdkConfigV1 } from "@postman/sdk-config/sdk-config/v1";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
@@ -361,6 +361,40 @@ describe("createSdkConfigWorkspace", () => {
         // The generated bundle lands in a managed temporary directory that the deploy step assigns.
         expect(generator?.absolutePathToLocalOutput).toBeUndefined();
         await cleanup();
+    });
+
+    it("rejects a hosted MCP target under --local, because the MCP language has no local generator", async () => {
+        const directory = await mkdtemp(path.join(tmpdir(), "fern-sdk-config-workspace-"));
+        temporaryDirectories.push(directory);
+        await writeFile(
+            path.join(directory, "openapi.yml"),
+            "openapi: 3.0.0\ninfo:\n  title: Payments\n  version: 1.0.0\npaths: {}\n"
+        );
+        const sdkConfig = parseSdkConfigV1({
+            schemaVersion: "sdk-config/v1",
+            sdkName: "payments",
+            source: { specs: [{ id: "payments", type: "openapi", path: "./openapi.yml" }] },
+            api: {},
+            client: {},
+            package: {},
+            docs: {},
+            generation: {},
+            targets: [{ language: "mcp", output: { delivery: "hosted", slug: "payments" } }]
+        });
+
+        const errorLog = vi.fn();
+        await expect(
+            createSdkConfigWorkspace({
+                sdkConfig,
+                absolutePathToConfig: path.join(directory, "sdk-config.yml"),
+                cliVersion: "0.0.0",
+                context: createMockTaskContext({ logger: { ...CONSOLE_LOGGER, error: errorLog } }),
+                local: true
+            })
+        ).rejects.toBeInstanceOf(TaskAbortSignal);
+        expect(errorLog).toHaveBeenCalledWith(
+            expect.stringContaining("cannot run with --local because no local generator exists for it")
+        );
     });
 
     it("does not mark a files or zip MCP target as fern-hosted", async () => {

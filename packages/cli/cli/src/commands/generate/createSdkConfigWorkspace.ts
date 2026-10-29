@@ -212,8 +212,9 @@ function createGeneratorInvocation({
                   )
                 : undefined,
         // A hosted MCP target has no output path: generation lands in a managed temporary directory and
-        // the generated bundle is deployed from there (see fernHostedOutputs.ts). `--local` keeps its
-        // directory, as for every other delivery.
+        // the generated bundle is deployed from there (see fernHostedOutputs.ts). It never combines with
+        // `--local`: the MCP language has no local (on-prem) generator, so `resolveLocalGenerator` rejects
+        // the target before this invocation is built.
         ...(output?.delivery === "hosted" ? { fernHostedOutput: { slug: output.slug } } : {}),
         absolutePathToLocalSnippets: undefined,
         keywords: undefined,
