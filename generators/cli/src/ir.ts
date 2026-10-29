@@ -49,6 +49,12 @@ export interface IrSummary {
      */
     whiteLabel: boolean;
     /**
+     * The IR's `readmeConfig.customSections` (from `generators.yml`'s top-level
+     * `readme.customSections`), unfiltered. `emitReadme` keeps the ones whose
+     * `language` targets the CLI.
+     */
+    readmeCustomSections: FernIr.ReadmeCustomSection[];
+    /**
      * `generationMetadata.requestedVersion`: the raw `--version` the Fern CLI
      * was invoked with (or SDK Config's `sdkVersion`). Local-file-system
      * output runs in `downloadFiles` mode, whose generator config carries no
@@ -86,6 +92,7 @@ export async function readIr(irFilepath: string): Promise<IrSummary> {
         services: ir.services,
         environments: ir.environments,
         whiteLabel: ir.readmeConfig?.whiteLabel ?? false,
+        readmeCustomSections: ir.readmeConfig?.customSections ?? [],
         requestedVersion: ir.generationMetadata?.requestedVersion
     };
 }

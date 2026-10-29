@@ -508,6 +508,80 @@ describe("emitReadme", () => {
         const toc = readme.split("## Table of contents")[1]?.split("## Installation")[0] ?? "";
         expect(toc).toContain("[Attribution](#attribution)");
     });
+
+    // ── Custom sections (readme.customSections) ─────────────────────
+
+    describe("custom sections", () => {
+        const sectionBase = {
+            binaryName: "acme",
+            apiDisplayName: "Acme",
+            authBindings: [bearerBinding],
+            npmPublishInfo,
+            repoUrl: "https://github.com/acme/acme-cli"
+        };
+
+        it("renders rust-language sections after Documentation, in order", async () => {
+            const readme = await emitAndRead({
+                outputDir,
+                ...sectionBase,
+                customSections: [
+                    { title: "Support", language: "rust", content: "Email support@acme.com." },
+                    { title: "Changelog", language: "rust", content: "See CHANGELOG.md." }
+                ]
+            });
+
+            const documentation = readme.indexOf("## Documentation");
+            const support = readme.indexOf("## Support\n\nEmail support@acme.com.\n\n");
+            const changelog = readme.indexOf("## Changelog\n\nSee CHANGELOG.md.\n\n");
+            const advanced = readme.indexOf("## Advanced");
+            expect(documentation).toBeGreaterThan(-1);
+            expect(support).toBeGreaterThan(documentation);
+            expect(changelog).toBeGreaterThan(support);
+            expect(advanced).toBeGreaterThan(changelog);
+            expect(readme).toContain("- [Support](#support)");
+        });
+
+        it("ignores sections for other languages", async () => {
+            const readme = await emitAndRead({
+                outputDir,
+                ...sectionBase,
+                customSections: [{ title: "Python Only", language: "python", content: "pip install acme" }]
+            });
+
+            expect(readme).not.toContain("Python Only");
+        });
+
+        it("interpolates known template options and leaves unknown ones intact", async () => {
+            const readme = await emitAndRead({
+                outputDir,
+                ...sectionBase,
+                customSections: [
+                    {
+                        title: "Scripting",
+                        language: "rust",
+                        content:
+                            "Run `{{ binaryName }}` from {{packageName}} against the {{apiName}} API. {{ unknown }}"
+                    }
+                ]
+            });
+
+            expect(readme).toContain("Run `acme` from @petstore/cli against the Acme API. {{ unknown }}");
+        });
+
+        it("replaces a previously generated custom section instead of duplicating it", async () => {
+            const customSections = [{ title: "Getting Help", language: "rust" as const, content: "v2 content" }];
+            await writeFile(
+                path.join(outputDir, "README.md"),
+                ["# Acme CLI", "", "## Getting Help", "", "v1 content", ""].join("\n")
+            );
+
+            const readme = await emitAndRead({ outputDir, ...sectionBase, customSections });
+
+            expect(readme).toContain("v2 content");
+            expect(readme).not.toContain("v1 content");
+            expect(readme.match(/## Getting Help/g)).toHaveLength(1);
+        });
+    });
 });
 
 describe("emitReadme — distribution channels", () => {

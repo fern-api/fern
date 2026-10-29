@@ -11,6 +11,7 @@ const emptyIr = (apiDisplayName: string | undefined = undefined): IrSummary => (
     services: {},
     environments: undefined,
     whiteLabel: false,
+    readmeCustomSections: [],
     requestedVersion: undefined
 });
 
