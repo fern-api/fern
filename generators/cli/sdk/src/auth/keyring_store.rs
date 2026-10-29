@@ -183,6 +183,12 @@ mod macos_keychain {
     }
 
     pub(super) fn delete(service: &str, account: &str) -> Result<(), CliError> {
+        // Items added through `security` are owned by it, so the in-process
+        // delete is refused ("Invalid attempt to change the owner of this
+        // item"); `security` can delete them, and older builds' items too.
+        if let Some(result) = super::macos_security_tool::delete(service, account) {
+            return result;
+        }
         match passwords::delete_generic_password(service, account) {
             Ok(()) => Ok(()),
             Err(e) if e.code() == ERR_SEC_ITEM_NOT_FOUND => Ok(()),
@@ -231,6 +237,24 @@ mod macos_security_tool {
         Some(parse_password(&stderr).map(Some).ok_or_else(|| {
             CliError::Auth("keyring get failed: unrecognized `security` output".to_string())
         }))
+    }
+
+    /// Delete the item; `Ok` when it is gone (or was never there). `None`
+    /// means the tool could not be run.
+    pub(super) fn delete(service: &str, account: &str) -> Option<Result<(), CliError>> {
+        let output = Command::new(SECURITY)
+            .args(["delete-generic-password", "-s", service, "-a", account])
+            .stdin(Stdio::null())
+            .stdout(Stdio::null())
+            .output()
+            .ok()?;
+        if output.status.success() || output.status.code() == Some(EXIT_ITEM_NOT_FOUND) {
+            return Some(Ok(()));
+        }
+        Some(Err(CliError::Auth(format!(
+            "keyring delete failed: {}",
+            String::from_utf8_lossy(&output.stderr).trim()
+        ))))
     }
 
     /// Whether [`add`] can name this item on a `security -i` command line.

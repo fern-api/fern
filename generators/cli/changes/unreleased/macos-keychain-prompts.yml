@@ -13,7 +13,7 @@
     release. Without the secrets the binaries are built unsigned, as before.
   type: fix
 - summary: |
-    On macOS, keychain credentials are read and written through Apple's
+    On macOS, keychain credentials are read, written and deleted through Apple's
     `/usr/bin/security` tool, so the keychain asks about that tool rather than
     the CLI binary itself. One "Always Allow" now lasts across rebuilds and
     upgrades, signed or not, instead of prompting again for every new build.
