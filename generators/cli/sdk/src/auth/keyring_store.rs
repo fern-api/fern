@@ -678,12 +678,13 @@ impl<S: KeyringStore> KeyringStore for ChunkedKeyringStore<S> {
 /// the request resolving each field) read the OS keychain once instead of
 /// once per lookup. On macOS every read can raise a password prompt.
 ///
-/// Only successful reads are kept: a failed or denied read is retried on the
-/// next lookup. `set` and `delete` update the cached copy, so a later lookup
-/// in the same process never sees a stale value. Entries expire after
+/// A denied or failed read is kept too, so one command raises one prompt per
+/// entry rather than one per lookup; the next command asks again. `set` and
+/// `delete` update the cached copy, so a later lookup in the same process
+/// never sees a stale value. Entries expire after
 /// [`Self::DEFAULT_TTL`], which bounds how long a long-running command can
 /// miss a change made by another process.
-type CachedEntries = HashMap<(String, String), (Instant, Option<String>)>;
+type CachedEntries = HashMap<(String, String), (Instant, Result<Option<String>, String>)>;
 
 pub struct CachingKeyringStore<S: KeyringStore> {
     inner: S,
@@ -716,7 +717,7 @@ impl<S: KeyringStore> CachingKeyringStore<S> {
             .unwrap_or_else(|poisoned| poisoned.into_inner())
     }
 
-    fn remember(&self, service: &str, account: &str, value: Option<String>) {
+    fn remember(&self, service: &str, account: &str, value: Result<Option<String>, String>) {
         self.entries()
             .insert(Self::key(service, account), (Instant::now(), value));
     }
@@ -741,18 +742,26 @@ impl<S: KeyringStore> KeyringStore for CachingKeyringStore<S> {
     fn get(&self, service: &str, account: &str) -> Result<Option<String>, CliError> {
         if let Some((read_at, value)) = self.entries().get(&Self::key(service, account)) {
             if read_at.elapsed() < self.ttl {
-                return Ok(value.clone());
+                return value.clone().map_err(CliError::Auth);
             }
         }
-        let value = self.inner.get(service, account)?;
-        self.remember(service, account, value.clone());
-        Ok(value)
+        match self.inner.get(service, account) {
+            Ok(value) => {
+                self.remember(service, account, Ok(value.clone()));
+                Ok(value)
+            }
+            Err(CliError::Auth(message)) => {
+                self.remember(service, account, Err(message.clone()));
+                Err(CliError::Auth(message))
+            }
+            Err(e) => Err(e),
+        }
     }
 
     fn set(&self, service: &str, account: &str, value: &str) -> Result<(), CliError> {
         match self.inner.set(service, account, value) {
             Ok(()) => {
-                self.remember(service, account, Some(value.to_string()));
+                self.remember(service, account, Ok(Some(value.to_string())));
                 Ok(())
             }
             Err(e) => {
@@ -765,7 +774,7 @@ impl<S: KeyringStore> KeyringStore for CachingKeyringStore<S> {
     fn delete(&self, service: &str, account: &str) -> Result<(), CliError> {
         match self.inner.delete(service, account) {
             Ok(()) => {
-                self.remember(service, account, None);
+                self.remember(service, account, Ok(None));
                 Ok(())
             }
             Err(e) => {
@@ -1072,17 +1081,39 @@ mod tests {
     }
 
     #[test]
-    fn caching_store_retries_a_failed_read() {
+    fn caching_store_remembers_a_failed_read_until_it_expires() {
         let mock = Arc::new(CountingMock::default());
         mock.inner.set("svc", "acct", "secret").unwrap();
         mock.fail_reads.store(true, std::sync::atomic::Ordering::SeqCst);
         let store = CachingKeyringStore::new(mock.clone());
 
-        assert!(store.get("svc", "acct").is_err());
-        assert!(store.get("svc", "acct").is_err());
+        for _ in 0..3 {
+            match store.get("svc", "acct") {
+                Err(CliError::Auth(msg)) => assert!(msg.contains("User denied access")),
+                other => panic!("expected the denial, got: {other:?}"),
+            }
+        }
+        assert_eq!(mock.reads(), 1, "one prompt per entry, not one per lookup");
+
         mock.fail_reads.store(false, std::sync::atomic::Ordering::SeqCst);
-        assert_eq!(store.get("svc", "acct").unwrap().as_deref(), Some("secret"));
-        assert_eq!(mock.reads(), 3, "a denied read is not remembered");
+        let expiring = CachingKeyringStore::with_ttl(mock.clone(), Duration::ZERO);
+        assert!(expiring.get("svc", "acct").is_ok());
+        assert!(expiring.get("svc", "acct").is_ok());
+        assert_eq!(mock.reads(), 3, "an expired denial is asked again");
+    }
+
+    #[test]
+    fn caching_store_forgets_a_failed_read_after_a_write() {
+        let mock = Arc::new(CountingMock::default());
+        mock.fail_reads.store(true, std::sync::atomic::Ordering::SeqCst);
+        let store = CachingKeyringStore::new(mock.clone());
+        assert!(store.get("svc", "acct").is_err());
+
+        store.set("svc", "acct", "fresh").unwrap();
+        assert_eq!(store.get("svc", "acct").unwrap().as_deref(), Some("fresh"));
+        store.delete("svc", "acct").unwrap();
+        assert_eq!(store.get("svc", "acct").unwrap(), None);
+        assert_eq!(mock.reads(), 1);
     }
 
     #[test]

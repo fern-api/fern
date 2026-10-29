@@ -24,6 +24,8 @@
     denied or cancelled macOS prompt, a locked keyring) now says so, for example
     "Couldn't read the saved credential for profile `default` from the macOS
     Keychain (access was denied, or the Keychain is locked)", instead of
-    reporting the credential as missing and asking the user to set it again. Credentials that really are missing get the same
+    reporting the credential as missing and asking the user to set it again. A
+    denied or cancelled read is also remembered for the rest of the command, so
+    an OAuth profile raises one Keychain dialog instead of three. Credentials that really are missing get the same
     error as before.
   type: fix
