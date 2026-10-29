@@ -40,7 +40,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	request := &fern.TestSubmissionStatus{
 //	    Stopped: "stopped",
 //	}
-//	client.Admin.UpdateTestSubmissionStatus(
+//	err := client.Admin.UpdateTestSubmissionStatus(
 //	    context.TODO(),
 //	    uuid.MustParse(
 //	        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -73,7 +73,7 @@ func (c *Client) UpdateTestSubmissionStatus(
 //	    ),
 //	    UpdateInfo: &fern.TestSubmissionUpdateInfo{},
 //	}
-//	client.Admin.SendTestSubmissionUpdate(
+//	err := client.Admin.SendTestSubmissionUpdate(
 //	    context.TODO(),
 //	    uuid.MustParse(
 //	        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -103,7 +103,7 @@ func (c *Client) SendTestSubmissionUpdate(
 //	request := &fern.WorkspaceSubmissionStatus{
 //	    Stopped: "stopped",
 //	}
-//	client.Admin.UpdateWorkspaceSubmissionStatus(
+//	err := client.Admin.UpdateWorkspaceSubmissionStatus(
 //	    context.TODO(),
 //	    uuid.MustParse(
 //	        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -136,7 +136,7 @@ func (c *Client) UpdateWorkspaceSubmissionStatus(
 //	    ),
 //	    UpdateInfo: &fern.WorkspaceSubmissionUpdateInfo{},
 //	}
-//	client.Admin.SendWorkspaceSubmissionUpdate(
+//	err := client.Admin.SendWorkspaceSubmissionUpdate(
 //	    context.TODO(),
 //	    uuid.MustParse(
 //	        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -243,7 +243,7 @@ func (c *Client) SendWorkspaceSubmissionUpdate(
 //	        },
 //	    },
 //	}
-//	client.Admin.StoreTracedTestCase(
+//	err := client.Admin.StoreTracedTestCase(
 //	    context.TODO(),
 //	    uuid.MustParse(
 //	        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -349,7 +349,7 @@ func (c *Client) StoreTracedTestCase(
 //	        ),
 //	    },
 //	}
-//	client.Admin.StoreTracedTestCaseV2(
+//	err := client.Admin.StoreTracedTestCaseV2(
 //	    context.TODO(),
 //	    uuid.MustParse(
 //	        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -464,7 +464,7 @@ func (c *Client) StoreTracedTestCaseV2(
 //	        },
 //	    },
 //	}
-//	client.Admin.StoreTracedWorkspace(
+//	err := client.Admin.StoreTracedWorkspace(
 //	    context.TODO(),
 //	    uuid.MustParse(
 //	        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -567,7 +567,7 @@ func (c *Client) StoreTracedWorkspace(
 //	        ),
 //	    },
 //	}
-//	client.Admin.StoreTracedWorkspaceV2(
+//	err := client.Admin.StoreTracedWorkspaceV2(
 //	    context.TODO(),
 //	    uuid.MustParse(
 //	        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",

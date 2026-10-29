@@ -18,7 +18,7 @@ request := &fern.GetFooRequest{
         "required_nullable_baz",
     ),
 }
-client.GetFoo(
+_, err := client.GetFoo(
     context.TODO(),
     request,
 )
@@ -100,7 +100,7 @@ request := &fern.UpdateFooRequest{
         "required_nullable_text",
     ),
 }
-client.UpdateFoo(
+_, err := client.UpdateFoo(
     context.TODO(),
     "id",
     request,

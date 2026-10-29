@@ -44,7 +44,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //
 // Example:
 //
-//	client.BasicAuth.GetWithBasicAuth(
+//	_, err := client.BasicAuth.GetWithBasicAuth(
 //	    context.TODO(),
 //	)
 func (c *Client) GetWithBasicAuth(
@@ -68,7 +68,7 @@ func (c *Client) GetWithBasicAuth(
 //	request := map[string]any{
 //	    "key": "value",
 //	}
-//	client.BasicAuth.PostWithBasicAuth(
+//	_, err := client.BasicAuth.PostWithBasicAuth(
 //	    context.TODO(),
 //	    request,
 //	)

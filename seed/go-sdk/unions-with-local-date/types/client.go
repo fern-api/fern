@@ -36,7 +36,7 @@ func NewClient(options *core.RequestOptions) *Client {
 
 // Example:
 //
-//	client.Types.Get(
+//	_, err := client.Types.Get(
 //	    context.TODO(),
 //	    "date-example",
 //	)
@@ -59,7 +59,7 @@ func (c *Client) Get(
 // Example:
 //
 //	request := &fern.UnionWithTime{}
-//	client.Types.Update(
+//	_, err := client.Types.Update(
 //	    context.TODO(),
 //	    request,
 //	)

@@ -8,7 +8,7 @@ import (
     option "github.com/fern-api/undiscriminated-go/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -17,8 +17,12 @@ func do() {
     request := &undiscriminated.MyUnion{
         String: "string",
     }
-    client.Union.Get(
+    _, err := client.Union.Get(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

@@ -26,7 +26,7 @@ Returns a RootObject which inherits from a nullable schema.
 <dd>
 
 ```go
-client.GetTest(
+_, err := client.GetTest(
     context.TODO(),
 )
 ```
@@ -68,7 +68,7 @@ Creates a test object with nullable allOf in request body.
 
 ```go
 request := &fern.RootObject{}
-client.CreateTest(
+_, err := client.CreateTest(
     context.TODO(),
     request,
 )

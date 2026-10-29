@@ -16,7 +16,7 @@
 request := &fern.MyUnion{
     String: "string",
 }
-client.Union.Get(
+_, err := client.Union.Get(
     context.TODO(),
     request,
 )
@@ -59,7 +59,7 @@ client.Union.Get(
 <dd>
 
 ```go
-client.Union.GetMetadata(
+_, err := client.Union.GetMetadata(
     context.TODO(),
 )
 ```
@@ -93,7 +93,7 @@ request := &fern.MetadataUnion{
         },
     },
 }
-client.Union.UpdateMetadata(
+_, err := client.Union.UpdateMetadata(
     context.TODO(),
     request,
 )
@@ -145,7 +145,7 @@ request := &fern.Request{
         },
     },
 }
-client.Union.Call(
+_, err := client.Union.Call(
     context.TODO(),
     request,
 )
@@ -191,7 +191,7 @@ client.Union.Call(
 request := &fern.UnionWithDuplicateTypes{
     String: "string",
 }
-client.Union.DuplicateTypesUnion(
+_, err := client.Union.DuplicateTypesUnion(
     context.TODO(),
     request,
 )
@@ -237,7 +237,7 @@ client.Union.DuplicateTypesUnion(
 request := &fern.NestedUnionRoot{
     String: "string",
 }
-client.Union.NestedUnions(
+_, err := client.Union.NestedUnions(
     context.TODO(),
     request,
 )
@@ -283,7 +283,7 @@ client.Union.NestedUnions(
 request := &fern.OuterNestedUnion{
     String: "string",
 }
-client.Union.NestedObjectUnions(
+_, err := client.Union.NestedObjectUnions(
     context.TODO(),
     request,
 )
@@ -332,7 +332,7 @@ request := &fern.AliasedObjectUnion{
         SharedNumber: 1,
     },
 }
-client.Union.AliasedObjectUnion(
+_, err := client.Union.AliasedObjectUnion(
     context.TODO(),
     request,
 )
@@ -385,7 +385,7 @@ request := &fern.UnionWithBaseProperties{
         },
     },
 }
-client.Union.GetWithBaseProperties(
+_, err := client.Union.GetWithBaseProperties(
     context.TODO(),
     request,
 )
@@ -436,7 +436,7 @@ request := &fern.PaymentRequest{
         },
     },
 }
-client.Union.TestCamelCaseProperties(
+_, err := client.Union.TestCamelCaseProperties(
     context.TODO(),
     request,
 )

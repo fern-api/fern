@@ -1058,12 +1058,6 @@
             {
               "type": "array",
               "items": {
-                "$ref": "#/$defs/__schema0"
-              }
-            },
-            {
-              "type": "array",
-              "items": {
                 "anyOf": [
                   {
                     "type": "object",
@@ -1191,6 +1185,12 @@
                     "additionalProperties": false
                   }
                 ]
+              }
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/__schema0"
               }
             }
           ]

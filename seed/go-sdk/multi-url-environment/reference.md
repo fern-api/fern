@@ -16,7 +16,7 @@
 request := &fern.BootInstanceRequest{
     Size: "size",
 }
-client.Ec2.BootInstance(
+err := client.Ec2.BootInstance(
     context.TODO(),
     request,
 )
@@ -63,7 +63,7 @@ client.Ec2.BootInstance(
 request := &fern.GetPresignedURLRequest{
     S3Key: "s3Key",
 }
-client.S3.GetPresignedURL(
+_, err := client.S3.GetPresignedURL(
     context.TODO(),
     request,
 )

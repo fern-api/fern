@@ -37,15 +37,19 @@ import (
     client "github.com/respect-optional-request-body/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &fern.RefundBody{
         ID: "refund-id",
     }
-    client.Refund(
+    err := client.Refund(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

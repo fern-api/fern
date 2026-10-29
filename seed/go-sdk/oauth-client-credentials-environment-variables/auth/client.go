@@ -50,7 +50,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	        "scope",
 //	    ),
 //	}
-//	client.Auth.GetTokenWithClientCredentials(
+//	_, err := client.Auth.GetTokenWithClientCredentials(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -80,7 +80,7 @@ func (c *Client) GetTokenWithClientCredentials(
 //	        "scope",
 //	    ),
 //	}
-//	client.Auth.RefreshToken(
+//	_, err := client.Auth.RefreshToken(
 //	    context.TODO(),
 //	    request,
 //	)

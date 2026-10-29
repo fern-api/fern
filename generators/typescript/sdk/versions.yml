@@ -1,4 +1,47 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.108.4
+  changelogEntry:
+    - summary: |
+        In Node, a rejected WebSocket handshake (a non-101 response) now includes the server's response
+        body in the error. Callers see `Unexpected server response: 400 (<body>)` instead of only
+        `Unexpected server response: 400`, so a bad query parameter or an auth failure can be told
+        apart from other errors. The `ErrorEvent` also exposes the rejection as optional `statusCode`,
+        `headers` and `body` fields (the body is capped at 1000 characters); they stay `undefined` for
+        other errors. The error reaches `error` listeners and `waitForOpen()`. Retry behavior does not
+        change, and browser WebSockets are unaffected.
+      type: fix
+  createdAt: "2026-10-28"
+  irVersion: 67
+- version: 3.108.3
+  changelogEntry:
+    - summary: |
+        The generated serialization layer no longer throws "Maximum call stack size exceeded" when a
+        value fails validation with a very large number of nested errors. `list`, `object` and `record`
+        schemas now append child errors in a loop instead of spreading them into `Array.prototype.push`.
+      type: fix
+  createdAt: "2026-10-28"
+  irVersion: 67
+- version: 3.108.2
+  changelogEntry:
+    - summary: |
+        XML (TwiML) builders match the legacy call shapes: a child builder keeps the child's name even when it
+        collides with the element's text field (`dial().number("+1…")` adds a `<Number>` child; the text is set
+        with `text(...)` / `setNumber(...)`), every element builder has a uniform `text(...)` setter, and the
+        child-builder verbs are also available on the value itself (`new VoiceResponse().say("hi")`). Children added
+        through the value's verbs live in its ordered `content` (which `toXml()` renders); the typed child property
+        (`children`) is not updated by them.
+      type: fix
+  createdAt: "2026-10-27"
+  irVersion: 67
+- version: 3.108.1
+  changelogEntry:
+    - summary: |
+        Fix TS1484 compilation error in the generated XML (TwiML) runtime: `src/core/xml/builder.ts` imported the
+        `XmlSerializable` interface as a value, which the ESM build (`tsconfig.esm.json`, `verbatimModuleSyntax`)
+        rejects. The import is now type-only, so `pnpm build` succeeds for SDKs with xml-encoded types.
+      type: fix
+  createdAt: "2026-10-27"
+  irVersion: 67
 - version: 3.108.0
   changelogEntry:
     - summary: |

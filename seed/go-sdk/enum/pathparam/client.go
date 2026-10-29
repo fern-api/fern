@@ -36,7 +36,7 @@ func NewClient(options *core.RequestOptions) *Client {
 
 // Example:
 //
-//	client.PathParam.Send(
+//	err := client.PathParam.Send(
 //	    context.TODO(),
 //	    fern.OperandGreaterThan.Ptr(),
 //	    &fern.ColorOrOperand{

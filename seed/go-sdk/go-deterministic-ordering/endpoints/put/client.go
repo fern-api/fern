@@ -40,7 +40,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	request := &fern.PutRequest{
 //	    ID: "id",
 //	}
-//	client.Endpoints.Put.Add(
+//	_, err := client.Endpoints.Put.Add(
 //	    context.TODO(),
 //	    request,
 //	)

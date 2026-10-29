@@ -25,6 +25,7 @@ export {
     type ResolvedAutomationConfig,
     type SingleNamespaceAPIDefinition
 } from "./GeneratorsConfiguration.js";
+export { isGithubAutoMergeEnabled } from "./isGithubAutoMergeEnabled.js";
 export { isRawProtobufAPIDefinitionSchema } from "./isRawProtobufAPIDefinitionSchema.js";
 export { resolveAutomationConfig } from "./resolveAutomationConfig.js";
 export * from "./schemas/index.js";

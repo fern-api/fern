@@ -28,7 +28,7 @@ This endpoint is used to retrieve a user.
 <dd>
 
 ```go
-client.User.GetUser(
+err := client.User.GetUser(
     context.TODO(),
     "userId",
 )
@@ -95,7 +95,7 @@ request := &fern.CreateUserRequest{
         1,
     ),
 }
-client.User.CreateUser(
+_, err := client.User.CreateUser(
     context.TODO(),
     request,
 )

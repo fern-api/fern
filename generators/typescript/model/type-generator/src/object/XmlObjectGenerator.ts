@@ -61,6 +61,17 @@ const RESERVED_BUILDER_METHODS = [
     "fromXml"
 ];
 
+/** Uniform setter for an element's text content, alongside the setter named after the text field. */
+const TEXT_SETTER = "text";
+
+interface ResolvedBuilderNames {
+    setterNames: Map<XmlProperty, string>;
+    childNames: Map<XmlProperty, Map<FernIr.TypeDeclaration, string>>;
+    textProperty: XmlProperty | undefined;
+    /** Name of the `text(...)` alias, or undefined when a property already owns that name. */
+    textAlias: string | undefined;
+}
+
 interface XmlProperty {
     key: string;
     /** A valid identifier for the property value, used for parameters and destructured locals. */
@@ -103,6 +114,7 @@ export class XmlObjectGenerator<Context extends BaseContext> {
     private readonly enableForwardCompatibleEnums: boolean;
     private readonly getPropertyKey: (property: FernIr.ObjectProperty) => string;
     private readonly getTypeForObjectProperty: (context: Context, property: FernIr.ObjectProperty) => TypeReferenceNode;
+    private readonly resolvedBuilderNames = new WeakMap<XmlProperty[], ResolvedBuilderNames>();
 
     constructor(init: XmlObjectGenerator.Init<Context>) {
         this.typeName = init.typeName;
@@ -201,11 +213,121 @@ export class XmlObjectGenerator<Context extends BaseContext> {
                     name: "toString",
                     returnType: "string",
                     statements: ["return this.toXml();"]
-                }
+                },
+                ...this.generateInstanceChildBuilderMethods(context, properties)
             ]
         };
         maybeAddDocsStructure(classNode, this.docs);
         return classNode;
+    }
+
+    /**
+     * Child-builder verbs on the value itself (`new VoiceResponse().say("hi")`), mirroring the builder's.
+     * The child is appended to the ordered content and rendered when this element is serialized; a name
+     * already used by a property or method of the class falls back to `add<Child>`.
+     */
+    private generateInstanceChildBuilderMethods(
+        context: Context,
+        properties: XmlProperty[]
+    ): OptionalKind<MethodDeclarationStructure>[] {
+        const contentName = this.contentName(properties);
+        const { childNames } = this.resolveBuilderNames(context, properties);
+        const taken = new Set<string>([
+            ...properties.map((property) => property.key),
+            "builder",
+            "fromXml",
+            "toXml",
+            "toString",
+            ADDITIONAL_ATTRIBUTES,
+            ADDITIONAL_CHILDREN,
+            contentName
+        ]);
+        const methods: OptionalKind<MethodDeclarationStructure>[] = [];
+        for (const property of this.contentProperties(properties)) {
+            for (const childType of property.childTypes) {
+                const builderName = childNames.get(property)?.get(childType);
+                if (builderName == null) {
+                    continue;
+                }
+                const name = taken.has(builderName)
+                    ? uniqueChildBuilderName(
+                          `add${context.case.pascalSafe(this.getChildElementName(childType))}`,
+                          taken
+                      )
+                    : builderName;
+                taken.add(name);
+                methods.push(
+                    this.generateChildBuilderMethod(context, property, childType, name, contentName, "instance")
+                );
+            }
+        }
+        return methods;
+    }
+
+    /**
+     * Fixes the builder's setter and child-builder names together. Child builders are named after the
+     * child element (`dial.number(...)`); when that is also the text field's name the child builder wins,
+     * as in the legacy SDKs, and the text is set through `text(...)` / `setNumber(...)`. Any other
+     * collision keeps the setter and prefixes the child builder with `add`.
+     */
+    private resolveBuilderNames(context: Context, properties: XmlProperty[]): ResolvedBuilderNames {
+        const cached = this.resolvedBuilderNames.get(properties);
+        if (cached != null) {
+            return cached;
+        }
+        const resolved = this.computeBuilderNames(context, properties);
+        this.resolvedBuilderNames.set(properties, resolved);
+        return resolved;
+    }
+
+    private computeBuilderNames(context: Context, properties: XmlProperty[]): ResolvedBuilderNames {
+        const elementProperties = properties.filter((property) => property.childTypes.length > 0);
+        const textProperty = properties.find((property) => property.kind === "TEXT");
+        const legacyChildNames = new Set<string>();
+        for (const property of elementProperties) {
+            for (const childType of property.childTypes) {
+                const { unsafeName } = context.case.camel(this.getChildElementName(childType));
+                if (isIdentifier(unsafeName)) {
+                    legacyChildNames.add(unsafeName);
+                }
+            }
+        }
+        const textYieldsToChild = textProperty != null && legacyChildNames.has(textProperty.key);
+
+        const taken = new Set<string>(RESERVED_BUILDER_METHODS);
+        if (textYieldsToChild && textProperty != null) {
+            taken.add(textProperty.key);
+        }
+        const setterNames = new Map<XmlProperty, string>();
+        for (const property of properties) {
+            const key = getPropertyKey(property.key);
+            const setterName = taken.has(property.key) ? `set${context.case.pascalSafe(property.key)}` : key;
+            taken.add(property.key);
+            taken.add(setterName);
+            setterNames.set(property, setterName);
+        }
+        if (textYieldsToChild && textProperty != null) {
+            taken.delete(textProperty.key);
+        }
+
+        const childNames = new Map<XmlProperty, Map<FernIr.TypeDeclaration, string>>();
+        for (const property of elementProperties) {
+            const names = new Map<FernIr.TypeDeclaration, string>();
+            for (const childType of property.childTypes) {
+                const childName = this.getChildElementName(childType);
+                const { unsafeName } = context.case.camel(childName);
+                const name =
+                    !isIdentifier(unsafeName) || taken.has(unsafeName)
+                        ? uniqueChildBuilderName(`add${context.case.pascalSafe(childName)}`, taken)
+                        : unsafeName;
+                taken.add(name);
+                names.set(childType, name);
+            }
+            childNames.set(property, names);
+        }
+
+        const textAlias = textProperty != null && !taken.has(TEXT_SETTER) ? TEXT_SETTER : undefined;
+        return { setterNames, childNames, textProperty, textAlias };
     }
 
     public generateModuleStatements(context: Context): StatementStructures[] {
@@ -342,15 +464,11 @@ export class XmlObjectGenerator<Context extends BaseContext> {
             }
         ];
 
-        const takenNames = new Set<string>(RESERVED_BUILDER_METHODS);
-        for (const property of properties) {
-            const key = getPropertyKey(property.key);
+        const { setterNames, childNames, textProperty, textAlias } = this.resolveBuilderNames(context, properties);
+        const generateSetter = (property: XmlProperty, name: string): OptionalKind<MethodDeclarationStructure> => {
             const target = elementKeys.has(property.key) ? "this.elements" : "this.fields";
-            const setterName = takenNames.has(property.key) ? `set${context.case.pascalSafe(property.key)}` : key;
-            takenNames.add(property.key);
-            takenNames.add(setterName);
-            const setter: OptionalKind<MethodDeclarationStructure> = {
-                name: setterName,
+            return {
+                name,
                 parameters: [
                     {
                         name: property.localName,
@@ -368,19 +486,30 @@ export class XmlObjectGenerator<Context extends BaseContext> {
                     "return this;"
                 ]
             };
+        };
+        for (const property of properties) {
+            const setter = generateSetter(property, setterNames.get(property) ?? getPropertyKey(property.key));
             maybeAddDocsStructure(setter, property.irProperty.docs);
             methods.push(setter);
         }
+        if (textProperty != null && textAlias != null) {
+            const alias = generateSetter(textProperty, textAlias);
+            alias.docs = [
+                { description: `Sets the text content of this element (same as \`${setterNames.get(textProperty)}\`).` }
+            ];
+            methods.push(alias);
+        }
 
         for (const property of elementProperties) {
-            for (const childType of property.childTypes) {
+            for (const [childType, name] of childNames.get(property) ?? []) {
                 methods.push(
                     this.generateChildBuilderMethod(
                         context,
                         property,
                         childType,
-                        takenNames,
-                        contentProperties.includes(property) ? contentName : undefined
+                        name,
+                        contentProperties.includes(property) ? contentName : undefined,
+                        "builder"
                     )
                 );
             }
@@ -564,28 +693,22 @@ export class XmlObjectGenerator<Context extends BaseContext> {
         context: Context,
         property: XmlProperty,
         childType: FernIr.TypeDeclaration,
-        takenNames: Set<string>,
-        contentName: string | undefined
+        name: string,
+        contentName: string | undefined,
+        target: "builder" | "instance"
     ): OptionalKind<MethodDeclarationStructure> {
         const childXml = getXmlEncoding(childType);
         if (childXml == null) {
             throw new Error(`Type ${childType.name.typeId} is not xml-encoded`);
         }
-        const { safeName, unsafeName } = context.case.camel(childXml.name);
-        let name = unsafeName;
-        if (safeName !== unsafeName || takenNames.has(name)) {
-            const prefixed = `add${context.case.pascalSafe(childXml.name)}`;
-            name = prefixed;
-            for (let suffix = 2; takenNames.has(name); suffix++) {
-                name = `${prefixed}${suffix}`;
-            }
-        }
-        takenNames.add(name);
 
         const childRef = getTextOfTsNode(context.type.getReferenceToNamedType(childType.name).getExpression());
         const element = accessProperty("this.elements", property.key);
         const append = property.isList ? `${element} = [...(${element} ?? []), builder];` : `${element} = builder;`;
-        const summary = `Adds a \`<${childXml.name}>\` child${property.isList ? "" : " (replacing any existing one)"} after any content added so far and returns its builder.`;
+        const summary =
+            target === "builder"
+                ? `Adds a \`<${childXml.name}>\` child${property.isList ? "" : " (replacing any existing one)"} after any content added so far and returns its builder.`
+                : `Appends a \`<${childXml.name}>\` child to the ordered content of this element and returns its builder, which is rendered when this element is serialized (the typed \`${property.key}\` property is not updated).`;
         const textKey = this.getTextPropertyKey(childType);
         const fieldsType = `Partial<${childRef}.${FIELDS_INTERFACE}>`;
         const fieldsDoc =
@@ -615,7 +738,7 @@ export class XmlObjectGenerator<Context extends BaseContext> {
             returnType: `${childRef}.${BUILDER_CLASS}`,
             statements: [
                 `const builder = new ${childRef}.${BUILDER_CLASS}(${fieldsExpression});`,
-                append,
+                ...(target === "builder" ? [append] : []),
                 ...(contentName != null ? [`this.${contentName}.push(builder);`] : []),
                 "return builder;"
             ]
@@ -962,6 +1085,15 @@ function accessProperty(receiver: string, key: string): string {
  */
 function isIdentifier(key: string): boolean {
     return getPropertyKey(key) === key;
+}
+
+/** Returns `prefixed`, suffixed with a number if already in `taken`. */
+function uniqueChildBuilderName(prefixed: string, taken: ReadonlySet<string>): string {
+    let name = prefixed;
+    for (let suffix = 2; taken.has(name); suffix++) {
+        name = `${prefixed}${suffix}`;
+    }
+    return name;
 }
 
 /** Returns `name` (prefixed with `_` if reserved), suffixed with a number if already in `taken`, and adds it to `taken`. */

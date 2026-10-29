@@ -14,15 +14,26 @@ import com.seed.endpointSecurityAuth.core.LogConfig;
 import com.seed.endpointSecurityAuth.core.OAuthAuthProvider;
 import com.seed.endpointSecurityAuth.core.RoutingAuthProvider;
 import com.seed.endpointSecurityAuth.resources.auth.AuthClient;
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import okhttp3.OkHttpClient;
 
 public class SeedEndpointSecurityAuthClientBuilder {
     private Optional<Integer> timeout = Optional.empty();
 
     private Optional<Integer> maxRetries = Optional.empty();
+
+    private Optional<Integer> maxConcurrentRequests = Optional.empty();
+
+    private Optional<Set<Integer>> retryOnStatusCodes = Optional.empty();
+
+    private Optional<List<Duration>> retryDelays = Optional.empty();
 
     private Optional<Long> initialRetryDelayMillis = Optional.empty();
 
@@ -114,6 +125,41 @@ public class SeedEndpointSecurityAuthClientBuilder {
     }
 
     /**
+     * Caps the number of in-flight requests (sync and async) the client will have at once. Unlimited unless set; must be positive.
+     */
+    public SeedEndpointSecurityAuthClientBuilder maxConcurrentRequests(int maxConcurrentRequests) {
+        this.maxConcurrentRequests = Optional.of(maxConcurrentRequests);
+        return this;
+    }
+
+    /**
+     * Restricts automatic retries to responses with one of the given HTTP status codes (for example {@code 429} only, or {@code 429} and {@code 503}), replacing the default set of 408, 429 and 5xx. Codes not listed are returned as-is. Retry-After handling and the other retry settings are unchanged.
+     */
+    public SeedEndpointSecurityAuthClientBuilder retryOnStatusCodes(Set<Integer> retryOnStatusCodes) {
+        if (retryOnStatusCodes == null) {
+            throw new IllegalArgumentException("retryOnStatusCodes must not be null");
+        }
+        this.retryOnStatusCodes = Optional.of(retryOnStatusCodes);
+        return this;
+    }
+
+    /**
+     * Sets an explicit retry schedule: the n-th retry waits for the n-th duration and the request stops retrying once the list is exhausted, so the list size replaces {@code maxRetries} and the exponential backoff settings. Delays are used as-is (no jitter); a {@code Retry-After} / {@code X-RateLimit-Reset} header still takes precedence for that attempt.
+     */
+    public SeedEndpointSecurityAuthClientBuilder retryDelays(List<Duration> retryDelays) {
+        if (retryDelays == null) {
+            throw new IllegalArgumentException("retryDelays must not be null");
+        }
+        for (Duration delay : retryDelays) {
+            if (delay == null || delay.isNegative()) {
+                throw new IllegalArgumentException("retryDelays must only contain non-negative durations: " + delay);
+            }
+        }
+        this.retryDelays = Optional.of(Collections.unmodifiableList(new ArrayList<>(retryDelays)));
+        return this;
+    }
+
+    /**
      * Sets the initial delay (in milliseconds) used for exponential backoff between retries. Defaults to 1000 milliseconds.
      */
     public SeedEndpointSecurityAuthClientBuilder initialRetryDelayMillis(long initialRetryDelayMillis) {
@@ -173,6 +219,7 @@ public class SeedEndpointSecurityAuthClientBuilder {
         setHttpClient(builder);
         setTimeouts(builder);
         setRetries(builder);
+        setConcurrencyLimit(builder);
         setLogging(builder);
         for (Map.Entry<String, String> header : this.customHeaders.entrySet()) {
             builder.addHeader(header.getKey(), header.getValue());
@@ -281,6 +328,24 @@ public class SeedEndpointSecurityAuthClientBuilder {
         }
         if (this.retryJitterFactor.isPresent()) {
             builder.retryJitterFactor(this.retryJitterFactor.get());
+        }
+        if (this.retryOnStatusCodes.isPresent()) {
+            builder.retryOnStatusCodes(this.retryOnStatusCodes.get());
+        }
+        if (this.retryDelays.isPresent()) {
+            builder.retryDelays(this.retryDelays.get());
+        }
+    }
+
+    /**
+     * Applies the in-flight request cap, if one was configured.
+     * Override this method to customize concurrency limiting.
+     *
+     * @param builder The ClientOptions.Builder to configure
+     */
+    protected void setConcurrencyLimit(ClientOptions.Builder builder) {
+        if (this.maxConcurrentRequests.isPresent()) {
+            builder.maxConcurrentRequests(this.maxConcurrentRequests.get());
         }
     }
 

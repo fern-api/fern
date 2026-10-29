@@ -128,7 +128,7 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 import asyncio
 import datetime
 
-from seed import AsyncSeedApi
+from seed import AsyncSeedApi, User, NestedUser
 
 client = AsyncSeedApi(
     base_url="https://yourhost.com/path/to/api",

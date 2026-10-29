@@ -7,15 +7,19 @@ import (
     option "github.com/fern-api/path-parameters-go/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
         ),
     )
-    client.Organizations.GetOrganization(
+    _, err := client.Organizations.GetOrganization(
         context.TODO(),
         "tenant_id",
         "organization_id",
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

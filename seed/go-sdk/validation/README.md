@@ -37,7 +37,7 @@ import (
     client "github.com/validation/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &fern.CreateRequest{
         Decimal: 2.2,
@@ -45,10 +45,14 @@ func do() {
         Name: "fern",
         Shape: fern.ShapeSquare,
     }
-    client.Create(
+    _, err := client.Create(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

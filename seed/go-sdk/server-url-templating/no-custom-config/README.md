@@ -37,16 +37,20 @@ import (
     client "github.com/server-url-templating/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &fern.TokenRequest{
         ClientID: "client_id",
         ClientSecret: "client_secret",
     }
-    client.GetToken(
+    _, err := client.GetToken(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

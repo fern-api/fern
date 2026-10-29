@@ -47,7 +47,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	        String: "tags",
 //	    },
 //	}
-//	client.Events.Subscribe(
+//	_, err := client.Events.Subscribe(
 //	    context.TODO(),
 //	    request,
 //	)

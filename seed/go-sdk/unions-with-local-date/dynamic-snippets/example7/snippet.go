@@ -8,15 +8,19 @@ import (
     option "github.com/unions-with-local-date/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
         ),
     )
     request := &fern.UnionWithTime{}
-    client.Types.Update(
+    _, err := client.Types.Update(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
