@@ -348,12 +348,20 @@ export const BreadcrumbsConfig = z.object({
     "current-page": z.boolean().optional()
 });
 
+export const VariantsColumnHeight = z.union([z.number().int().positive(), z.literal("no-limit")]);
+
+export const TabMenuLayoutConfig = z.object({
+    "default-column-height": VariantsColumnHeight.nullable().optional(),
+    "interact-on-click-only": z.boolean().optional()
+});
+
 export const LayoutConfig = z.object({
     "page-width": z.string().optional(),
     "content-width": z.string().optional(),
     "sidebar-width": z.string().optional(),
     "header-height": z.string().optional(),
     "searchbar-placement": SearchbarPlacement.optional(),
+    "tab-menu": TabMenuLayoutConfig.optional(),
     "tabs-placement": TabsPlacement.optional(),
     "switcher-placement": SwitcherPlacement.optional(),
     "content-alignment": ContentAlignment.optional(),
@@ -1004,9 +1012,18 @@ export const TabbedNavigationItemWithLayout = z.object({
     layout: z.array(NavigationItem).optional()
 });
 
+export const TabVariantGroupItem = z.union([TabVariant, LinkConfiguration]);
+
+export const TabVariantGroup = z.object({
+    group: z.string(),
+    items: z.array(TabVariantGroupItem)
+});
+
+export const TabVariantItem = z.union([TabVariant, TabVariantGroup, LinkConfiguration]);
+
 export const TabbedNavigationItemWithVariants = z.object({
     tab: TabId,
-    variants: z.array(TabVariant)
+    variants: z.array(TabVariantItem)
 });
 
 export const TabbedNavigationItem = z.union([TabbedNavigationItemWithLayout, TabbedNavigationItemWithVariants]);
@@ -1016,6 +1033,28 @@ export const TabbedNavigationConfig = z.array(TabbedNavigationItem);
 export const NavigationConfig = z.union([TabbedNavigationConfig, UntabbedNavigationConfig]);
 
 // ===== Tab Config =====
+
+export const TabMenuTab = WithPermissions.merge(WithFeatureFlags).merge(
+    z.object({
+        tab: TabId,
+        "display-name": z.string(),
+        subtitle: z.string().optional(),
+        icon: z.string().optional(),
+        slug: z.string().optional(),
+        "skip-slug": z.boolean().optional(),
+        hidden: z.boolean().optional(),
+        default: z.boolean().optional()
+    })
+);
+
+export const TabMenuGroupItem = z.union([TabMenuTab, LinkConfiguration]);
+
+export const TabMenuGroup = z.object({
+    group: z.string(),
+    tabs: z.array(TabMenuGroupItem)
+});
+
+export const TabMenuEntry = z.union([TabMenuTab, TabMenuGroup, LinkConfiguration]);
 
 export const TabConfig = WithPermissions.merge(WithFeatureFlags).merge(
     z.object({
@@ -1027,7 +1066,9 @@ export const TabConfig = WithPermissions.merge(WithFeatureFlags).merge(
         href: z.string().optional(),
         target: Target.optional(),
         changelog: ChangelogFolderRelativePath.optional(),
-        blog: ChangelogFolderRelativePath.optional()
+        blog: ChangelogFolderRelativePath.optional(),
+        "tab-menu": z.array(TabMenuEntry).optional(),
+        "tab-menu-column-height": VariantsColumnHeight.nullable().optional()
     })
 );
 

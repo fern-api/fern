@@ -1,8 +1,4 @@
-import {
-    docsYml,
-    tabbedNavigationItemHasLayout,
-    tabbedNavigationItemHasVariants
-} from "@fern-api/configuration-loader";
+import { docsYml, tabbedNavigationItemHasLayout } from "@fern-api/configuration-loader";
 import { noop, visitObjectAsync } from "@fern-api/core-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
@@ -52,10 +48,10 @@ export async function visitNavigationAst({
                             });
                         })
                     );
-                } else if (tabbedNavigationItemHasVariants(tab)) {
+                } else if (docsYml.isRawTabWithVariantLayouts(tab)) {
                     await Promise.all(
-                        tab.variants.flatMap((variant) =>
-                            variant.layout.map(async (item: docsYml.RawSchemas.NavigationItem) => {
+                        docsYml.flattenRawTabLayouts(tab).flatMap(({ layout }) =>
+                            layout.map(async (item: docsYml.RawSchemas.NavigationItem) => {
                                 await visitNavigationItem({
                                     navigationItem: item,
                                     visitor,

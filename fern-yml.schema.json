@@ -389,6 +389,285 @@
               },
               "blog": {
                 "type": "string"
+              },
+              "tab-menu": {
+                "type": "array",
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "object",
+                      "properties": {
+                        "viewers": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            }
+                          ]
+                        },
+                        "orphaned": {
+                          "type": "boolean"
+                        },
+                        "feature-flag": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "flag": {
+                                  "type": "string"
+                                },
+                                "fallback-value": {},
+                                "match": {}
+                              },
+                              "required": [
+                                "flag"
+                              ],
+                              "additionalProperties": false
+                            },
+                            {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "flag": {
+                                    "type": "string"
+                                  },
+                                  "fallback-value": {},
+                                  "match": {}
+                                },
+                                "required": [
+                                  "flag"
+                                ],
+                                "additionalProperties": false
+                              }
+                            }
+                          ]
+                        },
+                        "tab": {
+                          "type": "string"
+                        },
+                        "display-name": {
+                          "type": "string"
+                        },
+                        "subtitle": {
+                          "type": "string"
+                        },
+                        "icon": {
+                          "type": "string"
+                        },
+                        "slug": {
+                          "type": "string"
+                        },
+                        "skip-slug": {
+                          "type": "boolean"
+                        },
+                        "hidden": {
+                          "type": "boolean"
+                        },
+                        "default": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "tab",
+                        "display-name"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "group": {
+                          "type": "string"
+                        },
+                        "tabs": {
+                          "type": "array",
+                          "items": {
+                            "anyOf": [
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "viewers": {
+                                    "anyOf": [
+                                      {
+                                        "type": "string"
+                                      },
+                                      {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "string"
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  "orphaned": {
+                                    "type": "boolean"
+                                  },
+                                  "feature-flag": {
+                                    "anyOf": [
+                                      {
+                                        "type": "string"
+                                      },
+                                      {
+                                        "type": "object",
+                                        "properties": {
+                                          "flag": {
+                                            "type": "string"
+                                          },
+                                          "fallback-value": {},
+                                          "match": {}
+                                        },
+                                        "required": [
+                                          "flag"
+                                        ],
+                                        "additionalProperties": false
+                                      },
+                                      {
+                                        "type": "array",
+                                        "items": {
+                                          "type": "object",
+                                          "properties": {
+                                            "flag": {
+                                              "type": "string"
+                                            },
+                                            "fallback-value": {},
+                                            "match": {}
+                                          },
+                                          "required": [
+                                            "flag"
+                                          ],
+                                          "additionalProperties": false
+                                        }
+                                      }
+                                    ]
+                                  },
+                                  "tab": {
+                                    "type": "string"
+                                  },
+                                  "display-name": {
+                                    "type": "string"
+                                  },
+                                  "subtitle": {
+                                    "type": "string"
+                                  },
+                                  "icon": {
+                                    "type": "string"
+                                  },
+                                  "slug": {
+                                    "type": "string"
+                                  },
+                                  "skip-slug": {
+                                    "type": "boolean"
+                                  },
+                                  "hidden": {
+                                    "type": "boolean"
+                                  },
+                                  "default": {
+                                    "type": "boolean"
+                                  }
+                                },
+                                "required": [
+                                  "tab",
+                                  "display-name"
+                                ],
+                                "additionalProperties": false
+                              },
+                              {
+                                "type": "object",
+                                "properties": {
+                                  "link": {
+                                    "type": "string"
+                                  },
+                                  "href": {
+                                    "type": "string"
+                                  },
+                                  "icon": {
+                                    "type": "string"
+                                  },
+                                  "target": {
+                                    "type": "string",
+                                    "enum": [
+                                      "_blank",
+                                      "_self",
+                                      "_parent",
+                                      "_top"
+                                    ]
+                                  }
+                                },
+                                "required": [
+                                  "link",
+                                  "href"
+                                ],
+                                "additionalProperties": false
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "group",
+                        "tabs"
+                      ],
+                      "additionalProperties": false
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "link": {
+                          "type": "string"
+                        },
+                        "href": {
+                          "type": "string"
+                        },
+                        "icon": {
+                          "type": "string"
+                        },
+                        "target": {
+                          "type": "string",
+                          "enum": [
+                            "_blank",
+                            "_self",
+                            "_parent",
+                            "_top"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "link",
+                        "href"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ]
+                }
+              },
+              "tab-menu-column-height": {
+                "anyOf": [
+                  {
+                    "anyOf": [
+                      {
+                        "type": "integer",
+                        "exclusiveMinimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      {
+                        "type": "string",
+                        "const": "no-limit"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
               }
             },
             "required": [
@@ -1086,95 +1365,266 @@
                       "variants": {
                         "type": "array",
                         "items": {
-                          "type": "object",
-                          "properties": {
-                            "viewers": {
-                              "anyOf": [
-                                {
-                                  "type": "string"
-                                },
-                                {
-                                  "type": "array",
-                                  "items": {
-                                    "type": "string"
-                                  }
-                                }
-                              ]
-                            },
-                            "orphaned": {
-                              "type": "boolean"
-                            },
-                            "feature-flag": {
-                              "anyOf": [
-                                {
-                                  "type": "string"
-                                },
-                                {
-                                  "type": "object",
-                                  "properties": {
-                                    "flag": {
+                          "anyOf": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "viewers": {
+                                  "anyOf": [
+                                    {
                                       "type": "string"
                                     },
-                                    "fallback-value": {},
-                                    "match": {}
-                                  },
-                                  "required": [
-                                    "flag"
-                                  ],
-                                  "additionalProperties": false
+                                    {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  ]
                                 },
-                                {
+                                "orphaned": {
+                                  "type": "boolean"
+                                },
+                                "feature-flag": {
+                                  "anyOf": [
+                                    {
+                                      "type": "string"
+                                    },
+                                    {
+                                      "type": "object",
+                                      "properties": {
+                                        "flag": {
+                                          "type": "string"
+                                        },
+                                        "fallback-value": {},
+                                        "match": {}
+                                      },
+                                      "required": [
+                                        "flag"
+                                      ],
+                                      "additionalProperties": false
+                                    },
+                                    {
+                                      "type": "array",
+                                      "items": {
+                                        "type": "object",
+                                        "properties": {
+                                          "flag": {
+                                            "type": "string"
+                                          },
+                                          "fallback-value": {},
+                                          "match": {}
+                                        },
+                                        "required": [
+                                          "flag"
+                                        ],
+                                        "additionalProperties": false
+                                      }
+                                    }
+                                  ]
+                                },
+                                "title": {
+                                  "type": "string"
+                                },
+                                "subtitle": {
+                                  "type": "string"
+                                },
+                                "icon": {
+                                  "type": "string"
+                                },
+                                "layout": {
                                   "type": "array",
                                   "items": {
-                                    "type": "object",
-                                    "properties": {
-                                      "flag": {
-                                        "type": "string"
+                                    "$ref": "#/$defs/__schema0"
+                                  }
+                                },
+                                "slug": {
+                                  "type": "string"
+                                },
+                                "skip-slug": {
+                                  "type": "boolean"
+                                },
+                                "hidden": {
+                                  "type": "boolean"
+                                },
+                                "default": {
+                                  "type": "boolean"
+                                }
+                              },
+                              "required": [
+                                "title",
+                                "layout"
+                              ],
+                              "additionalProperties": false
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "group": {
+                                  "type": "string"
+                                },
+                                "items": {
+                                  "type": "array",
+                                  "items": {
+                                    "anyOf": [
+                                      {
+                                        "type": "object",
+                                        "properties": {
+                                          "viewers": {
+                                            "anyOf": [
+                                              {
+                                                "type": "string"
+                                              },
+                                              {
+                                                "type": "array",
+                                                "items": {
+                                                  "type": "string"
+                                                }
+                                              }
+                                            ]
+                                          },
+                                          "orphaned": {
+                                            "type": "boolean"
+                                          },
+                                          "feature-flag": {
+                                            "anyOf": [
+                                              {
+                                                "type": "string"
+                                              },
+                                              {
+                                                "type": "object",
+                                                "properties": {
+                                                  "flag": {
+                                                    "type": "string"
+                                                  },
+                                                  "fallback-value": {},
+                                                  "match": {}
+                                                },
+                                                "required": [
+                                                  "flag"
+                                                ],
+                                                "additionalProperties": false
+                                              },
+                                              {
+                                                "type": "array",
+                                                "items": {
+                                                  "type": "object",
+                                                  "properties": {
+                                                    "flag": {
+                                                      "type": "string"
+                                                    },
+                                                    "fallback-value": {},
+                                                    "match": {}
+                                                  },
+                                                  "required": [
+                                                    "flag"
+                                                  ],
+                                                  "additionalProperties": false
+                                                }
+                                              }
+                                            ]
+                                          },
+                                          "title": {
+                                            "type": "string"
+                                          },
+                                          "subtitle": {
+                                            "type": "string"
+                                          },
+                                          "icon": {
+                                            "type": "string"
+                                          },
+                                          "layout": {
+                                            "type": "array",
+                                            "items": {
+                                              "$ref": "#/$defs/__schema0"
+                                            }
+                                          },
+                                          "slug": {
+                                            "type": "string"
+                                          },
+                                          "skip-slug": {
+                                            "type": "boolean"
+                                          },
+                                          "hidden": {
+                                            "type": "boolean"
+                                          },
+                                          "default": {
+                                            "type": "boolean"
+                                          }
+                                        },
+                                        "required": [
+                                          "title",
+                                          "layout"
+                                        ],
+                                        "additionalProperties": false
                                       },
-                                      "fallback-value": {},
-                                      "match": {}
-                                    },
-                                    "required": [
-                                      "flag"
-                                    ],
-                                    "additionalProperties": false
+                                      {
+                                        "type": "object",
+                                        "properties": {
+                                          "link": {
+                                            "type": "string"
+                                          },
+                                          "href": {
+                                            "type": "string"
+                                          },
+                                          "icon": {
+                                            "type": "string"
+                                          },
+                                          "target": {
+                                            "type": "string",
+                                            "enum": [
+                                              "_blank",
+                                              "_self",
+                                              "_parent",
+                                              "_top"
+                                            ]
+                                          }
+                                        },
+                                        "required": [
+                                          "link",
+                                          "href"
+                                        ],
+                                        "additionalProperties": false
+                                      }
+                                    ]
                                   }
                                 }
-                              ]
+                              },
+                              "required": [
+                                "group",
+                                "items"
+                              ],
+                              "additionalProperties": false
                             },
-                            "title": {
-                              "type": "string"
-                            },
-                            "subtitle": {
-                              "type": "string"
-                            },
-                            "icon": {
-                              "type": "string"
-                            },
-                            "layout": {
-                              "type": "array",
-                              "items": {
-                                "$ref": "#/$defs/__schema0"
-                              }
-                            },
-                            "slug": {
-                              "type": "string"
-                            },
-                            "skip-slug": {
-                              "type": "boolean"
-                            },
-                            "hidden": {
-                              "type": "boolean"
-                            },
-                            "default": {
-                              "type": "boolean"
+                            {
+                              "type": "object",
+                              "properties": {
+                                "link": {
+                                  "type": "string"
+                                },
+                                "href": {
+                                  "type": "string"
+                                },
+                                "icon": {
+                                  "type": "string"
+                                },
+                                "target": {
+                                  "type": "string",
+                                  "enum": [
+                                    "_blank",
+                                    "_self",
+                                    "_parent",
+                                    "_top"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "link",
+                                "href"
+                              ],
+                              "additionalProperties": false
                             }
-                          },
-                          "required": [
-                            "title",
-                            "layout"
-                          ],
-                          "additionalProperties": false
+                          ]
                         }
                       }
                     },
@@ -2896,6 +3346,35 @@
                 "header-tabs",
                 "sidebar"
               ]
+            },
+            "tab-menu": {
+              "type": "object",
+              "properties": {
+                "default-column-height": {
+                  "anyOf": [
+                    {
+                      "anyOf": [
+                        {
+                          "type": "integer",
+                          "exclusiveMinimum": 0,
+                          "maximum": 9007199254740991
+                        },
+                        {
+                          "type": "string",
+                          "const": "no-limit"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "interact-on-click-only": {
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false
             },
             "tabs-placement": {
               "type": "string",

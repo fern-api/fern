@@ -15,7 +15,7 @@ import { materializeGitRef } from "./git-versions/materializeGitRef.js";
 import { type RefVersionScope, resolveRefContentRoot } from "./git-versions/resolveRefContentRoot.js";
 import { buildNavigationForDirectory, getFrontmatterMetadata, nameToSlug, nameToTitle } from "./navigationUtils.js";
 import { resolveRedirects } from "./resolveRedirects.js";
-import { tabbedNavigationItemHasLayout, tabbedNavigationItemHasVariants } from "./tabbedNavigationItemGuards.js";
+import { tabbedNavigationItemHasLayout } from "./tabbedNavigationItemGuards.js";
 
 function shouldProcessIconPath(iconPath?: string): boolean {
     if (!iconPath || iconPath.startsWith("<")) {
@@ -280,6 +280,7 @@ export async function parseDocsConfiguration({
         colors: convertColorsConfiguration(colors, context),
         typography,
         layout: convertLayoutConfig(layout, tabsObj?.alignment, tabsObj?.placement),
+        variantsLayout: convertVariantsLayout(layout),
         settings: convertSettingsConfig(rawDocsConfiguration.settings, context),
         context7File,
         llmsTxtFile,
@@ -676,6 +677,19 @@ async function parseContext7File({
     }
 
     return absolutePath;
+}
+
+function convertVariantsLayout(
+    layout: docsYml.RawSchemas.LayoutConfig | undefined
+): docsYml.VariantsLayout | undefined {
+    if (layout?.tabMenu == null) {
+        return undefined;
+    }
+
+    return {
+        tabMenuDefaultColumnHeight: layout.tabMenu?.defaultColumnHeight ?? undefined,
+        tabMenuInteractOnClickOnly: layout.tabMenu?.interactOnClickOnly ?? undefined
+    };
 }
 
 function convertLayoutConfig(
@@ -1281,6 +1295,7 @@ function parseWeight(weight: string | number | undefined): string[] | undefined 
 async function convertNavigationTabConfiguration({
     tabs,
     item,
+    tabMenuMemberItems,
     absolutePathToFernFolder,
     absolutePathToConfig,
     context,
@@ -1288,6 +1303,8 @@ async function convertNavigationTabConfiguration({
 }: {
     tabs: Record<string, docsYml.RawSchemas.TabConfig>;
     item: docsYml.RawSchemas.TabbedNavigationItem;
+    /** `navigation` entries of tab-menu members, by tab id. */
+    tabMenuMemberItems: Map<string, docsYml.RawSchemas.TabbedNavigationItem>;
     absolutePathToFernFolder: AbsoluteFilePath;
     absolutePathToConfig: AbsoluteFilePath;
     context: TaskContext;
@@ -1301,45 +1318,158 @@ async function convertNavigationTabConfiguration({
         });
     }
 
-    if (tabbedNavigationItemHasVariants(item)) {
-        const variants: docsYml.TabVariant[] = await Promise.all(
-            item.variants.map(async (variant) => {
-                const layout = await Promise.all(
-                    variant.layout.map((layoutItem) =>
-                        convertNavigationItem({
-                            rawConfig: layoutItem,
-                            absolutePathToFernFolder,
-                            absolutePathToConfig,
-                            context,
-                            folderTitleSource
-                        })
-                    )
-                );
-                return {
-                    title: variant.title,
-                    subtitle: variant.subtitle,
-                    icon: resolveIconPath(variant.icon, absolutePathToConfig),
-                    layout,
-                    slug: variant.slug,
-                    skipUrlSlug: variant.skipSlug,
-                    hidden: variant.hidden,
-                    default: variant.default,
-                    viewers: parseRoles(variant.viewers),
-                    orphaned: variant.orphaned,
-                    featureFlags: convertFeatureFlag(variant.featureFlag)
-                };
+    const convertLayout = (layout: docsYml.RawSchemas.NavigationItem[]) =>
+        Promise.all(
+            layout.map((layoutItem) =>
+                convertNavigationItem({
+                    rawConfig: layoutItem,
+                    absolutePathToFernFolder,
+                    absolutePathToConfig,
+                    context,
+                    folderTitleSource
+                })
+            )
+        );
+    const convertLink = (link: docsYml.RawSchemas.LinkConfiguration): docsYml.TabVariantMenuEntry.Link => ({
+        type: "link",
+        title: link.link,
+        href: link.href,
+        icon: resolveIconPath(link.icon, absolutePathToConfig),
+        target: link.target
+    });
+    const convertVariant = async (
+        variant: Omit<docsYml.RawSchemas.TabVariant, "layout">,
+        layout: docsYml.RawSchemas.NavigationItem[],
+        nestedVariants: docsYml.NestedTabVariants | undefined,
+        tabId?: string
+    ): Promise<docsYml.TabVariant> => ({
+        title: variant.title,
+        subtitle: variant.subtitle,
+        icon: resolveIconPath(variant.icon, absolutePathToConfig),
+        layout: await convertLayout(layout),
+        slug: variant.slug,
+        skipUrlSlug: variant.skipSlug,
+        hidden: variant.hidden,
+        default: variant.default,
+        viewers: parseRoles(variant.viewers),
+        orphaned: variant.orphaned,
+        featureFlags: convertFeatureFlag(variant.featureFlag),
+        nestedVariants,
+        tabId
+    });
+    // `variants` is built from the same TabVariant objects as `menu`, so the resolver can match them by identity.
+    const variantsInMenu = (menu: docsYml.TabVariantMenuItem[]): docsYml.TabVariant[] =>
+        menu
+            .flatMap((entry) => (entry.type === "group" ? entry.children : [entry]))
+            .flatMap((entry) => (entry.type === "variant" ? [entry.variant] : []));
+    const menuOrUndefined = (menu: docsYml.TabVariantMenuItem[]) =>
+        menu.some((entry) => entry.type !== "variant") ? menu : undefined;
+    const convertVariantsList = async (
+        items: docsYml.RawSchemas.TabVariantItem[]
+    ): Promise<docsYml.NestedTabVariants> => {
+        const convertEntry = async (entry: docsYml.RawTabVariantListItem): Promise<docsYml.TabVariantMenuEntry> => {
+            if (docsYml.isRawTabVariantLink(entry)) {
+                return convertLink(entry);
+            }
+            // A group can't nest inside a group; the schema only allows variants and links there.
+            if ("group" in entry) {
+                throw new CliError({
+                    message: `Tab ${item.tab}: variant groups can't be nested inside other groups.`,
+                    code: CliError.Code.ConfigError
+                });
+            }
+            return { type: "variant", variant: await convertVariant(entry, entry.layout, undefined) };
+        };
+        const menu: docsYml.TabVariantMenuItem[] = await Promise.all(
+            items.map(async (entry): Promise<docsYml.TabVariantMenuItem> => {
+                if (docsYml.isRawTabVariantGroup(entry)) {
+                    return {
+                        type: "group",
+                        title: entry.group,
+                        children: await Promise.all(entry.items.map(convertEntry))
+                    };
+                }
+                return convertEntry(entry);
             })
         );
+        return { variants: variantsInMenu(menu), columnHeight: undefined, menu: menuOrUndefined(menu) };
+    };
+    const convertTabMenuMember = async (
+        member: docsYml.RawSchemas.TabMenuTab
+    ): Promise<docsYml.TabVariantMenuEntry.Variant> => {
+        const memberItem = tabMenuMemberItems.get(member.tab);
+        if (memberItem == null) {
+            throw new CliError({
+                message: `Tab ${member.tab} in the tab-menu of ${item.tab} has no entry in navigation.`,
+                code: CliError.Code.ConfigError
+            });
+        }
+        const variant = { ...member, title: member.displayName };
+        if (docsYml.isRawTabWithVariantLayouts(memberItem)) {
+            const nested = await convertVariantsList(memberItem.variants);
+            return { type: "variant", variant: await convertVariant(variant, [], nested, member.tab) };
+        }
+        if (tabbedNavigationItemHasLayout(memberItem)) {
+            return {
+                type: "variant",
+                variant: await convertVariant(variant, memberItem.layout, undefined, member.tab)
+            };
+        }
+        throw new CliError({
+            message: `Tab ${member.tab} in the tab-menu of ${item.tab} needs a layout or variants in navigation.`,
+            code: CliError.Code.ConfigError
+        });
+    };
+    const convertTabMenu = (entries: docsYml.RawSchemas.TabMenuEntry[]): Promise<docsYml.TabVariantMenuItem[]> =>
+        Promise.all(
+            entries.map(async (entry): Promise<docsYml.TabVariantMenuItem> => {
+                if (docsYml.isRawTabMenuGroup(entry)) {
+                    return {
+                        type: "group",
+                        title: entry.group,
+                        children: await Promise.all(
+                            entry.tabs.map((child) =>
+                                docsYml.isRawTabMenuLink(child)
+                                    ? Promise.resolve(convertLink(child))
+                                    : convertTabMenuMember(child)
+                            )
+                        )
+                    };
+                }
+                return docsYml.isRawTabMenuLink(entry) ? convertLink(entry) : convertTabMenuMember(entry);
+            })
+        );
+
+    if (tab.tabMenu != null || docsYml.isRawTabWithVariantLayouts(item)) {
+        let child: docsYml.TabbedNavigationChild.Variants;
+        if (tab.tabMenu != null) {
+            if (docsYml.isRawTabWithVariantLayouts(item) || tabbedNavigationItemHasLayout(item)) {
+                throw new CliError({
+                    message: `Tab ${item.tab} has a tab-menu, so its navigation entry can't also have a layout or variants.`,
+                    code: CliError.Code.ConfigError
+                });
+            }
+            const menu = await convertTabMenu(tab.tabMenu);
+            child = {
+                type: "variants",
+                variants: variantsInMenu(menu),
+                location: "tab",
+                columnHeight: tab.tabMenuColumnHeight ?? undefined,
+                menu: menuOrUndefined(menu)
+            };
+        } else if (docsYml.isRawTabWithVariantLayouts(item)) {
+            const { variants, columnHeight, menu } = await convertVariantsList(item.variants);
+            child = { type: "variants", variants, location: "sidebar", columnHeight, menu };
+        } else {
+            throw new CliError({ message: `Tab ${item.tab} has no variants.`, code: CliError.Code.InternalError });
+        }
         return {
             title: tab.displayName,
             icon: resolveIconPath(tab.icon, absolutePathToConfig),
             slug: tab.slug,
             skipUrlSlug: tab.skipSlug,
             hidden: tab.hidden,
-            child: {
-                type: "variants",
-                variants
-            },
+            child,
             viewers: parseRoles(tab.viewers),
             orphaned: tab.orphaned,
             featureFlags: convertFeatureFlag(tab.featureFlag)
@@ -1429,17 +1559,26 @@ async function convertNavigationConfiguration({
     folderTitleSource?: docsYml.RawSchemas.TitleSource;
 }): Promise<docsYml.UntabbedDocsNavigation | docsYml.TabbedDocsNavigation> {
     if (isTabbedNavigationConfig(rawNavigationConfig)) {
+        const tabMenuMemberships = docsYml.getRawTabMenuMemberships(tabs);
+        const isTabMenuMember = (item: docsYml.RawSchemas.TabbedNavigationItem) =>
+            tabs?.[item.tab] == null && tabMenuMemberships.has(item.tab);
+        const tabMenuMemberItems = new Map(
+            rawNavigationConfig.filter(isTabMenuMember).map((item) => [item.tab, item] as const)
+        );
         const tabbedNavigationItems = await Promise.all(
-            rawNavigationConfig.map((item) =>
-                convertNavigationTabConfiguration({
-                    tabs,
-                    item,
-                    absolutePathToFernFolder,
-                    absolutePathToConfig,
-                    context,
-                    folderTitleSource
-                })
-            )
+            rawNavigationConfig
+                .filter((item) => !isTabMenuMember(item))
+                .map((item) =>
+                    convertNavigationTabConfiguration({
+                        tabs,
+                        item,
+                        tabMenuMemberItems,
+                        absolutePathToFernFolder,
+                        absolutePathToConfig,
+                        context,
+                        folderTitleSource
+                    })
+                )
         );
         return {
             type: "tabbed",

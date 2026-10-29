@@ -180,29 +180,26 @@ function collectFromNavigation(
         const out: ChangelogLocation[] = [];
         for (const item of navigation) {
             const next = `${breadcrumb} > tab "${item.tab}"`;
-            const tabConfig = tabs?.[item.tab];
-            const tabSegments = ancestorSlugSegments({
-                slug: tabConfig?.slug,
-                displayName: tabConfig?.displayName ?? item.tab,
-                skipSlug: tabConfig?.skipSlug
-            });
+            const tabOwners = docsYml.getRawTabSlugOwners(tabs, item.tab) ?? [{ title: item.tab }];
+            const tabSegments = tabOwners.flatMap((owner) =>
+                ancestorSlugSegments({ slug: owner.slug, displayName: owner.title, skipSlug: owner.skipSlug })
+            );
             const tabAncestors = [...ancestorSegments, ...tabSegments];
             if ("layout" in item && Array.isArray(item.layout)) {
                 out.push(...collectChangelogLocations(item.layout, next, tabAncestors));
             }
-            if ("variants" in item && Array.isArray(item.variants)) {
-                for (const variant of item.variants) {
-                    const variantBreadcrumb = `${next} > variant "${variant.title}"`;
-                    const variantSegments = ancestorSlugSegments({
-                        slug: variant.slug,
-                        displayName: variant.title,
-                        skipSlug: variant.skipSlug
-                    });
+            if (docsYml.isRawTabWithVariantLayouts(item)) {
+                for (const { owners, layout } of docsYml.flattenRawTabLayouts(item)) {
+                    const variantBreadcrumb = [next, ...owners.map((owner) => `variant "${owner.title}"`)].join(" > ");
+                    const variantSegments = owners.flatMap((owner) =>
+                        ancestorSlugSegments({
+                            slug: owner.slug,
+                            displayName: owner.title,
+                            skipSlug: owner.skipSlug
+                        })
+                    );
                     out.push(
-                        ...collectChangelogLocations(variant.layout, variantBreadcrumb, [
-                            ...tabAncestors,
-                            ...variantSegments
-                        ])
+                        ...collectChangelogLocations(layout, variantBreadcrumb, [...tabAncestors, ...variantSegments])
                     );
                 }
             }
