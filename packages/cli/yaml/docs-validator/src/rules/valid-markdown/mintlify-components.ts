@@ -5,12 +5,12 @@ import { visit } from "unist-util-visit";
  * Mintlify-only components that Fern renders through a Fern equivalent. Using the Fern component directly
  * keeps the page portable across renderer versions.
  */
-const MINTLIFY_COMPONENT_REPLACEMENTS: Record<string, string> = {
-    ResponseField: '<ParamField path="...">'
+const MINTLIFY_COMPONENT_HINTS: Record<string, string> = {
+    ResponseField: 'Use <ParamField path="..."> instead; <ResponseField name="..."> is rendered as a ParamField alias.'
 };
 
 export function getMintlifyComponentWarnings(content: string): string[] {
-    const names = Object.keys(MINTLIFY_COMPONENT_REPLACEMENTS).filter((name) => content.includes(`<${name}`));
+    const names = Object.keys(MINTLIFY_COMPONENT_HINTS).filter((name) => content.includes(`<${name}`));
     if (names.length === 0) {
         return [];
     }
@@ -27,8 +27,8 @@ export function getMintlifyComponentWarnings(content: string): string[] {
     }
 
     return [...counts.entries()].map(([name, count]) => {
-        const replacement = MINTLIFY_COMPONENT_REPLACEMENTS[name] ?? "a Fern component";
+        const hint = MINTLIFY_COMPONENT_HINTS[name] ?? "Use a Fern component instead.";
         const occurrences = count === 1 ? "1 occurrence" : `${count} occurrences`;
-        return `<${name}> is a Mintlify component, not a Fern component (${occurrences}). Use ${replacement} instead; <${name} name="..."> is rendered as a ParamField alias.`;
+        return `<${name}> is a Mintlify component, not a Fern component (${occurrences}). ${hint}`;
     });
 }
