@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern generate --docs --preview` now sends the docs.yml `instance.url` the preview is built
+    from, so an organization's preview authentication can be scoped to previews of specific
+    instances.
+  type: feat
