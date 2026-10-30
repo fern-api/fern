@@ -40,7 +40,13 @@ internal static class XmlUtils
 
     internal static string Serialize(XElement element, bool xmlDeclaration = false, bool indent = false)
     {
-        var xml = WithoutInvalidXmlChars(element).ToString(indent ? SaveOptions.None : SaveOptions.DisableFormatting);
+        var copy = WithoutInvalidXmlChars(element);
+        // Legacy TwiML libraries write empty elements as <Tag></Tag>, so keep that byte-for-byte.
+        foreach (var empty in copy.DescendantsAndSelf().Where(e => e.IsEmpty).ToList())
+        {
+            empty.Value = string.Empty;
+        }
+        var xml = copy.ToString(indent ? SaveOptions.None : SaveOptions.DisableFormatting);
         var siblings = element.Annotation<SiblingComments>();
         if (siblings != null)
         {
