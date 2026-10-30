@@ -39,7 +39,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 //
 // Example:
 //
-//	client.ListPlants(
+//	_, err := client.ListPlants(
 //	    context.TODO(),
 //	)
 func (c *Client) ListPlants(
@@ -63,7 +63,7 @@ func (c *Client) ListPlants(
 //	request := &fern.GetPlantRequest{
 //	    PlantID: "plantId",
 //	}
-//	client.GetPlant(
+//	_, err := client.GetPlant(
 //	    context.TODO(),
 //	    request,
 //	)

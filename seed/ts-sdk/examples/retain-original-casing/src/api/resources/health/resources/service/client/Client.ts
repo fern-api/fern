@@ -53,7 +53,7 @@ export class ServiceClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/check/${core.url.encodePathParam(id)}`,
+                `/check/${core.url.encodePathParam(id, errors.SeedExamplesError)}`,
             ),
             method: "GET",
             headers: _headers,

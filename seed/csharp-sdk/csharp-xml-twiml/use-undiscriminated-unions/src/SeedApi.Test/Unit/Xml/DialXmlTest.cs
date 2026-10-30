@@ -10,14 +10,8 @@ public class DialXmlTest
     public void FromXml_ToXml_RoundTrips()
     {
         var xml =
-            "<tw:Dial xmlns:tw=\"https://www.twilio.com/twiml\" statusCallbackEvent=\"statusCallbackEvent statusCallbackEvent-2\" record=\"record-from-answer record-from-ringing\">text<Numbers><Number /></Numbers></tw:Dial>";
+            "<tw:Dial xmlns:tw=\"https://www.twilio.com/twiml\" record=\"record-from-answer record-from-ringing\" statusCallbackEvent=\"statusCallbackEvent statusCallbackEvent-2\">text<Numbers><Number></Number></Numbers></tw:Dial>";
         var parsed = Dial.FromXml(xml);
-        Assert.That(parsed.Number, Is.EqualTo("text"), "Number");
-        Assert.That(
-            parsed.StatusCallbackEvent,
-            Is.EqualTo(new[] { "statusCallbackEvent", "statusCallbackEvent-2" }),
-            "StatusCallbackEvent"
-        );
         Assert.That(
             parsed.Record,
             Is.EqualTo(
@@ -29,13 +23,19 @@ public class DialXmlTest
             ),
             "Record"
         );
+        Assert.That(
+            parsed.StatusCallbackEvent,
+            Is.EqualTo(new[] { "statusCallbackEvent", "statusCallbackEvent-2" }),
+            "StatusCallbackEvent"
+        );
+        Assert.That(parsed.Text, Is.EqualTo("text"), "Text");
         var serialized = parsed.ToXml(false);
-        Assert.That(serialized, Does.Contain(">text<"));
+        Assert.That(serialized, Does.Contain("record=\"record-from-answer record-from-ringing\""));
         Assert.That(
             serialized,
             Does.Contain("statusCallbackEvent=\"statusCallbackEvent statusCallbackEvent-2\"")
         );
-        Assert.That(serialized, Does.Contain("record=\"record-from-answer record-from-ringing\""));
+        Assert.That(serialized, Does.Contain(">text<"));
         Assert.That(
             Dial.FromXml(serialized).ToXml(false),
             Is.EqualTo(serialized),
@@ -63,11 +63,11 @@ public class DialXmlTest
     [NUnit.Framework.Test]
     public void ToXml_EscapesSpecialCharacters()
     {
-        var model = new Dial { Number = "a & b < c > d \"q\" 'r'" };
+        var model = new Dial { Text = "a & b < c > d \"q\" 'r'" };
         var serialized = model.ToXml(false);
         Assert.That(serialized, Does.Not.Contain("a & b"));
         Assert.That(serialized, Does.Not.Contain("< c"));
-        Assert.That(Dial.FromXml(serialized).Number, Is.EqualTo("a & b < c > d \"q\" 'r'"));
+        Assert.That(Dial.FromXml(serialized).Text, Is.EqualTo("a & b < c > d \"q\" 'r'"));
     }
 
     [NUnit.Framework.Test]

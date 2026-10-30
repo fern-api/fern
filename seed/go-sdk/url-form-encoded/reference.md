@@ -15,8 +15,9 @@
 request := &fern.PostSubmitRequest{
     Username: "johndoe",
     Email: "john@example.com",
+    Content: `{"key":"value"}`,
 }
-client.SubmitFormData(
+_, err := client.SubmitFormData(
     context.TODO(),
     request,
 )
@@ -46,6 +47,14 @@ client.SubmitFormData(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**content:** `string` — A JSON document carried as a form field
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -71,7 +80,7 @@ request := &fern.TokenRequest{
     ClientID: "client_id",
     ClientSecret: "client_secret",
 }
-client.GetToken(
+_, err := client.GetToken(
     context.TODO(),
     request,
 )

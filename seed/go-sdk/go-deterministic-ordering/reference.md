@@ -17,7 +17,7 @@ request := []string{
     "string",
     "string",
 }
-client.Endpoints.Container.GetAndReturnListOfPrimitives(
+_, err := client.Endpoints.Container.GetAndReturnListOfPrimitives(
     context.TODO(),
     request,
 )
@@ -68,7 +68,7 @@ request := []*types.ObjectWithRequiredField{
         FieldString: "string",
     },
 }
-client.Endpoints.Container.GetAndReturnListOfObjects(
+_, err := client.Endpoints.Container.GetAndReturnListOfObjects(
     context.TODO(),
     request,
 )
@@ -114,7 +114,7 @@ client.Endpoints.Container.GetAndReturnListOfObjects(
 request := []string{
     "string",
 }
-client.Endpoints.Container.GetAndReturnSetOfPrimitives(
+_, err := client.Endpoints.Container.GetAndReturnSetOfPrimitives(
     context.TODO(),
     request,
 )
@@ -162,7 +162,7 @@ request := []*types.ObjectWithRequiredField{
         FieldString: "string",
     },
 }
-client.Endpoints.Container.GetAndReturnSetOfObjects(
+_, err := client.Endpoints.Container.GetAndReturnSetOfObjects(
     context.TODO(),
     request,
 )
@@ -208,7 +208,7 @@ client.Endpoints.Container.GetAndReturnSetOfObjects(
 request := map[string]string{
     "string": "string",
 }
-client.Endpoints.Container.GetAndReturnMapPrimToPrim(
+_, err := client.Endpoints.Container.GetAndReturnMapPrimToPrim(
     context.TODO(),
     request,
 )
@@ -256,7 +256,7 @@ request := map[string]*types.ObjectWithRequiredField{
         FieldString: "string",
     },
 }
-client.Endpoints.Container.GetAndReturnMapOfPrimToObject(
+_, err := client.Endpoints.Container.GetAndReturnMapOfPrimToObject(
     context.TODO(),
     request,
 )
@@ -304,7 +304,7 @@ request := map[string]*types.MixedType{
         Double: 1.1,
     },
 }
-client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnion(
+_, err := client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnion(
     context.TODO(),
     request,
 )
@@ -350,7 +350,7 @@ client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnion(
 request := &types.ObjectWithRequiredField{
     FieldString: "string",
 }
-client.Endpoints.Container.GetAndReturnOptional(
+_, err := client.Endpoints.Container.GetAndReturnOptional(
     context.TODO(),
     request,
 )
@@ -442,7 +442,7 @@ request := &types.ObjectWithOptionalField{
         "1000000",
     ),
 }
-client.Endpoints.ContentType.PostJSONPatchContentType(
+err := client.Endpoints.ContentType.PostJSONPatchContentType(
     context.TODO(),
     request,
 )
@@ -533,7 +533,7 @@ request := &types.ObjectWithOptionalField{
         "1000000",
     ),
 }
-client.Endpoints.ContentType.PostJSONPatchContentWithCharsetType(
+err := client.Endpoints.ContentType.PostJSONPatchContentWithCharsetType(
     context.TODO(),
     request,
 )
@@ -595,7 +595,7 @@ request := &fern.CreateRequestA{
     Name: "name",
     Value: 1,
 }
-client.Endpoints.DuplicateNamesA.Create(
+_, err := client.Endpoints.DuplicateNamesA.Create(
     context.TODO(),
     request,
 )
@@ -666,7 +666,7 @@ request := &fern.GetRequestA{
         "filter",
     ),
 }
-client.Endpoints.DuplicateNamesA.Get(
+err := client.Endpoints.DuplicateNamesA.Get(
     context.TODO(),
     request,
 )
@@ -739,7 +739,7 @@ request := &fern.ListRequestA{
         1,
     ),
 }
-client.Endpoints.DuplicateNamesA.List(
+err := client.Endpoints.DuplicateNamesA.List(
     context.TODO(),
     request,
 )
@@ -809,7 +809,7 @@ request := &fern.CreateRequestB{
     Description: "description",
     Count: 1,
 }
-client.Endpoints.DuplicateNamesB.Create(
+_, err := client.Endpoints.DuplicateNamesB.Create(
     context.TODO(),
     request,
 )
@@ -880,7 +880,7 @@ request := &fern.GetRequestB{
         true,
     ),
 }
-client.Endpoints.DuplicateNamesB.Get(
+err := client.Endpoints.DuplicateNamesB.Get(
     context.TODO(),
     request,
 )
@@ -953,7 +953,7 @@ request := &fern.ListRequestB{
         1,
     ),
 }
-client.Endpoints.DuplicateNamesB.List(
+err := client.Endpoints.DuplicateNamesB.List(
     context.TODO(),
     request,
 )
@@ -1023,7 +1023,7 @@ request := &fern.CreateRequestC{
     Label: "label",
     Priority: 1,
 }
-client.Endpoints.DuplicateNamesC.Create(
+_, err := client.Endpoints.DuplicateNamesC.Create(
     context.TODO(),
     request,
 )
@@ -1094,7 +1094,7 @@ request := &fern.GetRequestC{
         true,
     ),
 }
-client.Endpoints.DuplicateNamesC.Get(
+err := client.Endpoints.DuplicateNamesC.Get(
     context.TODO(),
     request,
 )
@@ -1167,7 +1167,7 @@ request := &fern.ListRequestC{
         1,
     ),
 }
-client.Endpoints.DuplicateNamesC.List(
+err := client.Endpoints.DuplicateNamesC.List(
     context.TODO(),
     request,
 )
@@ -1219,7 +1219,15 @@ client.Endpoints.DuplicateNamesC.List(
 <dd>
 
 ```go
-client.Endpoints.Enum.GetAndReturnEnum(
+request := types.WeatherReportSunny.Ptr()
+_, err := client.Endpoints.Enum.GetAndReturnEnum(
+    context.TODO(),
+    request,
+)
+if err != nil {
+    return err
+}
+_, err := client.Endpoints.Enum.GetAndReturnEnum(
     context.TODO(),
     request,
 )
@@ -1263,7 +1271,7 @@ client.Endpoints.Enum.GetAndReturnEnum(
 <dd>
 
 ```go
-client.Endpoints.HTTPMethods.TestGet(
+_, err := client.Endpoints.HTTPMethods.TestGet(
     context.TODO(),
     "id",
 )
@@ -1309,7 +1317,7 @@ client.Endpoints.HTTPMethods.TestGet(
 request := &types.ObjectWithRequiredField{
     FieldString: "string",
 }
-client.Endpoints.HTTPMethods.TestPost(
+_, err := client.Endpoints.HTTPMethods.TestPost(
     context.TODO(),
     request,
 )
@@ -1355,7 +1363,7 @@ client.Endpoints.HTTPMethods.TestPost(
 request := &types.ObjectWithRequiredField{
     FieldString: "string",
 }
-client.Endpoints.HTTPMethods.TestPut(
+_, err := client.Endpoints.HTTPMethods.TestPut(
     context.TODO(),
     "id",
     request,
@@ -1455,7 +1463,7 @@ request := &types.ObjectWithOptionalField{
         "1000000",
     ),
 }
-client.Endpoints.HTTPMethods.TestPatch(
+_, err := client.Endpoints.HTTPMethods.TestPatch(
     context.TODO(),
     "id",
     request,
@@ -1507,7 +1515,7 @@ client.Endpoints.HTTPMethods.TestPatch(
 <dd>
 
 ```go
-client.Endpoints.HTTPMethods.TestDelete(
+_, err := client.Endpoints.HTTPMethods.TestDelete(
     context.TODO(),
     "id",
 )
@@ -1599,7 +1607,7 @@ request := &types.ObjectWithOptionalField{
         "1000000",
     ),
 }
-client.Endpoints.Object.GetAndReturnWithOptionalField(
+_, err := client.Endpoints.Object.GetAndReturnWithOptionalField(
     context.TODO(),
     request,
 )
@@ -1645,7 +1653,7 @@ client.Endpoints.Object.GetAndReturnWithOptionalField(
 request := &types.ObjectWithRequiredField{
     FieldString: "string",
 }
-client.Endpoints.Object.GetAndReturnWithRequiredField(
+_, err := client.Endpoints.Object.GetAndReturnWithRequiredField(
     context.TODO(),
     request,
 )
@@ -1695,7 +1703,7 @@ request := &types.ObjectWithMapOfMap{
         },
     },
 }
-client.Endpoints.Object.GetAndReturnWithMapOfMap(
+_, err := client.Endpoints.Object.GetAndReturnWithMapOfMap(
     context.TODO(),
     request,
 )
@@ -1791,7 +1799,7 @@ request := &types.NestedObjectWithOptionalField{
         ),
     },
 }
-client.Endpoints.Object.GetAndReturnNestedWithOptionalField(
+_, err := client.Endpoints.Object.GetAndReturnNestedWithOptionalField(
     context.TODO(),
     request,
 )
@@ -1885,7 +1893,7 @@ request := &types.NestedObjectWithRequiredField{
         ),
     },
 }
-client.Endpoints.Object.GetAndReturnNestedWithRequiredField(
+_, err := client.Endpoints.Object.GetAndReturnNestedWithRequiredField(
     context.TODO(),
     "string",
     request,
@@ -2041,7 +2049,7 @@ request := []*types.NestedObjectWithRequiredField{
         },
     },
 }
-client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsList(
+_, err := client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsList(
     context.TODO(),
     request,
 )
@@ -2089,7 +2097,7 @@ request := &types.ObjectWithUnknownField{
         "$ref": "https://example.com/schema",
     },
 }
-client.Endpoints.Object.GetAndReturnWithUnknownField(
+_, err := client.Endpoints.Object.GetAndReturnWithUnknownField(
     context.TODO(),
     request,
 )
@@ -2154,7 +2162,7 @@ request := &types.ObjectWithDatetimeLikeString{
         "2023-08-31T14:15:22Z",
     ),
 }
-client.Endpoints.Object.GetAndReturnWithDatetimeLikeString(
+_, err := client.Endpoints.Object.GetAndReturnWithDatetimeLikeString(
     context.TODO(),
     request,
 )
@@ -2220,7 +2228,7 @@ request := &fern.ListItemsRequest{
         1,
     ),
 }
-client.Endpoints.Pagination.ListItems(
+_, err := client.Endpoints.Pagination.ListItems(
     context.TODO(),
     request,
 )
@@ -2286,7 +2294,7 @@ GET with path param
 <dd>
 
 ```go
-client.Endpoints.Params.GetWithPath(
+_, err := client.Endpoints.Params.GetWithPath(
     context.TODO(),
     "param",
 )
@@ -2346,7 +2354,7 @@ GET with path param
 request := &fern.GetWithInlinePath{
     Param: "param",
 }
-client.Endpoints.Params.GetWithInlinePath(
+_, err := client.Endpoints.Params.GetWithInlinePath(
     context.TODO(),
     request,
 )
@@ -2407,7 +2415,7 @@ request := &fern.GetWithQuery{
     Query: "query",
     Number: 1,
 }
-client.Endpoints.Params.GetWithQuery(
+err := client.Endpoints.Params.GetWithQuery(
     context.TODO(),
     request,
 )
@@ -2480,7 +2488,7 @@ request := &fern.GetWithMultipleQuery{
         1,
     },
 }
-client.Endpoints.Params.GetWithAllowMultipleQuery(
+err := client.Endpoints.Params.GetWithAllowMultipleQuery(
     context.TODO(),
     request,
 )
@@ -2548,7 +2556,7 @@ GET with path and query params
 request := &fern.GetWithPathAndQuery{
     Query: "query",
 }
-client.Endpoints.Params.GetWithPathAndQuery(
+err := client.Endpoints.Params.GetWithPathAndQuery(
     context.TODO(),
     "param",
     request,
@@ -2618,7 +2626,7 @@ request := &fern.GetWithInlinePathAndQuery{
     Param: "param",
     Query: "query",
 }
-client.Endpoints.Params.GetWithInlinePathAndQuery(
+err := client.Endpoints.Params.GetWithInlinePathAndQuery(
     context.TODO(),
     request,
 )
@@ -2683,7 +2691,16 @@ PUT to update with path param
 <dd>
 
 ```go
-client.Endpoints.Params.ModifyWithPath(
+request := "string"
+_, err := client.Endpoints.Params.ModifyWithPath(
+    context.TODO(),
+    "param",
+    request,
+)
+if err != nil {
+    return err
+}
+_, err := client.Endpoints.Params.ModifyWithPath(
     context.TODO(),
     "param",
     request,
@@ -2753,7 +2770,7 @@ request := &fern.ModifyResourceAtInlinedPath{
     Param: "param",
     Body: "string",
 }
-client.Endpoints.Params.ModifyWithInlinePath(
+_, err := client.Endpoints.Params.ModifyWithInlinePath(
     context.TODO(),
     request,
 )
@@ -2818,7 +2835,18 @@ POST bytes with path param returning object
 <dd>
 
 ```go
-client.Endpoints.Params.UploadWithPath(
+request := bytes.NewReader(
+    []byte(""),
+)
+_, err := client.Endpoints.Params.UploadWithPath(
+    context.TODO(),
+    "upload-path",
+    request,
+)
+if err != nil {
+    return err
+}
+_, err := client.Endpoints.Params.UploadWithPath(
     context.TODO(),
     "upload-path",
     request,
@@ -2863,7 +2891,15 @@ client.Endpoints.Params.UploadWithPath(
 <dd>
 
 ```go
-client.Endpoints.Primitive.GetAndReturnString(
+request := "string"
+_, err := client.Endpoints.Primitive.GetAndReturnString(
+    context.TODO(),
+    request,
+)
+if err != nil {
+    return err
+}
+_, err := client.Endpoints.Primitive.GetAndReturnString(
     context.TODO(),
     request,
 )
@@ -2906,7 +2942,15 @@ client.Endpoints.Primitive.GetAndReturnString(
 <dd>
 
 ```go
-client.Endpoints.Primitive.GetAndReturnInt(
+request := 1
+_, err := client.Endpoints.Primitive.GetAndReturnInt(
+    context.TODO(),
+    request,
+)
+if err != nil {
+    return err
+}
+_, err := client.Endpoints.Primitive.GetAndReturnInt(
     context.TODO(),
     request,
 )
@@ -2949,7 +2993,15 @@ client.Endpoints.Primitive.GetAndReturnInt(
 <dd>
 
 ```go
-client.Endpoints.Primitive.GetAndReturnLong(
+request := int64(1000000)
+_, err := client.Endpoints.Primitive.GetAndReturnLong(
+    context.TODO(),
+    request,
+)
+if err != nil {
+    return err
+}
+_, err := client.Endpoints.Primitive.GetAndReturnLong(
     context.TODO(),
     request,
 )
@@ -2992,7 +3044,15 @@ client.Endpoints.Primitive.GetAndReturnLong(
 <dd>
 
 ```go
-client.Endpoints.Primitive.GetAndReturnDouble(
+request := 1.1
+_, err := client.Endpoints.Primitive.GetAndReturnDouble(
+    context.TODO(),
+    request,
+)
+if err != nil {
+    return err
+}
+_, err := client.Endpoints.Primitive.GetAndReturnDouble(
     context.TODO(),
     request,
 )
@@ -3035,7 +3095,15 @@ client.Endpoints.Primitive.GetAndReturnDouble(
 <dd>
 
 ```go
-client.Endpoints.Primitive.GetAndReturnBool(
+request := true
+_, err := client.Endpoints.Primitive.GetAndReturnBool(
+    context.TODO(),
+    request,
+)
+if err != nil {
+    return err
+}
+_, err := client.Endpoints.Primitive.GetAndReturnBool(
     context.TODO(),
     request,
 )
@@ -3078,7 +3146,17 @@ client.Endpoints.Primitive.GetAndReturnBool(
 <dd>
 
 ```go
-client.Endpoints.Primitive.GetAndReturnDatetime(
+request := fern.MustParseDateTime(
+    "2024-01-15T09:30:00Z",
+)
+_, err := client.Endpoints.Primitive.GetAndReturnDatetime(
+    context.TODO(),
+    request,
+)
+if err != nil {
+    return err
+}
+_, err := client.Endpoints.Primitive.GetAndReturnDatetime(
     context.TODO(),
     request,
 )
@@ -3121,7 +3199,17 @@ client.Endpoints.Primitive.GetAndReturnDatetime(
 <dd>
 
 ```go
-client.Endpoints.Primitive.GetAndReturnDate(
+request := fern.MustParseDate(
+    "2023-01-15",
+)
+_, err := client.Endpoints.Primitive.GetAndReturnDate(
+    context.TODO(),
+    request,
+)
+if err != nil {
+    return err
+}
+_, err := client.Endpoints.Primitive.GetAndReturnDate(
     context.TODO(),
     request,
 )
@@ -3164,7 +3252,17 @@ client.Endpoints.Primitive.GetAndReturnDate(
 <dd>
 
 ```go
-client.Endpoints.Primitive.GetAndReturnUUID(
+request := uuid.MustParse(
+    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+)
+_, err := client.Endpoints.Primitive.GetAndReturnUUID(
+    context.TODO(),
+    request,
+)
+if err != nil {
+    return err
+}
+_, err := client.Endpoints.Primitive.GetAndReturnUUID(
     context.TODO(),
     request,
 )
@@ -3207,7 +3305,15 @@ client.Endpoints.Primitive.GetAndReturnUUID(
 <dd>
 
 ```go
-client.Endpoints.Primitive.GetAndReturnBase64(
+request := []byte("SGVsbG8gd29ybGQh")
+_, err := client.Endpoints.Primitive.GetAndReturnBase64(
+    context.TODO(),
+    request,
+)
+if err != nil {
+    return err
+}
+_, err := client.Endpoints.Primitive.GetAndReturnBase64(
     context.TODO(),
     request,
 )
@@ -3254,7 +3360,7 @@ client.Endpoints.Primitive.GetAndReturnBase64(
 request := &fern.PutRequest{
     ID: "id",
 }
-client.Endpoints.Put.Add(
+_, err := client.Endpoints.Put.Add(
     context.TODO(),
     request,
 )
@@ -3304,7 +3410,7 @@ request := &types.Animal{
         LikesToWoof: true,
     },
 }
-client.Endpoints.Union.GetAndReturnUnion(
+_, err := client.Endpoints.Union.GetAndReturnUnion(
     context.TODO(),
     request,
 )
@@ -3348,7 +3454,7 @@ client.Endpoints.Union.GetAndReturnUnion(
 <dd>
 
 ```go
-client.Endpoints.URLs.WithMixedCase(
+_, err := client.Endpoints.URLs.WithMixedCase(
     context.TODO(),
 )
 ```
@@ -3375,7 +3481,7 @@ client.Endpoints.URLs.WithMixedCase(
 <dd>
 
 ```go
-client.Endpoints.URLs.NoEndingSlash(
+_, err := client.Endpoints.URLs.NoEndingSlash(
     context.TODO(),
 )
 ```
@@ -3402,7 +3508,7 @@ client.Endpoints.URLs.NoEndingSlash(
 <dd>
 
 ```go
-client.Endpoints.URLs.WithEndingSlash(
+_, err := client.Endpoints.URLs.WithEndingSlash(
     context.TODO(),
 )
 ```
@@ -3429,7 +3535,7 @@ client.Endpoints.URLs.WithEndingSlash(
 <dd>
 
 ```go
-client.Endpoints.URLs.WithUnderscores(
+_, err := client.Endpoints.URLs.WithUnderscores(
     context.TODO(),
 )
 ```
@@ -3523,7 +3629,7 @@ request := &fern.PostWithObjectBody{
         ),
     },
 }
-client.InlinedRequests.PostWithObjectBodyandResponse(
+_, err := client.InlinedRequests.PostWithObjectBodyandResponse(
     context.TODO(),
     request,
 )
@@ -3600,7 +3706,7 @@ POST request with no auth
 request := map[string]any{
     "key": "value",
 }
-client.NoAuth.PostWithNoAuth(
+_, err := client.NoAuth.PostWithNoAuth(
     context.TODO(),
     request,
 )
@@ -3644,7 +3750,7 @@ client.NoAuth.PostWithNoAuth(
 <dd>
 
 ```go
-client.NoReqBody.GetWithNoRequestBody(
+_, err := client.NoReqBody.GetWithNoRequestBody(
     context.TODO(),
 )
 ```
@@ -3671,7 +3777,7 @@ client.NoReqBody.GetWithNoRequestBody(
 <dd>
 
 ```go
-client.NoReqBody.PostWithNoRequestBody(
+_, err := client.NoReqBody.PostWithNoRequestBody(
     context.TODO(),
 )
 ```
@@ -3704,7 +3810,7 @@ request := &fern.ReqWithHeaders{
     XTestEndpointHeader: "X-TEST-ENDPOINT-HEADER",
     Body: "string",
 }
-client.ReqWithHeaders.GetWithCustomHeader(
+err := client.ReqWithHeaders.GetWithCustomHeader(
     context.TODO(),
     request,
 )

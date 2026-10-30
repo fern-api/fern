@@ -1,3 +1,3 @@
 from importlib import metadata
 
-__version__ = metadata.version("fern_x-fern-global-parameters")
+__version__ = metadata.version("fern-x-fern-global-parameters")

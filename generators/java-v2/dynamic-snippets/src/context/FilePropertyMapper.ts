@@ -4,6 +4,8 @@ import { java } from "@fern-api/java-ast";
 
 import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext.js";
 
+const FILE_PLACEHOLDER_PATH = "path/to/file";
+
 export interface FilePropertyInfo {
     fileFields: java.BuilderParameter[];
     bodyPropertyFields: java.BuilderParameter[];
@@ -67,10 +69,10 @@ export class FilePropertyMapper {
             // In inline-file-properties mode the request builder field is typed as `java.io.File`,
             // so render a `java.io.File` literal. A required file is a staged builder step that
             // cannot be omitted, so fall back to a placeholder path when the example has no value.
-            return this.context.getJavaIoFileFromString(fileValue ?? "path/to/file");
+            return this.context.getJavaIoFileFromString(fileValue ?? FILE_PLACEHOLDER_PATH);
         }
         if (fileValue == null) {
-            return java.TypeLiteral.nop();
+            return this.getMissingFileArgument(property);
         }
         return java.TypeLiteral.reference(this.context.getFileStreamFromString(fileValue));
     }
@@ -87,11 +89,11 @@ export class FilePropertyMapper {
             // In inline-file-properties mode the request builder field is typed as `java.io.File`,
             // so render a `java.io.File` literal (the Java SDK does not support file arrays, so a
             // single value is emitted) and fall back to a placeholder when no example value exists.
-            const fileValue = fileValues?.[0] ?? "path/to/file";
+            const fileValue = fileValues?.[0] ?? FILE_PLACEHOLDER_PATH;
             return this.context.getJavaIoFileFromString(fileValue);
         }
-        if (fileValues == null) {
-            return java.TypeLiteral.nop();
+        if (fileValues == null || fileValues.length === 0) {
+            return this.getMissingFileArgument(property);
         }
         for (const fileValue of fileValues) {
             // The Java SDK doesn't support file array properties correctly, so we just
@@ -99,6 +101,32 @@ export class FilePropertyMapper {
             return java.TypeLiteral.reference(this.context.getFileStreamFromString(fileValue));
         }
         return java.TypeLiteral.nop();
+    }
+
+    /**
+     * The SDK takes each file as a positional `File` (required) or `Optional<File>` (optional)
+     * parameter. IR from older CLIs doesn't set `isOptional`, so the parameter type is unknown and
+     * the file is left as a nop (rendered as `null`, which is assignable to both).
+     */
+    private getMissingFileArgument(
+        property:
+            | FernIr.dynamic.FileUploadRequestBodyProperty.File
+            | FernIr.dynamic.FileUploadRequestBodyProperty.FileArray
+    ): java.TypeLiteral {
+        switch (property.isOptional) {
+            case true:
+                return java.TypeLiteral.reference(
+                    java.invokeMethod({
+                        on: java.classReference({ name: "Optional", packageName: "java.util" }),
+                        method: "empty",
+                        arguments_: []
+                    })
+                );
+            case false:
+                return this.context.getJavaIoFileFromString(FILE_PLACEHOLDER_PATH);
+            default:
+                return java.TypeLiteral.nop();
+        }
     }
 
     private getBodyProperty({

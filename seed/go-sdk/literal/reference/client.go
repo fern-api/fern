@@ -49,7 +49,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	        },
 //	    },
 //	}
-//	client.Reference.Send(
+//	_, err := client.Reference.Send(
 //	    context.TODO(),
 //	    request,
 //	)

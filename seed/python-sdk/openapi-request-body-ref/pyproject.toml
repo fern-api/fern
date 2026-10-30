@@ -1,9 +1,9 @@
 [project]
-name = "fern_openapi-request-body-ref"
+name = "fern-openapi-request-body-ref"
 dynamic = ["version"]
 
 [tool.poetry]
-name = "fern_openapi-request-body-ref"
+name = "fern-openapi-request-body-ref"
 version = "0.0.1"
 description = ""
 readme = "README.md"

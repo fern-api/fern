@@ -8,7 +8,7 @@ import (
     option "github.com/multi-url-environment/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -20,8 +20,12 @@ func do() {
     request := &fern.GetPresignedURLRequest{
         S3Key: "s3Key",
     }
-    client.S3.GetPresignedURL(
+    _, err := client.S3.GetPresignedURL(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

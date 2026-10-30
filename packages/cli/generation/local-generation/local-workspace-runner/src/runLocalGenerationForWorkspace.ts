@@ -466,6 +466,18 @@ export async function runLocalGenerationForWorkspace({
                 //   - outputting to a self-hosted GitHub repo (full replay + GitHub flow), or
                 //   - `--verify` is set (verify-only flow; no replay, no GitHub).
                 const githubPipelineEnabled = selfhostedGithubConfig != null && shouldCommit;
+                const autoMergeRequested =
+                    autoMerge === true || generatorsYml.isGithubAutoMergeEnabled(selfhostedGithubConfig);
+                // `--version AUTO` whose AI analysis failed falls back to PATCH with no versionBump, so breaking
+                // changes cannot be ruled out. Mirrors generator-cli's analysisUnavailable gate.
+                const versionAnalysisUnavailable =
+                    version != null && isAutoVersion(version) && autoVersioningVersionBump == null;
+                if (autoMergeRequested && versionAnalysisUnavailable && githubPipelineEnabled) {
+                    interactiveTaskContext.logger.warn(
+                        "Auto-merge skipped: AI version analysis was unavailable, so breaking changes cannot be ruled out."
+                    );
+                }
+                const autoMergeEnabled = autoMergeRequested && !versionAnalysisUnavailable;
                 const verifyOnlyPipelineEnabled = !githubPipelineEnabled && verify === true;
                 if (githubPipelineEnabled || verifyOnlyPipelineEnabled) {
                     const pipelineLogger: PipelineLogger = {
@@ -503,7 +515,7 @@ export async function runLocalGenerationForWorkspace({
                                           workflows: selfhostedGithubConfig.workflows ?? true,
                                           generatorName: generatorInvocation.name,
                                           automationMode,
-                                          autoMerge,
+                                          autoMerge: autoMergeEnabled,
                                           skipIfNoDiff,
                                           hasBreakingChanges,
                                           breakingChangesSummary: hasBreakingChanges
@@ -555,7 +567,7 @@ export async function runLocalGenerationForWorkspace({
                                     cliVersion: workspace.cliVersion,
                                     repoUri: selfhostedGithubConfig.uri,
                                     automationMode: automationMode === true,
-                                    autoMerge: autoMerge === true,
+                                    autoMerge: autoMergeEnabled,
                                     skipIfNoDiff: skipIfNoDiff === true,
                                     hasBreakingChanges,
                                     versionArg: version == null ? "none" : isAutoVersion(version) ? "auto" : "explicit",
@@ -607,7 +619,7 @@ export async function runLocalGenerationForWorkspace({
     );
 
     if (results.some((didSucceed) => !didSucceed)) {
-        throw new TaskAbortSignal();
+        throw new TaskAbortSignal(context.getLastFailureMessage());
     }
 }
 

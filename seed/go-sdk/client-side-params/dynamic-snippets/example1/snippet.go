@@ -8,7 +8,7 @@ import (
     option "github.com/client-side-params/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -21,9 +21,13 @@ func do() {
         IncludeMetadata: true,
         Format: "json",
     }
-    client.Service.GetResource(
+    _, err := client.Service.GetResource(
         context.TODO(),
         "resourceId",
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

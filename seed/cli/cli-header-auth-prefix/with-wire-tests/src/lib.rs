@@ -9,6 +9,7 @@ pub mod app;
 pub mod arg_source;
 pub mod asyncapi;
 pub mod auth;
+pub mod banner;
 pub mod binding;
 pub mod cli_args;
 pub mod completions;
@@ -23,6 +24,7 @@ pub mod openapi;
 pub mod pager;
 pub mod profiles;
 pub mod stability;
+pub mod table_columns;
 pub mod user_agent;
 pub mod validate;
 pub mod sdk_executor;
@@ -109,6 +111,8 @@ const DOTENV_DENIED_SUFFIXES: &[&str] = &[
     "_EXTRA_CA_CERTS",
     "_ALLOW_CROSS_HOST_REDIRECTS",
     "_ALLOW_CROSS_HOST_PAGINATION",
+    // Turns every invocation into a shell-completion request (see `completions.rs`).
+    "_COMPLETE",
 ];
 
 /// True when `key` is one a `.env` file must not be able to set.
@@ -250,4 +254,14 @@ mod dotenv_filter_tests {
         // Kebab-cased binary names map to underscored prefixes.
         assert!(dotenv_key_is_denied("MY_CLI_BASE_URL", "MY_CLI"));
     }
+
+    #[test]
+    fn dotenv_cannot_enable_dynamic_completion() {
+        assert!(super::dotenv_key_is_denied("MY_CLI_COMPLETE", "MY_CLI"));
+        assert_eq!(
+            crate::completions::complete_env_var("my-cli"),
+            "MY_CLI_COMPLETE"
+        );
+    }
+
 }

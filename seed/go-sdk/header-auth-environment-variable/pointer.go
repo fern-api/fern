@@ -6,6 +6,11 @@ import (
 	"github.com/google/uuid"
 )
 
+// Ptr returns a pointer to the given value.
+func Ptr[T any](v T) *T {
+	return &v
+}
+
 // Bool returns a pointer to the given bool value.
 func Bool(b bool) *bool {
 	return &b

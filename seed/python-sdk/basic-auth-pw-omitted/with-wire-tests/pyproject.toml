@@ -1,9 +1,9 @@
 [project]
-name = "fern_basic-auth-pw-omitted"
+name = "fern-basic-auth-pw-omitted"
 dynamic = ["version"]
 
 [tool.poetry]
-name = "fern_basic-auth-pw-omitted"
+name = "fern-basic-auth-pw-omitted"
 version = "0.0.1"
 description = ""
 readme = "README.md"

@@ -6,6 +6,7 @@ package com.seed.api;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.ObjectMappers;
+import com.seed.api.core.PathSegments;
 import com.seed.api.core.QueryStringMapper;
 import com.seed.api.core.RequestOptions;
 import com.seed.api.core.RetryInterceptor;
@@ -46,7 +47,7 @@ public class RawSeedApiClient {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("test")
-                .addPathSegment(region)
+                .addPathSegment(PathSegments.validate(region))
                 .addPathSegments("resource");
         QueryStringMapper.addQueryParameter(httpUrl, "limit", request.getLimit().orElse("100"), false);
         if (requestOptions != null) {

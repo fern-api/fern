@@ -110,6 +110,12 @@ export interface APIDefinitionSettings {
     respectOperationIdWordBoundaries: boolean | undefined;
     namespacedErrors: boolean | undefined;
     errorResponses: OpenApiErrorResponsesSchema | undefined;
+    /**
+     * True when `errorResponses` was inherited from the API-wide `api.settings` rather than set on
+     * the spec itself. The generated error body type and status-code errors are then declared once
+     * in the root package and shared by every namespaced spec.
+     */
+    sharedErrorResponses: boolean | undefined;
 }
 
 export interface GitSource {
@@ -254,7 +260,8 @@ export const GenerationLanguage = {
     CSHARP: "csharp",
     SWIFT: "swift",
     PHP: "php",
-    RUST: "rust"
+    RUST: "rust",
+    CLI: "cli"
 } as const;
 
 export type GenerationLanguage = Values<typeof GenerationLanguage>;

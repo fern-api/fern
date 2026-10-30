@@ -180,6 +180,11 @@ class CoreUtilities:
             exports={"Logger", "LogConfig", "LogLevel", "ConsoleLogger", "ILogger", "create_logger"}
             if not self._exclude_types_from_init_exports
             else set(),
+            string_replacements=(
+                {'logging.getLogger("fern")': f'logging.getLogger("{get_whitelabel_logger_name(project)}")'}
+                if project.whitelabel
+                else None
+            ),
         )
         retry_status_check = (
             "response.status_code in [408, 409, 429, 502, 503, 504]"
@@ -692,6 +697,15 @@ class CoreUtilities:
             import_=AST.ReferenceImport(
                 module=AST.Module.local(*self._module_path, "http_client"),
                 named_import="get_keepalive_socket_options",
+            ),
+        )
+
+    def get_reference_to_keepalive_proxy_mounts(self, *, is_async: bool) -> AST.Reference:
+        return AST.Reference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "http_client"),
+                named_import="get_async_keepalive_proxy_mounts" if is_async else "get_keepalive_proxy_mounts",
             ),
         )
 
@@ -1214,3 +1228,10 @@ class CoreUtilities:
                 named_import="Logger",
             ),
         )
+
+
+def get_whitelabel_logger_name(project: Project) -> str:
+    """The package name with dots instead of dashes, so `acme-orders` logs under `acme.orders` (a child of `acme`)."""
+    if project._project_config is None:
+        return project.get_module_path_for_imports()
+    return project._project_config.package_name.replace("-", ".")

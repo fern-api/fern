@@ -28,8 +28,8 @@ module Seed
       #     aliased_context: "You're super wise",
       #     maybe_context: "You're super wise",
       #     object_with_literal: {
-      #       nested_literal: {
-      #         my_literal: "How super cool"
+      #       nestedLiteral: {
+      #         myLiteral: "How super cool"
       #       }
       #     }
       #   )

@@ -8,6 +8,7 @@ import com.seed.api.core.BodyProperties;
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.MediaTypes;
 import com.seed.api.core.ObjectMappers;
+import com.seed.api.core.PathSegments;
 import com.seed.api.core.RequestOptions;
 import com.seed.api.core.RetryInterceptor;
 import com.seed.api.core.SeedApiApiException;
@@ -37,7 +38,7 @@ public class RawWidgetsClient {
     public SeedApiHttpResponse<Widget> create(Widget request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
-                .addPathSegment(clientOptions.apiVersion())
+                .addPathSegment(PathSegments.validate(clientOptions.apiVersion()))
                 .addPathSegments("widgets");
         if (requestOptions != null) {
             requestOptions.getQueryParameters().forEach((_key, _value) -> {

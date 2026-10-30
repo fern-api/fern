@@ -1,5 +1,5 @@
 import { FERNIGNORE_FILENAME, generatorsYml, getFernIgnorePaths } from "@fern-api/configuration-loader";
-import { assertNever, ContainerRunner } from "@fern-api/core-utils";
+import { assertNever, ContainerRunner, errorMessageOrString, isRecord } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
@@ -111,7 +111,7 @@ export async function packLocalOutputForGroup({
                 }
             }
         } catch (error) {
-            const message = error instanceof Error ? error.message : String(error);
+            const message = errorMessageOrString(error);
             context.logger.error(`Failed to package ${generator.name} output at ${outputPath}: ${message}`);
             await removeDistDirIfEmpty(outputPath);
             failures.push(generator.name);
@@ -342,6 +342,11 @@ async function packOutputForLanguage({
                     "Share the output directory itself, or reference it as a local package dependency."
             );
             return false;
+        case "cli":
+            context.logger.warn(
+                "CLI SDKs are distributed as installable binaries (npm/curl install script), so there is no package artifact to build."
+            );
+            return false;
         default:
             assertNever(language);
     }
@@ -371,7 +376,7 @@ async function ensureNpmPackageVersion({
 async function getNodePackageManagerCommand(outputPath: AbsoluteFilePath): Promise<string[]> {
     const packageJsonPath = join(outputPath, RelativeFilePath.of("package.json"));
     const packageJson: unknown = JSON.parse(await readFile(packageJsonPath, "utf-8"));
-    if (typeof packageJson === "object" && packageJson != null && !Array.isArray(packageJson)) {
+    if (isRecord(packageJson)) {
         const packageManager = "packageManager" in packageJson ? packageJson.packageManager : undefined;
         if (typeof packageManager === "string") {
             if (packageManager === "npm" || packageManager.startsWith("npm@")) {

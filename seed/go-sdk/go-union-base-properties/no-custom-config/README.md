@@ -37,7 +37,7 @@ import (
     client "github.com/go-union-base-properties/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &fern.Shape{
         Circle: &fern.Circle{
@@ -52,10 +52,14 @@ func do() {
             "2024-01-01T00:00:00Z",
         ),
     }
-    client.Create(
+    _, err := client.Create(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

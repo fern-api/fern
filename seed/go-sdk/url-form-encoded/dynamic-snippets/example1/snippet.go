@@ -8,7 +8,7 @@ import (
     option "github.com/url-form-encoded/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -17,9 +17,14 @@ func do() {
     request := &fern.PostSubmitRequest{
         Username: "username",
         Email: "email",
+        Content: "Content",
     }
-    client.SubmitFormData(
+    _, err := client.SubmitFormData(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

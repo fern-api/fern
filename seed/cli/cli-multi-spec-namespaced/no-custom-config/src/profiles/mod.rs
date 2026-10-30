@@ -119,6 +119,17 @@ pub struct ProvisionOperation {
     /// read from. Stored on the profile as `credential_parameters`, consulted
     /// only by `profiles remove --revoke` — never as a request default.
     pub revoke_parameters: Vec<(String, String)>,
+    /// Long name of the `profiles create` flag. `None` keeps `--provision`; when renamed,
+    /// `--provision` always stays accepted as a hidden alias.
+    pub flag: Option<String>,
+    /// Extra request values sent with the operation, e.g. `FriendlyName` →
+    /// `{cli} for {user} on {host}`. `{cli}`, `{profile}`, `{user}` and
+    /// `{host}` are substituted; a value the profile already sets wins.
+    pub parameters: Vec<(String, String)>,
+    /// Profile parameter → typed credential field it is copied from, e.g.
+    /// `AccountSid` → `username`, so requests keep the account once the
+    /// credential is replaced by the provisioned key.
+    pub profile_parameters: Vec<(String, String)>,
 }
 
 impl ProvisionOperation {
@@ -127,7 +138,44 @@ impl ProvisionOperation {
             operation: operation.into(),
             credential_fields: Vec::new(),
             revoke_parameters: Vec::new(),
+            flag: None,
+            parameters: Vec::new(),
+            profile_parameters: Vec::new(),
         }
+    }
+
+    pub fn profile_parameter(
+        mut self,
+        parameter: impl Into<String>,
+        field: impl Into<String>,
+    ) -> Self {
+        self.profile_parameters
+            .push((parameter.into(), field.into()));
+        self
+    }
+
+    /// The prompt label for credential `field`.
+    pub fn label_for(&self, field: &str) -> String {
+        let mut chars = field.replace('_', " ").chars().collect::<Vec<_>>();
+        if let Some(first) = chars.first_mut() {
+            *first = first.to_ascii_uppercase();
+        }
+        chars.into_iter().collect()
+    }
+
+    pub fn flag(mut self, flag: impl Into<String>) -> Self {
+        self.flag = Some(flag.into());
+        self
+    }
+
+    pub fn parameter(mut self, parameter: impl Into<String>, value: impl Into<String>) -> Self {
+        self.parameters.push((parameter.into(), value.into()));
+        self
+    }
+
+    /// The `profiles create` flag's long name.
+    pub fn flag_name(&self) -> &str {
+        self.flag.as_deref().unwrap_or("provision")
     }
 
     pub fn credential_field(
@@ -230,6 +278,90 @@ pub fn keyring_account(scheme: &str) -> String {
 /// exactly the bug that would follow.
 pub fn keyring_account_for(scheme: &str, credential: &str) -> String {
     format!("{scheme}#{credential}")
+}
+
+/// Note in `profiles.toml` that the active profile's credential slot now
+/// holds `stored` for `scheme`, so `profiles list` / `show` / `current` can
+/// report it without reading the keychain. No-op without an active profile:
+/// unprofiled credentials are never listed.
+pub(crate) fn note_stored_credential(cli_name: &str, scheme: &str, stored: &str) {
+    update_active_credential_record(cli_name, |store, credential| {
+        store.record_credential(credential, scheme, stored)
+    });
+}
+
+/// [`note_stored_credential`] for a removed entry.
+pub(crate) fn note_removed_credential(cli_name: &str, scheme: &str) {
+    update_active_credential_record(cli_name, |store, credential| {
+        store.mark_credential_absent(credential, scheme)
+    });
+}
+
+/// Copy what a request's keyring read found under `account` into the record
+/// for its slot, when the record does not already say so.
+///
+/// This is how a credential stored by an older binary, before `profiles.toml`
+/// kept a copy, gets one: from a read the request makes anyway, never from an
+/// extra read by `profiles list` / `show` / `current`. Only slots a profile
+/// uses are recorded, and only into an existing `profiles.toml`.
+pub(crate) fn note_read_credential(cli_name: &str, account: &str, stored: Option<&str>) {
+    if !account.contains('#') {
+        return;
+    }
+    let Some(mut store) = ProfileStore::for_cli(cli_name) else {
+        return;
+    };
+    // Only the display copy is lost; the request itself is unaffected.
+    if record_read_credential(&mut store, account, stored) {
+        if let Err(e) = store.save() {
+            tracing::debug!("could not update {}: {e}", store.path().display());
+        }
+    }
+}
+
+/// [`note_read_credential`] against `store`; whether the record changed.
+fn record_read_credential(store: &mut ProfileStore, account: &str, stored: Option<&str>) -> bool {
+    let Some((scheme, credential)) = account.split_once('#') else {
+        return false;
+    };
+    // Checked first: a record that already matches is the common case.
+    let record = store.credential_record(credential).unwrap_or_default();
+    let up_to_date = match stored {
+        Some(stored) => record.schemes.get(scheme) == Some(&store::StoredIdentity::of(stored)),
+        None => !record.schemes.contains_key(scheme) && record.checked.iter().any(|s| s == scheme),
+    };
+    if up_to_date {
+        return false;
+    }
+    let slot_in_use = store.entries().into_iter().any(|entry| {
+        store::resolve(store, &entry.name)
+            .ok()
+            .and_then(|profile| profile.credential)
+            .as_deref()
+            == Some(credential)
+    });
+    if !slot_in_use {
+        return false;
+    }
+    match stored {
+        Some(stored) => store.record_credential(credential, scheme, stored),
+        None => store.mark_credential_absent(credential, scheme),
+    }
+    true
+}
+
+fn update_active_credential_record(cli_name: &str, update: impl FnOnce(&mut ProfileStore, &str)) {
+    let Some(credential) = active().and_then(|p| p.credential.clone()) else {
+        return;
+    };
+    let Some(mut store) = ProfileStore::for_cli(cli_name) else {
+        return;
+    };
+    update(&mut store, &credential);
+    // Only the display copy is lost; the credential itself is stored.
+    if let Err(e) = store.save() {
+        eprintln!("warning: could not update {}: {e}", store.path().display());
+    }
 }
 
 /// The profile's default for the parameter registered as `wire_name` with
@@ -341,20 +473,29 @@ mod tests {
     #[test]
     fn parameter_matches_the_wire_name() {
         let p = profile_with([("AccountSid".to_string(), "AC11".to_string())].into());
-        assert_eq!(p.parameter("AccountSid", "account-sid").as_deref(), Some("AC11"));
+        assert_eq!(
+            p.parameter("AccountSid", "account-sid").as_deref(),
+            Some("AC11")
+        );
     }
 
     #[test]
     fn parameter_matches_the_flag_spelling() {
         // The user typed what they see in `--help`.
         let p = profile_with([("account-sid".to_string(), "AC11".to_string())].into());
-        assert_eq!(p.parameter("AccountSid", "account-sid").as_deref(), Some("AC11"));
+        assert_eq!(
+            p.parameter("AccountSid", "account-sid").as_deref(),
+            Some("AC11")
+        );
     }
 
     #[test]
     fn parameter_matches_across_spellings_via_kebab() {
         let p = profile_with([("account_sid".to_string(), "AC11".to_string())].into());
-        assert_eq!(p.parameter("AccountSid", "account-sid").as_deref(), Some("AC11"));
+        assert_eq!(
+            p.parameter("AccountSid", "account-sid").as_deref(),
+            Some("AC11")
+        );
     }
 
     #[test]
@@ -385,5 +526,50 @@ mod tests {
             ProfilesConfig::new().command_name("tenants").command_name,
             "tenants",
         );
+    }
+
+    fn store_with_profile(dir: &std::path::Path, profile: &str) -> ProfileStore {
+        let path = dir.join("profiles.toml");
+        std::fs::write(&path, format!("version = 1\n\n[profiles.{profile}]\n")).unwrap();
+        ProfileStore::at_path(path)
+    }
+
+    #[test]
+    fn a_read_records_the_slot_once() {
+        let dir = tempfile::tempdir().unwrap();
+        let mut store = store_with_profile(dir.path(), "prod");
+        let stored = r#"{"username":"AC1","password":"tok"}"#;
+        assert!(record_read_credential(&mut store, "basic#prod", Some(stored)));
+        assert_eq!(
+            store.credential_record("prod").unwrap().schemes["basic"].account.as_deref(),
+            Some("AC1")
+        );
+        assert!(!record_read_credential(&mut store, "basic#prod", Some(stored)));
+    }
+
+    #[test]
+    fn a_read_updates_a_changed_account_and_an_absent_entry() {
+        let dir = tempfile::tempdir().unwrap();
+        let mut store = store_with_profile(dir.path(), "prod");
+        record_read_credential(&mut store, "basic#prod", Some(r#"{"username":"AC1"}"#));
+        assert!(record_read_credential(&mut store, "basic#prod", Some(r#"{"username":"AC2"}"#)));
+        assert_eq!(
+            store.credential_record("prod").unwrap().schemes["basic"].account.as_deref(),
+            Some("AC2")
+        );
+        assert!(record_read_credential(&mut store, "basic#prod", None));
+        let record = store.credential_record("prod").unwrap();
+        assert!(record.schemes.is_empty());
+        assert_eq!(record.checked, vec!["basic".to_string()]);
+        assert!(!record_read_credential(&mut store, "basic#prod", None));
+    }
+
+    #[test]
+    fn a_read_outside_any_profile_slot_records_nothing() {
+        let dir = tempfile::tempdir().unwrap();
+        let mut store = store_with_profile(dir.path(), "prod");
+        assert!(!record_read_credential(&mut store, "basic", Some("tok")));
+        assert!(!record_read_credential(&mut store, "basic#gone", Some("tok")));
+        assert!(store.credential_record("gone").is_none());
     }
 }

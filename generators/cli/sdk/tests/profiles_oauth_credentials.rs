@@ -253,7 +253,7 @@ fn json(args: &[&str]) -> serde_json::Value {
 fn a_keyring_client_id_is_shown_by_list_show_and_current() {
     // `profiles set <name> OA_CLIENT_ID=…` writes the id to the keyring, not
     // to `oauth_client_id` in profiles.toml, so every reporting surface has
-    // to read it from there the way it reads a basic-auth username.
+    // to show the copy recorded alongside it, as it does a basic-auth username.
     with_clean_env(|| {
         run(&["oa", "profiles", "create", "prod", "--use"]);
         let (code, output) = run(&[
@@ -286,6 +286,30 @@ fn the_keyring_client_id_outranks_the_plaintext_one_in_show() {
     with_clean_env(|| {
         run(&["oa", "profiles", "create", "prod", "--oauth-client-id", "plain-id", "--use"]);
         store("prod", "keyring-id", "s");
+        // The entry was stored without a `profiles.toml` copy, as an older
+        // binary did; resolving it for `auth status` records one.
+        let (code, output) = run(&["oa", "auth", "status"]);
+        assert_eq!(code, 0, "{output}");
+
+        let shown = json(&["oa", "profiles", "show", "prod", "--format", "json"]);
+        assert_eq!(shown["oauth_client_id"], "keyring-id", "{shown:#?}");
+    });
+}
+
+#[test]
+#[serial]
+fn a_keyring_client_id_stored_by_an_older_binary_is_recorded_by_the_next_request() {
+    // `profiles show` no longer reads the keyring, so the client id of an
+    // entry stored without a `profiles.toml` copy comes from the provider's
+    // own read when a request authenticates.
+    with_clean_env(|| {
+        run(&["oa", "profiles", "create", "prod", "--use"]);
+        store("prod", "keyring-id", "s");
+        let before = json(&["oa", "profiles", "show", "prod", "--format", "json"]);
+        assert!(before["oauth_client_id"].is_null(), "{before:#?}");
+
+        // The token endpoint is unreachable; the keyring read comes first.
+        run(&["oa", "things", "list"]);
 
         let shown = json(&["oa", "profiles", "show", "prod", "--format", "json"]);
         assert_eq!(shown["oauth_client_id"], "keyring-id", "{shown:#?}");

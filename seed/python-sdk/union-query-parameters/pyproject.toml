@@ -1,9 +1,9 @@
 [project]
-name = "fern_union-query-parameters"
+name = "fern-union-query-parameters"
 dynamic = ["version"]
 
 [tool.poetry]
-name = "fern_union-query-parameters"
+name = "fern-union-query-parameters"
 version = "0.0.1"
 description = ""
 readme = "README.md"

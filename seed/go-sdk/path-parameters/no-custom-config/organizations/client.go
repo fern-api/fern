@@ -36,7 +36,7 @@ func NewClient(options *core.RequestOptions) *Client {
 
 // Example:
 //
-//	client.Organizations.GetOrganization(
+//	_, err := client.Organizations.GetOrganization(
 //	    context.TODO(),
 //	    "tenant_id",
 //	    "organization_id",
@@ -66,7 +66,7 @@ func (c *Client) GetOrganization(
 //	    OrganizationID: "organization_id",
 //	    UserID: "user_id",
 //	}
-//	client.Organizations.GetOrganizationUser(
+//	_, err := client.Organizations.GetOrganizationUser(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -93,7 +93,7 @@ func (c *Client) GetOrganizationUser(
 //	        1,
 //	    ),
 //	}
-//	client.Organizations.SearchOrganizations(
+//	_, err := client.Organizations.SearchOrganizations(
 //	    context.TODO(),
 //	    "tenant_id",
 //	    "organization_id",

@@ -260,7 +260,8 @@
                         "unsafeName": "OAuth",
                         "safeName": "OAuth"
                     }
-                }
+                },
+                "requirement": "ENDPOINT_SECURITY"
             },
             "declaration": {
                 "name": {
@@ -574,6 +575,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_simple.getSomething": {
@@ -667,7 +669,8 @@
                         "unsafeName": "OAuth",
                         "safeName": "OAuth"
                     }
-                }
+                },
+                "requirement": "ENDPOINT_SECURITY"
             },
             "declaration": {
                 "name": {
@@ -746,6 +749,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": false,
             "examples": null
         }
     },

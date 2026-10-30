@@ -3,6 +3,7 @@
 require "json"
 require "net/http"
 require "securerandom"
+require "time"
 
 require_relative "seed/internal/json/serializable"
 require_relative "seed/internal/types/type"
@@ -36,9 +37,14 @@ require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/connection_error"
-require_relative "seed/types/user"
-require_relative "seed/types/token_response"
 require_relative "seed/client"
 require_relative "seed/types/get_user_request"
 require_relative "seed/types/token_request"
 require_relative "seed/environment"
+
+module Seed
+  module Types
+    autoload :User, ::File.join(__dir__, "seed/types/user")
+    autoload :TokenResponse, ::File.join(__dir__, "seed/types/token_response")
+  end
+end

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "../../seed"
+
 module Seed
   module Types
     # A discriminated union request matching the Vectara pattern (FER-9556). Each variant inherits stream_response from

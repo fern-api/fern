@@ -1,3 +1,3 @@
 from importlib import metadata
 
-__version__ = metadata.version("fern_union-query-parameters")
+__version__ = metadata.version("fern-union-query-parameters")

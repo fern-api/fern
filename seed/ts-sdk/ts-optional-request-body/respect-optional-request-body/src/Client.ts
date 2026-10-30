@@ -58,7 +58,7 @@ export class SeedTsOptionalRequestBodyClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/refunds/${core.url.encodePathParam(id)}`,
+                `/refunds/${core.url.encodePathParam(id, errors.SeedTsOptionalRequestBodyError)}`,
             ),
             method: "POST",
             headers: _headers,
@@ -246,7 +246,7 @@ export class SeedTsOptionalRequestBodyClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/refunds/${core.url.encodePathParam(id)}/required`,
+                `/refunds/${core.url.encodePathParam(id, errors.SeedTsOptionalRequestBodyError)}/required`,
             ),
             method: "POST",
             headers: _headers,

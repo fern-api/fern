@@ -8,7 +8,7 @@ import (
     types "github.com/exhaustive/fern/types"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -22,8 +22,12 @@ func do() {
             "$ref": "https://example.com/schema",
         },
     }
-    client.Endpoints.Object.GetAndReturnWithUnknownField(
+    _, err := client.Endpoints.Object.GetAndReturnWithUnknownField(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

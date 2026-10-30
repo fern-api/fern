@@ -1,9 +1,9 @@
 [project]
-name = "fern_openapi-wildcard-errors"
+name = "fern-openapi-wildcard-errors"
 dynamic = ["version"]
 
 [tool.poetry]
-name = "fern_openapi-wildcard-errors"
+name = "fern-openapi-wildcard-errors"
 version = "0.0.1"
 description = ""
 readme = "README.md"

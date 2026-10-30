@@ -12,6 +12,7 @@
  * currentPagePath) requires that pages are rendered one at a time.
  */
 
+import { errorMessageOrString } from "@fern-api/core-utils";
 import { CliError } from "@fern-api/task-context";
 import { existsSync, mkdirSync, mkdtempSync, renameSync, rmSync } from "fs";
 import { dirname, join, relative } from "path";
@@ -65,7 +66,16 @@ export interface CppGenerateOptions {
     outputDir: string;
     /** Base slug prefix for page URLs (e.g., "reference/cub") */
     slug: string;
+    /**
+     * How symbol names become page filenames (and therefore URLs). `compact` (default)
+     * keeps the name as-is, so Fern's slugifier drops underscores: `doca_pcc_dev_get_port_counter_id`
+     * -> `/docapccdevgetportcounterid`. `hyphenated` turns underscores into hyphens so the
+     * URL keeps word boundaries: `/doca-pcc-dev-get-port-counter-id`.
+     */
+    slugStyle?: CppSlugStyle;
 }
+
+export type CppSlugStyle = "compact" | "hyphenated";
 
 export interface CppGenerateResult {
     /** Absolute paths of all written files */
@@ -74,13 +84,18 @@ export interface CppGenerateResult {
     pageCount: number;
 }
 
+/**
+ * Leading underscores are dropped because folder-based navigation skips files and
+ * directories whose names start with `_`; the URL slug is unchanged either way.
+ */
 function sanitizeForFilename(name: string): string {
     for (const [symbol, safeName] of OPERATOR_SYMBOL_MAP) {
         if (name === symbol) {
             return safeName;
         }
     }
-    return name.replace(/[^a-zA-Z0-9_-]/g, "_");
+    const sanitized = name.replace(/[^a-zA-Z0-9_-]/g, "_");
+    return sanitized.replace(/^_+/, "") || (sanitized.length > 0 ? "underscore" : "");
 }
 
 /** Intermediate collected compound before page-key assignment. */
@@ -104,11 +119,13 @@ export function generateCpp(options: CppGenerateOptions): CppGenerateResult {
     const rootNsName = slug.includes("/") ? slug.split("/").pop() : slug;
     const repo = ir.metadata.packageName;
 
+    namespaceDirOverrides = buildNamespaceDirOverrides(ir.rootNamespace, rootNsName);
+
     // Stage 1: Collect all compounds from namespace tree
     const collected = collectCompounds(ir.rootNamespace, rootPrefix);
 
     // Stage 2: Compute page keys (resolve collisions for template specializations)
-    const pageEntries = computePageKeys(collected, rootNsName);
+    const pageEntries = computePageKeys(collected, rootNsName, options.slugStyle ?? "compact");
 
     // Build entity registry for cross-reference link resolution
     const registry = buildEntityRegistry(pageEntries);
@@ -200,18 +217,18 @@ function swapIntoPlace(staged: string, target: string, backup: string): void {
             try {
                 renameSync(stagedMetadata, previousMetadata);
             } catch (metadataError) {
-                restoreErrors.push(`metadata left at ${stagedMetadata}: ${errorMessage(metadataError)}`);
+                restoreErrors.push(`metadata left at ${stagedMetadata}: ${errorMessageOrString(metadataError)}`);
             }
         }
         try {
             renameSync(backup, target);
         } catch (pagesError) {
-            restoreErrors.push(`previous pages kept at ${backup}: ${errorMessage(pagesError)}`);
+            restoreErrors.push(`previous pages kept at ${backup}: ${errorMessageOrString(pagesError)}`);
         }
         if (restoreErrors.length > 0) {
             throw new Error(
                 `Failed to replace ${target} and could not fully restore the previous output. ` +
-                    `Replace error: ${errorMessage(error)}. Restore errors: ${restoreErrors.join("; ")}`
+                    `Replace error: ${errorMessageOrString(error)}. Restore errors: ${restoreErrors.join("; ")}`
             );
         }
         throw error;
@@ -219,10 +236,6 @@ function swapIntoPlace(staged: string, target: string, backup: string): void {
 }
 
 const METADATA_DIR = ".fern";
-
-function errorMessage(error: unknown): string {
-    return error instanceof Error ? error.message : String(error);
-}
 
 /**
  * A library with no namespaces, concepts, templates or C++ class features
@@ -452,15 +465,66 @@ function categoryFolderForCompound(collected: CollectedCompound): string {
  *   ["thrust", "system", "cuda"] -> "thrust/namespaces/system/namespaces/cuda"
  */
 function namespacePathToFilesystem(nsParts: string[]): string {
-    const [first, ...rest] = nsParts;
-    if (first === undefined) {
-        return "";
-    }
-    const segments: string[] = [first];
-    for (const part of rest) {
-        segments.push("namespaces", part);
-    }
+    const segments: string[] = [];
+    nsParts.forEach((part, index) => {
+        if (index > 0) {
+            segments.push("namespaces");
+        }
+        segments.push(namespaceDirOverrides.get(nsParts.slice(0, index + 1).join("::")) ?? sanitizeForFilename(part));
+    });
     return segments.join("/");
+}
+
+/**
+ * Sibling namespaces whose names differ only in characters dropped by
+ * `sanitizeForFilename`/slugification (e.g. `detail` and `__detail`) would otherwise
+ * share one directory and overwrite each other's index pages. Keyed by the
+ * root-stripped namespace path (`a::b`), values are the directory segment to use
+ * for the last part; only colliding namespaces get an entry.
+ */
+let namespaceDirOverrides = new Map<string, string>();
+
+function buildNamespaceDirOverrides(root: CppNamespaceIr, rootNsName: string | undefined): Map<string, string> {
+    const overrides = new Map<string, string>();
+    const visit = (ns: CppNamespaceIr): void => {
+        const bySlug = new Map<string, CppNamespaceIr[]>();
+        for (const child of ns.namespaces) {
+            const slug = slugifySegment(sanitizeForFilename(child.name));
+            const existing = bySlug.get(slug);
+            if (existing) {
+                existing.push(child);
+            } else {
+                bySlug.set(slug, [child]);
+            }
+        }
+        const taken = new Set(bySlug.keys());
+        for (const siblings of bySlug.values()) {
+            if (siblings.length < 2) {
+                continue;
+            }
+            // The namespace whose name is already filesystem-safe keeps the plain directory.
+            const rank = (ns: CppNamespaceIr): number => (sanitizeForFilename(ns.name) === ns.name ? 0 : 1);
+            const sorted = [...siblings].sort(
+                (a, b) => rank(a) - rank(b) || (a.name < b.name ? -1 : a.name > b.name ? 1 : 0)
+            );
+            sorted.slice(1).forEach((child) => {
+                const base = sanitizeForFilename(child.name);
+                let n = 2;
+                while (taken.has(slugifySegment(`${base}-${n}`))) {
+                    n += 1;
+                }
+                taken.add(slugifySegment(`${base}-${n}`));
+                const allParts = child.path.split("::");
+                const parts = rootNsName != null && allParts[0] === rootNsName ? allParts.slice(1) : allParts;
+                overrides.set(parts.join("::"), `${base}-${n}`);
+            });
+        }
+        for (const child of ns.namespaces) {
+            visit(child);
+        }
+    };
+    visit(root);
+    return overrides;
 }
 
 // ---------------------------------------------------------------------------
@@ -574,14 +638,18 @@ interface PageEntry {
     collected: CollectedCompound;
 }
 
-function computePageKeys(compounds: CollectedCompound[], rootNsName: string | undefined): PageEntry[] {
+function computePageKeys(
+    compounds: CollectedCompound[],
+    rootNsName: string | undefined,
+    slugStyle: CppSlugStyle
+): PageEntry[] {
     // Group by directory + category + base filename to detect collisions
     const groups = new Map<string, CollectedCompound[]>();
     for (const c of compounds) {
         const stripped = stripTemplateArgs(c.path);
         const allNsParts = stripped.split("::").slice(0, -1);
         const nsParts = rootNsName != null && allNsParts[0] === rootNsName ? allNsParts.slice(1) : allNsParts;
-        const baseFilename = sanitizeForFilename(stripped.split("::").pop() ?? "");
+        const baseFilename = applySlugStyle(sanitizeForFilename(stripped.split("::").pop() ?? ""), slugStyle);
         const dir = namespacePathToFilesystem(nsParts);
         const category = categoryFolderForCompound(c);
         const groupKey = dir ? `${dir}/${category}/${baseFilename}` : `${category}/${baseFilename}`;
@@ -618,10 +686,43 @@ function computePageKeys(compounds: CollectedCompound[], rootNsName: string | un
 }
 
 /**
+ * `hyphenated` collapses underscore runs and drops leading/trailing ones, so `__s_dup` and
+ * `s_dup` share a filename that `compact` keeps apart. Those extra collisions are resolved by
+ * `disambiguateSlugCollisions` (public name first, internal one gets `-2`).
+ */
+function applySlugStyle(filename: string, slugStyle: CppSlugStyle): string {
+    if (slugStyle !== "hyphenated") {
+        return filename;
+    }
+    return filename.replace(/_+/g, "-").replace(/^-+|-+$/g, "") || filename;
+}
+
+/**
+ * Symbols whose source name starts with `_` are reserved/internal in C and C++, so a
+ * public symbol that shares a URL with one (`s_dup` vs `__s_dup`) must get the plain URL.
+ */
+function isInternalName(entry: PageEntry): boolean {
+    return (stripTemplateArgs(entry.collected.path).split("::").pop() ?? "").startsWith("_");
+}
+
+function comparePageEntries(a: PageEntry, b: PageEntry): number {
+    const internalA = isInternalName(a) ? 1 : 0;
+    const internalB = isInternalName(b) ? 1 : 0;
+    if (internalA !== internalB) {
+        return internalA - internalB;
+    }
+    if (a.pageKey !== b.pageKey) {
+        return a.pageKey < b.pageKey ? -1 : 1;
+    }
+    return a.collected.path < b.collected.path ? -1 : a.collected.path > b.collected.path ? 1 : 0;
+}
+
+/**
  * Page keys that differ on disk can still slugify to the same URL (e.g. `FOO_BAR`
  * and `FOOBAR` both become `foobar`). Append a numeric `-N` suffix (which survives
  * slugification) to every entry after the first in such a group, in a deterministic
- * order, so every page has a unique URL. The `index` slug of every directory is
+ * order (public names before `_`-prefixed ones, then by filename), so every page has a
+ * unique URL. The `index` slug of every directory is
  * reserved for the generated category/namespace index page.
  */
 function disambiguateSlugCollisions(entries: PageEntry[]): PageEntry[] {
@@ -647,7 +748,7 @@ function disambiguateSlugCollisions(entries: PageEntry[]): PageEntry[] {
             result.push(...group);
             continue;
         }
-        const sorted = [...group].sort((a, b) => (a.pageKey < b.pageKey ? -1 : a.pageKey > b.pageKey ? 1 : 0));
+        const sorted = [...group].sort(comparePageEntries);
         sorted.forEach((entry, index) => {
             if (index === 0 && !isReserved) {
                 result.push(entry);

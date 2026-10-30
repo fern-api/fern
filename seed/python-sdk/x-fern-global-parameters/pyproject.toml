@@ -1,9 +1,9 @@
 [project]
-name = "fern_x-fern-global-parameters"
+name = "fern-x-fern-global-parameters"
 dynamic = ["version"]
 
 [tool.poetry]
-name = "fern_x-fern-global-parameters"
+name = "fern-x-fern-global-parameters"
 version = "0.0.1"
 description = ""
 readme = "README.md"

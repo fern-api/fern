@@ -4,7 +4,7 @@ import { mkdir, readFile, writeFile } from "fs/promises";
 import stripAnsi from "strip-ansi";
 
 import { runFernCli } from "../../utils/runFernCli.js";
-import { init } from "../init/init.js";
+import { init, LEGACY_CONFIG_ENV } from "../init/init.js";
 
 // Pinned to a published TypeScript SDK generator version that has a matching
 // `fernapi/fern-typescript-sdk-validator:<version>` image on Docker Hub. The
@@ -16,7 +16,7 @@ const fixturesDir = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fi
 
 describe("fern generate", () => {
     it.concurrent("default api (fern init)", async ({ signal }) => {
-        const pathOfDirectory = await init({ signal });
+        const pathOfDirectory = await init({ env: LEGACY_CONFIG_ENV, signal });
 
         await runFernCli(["generate", "--local", "--keepDocker"], {
             cwd: pathOfDirectory,
@@ -27,7 +27,7 @@ describe("fern generate", () => {
     }, 300_000);
 
     it.concurrent("generate --local --verify succeeds with typescript sdk", async ({ signal }) => {
-        const pathOfDirectory = await init({ signal });
+        const pathOfDirectory = await init({ env: LEGACY_CONFIG_ENV, signal });
 
         // Pin the TS SDK generator to a version with a published validator
         // image. See comment on the constant.
@@ -70,36 +70,37 @@ describe("fern generate", () => {
         expect(stripAnsi(stdout) + stripAnsi(stderr)).toContain("Verification succeeded for image");
     }, 300_000);
 
-    it.concurrent("ir contains fdr definitionid", async ({ signal }) => {
-        if (globalThis.process.env.FERN_ORG_TOKEN_DEV == null) {
-            throw new Error("FERN_ORG_TOKEN_DEV is not set");
-        }
-        const { stdout, stderr } = await runFernCli(["generate", "--log-level", "debug"], {
-            cwd: join(fixturesDir, RelativeFilePath.of("basic")),
-            reject: false,
-            signal
-        });
+    it.skipIf(!globalThis.process.env.FERN_ORG_TOKEN_DEV)(
+        "ir contains fdr definitionid",
+        async ({ signal }) => {
+            const { stdout, stderr } = await runFernCli(["generate", "--log-level", "debug"], {
+                cwd: join(fixturesDir, RelativeFilePath.of("basic")),
+                reject: false,
+                signal
+            });
 
-        console.log("stdout", stdout);
-        console.log("stderr", stderr);
+            console.log("stdout", stdout);
+            console.log("stderr", stderr);
 
-        const filepath = extractFilepath(stdout);
-        if (filepath == null) {
-            throw new Error(`Failed to get path to IR:\n${stdout}`);
-        }
-
-        exec(`./ir-contains-fdr-definition-id.sh ${filepath}`, { cwd: __dirname }, (error, stdout, stderr) => {
-            if (error) {
-                console.error(`Error: ${error.message}`);
-                return;
+            const filepath = extractFilepath(stdout);
+            if (filepath == null) {
+                throw new Error(`Failed to get path to IR:\n${stdout}`);
             }
-            if (stderr) {
-                console.error(`stderr: ${stderr}`);
-                return;
-            }
-            console.log(`stdout: ${stdout}`);
-        });
-    }, 300_000);
+
+            exec(`./ir-contains-fdr-definition-id.sh ${filepath}`, { cwd: __dirname }, (error, stdout, stderr) => {
+                if (error) {
+                    console.error(`Error: ${error.message}`);
+                    return;
+                }
+                if (stderr) {
+                    console.error(`stderr: ${stderr}`);
+                    return;
+                }
+                console.log(`stdout: ${stdout}`);
+            });
+        },
+        300_000
+    );
 
     // TODO: Re-enable this test if and when it doesn't require the user to be logged in.
     // It's otherwise flaky on developer machines that haven't logged in with the fern CLI.
@@ -131,7 +132,7 @@ describe("fern generate", () => {
         });
         const output = stdout + stderr;
         expect(output).toContain(
-            "Authentication required. Please run 'fern login' or set the FERN_TOKEN environment variable."
+            "Authentication required. Please run 'fern login', set the FERN_TOKEN environment variable, or pass --guest to continue without an account."
         );
     }, 300_000);
 

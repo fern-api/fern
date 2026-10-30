@@ -16,6 +16,13 @@ export interface FernCliCustomConfig {
     binaryName?: string;
 
     /**
+     * Opt-in banner shown above the generated CLI's root help. A string is
+     * monochrome text; the object form can add one solid colour, a
+     * multi-stop gradient along `direction`, or one colour per line.
+     */
+    banner?: string | FernCliBannerConfig;
+
+    /**
      * When true (the default), the generator produces the full custom
      * command infrastructure alongside the CLI binary:
      *   - `<binaryName>-types` library crate (typed serde structs)
@@ -75,9 +82,11 @@ export interface FernCliCustomConfig {
      * Overrides the generated crate's `[package]` identity — the metadata
      * cargo (and cargo-dist's installers) publish under.
      *
-     * When omitted, the crate keeps the SDK template's Fern-owned
-     * identity (`fern-cli-sdk`, `github.com/fern-api/cli-sdk`), which is
-     * what every existing generation ships today.
+     * Unset fields default from the GitHub output repo: `repository` and
+     * `homepage` to its URL, and `name` to the binary name when that is a
+     * valid crate name. Without a GitHub repo (local-files / publish output)
+     * they keep the SDK template's Fern-owned identity (`fern-cli-sdk`,
+     * `github.com/fern-api/cli-sdk`).
      *
      * The `[lib]` name (`fern_cli_sdk`) is deliberately not configurable:
      * every `use fern_cli_sdk::...` in the vendored `src/` tree depends
@@ -243,6 +252,26 @@ export interface FernCliProfilesProvisionConfig {
      * request default.
      */
     revokeParameters?: Record<string, string>;
+
+    /**
+     * Long name of the `profiles create` flag. Defaults to `provision` (e.g. set `api-key`);
+     * `--provision` is always accepted as a hidden alias.
+     */
+    flag?: string;
+
+    /**
+     * Extra request values sent with the operation, e.g.
+     * `{ FriendlyName: "{cli} for {user} on {host}" }`. `{cli}`, `{profile}`,
+     * `{user}` and `{host}` are substituted; a value the profile sets wins.
+     */
+    parameters?: Record<string, string>;
+
+    /**
+     * Profile parameter → typed credential field it is copied from, e.g.
+     * `{ AccountSid: "username" }`, so requests keep the account once the
+     * credential is replaced by the provisioned key.
+     */
+    profileParameters?: Record<string, string>;
 }
 
 /**
@@ -279,7 +308,22 @@ export interface FernCliDistributionConfig {
      * Windows archive.
      */
     scoop?: FernCliScoopConfig;
+
+    /**
+     * Whether release builds sign artifacts with GitHub Artifact
+     * Attestations. GitHub only supports attestations on private repos
+     * with GitHub Enterprise Cloud, so on any other private repo the step
+     * fails every build leg and no release is cut.
+     *
+     * - `"auto"` (default): attest on public repos, skip on private ones.
+     *   Private repos on Enterprise Cloud should set `true`.
+     * - `true`: always attest.
+     * - `false`: never attest; drops the step and its permission.
+     */
+    githubAttestations?: FernCliGitHubAttestations;
 }
+
+export type FernCliGitHubAttestations = "auto" | boolean;
 
 export interface FernCliHomebrewConfig {
     /**
@@ -422,6 +466,20 @@ const RESERVED_SUFFIX_FLAG_NAMES: ReadonlySet<string> = new Set([
     "debug",
     "schema"
 ]);
+export interface FernCliBannerConfig {
+    text: string;
+    colors?: string[];
+    direction?: FernCliBannerDirection;
+    lineColors?: string[];
+    /** Play a short highlight sweep across the banner before root help on an interactive terminal. */
+    animate?: boolean;
+}
+
+export type FernCliBannerDirection = "horizontal" | "vertical" | "diagonal";
+
+const BANNER_CONFIG_FIELDS: ReadonlySet<string> = new Set(["text", "colors", "direction", "lineColors", "animate"]);
+const BANNER_DIRECTIONS: ReadonlySet<string> = new Set(["horizontal", "vertical", "diagonal"]);
+const BANNER_COLOR_PATTERN = /^#[0-9a-fA-F]{6}$/;
 
 export function getCustomConfig(generatorConfig: GeneratorConfig): FernCliCustomConfig {
     if (generatorConfig.customConfig == null) {
@@ -452,6 +510,9 @@ export function validateCustomConfig(raw: unknown): FernCliCustomConfig {
             throw new Error(`Invalid customConfig.binaryName: expected a string, got ${typeof obj.binaryName}.`);
         }
         result.binaryName = obj.binaryName;
+    }
+    if ("banner" in obj && obj.banner !== undefined) {
+        result.banner = validateBannerConfig(obj.banner);
     }
     if ("customCommands" in obj && obj.customCommands !== undefined) {
         if (typeof obj.customCommands !== "boolean") {
@@ -531,6 +592,97 @@ export function validateCustomConfig(raw: unknown): FernCliCustomConfig {
         result.distribution = validateDistribution(obj.distribution);
     }
     return result;
+}
+
+function validateBannerConfig(raw: unknown): string | FernCliBannerConfig {
+    if (typeof raw === "string") {
+        if (raw.length === 0) {
+            throw new Error('Invalid customConfig.banner: expected non-empty text, got "".');
+        }
+        return raw;
+    }
+
+    const obj = asConfigObject(raw, "customConfig.banner");
+    const unknownKeys = Object.keys(obj).filter((key) => !BANNER_CONFIG_FIELDS.has(key));
+    if (unknownKeys.length > 0) {
+        throw new Error(
+            `Invalid customConfig.banner: unknown field(s) ${unknownKeys.map((key) => `\`${key}\``).join(", ")}. ` +
+                "Supported fields: `text`, `colors`, `direction`, `lineColors`, `animate`."
+        );
+    }
+
+    if (typeof obj.text !== "string" || obj.text.length === 0) {
+        throw new Error(
+            `Invalid customConfig.banner.text: expected a non-empty string, got ${describeConfigValue(obj.text)}.`
+        );
+    }
+
+    const result: FernCliBannerConfig = { text: obj.text };
+    const colors = validateBannerColors(obj.colors, "colors");
+    if (colors != null) {
+        result.colors = colors;
+    }
+    const lineColors = validateBannerColors(obj.lineColors, "lineColors");
+    if (lineColors != null) {
+        if (colors != null) {
+            throw new Error(
+                "Invalid customConfig.banner: set either `colors` (a gradient) or `lineColors` (one colour per line), not both."
+            );
+        }
+        result.lineColors = lineColors;
+    }
+    if (obj.direction !== undefined) {
+        if (typeof obj.direction !== "string" || !BANNER_DIRECTIONS.has(obj.direction)) {
+            throw new Error(
+                `Invalid customConfig.banner.direction: expected "horizontal", "vertical", or "diagonal", got ${describeConfigValue(obj.direction)}.`
+            );
+        }
+        result.direction = obj.direction as FernCliBannerDirection;
+    }
+    if (obj.animate !== undefined) {
+        if (typeof obj.animate !== "boolean") {
+            throw new Error(
+                `Invalid customConfig.banner.animate: expected a boolean, got ${describeConfigValue(obj.animate)}.`
+            );
+        }
+        result.animate = obj.animate;
+    }
+    return result;
+}
+
+function validateBannerColors(raw: unknown, field: "colors" | "lineColors"): string[] | undefined {
+    if (raw === undefined) {
+        return undefined;
+    }
+    if (!Array.isArray(raw)) {
+        throw new Error(
+            `Invalid customConfig.banner.${field}: expected an array of 6-digit hex colours, got ${describeConfigValue(raw)}.`
+        );
+    }
+    return raw.map((color, index) => {
+        if (typeof color !== "string" || !BANNER_COLOR_PATTERN.test(color)) {
+            throw new Error(
+                `Invalid customConfig.banner.${field}[${index}]: expected a 6-digit hex colour like "#4949F2", got ${describeConfigValue(color)}.`
+            );
+        }
+        return color;
+    });
+}
+
+function describeConfigValue(value: unknown): string {
+    if (typeof value === "string") {
+        return JSON.stringify(value);
+    }
+    if (value === null) {
+        return "null";
+    }
+    if (Array.isArray(value)) {
+        return "array";
+    }
+    if (typeof value === "number" || typeof value === "boolean") {
+        return `${typeof value} ${value}`;
+    }
+    return typeof value;
 }
 
 const DEPENDENCY_SPEC_STRING_FIELDS = ["version", "package", "path", "git", "branch", "rev", "registry"] as const;
@@ -716,6 +868,29 @@ function validateStringMap(raw: unknown, label: string): Record<string, string> 
     return result;
 }
 
+// Free-text values (labels, templates) are interpolated into Rust string
+// literals, so quotes, backslashes and control characters are rejected.
+// biome-ignore lint/suspicious/noControlCharactersInRegex: intentionally rejecting control chars in codegen output
+const SAFE_TEXT = /^[^"\\\x00-\x1f]*$/;
+
+function validateTextMap(raw: unknown, label: string): Record<string, string> {
+    const obj = asConfigObject(raw, label);
+    const result: Record<string, string> = {};
+    for (const [key, value] of Object.entries(obj)) {
+        if (typeof value !== "string") {
+            throw new Error(`Invalid ${label}.${key}: expected a string, got ${typeof value}.`);
+        }
+        if (!FIELD_NAME.test(key)) {
+            throw new Error(`Invalid ${label}: "${key}" is not a field name ([A-Za-z0-9_.-]).`);
+        }
+        if (!SAFE_TEXT.test(value)) {
+            throw new Error(`Invalid ${label}.${key}: quotes, backslashes and control characters are not allowed.`);
+        }
+        result[key] = value;
+    }
+    return result;
+}
+
 function validateProvisionOperation(raw: unknown): FernCliProfilesProvisionConfig {
     const label = "customConfig.profiles.provisionOperation";
     const obj = asConfigObject(raw, label);
@@ -735,6 +910,18 @@ function validateProvisionOperation(raw: unknown): FernCliProfilesProvisionConfi
     const result: FernCliProfilesProvisionConfig = { operation: obj.operation, credential };
     if (obj.revokeParameters !== undefined) {
         result.revokeParameters = validateStringMap(obj.revokeParameters, `${label}.revokeParameters`);
+    }
+    if (obj.flag !== undefined) {
+        if (typeof obj.flag !== "string" || !/^[a-z][a-z0-9-]*$/.test(obj.flag)) {
+            throw new Error(`Invalid ${label}.flag: expected a kebab-case flag name without dashes (e.g. "api-key").`);
+        }
+        result.flag = obj.flag;
+    }
+    if (obj.parameters !== undefined) {
+        result.parameters = validateTextMap(obj.parameters, `${label}.parameters`);
+    }
+    if (obj.profileParameters !== undefined) {
+        result.profileParameters = validateStringMap(obj.profileParameters, `${label}.profileParameters`);
     }
     return result;
 }
@@ -767,6 +954,15 @@ function validateDistribution(raw: unknown): FernCliDistributionConfig {
     }
     if (obj.scoop !== undefined) {
         result.scoop = validateScoop(obj.scoop);
+    }
+    if (obj.githubAttestations !== undefined) {
+        if (obj.githubAttestations !== "auto" && typeof obj.githubAttestations !== "boolean") {
+            throw new Error(
+                `Invalid customConfig.distribution.githubAttestations: ${JSON.stringify(obj.githubAttestations)}. ` +
+                    'Expected "auto", true, or false.'
+            );
+        }
+        result.githubAttestations = obj.githubAttestations;
     }
     return result;
 }

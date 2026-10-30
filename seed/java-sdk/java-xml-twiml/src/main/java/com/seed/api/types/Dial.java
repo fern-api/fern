@@ -319,6 +319,28 @@ public final class Dial implements XmlSerializable {
             return this;
         }
 
+        public Builder statusCallbackEvent(String... statusCallbackEvent) {
+            return statusCallbackEvent(Arrays.asList(statusCallbackEvent));
+        }
+
+        public Builder record(DialRecordItem... record) {
+            return record(Arrays.asList(record));
+        }
+
+        /**
+         * Sets the text content of this element (same as {@code number(...)}).
+         */
+        public Builder text(Optional<String> text) {
+            return number(text);
+        }
+
+        /**
+         * Sets the text content of this element (same as {@code number(...)}).
+         */
+        public Builder text(String text) {
+            return number(text);
+        }
+
         /**
          * Appends a &lt;Number&gt; child element after any content added so far.
          * @param number the &lt;Number&gt; element to append
@@ -331,6 +353,24 @@ public final class Dial implements XmlSerializable {
             this.numbers = Optional.of(updated);
             this.content.add(XmlNode.element(item));
             return this;
+        }
+
+        /**
+         * Appends a &lt;Number&gt; child element after any content added so far.
+         * @param number the &lt;Number&gt; element to append
+         * @return this builder
+         */
+        public Builder number(Number number) {
+            return addNumber(number);
+        }
+
+        /**
+         * Appends a &lt;Number&gt; child element with the given text content after any content added so far.
+         * @param text the text content of the &lt;Number&gt; element
+         * @return this builder
+         */
+        public Builder addNumber(String text) {
+            return addNumber(Number.builder().phoneNumber(text).build());
         }
 
         /**

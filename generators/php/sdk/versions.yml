@@ -1,4 +1,76 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.30.12
+  changelogEntry:
+    - summary: |
+        README generation in self-hosted GitHub mode can clone a private repository with a personal
+        access token again. Upgrades `@fern-api/generator-cli` to 0.12.1, which also sends the token as an
+        `Authorization` header. Before this, git in the generator image (libcurl 8.23+) dropped the token
+        from the clone URL and failed with `could not read Username`.
+      type: fix
+  createdAt: "2026-10-30"
+  irVersion: 67
+- version: 2.30.11
+  changelogEntry:
+    - summary: |
+        Optional parameters whose type is a union containing `mixed` are now type-hinted as `mixed` instead of `mixed|null`. PHP rejects `mixed|null` with a fatal error ("Type mixed can only be used as a standalone type"), so the generated client failed to load.
+      type: fix
+  createdAt: "2026-10-29"
+  irVersion: 67
+- version: 2.30.10
+  changelogEntry:
+    - summary: |
+        XML (TwiML) child builders keep the legacy names even when they match the element's text property:
+        `$response->dial()->number('+1…')` adds a `<Number>` child and `$response->message()->body('Hi')` a
+        `<Body>` child (the text stays on the `$number` / `$body` property, also reachable as `getText()` / `setText()`); `addNumber()` / `addBody()`
+        remain available.
+      type: fix
+  createdAt: "2026-10-27"
+  irVersion: 67
+- version: 2.30.9
+  changelogEntry:
+    - summary: |
+        The generator image keeps Alpine 3.22's libcurl (< 8.23). curl 8.23.0 strips credentials from the
+        effective URL it reports, which made git treat every authenticated https clone as a redirect and drop
+        the token, so README generation and GitHub output for private repositories failed inside the
+        container with "could not read Username for 'https://github.com'".
+      type: fix
+  createdAt: "2026-10-27"
+  irVersion: 67
+- version: 2.30.8
+  changelogEntry:
+    - summary: |
+        XML (TwiML) serialization drops characters outside the XML 1.0 `Char` production (e.g. `\x01`) from text and attribute values, consistently across SDK languages.
+      type: fix
+  createdAt: "2026-10-21"
+  irVersion: 67
+- version: 2.30.7
+  changelogEntry:
+    - summary: |
+        XML (TwiML) types gain `asXML(bool $xmlDeclaration = true)` as an alias of `toXml()`, matching
+        the legacy TwiML SDK and `SimpleXMLElement::asXML()`.
+      type: fix
+  createdAt: "2026-10-21"
+  irVersion: 67
+- version: 2.30.6
+  changelogEntry:
+    - summary: |
+        Requests whose path contains a `.` or `..` segment (including `%2e` forms) now throw an
+        `InvalidArgumentException` before being sent. A path parameter value of `.` or `..` could
+        otherwise change which endpoint the request was sent to, with or without
+        `encode-path-params`.
+      type: fix
+  createdAt: "2026-10-19"
+  irVersion: 67
+- version: 2.30.5
+  changelogEntry:
+    - summary: |
+        `WebhooksHelper.verifyRequest` now parses `name=value` settings headers when
+        `webhook-signature.algorithm-header` sets `key-id-parameter`/`algorithm-parameter`
+        (e.g. Twilio's `X-Twilio-Webhooks-Signature-Settings: key=<id>,algorithm=HMAC_SHA256`),
+        so the key resolver receives the bare key ID instead of `key=<id>`. Requires IR 67.33.0.
+      type: fix
+  createdAt: "2026-10-16"
+  irVersion: 67
 - version: 2.30.4
   changelogEntry:
     - summary: |

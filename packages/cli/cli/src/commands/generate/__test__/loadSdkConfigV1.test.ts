@@ -166,6 +166,39 @@ describe("loadSdkConfigV1", () => {
         );
     });
 
+    it("sends sdk-gen-api a download for a hosted MCP target, which the CLI deploys itself", async () => {
+        const directory = await mkdtemp(join(tmpdir(), "fern-sdk-config-hosted-"));
+        temporaryDirectories.push(directory);
+        const configPath = join(directory, "sdk-config.yml");
+        await writeFile(
+            configPath,
+            YAML.stringify({
+                schemaVersion: "sdk-config/v1",
+                sdkName: "petstore",
+                sdkVersion: "1.0.0",
+                source: { specs: [{ id: "openapi", type: "openapi", path: "./openapi.yml" }] },
+                api: {},
+                client: {},
+                package: {},
+                docs: {},
+                generation: {},
+                targets: [{ language: "mcp", output: { delivery: "hosted", slug: "petstore" } }]
+            })
+        );
+
+        const loaded = await loadSdkConfigV1(configPath);
+        const [target] = loaded.payload.targets;
+        const body = JSON.parse(target?.body.toString("utf8") ?? "{}");
+
+        // The customer's document keeps the hosted delivery, so the deploy step can read the slug.
+        expect(loaded.config.targets[0]?.output).toEqual({ delivery: "hosted", slug: "petstore" });
+        expect(target?.requestedOutput).toEqual({ type: "download" });
+        // The request to sdk-gen-api never carries a delivery it may not know.
+        expect(body.targets).toEqual([expect.objectContaining({ language: "mcp", output: { delivery: "zip" } })]);
+        expect(JSON.stringify(body)).not.toContain("hosted");
+        expect(target?.absolutePathToLocalOutputArchive).toBeUndefined();
+    });
+
     it("bypasses direct publishing and credential resolution during preview", async () => {
         const { configPath } = await writeSdkConfig(temporaryDirectories, {
             language: "typescript",
@@ -575,6 +608,178 @@ describe("loadSdkConfigV1", () => {
                 ]
             }
         });
+    });
+
+    it("forwards a NuGet apiKey as a repository secret name without sending it in the SDK Config document", async () => {
+        const { configPath } = await writeSdkConfig(temporaryDirectories, {
+            language: "csharp",
+            package: { packageName: "Acme.Sdk" },
+            output: {
+                delivery: "github",
+                github: { repository: "acme/sdk-dotnet", mode: "pull-request" },
+                publish: { registry: "nuget", apiKey: "${MY_NUGET_KEY}" }
+            }
+        });
+
+        const loaded = await loadSdkConfigV1(configPath);
+
+        expect(loaded.payload.targets[0]?.requestedOutput).toEqual({
+            type: "github",
+            repository: "acme/sdk-dotnet",
+            mode: "pull-request",
+            publish: { registry: "nuget", apiKeyEnvironmentVariable: "MY_NUGET_KEY" }
+        });
+        expect(loaded.payload.targets[0]?.body.toString("utf8")).not.toContain("MY_NUGET_KEY");
+    });
+
+    it("forwards github.workflows false as requestedOutput.workflows", async () => {
+        const { configPath } = await writeSdkConfig(temporaryDirectories, {
+            language: "typescript",
+            package: { packageName: "acme-sdk" },
+            output: { delivery: "github", github: { repository: "acme/sdk", workflows: false } }
+        });
+
+        const loaded = await loadSdkConfigV1(configPath);
+
+        expect(loaded.payload.targets[0]?.requestedOutput).toEqual({
+            type: "github",
+            repository: "acme/sdk",
+            workflows: false
+        });
+    });
+
+    it.each([true, undefined])("omits requestedOutput.workflows when github.workflows is %s", async (workflows) => {
+        const { configPath } = await writeSdkConfig(temporaryDirectories, {
+            language: "typescript",
+            package: { packageName: "acme-sdk" },
+            output: {
+                delivery: "github",
+                github: { repository: "acme/sdk", ...(workflows == null ? {} : { workflows }) }
+            }
+        });
+
+        const loaded = await loadSdkConfigV1(configPath);
+
+        expect(loaded.payload.targets[0]?.requestedOutput).not.toHaveProperty("workflows");
+        expect(JSON.stringify(loaded.payload.targets[0]?.requestedOutput)).not.toContain("workflows");
+    });
+
+    it("does not set a NuGet secret name when no apiKey is configured", async () => {
+        const { configPath } = await writeSdkConfig(temporaryDirectories, {
+            language: "csharp",
+            package: { packageName: "Acme.Sdk" },
+            output: {
+                delivery: "github",
+                github: { repository: "acme/sdk-dotnet" },
+                publish: { registry: "nuget" }
+            }
+        });
+
+        const loaded = await loadSdkConfigV1(configPath);
+
+        expect(loaded.payload.targets[0]?.requestedOutput).toMatchObject({
+            publish: { registry: "nuget" }
+        });
+        expect(loaded.payload.targets[0]?.requestedOutput).not.toHaveProperty("publish.apiKeyEnvironmentVariable");
+    });
+
+    it("rejects a NuGet apiKey that is not an environment expression naming a secret", async () => {
+        const { configPath } = await writeSdkConfig(temporaryDirectories, {
+            language: "csharp",
+            package: { packageName: "Acme.Sdk" },
+            output: {
+                delivery: "github",
+                github: { repository: "acme/sdk-dotnet" },
+                publish: { registry: "nuget", apiKey: "literal-nuget-key" }
+            }
+        });
+
+        await expect(loadSdkConfigV1(configPath)).rejects.toThrow(
+            "output.publish.apiKey for nuget must be an environment expression naming a repository secret"
+        );
+        await expect(loadSdkConfigV1(configPath)).rejects.not.toThrow("literal-nuget-key");
+    });
+
+    it.each([
+        { language: "csharp", registry: "nuget", packageName: "Acme.Sdk", apiKey: "${MY_NUGET_KEY}" },
+        { language: "ruby", registry: "rubygems", packageName: "acme-sdk", apiKey: "${MY_GEM_KEY}" }
+    ])("rejects a $registry apiKey combined with trustedPublishing", async ({
+        language,
+        registry,
+        packageName,
+        apiKey
+    }) => {
+        const { configPath } = await writeSdkConfig(temporaryDirectories, {
+            language,
+            package: { packageName },
+            output: {
+                delivery: "github",
+                github: { repository: "acme/sdk" },
+                publish: { registry, apiKey, trustedPublishing: true }
+            }
+        });
+
+        await expect(loadSdkConfigV1(configPath)).rejects.toThrow(
+            `output.publish for ${registry}: apiKey must be omitted when trustedPublishing is true`
+        );
+    });
+
+    it("forwards a RubyGems apiKey as a repository secret name without sending it in the SDK Config document", async () => {
+        const { configPath } = await writeSdkConfig(temporaryDirectories, {
+            language: "ruby",
+            package: { packageName: "acme-sdk" },
+            output: {
+                delivery: "github",
+                github: { repository: "acme/sdk-ruby", mode: "pull-request" },
+                publish: { registry: "rubygems", apiKey: "${MY_GEM_KEY}" }
+            }
+        });
+
+        const loaded = await loadSdkConfigV1(configPath);
+
+        expect(loaded.payload.targets[0]?.requestedOutput).toEqual({
+            type: "github",
+            repository: "acme/sdk-ruby",
+            mode: "pull-request",
+            publish: { registry: "rubygems", apiKeyEnvironmentVariable: "MY_GEM_KEY" }
+        });
+        expect(loaded.payload.targets[0]?.body.toString("utf8")).not.toContain("MY_GEM_KEY");
+    });
+
+    it("does not set a RubyGems secret name when no apiKey is configured", async () => {
+        const { configPath } = await writeSdkConfig(temporaryDirectories, {
+            language: "ruby",
+            package: { packageName: "acme-sdk" },
+            output: {
+                delivery: "github",
+                github: { repository: "acme/sdk-ruby" },
+                publish: { registry: "rubygems" }
+            }
+        });
+
+        const loaded = await loadSdkConfigV1(configPath);
+
+        expect(loaded.payload.targets[0]?.requestedOutput).toMatchObject({
+            publish: { registry: "rubygems" }
+        });
+        expect(loaded.payload.targets[0]?.requestedOutput).not.toHaveProperty("publish.apiKeyEnvironmentVariable");
+    });
+
+    it("rejects a RubyGems apiKey that is not an environment expression naming a secret", async () => {
+        const { configPath } = await writeSdkConfig(temporaryDirectories, {
+            language: "ruby",
+            package: { packageName: "acme-sdk" },
+            output: {
+                delivery: "github",
+                github: { repository: "acme/sdk-ruby" },
+                publish: { registry: "rubygems", apiKey: "literal-gem-key" }
+            }
+        });
+
+        await expect(loadSdkConfigV1(configPath)).rejects.toThrow(
+            "output.publish.apiKey for rubygems must be an environment expression naming a repository secret"
+        );
+        await expect(loadSdkConfigV1(configPath)).rejects.not.toThrow("literal-gem-key");
     });
 
     it("preserves GitHub delivery while omitting registry publication credentials", async () => {

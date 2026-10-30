@@ -1,9 +1,9 @@
 [project]
-name = "fern_oauth-client-credentials-with-variables"
+name = "fern-oauth-client-credentials-with-variables"
 dynamic = ["version"]
 
 [tool.poetry]
-name = "fern_oauth-client-credentials-with-variables"
+name = "fern-oauth-client-credentials-with-variables"
 version = "0.0.1"
 description = ""
 readme = "README.md"

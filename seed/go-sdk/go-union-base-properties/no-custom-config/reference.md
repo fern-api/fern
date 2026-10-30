@@ -25,7 +25,7 @@ request := &fern.Shape{
         "2024-01-01T00:00:00Z",
     ),
 }
-client.Create(
+_, err := client.Create(
     context.TODO(),
     request,
 )

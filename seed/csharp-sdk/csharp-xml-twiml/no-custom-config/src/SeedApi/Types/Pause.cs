@@ -86,6 +86,12 @@ public record Pause : IJsonOnDeserialized, IXmlNode
     public string ToXml(bool xmlDeclaration) => XmlUtils.Serialize(ToXElement(), xmlDeclaration);
 
     /// <summary>
+    /// Serializes this value to XML, optionally prefixed with the XML declaration and optionally indented.
+    /// </summary>
+    public string ToXml(bool xmlDeclaration, bool indent) =>
+        XmlUtils.Serialize(ToXElement(), xmlDeclaration, indent);
+
+    /// <summary>
     /// Hash code derived from the rendered XML, consistent with Equals.
     /// </summary>
     public override int GetHashCode() => XmlUtils.XmlHashCode(this);

@@ -11,7 +11,8 @@ import {
     applyRustlsPatch,
     patchDistWorkspaceToml,
     removeWorkspaceMember,
-    setDistKey
+    setDistKey,
+    setDistRawKey
 } from "../index.js";
 
 const SDK_DIST_WORKSPACE_PATH = path.resolve(
@@ -150,6 +151,21 @@ describe("patchDistWorkspaceToml (filesystem)", () => {
         expect(result).not.toContain("cli-sdk");
         expect(result).not.toContain("pipeline-fixture");
         expect(result).toContain('cargo-dist-version = "0.31.0"');
+    });
+
+    it.each([
+        [false, "github-attestations = false"],
+        [true, "github-attestations = true"],
+        ["auto", "github-attestations = true"],
+        [undefined, "github-attestations = true"]
+    ] as const)("githubAttestations %s writes `%s`", async (githubAttestations, expected) => {
+        await writeFile(path.join(tmpDir, "dist-workspace.toml"), TEMPLATE_DIST_TOML);
+
+        await patchDistWorkspaceToml({ outputDir: tmpDir, githubAttestations });
+
+        const result = await readFile(path.join(tmpDir, "dist-workspace.toml"), "utf-8");
+        expect(result).toContain(expected);
+        expect(result.match(/^github-attestations/gm)).toHaveLength(1);
     });
 
     it("no-op when dist-workspace.toml doesn't exist — doesn't crash if the SDK template ever drops the file", async () => {
@@ -296,9 +312,30 @@ describe("patchDistWorkspaceToml — distribution", () => {
     it("writes nothing homebrew-related when no distribution is configured", async () => {
         await patchDistWorkspaceToml({ outputDir, binaryName: "acme-cli" });
         const written = await readFile(path.join(outputDir, "dist-workspace.toml"), "utf-8");
-        expect(written).toBe(applyDistWorkspacePatch(TEMPLATE_DIST_TOML));
+        expect(written).toBe(setDistRawKey(applyDistWorkspacePatch(TEMPLATE_DIST_TOML), "macos-sign", "true"));
         expect(written).not.toContain("homebrew");
         expect(written).not.toContain("tap =");
+    });
+
+    // dist only signs when the CODESIGN_* secrets are present, so this is a
+    // no-op for every repo that has not configured them.
+    it("enables macOS signing in the [dist] table", async () => {
+        await patchDistWorkspaceToml({ outputDir, binaryName: "acme-cli" });
+        const written = await readFile(path.join(outputDir, "dist-workspace.toml"), "utf-8");
+        expect(written.match(/^macos-sign =/gm)).toHaveLength(1);
+        expect(tablesBeforeMacosSign(written)).toEqual(["[dist]"]);
+    });
+
+    it("keeps macOS signing in the [dist] table alongside the homebrew keys", async () => {
+        await patchDistWorkspaceToml({
+            outputDir,
+            binaryName: "acme-cli",
+            homebrew: { tap: "acme/homebrew-tap" }
+        });
+        const written = await readFile(path.join(outputDir, "dist-workspace.toml"), "utf-8");
+        expect(written).toContain("tap =");
+        expect(written.match(/^macos-sign =/gm)).toHaveLength(1);
+        expect(tablesBeforeMacosSign(written)).toEqual(["[dist]"]);
     });
 
     // runPipeline calls this twice: once bare, then again with the generated
@@ -326,3 +363,12 @@ describe("patchDistWorkspaceToml — distribution", () => {
         expect(written).toContain('"cargo:acme-cli-sdk"');
     });
 });
+
+/**
+ * The tables `macos-sign` could belong to: every header from `[dist]` up to
+ * the key. Only `["[dist]"]` puts it where dist reads it.
+ */
+function tablesBeforeMacosSign(distToml: string): string[] {
+    const head = distToml.slice(0, distToml.indexOf("\nmacos-sign = true\n"));
+    return (head.match(/^\[[^\]]+\]$/gm) ?? []).filter((_, i, all) => i >= all.indexOf("[dist]"));
+}

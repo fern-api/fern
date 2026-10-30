@@ -15,12 +15,9 @@
  */
 package com.fern.java.generators;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fern.java.AbstractGeneratorContext;
@@ -53,21 +50,20 @@ public final class ObjectMappersGenerator extends AbstractFileGenerator {
                         Modifier.STATIC,
                         Modifier.FINAL)
                 .initializer(CodeBlock.builder()
-                        .add("$T.builder()\n", JsonMapper.class)
+                        .add("new $T()\n", ObjectMapper.class)
                         .indent()
-                        .add(".addModule(new $T())\n", Jdk8Module.class)
-                        .add(".addModule(new $T())\n", JavaTimeModule.class)
+                        .add(".registerModule(new $T())\n", Jdk8Module.class)
+                        .add(".registerModule(new $T())\n", JavaTimeModule.class)
                         .add(
-                                ".addModule($T.$L())\n",
+                                ".registerModule($T.$L())\n",
                                 generatorContext.getPoetClassNameFactory().getDateTimeDeserializerClassName(),
                                 DateTimeDeserializerGenerator.GET_MODULE_METHOD_NAME)
                         .add(
-                                ".addModule($T.$L())\n",
+                                ".registerModule($T.$L())\n",
                                 generatorContext.getPoetClassNameFactory().getDoubleSerializerClassName(),
                                 DoubleSerializerGenerator.GET_MODULE_METHOD_NAME)
                         .add(".disable($T.FAIL_ON_UNKNOWN_PROPERTIES)\n", DeserializationFeature.class)
-                        .add(".disable($T.WRITE_DATES_AS_TIMESTAMPS)\n", SerializationFeature.class)
-                        .add(".build()")
+                        .add(".disable($T.WRITE_DATES_AS_TIMESTAMPS)", SerializationFeature.class)
                         .build())
                 .build();
         TypeSpec enumTypeSpec = TypeSpec.classBuilder(className)
@@ -94,14 +90,9 @@ public final class ObjectMappersGenerator extends AbstractFileGenerator {
                 .returns(String.class)
                 .addParameter(ParameterSpec.builder(Object.class, "o").build())
                 .beginControlFlow("try")
-                .addStatement(CodeBlock.builder()
-                        .add(
-                                "return $L.setSerializationInclusion($T.Include.ALWAYS)\n",
-                                JSON_MAPPER_STATIC_FIELD_NAME,
-                                JsonInclude.class)
-                        .add(".writerWithDefaultPrettyPrinter()\n")
-                        .add(".writeValueAsString(o)")
-                        .build())
+                .addStatement(
+                        "return $L.writerWithDefaultPrettyPrinter().writeValueAsString(o)",
+                        JSON_MAPPER_STATIC_FIELD_NAME)
                 .endControlFlow()
                 .beginControlFlow("catch ($T e)", IOException.class)
                 .addStatement("return o.getClass().getName() + $S + $T.toHexString(o.hashCode())", "@", Integer.class)
@@ -121,7 +112,7 @@ public final class ObjectMappersGenerator extends AbstractFileGenerator {
                         JSON_MAPPER_STATIC_FIELD_NAME,
                         Object.class)
                 .endControlFlow()
-                .beginControlFlow("catch ($T ignored)", JsonProcessingException.class)
+                .beginControlFlow("catch ($T ignored)", IOException.class)
                 .addStatement("return responseBodyString")
                 .endControlFlow()
                 .build();

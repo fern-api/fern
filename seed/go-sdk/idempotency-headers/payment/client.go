@@ -41,7 +41,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	    Amount: 1,
 //	    Currency: fern.CurrencyUsd,
 //	}
-//	client.Payment.Create(
+//	_, err := client.Payment.Create(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -63,7 +63,7 @@ func (c *Client) Create(
 
 // Example:
 //
-//	client.Payment.Delete(
+//	err := client.Payment.Delete(
 //	    context.TODO(),
 //	    "paymentId",
 //	)

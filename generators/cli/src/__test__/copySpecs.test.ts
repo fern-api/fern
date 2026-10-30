@@ -121,6 +121,97 @@ describe("copySpecs", () => {
         expect(main).not.toContain(".spec_under");
         expect(main).toContain("use fern_cli_sdk::app::CliApp;");
         expect(main).toContain("use fern_cli_sdk::openapi::OpenApiBinding;");
+        expect(main).not.toContain("Banner");
+    });
+
+    it("emits an escaped banner literal with configured colours", async () => {
+        const { specsDir, outputDir } = await scaffold();
+        await copySpecs({
+            outputDir,
+            binaryName: BIN,
+            authBindings: [],
+            globalParamBindings: [],
+            specsDir,
+            banner: { text: 'line\\path "quoted"\nnext\u001b', colors: ["#4949F2", "#30F1B1"] }
+        });
+
+        const main = await readFile(path.join(outputDir, BIN_DIR, "main.rs"), "utf-8");
+        expect(main).toContain("use fern_cli_sdk::app::Banner;");
+        expect(main).toContain(
+            '        .banner(Banner::new("line\\\\path \\"quoted\\"\\nnext\\u{1b}").colors(&["#4949F2", "#30F1B1"]))'
+        );
+    });
+
+    it("emits the banner direction and per-line colours", async () => {
+        const { specsDir, outputDir } = await scaffold();
+        await copySpecs({
+            outputDir,
+            binaryName: BIN,
+            authBindings: [],
+            globalParamBindings: [],
+            specsDir,
+            banner: { text: "Fern", colors: ["#4949F2", "#30F1B1"], direction: "diagonal" }
+        });
+        const main = await readFile(path.join(outputDir, BIN_DIR, "main.rs"), "utf-8");
+        expect(main).toContain("use fern_cli_sdk::app::{Banner, BannerDirection};");
+        expect(main).toContain(
+            '.banner(Banner::new("Fern").colors(&["#4949F2", "#30F1B1"]).direction(BannerDirection::Diagonal))'
+        );
+
+        const lineOutput = await scaffold();
+        await copySpecs({
+            outputDir: lineOutput.outputDir,
+            binaryName: BIN,
+            authBindings: [],
+            globalParamBindings: [],
+            specsDir: lineOutput.specsDir,
+            banner: { text: "Fern", lineColors: ["#4949F2"], direction: "horizontal" }
+        });
+        const lineMain = await readFile(path.join(lineOutput.outputDir, BIN_DIR, "main.rs"), "utf-8");
+        expect(lineMain).toContain("use fern_cli_sdk::app::Banner;");
+        expect(lineMain).toContain('.banner(Banner::new("Fern").line_colors(&["#4949F2"]))');
+    });
+
+    it("emits animate only when enabled", async () => {
+        const animated = await scaffold();
+        await copySpecs({
+            outputDir: animated.outputDir,
+            binaryName: BIN,
+            authBindings: [],
+            globalParamBindings: [],
+            specsDir: animated.specsDir,
+            banner: { text: "Fern", colors: ["#4949F2"], animate: true }
+        });
+        const main = await readFile(path.join(animated.outputDir, BIN_DIR, "main.rs"), "utf-8");
+        expect(main).toContain('.banner(Banner::new("Fern").colors(&["#4949F2"]).animate(true))');
+
+        const still = await scaffold();
+        await copySpecs({
+            outputDir: still.outputDir,
+            binaryName: BIN,
+            authBindings: [],
+            globalParamBindings: [],
+            specsDir: still.specsDir,
+            banner: { text: "Fern", animate: false }
+        });
+        const stillMain = await readFile(path.join(still.outputDir, BIN_DIR, "main.rs"), "utf-8");
+        expect(stillMain).toContain('.banner(Banner::new("Fern"))');
+    });
+
+    it("emits a monochrome banner for the string shorthand", async () => {
+        const { specsDir, outputDir } = await scaffold();
+        await copySpecs({
+            outputDir,
+            binaryName: BIN,
+            authBindings: [],
+            globalParamBindings: [],
+            specsDir,
+            banner: "Fern CLI"
+        });
+
+        const main = await readFile(path.join(outputDir, BIN_DIR, "main.rs"), "utf-8");
+        expect(main).toContain('.banner(Banner::new("Fern CLI"))');
+        expect(main).not.toContain(".colors(");
     });
 
     it("custom.rs example uses OpenApiBinding::handler, since a bare closure does not compile", async () => {
@@ -714,6 +805,35 @@ describe("copySpecs", () => {
                 '.provision_operation(ProvisionOperation::new("iam.keys.create")' +
                 '.credential_field("username", "sid").credential_field("password", "secret")' +
                 '.revoke_parameter("Sid", "sid")))'
+        );
+    });
+
+    it("emits the interactive provisioning options when configured", async () => {
+        const { specsDir, outputDir } = await scaffold();
+
+        await copySpecs({
+            outputDir,
+            binaryName: BIN,
+            authBindings: [],
+            globalParamBindings: [],
+            specsDir,
+            profilesCommandName: "profiles",
+            profilesProvisionOperation: {
+                operation: "core.keys.create",
+                credential: { username: "sid", password: "secret" },
+                flag: "new-key",
+                parameters: { FriendlyName: "{cli} for {user} on {host}" },
+                profileParameters: { AccountSid: "username" }
+            }
+        });
+
+        const main = await readFile(path.join(outputDir, BIN_DIR, "main.rs"), "utf-8");
+        expect(main).toContain(
+            '.provision_operation(ProvisionOperation::new("core.keys.create")' +
+                '.credential_field("username", "sid").credential_field("password", "secret")' +
+                '.flag("new-key")' +
+                '.parameter("FriendlyName", "{cli} for {user} on {host}")' +
+                '.profile_parameter("AccountSid", "username")))'
         );
     });
 

@@ -6,6 +6,7 @@ import typing
 
 import pytest
 
+from fern_python.codegen.file_header import get_auto_generated_notice
 from core_utilities.shared.webhook_signature import (
     compute_hash,
     compute_hmac_signature,
@@ -244,7 +245,9 @@ def _render_helper(class_name: str, config: typing.Any) -> typing.Any:
     from core_utilities.shared import webhook_signature as core
     from fern_python.generators.sdk.webhooks_helper_generator import _HmacHelperWriter
 
-    source = _HmacHelperWriter(class_name=class_name, config=config).write()
+    source = _HmacHelperWriter(
+        class_name=class_name, config=config, auto_generated_notice=get_auto_generated_notice()
+    ).write()
     source = source.replace("from ..core.webhook_signature", "from core_utilities.shared.webhook_signature")
     module = types.ModuleType("_generated_webhook_helper")
     module.__dict__["core"] = core
@@ -605,6 +608,8 @@ def test_multiple_distinct_configs_produce_distinct_files() -> None:
     root_init_exports: typing.List[str] = []
 
     class _FakeProject:
+        auto_generated_notice = get_auto_generated_notice()
+
         def get_source_file_filepath(self, filepath: typing.Any, include_src_root: bool) -> str:
             parts = [d.module_name for d in filepath.directories] + [filepath.file.module_name + ".py"]
             return "/".join(parts)
@@ -665,6 +670,8 @@ def test_api_wide_config_generates_default_helper_without_webhooks() -> None:
     root_init_exports: typing.List[str] = []
 
     class _FakeProject:
+        auto_generated_notice = get_auto_generated_notice()
+
         def get_source_file_filepath(self, filepath: typing.Any, include_src_root: bool) -> str:
             parts = [d.module_name for d in filepath.directories] + [filepath.file.module_name + ".py"]
             return "/".join(parts)
@@ -789,3 +796,87 @@ def test_generated_verify_request_mismatch_logs_failure(caplog: typing.Any) -> N
             headers=headers, request_body="", notification_url=url, signature_key=_resolve_key
         )
     assert "signature mismatch" in caplog.text
+
+
+_NAMED_ALGORITHM_HEADER = {
+    "headerName": "X-Twilio-Webhooks-Signature-Settings",
+    "keyIdDelimiter": ",",
+    "keyIdParameter": "key",
+    "algorithmParameter": "algorithm",
+    "algorithms": [
+        {"wireValue": "HMAC_SHA1", "algorithm": "SHA1"},
+        {"wireValue": "HMAC_SHA256", "algorithm": "SHA256"},
+    ],
+}
+_TWILIO_KEY_ID = "webhooks_sharedkey_01m4tsfc8xfm5vcmq2e3wnfww2"
+_TWILIO_SHARED_KEYS = {_TWILIO_KEY_ID: "twilio_shared_secret"}
+
+
+def _named_settings_helper() -> typing.Any:
+    return _render_helper("WebhooksHelper", _hmac_config(algorithmHeader=_NAMED_ALGORITHM_HEADER))
+
+
+def test_generated_verify_request_hands_resolver_the_bare_shared_key_id() -> None:
+    helper = _named_settings_helper()
+    url = "https://example.com/sms"
+    headers = {
+        "x-twilio-signature": "irrelevant-for-this-check",
+        "x-twilio-webhooks-signature-settings": f"key={_TWILIO_KEY_ID},algorithm=HMAC_SHA256",
+    }
+    seen: typing.List[typing.Optional[str]] = []
+
+    def resolve(key_id: typing.Optional[str]) -> typing.Optional[str]:
+        seen.append(key_id)
+        return _TWILIO_SHARED_KEYS.get(key_id or "")
+
+    helper.verify_request(headers=headers, request_body="", notification_url=url, signature_key=resolve)
+    assert seen == [_TWILIO_KEY_ID]
+
+
+def test_generated_verify_request_named_settings_verifies_sha256_and_sha1() -> None:
+    helper = _named_settings_helper()
+    url = "https://example.com/sms"
+    secret = _TWILIO_SHARED_KEYS[_TWILIO_KEY_ID]
+    resolve = lambda key_id: _AUTH_TOKEN if key_id is None else _TWILIO_SHARED_KEYS.get(key_id)  # noqa: E731
+    for algorithm, wire in (("sha256", "HMAC_SHA256"), ("sha1", "HMAC_SHA1")):
+        headers = {
+            "X-Twilio-Signature": _sign_with(url, secret, algorithm),  # type: ignore[arg-type]
+            "X-Twilio-Webhooks-Signature-Settings": f"key={_TWILIO_KEY_ID}, algorithm={wire}",
+        }
+        assert helper.verify_request(headers=headers, request_body="", notification_url=url, signature_key=resolve)
+    # legacy Auth Token requests carry no settings header
+    headers = {"X-Twilio-Signature": _sign_with(url, _AUTH_TOKEN, "sha1")}
+    assert helper.verify_request(headers=headers, request_body="", notification_url=url, signature_key=resolve)
+
+
+def test_generated_verify_request_named_settings_fail_closed(caplog: typing.Any) -> None:
+    import logging
+
+    helper = _named_settings_helper()
+    url = "https://example.com/sms"
+    resolve = lambda key_id: _TWILIO_SHARED_KEYS.get(key_id or "")  # noqa: E731
+    with caplog.at_level(logging.WARNING):
+        for settings in (
+            f"key={_TWILIO_KEY_ID},algorithm=HMAC_SHA512",
+            f"key={_TWILIO_KEY_ID}",
+        ):
+            headers = {"X-Twilio-Signature": "x", "X-Twilio-Webhooks-Signature-Settings": settings}
+            assert not helper.verify_request(
+                headers=headers, request_body="", notification_url=url, signature_key=resolve
+            )
+            assert "unsupported algorithm" in caplog.text
+            caplog.clear()
+        headers = {
+            "X-Twilio-Signature": "x",
+            "X-Twilio-Webhooks-Signature-Settings": "key=unknown,algorithm=HMAC_SHA256",
+        }
+        assert not helper.verify_request(headers=headers, request_body="", notification_url=url, signature_key=resolve)
+        assert "signing key could not be resolved" in caplog.text
+        caplog.clear()
+        for settings in ("algorithm=HMAC_SHA256", f"{_TWILIO_KEY_ID},HMAC_SHA256"):
+            caplog.clear()
+            headers = {"X-Twilio-Signature": "x", "X-Twilio-Webhooks-Signature-Settings": settings}
+            assert not helper.verify_request(
+                headers=headers, request_body="", notification_url=url, signature_key=resolve
+            )
+            assert "missing the key ID" in caplog.text

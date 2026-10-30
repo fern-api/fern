@@ -1,9 +1,9 @@
 [project]
-name = "fern_single-url-environment-default"
+name = "fern-single-url-environment-default"
 dynamic = ["version"]
 
 [tool.poetry]
-name = "fern_single-url-environment-default"
+name = "fern-single-url-environment-default"
 version = "0.0.1"
 description = ""
 readme = "README.md"

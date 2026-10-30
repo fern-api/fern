@@ -1,4 +1,127 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.40.4
+  changelogEntry:
+    - summary: |
+        README generation in self-hosted GitHub mode can clone a private repository with a personal
+        access token again. Upgrades `@fern-api/generator-cli` to 0.12.1, which also sends the token as an
+        `Authorization` header. Before this, git in the generator image (libcurl 8.23+) dropped the token
+        from the clone URL and failed with `could not read Username`.
+      type: fix
+  createdAt: "2026-10-30"
+  irVersion: 67
+- version: 1.40.3
+  changelogEntry:
+    - summary: |
+        The generator image keeps Alpine 3.22's libcurl (< 8.23). curl 8.23.0 strips credentials from the
+        effective URL it reports, which made git treat every authenticated https clone as a redirect and drop
+        the token, so README generation and GitHub output for private repositories failed inside the
+        container with "could not read Username for 'https://github.com'".
+      type: fix
+  createdAt: "2026-10-27"
+  irVersion: 67
+- version: 1.40.2
+  changelogEntry:
+    - summary: |
+        XML (TwiML) child builders keep the legacy names even when they match the element's text attribute:
+        `dial { |d| d.number("+1…") }` adds a `<Number>` child and `message { |m| m.body("hi") }` a `<Body>` child,
+        while `d.number` without arguments still returns the attribute (`number=` sets it); every element with text
+        content also gets `text` / `text=` accessors. `add_number` / `add_body` remain available.
+      type: fix
+  createdAt: "2026-10-27"
+  irVersion: 67
+- version: 1.40.1
+  changelogEntry:
+    - summary: |
+        Map request bodies (e.g. `map<string, string>`) can be passed as keyword arguments again, as they
+        could before 1.34.1. `create(id: "h", MY_SECRET: "x")` sends `{"MY_SECRET":"x"}` instead of an empty
+        body. Passing the body argument (`request:`, or the wrapped body key) still takes precedence, and path,
+        query and header arguments are never included in the body. Set `allowMapBodyAsKeywordArguments: false`
+        to only read map bodies from the body argument, as 1.34.1 through 1.39.x did.
+      type: fix
+  createdAt: "2026-10-23"
+  irVersion: 67
+- version: 1.40.0
+  changelogEntry:
+    - summary: |
+        Add the opt-in `omitUnsetModelFields` config option. When enabled, request bodies no longer include model
+        fields the caller did not set. Without it, a required field left out of a nested object (e.g. a partial
+        update payload) is sent as `null`, which APIs with sparse-update semantics reject. With the option on, unset
+        fields are omitted from `to_h`, and a field set explicitly to `nil` is still sent as `null` unless it is
+        optional and not nullable. Disabled by default, so existing request bodies are unchanged.
+      type: feat
+  createdAt: "2026-10-23"
+  irVersion: 67
+- version: 1.39.8
+  changelogEntry:
+    - summary: |
+        Response parsing is faster on large payloads. `Model#initialize` no longer coerces fields whose value is nil or
+        copies its input hash twice, `Utils.coerce` returns exact `String`, `Integer`, and `Float` instances without
+        walking the full type match, and type dispatch in `Utils.coerce` and
+        `Model.===` no longer allocates a lambda or ancestor list per call. Parsed output is unchanged.
+      type: fix
+  createdAt: "2026-10-22"
+  irVersion: 67
+- version: 1.39.7
+  changelogEntry:
+    - summary: |
+        The gem's root file registers generated types with `autoload` instead of requiring every type
+        file eagerly, so `require "<gem>"` only loads the runtime and each type is read on first use.
+        Type files also `require_relative` the root file, so a single type can be required directly
+        (e.g. `require "<gem>/twiml_voice/types/voice_response"`) without a NameError.
+      type: fix
+  createdAt: "2026-10-22"
+  irVersion: 67
+- version: 1.39.6
+  changelogEntry:
+    - summary: |
+        `Time` and `ActiveSupport::TimeWithZone` values are now sent as RFC 3339 strings
+        with millisecond precision (e.g. `"2026-10-16T01:40:16.000Z"`) in JSON request
+        bodies, query parameters, form-urlencoded bodies, and multipart form fields.
+        Previously they were sent via `Time#to_s` (e.g. `"2026-10-16 01:40:16 UTC"`),
+        which is not RFC 3339. `Date` and `DateTime` values are unchanged. Set
+        `serializeTimeAsIso8601: false` in the generator config to keep the previous output.
+      type: fix
+  createdAt: "2026-10-22"
+  irVersion: 67
+- version: 1.39.5
+  changelogEntry:
+    - summary: |
+        Ruby dynamic snippets now use wire names for keys inside nested hashes (e.g. `httpEndpoint:` instead of `http_endpoint:`), pass file upload fields (example file contents as `StringIO.new(...)`, since the SDK reads a String as a file path; a missing required file gets a `"/path/to/your/file"` path placeholder, and a missing optional file is left out; dynamic IR from CLIs that predate the `isOptional` flag treats every file as required), and show an undiscriminated union body whose example isn't an object as the keyword arguments of its first object variant instead of `request:` with an error.
+      type: fix
+    - summary: |
+        `Model#to_h` now serializes models nested as map values, so a map of objects is sent as JSON objects instead of Ruby inspect strings.
+      type: fix
+    - summary: |
+        Multipart uploads of a readable object with no path or name (e.g. `StringIO`) now send the form field name as the part's `filename`. Before, the part had no `filename`, so servers that tell files from text fields by `filename` read it as a text field. With a filename set, the part also gets the default `Content-Type: application/octet-stream` unless `content_type:` is passed, the same as `File` uploads. Elements of a file list each get the field name as their filename.
+      type: fix
+  createdAt: "2026-10-22"
+  irVersion: 67
+- version: 1.39.4
+  changelogEntry:
+    - summary: |
+        XML (TwiML) serialization drops characters outside the XML 1.0 `Char` production (e.g. `\x01`) from text and attribute values instead of emitting XML that no parser accepts.
+      type: fix
+  createdAt: "2026-10-21"
+  irVersion: 67
+- version: 1.39.3
+  changelogEntry:
+    - summary: |
+        XML (TwiML) types accept the declaration flag positionally, like the legacy TwiML gem:
+        `response.to_s(false)` and `response.to_xml(false)` omit `<?xml ...?>`; the `xml_declaration:`
+        keyword still works.
+      type: fix
+  createdAt: "2026-10-21"
+  irVersion: 67
+- version: 1.39.2
+  changelogEntry:
+    - summary: |
+        `WebhooksHelper.verifyRequest` now parses `name=value` settings headers when
+        `webhook-signature.algorithm-header` sets `key-id-parameter`/`algorithm-parameter`
+        (e.g. Twilio's `X-Twilio-Webhooks-Signature-Settings: key=<id>,algorithm=HMAC_SHA256`),
+        so the key resolver receives the bare key ID instead of `key=<id>`. Requires IR 67.33.0.
+      type: fix
+  createdAt: "2026-10-16"
+  irVersion: 67
 - version: 1.39.1
   changelogEntry:
     - summary: |

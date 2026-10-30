@@ -1,4 +1,97 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.92.12
+  changelogEntry:
+    - summary: |
+        README generation in self-hosted GitHub mode can clone a private repository with a personal
+        access token again. Upgrades `@fern-api/generator-cli` to 0.12.1, which also sends the token as an
+        `Authorization` header. Before this, git in the generator image (libcurl 8.23+) dropped the token
+        from the clone URL and failed with `could not read Username`.
+      type: fix
+  createdAt: "2026-10-30"
+  irVersion: 67
+- version: 2.92.11
+  changelogEntry:
+    - summary: |
+        XML (TwiML) serialization writes empty elements with an explicit close tag (`<Hangup></Hangup>`) instead of a
+        self-closing `<Hangup />`, matching the legacy twilio-csharp output byte for byte.
+      type: fix
+  createdAt: "2026-10-30"
+  irVersion: 67
+- version: 2.92.10
+  changelogEntry:
+    - summary: |
+        The generator image keeps Alpine 3.22's libcurl (< 8.23). curl 8.23.0 strips credentials from the
+        effective URL it reports, which made git treat every authenticated https clone as a redirect and drop
+        the token, so README generation and GitHub output for private repositories failed inside the
+        container with "could not read Username for 'https://github.com'".
+      type: fix
+  createdAt: "2026-10-27"
+  irVersion: 67
+- version: 2.92.9
+  changelogEntry:
+    - summary: |
+        XML (TwiML) types match the legacy call shapes: when an element's text property has the same name as
+        one of its child elements, the child builder keeps the name (`message.Body("hi")` adds a `<Body>` child,
+        `dial.Number("+1…")` a `<Number>`) and the text property is renamed to `Text`; every element with text
+        content gets a `new Say("hi")` constructor next to the parameterless one; child builders whose text is a
+        `format: uri` string accept a `System.Uri` (`Redirect(new Uri("/voice", UriKind.Relative))`).
+      type: fix
+  createdAt: "2026-10-27"
+  irVersion: 67
+- version: 2.92.8
+  changelogEntry:
+    - summary: |
+        Fix `WebhooksHelper.VerifyRequest` failing to compile on `net462`/`netstandard2.0`
+        (`CS1503: cannot convert from 'string' to 'char'`) when `webhook-signature.algorithm-header`
+        uses `key-id-parameter`/`algorithm-parameter`: the settings header is now split with
+        `Split(new[] { "," }, StringSplitOptions.None)` instead of the `Split(string)` overload that
+        only exists on newer target frameworks.
+      type: fix
+  createdAt: "2026-10-22"
+  irVersion: 67
+- version: 2.92.7
+  changelogEntry:
+    - summary: |
+        C# dynamic snippets now keep nullable list and set item types (e.g. `List<MyEnum?>` for a multi-value query parameter typed `optional<nullable<MyEnum>>`), matching the SDK's `IEnumerable<MyEnum?>` property type instead of failing with CS0266.
+      type: fix
+  createdAt: "2026-10-21"
+  irVersion: 67
+- version: 2.92.6
+  changelogEntry:
+    - summary: |
+        XML (TwiML) `ToXml()` drops characters outside the XML 1.0 `Char` production (e.g. `\u0001`) from text, attributes and comments instead of throwing `ArgumentException`.
+      type: fix
+  createdAt: "2026-10-21"
+  irVersion: 67
+- version: 2.92.5
+  changelogEntry:
+    - summary: |
+        XML (TwiML) fluent child builders now take the element's text content as the first parameter, before
+        attributes, so legacy-style calls such as `response.Say("hi")` and `response.Dial("+15551234567")`
+        compile and set the content instead of an attribute. `ToXml(xmlDeclaration, indent)` adds an indented
+        output option.
+      type: fix
+  createdAt: "2026-10-21"
+  irVersion: 67
+- version: 2.92.4
+  changelogEntry:
+    - summary: |
+        Escape form-urlencoded example keys and values when generating C# mock-server tests. Examples
+        containing quotes, backslashes, or control characters now produce valid C# string literals
+        instead of causing the formatter to fail with syntax errors.
+      type: fix
+  createdAt: "2026-10-20"
+  irVersion: 67
+- version: 2.92.3
+  changelogEntry:
+    - summary: |
+        `WebhooksHelper.verifyRequest` now parses `name=value` settings headers when
+        `webhook-signature.algorithm-header` sets `key-id-parameter`/`algorithm-parameter`
+        (e.g. Twilio's `X-Twilio-Webhooks-Signature-Settings: key=<id>,algorithm=HMAC_SHA256`),
+        so the key resolver receives the bare key ID instead of `key=<id>`. Requires IR 67.33.0.
+      type: fix
+  createdAt: "2026-10-16"
+  irVersion: 67
 - version: 2.92.2
   changelogEntry:
     - summary: |

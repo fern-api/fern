@@ -18,12 +18,19 @@ import { loadCompatibleMigrationGroups } from "../loadCompatibleMigrationGroups.
 import { mapFernDefinitionToSdkConfigApi, mapFernGroupToSdkConfig } from "../mapFernGroupToSdkConfig.js";
 import {
     identifySourceDerivedApiFields,
-    type ResolvedMigrationSourceSpec,
+    isResolvedMigrationFileSpec,
+    type ResolvedMigrationFileSpec,
     resolveMigrationPathParameterStyle,
     resolveMigrationSourceSpecs,
+    resolveWorkspaceSourceSpecs,
     serializeMigrationSource
 } from "../projectMigrationSource.js";
 import { selectMigrationTarget } from "../selectMigrationTarget.js";
+
+/** Hosted MCP output has no registry publication, so read `publish` only where the output has one. */
+function publishOf(output: object | undefined): unknown {
+    return output != null && "publish" in output ? output.publish : undefined;
+}
 
 describe("SDK Config migration", () => {
     it("maps a resolved generator group without reparsing Fern configuration", () => {
@@ -35,6 +42,7 @@ describe("SDK Config migration", () => {
 
         expect(result.sdkConfig).toMatchObject({
             schemaVersion: "sdk-config/v1",
+            sdkName: "migration-api",
             api: {
                 audiences: [],
                 baseUrl: "https://api.example.com",
@@ -61,6 +69,17 @@ describe("SDK Config migration", () => {
         expect(result.sdkConfig.package).toBeUndefined();
         expect(result.sdkConfig.docs).toBeUndefined();
         expect(result.sdkConfig.generation).toBeUndefined();
+    });
+
+    it("uses an explicitly resolved SDK name", () => {
+        const result = mapFernGroupToSdkConfig({
+            fernWorkspace: { definition: createDefinition() },
+            group: createGroup([createGenerator("fernapi/fern-typescript-sdk", "typescript", "3.63.3")]),
+            source: createSource(),
+            sdkName: "acme"
+        });
+
+        expect(result.sdkConfig.sdkName).toBe("acme");
     });
 
     it("omits downloadSnippets synthesized for local output", () => {
@@ -136,9 +155,9 @@ describe("SDK Config migration", () => {
             source: createSource()
         });
 
-        expect(result.sdkConfig.targets[0]?.output?.publish).toMatchObject({ token: "${NPM_TOKEN}" });
-        expect(result.sdkConfig.targets[1]?.output?.publish).toMatchObject({ username: "__token__" });
-        expect(result.sdkConfig.targets[1]?.output?.publish).not.toHaveProperty("password");
+        expect(publishOf(result.sdkConfig.targets[0]?.output)).toMatchObject({ token: "${NPM_TOKEN}" });
+        expect(publishOf(result.sdkConfig.targets[1]?.output)).toMatchObject({ username: "__token__" });
+        expect(publishOf(result.sdkConfig.targets[1]?.output)).not.toHaveProperty("password");
         expect(JSON.stringify(result.sdkConfig)).not.toContain("literal-secret");
         expect(result.diagnostics).toEqual(
             expect.arrayContaining([
@@ -172,7 +191,7 @@ describe("SDK Config migration", () => {
             source: createSource()
         });
 
-        expect(result.sdkConfig.targets[0]?.output?.publish).not.toHaveProperty("username");
+        expect(publishOf(result.sdkConfig.targets[0]?.output)).not.toHaveProperty("username");
         expect(JSON.stringify(result.sdkConfig)).not.toContain("literal-user-token");
         expect(result.diagnostics).toEqual(
             expect.arrayContaining([
@@ -207,11 +226,11 @@ describe("SDK Config migration", () => {
             source: createSource()
         });
 
-        expect(result.sdkConfig.targets[0]?.output?.publish).toMatchObject({
+        expect(publishOf(result.sdkConfig.targets[0]?.output)).toMatchObject({
             username: "${MAVEN_USERNAME}",
             password: "${MAVEN_PASSWORD}"
         });
-        expect(result.sdkConfig.targets[0]?.output?.publish).not.toHaveProperty("signature");
+        expect(publishOf(result.sdkConfig.targets[0]?.output)).not.toHaveProperty("signature");
         expect(JSON.stringify(result.sdkConfig)).not.toContain("literal-signing-secret");
     });
 
@@ -251,7 +270,8 @@ describe("SDK Config migration", () => {
             default_bytes_stream_chunk_size: 1024,
             recursion_limit: 10_000,
             extras: { pyaudio: ["audio-runtime"] },
-            additional_init_exports: [{ from: "types", imports: ["ApiError"] }]
+            additional_init_exports: [{ from: "types", imports: ["ApiError"] }],
+            stream_abstraction: true
         };
 
         const result = mapFernGroupToSdkConfig({
@@ -270,8 +290,23 @@ describe("SDK Config migration", () => {
             defaultBytesStreamChunkSize: 1024,
             recursionLimit: 10_000,
             extras: { pyaudio: ["audio-runtime"] },
-            additionalInitExports: [{ from: "types", imports: ["ApiError"] }]
+            additionalInitExports: [{ from: "types", imports: ["ApiError"] }],
+            streamAbstraction: true
         });
+        expect(result.diagnostics).toEqual([]);
+    });
+
+    it("maps the Go generator packageLayout setting into SDK Config", () => {
+        const generator = createGenerator("fernapi/fern-go-sdk", "go", "1.0.0");
+        generator.config = { packageLayout: "types" };
+
+        const result = mapFernGroupToSdkConfig({
+            fernWorkspace: { definition: createDefinition() },
+            group: createGroup([generator]),
+            source: createSource()
+        });
+
+        expect(result.sdkConfig.targets[0]?.generation).toMatchObject({ packageLayout: "types" });
         expect(result.diagnostics).toEqual([]);
     });
 
@@ -592,7 +627,7 @@ describe("SDK Config migration", () => {
             workspace,
             fernWorkspace: {} as FernWorkspace,
             generator: createGenerator("fernapi/fern-typescript-sdk", "typescript", "3.63.3")
-        });
+        }).filter(isResolvedMigrationFileSpec);
 
         expect(specs.map(({ namespace, apiImportSettings }) => ({ namespace, apiImportSettings }))).toEqual([
             { namespace: "Second", apiImportSettings: { titleAsSchemaName: false } },
@@ -651,7 +686,7 @@ describe("SDK Config migration", () => {
             workspace,
             fernWorkspace: {} as FernWorkspace,
             generator: createGenerator("fernapi/fern-python-sdk", "python", "4.3.10")
-        });
+        }).filter(isResolvedMigrationFileSpec);
 
         expect(spec?.apiImportSettings).toEqual({
             titleAsSchemaName: false,
@@ -706,7 +741,7 @@ describe("SDK Config migration", () => {
             workspace,
             fernWorkspace: {} as FernWorkspace,
             generator
-        });
+        }).filter(isResolvedMigrationFileSpec);
 
         expect(spec?.apiImportSettings).toEqual({
             respectReadonlySchemas: true,
@@ -723,6 +758,41 @@ describe("SDK Config migration", () => {
             }
         });
         expect(spec?.hasLegacyOnlyDocsImportSettings).toBe(true);
+    });
+
+    it("resolves the API's own specs for docs, ignoring a generator's spec override", () => {
+        const generator = createGenerator("fernapi/fern-typescript-sdk", "typescript", "3.63.3");
+        generator.apiOverride = { specs: [{ openapi: "./internal.yml" }] };
+        const workspace = {
+            absoluteFilePath: AbsoluteFilePath.of("/tmp/fern"),
+            allSpecs: [createWorkspaceOpenApiSpec("Public", AbsoluteFilePath.of("/tmp/fern/public.yml"))],
+            generatorsConfiguration: {
+                api: {
+                    type: "multiNamespace",
+                    definitions: {
+                        Public: [createConfiguredOpenApiDefinition("public.yml", false)]
+                    },
+                    rootDefinitions: undefined
+                }
+            }
+        } as unknown as AbstractAPIWorkspace<unknown>;
+
+        expect(
+            resolveWorkspaceSourceSpecs(workspace)
+                ?.filter(isResolvedMigrationFileSpec)
+                .map((spec) => spec.absolutePath)
+        ).toEqual(["/tmp/fern/public.yml"]);
+        expect(
+            resolveMigrationSourceSpecs({ workspace, fernWorkspace: {} as FernWorkspace, generator })
+                .filter(isResolvedMigrationFileSpec)
+                .map((spec) => spec.absolutePath)
+        ).toEqual(["/tmp/fern/internal.yml"]);
+    });
+
+    it("has no workspace specs for docs when the API lists none of its own", () => {
+        expect(
+            resolveWorkspaceSourceSpecs({ absoluteFilePath: AbsoluteFilePath.of("/tmp/fern") } as never)
+        ).toBeUndefined();
     });
 
     it("rejects git-backed API specifications instead of serializing temporary clone paths", () => {
@@ -1264,8 +1334,8 @@ function createSource() {
 
 function createResolvedSourceSpec(
     name: string,
-    apiImportSettings: ResolvedMigrationSourceSpec["apiImportSettings"]
-): ResolvedMigrationSourceSpec {
+    apiImportSettings: ResolvedMigrationFileSpec["apiImportSettings"]
+): ResolvedMigrationFileSpec {
     return {
         absolutePath: `/tmp/${name}.yml`,
         absoluteOverlayPaths: [],

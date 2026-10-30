@@ -32,6 +32,10 @@
 //! token. Reads stay marker-aware on every platform, so a chunked entry is
 //! always reassembled correctly wherever it is encountered.
 //!
+//! [`CachingKeyringStore`] sits on top of that and remembers each entry it
+//! reads for a few seconds, so one command asking for the same credential
+//! several times reads the keychain once.
+//!
 //! ## Entry shape
 //!
 //! Keyed by `(service=<cli_name>, account=<scheme_name>)`. The value is an
@@ -39,8 +43,10 @@
 //! serialises a JSON token bundle; for `--with-token` the caller stores
 //! the raw token. This module is storage; it does not parse what it stores.
 
+use std::collections::HashMap;
 use std::path::PathBuf;
-use std::sync::{Arc, OnceLock, RwLock};
+use std::sync::{Arc, Mutex, OnceLock, RwLock};
+use std::time::{Duration, Instant};
 
 use crate::auth::oauth_common::{atomic_write, config_dir};
 use crate::error::CliError;
@@ -57,6 +63,12 @@ pub trait KeyringStore: Send + Sync + std::fmt::Debug {
     /// Short human-readable name of this backend for `auth status` output.
     /// e.g. `"macOS Keychain"`, `"~/.config/elevenlabs/auth-keyring.json"`.
     fn backend_label(&self) -> String;
+    /// Whether [`get`](Self::get) for `account` answers with what is actually
+    /// stored, as opposed to a value substituted for one call (a typed
+    /// credential used only to authenticate a key mint).
+    fn answers_from_storage(&self, _account: &str) -> bool {
+        true
+    }
 }
 
 // ---------------------------------------------------------------------------
@@ -92,6 +104,10 @@ impl OsKeyringStore {
 #[cfg(not(target_env = "musl"))]
 impl KeyringStore for OsKeyringStore {
     fn get(&self, service: &str, account: &str) -> Result<Option<String>, CliError> {
+        #[cfg(target_os = "macos")]
+        if let Some(read) = macos_security_tool::get(service, account) {
+            return read;
+        }
         let entry = keyring::Entry::new(service, account)
             .map_err(|e| CliError::Auth(format!("keyring open failed: {e}")))?;
         match entry.get_password() {
@@ -102,20 +118,30 @@ impl KeyringStore for OsKeyringStore {
     }
 
     fn set(&self, service: &str, account: &str, value: &str) -> Result<(), CliError> {
-        let entry = keyring::Entry::new(service, account)
-            .map_err(|e| CliError::Auth(format!("keyring open failed: {e}")))?;
-        entry
-            .set_password(value)
-            .map_err(|e| CliError::Auth(format!("keyring set failed: {e}")))
+        #[cfg(target_os = "macos")]
+        return macos_keychain::set(service, account, value);
+        #[cfg(not(target_os = "macos"))]
+        {
+            let entry = keyring::Entry::new(service, account)
+                .map_err(|e| CliError::Auth(format!("keyring open failed: {e}")))?;
+            entry
+                .set_password(value)
+                .map_err(|e| CliError::Auth(format!("keyring set failed: {e}")))
+        }
     }
 
     fn delete(&self, service: &str, account: &str) -> Result<(), CliError> {
-        let entry = keyring::Entry::new(service, account)
-            .map_err(|e| CliError::Auth(format!("keyring open failed: {e}")))?;
-        match entry.delete_credential() {
-            Ok(()) => Ok(()),
-            Err(keyring::Error::NoEntry) => Ok(()),
-            Err(e) => Err(CliError::Auth(format!("keyring delete failed: {e}"))),
+        #[cfg(target_os = "macos")]
+        return macos_keychain::delete(service, account);
+        #[cfg(not(target_os = "macos"))]
+        {
+            let entry = keyring::Entry::new(service, account)
+                .map_err(|e| CliError::Auth(format!("keyring open failed: {e}")))?;
+            match entry.delete_credential() {
+                Ok(()) => Ok(()),
+                Err(keyring::Error::NoEntry) => Ok(()),
+                Err(e) => Err(CliError::Auth(format!("keyring delete failed: {e}"))),
+            }
         }
     }
 
@@ -126,6 +152,196 @@ impl KeyringStore for OsKeyringStore {
         return "Windows Credential Manager".to_string();
         #[cfg(not(any(target_os = "macos", target_os = "windows")))]
         return "secret-service (Linux)".to_string();
+    }
+}
+
+/// Keychain writes and deletes that never read the stored secret.
+///
+/// `keyring` looks an item up with its password data before overwriting or
+/// deleting it, and macOS asks the user to approve that read like any other.
+/// `SecItemUpdate` / `SecItemDelete` match the same item (generic password,
+/// service + account) without fetching its data.
+#[cfg(target_os = "macos")]
+mod macos_keychain {
+    use crate::error::CliError;
+    use security_framework::passwords;
+
+    const ERR_SEC_ITEM_NOT_FOUND: i32 = -25300;
+
+    pub(super) fn set(service: &str, account: &str, value: &str) -> Result<(), CliError> {
+        // Recreated rather than updated, so the item trusts `security` (see
+        // `macos_security_tool`) instead of keeping an older binary's access
+        // list. If the tool cannot add it, the in-process write still does.
+        if super::macos_security_tool::can_add(service, account) {
+            delete(service, account)?;
+            if super::macos_security_tool::add(service, account, value) {
+                return Ok(());
+            }
+        }
+        passwords::set_generic_password(service, account, value.as_bytes())
+            .map_err(|e| CliError::Auth(format!("keyring set failed: {e}")))
+    }
+
+    pub(super) fn delete(service: &str, account: &str) -> Result<(), CliError> {
+        // Items added through `security` are owned by it, so the in-process
+        // delete is refused ("Invalid attempt to change the owner of this
+        // item"); `security` can delete them, and older builds' items too.
+        if let Some(result) = super::macos_security_tool::delete(service, account) {
+            return result;
+        }
+        match passwords::delete_generic_password(service, account) {
+            Ok(()) => Ok(()),
+            Err(e) if e.code() == ERR_SEC_ITEM_NOT_FOUND => Ok(()),
+            Err(e) => Err(CliError::Auth(format!("keyring delete failed: {e}"))),
+        }
+    }
+}
+
+/// Keychain reads and writes made through Apple's `/usr/bin/security`.
+///
+/// macOS ties "Always Allow" to the program that reads an item. For this
+/// CLI's own binary that is its code hash, which every build and release
+/// changes, so the prompt comes back after each upgrade. Through
+/// `security`, the program asking is always that Apple-signed tool, so one
+/// "Always Allow" lasts. `None` means the tool could not be run and the
+/// caller should go to the keychain itself.
+#[cfg(target_os = "macos")]
+mod macos_security_tool {
+    use super::security_tool_text::{encode_hex, parse_password, quote};
+    use crate::error::CliError;
+    use std::io::Write;
+    use std::process::{Command, Stdio};
+
+    const SECURITY: &str = "/usr/bin/security";
+    /// `security`'s exit status for errSecItemNotFound.
+    const EXIT_ITEM_NOT_FOUND: i32 = 44;
+
+    pub(super) fn get(service: &str, account: &str) -> Option<Result<Option<String>, CliError>> {
+        let output = Command::new(SECURITY)
+            .args(["find-generic-password", "-s", service, "-a", account, "-g"])
+            .stdin(Stdio::null())
+            .output()
+            .ok()?;
+        if output.status.code() == Some(EXIT_ITEM_NOT_FOUND) {
+            return Some(Ok(None));
+        }
+        // `-g` prints the password on stderr, after the item's attributes on
+        // stdout.
+        let stderr = String::from_utf8_lossy(&output.stderr);
+        if !output.status.success() {
+            return Some(Err(CliError::Auth(format!(
+                "keyring get failed: {}",
+                stderr.trim()
+            ))));
+        }
+        Some(parse_password(&stderr).map(Some).ok_or_else(|| {
+            CliError::Auth("keyring get failed: unrecognized `security` output".to_string())
+        }))
+    }
+
+    /// Delete the item; `Ok` when it is gone (or was never there). `None`
+    /// means the tool could not be run.
+    pub(super) fn delete(service: &str, account: &str) -> Option<Result<(), CliError>> {
+        let output = Command::new(SECURITY)
+            .args(["delete-generic-password", "-s", service, "-a", account])
+            .stdin(Stdio::null())
+            .stdout(Stdio::null())
+            .output()
+            .ok()?;
+        if output.status.success() || output.status.code() == Some(EXIT_ITEM_NOT_FOUND) {
+            return Some(Ok(()));
+        }
+        Some(Err(CliError::Auth(format!(
+            "keyring delete failed: {}",
+            String::from_utf8_lossy(&output.stderr).trim()
+        ))))
+    }
+
+    /// Whether [`add`] can name this item on a `security -i` command line.
+    pub(super) fn can_add(service: &str, account: &str) -> bool {
+        quote(service).is_some()
+            && quote(account).is_some()
+            && std::path::Path::new(SECURITY).exists()
+    }
+
+    /// Add the item; whether it was added. The value goes in as hex on
+    /// `security`'s stdin, so it is never on a command line.
+    pub(super) fn add(service: &str, account: &str, value: &str) -> bool {
+        let (Some(service), Some(account)) = (quote(service), quote(account)) else {
+            return false;
+        };
+        let command = format!(
+            "add-generic-password -s {service} -a {account} -X {}\n",
+            encode_hex(value.as_bytes())
+        );
+        let Ok(mut child) = Command::new(SECURITY)
+            .arg("-i")
+            .stdin(Stdio::piped())
+            .stdout(Stdio::null())
+            .stderr(Stdio::piped())
+            .spawn()
+        else {
+            return false;
+        };
+        let written = child
+            .stdin
+            .take()
+            .is_some_and(|mut stdin| stdin.write_all(command.as_bytes()).is_ok());
+        let Ok(output) = child.wait_with_output() else {
+            return false;
+        };
+        // `-i` reports a failed command on stderr, not always in its status.
+        written && output.status.success() && output.stderr.iter().all(u8::is_ascii_whitespace)
+    }
+}
+
+/// The text `/usr/bin/security` reads and prints, apart from running it so
+/// it is testable on any platform.
+#[cfg(any(target_os = "macos", test))]
+mod security_tool_text {
+    /// The password in `find-generic-password -g` output: `password: "…"`
+    /// when every byte is printable, else `password: 0x<HEX>  "…"`.
+    pub(super) fn parse_password(stderr: &str) -> Option<String> {
+        let rest = stderr
+            .lines()
+            .find_map(|line| line.strip_prefix("password:"))?;
+        let rest = rest.strip_prefix(' ').unwrap_or(rest);
+        if rest.is_empty() {
+            return Some(String::new());
+        }
+        if let Some(hex) = rest.strip_prefix("0x") {
+            return String::from_utf8(decode_hex(hex.split_whitespace().next()?)?).ok();
+        }
+        rest.strip_prefix('"')?
+            .strip_suffix('"')
+            .map(str::to_string)
+    }
+
+    pub(super) fn encode_hex(bytes: &[u8]) -> String {
+        bytes.iter().map(|b| format!("{b:02x}")).collect()
+    }
+
+    fn decode_hex(hex: &str) -> Option<Vec<u8>> {
+        if !hex.len().is_multiple_of(2) {
+            return None;
+        }
+        (0..hex.len())
+            .step_by(2)
+            .map(|i| u8::from_str_radix(hex.get(i..i + 2)?, 16).ok())
+            .collect()
+    }
+
+    /// `value` single-quoted for a `security -i` command line, or `None`
+    /// when it holds a character that quoting cannot carry.
+    pub(super) fn quote(value: &str) -> Option<String> {
+        if value.is_empty()
+            || value
+                .chars()
+                .any(|c| c == '\'' || c == '\\' || c.is_control())
+        {
+            return None;
+        }
+        Some(format!("'{value}'"))
     }
 }
 
@@ -271,6 +487,11 @@ pub struct ChunkedKeyringStore<S: KeyringStore> {
     /// Whether oversized values are split on write. Reads reassemble
     /// chunked entries regardless of this flag.
     chunk_writes: bool,
+    /// Whether chunk entries can exist here, so `set` and `delete` must
+    /// read the primary entry first to find and remove them. Off where no
+    /// build has ever written chunks: that read is a keychain access (and,
+    /// on macOS, a password prompt) with nothing to find.
+    reap_chunks: bool,
 }
 
 impl<S: KeyringStore> ChunkedKeyringStore<S> {
@@ -285,13 +506,19 @@ impl<S: KeyringStore> ChunkedKeyringStore<S> {
     /// cannot strand a credential behind a marker the old build can't read.
     /// Reads stay marker-aware either way.
     pub fn for_platform(inner: S) -> Self {
-        Self::with_chunk_writes(inner, cfg!(target_os = "windows"))
+        let chunking = cfg!(target_os = "windows");
+        Self {
+            inner,
+            chunk_writes: chunking,
+            reap_chunks: chunking,
+        }
     }
 
     fn with_chunk_writes(inner: S, chunk_writes: bool) -> Self {
         Self {
             inner,
             chunk_writes,
+            reap_chunks: true,
         }
     }
 
@@ -316,6 +543,9 @@ impl<S: KeyringStore> ChunkedKeyringStore<S> {
     /// Chunk count recorded in the primary entry, or 0 if it is absent or
     /// holds a plain value. Used to reap chunks the new value doesn't use.
     fn stored_chunk_count(&self, service: &str, account: &str) -> Result<usize, CliError> {
+        if !self.reap_chunks {
+            return Ok(0);
+        }
         Ok(self
             .inner
             .get(service, account)?
@@ -440,6 +670,126 @@ impl<S: KeyringStore> KeyringStore for ChunkedKeyringStore<S> {
 }
 
 // ---------------------------------------------------------------------------
+// Read cache
+// ---------------------------------------------------------------------------
+
+/// Keeps each entry read from `inner` in memory for a short time, so the
+/// repeated lookups one command makes (selection probing every scheme, then
+/// the request resolving each field) read the OS keychain once instead of
+/// once per lookup. On macOS every read can raise a password prompt.
+///
+/// A denied or failed read is kept too, so one command raises one prompt per
+/// entry rather than one per lookup; the next command asks again. `set` and
+/// `delete` update the cached copy, so a later lookup in the same process
+/// never sees a stale value. Entries expire after
+/// [`Self::DEFAULT_TTL`], which bounds how long a long-running command can
+/// miss a change made by another process.
+type CachedEntries = HashMap<(String, String), (Instant, Result<Option<String>, String>)>;
+
+pub struct CachingKeyringStore<S: KeyringStore> {
+    inner: S,
+    ttl: Duration,
+    entries: Mutex<CachedEntries>,
+}
+
+impl<S: KeyringStore> CachingKeyringStore<S> {
+    pub const DEFAULT_TTL: Duration = Duration::from_secs(10);
+
+    pub fn new(inner: S) -> Self {
+        Self::with_ttl(inner, Self::DEFAULT_TTL)
+    }
+
+    pub fn with_ttl(inner: S, ttl: Duration) -> Self {
+        Self {
+            inner,
+            ttl,
+            entries: Mutex::new(HashMap::new()),
+        }
+    }
+
+    fn key(service: &str, account: &str) -> (String, String) {
+        (service.to_string(), account.to_string())
+    }
+
+    fn entries(&self) -> std::sync::MutexGuard<'_, CachedEntries> {
+        self.entries
+            .lock()
+            .unwrap_or_else(|poisoned| poisoned.into_inner())
+    }
+
+    fn remember(&self, service: &str, account: &str, value: Result<Option<String>, String>) {
+        self.entries()
+            .insert(Self::key(service, account), (Instant::now(), value));
+    }
+
+    fn forget(&self, service: &str, account: &str) {
+        self.entries().remove(&Self::key(service, account));
+    }
+}
+
+// Hand-written so cached secrets never reach a log line.
+impl<S: KeyringStore> std::fmt::Debug for CachingKeyringStore<S> {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("CachingKeyringStore")
+            .field("inner", &self.inner)
+            .field("ttl", &self.ttl)
+            .field("cached_entries", &self.entries().len())
+            .finish()
+    }
+}
+
+impl<S: KeyringStore> KeyringStore for CachingKeyringStore<S> {
+    fn get(&self, service: &str, account: &str) -> Result<Option<String>, CliError> {
+        if let Some((read_at, value)) = self.entries().get(&Self::key(service, account)) {
+            if read_at.elapsed() < self.ttl {
+                return value.clone().map_err(CliError::Auth);
+            }
+        }
+        match self.inner.get(service, account) {
+            Ok(value) => {
+                self.remember(service, account, Ok(value.clone()));
+                Ok(value)
+            }
+            Err(CliError::Auth(message)) => {
+                self.remember(service, account, Err(message.clone()));
+                Err(CliError::Auth(message))
+            }
+            Err(e) => Err(e),
+        }
+    }
+
+    fn set(&self, service: &str, account: &str, value: &str) -> Result<(), CliError> {
+        match self.inner.set(service, account, value) {
+            Ok(()) => {
+                self.remember(service, account, Ok(Some(value.to_string())));
+                Ok(())
+            }
+            Err(e) => {
+                self.forget(service, account);
+                Err(e)
+            }
+        }
+    }
+
+    fn delete(&self, service: &str, account: &str) -> Result<(), CliError> {
+        match self.inner.delete(service, account) {
+            Ok(()) => {
+                self.remember(service, account, Ok(None));
+                Ok(())
+            }
+            Err(e) => {
+                self.forget(service, account);
+                Err(e)
+            }
+        }
+    }
+
+    fn backend_label(&self) -> String {
+        self.inner.backend_label()
+    }
+}
+
+// ---------------------------------------------------------------------------
 // Auto-pick + process-global handle
 // ---------------------------------------------------------------------------
 
@@ -464,7 +814,9 @@ pub fn auto_store() -> Arc<dyn KeyringStore> {
     {
         if OsKeyringStore::probe().is_ok() {
             tracing::debug!("Using OS keyring backend for credential storage");
-            return Arc::new(ChunkedKeyringStore::for_platform(OsKeyringStore));
+            return Arc::new(CachingKeyringStore::new(ChunkedKeyringStore::for_platform(
+                OsKeyringStore,
+            )));
         }
     }
     tracing::debug!("OS keyring unavailable; falling back to file backend");
@@ -682,6 +1034,125 @@ mod tests {
         "x".repeat(units)
     }
 
+    /// Counts `get` calls and can be told to fail them.
+    #[derive(Debug, Default)]
+    struct CountingMock {
+        inner: MockKeyringStore,
+        reads: std::sync::atomic::AtomicUsize,
+        fail_reads: std::sync::atomic::AtomicBool,
+    }
+
+    impl CountingMock {
+        fn reads(&self) -> usize {
+            self.reads.load(std::sync::atomic::Ordering::SeqCst)
+        }
+    }
+
+    impl KeyringStore for Arc<CountingMock> {
+        fn get(&self, service: &str, account: &str) -> Result<Option<String>, CliError> {
+            self.reads.fetch_add(1, std::sync::atomic::Ordering::SeqCst);
+            if self.fail_reads.load(std::sync::atomic::Ordering::SeqCst) {
+                return Err(CliError::Auth("keyring get failed: User denied access".into()));
+            }
+            self.inner.get(service, account)
+        }
+        fn set(&self, service: &str, account: &str, value: &str) -> Result<(), CliError> {
+            self.inner.set(service, account, value)
+        }
+        fn delete(&self, service: &str, account: &str) -> Result<(), CliError> {
+            self.inner.delete(service, account)
+        }
+        fn backend_label(&self) -> String {
+            self.inner.backend_label()
+        }
+    }
+
+    #[test]
+    fn caching_store_reads_each_entry_once() {
+        let mock = Arc::new(CountingMock::default());
+        mock.inner.set("svc", "acct", "secret").unwrap();
+        let store = CachingKeyringStore::new(mock.clone());
+
+        for _ in 0..8 {
+            assert_eq!(store.get("svc", "acct").unwrap().as_deref(), Some("secret"));
+            assert_eq!(store.get("svc", "missing").unwrap(), None);
+        }
+        assert_eq!(mock.reads(), 2, "one read per entry, present or absent");
+    }
+
+    #[test]
+    fn caching_store_remembers_a_failed_read_until_it_expires() {
+        let mock = Arc::new(CountingMock::default());
+        mock.inner.set("svc", "acct", "secret").unwrap();
+        mock.fail_reads.store(true, std::sync::atomic::Ordering::SeqCst);
+        let store = CachingKeyringStore::new(mock.clone());
+
+        for _ in 0..3 {
+            match store.get("svc", "acct") {
+                Err(CliError::Auth(msg)) => assert!(msg.contains("User denied access")),
+                other => panic!("expected the denial, got: {other:?}"),
+            }
+        }
+        assert_eq!(mock.reads(), 1, "one prompt per entry, not one per lookup");
+
+        mock.fail_reads.store(false, std::sync::atomic::Ordering::SeqCst);
+        let expiring = CachingKeyringStore::with_ttl(mock.clone(), Duration::ZERO);
+        assert!(expiring.get("svc", "acct").is_ok());
+        assert!(expiring.get("svc", "acct").is_ok());
+        assert_eq!(mock.reads(), 3, "an expired denial is asked again");
+    }
+
+    #[test]
+    fn caching_store_forgets_a_failed_read_after_a_write() {
+        let mock = Arc::new(CountingMock::default());
+        mock.fail_reads.store(true, std::sync::atomic::Ordering::SeqCst);
+        let store = CachingKeyringStore::new(mock.clone());
+        assert!(store.get("svc", "acct").is_err());
+
+        store.set("svc", "acct", "fresh").unwrap();
+        assert_eq!(store.get("svc", "acct").unwrap().as_deref(), Some("fresh"));
+        store.delete("svc", "acct").unwrap();
+        assert_eq!(store.get("svc", "acct").unwrap(), None);
+        assert_eq!(mock.reads(), 1);
+    }
+
+    #[test]
+    fn caching_store_sees_its_own_writes_and_deletes() {
+        let mock = Arc::new(CountingMock::default());
+        mock.inner.set("svc", "acct", "old").unwrap();
+        let store = CachingKeyringStore::new(mock.clone());
+        assert_eq!(store.get("svc", "acct").unwrap().as_deref(), Some("old"));
+
+        store.set("svc", "acct", "new").unwrap();
+        assert_eq!(store.get("svc", "acct").unwrap().as_deref(), Some("new"));
+        store.delete("svc", "acct").unwrap();
+        assert_eq!(store.get("svc", "acct").unwrap(), None);
+        assert_eq!(mock.inner.get("svc", "acct").unwrap(), None);
+        assert_eq!(mock.reads(), 1);
+    }
+
+    #[test]
+    fn caching_store_rereads_after_the_ttl() {
+        let mock = Arc::new(CountingMock::default());
+        mock.inner.set("svc", "acct", "old").unwrap();
+        let store = CachingKeyringStore::with_ttl(mock.clone(), Duration::ZERO);
+        assert_eq!(store.get("svc", "acct").unwrap().as_deref(), Some("old"));
+
+        // Another process rewrites the entry.
+        mock.inner.set("svc", "acct", "new").unwrap();
+        assert_eq!(store.get("svc", "acct").unwrap().as_deref(), Some("new"));
+        assert_eq!(mock.reads(), 2);
+    }
+
+    #[test]
+    fn caching_store_debug_omits_cached_values() {
+        let dir = tempfile::tempdir().unwrap();
+        let store = CachingKeyringStore::new(FileKeyringStore::at_root(dir.path().to_path_buf()));
+        store.set("svc", "acct", "super-secret-token").unwrap();
+        assert_eq!(store.get("svc", "acct").unwrap().as_deref(), Some("super-secret-token"));
+        assert!(!format!("{store:?}").contains("super-secret-token"));
+    }
+
     #[test]
     fn chunked_store_small_value_stored_plain() {
         let mock = MockKeyringStore::new();
@@ -881,10 +1352,64 @@ mod tests {
         assert_eq!(plain.get("svc", "acct").unwrap().as_deref(), Some(big.as_str()));
     }
 
+    #[cfg(not(target_os = "windows"))]
+    #[test]
+    fn platform_chunked_store_writes_and_deletes_without_reading() {
+        let counting = Arc::new(CountingMock {
+            inner: MockKeyringStore::new(),
+            reads: Default::default(),
+            fail_reads: Default::default(),
+        });
+        let store = ChunkedKeyringStore::for_platform(counting.clone());
+
+        store.set("svc", "acct", "tok").unwrap();
+        store.set("svc", "acct", "tok2").unwrap();
+        store.delete("svc", "acct").unwrap();
+        store.delete("svc", "missing").unwrap();
+
+        assert_eq!(counting.reads(), 0, "set/delete must not read the secret back");
+        assert!(counting.inner.snapshot().is_empty());
+    }
+
     #[test]
     fn chunked_store_backend_label_delegates() {
         let store = ChunkedKeyringStore::new(MockKeyringStore::new());
         assert_eq!(store.backend_label(), "mock (in-memory)");
+    }
+
+    #[test]
+    fn security_tool_password_output_is_parsed() {
+        use super::security_tool_text::parse_password;
+        assert_eq!(
+            parse_password("password: \"{\"username\":\"AC1\"}\"\n").as_deref(),
+            Some("{\"username\":\"AC1\"}")
+        );
+        // Printable hex is a password, not an encoding of one.
+        assert_eq!(
+            parse_password("password: \"deadbeef\"\n").as_deref(),
+            Some("deadbeef")
+        );
+        assert_eq!(
+            parse_password("password: 0x68C3A90A  \"h\\303\\251\\012\"\n").as_deref(),
+            Some("h\u{e9}\n")
+        );
+        assert_eq!(parse_password("password: \n").as_deref(), Some(""));
+        assert_eq!(parse_password("keychain: \"login.keychain-db\"\n"), None);
+        assert_eq!(parse_password("password: 0xZZ\n"), None);
+    }
+
+    #[test]
+    fn security_tool_input_is_encoded() {
+        use super::security_tool_text::{encode_hex, quote};
+        assert_eq!(encode_hex("h\u{e9}\n".as_bytes()), "68c3a90a");
+        assert_eq!(quote("twilio").as_deref(), Some("'twilio'"));
+        assert_eq!(
+            quote("accountSid_authToken#prod").as_deref(),
+            Some("'accountSid_authToken#prod'")
+        );
+        assert_eq!(quote("it's"), None);
+        assert_eq!(quote("a\nb"), None);
+        assert_eq!(quote(""), None);
     }
 
     #[test]

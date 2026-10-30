@@ -4,6 +4,7 @@ import {
     DEFAULT_HOMEBREW_TOKEN_ENV_VAR,
     DEFAULT_SCOOP_TOKEN_ENV_VAR,
     type FernCliGitHubAppConfig,
+    type FernCliGitHubAttestations,
     type FernCliHomebrewConfig,
     type ResolvedChannelAuth,
     resolveChannelAuth
@@ -45,14 +46,12 @@ export async function emitReleaseWorkflow(args: {
     homebrew?: FernCliHomebrewConfig;
     scoop?: ScoopJobArgs;
     githubApp?: FernCliGitHubAppConfig;
+    githubAttestations?: FernCliGitHubAttestations;
 }): Promise<void> {
-    const { outputDir, homebrew, scoop, githubApp } = args;
+    const { outputDir, ...rest } = args;
     const workflowsDir = path.join(outputDir, ".github", "workflows");
     await mkdir(workflowsDir, { recursive: true });
-    await writeFile(
-        path.join(workflowsDir, "release.yml"),
-        constructReleaseWorkflowYaml({ homebrew, scoop, githubApp })
-    );
+    await writeFile(path.join(workflowsDir, "release.yml"), constructReleaseWorkflowYaml(rest));
 }
 
 /**
@@ -62,8 +61,9 @@ export function constructReleaseWorkflowYaml(args: {
     homebrew?: FernCliHomebrewConfig;
     scoop?: ScoopJobArgs;
     githubApp?: FernCliGitHubAppConfig;
+    githubAttestations?: FernCliGitHubAttestations;
 }): string {
-    const { homebrew, scoop, githubApp } = args;
+    const { homebrew, scoop, githubApp, githubAttestations = "auto" } = args;
 
     const homebrewAuth =
         homebrew != null
@@ -112,7 +112,30 @@ export function constructReleaseWorkflowYaml(args: {
         jobs += constructScoopJobYaml({ ...scoop, auth: scoopAuth, preflightJob });
         publishJobs.push("publish-scoop");
     }
-    return RELEASE_WORKFLOW_YAML + jobs + constructAnnounceJob(publishJobs);
+    return applyAttestationMode(RELEASE_WORKFLOW_YAML, githubAttestations) + jobs + constructAnnounceJob(publishJobs);
+}
+
+const ATTEST_PERMISSION = `      "attestations": "write"\n`;
+const ATTEST_STEP_HEAD = `      - name: Attest\n`;
+const ATTEST_STEP = `${ATTEST_STEP_HEAD}        uses: actions/attest-build-provenance@v3
+        with:
+          subject-path: "target/distrib/*\${{ join(matrix.targets, ', ') }}*"
+`;
+
+/**
+ * `true` is cargo-dist's template verbatim. `auto` skips the step on
+ * private repos, where attestations need GitHub Enterprise Cloud and
+ * otherwise fail every build leg. `false` drops both the step and the
+ * permission it needs.
+ */
+function applyAttestationMode(yaml: string, mode: FernCliGitHubAttestations): string {
+    if (mode === true) {
+        return yaml;
+    }
+    if (mode === false) {
+        return yaml.replace(ATTEST_PERMISSION, "").replace(ATTEST_STEP, "");
+    }
+    return yaml.replace(ATTEST_STEP_HEAD, `${ATTEST_STEP_HEAD}        if: \${{ !github.event.repository.private }}\n`);
 }
 
 /**
@@ -484,6 +507,28 @@ jobs:
       - name: Install dependencies
         run: |
           \${{ matrix.packages_install }}
+      # Signs the macOS binaries (\`macos-sign\` in dist-workspace.toml) when
+      # the repo has all three CODESIGN_* secrets. A binary signed with a
+      # stable identity keeps the macOS keychain's "Always Allow" across
+      # upgrades; an unsigned one is a new program to the keychain on every
+      # release. Without the secrets nothing is exported and dist skips
+      # signing, because an empty CODESIGN_* variable would fail the build.
+      - name: Load macOS signing secrets
+        if: \${{ runner.os == 'macOS' }}
+        shell: bash
+        env:
+          CODESIGN_CERTIFICATE: \${{ secrets.CODESIGN_CERTIFICATE }}
+          CODESIGN_CERTIFICATE_PASSWORD: \${{ secrets.CODESIGN_CERTIFICATE_PASSWORD }}
+          CODESIGN_IDENTITY: \${{ secrets.CODESIGN_IDENTITY }}
+        run: |
+          if [ -n "$CODESIGN_CERTIFICATE" ] && [ -n "$CODESIGN_CERTIFICATE_PASSWORD" ] && [ -n "$CODESIGN_IDENTITY" ]; then
+            delimiter="CODESIGN_$(openssl rand -hex 16)"
+            for name in CODESIGN_CERTIFICATE CODESIGN_CERTIFICATE_PASSWORD CODESIGN_IDENTITY; do
+              printf '%s<<%s\\n%s\\n%s\\n' "$name" "$delimiter" "\${!name}" "$delimiter" >> "$GITHUB_ENV"
+            done
+          else
+            echo "CODESIGN_CERTIFICATE, CODESIGN_CERTIFICATE_PASSWORD and CODESIGN_IDENTITY are not all set; macOS binaries stay unsigned."
+          fi
       - name: Build artifacts
         run: |
           # Actually do builds and make zips and whatnot

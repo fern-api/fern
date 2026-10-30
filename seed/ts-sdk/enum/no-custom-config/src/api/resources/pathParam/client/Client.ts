@@ -50,7 +50,7 @@ export class PathParamClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `path/${core.url.encodePathParam(operand)}/${core.url.encodePathParam(operandOrColor)}`,
+                `path/${core.url.encodePathParam(operand, errors.SeedEnumError)}/${core.url.encodePathParam(operandOrColor, errors.SeedEnumError)}`,
             ),
             method: "POST",
             headers: _headers,

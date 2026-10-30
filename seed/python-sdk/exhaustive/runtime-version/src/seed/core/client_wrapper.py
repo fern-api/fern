@@ -34,7 +34,7 @@ class BaseClientWrapper:
         from importlib import metadata as _fern_importlib_metadata
 
         try:
-            _sdk_version = _fern_importlib_metadata.version("fern_exhaustive")
+            _sdk_version = _fern_importlib_metadata.version("fern-exhaustive")
         except _fern_importlib_metadata.PackageNotFoundError:
             _sdk_version = "0.0.1"
 
@@ -43,7 +43,7 @@ class BaseClientWrapper:
             "X-Fern-Language": "Python",
             "X-Fern-Runtime": f"python/{platform.python_version()}",
             "X-Fern-Platform": f"{platform.system().lower()}/{platform.release()}",
-            "X-Fern-SDK-Name": "fern_exhaustive",
+            "X-Fern-SDK-Name": "fern-exhaustive",
             "X-Fern-SDK-Version": _sdk_version,
             **(self.get_custom_headers() or {}),
         }

@@ -82,6 +82,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": false,
             "examples": null
         },
         "endpoint_service.download": {
@@ -194,6 +195,7 @@
             "response": {
                 "type": "bytes"
             },
+            "hasResponseBody": true,
             "examples": null
         }
     },

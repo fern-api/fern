@@ -1,3 +1,4 @@
+import { stripTrailingSlashes } from "@fern-api/core-utils";
 import { RawSchemas, visitRawAuthSchemeDeclaration } from "@fern-api/fern-definition-schema";
 import {
     AuthScheme,
@@ -220,7 +221,7 @@ function resolveEndpointFromReference({
         return undefined;
     }
     const method = HTTP_METHOD_MAP[parts[0]?.toUpperCase() ?? ""];
-    const targetPath = parts[1]?.replace(/\/+$/, "");
+    const targetPath = stripTrailingSlashes(parts[1]);
     if (method == null || targetPath == null) {
         return undefined;
     }
@@ -245,7 +246,7 @@ function reconstructPath(httpPath: FernIr.HttpPath): string {
     for (const part of httpPath.parts) {
         result += `{${part.pathParameter}}${part.tail}`;
     }
-    return result.replace(/\/+$/, "");
+    return stripTrailingSlashes(result);
 }
 
 /** Extracts the wire name from a `$request.propName` or `$response.propName` string, falling back to a default. */

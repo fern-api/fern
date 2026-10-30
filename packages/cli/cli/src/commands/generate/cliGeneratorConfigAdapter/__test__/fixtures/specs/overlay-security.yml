@@ -1,0 +1,7 @@
+overlay: 1.0.0
+info: { title: add security, version: "1" }
+actions:
+  - target: "$.components"
+    update:
+      securitySchemes:
+        overlayKey: { type: apiKey, in: header, name: X-Overlay-Key }

@@ -137,6 +137,8 @@ describe("WebhooksHelperGenerator", () => {
                 algorithmHeader: {
                     headerName: createWireValue("X-Twilio-Webhook-Signature-Settings"),
                     keyIdDelimiter: ";",
+                    keyIdParameter: undefined,
+                    algorithmParameter: undefined,
                     algorithms: [
                         { wireValue: "HMAC_SHA1", algorithm: "SHA1" },
                         { wireValue: "HMAC_SHA256", algorithm: "SHA256" }
@@ -164,6 +166,46 @@ describe("WebhooksHelperGenerator", () => {
             expect(text).toContain('getHeader(headers, "X-Twilio-Webhook-Signature-Settings")');
             expect(text).toContain("public static async verifyRequest(");
             expect(text).toContain('algorithm != null ? (HMAC_ALGORITHMS[algorithm] ?? algorithm) : "sha1"');
+            expect(text).toMatchSnapshot();
+        });
+
+        it("parses name=value settings headers into the bare key id and algorithm", () => {
+            const verification: FernIr.WebhookSignatureVerification = FernIr.WebhookSignatureVerification.hmac({
+                bodyHashBinding: undefined,
+                notificationUrlNormalization: undefined,
+                algorithmHeader: {
+                    headerName: createWireValue("X-Twilio-Webhooks-Signature-Settings"),
+                    keyIdDelimiter: ",",
+                    keyIdParameter: "key",
+                    algorithmParameter: "algorithm",
+                    algorithms: [
+                        { wireValue: "HMAC_SHA1", algorithm: "SHA1" },
+                        { wireValue: "HMAC_SHA256", algorithm: "SHA256" }
+                    ]
+                },
+                algorithm: "SHA1",
+                encoding: "BASE64",
+                signatureHeaderName: createWireValue("X-Twilio-Signature"),
+                signaturePrefix: undefined,
+                timestamp: undefined,
+                payloadFormat: {
+                    components: ["NOTIFICATION_URL", "BODY"],
+                    delimiter: "",
+                    bodySort: "ALPHABETICAL"
+                }
+            });
+            const generator = new WebhooksHelperGenerator(verification);
+            const context = createMockFileContext();
+            generator.writeToFile(context);
+            const text = context.sourceFile.getFullText();
+            expect(text).toContain('getHeader(headers, "X-Twilio-Webhooks-Signature-Settings")');
+            expect(text).toContain('for (const part of settingsHeader.split(","))');
+            expect(text).toContain('const separatorIndex = part.indexOf("=");');
+            expect(text).toContain('const algorithmValue = settingsParts["algorithm"] ?? "";');
+            expect(text).toContain('keyId = settingsParts["key"];');
+            expect(text).not.toContain("lastIndexOf");
+            expect(text).not.toContain("hasOwn");
+            expect(text).toContain("if (!isSupportedAlgorithm(algorithmValue)) {");
             expect(text).toMatchSnapshot();
         });
 

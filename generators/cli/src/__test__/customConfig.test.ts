@@ -15,6 +15,67 @@ describe("validateCustomConfig", () => {
         expect(validateCustomConfig({ binaryName: "acme-cli" })).toEqual({ binaryName: "acme-cli" });
     });
 
+    it("accepts banner text and an optional colour gradient", () => {
+        expect(
+            validateCustomConfig({
+                banner: { text: "Fern CLI", colors: ["#4949F2", "#30F1B1"] }
+            })
+        ).toEqual({ banner: { text: "Fern CLI", colors: ["#4949F2", "#30F1B1"] } });
+    });
+
+    it("accepts a monochrome banner string shorthand", () => {
+        expect(validateCustomConfig({ banner: "Fern CLI" })).toEqual({ banner: "Fern CLI" });
+    });
+
+    it("rejects a banner colour that is not a 6-digit hex value", () => {
+        expect(() => validateCustomConfig({ banner: { text: "Fern", colors: ["#4949F2", "blue"] } })).toThrow(
+            'Invalid customConfig.banner.colors[1]: expected a 6-digit hex colour like "#4949F2", got "blue".'
+        );
+    });
+
+    it("rejects an empty banner text", () => {
+        expect(() => validateCustomConfig({ banner: { text: "" } })).toThrow(
+            'Invalid customConfig.banner.text: expected a non-empty string, got "".'
+        );
+        expect(() => validateCustomConfig({ banner: "" })).toThrow(
+            'Invalid customConfig.banner: expected non-empty text, got "".'
+        );
+    });
+
+    it("accepts a gradient direction and per-line colours", () => {
+        expect(
+            validateCustomConfig({ banner: { text: "Fern", colors: ["#4949F2", "#30F1B1"], direction: "vertical" } })
+        ).toEqual({ banner: { text: "Fern", colors: ["#4949F2", "#30F1B1"], direction: "vertical" } });
+        expect(validateCustomConfig({ banner: { text: "Fern", lineColors: ["#4949F2", "#30F1B1"] } })).toEqual({
+            banner: { text: "Fern", lineColors: ["#4949F2", "#30F1B1"] }
+        });
+    });
+
+    it("accepts and validates banner.animate", () => {
+        expect(validateCustomConfig({ banner: { text: "Fern", animate: true } })).toEqual({
+            banner: { text: "Fern", animate: true }
+        });
+        expect(() => validateCustomConfig({ banner: { text: "Fern", animate: "yes" } })).toThrow(
+            "Invalid customConfig.banner.animate: expected a boolean"
+        );
+    });
+
+    it("rejects an unknown banner direction", () => {
+        expect(() => validateCustomConfig({ banner: { text: "Fern", direction: "radial" } })).toThrow(
+            'Invalid customConfig.banner.direction: expected "horizontal", "vertical", or "diagonal", got "radial".'
+        );
+    });
+
+    it("rejects colors combined with lineColors", () => {
+        expect(() =>
+            validateCustomConfig({ banner: { text: "Fern", colors: ["#4949F2"], lineColors: ["#30F1B1"] } })
+        ).toThrow(/either `colors`.*or `lineColors`/);
+    });
+
+    it("rejects unknown banner fields", () => {
+        expect(() => validateCustomConfig({ banner: { text: "Fern", color: "red" } })).toThrow(/unknown field/);
+    });
+
     it("ignores undefined binaryName explicitly set", () => {
         expect(validateCustomConfig({ binaryName: undefined })).toEqual({});
     });
@@ -238,6 +299,18 @@ describe("validateCustomConfig — distribution", () => {
         expect(validateCustomConfig({ distribution: { homebrew: { tap: "acme/homebrew-tap" } } })).toEqual({
             distribution: { homebrew: { tap: "acme/homebrew-tap" } }
         });
+    });
+
+    it.each(["auto", true, false] as const)("accepts githubAttestations: %s", (githubAttestations) => {
+        expect(validateCustomConfig({ distribution: { githubAttestations } })).toEqual({
+            distribution: { githubAttestations }
+        });
+    });
+
+    it.each(["yes", "false", 1, null])("rejects githubAttestations: %s", (githubAttestations) => {
+        expect(() => validateCustomConfig({ distribution: { githubAttestations } })).toThrow(
+            /customConfig\.distribution\.githubAttestations/
+        );
     });
 
     it("accepts a scoop-only block", () => {
@@ -499,6 +572,41 @@ describe("validateCustomConfig — profiles", () => {
             credential: { username: "sid", password: "secret" },
             revokeParameters: { Sid: "sid" }
         });
+    });
+
+    it("accepts the interactive provisionOperation fields", () => {
+        expect(
+            validateCustomConfig({
+                profiles: {
+                    enabled: true,
+                    provisionOperation: {
+                        operation: "core.keys.create",
+                        credential: { username: "sid", password: "secret" },
+                        flag: "api-key",
+                        parameters: { FriendlyName: "{cli} for {user} on {host}" },
+                        profileParameters: { AccountSid: "username" }
+                    }
+                }
+            }).profiles?.provisionOperation
+        ).toEqual({
+            operation: "core.keys.create",
+            credential: { username: "sid", password: "secret" },
+            flag: "api-key",
+            parameters: { FriendlyName: "{cli} for {user} on {host}" },
+            profileParameters: { AccountSid: "username" }
+        });
+    });
+
+    it("rejects an invalid provisionOperation flag or unsafe text", () => {
+        const base = { operation: "core.keys.create", credential: { token: "secret" } };
+        expect(() =>
+            validateCustomConfig({ profiles: { enabled: true, provisionOperation: { ...base, flag: "--api-key" } } })
+        ).toThrow(/provisionOperation.flag/);
+        expect(() =>
+            validateCustomConfig({
+                profiles: { enabled: true, provisionOperation: { ...base, parameters: { FriendlyName: 'a"b' } } }
+            })
+        ).toThrow(/provisionOperation.parameters.FriendlyName/);
     });
 
     it("rejects a provisionOperation without a credential mapping", () => {

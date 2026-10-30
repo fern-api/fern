@@ -35,7 +35,7 @@ func NewClient(options *core.RequestOptions) *Client {
 
 // Example:
 //
-//	client.Dummy.GetDummy(
+//	_, err := client.Dummy.GetDummy(
 //	    context.TODO(),
 //	)
 func (c *Client) GetDummy(

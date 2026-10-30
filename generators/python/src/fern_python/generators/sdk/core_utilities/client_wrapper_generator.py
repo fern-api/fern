@@ -1,3 +1,4 @@
+import functools
 import json
 import re
 import typing
@@ -98,6 +99,17 @@ def _append_app_info_to_user_agent(
         product_token += f" ({comment})"
     return f"{user_agent} {product_token}"
 """
+
+
+FERN_PLATFORM_HEADER_PREFIX = "X-Fern-"
+WHITELABEL_PLATFORM_HEADER_PREFIX = "X-Codegen-"
+
+
+def get_platform_header_name(name: str, *, whitelabel: bool) -> str:
+    """Whitelabeled SDKs send `X-Codegen-*` instead of the Fern-branded `X-Fern-*` platform headers."""
+    if whitelabel and name.startswith(FERN_PLATFORM_HEADER_PREFIX):
+        return WHITELABEL_PLATFORM_HEADER_PREFIX + name[len(FERN_PLATFORM_HEADER_PREFIX) :]
+    return name
 
 
 @dataclass
@@ -1091,22 +1103,24 @@ class ClientWrapperGenerator:
                             f'"{project._project_config.package_name}/{project._project_config.package_version}"'
                         )
                     writer.write_line(f'"User-Agent": {_with_app_info(default_user_agent_expr)},')
+                platform_headers = self._context.ir.sdk_config.platform_headers
+                header_name = functools.partial(get_platform_header_name, whitelabel=project.whitelabel)
                 if not drop_discrete_headers:
-                    writer.write_line(f'"{self._context.ir.sdk_config.platform_headers.language}": "Python",')
+                    writer.write_line(f'"{header_name(platform_headers.language)}": "Python",')
                 if not emit_structured_user_agent and not drop_discrete_headers:
-                    writer.write_line("f'X-Fern-Runtime': f\"python/{platform.python_version()}\",")
-                    writer.write_line("f'X-Fern-Platform': f\"{platform.system().lower()}/{platform.release()}\",")
+                    writer.write_line(f"f'{header_name('X-Fern-Runtime')}': f\"python/{{platform.python_version()}}\",")
+                    writer.write_line(
+                        f"f'{header_name('X-Fern-Platform')}': f\"{{platform.system().lower()}}/{{platform.release()}}\","
+                    )
                 if project._project_config is not None and not drop_discrete_headers:
                     writer.write_line(
-                        f'"{self._context.ir.sdk_config.platform_headers.sdk_name}": "{project._project_config.package_name}",'
+                        f'"{header_name(platform_headers.sdk_name)}": "{project._project_config.package_name}",'
                     )
                     if runtime_version_active:
-                        writer.write_line(
-                            f'"{self._context.ir.sdk_config.platform_headers.sdk_version}": _sdk_version,'
-                        )
+                        writer.write_line(f'"{header_name(platform_headers.sdk_version)}": _sdk_version,')
                     else:
                         writer.write_line(
-                            f'"{self._context.ir.sdk_config.platform_headers.sdk_version}": "{project._project_config.package_version}",'
+                            f'"{header_name(platform_headers.sdk_version)}": "{project._project_config.package_version}",'
                         )
             writer.write_line("**(self.get_custom_headers() or {}),")
             writer.write_line("}")

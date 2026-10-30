@@ -57,7 +57,7 @@ export class SeedPackageYmlClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/${core.url.encodePathParam(this._options.id)}/`,
+                `/${core.url.encodePathParam(this._options.id, errors.SeedPackageYmlError)}/`,
             ),
             method: "POST",
             headers: _headers,

@@ -21,6 +21,13 @@ types:
       location: EndpointLocation
       request: Request
       response: Response
+      hasResponseBody:
+        type: optional<boolean>
+        docs: |
+          Whether the endpoint returns a response body. `false` for endpoints with no
+          response body (e.g. a 204 delete), which some SDKs surface in the method
+          signature (e.g. Go returns only `error`). Absent in IRs produced before
+          67.35.0, in which case a response body should be assumed.
       examples: optional<list<EndpointExample>>
 
   Request:
@@ -111,9 +118,18 @@ types:
 
   FileUploadRequestBodyProperty:
     union:
-      file: commons.NameAndWireValue
-      fileArray: commons.NameAndWireValue
+      file: FileUploadRequestBodyFileProperty
+      fileArray: FileUploadRequestBodyFileProperty
       bodyProperty: types.NamedParameter
+
+  FileUploadRequestBodyFileProperty:
+    extends: commons.NameAndWireValue
+    properties:
+      isOptional:
+        type: optional<boolean>
+        docs: |
+          Whether the file (or file list) may be omitted from the request. Unset in IR produced
+          by older CLI versions; consumers should treat an unset value as required.
 
   EndpointExample:
     extends:

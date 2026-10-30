@@ -1,9 +1,9 @@
 [project]
-name = "fern_inline-enum-type-name-override"
+name = "fern-inline-enum-type-name-override"
 dynamic = ["version"]
 
 [tool.poetry]
-name = "fern_inline-enum-type-name-override"
+name = "fern-inline-enum-type-name-override"
 version = "0.0.1"
 description = ""
 readme = "README.md"

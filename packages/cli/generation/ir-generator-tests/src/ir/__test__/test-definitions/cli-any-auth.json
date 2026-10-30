@@ -1348,7 +1348,8 @@
                             "unsafeName": "BasicAuth",
                             "safeName": "BasicAuth"
                         }
-                    }
+                    },
+                    "requirement": "ANY"
                 },
                 "declaration": {
                     "name": {
@@ -1593,6 +1594,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_widgets.list": {
@@ -1656,7 +1658,8 @@
                             "unsafeName": "BasicAuth",
                             "safeName": "BasicAuth"
                         }
-                    }
+                    },
+                    "requirement": "ANY"
                 },
                 "declaration": {
                     "name": {
@@ -1735,6 +1738,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_system.health": {
@@ -1798,7 +1802,8 @@
                             "unsafeName": "BasicAuth",
                             "safeName": "BasicAuth"
                         }
-                    }
+                    },
+                    "requirement": "ANY"
                 },
                 "declaration": {
                     "name": {
@@ -1877,6 +1882,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": false,
                 "examples": null
             }
         },

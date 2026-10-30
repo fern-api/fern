@@ -220,6 +220,8 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                     retryStatusCodes: this.rubyContext.customConfig.retryStatusCodes,
                     respectOptionalRequestBody: this.rubyContext.customConfig.respectOptionalRequestBody,
                     respectNullableUnionFields: this.rubyContext.customConfig.respectNullableUnionFields,
+                    serializeTimeAsIso8601: this.rubyContext.customConfig.serializeTimeAsIso8601,
+                    omitUnsetModelFields: this.rubyContext.customConfig.omitUnsetModelFields,
                     endpointSecurity: this.rubyContext.ir.auth.requirement === "ENDPOINT_SECURITY",
                     requestLevelMaxRetries: hasEndpointWithRetriesDisabled(
                         Object.values(this.rubyContext.ir.services).flatMap((service) => service.endpoints)
@@ -243,6 +245,8 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         retryStatusCodes,
         respectOptionalRequestBody,
         respectNullableUnionFields,
+        serializeTimeAsIso8601,
+        omitUnsetModelFields,
         endpointSecurity,
         requestLevelMaxRetries
     }: {
@@ -259,6 +263,8 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         retryStatusCodes?: string;
         respectOptionalRequestBody?: boolean;
         respectNullableUnionFields?: boolean;
+        serializeTimeAsIso8601?: boolean;
+        omitUnsetModelFields?: boolean;
         endpointSecurity?: boolean;
         requestLevelMaxRetries?: boolean;
     }): Promise<File> {
@@ -276,6 +282,8 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                 maxRetries,
                 respectOptionalRequestBody,
                 respectNullableUnionFields,
+                serializeTimeAsIso8601,
+                omitUnsetModelFields,
                 endpointSecurity,
                 requestLevelMaxRetries
             })
@@ -354,6 +362,8 @@ function getTemplateVariables({
     maxRetries,
     respectOptionalRequestBody,
     respectNullableUnionFields,
+    serializeTimeAsIso8601,
+    omitUnsetModelFields,
     endpointSecurity,
     requestLevelMaxRetries
 }: {
@@ -368,6 +378,8 @@ function getTemplateVariables({
     maxRetries?: number;
     respectOptionalRequestBody?: boolean;
     respectNullableUnionFields?: boolean;
+    serializeTimeAsIso8601?: boolean;
+    omitUnsetModelFields?: boolean;
     endpointSecurity?: boolean;
     requestLevelMaxRetries?: boolean;
 }): Record<string, unknown> {
@@ -396,6 +408,12 @@ function getTemplateVariables({
         // the opt-in flag is on, so flag-off internal/types/union.rb stays
         // byte-identical.
         respectNullableUnionFields: respectNullableUnionFields ?? false,
+        // On by default; `false` restores the previous `Time#to_s` request serialization
+        // byte-for-byte.
+        serializeTimeAsIso8601: serializeTimeAsIso8601 ?? true,
+        // Drops never-set required fields from `Model#to_h` only when the opt-in flag is on,
+        // so flag-off internal/types/model.rb stays byte-identical.
+        omitUnsetModelFields: omitUnsetModelFields ?? false,
         // Emits the RawClient#auth_headers_for_endpoint delegator only for
         // endpoint-security SDKs, so ALL/ANY SDKs see zero change to raw_client.rb.
         endpointSecurity: endpointSecurity ?? false,
@@ -759,6 +777,9 @@ class ModuleFile {
     private get baseContents(): string {
         const hasBasicAuth = this.context.ir.auth.schemes.some((s) => s.type === "basic");
         const requires = ['"json"', '"net/http"', '"securerandom"'];
+        if (this.context.customConfig.serializeTimeAsIso8601 !== false) {
+            requires.push('"time"');
+        }
         if (hasBasicAuth) {
             requires.push('"base64"');
         }
@@ -817,13 +838,23 @@ class ModuleFile {
 
         const { sorted, cycles } = topologicalSortWithCycleDetection(filteredTypeDeclarations, dependsOn);
 
+        // Types are registered with `autoload` rather than required eagerly, so loading the
+        // gem only pays for the (small) runtime; each type file is read on first reference.
+        const autoloads = new Map<string, string[]>();
+        const typeFilePaths = new Set<AbsoluteFilePath>();
         sorted.forEach((typeDeclaration) => {
             const typeFilePath = join(
                 this.project.absolutePathToOutputDirectory,
                 this.context.getLocationForTypeId(typeDeclaration.name.typeId),
                 RelativeFilePath.of(this.context.getFileNameForTypeId(typeDeclaration.name.typeId))
             );
-            relativeImportPaths.add(relative(this.filePath, typeFilePath));
+            typeFilePaths.add(typeFilePath);
+            const classReference = this.context.getClassReferenceForTypeId(typeDeclaration.name.typeId);
+            const requirePath = relative(this.filePath, typeFilePath).replace(/\.rb$/, "");
+            const key = classReference.modules.join("::");
+            const entries = autoloads.get(key) ?? [];
+            entries.push(`autoload :${classReference.name}, ::File.join(__dir__, "${requirePath}")`);
+            autoloads.set(key, entries);
         });
 
         rubyFilePaths.forEach((filePath) => {
@@ -832,6 +863,7 @@ class ModuleFile {
             // The barrel lives in lib/, so test paths resolve to ../test/wire/…
             const relativePath = relative(this.filePath, filePath);
             if (
+                typeFilePaths.has(filePath) ||
                 relativePath.startsWith("spec/") ||
                 relativePath.startsWith("test/") ||
                 relativePath.startsWith("../test/") ||
@@ -849,6 +881,7 @@ class ModuleFile {
                 .filter((importPath) => importPath.endsWith(".rb"))
                 .map((importPath) => `require_relative "${importPath.replaceAll(".rb", "")}"`)
                 .join("\n");
+        const autoloadContents = this.renderAutoloads(autoloads);
 
         // Add optional user require paths hook at the end (only if configured)
         // This allows users to add custom code (e.g., Sentry integration) without fernignoring generated files
@@ -867,15 +900,59 @@ class ModuleFile {
   require_relative relative_path if File.exist?(absolute_path)
 end`;
 
-            return dedent`${contents}` + requirePathsHook + "\n";
+            return dedent`${contents}` + autoloadContents + requirePathsHook + "\n";
         }
 
-        return dedent`${contents}` + "\n";
+        return dedent`${contents}` + autoloadContents + "\n";
+    }
+
+    private renderAutoloads(autoloads: Map<string, string[]>): string {
+        const root: AutoloadModule = { children: new Map(), entries: [] };
+        for (const [key, entries] of autoloads) {
+            let node = root;
+            for (const moduleName of key.split("::")) {
+                let child = node.children.get(moduleName);
+                if (child == null) {
+                    child = { children: new Map(), entries: [] };
+                    node.children.set(moduleName, child);
+                }
+                node = child;
+            }
+            node.entries.push(...entries);
+        }
+        const blocks: string[] = [];
+        for (const [moduleName, node] of root.children) {
+            blocks.push(this.renderAutoloadModule(moduleName, node, 0).join("\n"));
+        }
+        return blocks.length === 0 ? "" : `\n\n${blocks.join("\n\n")}`;
+    }
+
+    private renderAutoloadModule(moduleName: string, node: AutoloadModule, depth: number): string[] {
+        const indent = "  ".repeat(depth);
+        const lines = [`${indent}module ${moduleName}`];
+        for (const entry of node.entries) {
+            lines.push(`${indent}  ${entry}`);
+        }
+        let first = node.entries.length === 0;
+        for (const [childName, child] of node.children) {
+            if (!first) {
+                lines.push("");
+            }
+            first = false;
+            lines.push(...this.renderAutoloadModule(childName, child, depth + 1));
+        }
+        lines.push(`${indent}end`);
+        return lines;
     }
 
     public async writeFile(): Promise<void> {
         await writeFile(join(this.filePath, RelativeFilePath.of(this.fileName)), this.toString());
     }
+}
+
+interface AutoloadModule {
+    children: Map<string, AutoloadModule>;
+    entries: string[];
 }
 
 function dependsOn(a: FernIr.TypeDeclaration, b: FernIr.TypeDeclaration): boolean {

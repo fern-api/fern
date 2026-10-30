@@ -174,7 +174,7 @@ public final class XmlWriter {
         }
         xml.append('<').append(qualifiedName).append(attributes);
         if (content.isEmpty()) {
-            xml.append(" />");
+            xml.append("/>");
         } else {
             xml.append('>');
             for (String part : content) {
@@ -219,11 +219,19 @@ public final class XmlWriter {
         return String.valueOf(value);
     }
 
+    /**
+     * Escapes markup characters and drops characters outside the XML 1.0 {@code Char} production (control
+     * characters, lone surrogates), which no XML parser accepts.
+     */
     public static String escape(String value) {
         StringBuilder escaped = new StringBuilder(value.length());
-        for (int i = 0; i < value.length(); i++) {
-            char c = value.charAt(i);
-            switch (c) {
+        for (int i = 0; i < value.length(); ) {
+            int codePoint = value.codePointAt(i);
+            i += Character.charCount(codePoint);
+            if (!isXmlChar(codePoint)) {
+                continue;
+            }
+            switch (codePoint) {
                 case '&':
                     escaped.append("&amp;");
                     break;
@@ -237,9 +245,31 @@ public final class XmlWriter {
                     escaped.append("&quot;");
                     break;
                 default:
-                    escaped.append(c);
+                    escaped.appendCodePoint(codePoint);
             }
         }
         return escaped.toString();
+    }
+
+    /** Drops characters outside the XML 1.0 {@code Char} production without escaping markup. */
+    public static String stripInvalidXmlChars(String value) {
+        StringBuilder result = new StringBuilder(value.length());
+        for (int i = 0; i < value.length(); ) {
+            int codePoint = value.codePointAt(i);
+            i += Character.charCount(codePoint);
+            if (isXmlChar(codePoint)) {
+                result.appendCodePoint(codePoint);
+            }
+        }
+        return result.toString();
+    }
+
+    private static boolean isXmlChar(int codePoint) {
+        return codePoint == 0x9
+                || codePoint == 0xA
+                || codePoint == 0xD
+                || (codePoint >= 0x20 && codePoint <= 0xD7FF)
+                || (codePoint >= 0xE000 && codePoint <= 0xFFFD)
+                || (codePoint >= 0x10000 && codePoint <= 0x10FFFF);
     }
 }

@@ -17,7 +17,7 @@ request := &fern.AstNode{
         Model: "model",
     },
 }
-client.CreateAst(
+_, err := client.CreateAst(
     context.TODO(),
     request,
 )

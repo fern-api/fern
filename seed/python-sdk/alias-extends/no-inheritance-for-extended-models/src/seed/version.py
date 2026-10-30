@@ -1,3 +1,3 @@
 from importlib import metadata
 
-__version__ = metadata.version("fern_alias-extends")
+__version__ = metadata.version("fern-alias-extends")

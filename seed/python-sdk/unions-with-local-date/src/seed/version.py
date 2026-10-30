@@ -1,3 +1,3 @@
 from importlib import metadata
 
-__version__ = metadata.version("fern_unions-with-local-date")
+__version__ = metadata.version("fern-unions-with-local-date")

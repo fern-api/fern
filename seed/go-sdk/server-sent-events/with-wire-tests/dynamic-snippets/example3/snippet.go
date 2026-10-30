@@ -8,7 +8,7 @@ import (
     option "github.com/fern-api/sse-go/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -17,8 +17,12 @@ func do() {
     request := &sse.StreamCompletionRequestWithoutTerminator{
         Query: "query",
     }
-    client.Completions.StreamWithoutTerminator(
+    _, err := client.Completions.StreamWithoutTerminator(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

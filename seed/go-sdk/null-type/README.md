@@ -37,15 +37,19 @@ import (
     client "github.com/null-type/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &fern.OutboundCallConversationsRequest{
         ToPhoneNumber: "to_phone_number",
     }
-    client.Conversations.OutboundCall(
+    _, err := client.Conversations.OutboundCall(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

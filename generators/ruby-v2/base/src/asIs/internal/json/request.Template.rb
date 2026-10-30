@@ -42,7 +42,7 @@ module <%= gem_namespace %>
         #   from request_options.
         def encode_body
           body = request_body
-          body.nil? ? nil : ::JSON.generate(body)
+          body.nil? ? nil : ::JSON.generate(<% if (serializeTimeAsIso8601) { %>Internal::Types::Utils.serialize_times(body)<% } else { %>body<% } %>)
         end
 
         private

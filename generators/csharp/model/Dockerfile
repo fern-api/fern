@@ -18,6 +18,11 @@ RUN apk update && apk upgrade --no-cache && \
     git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \
     git config --global user.name "fern-api"
 
+# curl 8.23.0 strips credentials from CURLINFO_EFFECTIVE_URL, so git (<= 2.54) treats every
+# authenticated https clone as a redirect, drops the token and fails on private repositories
+# ("could not read Username"). Keep Alpine 3.22's libcurl until git/curl ship a fix.
+RUN apk add --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine/v3.22/main 'curl<8.23' 'libcurl<8.23'
+
 # Copy over node contents to be able to run the compiled CLI
 COPY --from=node /usr/local/bin/node /usr/local/bin/
 COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules

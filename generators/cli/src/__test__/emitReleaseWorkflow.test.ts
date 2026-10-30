@@ -40,6 +40,25 @@ describe("constructReleaseWorkflowYaml", () => {
         expect(yaml).toContain("::error::The cargo-dist installer failed twice");
     });
 
+    // A stable signing identity keeps the macOS keychain's "Always Allow"
+    // across releases. The certificate must reach only the macOS legs, and a
+    // repo without the secrets must build exactly as before.
+    it("loads the macOS signing secrets only on macOS runners, before the build", () => {
+        const yaml = constructReleaseWorkflowYaml({});
+        const step = yaml.indexOf("- name: Load macOS signing secrets");
+        const build = yaml.indexOf("- name: Build artifacts");
+        expect(step).toBeGreaterThan(-1);
+        expect(step).toBeLessThan(build);
+        const stepBody = yaml.slice(step, build);
+        expect(stepBody).toContain("if: ${{ runner.os == 'macOS' }}");
+        for (const name of ["CODESIGN_CERTIFICATE", "CODESIGN_CERTIFICATE_PASSWORD", "CODESIGN_IDENTITY"]) {
+            expect(yaml.split(`secrets.${name} }}`)).toHaveLength(2);
+            expect(stepBody).toContain(`${name}: \${{ secrets.${name} }}`);
+        }
+        expect(stepBody).toContain('>> "$GITHUB_ENV"');
+        expect(stepBody).toContain("macOS binaries stay unsigned");
+    });
+
     // The retry must reuse the matrix's own command and shell. Branching on
     // `matrix.install_dist.shell` would mean a future cargo-dist field rename
     // silently skips both legs and installs nothing — trading a flake for a
@@ -51,6 +70,37 @@ describe("constructReleaseWorkflowYaml", () => {
         expect(yaml).not.toContain("${{ matrix.install_dist.shell }}");
         // Both install attempts go through the same upstream expression.
         expect(yaml.match(/run: \$\{\{ matrix\.install_dist\.run \}\}/g)).toHaveLength(2);
+    });
+
+    // GitHub only supports attestations on private repos with Enterprise
+    // Cloud; elsewhere the unguarded step failed every build leg.
+    describe("githubAttestations", () => {
+        const GUARD = "if: ${{ !github.event.repository.private }}";
+
+        it("defaults to auto: skips the attest step on private repos", () => {
+            const yaml = constructReleaseWorkflowYaml({});
+            expect(yaml).toBe(constructReleaseWorkflowYaml({ githubAttestations: "auto" }));
+            expect(yaml).toContain(
+                `- name: Attest\n        ${GUARD}\n        uses: actions/attest-build-provenance@v3`
+            );
+            expect(yaml).toContain('"attestations": "write"');
+        });
+
+        it("true: always attests, unguarded", () => {
+            const yaml = constructReleaseWorkflowYaml({ githubAttestations: true });
+            expect(yaml).toContain("- name: Attest\n        uses: actions/attest-build-provenance@v3");
+            expect(yaml).not.toContain(GUARD);
+            expect(yaml).toContain('"attestations": "write"');
+        });
+
+        it("false: drops the step and its permission", () => {
+            const yaml = constructReleaseWorkflowYaml({ githubAttestations: false });
+            expect(yaml).not.toContain("attest-build-provenance");
+            expect(yaml).not.toContain("- name: Attest");
+            expect(yaml).not.toContain('"attestations"');
+            expect(yaml).toContain('"id-token": "write"');
+            expect(yaml).toContain("- id: cargo-dist");
+        });
     });
 
     it("emits no homebrew job when no distribution is configured", () => {

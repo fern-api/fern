@@ -4,11 +4,18 @@ import {
     type FernWorkspace,
     getOpenAPISettings,
     type IdentifiableSource,
+    type ProtobufSpec,
     type Spec
 } from "@fern-api/api-workspace-commons";
 import { docsYml, generatorsYml } from "@fern-api/configuration-loader";
+import { toPosixPath } from "@fern-api/fs-utils";
 import { CliError } from "@fern-api/task-context";
-import type { SdkConfigV1SourceConfig, SdkConfigV1SourceSpec } from "@postman/sdk-config/sdk-config/v1";
+import type {
+    SdkConfigV1GitRemote,
+    SdkConfigV1ProtobufSource,
+    SdkConfigV1SourceConfig,
+    SdkConfigV1SourceSpec
+} from "@postman/sdk-config/sdk-config/v1";
 import path from "path";
 
 const DEFAULT_PATH_PARAMETER_STYLE = getOpenAPISettings().inlinePathParameters ? "inline" : "wrapped";
@@ -27,7 +34,9 @@ const DOCS_IMPORT_SETTING_KEY_PAIRS = [
 const DOCS_IMPORT_SETTING_KEYS = new Set(DOCS_IMPORT_SETTING_KEY_PAIRS.map(([key]) => key));
 const RAW_DOCS_IMPORT_SETTING_KEYS = new Set(DOCS_IMPORT_SETTING_KEY_PAIRS.map(([, key]) => key));
 
-export interface ResolvedMigrationSourceSpec {
+export type ResolvedMigrationSourceSpec = ResolvedMigrationFileSpec | ResolvedMigrationProtobufSpec;
+
+export interface ResolvedMigrationFileSpec {
     absolutePath: string;
     absoluteOverlayPaths: string[];
     absoluteOverridePaths: string[];
@@ -39,8 +48,28 @@ export interface ResolvedMigrationSourceSpec {
     idHint?: string;
     name?: string;
     namespace?: string;
-    type: SdkConfigV1SourceSpec["type"];
+    type: Exclude<SdkConfigV1SourceSpec, { proto: unknown }>["type"];
 }
+
+export function isResolvedMigrationFileSpec(spec: ResolvedMigrationSourceSpec): spec is ResolvedMigrationFileSpec {
+    return spec.type !== "protobuf";
+}
+
+export interface ResolvedMigrationProtobufSpec {
+    absoluteOverridePaths: string[];
+    apiImportSettings?: SdkConfigV1SourceSpec["apiImportSettings"];
+    dependencies: string[];
+    fromOpenApi: boolean;
+    idHint: string;
+    localGeneration: boolean;
+    location: ResolvedProtobufLocation;
+    type: "protobuf";
+}
+
+/** A local root keeps absolute paths. A git root keeps its remote, and its target stays relative to the repository root. */
+export type ResolvedProtobufLocation =
+    | { type: "local"; absoluteRootPath: string; absoluteTargetPath: string | undefined }
+    | { type: "git"; remote: SdkConfigV1GitRemote; target: string | undefined };
 
 export interface SourceDerivedApiFields {
     auth: boolean;
@@ -92,6 +121,81 @@ export function identifySourceDerivedApiFields({
     };
 }
 
+/**
+ * The specs of the API itself (the top-level `api:` section of generators.yml), ignoring any generator-level
+ * override. Returns undefined when the workspace does not list specs of its own.
+ */
+export function resolveWorkspaceSourceSpecs(
+    workspace: AbstractAPIWorkspace<unknown>
+): ResolvedMigrationSourceSpec[] | undefined {
+    const { specs, needsReordering } = workspaceSpecs(workspace);
+    if (specs.length === 0) {
+        return undefined;
+    }
+    const workspacePath = workspace.absoluteFilePath.toString();
+    const configuredDefinitions = getConfiguredDefinitions(workspace.generatorsConfiguration?.api);
+    const claimedDefinitions = new Set<ConfiguredDefinition>();
+    const matched = specs.map((spec) => {
+        const configuredDefinition = findConfiguredDefinition(
+            workspacePath,
+            spec,
+            configuredDefinitions,
+            claimedDefinitions
+        );
+        if (configuredDefinition?.location.gitSource != null && spec.type !== "protobuf") {
+            throw new CliError({
+                message: `fern sdk migrate cannot create durable local paths for git-backed API specification '${configuredDefinition.location.gitSource.path}' from '${configuredDefinition.location.gitSource.repo}'. Move the specification into the project or migrate this configuration manually.`,
+                code: CliError.Code.ConfigError
+            });
+        }
+        return { spec, configuredDefinition };
+    });
+    return (needsReordering ? inConfiguredOrder(matched, configuredDefinitions) : matched).map(
+        ({ spec, configuredDefinition }) =>
+            spec.type === "protobuf"
+                ? resolveWorkspaceProtobufSpec(spec, configuredDefinition?.location)
+                : resolveWorkspaceSpec(spec, configuredDefinition?.location.settings)
+    );
+}
+
+/**
+ * The workspace loader splits the configured specs into two views: `allSpecs` leaves out protos generated from
+ * OpenAPI, `specs` leaves out the other protos. Together they hold every spec the API lists. `allSpecs` keeps
+ * generators.yml order, so only specs missing from it need reordering.
+ */
+function workspaceSpecs(workspace: AbstractAPIWorkspace<unknown>): { specs: Spec[]; needsReordering: boolean } {
+    const allSpecs = specArray(workspace, "allSpecs");
+    const seen = new Set<Spec>(allSpecs);
+    const missing = specArray(workspace, "specs").filter((spec) => !seen.has(spec));
+    return { specs: [...allSpecs, ...missing], needsReordering: missing.length > 0 };
+}
+
+function specArray(workspace: AbstractAPIWorkspace<unknown>, key: "allSpecs" | "specs"): Spec[] {
+    if (!(key in workspace)) {
+        return [];
+    }
+    const value: unknown = (workspace as unknown as Record<typeof key, unknown>)[key];
+    return Array.isArray(value) ? (value as Spec[]) : [];
+}
+
+/**
+ * Restores generators.yml order, which the two workspace views lose. When a spec cannot be matched to its
+ * configured definition, the loaded order is kept instead.
+ */
+function inConfiguredOrder<T extends { configuredDefinition: ConfiguredDefinition | undefined }>(
+    matched: T[],
+    configuredDefinitions: ConfiguredDefinition[]
+): T[] {
+    const indexed = matched.map((entry) => ({
+        entry,
+        index: entry.configuredDefinition == null ? -1 : configuredDefinitions.indexOf(entry.configuredDefinition)
+    }));
+    if (indexed.some(({ index }) => index === -1)) {
+        return matched;
+    }
+    return indexed.sort((left, right) => left.index - right.index).map(({ entry }) => entry);
+}
+
 export function resolveMigrationSourceSpecs({
     workspace,
     fernWorkspace,
@@ -104,22 +208,9 @@ export function resolveMigrationSourceSpecs({
     if (generator.apiOverride?.specs != null) {
         return resolveGeneratorSpecOverrides(workspace.absoluteFilePath, generator.apiOverride.specs);
     }
-    if (hasNonEmptySpecs(workspace)) {
-        const configuredDefinitions = getConfiguredDefinitions(workspace.generatorsConfiguration?.api);
-        return workspace.allSpecs.map((spec) => {
-            const configuredDefinition = findConfiguredDefinition(
-                workspace.absoluteFilePath.toString(),
-                spec,
-                configuredDefinitions
-            );
-            if (configuredDefinition?.location.gitSource != null) {
-                throw new CliError({
-                    message: `fern sdk migrate cannot create durable local paths for git-backed API specification '${configuredDefinition.location.gitSource.path}' from '${configuredDefinition.location.gitSource.repo}'. Move the specification into the project or migrate this configuration manually.`,
-                    code: CliError.Code.ConfigError
-                });
-            }
-            return resolveWorkspaceSpec(spec, configuredDefinition?.location.settings);
-        });
+    const workspaceSpecs = resolveWorkspaceSourceSpecs(workspace);
+    if (workspaceSpecs != null) {
+        return workspaceSpecs;
     }
     if (fernWorkspace.sources.length > 0) {
         return fernWorkspace.sources.map(resolveIdentifiableSource);
@@ -140,7 +231,10 @@ export function serializeMigrationSource({
 }): SdkConfigV1SourceConfig {
     const sourceRoot = migrationSourceRoot(workingDirectory, specs);
     const usedIds = new Set<string>();
-    const serializedSpecs = specs.map((spec) => {
+    const serializedSpecs = specs.map((spec): SdkConfigV1SourceSpec => {
+        if (spec.type === "protobuf") {
+            return serializeProtobufSpec(spec, uniqueSourceId(spec.idHint, usedIds), sourceRoot);
+        }
         const id = uniqueSourceId(spec.idHint ?? sourceIdFromPath(spec.absolutePath), usedIds);
         return {
             id,
@@ -164,11 +258,45 @@ export function serializeMigrationSource({
     return hoistSharedApiImportSettings(serializedSpecs);
 }
 
+function serializeProtobufSpec(
+    spec: ResolvedMigrationProtobufSpec,
+    id: string,
+    sourceRoot: string
+): SdkConfigV1SourceSpec {
+    const { location } = spec;
+    const target =
+        location.type === "git"
+            ? location.target
+            : location.absoluteTargetPath == null
+              ? undefined
+              : relativeSourcePath(sourceRoot, location.absoluteTargetPath);
+    const proto: SdkConfigV1ProtobufSource = {
+        root:
+            location.type === "git"
+                ? { git: location.remote }
+                : relativeSourcePath(sourceRoot, location.absoluteRootPath),
+        ...(target == null ? {} : { target }),
+        ...(spec.absoluteOverridePaths.length === 0
+            ? {}
+            : { overrides: spec.absoluteOverridePaths.map((override) => relativeSourcePath(sourceRoot, override)) }),
+        ...(spec.dependencies.length === 0 ? {} : { dependencies: spec.dependencies }),
+        ...(spec.localGeneration ? { localGeneration: true } : {}),
+        // Written even when false, so a later change of the default does not change migrated configurations.
+        fromOpenApi: spec.fromOpenApi
+    };
+    return {
+        id,
+        ...(spec.apiImportSettings == null ? {} : { apiImportSettings: spec.apiImportSettings }),
+        proto
+    };
+}
+
 export function resolveMigrationPathParameterStyle(
     specs: ResolvedMigrationSourceSpec[]
 ): "inline" | "wrapped" | undefined {
     const explicitlyConfiguredSpecs = specs.filter(
-        (spec) => spec.type === "openapi" && spec.clientPathParameterStyleExplicit === true
+        (spec): spec is ResolvedMigrationFileSpec =>
+            spec.type === "openapi" && spec.clientPathParameterStyleExplicit === true
     );
     if (explicitlyConfiguredSpecs.length === 0) {
         return undefined;
@@ -192,9 +320,24 @@ export function resolveMigrationPathParameterStyle(
 }
 
 function migrationSourceRoot(workingDirectory: string, specs: ResolvedMigrationSourceSpec[]): string {
-    return specs
-        .flatMap((spec) => [spec.absolutePath, ...spec.absoluteOverlayPaths, ...spec.absoluteOverridePaths])
-        .reduce(commonAncestor, path.resolve(workingDirectory));
+    return specs.flatMap(sourceRootPaths).reduce(commonAncestor, path.resolve(workingDirectory));
+}
+
+/**
+ * fern generate resolves SDK Config paths against a source root it derives from the API's own files
+ * (`getAbsoluteFilePaths`), which count a proto's target and overrides but not its root, and skip protos generated
+ * from OpenAPI. A proto counts only those same paths here so both commands agree on the root; any other proto path
+ * is written relative to it, with `..` when it lies outside.
+ */
+function sourceRootPaths(spec: ResolvedMigrationSourceSpec): string[] {
+    if (spec.type !== "protobuf") {
+        return [spec.absolutePath, ...spec.absoluteOverlayPaths, ...spec.absoluteOverridePaths];
+    }
+    if (spec.fromOpenApi) {
+        return [];
+    }
+    const target = spec.location.type === "local" ? spec.location.absoluteTargetPath : undefined;
+    return [...(target == null ? [] : [target]), ...spec.absoluteOverridePaths];
 }
 
 function commonAncestor(candidateRoot: string, candidatePath: string): string {
@@ -252,20 +395,19 @@ function hoistSharedApiImportSettings(specs: SdkConfigV1SourceSpec[]): SdkConfig
     };
 }
 
-function hasNonEmptySpecs(workspace: AbstractAPIWorkspace<unknown>): workspace is AbstractAPIWorkspace<unknown> & {
-    allSpecs: Spec[];
-} {
-    return "allSpecs" in workspace && Array.isArray(workspace.allSpecs) && workspace.allSpecs.length > 0;
-}
-
 function resolveWorkspaceSpec(
-    spec: Spec,
+    spec: Exclude<Spec, ProtobufSpec>,
     settings: generatorsYml.APIDefinitionSettings | undefined
-): ResolvedMigrationSourceSpec {
+): ResolvedMigrationFileSpec {
     switch (spec.type) {
         case "openapi":
             if (spec.source.type === "protobuf") {
-                throw unsupportedSourceType(spec.source.type);
+                // Only OpenAPI converted from a proto at generation time has a protobuf source; the workspace
+                // loader never produces one.
+                throw new CliError({
+                    message: `fern sdk migrate received OpenAPI converted from protobuf root '${spec.source.root}' instead of its proto spec.`,
+                    code: CliError.Code.InternalError
+                });
             }
             return {
                 absolutePath: spec.absoluteFilepath,
@@ -298,10 +440,51 @@ function resolveWorkspaceSpec(
                 idHint: spec.namespace,
                 type: "graphql"
             };
-        case "protobuf":
         case "openrpc":
             throw unsupportedSourceType(spec.type);
     }
+}
+
+function resolveWorkspaceProtobufSpec(
+    spec: ProtobufSpec,
+    location: generatorsYml.APIDefinitionLocation | undefined
+): ResolvedMigrationProtobufSpec {
+    const gitSource = location?.gitSource;
+    const configuredTarget = location?.schema.type === "protobuf" ? location.schema.target : "";
+    const protobufLocation: ResolvedProtobufLocation =
+        gitSource == null
+            ? {
+                  type: "local",
+                  absoluteRootPath: spec.absoluteFilepathToProtobufRoot,
+                  absoluteTargetPath: spec.absoluteFilepathToProtobufTarget
+              }
+            : {
+                  type: "git",
+                  remote: gitRemote(gitSource),
+                  target: configuredTarget.length === 0 ? undefined : configuredTarget
+              };
+    return {
+        absoluteOverridePaths: normalizePaths(spec.absoluteFilepathToOverrides),
+        apiImportSettings: projectFernApiImportSettings(location?.settings),
+        dependencies: spec.dependencies,
+        fromOpenApi: spec.fromOpenAPI,
+        idHint: protobufIdHint(protobufLocation),
+        localGeneration: spec.generateLocally,
+        location: protobufLocation,
+        type: "protobuf"
+    };
+}
+
+function gitRemote(source: generatorsYml.GitSource): SdkConfigV1GitRemote {
+    return { repo: source.repo, ...(source.ref == null ? {} : { ref: source.ref }), path: source.path };
+}
+
+function protobufIdHint(location: ResolvedProtobufLocation): string {
+    const identifyingPath =
+        location.type === "local"
+            ? (location.absoluteTargetPath ?? location.absoluteRootPath)
+            : (location.target ?? location.remote.path);
+    return sourceIdFromPath(identifyingPath);
 }
 
 interface ConfiguredDefinition {
@@ -327,18 +510,92 @@ function getConfiguredDefinitions(api: generatorsYml.APIDefinition | undefined):
 function findConfiguredDefinition(
     workspacePath: string,
     spec: Spec,
-    definitions: ConfiguredDefinition[]
+    definitions: ConfiguredDefinition[],
+    claimedDefinitions: Set<ConfiguredDefinition>
 ): ConfiguredDefinition | undefined {
+    if (spec.type === "protobuf") {
+        // Fern ignores namespaces on protos, and identical proto entries are interchangeable, so each proto takes
+        // the most specific matching entry no earlier proto has taken (the first one among equals).
+        const match = definitions
+            .filter(
+                (definition) =>
+                    !claimedDefinitions.has(definition) &&
+                    protobufDefinitionMatchesSpec(workspacePath, definition.location, spec)
+            )
+            .reduce<ConfiguredDefinition | undefined>(
+                (best, candidate) =>
+                    best == null || protobufMatchSpecificity(candidate) > protobufMatchSpecificity(best)
+                        ? candidate
+                        : best,
+                undefined
+            );
+        if (match != null) {
+            claimedDefinitions.add(match);
+        }
+        return match;
+    }
     const matches = definitions.filter(
         (definition) =>
-            definition.namespace === specNamespace(spec) &&
+            definition.namespace === spec.namespace &&
             definitionMatchesSpecType(definition.location, spec) &&
             definitionMatchesSpecPath(workspacePath, definition.location, spec)
     );
     return matches.length === 1 ? matches[0] : undefined;
 }
 
-function definitionMatchesSpecType(definition: generatorsYml.APIDefinitionLocation, spec: Spec): boolean {
+function protobufDefinitionMatchesSpec(
+    workspacePath: string,
+    definition: generatorsYml.APIDefinitionLocation,
+    spec: ProtobufSpec
+): boolean {
+    if (definition.schema.type !== "protobuf") {
+        return false;
+    }
+    const specRoot = path.resolve(spec.absoluteFilepathToProtobufRoot);
+    const specTarget =
+        spec.absoluteFilepathToProtobufTarget == null ? undefined : path.resolve(spec.absoluteFilepathToProtobufTarget);
+    const configuredTarget = definition.schema.target;
+    if (definition.gitSource != null) {
+        // A git root and its target were resolved inside a temporary clone of the repository.
+        return (
+            endsWithPath(specRoot, definition.gitSource.path) &&
+            (configuredTarget.length === 0
+                ? specTarget == null
+                : specTarget != null && endsWithPath(specTarget, configuredTarget))
+        );
+    }
+    return (
+        path.resolve(workspacePath, definition.schema.root) === specRoot &&
+        (configuredTarget.length === 0
+            ? specTarget == null
+            : path.resolve(workspacePath, configuredTarget) === specTarget)
+    );
+}
+
+/**
+ * A git entry matches the clone paths by suffix, so `proto` also matches a root at `a/proto`. Preferring the longest
+ * git path and target keeps such an entry from taking a spec that belongs to a more specific one.
+ */
+function protobufMatchSpecificity({ location }: ConfiguredDefinition): number {
+    if (location.gitSource == null || location.schema.type !== "protobuf") {
+        return 0;
+    }
+    return path.normalize(location.gitSource.path).length + path.normalize(location.schema.target).length;
+}
+
+function endsWithPath(absolutePath: string, relativePath: string): boolean {
+    const normalized = path.normalize(relativePath).replace(/[\\/]+$/, "");
+    // `.` is the repository root, which is the clone directory itself.
+    if (normalized === "." || normalized === "") {
+        return true;
+    }
+    return absolutePath === normalized || absolutePath.endsWith(`${path.sep}${normalized}`);
+}
+
+function definitionMatchesSpecType(
+    definition: generatorsYml.APIDefinitionLocation,
+    spec: Exclude<Spec, ProtobufSpec>
+): boolean {
     switch (spec.type) {
         case "openapi":
             return definition.schema.type === "oss";
@@ -346,17 +603,15 @@ function definitionMatchesSpecType(definition: generatorsYml.APIDefinitionLocati
             return definition.schema.type === "graphql";
         case "openrpc":
             return definition.schema.type === "openrpc";
-        case "protobuf":
-            return definition.schema.type === "protobuf";
     }
 }
 
 function definitionMatchesSpecPath(
     workspacePath: string,
     definition: generatorsYml.APIDefinitionLocation,
-    spec: Spec
+    spec: Exclude<Spec, ProtobufSpec>
 ): boolean {
-    const specPath = absoluteSpecPath(spec);
+    const specPath = path.normalize(spec.absoluteFilepath.toString());
     const configuredPath = configuredDefinitionPath(definition);
     if (definition.gitSource != null) {
         const gitPath = path.normalize(definition.gitSource.path);
@@ -372,19 +627,12 @@ function configuredDefinitionPath(definition: generatorsYml.APIDefinitionLocatio
     return definition.schema.type === "protobuf" ? definition.schema.root : definition.schema.path;
 }
 
-function absoluteSpecPath(spec: Spec): string {
-    return path.normalize(
-        spec.type === "protobuf" ? spec.absoluteFilepathToProtobufRoot.toString() : spec.absoluteFilepath.toString()
-    );
-}
-
-function specNamespace(spec: Spec): string | undefined {
-    return spec.type === "protobuf" ? undefined : spec.namespace;
-}
-
 function resolveIdentifiableSource(source: IdentifiableSource): ResolvedMigrationSourceSpec {
     if (source.type === "protobuf") {
-        throw unsupportedSourceType(source.type);
+        throw new CliError({
+            message: `fern sdk migrate cannot migrate protobuf source '${source.id}' because this API does not list its own protobuf specs, so their root, target, and generation settings are unknown. List the proto specs in this API's generators.yml or migrate this configuration manually.`,
+            code: CliError.Code.ConfigError
+        });
     }
     return {
         absolutePath: source.absoluteFilePath,
@@ -402,7 +650,7 @@ function resolveGeneratorSpecOverrides(
     if (!Array.isArray(specs)) {
         throw unsupportedSourceType("conjure");
     }
-    return specs.map((spec) => {
+    return specs.map((spec): ResolvedMigrationSourceSpec => {
         if (!generatorsYml.isOpenApiSpecSchema(spec) || typeof spec.openapi !== "string") {
             throw unsupportedSourceType("generator API override");
         }
@@ -656,7 +904,7 @@ function uniqueSourceId(candidate: string, usedIds: Set<string>): string {
 }
 
 function relativeSourcePath(sourceRoot: string, absolutePath: string): string {
-    const relative = path.relative(sourceRoot, absolutePath).split(path.sep).join("/");
+    const relative = toPosixPath(path.relative(sourceRoot, absolutePath));
     return relative.startsWith(".") ? relative : `./${relative}`;
 }
 

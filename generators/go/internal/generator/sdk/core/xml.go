@@ -84,6 +84,7 @@ func (c XmlComment) write(buffer *bytes.Buffer) {
 // within a comment and a trailing "-", and either would otherwise end the
 // comment early and turn the rest into markup.
 func xmlCommentText(text string) string {
+	text = stripInvalidXmlChars(text)
 	var out strings.Builder
 	for i := 0; i < len(text); i++ {
 		out.WriteByte(text[i])
@@ -255,7 +256,7 @@ func (x *XmlElement) writeElement(buffer *bytes.Buffer, declared map[string]stri
 		buffer.WriteByte('"')
 	}
 	if !x.hasContent() {
-		buffer.WriteString(" />")
+		buffer.WriteString("/>")
 		return
 	}
 	buffer.WriteByte('>')
@@ -319,9 +320,29 @@ func copyDeclarations(declared map[string]string) map[string]string {
 	return result
 }
 
+// xmlEscape writes value with markup characters escaped and characters outside
+// the XML 1.0 Char production (control characters) dropped, since no XML
+// parser accepts them.
 func xmlEscape(buffer *bytes.Buffer, value string) {
 	// EscapeText only fails on writer errors, which bytes.Buffer never returns.
-	_ = xml.EscapeText(buffer, []byte(value))
+	_ = xml.EscapeText(buffer, []byte(stripInvalidXmlChars(value)))
+}
+
+// stripInvalidXmlChars drops characters outside the XML 1.0 Char production.
+func stripInvalidXmlChars(value string) string {
+	return strings.Map(func(r rune) rune {
+		if isXmlChar(r) {
+			return r
+		}
+		return -1
+	}, value)
+}
+
+func isXmlChar(r rune) bool {
+	return r == 0x9 || r == 0xA || r == 0xD ||
+		(r >= 0x20 && r <= 0xD7FF) ||
+		(r >= 0xE000 && r <= 0xFFFD) ||
+		(r >= 0x10000 && r <= 0x10FFFF)
 }
 
 // ParseXml parses an XML document into an XmlElement tree. Processing
@@ -429,7 +450,7 @@ func isNilXmlNode(node XmlNode) bool {
 	}
 	value := reflect.ValueOf(node)
 	switch value.Kind() {
-	case reflect.Ptr, reflect.Interface, reflect.Map, reflect.Slice, reflect.Func, reflect.Chan:
+	case reflect.Pointer, reflect.Interface, reflect.Map, reflect.Slice, reflect.Func, reflect.Chan:
 		return value.IsNil()
 	}
 	return false

@@ -1,6 +1,6 @@
 import { formatLog } from "@fern-api/cli-logger";
 import { DEPENDENCIES_FILENAME } from "@fern-api/configuration-loader";
-import { assertNever, entries } from "@fern-api/core-utils";
+import { assertNever, decodeJsonPointerSegment, entries } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import chalk from "chalk";
@@ -8,10 +8,6 @@ import { YAMLException } from "js-yaml";
 import { ZodIssue, ZodIssueCode } from "zod";
 
 import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./Result.js";
-
-function decodeJsonPointerSegment(segment: string): string {
-    return segment.replace(/~1/g, "/").replace(/~0/g, "~");
-}
 
 export function handleFailedWorkspaceParserResult(result: WorkspaceLoader.FailedResult, logger: Logger): void {
     for (const [relativeFilepath, failure] of entries(result.failures)) {

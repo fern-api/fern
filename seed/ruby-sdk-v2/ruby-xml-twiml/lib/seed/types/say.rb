@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "../../seed"
+
 module Seed
   module Types
     # <Say> TwiML Verb
@@ -39,6 +41,18 @@ module Seed
         record_content(child)
         yield child if block_given?
         child
+      end
+
+      # The text content of this element (same as `message`).
+      #
+      # @return [String, nil]
+      def text
+        @data[:message]
+      end
+
+      # Sets the text content of this element (same as `message=`).
+      def text=(value)
+        self.message = value
       end
     end
   end

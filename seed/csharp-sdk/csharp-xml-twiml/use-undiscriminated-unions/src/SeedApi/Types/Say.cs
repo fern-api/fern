@@ -15,6 +15,16 @@ public record Say : IJsonOnDeserialized, IXmlNode
     private readonly IDictionary<string, JsonElement> _extensionData =
         new Dictionary<string, JsonElement>();
 
+    public Say() { }
+
+    /// <summary>
+    /// Creates a <c>&lt;Say&gt;</c> element with the given text content.
+    /// </summary>
+    public Say(string message)
+    {
+        this.Message = message;
+    }
+
     /// <summary>
     /// Message to say
     /// </summary>
@@ -121,6 +131,12 @@ public record Say : IJsonOnDeserialized, IXmlNode
     /// Serializes this value to an XML element, optionally prefixed with the XML declaration.
     /// </summary>
     public string ToXml(bool xmlDeclaration) => XmlUtils.Serialize(ToXElement(), xmlDeclaration);
+
+    /// <summary>
+    /// Serializes this value to XML, optionally prefixed with the XML declaration and optionally indented.
+    /// </summary>
+    public string ToXml(bool xmlDeclaration, bool indent) =>
+        XmlUtils.Serialize(ToXElement(), xmlDeclaration, indent);
 
     /// <summary>
     /// Hash code derived from the rendered XML, consistent with Equals.

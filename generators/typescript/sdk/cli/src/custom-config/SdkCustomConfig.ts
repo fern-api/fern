@@ -73,7 +73,6 @@ export interface SdkCustomConfig {
     fetchSupport: "node-fetch" | "native";
     packagePath: string | undefined;
     omitFernHeaders: boolean | undefined;
-    requestIdHeader: string | undefined;
     includePlatformHeaders: boolean | undefined;
     userAgentOnly: boolean | undefined;
     allowUserAgentAppInfo: boolean | undefined;
@@ -83,6 +82,7 @@ export interface SdkCustomConfig {
     flattenRequestParameters: boolean | undefined;
     respectOptionalRequestBody: boolean | undefined;
     deepObjectMapQueryParameters: boolean | undefined;
+    includeMultipartPartContentType: boolean | undefined;
     exportAllRequestsAtRoot: boolean | undefined;
     testFramework: "jest" | "vitest";
     consolidateTypeFiles: boolean | undefined;
@@ -99,6 +99,7 @@ export interface SdkCustomConfig {
     alwaysSendAuth: boolean;
     optionalAuth: boolean;
     guardProcessEnvAccess: boolean;
+    flattenAnyAuthOptions: boolean;
     websocketHandlerMode: "replace" | "accumulate";
     retryStatusCodes: "legacy" | "recommended";
     generateReactQueryHooks: boolean;

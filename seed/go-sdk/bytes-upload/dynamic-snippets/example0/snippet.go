@@ -8,7 +8,7 @@ import (
     option "github.com/bytes-upload/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -17,8 +17,12 @@ func do() {
     request := bytes.NewReader(
         []byte(""),
     )
-    client.Service.Upload(
+    err := client.Service.Upload(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

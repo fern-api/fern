@@ -44,7 +44,7 @@ export class ServiceClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/service/${core.url.encodePathParam(this._options.rootVariable)}`,
+                `/service/${core.url.encodePathParam(this._options.rootVariable, errors.SeedOauthClientCredentialsWithVariablesError)}`,
             ),
             method: "POST",
             headers: _headers,

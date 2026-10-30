@@ -13,7 +13,7 @@
 
 ```go
 request := &fern.BulkUpdateTasksRequest{}
-client.BulkUpdateTasks(
+_, err := client.BulkUpdateTasks(
     context.TODO(),
     request,
 )

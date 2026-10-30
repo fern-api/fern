@@ -14,7 +14,7 @@ except ImportError:
         def __init__(self, **kwargs: typing.Any) -> None:
             raise RuntimeError(
                 "To use the aiohttp client, install the aiohttp extra: "
-                "pip install fern_python-positional-single-property[aiohttp]"
+                "pip install fern-python-positional-single-property[aiohttp]"
             )
 
 else:

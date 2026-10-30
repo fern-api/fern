@@ -1,8 +1,8 @@
+import { errorMessageOrString } from "@fern-api/core-utils";
 import type { SdkConfigIrV1, SdkConfigIrV1Input } from "@postman/sdk-config";
 import { parseSdkConfigIrV1, SDK_CONFIG_IR_V1_SCHEMA_VERSION } from "@postman/sdk-config";
 import type { SdkConfigV1, SdkConfigV1Target } from "@postman/sdk-config/sdk-config/v1";
 import { splitSdkConfigV1TargetGeneration } from "@postman/sdk-config/sdk-config/v1";
-
 import type { RawSpecsManifest } from "../rawSpecs.js";
 import { collectOnPremSourceSpecs } from "./onPremSourceSpecs.js";
 
@@ -17,6 +17,8 @@ export declare namespace buildSdkConfigIrFromSdkConfig {
         /** The language this generator invocation produces, derived from the generator name. */
         language: TargetLanguage;
         generatorName: string;
+        /** Fern API identity from the selected workspace definition. */
+        apiName: string;
         organization: string;
         /** Directory the adapter writes the SDK into, in the coordinates the adapter will see. */
         outputPath: string;
@@ -51,6 +53,7 @@ export function buildSdkConfigIrFromSdkConfig({
     sdkConfig,
     language,
     generatorName,
+    apiName,
     organization,
     outputPath,
     rawSpecsManifest
@@ -86,6 +89,7 @@ export function buildSdkConfigIrFromSdkConfig({
             sourceOrigin: "fern",
             sdkName: target.sdkName ?? sdkConfig.sdkName,
             sdkVersion: target.sdkVersion ?? sdkConfig.sdkVersion,
+            apiName,
             organization,
             ...(target.generatorVersion != null ? { generatorVersion: target.generatorVersion } : {}),
             ...(sdkConfig.apiVersion != null ? { apiVersion: sdkConfig.apiVersion } : {})
@@ -112,7 +116,7 @@ export function buildSdkConfigIrFromSdkConfig({
             success: false,
             message:
                 `Could not build SDK Config IR from sdk-config.yml for "${generatorName}": ` +
-                (error instanceof Error ? error.message : String(error))
+                errorMessageOrString(error)
         };
     }
 }

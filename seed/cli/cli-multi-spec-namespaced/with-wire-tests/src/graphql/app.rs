@@ -297,6 +297,8 @@ impl AppContext {
             color_mode: formatter::ColorMode::default(),
             quiet: self.quiet,
             query: None,
+            table_columns: None,
+            table_page_widths: Default::default(),
         };
 
         // Programmatic execution from custom command handlers honors the

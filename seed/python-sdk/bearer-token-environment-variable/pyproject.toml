@@ -1,9 +1,9 @@
 [project]
-name = "fern_bearer-token-environment-variable"
+name = "fern-bearer-token-environment-variable"
 dynamic = ["version"]
 
 [tool.poetry]
-name = "fern_bearer-token-environment-variable"
+name = "fern-bearer-token-environment-variable"
 version = "0.0.1"
 description = ""
 readme = "README.md"

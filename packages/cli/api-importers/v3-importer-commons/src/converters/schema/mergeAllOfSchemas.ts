@@ -1,3 +1,4 @@
+import { isRecord } from "@fern-api/core-utils";
 import { OpenAPIV3_1 } from "openapi-types";
 
 const OUTER_WINS_KEYS = [
@@ -118,7 +119,7 @@ function mergeSchemaElement(
         }
 
         if (key === "items") {
-            if (isPlainObject(targetValue) && isPlainObject(sourceValue)) {
+            if (isRecord(targetValue) && isRecord(sourceValue)) {
                 result[key] = mergeSchemaElement(
                     targetValue as Record<string, unknown>,
                     sourceValue as OpenAPIV3_1.SchemaObject
@@ -132,7 +133,7 @@ function mergeSchemaElement(
         if (DEEP_MERGE_KEYS.includes(key)) {
             // Deep-merge when both sides are objects (e.g., examples from
             // multiple allOf parents). Otherwise last writer wins.
-            if (isPlainObject(targetValue) && isPlainObject(sourceValue)) {
+            if (isRecord(targetValue) && isRecord(sourceValue)) {
                 result[key] = deepMergeObjects(
                     targetValue as Record<string, unknown>,
                     sourceValue as Record<string, unknown>
@@ -176,7 +177,7 @@ function mergeProperties(target: Record<string, unknown>, source: Record<string,
     const result = { ...target };
     for (const [key, sourceValue] of Object.entries(source)) {
         const targetValue = result[key];
-        if (isPlainObject(targetValue) && isPlainObject(sourceValue)) {
+        if (isRecord(targetValue) && isRecord(sourceValue)) {
             result[key] = mergeSchemaElement(
                 targetValue as Record<string, unknown>,
                 sourceValue as OpenAPIV3_1.SchemaObject
@@ -196,7 +197,7 @@ function deepMergeObjects(target: Record<string, unknown>, source: Record<string
     const result = { ...target };
     for (const [key, sourceValue] of Object.entries(source)) {
         const targetValue = result[key];
-        if (isPlainObject(targetValue) && isPlainObject(sourceValue)) {
+        if (isRecord(targetValue) && isRecord(sourceValue)) {
             result[key] = deepMergeObjects(
                 targetValue as Record<string, unknown>,
                 sourceValue as Record<string, unknown>
@@ -227,8 +228,4 @@ function applyOuterSchema(result: Record<string, unknown>, outerSchema: OpenAPIV
             result[key] = true;
         }
     }
-}
-
-function isPlainObject(value: unknown): value is Record<string, unknown> {
-    return typeof value === "object" && value !== null && !Array.isArray(value);
 }

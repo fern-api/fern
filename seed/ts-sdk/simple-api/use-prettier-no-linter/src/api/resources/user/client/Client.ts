@@ -50,7 +50,7 @@ export class UserClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/users/${core.url.encodePathParam(id)}`,
+                `/users/${core.url.encodePathParam(id, errors.SeedSimpleApiError)}`,
             ),
             method: "GET",
             headers: _headers,

@@ -126,6 +126,8 @@ public final class Response implements XmlSerializable {
                 case "Dial":
                 case "Pause":
                 case "Hangup":
+                case "Redirect":
+                case "Message":
                     return ResponseChildrenItem.fromXml(e);
                 default:
                     return null;
@@ -258,6 +260,15 @@ public final class Response implements XmlSerializable {
         }
 
         /**
+         * Appends a &lt;Say&gt; child element with the given text content after any content added so far.
+         * @param text the text content of the &lt;Say&gt; element
+         * @return this builder
+         */
+        public Builder say(String text) {
+            return say(Say.builder().message(text).build());
+        }
+
+        /**
          * Appends a &lt;Dial&gt; child element after any content added so far.
          * @param dial the &lt;Dial&gt; element to append
          * @return this builder
@@ -269,6 +280,15 @@ public final class Response implements XmlSerializable {
             this.children = Optional.of(updated);
             this.content.add(XmlNode.element(item));
             return this;
+        }
+
+        /**
+         * Appends a &lt;Dial&gt; child element with the given text content after any content added so far.
+         * @param text the text content of the &lt;Dial&gt; element
+         * @return this builder
+         */
+        public Builder dial(String text) {
+            return dial(Dial.builder().number(text).build());
         }
 
         /**
@@ -298,6 +318,54 @@ public final class Response implements XmlSerializable {
             this.children = Optional.of(updated);
             this.content.add(XmlNode.element(item));
             return this;
+        }
+
+        /**
+         * Appends a &lt;Redirect&gt; child element after any content added so far.
+         * <p>&lt;Redirect&gt; TwiML Verb</p>
+         * @param redirect the &lt;Redirect&gt; element to append
+         * @return this builder
+         */
+        public Builder redirect(Redirect redirect) {
+            ResponseChildrenItem item = ResponseChildrenItem.of(redirect);
+            List<ResponseChildrenItem> updated = new ArrayList<>(this.children.orElseGet(Collections::emptyList));
+            updated.add(item);
+            this.children = Optional.of(updated);
+            this.content.add(XmlNode.element(item));
+            return this;
+        }
+
+        /**
+         * Appends a &lt;Redirect&gt; child element with the given text content after any content added so far.
+         * @param text the text content of the &lt;Redirect&gt; element
+         * @return this builder
+         */
+        public Builder redirect(String text) {
+            return redirect(Redirect.builder().url(text).build());
+        }
+
+        /**
+         * Appends a &lt;Message&gt; child element after any content added so far.
+         * <p>A &lt;Message&gt; whose text property shares its name with the &lt;Body&gt; child element.</p>
+         * @param message the &lt;Message&gt; element to append
+         * @return this builder
+         */
+        public Builder message(Message message) {
+            ResponseChildrenItem item = ResponseChildrenItem.of(message);
+            List<ResponseChildrenItem> updated = new ArrayList<>(this.children.orElseGet(Collections::emptyList));
+            updated.add(item);
+            this.children = Optional.of(updated);
+            this.content.add(XmlNode.element(item));
+            return this;
+        }
+
+        /**
+         * Appends a &lt;Message&gt; child element with the given text content after any content added so far.
+         * @param text the text content of the &lt;Message&gt; element
+         * @return this builder
+         */
+        public Builder message(String text) {
+            return message(Message.builder().body(text).build());
         }
 
         /**

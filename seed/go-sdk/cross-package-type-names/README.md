@@ -37,7 +37,7 @@ import (
     client "github.com/cross-package-type-names/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &fern.FindRequest{
         OptionalString: fern.String(
@@ -50,10 +50,14 @@ func do() {
             1,
         ),
     }
-    client.Foo.Find(
+    _, err := client.Foo.Find(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

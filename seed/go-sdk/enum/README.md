@@ -37,7 +37,7 @@ import (
     client "github.com/enum/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &fern.SendEnumAsHeaderRequest{
         Operand: fern.OperandGreaterThan,
@@ -46,10 +46,14 @@ func do() {
             Color: fern.ColorRed,
         },
     }
-    client.Headers.Send(
+    err := client.Headers.Send(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

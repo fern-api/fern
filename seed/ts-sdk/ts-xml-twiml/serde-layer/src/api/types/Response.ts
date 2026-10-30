@@ -75,6 +75,54 @@ export class Response implements core.xml.XmlSerializable {
     toString(): string {
         return this.toXml();
     }
+
+    /**
+     * Appends a `<Say>` child to the ordered content of this element and returns its builder, which is rendered when this element is serialized (the typed `children` property is not updated).
+     *
+     * <Say> TwiML Verb
+     * @param fields the `<Say>` text content, or its initial attributes and children
+     * @returns the `SeedApi.Say.Builder` appended to this element
+     */
+    say(fields?: string | Partial<SeedApi.Say.Fields>): SeedApi.Say.Builder {
+        const builder = new SeedApi.Say.Builder(typeof fields === "string" ? { message: fields } : fields);
+        this.content.push(builder);
+        return builder;
+    }
+
+    /**
+     * Appends a `<Dial>` child to the ordered content of this element and returns its builder, which is rendered when this element is serialized (the typed `children` property is not updated).
+     * @param fields the `<Dial>` text content, or its initial attributes and children
+     * @returns the `SeedApi.Dial.Builder` appended to this element
+     */
+    dial(fields?: string | Partial<SeedApi.Dial.Fields>): SeedApi.Dial.Builder {
+        const builder = new SeedApi.Dial.Builder(typeof fields === "string" ? { number: fields } : fields);
+        this.content.push(builder);
+        return builder;
+    }
+
+    /**
+     * Appends a `<Pause>` child to the ordered content of this element and returns its builder, which is rendered when this element is serialized (the typed `children` property is not updated).
+     *
+     * XML element without an explicit xml.name; falls back to the schema name.
+     * @param fields initial `<Pause>` attributes and children
+     * @returns the `SeedApi.Pause.Builder` appended to this element
+     */
+    pause(fields?: Partial<SeedApi.Pause.Fields>): SeedApi.Pause.Builder {
+        const builder = new SeedApi.Pause.Builder(fields);
+        this.content.push(builder);
+        return builder;
+    }
+
+    /**
+     * Appends a `<Hangup>` child to the ordered content of this element and returns its builder, which is rendered when this element is serialized (the typed `children` property is not updated).
+     * @param fields initial `<Hangup>` attributes and children
+     * @returns the `SeedApi.Hangup.Builder` appended to this element
+     */
+    hangup(fields?: Partial<SeedApi.Hangup.Fields>): SeedApi.Hangup.Builder {
+        const builder = new SeedApi.Hangup.Builder(fields);
+        this.content.push(builder);
+        return builder;
+    }
 }
 
 export namespace Response {
@@ -118,11 +166,11 @@ export namespace Response {
          * Adds a `<Say>` child after any content added so far and returns its builder.
          *
          * <Say> TwiML Verb
-         * @param fields initial `<Say>` attributes and children
+         * @param fields the `<Say>` text content, or its initial attributes and children
          * @returns the `SeedApi.Say.Builder` appended to this element
          */
-        say(fields?: Partial<SeedApi.Say.Fields>): SeedApi.Say.Builder {
-            const builder = new SeedApi.Say.Builder(fields);
+        say(fields?: string | Partial<SeedApi.Say.Fields>): SeedApi.Say.Builder {
+            const builder = new SeedApi.Say.Builder(typeof fields === "string" ? { message: fields } : fields);
             this.elements.children = [...(this.elements.children ?? []), builder];
             this.content.push(builder);
             return builder;
@@ -130,11 +178,11 @@ export namespace Response {
 
         /**
          * Adds a `<Dial>` child after any content added so far and returns its builder.
-         * @param fields initial `<Dial>` attributes and children
+         * @param fields the `<Dial>` text content, or its initial attributes and children
          * @returns the `SeedApi.Dial.Builder` appended to this element
          */
-        dial(fields?: Partial<SeedApi.Dial.Fields>): SeedApi.Dial.Builder {
-            const builder = new SeedApi.Dial.Builder(fields);
+        dial(fields?: string | Partial<SeedApi.Dial.Fields>): SeedApi.Dial.Builder {
+            const builder = new SeedApi.Dial.Builder(typeof fields === "string" ? { number: fields } : fields);
             this.elements.children = [...(this.elements.children ?? []), builder];
             this.content.push(builder);
             return builder;

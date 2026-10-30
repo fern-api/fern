@@ -1,6 +1,7 @@
 using global::System.Globalization;
 using global::System.IO;
 using global::System.Runtime.CompilerServices;
+using global::System.Text;
 using global::System.Text.Json;
 using global::System.Xml;
 using global::System.Xml.Linq;
@@ -37,15 +38,76 @@ internal static class XmlUtils
         return element;
     }
 
-    internal static string Serialize(XElement element, bool xmlDeclaration = false)
+    internal static string Serialize(
+        XElement element,
+        bool xmlDeclaration = false,
+        bool indent = false
+    )
     {
-        var xml = element.ToString(SaveOptions.DisableFormatting);
+        var copy = WithoutInvalidXmlChars(element);
+        // Legacy TwiML libraries write empty elements as <Tag></Tag>, so keep that byte-for-byte. `copy` is a
+        // fresh clone (WithoutInvalidXmlChars), and ToList() materializes the lazy query before the tree is mutated.
+        foreach (var empty in copy.DescendantsAndSelf().Where(e => e.IsEmpty).ToList())
+        {
+            empty.Value = string.Empty;
+        }
+        var xml = copy.ToString(indent ? SaveOptions.None : SaveOptions.DisableFormatting);
         var siblings = element.Annotation<SiblingComments>();
         if (siblings != null)
         {
             xml = siblings.Wrap(xml);
         }
         return xmlDeclaration ? XmlDeclaration + xml : xml;
+    }
+
+    /// <summary>
+    /// Returns a copy of <paramref name="element"/> with characters outside the XML 1.0 <c>Char</c> production
+    /// (control characters, lone surrogates) removed from text, attributes and comments; <see cref="XElement.ToString()"/>
+    /// throws on them and no XML parser accepts them.
+    /// </summary>
+    private static XElement WithoutInvalidXmlChars(XElement element)
+    {
+        var copy = new XElement(element);
+        foreach (var text in copy.DescendantNodesAndSelf().OfType<XText>())
+        {
+            text.Value = StripInvalidXmlChars(text.Value);
+        }
+        foreach (var comment in copy.DescendantNodesAndSelf().OfType<XComment>())
+        {
+            comment.Value = StripInvalidXmlChars(comment.Value);
+        }
+        foreach (var attribute in copy.DescendantsAndSelf().Attributes())
+        {
+            attribute.Value = StripInvalidXmlChars(attribute.Value);
+        }
+        return copy;
+    }
+
+    internal static string StripInvalidXmlChars(string value)
+    {
+        StringBuilder? builder = null;
+        for (var i = 0; i < value.Length; i++)
+        {
+            var c = value[i];
+            if (XmlConvert.IsXmlChar(c))
+            {
+                builder?.Append(c);
+                continue;
+            }
+            if (
+                char.IsHighSurrogate(c)
+                && i + 1 < value.Length
+                && char.IsLowSurrogate(value[i + 1])
+            )
+            {
+                builder?.Append(c).Append(value[i + 1]);
+                i++;
+                continue;
+            }
+            // Lone surrogates, control characters and the noncharacters U+FFFE/U+FFFF are dropped.
+            builder ??= new StringBuilder(value, 0, i, value.Length);
+        }
+        return builder?.ToString() ?? value;
     }
 
     /// <summary>
@@ -84,7 +146,8 @@ internal static class XmlUtils
             return nodes.ToArray();
         }
 
-        private static string Render(XComment comment) => "<!--" + comment.Value + "-->";
+        private static string Render(XComment comment) =>
+            "<!--" + StripInvalidXmlChars(comment.Value) + "-->";
 
         internal string Wrap(string xml)
         {

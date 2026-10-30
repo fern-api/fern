@@ -11,7 +11,7 @@ import { fileURLToPath } from "url";
 import { describe, expect, it } from "vitest";
 
 import { mapFernGroupToSdkConfig } from "../mapFernGroupToSdkConfig.js";
-import { resolveMigrationSourceSpecs } from "../projectMigrationSource.js";
+import { isResolvedMigrationFileSpec, resolveMigrationSourceSpecs } from "../projectMigrationSource.js";
 
 const CLI_VERSION = "0.0.0";
 const COMPOSED_WORKSPACE = join(
@@ -164,7 +164,7 @@ describe("SDK Config from a composed workspace", () => {
             workspace,
             fernWorkspace,
             generator: typescriptGenerator()
-        });
+        }).filter(isResolvedMigrationFileSpec);
 
         expect(specs.map((spec) => [spec.namespace, spec.type])).toEqual([
             ["payments", "openapi"],

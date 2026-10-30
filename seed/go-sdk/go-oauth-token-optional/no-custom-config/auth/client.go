@@ -43,7 +43,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	        "client_credentials",
 //	    ),
 //	}
-//	client.Auth.CreateOauth2Token(
+//	_, err := client.Auth.CreateOauth2Token(
 //	    context.TODO(),
 //	    request,
 //	)

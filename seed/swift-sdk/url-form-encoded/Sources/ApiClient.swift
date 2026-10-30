@@ -62,7 +62,8 @@ public final class ApiClient: Sendable {
     ///
     ///     _ = try await client.submitFormData(request: .init(
     ///         username: "johndoe",
-    ///         email: "john@example.com"
+    ///         email: "john@example.com",
+    ///         content: "{\"key\":\"value\"}"
     ///     ))
     /// }
     ///

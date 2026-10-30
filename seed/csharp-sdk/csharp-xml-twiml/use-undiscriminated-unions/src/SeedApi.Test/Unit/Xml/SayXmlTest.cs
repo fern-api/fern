@@ -9,7 +9,7 @@ public class SayXmlTest
     [NUnit.Framework.Test]
     public void FromXml_ToXml_RoundTrips()
     {
-        var xml = "<Say voice=\"voice\" loop=\"1\">text<break /></Say>";
+        var xml = "<Say voice=\"voice\" loop=\"1\">text<break></break></Say>";
         var parsed = Say.FromXml(xml);
         Assert.That(parsed.Message, Is.EqualTo("text"), "Message");
         Assert.That(parsed.Voice, Is.EqualTo("voice"), "Voice");
@@ -53,8 +53,8 @@ public class SayXmlTest
     [NUnit.Framework.Test]
     public void FromXml_PreservesChildOrder()
     {
-        var parsed = Say.FromXml("<Say>a<break />b</Say>");
-        Assert.That(parsed.ToXml(false), Does.Contain("a<break />b"));
+        var parsed = Say.FromXml("<Say>a<break></break>b</Say>");
+        Assert.That(parsed.ToXml(false), Does.Contain("a<break></break>b"));
     }
 
     [NUnit.Framework.Test]

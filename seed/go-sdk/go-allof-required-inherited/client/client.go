@@ -40,7 +40,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 //	request := &fern.TransactionsGetRequest{
 //	    AccessToken: "access_token",
 //	}
-//	client.GetTransactions(
+//	_, err := client.GetTransactions(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -65,7 +65,7 @@ func (c *Client) GetTransactions(
 //	request := &fern.PlantCreate{
 //	    Species: "species",
 //	}
-//	client.CreatePlant(
+//	_, err := client.CreatePlant(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -94,7 +94,7 @@ func (c *Client) CreatePlant(
 //	    Interval: fern.PaymentScheduleIntervalWeekly,
 //	    IntervalExecutionDay: 1,
 //	}
-//	client.CreatePaymentSchedule(
+//	_, err := client.CreatePaymentSchedule(
 //	    context.TODO(),
 //	    request,
 //	)

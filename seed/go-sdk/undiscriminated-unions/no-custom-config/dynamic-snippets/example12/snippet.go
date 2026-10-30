@@ -8,7 +8,7 @@ import (
     option "github.com/fern-api/undiscriminated-go/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -22,8 +22,12 @@ func do() {
             },
         },
     }
-    client.Union.TestCamelCaseProperties(
+    _, err := client.Union.TestCamelCaseProperties(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

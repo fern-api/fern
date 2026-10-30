@@ -37,7 +37,7 @@ import (
     client "github.com/nullable-optional/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &fern.CreateUserRequest{
         Username: "username",
@@ -67,10 +67,14 @@ func do() {
             ),
         },
     }
-    client.NullableOptional.CreateUser(
+    _, err := client.NullableOptional.CreateUser(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

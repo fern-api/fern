@@ -37,16 +37,21 @@ import (
     client "github.com/url-form-encoded/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &fern.PostSubmitRequest{
         Username: "johndoe",
         Email: "john@example.com",
+        Content: `{"key":"value"}`,
     }
-    client.SubmitFormData(
+    _, err := client.SubmitFormData(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

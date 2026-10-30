@@ -11,7 +11,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient(
 		option.WithToken(
 			"<YOUR_API_KEY>",
@@ -31,10 +31,14 @@ func do() {
 		},
 		XAPIVersion: "0.0.1",
 	}
-	client.Service.GetMetadata(
+	_, err := client.Service.GetMetadata(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -50,7 +54,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient(
 		option.WithToken(
 			"<YOUR_API_KEY>",
@@ -67,10 +71,14 @@ func do() {
 		},
 		XAPIVersion: "0.0.1",
 	}
-	client.Service.GetMetadata(
+	_, err := client.Service.GetMetadata(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -87,7 +95,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient(
 		option.WithToken(
 			"<YOUR_API_KEY>",
@@ -139,10 +147,14 @@ func do() {
 			Status: acme.MigrationStatusRunning,
 		},
 	}
-	client.Service.CreateBigEntity(
+	_, err := client.Service.CreateBigEntity(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -171,7 +183,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient(
 		option.WithToken(
 			"<YOUR_API_KEY>",
@@ -200,10 +212,14 @@ func do() {
 		},
 		Revenue: int64(1000000),
 	}
-	client.Service.CreateMovie(
+	_, err := client.Service.CreateMovie(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -221,7 +237,7 @@ import (
 	uuid "github.com/google/uuid"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient(
 		option.WithToken(
 			"<YOUR_API_KEY>",
@@ -275,10 +291,14 @@ func do() {
 			"1000000",
 		),
 	}
-	client.Endpoints.Object.GetAndReturnWithOptionalField(
+	_, err := client.Endpoints.Object.GetAndReturnWithOptionalField(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -323,7 +343,7 @@ import (
 	types "github.com/acme/acme-go/types"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient(
 		option.WithToken(
 			"<YOUR_API_KEY>",
@@ -340,10 +360,14 @@ func do() {
 			FieldString: "three",
 		},
 	}
-	client.Endpoints.Container.GetAndReturnListOfObjects(
+	_, err := client.Endpoints.Container.GetAndReturnListOfObjects(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -358,7 +382,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient(
 		option.WithToken(
 			"<YOUR_API_KEY>",
@@ -369,10 +393,14 @@ func do() {
 		"two",
 		"three",
 	}
-	client.Endpoints.Container.GetAndReturnListOfPrimitives(
+	_, err := client.Endpoints.Container.GetAndReturnListOfPrimitives(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -388,7 +416,7 @@ import (
 	types "github.com/acme/acme-go/types"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient(
 		option.WithToken(
 			"<YOUR_API_KEY>",
@@ -413,10 +441,14 @@ func do() {
 			},
 		},
 	}
-	client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnion(
+	_, err := client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnion(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -433,7 +465,7 @@ import (
 	client "github.com/acme/acme-go/client"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient()
 	request := &acme.MyRequest{
 		File: strings.NewReader(
@@ -451,10 +483,14 @@ func do() {
 			"",
 		),
 	}
-	client.Service.Post(
+	err := client.Service.Post(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -470,17 +506,21 @@ import (
 	client "github.com/acme/acme-go/client"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient()
 	request := &acme.JustFileRequest{
 		File: strings.NewReader(
 			"Hello, world!",
 		),
 	}
-	client.Service.JustFile(
+	err := client.Service.JustFile(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -496,7 +536,7 @@ import (
 	client "github.com/acme/acme-go/client"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient()
 	request := &acme.JustFileWithQueryParamsRequest{
 		Integer: 42,
@@ -507,10 +547,14 @@ func do() {
 			"Hello, world!",
 		),
 	}
-	client.Service.JustFileWithQueryParams(
+	err := client.Service.JustFileWithQueryParams(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -526,7 +570,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient(
 		option.WithToken(
 			"<YOUR_API_KEY>",
@@ -535,10 +579,14 @@ func do() {
 	request := &acme.GetMovieImdbRequest{
 		MovieID: "movie_xyz",
 	}
-	client.Imdb.GetMovie(
+	_, err := client.Imdb.GetMovie(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -554,7 +602,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient(
 		option.WithToken(
 			"<YOUR_API_KEY>",
@@ -564,10 +612,14 @@ func do() {
 		Title:  "The Matrix",
 		Rating: 8.2,
 	}
-	client.Imdb.CreateMovie(
+	_, err := client.Imdb.CreateMovie(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -603,7 +655,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient(
 		option.WithBaseURL(
 			acme.Environments.Production,
@@ -615,10 +667,14 @@ func do() {
 	request := &acme.GetPresignedURLRequest{
 		S3Key: "xyz",
 	}
-	client.S3.GetPresignedURL(
+	_, err := client.S3.GetPresignedURL(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -634,7 +690,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient(
 		option.WithBaseURL(
 			acme.Environments.Staging,
@@ -646,10 +702,14 @@ func do() {
 	request := &acme.GetPresignedURLRequest{
 		S3Key: "xyz",
 	}
-	client.S3.GetPresignedURL(
+	_, err := client.S3.GetPresignedURL(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -675,7 +735,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient(
 		option.WithBaseURL(
 			"https://api.example.com",
@@ -695,10 +755,14 @@ func do() {
 			),
 		},
 	}
-	client.Nullable.CreateUser(
+	_, err := client.Nullable.CreateUser(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -726,7 +790,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient(
 		option.WithBaseURL(
 			"https://api.example.com",
@@ -743,10 +807,14 @@ func do() {
 		},
 		Tags: []*string{},
 	}
-	client.Nullable.GetUsers(
+	_, err := client.Nullable.GetUsers(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -761,7 +829,7 @@ import (
 	client "github.com/acme/acme-go/client"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient()
 	request := &acme.GetUserSpecificsRequest{
 		TenantID: "my_tenant",
@@ -769,10 +837,14 @@ func do() {
 		Version:  7,
 		Thought:  "my_thought",
 	}
-	client.User.GetUserSpecifics(
+	_, err := client.User.GetUserSpecifics(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -788,7 +860,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient(
 		option.WithBaseURL(
 			"https://api.example.com",
@@ -802,10 +874,14 @@ func do() {
 			Ssn:          "ssn",
 		},
 	}
-	client.CreateUser(
+	_, err := client.CreateUser(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -821,7 +897,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient(
 		option.WithBaseURL(
 			"https://api.example.com",
@@ -836,10 +912,14 @@ func do() {
 			Ssn:          "ssn",
 		},
 	}
-	client.CreateUser(
+	_, err := client.CreateUser(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -854,7 +934,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient(
 		option.WithToken(
 			"<YOUR_API_KEY>",
@@ -863,9 +943,13 @@ func do() {
 			"my-tenant-id",
 		),
 	)
-	client.Plantstore.List(
+	_, err := client.Plantstore.List(
 		context.TODO(),
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -881,7 +965,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient(
 		option.WithToken(
 			"<YOUR_API_KEY>",
@@ -894,10 +978,14 @@ func do() {
 		Name:  "Fern",
 		Price: 12.99,
 	}
-	client.Plantstore.Create(
+	_, err := client.Plantstore.Create(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -913,7 +1001,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient(
 		option.WithBaseURL(
 			acme.Environments.Production,
@@ -922,9 +1010,13 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
-	client.Dummy.GetDummy(
+	_, err := client.Dummy.GetDummy(
 		context.TODO(),
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -940,7 +1032,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient(
 		option.WithBaseURL(
 			acme.Environments.Staging,
@@ -949,9 +1041,13 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
-	client.Dummy.GetDummy(
+	_, err := client.Dummy.GetDummy(
 		context.TODO(),
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -966,7 +1062,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient(
 		option.WithBaseURL(
 			"http://localhost:8080",
@@ -975,9 +1071,13 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
-	client.Dummy.GetDummy(
+	_, err := client.Dummy.GetDummy(
 		context.TODO(),
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -1013,7 +1113,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient(
 		option.WithToken(
 			"<YOUR_API_KEY>",
@@ -1033,10 +1133,14 @@ func do() {
 		},
 		XAPIVersion: "0.0.1",
 	}
-	client.Service.GetMetadata(
+	_, err := client.Service.GetMetadata(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -1052,7 +1156,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient(
 		option.WithToken(
 			"<YOUR_API_KEY>",
@@ -1069,10 +1173,14 @@ func do() {
 		},
 		XAPIVersion: "0.0.1",
 	}
-	client.Service.GetMetadata(
+	_, err := client.Service.GetMetadata(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -1089,7 +1197,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient(
 		option.WithToken(
 			"<YOUR_API_KEY>",
@@ -1141,10 +1249,14 @@ func do() {
 			Status: acme.MigrationStatusRunning,
 		},
 	}
-	client.Service.CreateBigEntity(
+	_, err := client.Service.CreateBigEntity(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -1173,7 +1285,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient(
 		option.WithToken(
 			"<YOUR_API_KEY>",
@@ -1202,10 +1314,14 @@ func do() {
 		},
 		Revenue: int64(1000000),
 	}
-	client.Service.CreateMovie(
+	_, err := client.Service.CreateMovie(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -1223,7 +1339,7 @@ import (
 	uuid "github.com/google/uuid"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient(
 		option.WithToken(
 			"<YOUR_API_KEY>",
@@ -1277,10 +1393,14 @@ func do() {
 			"1000000",
 		),
 	}
-	client.Endpoints.Object.GetAndReturnWithOptionalField(
+	_, err := client.Endpoints.Object.GetAndReturnWithOptionalField(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -1325,7 +1445,7 @@ import (
 	types "github.com/acme/acme-go/types"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient(
 		option.WithToken(
 			"<YOUR_API_KEY>",
@@ -1342,10 +1462,14 @@ func do() {
 			FieldString: "three",
 		},
 	}
-	client.Endpoints.Container.GetAndReturnListOfObjects(
+	_, err := client.Endpoints.Container.GetAndReturnListOfObjects(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -1360,7 +1484,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient(
 		option.WithToken(
 			"<YOUR_API_KEY>",
@@ -1371,10 +1495,14 @@ func do() {
 		"two",
 		"three",
 	}
-	client.Endpoints.Container.GetAndReturnListOfPrimitives(
+	_, err := client.Endpoints.Container.GetAndReturnListOfPrimitives(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -1390,7 +1518,7 @@ import (
 	types "github.com/acme/acme-go/types"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient(
 		option.WithToken(
 			"<YOUR_API_KEY>",
@@ -1415,10 +1543,14 @@ func do() {
 			},
 		},
 	}
-	client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnion(
+	_, err := client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnion(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -1435,7 +1567,7 @@ import (
 	client "github.com/acme/acme-go/client"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient()
 	request := &acme.MyRequest{
 		File: strings.NewReader(
@@ -1453,10 +1585,14 @@ func do() {
 			"",
 		),
 	}
-	client.Service.Post(
+	err := client.Service.Post(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -1472,17 +1608,21 @@ import (
 	client "github.com/acme/acme-go/client"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient()
 	request := &acme.JustFileRequest{
 		File: strings.NewReader(
 			"Hello, world!",
 		),
 	}
-	client.Service.JustFile(
+	err := client.Service.JustFile(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -1498,7 +1638,7 @@ import (
 	client "github.com/acme/acme-go/client"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient()
 	request := &acme.JustFileWithQueryParamsRequest{
 		Integer: 42,
@@ -1509,10 +1649,14 @@ func do() {
 			"Hello, world!",
 		),
 	}
-	client.Service.JustFileWithQueryParams(
+	err := client.Service.JustFileWithQueryParams(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -1528,7 +1672,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient(
 		option.WithToken(
 			"<YOUR_API_KEY>",
@@ -1537,10 +1681,14 @@ func do() {
 	request := &acme.GetMovieImdbRequest{
 		MovieID: "movie_xyz",
 	}
-	client.Imdb.GetMovie(
+	_, err := client.Imdb.GetMovie(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -1556,7 +1704,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient(
 		option.WithToken(
 			"<YOUR_API_KEY>",
@@ -1566,10 +1714,14 @@ func do() {
 		Title:  "The Matrix",
 		Rating: 8.2,
 	}
-	client.Imdb.CreateMovie(
+	_, err := client.Imdb.CreateMovie(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -1605,7 +1757,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient(
 		option.WithBaseURL(
 			acme.Environments.Production,
@@ -1617,10 +1769,14 @@ func do() {
 	request := &acme.GetPresignedURLRequest{
 		S3Key: "xyz",
 	}
-	client.S3.GetPresignedURL(
+	_, err := client.S3.GetPresignedURL(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -1636,7 +1792,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient(
 		option.WithBaseURL(
 			acme.Environments.Staging,
@@ -1648,10 +1804,14 @@ func do() {
 	request := &acme.GetPresignedURLRequest{
 		S3Key: "xyz",
 	}
-	client.S3.GetPresignedURL(
+	_, err := client.S3.GetPresignedURL(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -1677,7 +1837,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient(
 		option.WithBaseURL(
 			"https://api.example.com",
@@ -1697,10 +1857,14 @@ func do() {
 			),
 		},
 	}
-	client.Nullable.CreateUser(
+	_, err := client.Nullable.CreateUser(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -1728,7 +1892,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient(
 		option.WithBaseURL(
 			"https://api.example.com",
@@ -1745,10 +1909,14 @@ func do() {
 		},
 		Tags: []*string{},
 	}
-	client.Nullable.GetUsers(
+	_, err := client.Nullable.GetUsers(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -1763,7 +1931,7 @@ import (
 	client "github.com/acme/acme-go/client"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient()
 	request := &acme.GetUserSpecificsRequest{
 		TenantID: "my_tenant",
@@ -1771,10 +1939,14 @@ func do() {
 		Version:  7,
 		Thought:  "my_thought",
 	}
-	client.User.GetUserSpecifics(
+	_, err := client.User.GetUserSpecifics(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -1790,7 +1962,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient(
 		option.WithBaseURL(
 			"https://api.example.com",
@@ -1804,10 +1976,14 @@ func do() {
 			Ssn:          "ssn",
 		},
 	}
-	client.CreateUser(
+	_, err := client.CreateUser(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -1823,7 +1999,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient(
 		option.WithBaseURL(
 			"https://api.example.com",
@@ -1838,10 +2014,14 @@ func do() {
 			Ssn:          "ssn",
 		},
 	}
-	client.CreateUser(
+	_, err := client.CreateUser(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -1856,7 +2036,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient(
 		option.WithToken(
 			"<YOUR_API_KEY>",
@@ -1865,9 +2045,13 @@ func do() {
 			"my-tenant-id",
 		),
 	)
-	client.Plantstore.List(
+	_, err := client.Plantstore.List(
 		context.TODO(),
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -1883,7 +2067,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient(
 		option.WithToken(
 			"<YOUR_API_KEY>",
@@ -1896,10 +2080,14 @@ func do() {
 		Name:  "Fern",
 		Price: 12.99,
 	}
-	client.Plantstore.Create(
+	_, err := client.Plantstore.Create(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -1915,7 +2103,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient(
 		option.WithBaseURL(
 			acme.Environments.Production,
@@ -1924,9 +2112,13 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
-	client.Dummy.GetDummy(
+	_, err := client.Dummy.GetDummy(
 		context.TODO(),
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -1942,7 +2134,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient(
 		option.WithBaseURL(
 			acme.Environments.Staging,
@@ -1951,9 +2143,13 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
-	client.Dummy.GetDummy(
+	_, err := client.Dummy.GetDummy(
 		context.TODO(),
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -1968,7 +2164,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewClient(
 		option.WithBaseURL(
 			"http://localhost:8080",
@@ -1977,9 +2173,13 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
-	client.Dummy.GetDummy(
+	_, err := client.Dummy.GetDummy(
 		context.TODO(),
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -2015,7 +2215,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewFernClient(
 		option.WithToken(
 			"<YOUR_API_KEY>",
@@ -2035,10 +2235,14 @@ func do() {
 		},
 		XAPIVersion: "0.0.1",
 	}
-	client.Service.GetMetadata(
+	_, err := client.Service.GetMetadata(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -2054,7 +2258,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewFernClient(
 		option.WithToken(
 			"<YOUR_API_KEY>",
@@ -2071,10 +2275,14 @@ func do() {
 		},
 		XAPIVersion: "0.0.1",
 	}
-	client.Service.GetMetadata(
+	_, err := client.Service.GetMetadata(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -2091,7 +2299,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewFernClient(
 		option.WithToken(
 			"<YOUR_API_KEY>",
@@ -2143,10 +2351,14 @@ func do() {
 			Status: acme.MigrationStatusRunning,
 		},
 	}
-	client.Service.CreateBigEntity(
+	_, err := client.Service.CreateBigEntity(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -2175,7 +2387,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewFernClient(
 		option.WithToken(
 			"<YOUR_API_KEY>",
@@ -2204,10 +2416,14 @@ func do() {
 		},
 		Revenue: int64(1000000),
 	}
-	client.Service.CreateMovie(
+	_, err := client.Service.CreateMovie(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -2225,7 +2441,7 @@ import (
 	uuid "github.com/google/uuid"
 )
 
-func do() {
+func do() error {
 	client := client.NewFernClient(
 		option.WithToken(
 			"<YOUR_API_KEY>",
@@ -2279,10 +2495,14 @@ func do() {
 			"1000000",
 		),
 	}
-	client.Endpoints.Object.GetAndReturnWithOptionalField(
+	_, err := client.Endpoints.Object.GetAndReturnWithOptionalField(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -2327,7 +2547,7 @@ import (
 	types "github.com/acme/acme-go/types"
 )
 
-func do() {
+func do() error {
 	client := client.NewFernClient(
 		option.WithToken(
 			"<YOUR_API_KEY>",
@@ -2344,10 +2564,14 @@ func do() {
 			FieldString: "three",
 		},
 	}
-	client.Endpoints.Container.GetAndReturnListOfObjects(
+	_, err := client.Endpoints.Container.GetAndReturnListOfObjects(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -2362,7 +2586,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewFernClient(
 		option.WithToken(
 			"<YOUR_API_KEY>",
@@ -2373,10 +2597,14 @@ func do() {
 		"two",
 		"three",
 	}
-	client.Endpoints.Container.GetAndReturnListOfPrimitives(
+	_, err := client.Endpoints.Container.GetAndReturnListOfPrimitives(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -2392,7 +2620,7 @@ import (
 	types "github.com/acme/acme-go/types"
 )
 
-func do() {
+func do() error {
 	client := client.NewFernClient(
 		option.WithToken(
 			"<YOUR_API_KEY>",
@@ -2417,10 +2645,14 @@ func do() {
 			},
 		},
 	}
-	client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnion(
+	_, err := client.Endpoints.Container.GetAndReturnMapOfPrimToUndiscriminatedUnion(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -2437,7 +2669,7 @@ import (
 	client "github.com/acme/acme-go/client"
 )
 
-func do() {
+func do() error {
 	client := client.NewFernClient()
 	request := &acme.MyRequest{
 		File: strings.NewReader(
@@ -2455,10 +2687,14 @@ func do() {
 			"",
 		),
 	}
-	client.Service.Post(
+	err := client.Service.Post(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -2474,17 +2710,21 @@ import (
 	client "github.com/acme/acme-go/client"
 )
 
-func do() {
+func do() error {
 	client := client.NewFernClient()
 	request := &acme.JustFileRequest{
 		File: strings.NewReader(
 			"Hello, world!",
 		),
 	}
-	client.Service.JustFile(
+	err := client.Service.JustFile(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -2500,7 +2740,7 @@ import (
 	client "github.com/acme/acme-go/client"
 )
 
-func do() {
+func do() error {
 	client := client.NewFernClient()
 	request := &acme.JustFileWithQueryParamsRequest{
 		Integer: 42,
@@ -2511,10 +2751,14 @@ func do() {
 			"Hello, world!",
 		),
 	}
-	client.Service.JustFileWithQueryParams(
+	err := client.Service.JustFileWithQueryParams(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -2530,7 +2774,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewFernClient(
 		option.WithToken(
 			"<YOUR_API_KEY>",
@@ -2539,10 +2783,14 @@ func do() {
 	request := &acme.GetMovieImdbRequest{
 		MovieID: "movie_xyz",
 	}
-	client.Imdb.GetMovie(
+	_, err := client.Imdb.GetMovie(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -2558,7 +2806,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewFernClient(
 		option.WithToken(
 			"<YOUR_API_KEY>",
@@ -2568,10 +2816,14 @@ func do() {
 		Title:  "The Matrix",
 		Rating: 8.2,
 	}
-	client.Imdb.CreateMovie(
+	_, err := client.Imdb.CreateMovie(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -2607,7 +2859,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewFernClient(
 		option.WithBaseURL(
 			acme.Environments.Production,
@@ -2619,10 +2871,14 @@ func do() {
 	request := &acme.GetPresignedURLRequest{
 		S3Key: "xyz",
 	}
-	client.S3.GetPresignedURL(
+	_, err := client.S3.GetPresignedURL(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -2638,7 +2894,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewFernClient(
 		option.WithBaseURL(
 			acme.Environments.Staging,
@@ -2650,10 +2906,14 @@ func do() {
 	request := &acme.GetPresignedURLRequest{
 		S3Key: "xyz",
 	}
-	client.S3.GetPresignedURL(
+	_, err := client.S3.GetPresignedURL(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -2679,7 +2939,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewFernClient(
 		option.WithBaseURL(
 			"https://api.example.com",
@@ -2699,10 +2959,14 @@ func do() {
 			),
 		},
 	}
-	client.Nullable.CreateUser(
+	_, err := client.Nullable.CreateUser(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -2730,7 +2994,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewFernClient(
 		option.WithBaseURL(
 			"https://api.example.com",
@@ -2747,10 +3011,14 @@ func do() {
 		},
 		Tags: []*string{},
 	}
-	client.Nullable.GetUsers(
+	_, err := client.Nullable.GetUsers(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -2765,7 +3033,7 @@ import (
 	client "github.com/acme/acme-go/client"
 )
 
-func do() {
+func do() error {
 	client := client.NewFernClient()
 	request := &acme.GetUserSpecificsRequest{
 		TenantID: "my_tenant",
@@ -2773,10 +3041,14 @@ func do() {
 		Version:  7,
 		Thought:  "my_thought",
 	}
-	client.User.GetUserSpecifics(
+	_, err := client.User.GetUserSpecifics(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -2792,7 +3064,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewFernClient(
 		option.WithBaseURL(
 			"https://api.example.com",
@@ -2806,10 +3078,14 @@ func do() {
 			Ssn:          "ssn",
 		},
 	}
-	client.CreateUser(
+	_, err := client.CreateUser(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -2825,7 +3101,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewFernClient(
 		option.WithBaseURL(
 			"https://api.example.com",
@@ -2840,10 +3116,14 @@ func do() {
 			Ssn:          "ssn",
 		},
 	}
-	client.CreateUser(
+	_, err := client.CreateUser(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -2858,7 +3138,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewFernClient(
 		option.WithToken(
 			"<YOUR_API_KEY>",
@@ -2867,9 +3147,13 @@ func do() {
 			"my-tenant-id",
 		),
 	)
-	client.Plantstore.List(
+	_, err := client.Plantstore.List(
 		context.TODO(),
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -2885,7 +3169,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewFernClient(
 		option.WithToken(
 			"<YOUR_API_KEY>",
@@ -2898,10 +3182,14 @@ func do() {
 		Name:  "Fern",
 		Price: 12.99,
 	}
-	client.Plantstore.Create(
+	_, err := client.Plantstore.Create(
 		context.TODO(),
 		request,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -2917,7 +3205,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewFernClient(
 		option.WithBaseURL(
 			acme.Environments.Production,
@@ -2926,9 +3214,13 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
-	client.Dummy.GetDummy(
+	_, err := client.Dummy.GetDummy(
 		context.TODO(),
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -2944,7 +3236,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewFernClient(
 		option.WithBaseURL(
 			acme.Environments.Staging,
@@ -2953,9 +3245,13 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
-	client.Dummy.GetDummy(
+	_, err := client.Dummy.GetDummy(
 		context.TODO(),
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;
@@ -2970,7 +3266,7 @@ import (
 	option "github.com/acme/acme-go/option"
 )
 
-func do() {
+func do() error {
 	client := client.NewFernClient(
 		option.WithBaseURL(
 			"http://localhost:8080",
@@ -2979,9 +3275,13 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
-	client.Dummy.GetDummy(
+	_, err := client.Dummy.GetDummy(
 		context.TODO(),
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 "
 `;

@@ -1,3 +1,3 @@
 from importlib import metadata
 
-__version__ = metadata.version("fern_oauth-pkce")
+__version__ = metadata.version("fern-oauth-pkce")

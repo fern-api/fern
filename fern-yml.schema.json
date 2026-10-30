@@ -1058,12 +1058,6 @@
             {
               "type": "array",
               "items": {
-                "$ref": "#/$defs/__schema0"
-              }
-            },
-            {
-              "type": "array",
-              "items": {
                 "anyOf": [
                   {
                     "type": "object",
@@ -1191,6 +1185,12 @@
                     "additionalProperties": false
                   }
                 ]
+              }
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/__schema0"
               }
             }
           ]
@@ -3036,6 +3036,9 @@
             "disable-analytics": {
               "type": "boolean"
             },
+            "require-analytics-consent": {
+              "type": "boolean"
+            },
             "language": {
               "type": "string",
               "pattern": "^[a-zA-Z]{2,8}(-[a-zA-Z0-9]{1,8})*$"
@@ -3157,6 +3160,42 @@
                 },
                 "show-products": {
                   "type": "boolean"
+                }
+              },
+              "additionalProperties": false
+            },
+            "code-blocks": {
+              "type": "object",
+              "properties": {
+                "light": {
+                  "type": "string",
+                  "enum": [
+                    "github-dark",
+                    "github-dark-default",
+                    "github-dark-dimmed",
+                    "github-dark-high-contrast",
+                    "github-light",
+                    "github-light-default",
+                    "github-light-high-contrast",
+                    "material-theme-darker",
+                    "min-dark",
+                    "min-light"
+                  ]
+                },
+                "dark": {
+                  "type": "string",
+                  "enum": [
+                    "github-dark",
+                    "github-dark-default",
+                    "github-dark-dimmed",
+                    "github-dark-high-contrast",
+                    "github-light",
+                    "github-light-default",
+                    "github-light-high-contrast",
+                    "material-theme-darker",
+                    "min-dark",
+                    "min-light"
+                  ]
                 }
               },
               "additionalProperties": false
@@ -5872,6 +5911,29 @@
                   ]
                 },
                 "swift": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "version": {
+                          "type": "string"
+                        },
+                        "package": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "version",
+                        "package"
+                      ],
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "cli": {
                   "anyOf": [
                     {
                       "type": "string"
