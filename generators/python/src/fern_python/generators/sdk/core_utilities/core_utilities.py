@@ -180,6 +180,11 @@ class CoreUtilities:
             exports={"Logger", "LogConfig", "LogLevel", "ConsoleLogger", "ILogger", "create_logger"}
             if not self._exclude_types_from_init_exports
             else set(),
+            string_replacements=(
+                {'logging.getLogger("fern")': f'logging.getLogger("{get_whitelabel_logger_name(project)}")'}
+                if project.whitelabel
+                else None
+            ),
         )
         retry_status_check = (
             "response.status_code in [408, 409, 429, 502, 503, 504]"
@@ -1223,3 +1228,10 @@ class CoreUtilities:
                 named_import="Logger",
             ),
         )
+
+
+def get_whitelabel_logger_name(project: Project) -> str:
+    """`{package name}_sdk_{version}`, so whitelabeled SDKs don't log under the "fern" logger."""
+    if project._project_config is None:
+        return f"{project.get_module_path_for_imports()}_sdk"
+    return f"{project._project_config.package_name}_sdk_{project._project_config.package_version}"

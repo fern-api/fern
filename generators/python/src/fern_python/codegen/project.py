@@ -179,6 +179,10 @@ class Project:
         return self._emit_scaffolding
 
     @property
+    def whitelabel(self) -> bool:
+        return self._whitelabel
+
+    @property
     def auto_generated_notice(self) -> str:
         """The "auto-generated" comment line, for files whose contents are written by hand rather than via a Writer."""
         return get_auto_generated_notice(whitelabel=self._whitelabel)
