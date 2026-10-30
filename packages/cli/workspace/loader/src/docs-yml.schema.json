@@ -5339,6 +5339,17 @@
             }
           ],
           "description": "Overrides the disclaimer shown in the Ask Fern chat\n(default: \"Responses are generated using AI and may contain mistakes.\")."
+        },
+        "button-text": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Overrides the \"Ask AI\" label on the header button and in the search dialog\n(default: \"Ask AI\", translated on localized sites)."
         }
       },
       "additionalProperties": false
