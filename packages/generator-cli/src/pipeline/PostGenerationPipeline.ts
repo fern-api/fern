@@ -203,6 +203,9 @@ export class PostGenerationPipeline {
                 if (step.name === "verify") {
                     break;
                 }
+                if (step.name === "autoVersion" && this.config.autoVersion?.strict === true) {
+                    break;
+                }
             }
         }
 

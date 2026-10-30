@@ -407,6 +407,13 @@ export class AutoVersionStep extends BaseStep {
             }
         };
 
+        if (this.config.strict === true && skippedChunks > 0) {
+            return {
+                analysis: this.fallbackPatchAnalysis(),
+                analysisWarning: `${skippedChunks} of ${chunks.length} diff chunks would not be analyzed (capped at ${MAX_CHUNKS})`
+            };
+        }
+
         try {
             if (this.config.ai == null && this.config.fernToken != null) {
                 // No BAML provider config (the remote-generation / fiddle path) — call the

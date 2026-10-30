@@ -1057,7 +1057,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     code: CliError.Code.ConfigError
                 });
             }
-            if (argv["strict-version"] && !argv.local && argv.runner == null) {
+            if (argv["strict-version"] && !argv.local) {
                 return cliContext.failWithoutThrowing(
                     "The --strict-version flag is currently only supported for local generation. Add --local.",
                     undefined,

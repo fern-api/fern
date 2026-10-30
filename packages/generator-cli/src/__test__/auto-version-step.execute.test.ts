@@ -1314,6 +1314,34 @@ describe("AutoVersionStep.execute() — FAI service path with a multi-chunk diff
         expect(result.versionBump).toBe("PATCH");
         expect(result.analysisWarning).toMatch(/\d+ of \d+ diff chunks were not analyzed \(capped at \d+\)/);
     });
+
+    it("fails instead of analyzing a truncated diff when strict is set and chunks exceed MAX_CHUNKS", async () => {
+        mockAnalyzeSdkDiff.mockReset();
+        await repo.cleanup();
+        repo = await setupTwoGenerations({
+            previousVersion: "2.0.0",
+            featureFile: {
+                path: "src/bigFeature.ts",
+                content: "export function bigFeature() {}\n"
+            },
+            fillerKB: (MAX_CHUNKS + 5) * (MAX_AI_DIFF_BYTES / 1024),
+            fillerFiles: MAX_CHUNKS + 5
+        });
+
+        const step = new AutoVersionStep(repo.repoPath, makeLogger(), { ...baseConfig, strict: true });
+        const prepared = fakePreparedReplay({
+            outputDir: repo.repoPath,
+            previousGenerationSha: repo.previousSha,
+            currentGenerationSha: repo.currentSha
+        });
+        const result = await step.execute(makeContext(prepared));
+
+        expect(mockAnalyzeSdkDiff).not.toHaveBeenCalled();
+        expect(mockFetch).not.toHaveBeenCalled();
+        expect(result.success).toBe(false);
+        expect(result.analysisWarning).toMatch(/\d+ of \d+ diff chunks would not be analyzed \(capped at \d+\)/);
+        expect(result.errorMessage).toContain("Strict versioning is enabled");
+    });
 });
 
 describe("AutoVersionStep.execute() — Go v2+ module suffix", () => {

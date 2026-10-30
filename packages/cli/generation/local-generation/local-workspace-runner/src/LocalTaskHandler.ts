@@ -381,6 +381,11 @@ export class LocalTaskHandler {
             // low-priority (addition-only) sections.
             const cappedChunks = chunks.slice(0, MAX_CHUNKS);
             const skippedChunks = chunks.length - cappedChunks.length;
+            if (skippedChunks > 0) {
+                this.assertNotStrictVersion(
+                    `${skippedChunks} of ${chunks.length} diff chunks would not be analyzed (capped at ${MAX_CHUNKS})`
+                );
+            }
 
             if (chunks.length > 1) {
                 this.context.logger.info(

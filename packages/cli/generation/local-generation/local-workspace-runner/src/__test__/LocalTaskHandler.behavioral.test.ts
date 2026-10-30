@@ -816,4 +816,13 @@ describe("LocalTaskHandler - Multi-Chunk Analysis", () => {
 
         await expect(callHandleAutoVersioning(handler)).rejects.toThrow(/--strict-version is set/);
     });
+
+    it("throws instead of analyzing a truncated diff when strictVersion is set and chunks exceed MAX_CHUNKS", async () => {
+        mockChunkDiff.mockReturnValue(Array.from({ length: 45 }, (_, i) => `chunk${i + 1} diff`));
+
+        const handler = await createTaskHandler({ strictVersion: true });
+
+        await expect(callHandleAutoVersioning(handler)).rejects.toThrow(/5 of 45 diff chunks would not be analyzed/);
+        expect(mockAnalyzeSdkDiff).not.toHaveBeenCalled();
+    });
 });
