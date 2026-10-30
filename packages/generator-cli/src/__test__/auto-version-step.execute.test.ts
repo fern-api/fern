@@ -291,6 +291,24 @@ describe("AutoVersionStep.execute() — normal MINOR flow", () => {
         expect(pkg.version).toBe("1.0.1");
     });
 
+    it("fails instead of falling back to PATCH when strict is set and FAI throws", async () => {
+        mockAnalyzeSdkDiff.mockRejectedValue(new Error("FAI network timeout"));
+
+        const step = new AutoVersionStep(repo.repoPath, makeLogger(), { ...baseConfig, strict: true });
+        const prepared = fakePreparedReplay({
+            outputDir: repo.repoPath,
+            previousGenerationSha: repo.previousSha,
+            currentGenerationSha: repo.currentSha
+        });
+
+        const result = await step.execute(makeContext(prepared));
+
+        expect(result.success).toBe(false);
+        expect(result.version).toBeUndefined();
+        expect(result.analysisWarning).toContain("FAI network timeout");
+        expect(result.errorMessage).toContain("Strict versioning is enabled");
+    });
+
     it("on NO_CHANGE, rewrites the placeholder to previousVersion and commits [fern-autoversion]", async () => {
         mockAnalyzeSdkDiff.mockResolvedValue({
             version_bump: "NO_CHANGE",

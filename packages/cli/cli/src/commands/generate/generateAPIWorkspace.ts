@@ -52,6 +52,7 @@ export async function generateWorkspace({
     sdkConfigV1,
     fernignorePath,
     skipFernignore,
+    strictVersion,
     dynamicIrOnly,
     noReplay,
     verify,
@@ -91,6 +92,7 @@ export async function generateWorkspace({
     sdkConfigV1?: FernSdkConfigV1Payload;
     fernignorePath: string | undefined;
     skipFernignore: boolean;
+    strictVersion?: boolean;
     dynamicIrOnly: boolean;
     noReplay: boolean;
     verify: boolean;
@@ -224,6 +226,7 @@ export async function generateWorkspace({
                         validateWorkspace: true,
                         requireEnvVars,
                         skipFernignore,
+                        strictVersion,
                         automationMode,
                         autoMerge,
                         skipIfNoDiff,

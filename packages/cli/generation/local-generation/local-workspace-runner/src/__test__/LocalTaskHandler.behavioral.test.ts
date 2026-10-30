@@ -807,4 +807,13 @@ describe("LocalTaskHandler - Multi-Chunk Analysis", () => {
         expect(result?.version).toBe("1.0.1");
         expect(mockLogger.warn).toHaveBeenCalledWith(expect.stringContaining("AI analysis failed"));
     });
+
+    it("throws instead of falling back to PATCH when strictVersion is set", async () => {
+        mockChunkDiff.mockReturnValue(["chunk1 diff"]);
+        mockAnalyzeSdkDiff.mockRejectedValueOnce(new Error("AI endpoint timeout"));
+
+        const handler = await createTaskHandler({ strictVersion: true });
+
+        await expect(callHandleAutoVersioning(handler)).rejects.toThrow(/--strict-version is set/);
+    });
 });

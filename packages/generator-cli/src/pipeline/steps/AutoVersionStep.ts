@@ -53,6 +53,7 @@ type VersionBumpLabel = "MAJOR" | "MINOR" | "PATCH" | "NO_CHANGE";
  *  - The cleaned diff exceeds MAX_RAW_DIFF_BYTES.
  *  - The FAI call throws (network error, rate limit, malformed response, …).
  * In both cases the result carries `analysisWarning` so GithubStep can flag the PR.
+ * With `strict` set, these cases (and partially failed analyses) fail the step instead.
  */
 export class AutoVersionStep extends BaseStep {
     readonly name = "autoVersion";
@@ -212,6 +213,9 @@ export class AutoVersionStep extends BaseStep {
             const warning =
                 `diff too large for FAI (${formatSizeKB(cleanedBytes)}KB, ` +
                 `limit ${formatSizeKB(MAX_RAW_DIFF_BYTES)}KB)`;
+            if (this.config.strict === true) {
+                return this.strictFailure(warning);
+            }
             this.logger.warn(`AutoVersionStep: ${warning}. Falling back to PATCH.`);
             return await this.finalizeWithBump({
                 service,
@@ -230,6 +234,10 @@ export class AutoVersionStep extends BaseStep {
             previousVersion,
             label: "AutoVersionStep"
         });
+
+        if (this.config.strict === true && analysisWarning != null) {
+            return this.strictFailure(analysisWarning);
+        }
 
         if (analysis == null) {
             this.logger.info(`AutoVersionStep: FAI returned NO_CHANGE; rewriting placeholder to ${previousVersion}.`);
@@ -311,6 +319,9 @@ export class AutoVersionStep extends BaseStep {
             const warning =
                 `diff too large for FAI (${formatSizeKB(cleanedBytes)}KB, ` +
                 `limit ${formatSizeKB(MAX_RAW_DIFF_BYTES)}KB)`;
+            if (this.config.strict === true) {
+                return this.strictFailure(warning);
+            }
             this.logger.warn(`AutoVersionStep (non-replay): ${warning}. Falling back to PATCH.`);
             return await this.finalizeWithBumpNonReplay({
                 service,
@@ -329,6 +340,10 @@ export class AutoVersionStep extends BaseStep {
             previousVersion,
             label: "AutoVersionStep (non-replay)"
         });
+
+        if (this.config.strict === true && analysisWarning != null) {
+            return this.strictFailure(analysisWarning);
+        }
 
         if (analysis == null) {
             this.logger.info(
@@ -352,6 +367,14 @@ export class AutoVersionStep extends BaseStep {
             analysis,
             analysisWarning
         });
+    }
+
+    private strictFailure(warning: string): AutoVersionStepResult {
+        const errorMessage =
+            `AUTO versioning could not assess the change (${warning}). ` +
+            "Strict versioning is enabled, so the run fails instead of falling back to a PATCH bump.";
+        this.logger.error(`AutoVersionStep: ${errorMessage}`);
+        return { executed: true, success: false, errorMessage, analysisWarning: warning };
     }
 
     private fallbackPatchAnalysis(): FAIAnalysis {

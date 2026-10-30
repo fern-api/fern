@@ -188,6 +188,9 @@ export class PostGenerationPipeline {
                         break;
                     }
                     result.errors.push(stepResult.errorMessage ?? `${step.name} step failed`);
+                    if (step.name === "autoVersion" && this.config.autoVersion?.strict === true) {
+                        break;
+                    }
                 }
             } catch (error) {
                 result.success = false;

@@ -97,6 +97,7 @@ export async function writeFilesToDiskAndRunGenerator({
     autoVersioningCache,
     absolutePathToSpecRepo,
     skipFernignore,
+    strictVersion,
     disableTelemetry,
     rawApiSpecs
 }: {
@@ -128,6 +129,7 @@ export async function writeFilesToDiskAndRunGenerator({
     autoVersioningCache?: AutoVersioningCache;
     absolutePathToSpecRepo: AbsoluteFilePath | undefined;
     skipFernignore?: boolean;
+    strictVersion?: boolean;
     disableTelemetry?: boolean;
     rawApiSpecs?: Spec[];
 }): Promise<{
@@ -374,7 +376,8 @@ export async function writeFilesToDiskAndRunGenerator({
         autoVersioningCache,
         generatorLanguage,
         absolutePathToSpecRepo,
-        skipFernignore
+        skipFernignore,
+        strictVersion
     });
     const generatedFilesResult = await taskHandler.copyGeneratedFiles();
 

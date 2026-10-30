@@ -811,6 +811,12 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     type: "string",
                     description: "The version for the generated packages"
                 })
+                .option("strict-version", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "With --version AUTO, fail with a non-zero exit (rather than falling back to a PATCH bump) if AI version analysis is unavailable. Requires --local."
+                })
                 .option("printZipUrl", {
                     boolean: true,
                     hidden: true,
@@ -1046,6 +1052,18 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     { code: CliError.Code.ConfigError }
                 );
             }
+            if (argv["strict-version"] && (argv.version == null || argv.version.toUpperCase() !== "AUTO")) {
+                return cliContext.failWithoutThrowing("The --strict-version flag requires --version AUTO.", undefined, {
+                    code: CliError.Code.ConfigError
+                });
+            }
+            if (argv["strict-version"] && !argv.local && argv.runner == null) {
+                return cliContext.failWithoutThrowing(
+                    "The --strict-version flag is currently only supported for local generation. Add --local.",
+                    undefined,
+                    { code: CliError.Code.ConfigError }
+                );
+            }
             if (argv["skip-fernignore"] && argv.fernignore != null) {
                 return cliContext.failWithoutThrowing(
                     "The --skip-fernignore and --fernignore flags cannot be used together.",
@@ -1150,6 +1168,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     sdkConfigPath: argv.sdkConfig,
                     fernignorePath: argv.fernignore,
                     skipFernignore: argv["skip-fernignore"],
+                    strictVersion: argv["strict-version"],
                     dynamicIrOnly: argv["dynamic-ir-only"],
                     outputDir: argv.output,
                     noReplay: !argv.replay,
@@ -1226,6 +1245,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 sdkConfigPath: argv.sdkConfig,
                 fernignorePath: argv.fernignore,
                 skipFernignore: argv["skip-fernignore"],
+                strictVersion: argv["strict-version"],
                 dynamicIrOnly: argv["dynamic-ir-only"],
                 outputDir: argv.output,
                 noReplay: !argv.replay,
