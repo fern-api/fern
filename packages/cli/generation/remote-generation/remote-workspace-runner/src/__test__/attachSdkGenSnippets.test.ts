@@ -3,6 +3,7 @@ import { describe, expect, it, vi } from "vitest";
 
 import {
     attachSdkGenSnippets,
+    describeSdkSnippetsReadFailures,
     describeSnippetSources,
     getSdkRequests,
     omitSdkLanguages,
@@ -404,5 +405,31 @@ describe("describeSnippetSources", () => {
 
     it("says nothing when no language has a source", () => {
         expect(describeSnippetSources({ sdkGenLanguages: [], dynamicIrLanguages: [] })).toBeUndefined();
+    });
+});
+
+describe("describeSdkSnippetsReadFailures", () => {
+    const snippetsConfig = {
+        typescriptSdk: { package: "@acme/sdk", version: "1.2.3" },
+        pythonSdk: { package: "acme", version: "2.0.0" }
+    };
+
+    it("names the sdk, language and version of each SDK the docs ask for, with the error", () => {
+        expect(
+            describeSdkSnippetsReadFailures({
+                snippetsConfig,
+                sdkNames: { typescript: ["acme-sdk"] },
+                error: new Error("boom")
+            })
+        ).toEqual([
+            "Failed to read sdk snippets for sdk: acme-sdk, language: typescript, version: 1.2.3, error: boom",
+            "Failed to read sdk snippets for sdk: unknown, language: python, version: 2.0.0, error: boom"
+        ]);
+    });
+
+    it("still reports the error when no entry names a version", () => {
+        expect(describeSdkSnippetsReadFailures({ snippetsConfig: {}, error: new Error("boom") })).toEqual([
+            "Failed to read sdk snippets, error: boom"
+        ]);
     });
 });

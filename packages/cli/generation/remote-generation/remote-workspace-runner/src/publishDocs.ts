@@ -74,6 +74,7 @@ import { basename } from "path";
 import terminalLink from "terminal-link";
 import {
     attachSdkGenSnippets,
+    describeSdkSnippetsReadFailures,
     describeSnippetSources,
     omitSdkLanguages,
     readSdkGenSnippets,
@@ -408,9 +409,9 @@ export async function publishDocs({
                 sdkNames,
                 logger: context.logger
             }).catch((error: unknown): SdkGenSnippets => {
-                context.logger.warn(
-                    `The SDK snippets could not be read (the docs are not affected): ${errorMessageOrString(error)}`
-                );
+                for (const line of describeSdkSnippetsReadFailures({ snippetsConfig, sdkNames, error })) {
+                    context.logger.warn(line);
+                }
                 return new Map();
             });
             sdkGenSnippetsByConfig.set(key, snippets);

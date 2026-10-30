@@ -38,6 +38,28 @@ export function getSdkRequests(config: SnippetsConfig): SdkRequest[] {
     });
 }
 
+/** One warning per SDK the docs ask for, naming it, for when reading its snippets failed in a way no lookup handled. */
+export function describeSdkSnippetsReadFailures({
+    snippetsConfig,
+    sdkNames = {},
+    error
+}: {
+    snippetsConfig: SnippetsConfig;
+    sdkNames?: Record<string, string[]>;
+    error: unknown;
+}): string[] {
+    const reason = errorMessageOrString(error);
+    const requests = getSdkRequests(snippetsConfig);
+    if (requests.length === 0) {
+        return [`Failed to read sdk snippets, error: ${reason}`];
+    }
+    return requests.map(({ type, version }) => {
+        const names = sdkNames[type] ?? [];
+        const sdkName = names.length > 0 ? names.join(", ") : "unknown";
+        return `Failed to read sdk snippets for sdk: ${sdkName}, language: ${type}, version: ${version}, error: ${reason}`;
+    });
+}
+
 const toPathSegment = (part: Endpoint["path"]["parts"][number]): string =>
     part.type === "literal" ? part.value : `{${part.value}}`;
 
