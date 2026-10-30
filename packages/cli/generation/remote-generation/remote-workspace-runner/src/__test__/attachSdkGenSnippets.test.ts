@@ -112,14 +112,12 @@ describe("attachSdkGenSnippets", () => {
     type ReadSnippets = (snippetsUrl: string) => Promise<string>;
 
     function setup({
-        enabled = true,
         origin = "https://sdk-gen.example",
         findSnippetsUrls = vi.fn<FindSnippetsUrls>(
             async ({ languages }) => new Map(languages.map((language) => [language, `https://s3/${language}`]))
         ),
         readSnippets = vi.fn<ReadSnippets>(async (url) => snippetsByUrl[url] ?? "{}")
     }: {
-        enabled?: boolean;
         /** `null` stands for an origin that is not set. */
         origin?: string | null;
         findSnippetsUrls?: ReturnType<typeof vi.fn<FindSnippetsUrls>>;
@@ -140,19 +138,10 @@ describe("attachSdkGenSnippets", () => {
                     sdkNames: names,
                     logger
                 },
-                { getOrigin: () => origin ?? undefined, findSnippetsUrls, readSnippets, isEnabled: () => enabled }
+                { getOrigin: () => origin ?? undefined, findSnippetsUrls, readSnippets }
             );
         return { logger, findSnippetsUrls, readSnippets, run };
     }
-
-    it("does nothing while the flag is off", async () => {
-        const { logger, findSnippetsUrls, run } = setup({ enabled: false });
-        const input = definition();
-
-        expect(await run(input)).toBe(input);
-        expect(findSnippetsUrls).not.toHaveBeenCalled();
-        expect(logger.info).not.toHaveBeenCalled();
-    });
 
     it("does nothing when no docs.yml entry names an SDK", async () => {
         const { findSnippetsUrls, run } = setup();

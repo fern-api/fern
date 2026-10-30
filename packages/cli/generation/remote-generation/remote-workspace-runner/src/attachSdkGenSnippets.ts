@@ -6,7 +6,7 @@ import { omit } from "lodash-es";
 
 import { getFernSdkGenApiOrigin } from "./fernSdkGenApi.js";
 import { findSdkGenSnippetsUrls, type SdkGenSnippetsQuery } from "./findSdkGenSnippets.js";
-import { downloadSnippetsJson, isSdkGenSnippetsEnabled, parseSdkSnippetsJson } from "./sdkGenSnippets.js";
+import { downloadSnippetsJson, parseSdkSnippetsJson } from "./sdkGenSnippets.js";
 
 type ApiDefinition = APIV1Write.ApiDefinition;
 type Endpoint = APIV1Write.EndpointDefinition;
@@ -98,7 +98,6 @@ export interface AttachSdkGenSnippetsDependencies {
     getOrigin?: () => string | undefined;
     findSnippetsUrls?: (query: SdkGenSnippetsQuery) => Promise<Map<string, string>>;
     readSnippets?: (snippetsUrl: string) => Promise<string>;
-    isEnabled?: () => boolean;
 }
 
 /** One sdk-gen-api lookup: the languages of an SDK name and version whose snippets the docs ask for. */
@@ -125,8 +124,8 @@ function getLookups(requests: SdkRequest[], sdkNames: Record<string, string[]>):
 
 /**
  * Reads the snippets sdk-gen saved with the builds of the SDKs the docs.yml `snippets:` entries name, found through the
- * sdk-gen-api, and adds them to the API definition as code samples. Does nothing unless FERN_UPLOAD_SDK_GEN_SNIPPETS is
- * `true`. A snippet problem must not fail the docs publish, so a failure only logs a warning.
+ * sdk-gen-api, and adds them to the API definition as code samples. A snippet problem must not fail the docs publish,
+ * so a failure only logs a warning.
  */
 export async function attachSdkGenSnippets(
     {
@@ -148,12 +147,11 @@ export async function attachSdkGenSnippets(
     {
         getOrigin = getFernSdkGenApiOrigin,
         findSnippetsUrls = (query) => findSdkGenSnippetsUrls(query),
-        readSnippets = downloadSnippetsJson,
-        isEnabled = isSdkGenSnippetsEnabled
+        readSnippets = downloadSnippetsJson
     }: AttachSdkGenSnippetsDependencies = {}
 ): Promise<ApiDefinition> {
     const requests = getSdkRequests(snippetsConfig);
-    if (!isEnabled() || requests.length === 0) {
+    if (requests.length === 0) {
         return apiDefinition;
     }
     const origin = getOrigin();

@@ -138,22 +138,9 @@ describe("fern generate (sdk-config.yml)", { timeout: 180_000 }, () => {
         return { logs, logged };
     }
 
-    describe("without the flag", () => {
-        it("builds the SDK and sends nothing to FDR's snippet store", async () => {
-            sdkGenApi.willBuild("typescript", { snippets: SNIPPETS });
-
-            const { logged } = await run({ targets: TARGETS.typescript });
-
-            expect(logged("Downloaded to")).toBe(true);
-            expect(fdr.requests).toEqual([]);
-            expect(logged("snippets")).toBe(false);
-        });
-    });
-
-    describe("with FERN_UPLOAD_SDK_GEN_SNIPPETS=true", () => {
+    describe("with snippets enabled in sdk-config.yml", () => {
         // The snippets reach the docs at `fern generate --docs`, which finds them in sdk-gen-api.
         it.each(Object.keys(TARGETS))("builds a %s SDK and sends nothing to FDR's snippet store", async (language) => {
-            vi.stubEnv("FERN_UPLOAD_SDK_GEN_SNIPPETS", "true");
             sdkGenApi.willBuild(language, { snippets: SNIPPETS });
 
             const { logged } = await run({ targets: TARGETS[language as keyof typeof TARGETS] });
