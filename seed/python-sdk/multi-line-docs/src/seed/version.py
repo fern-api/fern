@@ -1,3 +1,3 @@
 from importlib import metadata
 
-__version__ = metadata.version("fern_multi-line-docs")
+__version__ = metadata.version("fern-multi-line-docs")

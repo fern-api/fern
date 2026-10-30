@@ -1,3 +1,3 @@
 from importlib import metadata
 
-__version__ = metadata.version("fern_endpoint-security-auth")
+__version__ = metadata.version("fern-endpoint-security-auth")

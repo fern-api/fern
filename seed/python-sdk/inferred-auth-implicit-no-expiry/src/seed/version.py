@@ -1,3 +1,3 @@
 from importlib import metadata
 
-__version__ = metadata.version("fern_inferred-auth-implicit-no-expiry")
+__version__ = metadata.version("fern-inferred-auth-implicit-no-expiry")

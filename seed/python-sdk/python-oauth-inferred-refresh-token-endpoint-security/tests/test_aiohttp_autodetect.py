@@ -96,7 +96,7 @@ class TestDefaultClientsWithoutAiohttp(unittest.TestCase):
             with self.assertRaises(RuntimeError) as ctx:
                 seed._default_clients.DefaultAioHttpClient()
             self.assertIn(
-                "pip install fern_python-oauth-inferred-refresh-token-endpoint-security[aiohttp]", str(ctx.exception)
+                "pip install fern-python-oauth-inferred-refresh-token-endpoint-security[aiohttp]", str(ctx.exception)
             )
 
         importlib.reload(seed._default_clients)

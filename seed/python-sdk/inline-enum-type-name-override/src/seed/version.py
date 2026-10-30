@@ -1,3 +1,3 @@
 from importlib import metadata
 
-__version__ = metadata.version("fern_inline-enum-type-name-override")
+__version__ = metadata.version("fern-inline-enum-type-name-override")

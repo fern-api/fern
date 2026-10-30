@@ -1,9 +1,9 @@
 [project]
-name = "fern_python-file-upload-array-content-type"
+name = "fern-python-file-upload-array-content-type"
 dynamic = ["version"]
 
 [tool.poetry]
-name = "fern_python-file-upload-array-content-type"
+name = "fern-python-file-upload-array-content-type"
 version = "0.0.1"
 description = ""
 readme = "README.md"

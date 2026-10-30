@@ -1,9 +1,9 @@
 [project]
-name = "fern_python-inferred-auth-refresh-token"
+name = "fern-python-inferred-auth-refresh-token"
 dynamic = ["version"]
 
 [tool.poetry]
-name = "fern_python-inferred-auth-refresh-token"
+name = "fern-python-inferred-auth-refresh-token"
 version = "0.0.1"
 description = ""
 readme = "README.md"
