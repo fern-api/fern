@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { getPreviewPrivateRepoHint } from "../getPreviewPrivateRepoHint.js";
 
 describe("getPreviewPrivateRepoHint", () => {
-    it("explains that --preview blanks the token", () => {
+    it("says --preview and --local can't run with a private repo", () => {
         const hint = getPreviewPrivateRepoHint({ uri: "acme/sdk", token: "", previewMode: true });
         expect(hint).toContain("github.token for acme/sdk is empty");
         expect(hint).toContain("without --preview");

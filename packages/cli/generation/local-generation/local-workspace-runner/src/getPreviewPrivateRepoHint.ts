@@ -15,8 +15,5 @@ export function getPreviewPrivateRepoHint({
     if (!previewMode || token.trim() !== "") {
         return undefined;
     }
-    return (
-        `--preview blanks \${VAR} values, so github.token for ${uri} is empty and a private repo can't be cloned. ` +
-        "Run without --preview, with the token's env var (e.g. GITHUB_TOKEN) set."
-    );
+    return `--preview and --local can't run with a private repo (${uri}).`;
 }
