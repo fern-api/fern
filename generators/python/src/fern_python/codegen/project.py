@@ -15,7 +15,7 @@ class OutputDirectory(str, Enum):
 
 
 from .dependency_manager import DependencyManager
-from .file_header import get_file_header, get_license_comment
+from .file_header import FERN_HEADER, WHITELABEL_HEADER, get_file_header, get_license_comment
 from .filepath import Filepath
 from .module_manager import ModuleExport, ModuleManager
 from .reference_resolver_impl import ReferenceResolverImpl
@@ -145,6 +145,7 @@ class Project:
             import_paths=import_paths,
             package_name=package_name_for_import_paths,
             license_header=license_header,
+            whitelabel=whitelabel,
         )
         self._python_version = python_version
         self._dependency_manager = DependencyManager()
@@ -260,8 +261,15 @@ class Project:
         string_replacements: Optional[dict[str, str]] = None,
     ) -> None:
         with open(path_on_disk, "r") as existing_file:
-            writer = WriterImpl(should_format=False, should_sort_imports=True, license_header=self._license_header)
+            writer = WriterImpl(
+                should_format=False,
+                should_sort_imports=True,
+                whitelabel=self._whitelabel,
+                license_header=self._license_header,
+            )
             read_file = existing_file.read()
+            if self._whitelabel:
+                read_file = read_file.replace(FERN_HEADER, WHITELABEL_HEADER)
             if string_replacements is not None:
                 for k, v in string_replacements.items():
                     read_file = read_file.replace(k, v)
@@ -277,6 +285,10 @@ class Project:
                 filepath=filepath_in_project,
                 exports=exports,
             )
+
+    @property
+    def auto_generated_comment(self) -> str:
+        return WHITELABEL_HEADER if self._whitelabel else FERN_HEADER
 
     def add_file(self, filepath: str, contents: str) -> None:
         """Add a file relative to the root output directory (for project-level files like .gitignore)."""
