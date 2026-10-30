@@ -38,7 +38,7 @@ import (
     client "github.com/file-upload-openapi/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &fern.UploadFileRequest{
         File: strings.NewReader(
@@ -46,10 +46,14 @@ func do() {
         ),
         Name: "name",
     }
-    client.FileUploadExample.UploadFile(
+    _, err := client.FileUploadExample.UploadFile(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

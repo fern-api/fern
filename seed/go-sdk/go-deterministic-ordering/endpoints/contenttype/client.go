@@ -84,7 +84,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	        "1000000",
 //	    ),
 //	}
-//	client.Endpoints.ContentType.PostJSONPatchContentType(
+//	err := client.Endpoints.ContentType.PostJSONPatchContentType(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -154,7 +154,7 @@ func (c *Client) PostJSONPatchContentType(
 //	        "1000000",
 //	    ),
 //	}
-//	client.Endpoints.ContentType.PostJSONPatchContentWithCharsetType(
+//	err := client.Endpoints.ContentType.PostJSONPatchContentWithCharsetType(
 //	    context.TODO(),
 //	    request,
 //	)

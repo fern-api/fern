@@ -67,18 +67,18 @@ public final class SubmissionTypeState {
         return Optional.empty();
     }
 
-    @Override
+    @java.lang.Override
     public boolean equals(Object other) {
         if (this == other) return true;
         return other instanceof SubmissionTypeState && value.equals(((SubmissionTypeState) other).value);
     }
 
-    @Override
+    @java.lang.Override
     public int hashCode() {
         return Objects.hash(value);
     }
 
-    @Override
+    @java.lang.Override
     public String toString() {
         return value.toString();
     }

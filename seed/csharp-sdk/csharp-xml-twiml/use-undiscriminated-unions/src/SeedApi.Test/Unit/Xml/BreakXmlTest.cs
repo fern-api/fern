@@ -9,7 +9,7 @@ public class BreakXmlTest
     [NUnit.Framework.Test]
     public void FromXml_ToXml_RoundTrips()
     {
-        var xml = "<break strength=\"none\" time=\"time\" />";
+        var xml = "<break strength=\"none\" time=\"time\"></break>";
         var parsed = global::SeedApi.Break.FromXml(xml);
         Assert.That(
             parsed.Strength,
@@ -60,7 +60,7 @@ public class BreakXmlTest
     [NUnit.Framework.Test]
     public void FromXml_KeepsUnknownEnumValues()
     {
-        var parsed = global::SeedApi.Break.FromXml("<break strength=\"bogus-value\" />");
+        var parsed = global::SeedApi.Break.FromXml("<break strength=\"bogus-value\"></break>");
         Assert.That(parsed.ToXml(false), Does.Contain("strength=\"bogus-value\""));
     }
 

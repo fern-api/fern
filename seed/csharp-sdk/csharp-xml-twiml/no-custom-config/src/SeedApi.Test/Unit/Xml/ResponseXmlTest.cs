@@ -9,7 +9,7 @@ public class ResponseXmlTest
     [NUnit.Framework.Test]
     public void FromXml_ToXml_RoundTrips()
     {
-        var xml = "<Response><Say /></Response>";
+        var xml = "<Response><Say></Say></Response>";
         var parsed = global::SeedApi.Response.FromXml(xml);
         var serialized = parsed.ToXml(false);
         Assert.That(
@@ -43,9 +43,9 @@ public class ResponseXmlTest
     public void FromXml_PreservesChildOrder()
     {
         var parsed = global::SeedApi.Response.FromXml(
-            "<Response><Say /><Pause /><Say /></Response>"
+            "<Response><Say></Say><Pause></Pause><Say></Say></Response>"
         );
-        Assert.That(parsed.ToXml(false), Does.Contain("<Say /><Pause /><Say />"));
+        Assert.That(parsed.ToXml(false), Does.Contain("<Say></Say><Pause></Pause><Say></Say>"));
     }
 
     [NUnit.Framework.Test]

@@ -39,7 +39,7 @@ import (
     option "github.com/openapi-per-spec-base-path/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithClientCredentials(
             "<clientId>",
@@ -50,10 +50,14 @@ func do() {
         ClientID: "client_id",
         ClientSecret: "client_secret",
     }
-    client.Oauth.GetToken(
+    _, err := client.Oauth.GetToken(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

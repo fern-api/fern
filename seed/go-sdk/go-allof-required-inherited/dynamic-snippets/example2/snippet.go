@@ -8,7 +8,7 @@ import (
     option "github.com/go-allof-required-inherited/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -17,8 +17,12 @@ func do() {
     request := &fern.PlantCreate{
         Species: "species",
     }
-    client.CreatePlant(
+    _, err := client.CreatePlant(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

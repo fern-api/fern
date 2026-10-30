@@ -40,7 +40,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	request := &sse.StreamCompletionRequest{
 //	    Query: "foo",
 //	}
-//	client.Completions.Stream(
+//	_, err := client.Completions.Stream(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -88,7 +88,7 @@ func (c *Client) Stream(
 //	request := &sse.StreamEventsRequest{
 //	    Query: "query",
 //	}
-//	client.Completions.StreamEvents(
+//	_, err := client.Completions.StreamEvents(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -136,7 +136,7 @@ func (c *Client) StreamEvents(
 //	request := &sse.StreamEventsDiscriminantInDataRequest{
 //	    Query: "query",
 //	}
-//	client.Completions.StreamEventsDiscriminantInData(
+//	_, err := client.Completions.StreamEventsDiscriminantInData(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -185,7 +185,7 @@ func (c *Client) StreamEventsDiscriminantInData(
 //	request := &sse.StreamEventsContextProtocolRequest{
 //	    Query: "query",
 //	}
-//	client.Completions.StreamEventsContextProtocol(
+//	_, err := client.Completions.StreamEventsContextProtocol(
 //	    context.TODO(),
 //	    request,
 //	)

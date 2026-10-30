@@ -7,7 +7,7 @@ import (
     option "github.com/examples/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewAcmeClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -16,8 +16,12 @@ func do() {
             "<token>",
         ),
     )
-    client.Service.RefreshToken(
+    err := client.Service.RefreshToken(
         context.TODO(),
         nil,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

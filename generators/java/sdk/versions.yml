@@ -1,4 +1,59 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.37.3
+  changelogEntry:
+    - summary: |
+        Discriminated union wrapper classes now annotate `equals`, `hashCode` and `toString` with
+        `@java.lang.Override`, matching the other generated types. Previously the bare `@Override` failed to
+        compile when the API defined a type named `Override` in the same package
+        (`incompatible types: Override cannot be converted to Annotation`).
+      type: fix
+  createdAt: "2026-10-29"
+  irVersion: 67
+- version: 4.37.2
+  changelogEntry:
+    - summary: |
+        Build `core/ObjectMappers.JSON_MAPPER` with `new ObjectMapper().registerModule(...)` instead of
+        `JsonMapper.builder()`, so generated SDKs run on Jackson 2.9.x (`JsonMapper` was the only
+        Jackson 2.10+ symbol in the generated code and failed with `NoClassDefFoundError` at runtime).
+        `ObjectMappers.stringify()` no longer mutates the shared mapper via
+        `setSerializationInclusion(ALWAYS)` (a no-op: `ALWAYS` is Jackson's default and generated
+        models declare `@JsonInclude(NON_ABSENT)` at class level), and `parseErrorBody()` catches
+        `IOException` (the supertype `readValue` declares on 2.9) instead of `JsonProcessingException`.
+        Mapper configuration and serialized output are unchanged.
+      type: fix
+  createdAt: "2026-10-28"
+  irVersion: 67
+- version: 4.37.1
+  changelogEntry:
+    - summary: |
+        Re-publish the Java SDK generator: the 4.36.0 (`retryOnStatusCodes`) and 4.37.0 (`retryDelays`) images were never
+        pushed because the publish workflow broke on the new `ubuntu-latest` runner image (JDK 25); this release carries both
+        features with no further code changes.
+      type: chore
+  createdAt: "2026-10-28"
+  irVersion: 67
+- version: 4.37.0
+  changelogEntry:
+    - summary: |
+        Add `retryDelays(List<Duration>)` to `ClientOptions.Builder` and the generated root client builders (sync, async
+        and multi-auth stages) for an explicit retry schedule: the n-th retry waits for the n-th duration and the request
+        stops retrying once the list is exhausted, so the list size replaces `maxRetries` and the exponential backoff
+        settings. Delays are used as-is (no jitter); `Retry-After` / `X-RateLimit-Reset` headers still take precedence
+        for that attempt. Default behaviour is unchanged.
+      type: feat
+  createdAt: "2026-10-28"
+  irVersion: 67
+- version: 4.36.0
+  changelogEntry:
+    - summary: |
+        Add `retryOnStatusCodes(Set<Integer>)` to `ClientOptions.Builder` and the generated root client builders
+        (sync, async and multi-auth stages). It replaces the default set of HTTP status codes that trigger an automatic
+        retry (408, 429 and 5xx), so a consumer can retry only `429`, or `429` and `503`, and have other 5xx responses
+        returned as-is. The default is unchanged; `maxRetries`, the backoff settings and Retry-After handling are
+        unaffected.
+      type: feat
+  createdAt: "2026-10-28"
+  irVersion: 67
 - version: 4.35.1
   changelogEntry:
     - summary: |

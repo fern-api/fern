@@ -41,7 +41,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 //	    Parent: "parent",
 //	    Child: "child",
 //	}
-//	client.ExtendedInlineRequestBody(
+//	err := client.ExtendedInlineRequestBody(
 //	    context.TODO(),
 //	    request,
 //	)

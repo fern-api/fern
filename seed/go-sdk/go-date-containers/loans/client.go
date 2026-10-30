@@ -36,7 +36,7 @@ func NewClient(options *core.RequestOptions) *Client {
 
 // Example:
 //
-//	client.Loans.GetLoan(
+//	_, err := client.Loans.GetLoan(
 //	    context.TODO(),
 //	)
 func (c *Client) GetLoan(
@@ -68,7 +68,7 @@ func (c *Client) GetLoan(
 //	        ),
 //	    },
 //	}
-//	client.Loans.ListLoansByDate(
+//	_, err := client.Loans.ListLoansByDate(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -95,7 +95,7 @@ func (c *Client) ListLoansByDate(
 //	        "2002-08-28T12:30:00Z",
 //	    ),
 //	}
-//	client.Loans.ListLoansByTimestamp(
+//	_, err := client.Loans.ListLoansByTimestamp(
 //	    context.TODO(),
 //	    request,
 //	)

@@ -21,7 +21,7 @@ request := &fern.ListPlantsRequest{
         1,
     ),
 }
-client.Plants.List(
+_, err := client.Plants.List(
     context.TODO(),
     request,
 )
@@ -76,7 +76,7 @@ request := &fern.ListPlantsWithRequiredOffsetRequest{
     Offset: 1,
     Count: 1,
 }
-client.Plants.ListWithRequiredOffset(
+_, err := client.Plants.ListWithRequiredOffset(
     context.TODO(),
     request,
 )
@@ -135,7 +135,7 @@ request := &fern.ListPlantsWithBodyOffsetRequest{
         1,
     ),
 }
-client.Plants.ListWithBodyOffset(
+_, err := client.Plants.ListWithBodyOffset(
     context.TODO(),
     request,
 )

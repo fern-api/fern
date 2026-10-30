@@ -13,7 +13,17 @@
 <dd>
 
 ```go
-client.Service.Upload(
+request := bytes.NewReader(
+    []byte(""),
+)
+err := client.Service.Upload(
+    context.TODO(),
+    request,
+)
+if err != nil {
+    return err
+}
+err := client.Service.Upload(
     context.TODO(),
     request,
 )
@@ -45,7 +55,7 @@ request := &fern.UploadWithQueryParamsRequest{
     Model: "nova-2",
     Body: []byte(""),
 }
-client.Service.UploadWithQueryParams(
+err := client.Service.UploadWithQueryParams(
     context.TODO(),
     request,
 )

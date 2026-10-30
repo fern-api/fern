@@ -42,7 +42,7 @@ describe("serializeXmlElement", () => {
             additionalChildren: [new XmlElement({ name: "Extra", attributes: { k: "v" } })],
         });
         expect(xml).toBe(
-            '<Say voice="Polly.Joanna" loop="2" events="a b" tags="c,d">Hello &lt;world&gt; &amp; "friends"<Tag>x</Tag><Tag>y</Tag><Extra k="v" /></Say>',
+            '<Say voice="Polly.Joanna" loop="2" events="a b" tags="c,d">Hello &lt;world&gt; &amp; "friends"<Tag>x</Tag><Tag>y</Tag><Extra k="v"/></Say>',
         );
     });
 
@@ -58,7 +58,7 @@ describe("serializeXmlElement", () => {
     });
 
     it("self-closes empty elements and supports namespaces, wrappers and declarations", () => {
-        expect(serializeXmlElement({ name: "Hangup" })).toBe("<Hangup />");
+        expect(serializeXmlElement({ name: "Hangup" })).toBe("<Hangup/>");
         expect(
             serializeXmlElement({
                 name: "Dial",
@@ -68,7 +68,7 @@ describe("serializeXmlElement", () => {
             }),
         ).toBe('<tw:Dial xmlns:tw="https://www.twilio.com/twiml"><Numbers><Number>+1</Number></Numbers></tw:Dial>');
         expect(serializeXmlElement({ name: "Response", xmlDeclaration: true })).toBe(
-            '<?xml version="1.0" encoding="UTF-8"?><Response />',
+            '<?xml version="1.0" encoding="UTF-8"?><Response/>',
         );
     });
 });
@@ -88,14 +88,14 @@ describe("parseXml", () => {
     it("keeps prefixes and validates the root local name", () => {
         const node = parseXml('<tw:Dial xmlns:tw="https://www.twilio.com/twiml">+1</tw:Dial>', "Dial");
         expect(node.name).toBe("tw:Dial");
-        expect(() => parseXml("<Say />", "Dial")).toThrow(/expected <Dial> element but found <Say>/);
+        expect(() => parseXml("<Say/>", "Dial")).toThrow(/expected <Dial> element but found <Say>/);
     });
 
     it("rejects malformed documents and DOCTYPEs", () => {
         expect(() => parseXml("<Say>")).toThrow(XmlParseError);
         expect(() => parseXml("<Say></Dial>")).toThrow(XmlParseError);
-        expect(() => parseXml("<Say a=1 />")).toThrow(XmlParseError);
-        expect(() => parseXml("<Say /><Say />")).toThrow(XmlParseError);
+        expect(() => parseXml("<Say a=1/>")).toThrow(XmlParseError);
+        expect(() => parseXml("<Say/><Say/>")).toThrow(XmlParseError);
         expect(() => parseXml('<!DOCTYPE foo [<!ENTITY xxe SYSTEM "file:///etc/passwd">]><Say>&xxe;</Say>')).toThrow(
             /DOCTYPE/,
         );
@@ -108,7 +108,7 @@ describe("parseXml", () => {
         expect(() => parseXml("<Say>&nbsp;</Say>")).toThrow(/unknown entity &nbsp;/);
         expect(() => parseXml("<Say>&#x110000;</Say>")).toThrow(/invalid character reference/);
         expect(() => parseXml("<Say>&#;</Say>")).toThrow(XmlParseError);
-        expect(() => parseXml('<Say a="x & y" />')).toThrow(XmlParseError);
+        expect(() => parseXml('<Say a="x & y"/>')).toThrow(XmlParseError);
     });
 });
 
@@ -143,7 +143,7 @@ describe("readers", () => {
     });
 
     it("preserves unknown children inside wrappers without duplicating known ones", () => {
-        const xml = '<Dial><Numbers x="1"><Number>+1</Number><Extension>x</Extension></Numbers><Other /></Dial>';
+        const xml = '<Dial><Numbers x="1"><Number>+1</Number><Extension>x</Extension></Numbers><Other/></Dial>';
         const node = parseXml(xml, "Dial");
         const numbers = xmlChildren(node, { Number: (child) => child.text }, { wrapper: "Numbers" });
         const unknown = xmlUnknownChildren(node, ["Numbers"], { Numbers: ["Number"] });
@@ -162,7 +162,7 @@ describe("readers", () => {
                 ],
                 additionalChildren: unknown,
             }),
-        ).toBe('<Dial><Numbers x="1"><Number>+1</Number><Extension>x</Extension></Numbers><Other /></Dial>');
+        ).toBe('<Dial><Numbers x="1"><Number>+1</Number><Extension>x</Extension></Numbers><Other/></Dial>');
         expect(
             xmlUnknownChildren(parseXml("<Dial><Numbers><Number>+1</Number></Numbers></Dial>"), ["Numbers"], {
                 Numbers: ["Number"],
@@ -171,7 +171,7 @@ describe("readers", () => {
     });
 
     it("round-trips an XmlElement", () => {
-        const xml = '<a b="1"><c>text</c><d /></a>';
+        const xml = '<a b="1"><c>text</c><d/></a>';
         expect(XmlElement.fromXml(xml).toXml()).toBe(xml);
     });
 });
@@ -197,7 +197,7 @@ describe("ordered content", () => {
             "Press a key, then ",
             "<Say>one</Say>",
             " or ",
-            "<Custom />",
+            "<Custom/>",
         ]);
         expect(xmlContentElements(content, (item): item is Say => item instanceof Say)?.map((say) => say.text)).toEqual(
             ["one"],
@@ -212,9 +212,9 @@ describe("ordered content", () => {
         );
         const content = xmlContent(node, { wrappers: { Numbers: ["Number"] } });
         expect(content.map((item) => (typeof item === "string" ? item : item.toXml()))).toEqual([
-            "<Custom />",
-            '<Numbers priority="1"><Extra /></Numbers>',
-            "<Other />",
+            "<Custom/>",
+            '<Numbers priority="1"><Extra/></Numbers>',
+            "<Other/>",
         ]);
         expect(
             serializeXmlElement({
@@ -222,14 +222,14 @@ describe("ordered content", () => {
                 children: [{ name: "Numbers", value: [new XmlElement({ name: "Number", text: "+1" })], wrapped: true }],
                 content,
             }),
-        ).toBe('<Dial><Custom /><Numbers priority="1"><Number>+1</Number><Extra /></Numbers><Other /></Dial>');
+        ).toBe('<Dial><Custom/><Numbers priority="1"><Number>+1</Number><Extra/></Numbers><Other/></Dial>');
         expect(
             serializeXmlElement({
                 name: "Dial",
                 children: [{ name: "Numbers", value: [new XmlElement({ name: "Number", text: "+1" })], wrapped: true }],
                 content: [new XmlElement({ name: "Custom" })],
             }),
-        ).toBe("<Dial><Numbers><Number>+1</Number></Numbers><Custom /></Dial>");
+        ).toBe("<Dial><Numbers><Number>+1</Number></Numbers><Custom/></Dial>");
     });
 
     it("round-trips mixed content inside undeclared elements", () => {
@@ -239,7 +239,7 @@ describe("ordered content", () => {
         expect(element.text).toBe("Hi  world");
         expect(element.children.map((child) => child.name)).toEqual(["b"]);
         expect(new XmlElement({ name: "A", text: "t", children: [new XmlElement({ name: "B" })] }).toXml()).toBe(
-            "<A>t<B /></A>",
+            "<A>t<B/></A>",
         );
     });
 
@@ -249,7 +249,7 @@ describe("ordered content", () => {
         const custom = new XmlElement({ name: "Custom" });
         const ordered = orderXmlContent([a, custom, a, "tail"], [a, a, b]);
         expect(serializeXmlElement({ name: "Response", content: ordered })).toBe(
-            "<Response><Say>a</Say><Custom /><Say>a</Say>tail<Say>b</Say></Response>",
+            "<Response><Say>a</Say><Custom/><Say>a</Say>tail<Say>b</Say></Response>",
         );
         expect(serializeXmlElement({ name: "Response", content: orderXmlContent([a, "x"], []) })).toBe(
             "<Response><Say>a</Say>x</Response>",
@@ -383,12 +383,12 @@ describe("comments", () => {
 
     it("wraps a root element with its sibling comments, keeping the declaration first", () => {
         const siblingComments = new XmlSiblingComments();
-        expect(siblingComments.wrap("<Response />")).toBe("<Response />");
+        expect(siblingComments.wrap("<Response/>")).toBe("<Response/>");
         siblingComments.before.push(new XmlComment("b"));
         siblingComments.after.push(new XmlComment("a"));
-        expect(siblingComments.wrap('<?xml version="1.0" encoding="UTF-8"?><Response />')).toBe(
-            '<?xml version="1.0" encoding="UTF-8"?><!--b--><Response /><!--a-->',
+        expect(siblingComments.wrap('<?xml version="1.0" encoding="UTF-8"?><Response/>')).toBe(
+            '<?xml version="1.0" encoding="UTF-8"?><!--b--><Response/><!--a-->',
         );
-        expect(siblingComments.wrap("<Response />")).toBe("<!--b--><Response /><!--a-->");
+        expect(siblingComments.wrap("<Response/>")).toBe("<!--b--><Response/><!--a-->");
     });
 });

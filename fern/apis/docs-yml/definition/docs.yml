@@ -837,8 +837,8 @@ types:
   NavigationConfig:
     discriminated: false
     union:
-      - UntabbedNavigationConfig
       - TabbedNavigationConfig
+      - UntabbedNavigationConfig
 
   UntabbedNavigationConfig: list<NavigationItem>
 

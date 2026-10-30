@@ -39,7 +39,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	request := &fern.SearchProductsRequest{
 //	    RegionID: "regionId",
 //	}
-//	client.Products.Search(
+//	_, err := client.Products.Search(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -65,7 +65,7 @@ func (c *Client) Search(
 //	    RegionID: "regionId",
 //	    ProductID: "productId",
 //	}
-//	client.Products.Get(
+//	_, err := client.Products.Get(
 //	    context.TODO(),
 //	    request,
 //	)

@@ -10,7 +10,7 @@ import (
     uuid "github.com/google/uuid"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -67,9 +67,13 @@ func do() {
             "1000000",
         ),
     }
-    client.Endpoints.HTTPMethods.TestPatch(
+    _, err := client.Endpoints.HTTPMethods.TestPatch(
         context.TODO(),
         "id",
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

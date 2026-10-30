@@ -41,7 +41,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //
 // Example:
 //
-//	client.Service.GetWithBearerToken(
+//	_, err := client.Service.GetWithBearerToken(
 //	    context.TODO(),
 //	)
 func (c *Client) GetWithBearerToken(

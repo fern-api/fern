@@ -64,6 +64,7 @@ import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorT
 import { executeAutomationsGenerate } from "./commands/automations/generate/executeAutomationsGenerate.js";
 import { listPreviewGroups } from "./commands/automations/listPreviewGroups.js";
 import { executeAutomationsUpgrade } from "./commands/automations/upgrade/executeAutomationsUpgrade.js";
+import { claimGuestSession } from "./commands/claim/claimGuestSession.js";
 import { diff } from "./commands/diff/diff.js";
 import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace.js";
 import { parseDocsDevDuration } from "./commands/docs-dev/parseDocsDevDuration.js";
@@ -79,7 +80,6 @@ import { uploadDocsTheme } from "./commands/docs-theme/uploadDocsTheme.js";
 import { downgrade } from "./commands/downgrade/downgrade.js";
 import { generateOpenAPIForWorkspaces } from "./commands/export/generateOpenAPIForWorkspaces.js";
 import { formatWorkspaces } from "./commands/format/formatWorkspaces.js";
-import { GUEST_DOCS_REQUIRE_PREVIEW_MESSAGE } from "./commands/generate/assertGuestCanGenerate.js";
 import { parseGeneratorArg } from "./commands/generate/filterGenerators.js";
 import { GenerationMode, generateAPIWorkspaces } from "./commands/generate/generateAPIWorkspaces.js";
 import { generateDocsWorkspace } from "./commands/generate/generateDocsWorkspace.js";
@@ -119,6 +119,7 @@ import { upgrade } from "./commands/upgrade/upgrade.js";
 import { validateDocsBrokenLinks } from "./commands/validate/validateDocsBrokenLinks.js";
 import { logMdxValidationResults, validateMdxFiles } from "./commands/validate/validateMdx.js";
 import { validateWorkspaces } from "./commands/validate/validateWorkspaces.js";
+import { whoami } from "./commands/whoami/whoami.js";
 import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeDefinitionForWorkspaces.js";
 import { writeDocsDefinitionForProject } from "./commands/write-docs-definition/writeDocsDefinitionForProject.js";
 import { FERN_CWD_ENV_VAR } from "./cwd.js";
@@ -302,6 +303,8 @@ async function tryRunCli(cliContext: CliContext) {
     addRegisterV2Command(cli, cliContext);
     addLoginCommand(cli, cliContext);
     addLogoutCommand(cli, cliContext);
+    addClaimCommand(cli, cliContext);
+    addWhoamiCommand(cli, cliContext);
     addMcpCommand(cli, cliContext);
     addFormatCommand(cli, cliContext);
     addWriteDefinitionCommand(cli, cliContext);
@@ -444,7 +447,11 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 if (projectConfig != null) {
                     argv.organization = projectConfig;
                 } else {
-                    argv.organization = await cliContext.getInput({ message: "Please enter your organization" });
+                    argv.organization = await cliContext.getInput({
+                        message: "Please enter your organization",
+                        nonInteractiveError:
+                            "--organization is required in non-interactive mode (stdin is not a TTY or CI is set). Example: fern init --organization acme"
+                    });
                 }
             }
             if (argv.api != null && argv.docs != null) {
@@ -1031,11 +1038,6 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     undefined,
                     { code: CliError.Code.ConfigError }
                 );
-            }
-            if (argv.guest && argv.docs != null && !argv.preview) {
-                return cliContext.failWithoutThrowing(GUEST_DOCS_REQUIRE_PREVIEW_MESSAGE, undefined, {
-                    code: CliError.Code.ConfigError
-                });
             }
             if (argv.fernignore != null && (argv.local || argv.runner != null)) {
                 return cliContext.failWithoutThrowing(
@@ -1838,6 +1840,41 @@ function addMcpCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
             )
             .demandCommand(1, "Specify a subcommand, e.g. `fern mcp install`.");
     });
+}
+
+function addClaimCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "claim",
+        "Claim this repo's guest session (from `fern generate --guest`) into your Fern organization",
+        (yargs) =>
+            yargs.option("org", {
+                alias: "organization",
+                string: true,
+                description:
+                    "Move the guest session's work into an organization you administer. Defaults to turning the guest organization into your own."
+            }),
+        async (argv) => {
+            cliContext.instrumentPostHogEvent({ command: "fern claim" });
+            await claimGuestSession({ cliContext, organization: argv.org });
+        }
+    );
+}
+
+function addWhoamiCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "whoami",
+        "Show the login, FERN_TOKEN or guest session the CLI is using here",
+        (yargs) =>
+            yargs.option("json", {
+                boolean: true,
+                default: false,
+                description: "Print the report as JSON"
+            }),
+        async (argv) => {
+            cliContext.instrumentPostHogEvent({ command: "fern whoami" });
+            await whoami({ cliContext, json: argv.json });
+        }
+    );
 }
 
 function addLogoutCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {

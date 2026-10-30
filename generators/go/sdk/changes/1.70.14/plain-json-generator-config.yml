@@ -1,0 +1,5 @@
+- summary: |
+    Go dynamic snippets no longer fail with `config.output.mode._visit is not a function` when the
+    generator config is plain JSON (as passed by the docs platform). The SDK version / package name
+    helpers now switch on `output.mode.type` instead of calling `_visit`.
+  type: fix

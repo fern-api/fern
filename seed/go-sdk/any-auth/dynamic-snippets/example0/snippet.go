@@ -8,7 +8,7 @@ import (
     option "github.com/any-auth/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -21,8 +21,12 @@ func do() {
         ClientID: "client_id",
         ClientSecret: "client_secret",
     }
-    client.Auth.GetToken(
+    _, err := client.Auth.GetToken(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

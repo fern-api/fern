@@ -37,7 +37,7 @@ import (
     client "github.com/multi-line-docs/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &fern.CreateUserRequest{
         Name: "name",
@@ -45,10 +45,14 @@ func do() {
             1,
         ),
     }
-    client.User.CreateUser(
+    _, err := client.User.CreateUser(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

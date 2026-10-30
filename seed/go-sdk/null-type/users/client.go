@@ -41,7 +41,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	request := &fern.GetUsersRequest{
 //	    ID: "id",
 //	}
-//	client.Users.Get(
+//	_, err := client.Users.Get(
 //	    context.TODO(),
 //	    request,
 //	)

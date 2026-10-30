@@ -57,7 +57,7 @@ func (c *Client) Post(
 //	        "",
 //	    ),
 //	}
-//	client.Service.JustFile(
+//	err := client.Service.JustFile(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -164,7 +164,7 @@ func (c *Client) WithFormEncodedContainers(
 //	        "",
 //	    ),
 //	}
-//	client.Service.OptionalArgs(
+//	_, err := client.Service.OptionalArgs(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -226,7 +226,7 @@ func (c *Client) WithJSONProperty(
 //	        Foo: "bar",
 //	    },
 //	}
-//	client.Service.WithRefBody(
+//	_, err := client.Service.WithRefBody(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -248,7 +248,7 @@ func (c *Client) WithRefBody(
 
 // Example:
 //
-//	client.Service.Simple(
+//	err := client.Service.Simple(
 //	    context.TODO(),
 //	)
 func (c *Client) Simple(

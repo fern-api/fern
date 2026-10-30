@@ -9,7 +9,7 @@ public class PauseXmlTest
     [NUnit.Framework.Test]
     public void FromXml_ToXml_RoundTrips()
     {
-        var xml = "<Pause length=\"1\" />";
+        var xml = "<Pause length=\"1\"></Pause>";
         var parsed = global::SeedApi.Pause.FromXml(xml);
         Assert.That(parsed.Length, Is.EqualTo(1), "Length");
         var serialized = parsed.ToXml(false);

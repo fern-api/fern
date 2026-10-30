@@ -504,3 +504,263 @@ describe("ReconnectingWebSocket waitForOpen", () => {
         expect(await settleState(waiting)).toBe("rejected");
     });
 });
+
+type EmitterListener = (...args: unknown[]) => void;
+
+class FakeEmitterWebSocket extends FakeWebSocket {
+    public emitterListeners: Record<string, EmitterListener[]> = {};
+
+    public on(type: string, listener: EmitterListener): void {
+        (this.emitterListeners[type] ??= []).push(listener);
+    }
+
+    public removeListener(type: string, listener: EmitterListener): void {
+        this.emitterListeners[type] = (this.emitterListeners[type] ?? []).filter((l) => l !== listener);
+    }
+
+    public simulateUnexpectedResponse(response: FakeIncomingMessage): void {
+        for (const listener of [...(this.emitterListeners["unexpected-response"] ?? [])]) {
+            listener({}, response);
+        }
+    }
+}
+
+class FakeIncomingMessage {
+    public destroyed = false;
+    private readonly streamListeners: Record<string, EmitterListener[]> = {};
+
+    constructor(
+        public readonly statusCode: number,
+        private readonly body = "",
+        public readonly headers: Record<string, string | string[] | undefined> = {},
+    ) {}
+
+    public setEncoding(_encoding: string): void {}
+
+    public on(type: string, listener: EmitterListener): this {
+        (this.streamListeners[type] ??= []).push(listener);
+        return this;
+    }
+
+    public destroy(): void {
+        this.destroyed = true;
+    }
+
+    public push(chunk: string): void {
+        this.streamListeners.data?.forEach((l) => l(chunk));
+    }
+
+    public flush(): void {
+        if (this.body) {
+            this.streamListeners.data?.forEach((l) => l(this.body));
+        }
+        this.streamListeners.end?.forEach((l) => l());
+        this.streamListeners.close?.forEach((l) => l());
+    }
+}
+
+describe("ReconnectingWebSocket rejected handshake", () => {
+    let socket: ReconnectingWebSocket | undefined;
+
+    beforeEach(() => {
+        FakeWebSocket.instances = [];
+    });
+
+    afterEach(() => {
+        socket?.close();
+        socket = undefined;
+    });
+
+    const createEmitterSocket = (options: ReconnectingWebSocket.Options = {}): ReconnectingWebSocket =>
+        new ReconnectingWebSocket({
+            url: "ws://localhost/test",
+            options: {
+                WebSocket: FakeEmitterWebSocket,
+                minReconnectionDelay: 0,
+                maxReconnectionDelay: 0,
+                ...options,
+            },
+        });
+
+    const latestEmitterSocket = (): FakeEmitterWebSocket =>
+        FakeWebSocket.instances[FakeWebSocket.instances.length - 1] as FakeEmitterWebSocket;
+
+    it("includes the response body in the error", async () => {
+        socket = createEmitterSocket({ maxRetries: 1 });
+        await flush();
+        const onError = vi.fn();
+        socket.addEventListener("error", onError);
+        const waiting = socket.waitForOpen().catch((error: unknown) => error);
+
+        const response = new FakeIncomingMessage(400, '{"err_msg":"Unknown query parameters: foo"}');
+        latestEmitterSocket().simulateUnexpectedResponse(response);
+        response.flush();
+        await flush();
+
+        expect(onError).toHaveBeenCalledTimes(1);
+        expect(onError.mock.calls[0]?.[0]).toMatchObject({
+            message: 'Unexpected server response: 400 ({"err_msg":"Unknown query parameters: foo"})',
+        });
+        expect(await waiting).toMatchObject({
+            message: 'Unexpected server response: 400 ({"err_msg":"Unknown query parameters: foo"})',
+        });
+        expect(response.destroyed).toBe(true);
+    });
+
+    it("exposes the status, headers and body on the error event", async () => {
+        socket = createEmitterSocket({ maxRetries: 1 });
+        await flush();
+        const onError = vi.fn();
+        socket.addEventListener("error", onError);
+        const waiting = socket.waitForOpen().catch((error: unknown) => error);
+
+        const body = '{"err_msg":"Invalid credentials"}';
+        const response = new FakeIncomingMessage(401, body, {
+            "content-type": "application/json",
+            "x-request-id": "req-123",
+            "set-cookie": ["a=1", "b=2"],
+            "x-missing": undefined,
+        });
+        latestEmitterSocket().simulateUnexpectedResponse(response);
+        response.flush();
+        await flush();
+
+        const expected = {
+            statusCode: 401,
+            headers: { "content-type": "application/json", "x-request-id": "req-123", "set-cookie": "a=1, b=2" },
+            body,
+        };
+        expect(onError.mock.calls[0]?.[0]).toMatchObject(expected);
+        expect(await waiting).toMatchObject(expected);
+    });
+
+    it("caps the body field at the same length as the message", async () => {
+        socket = createEmitterSocket({ maxRetries: 1 });
+        await flush();
+        const onError = vi.fn();
+        socket.addEventListener("error", onError);
+
+        const response = new FakeIncomingMessage(400, "z".repeat(5000));
+        latestEmitterSocket().simulateUnexpectedResponse(response);
+        response.flush();
+        await flush();
+
+        expect((onError.mock.calls[0]?.[0] as ErrorEvent).body).toBe("z".repeat(1000));
+    });
+
+    it("leaves the handshake fields undefined for other errors", async () => {
+        socket = createEmitterSocket({ maxRetries: 0, connectionTimeout: 50 });
+        await flush();
+        const onError = vi.fn();
+        socket.addEventListener("error", onError);
+        await new Promise((resolve) => setTimeout(resolve, 100));
+
+        const event = onError.mock.calls[0]?.[0] as ErrorEvent;
+        expect(event.message).toBe("TIMEOUT");
+        expect(event.statusCode).toBeUndefined();
+        expect(event.headers).toBeUndefined();
+        expect(event.body).toBeUndefined();
+    });
+
+    it("reports the status alone when the response has no body", async () => {
+        socket = createEmitterSocket({ maxRetries: 1 });
+        await flush();
+        const onError = vi.fn();
+        socket.addEventListener("error", onError);
+
+        const response = new FakeIncomingMessage(503);
+        latestEmitterSocket().simulateUnexpectedResponse(response);
+        response.flush();
+        await flush();
+
+        expect(onError).toHaveBeenCalledTimes(1);
+        expect(onError.mock.calls[0]?.[0]).toMatchObject({ message: "Unexpected server response: 503" });
+    });
+
+    it("truncates long response bodies", async () => {
+        socket = createEmitterSocket({ maxRetries: 1 });
+        await flush();
+        const onError = vi.fn();
+        socket.addEventListener("error", onError);
+
+        const response = new FakeIncomingMessage(400, "x".repeat(5000));
+        latestEmitterSocket().simulateUnexpectedResponse(response);
+        response.flush();
+        await flush();
+
+        const message = (onError.mock.calls[0]?.[0] as ErrorEvent).message;
+        expect(message).toBe(`Unexpected server response: 400 (${"x".repeat(1000)}...)`);
+    });
+
+    it("stops reading once the body exceeds the cap", async () => {
+        socket = createEmitterSocket({ maxRetries: 1 });
+        await flush();
+        const onError = vi.fn();
+        socket.addEventListener("error", onError);
+
+        const response = new FakeIncomingMessage(400);
+        latestEmitterSocket().simulateUnexpectedResponse(response);
+        response.push("y".repeat(600));
+        expect(response.destroyed).toBe(false);
+        response.push("y".repeat(600));
+        await flush();
+
+        expect(response.destroyed).toBe(true);
+        expect(onError).toHaveBeenCalledTimes(1);
+        expect((onError.mock.calls[0]?.[0] as ErrorEvent).message).toBe(
+            `Unexpected server response: 400 (${"y".repeat(1000)}...)`,
+        );
+    });
+
+    it("reports the partial body when the response never finishes", async () => {
+        socket = createEmitterSocket({ maxRetries: 1, connectionTimeout: 100 });
+        await flush();
+        const onError = vi.fn();
+        socket.addEventListener("error", onError);
+        const waiting = socket.waitForOpen().catch((error: unknown) => error);
+
+        const response = new FakeIncomingMessage(400);
+        latestEmitterSocket().simulateUnexpectedResponse(response);
+        response.push("partial");
+        await new Promise((resolve) => setTimeout(resolve, 150));
+
+        expect(onError).toHaveBeenCalledTimes(1);
+        expect(await waiting).toMatchObject({ message: "Unexpected server response: 400 (partial)" });
+        expect(response.destroyed).toBe(true);
+    });
+
+    it("keeps the retry policy and stops listening on the replaced socket", async () => {
+        socket = createEmitterSocket({ maxRetries: 3 });
+        await flush();
+        const onError = vi.fn();
+        socket.addEventListener("error", onError);
+        const first = latestEmitterSocket();
+
+        const response = new FakeIncomingMessage(500, "internal error");
+        first.simulateUnexpectedResponse(response);
+        response.flush();
+        await flush();
+
+        expect(onError).toHaveBeenCalledTimes(1);
+        expect(first.closeCalls).toHaveLength(1);
+        expect(FakeWebSocket.instances).toHaveLength(2);
+        expect(first.emitterListeners["unexpected-response"]).toHaveLength(0);
+        expect(latestEmitterSocket().emitterListeners["unexpected-response"]).toHaveLength(1);
+    });
+
+    it("does not emit a rejection error after close() is called", async () => {
+        socket = createEmitterSocket({ maxRetries: 1 });
+        await flush();
+        const onError = vi.fn();
+        socket.addEventListener("error", onError);
+
+        const response = new FakeIncomingMessage(400, "bad request");
+        latestEmitterSocket().simulateUnexpectedResponse(response);
+        socket.close();
+        response.flush();
+        await flush();
+
+        expect(onError).not.toHaveBeenCalled();
+        expect(response.destroyed).toBe(true);
+    });
+});

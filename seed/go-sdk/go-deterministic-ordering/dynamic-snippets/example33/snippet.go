@@ -9,7 +9,7 @@ import (
     types "github.com/go-deterministic-ordering/fern/types"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -24,8 +24,12 @@ func do() {
             "2023-08-31T14:15:22Z",
         ),
     }
-    client.Endpoints.Object.GetAndReturnWithDatetimeLikeString(
+    _, err := client.Endpoints.Object.GetAndReturnWithDatetimeLikeString(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

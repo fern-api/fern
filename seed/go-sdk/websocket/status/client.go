@@ -36,7 +36,7 @@ func NewClient(options *core.RequestOptions) *Client {
 
 // Example:
 //
-//	client.Status.GetStatus(
+//	_, err := client.Status.GetStatus(
 //	    context.TODO(),
 //	)
 func (c *Client) GetStatus(

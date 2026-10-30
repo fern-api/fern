@@ -7,14 +7,18 @@ import (
     option "github.com/unions-with-local-date/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
         ),
     )
-    client.Bigunion.Get(
+    _, err := client.Bigunion.Get(
         context.TODO(),
         "id",
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

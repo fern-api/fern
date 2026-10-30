@@ -340,7 +340,7 @@ export class XmlSerializationTestGenerator extends FileGenerator<CSharpFile, Mod
             .join("");
         const text = required.find(({ property }) => property.kind === "TEXT")?.sample.xml;
         if (text == null) {
-            return `<${name}${namespaceDeclaration}${attributes} />`;
+            return `<${name}${namespaceDeclaration}${attributes}></${name}>`;
         }
         return `<${name}${namespaceDeclaration}${attributes}>${text}</${name}>`;
     }
@@ -373,7 +373,7 @@ export class XmlSerializationTestGenerator extends FileGenerator<CSharpFile, Mod
                     ? ` xmlns:${this.xml.prefix}="${this.xml.namespace}"`
                     : ` xmlns="${this.xml.namespace}"`;
         }
-        return `<${this.rootName()}${namespaceDeclaration}${attributes}${selfClosing ? " />" : ">"}`;
+        return `<${this.rootName()}${namespaceDeclaration}${attributes}${selfClosing ? `></${this.rootName()}>` : ">"}`;
     }
 
     /** Required attributes/text (with sample values) so documents in the non-round-trip tests still parse. */

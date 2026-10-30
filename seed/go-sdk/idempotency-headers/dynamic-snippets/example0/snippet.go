@@ -8,7 +8,7 @@ import (
     option "github.com/idempotency-headers/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -21,8 +21,12 @@ func do() {
         Amount: 1,
         Currency: fern.CurrencyUsd,
     }
-    client.Payment.Create(
+    _, err := client.Payment.Create(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

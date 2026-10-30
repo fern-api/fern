@@ -43,7 +43,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	        "scope",
 //	    ),
 //	}
-//	client.Auth.GetToken(
+//	_, err := client.Auth.GetToken(
 //	    context.TODO(),
 //	    request,
 //	)

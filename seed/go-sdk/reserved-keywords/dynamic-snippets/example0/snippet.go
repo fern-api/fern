@@ -8,7 +8,7 @@ import (
     option "github.com/reserved-keywords/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -17,8 +17,12 @@ func do() {
     request := &fern.TestRequest{
         For: "for",
     }
-    client.Package.Test(
+    err := client.Package.Test(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

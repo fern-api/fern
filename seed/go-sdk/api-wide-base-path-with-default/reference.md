@@ -16,7 +16,7 @@
 request := &fern.Widget{
     Name: "name",
 }
-client.Widgets.Create(
+_, err := client.Widgets.Create(
     context.TODO(),
     "v1beta",
     request,

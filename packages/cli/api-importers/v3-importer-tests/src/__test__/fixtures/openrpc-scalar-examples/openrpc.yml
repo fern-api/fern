@@ -1,0 +1,47 @@
+openrpc: 1.2.6
+info:
+  title: Scalar Examples API
+  version: 1.0.0
+servers:
+  - url: https://api.example.com/rpc
+    name: Production
+methods:
+  - name: getStatus
+    params:
+      - name: sessionId
+        required: true
+        schema:
+          type: string
+          example: abc-123
+      - name: verbose
+        schema:
+          type: boolean
+          example: true
+    result:
+      name: status
+      schema:
+        type: string
+        example: active
+    examples:
+      - name: getStatus example
+        params:
+          - name: sessionId
+            value: abc-123
+          - name: verbose
+            value: true
+        result:
+          name: status
+          value: active
+  - name: getCount
+    params: []
+    result:
+      name: count
+      schema:
+        type: integer
+        example: 42
+    examples:
+      - name: getCount example
+        params: []
+        result:
+          name: count
+          value: 0

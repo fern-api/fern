@@ -1,4 +1,144 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.186.0
+  changelogEntry:
+    - summary: |
+        An MCP target in `sdk-config.yml` can now host its server with `output.delivery: hosted` and a
+        `slug`, the equivalent of `output.location: fern-hosted` in `generators.yml`. `fern generate
+        --sdk-config` deploys it like the `generators.yml` path does, and `fern sdk migrate` keeps
+        the hosting and the slug instead of converting the output to a zip download. The request sent to
+        sdk-gen-api still asks only for a download.
+      type: feat
+  createdAt: "2026-10-29"
+  irVersion: 67
+- version: 5.185.0
+  changelogEntry:
+    - summary: |
+        The CLI generator's `config.banner.file` in `generators.yml` points at a text asset (resolved relative to
+        `generators.yml`) whose contents become the generated CLI's startup banner, so logo art can live in the
+        config repo instead of inline in YAML.
+      type: feat
+  createdAt: "2026-10-29"
+  irVersion: 67
+- version: 5.184.0
+  changelogEntry:
+    - summary: |
+        Support `x-fern-explorer` in OpenRPC specs. Set it at the document root to
+        enable or disable the API Explorer for every method, or on a method to
+        override the root value.
+      type: feat
+  createdAt: "2026-10-29"
+  irVersion: 67
+- version: 5.183.2
+  changelogEntry:
+    - summary: |
+        `fern generate --docs --guest` no longer prints the published site's own "Claim this site to keep it" link
+        next to the guest session's claim link. A guest session owns its docs site, so claiming the session (the
+        `Claim it to keep this work` link, or `fern claim`) is what keeps the site; the second link did not work.
+      type: fix
+  createdAt: "2026-10-28"
+  irVersion: 67
+- version: 5.183.1
+  changelogEntry:
+    - summary: |
+        Fix OpenRPC specs being dropped from docs when a schema or method example is a single
+        string, number or boolean value. The OpenRPC importer no longer crashes on these examples,
+        and falsy example results such as `0` or `false` are kept in the endpoint's response example.
+      type: fix
+  createdAt: "2026-10-28"
+  irVersion: 67
+- version: 5.183.0
+  changelogEntry:
+    - summary: |
+        OpenRPC methods now pass their `paramStructure` through to the docs, so the API Explorer
+        and code snippets can send JSON-RPC `params` as an object keyed by name for `by-name` methods.
+      type: feat
+  createdAt: "2026-10-28"
+  irVersion: 67
+- version: 5.182.2
+  changelogEntry:
+    - summary: |
+        Cloning a private repository with a personal access token (for example when generating the README in
+        self-hosted GitHub mode) no longer fails with `could not read Username` in containers with libcurl 8.23+.
+        The token is now also sent as an `Authorization` header, which git keeps after it rewrites the remote URL.
+      type: fix
+  createdAt: "2026-10-28"
+  irVersion: 67
+- version: 5.182.1
+  changelogEntry:
+    - summary: |
+        Large untabbed docs sites with very big API reference layouts (tens of thousands of endpoints) no longer fail
+        `fern check` / `fern generate --docs` with "Maximum call stack size exceeded". The docs.yml parser is now
+        generated with TypeScript SDK generator 3.108.3, which collects validation errors without spreading them.
+      type: fix
+  createdAt: "2026-10-28"
+  irVersion: 67
+- version: 5.182.0
+  changelogEntry:
+    - summary: |
+        `fern generate --docs --guest` publishes without `--preview`: the guest session publishes to the Fern Drop
+        site FDR holds for it (its own `drop-<id>` host, ignoring the docs.yml instance URL) and prints the drop URL
+        and the claim link, so a guest's docs can be claimed into an organization.
+      type: feat
+  createdAt: "2026-10-28"
+  irVersion: 67
+- version: 5.181.0
+  changelogEntry:
+    - summary: |
+        `fern sdk migrate` now carries every `proto` spec in `generators.yml` into `sdk-config.yml` as a
+        `proto` source, with its root (local or git), target, overrides, dependencies, `localGeneration` and an
+        explicit `fromOpenApi`. Proto-only APIs no longer fail to migrate, and `from-openapi: true` protos are no
+        longer dropped when the API also has OpenAPI specs. `docs.yml` is left unchanged, with a warning, for APIs
+        with proto specs, because docs API references cannot list them.
+      type: feat
+  createdAt: "2026-10-28"
+  irVersion: 67
+- version: 5.180.2
+  changelogEntry:
+    - summary: |
+        `fern check` and `fern generate --docs` no longer fail with "Maximum call stack size exceeded"
+        on large sites whose `docs.yml` uses `tabs`. The parser now tries the tabbed navigation shape
+        before the untabbed one, so a tab's `layout` is no longer validated as an API reference layout
+        first.
+      type: fix
+  createdAt: "2026-10-28"
+  irVersion: 67
+- version: 5.180.1
+  changelogEntry:
+    - summary: |
+        Interactive prompts now fail fast with a non-zero exit code when stdin is not a TTY or CI is set,
+        instead of waiting forever for input (for example, `fern init` run by an agent without
+        `--organization`). Cancelling a prompt (Ctrl+C or stdin closing) now also exits non-zero
+        instead of reporting success. `CI=false` and `CI=0` are now treated as not running in CI.
+      type: fix
+  createdAt: "2026-10-27"
+  irVersion: 67
+- version: 5.180.0
+  changelogEntry:
+    - summary: |
+        Add `fern whoami [--json]`: shows whether the CLI is using a login, a `FERN_TOKEN` organization token or
+        nothing, and this repo's guest session (`fern generate --guest`) with its organization, expiry and claim
+        link. The guest token itself is never printed.
+      type: feat
+  createdAt: "2026-10-27"
+  irVersion: 67
+- version: 5.179.0
+  changelogEntry:
+    - summary: |
+        Add `fern claim [--org <name>]`: claims the guest session recorded by `fern generate --guest` with your
+        Fern login (via Venus), points `fern.config.json` at the organization that now owns the work and forgets
+        the guest session.
+      type: feat
+    - summary: |
+        Add `fern generate --guest` (SDKs and `--docs`): with no `fern login` or `FERN_TOKEN`, the CLI
+        starts a temporary Venus guest session, generates under its `guest-<id>` organization and prints the
+        claim link and expiry. The session is reused by every run in the same repo (`fern/.guest-session`,
+        gitignored; credential in `~/.fern/guest-sessions/`) and the CLI warns when it is about to expire.
+        A guest can only download: `--docs` requires `--preview`, and generators that push to GitHub or
+        publish to a registry are refused up front. `--guest --new-session` discards the recorded session
+        and starts another one. The login error now mentions `--guest`.
+      type: feat
+  createdAt: "2026-10-27"
+  irVersion: 67
 - version: 5.178.0
   changelogEntry:
     - summary: |

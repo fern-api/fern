@@ -91,7 +91,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	        ),
 //	    },
 //	}
-//	client.InlinedRequests.PostWithObjectBodyandResponse(
+//	_, err := client.InlinedRequests.PostWithObjectBodyandResponse(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -124,7 +124,7 @@ func (c *Client) PostWithObjectBodyandResponse(
 //	        "string",
 //	    },
 //	}
-//	client.InlinedRequests.PostWithArrayBodyAndHeaders(
+//	_, err := client.InlinedRequests.PostWithArrayBodyAndHeaders(
 //	    context.TODO(),
 //	    request,
 //	)

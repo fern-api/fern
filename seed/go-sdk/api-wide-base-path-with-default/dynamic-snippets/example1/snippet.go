@@ -8,7 +8,7 @@ import (
     option "github.com/api-wide-base-path-with-default/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -17,9 +17,13 @@ func do() {
     request := &fern.Widget{
         Name: "name",
     }
-    client.Widgets.Create(
+    _, err := client.Widgets.Create(
         context.TODO(),
         "apiVersion",
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

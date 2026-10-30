@@ -36,7 +36,7 @@ func NewClient(options *core.RequestOptions) *Client {
 
 // Example:
 //
-//	client.Sysprop.SetNumWarmInstances(
+//	err := client.Sysprop.SetNumWarmInstances(
 //	    context.TODO(),
 //	    common.LanguageJava.Ptr(),
 //	    1,
@@ -61,7 +61,7 @@ func (c *Client) SetNumWarmInstances(
 
 // Example:
 //
-//	client.Sysprop.GetNumWarmInstances(
+//	_, err := client.Sysprop.GetNumWarmInstances(
 //	    context.TODO(),
 //	)
 func (c *Client) GetNumWarmInstances(
