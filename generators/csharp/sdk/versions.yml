@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.92.11
+  changelogEntry:
+    - summary: |
+        XML (TwiML) serialization writes empty elements with an explicit close tag (`<Hangup></Hangup>`) instead of a
+        self-closing `<Hangup />`, matching the legacy twilio-csharp output byte for byte.
+      type: fix
+  createdAt: "2026-10-30"
+  irVersion: 67
 - version: 2.92.10
   changelogEntry:
     - summary: |
