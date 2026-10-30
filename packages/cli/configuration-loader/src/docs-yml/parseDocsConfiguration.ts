@@ -1961,7 +1961,8 @@ function parseLibrariesConfiguration(
         result[name] = {
             input,
             output: {
-                path: config.output.path
+                path: config.output.path,
+                pages: config.output.pages ?? true
             },
             lang: config.lang
         };

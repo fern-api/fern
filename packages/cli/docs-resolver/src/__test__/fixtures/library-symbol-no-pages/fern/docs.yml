@@ -1,0 +1,14 @@
+instances: []
+navigation:
+  - page: C API
+    path: ./pages/c-api.mdx
+  - library: cuopt-c
+    title: Generated Reference
+libraries:
+  cuopt-c:
+    input:
+      git: https://github.com/acme/cuopt
+    output:
+      path: ./static/cuopt
+      pages: false
+    lang: cpp
