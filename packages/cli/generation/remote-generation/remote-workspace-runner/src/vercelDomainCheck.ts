@@ -128,13 +128,10 @@ export function getVercelDnsMessage(domains: { host: string; target: string }[],
     const color = isHardError ? chalk.red : chalk.yellow;
     const plural = domains.length > 1;
     const deadline = "December 1, 2026";
-    const lines = [
-        chalk.bold(
-            isHardError
-                ? `Publishing is blocked: your custom domain${plural ? "s" : ""} still point${plural ? "" : "s"} to Vercel.`
-                : `Action required by ${deadline}: your custom domain${plural ? "s" : ""} still point${plural ? "" : "s"} to Vercel.`
-        ),
-        "",
+    const title = isHardError
+        ? `[SEVERE] Publishing is blocked: your custom domain${plural ? "s" : ""} still point${plural ? "" : "s"} to Vercel.`
+        : `Action required by ${deadline}: your custom domain${plural ? "s" : ""} still point${plural ? "" : "s"} to Vercel.`;
+    const body = [
         ...domains.map(({ host, target }) => `  ${host}  →  ${target}`),
         "",
         "Fern Docs has moved to new hosting. To switch (your docs stay live on the current",
@@ -149,9 +146,14 @@ export function getVercelDnsMessage(domains: { host: string; target: string }[],
             : `From ${deadline}, this warning becomes an error and publishing will fail.`,
         "Questions? Reach out in your Fern Slack channel or email support@buildwithfern.com."
     ];
-    const width = Math.max(...lines.map((line) => stripAnsi(line).length)) + 2;
+    const width = Math.max(title.length, ...body.map((line) => line.length)) + 2;
     const border = color("━".repeat(width));
-    return ["", border, ...lines.map((line) => ` ${line}`), border, ""].join("\n");
+    if (!isHardError) {
+        return ["", border, ` ${chalk.bold(title)}`, "", ...body.map((line) => ` ${line}`), border, ""].join("\n");
+    }
+    // The logger colors the whole error red, which is hard to read; a reset keeps the body in the terminal's default color.
+    const header = chalk.bgRed.whiteBright.bold(` ${title}`.padEnd(width));
+    return ["", border, header, "", ...body.map((line) => chalk.reset(` ${line}`)), border, ""].join("\n");
 }
 
 function createResolver(): DnsLookup {
@@ -208,11 +210,6 @@ function inRanges(ip: string, ranges: readonly string[]): boolean {
         const start = ipv4ToInt(base);
         return start != null && value >= start && value < start + 2 ** (32 - Number(bits));
     });
-}
-
-function stripAnsi(value: string): string {
-    // biome-ignore lint/suspicious/noControlCharactersInRegex: matching ANSI escape codes
-    return value.replace(/\u001b\[[0-9;]*m/g, "");
 }
 
 async function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
