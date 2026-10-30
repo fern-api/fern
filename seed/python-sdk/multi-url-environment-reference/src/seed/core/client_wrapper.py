@@ -38,7 +38,7 @@ class BaseClientWrapper:
             "X-Fern-Language": "Python",
             "X-Fern-Runtime": f"python/{platform.python_version()}",
             "X-Fern-Platform": f"{platform.system().lower()}/{platform.release()}",
-            "X-Fern-SDK-Name": "fern_multi-url-environment-reference",
+            "X-Fern-SDK-Name": "fern-multi-url-environment-reference",
             "X-Fern-SDK-Version": "0.0.1",
             **(self.get_custom_headers() or {}),
         }

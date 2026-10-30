@@ -1,3 +1,3 @@
 from importlib import metadata
 
-__version__ = metadata.version("fern_bearer-token-environment-variable")
+__version__ = metadata.version("fern-bearer-token-environment-variable")

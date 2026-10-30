@@ -1,9 +1,9 @@
 [project]
-name = "fern_discriminated-union-with-nested-oneof"
+name = "fern-discriminated-union-with-nested-oneof"
 dynamic = ["version"]
 
 [tool.poetry]
-name = "fern_discriminated-union-with-nested-oneof"
+name = "fern-discriminated-union-with-nested-oneof"
 version = "0.0.1"
 description = ""
 readme = "README.md"

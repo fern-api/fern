@@ -1,9 +1,9 @@
 [project]
-name = "fern_basic-auth-environment-variables"
+name = "fern-basic-auth-environment-variables"
 dynamic = ["version"]
 
 [tool.poetry]
-name = "fern_basic-auth-environment-variables"
+name = "fern-basic-auth-environment-variables"
 version = "0.0.1"
 description = ""
 readme = "README.md"

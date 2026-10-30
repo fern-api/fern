@@ -1,3 +1,3 @@
 from importlib import metadata
 
-__version__ = metadata.version("fern_multi-url-environment-reference")
+__version__ = metadata.version("fern-multi-url-environment-reference")

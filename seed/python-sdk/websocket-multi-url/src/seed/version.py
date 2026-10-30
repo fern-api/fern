@@ -1,3 +1,3 @@
 from importlib import metadata
 
-__version__ = metadata.version("fern_websocket-multi-url")
+__version__ = metadata.version("fern-websocket-multi-url")

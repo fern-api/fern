@@ -14,7 +14,7 @@ except ImportError:
         def __init__(self, **kwargs: typing.Any) -> None:
             raise RuntimeError(
                 "To use the aiohttp client, install the aiohttp extra: "
-                "pip install fern_api-wide-base-path-with-default[aiohttp]"
+                "pip install fern-api-wide-base-path-with-default[aiohttp]"
             )
 
 else:
