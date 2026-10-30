@@ -103,4 +103,4 @@ def test_whitelabel_logger_name_without_project_config(tmp_path: Path) -> None:
 
 def test_core_logging_still_names_logger_fern() -> None:
     # CoreUtilities rewrites this exact string for whitelabeled SDKs.
-    assert 'logging.getLogger("fern")' in CORE_LOGGING_PY.read_text()
+    assert CORE_LOGGING_PY.read_text().count('logging.getLogger("fern")') == 1
