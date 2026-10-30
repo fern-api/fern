@@ -240,7 +240,9 @@ describe("fern generate --docs", () => {
                 fernProject({ docs: docsYml({ snippets: '    snippets:\n      python: "acme-py"\n' }) })
             );
 
-            expect(logs).toContain("warn: Failed to upload python SDK snippets because of unknown package `acme-py`.");
+            expect(logs).toContainEqual(
+                expect.stringMatching(/^warn: No python SDK snippets for package `acme-py`: no sdk-gen build was found/)
+            );
             expect(registeredApi().dynamicIRs).toBeUndefined();
         });
 
