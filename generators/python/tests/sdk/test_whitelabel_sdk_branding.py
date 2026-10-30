@@ -104,3 +104,16 @@ def test_whitelabel_logger_name_without_project_config(tmp_path: Path) -> None:
 def test_core_logging_still_names_logger_fern() -> None:
     # CoreUtilities rewrites this exact string for whitelabeled SDKs.
     assert CORE_LOGGING_PY.read_text().count('logging.getLogger("fern")') == 1
+
+
+@pytest.mark.parametrize(
+    "raw, normalized",
+    [("acme.orders.v2", "acme-orders-v2"), ("Acme_Orders", "acme-orders"), ("acme._-orders", "acme-orders")],
+)
+def test_package_name_is_normalized(raw: str, normalized: str) -> None:
+    assert ProjectConfig(package_name=raw, package_version="1.2.3").package_name == normalized
+
+
+def test_whitelabel_logger_name_uses_dashed_package_name(tmp_path: Path) -> None:
+    project = _project(tmp_path, project_config=ProjectConfig(package_name="acme.orders", package_version="1.2.3"))
+    assert get_whitelabel_logger_name(project) == "acme-orders"

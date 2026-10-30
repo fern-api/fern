@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+import re
 import typing
 from dataclasses import dataclass
 from enum import Enum
@@ -44,6 +45,10 @@ if TYPE_CHECKING:
 class ProjectConfig:
     package_name: str
     package_version: str
+
+    def __post_init__(self) -> None:
+        # https://packaging.python.org/en/latest/specifications/name-normalization/
+        object.__setattr__(self, "package_name", re.sub(r"[-_.]+", "-", self.package_name).lower())
 
 
 def _strip_auto_generated_notice(contents: str) -> str:
