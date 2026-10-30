@@ -48,6 +48,8 @@ export declare namespace LocalTaskHandler {
         generatorLanguage: string | undefined;
         absolutePathToSpecRepo: AbsoluteFilePath | undefined;
         skipFernignore?: boolean;
+        /** Fail instead of falling back to a PATCH bump when AUTO version analysis is unavailable. */
+        strictVersion?: boolean;
     }
 }
 
@@ -66,6 +68,7 @@ export class LocalTaskHandler {
     private generatorLanguage: string | undefined;
     private absolutePathToSpecRepo: AbsoluteFilePath | undefined;
     private skipFernignore: boolean;
+    private strictVersion: boolean;
 
     constructor({
         context,
@@ -81,7 +84,8 @@ export class LocalTaskHandler {
         autoVersioningCache,
         generatorLanguage,
         absolutePathToSpecRepo,
-        skipFernignore
+        skipFernignore,
+        strictVersion
     }: LocalTaskHandler.Init) {
         this.context = context;
         this.absolutePathToLocalOutput = absolutePathToLocalOutput;
@@ -97,6 +101,7 @@ export class LocalTaskHandler {
         this.generatorLanguage = generatorLanguage;
         this.absolutePathToSpecRepo = absolutePathToSpecRepo;
         this.skipFernignore = skipFernignore ?? false;
+        this.strictVersion = strictVersion ?? false;
     }
 
     public async copyGeneratedFiles(): Promise<{
@@ -216,6 +221,16 @@ export class LocalTaskHandler {
      * Handles automatic semantic versioning by analyzing the git diff with AI.
      * Returns the final version to use and the commit message, or null if NO_CHANGE.
      */
+    private assertNotStrictVersion(reason: string): void {
+        if (!this.strictVersion) {
+            return;
+        }
+        throw new StrictVersionError(
+            `AUTO versioning could not assess the change (${reason}). ` +
+                "--strict-version is set, so generation fails instead of falling back to a PATCH bump."
+        );
+    }
+
     private async handleAutoVersioning(priorChangelog: string): Promise<AutoVersionResult | null> {
         const autoVersioningService = new AutoVersioningService({ logger: this.context.logger });
         let diffFile: string | undefined;
@@ -340,6 +355,10 @@ export class LocalTaskHandler {
             // Reject absurdly large diffs before chunking to prevent excessive resource usage
             const cleanedDiffBytes = Buffer.byteLength(cleanedDiff, "utf-8");
             if (cleanedDiffBytes > MAX_RAW_DIFF_BYTES) {
+                this.assertNotStrictVersion(
+                    `diff too large for analysis (${(cleanedDiffBytes / 1_000_000).toFixed(1)}MB, ` +
+                        `limit ${MAX_RAW_DIFF_BYTES / 1_000_000}MB)`
+                );
                 this.context.logger.warn(
                     `Diff too large for analysis (${(cleanedDiffBytes / 1_000_000).toFixed(1)}MB, ` +
                         `limit ${MAX_RAW_DIFF_BYTES / 1_000_000}MB). Falling back to PATCH increment.`
@@ -362,6 +381,11 @@ export class LocalTaskHandler {
             // low-priority (addition-only) sections.
             const cappedChunks = chunks.slice(0, MAX_CHUNKS);
             const skippedChunks = chunks.length - cappedChunks.length;
+            if (skippedChunks > 0) {
+                this.assertNotStrictVersion(
+                    `${skippedChunks} of ${chunks.length} diff chunks would not be analyzed (capped at ${MAX_CHUNKS})`
+                );
+            }
 
             if (chunks.length > 1) {
                 this.context.logger.info(
@@ -491,6 +515,7 @@ export class LocalTaskHandler {
                 }
             } catch (aiError) {
                 const errorMessage = extractErrorMessage(aiError);
+                this.assertNotStrictVersion(`AI analysis failed: ${errorMessage}`);
                 this.context.logger.warn(
                     `AI analysis failed, falling back to PATCH increment. ` +
                         `Diff stats: ${cleanedDiff.length.toLocaleString()} chars cleaned ` +
@@ -559,6 +584,10 @@ export class LocalTaskHandler {
                     version: initialVersion,
                     commitMessage
                 };
+            }
+
+            if (error instanceof StrictVersionError) {
+                throw error;
             }
 
             this.context.logger.error(`Failed to perform automatic versioning: ${error}`);
@@ -1243,4 +1272,10 @@ export async function copySnippetJsonIfNonEmpty({
     }
     await cp(src, dest);
     return "copied";
+}
+
+class StrictVersionError extends CliError {
+    constructor(message: string) {
+        super({ message, code: CliError.Code.VersionError });
+    }
 }

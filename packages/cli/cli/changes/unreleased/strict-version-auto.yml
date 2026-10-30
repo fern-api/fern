@@ -1,0 +1,6 @@
+- summary: |
+    Add `--strict-version` to `fern generate`. With `--version AUTO --local`, generation now exits non-zero
+    when AI version analysis is unavailable (analysis error or oversized diff) instead of silently falling back
+    to a PATCH bump. The generator-cli `AutoVersionStep` also accepts a `strict` option that fails the step and
+    stops the pipeline before any GitHub push.
+  type: feat

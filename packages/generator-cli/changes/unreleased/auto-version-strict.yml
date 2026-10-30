@@ -1,0 +1,5 @@
+- summary: |
+    `AutoVersionStep` accepts a `strict` option. When set, the step fails instead of falling back to a PATCH bump
+    if AI version analysis is unavailable (analysis error, oversized diff, or partial chunk failures), and
+    `PostGenerationPipeline` stops before the GitHub step.
+  type: feat
