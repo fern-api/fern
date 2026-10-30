@@ -1,3 +1,8 @@
+type GlobalHeaders = InstanceType<typeof globalThis.Headers>;
+type HeadersEntries = GlobalHeaders extends { entries(): infer R } ? R : IterableIterator<[string, string]>;
+type HeadersKeys = GlobalHeaders extends { keys(): infer R } ? R : IterableIterator<string>;
+type HeadersValues = GlobalHeaders extends { values(): infer R } ? R : IterableIterator<string>;
+
 let Headers: typeof globalThis.Headers;
 
 if (typeof globalThis.Headers !== "undefined") {
@@ -68,23 +73,23 @@ if (typeof globalThis.Headers !== "undefined") {
             return this.headers.get("set-cookie") || [];
         }
 
-        *entries(): IterableIterator<[string, string]> {
+        *entries(): HeadersEntries {
             for (const [key, values] of this.headers.entries()) {
                 yield [key, values.join(", ")];
             }
         }
 
-        *keys(): IterableIterator<string> {
+        *keys(): HeadersKeys {
             yield* this.headers.keys();
         }
 
-        *values(): IterableIterator<string> {
+        *values(): HeadersValues {
             for (const values of this.headers.values()) {
                 yield values.join(", ");
             }
         }
 
-        [Symbol.iterator](): IterableIterator<[string, string]> {
+        [Symbol.iterator](): HeadersEntries {
             return this.entries();
         }
     };
