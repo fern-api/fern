@@ -1457,6 +1457,7 @@ async function executeFernSdkGenApiBuild(
     for (const participant of participants) {
         participant.context.logger.debug(`sdk-gen-api build ID: ${buildId}`);
     }
+    instrumentFernSdkGenApiBuildSubmitted({ participants, request, origin, buildId });
     const loggedByTarget = new Map<string, number>();
     const pollDeadline = Date.now() + POLL_TIMEOUT_MS;
     for (;;) {
@@ -1523,6 +1524,51 @@ async function executeFernSdkGenApiBuild(
             );
         }
         await delay(POLL_INTERVAL_MS);
+    }
+}
+
+/**
+ * Records one event per target so an sdk-gen-api build or target ID can be traced back to the
+ * organization, CLI run (`fern_run_id`, `github_run_id`), and, for logged-in users, the user.
+ */
+function instrumentFernSdkGenApiBuildSubmitted({
+    participants,
+    request,
+    origin,
+    buildId
+}: {
+    participants: FernSdkGenApiBuildParameters[];
+    request: FernSdkGenApiRequest;
+    origin: string;
+    buildId: string;
+}): void {
+    for (const [index, participant] of participants.entries()) {
+        const target = request.targets[index];
+        if (target == null) {
+            continue;
+        }
+        try {
+            participant.context.instrumentPostHogEvent({
+                orgId: participant.organization,
+                command: "sdk-gen-api build submitted",
+                properties: {
+                    sdkGenApiBuildId: buildId,
+                    sdkGenApiTargetId: target.targetId,
+                    sdkGenApiTargetCount: request.targets.length,
+                    sdkGenApiHost: new URL(origin).host,
+                    apiName: request.apiName,
+                    generatorName: target.fernGenerator.id,
+                    generatorVersion: target.fernGenerator.version ?? participant.generatorInvocation.version,
+                    language: target.language,
+                    payloadKind: target.payloadKind,
+                    outputMode: target.requestedOutput.type,
+                    sdkName: target.sdk.name,
+                    sdkVersion: target.sdk.version
+                }
+            });
+        } catch (error) {
+            participant.context.logger.debug(`[telemetry] failed to send sdk-gen-api build event: ${String(error)}`);
+        }
     }
 }
 
