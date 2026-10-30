@@ -109,6 +109,19 @@ describe("createProtoWorkspace", () => {
         expect(await exists(workspace, "proto/google/api/annotations.proto")).toBe(false);
     });
 
+    it("ignores a directory whose name ends in .proto but still reads the files inside it", async () => {
+        const source = await temporaryDirectory();
+        const workspace = await temporaryDirectory();
+        await write(source, "schema.proto/acme.proto", ANNOTATED_SERVICE);
+
+        await run({ workspace, protoPath: source });
+
+        expect(await readProtoSpec(workspace)).toMatchObject({
+            root: "proto",
+            target: "proto/schema.proto/acme.proto"
+        });
+    });
+
     it("copies a single file and uses it as the target", async () => {
         const source = await temporaryDirectory();
         const workspace = await temporaryDirectory();

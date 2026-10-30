@@ -185,9 +185,23 @@ async function writeBundledProtos({
 
 /** Paths of every `.proto` file under `directory`, relative to it and with forward slashes. */
 async function listProtoFiles(directory: AbsoluteFilePath): Promise<string[]> {
-    const entries = await readdir(directory, { recursive: true });
-    return entries
-        .filter((entry) => entry.endsWith(PROTO_EXTENSION))
-        .map((entry) => entry.split(path.sep).join("/"))
-        .sort();
+    const found: string[] = [];
+    const walk = async (relativeDirectory: string): Promise<void> => {
+        const entries = await readdir(path.join(directory, relativeDirectory), { withFileTypes: true });
+        for (const entry of entries) {
+            const relativePath = path.posix.join(relativeDirectory, entry.name);
+            if (entry.isDirectory()) {
+                await walk(relativePath);
+            } else if (entry.name.endsWith(PROTO_EXTENSION) && (await isFile(path.join(directory, relativePath)))) {
+                found.push(relativePath);
+            }
+        }
+    };
+    await walk("");
+    return found.sort();
+}
+
+/** True for regular files, including symlinks to them. */
+async function isFile(filepath: string): Promise<boolean> {
+    return (await stat(filepath)).isFile();
 }
