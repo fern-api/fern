@@ -850,7 +850,13 @@ async function addHintToGenerationError<T>(
         return await run();
     } catch (error) {
         if (error instanceof CliError) {
-            throw new CliError({ message: withHint(error.message, hint), code: error.code, docsLink: error.docsLink });
+            const withHintError = new CliError({
+                message: withHint(error.message, hint),
+                code: error.code,
+                docsLink: error.docsLink
+            });
+            withHintError.stack = error.stack;
+            throw withHintError;
         }
         // Already-logged failures (TaskAbortSignal) and unexpected errors keep their own handling.
         context.logger.error(hint);
