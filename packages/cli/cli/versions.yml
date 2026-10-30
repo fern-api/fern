@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.188.1
+  changelogEntry:
+    - summary: |
+        `fern check` now warns when a docs page uses Mintlify-only components (`<ResponseField>`,
+        `<Danger>`, `<Columns>`, `<Tree>`, `<RequestExample>`, `<ResponseExample>`, `<Visibility>`)
+        and suggests the Fern component to use instead.
+      type: fix
+  createdAt: "2026-10-30"
+  irVersion: 67
 - version: 5.188.0
   changelogEntry:
     - summary: |
