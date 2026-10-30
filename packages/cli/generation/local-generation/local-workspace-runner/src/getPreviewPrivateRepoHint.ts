@@ -15,5 +15,5 @@ export function getPreviewPrivateRepoHint({
     if (!previewMode || token.trim() !== "") {
         return undefined;
     }
-    return `--preview and --local can't run with a private repo (${uri}).`;
+    return `--preview and --local can't run with a private repo (${uri}), remove --preview and generate to a local folder`;
 }
