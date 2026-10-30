@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.41.15
+  changelogEntry:
+    - summary: |
+        When `whitelabel` is enabled, the SDK's platform headers are now sent as `X-Codegen-*`
+        (for example `X-Codegen-Language`) instead of `X-Fern-*`, and the SDK's logger is named
+        `{package name}_sdk_{version}` instead of `fern`.
+      type: fix
+  createdAt: "2026-10-30"
+  irVersion: 67
 - version: 5.41.14
   changelogEntry:
     - summary: |
