@@ -92,13 +92,13 @@ def _project(tmp_path: Path, *, project_config: Optional[ProjectConfig]) -> Proj
     )
 
 
-def test_whitelabel_logger_name_uses_package_name_and_version(tmp_path: Path) -> None:
+def test_whitelabel_logger_name_is_package_name(tmp_path: Path) -> None:
     project = _project(tmp_path, project_config=ProjectConfig(package_name="acme-sdk", package_version="1.2.3"))
-    assert get_whitelabel_logger_name(project) == "acme-sdk_sdk_1.2.3"
+    assert get_whitelabel_logger_name(project) == "acme-sdk"
 
 
 def test_whitelabel_logger_name_without_project_config(tmp_path: Path) -> None:
-    assert get_whitelabel_logger_name(_project(tmp_path, project_config=None)) == "acme_sdk"
+    assert get_whitelabel_logger_name(_project(tmp_path, project_config=None)) == "acme"
 
 
 def test_core_logging_still_names_logger_fern() -> None:

@@ -1231,7 +1231,7 @@ class CoreUtilities:
 
 
 def get_whitelabel_logger_name(project: Project) -> str:
-    """`{package name}_sdk_{version}`, so whitelabeled SDKs don't log under the "fern" logger."""
+    """The package name, so whitelabeled SDKs don't log under the "fern" logger."""
     if project._project_config is None:
-        return f"{project.get_module_path_for_imports()}_sdk"
-    return f"{project._project_config.package_name}_sdk_{project._project_config.package_version}"
+        return project.get_module_path_for_imports()
+    return project._project_config.package_name

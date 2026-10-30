@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    When `whitelabel` is enabled, the SDK's logger is now named after the package (for example
+    `acme.orders`) instead of `{package name}_sdk_{version}`. The name no longer changes on every
+    release, and it fits Python's dotted logger hierarchy, so `logging.getLogger("acme")` also
+    configures it.
+  type: fix
