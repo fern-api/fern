@@ -4098,6 +4098,84 @@ describe("sdk-gen-api build status polling", () => {
     });
 });
 
+describe("sdk-gen-api build telemetry", () => {
+    function startBuild(instrumentPostHogEvent: ReturnType<typeof vi.fn>) {
+        vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "https://sdk-gen-api.test");
+        const generatorInvocation = invocation();
+        const targetId = createFernSdkGenApiRequest({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation,
+            sdkVersion: "1.2.3",
+            specsTarGzBuffer: validSourceArchive,
+            payload: runtimePayload(validRuntimeBundle)
+        }).targets[0]?.targetId;
+        vi.spyOn(axios, "post").mockResolvedValue({ data: { buildId: "build-1" } } as never);
+        vi.spyOn(axios, "get").mockResolvedValue({
+            data: {
+                buildId: "build-1",
+                status: "failed",
+                targets: [{ targetId, status: "failed", logs: [], error: { message: "Generator crashed" } }]
+            }
+        } as never);
+        const outcome = runFernSdkGenApiBuild({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation,
+            sdkVersion: "1.2.3",
+            token: { value: "token" } as never,
+            specsTarGzBuffer: validSourceArchive,
+            payload: runtimePayload(validRuntimeBundle),
+            absolutePathToPreview: undefined,
+            context: {
+                logger: contextLogger,
+                failAndThrow: (message: string) => {
+                    throw new Error(message);
+                },
+                instrumentPostHogEvent
+            } as never
+        });
+        return { outcome, targetId };
+    }
+
+    it("records the build and target IDs for each target, even when the build fails", async () => {
+        const instrumentPostHogEvent = vi.fn();
+        const { outcome, targetId } = startBuild(instrumentPostHogEvent);
+
+        await expect(outcome).rejects.toMatchObject({ message: "Generator crashed" });
+        expect(instrumentPostHogEvent).toHaveBeenCalledExactlyOnceWith({
+            orgId: "acme",
+            command: "sdk-gen-api build submitted",
+            properties: {
+                sdkGenApiBuildId: "build-1",
+                sdkGenApiTargetId: targetId,
+                sdkGenApiTargetCount: 1,
+                sdkGenApiHost: "sdk-gen-api.test",
+                apiName: "Petstore",
+                generatorName: "fernapi/fern-typescript-sdk",
+                generatorVersion: "3.86.0",
+                language: "typescript",
+                payloadKind: "fern-runtime-bundle",
+                outputMode: "download",
+                sdkName: "Petstore",
+                sdkVersion: "1.2.3"
+            }
+        });
+    });
+
+    it("does not fail the build when telemetry throws", async () => {
+        const instrumentPostHogEvent = vi.fn(() => {
+            throw new Error("posthog unavailable");
+        });
+        const { outcome } = startBuild(instrumentPostHogEvent);
+
+        await expect(outcome).rejects.toMatchObject({ message: "Generator crashed" });
+        expect(instrumentPostHogEvent).toHaveBeenCalledOnce();
+    });
+});
+
 describe("sdk-gen-api target failure message", () => {
     it.each([
         [
