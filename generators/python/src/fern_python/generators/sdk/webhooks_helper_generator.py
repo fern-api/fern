@@ -3,7 +3,6 @@ from dataclasses import dataclass, field
 from typing import List, Optional, Tuple
 
 from fern_python.codegen import Project
-from fern_python.codegen.file_header import FERN_HEADER
 from fern_python.codegen.filepath import Filepath
 from fern_python.codegen.module_manager import ModuleExport
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
@@ -235,9 +234,7 @@ class WebhooksHelperGenerator:
 
 
 class _HmacHelperWriter:
-    def __init__(
-        self, *, class_name: str, config: ir_types.HmacSignatureVerification, header: str = FERN_HEADER
-    ) -> None:
+    def __init__(self, *, class_name: str, config: ir_types.HmacSignatureVerification, header: str) -> None:
         self._class_name = class_name
         self._header = header
         self._config = config

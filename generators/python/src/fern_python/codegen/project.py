@@ -268,11 +268,11 @@ class Project:
                 license_header=self._license_header,
             )
             read_file = existing_file.read()
-            if self._whitelabel:
-                read_file = read_file.replace(FERN_HEADER, WHITELABEL_HEADER)
             if string_replacements is not None:
                 for k, v in string_replacements.items():
                     read_file = read_file.replace(k, v)
+            if self._whitelabel:
+                read_file = read_file.replace(FERN_HEADER, WHITELABEL_HEADER)
 
             writer.write(read_file)
             writer.write_to_file(
