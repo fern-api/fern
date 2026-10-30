@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.37.5
+  changelogEntry:
+    - summary: |
+        XML (TwiML) builders keep the legacy meaning of a String setter whose name is shared by the element's text
+        and a child element: `Dial.builder().number("+15551234567")` sets the text (`<Dial>+15551234567</Dial>`) as in
+        twilio-java, `number(Number)` adds the `<Number>` child and `addNumber(String)` adds a child with text; the
+        text property is no longer renamed to `text` (the `text(...)` alias stays).
+      type: fix
+  createdAt: "2026-10-30"
+  irVersion: 67
 - version: 4.37.4
   changelogEntry:
     - summary: |
