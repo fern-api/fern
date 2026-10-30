@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.187.0
+  changelogEntry:
+    - summary: |
+        `fern generate` now records the sdk-gen-api build and target IDs in its usage telemetry once
+        the build is accepted, so a server-side build can be traced back to the organization and CLI
+        run that requested it. Generation is unaffected if telemetry fails.
+      type: feat
+  createdAt: "2026-10-30"
+  irVersion: 67
 - version: 5.186.0
   changelogEntry:
     - summary: |
