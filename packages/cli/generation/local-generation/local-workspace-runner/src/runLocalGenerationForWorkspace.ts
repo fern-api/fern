@@ -335,7 +335,7 @@ export async function runLocalGenerationForWorkspace({
                         ? getPreviewPrivateRepoHint({
                               uri: selfhostedGithubConfig.uri,
                               token: selfhostedGithubConfig.token,
-                              previewMode: selfhostedGithubConfig.previewMode
+                              previewMode: isPreview
                           })
                         : undefined;
                 if (previewPrivateRepoHint != null) {
