@@ -1,9 +1,10 @@
 # yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
 
 - summary: |
-    When `whitelabel` is enabled, the SDK's logger is now named after the package (for example
-    `acme-orders`) instead of `{package name}_sdk_{version}`, so the name no longer changes on
-    every release.
+    When `whitelabel` is enabled, the SDK's logger is now named after the package, with dashes
+    turned into dots (for example `acme-orders` logs as `acme.orders`), instead of
+    `{package name}_sdk_{version}`. The name no longer changes on every release, and it sits under
+    parent loggers such as `acme`.
   type: fix
 - summary: |
     The PyPI package name is now always normalized per the Python packaging spec: runs of
