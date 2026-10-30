@@ -1175,14 +1175,14 @@ typing-extensions = ">=4.13.0,<5.0.0"
 
 [[package]]
 name = "langgraph"
-version = "1.2.18"
+version = "1.2.19"
 description = "Building stateful, multi-actor applications with LLMs"
 optional = false
 python-versions = ">=3.10"
 groups = ["dev"]
 files = [
-    {file = "langgraph-1.2.18-py3-none-any.whl", hash = "sha256:f430f28ea7fbc129c3cf7dc31c19c33dc27d93aeebd25c6d64fd5c1bad93d27d"},
-    {file = "langgraph-1.2.18.tar.gz", hash = "sha256:4c3e4289043ed0f99625a09990a012d7b16bb576301d8616810de7db01725f9e"},
+    {file = "langgraph-1.2.19-py3-none-any.whl", hash = "sha256:6094a5cbed52a77d8c74c276fcd2056abde7b2836eab1c7a6b74bacbd1a269b3"},
+    {file = "langgraph-1.2.19.tar.gz", hash = "sha256:4a00fa1aad2b5fc2d3a789a8e9eaf993f76218ca924b434902ecf1bbaaf300f6"},
 ]
 
 [package.dependencies]
@@ -1227,14 +1227,14 @@ langgraph-checkpoint = ">=2.1.0,<5.0.0"
 
 [[package]]
 name = "langgraph-sdk"
-version = "0.4.10"
+version = "0.4.11"
 description = "SDK for interacting with LangGraph API"
 optional = false
 python-versions = ">=3.10"
 groups = ["dev"]
 files = [
-    {file = "langgraph_sdk-0.4.10-py3-none-any.whl", hash = "sha256:306ede340814e79332812e3b5a8bda2587a09657c95e14e5c7af3370e06c22fe"},
-    {file = "langgraph_sdk-0.4.10.tar.gz", hash = "sha256:d8d7afd326b4df42ddc0878b7fbf53f03c3237c664c236bf5bac4ab16fc38ed9"},
+    {file = "langgraph_sdk-0.4.11-py3-none-any.whl", hash = "sha256:6a65be4a8f825966a07317b8e34e3337cd227b9b58b185f0123fd13c3d0116fa"},
+    {file = "langgraph_sdk-0.4.11.tar.gz", hash = "sha256:2550af3bc7cb78ac4facb97d141ec1a76568fa3eb3d29040cff70b45bda84740"},
 ]
 
 [package.dependencies]
