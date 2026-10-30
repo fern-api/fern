@@ -1109,12 +1109,6 @@ fn handle_list<W: Write>(
     store: &mut ProfileStore,
     out: &mut W,
 ) -> Result<(), CliError> {
-    let credentials: Vec<String> = store
-        .entries()
-        .into_iter()
-        .filter_map(|entry| store::resolve(store, &entry.name).ok()?.credential)
-        .collect();
-    backfill_credential_records(ctx, store, credentials, Report::List);
     let store: &ProfileStore = store;
 
     // Re-resolve rather than reading the installed global: the `profiles`
@@ -1475,130 +1469,6 @@ fn recorded_field(
     schemes
         .into_iter()
         .find_map(|scheme| record.schemes.get(scheme).and_then(&field))
-}
-
-/// Which report is being rendered, and so which keychain entries it read
-/// before `profiles.toml` kept a copy.
-#[derive(Clone, Copy, PartialEq, Eq)]
-enum Report {
-    /// The account, or the OAuth client id when there is none.
-    List,
-    /// The account and the OAuth client id.
-    Show,
-    /// As `Show`, plus whether any credential is stored at all.
-    Current,
-}
-
-/// Fill the record for `credentials` from the keychain where it cannot yet
-/// answer `report`: credentials stored by an older binary, before
-/// `profiles.toml` kept a copy.
-///
-/// Reads, in the same order and with the same early exits, only the entries
-/// `report` read before, so the first run after an upgrade prompts no more
-/// than any run did; each answer is recorded (an absent entry as `checked`),
-/// so later runs read nothing. A failed read (a refused prompt, a locked
-/// keychain) is left unrecorded and retried next time, as before.
-fn backfill_credential_records(
-    ctx: &ProfilesContext<'_>,
-    store: &mut ProfileStore,
-    credentials: impl IntoIterator<Item = String>,
-    report: Report,
-) {
-    let mut changed = false;
-    for credential in credentials {
-        let account = backfill_field(ctx, store, &credential, basic_schemes(ctx), &mut changed, |i| {
-            i.account.clone()
-        });
-        if account.is_none() || report != Report::List {
-            backfill_field(ctx, store, &credential, oauth_schemes(ctx), &mut changed, |i| {
-                i.oauth_client_id.clone()
-            });
-        }
-        if report == Report::Current {
-            backfill_any_stored(ctx, store, &credential, &mut changed);
-        }
-    }
-    // Only the copy is lost; the next report reads the keychain again.
-    if changed {
-        if let Err(e) = store.save() {
-            eprintln!("warning: could not update {}: {e}", store.path().display());
-        }
-    }
-}
-
-/// The first `field` stored for `schemes`, taken from the record and read
-/// from the keychain only for schemes the record knows nothing about.
-fn backfill_field(
-    ctx: &ProfilesContext<'_>,
-    store: &mut ProfileStore,
-    credential: &str,
-    schemes: Vec<&str>,
-    changed: &mut bool,
-    field: impl Fn(&store::StoredIdentity) -> Option<String>,
-) -> Option<String> {
-    for scheme in schemes {
-        let record = store.credential_record(credential).unwrap_or_default();
-        if let Some(identity) = record.schemes.get(scheme) {
-            match field(identity) {
-                Some(value) => return Some(value),
-                None => continue,
-            }
-        }
-        if record.checked.iter().any(|s| s == scheme) {
-            continue;
-        }
-        let account = super::keyring_account_for(scheme, credential);
-        match active_store().get(ctx.cli_name, &account) {
-            Ok(Some(stored)) => {
-                store.record_credential(credential, scheme, &stored);
-                *changed = true;
-                let value = store
-                    .credential_record(credential)
-                    .and_then(|record| record.schemes.get(scheme).and_then(&field));
-                if value.is_some() {
-                    return value;
-                }
-            }
-            Ok(None) => {
-                store.mark_credential_absent(credential, scheme);
-                *changed = true;
-            }
-            Err(_) => {}
-        }
-    }
-    None
-}
-
-/// Make the record able to tell whether any scheme has an entry in
-/// `credential`, reading only until the first entry is found.
-fn backfill_any_stored(
-    ctx: &ProfilesContext<'_>,
-    store: &mut ProfileStore,
-    credential: &str,
-    changed: &mut bool,
-) {
-    for (scheme, _) in ctx.auth_bindings {
-        let record = store.credential_record(credential).unwrap_or_default();
-        if !record.schemes.is_empty() {
-            return;
-        }
-        if record.checked.contains(scheme) {
-            continue;
-        }
-        let account = super::keyring_account_for(scheme, credential);
-        match active_store().get(ctx.cli_name, &account) {
-            Ok(Some(stored)) => {
-                store.record_credential(credential, scheme, &stored);
-                *changed = true;
-                return;
-            }
-            Ok(None) => {
-                store.mark_credential_absent(credential, scheme);
-                *changed = true;
-            }
-            Err(_) => {}
-        }
-    }
 }
 
 /// Whether any scheme has a recorded keyring entry under this profile's
@@ -2612,7 +2482,6 @@ fn handle_show<W: Write>(
         return Err(store::unknown_profile(store, &name));
     }
     let resolved = store::resolve(store, &name)?;
-    backfill_credential_records(ctx, store, resolved.credential.clone(), Report::Show);
     let store: &ProfileStore = store;
 
     let pipeline = crate::formatter::OutputPipeline::from_matches(matches, ctx.cli_name)
@@ -2647,10 +2516,6 @@ fn handle_current<W: Write>(
     // exempted from selection (so `profiles use` still works when `active`
     // is stale), which means the global is empty here.
     let selected = selection::resolve_selection_in(store, ctx.cli_name, &argv())?;
-    let credential = selected
-        .as_ref()
-        .and_then(|selection| selection.profile.credential.clone());
-    backfill_credential_records(ctx, store, credential, Report::Current);
     let store: &ProfileStore = store;
 
     let payload = match &selected {
@@ -3249,6 +3114,10 @@ impl KeyringStore for TypedCredentialStore {
 
     fn backend_label(&self) -> String {
         self.inner.backend_label()
+    }
+
+    fn answers_from_storage(&self, account: &str) -> bool {
+        !self.covers(account) && self.inner.answers_from_storage(account)
     }
 }
 
