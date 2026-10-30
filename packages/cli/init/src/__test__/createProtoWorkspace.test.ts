@@ -78,6 +78,37 @@ describe("createProtoWorkspace", () => {
         expect(warnings).toEqual([]);
     });
 
+    it("keeps a google/api proto the user already has and adds only the missing one", async () => {
+        const source = await temporaryDirectory();
+        const workspace = await temporaryDirectory();
+        const customAnnotations =
+            'syntax = "proto3";\npackage google.api;\nimport "google/api/http.proto";\n// custom\n';
+        await write(source, "acme.proto", ANNOTATED_SERVICE);
+        await write(source, "google/api/annotations.proto", customAnnotations);
+
+        await run({ workspace, protoPath: source });
+
+        expect(await readFile(path.join(workspace, "proto/google/api/annotations.proto"), "utf8")).toBe(
+            customAnnotations
+        );
+        expect(await exists(workspace, "proto/google/api/http.proto")).toBe(true);
+    });
+
+    it("adds only http.proto when that is the only google/api import", async () => {
+        const source = await temporaryDirectory();
+        const workspace = await temporaryDirectory();
+        await write(
+            source,
+            "acme.proto",
+            ANNOTATED_SERVICE.replace("google/api/annotations.proto", "google/api/http.proto")
+        );
+
+        await run({ workspace, protoPath: source });
+
+        expect(await exists(workspace, "proto/google/api/http.proto")).toBe(true);
+        expect(await exists(workspace, "proto/google/api/annotations.proto")).toBe(false);
+    });
+
     it("copies a single file and uses it as the target", async () => {
         const source = await temporaryDirectory();
         const workspace = await temporaryDirectory();

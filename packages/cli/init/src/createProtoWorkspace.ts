@@ -61,10 +61,9 @@ export async function createProtoWorkspace({
 
     const existingPaths = new Set(relativePaths);
     const missingImports = findMissingImports({ files, existingPaths });
-    const bundledImports = missingImports.filter((importPath) => importPath in SAMPLE_GRPC_SUPPORT_PROTOS);
-    if (bundledImports.length > 0) {
-        // The annotations file imports http.proto, so both are needed whichever one was asked for.
-        await writeBundledProtos({ destinationRoot });
+    const bundledProtosToWrite = getBundledProtosToWrite({ missingImports, existingPaths });
+    if (bundledProtosToWrite.length > 0) {
+        await writeBundledProtos({ destinationRoot, relativePaths: bundledProtosToWrite });
         context.logger.info(`Added the google/api protos your proto imports to ./${SAMPLE_GRPC_PROTO_ROOT}`);
     }
     const unresolvedImports = missingImports.filter((importPath) => !(importPath in SAMPLE_GRPC_SUPPORT_PROTOS));
@@ -140,11 +139,47 @@ async function warnAboutBufConfig({
     }
 }
 
-async function writeBundledProtos({ destinationRoot }: { destinationRoot: AbsoluteFilePath }): Promise<void> {
-    for (const [relativePath, contents] of Object.entries(SAMPLE_GRPC_SUPPORT_PROTOS)) {
+/**
+ * The bundled protos that are imported but missing, plus the bundled protos those import in turn
+ * (annotations.proto imports http.proto). Files the user already has are never included.
+ */
+function getBundledProtosToWrite({
+    missingImports,
+    existingPaths
+}: {
+    missingImports: string[];
+    existingPaths: ReadonlySet<string>;
+}): string[] {
+    const toWrite = new Set<string>();
+    const pending = [...missingImports];
+    let relativePath: string | undefined;
+    while ((relativePath = pending.pop()) != null) {
+        const contents = SAMPLE_GRPC_SUPPORT_PROTOS[relativePath];
+        if (contents == null || toWrite.has(relativePath) || existingPaths.has(relativePath)) {
+            continue;
+        }
+        toWrite.add(relativePath);
+        pending.push(...analyzeProtoFile({ relativePath, contents }).imports);
+    }
+    return [...toWrite].sort();
+}
+
+async function writeBundledProtos({
+    destinationRoot,
+    relativePaths
+}: {
+    destinationRoot: AbsoluteFilePath;
+    relativePaths: string[];
+}): Promise<void> {
+    for (const relativePath of relativePaths) {
+        const contents = SAMPLE_GRPC_SUPPORT_PROTOS[relativePath];
+        if (contents == null) {
+            continue;
+        }
         const filepath = path.join(destinationRoot, relativePath);
         await mkdir(path.dirname(filepath), { recursive: true });
-        await writeFile(filepath, contents);
+        // "wx" fails instead of truncating if the file somehow exists.
+        await writeFile(filepath, contents, { flag: "wx" });
     }
 }
 
