@@ -154,7 +154,15 @@ export async function attachSdkGenSnippets(
     if (requests.length === 0) {
         return apiDefinition;
     }
-    const origin = getOrigin();
+    let origin: string | undefined;
+    try {
+        origin = getOrigin();
+    } catch (error) {
+        logger.warn(
+            `The sdk-gen-api origin is not usable, so the SDK snippets cannot be read (the docs are not affected): ${errorMessageOrString(error)}`
+        );
+        return apiDefinition;
+    }
     if (origin == null) {
         logger.warn(
             "FERN_SDK_GEN_API_ORIGIN is not set, so the SDK snippets cannot be read (the docs are not affected)"

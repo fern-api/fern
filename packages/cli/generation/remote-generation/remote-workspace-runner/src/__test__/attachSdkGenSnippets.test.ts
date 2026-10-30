@@ -160,6 +160,26 @@ describe("attachSdkGenSnippets", () => {
         expect(logger.warn).toHaveBeenCalledWith(expect.stringContaining("FERN_SDK_GEN_API_ORIGIN"));
     });
 
+    it("warns, and leaves the definition as it is, when the sdk-gen-api origin is invalid", async () => {
+        const { logger, findSnippetsUrls, readSnippets } = setup();
+        const input = definition();
+
+        const result = await attachSdkGenSnippets(
+            { token: "token", organization: "acme", apiDefinition: input, snippetsConfig, sdkNames, logger },
+            {
+                getOrigin: () => {
+                    throw new Error("FERN_SDK_GEN_API_ORIGIN must be a valid URL");
+                },
+                findSnippetsUrls,
+                readSnippets
+            }
+        );
+
+        expect(result).toBe(input);
+        expect(findSnippetsUrls).not.toHaveBeenCalled();
+        expect(logger.warn).toHaveBeenCalledWith(expect.stringContaining("must be a valid URL"));
+    });
+
     it("finds the languages of one SDK name and version with a single lookup", async () => {
         const { findSnippetsUrls, run } = setup();
 
