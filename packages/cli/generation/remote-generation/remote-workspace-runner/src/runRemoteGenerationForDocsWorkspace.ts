@@ -30,7 +30,6 @@ export async function runRemoteGenerationForDocsWorkspace({
     organization,
     apiWorkspaces,
     ossWorkspaces,
-    usesSdkConfig,
     sdkNames,
     docsWorkspace,
     context,
@@ -49,8 +48,6 @@ export async function runRemoteGenerationForDocsWorkspace({
     organization: string;
     apiWorkspaces: AbstractAPIWorkspace<unknown>[];
     ossWorkspaces: OSSWorkspace[];
-    /** Whether the project configures SDKs in sdk-config.yml; only used to explain missing SDK snippets. */
-    usesSdkConfig?: boolean;
     /** The `sdkName` of each language's SDK in the sdk-config.yml, used to find its build for the SDK snippets. */
     sdkNames?: Record<string, string[]>;
     docsWorkspace: DocsWorkspace;
@@ -178,7 +175,6 @@ export async function runRemoteGenerationForDocsWorkspace({
                 context,
                 apiWorkspaces,
                 ossWorkspaces,
-                usesSdkConfig,
                 sdkNames,
                 preview,
                 previewId,
