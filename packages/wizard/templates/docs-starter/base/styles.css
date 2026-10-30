@@ -1,0 +1,27 @@
+/* Custom styles for Fern Docs Starter */
+
+/* Accent tint on welcome hero images */
+.welcome-hero-tint {
+  position: relative;
+  display: block;
+  border-radius: calc(var(--radius) * 3);
+  overflow: hidden;
+}
+
+.welcome-hero-tint img {
+  width: 100%;
+  height: auto;
+  margin: 0 !important;
+}
+
+.welcome-hero-tint::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: var(--accent-9, var(--accent-primary));
+  mix-blend-mode: color;
+  opacity: 0.5;
+  pointer-events: none;
+  border-radius: inherit;
+  z-index: 1;
+}

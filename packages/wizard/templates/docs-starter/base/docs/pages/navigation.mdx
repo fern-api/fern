@@ -1,0 +1,72 @@
+---
+title: Set up navigation
+subtitle: Configure tabs, sections, and pages in your `docs.yml` file
+slug: navigation
+---
+
+The `docs.yml` file configures your whole documentation site, from visual styling to navigation. Navigation covers the tabs, sections, and pages that make up your site's structure. These settings determine what readers see in the sidebar and top bar, and how they move between pages.
+
+## Quick example
+
+Here's a minimal example showing navigation structure in `docs.yml`:
+
+```yaml title="docs.yml"
+navigation:
+  - section: Getting started
+    contents:
+      - page: Introduction
+        path: docs/pages/intro.mdx
+      - page: Quickstart
+        path: docs/pages/quickstart.mdx
+  - api: API Reference
+```
+
+## Complete navigation options
+
+Explore the navigation options below and click through to the Fern documentation for detailed configuration guides.
+
+<CardGroup cols={2}>
+  <Card
+    title="Sections and pages"
+    icon="duotone list"
+    href="https://buildwithfern.com/learn/docs/configuration/navigation#sections-contents-pages-and-folders"
+  >
+    Organize content into sections with pages and folders
+  </Card>
+  <Card
+    title="Tabs"
+    icon="duotone folder-open"
+    href="https://buildwithfern.com/learn/docs/configuration/tabs"
+  >
+    Create top-level navigation groups
+  </Card>
+  <Card
+    title="Versions"
+    icon="duotone code-branch"
+    href="https://buildwithfern.com/learn/docs/configuration/versions"
+  >
+    Add version switching for your documentation
+  </Card>
+  <Card
+    title="Products"
+    icon="duotone boxes-stacked"
+    href="https://buildwithfern.com/learn/docs/configuration/products"
+  >
+    Support multiple products in one site
+  </Card>
+  <Card
+    title="API reference"
+    icon="duotone code"
+    href="https://buildwithfern.com/learn/docs/api-references/generate-api-ref"
+  >
+    Auto-generate API documentation from your spec
+  </Card>
+  <Card
+    title="Changelogs"
+    icon="duotone clock-rotate-left"
+    href="https://buildwithfern.com/learn/docs/configuration/changelogs"
+  >
+    Add a changelog section to your docs
+  </Card>
+</CardGroup>
+
