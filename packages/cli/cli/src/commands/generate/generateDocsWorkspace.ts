@@ -1,11 +1,10 @@
 import { createOrganizationIfDoesNotExist, FernGuestToken, FernToken, FernUserToken, getToken } from "@fern-api/auth";
-import { SDK_CONFIG_FILENAME } from "@fern-api/configuration-loader";
 import { createFdrService } from "@fern-api/core";
 import { extractErrorMessage, sanitizePreviewId } from "@fern-api/core-utils";
 import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { Rules } from "@fern-api/docs-validator";
 import { FdrAPI } from "@fern-api/fdr-sdk";
-import { type AbsoluteFilePath, basename, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { type AbsoluteFilePath, basename } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
 import { type ValidationViolation, validateOSSWorkspace } from "@fern-api/oss-validator";
 import { Project } from "@fern-api/project-loader";
@@ -233,7 +232,6 @@ export async function generateDocsWorkspace({
             organization: project.config.organization,
             apiWorkspaces: project.apiWorkspaces,
             ossWorkspaces,
-            usesSdkConfig: await projectUsesSdkConfig({ project, docsWorkspace }),
             sdkNames: await getSdkConfigSdkNames({
                 directories: getSdkConfigDirectories({ project, docsWorkspace }),
                 logger: context.logger
@@ -269,29 +267,6 @@ function getSdkConfigDirectories({
         ...project.apiWorkspaces.map((workspace) => workspace.absoluteFilePath),
         ...(project.sdkConfigWorkspaces ?? []).map((workspace) => workspace.absoluteFilePath)
     ];
-}
-
-/**
- * Whether the project configures SDKs in an sdk-config.yml. `project.sdkConfigWorkspaces` only lists
- * workspaces that have no generators file at all, so a project that still has a generators.yml (or the
- * renamed generators.legacy.yml) next to its sdk-config.yml is found by looking for the file itself.
- */
-async function projectUsesSdkConfig({
-    project,
-    docsWorkspace
-}: {
-    project: Project;
-    docsWorkspace: DocsWorkspace;
-}): Promise<boolean> {
-    if ((project.sdkConfigWorkspaces?.length ?? 0) > 0) {
-        return true;
-    }
-    const exists = await Promise.all(
-        getSdkConfigDirectories({ project, docsWorkspace }).map((directory) =>
-            doesPathExist(join(directory, RelativeFilePath.of(SDK_CONFIG_FILENAME)))
-        )
-    );
-    return exists.some(Boolean);
 }
 
 function getExcludeRules(brokenLinks: boolean, strictBrokenLinks: boolean): string[] {

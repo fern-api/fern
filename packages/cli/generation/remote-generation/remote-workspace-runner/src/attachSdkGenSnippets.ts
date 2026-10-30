@@ -66,16 +66,31 @@ function addCodeSamples(endpoint: Endpoint, codeByLanguage: ReadonlyMap<string, 
     return { ...endpoint, examples };
 }
 
+/** The code of every language whose snippets were read from sdk-gen, by language. */
+export type SdkGenSnippets = ReadonlyMap<string, CodeByEndpoint>;
+
 /**
- * FDR looks up each SDK `snippetsConfiguration` names in its own snippet store, which holds no sdk-gen SDK, and fails
- * the registration when it finds none. The SDKs whose snippets were read from sdk-gen are already in the code samples,
- * so they are left out.
+ * The snippets config without the SDKs of these languages. FDR looks up each SDK `snippetsConfiguration` names in its
+ * own snippet store, which holds no sdk-gen SDK, and fails the registration when it finds none; and a language
+ * left in the config gets a dynamic IR built for it. The languages sdk-gen serves need neither.
  */
-function withoutLoadedSdks(
-    config: SnippetsConfig | null | undefined,
-    loadedLanguages: string[]
-): SnippetsConfig | undefined {
-    return config == null ? undefined : omit(config, ...loadedLanguages.map((language) => `${language}Sdk`));
+export function omitSdkLanguages(config: SnippetsConfig, languages: Iterable<string>): SnippetsConfig {
+    return omit(config, ...[...languages].map((language) => `${language}Sdk`));
+}
+
+/** One line saying where the snippets of each language come from, for the publish log. */
+export function describeSnippetSources({
+    sdkGenLanguages,
+    dynamicIrLanguages
+}: {
+    sdkGenLanguages: Iterable<string>;
+    dynamicIrLanguages: Iterable<string>;
+}): string | undefined {
+    const sources = [
+        ...[...sdkGenLanguages].map((language) => `${language}: sdk-gen`),
+        ...[...dynamicIrLanguages].map((language) => `${language}: Fern dynamic IR`)
+    ];
+    return sources.length === 0 ? undefined : `SDK snippet sources (${sources.join(", ")})`;
 }
 
 function mapEndpoints(apiDefinition: ApiDefinition, update: (endpoint: Endpoint) => Endpoint): ApiDefinition {
@@ -122,23 +137,39 @@ function getLookups(requests: SdkRequest[], sdkNames: Record<string, string[]>):
     return lookups;
 }
 
+/** The sdk-gen-api origin, or `undefined` (after a warning) when it is not set or not usable. */
+function readOrigin(getOrigin: () => string | undefined, logger: Pick<Logger, "warn">): string | undefined {
+    try {
+        const origin = getOrigin();
+        if (origin == null) {
+            logger.warn(
+                "FERN_SDK_GEN_API_ORIGIN is not set, so the SDK snippets cannot be read (the docs are not affected)"
+            );
+        }
+        return origin;
+    } catch (error) {
+        logger.warn(
+            `The sdk-gen-api origin is not usable, so the SDK snippets cannot be read (the docs are not affected): ${errorMessageOrString(error)}`
+        );
+        return undefined;
+    }
+}
+
 /**
  * Reads the snippets sdk-gen saved with the builds of the SDKs the docs.yml `snippets:` entries name, found through the
- * sdk-gen-api, and adds them to the API definition as code samples. A snippet problem must not fail the docs publish,
- * so a failure only logs a warning.
+ * sdk-gen-api. A language with no snippets is left out of the result, so the docs fall back to Fern's dynamic IR for it.
+ * A snippet problem must not fail the docs publish, so a failure only logs a warning.
  */
-export async function attachSdkGenSnippets(
+export async function readSdkGenSnippets(
     {
         token,
         organization,
-        apiDefinition,
         snippetsConfig,
         sdkNames = {},
         logger
     }: {
         token: string;
         organization: string;
-        apiDefinition: ApiDefinition;
         snippetsConfig: SnippetsConfig;
         /** The sdkNames of each language's SDK in the sdk-config.yml; a language without one has no snippets to read. */
         sdkNames?: Record<string, string[]>;
@@ -149,25 +180,14 @@ export async function attachSdkGenSnippets(
         findSnippetsUrls = (query) => findSdkGenSnippetsUrls(query),
         readSnippets = downloadSnippetsJson
     }: AttachSdkGenSnippetsDependencies = {}
-): Promise<ApiDefinition> {
+): Promise<SdkGenSnippets> {
     const requests = getSdkRequests(snippetsConfig);
     if (requests.length === 0) {
-        return apiDefinition;
+        return new Map();
     }
-    let origin: string | undefined;
-    try {
-        origin = getOrigin();
-    } catch (error) {
-        logger.warn(
-            `The sdk-gen-api origin is not usable, so the SDK snippets cannot be read (the docs are not affected): ${errorMessageOrString(error)}`
-        );
-        return apiDefinition;
-    }
+    const origin = readOrigin(getOrigin, logger);
     if (origin == null) {
-        logger.warn(
-            "FERN_SDK_GEN_API_ORIGIN is not set, so the SDK snippets cannot be read (the docs are not affected)"
-        );
-        return apiDefinition;
+        return new Map();
     }
 
     const urlsByLookup = new Map(
@@ -215,16 +235,26 @@ export async function attachSdkGenSnippets(
             })
         )
     );
-    const counts = [...codeByLanguage].map(([language, codeByEndpoint]) => `${language}: ${codeByEndpoint.size}`);
-    const loadedLanguages = [...codeByLanguage].filter(([, codeByEndpoint]) => codeByEndpoint.size > 0);
-    if (loadedLanguages.length > 0) {
+    const loaded = new Map([...codeByLanguage].filter(([, codeByEndpoint]) => codeByEndpoint.size > 0));
+    if (loaded.size > 0) {
+        const counts = [...loaded].map(([language, codeByEndpoint]) => `${language}: ${codeByEndpoint.size}`);
         logger.info(`Loaded SDK snippets (${counts.join(", ")})`);
     }
+    return loaded;
+}
+
+/**
+ * Adds the snippets read from sdk-gen to the API definition as code samples, and drops those languages from its
+ * `snippetsConfiguration` (see {@link omitSdkLanguages}).
+ */
+export function attachSdkGenSnippets(apiDefinition: ApiDefinition, snippets: SdkGenSnippets): ApiDefinition {
+    if (snippets.size === 0) {
+        return apiDefinition;
+    }
+    const { snippetsConfiguration } = apiDefinition;
     return {
-        ...mapEndpoints(apiDefinition, (endpoint) => addCodeSamples(endpoint, codeByLanguage)),
-        snippetsConfiguration: withoutLoadedSdks(
-            apiDefinition.snippetsConfiguration,
-            loadedLanguages.map(([language]) => language)
-        )
+        ...mapEndpoints(apiDefinition, (endpoint) => addCodeSamples(endpoint, snippets)),
+        snippetsConfiguration:
+            snippetsConfiguration == null ? undefined : omitSdkLanguages(snippetsConfiguration, snippets.keys())
     };
 }

@@ -1,7 +1,13 @@
 import type { APIV1Write } from "@fern-api/fdr-sdk";
 import { describe, expect, it, vi } from "vitest";
 
-import { attachSdkGenSnippets, getSdkRequests } from "../attachSdkGenSnippets.js";
+import {
+    attachSdkGenSnippets,
+    describeSnippetSources,
+    getSdkRequests,
+    omitSdkLanguages,
+    readSdkGenSnippets
+} from "../attachSdkGenSnippets.js";
 import type { SdkGenSnippetsQuery } from "../findSdkGenSnippets.js";
 
 const example = {
@@ -97,7 +103,7 @@ describe("getSdkRequests", () => {
     });
 });
 
-describe("attachSdkGenSnippets", () => {
+describe("attachSdkGenSnippets and readSdkGenSnippets", () => {
     const snippetsConfig = {
         typescriptSdk: { package: "@acme/sdk", version: "1.0.0" },
         pythonSdk: { package: "acme", version: "1.0.0" }
@@ -124,24 +130,44 @@ describe("attachSdkGenSnippets", () => {
         readSnippets?: ReturnType<typeof vi.fn<ReadSnippets>>;
     } = {}) {
         const logger = { debug: vi.fn(), info: vi.fn(), warn: vi.fn() };
-        const run = (
+        const read = (config: APIV1Write.SnippetsConfig = snippetsConfig, names: Record<string, string[]> = sdkNames) =>
+            readSdkGenSnippets(
+                { token: "token", organization: "acme", snippetsConfig: config, sdkNames: names, logger },
+                { getOrigin: () => origin ?? undefined, findSnippetsUrls, readSnippets }
+            );
+        const run = async (
             apiDefinition: APIV1Write.ApiDefinition = definition(),
             config: APIV1Write.SnippetsConfig = snippetsConfig,
             names: Record<string, string[]> = sdkNames
-        ) =>
-            attachSdkGenSnippets(
-                {
-                    token: "token",
-                    organization: "acme",
-                    apiDefinition,
-                    snippetsConfig: config,
-                    sdkNames: names,
-                    logger
-                },
-                { getOrigin: () => origin ?? undefined, findSnippetsUrls, readSnippets }
-            );
-        return { logger, findSnippetsUrls, readSnippets, run };
+        ) => attachSdkGenSnippets(apiDefinition, await read(config, names));
+        return { logger, findSnippetsUrls, readSnippets, read, run };
     }
+
+    it("reads only the languages it found snippets for, so the others keep Fern's dynamic IR", async () => {
+        const { read } = setup({
+            findSnippetsUrls: vi.fn<FindSnippetsUrls>(
+                async ({ languages }) =>
+                    new Map(
+                        languages.filter((language) => language === "typescript").map((l) => [l, `https://s3/${l}`])
+                    )
+            )
+        });
+
+        expect([...(await read()).keys()]).toEqual(["typescript"]);
+    });
+
+    it("reads nothing for a language whose snippets file is empty or unreadable", async () => {
+        const { read } = setup({
+            readSnippets: vi.fn<ReadSnippets>(async (url) => {
+                if (url.endsWith("python")) {
+                    throw new Error("403 expired link");
+                }
+                return "{}";
+            })
+        });
+
+        expect([...(await read()).keys()]).toEqual([]);
+    });
 
     it("does nothing when no docs.yml entry names an SDK", async () => {
         const { findSnippetsUrls, run } = setup();
@@ -164,15 +190,18 @@ describe("attachSdkGenSnippets", () => {
         const { logger, findSnippetsUrls, readSnippets } = setup();
         const input = definition();
 
-        const result = await attachSdkGenSnippets(
-            { token: "token", organization: "acme", apiDefinition: input, snippetsConfig, sdkNames, logger },
-            {
-                getOrigin: () => {
-                    throw new Error("FERN_SDK_GEN_API_ORIGIN must be a valid URL");
-                },
-                findSnippetsUrls,
-                readSnippets
-            }
+        const result = attachSdkGenSnippets(
+            input,
+            await readSdkGenSnippets(
+                { token: "token", organization: "acme", snippetsConfig, sdkNames, logger },
+                {
+                    getOrigin: () => {
+                        throw new Error("FERN_SDK_GEN_API_ORIGIN must be a valid URL");
+                    },
+                    findSnippetsUrls,
+                    readSnippets
+                }
+            )
         );
 
         expect(result).toBe(input);
@@ -350,5 +379,30 @@ describe("attachSdkGenSnippets", () => {
         expect(result.rootPackage.endpoints[0]?.examples[0]?.codeSamples).toEqual([
             { language: "typescript", code: "client.pet.get()" }
         ]);
+    });
+});
+
+describe("omitSdkLanguages", () => {
+    it("removes the SDK of each language and keeps the others", () => {
+        const goSdk = { githubRepo: "github.com/acme/sdk-go", version: "1.0.0" };
+
+        expect(
+            omitSdkLanguages(
+                { typescriptSdk: { package: "@acme/sdk", version: "1.0.0" }, pythonSdk: { package: "acme" }, goSdk },
+                ["typescript", "python"]
+            )
+        ).toEqual({ goSdk });
+    });
+});
+
+describe("describeSnippetSources", () => {
+    it("names the source of each language, sdk-gen first", () => {
+        expect(
+            describeSnippetSources({ sdkGenLanguages: ["typescript"], dynamicIrLanguages: ["python", "java"] })
+        ).toBe("SDK snippet sources (typescript: sdk-gen, python: Fern dynamic IR, java: Fern dynamic IR)");
+    });
+
+    it("says nothing when no language has a source", () => {
+        expect(describeSnippetSources({ sdkGenLanguages: [], dynamicIrLanguages: [] })).toBeUndefined();
     });
 });
