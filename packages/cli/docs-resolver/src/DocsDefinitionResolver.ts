@@ -86,6 +86,7 @@ type AIChatConfigWithUnpublishedFields = NonNullable<DocsV1Write.DocsConfig["aiC
 import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter.js";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter.js";
 import { NodeIdGenerator } from "./NodeIdGenerator.js";
+import { appendRequiredScopesToEndpointDocs } from "./utils/appendRequiredScopesToEndpointDocs.js";
 import { maybeBundleMdxComponent } from "./utils/bundleMdxComponent.js";
 import { collectMdxComponentFiles } from "./utils/collectMdxComponentFiles.js";
 import { collectWellKnownSkillsFiles } from "./utils/collectWellKnownSkillsFiles.js";
@@ -2227,6 +2228,10 @@ export class DocsDefinitionResolver {
             );
         }
 
+        if (item.showScopes) {
+            appendRequiredScopesToEndpointDocs(ir);
+        }
+
         // Resolve the OSS workspace for GraphQL extraction and translated API builds: prefer the
         // already-resolved openapiWorkspace, fall back to OSS lookup, or undefined for Fern Definitions.
         let resolvedOssWorkspace: OSSWorkspace | undefined = openapiWorkspace;
@@ -2314,6 +2319,11 @@ export class DocsDefinitionResolver {
         let translatedIrsByLocale: Map<string, IntermediateRepresentation> | undefined;
         if (this.buildTranslatedApiDefinitions && resolvedOssWorkspace != null) {
             translatedIrsByLocale = await this.buildTranslatedApiIrs(item, resolvedOssWorkspace);
+            if (item.showScopes && translatedIrsByLocale != null) {
+                for (const translatedIr of translatedIrsByLocale.values()) {
+                    appendRequiredScopesToEndpointDocs(translatedIr);
+                }
+            }
         }
 
         // Store pending registration for deferred processing after markdownFilesToPathName is available
