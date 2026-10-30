@@ -1340,7 +1340,7 @@ impl OAuth2KeyringProvider {
     async fn resolve_async(&self) -> Result<String, CliError> {
         let store = active_store();
         let account = crate::profiles::keyring_account(&self.scheme_name);
-        let raw = store.get(&self.cli_name, &account)?.ok_or_else(|| {
+        let raw = crate::auth::credential::read_keyring(&self.cli_name, &account)?.ok_or_else(|| {
             CliError::Auth(format!(
                 "Not logged in. Run `{} auth login` to authenticate.",
                 self.cli_name
@@ -1410,12 +1410,11 @@ impl AuthProvider for OAuth2KeyringProvider {
     }
 
     fn has_credentials(&self) -> bool {
-        active_store()
-            .get(
-                &self.cli_name,
-                &crate::profiles::keyring_account(&self.scheme_name),
-            )
-            .ok()
+        crate::auth::credential::read_keyring(
+            &self.cli_name,
+            &crate::profiles::keyring_account(&self.scheme_name),
+        )
+        .ok()
             .flatten()
             .map(|v| !v.is_empty())
             .unwrap_or(false)

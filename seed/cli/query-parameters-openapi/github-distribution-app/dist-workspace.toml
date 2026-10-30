@@ -34,6 +34,6 @@ install-path = "CARGO_HOME"
 install-updater = false
 default-features = false
 features = ["rustls"]
+macos-sign = true
 tap = "acme/homebrew-tap"
 formula = "query-parameters-api"
-macos-sign = true
