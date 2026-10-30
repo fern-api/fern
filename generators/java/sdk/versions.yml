@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.37.4
+  changelogEntry:
+    - summary: |
+        XML (TwiML) serialization writes empty elements as `<Hangup/>` instead of `<Hangup />`, matching the legacy
+        twilio-java output byte for byte.
+      type: fix
+  createdAt: "2026-10-30"
+  irVersion: 67
 - version: 4.37.3
   changelogEntry:
     - summary: |
