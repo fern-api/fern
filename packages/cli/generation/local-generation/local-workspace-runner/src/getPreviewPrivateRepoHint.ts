@@ -16,10 +16,7 @@ export function getPreviewPrivateRepoHint({
         return undefined;
     }
     return (
-        `--preview replaces every \${VAR} in generators.yml with an empty value, so github.token for ${uri} is empty. ` +
-        "If that repository is private, the generator cannot clone it (for example, to generate README.md), " +
-        "so --local --preview cannot generate it. " +
-        "To test with the token, run `fern generate --local` without --preview, " +
-        "with the environment variable that github.token references (e.g. GITHUB_TOKEN) set."
+        `--preview blanks \${VAR} values, so github.token for ${uri} is empty and a private repo can't be cloned. ` +
+        "Run without --preview, with the token's env var (e.g. GITHUB_TOKEN) set."
     );
 }
