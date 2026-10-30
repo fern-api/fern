@@ -1,8 +1,6 @@
 # yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
 
 - summary: |
-    `fern generate --local --preview` with self-hosted `github` output now explains that preview
-    blanks `github.token`, so the generator can't clone a private repository. It warns before
-    generation and adds the hint to the error when the clone or the generator fails, pointing to
-    running without `--preview` with the token's environment variable set.
+    `fern generate --local --preview` with self-hosted `github` output now warns that `--preview` and
+    `--local` can't run with a private repo, and adds that to the error when the clone or the generator fails.
   type: fix

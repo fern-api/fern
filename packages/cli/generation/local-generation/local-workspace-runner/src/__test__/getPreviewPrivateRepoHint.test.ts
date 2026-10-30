@@ -5,8 +5,7 @@ import { getPreviewPrivateRepoHint } from "../getPreviewPrivateRepoHint.js";
 describe("getPreviewPrivateRepoHint", () => {
     it("says --preview and --local can't run with a private repo", () => {
         const hint = getPreviewPrivateRepoHint({ uri: "acme/sdk", token: "", previewMode: true });
-        expect(hint).toContain("github.token for acme/sdk is empty");
-        expect(hint).toContain("without --preview");
+        expect(hint).toBe("--preview and --local can't run with a private repo (acme/sdk).");
     });
 
     it("treats a whitespace-only token as empty", () => {
