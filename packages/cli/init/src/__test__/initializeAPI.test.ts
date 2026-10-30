@@ -1,7 +1,7 @@
-import { mkdtemp, rm } from "node:fs/promises";
+import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
 import { createMockTaskContext, type TaskContext } from "@fern-api/task-context";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
@@ -73,8 +73,16 @@ describe("initializeAPI", () => {
             }
         });
 
-        async function init(options: { useGrpc?: boolean; protoPath?: AbsoluteFilePath }): Promise<string> {
+        async function init({
+            before,
+            ...options
+        }: {
+            useGrpc?: boolean;
+            protoPath?: AbsoluteFilePath;
+            before?: (fernDirectory: string) => Promise<void>;
+        }): Promise<string> {
             fernDirectory = await mkdtemp(path.join(tmpdir(), "fern-init-api-"));
+            await before?.(fernDirectory);
             vi.mocked(createFernDirectoryAndWorkspace).mockResolvedValue({
                 absolutePathToFernDirectory: AbsoluteFilePath.of(fernDirectory),
                 organization: "acme"
@@ -109,6 +117,29 @@ describe("initializeAPI", () => {
                 expect.objectContaining({ directoryOfWorkspace: directory, protoPath })
             );
             expect(createGrpcWorkspace).not.toHaveBeenCalled();
+        });
+
+        it("moves an existing inline gRPC API's proto along with its generators.yml", async () => {
+            const directory = await init({
+                protoPath: AbsoluteFilePath.of("/somewhere/protos"),
+                before: async (fern) => {
+                    await writeFile(
+                        path.join(fern, "generators.yml"),
+                        "api:\n  specs:\n    - proto:\n        root: proto\n"
+                    );
+                    await mkdir(path.join(fern, "proto"));
+                    await writeFile(path.join(fern, "proto", "a.proto"), "message A {}");
+                }
+            });
+
+            expect(await doesPathExist(AbsoluteFilePath.of(path.join(directory, "apis/api/generators.yml")))).toBe(
+                true
+            );
+            expect(await doesPathExist(AbsoluteFilePath.of(path.join(directory, "apis/api/proto/a.proto")))).toBe(true);
+            expect(await doesPathExist(AbsoluteFilePath.of(path.join(directory, "proto")))).toBe(false);
+            expect(createProtoWorkspace).toHaveBeenCalledWith(
+                expect.objectContaining({ directoryOfWorkspace: path.join(directory, "apis/api1") })
+            );
         });
 
         it("rejects protoPath when SDK Config is enabled", async () => {

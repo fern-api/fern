@@ -23,6 +23,7 @@ import {
 } from "./createWorkspace.js";
 import { preserveDocsSpecs, repointRelocatedSpecs } from "./docsYmlSync.js";
 import { initializeDocs } from "./initializeDocs.js";
+import { SAMPLE_GRPC_PROTO_ROOT } from "./sampleGrpcApi.js";
 
 export async function initializeAPI({
     organization,
@@ -206,7 +207,9 @@ async function getDirectoryOfNewAPIWorkspace({
             GENERATORS_CONFIGURATION_FILENAME,
             SDK_CONFIG_FILENAME,
             "openapi.yml",
-            "openapi.json"
+            "openapi.json",
+            // The proto root of a gRPC API; its generators.yml refers to it by a path relative to the workspace.
+            SAMPLE_GRPC_PROTO_ROOT
         ]) {
             const movedFile = await moveWorkspaceFileIfPresent({
                 filename,
