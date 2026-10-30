@@ -50,7 +50,7 @@ import path from "path";
 import tmp from "tmp-promise";
 import { generatorWantsSpecs } from "./constants.js";
 import { getGeneratorOutputSubfolder } from "./getGeneratorOutputSubfolder.js";
-import { getPreviewPrivateRepoHint } from "./getPreviewPrivateRepoHint.js";
+import { getPreviewPrivateRepoError } from "./getPreviewPrivateRepoError.js";
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator.js";
 
 export async function runLocalGenerationForWorkspace({
@@ -161,6 +161,20 @@ export async function runLocalGenerationForWorkspace({
                     );
 
                 generatorInvocation = substituteEnvVars(generatorInvocation);
+
+                const earlySelfhostedGithubConfig = getSelfhostedGithubConfig(generatorInvocation, isPreview);
+                if (earlySelfhostedGithubConfig != null) {
+                    const previewPrivateRepoError = await getPreviewPrivateRepoError({
+                        uri: earlySelfhostedGithubConfig.uri,
+                        token: earlySelfhostedGithubConfig.token,
+                        previewMode: isPreview
+                    });
+                    if (previewPrivateRepoError != null) {
+                        interactiveTaskContext.failAndThrow(previewPrivateRepoError, undefined, {
+                            code: CliError.Code.ConfigError
+                        });
+                    }
+                }
 
                 const fernWorkspace = await workspace.toFernWorkspace(
                     { context },
@@ -330,18 +344,6 @@ export async function runLocalGenerationForWorkspace({
                     }
                 }
 
-                const previewPrivateRepoHint =
-                    selfhostedGithubConfig != null
-                        ? getPreviewPrivateRepoHint({
-                              uri: selfhostedGithubConfig.uri,
-                              token: selfhostedGithubConfig.token,
-                              previewMode: isPreview
-                          })
-                        : undefined;
-                if (previewPrivateRepoHint != null) {
-                    interactiveTaskContext.logger.warn(previewPrivateRepoHint);
-                }
-
                 if (selfhostedGithubConfig != null) {
                     await fs.rm(absolutePathToLocalOutput, { recursive: true, force: true });
                     await fs.mkdir(absolutePathToLocalOutput, { recursive: true });
@@ -404,10 +406,7 @@ export async function runLocalGenerationForWorkspace({
                         }
                     } catch (error) {
                         interactiveTaskContext.failAndThrow(
-                            withHint(
-                                `Failed to clone GitHub repository ${selfhostedGithubConfig.uri}: ${extractErrorMessage(error)}`,
-                                previewPrivateRepoHint
-                            ),
+                            `Failed to clone GitHub repository ${selfhostedGithubConfig.uri}: ${extractErrorMessage(error)}`,
                             undefined,
                             { code: CliError.Code.NetworkError }
                         );
@@ -442,42 +441,39 @@ export async function runLocalGenerationForWorkspace({
                     autoVersioningVersionBump,
                     autoVersioningNewVersion,
                     autoVersioningPreviousVersion
-                } = await addHintToGenerationError(previewPrivateRepoHint, interactiveTaskContext, () =>
-                    writeFilesToDiskAndRunGenerator({
-                        organization: projectConfig.organization,
-                        absolutePathToFernConfig:
-                            workspace.generatorsConfiguration?.absolutePathToConfiguration ??
-                            projectConfig._absolutePath,
-                        workspace: fernWorkspace,
-                        generatorInvocation,
-                        absolutePathToLocalOutput,
-                        absolutePathToLocalSnippetJSON,
-                        absolutePathToLocalSnippetTemplateJSON: undefined,
-                        version,
-                        audiences: generatorGroup.audiences,
-                        workspaceTempDir,
-                        keepDocker,
-                        context: interactiveTaskContext,
-                        irVersionOverride: generatorInvocation.irVersionOverride,
-                        outputVersionOverride: version,
-                        writeUnitTests: true,
-                        generateOauthClients: orgBody?.oauthClientEnabled ?? true,
-                        generatePaginatedClients: orgBody?.paginationEnabled ?? true,
-                        includeOptionalRequestPropertyExamples: false,
-                        inspect,
-                        executionEnvironment: undefined, // This should use the Docker fallback with proper image name
-                        ir: intermediateRepresentation,
-                        whiteLabel: orgBody?.isWhitelabled ?? false,
-                        publishToRegistry,
-                        runner,
-                        ai,
-                        autoVersioningCache,
-                        absolutePathToSpecRepo: dirname(workspace.absoluteFilePath),
-                        skipFernignore,
-                        disableTelemetry,
-                        rawApiSpecs: wantsRawSpecs ? workspace.allSpecs : undefined
-                    })
-                );
+                } = await writeFilesToDiskAndRunGenerator({
+                    organization: projectConfig.organization,
+                    absolutePathToFernConfig:
+                        workspace.generatorsConfiguration?.absolutePathToConfiguration ?? projectConfig._absolutePath,
+                    workspace: fernWorkspace,
+                    generatorInvocation,
+                    absolutePathToLocalOutput,
+                    absolutePathToLocalSnippetJSON,
+                    absolutePathToLocalSnippetTemplateJSON: undefined,
+                    version,
+                    audiences: generatorGroup.audiences,
+                    workspaceTempDir,
+                    keepDocker,
+                    context: interactiveTaskContext,
+                    irVersionOverride: generatorInvocation.irVersionOverride,
+                    outputVersionOverride: version,
+                    writeUnitTests: true,
+                    generateOauthClients: orgBody?.oauthClientEnabled ?? true,
+                    generatePaginatedClients: orgBody?.paginationEnabled ?? true,
+                    includeOptionalRequestPropertyExamples: false,
+                    inspect,
+                    executionEnvironment: undefined, // This should use the Docker fallback with proper image name
+                    ir: intermediateRepresentation,
+                    whiteLabel: orgBody?.isWhitelabled ?? false,
+                    publishToRegistry,
+                    runner,
+                    ai,
+                    autoVersioningCache,
+                    absolutePathToSpecRepo: dirname(workspace.absoluteFilePath),
+                    skipFernignore,
+                    disableTelemetry,
+                    rawApiSpecs: wantsRawSpecs ? workspace.allSpecs : undefined
+                });
 
                 interactiveTaskContext.logger.info(chalk.green("Wrote files to " + absolutePathToLocalOutput));
 
@@ -832,34 +828,4 @@ function getSelfhostedGithubConfig(
         };
     }
     return undefined;
-}
-
-function withHint(message: string, hint: string | undefined): string {
-    return hint != null ? `${message}\n\n${hint}` : message;
-}
-
-async function addHintToGenerationError<T>(
-    hint: string | undefined,
-    context: TaskContext,
-    run: () => Promise<T>
-): Promise<T> {
-    if (hint == null) {
-        return run();
-    }
-    try {
-        return await run();
-    } catch (error) {
-        if (error instanceof CliError) {
-            const withHintError = new CliError({
-                message: withHint(error.message, hint),
-                code: error.code,
-                docsLink: error.docsLink
-            });
-            withHintError.stack = error.stack;
-            throw withHintError;
-        }
-        // Already-logged failures (TaskAbortSignal) and unexpected errors keep their own handling.
-        context.logger.error(hint);
-        throw error;
-    }
 }
