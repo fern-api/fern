@@ -276,7 +276,7 @@ ${PYTHON_GENERATOR}`,
         });
     });
 
-    describe("with FERN_UPLOAD_SDK_GEN_SNIPPETS=true", () => {
+    describe("with SDK snippets in sdk-gen-api", () => {
         const TYPESCRIPT_BUILD = {
             sdkName: "acme",
             version: "1.0.0",
@@ -290,7 +290,6 @@ ${PYTHON_GENERATOR}`,
         }
 
         beforeEach(() => {
-            vi.stubEnv("FERN_UPLOAD_SDK_GEN_SNIPPETS", "true");
             sdkGenApi.hasBuilt(TYPESCRIPT_BUILD);
         });
 
@@ -454,18 +453,6 @@ ${PYTHON_GENERATOR}`,
 
             expect(fdr.to("POST /docs-ledger/preview/init")).toHaveLength(1);
             expect(codeSamples()).toHaveLength(1);
-        });
-    });
-
-    describe("without the flag", () => {
-        it("asks sdk-gen-api and FDR's snippet store for nothing, and adds no code", async () => {
-            sdkGenApi.hasBuilt({ sdkName: "acme", version: "1.0.0", language: "typescript", snippets: "{}" });
-
-            await run(sdkConfigProject({ snippets: TYPESCRIPT_SNIPPETS }));
-
-            expect(sdkGenApi.artifactListRequests).toEqual([]);
-            expect(fdr.to("POST /snippets/load")).toEqual([]);
-            expect(registeredApi().definition.rootPackage.endpoints[0]?.examples[0]?.codeSamples).toBeUndefined();
         });
     });
 });

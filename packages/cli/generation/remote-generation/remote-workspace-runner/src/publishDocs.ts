@@ -493,8 +493,8 @@ export async function publishDocs({
         }) => {
             // apiName (docs.yml folder name) becomes the FDR API identifier, so users can
             // reference APIs by their folder name in docs components.
-            // Only adds anything when FERN_UPLOAD_SDK_GEN_SNIPPETS=true: the snippets sdk-gen saved with the builds of the
-            // SDKs docs.yml names become code samples in the definition, which both deploy modes publish.
+            // The snippets sdk-gen saved with the builds of the SDKs docs.yml names become code samples in the
+            // definition, which both deploy modes publish.
             const apiDefinition = await attachSdkGenSnippets({
                 token: token.value,
                 organization,
