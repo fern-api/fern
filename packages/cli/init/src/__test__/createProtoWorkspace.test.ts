@@ -182,6 +182,36 @@ message Res {}
         expect(errors.join("\n")).toMatch(/No \.proto files/);
     });
 
+    it("leaves nothing behind when there are no .proto files, so a retry can succeed", async () => {
+        const source = await temporaryDirectory();
+        const workspace = await temporaryDirectory();
+        await write(source, "README.md", "nothing here");
+
+        await expect(run({ workspace, protoPath: source })).rejects.toBeDefined();
+        expect(await exists(workspace, "proto")).toBe(false);
+
+        await write(source, "acme.proto", ANNOTATED_SERVICE);
+        await run({ workspace, protoPath: source });
+        expect(await exists(workspace, "proto/acme.proto")).toBe(true);
+    });
+
+    it("copies from a directory that contains the workspace, as with --proto .", async () => {
+        const project = await temporaryDirectory();
+        const workspace = path.join(project, "fern");
+        await write(project, "acme.proto", ANNOTATED_SERVICE);
+        await write(project, "node_modules/pkg/vendored.proto", "message V {}");
+        await write(project, ".git/hooks/x.proto", "message G {}");
+        await write(project, "fern/fern.config.json", "{}");
+
+        await run({ workspace, protoPath: project });
+
+        expect(await exists(workspace, "proto/acme.proto")).toBe(true);
+        expect(await exists(workspace, "proto/node_modules")).toBe(false);
+        expect(await exists(workspace, "proto/.git")).toBe(false);
+        expect(await exists(workspace, "proto/fern")).toBe(false);
+        expect(await readProtoSpec(workspace)).toMatchObject({ root: "proto", target: "proto/acme.proto" });
+    });
+
     it("fails for a single file that is not a .proto", async () => {
         const source = await temporaryDirectory();
         const workspace = await temporaryDirectory();

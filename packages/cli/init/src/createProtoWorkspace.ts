@@ -34,21 +34,26 @@ export async function createProtoWorkspace({
     await assertCanCopy({ protoPath, destinationRoot, context });
 
     const sourceIsDirectory = (await stat(protoPath)).isDirectory();
-    if (sourceIsDirectory) {
-        await warnAboutBufConfig({ directory: protoPath, context });
-        await fs.copy(protoPath, destinationRoot, {
-            filter: async (source) => (await stat(source)).isDirectory() || source.endsWith(PROTO_EXTENSION)
-        });
-    } else {
-        await mkdir(destinationRoot, { recursive: true });
-        await fs.copy(protoPath, path.join(destinationRoot, path.basename(protoPath)));
-    }
-
-    const relativePaths = await listProtoFiles(destinationRoot);
+    // Listed before anything is copied, so a failure leaves no proto directory behind to block a retry.
+    // The destination is skipped because it is inside the source for e.g. `fern init --proto .`.
+    const relativePaths = sourceIsDirectory
+        ? await listProtoFiles({ directory: protoPath, skip: destinationRoot })
+        : [path.basename(protoPath)];
     if (relativePaths.length === 0) {
         context.failAndThrow(`No ${PROTO_EXTENSION} files were found in ${protoPath}`, undefined, {
             code: CliError.Code.ConfigError
         });
+    }
+    if (sourceIsDirectory) {
+        await warnAboutBufConfig({ directory: protoPath, context });
+        for (const relativePath of relativePaths) {
+            await fs.copy(path.join(protoPath, relativePath), path.join(destinationRoot, relativePath), {
+                dereference: true
+            });
+        }
+    } else {
+        await mkdir(destinationRoot, { recursive: true });
+        await fs.copy(protoPath, path.join(destinationRoot, path.basename(protoPath)));
     }
     const files = await Promise.all(
         relativePaths.map(async (relativePath) =>
@@ -183,15 +188,30 @@ async function writeBundledProtos({
     }
 }
 
-/** Paths of every `.proto` file under `directory`, relative to it and with forward slashes. */
-async function listProtoFiles(directory: AbsoluteFilePath): Promise<string[]> {
+/**
+ * Paths of every `.proto` file under `directory`, relative to it and with forward slashes. Skips `skip`,
+ * `node_modules` and hidden directories, which hold vendored or tooling protos rather than the user's API.
+ */
+async function listProtoFiles({
+    directory,
+    skip
+}: {
+    directory: AbsoluteFilePath;
+    skip: AbsoluteFilePath;
+}): Promise<string[]> {
     const found: string[] = [];
     const walk = async (relativeDirectory: string): Promise<void> => {
         const entries = await readdir(path.join(directory, relativeDirectory), { withFileTypes: true });
         for (const entry of entries) {
             const relativePath = path.posix.join(relativeDirectory, entry.name);
             if (entry.isDirectory()) {
-                await walk(relativePath);
+                const isSkipped =
+                    entry.name === "node_modules" ||
+                    entry.name.startsWith(".") ||
+                    path.resolve(directory, relativePath) === path.resolve(skip);
+                if (!isSkipped) {
+                    await walk(relativePath);
+                }
             } else if (entry.name.endsWith(PROTO_EXTENSION) && (await isFile(path.join(directory, relativePath)))) {
                 found.push(relativePath);
             }
