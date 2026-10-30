@@ -15,7 +15,7 @@ class OutputDirectory(str, Enum):
 
 
 from .dependency_manager import DependencyManager
-from .file_header import get_file_header, get_license_comment
+from .file_header import FERN_HEADER, WHITELABEL_HEADER, get_auto_generated_notice, get_file_header, get_license_comment
 from .filepath import Filepath
 from .module_manager import ModuleExport, ModuleManager
 from .reference_resolver_impl import ReferenceResolverImpl
@@ -44,6 +44,14 @@ if TYPE_CHECKING:
 class ProjectConfig:
     package_name: str
     package_version: str
+
+
+def _strip_auto_generated_notice(contents: str) -> str:
+    """Files copied from disk may already carry an auto-generated notice; the writer adds the correct one."""
+    for notice in (FERN_HEADER, WHITELABEL_HEADER):
+        if contents.startswith(notice):
+            return contents[len(notice) :].lstrip("\n")
+    return contents
 
 
 class Project:
@@ -145,6 +153,7 @@ class Project:
             import_paths=import_paths,
             package_name=package_name_for_import_paths,
             license_header=license_header,
+            whitelabel=whitelabel,
         )
         self._python_version = python_version
         self._dependency_manager = DependencyManager()
@@ -168,6 +177,11 @@ class Project:
         is embedding the source tree into an existing project and owns those files.
         """
         return self._emit_scaffolding
+
+    @property
+    def auto_generated_notice(self) -> str:
+        """The "auto-generated" comment line, for files whose contents are written by hand rather than via a Writer."""
+        return get_auto_generated_notice(whitelabel=self._whitelabel)
 
     def get_module_path_for_imports(self) -> str:
         """
@@ -260,8 +274,13 @@ class Project:
         string_replacements: Optional[dict[str, str]] = None,
     ) -> None:
         with open(path_on_disk, "r") as existing_file:
-            writer = WriterImpl(should_format=False, should_sort_imports=True, license_header=self._license_header)
-            read_file = existing_file.read()
+            writer = WriterImpl(
+                should_format=False,
+                should_sort_imports=True,
+                whitelabel=self._whitelabel,
+                license_header=self._license_header,
+            )
+            read_file = _strip_auto_generated_notice(existing_file.read())
             if string_replacements is not None:
                 for k, v in string_replacements.items():
                     read_file = read_file.replace(k, v)
