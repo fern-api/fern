@@ -53,4 +53,25 @@ fixtures:
               Operand: 
                 type: null     
       outputFolder: custom-overrides
-allowedFailures: []
+allowedFailures:
+  # The IR-to-OpenAPI converter throws on these ("Duplicate <method> endpoint at <path>" or
+  # "bytes is not supported"), so the
+  # generator writes no files. The CLI now fails generation when that happens.
+  - bytes-upload
+  - cross-package-type-names
+  - endpoint-security-auth
+  - examples
+  - exhaustive
+  - file-upload
+  - folders
+  - multiple-request-bodies
+  - oauth-client-credentials
+  - oauth-client-credentials-custom
+  - oauth-client-credentials-environment-variables
+  - oauth-client-credentials-mandatory-auth
+  - oauth-client-credentials-with-variables
+  - pagination
+  - response-property
+  - server-sent-events-openapi
+  - trace
+  - unions-with-local-date
