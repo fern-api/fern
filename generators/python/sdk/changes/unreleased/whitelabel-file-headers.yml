@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    With `whitelabel: true`, every generated file now uses the unbranded
+    "auto-generated from our API Definition" header. Previously `__init__.py` files, most
+    `core/` files, `_default_clients.py`, webhook signature helpers and XML model tests
+    still said "by Fern".
+  type: fix
