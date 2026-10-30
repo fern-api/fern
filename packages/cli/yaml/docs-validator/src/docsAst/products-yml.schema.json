@@ -1889,6 +1889,17 @@
           ],
           "description": "If true, the API reference will be paginated rather than displayed in a single page (long-scrolling)."
         },
+        "show-scopes": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If true, appends the scopes each endpoint requires (from its `security` requirements) to the endpoint description."
+        },
         "playground": {
           "oneOf": [
             {
