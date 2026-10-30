@@ -45,7 +45,8 @@ internal static class XmlUtils
     )
     {
         var copy = WithoutInvalidXmlChars(element);
-        // Legacy TwiML libraries write empty elements as <Tag></Tag>, so keep that byte-for-byte.
+        // Legacy TwiML libraries write empty elements as <Tag></Tag>, so keep that byte-for-byte. `copy` is a
+        // fresh clone (WithoutInvalidXmlChars), and ToList() materializes the lazy query before the tree is mutated.
         foreach (var empty in copy.DescendantsAndSelf().Where(e => e.IsEmpty).ToList())
         {
             empty.Value = string.Empty;
