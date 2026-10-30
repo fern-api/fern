@@ -1,9 +1,9 @@
 [project]
-name = "fern_python-global-header-client-default"
+name = "fern-python-global-header-client-default"
 dynamic = ["version"]
 
 [tool.poetry]
-name = "fern_python-global-header-client-default"
+name = "fern-python-global-header-client-default"
 version = "0.0.1"
 description = ""
 readme = "README.md"

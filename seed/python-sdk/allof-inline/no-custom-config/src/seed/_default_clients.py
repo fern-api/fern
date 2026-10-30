@@ -13,7 +13,7 @@ except ImportError:
     class DefaultAioHttpClient(httpx.AsyncClient):  # type: ignore
         def __init__(self, **kwargs: typing.Any) -> None:
             raise RuntimeError(
-                "To use the aiohttp client, install the aiohttp extra: pip install fern_allof-inline[aiohttp]"
+                "To use the aiohttp client, install the aiohttp extra: pip install fern-allof-inline[aiohttp]"
             )
 
 else:

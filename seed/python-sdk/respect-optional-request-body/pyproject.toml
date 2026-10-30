@@ -1,9 +1,9 @@
 [project]
-name = "fern_respect-optional-request-body"
+name = "fern-respect-optional-request-body"
 dynamic = ["version"]
 
 [tool.poetry]
-name = "fern_respect-optional-request-body"
+name = "fern-respect-optional-request-body"
 version = "0.0.1"
 description = ""
 readme = "README.md"

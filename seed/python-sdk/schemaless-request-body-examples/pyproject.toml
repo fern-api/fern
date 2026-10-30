@@ -1,9 +1,9 @@
 [project]
-name = "fern_schemaless-request-body-examples"
+name = "fern-schemaless-request-body-examples"
 dynamic = ["version"]
 
 [tool.poetry]
-name = "fern_schemaless-request-body-examples"
+name = "fern-schemaless-request-body-examples"
 version = "0.0.1"
 description = ""
 readme = "README.md"
