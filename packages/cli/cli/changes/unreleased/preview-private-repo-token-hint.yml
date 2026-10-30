@@ -2,6 +2,6 @@
 
 - summary: |
     `fern generate --local --preview` with self-hosted `github` output and an empty `github.token` now fails
-    before generation if the repository can't be read without credentials, with "--preview and --local
-    can't run with a private repo (<repo>), remove --preview and generate to a local folder".
+    before generation if the repository can't be read without credentials, with
+    `--preview and --local can't run with a private repo (<repo>), remove --preview and generate to a local folder`.
   type: fix
