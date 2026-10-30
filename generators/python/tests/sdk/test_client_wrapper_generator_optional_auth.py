@@ -27,6 +27,7 @@ class _FakeContext:
 class _FakeProject:
     def __init__(self) -> None:
         self._project_config: Optional[object] = None
+        self.whitelabel = False
 
 
 def _basic_auth_scheme(*, username_omit: bool = False, password_omit: bool = False) -> ir_types.AuthScheme:
