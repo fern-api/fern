@@ -15,7 +15,7 @@ class OutputDirectory(str, Enum):
 
 
 from .dependency_manager import DependencyManager
-from .file_header import FERN_HEADER, get_auto_generated_notice, get_file_header, get_license_comment
+from .file_header import FERN_HEADER, WHITELABEL_HEADER, get_auto_generated_notice, get_file_header, get_license_comment
 from .filepath import Filepath
 from .module_manager import ModuleExport, ModuleManager
 from .reference_resolver_impl import ReferenceResolverImpl
@@ -46,10 +46,11 @@ class ProjectConfig:
     package_version: str
 
 
-def _strip_fern_header(contents: str) -> str:
-    """Files copied from disk may already carry the Fern header; the writer adds the correct one."""
-    if contents.startswith(FERN_HEADER):
-        return contents[len(FERN_HEADER) :].lstrip("\n")
+def _strip_auto_generated_notice(contents: str) -> str:
+    """Files copied from disk may already carry an auto-generated notice; the writer adds the correct one."""
+    for notice in (FERN_HEADER, WHITELABEL_HEADER):
+        if contents.startswith(notice):
+            return contents[len(notice) :].lstrip("\n")
     return contents
 
 
@@ -279,7 +280,7 @@ class Project:
                 whitelabel=self._whitelabel,
                 license_header=self._license_header,
             )
-            read_file = _strip_fern_header(existing_file.read())
+            read_file = _strip_auto_generated_notice(existing_file.read())
             if string_replacements is not None:
                 for k, v in string_replacements.items():
                     read_file = read_file.replace(k, v)
