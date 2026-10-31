@@ -40,3 +40,9 @@ export {
     runNativeGenerationWithCommand
 } from "./runLocalGenerationForSeed.js";
 export * from "./runLocalGenerationForWorkspace.js";
+export {
+    type ConvertProtobufSpecs,
+    prepareSdkSourceSpecs,
+    rewriteSdkConfigSourceSpecs,
+    type SdkSourceSpec
+} from "./sdkSourceSpecs.js";

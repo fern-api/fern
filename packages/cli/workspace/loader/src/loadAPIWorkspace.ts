@@ -391,6 +391,7 @@ export async function loadAPIWorkspace({
                     }
                     return true;
                 }),
+                sourceSpecs: specs,
                 workspaceName,
                 absoluteFilePath: absolutePathToWorkspace,
                 generatorsConfiguration,

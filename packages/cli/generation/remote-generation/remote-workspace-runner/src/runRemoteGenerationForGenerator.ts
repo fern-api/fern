@@ -361,7 +361,10 @@ export async function runRemoteGenerationForGenerator({
                     apiVersion: sdkConfigV1.apiVersion,
                     token,
                     specsTarGzBuffer: candidate.specsTarGzBuffer,
-                    payload: createSdkConfigTargetPayload(sdkConfigTarget),
+                    payload: createSdkConfigTargetPayload(
+                        sdkConfigTarget,
+                        sdkGenApiSourceArchive?.sdkConfigSourceSpecs
+                    ),
                     requestedOutput: sdkConfigRequestedOutput,
                     ...(!isPreview && sdkConfigTarget.publishCredential != null
                         ? { publishCredential: sdkConfigTarget.publishCredential }

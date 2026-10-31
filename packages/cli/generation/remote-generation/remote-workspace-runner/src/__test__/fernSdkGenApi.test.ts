@@ -2230,6 +2230,23 @@ describe("isEligibleForFernSdkGenApi", () => {
         ).toThrow("does not support Fern source type protobuf");
     });
 
+    it("accepts OpenAPI converted from protobuf at cutover and after", () => {
+        const archive = sourceArchive([
+            {
+                type: "openapi",
+                origin: "protobuf",
+                specPath: "/fern/specs/openapi0.json",
+                overridePaths: ["/fern/specs/openapi0-override-0.yml"]
+            },
+            { type: "openapi", specPath: "/fern/specs/openapi1.json" }
+        ]);
+
+        for (const version of ["4.0.0", "4.0.1"]) {
+            const route = nativeSdkConfigRoute(invocation({ version }));
+            expect(() => validateFernSdkGenApiSourceCompatibility(route, archive)).not.toThrow();
+        }
+    });
+
     it("allows an empty source archive for a runtime-bundle target", () => {
         const route = selectFernSdkGenApiRoute(invocation({ version: "3.999.999" }));
         if (route == null) {

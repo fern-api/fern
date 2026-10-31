@@ -119,6 +119,8 @@ export async function createSdkConfigWorkspace({
             specs: specs.filter(
                 (spec): spec is OpenAPISpec | ProtobufSpec => spec.type === "openapi" || isFromOpenAPIProtobufSpec(spec)
             ),
+            // Same order as sdk-config.yml `source.specs`, which SDK Config payloads correlate by position.
+            sourceSpecs: specs,
             generatorsConfiguration,
             workspaceName,
             cliVersion,

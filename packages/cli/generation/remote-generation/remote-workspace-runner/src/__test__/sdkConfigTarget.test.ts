@@ -25,3 +25,36 @@ describe("resolveSdkConfigTarget", () => {
         expect(createSdkConfigTargetPayload(second)).toEqual({ payloadKind: "sdk-config-v1", body: secondBody });
     });
 });
+
+describe("createSdkConfigTargetPayload", () => {
+    it("swaps in source specs rewritten to match the uploaded archive", () => {
+        const document = {
+            sdkName: "orders",
+            source: {
+                apiImportSettings: { respectNullableSchemas: true },
+                specs: [
+                    { id: "orders", proto: { root: "./proto", fromOpenApi: true } },
+                    { id: "docs", proto: { root: "./docs" } }
+                ]
+            },
+            targets: [{ language: "typescript" }]
+        };
+        const target = { body: Buffer.from(`${JSON.stringify(document)}\n`), language: "typescript" };
+        const specs = [
+            { id: "orders:a.proto", type: "openapi" as const, path: "fern/specs/openapi0.json" },
+            { id: "orders:b.proto", type: "openapi" as const, path: "fern/specs/openapi1.json" }
+        ];
+
+        const payload = createSdkConfigTargetPayload(target, specs);
+
+        expect(JSON.parse(payload.body.toString("utf8"))).toEqual({
+            ...document,
+            source: { ...document.source, specs }
+        });
+    });
+
+    it("sends the body unchanged without rewritten source specs", () => {
+        const body = Buffer.from('{"source":{"specs":[]}}');
+        expect(createSdkConfigTargetPayload({ body, language: "go" }).body).toBe(body);
+    });
+});
