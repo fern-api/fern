@@ -1,0 +1,6 @@
+- summary: |
+    `fern generate --docs --guest` no longer prints a "Missing redirects check skipped: could not
+    reach FDR (FDR returned 403)" warning. The check needs to read the site's previously published
+    pages, which a guest token is not allowed to do, and a guest's drop site has no redirects to
+    protect, so the check is skipped silently for guest publishes.
+  type: fix
