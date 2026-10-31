@@ -75,5 +75,123 @@ describe("Enum", () => {
               }"
             `);
         });
+
+        it("should decode unlisted raw values into the unknown case when forward compatible", () => {
+            const enum_ = swift.enumWithRawValues({
+                name: "Operand",
+                accessLevel: swift.AccessLevel.Public,
+                conformances: [swift.Protocol.RawRepresentable, swift.Protocol.Codable, swift.Protocol.CaseIterable],
+                cases: [
+                    { unsafeName: "greaterThan", rawValue: ">" },
+                    { unsafeName: "class", rawValue: "class" },
+                    { unsafeName: "lessThan", rawValue: "less_than" }
+                ],
+                unknownCase: { unsafeName: "__unknown" }
+            });
+
+            expect(enum_.toString()).toMatchInlineSnapshot(`
+              "public enum Operand: RawRepresentable, Codable, CaseIterable {
+                  case greaterThan
+                  case \`class\`
+                  case lessThan
+                  case __unknown(String)
+
+                  public static let allCases: [Self] = [.greaterThan, .\`class\`, .lessThan]
+
+                  public init(rawValue: String) {
+                      switch rawValue {
+                      case ">": self = .greaterThan
+                      case "class": self = .\`class\`
+                      case "less_than": self = .lessThan
+                      default: self = .__unknown(rawValue)
+                      }
+                  }
+
+                  public var rawValue: String {
+                      switch self {
+                      case .greaterThan: return ">"
+                      case .\`class\`: return "class"
+                      case .lessThan: return "less_than"
+                      case .__unknown(let rawValue): return rawValue
+                      }
+                  }
+
+                  public init(from decoder: Decoder) throws {
+                      self.init(rawValue: try decoder.singleValueContainer().decode(String.self))
+                  }
+
+                  public func encode(to encoder: Encoder) throws {
+                      var container = encoder.singleValueContainer()
+                      try container.encode(rawValue)
+                  }
+              }"
+            `);
+        });
+
+        it("should only emit Codable and CaseIterable members for listed conformances", () => {
+            const enum_ = swift.enumWithRawValues({
+                name: "Flag",
+                conformances: [swift.Protocol.RawRepresentable],
+                cases: [{ unsafeName: "on", rawValue: "on" }],
+                unknownCase: { unsafeName: "__unknown" }
+            });
+
+            expect(enum_.toString()).toMatchInlineSnapshot(`
+              "enum Flag: RawRepresentable {
+                  case on
+                  case __unknown(String)
+
+                  init(rawValue: String) {
+                      switch rawValue {
+                      case "on": self = .on
+                      default: self = .__unknown(rawValue)
+                      }
+                  }
+
+                  var rawValue: String {
+                      switch self {
+                      case .on: return "on"
+                      case .__unknown(let rawValue): return rawValue
+                      }
+                  }
+              }"
+            `);
+        });
+
+        it("should render a forward compatible enum without listed cases", () => {
+            const enum_ = swift.enumWithRawValues({
+                name: "Empty",
+                conformances: [swift.Protocol.RawRepresentable, swift.Protocol.Codable],
+                cases: [],
+                unknownCase: { unsafeName: "__unknown" }
+            });
+
+            expect(enum_.toString()).toMatchInlineSnapshot(`
+              "enum Empty: RawRepresentable, Codable {
+                  case __unknown(String)
+
+                  init(rawValue: String) {
+                      switch rawValue {
+                      default: self = .__unknown(rawValue)
+                      }
+                  }
+
+                  var rawValue: String {
+                      switch self {
+                      case .__unknown(let rawValue): return rawValue
+                      }
+                  }
+
+                  init(from decoder: Decoder) throws {
+                      self.init(rawValue: try decoder.singleValueContainer().decode(String.self))
+                  }
+
+                  func encode(to encoder: Encoder) throws {
+                      var container = encoder.singleValueContainer()
+                      try container.encode(rawValue)
+                  }
+              }"
+            `);
+        });
     });
 });
