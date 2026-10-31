@@ -1,0 +1,31 @@
+- summary: |
+    `profiles list`, `show` and `current` no longer read the OS keychain. A profile
+    saved by an older release used to be read once from them to fill its ACCOUNT
+    column, and a denied macOS prompt came back on every listing; that account is
+    now recorded by the next request that uses the profile, which reads the
+    credential anyway.
+  type: fix
+- summary: |
+    The generated release workflow signs the macOS binaries when the repository
+    has the `CODESIGN_CERTIFICATE`, `CODESIGN_CERTIFICATE_PASSWORD` and
+    `CODESIGN_IDENTITY` secrets (an Apple Developer ID certificate), so the macOS
+    keychain's "Always Allow" survives upgrades instead of prompting after every
+    release. Without the secrets the binaries are built unsigned, as before.
+  type: fix
+- summary: |
+    On macOS, keychain credentials are read, written and deleted through Apple's
+    `/usr/bin/security` tool, so the keychain asks about that tool rather than
+    the CLI binary itself. One "Always Allow" now lasts across rebuilds and
+    upgrades, signed or not, instead of prompting again for every new build.
+    Credentials saved by earlier releases are read as before and prompt once.
+  type: fix
+- summary: |
+    A request whose saved credential could not be read from the OS keychain (a
+    denied or cancelled macOS prompt, a locked keyring) now says so, for example
+    "Couldn't read the saved credential for profile `default` from the macOS
+    Keychain (access was denied, or the Keychain is locked)", instead of
+    reporting the credential as missing and asking the user to set it again. A
+    denied or cancelled read is also remembered for the rest of the command, so
+    an OAuth profile raises one Keychain dialog instead of three. Credentials that really are missing get the same
+    error as before.
+  type: fix

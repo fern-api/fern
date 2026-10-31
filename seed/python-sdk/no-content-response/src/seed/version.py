@@ -1,3 +1,3 @@
 from importlib import metadata
 
-__version__ = metadata.version("fern_no-content-response")
+__version__ = metadata.version("fern-no-content-response")

@@ -127,6 +127,18 @@ pub struct StoredIdentity {
     pub oauth_client_id: Option<String>,
 }
 
+impl StoredIdentity {
+    /// The public identifiers (`username`, `client_id`) in a stored value.
+    pub fn of(stored: &str) -> Self {
+        let fields: BTreeMap<String, String> = serde_json::from_str(stored).unwrap_or_default();
+        let field = |key: &str| fields.get(key).filter(|v| !v.is_empty()).cloned();
+        StoredIdentity {
+            account: field("username"),
+            oauth_client_id: field(crate::auth::oauth2::CLIENT_ID_FIELD),
+        }
+    }
+}
+
 /// Per-profile defaults for the transport knobs [`crate::http::HttpConfig`]
 /// reads from env. Each field mirrors one `<NAME>_*` variable.
 #[derive(Debug, Clone, Default, PartialEq, Eq)]
@@ -386,12 +398,7 @@ impl ProfileStore {
     /// Note that `scheme`'s entry in slot `credential` now holds `stored`,
     /// copying out its public identifiers (`username`, `client_id`).
     pub fn record_credential(&mut self, credential: &str, scheme: &str, stored: &str) {
-        let fields: BTreeMap<String, String> = serde_json::from_str(stored).unwrap_or_default();
-        let field = |key: &str| fields.get(key).filter(|v| !v.is_empty()).cloned();
-        let identity = StoredIdentity {
-            account: field("username"),
-            oauth_client_id: field(crate::auth::oauth2::CLIENT_ID_FIELD),
-        };
+        let identity = StoredIdentity::of(stored);
         let mut record = self.credential_record(credential).unwrap_or_default();
         record.checked.retain(|s| s != scheme);
         record.schemes.insert(scheme.to_string(), identity);

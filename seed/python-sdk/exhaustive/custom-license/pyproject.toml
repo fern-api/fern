@@ -1,10 +1,10 @@
 [project]
-name = "fern_exhaustive"
+name = "fern-exhaustive"
 dynamic = ["version"]
 license-files = ["LICENSE"]
 
 [tool.poetry]
-name = "fern_exhaustive"
+name = "fern-exhaustive"
 version = "0.0.1"
 description = ""
 readme = "README.md"

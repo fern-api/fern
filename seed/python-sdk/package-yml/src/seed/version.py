@@ -1,3 +1,3 @@
 from importlib import metadata
 
-__version__ = metadata.version("fern_package-yml")
+__version__ = metadata.version("fern-package-yml")

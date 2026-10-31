@@ -1,9 +1,9 @@
 [project]
-name = "fern_webhook-audience"
+name = "fern-webhook-audience"
 dynamic = ["version"]
 
 [tool.poetry]
-name = "fern_webhook-audience"
+name = "fern-webhook-audience"
 version = "0.0.1"
 description = ""
 readme = "README.md"

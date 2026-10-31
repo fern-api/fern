@@ -1,9 +1,9 @@
 [project]
-name = "fern_query-param-name-conflict"
+name = "fern-query-param-name-conflict"
 dynamic = ["version"]
 
 [tool.poetry]
-name = "fern_query-param-name-conflict"
+name = "fern-query-param-name-conflict"
 version = "0.0.1"
 description = ""
 readme = "README.md"

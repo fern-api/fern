@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Discriminated union wrapper classes now annotate `equals`, `hashCode` and `toString` with
+    `@java.lang.Override`, matching the other generated types. Previously the bare `@Override` failed to
+    compile when the API defined a type named `Override` in the same package
+    (`incompatible types: Override cannot be converted to Annotation`).
+  type: fix

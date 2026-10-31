@@ -1,4 +1,50 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.41.16
+  changelogEntry:
+    - summary: |
+        When `whitelabel` is enabled, the SDK's logger is now named after the package, with dashes
+        turned into dots (for example `acme-orders` logs as `acme.orders`), instead of
+        `{package name}_sdk_{version}`. The name no longer changes on every release, and it sits under
+        parent loggers such as `acme`.
+      type: fix
+    - summary: |
+        The PyPI package name is now always normalized per the Python packaging spec: runs of
+        `.`, `_`, and `-` become a single `-`, and the name is lowercased (for example `Acme_Orders.v2`
+        becomes `acme-orders-v2`). This applies to `pyproject.toml`, the SDK name header, and the
+        User-Agent. PyPI already treats these spellings as the same package, so installs are unaffected.
+      type: fix
+  createdAt: "2026-10-30"
+  irVersion: 67
+- version: 5.41.15
+  changelogEntry:
+    - summary: |
+        When `whitelabel` is enabled, the SDK's platform headers are now sent as `X-Codegen-*`
+        (for example `X-Codegen-Language`) instead of `X-Fern-*`, and the SDK's logger is named
+        `{package name}_sdk_{version}` instead of `fern`.
+      type: fix
+  createdAt: "2026-10-30"
+  irVersion: 67
+- version: 5.41.14
+  changelogEntry:
+    - summary: |
+        README generation in self-hosted GitHub mode can clone a private repository with a personal
+        access token again. Upgrades `@fern-api/generator-cli` to 0.12.1, which also sends the token as an
+        `Authorization` header. Before this, git in the generator image (libcurl 8.23+) dropped the token
+        from the clone URL and failed with `could not read Username`.
+      type: fix
+  createdAt: "2026-10-30"
+  irVersion: 67
+- version: 5.41.13
+  changelogEntry:
+    - summary: |
+        When `whitelabel` is enabled, every generated file now uses the unbranded header
+        ("This file was auto-generated from our API Definition."). Previously `__init__.py` files,
+        most `core/` utilities, `_default_clients.py`, webhook signature helpers, XML model tests,
+        and test asset models still said "by Fern". Files copied from disk no longer get the
+        header twice.
+      type: fix
+  createdAt: "2026-10-30"
+  irVersion: 67
 - version: 5.41.12
   changelogEntry:
     - summary: |

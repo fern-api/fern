@@ -1,9 +1,9 @@
 [project]
-name = "fern_python-backslash-escape"
+name = "fern-python-backslash-escape"
 dynamic = ["version"]
 
 [tool.poetry]
-name = "fern_python-backslash-escape"
+name = "fern-python-backslash-escape"
 version = "0.0.1"
 description = ""
 readme = "README.md"

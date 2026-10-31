@@ -1,4 +1,42 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 4.37.6
+  changelogEntry:
+    - summary: |
+        README generation in self-hosted GitHub mode can clone a private repository with a personal
+        access token again. Upgrades `@fern-api/generator-cli` to 0.12.1, which also sends the token as an
+        `Authorization` header. Before this, git in the generator image (libcurl 8.23+) dropped the token
+        from the clone URL and failed with `could not read Username`.
+      type: fix
+  createdAt: "2026-10-30"
+  irVersion: 67
+- version: 4.37.5
+  changelogEntry:
+    - summary: |
+        XML (TwiML) builders keep the legacy meaning of a String setter whose name is shared by the element's text
+        and a child element: `Dial.builder().number("+15551234567")` sets the text (`<Dial>+15551234567</Dial>`) as in
+        twilio-java, `number(Number)` adds the `<Number>` child and `addNumber(String)` adds a child with text; the
+        text property is no longer renamed to `text` (the `text(...)` alias stays).
+      type: fix
+  createdAt: "2026-10-30"
+  irVersion: 67
+- version: 4.37.4
+  changelogEntry:
+    - summary: |
+        XML (TwiML) serialization writes empty elements as `<Hangup/>` instead of `<Hangup />`, matching the legacy
+        twilio-java output byte for byte.
+      type: fix
+  createdAt: "2026-10-30"
+  irVersion: 67
+- version: 4.37.3
+  changelogEntry:
+    - summary: |
+        Discriminated union wrapper classes now annotate `equals`, `hashCode` and `toString` with
+        `@java.lang.Override`, matching the other generated types. Previously the bare `@Override` failed to
+        compile when the API defined a type named `Override` in the same package
+        (`incompatible types: Override cannot be converted to Annotation`).
+      type: fix
+  createdAt: "2026-10-29"
+  irVersion: 67
 - version: 4.37.2
   changelogEntry:
     - summary: |

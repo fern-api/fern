@@ -64,16 +64,3 @@ export async function fetchGuestDocsSite({
     }
     return json;
 }
-
-/** docs-ledger `finish` adds the claim link and expiry for a guest site; older FDRs do not. */
-export function readGuestPublishOutcome(result: unknown): { claimUrl?: string; expiresAt?: Date } {
-    if (typeof result !== "object" || result == null) {
-        return {};
-    }
-    const record: Record<string, unknown> = result as Record<string, unknown>;
-    const expiresAt = typeof record.expiresAt === "string" ? new Date(record.expiresAt) : undefined;
-    return {
-        claimUrl: typeof record.claimUrl === "string" ? record.claimUrl : undefined,
-        expiresAt: expiresAt != null && !Number.isNaN(expiresAt.getTime()) ? expiresAt : undefined
-    };
-}

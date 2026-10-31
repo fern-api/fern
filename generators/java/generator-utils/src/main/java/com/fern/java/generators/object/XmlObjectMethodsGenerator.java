@@ -77,80 +77,18 @@ public final class XmlObjectMethodsGenerator {
     /** The uniform setter for an element's text content when its own name is taken by a child builder. */
     public static final String TEXT_FIELD_NAME = "text";
 
-    /** The names the child builders of an xml object take: the camelCase name of each typed child element. */
-    public static Set<String> childBuilderNames(
-            Map<TypeId, TypeDeclaration> typeDeclarations, List<ObjectProperty> properties) {
-        Set<String> names = new HashSet<>();
-        for (ObjectProperty property : properties) {
-            if (XmlTypeUtils.getPropertyKind(property).getEnumValue() != XmlPropertyKind.Value.ELEMENT) {
-                continue;
-            }
-            Optional<TypeReference> item =
-                    XmlTypeUtils.getListItemType(XmlTypeUtils.unwrapOptional(property.getValueType()));
-            Optional<TypeId> typeId = item.flatMap(TypeReference::getNamed).map(named -> named.getTypeId());
-            if (typeId.isEmpty()) {
-                continue;
-            }
-            TypeDeclaration declaration = typeDeclarations.get(typeId.get());
-            if (declaration == null) {
-                continue;
-            }
-            if (XmlTypeUtils.getXmlObjectEncoding(typeDeclarations, typeId.get())
-                    .isPresent()) {
-                names.add(childBuilderName(declaration));
-                continue;
-            }
-            declaration.getShape().getUndiscriminatedUnion().ifPresent(union -> union.getMembers()
-                    .forEach(member -> member.getType()
-                            .getNamed()
-                            .map(named -> typeDeclarations.get(named.getTypeId()))
-                            .filter(memberDeclaration -> memberDeclaration != null
-                                    && XmlTypeUtils.getXmlObjectEncoding(
-                                                    typeDeclarations,
-                                                    memberDeclaration.getName().getTypeId())
-                                            .isPresent())
-                            .ifPresent(memberDeclaration -> names.add(childBuilderName(memberDeclaration)))));
-        }
-        return names;
-    }
-
     private static String childBuilderName(TypeDeclaration declaration) {
         return KeyWordUtils.getKeyWordCompatibleMethodName(
                 NameUtils.toName(declaration.getName().getName()).getCamelCase().getSafeName());
     }
 
-    /**
-     * The text property whose name is also a child builder's name ({@code Message.body} vs {@code <Body>}). As in the
-     * legacy SDKs the child builder keeps the name, so the text property is generated as {@code text}.
-     */
-    public static Optional<ObjectProperty> textPropertyYieldingToChild(
-            Map<TypeId, TypeDeclaration> typeDeclarations, List<ObjectProperty> properties) {
-        Set<String> childNames = childBuilderNames(typeDeclarations, properties);
-        return properties.stream()
-                .filter(property -> XmlTypeUtils.getPropertyKind(property).getEnumValue() == XmlPropertyKind.Value.TEXT)
-                .filter(property -> childNames.contains(fieldName(property)))
-                .findFirst();
-    }
-
     /** The generated field/setter name of an xml object's text property, or empty when it has none. */
     public static Optional<String> textFieldName(
             Map<TypeId, TypeDeclaration> typeDeclarations, List<ObjectProperty> properties) {
-        Optional<ObjectProperty> yielding = textPropertyYieldingToChild(typeDeclarations, properties);
-        if (yielding.isPresent()) {
-            return Optional.of(renamedTextFieldName(yielding.get(), properties));
-        }
         return properties.stream()
                 .filter(property -> XmlTypeUtils.getPropertyKind(property).getEnumValue() == XmlPropertyKind.Value.TEXT)
                 .map(XmlObjectMethodsGenerator::fieldName)
                 .findFirst();
-    }
-
-    /** {@code text}, or {@code <name>Text} when another property is already called {@code text}. */
-    public static String renamedTextFieldName(ObjectProperty textProperty, List<ObjectProperty> properties) {
-        boolean textTaken = properties.stream()
-                .filter(property -> property != textProperty)
-                .anyMatch(property -> fieldName(property).equals(TEXT_FIELD_NAME));
-        return textTaken ? fieldName(textProperty) + "Text" : TEXT_FIELD_NAME;
     }
 
     private static String fieldName(ObjectProperty property) {

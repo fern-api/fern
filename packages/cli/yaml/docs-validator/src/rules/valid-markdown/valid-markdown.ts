@@ -8,6 +8,7 @@ import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import { z } from "zod";
 import { Rule } from "../../Rule.js";
+import { getMintlifyComponentWarnings } from "./mintlify-components.js";
 export const ValidMarkdownRule: Rule = {
     name: "valid-markdown",
     create: ({ logger, workspace }) => {
@@ -45,7 +46,10 @@ export const ValidMarkdownRule: Rule = {
                     ];
                 }
 
-                return [];
+                return getMintlifyComponentWarnings(content).map((message) => ({
+                    severity: "warning" as const,
+                    message
+                }));
             }
         };
     }

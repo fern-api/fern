@@ -166,6 +166,39 @@ describe("loadSdkConfigV1", () => {
         );
     });
 
+    it("sends sdk-gen-api a download for a hosted MCP target, which the CLI deploys itself", async () => {
+        const directory = await mkdtemp(join(tmpdir(), "fern-sdk-config-hosted-"));
+        temporaryDirectories.push(directory);
+        const configPath = join(directory, "sdk-config.yml");
+        await writeFile(
+            configPath,
+            YAML.stringify({
+                schemaVersion: "sdk-config/v1",
+                sdkName: "petstore",
+                sdkVersion: "1.0.0",
+                source: { specs: [{ id: "openapi", type: "openapi", path: "./openapi.yml" }] },
+                api: {},
+                client: {},
+                package: {},
+                docs: {},
+                generation: {},
+                targets: [{ language: "mcp", output: { delivery: "hosted", slug: "petstore" } }]
+            })
+        );
+
+        const loaded = await loadSdkConfigV1(configPath);
+        const [target] = loaded.payload.targets;
+        const body = JSON.parse(target?.body.toString("utf8") ?? "{}");
+
+        // The customer's document keeps the hosted delivery, so the deploy step can read the slug.
+        expect(loaded.config.targets[0]?.output).toEqual({ delivery: "hosted", slug: "petstore" });
+        expect(target?.requestedOutput).toEqual({ type: "download" });
+        // The request to sdk-gen-api never carries a delivery it may not know.
+        expect(body.targets).toEqual([expect.objectContaining({ language: "mcp", output: { delivery: "zip" } })]);
+        expect(JSON.stringify(body)).not.toContain("hosted");
+        expect(target?.absolutePathToLocalOutputArchive).toBeUndefined();
+    });
+
     it("bypasses direct publishing and credential resolution during preview", async () => {
         const { configPath } = await writeSdkConfig(temporaryDirectories, {
             language: "typescript",

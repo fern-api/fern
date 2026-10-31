@@ -256,7 +256,7 @@ func (x *XmlElement) writeElement(buffer *bytes.Buffer, declared map[string]stri
 		buffer.WriteByte('"')
 	}
 	if !x.hasContent() {
-		buffer.WriteString(" />")
+		buffer.WriteString("/>")
 		return
 	}
 	buffer.WriteByte('>')

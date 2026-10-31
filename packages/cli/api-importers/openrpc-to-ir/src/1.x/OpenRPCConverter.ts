@@ -1,6 +1,7 @@
 import { HttpHeader, IntermediateRepresentation, PathParameter, QueryParameter } from "@fern-api/ir-sdk";
 import { AbstractSpecConverter, Converters, ServersConverter } from "@fern-api/v3-importer-commons";
 import { MethodObject, OpenrpcDocument, ServerObject } from "@open-rpc/meta-schema";
+import { FernExplorerExtension } from "./extensions/x-fern-explorer.js";
 import { FernParametersExtension } from "./extensions/x-fern-parameters.js";
 import { MethodConverter } from "./methods/MethodConverter.js";
 import { OpenRPCConverterContext3_1 } from "./OpenRPCConverterContext3_1.js";
@@ -115,6 +116,12 @@ export class OpenRPCConverter extends AbstractSpecConverter<OpenRPCConverterCont
             namespace: this.context.namespace
         });
 
+        const globalApiPlayground = new FernExplorerExtension({
+            breadcrumbs: [],
+            document: this.context.spec,
+            context: this.context
+        }).convert();
+
         for (const method of this.context.spec.methods ?? []) {
             const resolvedMethod = this.context.resolveMaybeReference<MethodObject>({
                 schemaOrReference: method,
@@ -131,7 +138,8 @@ export class OpenRPCConverter extends AbstractSpecConverter<OpenRPCConverterCont
                 pathParameters,
                 queryParameters,
                 headers,
-                topLevelServers: this.context.spec.servers
+                topLevelServers: this.context.spec.servers,
+                globalApiPlayground
             });
 
             const convertedMethod = methodConverter.convert();

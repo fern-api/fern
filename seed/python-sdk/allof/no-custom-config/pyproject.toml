@@ -1,9 +1,9 @@
 [project]
-name = "fern_allof"
+name = "fern-allof"
 dynamic = ["version"]
 
 [tool.poetry]
-name = "fern_allof"
+name = "fern-allof"
 version = "0.0.1"
 description = ""
 readme = "README.md"

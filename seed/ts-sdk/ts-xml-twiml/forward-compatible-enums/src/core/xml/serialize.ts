@@ -157,7 +157,7 @@ export function serializeXmlElement({
     }
 
     if (body.length === 0) {
-        parts.push(" />");
+        parts.push("/>");
     } else {
         parts.push(">", ...body, `</${tag}>`);
     }
@@ -269,5 +269,5 @@ function renderChild({ name, value, wrapped = false }: XmlChild, wrapperFragment
         rendered.push(...extra.map((child) => child.toXml(false)));
     }
     const open = `<${name}${wrapperAttributes.join("")}`;
-    return [rendered.length === 0 ? `${open} />` : `${open}>${rendered.join("")}</${name}>`];
+    return [rendered.length === 0 ? `${open}/>` : `${open}>${rendered.join("")}</${name}>`];
 }

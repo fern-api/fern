@@ -1,9 +1,9 @@
 [project]
-name = "fern_nullable-request-body"
+name = "fern-nullable-request-body"
 dynamic = ["version"]
 
 [tool.poetry]
-name = "fern_nullable-request-body"
+name = "fern-nullable-request-body"
 version = "0.0.1"
 description = ""
 readme = "README.md"
