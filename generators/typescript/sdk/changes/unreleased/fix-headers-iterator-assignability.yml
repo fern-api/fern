@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    The generated `Headers.ts` shim is assignable to `typeof globalThis.Headers` again on TypeScript 5.6+.
+    Since 3.75.1 the fallback class annotated `entries()`, `keys()`, `values()` and `[Symbol.iterator]()` as
+    `IterableIterator<T>` so the shim would compile on TypeScript < 5.6. From 5.6 on, `lib.dom.iterable` types
+    those members as `HeadersIterator<T>`, which extends `IteratorObject` and so carries the iterator helpers
+    (`map`, `filter`, `take`, `drop`, ...), making `IterableIterator<T>` too wide to assign:
+
+    ```
+    error TS2322: Type 'typeof Headers' is not assignable to type '{ new (init?: HeadersInit | undefined): Headers; prototype: Headers; }'.
+      The types returned by 'prototype.entries()' are incompatible between these types.
+        Type 'IterableIterator<[string, string]>' is missing the following properties from type
+        'HeadersIterator<[string, string]>': map, filter, take, drop, and 9 more.
+    ```
+
+    The members now derive their return type from the global instead of naming either iterator type, falling
+    back to `IterableIterator<T>` when the global does not declare the member -- `entries`, `keys` and `values`
+    live in `lib.dom.iterable` before TypeScript 6, so a consumer on `lib: ["es2020", "dom"]` does not have
+    them. That keeps the shim compiling on TypeScript < 5.6, on 5.6+, and with or without `dom.iterable`. The
+    error only surfaces when the generated sources are type-checked, so SDKs that ship `outputSourceFiles` and
+    are consumed from source hit it while prebuilt SDKs did not.
+  type: fix
