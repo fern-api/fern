@@ -1,0 +1,8 @@
+- summary: |
+    Point unauthenticated non-interactive runs at `--guest`. `fern generate --docs` run without a login or
+    `FERN_TOKEN` from a script or agent now fails on the missing account first (naming `--guest` as the way to publish
+    without one) instead of on the production-site confirmation, and no longer prints the site URL with a doubled
+    `https://`. `fern init` without `--organization` in non-interactive mode derives the organization from the
+    directory name instead of failing, and `fern init --docs` prints the publish command to run next
+    (`fern generate --docs --guest` when there is no account).
+  type: feat

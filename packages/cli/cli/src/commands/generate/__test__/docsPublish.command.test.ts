@@ -164,6 +164,51 @@ describe("fern generate --docs", () => {
         return request?.body as { definition: ApiDefinition; dynamicIRs?: Record<string, { dynamicIR: unknown }> };
     }
 
+    describe("without an account, in a non-interactive run", () => {
+        let isTTY: PropertyDescriptor | undefined;
+
+        beforeEach(() => {
+            vi.stubEnv("FERN_TOKEN", "");
+            vi.stubEnv("LOCAL_STORAGE_FOLDER", ".fern-test-no-login");
+            isTTY = Object.getOwnPropertyDescriptor(process.stdout, "isTTY");
+            Object.defineProperty(process.stdout, "isTTY", { value: false, configurable: true });
+        });
+
+        afterEach(() => {
+            if (isTTY != null) {
+                Object.defineProperty(process.stdout, "isTTY", isTTY);
+            } else {
+                Reflect.deleteProperty(process.stdout, "isTTY");
+            }
+        });
+
+        it("fails on the missing account, naming --guest, before asking about the production site", async () => {
+            testProject = await fernProject({ docs: docsYml() });
+            const { cliContext, logged } = createTestCliContext();
+
+            await expect(
+                generateDocsWorkspace({
+                    project: testProject.project,
+                    cliContext,
+                    instance: undefined,
+                    preview: false,
+                    previewId: undefined,
+                    force: true,
+                    brokenLinks: false,
+                    strictBrokenLinks: false,
+                    disableTemplates: undefined,
+                    noPrompt: false,
+                    skipUpload: false
+                })
+            ).rejects.toThrow();
+
+            expect(logged("No Fern account found")).toBe(true);
+            expect(logged("rerun with --guest")).toBe(true);
+            expect(cliContext.confirmPrompt).not.toHaveBeenCalled();
+            expect(fdr.requests).toHaveLength(0);
+        });
+    });
+
     describe("for SDKs built with generators.yml", () => {
         it("asks FDR whether the SDK's dynamic IR exists, by the package and version docs.yml names", async () => {
             await run(fernProject({ docs: docsYml({ snippets: TYPESCRIPT_SNIPPETS }) }));
