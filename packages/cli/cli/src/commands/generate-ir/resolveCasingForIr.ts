@@ -34,7 +34,12 @@ export function resolveCasingForIr({
             const groups = workspace.generatorsConfiguration?.groups ?? [];
             context.logger.debug(
                 `No ${generationLanguage} generator found in generators.yml (${groups.length} group(s): ${groups
-                    .flatMap((group) => group.generators.map((g) => `${g.name}:${g.language ?? "?"}`))
+                    .flatMap((group) =>
+                        group.generators.map(
+                            (generatorInvocation) =>
+                                `${generatorInvocation.name}:${generatorInvocation.language ?? "?"}`
+                        )
+                    )
                     .join(", ")}); smart-casing defaults to false`
             );
         }
