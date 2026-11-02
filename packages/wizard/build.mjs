@@ -1,5 +1,5 @@
 import { exec } from "child_process";
-import { cp, mkdir, rm, writeFile } from "fs/promises";
+import { mkdir, rm, writeFile } from "fs/promises";
 import path from "path";
 import tsup from "tsup";
 import { fileURLToPath } from "url";
@@ -26,6 +26,8 @@ async function main() {
         clean: true,
         entry: ["src/cli.ts"],
         noExternal: [/.*/],
+        // dist/package.json declares CommonJS, so the bundle keeps a plain .js name.
+        outExtension: () => ({ js: ".js" }),
         // Baked in so `fern-wizard --version` reports this release, not the npm_package_version of
         // whatever project npx runs it from.
         env: { WIZARD_VERSION: version }
@@ -44,9 +46,10 @@ async function main() {
                 version,
                 description: packageJson.description,
                 repository: packageJson.repository,
-                type: packageJson.type,
+                // The bundle is CommonJS even though the source package is ESM.
+                type: "commonjs",
                 main: "dist/cli.js",
-                types: "dist/cli.d.ts",
+                types: "dist/cli.d.cts",
                 bin: {
                     "fern-wizard": "bin/cli"
                 },
@@ -62,8 +65,6 @@ async function main() {
             2
         )
     );
-
-    await cp(path.join(__dirname, "templates"), path.join(outDirAbs, "templates"), { recursive: true });
 
     await execAsync("npm pkg fix", { cwd: outDirAbs });
 }

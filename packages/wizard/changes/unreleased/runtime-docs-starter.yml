@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Download the docs starter the first time it's needed (checked against its manifest and cached in ~/.fern) instead of shipping it in the package, and fall back to Fern's basic docs site if the download fails.
+  type: feat
+- summary: |
+    Pin new docs projects to the Fern CLI that set them up instead of version 5.59.0, and use the same Fern service URLs as the Fern CLI's builds.
+  type: fix

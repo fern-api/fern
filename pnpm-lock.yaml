@@ -4582,6 +4582,9 @@ importers:
       '@fern-api/venus-api-sdk':
         specifier: 'catalog:'
         version: 12.0.0
+      '@fern-api/wizard':
+        specifier: workspace:*
+        version: link:../../wizard
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../workspace/loader

@@ -195,7 +195,18 @@ function infoLines(dir: string, detection: Detection | undefined, frame: number,
             progressBar(scanningProgress(frame))
         ];
     }
-    const rows: Array<[string, string]> = [
+    const rows = summarizeDetection(dir, detection);
+    return [
+        ...header,
+        ...rows.map(([label, value]) => `${accent(label)}${text(`: ${truncate(value, width - label.length - 2)}`)}`),
+        "",
+        progressBar(PROGRESS_BLOCKS)
+    ];
+}
+
+/** What the scan found, as label and value pairs (the splash's summary, and `fern detect`). */
+export function summarizeDetection(dir: string, detection: Detection): Array<[string, string]> {
+    return [
         ["Directory", displayPath(dir)],
         ["API specs", describeSpecs(detection.apiSpecs)],
         ["Frameworks", list(detection.frameworks.map((framework) => framework.name))],
@@ -204,12 +215,6 @@ function infoLines(dir: string, detection: Detection | undefined, frame: number,
         ["Package manager", detection.hasPackageJson ? detection.packageManager : "none (no package.json)"],
         ["Fern project", detection.fernProject.exists ? (detection.fernProject.path ?? "fern/") : "not initialized"],
         ["Fern CLI", detection.fernCliVersion ?? "not installed"]
-    ];
-    return [
-        ...header,
-        ...rows.map(([label, value]) => `${accent(label)}${text(`: ${truncate(value, width - label.length - 2)}`)}`),
-        "",
-        progressBar(PROGRESS_BLOCKS)
     ];
 }
 

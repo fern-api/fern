@@ -1,10 +1,17 @@
 import { access, mkdir, mkdtemp, readFile, rm, writeFile } from "fs/promises";
 import os from "os";
 import path from "path";
+import { fileURLToPath } from "url";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { parse } from "yaml";
 import { type DocsSiteChoices, defaultDocsSiteChoices, LAYOUTS } from "../docs-site/options";
 import { scaffoldDocsSite } from "../docs-site/scaffold";
+
+/** The starter as checked into this repository, which the CLI downloads at runtime. */
+const STARTER = {
+    templateDir: fileURLToPath(new URL("../../templates/docs-starter", import.meta.url)),
+    fernVersion: "1.2.3"
+};
 
 const tempDirs: string[] = [];
 
@@ -20,7 +27,7 @@ describe("docs site scaffolding", () => {
                 ...defaultDocsSiteChoices("acme", layout.id),
                 siteTitle: "Acme API"
             };
-            await scaffoldDocsSite({ dir, org: "acme", choices });
+            await scaffoldDocsSite({ ...STARTER, dir, org: "acme", choices });
 
             const docsConfig = await readDocsConfig(dir);
             expect(docsConfig.title).toBe("Acme API | Documentation");
@@ -51,7 +58,7 @@ describe("docs site scaffolding", () => {
     it("removes disabled features and their navigation and starter files", async () => {
         const dir = await tempRepo();
         const choices = { ...defaultDocsSiteChoices("acme", "layout-3"), features: [] };
-        await scaffoldDocsSite({ dir, org: "acme", choices });
+        await scaffoldDocsSite({ ...STARTER, dir, org: "acme", choices });
 
         const docsConfig = await readDocsConfig(dir);
         const tabs = record(docsConfig.tabs);
@@ -84,7 +91,7 @@ describe("docs site scaffolding", () => {
             } else {
                 await mkdir(path.join(fernDir, "apis"), { recursive: true });
             }
-            await scaffoldDocsSite({ dir, org: "acme", choices: defaultDocsSiteChoices("acme") });
+            await scaffoldDocsSite({ ...STARTER, dir, org: "acme", choices: defaultDocsSiteChoices("acme") });
 
             expect(await pathExists(path.join(fernDir, "openapi.yaml"))).toBe(false);
             expect(await pathExists(path.join(fernDir, "asyncapi.yaml"))).toBe(false);
@@ -113,7 +120,7 @@ describe("docs site scaffolding", () => {
             await mkdir(path.join(fernDir, "apis", api), { recursive: true });
             await writeFile(path.join(fernDir, "apis", api, "generators.yml"), "api: {}\n");
         }
-        await scaffoldDocsSite({ dir, org: "acme", choices: defaultDocsSiteChoices("acme") });
+        await scaffoldDocsSite({ ...STARTER, dir, org: "acme", choices: defaultDocsSiteChoices("acme") });
 
         const apiNavigation = arrayField(await readDocsConfig(dir), "navigation").find(
             (item) => isRecord(item) && item.tab === "API Reference"
@@ -142,6 +149,7 @@ describe("docs site scaffolding", () => {
         let result: Awaited<ReturnType<typeof scaffoldDocsSite>>;
         try {
             result = await scaffoldDocsSite({
+                ...STARTER,
                 dir,
                 org: "acme",
                 choices: { ...defaultDocsSiteChoices("acme"), buttonShape: "sharp" }
@@ -178,6 +186,7 @@ describe("docs site scaffolding", () => {
             buttonShape: "round"
         };
         await scaffoldDocsSite({
+            ...STARTER,
             dir,
             org: "acme",
             choices,
@@ -217,12 +226,12 @@ describe("docs site scaffolding", () => {
 
     it("writes the Fern CLI config only when one is missing", async () => {
         const dir = await tempRepo();
-        await scaffoldDocsSite({ dir, org: "acme", choices: defaultDocsSiteChoices("acme") });
+        await scaffoldDocsSite({ ...STARTER, dir, org: "acme", choices: defaultDocsSiteChoices("acme") });
         await expect(readFile(path.join(dir, "fern", "fern.config.json"), "utf8")).resolves.toContain(
             '"organization": "acme"'
         );
         await expect(readFile(path.join(dir, "fern", "fern.config.json"), "utf8")).resolves.toContain(
-            '"version": "5.59.0"'
+            '"version": "1.2.3"'
         );
     });
 });

@@ -12,7 +12,8 @@ import {
     iconAsPng,
     imageExtension,
     pickBrandImages,
-    searchBrands
+    searchBrands,
+    withSearchResultFavicon
 } from "../docs-site/brand";
 import { applyBrand, confidentMatch, toSubdomain } from "../docs-site/brand-flow";
 import { defaultDocsSiteChoices } from "../docs-site/options";
@@ -177,6 +178,18 @@ describe("brand lookup", () => {
         expect(iconAsPng("https://cdn.brandfetch.io/id/w/128/h/128/fallback/lettermark/icon.webp?c=abc")).toBe(
             "https://cdn.brandfetch.io/id/w/128/h/128/fallback/lettermark/icon.png?c=abc"
         );
+    });
+
+    it("uses the search result's icon as the favicon when the brand has no square mark", () => {
+        const match = { name: "Acme", domain: "acme.com", icon: "https://cdn.brandfetch.io/id/icon.webp?c=abc" };
+        const wordmarkOnly = { logos: [{ url: "https://cdn.example/logo.png", type: "logo", theme: "dark" as const }] };
+        expect(withSearchResultFavicon(wordmarkOnly, match).faviconUrl).toBe(
+            "https://cdn.brandfetch.io/id/icon.png?c=abc"
+        );
+
+        const withMark = { logos: [{ url: "https://cdn.example/icon.png", type: "icon", theme: null }] };
+        expect(withSearchResultFavicon(withMark, match)).toBe(withMark);
+        expect(withSearchResultFavicon(wordmarkOnly, { name: "Acme", domain: "acme.com" })).toBe(wordmarkOnly);
     });
 
     it("guesses the company from a work email, otherwise from the GitHub remote", async () => {

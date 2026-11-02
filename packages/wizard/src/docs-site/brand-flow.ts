@@ -9,9 +9,9 @@ import {
     downloadBrandFiles,
     fetchBrand,
     guessBrand,
-    iconAsPng,
     readFernToken,
-    searchBrands
+    searchBrands,
+    withSearchResultFavicon
 } from "./brand";
 import type { DocsSiteChoices } from "./options";
 
@@ -71,12 +71,7 @@ export async function chooseBrand({
             if (brand === undefined) {
                 return undefined;
             }
-            // Brands without an icon-type logo still have a square icon in search results.
-            const hasMark = brand.logos.some((logo) => logo.type === "icon" || logo.type === "symbol");
-            const withFavicon =
-                brand.faviconUrl === undefined && !hasMark && match.icon !== undefined
-                    ? { ...brand, faviconUrl: iconAsPng(match.icon) }
-                    : brand;
+            const withFavicon = withSearchResultFavicon(brand, match);
             return { brand: withFavicon, files: await downloadBrandFiles(withFavicon) };
         });
         if (selection === undefined) {

@@ -1,5 +1,6 @@
 // biome-ignore-all lint/suspicious/noConsole: CLI output is intentionally written to stdout.
 import chalk from "chalk";
+import { dashboardOrigin } from "./fern-urls";
 import type { ActionPlan, Product, SetupStep } from "./types";
 
 export const Icons = {
@@ -90,9 +91,7 @@ export function printPlan(steps: SetupStep[], notes: string[]): void {
 
 /** The Fern Dashboard, opened to the organization when there is one. */
 export function dashboardUrl(organization: string | undefined): string {
-    return organization === undefined
-        ? "https://dashboard.buildwithfern.com"
-        : `https://dashboard.buildwithfern.com/${organization}`;
+    return organization === undefined ? dashboardOrigin() : `${dashboardOrigin()}/${organization}`;
 }
 
 /** The Fern Dashboard page where the organization changes its plan. */

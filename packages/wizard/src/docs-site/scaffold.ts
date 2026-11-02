@@ -13,6 +13,10 @@ interface ScaffoldOptions {
     dir: string;
     org: string;
     choices: DocsSiteChoices;
+    /** The docs starter's folder (see getDocsStarter). */
+    templateDir: string;
+    /** The Fern CLI version written to a new fern.config.json. */
+    fernVersion: string;
     fetchFontCss?: (url: string) => Promise<string | undefined>;
 }
 
@@ -30,9 +34,10 @@ export async function scaffoldDocsSite({
     dir,
     org,
     choices,
+    templateDir,
+    fernVersion,
     fetchFontCss
 }: ScaffoldOptions): Promise<{ written: string[]; skipped: string[] }> {
-    const templateDir = await resolveTemplateDirectory();
     const fernDir = path.join(dir, "fern");
     await mkdir(fernDir, { recursive: true });
 
@@ -102,7 +107,7 @@ export async function scaffoldDocsSite({
     if (protectedFiles.has("fern.config.json")) {
         recordSkipped("fern/fern.config.json", skippedFiles);
     } else {
-        await writeFile(configPath, `${JSON.stringify({ organization: org, version: "5.59.0" }, null, 2)}\n`);
+        await writeFile(configPath, `${JSON.stringify({ organization: org, version: fernVersion }, null, 2)}\n`);
         recordWritten("fern.config.json", writtenFiles);
     }
 
@@ -110,21 +115,6 @@ export async function scaffoldDocsSite({
         written: [...writtenFiles].map((file) => `fern/${file}`),
         skipped: [...skippedFiles]
     };
-}
-
-function resolveTemplateDirectory(): Promise<string> {
-    const candidates = [
-        path.resolve(__dirname, "../templates/docs-starter"),
-        path.resolve(__dirname, "../../templates/docs-starter")
-    ];
-    return (async () => {
-        for (const candidate of candidates) {
-            if (await pathExists(candidate)) {
-                return candidate;
-            }
-        }
-        throw new Error("The bundled docs starter template could not be found.");
-    })();
 }
 
 function shouldSkipStarterFile(relativePath: string, choices: DocsSiteChoices, existingApi: boolean): boolean {

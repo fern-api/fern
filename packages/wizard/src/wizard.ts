@@ -22,6 +22,7 @@ import { pickAvailableName } from "./docs-site/name-picker";
 import { type DocsSiteChoices, defaultDocsSiteChoices } from "./docs-site/options";
 import { promptDocsSiteChoices } from "./docs-site/prompt";
 import { scaffoldDocsSite } from "./docs-site/scaffold";
+import { getDocsStarter } from "./docs-site/starter";
 import { showSplash } from "./splash";
 import {
     type Command,
@@ -368,7 +369,20 @@ export async function runWizard(flags: WizardFlags): Promise<number> {
         return 1;
     }
 
-    const detected = await showSplash(dir, detectRepository(dir), flags.splash);
+    const scanned = await showSplash(
+        dir,
+        detectRepository(dir, { fernCliVersion: flags.fernCommand === undefined ? undefined : flags.fernVersion }),
+        flags.splash
+    );
+    // Run from the Fern CLI, the wizard uses that CLI for every `fern` command and never installs one.
+    const detected =
+        flags.fernCommand === undefined
+            ? scanned
+            : {
+                  ...scanned,
+                  fernCommand: flags.fernCommand,
+                  fernCliVersion: flags.fernVersion ?? scanned.fernCliVersion ?? "unknown"
+              };
     const spec = flags.spec === undefined ? undefined : findSpec(detected.apiSpecs, dir, flags.spec);
     if (flags.spec !== undefined && spec === undefined) {
         const found = detected.apiSpecs.map((candidate) => candidate.path).join(", ") || "none";
@@ -591,8 +605,28 @@ async function runAction(
                 throw new Error("Docs site choices are missing.");
             }
             const choices = docsSiteChoices;
+            let templateDir: string;
+            try {
+                templateDir = await withStatus("Downloading Fern's docs starter", () => getDocsStarter());
+            } catch (error) {
+                // Without the starter, Fern's basic docs site still gets the project going.
+                const reason = error instanceof Error ? error.message : String(error);
+                printSkipped(`Couldn't download the docs starter (${reason}), so using Fern's basic docs site`);
+                await withStatus("Creating your docs site", () =>
+                    runFernQuietly(["init", "--docs", ...orgArgs(flags.org)], dir, detection)
+                );
+                printDone("Created a basic docs site in fern/");
+                return;
+            }
             const result = await withStatus("Building your docs site", () =>
-                scaffoldDocsSite({ dir, org: flags.org ?? ORG_PLACEHOLDER, choices })
+                scaffoldDocsSite({
+                    dir,
+                    org: flags.org ?? ORG_PLACEHOLDER,
+                    choices,
+                    templateDir,
+                    // Pin new projects to the CLI that set them up ("*" runs whichever CLI is installed).
+                    fernVersion: flags.fernVersion ?? detection.fernCliVersion ?? "*"
+                })
             );
             printDone(`Created your docs site in fern/ (${result.written.length} files)`);
             return;
@@ -1169,7 +1203,7 @@ function isRecord(value: unknown): value is Record<string, unknown> {
     return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
-function docsSkillCommand(detection: Detection): Command {
+export function docsSkillCommand(detection: Detection): Command {
     return {
         executable: "npx",
         args: [
@@ -1239,6 +1273,9 @@ export function installCommand(detection: Detection): Command {
 }
 
 export function fernRunner(detection: Detection, args: string[] = []): Command {
+    if (detection.fernCommand !== undefined) {
+        return { executable: detection.fernCommand.executable, args: [...detection.fernCommand.args, ...args] };
+    }
     if (detection.fernCliVersion !== null) {
         return { executable: "fern", args };
     }
