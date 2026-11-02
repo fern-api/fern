@@ -5,9 +5,8 @@ import { CliError, type TaskContext, TaskResult } from "@fern-api/task-context";
 import { afterEach, beforeEach, describe, expect, it, type Mock, vi } from "vitest";
 
 import * as CppDocsGenerator from "../CppDocsGenerator.js";
-import { renderSourceSelection } from "../orchestrate.js";
 import * as LocalParserRunner from "../LocalParserRunner.js";
-import { runLibraryDocsGeneration, type StepWrapper } from "../orchestrate.js";
+import { renderSourceSelection, runLibraryDocsGeneration, type StepWrapper } from "../orchestrate.js";
 import * as PythonDocsGenerator from "../PythonDocsGenerator.js";
 
 vi.mock("../PythonDocsGenerator.js", async () => {

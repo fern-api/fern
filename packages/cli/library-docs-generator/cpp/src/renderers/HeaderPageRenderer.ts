@@ -5,8 +5,8 @@ import {
     renderSegmentsPlainText,
     renderSegmentsTrimmed
 } from "./DescriptionRenderer.js";
-import { renderFrontmatter, trimTrailingBlankLines } from "./shared.js";
 import { renderBareCodeBlock } from "./SignatureRenderer.js";
+import { renderFrontmatter, trimTrailingBlankLines } from "./shared.js";
 
 const SECTIONS: {
     key: keyof Pick<CppFileIr, "classes" | "functions" | "enums" | "typedefs" | "variables" | "macros">;

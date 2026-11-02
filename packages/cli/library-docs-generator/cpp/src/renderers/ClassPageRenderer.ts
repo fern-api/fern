@@ -104,7 +104,8 @@ function renderPreamble(cls: CppClassIr, ctx: RenderContext): string {
         lines.push(renderBareCodeBlock(`#include <${prefix}${cls.includeHeader}>`, "cpp"));
         lines.push("");
     }
-    if (cls.typedefAlias) {
+    // Only the C idiom `typedef struct X {...} X;` is folded by the parser; templates never carry one
+    if (cls.typedefAlias && !cls.name.includes("<")) {
         lines.push(renderBareCodeBlock(`typedef ${cls.kind} ${cls.name} ${cls.typedefAlias};`, "c"));
         lines.push("");
     }

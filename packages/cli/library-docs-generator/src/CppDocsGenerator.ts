@@ -29,7 +29,6 @@ import {
 import type { CppCompoundIr } from "../cpp/src/renderers/CompoundPageRenderer.js";
 import { renderCompoundPage } from "../cpp/src/renderers/CompoundPageRenderer.js";
 import { renderSegmentsPlainText } from "../cpp/src/renderers/DescriptionRenderer.js";
-import { renderHeaderPage, renderHeadersIndexPage } from "../cpp/src/renderers/HeaderPageRenderer.js";
 import type { GroupListEntry } from "../cpp/src/renderers/GroupPageRenderer.js";
 import {
     collectGroupSections,
@@ -37,6 +36,7 @@ import {
     renderGroupPage,
     renderGroupsIndexPage
 } from "../cpp/src/renderers/GroupPageRenderer.js";
+import { renderHeaderPage, renderHeadersIndexPage } from "../cpp/src/renderers/HeaderPageRenderer.js";
 import type {
     CategoryDefinition,
     CategoryWithEntries,
@@ -51,10 +51,10 @@ import {
 } from "../cpp/src/renderers/IndexPageRenderer.js";
 import { groupFunctionsByName, methodAnchorId } from "../cpp/src/renderers/MethodRenderer.js";
 import type {
-    CppFileIr,
-    CppEnumIr,
     CppClassIr,
     CppDocstringIr,
+    CppEnumIr,
+    CppFileIr,
     CppFunctionIr,
     CppGroupIr,
     CppLibraryDocsIr,
@@ -1045,13 +1045,16 @@ function generateHeaderPages(files: CppFileIr[], writer: MdxFileWriter, libraryT
     if (files.length === 0) {
         return;
     }
-    const used = new Map<string, number>();
+    const used = new Set<string>();
     const entries: { file: CppFileIr; slug: string }[] = [];
     for (const file of files) {
         const base = slugifySegment(file.path.replace(/\.[^.]+$/, "").replace(/[\\/]+/g, "-")) || "header";
-        const count = used.get(base) ?? 0;
-        used.set(base, count + 1);
-        entries.push({ file, slug: count === 0 ? base : `${base}-${count + 1}` });
+        let slug = base;
+        for (let n = 2; used.has(slug); n++) {
+            slug = `${base}-${n}`;
+        }
+        used.add(slug);
+        entries.push({ file, slug });
     }
     for (const { file, slug } of entries) {
         const pageKey = `headers/${slug}.mdx`;
