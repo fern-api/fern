@@ -9,10 +9,17 @@ import {
     isSafeOutputDir,
     keepsFile,
     parseInstanceUrl,
+    pdfOutputPath,
     safeRelativePath,
     writeExport
 } from "../exportDocs.js";
-import { type ExportSource, extractZip, hostedSource, type SiteExportClient } from "../exportSources.js";
+import {
+    downloadHostedPdf,
+    type ExportSource,
+    extractZip,
+    hostedSource,
+    type SiteExportClient
+} from "../exportSources.js";
 
 function fakeSource(batches: Record<string, string>[]): ExportSource & { finished: boolean } {
     const source = {
@@ -38,6 +45,13 @@ describe("keepsFile", () => {
         const files = ["index.html", "guides/quickstart.md", "llms.txt", "_astro/main.css", "fern-nav/abc.json"];
         expect(files.filter((filePath) => keepsFile(filePath, "html"))).toEqual(files);
         expect(files.filter((filePath) => keepsFile(filePath, "md"))).toEqual(["guides/quickstart.md", "llms.txt"]);
+    });
+});
+
+describe("pdfOutputPath", () => {
+    it("adds .pdf to a bare name and keeps an explicit .pdf file", () => {
+        expect(pdfOutputPath("docs-export")).toBe("docs-export.pdf");
+        expect(pdfOutputPath("out/site.PDF")).toBe("out/site.PDF");
     });
 });
 
@@ -229,5 +243,38 @@ describe("hostedSource", () => {
         await expect(writeExport({ source, format: "html", outputDir: path.join(workDir, "out") })).rejects.toThrow(
             /republished during the export/
         );
+    });
+
+    it("downloads a PDF task's file into place", async () => {
+        vi.stubGlobal("fetch", async () => new Response("%PDF-1.7"));
+        const client = fakeClient(["RUNNING", "COMPLETED"]);
+        const outputFile = path.join(workDir, "nested", "docs-export.pdf");
+        await downloadHostedPdf({
+            client,
+            orgId: "acme",
+            docsUrl: "acme.docs.buildwithfern.com",
+            outputFile,
+            pollIntervalMs: 0
+        });
+        expect(await readFile(outputFile, "utf8")).toBe("%PDF-1.7");
+        expect(await readdir(path.dirname(outputFile))).toEqual(["docs-export.pdf"]);
+        expect(client.created).toEqual([{ orgId: "acme", docsUrl: "acme.docs.buildwithfern.com", format: "pdf" }]);
+    });
+
+    it("keeps a previous PDF when the PDF task fails", async () => {
+        const outputFile = path.join(workDir, "docs-export.pdf");
+        await writeFile(outputFile, "old");
+        const client = fakeClient(["FAILED"], "render failed");
+        await expect(
+            downloadHostedPdf({
+                client,
+                orgId: "acme",
+                docsUrl: "acme.docs.buildwithfern.com",
+                outputFile,
+                pollIntervalMs: 0
+            })
+        ).rejects.toThrow(/render failed/);
+        expect(await readFile(outputFile, "utf8")).toBe("old");
+        expect(await readdir(workDir)).toEqual(["docs-export.pdf"]);
     });
 });

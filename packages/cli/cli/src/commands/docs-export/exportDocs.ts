@@ -10,22 +10,25 @@ import chalk from "chalk";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { FDR_ORIGIN } from "../docs-theme/themeOrigin.js";
 import {
+    downloadHostedPdf,
     type ExportFile,
     type ExportSource,
     hostedSource,
+    type SiteExportClient,
     safeRelativePath,
     selfHostedSource
 } from "./exportSources.js";
 
 export { safeRelativePath };
 
-export type DocsExportFormat = "html" | "md";
+export type DocsExportFormat = "html" | "md" | "pdf";
+type SiteExportFormat = Exclude<DocsExportFormat, "pdf">;
 
 const DOWNLOAD_CONCURRENCY = 16;
 const DOWNLOAD_ATTEMPTS = 3;
 
 /** Whether a site file belongs in an export of the given format: `md` keeps only the per-page Markdown and `llms.txt`. */
-export function keepsFile(filePath: string, format: DocsExportFormat): boolean {
+export function keepsFile(filePath: string, format: SiteExportFormat): boolean {
     return format === "html" || filePath.endsWith(".md") || path.posix.basename(filePath) === "llms.txt";
 }
 
@@ -47,7 +50,7 @@ export async function writeExport({
     onProgress
 }: {
     source: ExportSource;
-    format: DocsExportFormat;
+    format: SiteExportFormat;
     outputDir: string;
     onProgress?: (written: number) => void;
 }): Promise<number> {
@@ -117,6 +120,11 @@ async function forEachConcurrently<T>(items: T[], limit: number, run: (item: T) 
     await Promise.all(workers);
 }
 
+/** `--output` for a PDF export names a file; a bare name like the default `docs-export` gets `.pdf` added. */
+export function pdfOutputPath(output: string): string {
+    return output.toLowerCase().endsWith(".pdf") ? output : `${output}.pdf`;
+}
+
 /** Splits a docs.yml instance url (`acme.docs.buildwithfern.com/learn`) into the domain and basepath FDR keys sites by. */
 export function parseInstanceUrl(instanceUrl: string): { domain: string; basepath: string } {
     const url = new URL(/^https?:\/\//i.test(instanceUrl) ? instanceUrl : `https://${instanceUrl}`);
@@ -152,6 +160,25 @@ export async function exportDocs({
     selfHostedUrl: string | undefined;
     adminToken: string | undefined;
 }): Promise<void> {
+    if (format === "pdf") {
+        if (selfHostedUrl != null) {
+            return cliContext.failAndThrow("--format pdf is only available for Fern-hosted docs.", undefined, {
+                code: CliError.Code.ConfigError
+            });
+        }
+        const hosted = await resolveHostedExport({ cliContext, instance });
+        const outputFile = pdfOutputPath(output);
+        await cliContext.runTask(async (context) => {
+            context.logger.info(`Exporting PDF to ${outputFile}...`);
+            try {
+                await downloadHostedPdf({ ...hosted, outputFile });
+                context.logger.info(chalk.green(`Exported PDF to ${outputFile}`));
+            } catch (error) {
+                return context.failAndThrow(exportFailureMessage(error), error, { code: CliError.Code.NetworkError });
+            }
+        });
+        return;
+    }
     if (!isSafeOutputDir(output, process.cwd())) {
         return cliContext.failAndThrow(
             `--output ${output} contains the current folder. Each export empties the output folder; choose a new one.`,
@@ -171,7 +198,7 @@ export async function exportDocs({
                   adminToken,
                   basepath: instance != null ? parseInstanceUrl(instance).basepath : ""
               })
-            : await resolveHostedSource({ cliContext, instance, format });
+            : hostedSource({ ...(await resolveHostedExport({ cliContext, instance })), format });
 
     await cliContext.runTask(async (context) => {
         context.logger.info(`Exporting ${format === "md" ? "Markdown" : "HTML"} to ${output}...`);
@@ -192,15 +219,14 @@ export async function exportDocs({
     });
 }
 
-async function resolveHostedSource({
+/** Finds the hosted site to export and logs in: the export client, the org and the docs URL. */
+async function resolveHostedExport({
     cliContext,
-    instance,
-    format
+    instance
 }: {
     cliContext: CliContext;
     instance: string | undefined;
-    format: DocsExportFormat;
-}): Promise<ExportSource> {
+}): Promise<{ client: SiteExportClient; orgId: string; docsUrl: string }> {
     const fernDirectory = await getFernDirectory();
     if (fernDirectory == null) {
         return cliContext.failAndThrow(
@@ -249,10 +275,9 @@ async function resolveHostedSource({
     const projectConfig = await cliContext.runTask((context) =>
         loadProjectConfig({ directory: fernDirectory, context })
     );
-    return hostedSource({
+    return {
         client: createPdfExportClient({ baseUrl: FDR_ORIGIN, token: token.value }),
         orgId: projectConfig.organization,
-        docsUrl: instanceUrl,
-        format
-    });
+        docsUrl: instanceUrl
+    };
 }

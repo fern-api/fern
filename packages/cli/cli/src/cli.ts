@@ -2264,20 +2264,20 @@ function addDocsMdGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCo
 function addDocsExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "export",
-        "Download a copy of your live docs site as static HTML, or as a folder of Markdown",
+        "Download a copy of your live docs site as static HTML, a folder of Markdown, or one PDF",
         (yargs) =>
             yargs
                 .option("format", {
-                    choices: ["html", "md"] as const,
+                    choices: ["html", "md", "pdf"] as const,
                     default: "html" as const,
                     description:
-                        "html: the full site, served with any static file server. md: per-page Markdown and llms.txt"
+                        "html: the full site, served with any static file server. md: per-page Markdown and llms.txt. pdf: one PDF of the site (Fern-hosted only)"
                 })
                 .option("output", {
                     type: "string",
                     default: "docs-export",
                     description:
-                        "Folder to write the export into. Emptied first (except .git); must not contain the current folder"
+                        "Folder to write the export into. Emptied first (except .git); must not contain the current folder. For pdf, the file to write (.pdf is added if missing)"
                 })
                 .option("instance", {
                     type: "string",

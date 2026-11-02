@@ -1,5 +1,5 @@
 import { createWriteStream } from "node:fs";
-import { mkdir, mkdtemp, readdir, readFile, rm, writeFile } from "node:fs/promises";
+import { mkdir, mkdtemp, readdir, readFile, rename, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { Readable } from "node:stream";
@@ -25,7 +25,7 @@ export interface ExportSource {
     batches(): AsyncIterable<ExportFile[]>;
 }
 
-/** The FDR calls a hosted export makes: start a zip task, poll it, get the zip's download URL. */
+/** The FDR calls a hosted export makes: start a task, poll it, get its file's download URL. */
 export type SiteExportClient = Pick<PdfExportClient, "createTask" | "getTask" | "getDownloadUrl">;
 
 /**
@@ -50,11 +50,8 @@ export function hostedSource({
         async *batches() {
             const workDir = await mkdtemp(path.join(tmpdir(), "fern-docs-export-"));
             try {
-                const { id: taskId } = await client.createTask({ orgId, docsUrl, format });
-                await waitForTask({ client, taskId, pollIntervalMs });
-                const { downloadUrl } = await client.getDownloadUrl({ taskId });
                 const archive = path.join(workDir, "site.zip");
-                await downloadToFile(downloadUrl, archive);
+                await runHostedExport({ client, orgId, docsUrl, format, pollIntervalMs, destination: archive });
                 const siteDir = path.join(workDir, "site");
                 await extractZip(archive, siteDir);
                 yield* fileBatches(siteDir, await listFilesRecursively(siteDir));
@@ -63,6 +60,56 @@ export function hostedSource({
             }
         }
     };
+}
+
+/**
+ * A Fern-hosted site as one PDF, rendered by the PDF export worker. Downloads next to `outputFile`
+ * and renames it into place, so a failed export leaves any previous PDF intact.
+ */
+export async function downloadHostedPdf({
+    client,
+    orgId,
+    docsUrl,
+    outputFile,
+    pollIntervalMs = EXPORT_POLL_INTERVAL_MS
+}: {
+    client: SiteExportClient;
+    orgId: string;
+    docsUrl: string;
+    outputFile: string;
+    pollIntervalMs?: number;
+}): Promise<void> {
+    const destination = path.resolve(outputFile);
+    await mkdir(path.dirname(destination), { recursive: true });
+    const partial = `${destination}.partial`;
+    try {
+        await runHostedExport({ client, orgId, docsUrl, format: "pdf", pollIntervalMs, destination: partial });
+        await rename(partial, destination);
+    } finally {
+        await rm(partial, { force: true });
+    }
+}
+
+/** Starts an export task, waits for it to finish, then downloads its one file to `destination`. */
+async function runHostedExport({
+    client,
+    orgId,
+    docsUrl,
+    format,
+    pollIntervalMs,
+    destination
+}: {
+    client: SiteExportClient;
+    orgId: string;
+    docsUrl: string;
+    format: "pdf" | "html" | "md";
+    pollIntervalMs: number;
+    destination: string;
+}): Promise<void> {
+    const { id: taskId } = await client.createTask({ orgId, docsUrl, format });
+    await waitForTask({ client, taskId, pollIntervalMs });
+    const { downloadUrl } = await client.getDownloadUrl({ taskId });
+    await downloadToFile(downloadUrl, destination);
 }
 
 async function waitForTask({
@@ -93,7 +140,7 @@ async function waitForTask({
 async function downloadToFile(url: string, destination: string): Promise<void> {
     const response = await fetch(url);
     if (!response.ok || response.body == null) {
-        throw new Error(`Downloading the export zip failed: HTTP ${response.status}`);
+        throw new Error(`Downloading the export failed: HTTP ${response.status}`);
     }
     await pipeline(Readable.fromWeb(response.body as WebReadableStream), createWriteStream(destination));
 }
