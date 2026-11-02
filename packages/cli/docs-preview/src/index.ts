@@ -5,6 +5,7 @@ export {
     DOCS_DEV_SERVER_INFO_PATH,
     DOCS_DEV_SHUTDOWN_PATH,
     type DocsDevServerInfo,
+    type DocsDevStopInstructions,
     isDocsDevServerInfo
 } from "./astro/devServerControl.js";
 export { runAstroPreviewServer } from "./astro/runAstroPreviewServer.js";

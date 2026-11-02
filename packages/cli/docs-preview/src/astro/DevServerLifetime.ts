@@ -1,9 +1,11 @@
+import type { DocsDevStopInstructions } from "./devServerControl.js";
+
 /**
  * Machine-readable lifecycle events for `fern docs dev --json`. Agents and CI read these from stdout
  * (one JSON object per line) instead of scraping the human-readable "ready on" log line.
  */
 export type DocsDevLifecycleEvent =
-    | { event: "ready"; url: string; port: number; backendPort: number; pid: number }
+    | { event: "ready"; url: string; port: number; backendPort: number; pid: number; stop: DocsDevStopInstructions }
     | { event: "reload"; ok: true; durationMs: number }
     | { event: "reload"; ok: false; durationMs: number; error: string }
     | { event: "stopped"; reason: DocsDevStopReason };

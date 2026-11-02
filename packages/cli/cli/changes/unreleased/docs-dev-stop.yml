@@ -6,4 +6,7 @@
     message when there is nothing to stop, and `--json` writes the result to stdout. It uses a new local-only
     `POST /__fern/shutdown` route on the `fern docs dev` server, alongside `GET /__fern/dev-server`, which identifies
     the server. Both routes only accept requests from the same machine that carry the `x-fern-docs-dev: 1` header.
+    Once the server is ready, `fern docs dev` prints how to stop it: press Ctrl-C, run
+    `fern docs dev stop --port <port>`, or run `kill <pid>` with the server's PID. With `--json`, the `ready` event
+    includes the same instructions in a `stop` object (`keys`, `command`, `kill`).
   type: feat

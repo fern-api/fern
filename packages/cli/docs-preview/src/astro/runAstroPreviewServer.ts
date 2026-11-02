@@ -21,7 +21,9 @@ import {
     DOCS_DEV_SERVER_INFO_PATH,
     DOCS_DEV_SHUTDOWN_PATH,
     DocsDevServerInfo,
-    getControlRequestRejection
+    formatDocsDevStopInstructions,
+    getControlRequestRejection,
+    getDocsDevStopInstructions
 } from "./devServerControl.js";
 import { LocalLedgerMirror } from "./LocalLedgerMirror.js";
 import { getMirroredFilePath } from "./mirroredFilePath.js";
@@ -76,6 +78,7 @@ export async function runAstroPreviewServer({
     skipApi,
     timeoutMs,
     idleTimeoutMs,
+    cliName = "fern",
     onLifecycleEvent
 }: {
     initialProject: Project;
@@ -95,6 +98,8 @@ export async function runAstroPreviewServer({
     timeoutMs?: number;
     /** Stop after this long with no HTTP requests (the live-reload stream doesn't count). Unset: no limit. */
     idleTimeoutMs?: number;
+    /** Command name used in the printed stop instructions (e.g. `fern docs dev stop`). */
+    cliName?: string;
     onLifecycleEvent?: (event: DocsDevLifecycleEvent) => void;
 }): Promise<void> {
     const docsWorkspace = initialProject.docsWorkspaces;
@@ -414,9 +419,11 @@ export async function runAstroPreviewServer({
         await runUntilShutdown;
         return;
     }
+    const stopInstructions = getDocsDevStopInstructions({ cliName, port, pid: process.pid });
     context.logger.info(`Docs preview server (Astro) ready on ${url}`);
+    context.logger.info(formatDocsDevStopInstructions(stopInstructions));
     isReady = true;
-    onLifecycleEvent?.({ event: "ready", url, port, backendPort, pid: process.pid });
+    onLifecycleEvent?.({ event: "ready", url, port, backendPort, pid: process.pid, stop: stopInstructions });
     lifetime.start();
 
     await runUntilShutdown;

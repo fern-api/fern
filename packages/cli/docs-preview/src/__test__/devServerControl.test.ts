@@ -1,6 +1,11 @@
 import { describe, expect, it } from "vitest";
 
-import { getControlRequestRejection, isDocsDevServerInfo } from "../astro/devServerControl.js";
+import {
+    formatDocsDevStopInstructions,
+    getControlRequestRejection,
+    getDocsDevStopInstructions,
+    isDocsDevServerInfo
+} from "../astro/devServerControl.js";
 
 const allowed = {
     remoteAddress: "127.0.0.1",
@@ -91,5 +96,27 @@ describe("isDocsDevServerInfo", () => {
         { ...info, url: 1 }
     ])("rejects %s", (value) => {
         expect(isDocsDevServerInfo(value)).toBe(false);
+    });
+});
+
+describe("getDocsDevStopInstructions", () => {
+    it("names this server's port and PID", () => {
+        expect(getDocsDevStopInstructions({ cliName: "fern", port: 3002, pid: 4242 })).toEqual({
+            keys: "Ctrl-C",
+            command: "fern docs dev stop --port 3002",
+            kill: "kill 4242"
+        });
+    });
+
+    it("uses the CLI name it was given", () => {
+        expect(getDocsDevStopInstructions({ cliName: "fern-dev", port: 3000, pid: 1 }).command).toBe(
+            "fern-dev docs dev stop --port 3000"
+        );
+    });
+
+    it("formats all three ways to stop as one log line", () => {
+        expect(
+            formatDocsDevStopInstructions(getDocsDevStopInstructions({ cliName: "fern", port: 3000, pid: 4242 }))
+        ).toBe("To stop the server, press Ctrl-C, run `fern docs dev stop --port 3000`, or run `kill 4242`.");
     });
 });

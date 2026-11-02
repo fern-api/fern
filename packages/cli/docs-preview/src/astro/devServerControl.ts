@@ -17,6 +17,35 @@ export const DOCS_DEV_SHUTDOWN_PATH = "/__fern/shutdown";
 export const DOCS_DEV_CONTROL_HEADER = "x-fern-docs-dev";
 export const DOCS_DEV_CONTROL_HEADER_VALUE = "1";
 
+/**
+ * The ways to stop a running `fern docs dev`, printed once it is ready and included in the `--json` ready event,
+ * so an agent can stop the server without having to find its process.
+ */
+export interface DocsDevStopInstructions {
+    /** Key to press in the terminal running the server. */
+    keys: "Ctrl-C";
+    /** Command that stops this server from another terminal. */
+    command: string;
+    /** Command that sends SIGTERM to this server's process, which also stops it cleanly. */
+    kill: string;
+}
+
+export function getDocsDevStopInstructions({
+    cliName,
+    port,
+    pid
+}: {
+    cliName: string;
+    port: number;
+    pid: number;
+}): DocsDevStopInstructions {
+    return { keys: "Ctrl-C", command: `${cliName} docs dev stop --port ${port}`, kill: `kill ${pid}` };
+}
+
+export function formatDocsDevStopInstructions({ keys, command, kill }: DocsDevStopInstructions): string {
+    return `To stop the server, press ${keys}, run \`${command}\`, or run \`${kill}\`.`;
+}
+
 /** Body of `GET /__fern/dev-server`. */
 export interface DocsDevServerInfo {
     fernDocsDev: true;
