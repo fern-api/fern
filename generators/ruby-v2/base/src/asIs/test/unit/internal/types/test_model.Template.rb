@@ -50,6 +50,40 @@ describe <%= gem_namespace %>::Internal::Types::Model do
     field :count, Integer, default: "3"
   end
 
+  %i[dup clone].each do |copy_method|
+    describe "##{copy_method}" do
+      it "keeps field assignments and explicit nulls independent" do
+        original = ExampleModel.new(name: "Original")
+        copy = original.public_send(copy_method)
+
+        copy.name = "Copy"
+        copy.year = nil
+
+        assert_equal({ "name" => "Original" }, original.to_h)
+        assert_equal({ "name" => "Copy", "yearOfRelease" => nil }, copy.to_h)
+
+        original.rating = 4
+
+        assert_nil copy.rating
+      end
+
+      it "preserves explicit nulls and Ruby's shallow copy semantics" do
+        original = ExampleModel.new(name: "Original", year: nil, future_field: "kept")
+        copy = original.public_send(copy_method)
+        copy.year = 2020
+        copy.future_field = "changed"
+
+        assert_nil original.year
+        assert_equal "kept", original.future_field
+        assert original.to_h.key?("yearOfRelease")
+
+        parent = ExampleParent.new(child: { value: "nested" })
+
+        assert_same parent.child, parent.public_send(copy_method).child
+      end
+    end
+  end
+
   describe ".field" do
     before do
       @example = ExampleModel.new(name: "Inception", rating: 4)
