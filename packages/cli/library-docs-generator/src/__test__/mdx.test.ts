@@ -60,6 +60,20 @@ describe("escapeMdxPreservingCodeBlocks", () => {
         expect(escapeMdxPreservingCodeBlocks("Costs $5 or $10 {each}")).toBe("Costs $5 or $10 &#123;each&#125;");
     });
 
+    it("preserves inline code content unescaped", () => {
+        expect(escapeMdxPreservingCodeBlocks("Form: ``{<name>: {<op>: <ctrl>}}``, or `{}` <b>")).toBe(
+            "Form: ``{<name>: {<op>: <ctrl>}}``, or `{}` &lt;b&gt;"
+        );
+    });
+
+    it("escapes text after an unmatched backtick", () => {
+        expect(escapeMdxPreservingCodeBlocks("a ` b {c}\n\nd `e`")).toBe("a ` b &#123;c&#125;\n\nd `e`");
+    });
+
+    it("does not treat an escaped backtick as a code span", () => {
+        expect(escapeMdxPreservingCodeBlocks("\\`{x}\\`")).toBe("\\`&#123;x&#125;\\`");
+    });
+
     it("escapes JSX chars in plain text", () => {
         expect(escapeMdxPreservingCodeBlocks("Use <T> for generics")).toBe("Use &lt;T&gt; for generics");
     });

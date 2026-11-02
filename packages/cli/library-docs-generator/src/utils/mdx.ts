@@ -20,15 +20,23 @@ function escapeJsxChars(text: string): string {
 const MATH_REGEX = /\$\$[\s\S]+?\$\$|(?<![\w$])\$(?![\s$])(?:[^$\n\\]|\\.)+?(?<!\s)\$(?!\d)/g;
 
 /**
- * Escape JSX chars, leaving LaTeX math intact so braces like `\text{CZ}` still render.
+ * Inline code spans (CommonMark): a run of backticks closed by a run of the same length,
+ * not spanning a blank line. MDX renders their content literally, so it must not be escaped.
+ */
+const CODE_SPAN_PATTERN = String.raw`(?<![\\\`])(\`+)(?!\`)(?:[^\n]|\n(?![ \t]*\n))+?(?<!\`)\1(?!\`)`;
+
+const CODE_SPAN_OR_MATH_REGEX = new RegExp(`${CODE_SPAN_PATTERN}|${MATH_REGEX.source}`, "g");
+
+/**
+ * Escape JSX chars, leaving inline code and LaTeX math intact so `{a: b}` and `\text{CZ}` still render.
  * `<` and `>` inside math become `\lt`/`\gt` so math can't smuggle in JSX tags.
  */
-function escapeJsxCharsPreservingMath(text: string): string {
+function escapeJsxCharsPreservingCodeAndMath(text: string): string {
     let result = "";
     let lastIndex = 0;
-    for (const match of text.matchAll(MATH_REGEX)) {
-        const math = match[0].replace(/</g, "\\lt ").replace(/>/g, "\\gt ");
-        result += escapeJsxChars(text.slice(lastIndex, match.index)) + math;
+    for (const match of text.matchAll(CODE_SPAN_OR_MATH_REGEX)) {
+        const token = match[0].startsWith("`") ? match[0] : match[0].replace(/</g, "\\lt ").replace(/>/g, "\\gt ");
+        result += escapeJsxChars(text.slice(lastIndex, match.index)) + token;
         lastIndex = match.index + match[0].length;
     }
     return result + escapeJsxChars(text.slice(lastIndex));
@@ -48,9 +56,9 @@ export function escapeMdx(text: string): string {
     return escapeJsxChars(text.replace(/```/g, "\\`\\`\\`"));
 }
 
-/** Like `escapeMdx`, but keeps LaTeX math (`$…$`, `$$…$$`) renderable. Use for descriptions. */
+/** Like `escapeMdx`, but keeps inline code and LaTeX math (`$…$`, `$$…$$`) renderable. Use for descriptions. */
 export function escapeMdxPreservingMath(text: string): string {
-    return escapeJsxCharsPreservingMath(text.replace(/```/g, "\\`\\`\\`"));
+    return escapeJsxCharsPreservingCodeAndMath(text.replace(/```/g, "\\`\\`\\`"));
 }
 
 /**
@@ -77,7 +85,7 @@ export function escapeMdxPreservingCodeBlocks(text: string): string {
     while ((match = codeBlockRegex.exec(text)) !== null) {
         // Escape text before this code block
         if (match.index > lastIndex) {
-            result.push(escapeJsxCharsPreservingMath(text.slice(lastIndex, match.index)));
+            result.push(escapeJsxCharsPreservingCodeAndMath(text.slice(lastIndex, match.index)));
         }
 
         let codeBlock = match[0];
@@ -97,7 +105,7 @@ export function escapeMdxPreservingCodeBlocks(text: string): string {
 
     // Escape remaining text after last code block
     if (lastIndex < text.length) {
-        result.push(escapeJsxCharsPreservingMath(text.slice(lastIndex)));
+        result.push(escapeJsxCharsPreservingCodeAndMath(text.slice(lastIndex)));
     }
 
     return result.join("");
