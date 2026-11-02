@@ -87,6 +87,21 @@ const SDK_CONFIG_TARGET_DISPLAY_NAMES: Record<GeneratorLanguage, string> = {
     mcp: "MCP server"
 };
 
+/**
+ * gRPC (proto) generation is only supported on legacy Fern Fiddle generation, not on sdk-gen-api, which
+ * rejects raw `.proto` sources. A generators.yml API with a `proto` spec therefore stays on Fiddle whatever
+ * the `use-sdk-gen-api` flag says, as if `FERN_USE_SDK_GEN_API=false` were set for that API only.
+ * `FERN_USE_SDK_GEN_API=true` still forces sdk-gen-api, for testing proto support there. Post-cutover
+ * generator versions have no Fiddle route, so they still use sdk-gen-api. Remove this once sdk-gen-api
+ * supports proto sources.
+ */
+export function shouldKeepProtobufWorkspaceOnFiddle(workspace: AbstractAPIWorkspace<unknown>): boolean {
+    if (getFernSdkGenApiEnvOverride() === true || !(workspace instanceof OSSWorkspace)) {
+        return false;
+    }
+    return [...workspace.specs, ...workspace.allSpecs].some((spec) => spec.type === "protobuf");
+}
+
 export async function runRemoteGenerationForAPIWorkspace({
     projectConfig,
     organization,
@@ -221,11 +236,13 @@ export async function runRemoteGenerationForAPIWorkspace({
     // The flag is evaluated per generator, so an org, a language, or one generator in one org can be
     // routed (or kept off sdk-gen-api) independently. Values are memoized per process. Generators whose
     // routing the flag does not decide (SDK Config, post-cutover versions) make no flag request.
+    const keepOnFiddle = sdkConfigV1 == null && shouldKeepProtobufWorkspaceOnFiddle(workspace);
     const sdkGenApiEnabledByGenerator = await resolveFernSdkGenApiEnabledByGenerator({
         organization,
         generatorNames: generatorGroup.generators
             .filter(
                 (generator) =>
+                    !keepOnFiddle &&
                     getFlagIndependentSdkGenApiRouting({
                         generatorName: generator.name,
                         version: generator.version,
@@ -238,7 +255,7 @@ export async function runRemoteGenerationForAPIWorkspace({
     // race a sibling into remote registration or generation.
     const routePreparation = prepareFernSdkGenApiRoutes({
         generators: generatorGroup.generators,
-        isSdkGenApiEnabled: (generatorName) => sdkGenApiEnabledByGenerator.get(generatorName) === true,
+        isSdkGenApiEnabled: (generatorName) => !keepOnFiddle && sdkGenApiEnabledByGenerator.get(generatorName) === true,
         sdkConfigV1,
         requireEnvVars,
         isPreview: isSdkPreview,

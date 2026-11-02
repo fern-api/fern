@@ -1,5 +1,6 @@
 // cspell:ignore sdkgen
 import { generatorsYml } from "@fern-api/configuration";
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { CliError } from "@fern-api/task-context";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import axios from "axios";
@@ -27,7 +28,8 @@ import {
 import type { FernSdkGenApiSourceArchive } from "../fernSdkGenApiSourceArchive.js";
 import {
     prepareFernSdkGenApiRoutes,
-    runRemoteGenerationForAPIWorkspace
+    runRemoteGenerationForAPIWorkspace,
+    shouldKeepProtobufWorkspaceOnFiddle
 } from "../runRemoteGenerationForAPIWorkspace.js";
 
 function invocation(
@@ -798,5 +800,88 @@ describe("runRemoteGenerationForAPIWorkspace sdk-gen-api preparation", () => {
             "post-barrier target failure"
         );
         expect(cancel).toHaveBeenCalledWith(expect.objectContaining({ message: "post-barrier target failure" }));
+    });
+});
+
+function ossWorkspace(specTypes: { specs: string[]; allSpecs: string[] }): OSSWorkspace {
+    return Object.assign(Object.create(OSSWorkspace.prototype), {
+        workspaceName: "api",
+        generatorsConfiguration: undefined,
+        specs: specTypes.specs.map((type) => ({ type })),
+        allSpecs: specTypes.allSpecs.map((type) => ({ type })),
+        toFernWorkspace: vi.fn().mockResolvedValue({
+            definition: { rootApiFile: { contents: { name: "Api" } } },
+            cliVersion: "0.0.0"
+        })
+    });
+}
+
+describe("protobuf workspaces", () => {
+    beforeEach(() => {
+        runGenerator.mockReset();
+    });
+
+    afterEach(() => {
+        vi.unstubAllEnvs();
+    });
+
+    it("keeps a generators.yml proto workspace on Fiddle", () => {
+        expect(shouldKeepProtobufWorkspaceOnFiddle(ossWorkspace({ specs: ["protobuf"], allSpecs: [] }))).toBe(true);
+        expect(shouldKeepProtobufWorkspaceOnFiddle(ossWorkspace({ specs: [], allSpecs: ["protobuf"] }))).toBe(true);
+    });
+
+    it("leaves non-proto workspaces to the flag", () => {
+        expect(shouldKeepProtobufWorkspaceOnFiddle(ossWorkspace({ specs: ["openapi"], allSpecs: ["openapi"] }))).toBe(
+            false
+        );
+    });
+
+    it("lets FERN_USE_SDK_GEN_API=true force sdk-gen-api", () => {
+        vi.stubEnv("FERN_USE_SDK_GEN_API", "true");
+        expect(shouldKeepProtobufWorkspaceOnFiddle(ossWorkspace({ specs: ["protobuf"], allSpecs: [] }))).toBe(false);
+    });
+
+    it("generates a proto workspace on Fiddle when the flag enables sdk-gen-api", async () => {
+        runGenerator.mockResolvedValue({
+            createdSnippets: false,
+            snippetsS3PreSignedReadUrl: undefined,
+            actualVersion: "1.2.3",
+            pullRequestUrl: undefined,
+            noChangesDetected: undefined,
+            publishTarget: undefined
+        });
+
+        await runRemoteGenerationForAPIWorkspace({
+            projectConfig: { organization: "acme" } as never,
+            organization: "acme",
+            workspace: ossWorkspace({ specs: ["protobuf"], allSpecs: [] }),
+            context: {
+                logger: { warn: vi.fn(), debug: vi.fn() },
+                runInteractiveTask: async (_options: { name: string }, run: (taskContext: never) => Promise<void>) => {
+                    await run({ logger: { warn: vi.fn(), debug: vi.fn(), info: vi.fn() } } as never);
+                    return true;
+                }
+            } as never,
+            generatorGroup: {
+                groupName: "local",
+                generators: [invocation("fernapi/fern-csharp-sdk", "csharp", "2.999.999")],
+                audiences: { type: "all" }
+            } as never,
+            version: undefined,
+            shouldLogS3Url: false,
+            token: { value: "token" } as never,
+            whitelabel: undefined,
+            replay: undefined,
+            absolutePathToPreview: undefined,
+            mode: undefined,
+            fernignorePath: undefined,
+            skipFernignore: true,
+            dynamicIrOnly: false,
+            validateWorkspace: false,
+            retryRateLimited: false,
+            requireEnvVars: true
+        });
+
+        expect(runGenerator).toHaveBeenCalledWith(expect.objectContaining({ sdkGenApiRoute: undefined }));
     });
 });
