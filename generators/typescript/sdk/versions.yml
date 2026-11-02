@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.108.7
+  changelogEntry:
+    - summary: |
+        With `esmOnly: true`, the SDK no longer runs or ships `scripts/rename-to-esm-files.cjs`.
+        The package is already `"type": "module"`, so `build:esm` is now just `tsc` and the
+        `main`, `types` and `exports` entries point at `dist/esm/**/*.js` and `*.d.ts`
+        instead of `.mjs` and `.d.mts`.
+      type: fix
+  createdAt: "2026-11-02"
+  irVersion: 67
 - version: 3.108.6
   changelogEntry:
     - summary: |
