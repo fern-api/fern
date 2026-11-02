@@ -13,6 +13,7 @@ export async function generateIrForFernWorkspace({
     generationLanguage,
     keywords,
     smartCasing,
+    smartCasingDigitWordBoundary,
     disableExamples,
     audiences,
     readme,
@@ -24,6 +25,7 @@ export async function generateIrForFernWorkspace({
     generationLanguage: generatorsYml.GenerationLanguage | undefined;
     keywords: string[] | undefined;
     smartCasing: boolean;
+    smartCasingDigitWordBoundary?: boolean;
     disableExamples: boolean;
     audiences: Audiences;
     readme: generatorsYml.ReadmeSchema | undefined;
@@ -36,6 +38,7 @@ export async function generateIrForFernWorkspace({
         generationLanguage,
         keywords,
         smartCasing,
+        smartCasingDigitWordBoundary,
         exampleGeneration: { disabled: disableExamples },
         audiences,
         readme,

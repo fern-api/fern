@@ -1324,7 +1324,8 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 })
                 .option("smart-casing", {
                     boolean: true,
-                    description: "Whether to use smart casing"
+                    description:
+                        "Whether to use smart casing. Defaults to the `smart-casing` setting of the --language generator in generators.yml"
                 })
                 .option("from-openapi", {
                     boolean: true,
@@ -1349,7 +1350,7 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 audiences: argv.audience.length > 0 ? { type: "select", audiences: argv.audience } : { type: "all" },
                 version: argv.version,
                 keywords: undefined,
-                smartCasing: argv.smartCasing ?? false,
+                smartCasing: argv.smartCasing,
                 readme: undefined,
                 directFromOpenapi: argv.fromOpenapi,
                 disableExamples: argv.disableExamples
@@ -1451,7 +1452,8 @@ function addDynamicIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext
                 })
                 .option("smart-casing", {
                     boolean: true,
-                    description: "Whether to use smart casing"
+                    description:
+                        "Whether to use smart casing. Defaults to the `smart-casing` setting of the --language generator in generators.yml"
                 })
                 .option("disable-examples", {
                     boolean: true,
@@ -1470,7 +1472,7 @@ function addDynamicIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext
                 audiences: { type: "all" },
                 version: argv.version,
                 keywords: undefined,
-                smartCasing: argv.smartCasing ?? false,
+                smartCasing: argv.smartCasing,
                 disableDynamicExamples: argv.disableExamples ?? false
             });
         }

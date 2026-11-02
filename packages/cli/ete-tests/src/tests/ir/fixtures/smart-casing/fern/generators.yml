@@ -1,0 +1,9 @@
+groups:
+  go-sdk:
+    generators:
+      - name: fernapi/fern-go-sdk
+        version: 1.70.14
+        smart-casing: true
+        output:
+          location: local-file-system
+          path: ../sdks/go

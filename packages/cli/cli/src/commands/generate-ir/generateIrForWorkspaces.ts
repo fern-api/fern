@@ -10,6 +10,7 @@ import path from "path";
 
 import { CliContext } from "../../cli-context/CliContext.js";
 import { generateIrForFernWorkspace } from "./generateIrForFernWorkspace.js";
+import { resolveCasingForIr } from "./resolveCasingForIr.js";
 
 export async function generateIrForWorkspaces({
     project,
@@ -31,7 +32,8 @@ export async function generateIrForWorkspaces({
     audiences: Audiences;
     version: string | undefined;
     keywords: string[] | undefined;
-    smartCasing: boolean;
+    /** Explicit `--smart-casing`/`--no-smart-casing`; when undefined, read from generators.yml for `generationLanguage`. */
+    smartCasing: boolean | undefined;
     readme: generatorsYml.ReadmeSchema | undefined;
     directFromOpenapi: boolean;
     disableExamples: boolean;
@@ -41,12 +43,14 @@ export async function generateIrForWorkspaces({
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 cliContext.logger.info(`Generating IR for workspace ${workspace.workspaceName ?? "api"}`);
 
+                const casing = resolveCasingForIr({ workspace, generationLanguage, smartCasing, context });
                 const intermediateRepresentation = await getIntermediateRepresentation({
                     workspace,
                     context,
                     generationLanguage,
                     keywords,
-                    smartCasing,
+                    smartCasing: casing.smartCasing,
+                    smartCasingDigitWordBoundary: casing.smartCasingDigitWordBoundary,
                     disableExamples,
                     audiences,
                     version,
@@ -69,6 +73,7 @@ async function getIntermediateRepresentation({
     audiences,
     keywords,
     smartCasing,
+    smartCasingDigitWordBoundary,
     disableExamples,
     version,
     readme,
@@ -79,6 +84,7 @@ async function getIntermediateRepresentation({
     generationLanguage: generatorsYml.GenerationLanguage | undefined;
     keywords: string[] | undefined;
     smartCasing: boolean;
+    smartCasingDigitWordBoundary: boolean | undefined;
     disableExamples: boolean;
     audiences: Audiences;
     version: string | undefined;
@@ -104,6 +110,7 @@ async function getIntermediateRepresentation({
             audiences,
             keywords,
             smartCasing,
+            smartCasingDigitWordBoundary,
             disableExamples,
             readme,
             disableDynamicExamples: true,
