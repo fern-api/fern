@@ -22,8 +22,6 @@ pub enum StreamEventContextProtocol {
     #[non_exhaustive]
     Event {
         #[serde(default)]
-        event: String,
-        #[serde(default)]
         name: String,
     },
 
@@ -43,8 +41,8 @@ impl StreamEventContextProtocol {
         Self::Error { data }
     }
 
-    pub fn event(event: String, name: String) -> Self {
-        Self::Event { event, name }
+    pub fn event(name: String) -> Self {
+        Self::Event { name }
     }
 
     pub fn unknown(value: serde_json::Value) -> Self {
