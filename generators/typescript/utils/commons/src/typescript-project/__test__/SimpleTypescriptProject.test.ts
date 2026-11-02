@@ -128,18 +128,19 @@ describe("SimpleTypescriptProject", () => {
         );
 
         expect(packageJson.type).toBe("module");
-        expect(packageJson.main).toBe("./dist/esm/index.mjs");
-        expect(packageJson.types).toBe("./dist/esm/index.d.mts");
+        expect(packageJson.main).toBe("./dist/esm/index.js");
+        expect(packageJson.types).toBe("./dist/esm/index.d.ts");
         expect((packageJson.exports as Record<string, unknown>)["."]).toEqual({
-            types: "./dist/esm/index.d.mts",
-            default: "./dist/esm/index.mjs"
+            types: "./dist/esm/index.d.ts",
+            default: "./dist/esm/index.js"
         });
         expect(JSON.stringify(packageJson.exports)).not.toContain("require");
+        expect(JSON.stringify(packageJson.exports)).not.toContain(".mjs");
         expect(JSON.stringify(packageJson.exports)).not.toContain("dist/cjs");
         const scripts = packageJson.scripts as Record<string, string>;
         expect(scripts["build:cjs"]).toBeUndefined();
         expect(scripts["build:esm"]).toContain("tsc --project ./tsconfig.esm.json");
-        expect(scripts["build:esm"]).toContain("node scripts/rename-to-esm-files.cjs");
+        expect(scripts["build:esm"]).toBe("tsc --project ./tsconfig.esm.json");
         expect(scripts.build).toBe("pnpm build:esm");
         expect(hasCjsTsConfig).toBe(false);
         expect(rootTsConfig.extends).toBe("./tsconfig.esm.json");

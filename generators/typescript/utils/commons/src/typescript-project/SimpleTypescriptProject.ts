@@ -176,6 +176,14 @@ export class SimpleTypescriptProject extends TypescriptProject {
         );
     }
 
+    private getEsmJsExtension(): string {
+        return this.esmOnly ? "js" : "mjs";
+    }
+
+    private getEsmTypesExtension(): string {
+        return this.esmOnly ? "d.ts" : "d.mts";
+    }
+
     private async generatePackageJson(): Promise<void> {
         let packageJson: IPackageJson = {
             name: this.npmPackage != null ? this.npmPackage.packageName : "test-package"
@@ -221,8 +229,8 @@ export class SimpleTypescriptProject extends TypescriptProject {
         } else {
             const cjsFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.CJS_DIRECTORY}/index.js`;
             const cjsTypesFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.CJS_DIRECTORY}/index.d.ts`;
-            const mjsFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}/index.mjs`;
-            const mjsTypesFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}/index.d.mts`;
+            const mjsFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}/index.${this.getEsmJsExtension()}`;
+            const mjsTypesFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}/index.${this.getEsmTypesExtension()}`;
             const defaultTypesExport = this.esmOnly || this.outputEsm ? mjsTypesFile : cjsTypesFile;
             const defaultExport = this.esmOnly || this.outputEsm ? mjsFile : cjsFile;
             packageJson = {
@@ -257,8 +265,8 @@ export class SimpleTypescriptProject extends TypescriptProject {
                         const exportKey = isSubpackageExport ? subpackageExport.key : folder;
                         const cjsFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.CJS_DIRECTORY}/${folder}/${fileName}.js`;
                         const cjsTypesFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.CJS_DIRECTORY}/${folder}/${fileName}.d.ts`;
-                        const mjsFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}/${folder}/${fileName}.mjs`;
-                        const mjsTypesFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}/${folder}/${fileName}.d.mts`;
+                        const mjsFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}/${folder}/${fileName}.${this.getEsmJsExtension()}`;
+                        const mjsTypesFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}/${folder}/${fileName}.${this.getEsmTypesExtension()}`;
                         const defaultExport = this.outputEsm ? mjsFile : cjsFile;
 
                         return {
@@ -296,12 +304,15 @@ export class SimpleTypescriptProject extends TypescriptProject {
                         : {
                               [SimpleTypescriptProject.BUILD_CJS_SCRIPT_NAME]: `tsc --project ./${TypescriptProject.TS_CONFIG_CJS_FILENAME}`
                           }),
-                    [SimpleTypescriptProject.BUILD_ESM_SCRIPT_NAME]: [
-                        `tsc --project ./${TypescriptProject.TS_CONFIG_ESM_FILENAME}`,
-                        // in a `type: "module"` package, the CommonJS script is emitted
-                        // with a `.cjs` extension so Node does not interpret it as ESM
-                        `node ${SimpleTypescriptProject.SCRIPTS_DIRECTORY_NAME}/rename-to-esm-files.${this.esmOnly || this.outputEsm ? "cjs" : "js"} ${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}`
-                    ].join(" && "),
+                    [SimpleTypescriptProject.BUILD_ESM_SCRIPT_NAME]: this.esmOnly
+                        ? // a `type: "module"` package with no CommonJS output can ship tsc's `.js` output as-is
+                          `tsc --project ./${TypescriptProject.TS_CONFIG_ESM_FILENAME}`
+                        : [
+                              `tsc --project ./${TypescriptProject.TS_CONFIG_ESM_FILENAME}`,
+                              // in a `type: "module"` package, the CommonJS script is emitted
+                              // with a `.cjs` extension so Node does not interpret it as ESM
+                              `node ${SimpleTypescriptProject.SCRIPTS_DIRECTORY_NAME}/rename-to-esm-files.${this.outputEsm ? "cjs" : "js"} ${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}`
+                          ].join(" && "),
                     ...packageJson.scripts,
                     ...this.extraScripts
                 }
