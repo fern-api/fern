@@ -39,7 +39,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 // Example:
 //
 //	request := &fern.UploadDocumentRequest{}
-//	client.UploadJSONDocument(
+//	_, err := client.UploadJSONDocument(
 //	    context.TODO(),
 //	    request,
 //	)

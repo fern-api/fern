@@ -37,7 +37,7 @@ import (
     client "github.com/fern-api/path-parameters-go/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &path.User{
         Name: "name",
@@ -46,11 +46,15 @@ func do() {
             "tags",
         },
     }
-    client.User.CreateUser(
+    _, err := client.User.CreateUser(
         context.TODO(),
         "tenant_id",
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

@@ -42,7 +42,7 @@ func NewClient(options *core.RequestOptions) *Client {
 
 // Example:
 //
-//	client.Simple.GetSomething(
+//	err := client.Simple.GetSomething(
 //	    context.TODO(),
 //	)
 func (c *Client) GetSomething(

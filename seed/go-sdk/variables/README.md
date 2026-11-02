@@ -37,15 +37,19 @@ import (
     option "github.com/variables/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithRootVariable(
             "<endpointParam>",
         ),
     )
-    client.Service.Post(
+    err := client.Service.Post(
         context.TODO(),
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

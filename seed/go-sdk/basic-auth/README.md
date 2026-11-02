@@ -37,7 +37,7 @@ import (
     option "github.com/basic-auth/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBasicAuth(
             "<username>",
@@ -47,10 +47,14 @@ func do() {
     request := map[string]any{
         "key": "value",
     }
-    client.BasicAuth.PostWithBasicAuth(
+    _, err := client.BasicAuth.PostWithBasicAuth(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

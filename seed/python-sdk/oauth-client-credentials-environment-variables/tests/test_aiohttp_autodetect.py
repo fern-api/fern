@@ -96,7 +96,7 @@ class TestDefaultClientsWithoutAiohttp(unittest.TestCase):
             with self.assertRaises(RuntimeError) as ctx:
                 seed._default_clients.DefaultAioHttpClient()
             self.assertIn(
-                "pip install fern_oauth-client-credentials-environment-variables[aiohttp]", str(ctx.exception)
+                "pip install fern-oauth-client-credentials-environment-variables[aiohttp]", str(ctx.exception)
             )
 
         importlib.reload(seed._default_clients)

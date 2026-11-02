@@ -42,7 +42,7 @@ func NewClient(options *core.RequestOptions) *Client {
 
 // Example:
 //
-//	client.Nested.API.GetSomething(
+//	err := client.Nested.API.GetSomething(
 //	    context.TODO(),
 //	)
 func (c *Client) GetSomething(

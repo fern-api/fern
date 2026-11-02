@@ -187,6 +187,28 @@ describe("fern init", () => {
         expect(result.exitCode).not.toBe(0);
     }, 180_000);
 
+    it.concurrent("names the organization after the directory without --organization, a TTY or a login", async ({
+        expect,
+        signal
+    }) => {
+        const tmpDir = await tmp.dir();
+        const result = await runFernCli(["init"], {
+            cwd: AbsoluteFilePath.of(tmpDir.path),
+            // Opt out of CI detection so this exercises the non-TTY stdin path even on CI runners.
+            env: { CI: "false", FERN_TOKEN: "" },
+            includeAuthToken: false,
+            reject: false,
+            timeout: 60_000,
+            signal
+        });
+        expect(result.timedOut).toBe(false);
+        expect(result.exitCode).toBe(0);
+        expect(result.stderr + result.stdout).toContain("from the directory name");
+        expect(await doesPathExist(join(AbsoluteFilePath.of(tmpDir.path), RelativeFilePath.of(FERN_DIRECTORY)))).toBe(
+            true
+        );
+    }, 180_000);
+
     it.concurrent("init docs", async ({ expect, signal }) => {
         const pathOfDirectory = await init({
             additionalArgs: [{ name: "--fern-definition" }],

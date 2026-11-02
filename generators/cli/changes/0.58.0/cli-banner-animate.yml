@@ -1,0 +1,5 @@
+- summary: |
+    Add `banner.animate`. When `true`, root `--help` on an interactive terminal plays a short
+    shimmer across the banner, then prints it statically. Pipes, captured output, `NO_COLOR`,
+    `TERM=dumb` and terminals too small for the banner skip the animation.
+  type: feat

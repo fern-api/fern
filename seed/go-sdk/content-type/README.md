@@ -37,7 +37,7 @@ import (
     client "github.com/content-type/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &fern.PatchProxyRequest{
         Application: fern.String(
@@ -47,10 +47,14 @@ func do() {
             true,
         ),
     }
-    client.Service.Patch(
+    err := client.Service.Patch(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

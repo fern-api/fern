@@ -7,13 +7,31 @@ export class Event {
     }
 }
 
+/** Details of a rejected WebSocket handshake (a non-101 response). Only available in Node. */
+export interface HandshakeRejection {
+    statusCode?: number;
+    headers: Record<string, string>;
+    body: string;
+}
+
 export class ErrorEvent extends Event {
     public message: string;
     public error: Error;
-    constructor(error: Error, target: any) {
+    /** HTTP status of a rejected handshake (Node only). */
+    public statusCode?: number;
+    /** Response headers of a rejected handshake (Node only). */
+    public headers?: Record<string, string>;
+    /** Response body of a rejected handshake, capped at 1000 characters (Node only). */
+    public body?: string;
+    constructor(error: Error, target: any, handshakeRejection?: HandshakeRejection) {
         super("error", target);
         this.message = error.message;
         this.error = error;
+        if (handshakeRejection != null) {
+            this.statusCode = handshakeRejection.statusCode;
+            this.headers = handshakeRejection.headers;
+            this.body = handshakeRejection.body;
+        }
     }
 }
 

@@ -36,7 +36,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 
 // Example:
 //
-//	client.Ping(
+//	_, err := client.Ping(
 //	    context.TODO(),
 //	)
 func (c *Client) Ping(

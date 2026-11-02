@@ -13,6 +13,9 @@
 //!
 //! [hcf]: crate::auth::AuthProvider::has_credentials_for
 
+use crate::auth::credential::{
+    clear_keyring_read_failure, keyring_read_failure, KeyringReadFailure,
+};
 use crate::auth::provider::{AuthProvider, EndpointAuthMetadata};
 use crate::error::CliError;
 
@@ -32,10 +35,18 @@ pub fn handle_error_response<T>(
     provider: &dyn AuthProvider,
     endpoint: &EndpointAuthMetadata,
 ) -> Result<T, CliError> {
+    // `security: []` never carries credentials (e.g. a token-issuing endpoint),
+    // so a 401 there is about the request itself, not a missing token.
+    if endpoint.is_explicit_anonymous() {
+        return Err(parse_api_error(status, error_body));
+    }
+    let (has_credentials, read_failure) = probe_credentials(provider, endpoint);
     if status.as_u16() == 401 || status.as_u16() == 403 {
-        if !provider.has_credentials_for(endpoint) {
+        if !has_credentials {
             let hints = provider.credential_hints();
-            let message = if hints.is_empty() {
+            let message = if let Some(failure) = &read_failure {
+                keyring_read_failure_message(failure, "no credentials were sent")
+            } else if hints.is_empty() {
                 "Access denied. Authentication credentials are missing. \
                  Check that the configured auth source for this CLI \
                  (environment variable, --flag, or credential file) has a value set."
@@ -76,9 +87,9 @@ pub fn handle_error_response<T>(
     // This only *annotates* — the error keeps its class and exit code, because
     // the server, not the spec, is the authority on whether this endpoint
     // needed auth at all. Public endpoints must keep working.
-    if !provider.has_credentials_for(endpoint) {
+    if !has_credentials {
         let base = parse_api_error(status, error_body);
-        if let Some(note) = missing_credentials_note(provider) {
+        if let Some(note) = missing_credentials_note(provider, read_failure.as_ref()) {
             return Err(decorate_with_help(base, note));
         }
         return Err(base);
@@ -103,12 +114,22 @@ pub fn ensure_credentials_for(
         &endpoint.security_requirements,
         Some(reqs) if !reqs.is_empty() && reqs.iter().all(|req| !req.is_empty())
     );
-    if !requires_auth || provider.has_credentials_for(endpoint) {
+    if !requires_auth {
+        return Ok(());
+    }
+    let (has_credentials, read_failure) = probe_credentials(provider, endpoint);
+    if has_credentials {
         return Ok(());
     }
     let hints = dedup_preserve_order(provider.credential_hints());
     if hints.is_empty() {
         return Ok(());
+    }
+    if let Some(failure) = &read_failure {
+        return Err(CliError::Auth(keyring_read_failure_message(
+            failure,
+            "the request was not sent",
+        )));
     }
     Err(CliError::Auth(format!(
         "Authentication credentials are missing, so the request was not sent. Set {}.",
@@ -118,15 +139,62 @@ pub fn ensure_credentials_for(
 
 /// Advice for a request that went out with no credentials at all, or `None`
 /// when the CLI declares no auth sources to point at.
-fn missing_credentials_note(provider: &dyn AuthProvider) -> Option<String> {
+fn missing_credentials_note(
+    provider: &dyn AuthProvider,
+    read_failure: Option<&KeyringReadFailure>,
+) -> Option<String> {
     let hints = dedup_preserve_order(provider.credential_hints());
     if hints.is_empty() {
         return None;
+    }
+    if let Some(failure) = read_failure {
+        return Some(keyring_read_failure_message(
+            failure,
+            "no credentials were sent",
+        ));
     }
     Some(format!(
         "No credentials were sent with this request. Set {}.",
         hints.join(", ")
     ))
+}
+
+/// Whether `provider` can authenticate `endpoint`, plus the keyring read that
+/// failed during the check, if one did.
+fn probe_credentials(
+    provider: &dyn AuthProvider,
+    endpoint: &EndpointAuthMetadata,
+) -> (bool, Option<KeyringReadFailure>) {
+    clear_keyring_read_failure();
+    if provider.has_credentials_for(endpoint) {
+        return (true, None);
+    }
+    (false, keyring_read_failure())
+}
+
+/// Explain that a saved credential exists but its store refused to hand it
+/// over (a denied or cancelled keychain prompt, a locked keyring). Telling the
+/// user to "set" it would send them to re-enter a credential they already have.
+fn keyring_read_failure_message(failure: &KeyringReadFailure, consequence: &str) -> String {
+    let credential = match failure.account.split_once('#') {
+        Some((_, profile)) if !profile.is_empty() => {
+            format!("the saved credential for profile `{profile}`")
+        }
+        _ => "the saved credential".to_string(),
+    };
+    if failure.backend == "macOS Keychain" {
+        format!(
+            "Couldn't read {credential} from the macOS Keychain (access was denied, or \
+             the Keychain is locked), so {consequence}. Run the command again, then click \
+             \"Always Allow\" or enter your Keychain password."
+        )
+    } else {
+        format!(
+            "Couldn't read {credential} from {}, so {consequence}. \
+             Unlock it and run the command again.",
+            failure.backend
+        )
+    }
 }
 
 /// Attach `note` as the error's `help`, leaving every other field alone.
@@ -269,6 +337,27 @@ mod tests {
         match err {
             CliError::Auth(msg) => assert!(msg.contains("Access denied")),
             _ => panic!("Expected Auth"),
+        }
+    }
+
+    #[test]
+    fn passes_through_for_explicit_anonymous_endpoint() {
+        let p = BearerAuthProvider::new("bearer", AuthCredentialSource::Missing);
+        for status in [reqwest::StatusCode::UNAUTHORIZED, reqwest::StatusCode::NOT_FOUND] {
+            let err = handle_error_response::<()>(
+                status,
+                r#"{"error":{"code":401,"message":"invalid client","reason":"x"}}"#,
+                &p,
+                &EndpointAuthMetadata::explicit_anonymous(),
+            )
+            .unwrap_err();
+            match err {
+                CliError::Api { message, help, .. } => {
+                    assert_eq!(message, "invalid client");
+                    assert!(help.is_none(), "unexpected credential hint: {help:?}");
+                }
+                other => panic!("Expected Api, got {other:?}"),
+            }
         }
     }
 
@@ -767,5 +856,129 @@ mod tests {
         let input = vec!["a".into(), "b".into(), "a".into(), "c".into(), "b".into()];
         let result = dedup_preserve_order(input);
         assert_eq!(result, vec!["a", "b", "c"]);
+    }
+
+    /// A store whose every read fails, standing in for a denied or cancelled
+    /// OS keychain prompt.
+    #[derive(Debug)]
+    struct UnreadableStore(&'static str);
+
+    impl crate::auth::keyring_store::KeyringStore for UnreadableStore {
+        fn get(&self, _: &str, _: &str) -> Result<Option<String>, CliError> {
+            Err(CliError::Auth(
+                "keyring get failed: User canceled the operation.".into(),
+            ))
+        }
+        fn set(&self, _: &str, _: &str, _: &str) -> Result<(), CliError> {
+            unreachable!()
+        }
+        fn delete(&self, _: &str, _: &str) -> Result<(), CliError> {
+            unreachable!()
+        }
+        fn backend_label(&self) -> String {
+            self.0.into()
+        }
+    }
+
+    fn keyring_bearer(account: &str) -> BearerAuthProvider {
+        BearerAuthProvider::new("bearer", AuthCredentialSource::keyring("svc", account))
+    }
+
+    #[test]
+    #[serial_test::serial]
+    fn a_denied_keychain_is_reported_instead_of_missing_credentials() {
+        use crate::auth::keyring_store::set_active_store;
+        set_active_store(std::sync::Arc::new(UnreadableStore("macOS Keychain")));
+
+        let err = ensure_credentials_for(&keyring_bearer("bearer#lb2"), &requiring(&["bearer"]))
+            .unwrap_err();
+        assert_eq!(err.exit_code(), CliError::EXIT_CODE_AUTH);
+        match err {
+            CliError::Auth(msg) => assert_eq!(
+                msg,
+                "Couldn't read the saved credential for profile `lb2` from the macOS \
+                 Keychain (access was denied, or the Keychain is locked), so the request was \
+                 not sent. Run the command again, then click \"Always Allow\" or enter your \
+                 Keychain password."
+            ),
+            other => panic!("expected Auth, got: {other:?}"),
+        }
+    }
+
+    #[test]
+    #[serial_test::serial]
+    fn an_unreadable_keyring_elsewhere_names_its_backend() {
+        use crate::auth::keyring_store::set_active_store;
+        set_active_store(std::sync::Arc::new(UnreadableStore(
+            "secret-service (Linux)",
+        )));
+
+        match ensure_credentials_for(&keyring_bearer("bearer"), &requiring(&["bearer"]))
+            .unwrap_err()
+        {
+            CliError::Auth(msg) => assert_eq!(
+                msg,
+                "Couldn't read the saved credential from secret-service (Linux), so the \
+                 request was not sent. Unlock it and run the command again."
+            ),
+            other => panic!("expected Auth, got: {other:?}"),
+        }
+    }
+
+    #[test]
+    #[serial_test::serial]
+    fn an_unauthorized_response_after_a_denied_keychain_names_the_denial() {
+        use crate::auth::keyring_store::set_active_store;
+        set_active_store(std::sync::Arc::new(UnreadableStore("macOS Keychain")));
+
+        let err = handle_error_response::<()>(
+            reqwest::StatusCode::UNAUTHORIZED,
+            "Unauthorized",
+            &keyring_bearer("bearer#lb2"),
+            &EndpointAuthMetadata::unspecified(),
+        )
+        .unwrap_err();
+        match err {
+            CliError::Auth(msg) => {
+                assert!(msg.contains("from the macOS Keychain"), "got: {msg}");
+                assert!(msg.contains("no credentials were sent"), "got: {msg}");
+            }
+            other => panic!("expected Auth, got: {other:?}"),
+        }
+    }
+
+    #[test]
+    #[serial_test::serial]
+    fn an_empty_keychain_still_reports_missing_credentials() {
+        use crate::auth::keyring_store::{set_active_store, MockKeyringStore};
+        set_active_store(std::sync::Arc::new(MockKeyringStore::new()));
+
+        match ensure_credentials_for(&keyring_bearer("bearer#lb2"), &requiring(&["bearer"]))
+            .unwrap_err()
+        {
+            CliError::Auth(msg) => assert!(
+                msg.starts_with(
+                    "Authentication credentials are missing, so the request was not sent. Set "
+                ),
+                "got: {msg}"
+            ),
+            other => panic!("expected Auth, got: {other:?}"),
+        }
+    }
+
+    #[test]
+    #[serial_test::serial]
+    fn an_earlier_denial_does_not_leak_into_a_later_check() {
+        use crate::auth::keyring_store::{set_active_store, MockKeyringStore};
+        set_active_store(std::sync::Arc::new(UnreadableStore("macOS Keychain")));
+        let _ = ensure_credentials_for(&keyring_bearer("bearer#lb2"), &requiring(&["bearer"]));
+
+        set_active_store(std::sync::Arc::new(MockKeyringStore::new()));
+        match ensure_credentials_for(&keyring_bearer("bearer#lb2"), &requiring(&["bearer"]))
+            .unwrap_err()
+        {
+            CliError::Auth(msg) => assert!(msg.contains("are missing"), "got: {msg}"),
+            other => panic!("expected Auth, got: {other:?}"),
+        }
     }
 }

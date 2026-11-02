@@ -54,7 +54,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	        NestedLiteral: &fern.ANestedLiteral{},
 //	    },
 //	}
-//	client.Inlined.Send(
+//	_, err := client.Inlined.Send(
 //	    context.TODO(),
 //	    request,
 //	)

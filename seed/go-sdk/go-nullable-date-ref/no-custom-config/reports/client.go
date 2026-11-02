@@ -42,7 +42,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	    ),
 //	    Title: "title",
 //	}
-//	client.Reports.Create(
+//	_, err := client.Reports.Create(
 //	    context.TODO(),
 //	    request,
 //	)

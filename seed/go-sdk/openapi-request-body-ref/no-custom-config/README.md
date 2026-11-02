@@ -37,15 +37,19 @@ import (
     client "github.com/openapi-request-body-ref/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &fern.CreateVendorRequest{
         Name: "name",
     }
-    client.Vendor.CreateVendor(
+    _, err := client.Vendor.CreateVendor(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

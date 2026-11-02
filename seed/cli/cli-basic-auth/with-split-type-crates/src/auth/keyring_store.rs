@@ -63,6 +63,12 @@ pub trait KeyringStore: Send + Sync + std::fmt::Debug {
     /// Short human-readable name of this backend for `auth status` output.
     /// e.g. `"macOS Keychain"`, `"~/.config/elevenlabs/auth-keyring.json"`.
     fn backend_label(&self) -> String;
+    /// Whether [`get`](Self::get) for `account` answers with what is actually
+    /// stored, as opposed to a value substituted for one call (a typed
+    /// credential used only to authenticate a key mint).
+    fn answers_from_storage(&self, _account: &str) -> bool {
+        true
+    }
 }
 
 // ---------------------------------------------------------------------------
@@ -98,6 +104,10 @@ impl OsKeyringStore {
 #[cfg(not(target_env = "musl"))]
 impl KeyringStore for OsKeyringStore {
     fn get(&self, service: &str, account: &str) -> Result<Option<String>, CliError> {
+        #[cfg(target_os = "macos")]
+        if let Some(read) = macos_security_tool::get(service, account) {
+            return read;
+        }
         let entry = keyring::Entry::new(service, account)
             .map_err(|e| CliError::Auth(format!("keyring open failed: {e}")))?;
         match entry.get_password() {
@@ -159,16 +169,179 @@ mod macos_keychain {
     const ERR_SEC_ITEM_NOT_FOUND: i32 = -25300;
 
     pub(super) fn set(service: &str, account: &str, value: &str) -> Result<(), CliError> {
+        // Recreated rather than updated, so the item trusts `security` (see
+        // `macos_security_tool`) instead of keeping an older binary's access
+        // list. If the tool cannot add it, the in-process write still does.
+        if super::macos_security_tool::can_add(service, account) {
+            delete(service, account)?;
+            if super::macos_security_tool::add(service, account, value) {
+                return Ok(());
+            }
+        }
         passwords::set_generic_password(service, account, value.as_bytes())
             .map_err(|e| CliError::Auth(format!("keyring set failed: {e}")))
     }
 
     pub(super) fn delete(service: &str, account: &str) -> Result<(), CliError> {
+        // Items added through `security` are owned by it, so the in-process
+        // delete is refused ("Invalid attempt to change the owner of this
+        // item"); `security` can delete them, and older builds' items too.
+        if let Some(result) = super::macos_security_tool::delete(service, account) {
+            return result;
+        }
         match passwords::delete_generic_password(service, account) {
             Ok(()) => Ok(()),
             Err(e) if e.code() == ERR_SEC_ITEM_NOT_FOUND => Ok(()),
             Err(e) => Err(CliError::Auth(format!("keyring delete failed: {e}"))),
         }
+    }
+}
+
+/// Keychain reads and writes made through Apple's `/usr/bin/security`.
+///
+/// macOS ties "Always Allow" to the program that reads an item. For this
+/// CLI's own binary that is its code hash, which every build and release
+/// changes, so the prompt comes back after each upgrade. Through
+/// `security`, the program asking is always that Apple-signed tool, so one
+/// "Always Allow" lasts. `None` means the tool could not be run and the
+/// caller should go to the keychain itself.
+#[cfg(target_os = "macos")]
+mod macos_security_tool {
+    use super::security_tool_text::{encode_hex, parse_password, quote};
+    use crate::error::CliError;
+    use std::io::Write;
+    use std::process::{Command, Stdio};
+
+    const SECURITY: &str = "/usr/bin/security";
+    /// `security`'s exit status for errSecItemNotFound.
+    const EXIT_ITEM_NOT_FOUND: i32 = 44;
+
+    pub(super) fn get(service: &str, account: &str) -> Option<Result<Option<String>, CliError>> {
+        let output = Command::new(SECURITY)
+            .args(["find-generic-password", "-s", service, "-a", account, "-g"])
+            .stdin(Stdio::null())
+            .output()
+            .ok()?;
+        if output.status.code() == Some(EXIT_ITEM_NOT_FOUND) {
+            return Some(Ok(None));
+        }
+        // `-g` prints the password on stderr, after the item's attributes on
+        // stdout.
+        let stderr = String::from_utf8_lossy(&output.stderr);
+        if !output.status.success() {
+            return Some(Err(CliError::Auth(format!(
+                "keyring get failed: {}",
+                stderr.trim()
+            ))));
+        }
+        Some(parse_password(&stderr).map(Some).ok_or_else(|| {
+            CliError::Auth("keyring get failed: unrecognized `security` output".to_string())
+        }))
+    }
+
+    /// Delete the item; `Ok` when it is gone (or was never there). `None`
+    /// means the tool could not be run.
+    pub(super) fn delete(service: &str, account: &str) -> Option<Result<(), CliError>> {
+        let output = Command::new(SECURITY)
+            .args(["delete-generic-password", "-s", service, "-a", account])
+            .stdin(Stdio::null())
+            .stdout(Stdio::null())
+            .output()
+            .ok()?;
+        if output.status.success() || output.status.code() == Some(EXIT_ITEM_NOT_FOUND) {
+            return Some(Ok(()));
+        }
+        Some(Err(CliError::Auth(format!(
+            "keyring delete failed: {}",
+            String::from_utf8_lossy(&output.stderr).trim()
+        ))))
+    }
+
+    /// Whether [`add`] can name this item on a `security -i` command line.
+    pub(super) fn can_add(service: &str, account: &str) -> bool {
+        quote(service).is_some()
+            && quote(account).is_some()
+            && std::path::Path::new(SECURITY).exists()
+    }
+
+    /// Add the item; whether it was added. The value goes in as hex on
+    /// `security`'s stdin, so it is never on a command line.
+    pub(super) fn add(service: &str, account: &str, value: &str) -> bool {
+        let (Some(service), Some(account)) = (quote(service), quote(account)) else {
+            return false;
+        };
+        let command = format!(
+            "add-generic-password -s {service} -a {account} -X {}\n",
+            encode_hex(value.as_bytes())
+        );
+        let Ok(mut child) = Command::new(SECURITY)
+            .arg("-i")
+            .stdin(Stdio::piped())
+            .stdout(Stdio::null())
+            .stderr(Stdio::piped())
+            .spawn()
+        else {
+            return false;
+        };
+        let written = child
+            .stdin
+            .take()
+            .is_some_and(|mut stdin| stdin.write_all(command.as_bytes()).is_ok());
+        let Ok(output) = child.wait_with_output() else {
+            return false;
+        };
+        // `-i` reports a failed command on stderr, not always in its status.
+        written && output.status.success() && output.stderr.iter().all(u8::is_ascii_whitespace)
+    }
+}
+
+/// The text `/usr/bin/security` reads and prints, apart from running it so
+/// it is testable on any platform.
+#[cfg(any(target_os = "macos", test))]
+mod security_tool_text {
+    /// The password in `find-generic-password -g` output: `password: "…"`
+    /// when every byte is printable, else `password: 0x<HEX>  "…"`.
+    pub(super) fn parse_password(stderr: &str) -> Option<String> {
+        let rest = stderr
+            .lines()
+            .find_map(|line| line.strip_prefix("password:"))?;
+        let rest = rest.strip_prefix(' ').unwrap_or(rest);
+        if rest.is_empty() {
+            return Some(String::new());
+        }
+        if let Some(hex) = rest.strip_prefix("0x") {
+            return String::from_utf8(decode_hex(hex.split_whitespace().next()?)?).ok();
+        }
+        rest.strip_prefix('"')?
+            .strip_suffix('"')
+            .map(str::to_string)
+    }
+
+    pub(super) fn encode_hex(bytes: &[u8]) -> String {
+        bytes.iter().map(|b| format!("{b:02x}")).collect()
+    }
+
+    fn decode_hex(hex: &str) -> Option<Vec<u8>> {
+        if !hex.len().is_multiple_of(2) {
+            return None;
+        }
+        (0..hex.len())
+            .step_by(2)
+            .map(|i| u8::from_str_radix(hex.get(i..i + 2)?, 16).ok())
+            .collect()
+    }
+
+    /// `value` single-quoted for a `security -i` command line, or `None`
+    /// when it holds a character that quoting cannot carry.
+    pub(super) fn quote(value: &str) -> Option<String> {
+        if value.is_empty()
+            || value
+                .chars()
+                .any(|c| c == '\'' || c == '\\' || c.is_control())
+        {
+            return None;
+        }
+        Some(format!("'{value}'"))
     }
 }
 
@@ -505,12 +678,13 @@ impl<S: KeyringStore> KeyringStore for ChunkedKeyringStore<S> {
 /// the request resolving each field) read the OS keychain once instead of
 /// once per lookup. On macOS every read can raise a password prompt.
 ///
-/// Only successful reads are kept: a failed or denied read is retried on the
-/// next lookup. `set` and `delete` update the cached copy, so a later lookup
-/// in the same process never sees a stale value. Entries expire after
+/// A denied or failed read is kept too, so one command raises one prompt per
+/// entry rather than one per lookup; the next command asks again. `set` and
+/// `delete` update the cached copy, so a later lookup in the same process
+/// never sees a stale value. Entries expire after
 /// [`Self::DEFAULT_TTL`], which bounds how long a long-running command can
 /// miss a change made by another process.
-type CachedEntries = HashMap<(String, String), (Instant, Option<String>)>;
+type CachedEntries = HashMap<(String, String), (Instant, Result<Option<String>, String>)>;
 
 pub struct CachingKeyringStore<S: KeyringStore> {
     inner: S,
@@ -543,7 +717,7 @@ impl<S: KeyringStore> CachingKeyringStore<S> {
             .unwrap_or_else(|poisoned| poisoned.into_inner())
     }
 
-    fn remember(&self, service: &str, account: &str, value: Option<String>) {
+    fn remember(&self, service: &str, account: &str, value: Result<Option<String>, String>) {
         self.entries()
             .insert(Self::key(service, account), (Instant::now(), value));
     }
@@ -568,18 +742,26 @@ impl<S: KeyringStore> KeyringStore for CachingKeyringStore<S> {
     fn get(&self, service: &str, account: &str) -> Result<Option<String>, CliError> {
         if let Some((read_at, value)) = self.entries().get(&Self::key(service, account)) {
             if read_at.elapsed() < self.ttl {
-                return Ok(value.clone());
+                return value.clone().map_err(CliError::Auth);
             }
         }
-        let value = self.inner.get(service, account)?;
-        self.remember(service, account, value.clone());
-        Ok(value)
+        match self.inner.get(service, account) {
+            Ok(value) => {
+                self.remember(service, account, Ok(value.clone()));
+                Ok(value)
+            }
+            Err(CliError::Auth(message)) => {
+                self.remember(service, account, Err(message.clone()));
+                Err(CliError::Auth(message))
+            }
+            Err(e) => Err(e),
+        }
     }
 
     fn set(&self, service: &str, account: &str, value: &str) -> Result<(), CliError> {
         match self.inner.set(service, account, value) {
             Ok(()) => {
-                self.remember(service, account, Some(value.to_string()));
+                self.remember(service, account, Ok(Some(value.to_string())));
                 Ok(())
             }
             Err(e) => {
@@ -592,7 +774,7 @@ impl<S: KeyringStore> KeyringStore for CachingKeyringStore<S> {
     fn delete(&self, service: &str, account: &str) -> Result<(), CliError> {
         match self.inner.delete(service, account) {
             Ok(()) => {
-                self.remember(service, account, None);
+                self.remember(service, account, Ok(None));
                 Ok(())
             }
             Err(e) => {
@@ -899,17 +1081,39 @@ mod tests {
     }
 
     #[test]
-    fn caching_store_retries_a_failed_read() {
+    fn caching_store_remembers_a_failed_read_until_it_expires() {
         let mock = Arc::new(CountingMock::default());
         mock.inner.set("svc", "acct", "secret").unwrap();
         mock.fail_reads.store(true, std::sync::atomic::Ordering::SeqCst);
         let store = CachingKeyringStore::new(mock.clone());
 
-        assert!(store.get("svc", "acct").is_err());
-        assert!(store.get("svc", "acct").is_err());
+        for _ in 0..3 {
+            match store.get("svc", "acct") {
+                Err(CliError::Auth(msg)) => assert!(msg.contains("User denied access")),
+                other => panic!("expected the denial, got: {other:?}"),
+            }
+        }
+        assert_eq!(mock.reads(), 1, "one prompt per entry, not one per lookup");
+
         mock.fail_reads.store(false, std::sync::atomic::Ordering::SeqCst);
-        assert_eq!(store.get("svc", "acct").unwrap().as_deref(), Some("secret"));
-        assert_eq!(mock.reads(), 3, "a denied read is not remembered");
+        let expiring = CachingKeyringStore::with_ttl(mock.clone(), Duration::ZERO);
+        assert!(expiring.get("svc", "acct").is_ok());
+        assert!(expiring.get("svc", "acct").is_ok());
+        assert_eq!(mock.reads(), 3, "an expired denial is asked again");
+    }
+
+    #[test]
+    fn caching_store_forgets_a_failed_read_after_a_write() {
+        let mock = Arc::new(CountingMock::default());
+        mock.fail_reads.store(true, std::sync::atomic::Ordering::SeqCst);
+        let store = CachingKeyringStore::new(mock.clone());
+        assert!(store.get("svc", "acct").is_err());
+
+        store.set("svc", "acct", "fresh").unwrap();
+        assert_eq!(store.get("svc", "acct").unwrap().as_deref(), Some("fresh"));
+        store.delete("svc", "acct").unwrap();
+        assert_eq!(store.get("svc", "acct").unwrap(), None);
+        assert_eq!(mock.reads(), 1);
     }
 
     #[test]
@@ -1171,6 +1375,41 @@ mod tests {
     fn chunked_store_backend_label_delegates() {
         let store = ChunkedKeyringStore::new(MockKeyringStore::new());
         assert_eq!(store.backend_label(), "mock (in-memory)");
+    }
+
+    #[test]
+    fn security_tool_password_output_is_parsed() {
+        use super::security_tool_text::parse_password;
+        assert_eq!(
+            parse_password("password: \"{\"username\":\"AC1\"}\"\n").as_deref(),
+            Some("{\"username\":\"AC1\"}")
+        );
+        // Printable hex is a password, not an encoding of one.
+        assert_eq!(
+            parse_password("password: \"deadbeef\"\n").as_deref(),
+            Some("deadbeef")
+        );
+        assert_eq!(
+            parse_password("password: 0x68C3A90A  \"h\\303\\251\\012\"\n").as_deref(),
+            Some("h\u{e9}\n")
+        );
+        assert_eq!(parse_password("password: \n").as_deref(), Some(""));
+        assert_eq!(parse_password("keychain: \"login.keychain-db\"\n"), None);
+        assert_eq!(parse_password("password: 0xZZ\n"), None);
+    }
+
+    #[test]
+    fn security_tool_input_is_encoded() {
+        use super::security_tool_text::{encode_hex, quote};
+        assert_eq!(encode_hex("h\u{e9}\n".as_bytes()), "68c3a90a");
+        assert_eq!(quote("twilio").as_deref(), Some("'twilio'"));
+        assert_eq!(
+            quote("accountSid_authToken#prod").as_deref(),
+            Some("'accountSid_authToken#prod'")
+        );
+        assert_eq!(quote("it's"), None);
+        assert_eq!(quote("a\nb"), None);
+        assert_eq!(quote(""), None);
     }
 
     #[test]

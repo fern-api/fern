@@ -7,7 +7,7 @@ import (
     option "github.com/go-deterministic-ordering/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -19,8 +19,12 @@ func do() {
     request := map[string]string{
         "string": "string",
     }
-    client.Endpoints.Container.GetAndReturnMapPrimToPrim(
+    _, err := client.Endpoints.Container.GetAndReturnMapPrimToPrim(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

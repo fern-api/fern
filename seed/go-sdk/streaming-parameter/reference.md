@@ -17,7 +17,7 @@ request := &fern.GenerateRequest{
     Stream: false,
     NumEvents: 5,
 }
-client.Dummy.Generate(
+_, err := client.Dummy.Generate(
     context.TODO(),
     request,
 )

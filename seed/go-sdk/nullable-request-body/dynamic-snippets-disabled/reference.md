@@ -31,7 +31,7 @@ request := &fern.TestMethodNameTestGroupRequest{
     PathParam: "path_param",
     Body: &fern.PlainObject{},
 }
-client.TestGroup.TestMethodName(
+_, err := client.TestGroup.TestMethodName(
     context.TODO(),
     request,
 )

@@ -41,7 +41,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	    XTestEndpointHeader: "X-TEST-ENDPOINT-HEADER",
 //	    Body: "string",
 //	}
-//	client.ReqWithHeaders.GetWithCustomHeader(
+//	err := client.ReqWithHeaders.GetWithCustomHeader(
 //	    context.TODO(),
 //	    request,
 //	)

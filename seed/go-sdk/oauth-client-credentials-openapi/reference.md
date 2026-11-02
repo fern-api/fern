@@ -17,7 +17,7 @@ request := &fern.GetTokenIdentityRequest{
     Username: "username",
     Password: "password",
 }
-client.Identity.GetToken(
+_, err := client.Identity.GetToken(
     context.TODO(),
     request,
 )
@@ -69,7 +69,7 @@ client.Identity.GetToken(
 <dd>
 
 ```go
-client.Plants.List(
+_, err := client.Plants.List(
     context.TODO(),
 )
 ```
@@ -99,7 +99,7 @@ client.Plants.List(
 request := &fern.GetPlantsRequest{
     PlantID: "plantId",
 }
-client.Plants.Get(
+_, err := client.Plants.Get(
     context.TODO(),
     request,
 )

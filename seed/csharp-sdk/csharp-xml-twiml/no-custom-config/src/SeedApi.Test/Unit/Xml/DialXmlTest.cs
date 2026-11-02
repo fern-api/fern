@@ -10,7 +10,7 @@ public class DialXmlTest
     public void FromXml_ToXml_RoundTrips()
     {
         var xml =
-            "<tw:Dial xmlns:tw=\"https://www.twilio.com/twiml\" record=\"record-from-answer record-from-ringing\" statusCallbackEvent=\"statusCallbackEvent statusCallbackEvent-2\">text<Numbers><Number /></Numbers></tw:Dial>";
+            "<tw:Dial xmlns:tw=\"https://www.twilio.com/twiml\" record=\"record-from-answer record-from-ringing\" statusCallbackEvent=\"statusCallbackEvent statusCallbackEvent-2\">text<Numbers><Number></Number></Numbers></tw:Dial>";
         var parsed = Dial.FromXml(xml);
         Assert.That(
             parsed.Record,

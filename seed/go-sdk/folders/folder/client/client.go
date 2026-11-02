@@ -38,7 +38,7 @@ func NewClient(options *core.RequestOptions) *Client {
 
 // Example:
 //
-//	client.Folder.Foo(
+//	err := client.Folder.Foo(
 //	    context.TODO(),
 //	)
 func (c *Client) Foo(

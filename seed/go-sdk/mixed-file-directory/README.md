@@ -37,15 +37,19 @@ import (
     client "github.com/mixed-file-directory/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &fern.CreateOrganizationRequest{
         Name: "name",
     }
-    client.Organization.Create(
+    _, err := client.Organization.Create(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

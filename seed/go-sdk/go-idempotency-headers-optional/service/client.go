@@ -42,7 +42,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	request := &fern.CreatePaymentRequest{
 //	    Amount: 1,
 //	}
-//	client.Service.Create(
+//	_, err := client.Service.Create(
 //	    context.TODO(),
 //	    request,
 //	)

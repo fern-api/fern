@@ -16,7 +16,7 @@ request := &fern.InlinedChildRequest{
     Parent: "parent",
     Child: "child",
 }
-client.ExtendedInlineRequestBody(
+err := client.ExtendedInlineRequestBody(
     context.TODO(),
     request,
 )

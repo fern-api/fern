@@ -40,7 +40,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	request := &fern.AssetReportPdfGetRequest{
 //	    AssetReportToken: "asset_report_token",
 //	}
-//	client.AssetReport.GetPdf(
+//	_, err := client.AssetReport.GetPdf(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -65,7 +65,7 @@ func (c *Client) GetPdf(
 //	request := &fern.AssetReportPdfGetRequest{
 //	    AssetReportToken: "asset_report_token",
 //	}
-//	client.AssetReport.Get(
+//	_, err := client.AssetReport.Get(
 //	    context.TODO(),
 //	    request,
 //	)

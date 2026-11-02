@@ -1,3 +1,3 @@
 from importlib import metadata
 
-__version__ = metadata.version("fern_bytes-download")
+__version__ = metadata.version("fern-bytes-download")

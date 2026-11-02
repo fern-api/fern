@@ -44,7 +44,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 //	        "account_ids",
 //	    },
 //	}
-//	client.GetAccounts(
+//	_, err := client.GetAccounts(
 //	    context.TODO(),
 //	    request,
 //	)

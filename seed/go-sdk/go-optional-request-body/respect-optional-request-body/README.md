@@ -37,15 +37,19 @@ import (
     client "github.com/go-optional-request-body/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &fern.WaterPlantRequest{
         PlantID: "plant-id",
     }
-    client.WaterPlant(
+    _, err := client.WaterPlant(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

@@ -54,7 +54,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	        "xyz",
 //	    ),
 //	}
-//	client.Oauth.Authorize(
+//	_, err := client.Oauth.Authorize(
 //	    context.TODO(),
 //	    request,
 //	)

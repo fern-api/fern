@@ -1,3 +1,3 @@
 from importlib import metadata
 
-__version__ = metadata.version("fern_allof-inline")
+__version__ = metadata.version("fern-allof-inline")

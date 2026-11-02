@@ -36,11 +36,15 @@ import (
     client "github.com/openapi-subtitle/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
-    client.ListPlants(
+    _, err := client.ListPlants(
         context.TODO(),
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

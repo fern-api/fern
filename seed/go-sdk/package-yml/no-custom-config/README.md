@@ -37,17 +37,21 @@ import (
     client "github.com/package-yml/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &fern.EchoRequest{
         Name: "Hello world!",
         Size: 20,
     }
-    client.Echo(
+    _, err := client.Echo(
         context.TODO(),
         "id-ksfd9c1",
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

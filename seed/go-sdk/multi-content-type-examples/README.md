@@ -37,7 +37,7 @@ import (
     client "github.com/multi-content-type-examples/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &fern.ClientRequest{
         Client: &fern.Client{
@@ -45,10 +45,14 @@ func do() {
             Email: "contact@acme.com",
         },
     }
-    client.Clients.Create(
+    _, err := client.Clients.Create(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

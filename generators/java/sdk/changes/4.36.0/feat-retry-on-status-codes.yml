@@ -1,0 +1,7 @@
+- type: feat
+  summary: |
+    Add `retryOnStatusCodes(Set<Integer>)` to `ClientOptions.Builder` and the generated root client builders
+    (sync, async and multi-auth stages). It replaces the default set of HTTP status codes that trigger an automatic
+    retry (408, 429 and 5xx), so a consumer can retry only `429`, or `429` and `503`, and have other 5xx responses
+    returned as-is. The default is unchanged; `maxRetries`, the backoff settings and Retry-After handling are
+    unaffected.

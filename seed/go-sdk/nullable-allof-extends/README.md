@@ -37,13 +37,17 @@ import (
     client "github.com/nullable-allof-extends/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &fern.RootObject{}
-    client.CreateTest(
+    _, err := client.CreateTest(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

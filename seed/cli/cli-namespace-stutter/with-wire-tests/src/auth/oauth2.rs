@@ -521,9 +521,7 @@ impl OAuth2TokenProvider {
     fn keyring_field(&self, field: &str) -> Option<String> {
         let cli_name = self.cli_name.get()?;
         let account = crate::profiles::keyring_account(&self.scheme_name);
-        let raw = crate::auth::keyring_store::active_store()
-            .get(cli_name, &account)
-            .ok()??;
+        let raw = crate::auth::credential::read_keyring(cli_name, &account).ok()??;
         serde_json::from_str::<Value>(&raw)
             .ok()?
             .get(field)?

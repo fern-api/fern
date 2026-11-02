@@ -18,7 +18,7 @@ request := &upload.JustFileRequest{
         "",
     ),
 }
-client.Service.JustFile(
+err := client.Service.JustFile(
     context.TODO(),
     request,
 )
@@ -51,7 +51,7 @@ request := &upload.OptionalArgsRequest{
         "",
     ),
 }
-client.Service.OptionalArgs(
+_, err := client.Service.OptionalArgs(
     context.TODO(),
     request,
 )
@@ -87,7 +87,7 @@ request := &upload.WithRefBodyRequest{
         Foo: "bar",
     },
 }
-client.Service.WithRefBody(
+_, err := client.Service.WithRefBody(
     context.TODO(),
     request,
 )
@@ -115,7 +115,7 @@ client.Service.WithRefBody(
 <dd>
 
 ```go
-client.Service.Simple(
+err := client.Service.Simple(
     context.TODO(),
 )
 ```

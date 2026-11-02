@@ -36,7 +36,7 @@ func NewClient(options *core.RequestOptions) *Client {
 
 // Example:
 //
-//	client.Calls.Calls.CreateCall(
+//	_, err := client.Calls.Calls.CreateCall(
 //	    context.TODO(),
 //	)
 func (c *Client) CreateCall(

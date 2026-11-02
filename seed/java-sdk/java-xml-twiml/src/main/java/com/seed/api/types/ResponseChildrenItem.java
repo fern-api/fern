@@ -45,6 +45,8 @@ public final class ResponseChildrenItem implements XmlSerializable {
             return visitor.visit((Hangup) this.value);
         } else if (this.type == 4) {
             return visitor.visit((Redirect) this.value);
+        } else if (this.type == 5) {
+            return visitor.visit((Message) this.value);
         }
         throw new IllegalStateException("Failed to visit value. This should never happen.");
     }
@@ -89,6 +91,10 @@ public final class ResponseChildrenItem implements XmlSerializable {
         return new ResponseChildrenItem(value, 4);
     }
 
+    public static ResponseChildrenItem of(Message value) {
+        return new ResponseChildrenItem(value, 5);
+    }
+
     @Override
     public String toXml() {
         return ((XmlSerializable) this.value).toXml();
@@ -112,6 +118,8 @@ public final class ResponseChildrenItem implements XmlSerializable {
                 return of(Hangup.fromXml(element));
             case "Redirect":
                 return of(Redirect.fromXml(element));
+            case "Message":
+                return of(Message.fromXml(element));
             default:
                 throw new IllegalArgumentException("Unexpected element <" + name + "> in ResponseChildrenItem");
         }
@@ -127,6 +135,8 @@ public final class ResponseChildrenItem implements XmlSerializable {
         T visit(Hangup value);
 
         T visit(Redirect value);
+
+        T visit(Message value);
     }
 
     static final class Deserializer extends StdDeserializer<ResponseChildrenItem> {
@@ -157,6 +167,10 @@ public final class ResponseChildrenItem implements XmlSerializable {
             }
             try {
                 return of(ObjectMappers.JSON_MAPPER.convertValue(value, Hangup.class));
+            } catch (RuntimeException e) {
+            }
+            try {
+                return of(ObjectMappers.JSON_MAPPER.convertValue(value, Message.class));
             } catch (RuntimeException e) {
             }
             throw new JsonParseException(p, "Failed to deserialize");

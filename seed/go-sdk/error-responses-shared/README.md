@@ -36,11 +36,15 @@ import (
     client "github.com/error-responses-shared/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
-    client.Calls.Calls.CreateCall(
+    _, err := client.Calls.Calls.CreateCall(
         context.TODO(),
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

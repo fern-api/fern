@@ -7,7 +7,7 @@ import (
     option "github.com/basic-auth-pw-omitted/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -16,7 +16,11 @@ func do() {
             "<username>",
         ),
     )
-    client.BasicAuth.GetWithBasicAuth(
+    _, err := client.BasicAuth.GetWithBasicAuth(
         context.TODO(),
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

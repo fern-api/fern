@@ -37,16 +37,20 @@ import (
     client "github.com/alias-extends/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &fern.InlinedChildRequest{
         Parent: "parent",
         Child: "child",
     }
-    client.ExtendedInlineRequestBody(
+    err := client.ExtendedInlineRequestBody(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

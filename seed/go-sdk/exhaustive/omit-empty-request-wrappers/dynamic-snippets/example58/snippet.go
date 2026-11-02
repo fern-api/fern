@@ -7,7 +7,7 @@ import (
     option "github.com/exhaustive/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -16,7 +16,11 @@ func do() {
             "<token>",
         ),
     )
-    client.Endpoints.URLs.WithMixedCase(
+    _, err := client.Endpoints.URLs.WithMixedCase(
         context.TODO(),
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

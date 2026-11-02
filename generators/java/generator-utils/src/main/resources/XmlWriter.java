@@ -174,7 +174,7 @@ public final class XmlWriter {
         }
         xml.append('<').append(qualifiedName).append(attributes);
         if (content.isEmpty()) {
-            xml.append(" />");
+            xml.append("/>");
         } else {
             xml.append('>');
             for (String part : content) {

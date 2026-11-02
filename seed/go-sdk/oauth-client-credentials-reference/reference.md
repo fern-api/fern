@@ -17,7 +17,7 @@ request := &fern.GetTokenRequest{
     ClientID: "client_id",
     ClientSecret: "client_secret",
 }
-client.Auth.GetToken(
+_, err := client.Auth.GetToken(
     context.TODO(),
     request,
 )
@@ -61,7 +61,7 @@ client.Auth.GetToken(
 <dd>
 
 ```go
-client.Simple.GetSomething(
+err := client.Simple.GetSomething(
     context.TODO(),
 )
 ```

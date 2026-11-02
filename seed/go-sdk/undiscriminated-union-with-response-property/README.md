@@ -36,11 +36,15 @@ import (
     client "github.com/undiscriminated-union-with-response-property/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
-    client.GetUnion(
+    _, err := client.GetUnion(
         context.TODO(),
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

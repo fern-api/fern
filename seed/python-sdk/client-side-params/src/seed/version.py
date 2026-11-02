@@ -1,3 +1,3 @@
 from importlib import metadata
 
-__version__ = metadata.version("fern_client-side-params")
+__version__ = metadata.version("fern-client-side-params")

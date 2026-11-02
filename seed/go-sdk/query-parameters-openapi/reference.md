@@ -125,7 +125,7 @@ request := &fern.SearchRequest{
         },
     },
 }
-client.Search(
+_, err := client.Search(
     context.TODO(),
     request,
 )

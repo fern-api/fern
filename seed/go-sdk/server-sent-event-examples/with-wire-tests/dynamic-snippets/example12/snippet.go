@@ -8,7 +8,7 @@ import (
     option "github.com/fern-api/sse-examples-go/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -17,8 +17,12 @@ func do() {
     request := &sse.StreamEventsContextProtocolRequest{
         Query: "",
     }
-    client.Completions.StreamEventsContextProtocol(
+    _, err := client.Completions.StreamEventsContextProtocol(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

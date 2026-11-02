@@ -13,7 +13,7 @@
 
 ```go
 request := &fern.SearchRuleTypesRequest{}
-client.SearchRuleTypes(
+_, err := client.SearchRuleTypes(
     context.TODO(),
     request,
 )
@@ -60,7 +60,7 @@ request := &fern.RuleCreateRequest{
     Name: "name",
     ExecutionContext: fern.RuleCreateRequestExecutionContextProd,
 }
-client.CreateRule(
+_, err := client.CreateRule(
     context.TODO(),
     request,
 )
@@ -111,7 +111,7 @@ client.CreateRule(
 <dd>
 
 ```go
-client.ListUsers(
+_, err := client.ListUsers(
     context.TODO(),
 )
 ```
@@ -138,7 +138,7 @@ client.ListUsers(
 <dd>
 
 ```go
-client.GetEntity(
+_, err := client.GetEntity(
     context.TODO(),
 )
 ```
@@ -165,7 +165,7 @@ client.GetEntity(
 <dd>
 
 ```go
-client.GetOrganization(
+_, err := client.GetOrganization(
     context.TODO(),
 )
 ```
@@ -214,7 +214,7 @@ request := &fern.PlantPost{
     WateringFrequency: fern.PlantBaseWateringFrequencyDaily,
     SunExposure: fern.PlantPostSunExposureFull,
 }
-client.CreatePlant(
+_, err := client.CreatePlant(
     context.TODO(),
     request,
 )
@@ -308,7 +308,7 @@ request := &fern.TreeRecord{
     TreeName: "treeName",
     TreeSpecies: "treeSpecies",
 }
-client.CreateTree(
+_, err := client.CreateTree(
     context.TODO(),
     request,
 )

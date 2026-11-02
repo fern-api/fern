@@ -37,15 +37,19 @@ import (
     client "github.com/reserved-keywords/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &fern.TestRequest{
         For: "for",
     }
-    client.Package.Test(
+    err := client.Package.Test(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

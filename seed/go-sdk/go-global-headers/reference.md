@@ -27,7 +27,7 @@ GET request that sends the global headers
 <dd>
 
 ```go
-client.Service.Get(
+_, err := client.Service.Get(
     context.TODO(),
 )
 ```

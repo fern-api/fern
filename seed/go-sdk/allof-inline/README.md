@@ -37,16 +37,20 @@ import (
     client "github.com/allof-inline/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &fern.RuleCreateRequest{
         Name: "name",
         ExecutionContext: fern.RuleCreateRequestExecutionContextProd,
     }
-    client.CreateRule(
+    _, err := client.CreateRule(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

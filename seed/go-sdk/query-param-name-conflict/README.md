@@ -37,13 +37,17 @@ import (
     client "github.com/query-param-name-conflict/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &fern.BulkUpdateTasksRequest{}
-    client.BulkUpdateTasks(
+    _, err := client.BulkUpdateTasks(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

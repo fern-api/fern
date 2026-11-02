@@ -9,7 +9,7 @@ import (
     option "github.com/exhaustive/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -26,8 +26,12 @@ func do() {
             1,
         ),
     }
-    client.Endpoints.Pagination.ListItems(
+    _, err := client.Endpoints.Pagination.ListItems(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

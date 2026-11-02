@@ -3,6 +3,7 @@ import { spawnSync } from "node:child_process";
 import type { ReadStream, WriteStream } from "node:tty";
 import { fromBinary, toBinary } from "@bufbuild/protobuf";
 import { CodeGeneratorRequestSchema, CodeGeneratorResponseSchema } from "@bufbuild/protobuf/wkt";
+import { getToken } from "@fern-api/auth";
 import { getOrCreateFernRunId } from "@fern-api/cli-telemetry";
 import type { OutputFormat } from "@fern-api/cli-v2";
 import {
@@ -34,6 +35,7 @@ import {
 import { AbsoluteFilePath, cwd, doesPathExist, isURL, resolve } from "@fern-api/fs-utils";
 import { formatBootstrapSummary, replayForget, replayInit, replayResolve, replayStatus } from "@fern-api/generator-cli";
 import {
+    getDefaultOrganizationName,
     initializeAPI,
     initializeDocs,
     initializeWithMintlify,
@@ -81,7 +83,6 @@ import { uploadDocsTheme } from "./commands/docs-theme/uploadDocsTheme.js";
 import { downgrade } from "./commands/downgrade/downgrade.js";
 import { generateOpenAPIForWorkspaces } from "./commands/export/generateOpenAPIForWorkspaces.js";
 import { formatWorkspaces } from "./commands/format/formatWorkspaces.js";
-import { GUEST_DOCS_REQUIRE_PREVIEW_MESSAGE } from "./commands/generate/assertGuestCanGenerate.js";
 import { parseGeneratorArg } from "./commands/generate/filterGenerators.js";
 import { GenerationMode, generateAPIWorkspaces } from "./commands/generate/generateAPIWorkspaces.js";
 import { generateDocsWorkspace } from "./commands/generate/generateDocsWorkspace.js";
@@ -435,6 +436,16 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     boolean: true,
                     description: "Initialize with a sample Fern Definition instead of an OpenAPI spec"
                 })
+                .option("grpc", {
+                    boolean: true,
+                    description:
+                        "Initialize with a sample gRPC (.proto) API and a C# SDK, the only language with native gRPC output"
+                })
+                .option("proto", {
+                    type: "string",
+                    description:
+                        "Filepath to an existing .proto file, or a directory of them, to initialize a gRPC API with a C# SDK"
+                })
                 .option("mintlify", {
                     type: "string",
                     description: "Migrate docs from Mintlify provided a path to a mint.json file"
@@ -448,9 +459,22 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 const projectConfig = await getOrganization(cliContext);
                 if (projectConfig != null) {
                     argv.organization = projectConfig;
-                } else {
-                    argv.organization = await cliContext.getInput({ message: "Please enter your organization" });
+                } else if (cliContext.isInteractive) {
+                    argv.organization = await cliContext.getInput({
+                        message: "Please enter your organization",
+                        nonInteractiveError:
+                            "--organization is required in non-interactive mode (stdin is not a TTY or CI is set). Example: fern init --organization acme"
+                    });
+                } else if ((await getToken()) == null) {
+                    // Nothing to name the organization after (no prompt, no login), so an agent or script without an
+                    // account can still get a project it can publish with `fern generate --guest`.
+                    argv.organization = getDefaultOrganizationName(cwd());
+                    cliContext.logger.info(
+                        `No --organization given and no Fern login found; using ${chalk.bold(argv.organization)} from the directory name. Pass --organization to choose another.`
+                    );
                 }
+                // Otherwise `createFernDirectoryAndWorkspace` (@fern-api/init) reads the organization from the login or
+                // FERN_TOKEN.
             }
             if (argv.api != null && argv.docs != null) {
                 return cliContext.failWithoutThrowing(
@@ -467,6 +491,25 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
             } else if (argv.openapi != null && argv["fern-definition"] === true) {
                 return cliContext.failWithoutThrowing(
                     "Cannot specify both --openapi and --fern-definition. Please choose one.",
+                    undefined,
+                    { code: CliError.Code.ConfigError }
+                );
+            } else if (argv.grpc === true && argv.proto != null) {
+                return cliContext.failWithoutThrowing(
+                    "Cannot specify both --grpc and --proto. Use --grpc for a sample API, or --proto to use your own.",
+                    undefined,
+                    { code: CliError.Code.ConfigError }
+                );
+            } else if (
+                (argv.grpc === true || argv.proto != null) &&
+                (argv.openapi != null ||
+                    argv["fern-definition"] === true ||
+                    argv.docs != null ||
+                    argv.mintlify != null ||
+                    argv.readme != null)
+            ) {
+                return cliContext.failWithoutThrowing(
+                    "Cannot combine --grpc or --proto with --openapi, --fern-definition, --docs, --mintlify or --readme. Please choose one.",
                     undefined,
                     { code: CliError.Code.ConfigError }
                 );
@@ -500,9 +543,27 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 });
             } else {
                 const useFernDefinition = argv["fern-definition"] === true;
-                const useSdkConfig = isSdkConfigInitEnabled() && !useFernDefinition;
+                const useGrpc = argv.grpc === true || argv.proto != null;
+                // gRPC init only scaffolds generators.yml, so it always uses the generators.yml flow.
+                const useSdkConfig = isSdkConfigInitEnabled() && !useFernDefinition && !useGrpc;
                 let absoluteOpenApiPath: AbsoluteFilePath | undefined = undefined;
                 let openApiUrl: string | undefined = undefined;
+                let absoluteProtoPath: AbsoluteFilePath | undefined = undefined;
+                if (argv.proto != null) {
+                    if (isURL(argv.proto)) {
+                        cliContext.failAndThrow(
+                            "--proto does not support URLs. Download the .proto files and pass their path.",
+                            undefined,
+                            { code: CliError.Code.ConfigError }
+                        );
+                    }
+                    absoluteProtoPath = AbsoluteFilePath.of(resolve(cwd(), argv.proto));
+                    if (!(await doesPathExist(absoluteProtoPath))) {
+                        cliContext.failAndThrow(`${absoluteProtoPath} does not exist`, undefined, {
+                            code: CliError.Code.ConfigError
+                        });
+                    }
+                }
                 if (argv.openapi != null) {
                     if (isURL(argv.openapi)) {
                         openApiUrl = argv.openapi;
@@ -535,7 +596,9 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                         openApiUrl,
                         useFernDefinition,
                         useSdkConfig,
-                        includeDocs: argv.api == null
+                        includeDocs: argv.api == null && argv.grpc !== true && argv.proto == null,
+                        useGrpc: argv.grpc === true,
+                        protoPath: absoluteProtoPath
                     });
                 });
             }
@@ -1036,11 +1099,6 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     undefined,
                     { code: CliError.Code.ConfigError }
                 );
-            }
-            if (argv.guest && argv.docs != null && !argv.preview) {
-                return cliContext.failWithoutThrowing(GUEST_DOCS_REQUIRE_PREVIEW_MESSAGE, undefined, {
-                    code: CliError.Code.ConfigError
-                });
             }
             if (argv.fernignore != null && (argv.local || argv.runner != null)) {
                 return cliContext.failWithoutThrowing(

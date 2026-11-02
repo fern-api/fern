@@ -8,7 +8,7 @@ import (
     option "github.com/literal/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -17,8 +17,12 @@ func do() {
     request := &fern.SendLiteralsInHeadersRequest{
         Query: "What is the weather today",
     }
-    client.Headers.Send(
+    _, err := client.Headers.Send(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

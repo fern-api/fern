@@ -2,16 +2,22 @@ import { readFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { assertNever, errorMessageOrString, isRecord } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd } from "@fern-api/fs-utils";
-import type {
-    FernSdkConfigV1Payload,
-    FernSdkGenApiPackageConfig,
-    FernSdkGenApiRequestedOutput
+import {
+    type FernSdkConfigV1Payload,
+    type FernSdkGenApiPackageConfig,
+    type FernSdkGenApiRequestedOutput,
+    toSdkGenApiTarget
 } from "@fern-api/remote-workspace-runner";
 import {
     SDK_CONFIG_DIRECT_RUBYGEMS_PUBLISHING_UNSUPPORTED_MESSAGE,
     validateFernSdkGenApiPublishTargets
 } from "@fern-api/remote-workspace-runner/direct-publish-credentials";
-import { parseSdkConfigV1, type SdkConfigV1, validateSdkConfigV1 } from "@postman/sdk-config/sdk-config/v1";
+import {
+    parseSdkConfigV1,
+    type SdkConfigV1,
+    type SdkConfigV1McpOutputConfig,
+    validateSdkConfigV1
+} from "@postman/sdk-config/sdk-config/v1";
 import YAML from "yaml";
 
 import { getDuplicateTargetLanguageIndexes } from "./getDuplicateTargetLanguageIndexes.js";
@@ -96,7 +102,9 @@ export async function loadSdkConfigV1(
                 const output = target.output ?? parsed.output;
                 const duplicateTargetLanguageIndex = duplicateTargetLanguageIndexes[index];
                 return {
-                    body: Buffer.from(`${JSON.stringify({ ...document, targets: [documentTarget] })}\n`),
+                    body: Buffer.from(
+                        `${JSON.stringify({ ...document, targets: [toSdkGenApiTarget(documentTarget)] })}\n`
+                    ),
                     language: target.language,
                     ...(target.generatorVersion != null ? { generatorVersion: target.generatorVersion } : {}),
                     ...(target.sdkName != null ? { sdkName: target.sdkName } : {}),
@@ -171,7 +179,12 @@ export async function loadSdkConfigV1(
 export function assertNoSdkConfigDirectRubyGemsPublishing({ absolutePath, config }: LoadedSdkConfigV1): void {
     config.targets.forEach((target, index) => {
         const output = target.output ?? config.output;
-        if (output != null && output.delivery !== "github" && output.publish?.registry === "rubygems") {
+        if (
+            output != null &&
+            output.delivery !== "github" &&
+            output.delivery !== "hosted" &&
+            output.publish?.registry === "rubygems"
+        ) {
             throw new Error(
                 `SDK Config v1 at ${absolutePath} failed validation: target ${index} (${target.language}): ${SDK_CONFIG_DIRECT_RUBYGEMS_PUBLISHING_UNSUPPORTED_MESSAGE}`
             );
@@ -269,11 +282,15 @@ function publicationValidationMetadata(requestedOutput: FernSdkGenApiRequestedOu
 }
 
 function toRequestedOutput(
-    output: SdkConfigV1["output"],
+    output: SdkConfigV1["output"] | SdkConfigV1McpOutputConfig,
     isPreview: boolean,
     apiKeySecretName: string | undefined
 ): FernSdkGenApiRequestedOutput {
     if (isPreview) {
+        return { type: "download" };
+    }
+    // A hosted MCP server is deployed by the CLI from a download, so sdk-gen-api builds only the download.
+    if (output?.delivery === "hosted") {
         return { type: "download" };
     }
     if (output == null || output.delivery === "files" || output.delivery === "zip") {

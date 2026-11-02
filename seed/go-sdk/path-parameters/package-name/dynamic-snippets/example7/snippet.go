@@ -8,7 +8,7 @@ import (
     option "github.com/fern-api/path-parameters-go/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -19,8 +19,12 @@ func do() {
         UserID: "user_id",
         Version: 1,
     }
-    client.User.GetUserMetadata(
+    _, err := client.User.GetUserMetadata(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

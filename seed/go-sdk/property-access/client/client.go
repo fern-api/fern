@@ -49,7 +49,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 //	        Ssn: "ssn",
 //	    },
 //	}
-//	client.CreateUser(
+//	_, err := client.CreateUser(
 //	    context.TODO(),
 //	    request,
 //	)

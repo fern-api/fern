@@ -1,9 +1,9 @@
 [project]
-name = "fern_streaming-parameter"
+name = "fern-streaming-parameter"
 dynamic = ["version"]
 
 [tool.poetry]
-name = "fern_streaming-parameter"
+name = "fern-streaming-parameter"
 version = "0.0.1"
 description = ""
 readme = "README.md"

@@ -38,7 +38,7 @@ import (
     option "github.com/inferred-auth-implicit-reference/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithClientID(
             "client_id",
@@ -54,10 +54,14 @@ func do() {
             "scope",
         ),
     }
-    client.Auth.GetTokenWithClientCredentials(
+    _, err := client.Auth.GetTokenWithClientCredentials(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

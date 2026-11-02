@@ -36,7 +36,7 @@ func NewClient(options *core.RequestOptions) *Client {
 
 // Example:
 //
-//	client.Bigunion.Get(
+//	_, err := client.Bigunion.Get(
 //	    context.TODO(),
 //	    "id",
 //	)
@@ -72,7 +72,7 @@ func (c *Client) Get(
 //	        ),
 //	    ),
 //	}
-//	client.Bigunion.Update(
+//	_, err := client.Bigunion.Update(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -124,7 +124,7 @@ func (c *Client) Update(
 //	        ),
 //	    },
 //	}
-//	client.Bigunion.UpdateMany(
+//	_, err := client.Bigunion.UpdateMany(
 //	    context.TODO(),
 //	    request,
 //	)

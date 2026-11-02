@@ -8,7 +8,7 @@ import (
     types "github.com/go-deterministic-ordering/fern/types"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -20,9 +20,13 @@ func do() {
     request := &types.ObjectWithRequiredField{
         FieldString: "string",
     }
-    client.Endpoints.HTTPMethods.TestPut(
+    _, err := client.Endpoints.HTTPMethods.TestPut(
         context.TODO(),
         "id",
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

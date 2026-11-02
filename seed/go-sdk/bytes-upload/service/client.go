@@ -37,7 +37,17 @@ func NewClient(options *core.RequestOptions) *Client {
 
 // Example:
 //
-//	client.Service.Upload(
+//	request := bytes.NewReader(
+//	    []byte(""),
+//	)
+//	err := client.Service.Upload(
+//	    context.TODO(),
+//	    request,
+//	)
+//	if err != nil {
+//	    return err
+//	}
+//	err := client.Service.Upload(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -63,7 +73,7 @@ func (c *Client) Upload(
 //	    Model: "nova-2",
 //	    Body: []byte(""),
 //	}
-//	client.Service.UploadWithQueryParams(
+//	err := client.Service.UploadWithQueryParams(
 //	    context.TODO(),
 //	    request,
 //	)

@@ -36,7 +36,7 @@ import (
     client "github.com/schemaless-request-body-examples/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := map[string]any{
         "care": map[string]any{
@@ -51,10 +51,14 @@ func do() {
             "tropical",
         },
     }
-    client.CreatePlant(
+    _, err := client.CreatePlant(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

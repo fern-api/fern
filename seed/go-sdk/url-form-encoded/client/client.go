@@ -42,7 +42,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 //	    Email: "john@example.com",
 //	    Content: `{"key":"value"}`,
 //	}
-//	client.SubmitFormData(
+//	_, err := client.SubmitFormData(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -68,7 +68,7 @@ func (c *Client) SubmitFormData(
 //	    ClientID: "client_id",
 //	    ClientSecret: "client_secret",
 //	}
-//	client.GetToken(
+//	_, err := client.GetToken(
 //	    context.TODO(),
 //	    request,
 //	)

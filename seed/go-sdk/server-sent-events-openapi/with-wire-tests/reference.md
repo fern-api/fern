@@ -27,7 +27,7 @@ Uses discriminator with mapping, x-fern-discriminator-context set to protocol. B
 
 ```go
 request := &fern.StreamRequest{}
-client.StreamProtocolNoCollision(
+_, err := client.StreamProtocolNoCollision(
     context.TODO(),
     request,
 )
@@ -85,7 +85,7 @@ Same as endpoint 1, but the object data payload contains its own "event" propert
 
 ```go
 request := &fern.StreamRequest{}
-client.StreamProtocolCollision(
+_, err := client.StreamProtocolCollision(
     context.TODO(),
     request,
 )
@@ -143,7 +143,7 @@ x-fern-discriminator-context is explicitly set to "data" (the default value). Ea
 
 ```go
 request := &fern.StreamRequest{}
-client.StreamDataContext(
+_, err := client.StreamDataContext(
     context.TODO(),
     request,
 )
@@ -201,7 +201,7 @@ The x-fern-discriminator-context extension is omitted entirely. Tests whether Fe
 
 ```go
 request := &fern.StreamRequest{}
-client.StreamNoContext(
+_, err := client.StreamNoContext(
     context.TODO(),
     request,
 )
@@ -259,7 +259,7 @@ Mismatched combination: context=protocol with the flat allOf schema pattern that
 
 ```go
 request := &fern.StreamRequest{}
-client.StreamProtocolWithFlatSchema(
+_, err := client.StreamProtocolWithFlatSchema(
     context.TODO(),
     request,
 )
@@ -317,7 +317,7 @@ context=protocol where some variants use the envelope+data pattern and others us
 
 ```go
 request := &fern.StreamRequest{}
-client.StreamProtocolMixedSchema(
+_, err := client.StreamProtocolMixedSchema(
     context.TODO(),
     request,
 )
@@ -375,7 +375,7 @@ Mismatched combination: context=data with the envelope+data schema pattern that 
 
 ```go
 request := &fern.StreamRequest{}
-client.StreamDataContextWithEnvelopeSchema(
+_, err := client.StreamDataContextWithEnvelopeSchema(
     context.TODO(),
     request,
 )
@@ -433,7 +433,7 @@ Follows the pattern from the OAS 3.2 specification's own SSE example. The itemSc
 
 ```go
 request := &fern.StreamRequest{}
-client.StreamOasSpecNative(
+_, err := client.StreamOasSpecNative(
     context.TODO(),
     request,
 )
@@ -493,7 +493,7 @@ Uses x-fern-streaming extension with stream-condition to split into streaming an
 request := &fern.StreamXFernStreamingConditionStreamRequest{
     Query: "query",
 }
-client.StreamXFernStreamingConditionStream(
+_, err := client.StreamXFernStreamingConditionStream(
     context.TODO(),
     request,
 )
@@ -561,7 +561,7 @@ Uses x-fern-streaming extension with stream-condition to split into streaming an
 request := &fern.StreamXFernStreamingConditionRequest{
     Query: "query",
 }
-client.StreamXFernStreamingCondition(
+_, err := client.StreamXFernStreamingCondition(
     context.TODO(),
     request,
 )
@@ -630,7 +630,7 @@ request := &fern.StreamXFernStreamingSharedSchemaStreamRequest{
     Prompt: "prompt",
     Model: "model",
 }
-client.StreamXFernStreamingSharedSchemaStream(
+_, err := client.StreamXFernStreamingSharedSchemaStream(
     context.TODO(),
     request,
 )
@@ -707,7 +707,7 @@ request := &fern.StreamXFernStreamingSharedSchemaRequest{
     Prompt: "prompt",
     Model: "model",
 }
-client.StreamXFernStreamingSharedSchema(
+_, err := client.StreamXFernStreamingSharedSchema(
     context.TODO(),
     request,
 )
@@ -784,7 +784,7 @@ request := &fern.SharedCompletionRequest{
     Prompt: "prompt",
     Model: "model",
 }
-client.ValidateCompletion(
+_, err := client.ValidateCompletion(
     context.TODO(),
     request,
 )
@@ -866,7 +866,7 @@ request := &fern.StreamXFernStreamingUnionStreamRequest{
         Message: "message",
     },
 }
-client.StreamXFernStreamingUnionStream(
+_, err := client.StreamXFernStreamingUnionStream(
     context.TODO(),
     request,
 )
@@ -932,7 +932,7 @@ request := &fern.StreamXFernStreamingUnionRequest{
         Message: "message",
     },
 }
-client.StreamXFernStreamingUnion(
+_, err := client.StreamXFernStreamingUnion(
     context.TODO(),
     request,
 )
@@ -992,7 +992,7 @@ References UnionStreamRequestBase directly, ensuring the base schema cannot be e
 request := &fern.UnionStreamRequestBase{
     Prompt: "prompt",
 }
-client.ValidateUnionRequest(
+_, err := client.ValidateUnionRequest(
     context.TODO(),
     request,
 )
@@ -1052,7 +1052,7 @@ Uses x-fern-streaming with stream-condition where the stream field is nullable (
 request := &fern.StreamXFernStreamingNullableConditionStreamRequest{
     Query: "query",
 }
-client.StreamXFernStreamingNullableConditionStream(
+_, err := client.StreamXFernStreamingNullableConditionStream(
     context.TODO(),
     request,
 )
@@ -1120,7 +1120,7 @@ Uses x-fern-streaming with stream-condition where the stream field is nullable (
 request := &fern.StreamXFernStreamingNullableConditionRequest{
     Query: "query",
 }
-client.StreamXFernStreamingNullableCondition(
+_, err := client.StreamXFernStreamingNullableCondition(
     context.TODO(),
     request,
 )
@@ -1186,7 +1186,7 @@ Uses x-fern-streaming with format: sse but no stream-condition. This represents 
 
 ```go
 request := &fern.StreamRequest{}
-client.StreamXFernStreamingSseOnly(
+_, err := client.StreamXFernStreamingSseOnly(
     context.TODO(),
     request,
 )

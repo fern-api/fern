@@ -1,3 +1,3 @@
 from importlib import metadata
 
-__version__ = metadata.version("fern_nullable-optional")
+__version__ = metadata.version("fern-nullable-optional")

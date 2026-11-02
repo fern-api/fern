@@ -8,7 +8,7 @@ import (
     option "github.com/path-parameters/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -23,10 +23,14 @@ func do() {
             },
         },
     }
-    client.User.UpdateUser(
+    _, err := client.User.UpdateUser(
         context.TODO(),
         "tenant_id",
         "user_id",
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

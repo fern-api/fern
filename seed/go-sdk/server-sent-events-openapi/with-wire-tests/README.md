@@ -37,13 +37,17 @@ import (
     client "github.com/server-sent-events-openapi/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &fern.StreamRequest{}
-    client.StreamProtocolNoCollision(
+    _, err := client.StreamProtocolNoCollision(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

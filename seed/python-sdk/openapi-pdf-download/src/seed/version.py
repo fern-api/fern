@@ -1,3 +1,3 @@
 from importlib import metadata
 
-__version__ = metadata.version("fern_openapi-pdf-download")
+__version__ = metadata.version("fern-openapi-pdf-download")

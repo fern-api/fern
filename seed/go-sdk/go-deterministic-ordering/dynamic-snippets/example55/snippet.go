@@ -8,7 +8,7 @@ import (
     types "github.com/go-deterministic-ordering/fern/types"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -23,8 +23,12 @@ func do() {
             LikesToWoof: true,
         },
     }
-    client.Endpoints.Union.GetAndReturnUnion(
+    _, err := client.Endpoints.Union.GetAndReturnUnion(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

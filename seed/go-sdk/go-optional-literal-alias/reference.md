@@ -18,7 +18,7 @@ request := &fern.SearchRequest{
     ),
     Query: "test query",
 }
-client.Search(
+_, err := client.Search(
     context.TODO(),
     request,
 )

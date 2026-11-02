@@ -39,7 +39,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	request := &fern.SendLiteralsInHeadersRequest{
 //	    Query: "What is the weather today",
 //	}
-//	client.Headers.Send(
+//	_, err := client.Headers.Send(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -61,7 +61,7 @@ func (c *Client) Send(
 
 // Example:
 //
-//	client.Headers.SendLiteralsOnly(
+//	_, err := client.Headers.SendLiteralsOnly(
 //	    context.TODO(),
 //	)
 func (c *Client) SendLiteralsOnly(

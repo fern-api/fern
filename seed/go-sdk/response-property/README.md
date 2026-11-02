@@ -36,13 +36,17 @@ import (
     client "github.com/response-property/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := "string"
-    client.Service.GetMovie(
+    _, err := client.Service.GetMovie(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

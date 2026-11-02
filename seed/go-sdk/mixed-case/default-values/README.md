@@ -36,12 +36,16 @@ import (
     client "github.com/mixed-case/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
-    client.Service.GetResource(
+    _, err := client.Service.GetResource(
         context.TODO(),
         "rsc-xyz",
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

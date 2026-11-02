@@ -36,7 +36,15 @@ func NewClient(options *core.RequestOptions) *Client {
 
 // Example:
 //
-//	client.Service.GetMovie(
+//	request := "string"
+//	_, err := client.Service.GetMovie(
+//	    context.TODO(),
+//	    request,
+//	)
+//	if err != nil {
+//	    return err
+//	}
+//	_, err := client.Service.GetMovie(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -58,7 +66,15 @@ func (c *Client) GetMovie(
 
 // Example:
 //
-//	client.Service.GetMovieDocs(
+//	request := "string"
+//	_, err := client.Service.GetMovieDocs(
+//	    context.TODO(),
+//	    request,
+//	)
+//	if err != nil {
+//	    return err
+//	}
+//	_, err := client.Service.GetMovieDocs(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -80,7 +96,15 @@ func (c *Client) GetMovieDocs(
 
 // Example:
 //
-//	client.Service.GetMovieName(
+//	request := "string"
+//	_, err := client.Service.GetMovieName(
+//	    context.TODO(),
+//	    request,
+//	)
+//	if err != nil {
+//	    return err
+//	}
+//	_, err := client.Service.GetMovieName(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -102,7 +126,15 @@ func (c *Client) GetMovieName(
 
 // Example:
 //
-//	client.Service.GetMovieMetadata(
+//	request := "string"
+//	_, err := client.Service.GetMovieMetadata(
+//	    context.TODO(),
+//	    request,
+//	)
+//	if err != nil {
+//	    return err
+//	}
+//	_, err := client.Service.GetMovieMetadata(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -124,7 +156,15 @@ func (c *Client) GetMovieMetadata(
 
 // Example:
 //
-//	client.Service.GetOptionalMovie(
+//	request := "string"
+//	_, err := client.Service.GetOptionalMovie(
+//	    context.TODO(),
+//	    request,
+//	)
+//	if err != nil {
+//	    return err
+//	}
+//	_, err := client.Service.GetOptionalMovie(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -146,7 +186,15 @@ func (c *Client) GetOptionalMovie(
 
 // Example:
 //
-//	client.Service.GetOptionalMovieDocs(
+//	request := "string"
+//	_, err := client.Service.GetOptionalMovieDocs(
+//	    context.TODO(),
+//	    request,
+//	)
+//	if err != nil {
+//	    return err
+//	}
+//	_, err := client.Service.GetOptionalMovieDocs(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -168,7 +216,15 @@ func (c *Client) GetOptionalMovieDocs(
 
 // Example:
 //
-//	client.Service.GetOptionalMovieName(
+//	request := "string"
+//	_, err := client.Service.GetOptionalMovieName(
+//	    context.TODO(),
+//	    request,
+//	)
+//	if err != nil {
+//	    return err
+//	}
+//	_, err := client.Service.GetOptionalMovieName(
 //	    context.TODO(),
 //	    request,
 //	)

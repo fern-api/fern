@@ -44,7 +44,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	        "starting_after",
 //	    ),
 //	}
-//	client.Users.ListWithCustomPager(
+//	_, err := client.Users.ListWithCustomPager(
 //	    context.TODO(),
 //	    request,
 //	)

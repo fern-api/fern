@@ -150,7 +150,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 //	        },
 //	    },
 //	}
-//	client.Search(
+//	_, err := client.Search(
 //	    context.TODO(),
 //	    request,
 //	)

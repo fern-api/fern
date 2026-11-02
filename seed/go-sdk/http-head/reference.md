@@ -13,7 +13,7 @@
 <dd>
 
 ```go
-client.User.Head(
+err := client.User.Head(
     context.TODO(),
 )
 ```
@@ -43,7 +43,7 @@ client.User.Head(
 request := &fern.ListUsersRequest{
     Limit: 1,
 }
-client.User.List(
+_, err := client.User.List(
     context.TODO(),
     request,
 )

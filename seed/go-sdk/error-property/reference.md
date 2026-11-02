@@ -27,7 +27,7 @@ GET request that always throws an error
 <dd>
 
 ```go
-client.PropertyBasedError.ThrowError(
+_, err := client.PropertyBasedError.ThrowError(
     context.TODO(),
 )
 ```

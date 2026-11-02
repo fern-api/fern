@@ -7,7 +7,7 @@ import (
     option "github.com/trace/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -16,7 +16,11 @@ func do() {
             "<token>",
         ),
     )
-    client.V2.V3.Problem.GetProblems(
+    _, err := client.V2.V3.Problem.GetProblems(
         context.TODO(),
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

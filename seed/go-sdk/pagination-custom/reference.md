@@ -21,7 +21,7 @@ request := &fern.ListWithCustomPagerRequest{
         "starting_after",
     ),
 }
-client.Users.ListWithCustomPager(
+_, err := client.Users.ListWithCustomPager(
     context.TODO(),
     request,
 )

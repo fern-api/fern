@@ -8,7 +8,7 @@ import (
     types "github.com/exhaustive/fern/types"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -18,8 +18,12 @@ func do() {
         ),
     )
     request := types.WeatherReportSunny.Ptr()
-    client.Endpoints.Enum.GetAndReturnEnum(
+    _, err := client.Endpoints.Enum.GetAndReturnEnum(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

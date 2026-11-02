@@ -38,7 +38,7 @@ import (
     client "github.com/go-pagination-offset-item-index/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &fern.ListPlantsWithBodyOffsetRequest{
         Offset: fern.Int(
@@ -48,10 +48,14 @@ func do() {
             1,
         ),
     }
-    client.Plants.ListWithBodyOffset(
+    _, err := client.Plants.ListWithBodyOffset(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

@@ -8,7 +8,7 @@ import (
     option "github.com/pagination/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -22,8 +22,12 @@ func do() {
             1,
         ),
     }
-    client.Users.ListWithOptionalData(
+    _, err := client.Users.ListWithOptionalData(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

@@ -1,9 +1,9 @@
 [project]
-name = "fern_circular-references"
+name = "fern-circular-references"
 dynamic = ["version"]
 
 [tool.poetry]
-name = "fern_circular-references"
+name = "fern-circular-references"
 version = "0.0.1"
 description = ""
 readme = "README.md"

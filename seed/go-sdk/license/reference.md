@@ -12,7 +12,7 @@
 <dd>
 
 ```go
-client.Get(
+err := client.Get(
     context.TODO(),
 )
 ```

@@ -8,7 +8,7 @@ import (
     option "github.com/server-sent-events-openapi/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -20,8 +20,12 @@ func do() {
         ),
         Prompt: "prompt",
     }
-    client.ValidateUnionRequest(
+    _, err := client.ValidateUnionRequest(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

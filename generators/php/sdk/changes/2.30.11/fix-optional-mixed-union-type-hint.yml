@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Optional parameters whose type is a union containing `mixed` are now type-hinted as `mixed` instead of `mixed|null`. PHP rejects `mixed|null` with a fatal error ("Type mixed can only be used as a standalone type"), so the generated client failed to load.
+  type: fix

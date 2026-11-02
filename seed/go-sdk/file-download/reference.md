@@ -13,7 +13,7 @@
 <dd>
 
 ```go
-client.Service.Simple(
+err := client.Service.Simple(
     context.TODO(),
 )
 ```
@@ -40,7 +40,7 @@ client.Service.Simple(
 <dd>
 
 ```go
-client.Service.DownloadFile(
+_, err := client.Service.DownloadFile(
     context.TODO(),
 )
 ```

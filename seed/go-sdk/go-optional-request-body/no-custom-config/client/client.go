@@ -42,7 +42,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 //	request := &fern.WaterPlantRequest{
 //	    PlantID: "plant-id",
 //	}
-//	client.WaterPlant(
+//	_, err := client.WaterPlant(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -66,7 +66,7 @@ func (c *Client) WaterPlant(
 //
 // Example:
 //
-//	client.WaterAllPlants(
+//	_, err := client.WaterAllPlants(
 //	    context.TODO(),
 //	    nil,
 //	)
@@ -98,7 +98,7 @@ func (c *Client) WaterAllPlants(
 //	        ),
 //	    },
 //	}
-//	client.PrunePlant(
+//	_, err := client.PrunePlant(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -125,7 +125,7 @@ func (c *Client) PrunePlant(
 //	request := &fern.MistPlantRequest{
 //	    PlantID: "plant-id",
 //	}
-//	client.MistPlant(
+//	_, err := client.MistPlant(
 //	    context.TODO(),
 //	    request,
 //	)

@@ -9,7 +9,7 @@ import (
     option "github.com/trace/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -38,8 +38,12 @@ func do() {
         },
         MethodName: "methodName",
     }
-    client.Problem.GetDefaultStarterFiles(
+    _, err := client.Problem.GetDefaultStarterFiles(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

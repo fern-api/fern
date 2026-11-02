@@ -95,7 +95,7 @@ class TestDefaultClientsWithoutAiohttp(unittest.TestCase):
 
             with self.assertRaises(RuntimeError) as ctx:
                 seed._default_clients.DefaultAioHttpClient()
-            self.assertIn("pip install fern_openapi-path-param-body-collision[aiohttp]", str(ctx.exception))
+            self.assertIn("pip install fern-openapi-path-param-body-collision[aiohttp]", str(ctx.exception))
 
         importlib.reload(seed._default_clients)
 

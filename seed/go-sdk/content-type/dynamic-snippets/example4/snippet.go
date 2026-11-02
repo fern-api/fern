@@ -8,7 +8,7 @@ import (
     option "github.com/content-type/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -22,9 +22,13 @@ func do() {
             1,
         ),
     }
-    client.Service.RegularPatch(
+    err := client.Service.RegularPatch(
         context.TODO(),
         "id",
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

@@ -13,7 +13,7 @@
 <dd>
 
 ```go
-client.Dummy.GetDummy(
+_, err := client.Dummy.GetDummy(
     context.TODO(),
 )
 ```

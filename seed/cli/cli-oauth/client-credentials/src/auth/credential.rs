@@ -217,16 +217,14 @@ impl AuthCredentialSource {
             AuthCredentialSource::Closure(f, _) => {
                 f().filter(|v| !v.is_empty()).map(SecretString::from)
             }
-            AuthCredentialSource::Keyring { service, account } => active_store()
-                .get(service, account)?
+            AuthCredentialSource::Keyring { service, account } => read_keyring(service, account)?
                 .filter(|v| !v.is_empty())
                 .map(SecretString::from),
             AuthCredentialSource::KeyringField {
                 service,
                 account,
                 field,
-            } => active_store()
-                .get(service, account)?
+            } => read_keyring(service, account)?
                 .as_deref()
                 .and_then(read_json_field(field))
                 .filter(|v| !v.is_empty())
@@ -458,6 +456,55 @@ fn read_json_field(field: &str) -> impl Fn(&str) -> Option<String> + '_ {
             .as_str()
             .map(str::to_string)
     }
+}
+
+/// Read a keyring entry and let `profiles.toml` copy its public identifiers,
+/// so `profiles list` / `show` / `current` never have to read it themselves.
+pub(crate) fn read_keyring(service: &str, account: &str) -> Result<Option<String>, CliError> {
+    let store = active_store();
+    let value = store
+        .get(service, account)
+        .inspect_err(|_| note_keyring_read_failed(account, store.backend_label()))?;
+    if store.answers_from_storage(account) {
+        crate::profiles::note_read_credential(service, account, value.as_deref());
+    }
+    Ok(value)
+}
+
+/// A keyring entry that exists but could not be read: a denied or cancelled
+/// OS prompt, or a locked keychain.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub(crate) struct KeyringReadFailure {
+    pub account: String,
+    pub backend: String,
+}
+
+thread_local! {
+    /// The first unreadable entry since the last
+    /// [`clear_keyring_read_failure`]. Probing reads
+    /// ([`AuthCredentialSource::resolve`]) treat it as "no credential", so
+    /// without this the user is told to set a credential they already saved.
+    static KEYRING_READ_FAILURE: std::cell::RefCell<Option<KeyringReadFailure>> =
+        const { std::cell::RefCell::new(None) };
+}
+
+fn note_keyring_read_failed(account: &str, backend: String) {
+    KEYRING_READ_FAILURE.with_borrow_mut(|slot| {
+        slot.get_or_insert_with(|| KeyringReadFailure {
+            account: account.to_string(),
+            backend,
+        });
+    });
+}
+
+pub(crate) fn clear_keyring_read_failure() {
+    KEYRING_READ_FAILURE.with_borrow_mut(|slot| *slot = None);
+}
+
+/// The keyring read on this thread that failed since the last
+/// [`clear_keyring_read_failure`], if any.
+pub(crate) fn keyring_read_failure() -> Option<KeyringReadFailure> {
+    KEYRING_READ_FAILURE.with_borrow(Clone::clone)
 }
 
 fn read_credential_file(path: &Path) -> Option<SecretString> {

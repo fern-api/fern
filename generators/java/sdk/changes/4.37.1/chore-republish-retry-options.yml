@@ -1,0 +1,5 @@
+- type: chore
+  summary: |
+    Re-publish the Java SDK generator: the 4.36.0 (`retryOnStatusCodes`) and 4.37.0 (`retryDelays`) images were never
+    pushed because the publish workflow broke on the new `ubuntu-latest` runner image (JDK 25); this release carries both
+    features with no further code changes.

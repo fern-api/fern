@@ -239,7 +239,7 @@ export async function createOrgToken({
         const venus = createVenusService({ token });
 
         let name = description;
-        if (name == null && process.stdout.isTTY) {
+        if (name == null && process.stdout.isTTY && cliContext.isInteractive) {
             const answer = await cliContext.getInput({
                 message: `Description ${chalk.dim("(optional, press Enter to skip)")}:`
             });

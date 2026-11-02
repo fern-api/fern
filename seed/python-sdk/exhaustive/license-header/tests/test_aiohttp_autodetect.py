@@ -98,7 +98,7 @@ class TestDefaultClientsWithoutAiohttp(unittest.TestCase):
 
             with self.assertRaises(RuntimeError) as ctx:
                 seed.matryoshka.doll.structure._default_clients.DefaultAioHttpClient()
-            self.assertIn("pip install fern_exhaustive[aiohttp]", str(ctx.exception))
+            self.assertIn("pip install fern-exhaustive[aiohttp]", str(ctx.exception))
 
         importlib.reload(seed.matryoshka.doll.structure._default_clients)
 

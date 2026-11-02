@@ -16,7 +16,7 @@
 request := &fern.CreateItemRequest{
     Name: "name",
 }
-client.Items.CreateItem(
+_, err := client.Items.CreateItem(
     context.TODO(),
     request,
 )
@@ -62,7 +62,7 @@ client.Items.CreateItem(
 request := &fern.GetItemRequest{
     ItemID: "item_id",
 }
-client.Items.GetItem(
+_, err := client.Items.GetItem(
     context.TODO(),
     request,
 )

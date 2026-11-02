@@ -6,6 +6,7 @@ import typing
 
 import pytest
 
+from fern_python.codegen.file_header import get_auto_generated_notice
 from core_utilities.shared.webhook_signature import (
     compute_hash,
     compute_hmac_signature,
@@ -244,7 +245,9 @@ def _render_helper(class_name: str, config: typing.Any) -> typing.Any:
     from core_utilities.shared import webhook_signature as core
     from fern_python.generators.sdk.webhooks_helper_generator import _HmacHelperWriter
 
-    source = _HmacHelperWriter(class_name=class_name, config=config).write()
+    source = _HmacHelperWriter(
+        class_name=class_name, config=config, auto_generated_notice=get_auto_generated_notice()
+    ).write()
     source = source.replace("from ..core.webhook_signature", "from core_utilities.shared.webhook_signature")
     module = types.ModuleType("_generated_webhook_helper")
     module.__dict__["core"] = core
@@ -605,6 +608,8 @@ def test_multiple_distinct_configs_produce_distinct_files() -> None:
     root_init_exports: typing.List[str] = []
 
     class _FakeProject:
+        auto_generated_notice = get_auto_generated_notice()
+
         def get_source_file_filepath(self, filepath: typing.Any, include_src_root: bool) -> str:
             parts = [d.module_name for d in filepath.directories] + [filepath.file.module_name + ".py"]
             return "/".join(parts)
@@ -665,6 +670,8 @@ def test_api_wide_config_generates_default_helper_without_webhooks() -> None:
     root_init_exports: typing.List[str] = []
 
     class _FakeProject:
+        auto_generated_notice = get_auto_generated_notice()
+
         def get_source_file_filepath(self, filepath: typing.Any, include_src_root: bool) -> str:
             parts = [d.module_name for d in filepath.directories] + [filepath.file.module_name + ".py"]
             return "/".join(parts)

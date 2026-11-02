@@ -30,7 +30,7 @@ Place an outbound call or validate call setup with dry_run.
 request := &fern.OutboundCallConversationsRequest{
     ToPhoneNumber: "to_phone_number",
 }
-client.Conversations.OutboundCall(
+_, err := client.Conversations.OutboundCall(
     context.TODO(),
     request,
 )
@@ -99,7 +99,7 @@ Gets a user by ID. The deleted_at field uses type null.
 request := &fern.GetUsersRequest{
     ID: "id",
 }
-client.Users.Get(
+_, err := client.Users.Get(
     context.TODO(),
     request,
 )

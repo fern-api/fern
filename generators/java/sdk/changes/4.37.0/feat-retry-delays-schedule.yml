@@ -1,0 +1,7 @@
+- type: feat
+  summary: |
+    Add `retryDelays(List<Duration>)` to `ClientOptions.Builder` and the generated root client builders (sync, async
+    and multi-auth stages) for an explicit retry schedule: the n-th retry waits for the n-th duration and the request
+    stops retrying once the list is exhausted, so the list size replaces `maxRetries` and the exponential backoff
+    settings. Delays are used as-is (no jitter); `Retry-After` / `X-RateLimit-Reset` headers still take precedence
+    for that attempt. Default behaviour is unchanged.

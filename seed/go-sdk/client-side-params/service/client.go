@@ -51,7 +51,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	        "search",
 //	    ),
 //	}
-//	client.Service.ListResources(
+//	_, err := client.Service.ListResources(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -79,7 +79,7 @@ func (c *Client) ListResources(
 //	    IncludeMetadata: true,
 //	    Format: "json",
 //	}
-//	client.Service.GetResource(
+//	_, err := client.Service.GetResource(
 //	    context.TODO(),
 //	    "resourceId",
 //	    request,
@@ -118,7 +118,7 @@ func (c *Client) GetResource(
 //	        },
 //	    },
 //	}
-//	client.Service.SearchResources(
+//	_, err := client.Service.SearchResources(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -168,7 +168,7 @@ func (c *Client) SearchResources(
 //	        "fields",
 //	    ),
 //	}
-//	client.Service.ListUsers(
+//	_, err := client.Service.ListUsers(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -200,7 +200,7 @@ func (c *Client) ListUsers(
 //	        true,
 //	    ),
 //	}
-//	client.Service.GetUserByID(
+//	_, err := client.Service.GetUserByID(
 //	    context.TODO(),
 //	    "userId",
 //	    request,
@@ -256,7 +256,7 @@ func (c *Client) GetUserByID(
 //	    },
 //	    Connection: "connection",
 //	}
-//	client.Service.CreateUser(
+//	_, err := client.Service.CreateUser(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -313,7 +313,7 @@ func (c *Client) CreateUser(
 //	        true,
 //	    ),
 //	}
-//	client.Service.UpdateUser(
+//	_, err := client.Service.UpdateUser(
 //	    context.TODO(),
 //	    "userId",
 //	    request,
@@ -340,7 +340,7 @@ func (c *Client) UpdateUser(
 //
 // Example:
 //
-//	client.Service.DeleteUser(
+//	err := client.Service.DeleteUser(
 //	    context.TODO(),
 //	    "userId",
 //	)
@@ -375,7 +375,7 @@ func (c *Client) DeleteUser(
 //	        "fields",
 //	    ),
 //	}
-//	client.Service.ListConnections(
+//	_, err := client.Service.ListConnections(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -404,7 +404,7 @@ func (c *Client) ListConnections(
 //	        "fields",
 //	    ),
 //	}
-//	client.Service.GetConnection(
+//	_, err := client.Service.GetConnection(
 //	    context.TODO(),
 //	    "connectionId",
 //	    request,
@@ -458,7 +458,7 @@ func (c *Client) GetConnection(
 //	        "app_type",
 //	    },
 //	}
-//	client.Service.ListClients(
+//	_, err := client.Service.ListClients(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -490,7 +490,7 @@ func (c *Client) ListClients(
 //	        true,
 //	    ),
 //	}
-//	client.Service.GetClient(
+//	_, err := client.Service.GetClient(
 //	    context.TODO(),
 //	    "clientId",
 //	    request,

@@ -1,9 +1,9 @@
 [project]
-name = "fern_pagination-uri-path"
+name = "fern-pagination-uri-path"
 dynamic = ["version"]
 
 [tool.poetry]
-name = "fern_pagination-uri-path"
+name = "fern-pagination-uri-path"
 version = "0.0.1"
 description = ""
 readme = "README.md"

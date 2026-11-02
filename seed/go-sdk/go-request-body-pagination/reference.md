@@ -36,7 +36,7 @@ request := &fern.ListUsersBodyCursorPaginationRequest{
         "filter",
     ),
 }
-client.Users.ListWithBodyCursorPagination(
+_, err := client.Users.ListWithBodyCursorPagination(
     context.TODO(),
     request,
 )
@@ -104,7 +104,7 @@ Pagination endpoint with a required top-level cursor field in the request body.
 request := &fern.ListUsersRequiredBodyCursorPaginationRequest{
     Cursor: "cursor",
 }
-client.Users.ListWithRequiredBodyCursorPagination(
+_, err := client.Users.ListWithRequiredBodyCursorPagination(
     context.TODO(),
     request,
 )
@@ -169,7 +169,7 @@ request := &fern.ListUsersUUIDBodyCursorPaginationRequest{
         ),
     ),
 }
-client.Users.ListWithUUIDBodyCursorPagination(
+_, err := client.Users.ListWithUUIDBodyCursorPagination(
     context.TODO(),
     request,
 )
@@ -232,7 +232,7 @@ request := &fern.ListUsersAliasBodyCursorPaginationRequest{
         "cursor",
     ),
 }
-client.Users.ListWithAliasBodyCursorPagination(
+_, err := client.Users.ListWithAliasBodyCursorPagination(
     context.TODO(),
     request,
 )
@@ -293,7 +293,7 @@ generates as a value in Go, where the zero value is already the empty string.
 request := &fern.ListUsersRequiredAliasBodyCursorPaginationRequest{
     Cursor: "cursor",
 }
-client.Users.ListWithRequiredAliasBodyCursorPagination(
+_, err := client.Users.ListWithRequiredAliasBodyCursorPagination(
     context.TODO(),
     request,
 )
@@ -356,7 +356,7 @@ request := &fern.ListUsersNullableAliasBodyCursorPaginationRequest{
         "cursor",
     ),
 }
-client.Users.ListWithNullableAliasBodyCursorPagination(
+_, err := client.Users.ListWithNullableAliasBodyCursorPagination(
     context.TODO(),
     request,
 )
@@ -421,7 +421,7 @@ request := &fern.ListUsersBodyOffsetPaginationRequest{
         1,
     ),
 }
-client.Users.ListWithBodyOffsetPagination(
+_, err := client.Users.ListWithBodyOffsetPagination(
     context.TODO(),
     request,
 )
@@ -494,7 +494,7 @@ request := &fern.ListUsersNestedBodyCursorPaginationRequest{
         ),
     },
 }
-client.Users.ListWithNestedBodyCursorPagination(
+_, err := client.Users.ListWithNestedBodyCursorPagination(
     context.TODO(),
     request,
 )
@@ -557,7 +557,7 @@ request := &fern.ListUsersNestedRequiredBodyCursorPaginationRequest{
         Cursor: "cursor",
     },
 }
-client.Users.ListWithNestedRequiredBodyCursorPagination(
+_, err := client.Users.ListWithNestedRequiredBodyCursorPagination(
     context.TODO(),
     request,
 )
@@ -624,7 +624,7 @@ request := &fern.ListUsersDeeplyNestedBodyCursorPaginationRequest{
         },
     },
 }
-client.Users.ListWithDeeplyNestedBodyCursorPagination(
+_, err := client.Users.ListWithDeeplyNestedBodyCursorPagination(
     context.TODO(),
     request,
 )
@@ -692,7 +692,7 @@ request := &fern.ListUsersNestedBodyOffsetPaginationRequest{
         ),
     },
 }
-client.Users.ListWithNestedBodyOffsetPagination(
+_, err := client.Users.ListWithNestedBodyOffsetPagination(
     context.TODO(),
     request,
 )
@@ -760,7 +760,7 @@ request := &fern.ListUsersAliasedNestedBodyOffsetPaginationRequest{
         ),
     },
 }
-client.Users.ListWithAliasedNestedBodyOffsetPagination(
+_, err := client.Users.ListWithAliasedNestedBodyOffsetPagination(
     context.TODO(),
     request,
 )

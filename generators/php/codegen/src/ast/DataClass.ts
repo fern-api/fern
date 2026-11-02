@@ -46,6 +46,14 @@ export class DataClass extends AstNode {
         this.class_ = new Class({ name, namespace, abstract, docs, parentClassReference, traits });
     }
 
+    public get fields(): Field[] {
+        return this.class_.fields;
+    }
+
+    public get methods(): Method[] {
+        return this.class_.methods;
+    }
+
     public addField(field: Field): void {
         this.class_.addField(field);
     }

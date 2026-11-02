@@ -7,7 +7,7 @@ import (
     option "github.com/unknown/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -16,8 +16,12 @@ func do() {
     request := map[string]any{
         "key": "value",
     }
-    client.Unknown.Post(
+    _, err := client.Unknown.Post(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

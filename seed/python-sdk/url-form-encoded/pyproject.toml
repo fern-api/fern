@@ -1,9 +1,9 @@
 [project]
-name = "fern_url-form-encoded"
+name = "fern-url-form-encoded"
 dynamic = ["version"]
 
 [tool.poetry]
-name = "fern_url-form-encoded"
+name = "fern-url-form-encoded"
 version = "0.0.1"
 description = ""
 readme = "README.md"

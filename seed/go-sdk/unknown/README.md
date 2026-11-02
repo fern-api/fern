@@ -36,15 +36,19 @@ import (
     client "github.com/unknown/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := map[string]any{
         "key": "value",
     }
-    client.Unknown.Post(
+    _, err := client.Unknown.Post(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

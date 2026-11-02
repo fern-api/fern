@@ -37,14 +37,18 @@ import (
     client "github.com/file-upload/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
-    client.Service.JustFile(
+    err := client.Service.JustFile(
         context.TODO(),
         strings.NewReader(
             "",
         ),
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

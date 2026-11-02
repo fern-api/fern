@@ -13,7 +13,7 @@
 <dd>
 
 ```go
-client.Auth.GetToken(
+_, err := client.Auth.GetToken(
     context.TODO(),
 )
 ```
@@ -41,7 +41,7 @@ client.Auth.GetToken(
 <dd>
 
 ```go
-client.Things.ListThings(
+_, err := client.Things.ListThings(
     context.TODO(),
 )
 ```

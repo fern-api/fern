@@ -36,12 +36,16 @@ import (
     client "github.com/simple-fhir/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
-    client.GetAccount(
+    _, err := client.GetAccount(
         context.TODO(),
         "account_id",
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

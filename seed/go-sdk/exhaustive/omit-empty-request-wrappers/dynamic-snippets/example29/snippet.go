@@ -8,7 +8,7 @@ import (
     types "github.com/exhaustive/fern/types"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -24,8 +24,12 @@ func do() {
             NestedObject: &types.ObjectWithOptionalField{},
         },
     }
-    client.Endpoints.Object.GetAndReturnWithRequiredNestedObject(
+    _, err := client.Endpoints.Object.GetAndReturnWithRequiredNestedObject(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

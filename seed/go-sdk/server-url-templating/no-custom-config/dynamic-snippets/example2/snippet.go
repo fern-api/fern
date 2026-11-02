@@ -8,7 +8,7 @@ import (
     option "github.com/server-url-templating/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -17,8 +17,12 @@ func do() {
     request := &fern.GetUserRequest{
         UserID: "userId",
     }
-    client.GetUser(
+    _, err := client.GetUser(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

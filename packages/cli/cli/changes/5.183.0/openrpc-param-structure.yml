@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    OpenRPC methods now pass their `paramStructure` through to the docs, so the API Explorer
+    and code snippets can send JSON-RPC `params` as an object keyed by name for `by-name` methods.
+  type: feat

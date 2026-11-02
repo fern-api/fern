@@ -36,7 +36,7 @@ func NewClient(options *core.RequestOptions) *Client {
 
 // Example:
 //
-//	client.Auth.GetToken(
+//	_, err := client.Auth.GetToken(
 //	    context.TODO(),
 //	)
 func (c *Client) GetToken(

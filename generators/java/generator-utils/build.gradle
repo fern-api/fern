@@ -21,3 +21,18 @@ dependencies {
     testImplementation 'org.mockito:mockito-core'
     testImplementation 'org.mockito:mockito-junit-jupiter'
 }
+
+// Jackson 2.9.10 is the documented runtime floor for generated SDKs; ObjectMappersJackson29CompatibilityTest
+// compiles the generated core mapper classes against it. A detached configuration is used so that
+// consistent-versions does not force the project's Jackson version onto it.
+def jackson29Classpath = configurations.detachedConfiguration(
+        dependencies.create('com.fasterxml.jackson.core:jackson-databind:2.9.10'),
+        dependencies.create('com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.9.10'),
+        dependencies.create('com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.9.10'))
+
+tasks.named('test') {
+    inputs.files(jackson29Classpath).withNormalizer(ClasspathNormalizer)
+    doFirst {
+        systemProperty 'fern.test.jackson29.classpath', jackson29Classpath.asPath
+    }
+}

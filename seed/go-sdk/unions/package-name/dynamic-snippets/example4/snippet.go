@@ -8,7 +8,7 @@ import (
     option "github.com/fern-api/unions-go/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -20,8 +20,12 @@ func do() {
         },
         ID: "id",
     }
-    client.Union.Update(
+    _, err := client.Union.Update(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

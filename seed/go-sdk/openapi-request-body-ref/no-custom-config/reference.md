@@ -19,7 +19,7 @@ request := &fern.UpdateVendorBody{
         Name: "name",
     },
 }
-client.Vendor.UpdateVendor(
+_, err := client.Vendor.UpdateVendor(
     context.TODO(),
     request,
 )
@@ -73,7 +73,7 @@ client.Vendor.UpdateVendor(
 request := &fern.CreateVendorRequest{
     Name: "name",
 }
-client.Vendor.CreateVendor(
+_, err := client.Vendor.CreateVendor(
     context.TODO(),
     request,
 )
@@ -141,7 +141,7 @@ request := &fern.CreateCatalogImageBody{
         CatalogObjectID: "catalog_object_id",
     },
 }
-client.Catalog.CreateCatalogImage(
+_, err := client.Catalog.CreateCatalogImage(
     context.TODO(),
     request,
 )
@@ -172,7 +172,7 @@ client.Catalog.CreateCatalogImage(
 request := &fern.GetCatalogImageRequest{
     ImageID: "image_id",
 }
-client.Catalog.GetCatalogImage(
+_, err := client.Catalog.GetCatalogImage(
     context.TODO(),
     request,
 )
@@ -219,7 +219,7 @@ client.Catalog.GetCatalogImage(
 request := &fern.UpdateTeamMemberRequest{
     TeamMemberID: "team_member_id",
 }
-client.TeamMember.UpdateTeamMember(
+_, err := client.TeamMember.UpdateTeamMember(
     context.TODO(),
     request,
 )

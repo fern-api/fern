@@ -1,3 +1,3 @@
 from importlib import metadata
 
-__version__ = metadata.version("fern_single-url-environment-no-default")
+__version__ = metadata.version("fern-single-url-environment-no-default")

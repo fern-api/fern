@@ -36,7 +36,7 @@ func NewClient(options *core.RequestOptions) *Client {
 
 // Example:
 //
-//	client.Messages.Messages.ListMessages(
+//	_, err := client.Messages.Messages.ListMessages(
 //	    context.TODO(),
 //	)
 func (c *Client) ListMessages(
@@ -59,7 +59,7 @@ func (c *Client) ListMessages(
 //	    Sid: "sid",
 //	    Body: "body",
 //	}
-//	client.Messages.Messages.CreateMessage(
+//	_, err := client.Messages.Messages.CreateMessage(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -84,7 +84,7 @@ func (c *Client) CreateMessage(
 //	request := &messages.DeleteMessageRequest{
 //	    Sid: "sid",
 //	}
-//	client.Messages.Messages.DeleteMessage(
+//	err := client.Messages.Messages.DeleteMessage(
 //	    context.TODO(),
 //	    request,
 //	)

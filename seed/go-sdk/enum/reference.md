@@ -20,7 +20,7 @@ request := &fern.SendEnumAsHeaderRequest{
         Color: fern.ColorRed,
     },
 }
-client.Headers.Send(
+err := client.Headers.Send(
     context.TODO(),
     request,
 )
@@ -94,7 +94,7 @@ request := &fern.SendEnumInlinedRequest{
         Color: fern.ColorRed,
     },
 }
-client.InlinedRequest.Send(
+err := client.InlinedRequest.Send(
     context.TODO(),
     request,
 )
@@ -163,7 +163,7 @@ client.InlinedRequest.Send(
 <dd>
 
 ```go
-client.PathParam.Send(
+err := client.PathParam.Send(
     context.TODO(),
     fern.OperandGreaterThan.Ptr(),
     &fern.ColorOrOperand{
@@ -224,7 +224,7 @@ request := &fern.SendEnumAsQueryParamRequest{
         Color: fern.ColorRed,
     },
 }
-client.QueryParam.Send(
+err := client.QueryParam.Send(
     context.TODO(),
     request,
 )
@@ -309,7 +309,7 @@ request := &fern.SendEnumListAsQueryParamRequest{
         },
     },
 }
-client.QueryParam.SendList(
+err := client.QueryParam.SendList(
     context.TODO(),
     request,
 )

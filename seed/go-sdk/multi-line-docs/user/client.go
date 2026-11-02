@@ -39,7 +39,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //
 // Example:
 //
-//	client.User.GetUser(
+//	err := client.User.GetUser(
 //	    context.TODO(),
 //	    "userId",
 //	)
@@ -72,7 +72,7 @@ func (c *Client) GetUser(
 //	        1,
 //	    ),
 //	}
-//	client.User.CreateUser(
+//	_, err := client.User.CreateUser(
 //	    context.TODO(),
 //	    request,
 //	)

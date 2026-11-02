@@ -1,3 +1,3 @@
 from importlib import metadata
 
-__version__ = metadata.version("fern_python-reserved-keyword-subpackages")
+__version__ = metadata.version("fern-python-reserved-keyword-subpackages")

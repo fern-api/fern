@@ -1,12 +1,11 @@
 import { createOrganizationIfDoesNotExist, FernGuestToken, FernToken, FernUserToken, getToken } from "@fern-api/auth";
-import { SDK_CONFIG_FILENAME } from "@fern-api/configuration-loader";
 import { createFdrService } from "@fern-api/core";
 import { extractErrorMessage, sanitizePreviewId } from "@fern-api/core-utils";
 import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { Rules } from "@fern-api/docs-validator";
 import { FdrAPI } from "@fern-api/fdr-sdk";
-import { type AbsoluteFilePath, basename, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { askToLogin } from "@fern-api/login";
+import { type AbsoluteFilePath, basename } from "@fern-api/fs-utils";
+import { askToLogin, getMissingLoginMessage } from "@fern-api/login";
 import { type ValidationViolation, validateOSSWorkspace } from "@fern-api/oss-validator";
 import { Project } from "@fern-api/project-loader";
 import { runRemoteGenerationForDocsWorkspace } from "@fern-api/remote-workspace-runner";
@@ -16,7 +15,6 @@ import chalk from "chalk";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { detectCISource, detectDeployerAuthor, isCI } from "../../utils/environment.js";
 import { validateDocsWorkspaceAndLogIssues } from "../validate/validateDocsWorkspaceAndLogIssues.js";
-import { GUEST_DOCS_REQUIRE_PREVIEW_MESSAGE } from "./assertGuestCanGenerate.js";
 import { getSdkConfigSdkNames } from "./getSdkConfigSdkNames.js";
 import { resolveGuestProject } from "./resolveGuestProject.js";
 
@@ -91,10 +89,6 @@ export async function generateDocsWorkspace({
         return;
     }
     let guestToken: FernGuestToken | undefined;
-    if (guest && !preview) {
-        cliContext.failAndThrow(GUEST_DOCS_REQUIRE_PREVIEW_MESSAGE, undefined, { code: CliError.Code.ConfigError });
-        return;
-    }
     if (guest) {
         const resolved = await resolveGuestProject({ project, cliContext, newSession });
         project = resolved.project;
@@ -102,13 +96,28 @@ export async function generateDocsWorkspace({
     }
     const hasFdrOriginOverride = !!process.env["FERN_FDR_ORIGIN"] || !!process.env["OVERRIDE_FDR_ORIGIN"];
 
-    if (!preview && !isCI() && !noPrompt) {
+    // Every path below needs a token (preview included; `askToLogin` runs for all of them). `askToLogin` only opens
+    // the login prompt when stdout is a TTY, so a run that would not get the prompt (an agent, CI) is told about the
+    // missing account here, before the production-site confirmation: the first error names the one step it can take
+    // on its own, --guest.
+    if (!guest && !process.stdout.isTTY && (await getToken()) == null) {
+        cliContext.failAndThrow(getMissingLoginMessage({ suggestGuest: true }), undefined, {
+            code: CliError.Code.AuthError
+        });
+        return;
+    }
+
+    // A guest publishes to its own temporary drop site, so there is no production site to protect.
+    if (!preview && !guest && !isCI() && !noPrompt) {
         const productionUrl = instance ?? docsWorkspace.config.instances[0]?.url;
-        const urlDisplay = productionUrl ? ` (${chalk.cyan(`https://${productionUrl}`)})` : "";
+        const urlDisplay = productionUrl ? ` (${chalk.cyan(`https://${stripScheme(productionUrl)}`)})` : "";
 
         const shouldContinue = await cliContext.confirmPrompt(
             `This will affect a production site${urlDisplay}. Run with --preview to generate docs for a preview instance.\n${chalk.yellow("?")} Are you sure you want to continue?`,
-            false
+            false,
+            {
+                nonInteractiveError: `This will affect a production site${urlDisplay}. Pass --no-prompt to confirm in non-interactive mode, or --preview to generate docs for a preview instance.`
+            }
         );
         if (!shouldContinue) {
             cliContext.logger.info("Docs generation cancelled.");
@@ -122,11 +131,9 @@ export async function generateDocsWorkspace({
     } else if (hasFdrOriginOverride) {
         const fernToken = await getToken();
         if (!fernToken) {
-            cliContext.failAndThrow(
-                "No token found. Please set the FERN_TOKEN environment variable or run `fern login`.",
-                undefined,
-                { code: CliError.Code.AuthError }
-            );
+            cliContext.failAndThrow(getMissingLoginMessage({ suggestGuest: true }), undefined, {
+                code: CliError.Code.AuthError
+            });
             return;
         }
         token = fernToken;
@@ -161,7 +168,10 @@ export async function generateDocsWorkspace({
         if (metadataExists) {
             const shouldOverwrite = await cliContext.confirmPrompt(
                 `This preview ID already exists for ${chalk.bold(project.config.organization)} (${chalk.cyan(`https://${expectedDomain}`)}). Are you sure you want to overwrite this?`,
-                false
+                false,
+                {
+                    nonInteractiveError: `Preview ID already exists (https://${expectedDomain}). Pass --force to overwrite it in non-interactive mode.`
+                }
             );
             if (!shouldOverwrite) {
                 cliContext.logger.info("Docs generation cancelled.");
@@ -231,7 +241,6 @@ export async function generateDocsWorkspace({
             organization: project.config.organization,
             apiWorkspaces: project.apiWorkspaces,
             ossWorkspaces,
-            usesSdkConfig: await projectUsesSdkConfig({ project, docsWorkspace }),
             sdkNames: await getSdkConfigSdkNames({
                 directories: getSdkConfigDirectories({ project, docsWorkspace }),
                 logger: context.logger
@@ -267,29 +276,6 @@ function getSdkConfigDirectories({
         ...project.apiWorkspaces.map((workspace) => workspace.absoluteFilePath),
         ...(project.sdkConfigWorkspaces ?? []).map((workspace) => workspace.absoluteFilePath)
     ];
-}
-
-/**
- * Whether the project configures SDKs in an sdk-config.yml. `project.sdkConfigWorkspaces` only lists
- * workspaces that have no generators file at all, so a project that still has a generators.yml (or the
- * renamed generators.legacy.yml) next to its sdk-config.yml is found by looking for the file itself.
- */
-async function projectUsesSdkConfig({
-    project,
-    docsWorkspace
-}: {
-    project: Project;
-    docsWorkspace: DocsWorkspace;
-}): Promise<boolean> {
-    if ((project.sdkConfigWorkspaces?.length ?? 0) > 0) {
-        return true;
-    }
-    const exists = await Promise.all(
-        getSdkConfigDirectories({ project, docsWorkspace }).map((directory) =>
-            doesPathExist(join(directory, RelativeFilePath.of(SDK_CONFIG_FILENAME)))
-        )
-    );
-    return exists.some(Boolean);
 }
 
 function getExcludeRules(brokenLinks: boolean, strictBrokenLinks: boolean): string[] {
@@ -341,4 +327,9 @@ function summarizeValidationErrors(errors: ValidationViolation[]): string[] {
     }
 
     return summaries;
+}
+
+/** `docs.yml` instance URLs may or may not carry a scheme; the prompt adds its own. */
+function stripScheme(url: string): string {
+    return url.replace(/^https?:\/\//, "");
 }

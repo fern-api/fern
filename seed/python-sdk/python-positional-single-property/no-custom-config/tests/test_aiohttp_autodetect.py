@@ -95,7 +95,7 @@ class TestDefaultClientsWithoutAiohttp(unittest.TestCase):
 
             with self.assertRaises(RuntimeError) as ctx:
                 seed._default_clients.DefaultAioHttpClient()
-            self.assertIn("pip install fern_python-positional-single-property[aiohttp]", str(ctx.exception))
+            self.assertIn("pip install fern-python-positional-single-property[aiohttp]", str(ctx.exception))
 
         importlib.reload(seed._default_clients)
 

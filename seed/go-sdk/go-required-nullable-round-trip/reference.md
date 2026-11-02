@@ -19,7 +19,7 @@ request := &fern.GetAccountsRequest{
         "account_ids",
     },
 }
-client.GetAccounts(
+_, err := client.GetAccounts(
     context.TODO(),
     request,
 )

@@ -1,9 +1,9 @@
 [project]
-name = "fern_undiscriminated-unions"
+name = "fern-undiscriminated-unions"
 dynamic = ["version"]
 
 [tool.poetry]
-name = "fern_undiscriminated-unions"
+name = "fern-undiscriminated-unions"
 version = "0.0.1"
 description = ""
 readme = "README.md"

@@ -8,7 +8,7 @@ import (
     option "github.com/no-content-response/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -17,8 +17,12 @@ func do() {
     request := &fern.CreateContactRequest{
         Name: "name",
     }
-    client.Contacts.Create(
+    _, err := client.Contacts.Create(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

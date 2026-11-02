@@ -39,7 +39,7 @@ import (
     option "github.com/pagination/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithToken(
             "<token>",
@@ -64,11 +64,15 @@ func do() {
             },
         },
     }
-    client.Complex.Search(
+    _, err := client.Complex.Search(
         context.TODO(),
         "index",
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

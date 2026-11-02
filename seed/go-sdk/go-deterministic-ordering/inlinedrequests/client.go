@@ -91,7 +91,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	        ),
 //	    },
 //	}
-//	client.InlinedRequests.PostWithObjectBodyandResponse(
+//	_, err := client.InlinedRequests.PostWithObjectBodyandResponse(
 //	    context.TODO(),
 //	    request,
 //	)

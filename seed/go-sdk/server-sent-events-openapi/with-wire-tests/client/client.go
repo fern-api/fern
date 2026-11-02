@@ -41,7 +41,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 // Example:
 //
 //	request := &fern.StreamRequest{}
-//	client.StreamProtocolNoCollision(
+//	_, err := client.StreamProtocolNoCollision(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -95,7 +95,7 @@ func (c *Client) StreamProtocolNoCollision(
 // Example:
 //
 //	request := &fern.StreamRequest{}
-//	client.StreamProtocolCollision(
+//	_, err := client.StreamProtocolCollision(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -149,7 +149,7 @@ func (c *Client) StreamProtocolCollision(
 // Example:
 //
 //	request := &fern.StreamRequest{}
-//	client.StreamDataContext(
+//	_, err := client.StreamDataContext(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -197,7 +197,7 @@ func (c *Client) StreamDataContext(
 // Example:
 //
 //	request := &fern.StreamRequest{}
-//	client.StreamNoContext(
+//	_, err := client.StreamNoContext(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -245,7 +245,7 @@ func (c *Client) StreamNoContext(
 // Example:
 //
 //	request := &fern.StreamRequest{}
-//	client.StreamProtocolWithFlatSchema(
+//	_, err := client.StreamProtocolWithFlatSchema(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -294,7 +294,7 @@ func (c *Client) StreamProtocolWithFlatSchema(
 // Example:
 //
 //	request := &fern.StreamRequest{}
-//	client.StreamProtocolMixedSchema(
+//	_, err := client.StreamProtocolMixedSchema(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -346,7 +346,7 @@ func (c *Client) StreamProtocolMixedSchema(
 // Example:
 //
 //	request := &fern.StreamRequest{}
-//	client.StreamDataContextWithEnvelopeSchema(
+//	_, err := client.StreamDataContextWithEnvelopeSchema(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -394,7 +394,7 @@ func (c *Client) StreamDataContextWithEnvelopeSchema(
 // Example:
 //
 //	request := &fern.StreamRequest{}
-//	client.StreamOasSpecNative(
+//	_, err := client.StreamOasSpecNative(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -444,7 +444,7 @@ func (c *Client) StreamOasSpecNative(
 //	request := &fern.StreamXFernStreamingConditionStreamRequest{
 //	    Query: "query",
 //	}
-//	client.StreamXFernStreamingConditionStream(
+//	_, err := client.StreamXFernStreamingConditionStream(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -491,7 +491,7 @@ func (c *Client) StreamXFernStreamingConditionStream(
 //	request := &fern.StreamXFernStreamingConditionRequest{
 //	    Query: "query",
 //	}
-//	client.StreamXFernStreamingCondition(
+//	_, err := client.StreamXFernStreamingCondition(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -519,7 +519,7 @@ func (c *Client) StreamXFernStreamingCondition(
 //	    Prompt: "prompt",
 //	    Model: "model",
 //	}
-//	client.StreamXFernStreamingSharedSchemaStream(
+//	_, err := client.StreamXFernStreamingSharedSchemaStream(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -567,7 +567,7 @@ func (c *Client) StreamXFernStreamingSharedSchemaStream(
 //	    Prompt: "prompt",
 //	    Model: "model",
 //	}
-//	client.StreamXFernStreamingSharedSchema(
+//	_, err := client.StreamXFernStreamingSharedSchema(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -595,7 +595,7 @@ func (c *Client) StreamXFernStreamingSharedSchema(
 //	    Prompt: "prompt",
 //	    Model: "model",
 //	}
-//	client.ValidateCompletion(
+//	_, err := client.ValidateCompletion(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -628,7 +628,7 @@ func (c *Client) ValidateCompletion(
 //	        Message: "message",
 //	    },
 //	}
-//	client.StreamXFernStreamingUnionStream(
+//	_, err := client.StreamXFernStreamingUnionStream(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -680,7 +680,7 @@ func (c *Client) StreamXFernStreamingUnionStream(
 //	        Message: "message",
 //	    },
 //	}
-//	client.StreamXFernStreamingUnion(
+//	_, err := client.StreamXFernStreamingUnion(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -707,7 +707,7 @@ func (c *Client) StreamXFernStreamingUnion(
 //	request := &fern.UnionStreamRequestBase{
 //	    Prompt: "prompt",
 //	}
-//	client.ValidateUnionRequest(
+//	_, err := client.ValidateUnionRequest(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -734,7 +734,7 @@ func (c *Client) ValidateUnionRequest(
 //	request := &fern.StreamXFernStreamingNullableConditionStreamRequest{
 //	    Query: "query",
 //	}
-//	client.StreamXFernStreamingNullableConditionStream(
+//	_, err := client.StreamXFernStreamingNullableConditionStream(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -781,7 +781,7 @@ func (c *Client) StreamXFernStreamingNullableConditionStream(
 //	request := &fern.StreamXFernStreamingNullableConditionRequest{
 //	    Query: "query",
 //	}
-//	client.StreamXFernStreamingNullableCondition(
+//	_, err := client.StreamXFernStreamingNullableCondition(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -806,7 +806,7 @@ func (c *Client) StreamXFernStreamingNullableCondition(
 // Example:
 //
 //	request := &fern.StreamRequest{}
-//	client.StreamXFernStreamingSseOnly(
+//	_, err := client.StreamXFernStreamingSseOnly(
 //	    context.TODO(),
 //	    request,
 //	)

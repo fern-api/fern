@@ -8,7 +8,7 @@ import (
     option "github.com/multi-url-environment-reference/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -21,8 +21,12 @@ func do() {
         Name: "name",
         ParentID: "parent_id",
     }
-    client.Files.Upload(
+    _, err := client.Files.Upload(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

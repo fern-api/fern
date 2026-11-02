@@ -59,7 +59,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	        true,
 //	    ),
 //	}
-//	client.Nullable.GetUsers(
+//	_, err := client.Nullable.GetUsers(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -113,7 +113,7 @@ func (c *Client) GetUsers(
 //	        "avatar",
 //	    ),
 //	}
-//	client.Nullable.CreateUser(
+//	_, err := client.Nullable.CreateUser(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -140,7 +140,7 @@ func (c *Client) CreateUser(
 //	        "xy",
 //	    ),
 //	}
-//	client.Nullable.DeleteUser(
+//	_, err := client.Nullable.DeleteUser(
 //	    context.TODO(),
 //	    request,
 //	)
