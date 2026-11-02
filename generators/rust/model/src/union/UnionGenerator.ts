@@ -36,6 +36,7 @@ export class UnionGenerator {
     private readonly typeDeclaration: FernIr.TypeDeclaration;
     private readonly unionTypeDeclaration: FernIr.UnionTypeDeclaration;
     private readonly context: ModelGeneratorContext;
+    private readonly discriminantWireValue: string;
 
     public constructor(
         typeDeclaration: FernIr.TypeDeclaration,
@@ -44,6 +45,7 @@ export class UnionGenerator {
     ) {
         this.typeDeclaration = typeDeclaration;
         this.unionTypeDeclaration = unionTypeDeclaration;
+        this.discriminantWireValue = getWireValue(unionTypeDeclaration.discriminant);
         this.context = context;
     }
 
@@ -440,6 +442,7 @@ export class UnionGenerator {
      * Returns the fields to inline into a variant, or undefined if the variant is not inlined.
      * A field sharing the discriminant's wire name is dropped: serde rejects a variant field
      * that collides with the enum's internal tag, and the tag already carries that value.
+     * The variant's constructors therefore take no parameter for it either.
      */
     private getInlinedVariantProperties(declaredTypeName: FernIr.DeclaredTypeName): FernIr.ObjectProperty[] | undefined {
         if (!this.context.inlinedUnionVariantTypeIds.has(declaredTypeName.typeId)) {
@@ -449,9 +452,8 @@ export class UnionGenerator {
         if (referencedType?.shape.type !== "object") {
             return undefined;
         }
-        const discriminantWireValue = getWireValue(this.unionTypeDeclaration.discriminant);
         return referencedType.shape.properties.filter(
-            (property) => getWireValue(property.name) !== discriminantWireValue
+            (property) => getWireValue(property.name) !== this.discriminantWireValue
         );
     }
 
