@@ -334,7 +334,7 @@ function getSourceFilePath({
     context: SdkGeneratorContext;
     service: FernIr.HttpService;
 }): string | undefined {
-    const modulePath = context.getModulePath().replace(/-/g, "_");
+    const modulePath = context.getModulePath().replace(/-/g, "_").replace(/\./g, "/");
     const pathParts = service.name.fernFilepath.allParts.map((part) => context.getModuleName(part));
     if (pathParts.length === 0) {
         return `src/${modulePath}/client.py`;

@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix `reference.md` source links when `package_name` contains dots or `package_path` is set.
+    Links previously used the dotted Python module path (e.g. `src/acme.management/actions/client.py`)
+    instead of the directory path (`src/acme/management/actions/client.py`).
+  type: fix
