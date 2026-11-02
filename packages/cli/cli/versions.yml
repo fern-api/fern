@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.191.1
+  changelogEntry:
+    - summary: |
+        `fern init --grpc` and `fern init --proto <path>` no longer fail with "gRPC initialization is not supported by
+        this version of fern init". They now always write a `generators.yml`, since SDK Config does not support gRPC yet.
+      type: fix
+  createdAt: "2026-11-02"
+  irVersion: 67
 - version: 5.191.0
   changelogEntry:
     - summary: |
