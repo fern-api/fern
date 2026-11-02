@@ -229,26 +229,26 @@ export class SimpleTypescriptProject extends TypescriptProject {
         } else {
             const cjsFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.CJS_DIRECTORY}/index.js`;
             const cjsTypesFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.CJS_DIRECTORY}/index.d.ts`;
-            const mjsFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}/index.${this.getEsmJsExtension()}`;
-            const mjsTypesFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}/index.${this.getEsmTypesExtension()}`;
-            const defaultTypesExport = this.esmOnly || this.outputEsm ? mjsTypesFile : cjsTypesFile;
-            const defaultExport = this.esmOnly || this.outputEsm ? mjsFile : cjsFile;
+            const esmFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}/index.${this.getEsmJsExtension()}`;
+            const esmTypesFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}/index.${this.getEsmTypesExtension()}`;
+            const defaultTypesExport = this.esmOnly || this.outputEsm ? esmTypesFile : cjsTypesFile;
+            const defaultExport = this.esmOnly || this.outputEsm ? esmFile : cjsFile;
             packageJson = {
                 ...packageJson,
                 type: this.esmOnly || this.outputEsm ? "module" : "commonjs",
                 main: defaultExport,
-                module: mjsFile,
+                module: esmFile,
                 types: defaultTypesExport,
                 exports: {
                     ".": this.esmOnly
                         ? {
-                              types: mjsTypesFile,
-                              default: mjsFile
+                              types: esmTypesFile,
+                              default: esmFile
                           }
                         : {
                               import: {
-                                  types: mjsTypesFile,
-                                  default: mjsFile
+                                  types: esmTypesFile,
+                                  default: esmFile
                               },
                               require: {
                                   types: cjsTypesFile,
@@ -265,21 +265,21 @@ export class SimpleTypescriptProject extends TypescriptProject {
                         const exportKey = isSubpackageExport ? subpackageExport.key : folder;
                         const cjsFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.CJS_DIRECTORY}/${folder}/${fileName}.js`;
                         const cjsTypesFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.CJS_DIRECTORY}/${folder}/${fileName}.d.ts`;
-                        const mjsFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}/${folder}/${fileName}.${this.getEsmJsExtension()}`;
-                        const mjsTypesFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}/${folder}/${fileName}.${this.getEsmTypesExtension()}`;
-                        const defaultExport = this.outputEsm ? mjsFile : cjsFile;
+                        const esmFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}/${folder}/${fileName}.${this.getEsmJsExtension()}`;
+                        const esmTypesFile = `./${SimpleTypescriptProject.DIST_DIRECTORY}/${SimpleTypescriptProject.ESM_DIRECTORY}/${folder}/${fileName}.${this.getEsmTypesExtension()}`;
+                        const defaultExport = this.outputEsm ? esmFile : cjsFile;
 
                         return {
                             ...acc,
                             [`./${exportKey}`]: this.esmOnly
                                 ? {
-                                      types: mjsTypesFile,
-                                      default: mjsFile
+                                      types: esmTypesFile,
+                                      default: esmFile
                                   }
                                 : {
                                       import: {
-                                          types: mjsTypesFile,
-                                          default: mjsFile
+                                          types: esmTypesFile,
+                                          default: esmFile
                                       },
                                       require: {
                                           types: cjsTypesFile,
