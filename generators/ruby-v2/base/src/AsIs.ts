@@ -72,6 +72,7 @@ export const AsIsFiles = {
 
     // Test files
     TestHelper: "test/test_helper.Template.rb",
+    TestResponseError: "test/unit/errors/test_response_error.Template.rb",
     TestCursorItemIterator: "test/unit/internal/iterators/test_cursor_item_iterator.Template.rb",
     TestOffsetItemIterator: "test/unit/internal/iterators/test_offset_item_iterator.Template.rb",
     TestArrayType: "test/unit/internal/types/test_array.Template.rb",

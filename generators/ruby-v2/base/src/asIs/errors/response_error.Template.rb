@@ -3,14 +3,16 @@
 module <%= gem_namespace %>
   module Errors
     class ResponseError < ApiError
-      attr_reader :code, :body
+      attr_reader :code, :body, :headers
 
       # @param msg [String] The raw response body.
       # @param code [Integer] The HTTP status code.
       # @param body [Object, nil] The response body parsed into the endpoint's declared error type, if any.
-      def initialize(msg, code:, body: nil)
+      # @param headers [Hash{String => Array<String>}] The response headers, with lowercase names.
+      def initialize(msg, code:, body: nil, headers: {})
         @code = code
         @body = body
+        @headers = headers
         super(msg)
       end
 

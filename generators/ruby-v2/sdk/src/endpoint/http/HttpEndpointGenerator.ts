@@ -559,7 +559,9 @@ export class HttpEndpointGenerator {
             const errorBodyTypes = this.getErrorBodyTypes(endpoint);
             if (errorBodyTypes.length === 0) {
                 ruby.raise({
-                    errorClass: ruby.codeblock(`${ERROR_CLASS_VN}.new(${HTTP_RESPONSE_VN}.body, code: ${CODE_VN})`)
+                    errorClass: ruby.codeblock(
+                        `${ERROR_CLASS_VN}.new(${HTTP_RESPONSE_VN}.body, code: ${CODE_VN}, headers: ${HTTP_RESPONSE_VN}.to_hash)`
+                    )
                 }).write(writer);
                 return;
             }
@@ -577,7 +579,7 @@ export class HttpEndpointGenerator {
             );
             ruby.raise({
                 errorClass: ruby.codeblock(
-                    `${ERROR_CLASS_VN}.new(${HTTP_RESPONSE_VN}.body, code: ${CODE_VN}, body: ${ERROR_BODY_VN})`
+                    `${ERROR_CLASS_VN}.new(${HTTP_RESPONSE_VN}.body, code: ${CODE_VN}, body: ${ERROR_BODY_VN}, headers: ${HTTP_RESPONSE_VN}.to_hash)`
                 )
             }).write(writer);
         });
@@ -746,7 +748,7 @@ export class HttpEndpointGenerator {
         writer.writeLine("rescue ::JSON::ParserError");
         writer.indent();
         writer.writeLine(
-            `raise ${this.context.getRootModuleName()}::Errors::ResponseError.new(${HTTP_RESPONSE_VN}.body, code: ${CODE_VN})`
+            `raise ${this.context.getRootModuleName()}::Errors::ResponseError.new(${HTTP_RESPONSE_VN}.body, code: ${CODE_VN}, headers: ${HTTP_RESPONSE_VN}.to_hash)`
         );
         writer.dedent();
         writer.writeLine("end");
