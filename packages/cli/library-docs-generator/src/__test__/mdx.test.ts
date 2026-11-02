@@ -45,6 +45,17 @@ describe("escapeMdx", () => {
 });
 
 describe("escapeMdxPreservingCodeBlocks", () => {
+    it("preserves inline and display math", () => {
+        const input = "Reset to $|0\\rangle$ with {opts}.\n\n$$\n\\text{CZ} = \\{a, b\\}\n$$";
+        expect(escapeMdxPreservingCodeBlocks(input)).toBe(
+            "Reset to $|0\\rangle$ with &#123;opts&#125;.\n\n$$\n\\text{CZ} = \\{a, b\\}\n$$"
+        );
+    });
+
+    it("does not treat prices as math", () => {
+        expect(escapeMdxPreservingCodeBlocks("Costs $5 or $10 {each}")).toBe("Costs $5 or $10 &#123;each&#125;");
+    });
+
     it("escapes JSX chars in plain text", () => {
         expect(escapeMdxPreservingCodeBlocks("Use <T> for generics")).toBe("Use &lt;T&gt; for generics");
     });

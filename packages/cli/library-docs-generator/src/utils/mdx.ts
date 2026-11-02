@@ -13,6 +13,24 @@ function escapeJsxChars(text: string): string {
 }
 
 /**
+ * Display math (`$$…$$`) and inline math (`$…$`). As in Pandoc, inline math can't
+ * start or end with whitespace and the closing `$` can't be followed by a digit,
+ * so prices like "$5 and $10" stay plain text.
+ */
+const MATH_REGEX = /\$\$[\s\S]+?\$\$|\$(?![\s$])(?:[^$\n\\]|\\.)+?(?<!\s)\$(?!\d)/g;
+
+/** Escape JSX chars, leaving LaTeX math intact so braces like `\text{CZ}` still render. */
+function escapeJsxCharsPreservingMath(text: string): string {
+    let result = "";
+    let lastIndex = 0;
+    for (const match of text.matchAll(MATH_REGEX)) {
+        result += escapeJsxChars(text.slice(lastIndex, match.index)) + match[0];
+        lastIndex = match.index + match[0].length;
+    }
+    return result + escapeJsxChars(text.slice(lastIndex));
+}
+
+/**
  * Escape special MDX characters in text.
  *
  * Use this for short text like identifiers, types, and parameter values
@@ -50,7 +68,7 @@ export function escapeMdxPreservingCodeBlocks(text: string): string {
     while ((match = codeBlockRegex.exec(text)) !== null) {
         // Escape text before this code block
         if (match.index > lastIndex) {
-            result.push(escapeJsxChars(text.slice(lastIndex, match.index)));
+            result.push(escapeJsxCharsPreservingMath(text.slice(lastIndex, match.index)));
         }
 
         let codeBlock = match[0];
@@ -70,7 +88,7 @@ export function escapeMdxPreservingCodeBlocks(text: string): string {
 
     // Escape remaining text after last code block
     if (lastIndex < text.length) {
-        result.push(escapeJsxChars(text.slice(lastIndex)));
+        result.push(escapeJsxCharsPreservingMath(text.slice(lastIndex)));
     }
 
     return result.join("");

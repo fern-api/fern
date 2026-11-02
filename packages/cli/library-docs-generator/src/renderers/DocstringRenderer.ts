@@ -22,6 +22,62 @@ export interface DocstringLinkContext {
  * 2. Renders: wraps fenced code blocks in <CodeBlock showLineNumbers={false}> components
  */
 function renderDescriptionText(text: string): string {
+    return splitCallouts(text)
+        .map(({ component, body }) =>
+            component != null
+                ? `<${component}>\n\n${renderMarkdownText(body)}\n\n</${component}>`
+                : renderMarkdownText(body)
+        )
+        .join("\n");
+}
+
+/** GitHub-style alert kinds (`> [!NOTE]`) and the Fern callout each renders as. */
+const CALLOUT_COMPONENTS: Record<string, string> = {
+    NOTE: "Note",
+    TIP: "Tip",
+    IMPORTANT: "Info",
+    WARNING: "Warning",
+    CAUTION: "Error"
+};
+const CALLOUT_START_REGEX = /^> \[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\][ \t]*$/;
+const FENCE_REGEX = /^[ \t]*(```|~~~)/;
+
+/** Split text into plain Markdown and the top-level `> [!KIND]` alerts in it, skipping code fences. */
+function splitCallouts(text: string): Array<{ component: string | undefined; body: string }> {
+    const parts: Array<{ component: string | undefined; body: string }> = [];
+    const plain: string[] = [];
+    const lines = text.split("\n");
+    let inFence = false;
+    let i = 0;
+    while (i < lines.length) {
+        const line = lines[i] ?? "";
+        const kind = inFence ? undefined : CALLOUT_START_REGEX.exec(line)?.[1];
+        if (kind == null) {
+            if (FENCE_REGEX.test(line)) {
+                inFence = !inFence;
+            }
+            plain.push(line);
+            i++;
+            continue;
+        }
+        const body: string[] = [];
+        i++;
+        while (i < lines.length && /^>( |$)/.test(lines[i] ?? "")) {
+            body.push((lines[i] ?? "").replace(/^> ?/, ""));
+            i++;
+        }
+        if (plain.length > 0) {
+            parts.push({ component: undefined, body: plain.splice(0).join("\n") });
+        }
+        parts.push({ component: CALLOUT_COMPONENTS[kind], body: body.join("\n") });
+    }
+    if (plain.length > 0 || parts.length === 0) {
+        parts.push({ component: undefined, body: plain.join("\n") });
+    }
+    return parts;
+}
+
+function renderMarkdownText(text: string): string {
     const sanitized = escapeMdxPreservingCodeBlocks(text);
     // Only wrap top-level (unindented) code blocks in <CodeBlock>.
     // Indented code blocks (inside list items) stay as plain fences because
