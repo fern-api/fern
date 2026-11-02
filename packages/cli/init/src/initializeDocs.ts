@@ -125,7 +125,7 @@ export async function initializeDocs({
  */
 async function getNextStepsMessage(): Promise<string> {
     const publishCommand =
-        (await getToken()) == null
+        (await getToken().catch(() => undefined)) == null
             ? `${chalk.bold("fern generate --docs --guest")} publishes it without a Fern account, to a temporary site you can claim later with ${chalk.bold("fern claim")}; or run ${chalk.bold("fern login")} first and publish with ${chalk.bold("fern generate --docs")}.`
             : `${chalk.bold("fern generate --docs")} publishes it.`;
     return `Next: ${chalk.bold("fern docs dev")} previews the site locally; ${publishCommand}`;
