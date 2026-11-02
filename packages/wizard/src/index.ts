@@ -18,7 +18,8 @@ export {
     downloadBrandFiles,
     fetchBrand,
     readFernToken,
-    searchBrands
+    searchBrands,
+    withSearchResultFavicon
 } from "./docs-site/brand";
 export { confidentMatch } from "./docs-site/brand-flow";
 export { defaultDocsSiteChoices, LAYOUTS, layoutFromFlag } from "./docs-site/options";

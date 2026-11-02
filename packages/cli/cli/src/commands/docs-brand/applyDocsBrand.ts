@@ -7,7 +7,8 @@ import {
     confidentMatch,
     downloadBrandFiles,
     fetchBrand,
-    searchBrands
+    searchBrands,
+    withSearchResultFavicon
 } from "@fern-api/wizard";
 
 import { CliContext } from "../../cli-context/CliContext.js";
@@ -31,10 +32,11 @@ export async function applyDocsBrand({
 }): Promise<void> {
     const token = await requireFernLogin(cliContext);
     const match = await chooseCompany({ cliContext, query, token, yes: yes || json });
-    const brand = await fetchBrand(match.domain, token);
-    if (brand === undefined) {
+    const fetched = await fetchBrand(match.domain, token);
+    if (fetched === undefined) {
         return cliContext.failAndThrow(`Couldn't load ${match.name}'s logo and colors. Try again in a moment.`);
     }
+    const brand = withSearchResultFavicon(fetched, match);
     if (json) {
         cliContext.writeJsonToStdout({ name: brand.name ?? match.name, domain: match.domain, ...brand });
         return;

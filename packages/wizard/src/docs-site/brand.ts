@@ -207,6 +207,14 @@ export function iconAsPng(iconUrl: string): string {
     return iconUrl.replace(/\/icon\.(webp|jpe?g|svg)(\?|$)/, "/icon.png$2");
 }
 
+/** Brands without an icon-type logo still have a square icon in search results; use it as the favicon. */
+export function withSearchResultFavicon(brand: Brand, match: BrandSearchResult): Brand {
+    const hasMark = brand.logos.some((logo) => logo.type === "icon" || logo.type === "symbol");
+    return brand.faviconUrl === undefined && !hasMark && match.icon !== undefined
+        ? { ...brand, faviconUrl: iconAsPng(match.icon) }
+        : brand;
+}
+
 /**
  * Downloads the brand's logos and favicon (see {@link pickBrandImages}) to a temporary directory.
  */
