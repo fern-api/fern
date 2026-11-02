@@ -47,6 +47,23 @@ describe("renderDocstring", () => {
         expect(result).not.toContain("[!NOTE]");
     });
 
+    it("does not close a backtick fence on a tilde line", () => {
+        const result = renderDocstring(docstring({ description: "```text\n~~~\n> [!NOTE]\n> x\n```" }));
+        expect(result).toContain("> [!NOTE]");
+        expect(result).not.toContain("<Note>");
+    });
+
+    it("keeps math in parameter and raises descriptions", () => {
+        const result = renderDocstring(
+            docstring({
+                params: [{ name: "gate", description: "Gate $\\text{CZ}$ with {opts}", type: "str" }],
+                raises: [{ type: "ValueError", description: "If $\\text{x}$ is bad" }]
+            })
+        );
+        expect(result).toContain("Gate $\\text{CZ}$ with &#123;opts&#125;");
+        expect(result).toContain("If $\\text{x}$ is bad");
+    });
+
     it("leaves alerts inside code blocks alone", () => {
         const result = renderDocstring(docstring({ description: "```python\n> [!NOTE]\n```" }));
         expect(result).toContain("> [!NOTE]");

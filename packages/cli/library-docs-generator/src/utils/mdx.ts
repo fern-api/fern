@@ -17,14 +17,18 @@ function escapeJsxChars(text: string): string {
  * start or end with whitespace and the closing `$` can't be followed by a digit,
  * so prices like "$5 and $10" stay plain text.
  */
-const MATH_REGEX = /\$\$[\s\S]+?\$\$|\$(?![\s$])(?:[^$\n\\]|\\.)+?(?<!\s)\$(?!\d)/g;
+const MATH_REGEX = /\$\$[\s\S]+?\$\$|(?<![\w$])\$(?![\s$])(?:[^$\n\\]|\\.)+?(?<!\s)\$(?!\d)/g;
 
-/** Escape JSX chars, leaving LaTeX math intact so braces like `\text{CZ}` still render. */
+/**
+ * Escape JSX chars, leaving LaTeX math intact so braces like `\text{CZ}` still render.
+ * `<` and `>` inside math become `\lt`/`\gt` so math can't smuggle in JSX tags.
+ */
 function escapeJsxCharsPreservingMath(text: string): string {
     let result = "";
     let lastIndex = 0;
     for (const match of text.matchAll(MATH_REGEX)) {
-        result += escapeJsxChars(text.slice(lastIndex, match.index)) + match[0];
+        const math = match[0].replace(/</g, "\\lt ").replace(/>/g, "\\gt ");
+        result += escapeJsxChars(text.slice(lastIndex, match.index)) + math;
         lastIndex = match.index + match[0].length;
     }
     return result + escapeJsxChars(text.slice(lastIndex));
@@ -42,6 +46,11 @@ function escapeJsxCharsPreservingMath(text: string): string {
  */
 export function escapeMdx(text: string): string {
     return escapeJsxChars(text.replace(/```/g, "\\`\\`\\`"));
+}
+
+/** Like `escapeMdx`, but keeps LaTeX math (`$…$`, `$$…$$`) renderable. Use for descriptions. */
+export function escapeMdxPreservingMath(text: string): string {
+    return escapeJsxCharsPreservingMath(text.replace(/```/g, "\\`\\`\\`"));
 }
 
 /**

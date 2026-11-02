@@ -6,7 +6,12 @@
  */
 
 import type { FdrAPI } from "@fern-api/fdr-sdk";
-import { escapeMdx, escapeMdxPreservingCodeBlocks, formatTypeAnnotation } from "../utils/mdx.js";
+import {
+    escapeMdx,
+    escapeMdxPreservingCodeBlocks,
+    escapeMdxPreservingMath,
+    formatTypeAnnotation
+} from "../utils/mdx.js";
 import { linkDocstringType, type RenderContext } from "../utils/TypeLinkResolver.js";
 
 /** Where the docstring is rendered; enables links from documented types to their generated pages. */
@@ -28,11 +33,11 @@ function renderDescriptionText(text: string): string {
                 ? `<${component}>\n\n${renderMarkdownText(body)}\n\n</${component}>`
                 : renderMarkdownText(body)
         )
-        .join("\n");
+        .join("\n\n");
 }
 
 /** GitHub-style alert kinds (`> [!NOTE]`) and the Fern callout each renders as. */
-const CALLOUT_COMPONENTS: Record<string, string> = {
+const CALLOUT_COMPONENTS: Record<"NOTE" | "TIP" | "IMPORTANT" | "WARNING" | "CAUTION", string> = {
     NOTE: "Note",
     TIP: "Tip",
     IMPORTANT: "Info",
@@ -40,21 +45,29 @@ const CALLOUT_COMPONENTS: Record<string, string> = {
     CAUTION: "Error"
 };
 const CALLOUT_START_REGEX = /^> \[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\][ \t]*$/;
-const FENCE_REGEX = /^[ \t]*(```|~~~)/;
+const FENCE_REGEX = /^[ \t]*(`{3,}|~{3,})/;
 
 /** Split text into plain Markdown and the top-level `> [!KIND]` alerts in it, skipping code fences. */
 function splitCallouts(text: string): Array<{ component: string | undefined; body: string }> {
     const parts: Array<{ component: string | undefined; body: string }> = [];
     const plain: string[] = [];
     const lines = text.split("\n");
-    let inFence = false;
+    let openFence: string | undefined;
     let i = 0;
     while (i < lines.length) {
         const line = lines[i] ?? "";
-        const kind = inFence ? undefined : CALLOUT_START_REGEX.exec(line)?.[1];
+        const kind =
+            openFence != null
+                ? undefined
+                : (CALLOUT_START_REGEX.exec(line)?.[1] as keyof typeof CALLOUT_COMPONENTS | undefined);
         if (kind == null) {
-            if (FENCE_REGEX.test(line)) {
-                inFence = !inFence;
+            const fence = FENCE_REGEX.exec(line)?.[1];
+            if (fence != null) {
+                if (openFence == null) {
+                    openFence = fence;
+                } else if (fence[0] === openFence[0] && fence.length >= openFence.length) {
+                    openFence = undefined;
+                }
             }
             plain.push(line);
             i++;
@@ -138,7 +151,7 @@ export function renderDocstring(
             // ParamField is a JSX context — use escapeMdx (code blocks inside JSX are unreliable).
             // The `type` prop renders as plain text, so linked types go in the body.
             const linkedType = type ? linkDocstringTypeIn(type, linkContext) : undefined;
-            const body = [linkedType, param.description ? escapeMdx(param.description) : undefined]
+            const body = [linkedType, param.description ? escapeMdxPreservingMath(param.description) : undefined]
                 .filter((part): part is string => part != null && part !== "")
                 .join(" — ");
 
@@ -161,7 +174,7 @@ export function renderDocstring(
     if (docstring.raises.length > 0) {
         lines.push("**Raises:**", "");
         for (const exc of docstring.raises) {
-            const desc = exc.description ? `: ${escapeMdx(exc.description)}` : "";
+            const desc = exc.description ? `: ${escapeMdxPreservingMath(exc.description)}` : "";
             lines.push(`- \`${escapeMdx(exc.type)}\`${desc}`);
         }
         lines.push("");

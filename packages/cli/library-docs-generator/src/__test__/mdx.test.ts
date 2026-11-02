@@ -52,6 +52,10 @@ describe("escapeMdxPreservingCodeBlocks", () => {
         );
     });
 
+    it("escapes JSX tags inside math", () => {
+        expect(escapeMdxPreservingCodeBlocks("$a <Evil/> b$")).toBe("$a \\lt Evil/\\gt  b$");
+    });
+
     it("does not treat prices as math", () => {
         expect(escapeMdxPreservingCodeBlocks("Costs $5 or $10 {each}")).toBe("Costs $5 or $10 &#123;each&#125;");
     });
