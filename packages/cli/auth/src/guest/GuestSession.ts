@@ -9,6 +9,8 @@ const LOCAL_STORAGE_FOLDER = process.env.LOCAL_STORAGE_FOLDER ?? ".fern";
 const GUEST_SESSIONS_FOLDER = "guest-sessions";
 /** Written next to fern.config.json so every shell in the same repo reuses one guest org. */
 export const GUEST_SESSION_POINTER_FILENAME = ".guest-session";
+/** `~/.fern/guest-sessions/current`: the session this machine last started or used, so a second repo joins it instead of minting its own. */
+const CURRENT_GUEST_SESSION_FILENAME = "current";
 
 export interface StoredGuestSession {
     sessionId: string;
@@ -32,12 +34,34 @@ export function getPathToGuestSessionPointer(absolutePathToFernDirectory: Absolu
     return join(absolutePathToFernDirectory, RelativeFilePath.of(GUEST_SESSION_POINTER_FILENAME));
 }
 
+export function getPathToCurrentGuestSessionPointer(): AbsoluteFilePath {
+    return join(
+        AbsoluteFilePath.of(homedir()),
+        RelativeFilePath.of(LOCAL_STORAGE_FOLDER),
+        RelativeFilePath.of(GUEST_SESSIONS_FOLDER),
+        RelativeFilePath.of(CURRENT_GUEST_SESSION_FILENAME)
+    );
+}
+
+/**
+ * The session recorded for this repo (`fern/.guest-session`), or, when the repo has none, the one this machine
+ * last used (`~/.fern/guest-sessions/current`) -- so docs from several repos land in one guest session and one
+ * claim gets them all. `source` says which, so a caller can pin a machine-wide session to the repo.
+ */
 export async function readStoredGuestSession({
     absolutePathToFernDirectory
 }: {
     absolutePathToFernDirectory: AbsoluteFilePath;
-}): Promise<StoredGuestSession | undefined> {
-    const pointerPath = getPathToGuestSessionPointer(absolutePathToFernDirectory);
+}): Promise<(StoredGuestSession & { source: "repo" | "machine" }) | undefined> {
+    const fromRepo = await readSessionAt(getPathToGuestSessionPointer(absolutePathToFernDirectory));
+    if (fromRepo != null) {
+        return { ...fromRepo, source: "repo" };
+    }
+    const fromMachine = await readSessionAt(getPathToCurrentGuestSessionPointer());
+    return fromMachine != null ? { ...fromMachine, source: "machine" } : undefined;
+}
+
+async function readSessionAt(pointerPath: AbsoluteFilePath): Promise<StoredGuestSession | undefined> {
     if (!(await doesPathExist(pointerPath))) {
         return undefined;
     }
@@ -70,9 +94,21 @@ export async function writeStoredGuestSession({
     // `mode` only applies when the file is created; tighten a pre-existing file too.
     await chmod(sessionPath, 0o600);
 
+    await writeFile(getPathToCurrentGuestSessionPointer(), `${session.sessionId}\n`, { mode: 0o600 });
+    await recordGuestSessionInRepo({ sessionId: session.sessionId, absolutePathToFernDirectory });
+}
+
+/** Points this repo at a session (which may have been started from another repo on this machine). */
+export async function recordGuestSessionInRepo({
+    sessionId,
+    absolutePathToFernDirectory
+}: {
+    sessionId: string;
+    absolutePathToFernDirectory: AbsoluteFilePath;
+}): Promise<void> {
     // Ignore the pointer before it exists, so a failure here never leaves a committable file behind.
     await ensureGitignored({ absolutePathToFernDirectory });
-    await writeFile(getPathToGuestSessionPointer(absolutePathToFernDirectory), `${session.sessionId}\n`);
+    await writeFile(getPathToGuestSessionPointer(absolutePathToFernDirectory), `${sessionId}\n`);
 }
 
 /** Forgets a session: removes the repo pointer and the credential file. Missing files are fine. */
@@ -86,6 +122,10 @@ export async function removeStoredGuestSession({
     // Credential first: a pointer without a file is harmless, a file without a pointer is unreachable.
     await unlinkIfExists(getPathToGuestSessionFile(sessionId));
     await unlinkIfExists(getPathToGuestSessionPointer(absolutePathToFernDirectory));
+    const currentPath = getPathToCurrentGuestSessionPointer();
+    if ((await doesPathExist(currentPath)) && (await readFile(currentPath, "utf-8")).trim() === sessionId) {
+        await unlinkIfExists(currentPath);
+    }
 }
 
 /** The claim secret travels in the fragment of the claim URL (`…/claim/<id>#<secret>`). */

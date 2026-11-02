@@ -5,10 +5,12 @@ export type { StoredGuestSession } from "./guest/GuestSession.js";
 export {
     GUEST_SESSION_POINTER_FILENAME,
     getClaimSecret,
+    getPathToCurrentGuestSessionPointer,
     getPathToGuestSessionFile,
     getPathToGuestSessionPointer,
     isGuestSessionLive,
     readStoredGuestSession,
+    recordGuestSessionInRepo,
     removeStoredGuestSession,
     writeStoredGuestSession
 } from "./guest/GuestSession.js";

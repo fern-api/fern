@@ -9,6 +9,7 @@ import { FernGuestToken } from "../FernToken.js";
 import {
     isGuestSessionLive,
     readStoredGuestSession,
+    recordGuestSessionInRepo,
     type StoredGuestSession,
     toGuestToken,
     writeStoredGuestSession
@@ -19,10 +20,10 @@ export type CreateGuestSession = (
 ) => Promise<FernVenusApi.CreateGuestSessionResponse>;
 
 /**
- * Returns the guest session recorded for this repo (`fern/.guest-session` -> `~/.fern/guest-sessions/<id>.json`)
- * while it is still live and was issued by the Venus the CLI is talking to now, otherwise mints a new one from
- * Venus and records it. Policy (limits, kill switch,
- * expiry) is the server's; this only keeps the credential.
+ * Returns the guest session recorded for this repo (`fern/.guest-session` -> `~/.fern/guest-sessions/<id>.json`),
+ * or failing that the one this machine last used (`~/.fern/guest-sessions/current`, then pinned to this repo too),
+ * while it is still live and was issued by the Venus the CLI is talking to now; otherwise mints a new one from
+ * Venus and records it. Policy (limits, kill switch, expiry) is the server's; this only keeps the credential.
  */
 export async function getOrCreateGuestSession({
     absolutePathToFernDirectory,
@@ -45,6 +46,9 @@ export async function getOrCreateGuestSession({
 }): Promise<{ token: FernGuestToken; reused: boolean }> {
     const stored = await readStoredGuestSession({ absolutePathToFernDirectory });
     if (!forceNew && stored != null && stored.venusOrigin === getVenusOrigin() && isGuestSessionLive(stored, now)) {
+        if (stored.source === "machine") {
+            await recordGuestSessionInRepo({ sessionId: stored.sessionId, absolutePathToFernDirectory });
+        }
         return { token: toGuestToken(stored), reused: true };
     }
 

@@ -143,7 +143,7 @@ export async function runRemoteGenerationForDocsWorkspace({
             );
             return;
         }
-        const site = await fetchGuestDocsSite({ fdrOrigin: getFdrOrigin(), token });
+        const site = await fetchGuestDocsSite({ fdrOrigin: getFdrOrigin(), token, docsUrl: maybeInstance.url });
         publishUrl = site.domain;
         context.logger.warn(
             `Ignoring instance URL "${maybeInstance.url}" from docs.yml while running as a guest; publishing to https://${publishUrl} instead.`

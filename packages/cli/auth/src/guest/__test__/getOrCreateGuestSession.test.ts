@@ -15,8 +15,10 @@ vi.mock("os", async (importOriginal) => {
 import {
     GUEST_SESSION_POINTER_FILENAME,
     getClaimSecret,
+    getPathToCurrentGuestSessionPointer,
     getPathToGuestSessionFile,
-    isGuestSessionLive
+    isGuestSessionLive,
+    removeStoredGuestSession
 } from "../GuestSession.js";
 import { getOrCreateGuestSession } from "../getOrCreateGuestSession.js";
 
@@ -147,6 +149,86 @@ describe("getOrCreateGuestSession", () => {
         expect(createGuestSession).toHaveBeenCalledTimes(1);
         expect(second.reused).toBe(true);
         expect(second.token).toEqual(first.token);
+    });
+
+    it("reuses the live session another repo on this machine started, and points this repo at it too", async () => {
+        const createGuestSession = vi.fn().mockResolvedValue(venusResponse());
+        const otherRepo = await mkdtemp(path.join(tmpdir(), "fern-guest-repo-b-"));
+        const otherFernDirectory = AbsoluteFilePath.of(path.join(otherRepo, "fern"));
+        await mkdir(otherFernDirectory, { recursive: true });
+        try {
+            const first = await getOrCreateGuestSession({
+                absolutePathToFernDirectory: fernDirectory,
+                cliVersion: "1.2.3",
+                context: createMockTaskContext(),
+                createGuestSession,
+                now: NOW
+            });
+            expect((await readFile(getPathToCurrentGuestSessionPointer(), "utf-8")).trim()).toBe("gs_123");
+
+            const second = await getOrCreateGuestSession({
+                absolutePathToFernDirectory: otherFernDirectory,
+                cliVersion: "1.2.3",
+                context: createMockTaskContext(),
+                createGuestSession,
+                now: NOW
+            });
+            expect(createGuestSession).toHaveBeenCalledTimes(1);
+            expect(second.reused).toBe(true);
+            expect(second.token).toEqual(first.token);
+            expect(
+                (await readFile(path.join(otherFernDirectory, GUEST_SESSION_POINTER_FILENAME), "utf-8")).trim()
+            ).toBe("gs_123");
+            expect(await readFile(path.join(otherFernDirectory, ".gitignore"), "utf-8")).toContain(
+                GUEST_SESSION_POINTER_FILENAME
+            );
+        } finally {
+            await rm(otherRepo, { recursive: true, force: true });
+        }
+    });
+
+    it("a repo's own pointer wins over the machine's current session", async () => {
+        const createGuestSession = vi
+            .fn()
+            .mockResolvedValueOnce(venusResponse())
+            .mockResolvedValueOnce(
+                venusResponse({ sessionId: "gs_456", organizationId: "guest-gs_456", token: "jwt-2" })
+            );
+        const args = {
+            absolutePathToFernDirectory: fernDirectory,
+            cliVersion: "1.2.3",
+            context: createMockTaskContext(),
+            createGuestSession,
+            now: NOW
+        };
+        await getOrCreateGuestSession(args);
+        await getOrCreateGuestSession({ ...args, forceNew: true });
+        // The machine now says gs_456; a repo still pointing at gs_123 keeps it.
+        await writeFile(path.join(fernDirectory, GUEST_SESSION_POINTER_FILENAME), "gs_123\n");
+        const reused = await getOrCreateGuestSession(args);
+        expect(reused.token.sessionId).toBe("gs_123");
+        expect(createGuestSession).toHaveBeenCalledTimes(2);
+    });
+
+    it("forgetting a session also clears the machine's current pointer when it names that session", async () => {
+        const createGuestSession = vi.fn().mockResolvedValue(venusResponse());
+        await getOrCreateGuestSession({
+            absolutePathToFernDirectory: fernDirectory,
+            cliVersion: "1.2.3",
+            context: createMockTaskContext(),
+            createGuestSession,
+            now: NOW
+        });
+        await removeStoredGuestSession({ sessionId: "gs_123", absolutePathToFernDirectory: fernDirectory });
+        await expect(stat(getPathToCurrentGuestSessionPointer())).rejects.toMatchObject({ code: "ENOENT" });
+        const again = await getOrCreateGuestSession({
+            absolutePathToFernDirectory: fernDirectory,
+            cliVersion: "1.2.3",
+            context: createMockTaskContext(),
+            createGuestSession,
+            now: NOW
+        });
+        expect(again.reused).toBe(false);
     });
 
     it("mints a new session when forceNew is set even though the stored one is live", async () => {
