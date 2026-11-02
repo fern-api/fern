@@ -120,8 +120,7 @@ export async function loadSdkConfigV1(
                     requestedOutput,
                     ...(configuredOutput?.type === "github"
                         ? {
-                              autoVersionPreviewOutput:
-                                  configuredOutput satisfies FernSdkGenApiGithubRequestedOutput
+                              autoVersionPreviewOutput: configuredOutput satisfies FernSdkGenApiGithubRequestedOutput
                           }
                         : {}),
                     ...(output?.delivery === "zip"

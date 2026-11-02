@@ -2168,42 +2168,44 @@ async function finishFernSdkGenApiTarget(
         target.publication?.status === "success" &&
         target.publication.output.noChangesDetected === true &&
         target.result?.actualVersion == null;
-    if (target.result?.artifactUrl == null && !noChangeAutoPreview) {
+    const artifactUrl = target.result?.artifactUrl;
+    if (artifactUrl == null && !noChangeAutoPreview) {
         return participant.context.failAndThrow("sdk-gen-api target completed without an artifact URL", undefined, {
             code: CliError.Code.InternalError
         });
     }
-    if (target.result?.artifactUrl != null && participant.absolutePathToPreview != null) {
-        await downloadFilesForTask({
-            s3PreSignedReadUrl: target.result.artifactUrl,
-            absolutePathToLocalOutput: join(
-                participant.absolutePathToPreview,
-                RelativeFilePath.of(
-                    getSdkGenApiPreviewOutputDirectoryName(
-                        participant.generatorInvocation.name,
-                        getSdkConfigTargetIndex(participant.generatorInvocation)
+    if (artifactUrl == null) {
+        participant.context.logger.info("No changes detected; there is no SDK preview to download.");
+    } else {
+        if (participant.absolutePathToPreview != null) {
+            await downloadFilesForTask({
+                s3PreSignedReadUrl: artifactUrl,
+                absolutePathToLocalOutput: join(
+                    participant.absolutePathToPreview,
+                    RelativeFilePath.of(
+                        getSdkGenApiPreviewOutputDirectoryName(
+                            participant.generatorInvocation.name,
+                            getSdkConfigTargetIndex(participant.generatorInvocation)
+                        )
                     )
-                )
-            ),
-            context: participant.context,
-            skipFernignore: participant.skipFernignore
-        });
-    } else if (target.result?.artifactUrl != null && participant.absolutePathToLocalOutputArchive != null) {
-        await downloadArchiveForTask({
-            s3PreSignedReadUrl: target.result.artifactUrl,
-            absolutePathToLocalOutput: participant.absolutePathToLocalOutputArchive,
-            context: participant.context
-        });
-    } else if (
-        target.result?.artifactUrl != null &&
-        participant.generatorInvocation.absolutePathToLocalOutput != null
-    ) {
-        await downloadFilesForTask({
-            s3PreSignedReadUrl: target.result.artifactUrl,
-            absolutePathToLocalOutput: participant.generatorInvocation.absolutePathToLocalOutput,
-            context: participant.context,
-            skipFernignore: participant.skipFernignore
-        });
+                ),
+                context: participant.context,
+                skipFernignore: participant.skipFernignore
+            });
+        } else if (participant.absolutePathToLocalOutputArchive != null) {
+            await downloadArchiveForTask({
+                s3PreSignedReadUrl: artifactUrl,
+                absolutePathToLocalOutput: participant.absolutePathToLocalOutputArchive,
+                context: participant.context
+            });
+        } else if (participant.generatorInvocation.absolutePathToLocalOutput != null) {
+            await downloadFilesForTask({
+                s3PreSignedReadUrl: artifactUrl,
+                absolutePathToLocalOutput: participant.generatorInvocation.absolutePathToLocalOutput,
+                context: participant.context,
+                skipFernignore: participant.skipFernignore
+            });
+        }
     }
     // An AUTO build that released nothing has no version, and "AUTO" itself is not one.
     const actualVersion = target.result?.actualVersion ?? (autoVersion ? undefined : participant.sdkVersion);

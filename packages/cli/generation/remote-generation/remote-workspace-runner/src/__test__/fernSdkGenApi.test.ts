@@ -3990,6 +3990,7 @@ describe("GitHub delivery result", () => {
         expect(result.actualVersion).toBeUndefined();
         expect(result.noChangesDetected).toBe(true);
         expect(result.publishTarget).toBeUndefined();
+        expect(contextLogger.info).toHaveBeenCalledWith("No changes detected; there is no SDK preview to download.");
     });
 
     it("reports a skip for no changes explicitly instead of as a created pull request", async () => {

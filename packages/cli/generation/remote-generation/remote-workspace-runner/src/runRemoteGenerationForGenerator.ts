@@ -42,8 +42,8 @@ import {
     type FernSdkConfigV1Payload,
     FernSdkGenApiBatch,
     type FernSdkGenApiBuildParameters,
-    type FernSdkGenApiGithubRequestedOutput,
     type FernSdkGenApiGithubOptions,
+    type FernSdkGenApiGithubRequestedOutput,
     FernSdkGenApiPreparationBatch,
     type FernSdkGenApiRequestedOutput,
     formatGeneratorConfigCompatibilityError,
@@ -327,17 +327,17 @@ export async function runRemoteGenerationForGenerator({
         ? { type: "download" }
         : undefined;
     const githubOptions = getFernSdkGenApiGithubOptions({ replay, verify, skipIfNoDiff, noReplay });
-    const configuredOutput =
-        sdkConfigTarget?.autoVersionPreviewOutput ??
-        sdkConfigTarget?.requestedOutput ??
-        mapFernSdkGenApiOutput(generatorInvocation, githubOptions).requestedOutput;
-    const autoVersionPreviewOutput: FernSdkGenApiGithubRequestedOutput | undefined =
-        isDryRunPreview &&
-        resolvedVersion != null &&
-        isAutoVersion(resolvedVersion) &&
-        configuredOutput.type === "github"
-            ? configuredOutput
+    // Omitted versions intentionally keep download-only semantics: sdk-gen-api resolves them to the
+    // deterministic initial version without consulting registry or GitHub state. Only explicit AUTO
+    // previews need the configured GitHub destination for semantic version analysis.
+    const configuredAutoVersionPreviewOutput =
+        sdkGenApiRoute != null && isDryRunPreview && resolvedVersion != null && isAutoVersion(resolvedVersion)
+            ? (sdkConfigTarget?.autoVersionPreviewOutput ??
+              sdkConfigTarget?.requestedOutput ??
+              mapFernSdkGenApiOutput(generatorInvocation, githubOptions).requestedOutput)
             : undefined;
+    const autoVersionPreviewOutput: FernSdkGenApiGithubRequestedOutput | undefined =
+        configuredAutoVersionPreviewOutput?.type === "github" ? configuredAutoVersionPreviewOutput : undefined;
     let sdkConfigBuildParameters: FernSdkGenApiBuildParameters | undefined;
     if (sdkGenApiRoute != null) {
         // Preview must never retain a publishing destination from SDK Config.

@@ -10,6 +10,8 @@ const generateIntermediateRepresentation = vi.hoisted(() => vi.fn());
 const migrateIntermediateRepresentationForInvocation = vi.hoisted(() =>
     vi.fn(async ({ intermediateRepresentation }) => intermediateRepresentation)
 );
+const createAndStartJob = vi.hoisted(() => vi.fn());
+const pollJobAndReportStatus = vi.hoisted(() => vi.fn());
 
 vi.mock("@fern-api/api-workspace-commons", async (importOriginal) => ({
     ...(await importOriginal<typeof import("@fern-api/api-workspace-commons")>()),
@@ -36,6 +38,9 @@ vi.mock("../migrateIntermediateRepresentationForInvocation.js", () => ({
     migrateIntermediateRepresentationForInvocation
 }));
 
+vi.mock("../createAndStartJob.js", () => ({ createAndStartJob }));
+vi.mock("../pollJobAndReportStatus.js", () => ({ pollJobAndReportStatus }));
+
 import { discoverLatestSdkGenApiGeneratorVersions } from "../discoverSdkGenApiGeneratorVersions.js";
 import {
     createFernSdkGenApiRequest,
@@ -51,6 +56,8 @@ describe("runRemoteGenerationForGenerator synthesized SDK Config latest", () => 
         vi.unstubAllGlobals();
         vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "https://sdk-gen-api.test");
         migrateIntermediateRepresentationForInvocation.mockClear();
+        createAndStartJob.mockReset().mockResolvedValue({ jobId: "job-1", taskIds: ["task-1"] });
+        pollJobAndReportStatus.mockReset().mockResolvedValue(buildResponse());
         generateIntermediateRepresentation.mockReset().mockReturnValue({
             apiName: "Petstore",
             specVersion: "1.0.0"
@@ -357,6 +364,52 @@ describe("runRemoteGenerationForGenerator synthesized SDK Config latest", () => 
                 requestedOutput: { type: "github", repository: "acme/sdk", mode: "push" }
             });
         });
+    });
+
+    it("keeps legacy Postman publication on Fiddle without sdk-gen-api output mapping", async () => {
+        const generatorInvocation = {
+            ...typescriptInvocation(),
+            outputMode: FernFiddle.OutputMode.publishV2(
+                FernFiddle.PublishOutputModeV2.postman({
+                    apiKey: "postman-api-key",
+                    workspaceId: "postman-workspace"
+                })
+            )
+        };
+        const sourceArchive = archive();
+
+        await expect(
+            runRemoteGenerationForGenerator({
+                projectConfig: { organization: "acme" } as never,
+                organization: "acme",
+                workspace: workspace() as never,
+                interactiveTaskContext: context() as never,
+                generatorInvocation,
+                version: "1.2.3",
+                audiences: { type: "all" },
+                shouldLogS3Url: false,
+                token: { value: "token" } as never,
+                whitelabel: undefined,
+                replay: undefined,
+                irVersionOverride: undefined,
+                absolutePathToPreview: undefined,
+                isPreview: false,
+                readme: undefined,
+                fernignorePath: undefined,
+                dynamicIrOnly: false,
+                retryRateLimited: false,
+                requireEnvVars: true,
+                specsTarGzBuffer: sourceArchive.buffer,
+                sdkGenApiRoute: undefined,
+                generateFullProject: true
+            })
+        ).resolves.toMatchObject({ actualVersion: "1.2.3" });
+
+        expect(createAndStartJob).toHaveBeenCalledTimes(1);
+        expect(createAndStartJob).toHaveBeenCalledWith(
+            expect.objectContaining({ generatorInvocation, version: "1.2.3" })
+        );
+        expect(pollJobAndReportStatus).toHaveBeenCalledTimes(1);
     });
 
     it("rejects latest runtime resolution at the SDK Config cutover before migration or submission", async () => {
