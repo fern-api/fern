@@ -329,10 +329,10 @@ describe("generateCpp()", () => {
         expect(existsSync(join(tmpDir, "headers", "include-pssprotocol-3.mdx"))).toBe(true);
         // `index.h` must not overwrite the headers index
         expect(existsSync(join(tmpDir, "headers", "index-2.mdx"))).toBe(true);
-        expect(index).toContain("[`index.h`](headers/index-2)");
         const index = readFileSync(join(tmpDir, "headers", "index.mdx"), "utf-8");
         expect(index).toContain("[`include/pss_protocol.h`](headers/include-pssprotocol)");
         expect(index).toContain("[`legacy/pss_protocol.h`](headers/legacy-pssprotocol)");
+        expect(index).toContain("[`index.h`](headers/index-2)");
     });
 
     // ------------------------------------------------------------------
