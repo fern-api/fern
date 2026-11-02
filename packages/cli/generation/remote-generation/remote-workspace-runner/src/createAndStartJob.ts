@@ -2,6 +2,7 @@ import { stripCliConfigKeys } from "@fern-api/api-workspace-commons";
 import { describeGuestRejection, FernToken, isGuestRejection, readGuestRejection } from "@fern-api/auth";
 import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { createFiddleService, getFiddleOrigin } from "@fern-api/core";
+import { errorMessageOrString } from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { CliError, TaskContext } from "@fern-api/task-context";
@@ -450,7 +451,7 @@ async function startJob({
         });
         context.logger.debug(`Appended provenance inputs for ${provenanceInputs.specs.length} spec file(s)`);
     } catch (error) {
-        context.logger.debug(`Skipping provenance inputs: ${error instanceof Error ? error.message : String(error)}`);
+        context.logger.debug(`Skipping provenance inputs: ${errorMessageOrString(error)}`);
     }
 
     const url = urlJoin(getFiddleOrigin(), `/api/remote-gen/jobs/${job.jobId}/start`);
