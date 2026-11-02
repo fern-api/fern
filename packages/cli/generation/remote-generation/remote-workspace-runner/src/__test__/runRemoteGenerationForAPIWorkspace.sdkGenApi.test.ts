@@ -29,7 +29,7 @@ import type { FernSdkGenApiSourceArchive } from "../fernSdkGenApiSourceArchive.j
 import {
     prepareFernSdkGenApiRoutes,
     runRemoteGenerationForAPIWorkspace,
-    shouldKeepProtobufWorkspaceOnFiddle
+    shouldKeepProtobufGeneratorOnFiddle
 } from "../runRemoteGenerationForAPIWorkspace.js";
 
 function invocation(
@@ -825,20 +825,45 @@ describe("protobuf workspaces", () => {
         vi.unstubAllEnvs();
     });
 
+    const csharp = invocation("fernapi/fern-csharp-sdk", "csharp", "2.999.999");
+
     it("keeps a generators.yml proto workspace on Fiddle", () => {
-        expect(shouldKeepProtobufWorkspaceOnFiddle(ossWorkspace({ specs: ["protobuf"], allSpecs: [] }))).toBe(true);
-        expect(shouldKeepProtobufWorkspaceOnFiddle(ossWorkspace({ specs: [], allSpecs: ["protobuf"] }))).toBe(true);
+        expect(shouldKeepProtobufGeneratorOnFiddle(ossWorkspace({ specs: ["protobuf"], allSpecs: [] }), csharp)).toBe(
+            true
+        );
+        expect(shouldKeepProtobufGeneratorOnFiddle(ossWorkspace({ specs: [], allSpecs: ["protobuf"] }), csharp)).toBe(
+            true
+        );
     });
 
     it("leaves non-proto workspaces to the flag", () => {
-        expect(shouldKeepProtobufWorkspaceOnFiddle(ossWorkspace({ specs: ["openapi"], allSpecs: ["openapi"] }))).toBe(
-            false
-        );
+        expect(
+            shouldKeepProtobufGeneratorOnFiddle(ossWorkspace({ specs: ["openapi"], allSpecs: ["openapi"] }), csharp)
+        ).toBe(false);
+    });
+
+    it("follows a generator's specs override", () => {
+        const withOverride = (specs: generatorsYml.SpecSchema[]) =>
+            ({ ...csharp, apiOverride: { specs } }) as generatorsYml.GeneratorInvocation;
+        expect(
+            shouldKeepProtobufGeneratorOnFiddle(
+                ossWorkspace({ specs: ["protobuf"], allSpecs: [] }),
+                withOverride([{ openapi: "openapi.yml" }])
+            )
+        ).toBe(false);
+        expect(
+            shouldKeepProtobufGeneratorOnFiddle(
+                ossWorkspace({ specs: ["openapi"], allSpecs: [] }),
+                withOverride([{ proto: { root: "proto" } }])
+            )
+        ).toBe(true);
     });
 
     it("lets FERN_USE_SDK_GEN_API=true force sdk-gen-api", () => {
         vi.stubEnv("FERN_USE_SDK_GEN_API", "true");
-        expect(shouldKeepProtobufWorkspaceOnFiddle(ossWorkspace({ specs: ["protobuf"], allSpecs: [] }))).toBe(false);
+        expect(shouldKeepProtobufGeneratorOnFiddle(ossWorkspace({ specs: ["protobuf"], allSpecs: [] }), csharp)).toBe(
+            false
+        );
     });
 
     it("generates a proto workspace on Fiddle when the flag enables sdk-gen-api", async () => {
