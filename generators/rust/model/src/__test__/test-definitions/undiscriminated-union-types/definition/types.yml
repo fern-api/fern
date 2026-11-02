@@ -63,7 +63,7 @@ types:
   # Undiscriminated union with a single-enum-property member.
   # The EventPayload struct has one field whose type is an enum.
   # It must NOT get #[serde(transparent)] because that would serialize
-  # as just the enum string instead of {"type":"text.done"}.
+  # as just the enum string instead of {"kind":"text.done"}.
   EventMessage:
     union:
       payload: EventPayload
@@ -71,7 +71,7 @@ types:
 
   EventPayload:
     properties:
-      type: EventType
+      kind: EventType
 
   EventType:
     enum:

@@ -7,7 +7,7 @@ pub enum EventMessage {
         #[serde(rename = "payload")]
         #[non_exhaustive]
         Payload {
-            r#type: EventType,
+            kind: EventType,
         },
 
         #[serde(rename = "raw")]
@@ -24,8 +24,8 @@ pub enum EventMessage {
 }
 
 impl EventMessage {
-    pub fn payload(r#type: EventType) -> Self {
-        Self::Payload { r#type }
+    pub fn payload(kind: EventType) -> Self {
+        Self::Payload { kind }
     }
 
     pub fn raw(value: String) -> Self {
