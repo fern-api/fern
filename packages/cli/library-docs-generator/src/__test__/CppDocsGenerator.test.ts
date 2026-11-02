@@ -228,6 +228,11 @@ describe("generateCpp()", () => {
             ]
         } as unknown as CppNamespaceIr["enums"][number];
         const named = { ...anon, name: "Mode", path: "Mode" };
+        const anonOnly = makeIr(makeNamespace({ enums: [anon] }));
+        generateCpp({ ir: anonOnly, outputDir: tmpDir, slug: "safety" });
+        expect(readFileSync(join(tmpDir, "enums", "index.mdx"), "utf-8")).toContain("- `OPERATIONAL` — Normal");
+        rmSync(tmpDir, { recursive: true, force: true });
+        mkdirSync(tmpDir);
         const ir = makeIr(makeNamespace({ enums: [anon, named] }));
         generateCpp({ ir, outputDir: tmpDir, slug: "safety" });
         const files = collectMdxFiles(tmpDir).map((f) => f.split("/").pop());
@@ -272,6 +277,17 @@ describe("generateCpp()", () => {
                     macros: ["PSS_OLD"]
                 },
                 {
+                    name: "index.h",
+                    path: "index.h",
+                    includes: [],
+                    classes: [],
+                    functions: [],
+                    enums: [],
+                    typedefs: [],
+                    variables: [],
+                    macros: []
+                },
+                {
                     name: "pss_protocol-2.h",
                     path: "include/pss_protocol-2.h",
                     includes: [],
@@ -299,7 +315,7 @@ describe("generateCpp()", () => {
         expect(existsSync(join(tmpDir, "headers"))).toBe(false);
 
         const withHeaders = generateCpp({ ir, outputDir: tmpDir, slug: "safety", organizeBy: "header" });
-        expect(withHeaders.pageCount).toBe(withoutHeaders.pageCount + 5);
+        expect(withHeaders.pageCount).toBe(withoutHeaders.pageCount + 6);
         const page = readFileSync(join(tmpDir, "headers", "include-pssprotocol.mdx"), "utf-8");
         expect(page).toContain("#include <include/pss_protocol.h>");
         expect(page).toContain("Wire protocol.");
@@ -311,9 +327,12 @@ describe("generateCpp()", () => {
         // `include/pss_protocol-2.h` claims `include-pssprotocol-2`; the later colliding `include/pss__protocol.h` moves on to `-3`
         expect(existsSync(join(tmpDir, "headers", "include-pssprotocol-2.mdx"))).toBe(true);
         expect(existsSync(join(tmpDir, "headers", "include-pssprotocol-3.mdx"))).toBe(true);
+        // `index.h` must not overwrite the headers index
+        expect(existsSync(join(tmpDir, "headers", "index-2.mdx"))).toBe(true);
+        expect(index).toContain("[`index.h`](headers/index-2)");
         const index = readFileSync(join(tmpDir, "headers", "index.mdx"), "utf-8");
-        expect(index).toContain("[`include/pss_protocol.h`](./include-pssprotocol)");
-        expect(index).toContain("[`legacy/pss_protocol.h`](./legacy-pssprotocol)");
+        expect(index).toContain("[`include/pss_protocol.h`](headers/include-pssprotocol)");
+        expect(index).toContain("[`legacy/pss_protocol.h`](headers/legacy-pssprotocol)");
     });
 
     // ------------------------------------------------------------------
