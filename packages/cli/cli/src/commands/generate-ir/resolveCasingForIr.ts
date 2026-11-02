@@ -24,7 +24,10 @@ export function resolveCasingForIr({
         generationLanguage
     });
     if (smartCasing != null) {
-        return { smartCasing, smartCasingDigitWordBoundary: fromGenerators?.smartCasingDigitWordBoundary };
+        return {
+            smartCasing,
+            smartCasingDigitWordBoundary: smartCasing ? fromGenerators?.smartCasingDigitWordBoundary : undefined
+        };
     }
     if (fromGenerators == null) {
         if (generationLanguage != null) {

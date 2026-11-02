@@ -25,7 +25,7 @@ export async function generateIrForFernWorkspace({
     generationLanguage: generatorsYml.GenerationLanguage | undefined;
     keywords: string[] | undefined;
     smartCasing: boolean;
-    smartCasingDigitWordBoundary?: boolean;
+    smartCasingDigitWordBoundary: boolean | undefined;
     disableExamples: boolean;
     audiences: Audiences;
     readme: generatorsYml.ReadmeSchema | undefined;
