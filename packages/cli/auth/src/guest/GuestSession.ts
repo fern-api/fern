@@ -94,7 +94,9 @@ export async function writeStoredGuestSession({
     // `mode` only applies when the file is created; tighten a pre-existing file too.
     await chmod(sessionPath, 0o600);
 
-    await writeFile(getPathToCurrentGuestSessionPointer(), `${session.sessionId}\n`, { mode: 0o600 });
+    const currentPath = getPathToCurrentGuestSessionPointer();
+    await mkdir(dirname(currentPath), { recursive: true, mode: 0o700 });
+    await writeFile(currentPath, `${session.sessionId}\n`, { mode: 0o600 });
     await recordGuestSessionInRepo({ sessionId: session.sessionId, absolutePathToFernDirectory });
 }
 
@@ -123,8 +125,19 @@ export async function removeStoredGuestSession({
     await unlinkIfExists(getPathToGuestSessionFile(sessionId));
     await unlinkIfExists(getPathToGuestSessionPointer(absolutePathToFernDirectory));
     const currentPath = getPathToCurrentGuestSessionPointer();
-    if ((await doesPathExist(currentPath)) && (await readFile(currentPath, "utf-8")).trim() === sessionId) {
+    if ((await readFileIfExists(currentPath))?.trim() === sessionId) {
         await unlinkIfExists(currentPath);
+    }
+}
+
+async function readFileIfExists(path: AbsoluteFilePath): Promise<string | undefined> {
+    try {
+        return await readFile(path, "utf-8");
+    } catch (error) {
+        if (isEnoentError(error)) {
+            return undefined;
+        }
+        throw error;
     }
 }
 
