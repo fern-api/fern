@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="src/seed/service/client.py">endpoint</a>()</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L25-L47">endpoint</a>()</code></summary>
 <dl>
 <dd>
 

@@ -1,6 +1,6 @@
 # Reference
 ## Union
-<details><summary><code>client.union.<a href="src/seed/union/client.py">get</a>(...) -> MyUnion</code></summary>
+<details><summary><code>client.union.<a href="src/seed/union/client.py#L37-L62">get</a>(...) -> MyUnion</code></summary>
 <dl>
 <dd>
 
@@ -57,7 +57,7 @@ client.union.get(
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="src/seed/union/client.py">get_metadata</a>() -> Metadata</code></summary>
+<details><summary><code>client.union.<a href="src/seed/union/client.py#L64-L85">get_metadata</a>() -> Metadata</code></summary>
 <dl>
 <dd>
 
@@ -104,7 +104,7 @@ client.union.get_metadata()
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="src/seed/union/client.py">update_metadata</a>(...) -> bool</code></summary>
+<details><summary><code>client.union.<a href="src/seed/union/client.py#L87-L114">update_metadata</a>(...) -> bool</code></summary>
 <dl>
 <dd>
 
@@ -163,7 +163,7 @@ client.union.update_metadata(
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="src/seed/union/client.py">call</a>(...) -> bool</code></summary>
+<details><summary><code>client.union.<a href="src/seed/union/client.py#L116-L143">call</a>(...) -> bool</code></summary>
 <dl>
 <dd>
 
@@ -222,7 +222,7 @@ client.union.call(
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="src/seed/union/client.py">duplicate_types_union</a>(...) -> UnionWithDuplicateTypes</code></summary>
+<details><summary><code>client.union.<a href="src/seed/union/client.py#L145-L172">duplicate_types_union</a>(...) -> UnionWithDuplicateTypes</code></summary>
 <dl>
 <dd>
 
@@ -279,7 +279,7 @@ client.union.duplicate_types_union(
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="src/seed/union/client.py">nested_unions</a>(...) -> str</code></summary>
+<details><summary><code>client.union.<a href="src/seed/union/client.py#L174-L201">nested_unions</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -336,7 +336,7 @@ client.union.nested_unions(
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="src/seed/union/client.py">nested_object_unions</a>(...) -> str</code></summary>
+<details><summary><code>client.union.<a href="src/seed/union/client.py#L203-L230">nested_object_unions</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -393,7 +393,7 @@ client.union.nested_object_unions(
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="src/seed/union/client.py">aliased_object_union</a>(...) -> str</code></summary>
+<details><summary><code>client.union.<a href="src/seed/union/client.py#L232-L263">aliased_object_union</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -454,7 +454,7 @@ client.union.aliased_object_union(
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="src/seed/union/client.py">get_with_base_properties</a>(...) -> UnionWithBaseProperties</code></summary>
+<details><summary><code>client.union.<a href="src/seed/union/client.py#L265-L296">get_with_base_properties</a>(...) -> UnionWithBaseProperties</code></summary>
 <dl>
 <dd>
 
@@ -517,7 +517,7 @@ client.union.get_with_base_properties(
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="src/seed/union/client.py">test_camel_case_properties</a>(...) -> str</code></summary>
+<details><summary><code>client.union.<a href="src/seed/union/client.py#L298-L331">test_camel_case_properties</a>(...) -> str</code></summary>
 <dl>
 <dd>
 

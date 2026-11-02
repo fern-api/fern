@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">get_test</a>() -> RootObject</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L109-L131">get_test</a>() -> RootObject</code></summary>
 <dl>
 <dd>
 
@@ -61,7 +61,7 @@ client.get_test()
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">create_test</a>(...) -> RootObject</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L133-L167">create_test</a>(...) -> RootObject</code></summary>
 <dl>
 <dd>
 

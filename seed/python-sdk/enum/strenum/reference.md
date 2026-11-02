@@ -1,6 +1,6 @@
 # Reference
 ## Headers
-<details><summary><code>client.headers.<a href="src/seed/headers/client.py">send</a>(...)</code></summary>
+<details><summary><code>client.headers.<a href="src/seed/headers/client.py#L27-L74">send</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -84,7 +84,7 @@ client.headers.send(
 </details>
 
 ## InlinedRequest
-<details><summary><code>client.inlined_request.<a href="src/seed/inlined_request/client.py">send</a>(...)</code></summary>
+<details><summary><code>client.inlined_request.<a href="src/seed/inlined_request/client.py#L30-L76">send</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -167,7 +167,7 @@ client.inlined_request.send(
 </details>
 
 ## MultipartForm
-<details><summary><code>client.multipart_form.<a href="src/seed/multipart_form/client.py">multipart_form</a>(...)</code></summary>
+<details><summary><code>client.multipart_form.<a href="src/seed/multipart_form/client.py#L29-L63">multipart_form</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -240,7 +240,7 @@ client.multipart_form.multipart_form(...)
 </details>
 
 ## PathParam
-<details><summary><code>client.path_param.<a href="src/seed/path_param/client.py">send</a>(...)</code></summary>
+<details><summary><code>client.path_param.<a href="src/seed/path_param/client.py#L27-L61">send</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -307,7 +307,7 @@ client.path_param.send(
 </details>
 
 ## QueryParam
-<details><summary><code>client.query_param.<a href="src/seed/query_param/client.py">send</a>(...)</code></summary>
+<details><summary><code>client.query_param.<a href="src/seed/query_param/client.py#L27-L73">send</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -389,7 +389,7 @@ client.query_param.send(
 </dl>
 </details>
 
-<details><summary><code>client.query_param.<a href="src/seed/query_param/client.py">send_list</a>(...)</code></summary>
+<details><summary><code>client.query_param.<a href="src/seed/query_param/client.py#L75-L123">send_list</a>(...)</code></summary>
 <dl>
 <dd>
 

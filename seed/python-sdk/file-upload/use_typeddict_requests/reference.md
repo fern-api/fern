@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="src/seed/service/client.py">post</a>(...)</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L38-L120">post</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -160,7 +160,7 @@ client.service.post(...)
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">just_file</a>(...)</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L122-L146">just_file</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -217,7 +217,7 @@ client.service.just_file(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">just_file_with_query_params</a>(...)</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L148-L191">just_file_with_query_params</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -305,7 +305,7 @@ client.service.just_file_with_query_params(...)
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">just_file_with_optional_query_params</a>(...)</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L193-L221">just_file_with_optional_query_params</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -369,7 +369,7 @@ client.service.just_file_with_optional_query_params(...)
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">with_content_type</a>(...)</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L223-L254">with_content_type</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -441,7 +441,7 @@ client.service.with_content_type(...)
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">with_form_encoding</a>(...)</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L256-L277">with_form_encoding</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -505,7 +505,7 @@ client.service.with_form_encoding(...)
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">with_form_encoded_containers</a>(...)</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L279-L365">with_form_encoded_containers</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -673,7 +673,7 @@ client.service.with_form_encoded_containers(...)
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">optional_args</a>(...) -> str</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L367-L401">optional_args</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -738,7 +738,7 @@ client.service.optional_args(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">with_inline_type</a>(...) -> str</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L403-L422">with_inline_type</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -794,7 +794,7 @@ client.service.with_inline_type(...)
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">with_json_property</a>(...) -> str</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L424-L447">with_json_property</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -850,7 +850,7 @@ client.service.with_json_property(...)
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">with_ref_body</a>(...) -> str</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L449-L485">with_ref_body</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -918,7 +918,7 @@ client.service.with_ref_body(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">simple</a>()</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L487-L508">simple</a>()</code></summary>
 <dl>
 <dd>
 
@@ -965,7 +965,7 @@ client.service.simple()
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">with_literal_and_enum_types</a>(...) -> str</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L510-L545">with_literal_and_enum_types</a>(...) -> str</code></summary>
 <dl>
 <dd>
 

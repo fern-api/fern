@@ -1,6 +1,6 @@
 # Reference
 ## Simple
-<details><summary><code>client.simple.<a href="src/seed/simple/client.py">foo_without_endpoint_error</a>(...) -> FooResponse</code></summary>
+<details><summary><code>client.simple.<a href="src/seed/simple/client.py#L29-L56">foo_without_endpoint_error</a>(...) -> FooResponse</code></summary>
 <dl>
 <dd>
 
@@ -57,7 +57,7 @@ client.simple.foo_without_endpoint_error(
 </dl>
 </details>
 
-<details><summary><code>client.simple.<a href="src/seed/simple/client.py">foo</a>(...) -> FooResponse</code></summary>
+<details><summary><code>client.simple.<a href="src/seed/simple/client.py#L58-L83">foo</a>(...) -> FooResponse</code></summary>
 <dl>
 <dd>
 
@@ -114,7 +114,7 @@ client.simple.foo(
 </dl>
 </details>
 
-<details><summary><code>client.simple.<a href="src/seed/simple/client.py">foo_with_examples</a>(...) -> FooResponse</code></summary>
+<details><summary><code>client.simple.<a href="src/seed/simple/client.py#L85-L110">foo_with_examples</a>(...) -> FooResponse</code></summary>
 <dl>
 <dd>
 

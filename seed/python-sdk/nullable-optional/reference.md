@@ -1,6 +1,6 @@
 # Reference
 ## NullableOptional
-<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">get_user</a>(...) -> UserResponse</code></summary>
+<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py#L37-L64">get_user</a>(...) -> UserResponse</code></summary>
 <dl>
 <dd>
 
@@ -71,7 +71,7 @@ client.nullable_optional.get_user(
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">create_user</a>(...) -> UserResponse</code></summary>
+<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py#L66-L121">create_user</a>(...) -> UserResponse</code></summary>
 <dl>
 <dd>
 
@@ -154,7 +154,7 @@ client.nullable_optional.create_user(
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">update_user</a>(...) -> UserResponse</code></summary>
+<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py#L123-L182">update_user</a>(...) -> UserResponse</code></summary>
 <dl>
 <dd>
 
@@ -246,7 +246,7 @@ client.nullable_optional.update_user(
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">list_users</a>(...) -> typing.List[UserResponse]</code></summary>
+<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py#L184-L234">list_users</a>(...) -> typing.List[UserResponse]</code></summary>
 <dl>
 <dd>
 
@@ -344,7 +344,7 @@ client.nullable_optional.list_users(
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">search_users</a>(...) -> typing.List[UserResponse]</code></summary>
+<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py#L236-L282">search_users</a>(...) -> typing.List[UserResponse]</code></summary>
 <dl>
 <dd>
 
@@ -442,7 +442,7 @@ client.nullable_optional.search_users(
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">create_complex_profile</a>(...) -> ComplexProfile</code></summary>
+<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py#L284-L492">create_complex_profile</a>(...) -> ComplexProfile</code></summary>
 <dl>
 <dd>
 
@@ -612,7 +612,7 @@ client.nullable_optional.create_complex_profile(
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">get_complex_profile</a>(...) -> ComplexProfile</code></summary>
+<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py#L494-L523">get_complex_profile</a>(...) -> ComplexProfile</code></summary>
 <dl>
 <dd>
 
@@ -683,7 +683,7 @@ client.nullable_optional.get_complex_profile(
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">update_complex_profile</a>(...) -> ComplexProfile</code></summary>
+<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py#L525-L616">update_complex_profile</a>(...) -> ComplexProfile</code></summary>
 <dl>
 <dd>
 
@@ -824,7 +824,7 @@ client.nullable_optional.update_complex_profile(
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">test_deserialization</a>(...) -> DeserializationTestResponse</code></summary>
+<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py#L618-L753">test_deserialization</a>(...) -> DeserializationTestResponse</code></summary>
 <dl>
 <dd>
 
@@ -946,7 +946,7 @@ client.nullable_optional.test_deserialization(
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">filter_by_role</a>(...) -> typing.List[UserResponse]</code></summary>
+<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py#L755-L797">filter_by_role</a>(...) -> typing.List[UserResponse]</code></summary>
 <dl>
 <dd>
 
@@ -1035,7 +1035,7 @@ client.nullable_optional.filter_by_role(
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">get_notification_settings</a>(...) -> typing.Optional[NotificationMethod]</code></summary>
+<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py#L799-L829">get_notification_settings</a>(...) -> typing.Optional[NotificationMethod]</code></summary>
 <dl>
 <dd>
 
@@ -1106,7 +1106,7 @@ client.nullable_optional.get_notification_settings(
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">update_tags</a>(...) -> typing.List[str]</code></summary>
+<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py#L831-L878">update_tags</a>(...) -> typing.List[str]</code></summary>
 <dl>
 <dd>
 
@@ -1213,7 +1213,7 @@ client.nullable_optional.update_tags(
 </dl>
 </details>
 
-<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py">get_search_results</a>(...) -> typing.Optional[typing.List[SearchResult]]</code></summary>
+<details><summary><code>client.nullable_optional.<a href="src/seed/nullable_optional/client.py#L880-L923">get_search_results</a>(...) -> typing.Optional[typing.List[SearchResult]]</code></summary>
 <dl>
 <dd>
 

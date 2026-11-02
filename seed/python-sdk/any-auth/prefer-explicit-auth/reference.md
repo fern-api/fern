@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="src/seed/auth/client.py">get_token</a>(...) -> TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="src/seed/auth/client.py#L29-L63">get_token</a>(...) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -84,7 +84,7 @@ client.auth.get_token(
 </details>
 
 ## User
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get</a>() -> typing.List[User]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py#L26-L49">get</a>() -> typing.List[User]</code></summary>
 <dl>
 <dd>
 
@@ -132,7 +132,7 @@ client.user.get()
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get_admins</a>() -> typing.List[User]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py#L51-L74">get_admins</a>() -> typing.List[User]</code></summary>
 <dl>
 <dd>
 

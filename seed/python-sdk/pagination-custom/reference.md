@@ -1,6 +1,6 @@
 # Reference
 ## Users
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_custom_pager</a>(...) -> UsersListResponse</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py#L27-L70">list_with_custom_pager</a>(...) -> UsersListResponse</code></summary>
 <dl>
 <dd>
 

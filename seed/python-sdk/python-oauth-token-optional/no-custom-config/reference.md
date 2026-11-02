@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="src/seed/auth/client.py">create_oauth2token</a>(...) -> TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="src/seed/auth/client.py#L29-L71">create_oauth2token</a>(...) -> TokenResponse</code></summary>
 <dl>
 <dd>
 

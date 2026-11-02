@@ -1,6 +1,6 @@
 # Reference
 ## Contacts
-<details><summary><code>client.contacts.<a href="src/seed/contacts/client.py">create</a>(...) -> typing.Optional[Contact]</code></summary>
+<details><summary><code>client.contacts.<a href="src/seed/contacts/client.py#L29-L61">create</a>(...) -> typing.Optional[Contact]</code></summary>
 <dl>
 <dd>
 
@@ -79,7 +79,7 @@ client.contacts.create(
 </dl>
 </details>
 
-<details><summary><code>client.contacts.<a href="src/seed/contacts/client.py">get</a>(...) -> Contact</code></summary>
+<details><summary><code>client.contacts.<a href="src/seed/contacts/client.py#L63-L91">get</a>(...) -> Contact</code></summary>
 <dl>
 <dd>
 

@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="src/seed/service/client.py">get_with_api_version</a>() -> str</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L25-L51">get_with_api_version</a>() -> str</code></summary>
 <dl>
 <dd>
 

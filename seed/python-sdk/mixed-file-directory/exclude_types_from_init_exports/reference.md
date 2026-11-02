@@ -1,6 +1,6 @@
 # Reference
 ## Organization
-<details><summary><code>client.organization.<a href="src/seed/organization/client.py">create</a>(...) -> Organization</code></summary>
+<details><summary><code>client.organization.<a href="src/seed/organization/client.py#L29-L56">create</a>(...) -> Organization</code></summary>
 <dl>
 <dd>
 
@@ -72,7 +72,7 @@ client.organization.create(
 </details>
 
 ## User
-<details><summary><code>client.user.<a href="src/seed/user/client.py">list</a>(...) -> typing.List[User]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py#L33-L63">list</a>(...) -> typing.List[User]</code></summary>
 <dl>
 <dd>
 
@@ -144,7 +144,7 @@ client.user.list(
 </details>
 
 ## User Events
-<details><summary><code>client.user.events.<a href="src/seed/user/events/client.py">list_events</a>(...) -> typing.List[Event]</code></summary>
+<details><summary><code>client.user.events.<a href="src/seed/user/events/client.py#L33-L63">list_events</a>(...) -> typing.List[Event]</code></summary>
 <dl>
 <dd>
 
@@ -216,7 +216,7 @@ client.user.events.list_events(
 </details>
 
 ## User Events Metadata
-<details><summary><code>client.user.events.metadata.<a href="src/seed/user/events/metadata/client.py">get_metadata</a>(...) -> Metadata</code></summary>
+<details><summary><code>client.user.events.metadata.<a href="src/seed/user/events/metadata/client.py#L27-L54">get_metadata</a>(...) -> Metadata</code></summary>
 <dl>
 <dd>
 

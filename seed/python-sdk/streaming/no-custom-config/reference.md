@@ -1,6 +1,6 @@
 # Reference
 ## Dummy
-<details><summary><code>client.dummy.<a href="src/seed/dummy/client.py">generate_stream</a>(...) -> typing.Iterator[bytes]</code></summary>
+<details><summary><code>client.dummy.<a href="src/seed/dummy/client.py#L29-L58">generate_stream</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -65,7 +65,7 @@ client.dummy.generate_stream(
 </dl>
 </details>
 
-<details><summary><code>client.dummy.<a href="src/seed/dummy/client.py">generate</a>(...) -> StreamResponse</code></summary>
+<details><summary><code>client.dummy.<a href="src/seed/dummy/client.py#L60-L85">generate</a>(...) -> StreamResponse</code></summary>
 <dl>
 <dd>
 

@@ -1,6 +1,6 @@
 # Reference
 ## Identity
-<details><summary><code>client.identity.<a href="src/seed/identity/client.py">get_token</a>(...) -> TokenResponse</code></summary>
+<details><summary><code>client.identity.<a href="src/seed/identity/client.py#L29-L62">get_token</a>(...) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -69,7 +69,7 @@ client.identity.get_token(
 </details>
 
 ## Plants
-<details><summary><code>client.plants.<a href="src/seed/plants/client.py">list</a>() -> typing.List[Plant]</code></summary>
+<details><summary><code>client.plants.<a href="src/seed/plants/client.py#L26-L50">list</a>() -> typing.List[Plant]</code></summary>
 <dl>
 <dd>
 
@@ -118,7 +118,7 @@ client.plants.list()
 </dl>
 </details>
 
-<details><summary><code>client.plants.<a href="src/seed/plants/client.py">get</a>(...) -> Plant</code></summary>
+<details><summary><code>client.plants.<a href="src/seed/plants/client.py#L52-L80">get</a>(...) -> Plant</code></summary>
 <dl>
 <dd>
 

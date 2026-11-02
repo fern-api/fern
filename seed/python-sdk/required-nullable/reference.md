@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">get_foo</a>(...) -> Foo</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L100-L151">get_foo</a>(...) -> Foo</code></summary>
 <dl>
 <dd>
 
@@ -81,7 +81,7 @@ client.get_foo(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">update_foo</a>(...) -> Foo</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L153-L216">update_foo</a>(...) -> Foo</code></summary>
 <dl>
 <dd>
 

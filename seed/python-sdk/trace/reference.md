@@ -1,6 +1,6 @@
 # Reference
 ## V2
-<details><summary><code>client.v2.<a href="src/seed/v2/client.py">test</a>()</code></summary>
+<details><summary><code>client.v2.<a href="src/seed/v2/client.py#L34-L56">test</a>()</code></summary>
 <dl>
 <dd>
 
@@ -50,7 +50,7 @@ client.v2.test()
 </details>
 
 ## Admin
-<details><summary><code>client.admin.<a href="src/seed/admin/client.py">update_test_submission_status</a>(...)</code></summary>
+<details><summary><code>client.admin.<a href="src/seed/admin/client.py#L39-L81">update_test_submission_status</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -120,7 +120,7 @@ client.admin.update_test_submission_status(
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="src/seed/admin/client.py">send_test_submission_update</a>(...)</code></summary>
+<details><summary><code>client.admin.<a href="src/seed/admin/client.py#L83-L132">send_test_submission_update</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -194,7 +194,7 @@ client.admin.send_test_submission_update(
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="src/seed/admin/client.py">update_workspace_submission_status</a>(...)</code></summary>
+<details><summary><code>client.admin.<a href="src/seed/admin/client.py#L134-L176">update_workspace_submission_status</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -264,7 +264,7 @@ client.admin.update_workspace_submission_status(
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="src/seed/admin/client.py">send_workspace_submission_update</a>(...)</code></summary>
+<details><summary><code>client.admin.<a href="src/seed/admin/client.py#L178-L229">send_workspace_submission_update</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -338,7 +338,7 @@ client.admin.send_workspace_submission_update(
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="src/seed/admin/client.py">store_traced_test_case</a>(...)</code></summary>
+<details><summary><code>client.admin.<a href="src/seed/admin/client.py#L231-L374">store_traced_test_case</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -511,7 +511,7 @@ client.admin.store_traced_test_case(
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="src/seed/admin/client.py">store_traced_test_case_v2</a>(...)</code></summary>
+<details><summary><code>client.admin.<a href="src/seed/admin/client.py#L376-L509">store_traced_test_case_v2</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -670,7 +670,7 @@ client.admin.store_traced_test_case_v2(
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="src/seed/admin/client.py">store_traced_workspace</a>(...)</code></summary>
+<details><summary><code>client.admin.<a href="src/seed/admin/client.py#L511-L653">store_traced_workspace</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -833,7 +833,7 @@ client.admin.store_traced_workspace(
 </dl>
 </details>
 
-<details><summary><code>client.admin.<a href="src/seed/admin/client.py">store_traced_workspace_v2</a>(...)</code></summary>
+<details><summary><code>client.admin.<a href="src/seed/admin/client.py#L655-L784">store_traced_workspace_v2</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -984,7 +984,7 @@ client.admin.store_traced_workspace_v2(
 </details>
 
 ## Homepage
-<details><summary><code>client.homepage.<a href="src/seed/homepage/client.py">get_homepage_problems</a>() -> typing.List[ProblemId]</code></summary>
+<details><summary><code>client.homepage.<a href="src/seed/homepage/client.py#L29-L53">get_homepage_problems</a>() -> typing.List[ProblemId]</code></summary>
 <dl>
 <dd>
 
@@ -1033,7 +1033,7 @@ client.homepage.get_homepage_problems()
 </dl>
 </details>
 
-<details><summary><code>client.homepage.<a href="src/seed/homepage/client.py">set_homepage_problems</a>(...)</code></summary>
+<details><summary><code>client.homepage.<a href="src/seed/homepage/client.py#L55-L83">set_homepage_problems</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -1096,7 +1096,7 @@ client.homepage.set_homepage_problems(
 </details>
 
 ## Migration
-<details><summary><code>client.migration.<a href="src/seed/migration/client.py">get_attempted_migrations</a>(...) -> typing.List[Migration]</code></summary>
+<details><summary><code>client.migration.<a href="src/seed/migration/client.py#L26-L56">get_attempted_migrations</a>(...) -> typing.List[Migration]</code></summary>
 <dl>
 <dd>
 
@@ -1156,7 +1156,7 @@ client.migration.get_attempted_migrations(
 </details>
 
 ## Playlist
-<details><summary><code>client.playlist.<a href="src/seed/playlist/client.py">create_playlist</a>(...) -> Playlist</code></summary>
+<details><summary><code>client.playlist.<a href="src/seed/playlist/client.py#L33-L95">create_playlist</a>(...) -> Playlist</code></summary>
 <dl>
 <dd>
 
@@ -1261,7 +1261,7 @@ client.playlist.create_playlist(
 </dl>
 </details>
 
-<details><summary><code>client.playlist.<a href="src/seed/playlist/client.py">get_playlists</a>(...) -> typing.List[Playlist]</code></summary>
+<details><summary><code>client.playlist.<a href="src/seed/playlist/client.py#L97-L161">get_playlists</a>(...) -> typing.List[Playlist]</code></summary>
 <dl>
 <dd>
 
@@ -1386,7 +1386,7 @@ description
 </dl>
 </details>
 
-<details><summary><code>client.playlist.<a href="src/seed/playlist/client.py">get_playlist</a>(...) -> Playlist</code></summary>
+<details><summary><code>client.playlist.<a href="src/seed/playlist/client.py#L163-L196">get_playlist</a>(...) -> Playlist</code></summary>
 <dl>
 <dd>
 
@@ -1468,7 +1468,7 @@ client.playlist.get_playlist(
 </dl>
 </details>
 
-<details><summary><code>client.playlist.<a href="src/seed/playlist/client.py">update_playlist</a>(...) -> typing.Optional[Playlist]</code></summary>
+<details><summary><code>client.playlist.<a href="src/seed/playlist/client.py#L198-L245">update_playlist</a>(...) -> typing.Optional[Playlist]</code></summary>
 <dl>
 <dd>
 
@@ -1566,7 +1566,7 @@ client.playlist.update_playlist(
 </dl>
 </details>
 
-<details><summary><code>client.playlist.<a href="src/seed/playlist/client.py">delete_playlist</a>(...)</code></summary>
+<details><summary><code>client.playlist.<a href="src/seed/playlist/client.py#L247-L280">delete_playlist</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -1649,7 +1649,7 @@ client.playlist.delete_playlist(
 </details>
 
 ## Problem
-<details><summary><code>client.problem.<a href="src/seed/problem/client.py">create_problem</a>(...) -> CreateProblemResponse</code></summary>
+<details><summary><code>client.problem.<a href="src/seed/problem/client.py#L38-L169">create_problem</a>(...) -> CreateProblemResponse</code></summary>
 <dl>
 <dd>
 
@@ -1798,7 +1798,7 @@ client.problem.create_problem(
 </dl>
 </details>
 
-<details><summary><code>client.problem.<a href="src/seed/problem/client.py">update_problem</a>(...) -> UpdateProblemResponse</code></summary>
+<details><summary><code>client.problem.<a href="src/seed/problem/client.py#L171-L307">update_problem</a>(...) -> UpdateProblemResponse</code></summary>
 <dl>
 <dd>
 
@@ -1956,7 +1956,7 @@ client.problem.update_problem(
 </dl>
 </details>
 
-<details><summary><code>client.problem.<a href="src/seed/problem/client.py">delete_problem</a>(...)</code></summary>
+<details><summary><code>client.problem.<a href="src/seed/problem/client.py#L309-L337">delete_problem</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -2029,7 +2029,7 @@ client.problem.delete_problem(
 </dl>
 </details>
 
-<details><summary><code>client.problem.<a href="src/seed/problem/client.py">get_default_starter_files</a>(...) -> GetDefaultStarterFilesResponse</code></summary>
+<details><summary><code>client.problem.<a href="src/seed/problem/client.py#L339-L399">get_default_starter_files</a>(...) -> GetDefaultStarterFilesResponse</code></summary>
 <dl>
 <dd>
 
@@ -2139,7 +2139,7 @@ The method name cannot include the following characters:
 </details>
 
 ## Submission
-<details><summary><code>client.submission.<a href="src/seed/submission/client.py">create_execution_session</a>(...) -> ExecutionSessionResponse</code></summary>
+<details><summary><code>client.submission.<a href="src/seed/submission/client.py#L28-L58">create_execution_session</a>(...) -> ExecutionSessionResponse</code></summary>
 <dl>
 <dd>
 
@@ -2212,7 +2212,7 @@ client.submission.create_execution_session(
 </dl>
 </details>
 
-<details><summary><code>client.submission.<a href="src/seed/submission/client.py">get_execution_session</a>(...) -> typing.Optional[ExecutionSessionResponse]</code></summary>
+<details><summary><code>client.submission.<a href="src/seed/submission/client.py#L60-L90">get_execution_session</a>(...) -> typing.Optional[ExecutionSessionResponse]</code></summary>
 <dl>
 <dd>
 
@@ -2285,7 +2285,7 @@ client.submission.get_execution_session(
 </dl>
 </details>
 
-<details><summary><code>client.submission.<a href="src/seed/submission/client.py">stop_execution_session</a>(...)</code></summary>
+<details><summary><code>client.submission.<a href="src/seed/submission/client.py#L92-L122">stop_execution_session</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -2358,7 +2358,7 @@ client.submission.stop_execution_session(
 </dl>
 </details>
 
-<details><summary><code>client.submission.<a href="src/seed/submission/client.py">get_execution_sessions_state</a>() -> GetExecutionSessionStateResponse</code></summary>
+<details><summary><code>client.submission.<a href="src/seed/submission/client.py#L124-L148">get_execution_sessions_state</a>() -> GetExecutionSessionStateResponse</code></summary>
 <dl>
 <dd>
 
@@ -2408,7 +2408,7 @@ client.submission.get_execution_sessions_state()
 </details>
 
 ## Sysprop
-<details><summary><code>client.sysprop.<a href="src/seed/sysprop/client.py">set_num_warm_instances</a>(...)</code></summary>
+<details><summary><code>client.sysprop.<a href="src/seed/sysprop/client.py#L26-L59">set_num_warm_instances</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -2476,7 +2476,7 @@ client.sysprop.set_num_warm_instances(
 </dl>
 </details>
 
-<details><summary><code>client.sysprop.<a href="src/seed/sysprop/client.py">get_num_warm_instances</a>() -> typing.Dict[Language, int]</code></summary>
+<details><summary><code>client.sysprop.<a href="src/seed/sysprop/client.py#L61-L85">get_num_warm_instances</a>() -> typing.Dict[Language, int]</code></summary>
 <dl>
 <dd>
 
@@ -2526,7 +2526,7 @@ client.sysprop.get_num_warm_instances()
 </details>
 
 ## V2 Problem
-<details><summary><code>client.v2.problem.<a href="src/seed/v2/problem/client.py">get_lightweight_problems</a>() -> typing.List[LightweightProblemInfoV2]</code></summary>
+<details><summary><code>client.v2.problem.<a href="src/seed/v2/problem/client.py#L28-L54">get_lightweight_problems</a>() -> typing.List[LightweightProblemInfoV2]</code></summary>
 <dl>
 <dd>
 
@@ -2589,7 +2589,7 @@ client.v2.problem.get_lightweight_problems()
 </dl>
 </details>
 
-<details><summary><code>client.v2.problem.<a href="src/seed/v2/problem/client.py">get_problems</a>() -> typing.List[ProblemInfoV2]</code></summary>
+<details><summary><code>client.v2.problem.<a href="src/seed/v2/problem/client.py#L56-L80">get_problems</a>() -> typing.List[ProblemInfoV2]</code></summary>
 <dl>
 <dd>
 
@@ -2652,7 +2652,7 @@ client.v2.problem.get_problems()
 </dl>
 </details>
 
-<details><summary><code>client.v2.problem.<a href="src/seed/v2/problem/client.py">get_latest_problem</a>(...) -> ProblemInfoV2</code></summary>
+<details><summary><code>client.v2.problem.<a href="src/seed/v2/problem/client.py#L82-L112">get_latest_problem</a>(...) -> ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -2725,7 +2725,7 @@ client.v2.problem.get_latest_problem(
 </dl>
 </details>
 
-<details><summary><code>client.v2.problem.<a href="src/seed/v2/problem/client.py">get_problem_version</a>(...) -> ProblemInfoV2</code></summary>
+<details><summary><code>client.v2.problem.<a href="src/seed/v2/problem/client.py#L114-L147">get_problem_version</a>(...) -> ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -2808,7 +2808,7 @@ client.v2.problem.get_problem_version(
 </details>
 
 ## V2 V3 Problem
-<details><summary><code>client.v2.v3.problem.<a href="src/seed/v2/v3/problem/client.py">get_lightweight_problems</a>() -> typing.List[LightweightProblemInfoV2]</code></summary>
+<details><summary><code>client.v2.v3.problem.<a href="src/seed/v2/v3/problem/client.py#L28-L54">get_lightweight_problems</a>() -> typing.List[LightweightProblemInfoV2]</code></summary>
 <dl>
 <dd>
 
@@ -2871,7 +2871,7 @@ client.v2.problem.get_lightweight_problems()
 </dl>
 </details>
 
-<details><summary><code>client.v2.v3.problem.<a href="src/seed/v2/v3/problem/client.py">get_problems</a>() -> typing.List[ProblemInfoV2]</code></summary>
+<details><summary><code>client.v2.v3.problem.<a href="src/seed/v2/v3/problem/client.py#L56-L80">get_problems</a>() -> typing.List[ProblemInfoV2]</code></summary>
 <dl>
 <dd>
 
@@ -2934,7 +2934,7 @@ client.v2.problem.get_problems()
 </dl>
 </details>
 
-<details><summary><code>client.v2.v3.problem.<a href="src/seed/v2/v3/problem/client.py">get_latest_problem</a>(...) -> ProblemInfoV2</code></summary>
+<details><summary><code>client.v2.v3.problem.<a href="src/seed/v2/v3/problem/client.py#L82-L112">get_latest_problem</a>(...) -> ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -3007,7 +3007,7 @@ client.v2.problem.get_latest_problem(
 </dl>
 </details>
 
-<details><summary><code>client.v2.v3.problem.<a href="src/seed/v2/v3/problem/client.py">get_problem_version</a>(...) -> ProblemInfoV2</code></summary>
+<details><summary><code>client.v2.v3.problem.<a href="src/seed/v2/v3/problem/client.py#L114-L147">get_problem_version</a>(...) -> ProblemInfoV2</code></summary>
 <dl>
 <dd>
 

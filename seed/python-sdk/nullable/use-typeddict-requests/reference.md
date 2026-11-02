@@ -1,6 +1,6 @@
 # Reference
 ## Nullable
-<details><summary><code>client.nullable.<a href="src/seed/nullable/client.py">get_users</a>(...) -> typing.List[User]</code></summary>
+<details><summary><code>client.nullable.<a href="src/seed/nullable/client.py#L30-L83">get_users</a>(...) -> typing.List[User]</code></summary>
 <dl>
 <dd>
 
@@ -99,7 +99,7 @@ client.nullable.get_users(
 </dl>
 </details>
 
-<details><summary><code>client.nullable.<a href="src/seed/nullable/client.py">create_user</a>(...) -> User</code></summary>
+<details><summary><code>client.nullable.<a href="src/seed/nullable/client.py#L85-L142">create_user</a>(...) -> User</code></summary>
 <dl>
 <dd>
 
@@ -198,7 +198,7 @@ client.nullable.create_user(
 </dl>
 </details>
 
-<details><summary><code>client.nullable.<a href="src/seed/nullable/client.py">delete_user</a>(...) -> bool</code></summary>
+<details><summary><code>client.nullable.<a href="src/seed/nullable/client.py#L144-L172">delete_user</a>(...) -> bool</code></summary>
 <dl>
 <dd>
 

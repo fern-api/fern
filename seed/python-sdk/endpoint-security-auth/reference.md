@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="src/seed/auth/client.py">get_token</a>(...) -> TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="src/seed/auth/client.py#L29-L63">get_token</a>(...) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -84,7 +84,7 @@ client.auth.get_token(
 </details>
 
 ## User
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get_with_bearer</a>() -> typing.List[User]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py#L26-L49">get_with_bearer</a>() -> typing.List[User]</code></summary>
 <dl>
 <dd>
 
@@ -132,7 +132,7 @@ client.user.get_with_bearer()
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get_with_api_key</a>() -> typing.List[User]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py#L51-L74">get_with_api_key</a>() -> typing.List[User]</code></summary>
 <dl>
 <dd>
 
@@ -180,7 +180,7 @@ client.user.get_with_bearer()
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get_with_o_auth</a>() -> typing.List[User]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py#L76-L99">get_with_o_auth</a>() -> typing.List[User]</code></summary>
 <dl>
 <dd>
 
@@ -228,7 +228,7 @@ client.user.get_with_bearer()
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get_with_basic</a>() -> typing.List[User]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py#L101-L124">get_with_basic</a>() -> typing.List[User]</code></summary>
 <dl>
 <dd>
 
@@ -276,7 +276,7 @@ client.user.get_with_bearer()
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get_with_inferred_auth</a>() -> typing.List[User]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py#L126-L149">get_with_inferred_auth</a>() -> typing.List[User]</code></summary>
 <dl>
 <dd>
 
@@ -324,7 +324,7 @@ client.user.get_with_bearer()
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get_with_any_auth</a>() -> typing.List[User]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py#L151-L174">get_with_any_auth</a>() -> typing.List[User]</code></summary>
 <dl>
 <dd>
 
@@ -372,7 +372,7 @@ client.user.get_with_bearer()
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get_with_all_auth</a>() -> typing.List[User]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py#L176-L199">get_with_all_auth</a>() -> typing.List[User]</code></summary>
 <dl>
 <dd>
 

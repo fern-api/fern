@@ -1,6 +1,6 @@
 # Reference
 ## Status
-<details><summary><code>client.status.<a href="src/seed/status/client.py">get_status</a>() -> StatusResponse</code></summary>
+<details><summary><code>client.status.<a href="src/seed/status/client.py#L26-L47">get_status</a>() -> StatusResponse</code></summary>
 <dl>
 <dd>
 

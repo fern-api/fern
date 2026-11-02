@@ -1,6 +1,6 @@
 # Reference
 ## Widgets
-<details><summary><code>client.widgets.<a href="src/seed/widgets/client.py">create</a>(...) -> Widget</code></summary>
+<details><summary><code>client.widgets.<a href="src/seed/widgets/client.py#L29-L56">create</a>(...) -> Widget</code></summary>
 <dl>
 <dd>
 

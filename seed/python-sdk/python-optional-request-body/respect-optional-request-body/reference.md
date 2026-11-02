@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">refund</a>(...) -> Refund</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L101-L133">refund</a>(...) -> Refund</code></summary>
 <dl>
 <dd>
 
@@ -79,7 +79,7 @@ client.refund(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">bulk_refund</a>(...) -> typing.List[Refund]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L135-L164">bulk_refund</a>(...) -> typing.List[Refund]</code></summary>
 <dl>
 <dd>
 
@@ -150,7 +150,7 @@ client.bulk_refund(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">refund_with_header</a>(...) -> Refund</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L166-L204">refund_with_header</a>(...) -> Refund</code></summary>
 <dl>
 <dd>
 
@@ -230,7 +230,7 @@ client.refund_with_header(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">batch_refund</a>(...) -> typing.List[Refund]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L206-L242">batch_refund</a>(...) -> typing.List[Refund]</code></summary>
 <dl>
 <dd>
 
@@ -308,7 +308,7 @@ client.batch_refund(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">required_refund</a>(...) -> Refund</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L244-L276">required_refund</a>(...) -> Refund</code></summary>
 <dl>
 <dd>
 

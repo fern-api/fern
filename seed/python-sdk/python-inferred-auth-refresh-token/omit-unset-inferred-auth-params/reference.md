@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="src/seed/auth/client.py">get_token_with_refresh_token</a>(...) -> TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="src/seed/auth/client.py#L29-L70">get_token_with_refresh_token</a>(...) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -78,7 +78,7 @@ client.auth.get_token_with_refresh_token(
 </details>
 
 ## Simple
-<details><summary><code>client.simple.<a href="src/seed/simple/client.py">get_something</a>()</code></summary>
+<details><summary><code>client.simple.<a href="src/seed/simple/client.py#L25-L47">get_something</a>()</code></summary>
 <dl>
 <dd>
 

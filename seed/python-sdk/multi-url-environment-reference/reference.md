@@ -1,6 +1,6 @@
 # Reference
 ## Items
-<details><summary><code>client.items.<a href="src/seed/items/client.py">list_items</a>() -> str</code></summary>
+<details><summary><code>client.items.<a href="src/seed/items/client.py#L25-L47">list_items</a>() -> str</code></summary>
 <dl>
 <dd>
 
@@ -50,7 +50,7 @@ client.items.list_items()
 </details>
 
 ## Auth
-<details><summary><code>client.auth.<a href="src/seed/auth/client.py">gettoken</a>(...) -> AuthGetTokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="src/seed/auth/client.py#L29-L62">gettoken</a>(...) -> AuthGetTokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -119,7 +119,7 @@ client.auth.gettoken(
 </details>
 
 ## Files
-<details><summary><code>client.files.<a href="src/seed/files/client.py">upload</a>(...) -> str</code></summary>
+<details><summary><code>client.files.<a href="src/seed/files/client.py#L28-L57">upload</a>(...) -> str</code></summary>
 <dl>
 <dd>
 

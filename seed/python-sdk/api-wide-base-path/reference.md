@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="src/seed/service/client.py">post</a>(...)</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L25-L66">post</a>(...)</code></summary>
 <dl>
 <dd>
 

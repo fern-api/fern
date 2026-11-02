@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">list_items</a>() -> typing.List[str]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L205-L229">list_items</a>() -> typing.List[str]</code></summary>
 <dl>
 <dd>
 
@@ -49,7 +49,7 @@ client.list_items()
 </details>
 
 ## Oauth
-<details><summary><code>client.oauth.<a href="src/seed/oauth/client.py">get_token</a>(...) -> GetTokenResponse</code></summary>
+<details><summary><code>client.oauth.<a href="src/seed/oauth/client.py#L29-L64">get_token</a>(...) -> GetTokenResponse</code></summary>
 <dl>
 <dd>
 
