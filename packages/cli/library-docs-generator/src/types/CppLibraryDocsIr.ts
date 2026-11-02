@@ -276,6 +276,8 @@ export interface CppClassIr {
     isAbstract: boolean;
     isFinal: boolean;
     includeHeader: string | undefined;
+    /** `typedef struct X {...} X;` alias folded into this record by the parser. */
+    typedefAlias?: string | undefined;
     methods: CppFunctionIr[];
     staticMethods: CppFunctionIr[];
     friendFunctions: CppFunctionIr[];
@@ -333,4 +335,20 @@ export interface CppLibraryDocsIr {
     metadata: IrMetadata;
     rootNamespace: CppNamespaceIr;
     groups: CppGroupIr[];
+    /** Source headers and the symbols each declares (absent in IRs from older parsers). */
+    files?: CppFileIr[] | undefined;
+}
+
+/** A source header and the qualified paths of the symbols it declares. */
+export interface CppFileIr {
+    name: string;
+    path: string;
+    docstring?: CppDocstringIr | undefined;
+    includes: string[];
+    classes: string[];
+    functions: string[];
+    enums: string[];
+    typedefs: string[];
+    variables: string[];
+    macros: string[];
 }

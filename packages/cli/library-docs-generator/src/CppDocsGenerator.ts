@@ -29,6 +29,7 @@ import {
 import type { CppCompoundIr } from "../cpp/src/renderers/CompoundPageRenderer.js";
 import { renderCompoundPage } from "../cpp/src/renderers/CompoundPageRenderer.js";
 import { renderSegmentsPlainText } from "../cpp/src/renderers/DescriptionRenderer.js";
+import { renderHeaderPage, renderHeadersIndexPage } from "../cpp/src/renderers/HeaderPageRenderer.js";
 import type { GroupListEntry } from "../cpp/src/renderers/GroupPageRenderer.js";
 import {
     collectGroupSections,
@@ -50,6 +51,8 @@ import {
 } from "../cpp/src/renderers/IndexPageRenderer.js";
 import { groupFunctionsByName, methodAnchorId } from "../cpp/src/renderers/MethodRenderer.js";
 import type {
+    CppFileIr,
+    CppEnumIr,
     CppClassIr,
     CppDocstringIr,
     CppFunctionIr,
@@ -73,6 +76,8 @@ export interface CppGenerateOptions {
      * URL keeps word boundaries: `/doca-pcc-dev-get-port-counter-id`.
      */
     slugStyle?: CppSlugStyle;
+    /** `header` also writes `headers/` pages, one per source header (needs IR `files`). */
+    organizeBy?: "kind" | "header";
 }
 
 export type CppSlugStyle = "compact" | "hyphenated";
@@ -172,6 +177,11 @@ export function generateCpp(options: CppGenerateOptions): CppGenerateResult {
 
         // Stage 5: Generate pages for the library's Doxygen groups
         generateGroupPages(groups, writer, repo.trim() || (rootNsName ?? slug));
+
+        // Stage 6 (opt-in): one page per source header
+        if (options.organizeBy === "header") {
+            generateHeaderPages(ir.files ?? [], writer, repo.trim() || (rootNsName ?? slug));
+        }
 
         const result = writer.result();
         swapIntoPlace(stagingDir, outputDir, backupDir);
@@ -365,7 +375,8 @@ function collectCompounds(ns: CppNamespaceIr, rootPrefix: string): CollectedComp
     }
 
     for (const enumIr of ns.enums) {
-        if (rootPrefix && !enumIr.path.startsWith(rootPrefix)) {
+        // Doxygen names `enum { A, B };` "@N": no page of its own, listed on the enums index
+        if (enumIr.name.startsWith("@") || (rootPrefix && !enumIr.path.startsWith(rootPrefix))) {
             continue;
         }
         result.push({
@@ -884,7 +895,12 @@ function generateIndexPages(
         setCurrentPageSlugPath(pageKeyToSlugPath(catPageKey));
         const entries = category.collectEntries(ns);
         const categoryWithEntries: CategoryWithEntries = { category, entries };
-        const categoryContent = renderCategoryIndexPage(ns.path, categoryWithEntries, title);
+        const categoryContent = renderCategoryIndexPage(
+            ns.path,
+            categoryWithEntries,
+            title,
+            category.folderName === "enums" ? anonymousEnums(ns) : []
+        );
         writer.writePage(catPageKey, categoryContent);
     }
 
@@ -1018,4 +1034,37 @@ function writeGroupPage(group: CppGroupIr, dir: string, writer: MdxFileWriter, w
     for (const subgroup of subgroups) {
         writeGroupPage(subgroup, `${dir}/${folders.get(subgroup) ?? groupFolderName(subgroup)}`, writer, written);
     }
+}
+
+function anonymousEnums(ns: CppNamespaceIr): CppEnumIr[] {
+    return ns.enums.filter((e) => e.name.startsWith("@"));
+}
+
+/** `headers/<file>.mdx` per IR file plus `headers/index.mdx`; nested dirs are flattened into the slug. */
+function generateHeaderPages(files: CppFileIr[], writer: MdxFileWriter, libraryTitle: string): void {
+    if (files.length === 0) {
+        return;
+    }
+    const used = new Map<string, number>();
+    const entries: { file: CppFileIr; slug: string }[] = [];
+    for (const file of files) {
+        const base = slugifySegment(file.path.replace(/\.[^.]+$/, "").replace(/[\\/]+/g, "-")) || "header";
+        const count = used.get(base) ?? 0;
+        used.set(base, count + 1);
+        entries.push({ file, slug: count === 0 ? base : `${base}-${count + 1}` });
+    }
+    for (const { file, slug } of entries) {
+        const pageKey = `headers/${slug}.mdx`;
+        setCurrentPageSlugPath(pageKeyToSlugPath(pageKey));
+        writer.writePage(pageKey, renderHeaderPage(file));
+    }
+    const indexPageKey = "headers/index.mdx";
+    setCurrentPageSlugPath(pageKeyToSlugPath(indexPageKey));
+    writer.writePage(
+        indexPageKey,
+        renderHeadersIndexPage(
+            entries.map(({ file, slug }) => ({ displayName: file.path, linkPath: `./${slug}` })),
+            libraryTitle
+        )
+    );
 }

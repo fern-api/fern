@@ -300,6 +300,19 @@ async function generateSingleLibrary({
             code: CliError.Code.ConfigError
         });
     }
+    for (const [field, label] of [
+        [config.config?.organizeBy, "organize-by"],
+        [config.config?.include, "include"],
+        [config.config?.exclude, "exclude"],
+        [config.config?.excludeSymbols, "exclude-symbols"]
+    ] as const) {
+        if (field != null && config.lang !== "cpp") {
+            throw new CliError({
+                message: `Library '${name}': '${label}' config is only valid for lang: cpp`,
+                code: CliError.Code.ConfigError
+            });
+        }
+    }
     const includeUndocumentedMacros = config.lang === "cpp" ? config.config?.includeUndocumentedMacros : undefined;
     const logFilePath = logsDir != null ? join(logsDir, RelativeFilePath.of(`${logFileStem(name)}.log`)) : undefined;
 
@@ -315,6 +328,13 @@ async function generateSingleLibrary({
                     `(resolved to ${doxyfilePath})`,
                 code: CliError.Code.ConfigError
             });
+        }
+    }
+    if (config.lang === "cpp") {
+        const selection = renderSourceSelection(config.config);
+        if (selection.length > 0) {
+            // docs.yml settings come last so they take precedence over the user's Doxyfile
+            doxyfileContent = `${doxyfileContent ?? ""}\n${selection}\n`;
         }
     }
 
@@ -366,7 +386,8 @@ async function generateSingleLibrary({
             ir: cppIr,
             outputDir: resolvedOutputPath,
             slug: name,
-            slugStyle: config.config?.slugStyle
+            slugStyle: config.config?.slugStyle,
+            organizeBy: config.config?.organizeBy
         });
         context.logger.info(
             chalk.green(`Library '${name}': generated ${result.pageCount} pages at ${resolvedOutputPath}`)
@@ -690,4 +711,29 @@ function validateLibraryIr(ir: unknown, language: LibraryLanguage, libraryName: 
             code: CliError.Code.InternalError
         });
     }
+}
+
+/**
+ * Doxyfile lines for the `include` / `exclude` / `exclude-symbols` library settings.
+ * Entries of `exclude` containing a glob character are patterns (`EXCLUDE_PATTERNS`),
+ * the rest are paths (`EXCLUDE`); all paths are relative to the scanned source root.
+ */
+export function renderSourceSelection(
+    libraryConfig: { include?: string[]; exclude?: string[]; excludeSymbols?: string[] } | undefined
+): string {
+    if (libraryConfig == null) {
+        return "";
+    }
+    const lines: string[] = [];
+    const quote = (value: string): string => `"${value.replace(/"/g, '\\"')}"`;
+    for (const path of libraryConfig.include ?? []) {
+        lines.push(`INPUT += ${quote(path)}`);
+    }
+    for (const entry of libraryConfig.exclude ?? []) {
+        lines.push(/[*?[\]]/.test(entry) ? `EXCLUDE_PATTERNS += ${quote(entry)}` : `EXCLUDE += ${quote(entry)}`);
+    }
+    for (const symbol of libraryConfig.excludeSymbols ?? []) {
+        lines.push(`EXCLUDE_SYMBOLS += ${quote(symbol)}`);
+    }
+    return lines.join("\n");
 }

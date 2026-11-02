@@ -200,6 +200,97 @@ describe("generateCpp()", () => {
         rmSync(tmpDir, { recursive: true, force: true });
     });
 
+    it("renders the folded typedef alias on a C struct page", () => {
+        const ir = makeIr(
+            makeNamespace({
+                classes: [makeClass({ name: "Packet", path: "Packet", kind: "struct", typedefAlias: "Packet" })]
+            })
+        );
+        generateCpp({ ir, outputDir: tmpDir, slug: "safety" });
+        const page = readFileSync(join(tmpDir, "structs", "Packet.mdx"), "utf-8");
+        expect(page).toContain("typedef struct Packet Packet;");
+    });
+
+    it("lists anonymous enum values on the enums index instead of a page of their own", () => {
+        const anon = {
+            name: "@0",
+            path: "@0",
+            docstring: undefined,
+            isScoped: false,
+            underlyingType: undefined,
+            values: [
+                {
+                    name: "OPERATIONAL",
+                    initializer: undefined,
+                    docstring: makeDocstring({ summary: [{ type: "text", text: "Normal" }] })
+                },
+                { name: "CRITICAL", initializer: "= 2", docstring: undefined }
+            ]
+        } as unknown as CppNamespaceIr["enums"][number];
+        const named = { ...anon, name: "Mode", path: "Mode" };
+        const ir = makeIr(makeNamespace({ enums: [anon, named] }));
+        generateCpp({ ir, outputDir: tmpDir, slug: "safety" });
+        const files = collectMdxFiles(tmpDir).map((f) => f.split("/").pop());
+        expect(files).toContain("Mode.mdx");
+        expect(files.some((f) => f?.startsWith("0") || f?.includes("@"))).toBe(false);
+        const index = readFileSync(join(tmpDir, "enums", "index.mdx"), "utf-8");
+        expect(index).toContain("## Anonymous enumerations");
+        expect(index).toContain("- `OPERATIONAL` — Normal");
+        expect(index).toContain("- `CRITICAL = 2`");
+    });
+
+    it("writes one page per source header when organize-by is header", () => {
+        const ir: CppLibraryDocsIr = {
+            ...makeIr(
+                makeNamespace({
+                    classes: [makeClass({ name: "Packet", path: "Packet", kind: "struct" })],
+                    functions: [makeFunction({ name: "pss_send", path: "pss_send" })]
+                })
+            ),
+            files: [
+                {
+                    name: "pss_protocol.h",
+                    path: "include/pss_protocol.h",
+                    docstring: makeDocstring({ summary: [{ type: "text", text: "Wire protocol." }] }),
+                    includes: ["stdint.h"],
+                    classes: ["Packet"],
+                    functions: ["pss_send"],
+                    enums: ["@0"],
+                    typedefs: [],
+                    variables: [],
+                    macros: []
+                },
+                {
+                    name: "pss_protocol.h",
+                    path: "legacy/pss_protocol.h",
+                    includes: [],
+                    classes: [],
+                    functions: [],
+                    enums: [],
+                    typedefs: [],
+                    variables: [],
+                    macros: ["PSS_OLD"]
+                }
+            ]
+        };
+        const withoutHeaders = generateCpp({ ir, outputDir: tmpDir, slug: "safety" });
+        expect(existsSync(join(tmpDir, "headers"))).toBe(false);
+
+        const withHeaders = generateCpp({ ir, outputDir: tmpDir, slug: "safety", organizeBy: "header" });
+        expect(withHeaders.pageCount).toBe(withoutHeaders.pageCount + 3);
+        const page = readFileSync(join(tmpDir, "headers", "include-pssprotocol.mdx"), "utf-8");
+        expect(page).toContain("#include <include/pss_protocol.h>");
+        expect(page).toContain("Wire protocol.");
+        expect(page).toContain("[`Packet`](../structs/packet)");
+        expect(page).toContain("[`pss_send`](../functions/psssend)");
+        expect(page).toContain("- `(anonymous enum)`");
+        expect(page).toContain("- `stdint.h`");
+        expect(existsSync(join(tmpDir, "headers", "legacy-pssprotocol.mdx"))).toBe(true);
+        const index = readFileSync(join(tmpDir, "headers", "index.mdx"), "utf-8");
+        expect(index).toContain("[`include/pss_protocol.h`](./include-pssprotocol)");
+        expect(index).toContain("[`legacy/pss_protocol.h`](./legacy-pssprotocol)");
+    });
+
     // ------------------------------------------------------------------
     // 1. Phantom namespace filtering
     // ------------------------------------------------------------------

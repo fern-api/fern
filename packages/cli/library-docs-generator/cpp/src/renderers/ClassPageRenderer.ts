@@ -104,6 +104,10 @@ function renderPreamble(cls: CppClassIr, ctx: RenderContext): string {
         lines.push(renderBareCodeBlock(`#include <${prefix}${cls.includeHeader}>`, "cpp"));
         lines.push("");
     }
+    if (cls.typedefAlias) {
+        lines.push(renderBareCodeBlock(`typedef ${cls.kind} ${cls.name} ${cls.typedefAlias};`, "c"));
+        lines.push("");
+    }
 
     // 4. Callouts
     // Deprecated

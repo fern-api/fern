@@ -26,4 +26,12 @@ export interface LibraryConfig {
      * Changing this renames every generated page. Only valid when lang is cpp.
      */
     slugStyle?: FernDocsConfig.LibrarySlugStyle;
+    /** `kind` (default) groups pages by symbol kind; `header` also writes a `headers/` folder with one page per source header. Only valid when lang is cpp. */
+    organizeBy?: FernDocsConfig.LibraryOrganizeBy;
+    /** Files or directories to scan, relative to `input.path` (Doxygen `INPUT`). Only valid when lang is cpp. */
+    include?: string[];
+    /** Files, directories or glob patterns to leave out of the scan (Doxygen `EXCLUDE` / `EXCLUDE_PATTERNS`). Only valid when lang is cpp. */
+    exclude?: string[];
+    /** Symbol names or patterns to leave out, e.g. `INTERNAL_*` (Doxygen `EXCLUDE_SYMBOLS`). Only valid when lang is cpp. */
+    excludeSymbols?: string[];
 }
