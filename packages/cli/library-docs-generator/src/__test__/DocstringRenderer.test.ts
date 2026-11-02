@@ -56,7 +56,7 @@ describe("renderDocstring", () => {
     it("keeps math in parameter and raises descriptions", () => {
         const result = renderDocstring(
             docstring({
-                params: [{ name: "gate", description: "Gate $\\text{CZ}$ with {opts}", type: "str" }],
+                params: [{ name: "gate", description: "Gate $\\text{CZ}$ with {opts}", type: "str", default: undefined }],
                 raises: [{ type: "ValueError", description: "If $\\text{x}$ is bad" }]
             })
         );
