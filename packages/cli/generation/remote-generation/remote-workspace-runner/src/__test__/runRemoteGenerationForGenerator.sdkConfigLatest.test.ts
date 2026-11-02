@@ -238,24 +238,23 @@ describe("runRemoteGenerationForGenerator synthesized SDK Config latest", () => 
                 FernFiddle.GithubOutputModeV2.push({ owner: "acme", repo: "sdk", branch: "${SDK_BRANCH}" })
             );
 
-        async function submittedRequestedOutput(
-            overrides: Partial<Parameters<typeof runRemoteGenerationForGenerator>[0]>
-        ) {
+        async function submittedTarget(overrides: Partial<Parameters<typeof runRemoteGenerationForGenerator>[0]>) {
             vi.stubEnv("SDK_BRANCH", "api-updates-293596b");
             const generatorInvocation = { ...typescriptInvocation(), version: "3.54.0", outputMode: githubPush() };
             const [prepared] = prepareFernSdkGenApiRoutes({
                 generators: [generatorInvocation],
                 isSdkGenApiEnabled: () => true,
+                sdkConfigV1: overrides.sdkConfigV1,
                 requireEnvVars: true,
                 isPreview: true
             });
-            if (prepared?.route == null || prepared.route.payloadKind !== "fern-runtime-bundle") {
-                throw new Error("Expected a Fern runtime bundle route");
+            if (prepared?.route == null) {
+                throw new Error("Expected an sdk-gen-api route");
             }
             const sourceArchive = archive();
-            let requestedOutput: unknown;
+            let target: ReturnType<typeof createFernSdkGenApiRequest>["targets"][number] | undefined;
             const run = vi.fn(async (parameters: FernSdkGenApiBuildParameters) => {
-                requestedOutput = createFernSdkGenApiRequest({
+                target = createFernSdkGenApiRequest({
                     apiName: parameters.apiName,
                     organization: parameters.organization,
                     cliVersion: parameters.cliVersion,
@@ -265,8 +264,9 @@ describe("runRemoteGenerationForGenerator synthesized SDK Config latest", () => 
                     specsTarGzBuffer: parameters.specsTarGzBuffer,
                     payload: parameters.payload,
                     requestedOutput: parameters.requestedOutput,
+                    autoVersionPreviewOutput: parameters.autoVersionPreviewOutput,
                     githubOptions: parameters.githubOptions
-                }).targets[0]?.requestedOutput;
+                }).targets[0];
                 return buildResponse();
             });
             await runRemoteGenerationForGenerator({
@@ -299,22 +299,63 @@ describe("runRemoteGenerationForGenerator synthesized SDK Config latest", () => 
             if (run.mock.calls.length !== 1) {
                 throw new Error(`Expected one sdk-gen-api build, got ${run.mock.calls.length}`);
             }
-            return requestedOutput;
+            return target;
         }
 
         it("requests a download instead of a GitHub push with a blanked branch", async () => {
-            await expect(submittedRequestedOutput({})).resolves.toEqual({ type: "download" });
+            await expect(submittedTarget({})).resolves.toMatchObject({ requestedOutput: { type: "download" } });
+        });
+
+        it("keeps AUTO and sends the GitHub context for semantic preview versioning", async () => {
+            const target = await submittedTarget({ version: "AUTO" });
+
+            expect(target?.requestedOutput).toEqual({ type: "download" });
+            expect(target?.sdk).toEqual({ name: "Petstore", version: "AUTO" });
+            expect(target?.autoVersionPreview).toEqual({
+                github: expect.objectContaining({ type: "github", repository: "acme/sdk", mode: "push" })
+            });
+        });
+
+        it("uses the sanitized GitHub context retained by the SDK Config preview loader", async () => {
+            const target = await submittedTarget({
+                version: undefined,
+                sdkConfigV1: {
+                    sdkName: "Petstore",
+                    sdkVersion: "AUTO",
+                    targets: [
+                        {
+                            body: Buffer.from('{"schemaVersion":"sdk-config/v1"}'),
+                            language: "typescript",
+                            generatorVersion: "4.0.0",
+                            requestedOutput: { type: "download" },
+                            autoVersionPreviewOutput: {
+                                type: "github",
+                                repository: "acme/sdk",
+                                mode: "pull-request"
+                            }
+                        }
+                    ]
+                }
+            });
+
+            expect(target?.requestedOutput).toEqual({ type: "download" });
+            expect(target?.sdk).toEqual({ name: "Petstore", version: "AUTO" });
+            expect(target?.autoVersionPreview).toEqual({
+                github: expect.objectContaining({ type: "github", repository: "acme/sdk", mode: "pull-request" })
+            });
         });
 
         it("keeps the GitHub output when sdk preview pushes a preview branch", async () => {
             await expect(
-                submittedRequestedOutput({
+                submittedTarget({
                     absolutePathToPreview: undefined,
                     isPreview: false,
                     fiddlePreview: true,
                     pushPreviewBranch: true
                 })
-            ).resolves.toMatchObject({ type: "github", repository: "acme/sdk", mode: "push" });
+            ).resolves.toMatchObject({
+                requestedOutput: { type: "github", repository: "acme/sdk", mode: "push" }
+            });
         });
     });
 
