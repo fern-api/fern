@@ -36,6 +36,7 @@ export class UnionGenerator {
     private readonly typeDeclaration: FernIr.TypeDeclaration;
     private readonly unionTypeDeclaration: FernIr.UnionTypeDeclaration;
     private readonly context: ModelGeneratorContext;
+    private readonly discriminantWireValue: string;
 
     public constructor(
         typeDeclaration: FernIr.TypeDeclaration,
@@ -44,6 +45,7 @@ export class UnionGenerator {
     ) {
         this.typeDeclaration = typeDeclaration;
         this.unionTypeDeclaration = unionTypeDeclaration;
+        this.discriminantWireValue = getWireValue(unionTypeDeclaration.discriminant);
         this.context = context;
     }
 
@@ -357,9 +359,8 @@ export class UnionGenerator {
 
                 if (canInline) {
                     // Inline the object's fields directly into the variant
-                    const referencedType = this.context.ir.types[declaredTypeName.typeId];
-                    if (referencedType?.shape.type === "object") {
-                        const properties = referencedType.shape.properties;
+                    const properties = this.getInlinedVariantProperties(declaredTypeName);
+                    if (properties != null) {
                         if (properties.length === 0) {
                             // Empty type: generate empty struct variant
                             writer.writeLine(`    ${variantName} {},`);
@@ -435,6 +436,25 @@ export class UnionGenerator {
         attributes.push(Attribute.nonExhaustive());
 
         return attributes;
+    }
+
+    /**
+     * Returns the fields to inline into a variant, or undefined if the variant is not inlined.
+     * A field sharing the discriminant's wire name is dropped: serde rejects a variant field
+     * that collides with the enum's internal tag, and the tag already carries that value.
+     * The variant's constructors therefore take no parameter for it either.
+     */
+    private getInlinedVariantProperties(declaredTypeName: FernIr.DeclaredTypeName): FernIr.ObjectProperty[] | undefined {
+        if (!this.context.inlinedUnionVariantTypeIds.has(declaredTypeName.typeId)) {
+            return undefined;
+        }
+        const referencedType = this.context.ir.types[declaredTypeName.typeId];
+        if (referencedType?.shape.type !== "object") {
+            return undefined;
+        }
+        return referencedType.shape.properties.filter(
+            (property) => getWireValue(property.name) !== this.discriminantWireValue
+        );
     }
 
     private generateInlinedProperties(
@@ -628,9 +648,8 @@ export class UnionGenerator {
                 const canInline = this.context.inlinedUnionVariantTypeIds.has(declaredTypeName.typeId);
 
                 if (canInline) {
-                    const referencedType = this.context.ir.types[declaredTypeName.typeId];
-                    if (referencedType?.shape.type === "object") {
-                        const properties = referencedType.shape.properties;
+                    const properties = this.getInlinedVariantProperties(declaredTypeName);
+                    if (properties != null) {
                         if (properties.length === 0) {
                             // Empty inlined type: no parameters needed
                             const baseParams = this.getBasePropertyParams();
@@ -744,17 +763,11 @@ export class UnionGenerator {
             noProperties: () => {},
             singleProperty: () => {},
             samePropertiesAsObject: (declaredTypeName) => {
-                const canInline = this.context.inlinedUnionVariantTypeIds.has(declaredTypeName.typeId);
-                if (!canInline) {
+                const properties = this.getInlinedVariantProperties(declaredTypeName);
+                if (properties == null) {
                     return;
                 }
 
-                const referencedType = this.context.ir.types[declaredTypeName.typeId];
-                if (referencedType?.shape.type !== "object") {
-                    return;
-                }
-
-                const properties = referencedType.shape.properties;
                 const optionalProperties = properties.filter((p) => isOptionalType(p.valueType));
 
                 // Only generate convenience constructors if there are optional fields
@@ -881,13 +894,8 @@ export class UnionGenerator {
                 singleProperty: (singleProperty) => predicate(singleProperty.type),
                 samePropertiesAsObject: (declaredTypeName) => {
                     // For inlined types, check the object's properties directly
-                    if (this.context.inlinedUnionVariantTypeIds.has(declaredTypeName.typeId)) {
-                        const referencedType = this.context.ir.types[declaredTypeName.typeId];
-                        if (referencedType?.shape.type === "object") {
-                            return referencedType.shape.properties.some((prop) => predicate(prop.valueType));
-                        }
-                    }
-                    return false;
+                    const properties = this.getInlinedVariantProperties(declaredTypeName);
+                    return properties?.some((prop) => predicate(prop.valueType)) ?? false;
                 },
                 noProperties: () => false,
                 _other: () => false
@@ -918,11 +926,8 @@ export class UnionGenerator {
                     // For inlined types, collect the named types from the inlined properties
                     // instead of the wrapper type (which no longer exists as a separate struct)
                     if (this.context.inlinedUnionVariantTypeIds.has(declaredTypeName.typeId)) {
-                        const referencedType = this.context.ir.types[declaredTypeName.typeId];
-                        if (referencedType?.shape.type === "object") {
-                            for (const prop of referencedType.shape.properties) {
-                                this.collectNamedTypesFromTypeRef(prop.valueType, variantTypeNames, visited);
-                            }
+                        for (const prop of this.getInlinedVariantProperties(declaredTypeName) ?? []) {
+                            this.collectNamedTypesFromTypeRef(prop.valueType, variantTypeNames, visited);
                         }
                         return;
                     }

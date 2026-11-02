@@ -159,3 +159,20 @@ types:
   EntityStreamEvent:
     extends:
       - EntityEvent
+
+  # A variant object that also declares the discriminant as a property. Inlining must
+  # drop that field, or the variant collides with the enum's `#[serde(tag = "source")]`.
+  PlantSource:
+    discriminant: source
+    union:
+      seed: SeedSource
+      cutting: CuttingSource
+
+  SeedSource:
+    properties:
+      source: optional<string>
+      supplier: string
+
+  CuttingSource:
+    properties:
+      parent_plant: string

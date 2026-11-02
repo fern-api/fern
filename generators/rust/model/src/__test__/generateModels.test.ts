@@ -154,6 +154,19 @@ describe("generateModels type-specific tests", () => {
         expect(entityStreamEvent?.fileContents).toContain("entity_event_fields: EntityEvent");
     });
 
+    it("should drop the discriminant field from inlined union variants", async () => {
+        // SeedSource declares `source`, which is also PlantSource's discriminant. Serde rejects a
+        // variant field that shares the internal tag's name, so the inlined variant must omit it.
+        const context = await createSampleGeneratorContext("union-types");
+        const files = generateModels({ context });
+
+        const plantSource = files.find((file) => file.fileContents.includes("pub enum PlantSource"));
+        expect(plantSource).toBeDefined();
+        expect(plantSource?.fileContents).toContain('#[serde(tag = "source")]');
+        expect(plantSource?.fileContents).toContain("supplier: String,");
+        expect(plantSource?.fileContents).not.toMatch(/^\s+source: /m);
+    });
+
     it("should generate unions for union types (all are discriminated in Fern)", async () => {
         const context = await createSampleGeneratorContext("undiscriminated-union-types");
         const files = generateModels({ context });
