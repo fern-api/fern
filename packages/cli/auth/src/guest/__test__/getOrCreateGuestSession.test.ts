@@ -153,6 +153,7 @@ describe("getOrCreateGuestSession", () => {
 
     it("reuses the live session another repo on this machine started, and points this repo at it too", async () => {
         const createGuestSession = vi.fn().mockResolvedValue(venusResponse());
+        const checkGuestSession = vi.fn().mockResolvedValue("active" as const);
         const otherRepo = await mkdtemp(path.join(tmpdir(), "fern-guest-repo-b-"));
         const otherFernDirectory = AbsoluteFilePath.of(path.join(otherRepo, "fern"));
         await mkdir(otherFernDirectory, { recursive: true });
@@ -171,9 +172,11 @@ describe("getOrCreateGuestSession", () => {
                 cliVersion: "1.2.3",
                 context: createMockTaskContext(),
                 createGuestSession,
+                checkGuestSession,
                 now: NOW
             });
             expect(createGuestSession).toHaveBeenCalledTimes(1);
+            expect(checkGuestSession).toHaveBeenCalledWith(expect.objectContaining({ sessionId: "gs_123" }));
             expect(second.reused).toBe(true);
             expect(second.token).toEqual(first.token);
             expect(
@@ -181,6 +184,44 @@ describe("getOrCreateGuestSession", () => {
             ).toBe("gs_123");
             expect(await readFile(path.join(otherFernDirectory, ".gitignore"), "utf-8")).toContain(
                 GUEST_SESSION_POINTER_FILENAME
+            );
+        } finally {
+            await rm(otherRepo, { recursive: true, force: true });
+        }
+    });
+
+    it("does not join another repo's session that Venus says is no longer active; it mints a new one", async () => {
+        const createGuestSession = vi
+            .fn()
+            .mockResolvedValueOnce(venusResponse())
+            .mockResolvedValueOnce(
+                venusResponse({ sessionId: "gs_456", organizationId: "guest-gs_456", token: "jwt-2" })
+            );
+        const otherRepo = await mkdtemp(path.join(tmpdir(), "fern-guest-repo-c-"));
+        const otherFernDirectory = AbsoluteFilePath.of(path.join(otherRepo, "fern"));
+        await mkdir(otherFernDirectory, { recursive: true });
+        try {
+            await getOrCreateGuestSession({
+                absolutePathToFernDirectory: fernDirectory,
+                cliVersion: "1.2.3",
+                context: createMockTaskContext(),
+                createGuestSession,
+                now: NOW
+            });
+            const second = await getOrCreateGuestSession({
+                absolutePathToFernDirectory: otherFernDirectory,
+                cliVersion: "1.2.3",
+                context: createMockTaskContext(),
+                createGuestSession,
+                checkGuestSession: async () => "dead",
+                now: NOW
+            });
+            expect(second.reused).toBe(false);
+            expect(second.token.sessionId).toBe("gs_456");
+            expect((await readFile(getPathToCurrentGuestSessionPointer(), "utf-8")).trim()).toBe("gs_456");
+            // The first repo keeps its own (claimed) session until it is told otherwise.
+            expect((await readFile(path.join(fernDirectory, GUEST_SESSION_POINTER_FILENAME), "utf-8")).trim()).toBe(
+                "gs_123"
             );
         } finally {
             await rm(otherRepo, { recursive: true, force: true });

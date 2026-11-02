@@ -94,10 +94,16 @@ export async function writeStoredGuestSession({
     // `mode` only applies when the file is created; tighten a pre-existing file too.
     await chmod(sessionPath, 0o600);
 
+    await recordCurrentGuestSession(session.sessionId);
+    await recordGuestSessionInRepo({ sessionId: session.sessionId, absolutePathToFernDirectory });
+}
+
+/** Makes a session the one this machine last used, so the next repo without a pointer of its own joins it. */
+export async function recordCurrentGuestSession(sessionId: string): Promise<void> {
     const currentPath = getPathToCurrentGuestSessionPointer();
     await mkdir(dirname(currentPath), { recursive: true, mode: 0o700 });
-    await writeFile(currentPath, `${session.sessionId}\n`, { mode: 0o600 });
-    await recordGuestSessionInRepo({ sessionId: session.sessionId, absolutePathToFernDirectory });
+    await writeFile(currentPath, `${sessionId}\n`, { mode: 0o600 });
+    await chmod(currentPath, 0o600);
 }
 
 /** Points this repo at a session (which may have been started from another repo on this machine). */

@@ -9,6 +9,7 @@ import { FernGuestToken } from "../FernToken.js";
 import {
     isGuestSessionLive,
     readStoredGuestSession,
+    recordCurrentGuestSession,
     recordGuestSessionInRepo,
     type StoredGuestSession,
     toGuestToken,
@@ -18,6 +19,12 @@ import {
 export type CreateGuestSession = (
     request: FernVenusApi.CreateGuestSessionRequest
 ) => Promise<FernVenusApi.CreateGuestSessionResponse>;
+
+/**
+ * Asks Venus whether a session is still active: "dead" when Venus says it is claimed, expired or gone (or no longer
+ * accepts its token), "unknown" when Venus could not be reached -- then the local expiry is all there is to go on.
+ */
+export type CheckGuestSession = (session: StoredGuestSession) => Promise<"active" | "dead" | "unknown">;
 
 /**
  * Returns the guest session recorded for this repo (`fern/.guest-session` -> `~/.fern/guest-sessions/<id>.json`),
@@ -30,6 +37,7 @@ export async function getOrCreateGuestSession({
     cliVersion,
     context,
     createGuestSession = createGuestSessionWithVenus,
+    checkGuestSession = checkGuestSessionWithVenus,
     forceNew = false,
     now = new Date()
 }: {
@@ -37,6 +45,7 @@ export async function getOrCreateGuestSession({
     cliVersion: string;
     context: TaskContext;
     createGuestSession?: CreateGuestSession;
+    checkGuestSession?: CheckGuestSession;
     /**
      * Skip the stored session even if it looks live (`--new-session`). The local file only knows `expiresAt`; a
      * session claimed, revoked or killed on the Venus side still looks live here.
@@ -46,10 +55,20 @@ export async function getOrCreateGuestSession({
 }): Promise<{ token: FernGuestToken; reused: boolean }> {
     const stored = await readStoredGuestSession({ absolutePathToFernDirectory });
     if (!forceNew && stored != null && stored.venusOrigin === getVenusOrigin() && isGuestSessionLive(stored, now)) {
-        if (stored.source === "machine") {
-            await recordGuestSessionInRepo({ sessionId: stored.sessionId, absolutePathToFernDirectory });
+        if (stored.source === "repo") {
+            // "current" is the session last used, not last minted: the next repo joins the one this run used.
+            await recordCurrentGuestSession(stored.sessionId);
+            return { token: toGuestToken(stored), reused: true };
         }
-        return { token: toGuestToken(stored), reused: true };
+        // Another repo's session. The file only knows `expiresAt`, and a session claimed from the browser or
+        // revoked still looks live here, so ask Venus before a new repo joins it rather than fail its first publish.
+        if ((await checkGuestSession(stored)) !== "dead") {
+            await recordGuestSessionInRepo({ sessionId: stored.sessionId, absolutePathToFernDirectory });
+            return { token: toGuestToken(stored), reused: true };
+        }
+        context.logger.debug(
+            `Guest session ${stored.sessionId} on this machine is no longer active; starting a new one.`
+        );
     }
 
     let response: FernVenusApi.CreateGuestSessionResponse;
@@ -73,6 +92,32 @@ export async function getOrCreateGuestSession({
     };
     await writeStoredGuestSession({ session, absolutePathToFernDirectory });
     return { token: toGuestToken(session), reused: false };
+}
+
+async function checkGuestSessionWithVenus(session: StoredGuestSession): Promise<"active" | "dead" | "unknown"> {
+    try {
+        const response = await createVenusService({
+            environment: session.venusOrigin,
+            token: session.token
+        }).guestSession.get({ sessionId: session.sessionId });
+        if (response.ok) {
+            return response.body.status === "active" ? "active" : "dead";
+        }
+        return response.error._visit<"dead" | "unknown">({
+            notFoundError: () => "dead",
+            goneError: () => "dead",
+            unprocessableEntityError: () => "unknown",
+            serviceUnavailableError: () => "unknown",
+            // Venus refused the session's own token (401/403): it has been revoked.
+            _other: (fetcherError) =>
+                fetcherError.reason === "status-code" &&
+                (fetcherError.statusCode === 401 || fetcherError.statusCode === 403)
+                    ? "dead"
+                    : "unknown"
+        });
+    } catch {
+        return "unknown";
+    }
 }
 
 async function createGuestSessionWithVenus(
