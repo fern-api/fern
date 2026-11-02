@@ -1,15 +1,23 @@
 import { mkdir, readdir, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { getFernDirectory } from "@fern-api/configuration-loader";
+import { getFernDirectory, loadProjectConfig } from "@fern-api/configuration-loader";
 import { delay, replaceEnvVariables, stripTrailingSlashes } from "@fern-api/core-utils";
-import { ORPCError } from "@fern-api/fdr-sdk/orpc-client";
+import { createPdfExportClient, ORPCError } from "@fern-api/fdr-sdk/orpc-client";
 import { askToLogin } from "@fern-api/login";
 import { CliError } from "@fern-api/task-context";
 import { loadDocsWorkspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { FDR_ORIGIN } from "../docs-theme/themeOrigin.js";
-import { type ExportFile, type ExportSource, hostedSource, selfHostedSource } from "./exportSources.js";
+import {
+    type ExportFile,
+    type ExportSource,
+    hostedSource,
+    safeRelativePath,
+    selfHostedSource
+} from "./exportSources.js";
+
+export { safeRelativePath };
 
 export type DocsExportFormat = "html" | "md";
 
@@ -70,21 +78,6 @@ async function emptyDir(root: string): Promise<void> {
     );
 }
 
-/**
- * A server-supplied site path (`docs/quickstart/index.html`) as a native relative path, or undefined
- * when it is absolute, has empty, `.` or `..` segments, or holds a backslash, drive letter or NUL.
- */
-export function safeRelativePath(filePath: string): string | undefined {
-    if (/[\\\0]/.test(filePath) || filePath.startsWith("/") || /^[a-zA-Z]:/.test(filePath)) {
-        return undefined;
-    }
-    const segments = filePath.split("/");
-    if (segments.some((segment) => segment === "" || segment === "." || segment === "..")) {
-        return undefined;
-    }
-    return segments.join(path.sep);
-}
-
 async function writeFileUnder(root: string, file: ExportFile): Promise<void> {
     const relative = safeRelativePath(file.path);
     const destination = relative == null ? undefined : path.resolve(root, relative);
@@ -131,14 +124,14 @@ export function parseInstanceUrl(instanceUrl: string): { domain: string; basepat
     return { domain: url.hostname, basepath: basepath === "/" ? "" : basepath };
 }
 
-/** The headline for a failed export; FDR's error code says whether to re-run or republish. */
+/** The headline for a failed export; FDR's error code says whether to wait, check access, or re-run. */
 export function exportFailureMessage(error: unknown): string {
     if (error instanceof ORPCError) {
-        if (error.code === "CONFLICT") {
-            return "Docs export failed: the site was republished during the export. Run the export again.";
+        if (error.code === "TOO_MANY_REQUESTS") {
+            return "Docs export failed: the organization hit its daily export limit. Try again tomorrow.";
         }
-        if (error.code === "BAD_GATEWAY") {
-            return "Docs export failed: the live build is broken. Republish the site, then export again.";
+        if (error.code === "FORBIDDEN") {
+            return "Docs export failed: this docs site does not belong to the organization in fern.config.json.";
         }
     }
     return "Docs export failed";
@@ -178,7 +171,7 @@ export async function exportDocs({
                   adminToken,
                   basepath: instance != null ? parseInstanceUrl(instance).basepath : ""
               })
-            : await resolveHostedSource({ cliContext, instance });
+            : await resolveHostedSource({ cliContext, instance, format });
 
     await cliContext.runTask(async (context) => {
         context.logger.info(`Exporting ${format === "md" ? "Markdown" : "HTML"} to ${output}...`);
@@ -201,10 +194,12 @@ export async function exportDocs({
 
 async function resolveHostedSource({
     cliContext,
-    instance
+    instance,
+    format
 }: {
     cliContext: CliContext;
     instance: string | undefined;
+    format: DocsExportFormat;
 }): Promise<ExportSource> {
     const fernDirectory = await getFernDirectory();
     if (fernDirectory == null) {
@@ -251,6 +246,13 @@ async function resolveHostedSource({
             code: CliError.Code.AuthError
         });
     }
-    const { domain, basepath } = parseInstanceUrl(instanceUrl);
-    return hostedSource({ fdrOrigin: FDR_ORIGIN, token: token.value, domain, basepath });
+    const projectConfig = await cliContext.runTask((context) =>
+        loadProjectConfig({ directory: fernDirectory, context })
+    );
+    return hostedSource({
+        client: createPdfExportClient({ baseUrl: FDR_ORIGIN, token: token.value }),
+        orgId: projectConfig.organization,
+        docsUrl: instanceUrl,
+        format
+    });
 }

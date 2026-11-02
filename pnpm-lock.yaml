@@ -4618,6 +4618,9 @@ importers:
       '@types/yargs':
         specifier: ^17.0.28
         version: 17.0.35
+      '@types/yauzl':
+        specifier: 'catalog:'
+        version: 2.10.3
       '@types/yazl':
         specifier: 'catalog:'
         version: 3.3.1
@@ -4699,6 +4702,9 @@ importers:
       yargs:
         specifier: ^17.4.1
         version: 17.7.2
+      yauzl:
+        specifier: ^3.2.1
+        version: 3.3.0
       yazl:
         specifier: 'catalog:'
         version: 3.3.1

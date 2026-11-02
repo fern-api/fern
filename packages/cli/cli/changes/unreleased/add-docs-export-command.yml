@@ -3,6 +3,7 @@
 - summary: |
     Add `fern docs export` to download a copy of your live docs site. `--format html` (default) writes the full
     static site, which you can open with any static file server (`npx serve docs-export`). `--format md` writes
-    only the per-page Markdown and `llms.txt`. For self-hosted docs, pass `--url` and `--admin-token`. Each run
-    empties `--output` first (except `.git`), like local generation.
+    only the per-page Markdown and `llms.txt`. For Fern-hosted docs, Fern builds the export server-side and the
+    CLI downloads and unpacks one zip. For self-hosted docs, pass `--url` and `--admin-token`. Each run empties
+    `--output` first (except `.git`), like local generation, but only after the export has downloaded.
   type: feat

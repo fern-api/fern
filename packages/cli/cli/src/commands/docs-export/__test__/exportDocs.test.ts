@@ -2,7 +2,8 @@ import { mkdir, mkdtemp, readdir, readFile, rm, writeFile } from "node:fs/promis
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { ORPCError } from "@fern-api/fdr-sdk/orpc-client";
-import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import yazl from "yazl";
 import {
     exportFailureMessage,
     isSafeOutputDir,
@@ -11,7 +12,7 @@ import {
     safeRelativePath,
     writeExport
 } from "../exportDocs.js";
-import type { ExportSource } from "../exportSources.js";
+import { type ExportSource, extractZip, hostedSource, type SiteExportClient } from "../exportSources.js";
 
 function fakeSource(batches: Record<string, string>[]): ExportSource & { finished: boolean } {
     const source = {
@@ -119,9 +120,114 @@ describe("safeRelativePath", () => {
 });
 
 describe("exportFailureMessage", () => {
-    it("says to re-run after a republish and to republish a broken build", () => {
-        expect(exportFailureMessage(new ORPCError("CONFLICT"))).toMatch(/republished during the export/);
-        expect(exportFailureMessage(new ORPCError("BAD_GATEWAY"))).toMatch(/live build is broken/);
+    it("explains the daily limit and a site outside the organization", () => {
+        expect(exportFailureMessage(new ORPCError("TOO_MANY_REQUESTS"))).toMatch(/daily export limit/);
+        expect(exportFailureMessage(new ORPCError("FORBIDDEN"))).toMatch(/does not belong to the organization/);
         expect(exportFailureMessage(new Error("boom"))).toBe("Docs export failed");
+    });
+});
+
+async function zipOf(files: Record<string, string>, zipPath: string): Promise<void> {
+    const zip = new yazl.ZipFile();
+    for (const [name, body] of Object.entries(files)) {
+        zip.addBuffer(Buffer.from(body), name);
+    }
+    zip.end();
+    const chunks: Buffer[] = [];
+    for await (const chunk of zip.outputStream) {
+        chunks.push(Buffer.from(chunk));
+    }
+    await writeFile(zipPath, Buffer.concat(chunks));
+}
+
+describe("extractZip", () => {
+    let workDir: string;
+    beforeEach(async () => {
+        workDir = await mkdtemp(path.join(tmpdir(), "docs-export-zip-"));
+    });
+    afterEach(async () => {
+        await rm(workDir, { recursive: true, force: true });
+    });
+
+    it("unpacks site paths", async () => {
+        const zipPath = path.join(workDir, "site.zip");
+        await zipOf({ "learn/index.html": "<html>", "llms.txt": "index" }, zipPath);
+        await extractZip(zipPath, path.join(workDir, "out"));
+        expect(await readFile(path.join(workDir, "out", "learn", "index.html"), "utf8")).toBe("<html>");
+        expect(await readFile(path.join(workDir, "out", "llms.txt"), "utf8")).toBe("index");
+    });
+
+    it("refuses an entry that escapes the output folder", async () => {
+        const zipPath = path.join(workDir, "evil.zip");
+        await zipOf({ "aa/escape.html": "x" }, zipPath);
+        // yazl refuses `..` names, so rename the entry in place: "aa/" and "../" have the same length.
+        const bytes = await readFile(zipPath);
+        await writeFile(zipPath, Buffer.from(bytes.toString("latin1").replaceAll("aa/escape", "../escape"), "latin1"));
+        await expect(extractZip(zipPath, path.join(workDir, "out"))).rejects.toThrow();
+        await expect(readFile(path.join(workDir, "escape.html"))).rejects.toThrow();
+    });
+});
+
+describe("hostedSource", () => {
+    let workDir: string;
+    beforeEach(async () => {
+        workDir = await mkdtemp(path.join(tmpdir(), "docs-export-hosted-"));
+    });
+    afterEach(async () => {
+        vi.unstubAllGlobals();
+        await rm(workDir, { recursive: true, force: true });
+    });
+
+    function fakeClient(statuses: string[], errorMessage?: string): SiteExportClient & { created: unknown[] } {
+        const created: unknown[] = [];
+        let poll = 0;
+        return {
+            created,
+            createTask: async (input: unknown) => {
+                created.push(input);
+                return { id: "task-1" };
+            },
+            getTask: async () => ({ status: statuses[Math.min(poll++, statuses.length - 1)], errorMessage }),
+            getDownloadUrl: async () => ({
+                downloadUrl: "https://s3.example/site.zip",
+                fileName: "site.zip",
+                sizeBytes: 1
+            })
+        } as unknown as SiteExportClient & { created: unknown[] };
+    }
+
+    it("creates a task, waits for it, then yields the unpacked zip", async () => {
+        const zipPath = path.join(workDir, "site.zip");
+        await zipOf({ "index.md": "# Home" }, zipPath);
+        const zipBytes = await readFile(zipPath);
+        vi.stubGlobal("fetch", async () => new Response(zipBytes));
+        const client = fakeClient(["PENDING", "RUNNING", "COMPLETED"]);
+        const source = hostedSource({
+            client,
+            orgId: "acme",
+            docsUrl: "acme.docs.buildwithfern.com",
+            format: "md",
+            pollIntervalMs: 0
+        });
+        const files: string[] = [];
+        for await (const batch of source.batches()) {
+            files.push(...batch.map((file) => file.path));
+        }
+        expect(files).toEqual(["index.md"]);
+        expect(client.created).toEqual([{ orgId: "acme", docsUrl: "acme.docs.buildwithfern.com", format: "md" }]);
+    });
+
+    it("surfaces the task's error when the export Job fails", async () => {
+        const client = fakeClient(["RUNNING", "FAILED"], "the site was republished during the export");
+        const source = hostedSource({
+            client,
+            orgId: "acme",
+            docsUrl: "acme.docs.buildwithfern.com",
+            format: "html",
+            pollIntervalMs: 0
+        });
+        await expect(writeExport({ source, format: "html", outputDir: path.join(workDir, "out") })).rejects.toThrow(
+            /republished during the export/
+        );
     });
 });
