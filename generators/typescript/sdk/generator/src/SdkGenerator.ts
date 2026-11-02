@@ -675,7 +675,8 @@ export class SdkGenerator {
             autoGenerateIdempotencyKey: intermediateRepresentation.sdkConfig.idempotencyKeyGeneration != null,
             idempotencyKeyHeaderName:
                 intermediateRepresentation.sdkConfig.idempotencyKeyGeneration?.headerName ?? "Idempotency-Key",
-            esModulePackage: config.esmOnly || config.outputEsm
+            esModulePackage: config.esmOnly || config.outputEsm,
+            esmOnly: config.esmOnly
         });
 
         this.websocketTypeSchemaDeclarationReferencer = new WebsocketTypeSchemaDeclarationReferencer({
