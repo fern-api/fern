@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.192.0
+  changelogEntry:
+    - summary: |
+        `fern docs md generate` now keeps LaTeX math (`$…$` and `$$…$$`) in Python library
+        docstrings intact instead of escaping its braces, shows `{`, `<` and `>` inside inline
+        code literally instead of as `&#123;`/`&lt;`, and renders `> [!NOTE]`-style alerts
+        (which the Python parser now emits for reStructuredText admonitions) as Fern callouts.
+      type: feat
+  createdAt: "2026-11-02"
+  irVersion: 67
 - version: 5.191.2
   changelogEntry:
     - summary: |
