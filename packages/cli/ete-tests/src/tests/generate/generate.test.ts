@@ -131,9 +131,8 @@ describe("fern generate", () => {
             signal
         });
         const output = stdout + stderr;
-        expect(output).toContain(
-            "Authentication required. Please run 'fern login', set the FERN_TOKEN environment variable, or pass --guest to continue without an account."
-        );
+        expect(output).toContain("No Fern account found (not logged in and FERN_TOKEN is not set)");
+        expect(output).toContain("rerun with --guest");
     }, 300_000);
 
     it.concurrent("generate docs with FDR origin override and token succeeds", async ({ signal }) => {
