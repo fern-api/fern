@@ -1,6 +1,6 @@
 # Reference
 ## FolderA Service
-<details><summary><code>client.folder_a.service.<a href="src/seed/folder_a/service/client.py">get_direct_thread</a>(...) -> Response</code></summary>
+<details><summary><code>client.folder_a.service.<a href="src/seed/folder_a/service/client.py#L26-L61">get_direct_thread</a>(...) -> Response</code></summary>
 <dl>
 <dd>
 
@@ -72,7 +72,7 @@ client.folder_a.service.get_direct_thread(
 </details>
 
 ## FolderD Service
-<details><summary><code>client.folder_d.service.<a href="src/seed/folder_d/service/client.py">get_direct_thread</a>() -> Response</code></summary>
+<details><summary><code>client.folder_d.service.<a href="src/seed/folder_d/service/client.py#L26-L48">get_direct_thread</a>() -> Response</code></summary>
 <dl>
 <dd>
 
@@ -121,7 +121,7 @@ client.folder_d.service.get_direct_thread()
 </details>
 
 ## Foo
-<details><summary><code>client.foo.<a href="src/seed/foo/client.py">find</a>(...) -> ImportingType</code></summary>
+<details><summary><code>client.foo.<a href="src/seed/foo/client.py#L30-L74">find</a>(...) -> ImportingType</code></summary>
 <dl>
 <dd>
 

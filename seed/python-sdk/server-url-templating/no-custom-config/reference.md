@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">get_users</a>() -> typing.List[User]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L129-L149">get_users</a>() -> typing.List[User]</code></summary>
 <dl>
 <dd>
 
@@ -47,7 +47,7 @@ client.get_users()
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">get_user</a>(...) -> User</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L151-L175">get_user</a>(...) -> User</code></summary>
 <dl>
 <dd>
 
@@ -105,7 +105,7 @@ client.get_user(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">get_token</a>(...) -> TokenResponse</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L177-L208">get_token</a>(...) -> TokenResponse</code></summary>
 <dl>
 <dd>
 

@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="src/seed/service/client.py">patch</a>(...)</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L28-L64">patch</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -66,7 +66,7 @@ client.service.patch(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">patch_complex</a>(...)</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L66-L154">patch_complex</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -237,7 +237,7 @@ client.service.patch_complex(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">named_patch_with_mixed</a>(...)</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L156-L203">named_patch_with_mixed</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -336,7 +336,7 @@ client.service.named_patch_with_mixed(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">optional_merge_patch_test</a>(...)</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L205-L263">optional_merge_patch_test</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -446,7 +446,7 @@ client.service.optional_merge_patch_test(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">regular_patch</a>(...)</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L265-L305">regular_patch</a>(...)</code></summary>
 <dl>
 <dd>
 

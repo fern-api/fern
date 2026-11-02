@@ -1,6 +1,6 @@
 # Reference
 ## Conversations
-<details><summary><code>client.conversations.<a href="src/seed/conversations/client.py">outbound_call</a>(...) -> OutboundCallConversationsResponse</code></summary>
+<details><summary><code>client.conversations.<a href="src/seed/conversations/client.py#L29-L69">outbound_call</a>(...) -> OutboundCallConversationsResponse</code></summary>
 <dl>
 <dd>
 
@@ -80,7 +80,7 @@ client.conversations.outbound_call(
 </details>
 
 ## Users
-<details><summary><code>client.users.<a href="src/seed/users/client.py">get</a>(...) -> User</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py#L26-L54">get</a>(...) -> User</code></summary>
 <dl>
 <dd>
 

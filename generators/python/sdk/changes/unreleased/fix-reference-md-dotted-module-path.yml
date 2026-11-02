@@ -5,3 +5,7 @@
     Links previously used the dotted Python module path (e.g. `src/acme.management/actions/client.py`)
     instead of the directory path (`src/acme/management/actions/client.py`).
   type: fix
+- summary: |
+    `reference.md` method links now point at the method's line range in `client.py`
+    (e.g. `src/acme/management/actions/client.py#L54-L125`) instead of the top of the file.
+  type: fix

@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">echo</a>(...) -> str</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L108-L137">echo</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -67,7 +67,7 @@ client.echo(
 </details>
 
 ## Service
-<details><summary><code>client.service.<a href="src/seed/service/client.py">nop</a>(...)</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L25-L51">nop</a>(...)</code></summary>
 <dl>
 <dd>
 

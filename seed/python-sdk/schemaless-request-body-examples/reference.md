@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">create_plant</a>(...) -> CreatePlantResponse</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L102-L141">create_plant</a>(...) -> CreatePlantResponse</code></summary>
 <dl>
 <dd>
 
@@ -70,7 +70,7 @@ client.create_plant(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">update_plant</a>(...) -> UpdatePlantResponse</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L143-L179">update_plant</a>(...) -> UpdatePlantResponse</code></summary>
 <dl>
 <dd>
 
@@ -150,7 +150,7 @@ client.update_plant(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">create_plant_with_schema</a>(...) -> CreatePlantWithSchemaResponse</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L181-L220">create_plant_with_schema</a>(...) -> CreatePlantWithSchemaResponse</code></summary>
 <dl>
 <dd>
 

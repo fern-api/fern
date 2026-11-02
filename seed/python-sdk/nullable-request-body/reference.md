@@ -1,6 +1,6 @@
 # Reference
 ## TestGroup
-<details><summary><code>client.test_group.<a href="src/seed/test_group/client.py">test_method_name</a>(...) -> typing.Any</code></summary>
+<details><summary><code>client.test_group.<a href="src/seed/test_group/client.py#L29-L78">test_method_name</a>(...) -> typing.Any</code></summary>
 <dl>
 <dd>
 

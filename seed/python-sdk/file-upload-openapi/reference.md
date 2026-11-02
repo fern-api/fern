@@ -1,6 +1,6 @@
 # Reference
 ## FileUploadExample
-<details><summary><code>client.file_upload_example.<a href="src/seed/file_upload_example/client.py">upload_file</a>(...) -> FileId</code></summary>
+<details><summary><code>client.file_upload_example.<a href="src/seed/file_upload_example/client.py#L30-L67">upload_file</a>(...) -> FileId</code></summary>
 <dl>
 <dd>
 

@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">stream_protocol_no_collision</a>(...) -> typing.Iterator[bytes]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L112-L142">stream_protocol_no_collision</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -68,7 +68,7 @@ client.stream_protocol_no_collision()
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">stream_protocol_collision</a>(...) -> typing.Iterator[bytes]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L144-L174">stream_protocol_collision</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -137,7 +137,7 @@ client.stream_protocol_collision()
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">stream_data_context</a>(...) -> typing.Iterator[bytes]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L176-L206">stream_data_context</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -206,7 +206,7 @@ client.stream_data_context()
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">stream_no_context</a>(...) -> typing.Iterator[bytes]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L208-L238">stream_no_context</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -275,7 +275,7 @@ client.stream_no_context()
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">stream_protocol_with_flat_schema</a>(...) -> typing.Iterator[bytes]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L240-L270">stream_protocol_with_flat_schema</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -344,7 +344,7 @@ client.stream_protocol_with_flat_schema()
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">stream_protocol_mixed_schema</a>(...) -> typing.Iterator[bytes]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L272-L302">stream_protocol_mixed_schema</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -413,7 +413,7 @@ client.stream_protocol_mixed_schema()
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">stream_data_context_with_envelope_schema</a>(...) -> typing.Iterator[bytes]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L304-L336">stream_data_context_with_envelope_schema</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -482,7 +482,7 @@ client.stream_data_context_with_envelope_schema()
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">stream_oas_spec_native</a>(...) -> typing.Iterator[bytes]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L338-L368">stream_oas_spec_native</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -551,7 +551,7 @@ client.stream_oas_spec_native()
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">stream_x_fern_streaming_condition_stream</a>(...) -> typing.Iterator[bytes]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L370-L405">stream_x_fern_streaming_condition_stream</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -630,7 +630,7 @@ client.stream_x_fern_streaming_condition_stream(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">stream_x_fern_streaming_condition</a>(...) -> CompletionFullResponse</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L407-L438">stream_x_fern_streaming_condition</a>(...) -> CompletionFullResponse</code></summary>
 <dl>
 <dd>
 
@@ -709,7 +709,7 @@ client.stream_x_fern_streaming_condition_stream(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">stream_x_fern_streaming_shared_schema_stream</a>(...) -> typing.Iterator[bytes]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L440-L479">stream_x_fern_streaming_shared_schema_stream</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -797,7 +797,7 @@ client.stream_x_fern_streaming_shared_schema_stream(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">stream_x_fern_streaming_shared_schema</a>(...) -> CompletionFullResponse</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L481-L518">stream_x_fern_streaming_shared_schema</a>(...) -> CompletionFullResponse</code></summary>
 <dl>
 <dd>
 
@@ -885,7 +885,7 @@ client.stream_x_fern_streaming_shared_schema_stream(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">validate_completion</a>(...) -> CompletionFullResponse</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L520-L565">validate_completion</a>(...) -> CompletionFullResponse</code></summary>
 <dl>
 <dd>
 
@@ -973,7 +973,7 @@ client.validate_completion(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">stream_x_fern_streaming_union_stream</a>(...) -> typing.Iterator[bytes]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L567-L608">stream_x_fern_streaming_union_stream</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -1048,7 +1048,7 @@ client.stream_x_fern_streaming_union_stream(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">stream_x_fern_streaming_union</a>(...) -> CompletionFullResponse</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L610-L644">stream_x_fern_streaming_union</a>(...) -> CompletionFullResponse</code></summary>
 <dl>
 <dd>
 
@@ -1123,7 +1123,7 @@ client.stream_x_fern_streaming_union_stream(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">validate_union_request</a>(...) -> ValidateUnionRequestResponse</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L646-L686">validate_union_request</a>(...) -> ValidateUnionRequestResponse</code></summary>
 <dl>
 <dd>
 
@@ -1194,7 +1194,7 @@ client.validate_union_request(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">stream_x_fern_streaming_nullable_condition_stream</a>(...) -> typing.Iterator[bytes]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L688-L723">stream_x_fern_streaming_nullable_condition_stream</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -1273,7 +1273,7 @@ client.stream_x_fern_streaming_nullable_condition_stream(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">stream_x_fern_streaming_nullable_condition</a>(...) -> CompletionFullResponse</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L725-L758">stream_x_fern_streaming_nullable_condition</a>(...) -> CompletionFullResponse</code></summary>
 <dl>
 <dd>
 
@@ -1352,7 +1352,7 @@ client.stream_x_fern_streaming_nullable_condition_stream(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">stream_x_fern_streaming_sse_only</a>(...) -> typing.Iterator[bytes]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L760-L790">stream_x_fern_streaming_sse_only</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 

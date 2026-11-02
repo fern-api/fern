@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="src/seed/service/client.py">get_text</a>() -> str</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L25-L46">get_text</a>() -> str</code></summary>
 <dl>
 <dd>
 
@@ -47,7 +47,7 @@ client.service.get_text()
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">get_csv</a>() -> str</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L48-L69">get_csv</a>() -> str</code></summary>
 <dl>
 <dd>
 
@@ -94,7 +94,7 @@ client.service.get_csv()
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">get_xml</a>() -> str</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L71-L92">get_xml</a>() -> str</code></summary>
 <dl>
 <dd>
 

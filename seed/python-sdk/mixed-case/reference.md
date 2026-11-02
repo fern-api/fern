@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="src/seed/service/client.py">get_resource</a>(...) -> Resource</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L27-L52">get_resource</a>(...) -> Resource</code></summary>
 <dl>
 <dd>
 
@@ -57,7 +57,7 @@ client.service.get_resource(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">list_resources</a>(...) -> typing.List[Resource]</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L54-L90">list_resources</a>(...) -> typing.List[Resource]</code></summary>
 <dl>
 <dd>
 

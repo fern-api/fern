@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">update_profile_identifier</a>(...) -> UpdateProfileIdentifierResponse</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L109-L162">update_profile_identifier</a>(...) -> UpdateProfileIdentifierResponse</code></summary>
 <dl>
 <dd>
 

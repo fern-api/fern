@@ -1,6 +1,6 @@
 # Reference
 ## Package
-<details><summary><code>client.package.<a href="src/seed/package/client.py">test</a>(...)</code></summary>
+<details><summary><code>client.package.<a href="src/seed/package/client.py#L25-L50">test</a>(...)</code></summary>
 <dl>
 <dd>
 

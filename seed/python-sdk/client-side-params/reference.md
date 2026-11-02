@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="src/seed/service/client.py">list_resources</a>(...) -> typing.List[Resource]</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L35-L108">list_resources</a>(...) -> typing.List[Resource]</code></summary>
 <dl>
 <dd>
 
@@ -126,7 +126,7 @@ client.service.list_resources(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">get_resource</a>(...) -> Resource</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L110-L155">get_resource</a>(...) -> Resource</code></summary>
 <dl>
 <dd>
 
@@ -216,7 +216,7 @@ client.service.get_resource(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">search_resources</a>(...) -> SearchResponse</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L157-L207">search_resources</a>(...) -> SearchResponse</code></summary>
 <dl>
 <dd>
 
@@ -317,7 +317,7 @@ client.service.search_resources(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">list_users</a>(...) -> PaginatedUserResponse</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L209-L289">list_users</a>(...) -> PaginatedUserResponse</code></summary>
 <dl>
 <dd>
 
@@ -452,7 +452,7 @@ client.service.list_users(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">get_user_by_id</a>(...) -> User</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L291-L336">get_user_by_id</a>(...) -> User</code></summary>
 <dl>
 <dd>
 
@@ -542,7 +542,7 @@ client.service.get_user_by_id(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">create_user</a>(...) -> User</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L338-L414">create_user</a>(...) -> User</code></summary>
 <dl>
 <dd>
 
@@ -626,7 +626,7 @@ client.service.create_user(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">update_user</a>(...) -> User</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L416-L497">update_user</a>(...) -> User</code></summary>
 <dl>
 <dd>
 
@@ -719,7 +719,7 @@ client.service.update_user(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">delete_user</a>(...)</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L499-L527">delete_user</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -791,7 +791,7 @@ client.service.delete_user(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">list_connections</a>(...) -> typing.List[Connection]</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L529-L575">list_connections</a>(...) -> typing.List[Connection]</code></summary>
 <dl>
 <dd>
 
@@ -881,7 +881,7 @@ client.service.list_connections(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">get_connection</a>(...) -> Connection</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L577-L615">get_connection</a>(...) -> Connection</code></summary>
 <dl>
 <dd>
 
@@ -962,7 +962,7 @@ client.service.get_connection(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">list_clients</a>(...) -> PaginatedClientResponse</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L617-L696">list_clients</a>(...) -> PaginatedClientResponse</code></summary>
 <dl>
 <dd>
 
@@ -1100,7 +1100,7 @@ client.service.list_clients(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">get_client</a>(...) -> Client</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L698-L743">get_client</a>(...) -> Client</code></summary>
 <dl>
 <dd>
 

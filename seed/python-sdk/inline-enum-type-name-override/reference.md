@@ -1,6 +1,6 @@
 # Reference
 ## Reporting
-<details><summary><code>client.reporting.<a href="src/seed/reporting/client.py">load</a>(...)</code></summary>
+<details><summary><code>client.reporting.<a href="src/seed/reporting/client.py#L30-L61">load</a>(...)</code></summary>
 <dl>
 <dd>
 

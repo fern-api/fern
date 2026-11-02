@@ -1,6 +1,6 @@
 # Reference
 ## AssetReport
-<details><summary><code>client.asset_report.<a href="src/seed/asset_report/client.py">get_pdf</a>(...) -> typing.Iterator[bytes]</code></summary>
+<details><summary><code>client.asset_report.<a href="src/seed/asset_report/client.py#L29-L57">get_pdf</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -57,7 +57,7 @@ client.asset_report.get_pdf(
 </dl>
 </details>
 
-<details><summary><code>client.asset_report.<a href="src/seed/asset_report/client.py">get</a>(...) -> AssetReportGetResponse</code></summary>
+<details><summary><code>client.asset_report.<a href="src/seed/asset_report/client.py#L59-L87">get</a>(...) -> AssetReportGetResponse</code></summary>
 <dl>
 <dd>
 

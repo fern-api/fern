@@ -1,6 +1,6 @@
 # Reference
 ## Organizations
-<details><summary><code>client.organizations.<a href="src/seed/organizations/client.py">get_organization</a>(...) -> Organization</code></summary>
+<details><summary><code>client.organizations.<a href="src/seed/organizations/client.py#L27-L55">get_organization</a>(...) -> Organization</code></summary>
 <dl>
 <dd>
 
@@ -66,7 +66,7 @@ client.organizations.get_organization(
 </dl>
 </details>
 
-<details><summary><code>client.organizations.<a href="src/seed/organizations/client.py">get_organization_user</a>(...) -> User</code></summary>
+<details><summary><code>client.organizations.<a href="src/seed/organizations/client.py#L57-L88">get_organization_user</a>(...) -> User</code></summary>
 <dl>
 <dd>
 
@@ -141,7 +141,7 @@ client.organizations.get_organization_user(
 </dl>
 </details>
 
-<details><summary><code>client.organizations.<a href="src/seed/organizations/client.py">search_organizations</a>(...) -> typing.List[Organization]</code></summary>
+<details><summary><code>client.organizations.<a href="src/seed/organizations/client.py#L90-L125">search_organizations</a>(...) -> typing.List[Organization]</code></summary>
 <dl>
 <dd>
 
@@ -217,7 +217,7 @@ client.organizations.search_organizations(
 </details>
 
 ## User
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get_user</a>(...) -> User</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py#L29-L55">get_user</a>(...) -> User</code></summary>
 <dl>
 <dd>
 
@@ -283,7 +283,7 @@ client.user.get_user(
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">create_user</a>(...) -> User</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py#L57-L88">create_user</a>(...) -> User</code></summary>
 <dl>
 <dd>
 
@@ -353,7 +353,7 @@ client.user.create_user(
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">update_user</a>(...) -> User</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py#L90-L129">update_user</a>(...) -> User</code></summary>
 <dl>
 <dd>
 
@@ -432,7 +432,7 @@ client.user.update_user(
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">search_users</a>(...) -> typing.List[User]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py#L131-L166">search_users</a>(...) -> typing.List[User]</code></summary>
 <dl>
 <dd>
 
@@ -507,7 +507,7 @@ client.user.search_users(
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get_user_metadata</a>(...) -> User</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py#L168-L201">get_user_metadata</a>(...) -> User</code></summary>
 <dl>
 <dd>
 
@@ -596,7 +596,7 @@ client.user.get_user_metadata(
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get_user_specifics</a>(...) -> User</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py#L203-L239">get_user_specifics</a>(...) -> User</code></summary>
 <dl>
 <dd>
 

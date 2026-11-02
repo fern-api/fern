@@ -2,7 +2,10 @@ import { getNameFromWireValue, ReferenceConfigBuilder } from "@fern-api/base-gen
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
+import { readFileSync } from "fs";
+import { join } from "path";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
+import { getMethodLineRange } from "./getMethodLineRange.js";
 
 export function buildReference({
     context,
@@ -15,12 +18,18 @@ export function buildReference({
     const serviceEntries = Object.entries(context.ir.services);
 
     const snippetsByEndpointId = buildSnippetsByEndpointId({ context, endpointSnippets: endpointSnippets ?? [] });
+    const sourceFiles = new Map<string, string | undefined>();
 
     serviceEntries.forEach(([serviceId, service]) => {
         const section = isRootServiceId({ context, serviceId })
             ? builder.addRootSection()
             : builder.addSection({ title: getSectionTitle({ context, service }) });
-        const endpoints = getEndpointReferencesForService({ context, service, endpointSnippets: snippetsByEndpointId });
+        const endpoints = getEndpointReferencesForService({
+            context,
+            service,
+            endpointSnippets: snippetsByEndpointId,
+            sourceFiles
+        });
         for (const endpoint of endpoints) {
             section.addEndpoint(endpoint);
         }
@@ -58,11 +67,13 @@ function buildSnippetsByEndpointId({
 function getEndpointReferencesForService({
     context,
     service,
-    endpointSnippets
+    endpointSnippets,
+    sourceFiles
 }: {
     context: SdkGeneratorContext;
     service: FernIr.HttpService;
     endpointSnippets: Record<string, string>;
+    sourceFiles: Map<string, string | undefined>;
 }): FernGeneratorCli.EndpointReference[] {
     return service.endpoints
         .map((endpoint) => {
@@ -70,7 +81,8 @@ function getEndpointReferencesForService({
                 context,
                 service,
                 endpoint,
-                endpointSnippets
+                endpointSnippets,
+                sourceFiles
             });
         })
         .filter((endpoint): endpoint is FernGeneratorCli.EndpointReference => endpoint != null);
@@ -80,12 +92,14 @@ function getEndpointReference({
     context,
     service,
     endpoint,
-    endpointSnippets
+    endpointSnippets,
+    sourceFiles
 }: {
     context: SdkGeneratorContext;
     service: FernIr.HttpService;
     endpoint: FernIr.HttpEndpoint;
     endpointSnippets: Record<string, string>;
+    sourceFiles: Map<string, string | undefined>;
 }): FernGeneratorCli.EndpointReference | undefined {
     const methodName = context.caseConverter.snakeUnsafe(endpoint.name);
     const accessPath = getAccessFromRootClient({ context, service });
@@ -117,7 +131,12 @@ function getEndpointReference({
                 },
                 {
                     text: methodName,
-                    location: sourceFilePath != null ? { path: sourceFilePath } : undefined
+                    location:
+                        sourceFilePath != null
+                            ? {
+                                  path: getMethodLink({ context, sourceFilePath, methodName, sourceFiles })
+                              }
+                            : undefined
                 },
                 {
                     text: hasUserParameters ? `(...)` : `()`
@@ -340,6 +359,33 @@ function getSourceFilePath({
         return `src/${modulePath}/client.py`;
     }
     return `src/${modulePath}/${pathParts.join("/")}/client.py`;
+}
+
+function getMethodLink({
+    context,
+    sourceFilePath,
+    methodName,
+    sourceFiles
+}: {
+    context: SdkGeneratorContext;
+    sourceFilePath: string;
+    methodName: string;
+    sourceFiles: Map<string, string | undefined>;
+}): string {
+    if (!sourceFiles.has(sourceFilePath)) {
+        sourceFiles.set(sourceFilePath, readSourceFile(join(context.config.output.path, sourceFilePath)));
+    }
+    const source = sourceFiles.get(sourceFilePath);
+    const lineRange = source != null ? getMethodLineRange({ source, methodName }) : undefined;
+    return lineRange != null ? `${sourceFilePath}#L${lineRange.start}-L${lineRange.end}` : sourceFilePath;
+}
+
+function readSourceFile(absolutePath: string): string | undefined {
+    try {
+        return readFileSync(absolutePath, "utf-8");
+    } catch {
+        return undefined;
+    }
 }
 
 function getReturnTypeString({

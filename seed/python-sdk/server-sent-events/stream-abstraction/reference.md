@@ -1,6 +1,6 @@
 # Reference
 ## Completions
-<details><summary><code>client.completions.<a href="src/seed/completions/client.py">stream</a>(...) -> typing.Iterator[bytes]</code></summary>
+<details><summary><code>client.completions.<a href="src/seed/completions/client.py#L30-L63">stream</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -57,7 +57,7 @@ client.completions.stream(
 </dl>
 </details>
 
-<details><summary><code>client.completions.<a href="src/seed/completions/client.py">stream_without_terminator</a>(...) -> typing.Iterator[bytes]</code></summary>
+<details><summary><code>client.completions.<a href="src/seed/completions/client.py#L65-L98">stream_without_terminator</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 

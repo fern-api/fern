@@ -1,6 +1,6 @@
 # Reference
 ## Imdb
-<details><summary><code>client.imdb.<a href="src/seed/imdb/client.py">create_movie</a>(...) -> MovieId</code></summary>
+<details><summary><code>client.imdb.<a href="src/seed/imdb/client.py#L30-L64">create_movie</a>(...) -> MovieId</code></summary>
 <dl>
 <dd>
 
@@ -81,7 +81,7 @@ client.imdb.create_movie(
 </dl>
 </details>
 
-<details><summary><code>client.imdb.<a href="src/seed/imdb/client.py">get_movie</a>(...) -> Movie</code></summary>
+<details><summary><code>client.imdb.<a href="src/seed/imdb/client.py#L66-L93">get_movie</a>(...) -> Movie</code></summary>
 <dl>
 <dd>
 

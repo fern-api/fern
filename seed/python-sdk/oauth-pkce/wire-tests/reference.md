@@ -1,6 +1,6 @@
 # Reference
 ## Oauth
-<details><summary><code>client.oauth.<a href="src/seed/oauth/client.py">authorize</a>(...) -> AuthorizeResponse</code></summary>
+<details><summary><code>client.oauth.<a href="src/seed/oauth/client.py#L26-L87">authorize</a>(...) -> AuthorizeResponse</code></summary>
 <dl>
 <dd>
 

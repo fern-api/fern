@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">list_plants</a>() -> typing.List[Plant]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L97-L121">list_plants</a>() -> typing.List[Plant]</code></summary>
 <dl>
 <dd>
 
@@ -60,7 +60,7 @@ client.list_plants()
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">get_plant</a>(...) -> Plant</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L123-L151">get_plant</a>(...) -> Plant</code></summary>
 <dl>
 <dd>
 

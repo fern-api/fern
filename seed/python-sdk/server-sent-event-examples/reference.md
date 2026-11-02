@@ -1,6 +1,6 @@
 # Reference
 ## Completions
-<details><summary><code>client.completions.<a href="src/seed/completions/client.py">stream</a>(...) -> typing.Iterator[bytes]</code></summary>
+<details><summary><code>client.completions.<a href="src/seed/completions/client.py#L32-L61">stream</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -57,7 +57,7 @@ client.completions.stream(
 </dl>
 </details>
 
-<details><summary><code>client.completions.<a href="src/seed/completions/client.py">stream_events</a>(...) -> typing.Iterator[bytes]</code></summary>
+<details><summary><code>client.completions.<a href="src/seed/completions/client.py#L63-L92">stream_events</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -114,7 +114,7 @@ client.completions.stream_events(
 </dl>
 </details>
 
-<details><summary><code>client.completions.<a href="src/seed/completions/client.py">stream_events_discriminant_in_data</a>(...) -> typing.Iterator[bytes]</code></summary>
+<details><summary><code>client.completions.<a href="src/seed/completions/client.py#L94-L123">stream_events_discriminant_in_data</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -171,7 +171,7 @@ client.completions.stream_events_discriminant_in_data(
 </dl>
 </details>
 
-<details><summary><code>client.completions.<a href="src/seed/completions/client.py">stream_events_context_protocol</a>(...) -> typing.Iterator[bytes]</code></summary>
+<details><summary><code>client.completions.<a href="src/seed/completions/client.py#L125-L154">stream_events_context_protocol</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 

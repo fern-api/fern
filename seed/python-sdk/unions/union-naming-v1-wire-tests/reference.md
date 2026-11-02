@@ -1,6 +1,6 @@
 # Reference
 ## Bigunion
-<details><summary><code>client.bigunion.<a href="src/seed/bigunion/client.py">get</a>(...) -> BigUnion</code></summary>
+<details><summary><code>client.bigunion.<a href="src/seed/bigunion/client.py#L29-L54">get</a>(...) -> BigUnion</code></summary>
 <dl>
 <dd>
 
@@ -57,7 +57,7 @@ client.bigunion.get(
 </dl>
 </details>
 
-<details><summary><code>client.bigunion.<a href="src/seed/bigunion/client.py">update</a>(...) -> bool</code></summary>
+<details><summary><code>client.bigunion.<a href="src/seed/bigunion/client.py#L56-L93">update</a>(...) -> bool</code></summary>
 <dl>
 <dd>
 
@@ -121,7 +121,7 @@ client.bigunion.update(
 </dl>
 </details>
 
-<details><summary><code>client.bigunion.<a href="src/seed/bigunion/client.py">update_many</a>(...) -> typing.Dict[str, bool]</code></summary>
+<details><summary><code>client.bigunion.<a href="src/seed/bigunion/client.py#L95-L146">update_many</a>(...) -> typing.Dict[str, bool]</code></summary>
 <dl>
 <dd>
 
@@ -194,7 +194,7 @@ client.bigunion.update_many(
 </details>
 
 ## Union
-<details><summary><code>client.union.<a href="src/seed/union/client.py">get</a>(...) -> Shape</code></summary>
+<details><summary><code>client.union.<a href="src/seed/union/client.py#L29-L54">get</a>(...) -> Shape</code></summary>
 <dl>
 <dd>
 
@@ -251,7 +251,7 @@ client.union.get(
 </dl>
 </details>
 
-<details><summary><code>client.union.<a href="src/seed/union/client.py">update</a>(...) -> bool</code></summary>
+<details><summary><code>client.union.<a href="src/seed/union/client.py#L56-L85">update</a>(...) -> bool</code></summary>
 <dl>
 <dd>
 

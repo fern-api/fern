@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="src/seed/service/client.py">simple</a>()</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L25-L46">simple</a>()</code></summary>
 <dl>
 <dd>
 
@@ -47,7 +47,7 @@ client.service.simple()
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">download</a>(...)</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L48-L62">download</a>(...)</code></summary>
 <dl>
 <dd>
 

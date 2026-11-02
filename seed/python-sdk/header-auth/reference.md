@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="src/seed/service/client.py">get_with_bearer_token</a>() -> str</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L25-L49">get_with_bearer_token</a>() -> str</code></summary>
 <dl>
 <dd>
 

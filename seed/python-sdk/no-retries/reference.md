@@ -1,6 +1,6 @@
 # Reference
 ## Retries
-<details><summary><code>client.retries.<a href="src/seed/retries/client.py">get_users</a>() -> typing.List[User]</code></summary>
+<details><summary><code>client.retries.<a href="src/seed/retries/client.py#L26-L47">get_users</a>() -> typing.List[User]</code></summary>
 <dl>
 <dd>
 

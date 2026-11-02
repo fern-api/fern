@@ -1,6 +1,6 @@
 # Reference
 ## Dummy
-<details><summary><code>client.dummy.<a href="src/seed/dummy/client.py">generate</a>(...)</code></summary>
+<details><summary><code>client.dummy.<a href="src/seed/dummy/client.py#L37-L193">generate</a>(...)</code></summary>
 <dl>
 <dd>
 

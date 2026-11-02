@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">upload_json_document</a>(...) -> UploadDocumentResponse</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L114-L151">upload_json_document</a>(...) -> UploadDocumentResponse</code></summary>
 <dl>
 <dd>
 
@@ -72,7 +72,7 @@ client.upload_json_document()
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">upload_pdf_document</a>(...) -> UploadDocumentResponse</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L153-L173">upload_pdf_document</a>(...) -> UploadDocumentResponse</code></summary>
 <dl>
 <dd>
 

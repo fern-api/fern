@@ -1,6 +1,6 @@
 # Reference
 ## Events
-<details><summary><code>client.events.<a href="src/seed/events/client.py">subscribe</a>(...) -> str</code></summary>
+<details><summary><code>client.events.<a href="src/seed/events/client.py#L27-L64">subscribe</a>(...) -> str</code></summary>
 <dl>
 <dd>
 

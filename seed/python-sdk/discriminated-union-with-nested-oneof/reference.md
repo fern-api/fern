@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">create_ast</a>(...) -> AstNode</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L100-L128">create_ast</a>(...) -> AstNode</code></summary>
 <dl>
 <dd>
 

@@ -1,6 +1,6 @@
 # Reference
 ## Users
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_uri_pagination</a>() -> ListUsersUriPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py#L29-L57">list_with_uri_pagination</a>() -> ListUsersUriPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -48,7 +48,7 @@ client.users.list_with_uri_pagination()
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_path_pagination</a>() -> ListUsersPathPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py#L59-L87">list_with_path_pagination</a>() -> ListUsersPathPaginationResponse</code></summary>
 <dl>
 <dd>
 

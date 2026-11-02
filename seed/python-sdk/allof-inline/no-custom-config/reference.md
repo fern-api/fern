@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">search_rule_types</a>(...) -> RuleTypeSearchResponse</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L119-L143">search_rule_types</a>(...) -> RuleTypeSearchResponse</code></summary>
 <dl>
 <dd>
 
@@ -55,7 +55,7 @@ client.search_rule_types()
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">create_rule</a>(...) -> RuleResponse</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L145-L181">create_rule</a>(...) -> RuleResponse</code></summary>
 <dl>
 <dd>
 
@@ -122,7 +122,7 @@ client.create_rule(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">list_users</a>() -> UserSearchResponse</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L183-L203">list_users</a>() -> UserSearchResponse</code></summary>
 <dl>
 <dd>
 
@@ -170,7 +170,7 @@ client.list_users()
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">get_entity</a>() -> CombinedEntity</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L205-L225">get_entity</a>() -> CombinedEntity</code></summary>
 <dl>
 <dd>
 
@@ -218,7 +218,7 @@ client.get_entity()
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">get_organization</a>() -> Organization</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L227-L247">get_organization</a>() -> Organization</code></summary>
 <dl>
 <dd>
 
@@ -266,7 +266,7 @@ client.get_organization()
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">create_plant</a>(...) -> PlantStrict</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L249-L323">create_plant</a>(...) -> PlantStrict</code></summary>
 <dl>
 <dd>
 
@@ -399,7 +399,7 @@ client.create_plant(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">create_tree</a>(...) -> TreeRecord</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L325-L387">create_tree</a>(...) -> TreeRecord</code></summary>
 <dl>
 <dd>
 

@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.<a href="src/seed/user/client.py">create_username</a>(...)</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py#L33-L77">create_username</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -87,7 +87,7 @@ client.user.create_username(
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">create_username_with_referenced_type</a>(...)</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py#L79-L123">create_username_with_referenced_type</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -158,7 +158,7 @@ client.user.create_username_with_referenced_type(
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">create_username_optional</a>(...)</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py#L125-L156">create_username_optional</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -216,7 +216,7 @@ client.user.create_username_optional(
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get_username</a>(...) -> User</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py#L158-L302">get_username</a>(...) -> User</code></summary>
 <dl>
 <dd>
 
