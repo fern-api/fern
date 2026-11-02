@@ -542,7 +542,9 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 });
             } else {
                 const useFernDefinition = argv["fern-definition"] === true;
-                const useSdkConfig = isSdkConfigInitEnabled() && !useFernDefinition;
+                const useGrpc = argv.grpc === true || argv.proto != null;
+                // gRPC init only scaffolds generators.yml, so it always uses the generators.yml flow.
+                const useSdkConfig = isSdkConfigInitEnabled() && !useFernDefinition && !useGrpc;
                 let absoluteOpenApiPath: AbsoluteFilePath | undefined = undefined;
                 let openApiUrl: string | undefined = undefined;
                 let absoluteProtoPath: AbsoluteFilePath | undefined = undefined;
