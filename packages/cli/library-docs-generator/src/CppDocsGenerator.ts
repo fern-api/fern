@@ -43,6 +43,7 @@ import type {
     NamespaceListEntry
 } from "../cpp/src/renderers/IndexPageRenderer.js";
 import {
+    categoryHasEntries,
     ENTITY_CATEGORIES,
     namespaceHasEntities,
     renderCategoryIndexPage,
@@ -860,7 +861,7 @@ function generateIndexPages(
     // Identify which categories have entities (without resolving links yet)
     const nonEmptyCategories: CategoryDefinition[] = [];
     for (const category of ENTITY_CATEGORIES) {
-        if (category.collectEntries(ns).length > 0) {
+        if (categoryHasEntries(category, ns)) {
             nonEmptyCategories.push(category);
         }
     }
@@ -1045,7 +1046,7 @@ function generateHeaderPages(files: CppFileIr[], writer: MdxFileWriter, libraryT
     if (files.length === 0) {
         return;
     }
-    const used = new Set<string>();
+    const used = new Set<string>(["index"]);
     const entries: { file: CppFileIr; slug: string }[] = [];
     for (const file of files) {
         const base = slugifySegment(file.path.replace(/\.[^.]+$/, "").replace(/[\\/]+/g, "-")) || "header";
@@ -1066,7 +1067,8 @@ function generateHeaderPages(files: CppFileIr[], writer: MdxFileWriter, libraryT
     writer.writePage(
         indexPageKey,
         renderHeadersIndexPage(
-            entries.map(({ file, slug }) => ({ displayName: file.path, linkPath: `./${slug}` })),
+            // the index is served at `.../headers`, so sibling pages are reached via `headers/<slug>`
+            entries.map(({ file, slug }) => ({ displayName: file.path, linkPath: `headers/${slug}` })),
             libraryTitle
         )
     );

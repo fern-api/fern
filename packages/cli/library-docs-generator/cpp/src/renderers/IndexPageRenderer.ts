@@ -135,8 +135,16 @@ export const ENTITY_CATEGORIES: readonly CategoryDefinition[] = [
 /**
  * Check whether a namespace has any entities, either directly or in descendants.
  */
+/** Anonymous enums have no page, but they are listed on the enums index, so they count as content. */
+export function categoryHasEntries(category: CategoryDefinition, ns: CppNamespaceIr): boolean {
+    if (category.collectEntries(ns).length > 0) {
+        return true;
+    }
+    return category.folderName === "enums" && ns.enums.some((e) => e.name.startsWith("@"));
+}
+
 export function namespaceHasEntities(ns: CppNamespaceIr): boolean {
-    const hasDirectEntities = ENTITY_CATEGORIES.some((cat) => cat.collectEntries(ns).length > 0);
+    const hasDirectEntities = ENTITY_CATEGORIES.some((cat) => categoryHasEntries(cat, ns));
     if (hasDirectEntities) {
         return true;
     }

@@ -726,7 +726,12 @@ export function renderSourceSelection(
     }
     const lines: string[] = [];
     const quote = (value: string): string => `"${value.replace(/"/g, '\\"')}"`;
-    for (const path of libraryConfig.include ?? []) {
+    const include = libraryConfig.include ?? [];
+    if (include.length > 0) {
+        // Reset so a user Doxyfile's own INPUT (and the parser's whole-root default) is replaced, not extended
+        lines.push("INPUT =");
+    }
+    for (const path of include) {
         lines.push(`INPUT += ${quote(path)}`);
     }
     for (const entry of libraryConfig.exclude ?? []) {

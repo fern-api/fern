@@ -641,6 +641,7 @@ describe("renderSourceSelection()", () => {
                 excludeSymbols: ["PSS_DAEMON_*", "detail::*"]
             }).split("\n")
         ).toEqual([
+            "INPUT =",
             'INPUT += "include/pss_daemon.h"',
             'INPUT += "include/pss_protocol.h"',
             'EXCLUDE += "third_party"',
