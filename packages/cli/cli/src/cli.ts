@@ -472,7 +472,8 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                         `No --organization given and no Fern login found; using ${chalk.bold(argv.organization)} from the directory name. Pass --organization to choose another.`
                     );
                 }
-                // Otherwise the organization is read from the login or FERN_TOKEN when the fern directory is created.
+                // Otherwise `createFernDirectoryAndWorkspace` (@fern-api/init) reads the organization from the login or
+                // FERN_TOKEN.
             }
             if (argv.api != null && argv.docs != null) {
                 return cliContext.failWithoutThrowing(

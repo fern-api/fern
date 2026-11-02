@@ -96,8 +96,10 @@ export async function generateDocsWorkspace({
     }
     const hasFdrOriginOverride = !!process.env["FERN_FDR_ORIGIN"] || !!process.env["OVERRIDE_FDR_ORIGIN"];
 
-    // A non-interactive run (an agent, CI) cannot answer a login prompt, so a missing account is reported before the
-    // production-site confirmation: the first error names the one step it can take on its own, --guest.
+    // Every path below needs a token (preview included; `askToLogin` runs for all of them). `askToLogin` only opens
+    // the login prompt when stdout is a TTY, so a run that would not get the prompt (an agent, CI) is told about the
+    // missing account here, before the production-site confirmation: the first error names the one step it can take
+    // on its own, --guest.
     if (!guest && !process.stdout.isTTY && (await getToken()) == null) {
         cliContext.failAndThrow(getMissingLoginMessage({ suggestGuest: true }), undefined, {
             code: CliError.Code.AuthError

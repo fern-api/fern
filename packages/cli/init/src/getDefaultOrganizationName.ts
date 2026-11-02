@@ -1,5 +1,5 @@
+import path from "node:path";
 import { getOrganizationNameValidationError } from "@fern-api/auth";
-import path from "path";
 
 const FALLBACK_ORGANIZATION_NAME = "my-org";
 
