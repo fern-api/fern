@@ -278,6 +278,8 @@ describe("WebhooksHelperGenerator verify_request", () => {
 
     it("maps configured wire values onto the generic algorithm in verify_signature", () => {
         const body = render({ ...config, algorithmHeader });
-        expect(body).toContain('algorithm.nil? ? "sha1" : HMAC_ALGORITHMS.fetch(algorithm, algorithm)');
+        expect(body).toContain('algorithm.nil? ? "sha1" : HMAC_ALGORITHMS.fetch(algorithm)');
+        expect(body).toContain("if !algorithm.nil? && !HMAC_ALGORITHMS.key?(algorithm)");
+        expect(body).not.toContain("fetch(algorithm, algorithm)");
     });
 });
