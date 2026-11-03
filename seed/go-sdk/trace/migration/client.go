@@ -39,7 +39,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	request := &fern.GetAttemptedMigrationsRequest{
 //	    AdminKeyHeader: "admin-key-header",
 //	}
-//	client.Migration.GetAttemptedMigrations(
+//	_, err := client.Migration.GetAttemptedMigrations(
 //	    context.TODO(),
 //	    request,
 //	)

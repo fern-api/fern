@@ -205,8 +205,8 @@ export class EndpointSnippetsGenerator {
         for (const line of lines) {
             const trimmedLine = line.trim();
 
-            // Start collecting when we see a client method call
-            if (trimmedLine.startsWith("client.") && !inMethodCall) {
+            // Start collecting when we see a client method call (optionally assigned, e.g. `_, err := client.`)
+            if (isClientMethodCallStart(trimmedLine) && !inMethodCall) {
                 inMethodCall = true;
                 methodCallLines = [];
             }
@@ -324,4 +324,12 @@ export class EndpointSnippetsGenerator {
         }
         return undefined;
     }
+}
+
+// Matches `client.X(`, `_, err := client.X(` or `err := client.X(`, but not the client construction
+// `client := client.NewClient(` (the constructor name is configurable, e.g. `NewIMDBClient`).
+const CLIENT_METHOD_CALL_START_REGEX = /^(?!client\s*:=)(?:(?:_|\w+)(?:,\s*(?:_|\w+))*\s*:=\s*)?client\./;
+
+function isClientMethodCallStart(trimmedLine: string): boolean {
+    return CLIENT_METHOD_CALL_START_REGEX.test(trimmedLine);
 }

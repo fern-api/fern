@@ -1,6 +1,6 @@
 # Reference
 ## Items
-<details><summary><code>client.items.<a href="src/seed/items/client.py">create_item</a>(...) -> Item</code></summary>
+<details><summary><code>client.items.<a href="src/seed/items/client.py#L29-L53">create_item</a>(...) -> Item</code></summary>
 <dl>
 <dd>
 
@@ -58,7 +58,7 @@ client.items.create_item(
 </dl>
 </details>
 
-<details><summary><code>client.items.<a href="src/seed/items/client.py">get_item</a>(...) -> Item</code></summary>
+<details><summary><code>client.items.<a href="src/seed/items/client.py#L55-L79">get_item</a>(...) -> Item</code></summary>
 <dl>
 <dd>
 

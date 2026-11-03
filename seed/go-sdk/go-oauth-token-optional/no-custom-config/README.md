@@ -39,7 +39,7 @@ import (
     option "github.com/go-oauth-token-optional/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithClientCredentials(
             "<clientId>",
@@ -53,10 +53,14 @@ func do() {
             "client_credentials",
         ),
     }
-    client.Auth.CreateOauth2Token(
+    _, err := client.Auth.CreateOauth2Token(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

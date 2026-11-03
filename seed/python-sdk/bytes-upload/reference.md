@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="src/seed/service/client.py">upload</a>(...)</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L28-L56">upload</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -55,7 +55,7 @@ client.service.upload()
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">upload_with_query_params</a>(...)</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L58-L98">upload_with_query_params</a>(...)</code></summary>
 <dl>
 <dd>
 

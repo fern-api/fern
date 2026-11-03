@@ -118,7 +118,7 @@ client.echo(
 </details>
 
 ## File Notification Service
-<details><summary><code>client.file.notification.service.<a href="src/seed/file/notification/service/client.py">get_exception</a>(...) -> Exception</code></summary>
+<details><summary><code>client.file.notification.service.<a href="src/seed/file/notification/service/client.py#L26-L55">get_exception</a>(...) -> Exception</code></summary>
 <dl>
 <dd>
 
@@ -178,7 +178,7 @@ client.file.notification.service.get_exception(
 </details>
 
 ## File Service
-<details><summary><code>client.file.service.<a href="src/seed/file/service/client.py">get_file</a>(...) -> File</code></summary>
+<details><summary><code>client.file.service.<a href="src/seed/file/service/client.py#L26-L63">get_file</a>(...) -> File</code></summary>
 <dl>
 <dd>
 
@@ -253,7 +253,7 @@ client.file.service.get_file(
 </details>
 
 ## Health Service
-<details><summary><code>client.health.service.<a href="src/seed/health/service/client.py">check</a>(...)</code></summary>
+<details><summary><code>client.health.service.<a href="src/seed/health/service/client.py#L25-L55">check</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -326,7 +326,7 @@ client.health.service.check(
 </dl>
 </details>
 
-<details><summary><code>client.health.service.<a href="src/seed/health/service/client.py">ping</a>() -> bool</code></summary>
+<details><summary><code>client.health.service.<a href="src/seed/health/service/client.py#L57-L82">ping</a>() -> bool</code></summary>
 <dl>
 <dd>
 
@@ -390,7 +390,7 @@ client.health.service.ping()
 </details>
 
 ## Service
-<details><summary><code>client.service.<a href="src/seed/service/client.py">get_movie</a>(...) -> Movie</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L46-L73">get_movie</a>(...) -> Movie</code></summary>
 <dl>
 <dd>
 
@@ -449,7 +449,7 @@ client.service.get_movie(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">create_movie</a>(...) -> MovieId</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L75-L154">create_movie</a>(...) -> MovieId</code></summary>
 <dl>
 <dd>
 
@@ -519,7 +519,7 @@ client.service.create_movie(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">get_metadata</a>(...) -> Metadata</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L156-L198">get_metadata</a>(...) -> Metadata</code></summary>
 <dl>
 <dd>
 
@@ -598,7 +598,7 @@ client.service.get_metadata(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">create_big_entity</a>(...) -> Response</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L200-L485">create_big_entity</a>(...) -> Response</code></summary>
 <dl>
 <dd>
 
@@ -859,7 +859,7 @@ client.service.create_big_entity(
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">refresh_token</a>(...)</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L487-L517">refresh_token</a>(...)</code></summary>
 <dl>
 <dd>
 

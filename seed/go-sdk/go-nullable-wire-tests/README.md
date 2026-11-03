@@ -36,11 +36,15 @@ import (
     client "github.com/go-nullable-wire-tests/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
-    client.Things.GetThing(
+    _, err := client.Things.GetThing(
         context.TODO(),
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

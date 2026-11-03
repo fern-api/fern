@@ -42,7 +42,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 //	    Docs: "docs",
 //	    Unique: "unique",
 //	}
-//	client.ExtendedInlineRequestBody(
+//	err := client.ExtendedInlineRequestBody(
 //	    context.TODO(),
 //	    request,
 //	)

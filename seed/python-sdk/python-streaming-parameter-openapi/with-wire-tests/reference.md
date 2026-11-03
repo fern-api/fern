@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">chat_stream</a>(...) -> typing.Iterator[bytes]</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L101-L132">chat_stream</a>(...) -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 
@@ -64,7 +64,7 @@ client.chat_stream(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">chat</a>(...) -> ChatResponse</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L134-L161">chat</a>(...) -> ChatResponse</code></summary>
 <dl>
 <dd>
 

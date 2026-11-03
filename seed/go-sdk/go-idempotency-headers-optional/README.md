@@ -37,15 +37,19 @@ import (
     client "github.com/go-idempotency-headers-optional/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &fern.CreatePaymentRequest{
         Amount: 1,
     }
-    client.Service.Create(
+    _, err := client.Service.Create(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

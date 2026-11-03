@@ -37,7 +37,7 @@ import (
     client "github.com/openapi-path-param-body-collision/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &fern.IdentifierUpdate{
         ProfileID: "profile_123",
@@ -46,10 +46,14 @@ func do() {
         OldValue: "+13175556789",
         NewValue: "+13175556798",
     }
-    client.UpdateProfileIdentifier(
+    _, err := client.UpdateProfileIdentifier(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

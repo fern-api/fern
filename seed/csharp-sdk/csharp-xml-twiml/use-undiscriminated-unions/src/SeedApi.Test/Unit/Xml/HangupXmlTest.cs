@@ -9,7 +9,7 @@ public class HangupXmlTest
     [NUnit.Framework.Test]
     public void FromXml_ToXml_RoundTrips()
     {
-        var xml = "<Hangup />";
+        var xml = "<Hangup></Hangup>";
         var parsed = Hangup.FromXml(xml);
         var serialized = parsed.ToXml(false);
         Assert.That(

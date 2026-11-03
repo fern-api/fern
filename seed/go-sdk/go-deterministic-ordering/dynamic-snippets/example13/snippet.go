@@ -8,7 +8,7 @@ import (
     option "github.com/go-deterministic-ordering/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -21,8 +21,12 @@ func do() {
         Description: "description",
         Count: 1,
     }
-    client.Endpoints.DuplicateNamesB.Create(
+    _, err := client.Endpoints.DuplicateNamesB.Create(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

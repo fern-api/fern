@@ -50,7 +50,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //
 // Example:
 //
-//	client.Service.GetWithAPIVersion(
+//	_, err := client.Service.GetWithAPIVersion(
 //	    context.TODO(),
 //	)
 func (c *Client) GetWithAPIVersion(

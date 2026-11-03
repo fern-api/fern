@@ -1,6 +1,6 @@
 # Reference
 ## Vendor
-<details><summary><code>client.vendor.<a href="src/seed/vendor/client.py">update_vendor</a>(...) -> Vendor</code></summary>
+<details><summary><code>client.vendor.<a href="src/seed/vendor/client.py#L30-L68">update_vendor</a>(...) -> Vendor</code></summary>
 <dl>
 <dd>
 
@@ -66,7 +66,7 @@ client.vendor.update_vendor(
 </dl>
 </details>
 
-<details><summary><code>client.vendor.<a href="src/seed/vendor/client.py">create_vendor</a>(...) -> Vendor</code></summary>
+<details><summary><code>client.vendor.<a href="src/seed/vendor/client.py#L70-L109">create_vendor</a>(...) -> Vendor</code></summary>
 <dl>
 <dd>
 
@@ -140,7 +140,7 @@ client.vendor.create_vendor(
 </details>
 
 ## Catalog
-<details><summary><code>client.catalog.<a href="src/seed/catalog/client.py">create_catalog_image</a>(...) -> CatalogImage</code></summary>
+<details><summary><code>client.catalog.<a href="src/seed/catalog/client.py#L31-L70">create_catalog_image</a>(...) -> CatalogImage</code></summary>
 <dl>
 <dd>
 
@@ -208,7 +208,7 @@ client.catalog.create_catalog_image(
 </dl>
 </details>
 
-<details><summary><code>client.catalog.<a href="src/seed/catalog/client.py">get_catalog_image</a>(...) -> CatalogImage</code></summary>
+<details><summary><code>client.catalog.<a href="src/seed/catalog/client.py#L72-L100">get_catalog_image</a>(...) -> CatalogImage</code></summary>
 <dl>
 <dd>
 
@@ -266,7 +266,7 @@ client.catalog.get_catalog_image(
 </details>
 
 ## TeamMember
-<details><summary><code>client.team_member.<a href="src/seed/team_member/client.py">update_team_member</a>(...) -> TeamMember</code></summary>
+<details><summary><code>client.team_member.<a href="src/seed/team_member/client.py#L29-L75">update_team_member</a>(...) -> TeamMember</code></summary>
 <dl>
 <dd>
 

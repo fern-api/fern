@@ -1,9 +1,9 @@
 [project]
-name = "fern_http-head"
+name = "fern-http-head"
 dynamic = ["version"]
 
 [tool.poetry]
-name = "fern_http-head"
+name = "fern-http-head"
 version = "0.0.1"
 description = ""
 readme = "README.md"

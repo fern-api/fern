@@ -687,6 +687,13 @@
       ],
       "description": "The programming language of the library source code."
     },
+    "docs.LibrarySlugStyle": {
+      "type": "string",
+      "enum": [
+        "compact",
+        "hyphenated"
+      ]
+    },
     "docs.LibraryConfig": {
       "type": "object",
       "properties": {
@@ -711,6 +718,17 @@
             }
           ],
           "description": "Also generate pages for `#define`s that have no Doxygen comment.\nBy default only documented macros are rendered. Include guards are never\nemitted (Doxygen drops them). Only valid when lang is cpp."
+        },
+        "slug-style": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.LibrarySlugStyle"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "How symbol names become page URLs. `compact` (default) drops underscores\n(`doca_pcc_dev_get_port_counter_id` -> `docapccdevgetportcounterid`);\n`hyphenated` keeps word boundaries (`doca-pcc-dev-get-port-counter-id`).\nChanging this renames every generated page. Only valid when lang is cpp."
         }
       },
       "additionalProperties": false,
@@ -1728,6 +1746,9 @@
         "path"
       ],
       "additionalProperties": false
+    },
+    "docs.TabId": {
+      "type": "string"
     },
     "docs.CollapsedStringValue": {
       "type": "string",
@@ -3585,15 +3606,6 @@
         }
       ]
     },
-    "docs.UntabbedNavigationConfig": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/docs.NavigationItem"
-      }
-    },
-    "docs.TabId": {
-      "type": "string"
-    },
     "docs.TabbedNavigationItemWithLayout": {
       "type": "object",
       "properties": {
@@ -3765,13 +3777,19 @@
         "$ref": "#/definitions/docs.TabbedNavigationItem"
       }
     },
+    "docs.UntabbedNavigationConfig": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/docs.NavigationItem"
+      }
+    },
     "docs.NavigationConfig": {
       "anyOf": [
         {
-          "$ref": "#/definitions/docs.UntabbedNavigationConfig"
+          "$ref": "#/definitions/docs.TabbedNavigationConfig"
         },
         {
-          "$ref": "#/definitions/docs.TabbedNavigationConfig"
+          "$ref": "#/definitions/docs.UntabbedNavigationConfig"
         }
       ]
     },

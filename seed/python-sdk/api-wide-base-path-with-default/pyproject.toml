@@ -1,9 +1,9 @@
 [project]
-name = "fern_api-wide-base-path-with-default"
+name = "fern-api-wide-base-path-with-default"
 dynamic = ["version"]
 
 [tool.poetry]
-name = "fern_api-wide-base-path-with-default"
+name = "fern-api-wide-base-path-with-default"
 version = "0.0.1"
 description = ""
 readme = "README.md"

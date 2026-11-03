@@ -17,7 +17,7 @@ request := &fern.Inlined{
     Docs: "docs",
     Unique: "unique",
 }
-client.ExtendedInlineRequestBody(
+err := client.ExtendedInlineRequestBody(
     context.TODO(),
     request,
 )

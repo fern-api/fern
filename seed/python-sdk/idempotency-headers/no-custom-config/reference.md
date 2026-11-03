@@ -1,6 +1,6 @@
 # Reference
 ## Payment
-<details><summary><code>client.payment.<a href="src/seed/payment/client.py">create</a>(...) -> uuid.UUID</code></summary>
+<details><summary><code>client.payment.<a href="src/seed/payment/client.py#L30-L77">create</a>(...) -> uuid.UUID</code></summary>
 <dl>
 <dd>
 
@@ -67,7 +67,7 @@ client.payment.create(
 </dl>
 </details>
 
-<details><summary><code>client.payment.<a href="src/seed/payment/client.py">delete</a>(...)</code></summary>
+<details><summary><code>client.payment.<a href="src/seed/payment/client.py#L79-L105">delete</a>(...)</code></summary>
 <dl>
 <dd>
 

@@ -89,7 +89,7 @@ request := &fern.GetUsersRequest{
         "filter",
     },
 }
-client.User.GetUsername(
+_, err := client.User.GetUsername(
     context.TODO(),
     request,
 )

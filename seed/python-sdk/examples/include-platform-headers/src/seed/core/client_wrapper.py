@@ -46,7 +46,7 @@ class BaseClientWrapper:
         headers: typing.Dict[str, str] = {
             "User-Agent": _user_agent,
             "X-Fern-Language": "Python",
-            "X-Fern-SDK-Name": "fern_examples",
+            "X-Fern-SDK-Name": "fern-examples",
             "X-Fern-SDK-Version": "0.0.1",
             **(self.get_custom_headers() or {}),
         }

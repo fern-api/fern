@@ -1,3 +1,3 @@
 from importlib import metadata
 
-__version__ = metadata.version("fern_python-inferred-auth-refresh-token")
+__version__ = metadata.version("fern-python-inferred-auth-refresh-token")

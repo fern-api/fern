@@ -27,7 +27,7 @@ GET request with custom api key
 <dd>
 
 ```go
-client.Service.GetWithBearerToken(
+_, err := client.Service.GetWithBearerToken(
     context.TODO(),
 )
 ```

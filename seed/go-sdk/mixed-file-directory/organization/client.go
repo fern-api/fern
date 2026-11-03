@@ -41,7 +41,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	request := &fern.CreateOrganizationRequest{
 //	    Name: "name",
 //	}
-//	client.Organization.Create(
+//	_, err := client.Organization.Create(
 //	    context.TODO(),
 //	    request,
 //	)

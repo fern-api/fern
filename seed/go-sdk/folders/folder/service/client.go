@@ -35,7 +35,7 @@ func NewClient(options *core.RequestOptions) *Client {
 
 // Example:
 //
-//	client.Folder.Service.Endpoint(
+//	err := client.Folder.Service.Endpoint(
 //	    context.TODO(),
 //	)
 func (c *Client) Endpoint(
@@ -57,7 +57,7 @@ func (c *Client) Endpoint(
 //	request := map[string]any{
 //	    "key": "value",
 //	}
-//	client.Folder.Service.UnknownRequest(
+//	err := client.Folder.Service.UnknownRequest(
 //	    context.TODO(),
 //	    request,
 //	)

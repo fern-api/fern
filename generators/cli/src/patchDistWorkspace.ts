@@ -22,6 +22,10 @@ import type { FernCliGitHubAttestations, FernCliHomebrewConfig } from "./customC
  * Everything else in the file — `targets`, `installers`, `ci`,
  * `archive` formats — is generic boilerplate worth keeping.
  *
+ * `macos-sign = true` lets the release workflow sign the macOS binaries
+ * when the repo has the `CODESIGN_*` secrets; without them dist skips
+ * signing (see the "Load macOS signing secrets" step in `release.yml`).
+ *
  * No-op when the file doesn't exist (e.g. if a future change removes
  * the dist-workspace.toml from the SDK template entirely).
  */
@@ -80,7 +84,7 @@ export async function patchDistWorkspaceToml(args: {
         return;
     }
 
-    let patched = applyDistWorkspacePatch(contents);
+    let patched = setDistRawKey(applyDistWorkspacePatch(contents), "macos-sign", "true");
     if (homebrew != null) {
         patched = applyHomebrewPatch(patched, homebrew, binaryName);
     }

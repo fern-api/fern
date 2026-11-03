@@ -1,0 +1,7 @@
+- summary: |
+    An MCP target in `sdk-config.yml` can now host its server with `output.delivery: hosted` and a
+    `slug`, the equivalent of `output.location: fern-hosted` in `generators.yml`. `fern generate
+    --sdk-config` deploys it like the `generators.yml` path does, and `fern sdk migrate` keeps
+    the hosting and the slug instead of converting the output to a zip download. The request sent to
+    sdk-gen-api still asks only for a download.
+  type: feat

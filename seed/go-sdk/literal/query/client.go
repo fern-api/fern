@@ -57,7 +57,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	    ),
 //	    Query: "What is the weather today",
 //	}
-//	client.Query.Send(
+//	_, err := client.Query.Send(
 //	    context.TODO(),
 //	    request,
 //	)

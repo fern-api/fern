@@ -5,7 +5,7 @@ import { readFile } from "fs/promises";
 import path from "path";
 import YAML, { isMap, isScalar, isSeq, type Node, type YAMLMap } from "yaml";
 
-import type { ResolvedMigrationSourceSpec } from "./projectMigrationSource.js";
+import type { ResolvedMigrationFileSpec } from "./projectMigrationSource.js";
 
 export interface DocsConfigurationEdit {
     contents: string;
@@ -27,7 +27,7 @@ export async function migrateDocsConfiguration({
     docsPath: AbsoluteFilePath | undefined;
     workspaceName: string | undefined;
     isOnlyApiWorkspace: boolean;
-    sourceSpecs: ResolvedMigrationSourceSpec[];
+    sourceSpecs: ResolvedMigrationFileSpec[];
 }): Promise<DocsConfigurationMigration> {
     if (docsPath == null || !(await doesPathExist(docsPath))) {
         return { edits: [], updatedSections: 0 };
@@ -86,7 +86,7 @@ function migrateDocument({
     configurationPath: AbsoluteFilePath;
     workspaceName: string | undefined;
     isOnlyApiWorkspace: boolean;
-    sourceSpecs: ResolvedMigrationSourceSpec[];
+    sourceSpecs: ResolvedMigrationFileSpec[];
 }): { edit?: DocsConfigurationEdit; updatedSections: number } {
     const docsDirectory = dirname(configurationPath).toString();
     let updatedSections = 0;
@@ -157,7 +157,7 @@ function addReferencedPath(node: unknown, fernDirectory: string, paths: Set<stri
 }
 
 function serializeDocsSpec(
-    spec: ResolvedMigrationSourceSpec,
+    spec: ResolvedMigrationFileSpec,
     docsDirectory: string
 ): docsYml.RawSchemas.Serializer.ApiSpecConfiguration.Raw {
     if (spec.type !== "openapi" && spec.type !== "asyncapi" && spec.type !== "graphql") {

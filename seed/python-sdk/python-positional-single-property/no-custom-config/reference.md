@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">create</a>(...) -> str</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L101-L149">create</a>(...) -> str</code></summary>
 <dl>
 <dd>
 

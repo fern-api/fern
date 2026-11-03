@@ -1,3 +1,3 @@
 from importlib import metadata
 
-__version__ = metadata.version("fern_validation")
+__version__ = metadata.version("fern-validation")

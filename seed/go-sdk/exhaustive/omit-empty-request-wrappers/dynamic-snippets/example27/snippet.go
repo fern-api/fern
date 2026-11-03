@@ -9,7 +9,7 @@ import (
     types "github.com/exhaustive/fern/types"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -26,8 +26,12 @@ func do() {
         ),
         RequiredLong: int64(0),
     }
-    client.Endpoints.Object.GetAndReturnWithMixedRequiredAndOptionalFields(
+    _, err := client.Endpoints.Object.GetAndReturnWithMixedRequiredAndOptionalFields(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

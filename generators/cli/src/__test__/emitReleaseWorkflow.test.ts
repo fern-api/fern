@@ -40,6 +40,25 @@ describe("constructReleaseWorkflowYaml", () => {
         expect(yaml).toContain("::error::The cargo-dist installer failed twice");
     });
 
+    // A stable signing identity keeps the macOS keychain's "Always Allow"
+    // across releases. The certificate must reach only the macOS legs, and a
+    // repo without the secrets must build exactly as before.
+    it("loads the macOS signing secrets only on macOS runners, before the build", () => {
+        const yaml = constructReleaseWorkflowYaml({});
+        const step = yaml.indexOf("- name: Load macOS signing secrets");
+        const build = yaml.indexOf("- name: Build artifacts");
+        expect(step).toBeGreaterThan(-1);
+        expect(step).toBeLessThan(build);
+        const stepBody = yaml.slice(step, build);
+        expect(stepBody).toContain("if: ${{ runner.os == 'macOS' }}");
+        for (const name of ["CODESIGN_CERTIFICATE", "CODESIGN_CERTIFICATE_PASSWORD", "CODESIGN_IDENTITY"]) {
+            expect(yaml.split(`secrets.${name} }}`)).toHaveLength(2);
+            expect(stepBody).toContain(`${name}: \${{ secrets.${name} }}`);
+        }
+        expect(stepBody).toContain('>> "$GITHUB_ENV"');
+        expect(stepBody).toContain("macOS binaries stay unsigned");
+    });
+
     // The retry must reuse the matrix's own command and shell. Branching on
     // `matrix.install_dist.shell` would mean a future cargo-dist field rename
     // silently skips both legs and installs nothing — trading a flake for a

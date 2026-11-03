@@ -119,6 +119,33 @@ describe("prepareFernSdkGenApiSdkConfigPayload", () => {
         );
     });
 
+    it("sends sdk-gen-api a download for a hosted MCP target, which the CLI deploys itself", () => {
+        const mapFernGroupToSdkConfig = vi.fn(
+            ({ source }: Parameters<MapFernGroupToSdkConfig>[0]): SdkConfigMappingResult => ({
+                diagnostics: [],
+                sdkConfig: validateSdkConfigV1({
+                    schemaVersion: "sdk-config/v1",
+                    sdkName: "weather",
+                    source,
+                    targets: [{ language: "mcp", output: { delivery: "hosted", slug: "weather" } }]
+                })
+            })
+        );
+        const payload = prepareFernSdkGenApiSdkConfigPayload({
+            workspace: { definition: definition() },
+            generatorInvocation: mcpInvocation(),
+            audiences: { type: "all" },
+            sourceArchive: archive([0]),
+            mapFernGroupToSdkConfig
+        });
+
+        const sdkConfig = JSON.parse(payload.body.toString("utf8")) as {
+            targets: Array<{ language: string; output: unknown }>;
+        };
+        expect(sdkConfig.targets).toEqual([{ language: "mcp", output: { delivery: "zip" } }]);
+        expect(payload.body.toString("utf8")).not.toContain("hosted");
+    });
+
     it("preserves active customer fields without materializing their defaults", () => {
         const mapFernGroupToSdkConfig = vi.fn(
             ({ source }: Parameters<MapFernGroupToSdkConfig>[0]): SdkConfigMappingResult => ({

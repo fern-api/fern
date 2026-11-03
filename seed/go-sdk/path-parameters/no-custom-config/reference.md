@@ -13,7 +13,7 @@
 <dd>
 
 ```go
-client.Organizations.GetOrganization(
+_, err := client.Organizations.GetOrganization(
     context.TODO(),
     "tenant_id",
     "organization_id",
@@ -70,7 +70,7 @@ request := &fern.GetOrganizationUserRequest{
     OrganizationID: "organization_id",
     UserID: "user_id",
 }
-client.Organizations.GetOrganizationUser(
+_, err := client.Organizations.GetOrganizationUser(
     context.TODO(),
     request,
 )
@@ -134,7 +134,7 @@ request := &fern.SearchOrganizationsRequest{
         1,
     ),
 }
-client.Organizations.SearchOrganizations(
+_, err := client.Organizations.SearchOrganizations(
     context.TODO(),
     "tenant_id",
     "organization_id",
@@ -200,7 +200,7 @@ request := &fern.GetUsersRequest{
     TenantID: "tenant_id",
     UserID: "user_id",
 }
-client.User.GetUser(
+_, err := client.User.GetUser(
     context.TODO(),
     request,
 )
@@ -258,7 +258,7 @@ request := &fern.User{
         "tags",
     },
 }
-client.User.CreateUser(
+_, err := client.User.CreateUser(
     context.TODO(),
     "tenant_id",
     request,
@@ -321,7 +321,7 @@ request := &fern.UpdateUserRequest{
         },
     },
 }
-client.User.UpdateUser(
+_, err := client.User.UpdateUser(
     context.TODO(),
     request,
 )
@@ -387,7 +387,7 @@ request := &fern.SearchUsersRequest{
         1,
     ),
 }
-client.User.SearchUsers(
+_, err := client.User.SearchUsers(
     context.TODO(),
     request,
 )
@@ -465,7 +465,7 @@ request := &fern.GetUserMetadataRequest{
     UserID: "user_id",
     Version: 1,
 }
-client.User.GetUserMetadata(
+_, err := client.User.GetUserMetadata(
     context.TODO(),
     request,
 )
@@ -544,7 +544,7 @@ request := &fern.GetUserSpecificsRequest{
     Version: 1,
     Thought: "thought",
 }
-client.User.GetUserSpecifics(
+_, err := client.User.GetUserSpecifics(
     context.TODO(),
     request,
 )

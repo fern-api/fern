@@ -1,6 +1,6 @@
 # Reference
 ## Auth
-<details><summary><code>client.auth.<a href="src/seed/auth/client.py">get_token_with_client_credentials</a>(...) -> TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="src/seed/auth/client.py#L29-L72">get_token_with_client_credentials</a>(...) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -93,7 +93,7 @@ client.auth.get_token_with_client_credentials(
 </dl>
 </details>
 
-<details><summary><code>client.auth.<a href="src/seed/auth/client.py">refresh_token</a>(...) -> TokenResponse</code></summary>
+<details><summary><code>client.auth.<a href="src/seed/auth/client.py#L74-L125">refresh_token</a>(...) -> TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -196,7 +196,7 @@ client.auth.refresh_token(
 </details>
 
 ## NestedNoAuth Api
-<details><summary><code>client.nested_no_auth.api.<a href="src/seed/nested_no_auth/api/client.py">get_something</a>()</code></summary>
+<details><summary><code>client.nested_no_auth.api.<a href="src/seed/nested_no_auth/api/client.py#L25-L49">get_something</a>()</code></summary>
 <dl>
 <dd>
 
@@ -246,7 +246,7 @@ client.nested_no_auth.api.get_something()
 </details>
 
 ## Nested Api
-<details><summary><code>client.nested.api.<a href="src/seed/nested/api/client.py">get_something</a>()</code></summary>
+<details><summary><code>client.nested.api.<a href="src/seed/nested/api/client.py#L25-L49">get_something</a>()</code></summary>
 <dl>
 <dd>
 
@@ -296,7 +296,7 @@ client.nested.api.get_something()
 </details>
 
 ## Service
-<details><summary><code>client.service.<a href="src/seed/service/client.py">post</a>(...)</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L25-L49">post</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -354,7 +354,7 @@ client.service.post()
 </details>
 
 ## Simple
-<details><summary><code>client.simple.<a href="src/seed/simple/client.py">get_something</a>()</code></summary>
+<details><summary><code>client.simple.<a href="src/seed/simple/client.py#L25-L49">get_something</a>()</code></summary>
 <dl>
 <dd>
 

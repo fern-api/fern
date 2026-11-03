@@ -1,0 +1,4 @@
+- type: fix
+  summary: |
+    XML (TwiML) serialization writes empty elements with an explicit close tag (`<Hangup></Hangup>`) instead of a
+    self-closing `<Hangup />`, matching the legacy twilio-csharp output byte for byte.

@@ -8,7 +8,7 @@ import (
     option "github.com/multi-url-environment-no-default/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -20,8 +20,12 @@ func do() {
     request := &fern.BootInstanceRequest{
         Size: "size",
     }
-    client.Ec2.BootInstance(
+    err := client.Ec2.BootInstance(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

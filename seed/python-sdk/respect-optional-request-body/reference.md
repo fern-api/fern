@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">refund</a>(...)</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L99-L128">refund</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -64,7 +64,7 @@ client.refund(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">required_refund</a>(...)</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L130-L160">required_refund</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -130,7 +130,7 @@ client.required_refund(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">bulk_refund</a>(...)</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L162-L187">bulk_refund</a>(...)</code></summary>
 <dl>
 <dd>
 

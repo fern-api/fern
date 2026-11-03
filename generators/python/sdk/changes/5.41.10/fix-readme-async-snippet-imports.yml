@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix the README "Async Client" snippet dropping types imported from the package root.
+    Previously the whole `from <package> import <Client>, <Type>, ...` line of the sync
+    snippet was discarded, so the async example only imported the async client and
+    referenced request types that were never imported. The async snippet now imports
+    those names alongside the async client.
+  type: fix

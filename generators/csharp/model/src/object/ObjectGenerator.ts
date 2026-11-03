@@ -14,7 +14,7 @@ type TypeReference = FernIr.TypeReference;
 import { generateFields, getGeneratedPropertyName } from "../generateFields.js";
 import { ModelGeneratorContext } from "../ModelGeneratorContext.js";
 import { ExampleGenerator } from "../snippets/ExampleGenerator.js";
-import { XmlObjectGenerator } from "./XmlObjectGenerator.js";
+import { getXmlTextFieldName, XmlObjectGenerator } from "./XmlObjectGenerator.js";
 
 export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorContext> {
     private readonly typeDeclaration: TypeDeclaration;
@@ -61,6 +61,14 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelGeneratorCon
             annotations: [this.System.Serializable]
         });
         const properties = this.getPropertiesToGenerate();
+        if (this.typeDeclaration.encoding?.xml != null) {
+            for (const property of properties) {
+                const textFieldName = getXmlTextFieldName(this.context, this.typeDeclaration, property);
+                if (textFieldName != null) {
+                    class_.reference.registerField(textFieldName, property);
+                }
+            }
+        }
         const fields = generateFields(class_, {
             properties,
             className: this.classReference.name,

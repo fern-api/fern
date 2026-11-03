@@ -37,7 +37,7 @@ import (
     client "github.com/required-nullable/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &fern.GetFooRequest{
         RequiredBaz: "required_baz",
@@ -45,10 +45,14 @@ func do() {
             "required_nullable_baz",
         ),
     }
-    client.GetFoo(
+    _, err := client.GetFoo(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

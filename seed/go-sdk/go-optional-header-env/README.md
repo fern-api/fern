@@ -37,15 +37,19 @@ import (
     option "github.com/go-optional-header-env/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithAPIKey(
             "<token>",
         ),
     )
-    client.Service.GetWithAPIVersion(
+    _, err := client.Service.GetWithAPIVersion(
         context.TODO(),
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

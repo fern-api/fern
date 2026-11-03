@@ -13,7 +13,7 @@
 <dd>
 
 ```go
-client.V2.Test(
+err := client.V2.Test(
     context.TODO(),
 )
 ```
@@ -44,7 +44,7 @@ client.V2.Test(
 request := &fern.TestSubmissionStatus{
     Stopped: "stopped",
 }
-client.Admin.UpdateTestSubmissionStatus(
+err := client.Admin.UpdateTestSubmissionStatus(
     context.TODO(),
     uuid.MustParse(
         "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -104,7 +104,7 @@ request := &fern.TestSubmissionUpdate{
     ),
     UpdateInfo: &fern.TestSubmissionUpdateInfo{},
 }
-client.Admin.SendTestSubmissionUpdate(
+err := client.Admin.SendTestSubmissionUpdate(
     context.TODO(),
     uuid.MustParse(
         "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -161,7 +161,7 @@ client.Admin.SendTestSubmissionUpdate(
 request := &fern.WorkspaceSubmissionStatus{
     Stopped: "stopped",
 }
-client.Admin.UpdateWorkspaceSubmissionStatus(
+err := client.Admin.UpdateWorkspaceSubmissionStatus(
     context.TODO(),
     uuid.MustParse(
         "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -221,7 +221,7 @@ request := &fern.WorkspaceSubmissionUpdate{
     ),
     UpdateInfo: &fern.WorkspaceSubmissionUpdateInfo{},
 }
-client.Admin.SendWorkspaceSubmissionUpdate(
+err := client.Admin.SendWorkspaceSubmissionUpdate(
     context.TODO(),
     uuid.MustParse(
         "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -355,7 +355,7 @@ request := &fern.StoreTracedTestCaseRequest{
         },
     },
 }
-client.Admin.StoreTracedTestCase(
+err := client.Admin.StoreTracedTestCase(
     context.TODO(),
     uuid.MustParse(
         "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -502,7 +502,7 @@ request := []*fern.TraceResponseV2{
         ),
     },
 }
-client.Admin.StoreTracedTestCaseV2(
+err := client.Admin.StoreTracedTestCaseV2(
     context.TODO(),
     uuid.MustParse(
         "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -650,7 +650,7 @@ request := &fern.StoreTracedWorkspaceRequest{
         },
     },
 }
-client.Admin.StoreTracedWorkspace(
+err := client.Admin.StoreTracedWorkspace(
     context.TODO(),
     uuid.MustParse(
         "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -788,7 +788,7 @@ request := []*fern.TraceResponseV2{
         ),
     },
 }
-client.Admin.StoreTracedWorkspaceV2(
+err := client.Admin.StoreTracedWorkspaceV2(
     context.TODO(),
     uuid.MustParse(
         "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -843,7 +843,7 @@ client.Admin.StoreTracedWorkspaceV2(
 <dd>
 
 ```go
-client.Homepage.GetHomepageProblems(
+_, err := client.Homepage.GetHomepageProblems(
     context.TODO(),
 )
 ```
@@ -874,7 +874,7 @@ request := []common.ProblemID{
     "string",
     "string",
 }
-client.Homepage.SetHomepageProblems(
+err := client.Homepage.SetHomepageProblems(
     context.TODO(),
     request,
 )
@@ -921,7 +921,7 @@ client.Homepage.SetHomepageProblems(
 request := &fern.GetAttemptedMigrationsRequest{
     AdminKeyHeader: "admin-key-header",
 }
-client.Migration.GetAttemptedMigrations(
+_, err := client.Migration.GetAttemptedMigrations(
     context.TODO(),
     request,
 )
@@ -996,7 +996,7 @@ request := &fern.CreatePlaylistRequest{
         },
     },
 }
-client.Playlist.CreatePlaylist(
+_, err := client.Playlist.CreatePlaylist(
     context.TODO(),
     1,
     request,
@@ -1093,7 +1093,7 @@ request := &fern.GetPlaylistsRequest{
         "multipleField",
     },
 }
-client.Playlist.GetPlaylists(
+_, err := client.Playlist.GetPlaylists(
     context.TODO(),
     1,
     request,
@@ -1194,7 +1194,7 @@ Returns a playlist
 <dd>
 
 ```go
-client.Playlist.GetPlaylist(
+_, err := client.Playlist.GetPlaylist(
     context.TODO(),
     1,
     "playlistId",
@@ -1267,7 +1267,7 @@ request := &fern.UpdatePlaylistRequest{
         "problems",
     },
 }
-client.Playlist.UpdatePlaylist(
+_, err := client.Playlist.UpdatePlaylist(
     context.TODO(),
     1,
     "playlistId",
@@ -1342,7 +1342,7 @@ Deletes a playlist
 <dd>
 
 ```go
-client.Playlist.DeletePlaylist(
+err := client.Playlist.DeletePlaylist(
     context.TODO(),
     1,
     "playlist_id",
@@ -1476,7 +1476,7 @@ request := &fern.CreateProblemRequest{
     },
     MethodName: "methodName",
 }
-client.Problem.CreateProblem(
+_, err := client.Problem.CreateProblem(
     context.TODO(),
     request,
 )
@@ -1600,7 +1600,7 @@ request := &fern.CreateProblemRequest{
     },
     MethodName: "methodName",
 }
-client.Problem.UpdateProblem(
+_, err := client.Problem.UpdateProblem(
     context.TODO(),
     "problemId",
     request,
@@ -1666,7 +1666,7 @@ Soft deletes a problem
 <dd>
 
 ```go
-client.Problem.DeleteProblem(
+err := client.Problem.DeleteProblem(
     context.TODO(),
     "problemId",
 )
@@ -1743,7 +1743,7 @@ request := &fern.GetDefaultStarterFilesRequest{
     },
     MethodName: "methodName",
 }
-client.Problem.GetDefaultStarterFiles(
+_, err := client.Problem.GetDefaultStarterFiles(
     context.TODO(),
     request,
 )
@@ -1824,7 +1824,7 @@ Returns sessionId and execution server URL for session. Spins up server.
 <dd>
 
 ```go
-client.Submission.CreateExecutionSession(
+_, err := client.Submission.CreateExecutionSession(
     context.TODO(),
     common.LanguageJava.Ptr(),
 )
@@ -1881,7 +1881,7 @@ Returns execution server URL for session. Returns empty if session isn't registe
 <dd>
 
 ```go
-client.Submission.GetExecutionSession(
+_, err := client.Submission.GetExecutionSession(
     context.TODO(),
     "sessionId",
 )
@@ -1938,7 +1938,7 @@ Stops execution session.
 <dd>
 
 ```go
-client.Submission.StopExecutionSession(
+err := client.Submission.StopExecutionSession(
     context.TODO(),
     "sessionId",
 )
@@ -1981,7 +1981,7 @@ client.Submission.StopExecutionSession(
 <dd>
 
 ```go
-client.Submission.GetExecutionSessionsState(
+_, err := client.Submission.GetExecutionSessionsState(
     context.TODO(),
 )
 ```
@@ -2009,7 +2009,7 @@ client.Submission.GetExecutionSessionsState(
 <dd>
 
 ```go
-client.Sysprop.SetNumWarmInstances(
+err := client.Sysprop.SetNumWarmInstances(
     context.TODO(),
     common.LanguageJava.Ptr(),
     1,
@@ -2061,7 +2061,7 @@ client.Sysprop.SetNumWarmInstances(
 <dd>
 
 ```go
-client.Sysprop.GetNumWarmInstances(
+_, err := client.Sysprop.GetNumWarmInstances(
     context.TODO(),
 )
 ```
@@ -2103,7 +2103,7 @@ Returns lightweight versions of all problems
 <dd>
 
 ```go
-client.V2.Problem.GetLightweightProblems(
+_, err := client.V2.Problem.GetLightweightProblems(
     context.TODO(),
 )
 ```
@@ -2144,7 +2144,7 @@ Returns latest versions of all problems
 <dd>
 
 ```go
-client.V2.Problem.GetProblems(
+_, err := client.V2.Problem.GetProblems(
     context.TODO(),
 )
 ```
@@ -2185,7 +2185,7 @@ Returns latest version of a problem
 <dd>
 
 ```go
-client.V2.Problem.GetLatestProblem(
+_, err := client.V2.Problem.GetLatestProblem(
     context.TODO(),
     "problemId",
 )
@@ -2242,7 +2242,7 @@ Returns requested version of a problem
 <dd>
 
 ```go
-client.V2.Problem.GetProblemVersion(
+_, err := client.V2.Problem.GetProblemVersion(
     context.TODO(),
     "problemId",
     1,
@@ -2309,7 +2309,7 @@ Returns lightweight versions of all problems
 <dd>
 
 ```go
-client.V2.V3.Problem.GetLightweightProblems(
+_, err := client.V2.V3.Problem.GetLightweightProblems(
     context.TODO(),
 )
 ```
@@ -2350,7 +2350,7 @@ Returns latest versions of all problems
 <dd>
 
 ```go
-client.V2.V3.Problem.GetProblems(
+_, err := client.V2.V3.Problem.GetProblems(
     context.TODO(),
 )
 ```
@@ -2391,7 +2391,7 @@ Returns latest version of a problem
 <dd>
 
 ```go
-client.V2.V3.Problem.GetLatestProblem(
+_, err := client.V2.V3.Problem.GetLatestProblem(
     context.TODO(),
     "problemId",
 )
@@ -2448,7 +2448,7 @@ Returns requested version of a problem
 <dd>
 
 ```go
-client.V2.V3.Problem.GetProblemVersion(
+_, err := client.V2.V3.Problem.GetProblemVersion(
     context.TODO(),
     "problemId",
     1,

@@ -18,7 +18,9 @@ public class XmlElementTests
 
         Assert.That(
             element.ToXml(),
-            Is.EqualTo("<Foo a=\"1\">hi &lt;&amp;&gt; \"there\"<Bar b=\"2\" /><Baz>x</Baz></Foo>")
+            Is.EqualTo(
+                "<Foo a=\"1\">hi &lt;&amp;&gt; \"there\"<Bar b=\"2\"></Bar><Baz>x</Baz></Foo>"
+            )
         );
     }
 
@@ -60,7 +62,7 @@ public class XmlElementTests
     public void FromXml_RoundTrips()
     {
         const string xml =
-            "<Response><Say voice=\"man\">hi</Say><tw:Dial xmlns:tw=\"https://www.twilio.com/twiml\" xml:lang=\"en\">+1</tw:Dial><Hangup /></Response>";
+            "<Response><Say voice=\"man\">hi</Say><tw:Dial xmlns:tw=\"https://www.twilio.com/twiml\" xml:lang=\"en\">+1</tw:Dial><Hangup></Hangup></Response>";
 
         var element = XmlElement.FromXml(xml);
 
@@ -104,7 +106,7 @@ public class XmlElementTests
     [Test]
     public void ParseRoot_RejectsWrongRootName()
     {
-        var e = Assert.Throws<ArgumentException>(() => XmlUtils.ParseRoot("<Bar />", "Foo"));
+        var e = Assert.Throws<ArgumentException>(() => XmlUtils.ParseRoot("<Bar></Bar>", "Foo"));
         Assert.That(e!.Message, Does.Contain("<Foo>"));
     }
 
@@ -114,7 +116,7 @@ public class XmlElementTests
         var parsed = XmlElement.FromXml("<Foo xmlns:a=\"urn:test\"><Bar a:id=\"1\"/></Foo>");
         var bar = (XmlElement)parsed.Children[0];
         Assert.That(bar.Attributes["a:id"], Is.EqualTo("1"));
-        Assert.That(bar.ToXml(), Is.EqualTo("<Bar xmlns:a=\"urn:test\" a:id=\"1\" />"));
+        Assert.That(bar.ToXml(), Is.EqualTo("<Bar xmlns:a=\"urn:test\" a:id=\"1\"></Bar>"));
         Assert.That(XmlElement.FromXml(parsed.ToXml()), Is.EqualTo(parsed));
     }
 
@@ -157,7 +159,10 @@ public class XmlElementTests
             .AddChild(new XmlElement("break").SetAttribute("strength", "weak"))
             .AddText(" world");
 
-        Assert.That(element.ToXml(), Is.EqualTo("<Say>Hi <break strength=\"weak\" /> world</Say>"));
+        Assert.That(
+            element.ToXml(),
+            Is.EqualTo("<Say>Hi <break strength=\"weak\"></break> world</Say>")
+        );
         Assert.That(element.Text, Is.EqualTo("Hi  world"));
 
         var parsed = XmlElement.FromXml(element.ToXml());
@@ -170,10 +175,10 @@ public class XmlElementTests
     [Test]
     public void ReadContent_SkipsIndentationButKeepsInlineWhitespace()
     {
-        var pretty = XmlUtils.ParseDocument("<Say>\n  <break />\n  <break />\n</Say>");
+        var pretty = XmlUtils.ParseDocument("<Say>\n  <break></break>\n  <break></break>\n</Say>");
         Assert.That(XmlUtils.ReadContent(pretty, null, false, null, null), Has.Count.EqualTo(2));
 
-        var inline = XmlUtils.ParseDocument("<Say><break /> <break /></Say>");
+        var inline = XmlUtils.ParseDocument("<Say><break></break> <break></break></Say>");
         var content = XmlUtils.ReadContent(inline, null, false, null, null);
         Assert.That(content, Has.Count.EqualTo(3));
         Assert.That(content[1], Is.EqualTo(" "));
@@ -183,7 +188,7 @@ public class XmlElementTests
     public void ReadContent_SkipsLeadingTextAndScalars_KeepsWrapperMarkers()
     {
         var root = XmlUtils.ParseDocument(
-            "<Dial>+1<Numbers x=\"1\"><Number>+1</Number><Extension>2</Extension></Numbers><Timeout>3</Timeout><Other />tail</Dial>"
+            "<Dial>+1<Numbers x=\"1\"><Number>+1</Number><Extension>2</Extension></Numbers><Timeout>3</Timeout><Other></Other>tail</Dial>"
         );
 
         var content = XmlUtils.ReadContent(
@@ -225,7 +230,7 @@ public class XmlElementTests
     public void AddContent_DealsWrappedItemsOutToRepeatedWrappers()
     {
         var root = XmlUtils.ParseDocument(
-            "<Dial><Numbers><Number>+1</Number></Numbers><Custom /><Numbers><Number>+2</Number><Number>+3</Number></Numbers></Dial>"
+            "<Dial><Numbers><Number>+1</Number></Numbers><Custom></Custom><Numbers><Number>+2</Number><Number>+3</Number></Numbers></Dial>"
         );
         var wrappers = new Dictionary<string, string[]> { { "Numbers", new[] { "Number" } } };
         var content = XmlUtils.ReadContent(root, null, false, null, wrappers);
@@ -320,7 +325,7 @@ public class XmlElementTests
 
         Assert.That(
             element.ToXml(),
-            Is.EqualTo("<Response><!-- a comment --><Hangup />loose text</Response>")
+            Is.EqualTo("<Response><!-- a comment --><Hangup></Hangup>loose text</Response>")
         );
 
         var parsed = XmlElement.FromXml(element.ToXml());
@@ -340,7 +345,7 @@ public class XmlElementTests
 
         Assert.That(
             response.ToXml(),
-            Is.EqualTo("<Response><Pause /><!--before--><Say>x</Say><!--after--></Response>")
+            Is.EqualTo("<Response><Pause></Pause><!--before--><Say>x</Say><!--after--></Response>")
         );
         Assert.That(
             say.ToXml(true),

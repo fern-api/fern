@@ -8,7 +8,7 @@ import (
     option "github.com/fern-api/stream-go/v2/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -17,8 +17,12 @@ func do() {
     request := &stream.Generateequest{
         NumEvents: 1,
     }
-    client.Dummy.Generate(
+    _, err := client.Dummy.Generate(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

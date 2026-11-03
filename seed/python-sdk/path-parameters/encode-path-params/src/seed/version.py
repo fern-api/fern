@@ -1,3 +1,3 @@
 from importlib import metadata
 
-__version__ = metadata.version("fern_path-parameters")
+__version__ = metadata.version("fern-path-parameters")

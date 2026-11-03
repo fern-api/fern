@@ -36,7 +36,7 @@ func NewClient(options *core.RequestOptions) *Client {
 
 // Example:
 //
-//	client.User.Head(
+//	err := client.User.Head(
 //	    context.TODO(),
 //	)
 func (c *Client) Head(
@@ -58,7 +58,7 @@ func (c *Client) Head(
 //	request := &fern.ListUsersRequest{
 //	    Limit: 1,
 //	}
-//	client.User.List(
+//	_, err := client.User.List(
 //	    context.TODO(),
 //	    request,
 //	)

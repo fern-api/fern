@@ -1,0 +1,5 @@
+- summary: |
+    Fix OpenRPC specs being dropped from docs when a schema or method example is a single
+    string, number or boolean value. The OpenRPC importer no longer crashes on these examples,
+    and falsy example results such as `0` or `false` are kept in the endpoint's response example.
+  type: fix

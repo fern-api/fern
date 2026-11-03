@@ -30,7 +30,7 @@ POST request that sends the idempotency headers
 request := &fern.CreatePaymentRequest{
     Amount: 1,
 }
-client.Service.Create(
+_, err := client.Service.Create(
     context.TODO(),
     request,
 )

@@ -8,7 +8,7 @@ import (
     option "github.com/x-fern-default/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -17,8 +17,12 @@ func do() {
     request := &fern.TestGetRequest{
         Region: "region",
     }
-    client.TestGet(
+    _, err := client.TestGet(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

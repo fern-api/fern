@@ -8,7 +8,7 @@ import (
     option "github.com/imdb/fern/all/the/way/in/here/please/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -20,8 +20,12 @@ func do() {
     request := &please.GetMovieImdbRequest{
         MovieID: "movieId",
     }
-    client.Imdb.GetMovie(
+    _, err := client.Imdb.GetMovie(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

@@ -36,7 +36,15 @@ func NewClient(options *core.RequestOptions) *Client {
 
 // Example:
 //
-//	client.Endpoints.Enum.GetAndReturnEnum(
+//	request := types.WeatherReportSunny.Ptr()
+//	_, err := client.Endpoints.Enum.GetAndReturnEnum(
+//	    context.TODO(),
+//	    request,
+//	)
+//	if err != nil {
+//	    return err
+//	}
+//	_, err := client.Endpoints.Enum.GetAndReturnEnum(
 //	    context.TODO(),
 //	    request,
 //	)

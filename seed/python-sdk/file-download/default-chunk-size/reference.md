@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.<a href="src/seed/service/client.py">simple</a>()</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L25-L46">simple</a>()</code></summary>
 <dl>
 <dd>
 
@@ -47,7 +47,7 @@ client.service.simple()
 </dl>
 </details>
 
-<details><summary><code>client.service.<a href="src/seed/service/client.py">download_file</a>() -> typing.Iterator[bytes]</code></summary>
+<details><summary><code>client.service.<a href="src/seed/service/client.py#L48-L69">download_file</a>() -> typing.Iterator[bytes]</code></summary>
 <dl>
 <dd>
 

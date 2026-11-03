@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    When `whitelabel` is enabled, every generated file now uses the unbranded header
+    ("This file was auto-generated from our API Definition."). Previously `__init__.py` files,
+    most `core/` utilities, `_default_clients.py`, webhook signature helpers, XML model tests,
+    and test asset models still said "by Fern". Files copied from disk no longer get the
+    header twice.
+  type: fix

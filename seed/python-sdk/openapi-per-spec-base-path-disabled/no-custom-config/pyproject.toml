@@ -1,9 +1,9 @@
 [project]
-name = "fern_openapi-per-spec-base-path-disabled"
+name = "fern-openapi-per-spec-base-path-disabled"
 dynamic = ["version"]
 
 [tool.poetry]
-name = "fern_openapi-per-spec-base-path-disabled"
+name = "fern-openapi-per-spec-base-path-disabled"
 version = "0.0.1"
 description = ""
 readme = "README.md"

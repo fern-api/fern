@@ -39,7 +39,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	request := &fern.FooRequest{
 //	    Bar: "bar",
 //	}
-//	client.Simple.FooWithoutEndpointError(
+//	_, err := client.Simple.FooWithoutEndpointError(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -64,7 +64,7 @@ func (c *Client) FooWithoutEndpointError(
 //	request := &fern.FooRequest{
 //	    Bar: "bar",
 //	}
-//	client.Simple.Foo(
+//	_, err := client.Simple.Foo(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -89,7 +89,7 @@ func (c *Client) Foo(
 //	request := &fern.FooRequest{
 //	    Bar: "hello",
 //	}
-//	client.Simple.FooWithExamples(
+//	_, err := client.Simple.FooWithExamples(
 //	    context.TODO(),
 //	    request,
 //	)

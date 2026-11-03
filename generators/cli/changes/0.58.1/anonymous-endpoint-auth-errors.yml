@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Show the server's own error for a failed call to an operation marked `security: []`
+    (for example a token-issuing `/oauth/token`), instead of rewriting a 401/403 into
+    "Authentication credentials are missing. Set <TOKEN_ENV>". These operations never
+    send credentials, so the hint was misleading. Protected operations are unchanged.
+  type: fix

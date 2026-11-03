@@ -125,7 +125,7 @@ export namespace Dial {
             return new Dial.Builder(Dial.fromXml(xml));
         }
 
-        number(number: string | undefined): this {
+        setNumber(number: string | undefined): this {
             this.fields.number = number;
             return this;
         }
@@ -145,12 +145,18 @@ export namespace Dial {
             return this;
         }
 
+        /** Sets the text content of this element (same as `setNumber`). */
+        text(number: string | undefined): this {
+            this.fields.number = number;
+            return this;
+        }
+
         /**
          * Adds a `<Number>` child after any content added so far and returns its builder.
          * @param fields the `<Number>` text content, or its initial attributes and children
          * @returns the `SeedApi.Number.Builder` appended to this element
          */
-        addNumber(fields?: string | Partial<SeedApi.Number.Fields>): SeedApi.Number.Builder {
+        number(fields?: string | Partial<SeedApi.Number.Fields>): SeedApi.Number.Builder {
             const builder = new SeedApi.Number.Builder(typeof fields === "string" ? { phone_number: fields } : fields);
             this.elements.numbers = [...(this.elements.numbers ?? []), builder];
             return builder;

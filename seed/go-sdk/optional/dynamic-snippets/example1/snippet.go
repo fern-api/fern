@@ -8,7 +8,7 @@ import (
     option "github.com/optional/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -17,8 +17,12 @@ func do() {
     request := &fern.SendOptionalBodyRequest{
         Message: "message",
     }
-    client.Optional.SendOptionalTypedBody(
+    _, err := client.Optional.SendOptionalTypedBody(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

@@ -36,7 +36,7 @@ func NewClient(options *core.RequestOptions) *Client {
 
 // Example:
 //
-//	client.Endpoints.HTTPMethods.TestGet(
+//	_, err := client.Endpoints.HTTPMethods.TestGet(
 //	    context.TODO(),
 //	    "id",
 //	)
@@ -61,7 +61,7 @@ func (c *Client) TestGet(
 //	request := &types.ObjectWithRequiredField{
 //	    FieldString: "string",
 //	}
-//	client.Endpoints.HTTPMethods.TestPost(
+//	_, err := client.Endpoints.HTTPMethods.TestPost(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -86,7 +86,7 @@ func (c *Client) TestPost(
 //	request := &types.ObjectWithRequiredField{
 //	    FieldString: "string",
 //	}
-//	client.Endpoints.HTTPMethods.TestPut(
+//	_, err := client.Endpoints.HTTPMethods.TestPut(
 //	    context.TODO(),
 //	    "id",
 //	    request,
@@ -159,7 +159,7 @@ func (c *Client) TestPut(
 //	        "1000000",
 //	    ),
 //	}
-//	client.Endpoints.HTTPMethods.TestPatch(
+//	_, err := client.Endpoints.HTTPMethods.TestPatch(
 //	    context.TODO(),
 //	    "id",
 //	    request,
@@ -184,7 +184,7 @@ func (c *Client) TestPatch(
 
 // Example:
 //
-//	client.Endpoints.HTTPMethods.TestDelete(
+//	_, err := client.Endpoints.HTTPMethods.TestDelete(
 //	    context.TODO(),
 //	    "id",
 //	)

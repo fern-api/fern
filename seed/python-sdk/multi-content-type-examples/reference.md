@@ -1,6 +1,6 @@
 # Reference
 ## Clients
-<details><summary><code>client.clients.<a href="src/seed/clients/client.py">create</a>(...) -> ClientResponse</code></summary>
+<details><summary><code>client.clients.<a href="src/seed/clients/client.py#L30-L61">create</a>(...) -> ClientResponse</code></summary>
 <dl>
 <dd>
 

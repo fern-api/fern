@@ -44,7 +44,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	        true,
 //	    ),
 //	}
-//	client.Service.Patch(
+//	err := client.Service.Patch(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -108,7 +108,7 @@ func (c *Client) Patch(
 //	        },
 //	    },
 //	}
-//	client.Service.PatchComplex(
+//	err := client.Service.PatchComplex(
 //	    context.TODO(),
 //	    "id",
 //	    request,
@@ -147,7 +147,7 @@ func (c *Client) PatchComplex(
 //	        true,
 //	    ),
 //	}
-//	client.Service.NamedPatchWithMixed(
+//	err := client.Service.NamedPatchWithMixed(
 //	    context.TODO(),
 //	    "id",
 //	    request,
@@ -192,7 +192,7 @@ func (c *Client) NamedPatchWithMixed(
 //	        "nullableString",
 //	    ),
 //	}
-//	client.Service.OptionalMergePatchTest(
+//	err := client.Service.OptionalMergePatchTest(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -224,7 +224,7 @@ func (c *Client) OptionalMergePatchTest(
 //	        1,
 //	    ),
 //	}
-//	client.Service.RegularPatch(
+//	err := client.Service.RegularPatch(
 //	    context.TODO(),
 //	    "id",
 //	    request,

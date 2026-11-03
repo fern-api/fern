@@ -1,3 +1,3 @@
 from importlib import metadata
 
-__version__ = metadata.version("fern_webhook-audience")
+__version__ = metadata.version("fern-webhook-audience")

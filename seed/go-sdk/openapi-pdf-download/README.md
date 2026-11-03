@@ -37,15 +37,19 @@ import (
     client "github.com/openapi-pdf-download/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &fern.AssetReportPdfGetRequest{
         AssetReportToken: "asset_report_token",
     }
-    client.AssetReport.GetPdf(
+    _, err := client.AssetReport.GetPdf(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

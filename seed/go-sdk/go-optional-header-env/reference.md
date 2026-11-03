@@ -27,7 +27,7 @@ GET request with a version header
 <dd>
 
 ```go
-client.Service.GetWithAPIVersion(
+_, err := client.Service.GetWithAPIVersion(
     context.TODO(),
 )
 ```

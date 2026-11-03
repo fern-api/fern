@@ -16,7 +16,7 @@
 request := &fern.SearchProductsRequest{
     RegionID: "regionId",
 }
-client.Products.Search(
+_, err := client.Products.Search(
     context.TODO(),
     request,
 )
@@ -79,7 +79,7 @@ request := &fern.GetProductsRequest{
     RegionID: "regionId",
     ProductID: "productId",
 }
-client.Products.Get(
+_, err := client.Products.Get(
     context.TODO(),
     request,
 )

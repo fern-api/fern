@@ -1,9 +1,9 @@
 [project]
-name = "fern_bytes-download"
+name = "fern-bytes-download"
 dynamic = ["version"]
 
 [tool.poetry]
-name = "fern_bytes-download"
+name = "fern-bytes-download"
 version = "0.0.1"
 description = ""
 readme = "README.md"

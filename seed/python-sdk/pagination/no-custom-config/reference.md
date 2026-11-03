@@ -1,6 +1,6 @@
 # Reference
 ## Conversations
-<details><summary><code>client.complex_.<a href="src/seed/complex_/client.py">search</a>(...) -> PaginatedConversationResponse</code></summary>
+<details><summary><code>client.complex_.<a href="src/seed/complex_/client.py#L33-L84">search</a>(...) -> PaginatedConversationResponse</code></summary>
 <dl>
 <dd>
 
@@ -77,7 +77,7 @@ client.complex_.search(
 </details>
 
 ## InlineUsers InlineUsers
-<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_cursor_pagination</a>(...) -> ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py#L40-L93">list_with_cursor_pagination</a>(...) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -165,7 +165,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_mixed_type_cursor_pagination</a>(...) -> ListUsersMixedTypePaginationResponse</code></summary>
+<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py#L95-L129">list_with_mixed_type_cursor_pagination</a>(...) -> ListUsersMixedTypePaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -223,7 +223,7 @@ client.inline_users.inline_users.list_with_mixed_type_cursor_pagination(
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_body_cursor_pagination</a>(...) -> ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py#L131-L168">list_with_body_cursor_pagination</a>(...) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -282,7 +282,7 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_offset_pagination</a>(...) -> ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py#L170-L223">list_with_offset_pagination</a>(...) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -370,7 +370,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_double_offset_pagination</a>(...) -> ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py#L225-L278">list_with_double_offset_pagination</a>(...) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -458,7 +458,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_body_offset_pagination</a>(...) -> ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py#L280-L317">list_with_body_offset_pagination</a>(...) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -517,7 +517,7 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_offset_step_pagination</a>(...) -> ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py#L319-L368">list_with_offset_step_pagination</a>(...) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -597,7 +597,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_offset_pagination_has_next_page</a>(...) -> ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py#L370-L421">list_with_offset_pagination_has_next_page</a>(...) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -677,7 +677,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_extended_results</a>(...) -> ListUsersExtendedResponse</code></summary>
+<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py#L423-L459">list_with_extended_results</a>(...) -> ListUsersExtendedResponse</code></summary>
 <dl>
 <dd>
 
@@ -736,7 +736,7 @@ client.inline_users.inline_users.list_with_extended_results(
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_extended_results_and_optional_data</a>(...) -> ListUsersExtendedOptionalListResponse</code></summary>
+<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py#L461-L499">list_with_extended_results_and_optional_data</a>(...) -> ListUsersExtendedOptionalListResponse</code></summary>
 <dl>
 <dd>
 
@@ -795,7 +795,7 @@ client.inline_users.inline_users.list_with_extended_results(
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_usernames</a>(...) -> UsernameCursor</code></summary>
+<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py#L501-L535">list_usernames</a>(...) -> UsernameCursor</code></summary>
 <dl>
 <dd>
 
@@ -856,7 +856,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py">list_with_global_config</a>(...) -> UsernameContainer</code></summary>
+<details><summary><code>client.inline_users.inline_users.<a href="src/seed/inline_users/inline_users/client.py#L537-L569">list_with_global_config</a>(...) -> UsernameContainer</code></summary>
 <dl>
 <dd>
 
@@ -915,7 +915,7 @@ client.inline_users.inline_users.list_with_global_config(
 </details>
 
 ## Users
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_cursor_pagination</a>(...) -> ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py#L43-L96">list_with_cursor_pagination</a>(...) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1003,7 +1003,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_mixed_type_cursor_pagination</a>(...) -> ListUsersMixedTypePaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py#L98-L130">list_with_mixed_type_cursor_pagination</a>(...) -> ListUsersMixedTypePaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1061,7 +1061,7 @@ client.users.list_with_mixed_type_cursor_pagination(
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_body_cursor_pagination</a>(...) -> ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py#L132-L169">list_with_body_cursor_pagination</a>(...) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1120,7 +1120,7 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_top_level_body_cursor_pagination</a>(...) -> ListUsersTopLevelCursorPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py#L171-L219">list_with_top_level_body_cursor_pagination</a>(...) -> ListUsersTopLevelCursorPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1206,7 +1206,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_offset_pagination</a>(...) -> ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py#L221-L274">list_with_offset_pagination</a>(...) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1294,7 +1294,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_double_offset_pagination</a>(...) -> ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py#L276-L329">list_with_double_offset_pagination</a>(...) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1382,7 +1382,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_body_offset_pagination</a>(...) -> ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py#L331-L368">list_with_body_offset_pagination</a>(...) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1441,7 +1441,7 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_offset_step_pagination</a>(...) -> ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py#L370-L419">list_with_offset_step_pagination</a>(...) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1521,7 +1521,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_offset_pagination_has_next_page</a>(...) -> ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py#L421-L470">list_with_offset_pagination_has_next_page</a>(...) -> ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1601,7 +1601,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_extended_results</a>(...) -> ListUsersExtendedResponse</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py#L472-L508">list_with_extended_results</a>(...) -> ListUsersExtendedResponse</code></summary>
 <dl>
 <dd>
 
@@ -1660,7 +1660,7 @@ client.users.list_with_extended_results(
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_extended_results_and_optional_data</a>(...) -> ListUsersExtendedOptionalListResponse</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py#L510-L548">list_with_extended_results_and_optional_data</a>(...) -> ListUsersExtendedOptionalListResponse</code></summary>
 <dl>
 <dd>
 
@@ -1719,7 +1719,7 @@ client.users.list_with_extended_results(
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_usernames</a>(...) -> UsernameCursor</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py#L550-L584">list_usernames</a>(...) -> UsernameCursor</code></summary>
 <dl>
 <dd>
 
@@ -1780,7 +1780,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_usernames_with_optional_response</a>(...) -> typing.Optional[UsernameCursor]</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py#L586-L622">list_usernames_with_optional_response</a>(...) -> typing.Optional[UsernameCursor]</code></summary>
 <dl>
 <dd>
 
@@ -1841,7 +1841,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_global_config</a>(...) -> UsernameContainer</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py#L624-L656">list_with_global_config</a>(...) -> UsernameContainer</code></summary>
 <dl>
 <dd>
 
@@ -1899,7 +1899,7 @@ client.users.list_with_global_config(
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_optional_data</a>(...) -> ListUsersOptionalDataPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py#L658-L691">list_with_optional_data</a>(...) -> ListUsersOptionalDataPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1957,7 +1957,7 @@ client.users.list_with_optional_data(
 </dl>
 </details>
 
-<details><summary><code>client.users.<a href="src/seed/users/client.py">list_with_aliased_data</a>(...) -> ListUsersAliasedDataPaginationResponse</code></summary>
+<details><summary><code>client.users.<a href="src/seed/users/client.py#L693-L742">list_with_aliased_data</a>(...) -> ListUsersAliasedDataPaginationResponse</code></summary>
 <dl>
 <dd>
 

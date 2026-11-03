@@ -41,7 +41,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	request := &fern.OutboundCallConversationsRequest{
 //	    ToPhoneNumber: "to_phone_number",
 //	}
-//	client.Conversations.OutboundCall(
+//	_, err := client.Conversations.OutboundCall(
 //	    context.TODO(),
 //	    request,
 //	)

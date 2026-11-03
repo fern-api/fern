@@ -35,7 +35,7 @@ func NewClient(options *core.RequestOptions) *Client {
 
 // Example:
 //
-//	client.Items.ListItems(
+//	_, err := client.Items.ListItems(
 //	    context.TODO(),
 //	)
 func (c *Client) ListItems(

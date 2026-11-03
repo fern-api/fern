@@ -3,6 +3,7 @@ import {
     DEFINITION_DIRECTORY,
     GENERATOR_INVOCATIONS,
     GENERATORS_CONFIGURATION_FILENAME,
+    GeneratorName,
     generatorsYml,
     getLatestGeneratorVersion,
     ROOT_API_FILENAME,
@@ -18,6 +19,12 @@ import { type SdkConfigV1Document, validateSdkConfigV1 } from "@postman/sdk-conf
 import { mkdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
+import {
+    SAMPLE_GRPC_PROTO_ROOT,
+    SAMPLE_GRPC_PROTO_TARGET,
+    SAMPLE_GRPC_SUPPORT_PROTOS,
+    SAMPLE_USER_SERVICE_PROTO
+} from "./sampleGrpcApi.js";
 import { SAMPLE_IMDB_API } from "./sampleImdbApi.js";
 import { SAMPLE_OPENAPI } from "./sampleOpenApi.js";
 
@@ -147,6 +154,87 @@ export async function createDefaultOpenAPIWorkspace({
     });
 }
 
+/**
+ * Creates a workspace for a gRPC API: a sample proto service plus a generators.yml that compiles it and
+ * generates a C# SDK, the only language with native gRPC output.
+ *
+ * `local-generation` is required: remote Protobuf compilation is not implemented, so the CLI always has to
+ * compile the proto itself. That step only needs `buf`, which the CLI downloads. It does not need Docker.
+ * The SDK itself can still be generated remotely.
+ */
+export async function createGrpcWorkspace({
+    directoryOfWorkspace,
+    cliVersion,
+    context
+}: {
+    directoryOfWorkspace: AbsoluteFilePath;
+    cliVersion: string;
+    context: TaskContext;
+}): Promise<void> {
+    await mkdir(directoryOfWorkspace, { recursive: true });
+
+    const protoFiles: Record<string, string> = {
+        [SAMPLE_GRPC_PROTO_TARGET.slice(`${SAMPLE_GRPC_PROTO_ROOT}/`.length)]: SAMPLE_USER_SERVICE_PROTO,
+        ...SAMPLE_GRPC_SUPPORT_PROTOS
+    };
+    for (const [relativeToProtoRoot, contents] of Object.entries(protoFiles)) {
+        const filepath = join(
+            directoryOfWorkspace,
+            RelativeFilePath.of(SAMPLE_GRPC_PROTO_ROOT),
+            RelativeFilePath.of(relativeToProtoRoot)
+        );
+        await mkdir(path.dirname(filepath), { recursive: true });
+        await writeFile(filepath, contents);
+    }
+
+    await writeGrpcGeneratorsConfiguration({
+        directoryOfWorkspace,
+        cliVersion,
+        context,
+        protoRoot: SAMPLE_GRPC_PROTO_ROOT,
+        protoTarget: SAMPLE_GRPC_PROTO_TARGET
+    });
+}
+
+/**
+ * Writes the generators.yml for a gRPC API whose protos are already under `protoRoot`.
+ *
+ * `protoTarget` is relative to the workspace and includes the root, e.g. `proto/user/v1/user.proto`.
+ * Leave it undefined to compile every `.proto` file under the root.
+ */
+export async function writeGrpcGeneratorsConfiguration({
+    directoryOfWorkspace,
+    cliVersion,
+    context,
+    protoRoot,
+    protoTarget
+}: {
+    directoryOfWorkspace: AbsoluteFilePath;
+    cliVersion: string;
+    context: TaskContext;
+    protoRoot: string;
+    protoTarget: string | undefined;
+}): Promise<void> {
+    await writeGeneratorsConfiguration({
+        filepath: join(directoryOfWorkspace, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME)),
+        cliVersion,
+        context,
+        generatorName: GeneratorName.CSHARP_SDK,
+        apiConfiguration: {
+            specs: [
+                {
+                    proto: {
+                        root: protoRoot,
+                        ...(protoTarget != null ? { target: protoTarget } : {}),
+                        "from-openapi": true,
+                        "local-generation": true
+                    }
+                }
+            ]
+        }
+    });
+}
+
 export async function materializeOpenAPI({
     directoryOfWorkspace,
     openAPIFilePath,
@@ -215,15 +303,17 @@ async function writeSdkConfiguration({
 async function getDefaultGeneratorsConfiguration({
     cliVersion,
     context,
-    apiConfiguration
+    apiConfiguration,
+    generatorName = GeneratorName.TYPESCRIPT_SDK
 }: {
     cliVersion: string;
     context: TaskContext;
     apiConfiguration?: generatorsYml.ApiConfigurationSchema;
+    generatorName?: GeneratorName;
 }): Promise<generatorsYml.GeneratorsConfigurationSchema> {
     // Use the full name for lookups, but the shorthand name for the generated config
-    const defaultGeneratorFullName = "fernapi/fern-typescript-sdk";
-    const defaultGeneratorShortName = "fern-typescript-sdk";
+    const defaultGeneratorFullName = generatorName;
+    const defaultGeneratorShortName = generatorName.replace(/^fernapi\//, "");
     const fallbackInvocation = GENERATOR_INVOCATIONS[defaultGeneratorFullName];
 
     let version = fallbackInvocation.version;
@@ -265,27 +355,32 @@ async function writeGeneratorsConfiguration({
     filepath,
     cliVersion,
     context,
-    apiConfiguration
+    apiConfiguration,
+    generatorName
 }: {
     filepath: AbsoluteFilePath;
     cliVersion: string;
     context: TaskContext;
     apiConfiguration?: generatorsYml.ApiConfigurationV2Schema;
+    generatorName?: GeneratorName;
 }): Promise<void> {
     await writeFile(
         filepath,
         "# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json\n" +
-            yaml.dump(await getDefaultGeneratorsConfiguration({ cliVersion, context, apiConfiguration }), {
-                sortKeys: (a, b) => {
-                    if (a === "api") {
-                        return -1;
+            yaml.dump(
+                await getDefaultGeneratorsConfiguration({ cliVersion, context, apiConfiguration, generatorName }),
+                {
+                    sortKeys: (a, b) => {
+                        if (a === "api") {
+                            return -1;
+                        }
+                        if (b === "api") {
+                            return 1;
+                        }
+                        return a.localeCompare(b);
                     }
-                    if (b === "api") {
-                        return 1;
-                    }
-                    return a.localeCompare(b);
                 }
-            })
+            )
     );
 }
 

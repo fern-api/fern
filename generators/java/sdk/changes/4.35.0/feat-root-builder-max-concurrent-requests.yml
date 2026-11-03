@@ -1,0 +1,6 @@
+- type: feat
+  summary: |
+    Expose `maxConcurrentRequests(int)` on the generated root client builders (`<Client>Builder`,
+    `Async<Client>Builder`, and the multi-auth builder stages) so the in-flight request cap added in
+    4.34.0 can be set without constructing `ClientOptions` by hand, matching `timeout` and `maxRetries`.
+    Subclasses can override the new `setConcurrencyLimit(ClientOptions.Builder)` hook.

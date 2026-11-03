@@ -18,7 +18,7 @@ request := &fern.CreateRequest{
     Name: "fern",
     Shape: fern.ShapeSquare,
 }
-client.Create(
+_, err := client.Create(
     context.TODO(),
     request,
 )
@@ -90,7 +90,7 @@ request := &fern.GetRequest{
     Even: 100,
     Name: "fern",
 }
-client.Get(
+_, err := client.Get(
     context.TODO(),
     request,
 )

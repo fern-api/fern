@@ -8,7 +8,7 @@ import (
     option "github.com/examples/fern/pleaseinhere/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -28,8 +28,12 @@ func do() {
         },
         XAPIVersion: "0.0.1",
     }
-    client.Service.GetMetadata(
+    _, err := client.Service.GetMetadata(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

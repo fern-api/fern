@@ -16,7 +16,7 @@ request := &fern.EchoRequest{
     Name: "Hello world!",
     Size: 20,
 }
-client.Echo(
+_, err := client.Echo(
     context.TODO(),
     "id-ksfd9c1",
     request,
@@ -69,7 +69,7 @@ client.Echo(
 <dd>
 
 ```go
-client.Service.Nop(
+err := client.Service.Nop(
     context.TODO(),
     "id-a2ijs82",
     "id-219xca8",

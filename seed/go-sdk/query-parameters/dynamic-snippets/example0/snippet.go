@@ -9,7 +9,7 @@ import (
     option "github.com/query-parameters/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -91,8 +91,12 @@ func do() {
             "filter",
         },
     }
-    client.User.GetUsername(
+    _, err := client.User.GetUsername(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

@@ -1,6 +1,6 @@
 # Reference
 ## Unknown
-<details><summary><code>client.unknown.<a href="src/seed/unknown/client.py">post</a>(...) -> typing.List[typing.Any]</code></summary>
+<details><summary><code>client.unknown.<a href="src/seed/unknown/client.py#L28-L55">post</a>(...) -> typing.List[typing.Any]</code></summary>
 <dl>
 <dd>
 
@@ -57,7 +57,7 @@ client.unknown.post(
 </dl>
 </details>
 
-<details><summary><code>client.unknown.<a href="src/seed/unknown/client.py">post_object</a>(...) -> typing.List[typing.Any]</code></summary>
+<details><summary><code>client.unknown.<a href="src/seed/unknown/client.py#L57-L84">post_object</a>(...) -> typing.List[typing.Any]</code></summary>
 <dl>
 <dd>
 

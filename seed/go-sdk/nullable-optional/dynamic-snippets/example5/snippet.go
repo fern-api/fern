@@ -8,7 +8,7 @@ import (
     option "github.com/nullable-optional/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -192,8 +192,12 @@ func do() {
             "optionalMapOfEnums": fern.UserRoleAdmin,
         },
     }
-    client.NullableOptional.CreateComplexProfile(
+    _, err := client.NullableOptional.CreateComplexProfile(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

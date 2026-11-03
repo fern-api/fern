@@ -1,9 +1,9 @@
 [project]
-name = "fern_dollar-string-examples"
+name = "fern-dollar-string-examples"
 dynamic = ["version"]
 
 [tool.poetry]
-name = "fern_dollar-string-examples"
+name = "fern-dollar-string-examples"
 version = "0.0.1"
 description = ""
 readme = "README.md"

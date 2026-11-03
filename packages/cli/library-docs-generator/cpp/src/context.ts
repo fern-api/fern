@@ -264,7 +264,7 @@ export function stripTemplateArgs(name: string): string {
  *   `cub::` and `thrust::` names do not need quoting.
  */
 export function needsQuoting(value: string): boolean {
-    if (/[<>&"']/.test(value)) {
+    if (/[<>&"'\\#]|: |^[-?@`!%*|{}[\],:]/.test(value)) {
         return true;
     }
     // cuda:: prefixed names need quoting to prevent YAML key misinterpretation.

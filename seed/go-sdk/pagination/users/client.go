@@ -52,7 +52,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	        "starting_after",
 //	    ),
 //	}
-//	client.Users.ListWithCursorPagination(
+//	_, err := client.Users.ListWithCursorPagination(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -122,7 +122,7 @@ func (c *Client) ListWithCursorPagination(
 //	        "cursor",
 //	    ),
 //	}
-//	client.Users.ListWithMixedTypeCursorPagination(
+//	_, err := client.Users.ListWithMixedTypeCursorPagination(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -194,7 +194,7 @@ func (c *Client) ListWithMixedTypeCursorPagination(
 //	        ),
 //	    },
 //	}
-//	client.Users.ListWithBodyCursorPagination(
+//	_, err := client.Users.ListWithBodyCursorPagination(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -228,7 +228,7 @@ func (c *Client) ListWithBodyCursorPagination(
 //	        "active",
 //	    ),
 //	}
-//	client.Users.ListWithTopLevelBodyCursorPagination(
+//	_, err := client.Users.ListWithTopLevelBodyCursorPagination(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -262,7 +262,7 @@ func (c *Client) ListWithTopLevelBodyCursorPagination(
 //	        "starting_after",
 //	    ),
 //	}
-//	client.Users.ListWithOffsetPagination(
+//	_, err := client.Users.ListWithOffsetPagination(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -345,7 +345,7 @@ func (c *Client) ListWithOffsetPagination(
 //	        "starting_after",
 //	    ),
 //	}
-//	client.Users.ListWithDoubleOffsetPagination(
+//	_, err := client.Users.ListWithDoubleOffsetPagination(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -423,7 +423,7 @@ func (c *Client) ListWithDoubleOffsetPagination(
 //	        ),
 //	    },
 //	}
-//	client.Users.ListWithBodyOffsetPagination(
+//	_, err := client.Users.ListWithBodyOffsetPagination(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -454,7 +454,7 @@ func (c *Client) ListWithBodyOffsetPagination(
 //	    ),
 //	    Order: fern.OrderAsc.Ptr(),
 //	}
-//	client.Users.ListWithOffsetStepPagination(
+//	_, err := client.Users.ListWithOffsetStepPagination(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -534,7 +534,7 @@ func (c *Client) ListWithOffsetStepPagination(
 //	    ),
 //	    Order: fern.OrderAsc.Ptr(),
 //	}
-//	client.Users.ListWithOffsetPaginationHasNextPage(
+//	_, err := client.Users.ListWithOffsetPaginationHasNextPage(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -612,7 +612,7 @@ func (c *Client) ListWithOffsetPaginationHasNextPage(
 //	        ),
 //	    ),
 //	}
-//	client.Users.ListWithExtendedResults(
+//	_, err := client.Users.ListWithExtendedResults(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -684,7 +684,7 @@ func (c *Client) ListWithExtendedResults(
 //	        ),
 //	    ),
 //	}
-//	client.Users.ListWithExtendedResultsAndOptionalData(
+//	_, err := client.Users.ListWithExtendedResultsAndOptionalData(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -754,7 +754,7 @@ func (c *Client) ListWithExtendedResultsAndOptionalData(
 //	        "starting_after",
 //	    ),
 //	}
-//	client.Users.ListUsernames(
+//	_, err := client.Users.ListUsernames(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -827,7 +827,7 @@ func (c *Client) ListUsernames(
 //	        "starting_after",
 //	    ),
 //	}
-//	client.Users.ListUsernamesWithOptionalResponse(
+//	_, err := client.Users.ListUsernamesWithOptionalResponse(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -900,7 +900,7 @@ func (c *Client) ListUsernamesWithOptionalResponse(
 //	        1,
 //	    ),
 //	}
-//	client.Users.ListWithGlobalConfig(
+//	_, err := client.Users.ListWithGlobalConfig(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -976,7 +976,7 @@ func (c *Client) ListWithGlobalConfig(
 //	        1,
 //	    ),
 //	}
-//	client.Users.ListWithOptionalData(
+//	_, err := client.Users.ListWithOptionalData(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -1058,7 +1058,7 @@ func (c *Client) ListWithOptionalData(
 //	        "starting_after",
 //	    ),
 //	}
-//	client.Users.ListWithAliasedData(
+//	_, err := client.Users.ListWithAliasedData(
 //	    context.TODO(),
 //	    request,
 //	)

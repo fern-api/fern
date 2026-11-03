@@ -1,9 +1,9 @@
 [project]
-name = "fern_server-sent-events-resumable"
+name = "fern-server-sent-events-resumable"
 dynamic = ["version"]
 
 [tool.poetry]
-name = "fern_server-sent-events-resumable"
+name = "fern-server-sent-events-resumable"
 version = "0.0.1"
 description = ""
 readme = "README.md"

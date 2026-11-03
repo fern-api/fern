@@ -1,6 +1,6 @@
 # Reference
 ## Class
-<details><summary><code>client.class_.<a href="src/seed/class_/client.py">create</a>()</code></summary>
+<details><summary><code>client.class_.<a href="src/seed/class_/client.py#L25-L46">create</a>()</code></summary>
 <dl>
 <dd>
 
@@ -48,7 +48,7 @@ client.class_.create()
 </details>
 
 ## Automations Import
-<details><summary><code>client.automations.import_.<a href="src/seed/automations/import_/client.py">create</a>()</code></summary>
+<details><summary><code>client.automations.import_.<a href="src/seed/automations/import_/client.py#L25-L46">create</a>()</code></summary>
 <dl>
 <dd>
 
@@ -96,7 +96,7 @@ client.automations.import_.create()
 </details>
 
 ## Automations Export
-<details><summary><code>client.automations.export.<a href="src/seed/automations/export/client.py">create</a>()</code></summary>
+<details><summary><code>client.automations.export.<a href="src/seed/automations/export/client.py#L25-L46">create</a>()</code></summary>
 <dl>
 <dd>
 

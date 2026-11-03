@@ -37,7 +37,15 @@ func NewClient(options *core.RequestOptions) *Client {
 
 // Example:
 //
-//	client.Endpoints.Primitive.GetAndReturnString(
+//	request := "string"
+//	_, err := client.Endpoints.Primitive.GetAndReturnString(
+//	    context.TODO(),
+//	    request,
+//	)
+//	if err != nil {
+//	    return err
+//	}
+//	_, err := client.Endpoints.Primitive.GetAndReturnString(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -59,7 +67,15 @@ func (c *Client) GetAndReturnString(
 
 // Example:
 //
-//	client.Endpoints.Primitive.GetAndReturnInt(
+//	request := 1
+//	_, err := client.Endpoints.Primitive.GetAndReturnInt(
+//	    context.TODO(),
+//	    request,
+//	)
+//	if err != nil {
+//	    return err
+//	}
+//	_, err := client.Endpoints.Primitive.GetAndReturnInt(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -81,7 +97,15 @@ func (c *Client) GetAndReturnInt(
 
 // Example:
 //
-//	client.Endpoints.Primitive.GetAndReturnLong(
+//	request := int64(1000000)
+//	_, err := client.Endpoints.Primitive.GetAndReturnLong(
+//	    context.TODO(),
+//	    request,
+//	)
+//	if err != nil {
+//	    return err
+//	}
+//	_, err := client.Endpoints.Primitive.GetAndReturnLong(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -103,7 +127,15 @@ func (c *Client) GetAndReturnLong(
 
 // Example:
 //
-//	client.Endpoints.Primitive.GetAndReturnDouble(
+//	request := 1.1
+//	_, err := client.Endpoints.Primitive.GetAndReturnDouble(
+//	    context.TODO(),
+//	    request,
+//	)
+//	if err != nil {
+//	    return err
+//	}
+//	_, err := client.Endpoints.Primitive.GetAndReturnDouble(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -125,7 +157,15 @@ func (c *Client) GetAndReturnDouble(
 
 // Example:
 //
-//	client.Endpoints.Primitive.GetAndReturnBool(
+//	request := true
+//	_, err := client.Endpoints.Primitive.GetAndReturnBool(
+//	    context.TODO(),
+//	    request,
+//	)
+//	if err != nil {
+//	    return err
+//	}
+//	_, err := client.Endpoints.Primitive.GetAndReturnBool(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -147,7 +187,17 @@ func (c *Client) GetAndReturnBool(
 
 // Example:
 //
-//	client.Endpoints.Primitive.GetAndReturnDatetime(
+//	request := fern.MustParseDateTime(
+//	    "2024-01-15T09:30:00Z",
+//	)
+//	_, err := client.Endpoints.Primitive.GetAndReturnDatetime(
+//	    context.TODO(),
+//	    request,
+//	)
+//	if err != nil {
+//	    return err
+//	}
+//	_, err := client.Endpoints.Primitive.GetAndReturnDatetime(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -169,7 +219,17 @@ func (c *Client) GetAndReturnDatetime(
 
 // Example:
 //
-//	client.Endpoints.Primitive.GetAndReturnDate(
+//	request := fern.MustParseDate(
+//	    "2023-01-15",
+//	)
+//	_, err := client.Endpoints.Primitive.GetAndReturnDate(
+//	    context.TODO(),
+//	    request,
+//	)
+//	if err != nil {
+//	    return err
+//	}
+//	_, err := client.Endpoints.Primitive.GetAndReturnDate(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -191,7 +251,17 @@ func (c *Client) GetAndReturnDate(
 
 // Example:
 //
-//	client.Endpoints.Primitive.GetAndReturnUUID(
+//	request := uuid.MustParse(
+//	    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+//	)
+//	_, err := client.Endpoints.Primitive.GetAndReturnUUID(
+//	    context.TODO(),
+//	    request,
+//	)
+//	if err != nil {
+//	    return err
+//	}
+//	_, err := client.Endpoints.Primitive.GetAndReturnUUID(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -213,7 +283,15 @@ func (c *Client) GetAndReturnUUID(
 
 // Example:
 //
-//	client.Endpoints.Primitive.GetAndReturnBase64(
+//	request := []byte("SGVsbG8gd29ybGQh")
+//	_, err := client.Endpoints.Primitive.GetAndReturnBase64(
+//	    context.TODO(),
+//	    request,
+//	)
+//	if err != nil {
+//	    return err
+//	}
+//	_, err := client.Endpoints.Primitive.GetAndReturnBase64(
 //	    context.TODO(),
 //	    request,
 //	)

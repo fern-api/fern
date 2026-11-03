@@ -1,6 +1,6 @@
 # Reference
 ## Headers
-<details><summary><code>client.headers.<a href="src/seed/headers/client.py">send</a>(...) -> SendResponse</code></summary>
+<details><summary><code>client.headers.<a href="src/seed/headers/client.py#L29-L54">send</a>(...) -> SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -73,7 +73,7 @@ client.headers.send(
 </dl>
 </details>
 
-<details><summary><code>client.headers.<a href="src/seed/headers/client.py">send_literals_only</a>(...) -> SendResponse</code></summary>
+<details><summary><code>client.headers.<a href="src/seed/headers/client.py#L56-L77">send_literals_only</a>(...) -> SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -137,7 +137,7 @@ client.headers.send_literals_only()
 </details>
 
 ## Inlined
-<details><summary><code>client.inlined.<a href="src/seed/inlined/client.py">send</a>(...) -> SendResponse</code></summary>
+<details><summary><code>client.inlined.<a href="src/seed/inlined/client.py#L31-L87">send</a>(...) -> SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -258,7 +258,7 @@ client.inlined.send(
 </details>
 
 ## Path
-<details><summary><code>client.path.<a href="src/seed/path/client.py">send</a>(...) -> SendResponse</code></summary>
+<details><summary><code>client.path.<a href="src/seed/path/client.py#L26-L47">send</a>(...) -> SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -314,7 +314,7 @@ client.path.send()
 </details>
 
 ## Query
-<details><summary><code>client.query.<a href="src/seed/query/client.py">send</a>(...) -> SendResponse</code></summary>
+<details><summary><code>client.query.<a href="src/seed/query/client.py#L28-L77">send</a>(...) -> SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -440,7 +440,7 @@ client.query.send(
 </details>
 
 ## Reference
-<details><summary><code>client.reference.<a href="src/seed/reference/client.py">send</a>(...) -> SendResponse</code></summary>
+<details><summary><code>client.reference.<a href="src/seed/reference/client.py#L31-L77">send</a>(...) -> SendResponse</code></summary>
 <dl>
 <dd>
 

@@ -8,7 +8,7 @@ import (
     events "github.com/mixed-file-directory/fern/user/events"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -17,8 +17,12 @@ func do() {
     request := &events.GetEventMetadataRequest{
         ID: "id",
     }
-    client.User.Events.Metadata.GetMetadata(
+    _, err := client.User.Events.Metadata.GetMetadata(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

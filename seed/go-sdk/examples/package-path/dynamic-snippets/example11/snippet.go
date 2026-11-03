@@ -7,7 +7,7 @@ import (
     option "github.com/examples/fern/pleaseinhere/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -16,7 +16,11 @@ func do() {
             "<token>",
         ),
     )
-    client.Health.Service.Ping(
+    _, err := client.Health.Service.Ping(
         context.TODO(),
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">upload</a>(...)</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L100-L139">upload</a>(...)</code></summary>
 <dl>
 <dd>
 

@@ -13,7 +13,7 @@
 <dd>
 
 ```go
-client.Service.JustFile(
+err := client.Service.JustFile(
     context.TODO(),
     strings.NewReader(
         "",
@@ -44,7 +44,7 @@ client.Service.JustFile(
 
 ```go
 request := &fern.OptionalArgsRequest{}
-client.Service.OptionalArgs(
+_, err := client.Service.OptionalArgs(
     context.TODO(),
     strings.NewReader(
         "",
@@ -80,7 +80,7 @@ request := &fern.WithRefBodyRequest{
         Foo: "bar",
     },
 }
-client.Service.WithRefBody(
+_, err := client.Service.WithRefBody(
     context.TODO(),
     strings.NewReader(
         "",
@@ -111,7 +111,7 @@ client.Service.WithRefBody(
 <dd>
 
 ```go
-client.Service.Simple(
+err := client.Service.Simple(
     context.TODO(),
 )
 ```

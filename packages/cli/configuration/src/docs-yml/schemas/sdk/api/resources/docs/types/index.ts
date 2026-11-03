@@ -98,6 +98,7 @@ export * from "./LibraryLanguage.js";
 export * from "./LibraryName.js";
 export * from "./LibraryOutputConfiguration.js";
 export * from "./LibraryReferenceConfiguration.js";
+export * from "./LibrarySlugStyle.js";
 export * from "./LinkConfiguration.js";
 export * from "./LogoConfiguration.js";
 export * from "./MetadataConfig.js";

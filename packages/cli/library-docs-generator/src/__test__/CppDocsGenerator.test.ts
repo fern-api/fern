@@ -594,6 +594,70 @@ describe("generateCpp()", () => {
         expect(macroIndex).toContain("- [`__always_inline`](macros/alwaysinline-2)");
     });
 
+    it("gives public symbols the plain URL ahead of _-prefixed ones that sanitize to the same filename", () => {
+        const internalDup = makeFunction({ name: "__s_dup", path: "__s_dup" });
+        const publicDup = makeFunction({ name: "s_dup", path: "s_dup" });
+        const upperCase = makeMacro({ name: "S_CASE", path: "S_CASE" });
+        const lowerCase = makeMacro({ name: "s_case", path: "s_case" });
+        const sab = makeFunction({ name: "s_a_b", path: "s_a_b" });
+        const saB = makeFunction({ name: "sa_b", path: "sa_b" });
+        // Internal name first in source order: it must still lose the plain URL.
+        const ir = makeIr(
+            makeNamespace({ functions: [internalDup, publicDup, saB, sab], macros: [lowerCase, upperCase] }),
+            {
+                packageName: "lib"
+            }
+        );
+
+        generateCpp({ ir, outputDir: tmpDir, slug: "reference/lib" });
+
+        const relativePaths = collectMdxFiles(tmpDir).map((f) => f.substring(tmpDir.length + 1));
+        expect(relativePaths).toContain("functions/s_dup.mdx");
+        expect(relativePaths).toContain("functions/s_dup-2.mdx");
+        expect(readFileSync(join(tmpDir, "functions/s_dup.mdx"), "utf-8")).toContain("title: s_dup");
+        expect(readFileSync(join(tmpDir, "functions/s_dup-2.mdx"), "utf-8")).toContain("title: __s_dup");
+        expect(relativePaths).toContain("macros/S_CASE.mdx");
+        expect(relativePaths).toContain("macros/s_case-2.mdx");
+        expect(relativePaths).toContain("functions/s_a_b.mdx");
+        expect(relativePaths).toContain("functions/sa_b-2.mdx");
+
+        const fnIndex = readFileSync(join(tmpDir, "functions/index.mdx"), "utf-8");
+        expect(fnIndex).toContain("- [`s_dup`](functions/sdup)");
+        expect(fnIndex).toContain("- [`__s_dup`](functions/sdup-2)");
+    });
+
+    it("slugStyle: hyphenated keeps word boundaries in filenames and URLs", () => {
+        const fn = makeFunction({ name: "doca_pcc_dev_get_port_counter_id", path: "doca_pcc_dev_get_port_counter_id" });
+        const sab = makeFunction({ name: "s_a_b", path: "s_a_b" });
+        const saB = makeFunction({ name: "sa_b", path: "sa_b" });
+        const ir = makeIr(makeNamespace({ functions: [fn, sab, saB] }), { packageName: "lib" });
+
+        generateCpp({ ir, outputDir: tmpDir, slug: "reference/lib", slugStyle: "hyphenated" });
+
+        const relativePaths = collectMdxFiles(tmpDir).map((f) => f.substring(tmpDir.length + 1));
+        expect(relativePaths).toContain("functions/doca-pcc-dev-get-port-counter-id.mdx");
+        expect(relativePaths).toContain("functions/s-a-b.mdx");
+        expect(relativePaths).toContain("functions/sa-b.mdx");
+        const fnIndex = readFileSync(join(tmpDir, "functions/index.mdx"), "utf-8");
+        expect(fnIndex).toContain("](functions/doca-pcc-dev-get-port-counter-id)");
+        expect(fnIndex).toContain("](functions/s-a-b)");
+        expect(fnIndex).toContain("](functions/sa-b)");
+    });
+
+    it("slugStyle: hyphenated still keeps colliding public/internal symbols on distinct pages", () => {
+        const internal = makeFunction({ name: "__s_dup", path: "__s_dup" });
+        const pub = makeFunction({ name: "s_dup", path: "s_dup" });
+        const ir = makeIr(makeNamespace({ functions: [internal, pub] }), { packageName: "lib" });
+
+        generateCpp({ ir, outputDir: tmpDir, slug: "reference/lib", slugStyle: "hyphenated" });
+
+        const relativePaths = collectMdxFiles(tmpDir).map((f) => f.substring(tmpDir.length + 1));
+        expect(relativePaths).toContain("functions/s-dup.mdx");
+        expect(relativePaths).toContain("functions/s-dup-2.mdx");
+        expect(readFileSync(join(tmpDir, "functions/s-dup.mdx"), "utf-8")).toContain("title: s_dup\n");
+        expect(readFileSync(join(tmpDir, "functions/s-dup-2.mdx"), "utf-8")).toContain("title: __s_dup\n");
+    });
+
     it("drops leading underscores from page and group filenames so folder navigation includes them", () => {
         const be16 = makeMacro({ name: "__be16", path: "__be16" });
         const ir = makeIr(makeNamespace({ macros: [be16] }), { packageName: "lib" }, [

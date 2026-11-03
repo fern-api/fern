@@ -837,8 +837,8 @@ types:
   NavigationConfig:
     discriminated: false
     union:
-      - UntabbedNavigationConfig
       - TabbedNavigationConfig
+      - UntabbedNavigationConfig
 
   UntabbedNavigationConfig: list<NavigationItem>
 
@@ -1918,6 +1918,18 @@ types:
           Also generate pages for `#define`s that have no Doxygen comment.
           By default only documented macros are rendered. Include guards are never
           emitted (Doxygen drops them). Only valid when lang is cpp.
+      slug-style:
+        type: optional<LibrarySlugStyle>
+        docs: |
+          How symbol names become page URLs. `compact` (default) drops underscores
+          (`doca_pcc_dev_get_port_counter_id` -> `docapccdevgetportcounterid`);
+          `hyphenated` keeps word boundaries (`doca-pcc-dev-get-port-counter-id`).
+          Changing this renames every generated page. Only valid when lang is cpp.
+
+  LibrarySlugStyle:
+    enum:
+      - compact
+      - hyphenated
 
   LibraryConfiguration:
     docs: |

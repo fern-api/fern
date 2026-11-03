@@ -1,9 +1,9 @@
 [project]
-name = "fern_reserved-keywords"
+name = "fern-reserved-keywords"
 dynamic = ["version"]
 
 [tool.poetry]
-name = "fern_reserved-keywords"
+name = "fern-reserved-keywords"
 version = "0.0.1"
 description = ""
 readme = "README.md"

@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">create</a>(...) -> Type</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L101-L145">create</a>(...) -> Type</code></summary>
 <dl>
 <dd>
 
@@ -83,7 +83,7 @@ client.create(
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">get</a>(...) -> Type</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L147-L185">get</a>(...) -> Type</code></summary>
 <dl>
 <dd>
 

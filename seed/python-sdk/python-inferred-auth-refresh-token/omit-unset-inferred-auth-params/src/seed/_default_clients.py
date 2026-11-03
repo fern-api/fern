@@ -14,7 +14,7 @@ except ImportError:
         def __init__(self, **kwargs: typing.Any) -> None:
             raise RuntimeError(
                 "To use the aiohttp client, install the aiohttp extra: "
-                "pip install fern_python-inferred-auth-refresh-token[aiohttp]"
+                "pip install fern-python-inferred-auth-refresh-token[aiohttp]"
             )
 
 else:

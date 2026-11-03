@@ -2,10 +2,11 @@ import { readFile } from "node:fs/promises";
 import { docsYml } from "@fern-api/configuration";
 import { delay, extractErrorMessage } from "@fern-api/core-utils";
 import { FdrAPI } from "@fern-api/fdr-sdk";
-import { AbsoluteFilePath, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { cloneRepositoryAtRef, resolveRepositorySubpath } from "@fern-api/github";
 import { CliError, type TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
+import { createHash } from "crypto";
 
 import { generateCpp } from "./CppDocsGenerator.js";
 import { type LocalParserConfig, runLocalParser } from "./LocalParserRunner.js";
@@ -145,7 +146,8 @@ export async function runLibraryDocsGeneration({
     context,
     wrapStep = defaultWrapStep,
     local = false,
-    docsConfig
+    docsConfig,
+    logsDir
 }: {
     libraries: Record<string, docsYml.RawSchemas.LibraryConfiguration | undefined>;
     /** Optional library name to filter to a single entry. */
@@ -161,6 +163,11 @@ export async function runLibraryDocsGeneration({
     local?: boolean;
     /** docs.yml navigation, used to find the tab generated pages are listed under. */
     docsConfig?: Pick<docsYml.RawSchemas.DocsConfiguration, "navigation" | "tabs">;
+    /**
+     * Directory to keep local parser logs in (one `<library>.log` per library). When
+     * unset, logs go to a temporary file that may not survive the command.
+     */
+    logsDir?: AbsoluteFilePath;
 }): Promise<{ successful: number }> {
     if (Object.keys(libraries).length === 0) {
         throw new CliError({
@@ -212,7 +219,8 @@ export async function runLibraryDocsGeneration({
                 orgId,
                 wrapStep,
                 local,
-                docsConfig
+                docsConfig,
+                logsDir
             });
         })
     );
@@ -237,6 +245,18 @@ export async function runLibraryDocsGeneration({
     return { successful: results.length - failures.length };
 }
 
+/**
+ * Library names come from docs.yml keys; keep the log filename safe and unique even when two
+ * names only differ in characters the sanitizer replaces (`a b` vs `a_b`).
+ */
+function logFileStem(name: string): string {
+    const safe = name.replace(/[^a-zA-Z0-9._-]/g, "_");
+    if (safe === name) {
+        return safe;
+    }
+    return `${safe}-${createHash("sha1").update(name).digest("hex").slice(0, 8)}`;
+}
+
 async function generateSingleLibrary({
     client,
     context,
@@ -246,7 +266,8 @@ async function generateSingleLibrary({
     orgId,
     wrapStep,
     local,
-    docsConfig
+    docsConfig,
+    logsDir
 }: {
     client: LibraryDocsClient | undefined;
     context: TaskContext;
@@ -257,6 +278,7 @@ async function generateSingleLibrary({
     wrapStep: StepWrapper;
     local: boolean;
     docsConfig: Pick<docsYml.RawSchemas.DocsConfiguration, "navigation" | "tabs"> | undefined;
+    logsDir: AbsoluteFilePath | undefined;
 }): Promise<void> {
     const resolvedOutputPath = resolve(docsDirectoryPath, config.output.path);
 
@@ -272,7 +294,14 @@ async function generateSingleLibrary({
             code: CliError.Code.ConfigError
         });
     }
+    if (config.config?.slugStyle != null && config.lang !== "cpp") {
+        throw new CliError({
+            message: `Library '${name}': 'slug-style' config is only valid for lang: cpp`,
+            code: CliError.Code.ConfigError
+        });
+    }
     const includeUndocumentedMacros = config.lang === "cpp" ? config.config?.includeUndocumentedMacros : undefined;
+    const logFilePath = logsDir != null ? join(logsDir, RelativeFilePath.of(`${logFileStem(name)}.log`)) : undefined;
 
     let doxyfileContent: string | undefined;
     if (config.lang === "cpp" && config.config?.doxyfile != null) {
@@ -307,6 +336,7 @@ async function generateSingleLibrary({
             language,
             doxyfileContent,
             includeUndocumentedMacros,
+            logFilePath,
             wrapStep
         });
     } else if (client != null) {
@@ -335,7 +365,8 @@ async function generateSingleLibrary({
         const result = generateCpp({
             ir: cppIr,
             outputDir: resolvedOutputPath,
-            slug: name
+            slug: name,
+            slugStyle: config.config?.slugStyle
         });
         context.logger.info(
             chalk.green(`Library '${name}': generated ${result.pageCount} pages at ${resolvedOutputPath}`)
@@ -442,6 +473,7 @@ async function generateIrLocally({
     language,
     doxyfileContent,
     includeUndocumentedMacros,
+    logFilePath,
     wrapStep
 }: {
     context: TaskContext;
@@ -451,6 +483,7 @@ async function generateIrLocally({
     language: LibraryLanguage;
     doxyfileContent: string | undefined;
     includeUndocumentedMacros: boolean | undefined;
+    logFilePath: string | undefined;
     wrapStep: StepWrapper;
 }): Promise<unknown> {
     let sourcePath: AbsoluteFilePath;
@@ -476,11 +509,12 @@ async function generateIrLocally({
             sourceUrl: gitInput.git,
             branch: gitInput.ref,
             doxyfileContent,
-            includeUndocumentedMacros
+            includeUndocumentedMacros,
+            logFilePath
         };
     } else {
         sourcePath = resolve(docsDirectoryPath, config.input.path);
-        parserConfig = { doxyfileContent, includeUndocumentedMacros };
+        parserConfig = { doxyfileContent, includeUndocumentedMacros, logFilePath };
     }
 
     const result = await wrapStep({

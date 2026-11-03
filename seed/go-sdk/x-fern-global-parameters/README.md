@@ -37,15 +37,19 @@ import (
     client "github.com/x-fern-global-parameters/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &fern.SearchProductsRequest{
         RegionID: "regionId",
     }
-    client.Products.Search(
+    _, err := client.Products.Search(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

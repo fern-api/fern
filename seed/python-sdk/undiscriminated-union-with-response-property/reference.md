@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">get_union</a>() -> UnionResponse</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L100-L121">get_union</a>() -> UnionResponse</code></summary>
 <dl>
 <dd>
 
@@ -46,7 +46,7 @@ client.get_union()
 </dl>
 </details>
 
-<details><summary><code>client.<a href="src/seed/client.py">list_unions</a>() -> UnionListResponse</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L123-L144">list_unions</a>() -> UnionListResponse</code></summary>
 <dl>
 <dd>
 

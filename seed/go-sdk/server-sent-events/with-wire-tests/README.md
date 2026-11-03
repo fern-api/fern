@@ -37,15 +37,19 @@ import (
     client "github.com/fern-api/sse-go/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &sse.StreamCompletionRequest{
         Query: "foo",
     }
-    client.Completions.Stream(
+    _, err := client.Completions.Stream(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

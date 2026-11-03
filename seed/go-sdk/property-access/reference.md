@@ -24,7 +24,7 @@ request := &fern.User{
         Ssn: "ssn",
     },
 }
-client.CreateUser(
+_, err := client.CreateUser(
     context.TODO(),
     request,
 )

@@ -1,9 +1,9 @@
 [project]
-name = "fern_oauth-pkce"
+name = "fern-oauth-pkce"
 dynamic = ["version"]
 
 [tool.poetry]
-name = "fern_oauth-pkce"
+name = "fern-oauth-pkce"
 version = "0.0.1"
 description = ""
 readme = "README.md"

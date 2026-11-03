@@ -13,7 +13,7 @@
 <dd>
 
 ```go
-client.Bigunion.Get(
+_, err := client.Bigunion.Get(
     context.TODO(),
     "id",
 )
@@ -70,7 +70,7 @@ request := &fern.BigUnion{
         ),
     ),
 }
-client.Bigunion.Update(
+_, err := client.Bigunion.Update(
     context.TODO(),
     request,
 )
@@ -143,7 +143,7 @@ request := []*fern.BigUnion{
         ),
     },
 }
-client.Bigunion.UpdateMany(
+_, err := client.Bigunion.UpdateMany(
     context.TODO(),
     request,
 )
@@ -187,7 +187,7 @@ client.Bigunion.UpdateMany(
 <dd>
 
 ```go
-client.Types.Get(
+_, err := client.Types.Get(
     context.TODO(),
     "date-example",
 )
@@ -231,7 +231,7 @@ client.Types.Get(
 
 ```go
 request := &fern.UnionWithTime{}
-client.Types.Update(
+_, err := client.Types.Update(
     context.TODO(),
     request,
 )
@@ -275,7 +275,7 @@ client.Types.Update(
 <dd>
 
 ```go
-client.Union.Get(
+_, err := client.Union.Get(
     context.TODO(),
     "id",
 )
@@ -324,7 +324,7 @@ request := &fern.Shape{
     },
     ID: "id",
 }
-client.Union.Update(
+_, err := client.Union.Update(
     context.TODO(),
     request,
 )

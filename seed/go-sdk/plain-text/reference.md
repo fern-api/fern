@@ -13,7 +13,7 @@
 <dd>
 
 ```go
-client.Service.GetText(
+_, err := client.Service.GetText(
     context.TODO(),
 )
 ```
@@ -40,7 +40,7 @@ client.Service.GetText(
 <dd>
 
 ```go
-client.Service.GetCsv(
+_, err := client.Service.GetCsv(
     context.TODO(),
 )
 ```
@@ -67,7 +67,7 @@ client.Service.GetCsv(
 <dd>
 
 ```go
-client.Service.GetXML(
+_, err := client.Service.GetXML(
     context.TODO(),
 )
 ```

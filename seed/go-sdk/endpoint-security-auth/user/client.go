@@ -55,7 +55,7 @@ func NewClient(options *core.RequestOptions) *Client {
 
 // Example:
 //
-//	client.User.GetWithBearer(
+//	_, err := client.User.GetWithBearer(
 //	    context.TODO(),
 //	)
 func (c *Client) GetWithBearer(
@@ -74,7 +74,7 @@ func (c *Client) GetWithBearer(
 
 // Example:
 //
-//	client.User.GetWithAPIKey(
+//	_, err := client.User.GetWithAPIKey(
 //	    context.TODO(),
 //	)
 func (c *Client) GetWithAPIKey(
@@ -93,7 +93,7 @@ func (c *Client) GetWithAPIKey(
 
 // Example:
 //
-//	client.User.GetWithOAuth(
+//	_, err := client.User.GetWithOAuth(
 //	    context.TODO(),
 //	)
 func (c *Client) GetWithOAuth(
@@ -112,7 +112,7 @@ func (c *Client) GetWithOAuth(
 
 // Example:
 //
-//	client.User.GetWithBasic(
+//	_, err := client.User.GetWithBasic(
 //	    context.TODO(),
 //	)
 func (c *Client) GetWithBasic(
@@ -131,7 +131,7 @@ func (c *Client) GetWithBasic(
 
 // Example:
 //
-//	client.User.GetWithInferredAuth(
+//	_, err := client.User.GetWithInferredAuth(
 //	    context.TODO(),
 //	)
 func (c *Client) GetWithInferredAuth(
@@ -150,7 +150,7 @@ func (c *Client) GetWithInferredAuth(
 
 // Example:
 //
-//	client.User.GetWithAnyAuth(
+//	_, err := client.User.GetWithAnyAuth(
 //	    context.TODO(),
 //	)
 func (c *Client) GetWithAnyAuth(
@@ -169,7 +169,7 @@ func (c *Client) GetWithAnyAuth(
 
 // Example:
 //
-//	client.User.GetWithAllAuth(
+//	_, err := client.User.GetWithAllAuth(
 //	    context.TODO(),
 //	)
 func (c *Client) GetWithAllAuth(

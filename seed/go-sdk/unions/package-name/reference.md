@@ -13,7 +13,7 @@
 <dd>
 
 ```go
-client.Bigunion.Get(
+_, err := client.Bigunion.Get(
     context.TODO(),
     "id",
 )
@@ -70,7 +70,7 @@ request := &unions.BigUnion{
         ),
     ),
 }
-client.Bigunion.Update(
+_, err := client.Bigunion.Update(
     context.TODO(),
     request,
 )
@@ -143,7 +143,7 @@ request := []*unions.BigUnion{
         ),
     },
 }
-client.Bigunion.UpdateMany(
+_, err := client.Bigunion.UpdateMany(
     context.TODO(),
     request,
 )
@@ -187,7 +187,7 @@ client.Bigunion.UpdateMany(
 <dd>
 
 ```go
-client.Union.Get(
+_, err := client.Union.Get(
     context.TODO(),
     "id",
 )
@@ -236,7 +236,7 @@ request := &unions.Shape{
     },
     ID: "id",
 }
-client.Union.Update(
+_, err := client.Union.Update(
     context.TODO(),
     request,
 )

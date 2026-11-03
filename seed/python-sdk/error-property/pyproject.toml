@@ -1,9 +1,9 @@
 [project]
-name = "fern_error-property"
+name = "fern-error-property"
 dynamic = ["version"]
 
 [tool.poetry]
-name = "fern_error-property"
+name = "fern-error-property"
 version = "0.0.1"
 description = ""
 readme = "README.md"

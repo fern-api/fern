@@ -8,7 +8,7 @@ import (
     option "github.com/literal/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -32,8 +32,12 @@ func do() {
             NestedLiteral: &fern.ANestedLiteral{},
         },
     }
-    client.Inlined.Send(
+    _, err := client.Inlined.Send(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

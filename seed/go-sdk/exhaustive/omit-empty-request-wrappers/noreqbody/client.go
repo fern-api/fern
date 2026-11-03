@@ -36,7 +36,7 @@ func NewClient(options *core.RequestOptions) *Client {
 
 // Example:
 //
-//	client.NoReqBody.GetWithNoRequestBody(
+//	_, err := client.NoReqBody.GetWithNoRequestBody(
 //	    context.TODO(),
 //	)
 func (c *Client) GetWithNoRequestBody(
@@ -55,7 +55,7 @@ func (c *Client) GetWithNoRequestBody(
 
 // Example:
 //
-//	client.NoReqBody.PostWithNoRequestBody(
+//	_, err := client.NoReqBody.PostWithNoRequestBody(
 //	    context.TODO(),
 //	)
 func (c *Client) PostWithNoRequestBody(

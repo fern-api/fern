@@ -444,22 +444,35 @@ fn a_request_reads_the_keychain_entry_once() {
 
 #[test]
 #[serial]
-fn a_credential_stored_by_an_older_binary_is_read_once() {
-    // An entry written before `profiles.toml` kept a copy: the first listing
-    // reads the keychain as it always did and records the account, so later
-    // listings show the same thing without reading it.
+fn a_credential_stored_by_an_older_binary_is_recorded_by_the_next_request() {
+    // An entry written before `profiles.toml` kept a copy: listing does not
+    // read the keychain for it (on macOS that read prompts, and a refused
+    // prompt used to repeat on every listing). The next request reads the
+    // entry anyway and records the account, so listings show it from then on.
     with_clean_env(|home| {
         run(&["bsc", "profiles", "create", "prod", "--use"]);
         store_basic("prod", "AC2222", "tok");
         let reads = count_reads(home);
 
-        for expected_reads in [true, false] {
-            let rows: serde_json::Value =
-                serde_json::from_str(&run(&["bsc", "profiles", "list", "--format", "json"]).1)
-                    .expect("json");
-            assert_eq!(rows[0]["account"], "AC2222", "{rows:#?}");
-            assert_eq!(take(&reads) > 0, expected_reads);
+        let rows: serde_json::Value =
+            serde_json::from_str(&run(&["bsc", "profiles", "list", "--format", "json"]).1)
+                .expect("json");
+        assert!(rows[0].get("account").is_none(), "{rows:#?}");
+        assert_eq!(take(&reads), 0, "listing must not read the keychain");
+
+        let (code, output) =
+            run(&["bsc", "messages", "list", "--account-sid", "AC2222", "--dry-run"]);
+        assert_eq!(code, 0, "{output}");
+        assert!(take(&reads) > 0, "the request reads the credential");
+
+        for report in ["list", "show", "current"] {
+            let (code, output) = run(&["bsc", "profiles", report, "--format", "json"]);
+            assert_eq!(code, 0, "{output}");
+            let value: serde_json::Value = serde_json::from_str(&output).expect("json");
+            let row = if report == "list" { &value[0] } else { &value };
+            assert_eq!(row["account"], "AC2222", "{report}: {value:#?}");
         }
+        assert_eq!(take(&reads), 0, "list / show / current must not read the keychain");
     });
 }
 
@@ -483,14 +496,14 @@ fn removing_a_profile_forgets_its_recorded_account() {
 
 #[test]
 #[serial]
-fn an_empty_profile_is_looked_up_once() {
+fn an_empty_profile_is_never_looked_up() {
     with_clean_env(|home| {
         run(&["bsc", "profiles", "create", "empty", "--use"]);
         let reads = count_reads(home);
-        for expected_reads in [true, false] {
+        for _ in 0..2 {
             let (code, output) = run(&["bsc", "profiles", "list", "--format", "json"]);
             assert_eq!(code, 0, "{output}");
-            assert_eq!(take(&reads) > 0, expected_reads);
+            assert_eq!(take(&reads), 0);
         }
     });
 }

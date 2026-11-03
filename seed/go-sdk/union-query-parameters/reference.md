@@ -36,7 +36,7 @@ request := &fern.SubscribeEventsRequest{
         String: "tags",
     },
 }
-client.Events.Subscribe(
+_, err := client.Events.Subscribe(
     context.TODO(),
     request,
 )

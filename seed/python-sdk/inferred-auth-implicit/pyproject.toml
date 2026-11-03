@@ -1,9 +1,9 @@
 [project]
-name = "fern_inferred-auth-implicit"
+name = "fern-inferred-auth-implicit"
 dynamic = ["version"]
 
 [tool.poetry]
-name = "fern_inferred-auth-implicit"
+name = "fern-inferred-auth-implicit"
 version = "0.0.1"
 description = ""
 readme = "README.md"

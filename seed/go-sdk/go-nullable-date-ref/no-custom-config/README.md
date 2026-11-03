@@ -37,7 +37,7 @@ import (
     client "github.com/go-nullable-date-ref/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &fern.Report{
         CreatedDate: fern.MustParseDate(
@@ -45,10 +45,14 @@ func do() {
         ),
         Title: "title",
     }
-    client.Reports.Create(
+    _, err := client.Reports.Create(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

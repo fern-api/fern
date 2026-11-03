@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.<a href="src/seed/user/client.py">head</a>()</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py#L26-L47">head</a>()</code></summary>
 <dl>
 <dd>
 
@@ -47,7 +47,7 @@ client.user.head()
 </dl>
 </details>
 
-<details><summary><code>client.user.<a href="src/seed/user/client.py">list</a>(...) -> typing.List[User]</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py#L49-L74">list</a>(...) -> typing.List[User]</code></summary>
 <dl>
 <dd>
 

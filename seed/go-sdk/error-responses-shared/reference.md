@@ -13,7 +13,7 @@
 <dd>
 
 ```go
-client.Calls.Calls.CreateCall(
+_, err := client.Calls.Calls.CreateCall(
     context.TODO(),
 )
 ```
@@ -41,7 +41,7 @@ client.Calls.Calls.CreateCall(
 <dd>
 
 ```go
-client.Messages.Messages.ListMessages(
+_, err := client.Messages.Messages.ListMessages(
     context.TODO(),
 )
 ```
@@ -72,7 +72,7 @@ request := &messages.Message{
     Sid: "sid",
     Body: "body",
 }
-client.Messages.Messages.CreateMessage(
+_, err := client.Messages.Messages.CreateMessage(
     context.TODO(),
     request,
 )
@@ -118,7 +118,7 @@ client.Messages.Messages.CreateMessage(
 request := &messages.DeleteMessageRequest{
     Sid: "sid",
 }
-client.Messages.Messages.DeleteMessage(
+err := client.Messages.Messages.DeleteMessage(
     context.TODO(),
     request,
 )

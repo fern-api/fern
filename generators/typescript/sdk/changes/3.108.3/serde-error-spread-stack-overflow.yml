@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    The generated serialization layer no longer throws "Maximum call stack size exceeded" when a
+    value fails validation with a very large number of nested errors. `list`, `object` and `record`
+    schemas now append child errors in a loop instead of spreading them into `Array.prototype.push`.
+  type: fix

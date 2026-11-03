@@ -37,16 +37,20 @@ import (
     client "github.com/api-wide-base-path-with-default/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &fern.Widget{
         Name: "name",
     }
-    client.Widgets.Create(
+    _, err := client.Widgets.Create(
         context.TODO(),
         "v1beta",
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

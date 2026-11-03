@@ -36,11 +36,15 @@ import (
     client "github.com/http-head/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
-    client.User.Head(
+    err := client.User.Head(
         context.TODO(),
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

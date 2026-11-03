@@ -1,9 +1,9 @@
 [project]
-name = "fern_python-multi-env-url-templating"
+name = "fern-python-multi-env-url-templating"
 dynamic = ["version"]
 
 [tool.poetry]
-name = "fern_python-multi-env-url-templating"
+name = "fern-python-multi-env-url-templating"
 version = "0.0.1"
 description = ""
 readme = "README.md"

@@ -1,6 +1,6 @@
 # Reference
 ## Products
-<details><summary><code>client.products.<a href="src/seed/products/client.py">search</a>(...) -> SearchProductsResponse</code></summary>
+<details><summary><code>client.products.<a href="src/seed/products/client.py#L31-L68">search</a>(...) -> SearchProductsResponse</code></summary>
 <dl>
 <dd>
 
@@ -73,7 +73,7 @@ client.products.search(
 </dl>
 </details>
 
-<details><summary><code>client.products.<a href="src/seed/products/client.py">get</a>(...) -> Product</code></summary>
+<details><summary><code>client.products.<a href="src/seed/products/client.py#L70-L101">get</a>(...) -> Product</code></summary>
 <dl>
 <dd>
 

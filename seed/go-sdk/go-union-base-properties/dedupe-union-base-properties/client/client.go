@@ -46,7 +46,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 //	        Radius: 1.5,
 //	    },
 //	}
-//	client.Create(
+//	_, err := client.Create(
 //	    context.TODO(),
 //	    request,
 //	)

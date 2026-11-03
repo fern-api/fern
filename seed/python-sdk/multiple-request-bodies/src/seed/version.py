@@ -1,3 +1,3 @@
 from importlib import metadata
 
-__version__ = metadata.version("fern_multiple-request-bodies")
+__version__ = metadata.version("fern-multiple-request-bodies")

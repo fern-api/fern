@@ -8,7 +8,7 @@ import (
     types "github.com/exhaustive/fern/types"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -20,8 +20,12 @@ func do() {
     request := &types.ObjectWithRequiredField{
         FieldString: "string",
     }
-    client.Endpoints.Object.GetAndReturnWithRequiredField(
+    _, err := client.Endpoints.Object.GetAndReturnWithRequiredField(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

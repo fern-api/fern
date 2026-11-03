@@ -10,6 +10,8 @@ from fern_python.generators.pydantic_model.fern_aware_pydantic_model import (
 )
 from fern_python.generators.pydantic_model.type_declaration_handler.type_utilities import (
     declared_type_name_to_named_type,
+    imports_after_recursive_type_alias,
+    is_recursive_type_alias,
 )
 from fern_python.snippet import SnippetWriter
 from fern_python.utils import resolve_name
@@ -42,12 +44,24 @@ class PydanticModelAliasGenerator(AbstractAliasGenerator):
         self,
     ) -> None:
         if not self._custom_config.wrapped_aliases:
+            is_recursive = is_recursive_type_alias(self._name.type_id, self._context, self._custom_config)
+            type_hint = (
+                self._context.get_type_hint_for_type_reference(
+                    self._alias.alias_of,
+                    must_import_after_current_declaration=imports_after_recursive_type_alias(
+                        self._name.type_id, self._context
+                    ),
+                )
+                if is_recursive
+                else self._type_hint
+            )
             self._source_file.add_declaration(
                 declaration=AST.TypeAliasDeclaration(
                     name=self._context.get_class_name_for_type_id(self._name.type_id, as_request=False),
-                    type_hint=self._type_hint,
+                    type_hint=type_hint,
                     snippet=self._snippet,
                     docs=self._docs,
+                    is_type_alias_type=is_recursive,
                 ),
                 should_export=True,
             )

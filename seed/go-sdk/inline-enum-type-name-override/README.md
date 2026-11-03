@@ -37,13 +37,17 @@ import (
     client "github.com/inline-enum-type-name-override/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &fern.LoadRequest{}
-    client.Reporting.Load(
+    err := client.Reporting.Load(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

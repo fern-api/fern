@@ -43,7 +43,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 //	    Name: "fern",
 //	    Shape: fern.ShapeSquare,
 //	}
-//	client.Create(
+//	_, err := client.Create(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -70,7 +70,7 @@ func (c *Client) Create(
 //	    Even: 100,
 //	    Name: "fern",
 //	}
-//	client.Get(
+//	_, err := client.Get(
 //	    context.TODO(),
 //	    request,
 //	)

@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    README generation in self-hosted GitHub mode can clone a private repository with a personal
+    access token again. Upgrades `@fern-api/generator-cli` to 0.12.1, which also sends the token as an
+    `Authorization` header. Before this, git in the generator image (libcurl 8.23+) dropped the token
+    from the clone URL and failed with `could not read Username`.
+  type: fix

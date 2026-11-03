@@ -427,10 +427,18 @@ export class XmlObjectGenerator {
 
     private getChildBuilderMethods(): ruby.AstNode[] {
         const methods: ruby.AstNode[] = [];
+        // The text field yields its name to a same-named child builder (`dial.number("+1…")` adds a <Number>,
+        // as in the legacy SDKs); called without arguments the method still returns the attribute.
+        const textProperty = this.properties.find((property) => property.kind === FernIr.XmlPropertyKind.Text);
         const usedNames = new Set<string>([
-            ...this.properties.map((property) => property.fieldName),
+            ...this.properties.filter((property) => property !== textProperty).map((property) => property.fieldName),
             ...RESERVED_METHOD_NAMES
         ]);
+        // `text` / `text=` belong to the element's own text; a <Text> child builder yields (`add_text`).
+        const textAlias = textProperty != null && textProperty.fieldName !== "text" && !usedNames.has("text");
+        if (textAlias) {
+            usedNames.add("text");
+        }
         for (const property of this.properties) {
             if (property.kind !== FernIr.XmlPropertyKind.Element || property.value.type !== "object") {
                 continue;
@@ -445,22 +453,65 @@ export class XmlObjectGenerator {
                     continue;
                 }
                 usedNames.add(methodName);
-                methods.push(this.getChildBuilderMethod({ property, childType, methodName, xmlName }));
+                const attributeFallback =
+                    textProperty != null && methodName === textProperty.fieldName ? textProperty : undefined;
+                methods.push(
+                    this.getChildBuilderMethod({ property, childType, methodName, xmlName, attributeFallback })
+                );
+                if (attributeFallback != null) {
+                    // keep the `add_<name>` builder the SDK had while the name belonged to the text attribute
+                    const addMethodName = `add_${this.context.caseConverter.snakeUnsafe(xmlName)}`;
+                    if (!usedNames.has(addMethodName)) {
+                        usedNames.add(addMethodName);
+                        methods.push(
+                            this.getChildBuilderMethod({ property, childType, methodName: addMethodName, xmlName })
+                        );
+                    }
+                }
             }
         }
+        if (textProperty != null && textAlias) {
+            methods.push(this.getTextAlias(textProperty));
+        }
         return methods;
+    }
+
+    /** `text` / `text=` next to the field-named accessors of the text content. */
+    private getTextAlias(textProperty: XmlProperty): ruby.AstNode {
+        return ruby.codeblock((writer) => {
+            ruby.comment({
+                docs: `The text content of this element (same as \`${textProperty.fieldName}\`).\n\n@return [String, nil]`
+            }).write(writer);
+            writer.writeLine("def text");
+            writer.indent();
+            writer.writeLine(`@data[:${textProperty.fieldName}]`);
+            writer.dedent();
+            writer.writeLine("end");
+            writer.newLine();
+            ruby.comment({
+                docs: `Sets the text content of this element (same as \`${textProperty.fieldName}=\`).`
+            }).write(writer);
+            writer.writeLine("def text=(value)");
+            writer.indent();
+            writer.writeLine(`self.${textProperty.fieldName} = value`);
+            writer.dedent();
+            writer.write("end");
+        });
     }
 
     private getChildBuilderMethod({
         property,
         childType,
         methodName,
-        xmlName
+        xmlName,
+        attributeFallback
     }: {
         property: XmlProperty;
         childType: FernIr.TypeDeclaration;
         methodName: string;
         xmlName: string;
+        /** The text field this method replaces as reader: with no arguments it returns the attribute. */
+        attributeFallback?: XmlProperty;
     }): ruby.AstNode {
         const childClass = this.getChildClassReference(childType);
         const textProperty =
@@ -491,6 +542,11 @@ export class XmlObjectGenerator {
         return ruby.codeblock((writer) => {
             const docs = [
                 `Appends a <${xmlName}> child element and returns it. Pass an existing ${childClass.name} to append it as-is.`,
+                ...(attributeFallback != null
+                    ? [
+                          `Called without arguments it returns the \`${attributeFallback.fieldName}\` text content instead (use \`text=\` / \`${attributeFallback.fieldName}=\` to set it).`
+                      ]
+                    : []),
                 ...(childDocs != null ? ["", childDocs] : []),
                 "",
                 ...(textField != null
@@ -506,9 +562,29 @@ export class XmlObjectGenerator {
                 `@return [${childClass.name}]`
             ];
             ruby.comment({ docs: docs.join("\n") }).write(writer);
-            const params = textField != null ? `${textField} = nil, **attributes` : "**attributes";
-            writer.writeLine(`def ${methodName}(${params})`);
-            writer.indent();
+            if (attributeFallback != null && textField != null) {
+                // `*args` so that an explicit `number(nil)` still adds the child; only a bare `number` reads the attribute
+                writer.writeLine(`def ${methodName}(*args, **attributes)`);
+                writer.indent();
+                writer.writeLine(
+                    `return @data[:${attributeFallback.fieldName}] if args.empty? && attributes.empty? && !block_given?`
+                );
+                writer.writeLine(
+                    `raise ArgumentError, "wrong number of arguments (given #{args.size}, expected 0..1)" if args.size > 1`
+                );
+                writer.newLine();
+                writer.writeLine(`${textField} = args.first`);
+            } else {
+                const params = textField != null ? `${textField} = nil, **attributes` : "**attributes";
+                writer.writeLine(`def ${methodName}(${params})`);
+                writer.indent();
+                if (attributeFallback != null) {
+                    writer.writeLine(
+                        `return @data[:${attributeFallback.fieldName}] if attributes.empty? && !block_given?`
+                    );
+                    writer.newLine();
+                }
+            }
             if (textField != null) {
                 writer.writeLine(`if attributes.key?(:${textField})`);
                 writer.indent();

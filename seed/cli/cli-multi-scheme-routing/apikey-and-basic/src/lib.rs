@@ -9,6 +9,7 @@ pub mod app;
 pub mod arg_source;
 pub mod asyncapi;
 pub mod auth;
+pub mod banner;
 pub mod binding;
 pub mod cli_args;
 pub mod completions;

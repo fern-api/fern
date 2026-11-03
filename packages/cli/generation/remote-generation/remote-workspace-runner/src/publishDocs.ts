@@ -1,5 +1,5 @@
 import { resolveSnippetPackageName, VisibilityFilter } from "@fern-api/api-workspace-commons";
-import { FernToken } from "@fern-api/auth";
+import { describeGuestRejection, FernToken, isGuestRejection, readGuestRejection } from "@fern-api/auth";
 import { docsYml, generatorsYml } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
 import {
@@ -72,10 +72,19 @@ import { camelCase, chunk } from "lodash-es";
 import * as mime from "mime-types";
 import { basename } from "path";
 import terminalLink from "terminal-link";
+import {
+    attachSdkGenSnippets,
+    describeSdkSnippetsReadFailures,
+    describeSnippetSources,
+    omitSdkLanguages,
+    readSdkGenSnippets,
+    type SdkGenSnippets
+} from "./attachSdkGenSnippets.js";
 import { getDocsDeployMode } from "./docsDeployMode.js";
 import { computeDynamicIRs, type DynamicIrGeneratorJob } from "./dynamicIr/computeDynamicIRs.js";
 import { DynamicIrWorkerPool, parseDynamicIrResult } from "./dynamicIr/DynamicIrWorkerPool.js";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
+import { getFdrOrigin, readGuestPublishOutcome } from "./guestDocsSite.js";
 import { measureImageSizes } from "./measureImageSizes.js";
 import { normalizeRepoUrlToHttps } from "./normalizeRepoUrl.js";
 import { publishDocsViaLedger } from "./publishDocsLedger.js";
@@ -195,7 +204,7 @@ export async function publishDocs({
     customDomains,
     apiWorkspaces,
     ossWorkspaces,
-    usesSdkConfig = false,
+    sdkNames = {},
     context,
     preview,
     previewId,
@@ -219,8 +228,8 @@ export async function publishDocs({
     customDomains: string[];
     apiWorkspaces: AbstractAPIWorkspace<unknown>[];
     ossWorkspaces: OSSWorkspace[];
-    /** Whether the project configures SDKs in sdk-config.yml; only used to explain missing SDK snippets. */
-    usesSdkConfig?: boolean;
+    /** The `sdkName` of each language's SDK in the sdk-config.yml, used to find its build for the SDK snippets. */
+    sdkNames?: Record<string, string[]>;
     context: TaskContext;
     preview: boolean;
     previewId: string | undefined;
@@ -242,11 +251,7 @@ export async function publishDocs({
     loginCommand?: string;
     multiSource?: boolean;
 }): Promise<string> {
-    const fdrOrigin =
-        process.env.FERN_FDR_ORIGIN ??
-        process.env.OVERRIDE_FDR_ORIGIN ??
-        process.env.DEFAULT_FDR_ORIGIN ??
-        "https://registry.buildwithfern.com";
+    const fdrOrigin = getFdrOrigin();
     const isAirGapped = await detectAirGappedMode(`${fdrOrigin}/health`, context.logger);
     if (isAirGapped) {
         context.logger.debug("Detected air-gapped environment - skipping external FDR service calls");
@@ -387,14 +392,46 @@ export async function publishDocs({
             ? undefined
             : DynamicIrWorkerPool.create({ registrationConcurrency: getApiRegistrationConcurrency(), context });
 
+        // The snippets sdk-gen serves are read once per snippets config: the dynamic IRs need to know which languages
+        // they can skip before registration, and registration (and each locale) adds the same snippets to its definition.
+        const sdkGenSnippetsByConfig = new Map<string, Promise<SdkGenSnippets>>();
+        const loadSdkGenSnippets = (snippetsConfig: SnippetsConfig): Promise<SdkGenSnippets> => {
+            const key = JSON.stringify(snippetsConfig);
+            const existing = sdkGenSnippetsByConfig.get(key);
+            if (existing != null) {
+                return existing;
+            }
+            // A snippet problem must never fail the docs publish, so the cached promise always resolves.
+            const snippets = readSdkGenSnippets({
+                token: token.value,
+                organization,
+                snippetsConfig,
+                sdkNames,
+                logger: context.logger
+            }).catch((error: unknown): SdkGenSnippets => {
+                for (const line of describeSdkSnippetsReadFailures({ snippetsConfig, sdkNames, error })) {
+                    context.logger.warn(line);
+                }
+                return new Map();
+            });
+            sdkGenSnippetsByConfig.set(key, snippets);
+            return snippets;
+        };
+
         /** Fetches existing SDK dynamic IRs and generates the rest; the returned loader builds the record. */
         const prepareDynamicIRs = async ({
             workspace,
-            snippetsConfig
+            snippetsConfig: fullSnippetsConfig
         }: {
             workspace: FernWorkspace | undefined;
             snippetsConfig: SnippetsConfig;
         }): Promise<() => Record<string, DynamicIr> | undefined> => {
+            // A language whose snippets sdk-gen serves needs no dynamic IR; the others keep using Fern's.
+            const sdkGenLanguages = [...(await loadSdkGenSnippets(fullSnippetsConfig)).keys()];
+            const snippetsConfig = omitSdkLanguages(fullSnippetsConfig, sdkGenLanguages);
+            if (sdkGenLanguages.length > 0) {
+                context.logger.debug(`Skipping dynamic IR for ${sdkGenLanguages.join(", ")} (served by sdk-gen)`);
+            }
             let existingDynamicIRs: Record<string, DynamicIr> | undefined;
             let languagesWithExistingSdkDynamicIr: Set<string> = new Set();
             const existingSdkDynamicIrs = await checkAndDownloadExistingSdkDynamicIRs({
@@ -420,7 +457,6 @@ export async function publishDocs({
                 organization,
                 context,
                 snippetsConfig,
-                usesSdkConfig,
                 skipLanguages: languagesWithExistingSdkDynamicIr,
                 pool: dynamicIrWorkerPool
             });
@@ -492,15 +528,21 @@ export async function publishDocs({
         }) => {
             // apiName (docs.yml folder name) becomes the FDR API identifier, so users can
             // reference APIs by their folder name in docs components.
-            const apiDefinition = convertIrToFdrApi({
-                ir,
-                snippetsConfig,
-                playgroundConfig,
-                graphqlOperations,
-                graphqlTypes,
-                context,
-                apiNameOverride: apiName
-            });
+            // The snippets sdk-gen saved with the builds of the SDKs docs.yml names become code samples in the
+            // definition, which both deploy modes publish.
+            const sdkGenSnippets = await loadSdkGenSnippets(snippetsConfig);
+            const apiDefinition = attachSdkGenSnippets(
+                convertIrToFdrApi({
+                    ir,
+                    snippetsConfig,
+                    playgroundConfig,
+                    graphqlOperations,
+                    graphqlTypes,
+                    context,
+                    apiNameOverride: apiName
+                }),
+                sdkGenSnippets
+            );
 
             // create dynamic IR + metadata for each generator language
             let dynamicIRsByLanguage: Record<string, DynamicIr> | undefined;
@@ -509,6 +551,13 @@ export async function publishDocs({
             } else if (!disableDynamicSnippets) {
                 const loadDynamicIRs = await takeDynamicIRs({ workspace, snippetsConfig });
                 dynamicIRsByLanguage = loadDynamicIRs();
+            }
+            const snippetSources = describeSnippetSources({
+                sdkGenLanguages: sdkGenSnippets.keys(),
+                dynamicIrLanguages: Object.keys(dynamicIRsByLanguage ?? {})
+            });
+            if (snippetSources != null) {
+                context.logger.info(snippetSources);
             }
 
             const effectiveApiName = apiName ?? getOriginalName(ir.apiName);
@@ -746,7 +795,14 @@ export async function publishDocs({
                             previewId: previewId != null ? sanitizePreviewId(previewId) : undefined
                         });
                     } catch (error) {
-                        return await startDocsRegisterFailed(error, context, organization, domain, loginCommand);
+                        return await startDocsRegisterFailed(
+                            error,
+                            context,
+                            organization,
+                            domain,
+                            loginCommand,
+                            token.type
+                        );
                     }
                     urlToOutput = startDocsRegisterResponse.previewUrl;
                     docsRegistrationId = startDocsRegisterResponse.docsRegistrationId;
@@ -796,7 +852,7 @@ export async function publishDocs({
                             ...(isBasepathAware && { basepathAware: true })
                         });
                     } catch (error) {
-                        return startDocsRegisterFailed(error, context, organization, domain, loginCommand);
+                        return startDocsRegisterFailed(error, context, organization, domain, loginCommand, token.type);
                     }
                     docsRegistrationId = startDocsRegisterResponse.docsRegistrationId;
                     deployLocked = true;
@@ -992,6 +1048,16 @@ export async function publishDocs({
                 context.logger.debug(
                     `[ledger] Deployment ${ledgerResult.reusedDeployment ? "reused" : "created"}: ${ledgerResult.deploymentId}`
                 );
+                if (token.type === "guest") {
+                    const outcome = readGuestPublishOutcome(ledgerResult);
+                    if (outcome.claimUrl != null) {
+                        const expiry =
+                            outcome.expiresAt != null ? ` (expires ${outcome.expiresAt.toLocaleString()})` : "";
+                        context.logger.info(
+                            `Claim only this docs site (opens its banner's Claim): ${outcome.claimUrl}${expiry}`
+                        );
+                    }
+                }
             }
         };
 
@@ -1454,7 +1520,8 @@ async function startDocsRegisterFailed(
     context: TaskContext,
     organization: string,
     domain: string,
-    loginCommand: string
+    loginCommand: string,
+    tokenType: FernToken["type"]
 ): Promise<never> {
     context.instrumentPostHogEvent({
         command: "docs-generation",
@@ -1472,6 +1539,15 @@ async function startDocsRegisterFailed(
     const errorContent = errorObj?.content as Record<string, unknown> | undefined;
     if (errorContent?.reason === "status-code" && errorContent?.statusCode === 409) {
         throw new DocsPublishConflictError();
+    }
+
+    if (tokenType === "guest") {
+        const rejection = readGuestRejection(error);
+        if (isGuestRejection(rejection)) {
+            return context.failAndThrow(describeGuestRejection(rejection), undefined, {
+                code: CliError.Code.AuthError
+            });
+        }
     }
 
     const authErrorMessage = getAuthenticationErrorMessage(error, organization, domain, loginCommand);
@@ -2115,7 +2191,6 @@ async function generateLanguageSpecificDynamicIRs({
     organization,
     context,
     snippetsConfig,
-    usesSdkConfig,
     skipLanguages = new Set(),
     pool
 }: {
@@ -2124,7 +2199,6 @@ async function generateLanguageSpecificDynamicIRs({
     organization: string;
     context: TaskContext;
     snippetsConfig: SnippetsConfig;
-    usesSdkConfig: boolean;
     skipLanguages?: Set<string>;
     pool?: DynamicIrWorkerPool;
 }): Promise<(() => Record<string, DynamicIr>) | undefined> {
@@ -2233,17 +2307,14 @@ async function generateLanguageSpecificDynamicIRs({
 
     for (const [language, packageName] of Object.entries(snippetConfiguration)) {
         if (language && packageName && !languagesWithDynamicIr.has(language) && !skipLanguages.has(language)) {
-            context.logger.warn();
-            for (const line of getUnknownSnippetPackageWarningLines({
-                language,
-                packageName,
-                workspaceName: workspace.workspaceName,
-                otherApiWorkspaceCount: apiWorkspaces.length,
-                usesSdkConfig
-            })) {
-                context.logger.warn(line);
-            }
-            context.logger.warn();
+            context.logger.warn(
+                getUnknownSnippetPackageWarning({
+                    language,
+                    packageName,
+                    workspaceName: workspace.workspaceName,
+                    otherApiWorkspaceCount: apiWorkspaces.length
+                })
+            );
         }
     }
 
@@ -2262,33 +2333,21 @@ async function generateLanguageSpecificDynamicIRs({
 }
 
 /**
- * Warning lines for a docs `snippets:` entry that no generator resolved to. Docs publishing only
- * reads generators.yml for SDK packages, so for SDKs configured in sdk-config.yml (where `fern sdk migrate`
- * moves the generators into sdk-config.yml) the package is not found and the snippets are dropped.
+ * The warning for a docs `snippets:` entry that no sdk-gen build and no generator resolved to, so the docs have no
+ * SDK snippets for that language.
  */
-export function getUnknownSnippetPackageWarningLines({
+export function getUnknownSnippetPackageWarning({
     language,
     packageName,
     workspaceName,
-    otherApiWorkspaceCount,
-    usesSdkConfig
+    otherApiWorkspaceCount
 }: {
     language: string;
     packageName: string;
     workspaceName: string | undefined;
     otherApiWorkspaceCount: number;
-    usesSdkConfig: boolean;
-}): string[] {
-    const lines = [
-        `Failed to upload ${language} SDK snippets because of unknown package \`${packageName}\`.`,
-        `Please make sure a generators.yml in this fern folder (checked ${workspaceName ? `${workspaceName}/` : ""}generators.yml and the other ${otherApiWorkspaceCount} API workspace(s)) has a generator that publishes a ${packageName} package.`
-    ];
-    if (usesSdkConfig) {
-        lines.push(
-            "SDK snippets are not supported for SDKs configured in sdk-config.yml yet. The package name is only read from generators.yml, so migrated SDKs have no snippets in these docs."
-        );
-    }
-    return lines;
+}): string {
+    return `No ${language} SDK snippets for package \`${packageName}\`: no sdk-gen build was found, and no generator in the generators.yml of this fern folder (checked ${workspaceName ? `${workspaceName}/` : ""}generators.yml and the other ${otherApiWorkspaceCount} API workspace(s)) publishes that package.`;
 }
 
 /**

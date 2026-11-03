@@ -37,16 +37,20 @@ import (
     client "github.com/streaming-parameter/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &fern.GenerateRequest{
         Stream: false,
         NumEvents: 5,
     }
-    client.Dummy.Generate(
+    _, err := client.Dummy.Generate(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

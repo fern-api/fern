@@ -1,6 +1,6 @@
 # Reference
 ## Agents
-<details><summary><code>client._agents.<a href="src/seed/_agents/client.py">create</a>()</code></summary>
+<details><summary><code>client._agents.<a href="src/seed/_agents/client.py#L32-L53">create</a>()</code></summary>
 <dl>
 <dd>
 
@@ -48,7 +48,7 @@ client._agents.create()
 </details>
 
 ## Agents Internal
-<details><summary><code>client._agents._internal.<a href="src/seed/_agents/_internal/client.py">create</a>()</code></summary>
+<details><summary><code>client._agents._internal.<a href="src/seed/_agents/_internal/client.py#L25-L46">create</a>()</code></summary>
 <dl>
 <dd>
 

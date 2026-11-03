@@ -8,7 +8,7 @@ import (
     option "github.com/examples/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewAcme(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -20,8 +20,12 @@ func do() {
     request := &fern.Type{
         BasicType: fern.BasicTypePrimitive,
     }
-    client.CreateType(
+    _, err := client.CreateType(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

@@ -17,7 +17,7 @@ request := &fern.GetTokenRequest{
     ClientID: "my_oauth_app_123",
     ClientSecret: "sk_live_abcdef123456789",
 }
-client.Auth.GetTokenWithClientCredentials(
+_, err := client.Auth.GetTokenWithClientCredentials(
     context.TODO(),
     request,
 )

@@ -37,7 +37,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 
 // Example:
 //
-//	client.GetAccount(
+//	_, err := client.GetAccount(
 //	    context.TODO(),
 //	    "account_id",
 //	)

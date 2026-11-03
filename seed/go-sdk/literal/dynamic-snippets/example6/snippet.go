@@ -7,14 +7,18 @@ import (
     option "github.com/literal/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
         ),
     )
-    client.Path.Send(
+    _, err := client.Path.Send(
         context.TODO(),
         "123",
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

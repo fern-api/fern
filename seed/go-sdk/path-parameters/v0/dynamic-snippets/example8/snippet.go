@@ -7,17 +7,21 @@ import (
     option "github.com/path-parameters/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
         ),
     )
-    client.User.GetUserSpecifics(
+    _, err := client.User.GetUserSpecifics(
         context.TODO(),
         "tenant_id",
         "user_id",
         1,
         "thought",
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

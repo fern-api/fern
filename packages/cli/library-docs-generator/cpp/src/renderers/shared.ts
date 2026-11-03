@@ -92,8 +92,17 @@ export function trimTrailingBlankLines(lines: string[]): void {
  * double quotes in the description.
  */
 export function renderFrontmatter(title: string, description: string): string[] {
-    const quotedTitle = needsQuoting(title) ? `"${title}"` : title;
-    return ["---", `title: ${quotedTitle}`, `description: "${description.replace(/"/g, '\\"')}"`, "---"];
+    const quotedTitle = needsQuoting(title) ? yamlDoubleQuote(title) : title;
+    return ["---", `title: ${quotedTitle}`, `description: ${yamlDoubleQuote(description)}`, "---"];
+}
+
+/**
+ * Wrap a string in a YAML double-quoted scalar. Backslashes are escaped before
+ * quotes so that `\\M` or `C:\\path` (which are invalid or lossy YAML escapes
+ * when left raw) round-trip as literal text.
+ */
+export function yamlDoubleQuote(value: string): string {
+    return `"${value.replace(/\\/g, "\\\\").replace(/"/g, '\\"')}"`;
 }
 
 // ---------------------------------------------------------------------------

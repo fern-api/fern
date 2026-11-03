@@ -7,13 +7,17 @@ import (
     option "github.com/openapi-subtitle/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
         ),
     )
-    client.ListPlants(
+    _, err := client.ListPlants(
         context.TODO(),
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

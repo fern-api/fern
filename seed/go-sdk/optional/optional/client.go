@@ -41,7 +41,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	        "key": "value",
 //	    },
 //	}
-//	client.Optional.SendOptionalBody(
+//	_, err := client.Optional.SendOptionalBody(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -66,7 +66,7 @@ func (c *Client) SendOptionalBody(
 //	request := &fern.SendOptionalBodyRequest{
 //	    Message: "message",
 //	}
-//	client.Optional.SendOptionalTypedBody(
+//	_, err := client.Optional.SendOptionalTypedBody(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -96,7 +96,7 @@ func (c *Client) SendOptionalTypedBody(
 //	        true,
 //	    ),
 //	}
-//	client.Optional.SendOptionalNullableWithAllOptionalProperties(
+//	_, err := client.Optional.SendOptionalNullableWithAllOptionalProperties(
 //	    context.TODO(),
 //	    "actionId",
 //	    "id",

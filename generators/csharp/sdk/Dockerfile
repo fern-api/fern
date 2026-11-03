@@ -22,6 +22,11 @@ RUN apk --no-cache upgrade && \
     git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" && \
     git config --global user.name "fern-api"
 
+# curl 8.23.0 strips credentials from CURLINFO_EFFECTIVE_URL, so git (<= 2.54) treats every
+# authenticated https clone as a redirect, drops the token and fails on private repositories
+# ("could not read Username"). Keep Alpine 3.22's libcurl until git/curl ship a fix.
+RUN apk add --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine/v3.22/main 'curl<8.23' 'libcurl<8.23'
+
 # PowerShell is bundled with the .NET SDK image but is unused by the C# SDK
 # generator (the generator only needs `dotnet format` and the `csharpier`
 # tool). Removing it drops the vulnerable

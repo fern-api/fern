@@ -59,8 +59,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public final class ObjectGenerator extends AbstractTypeGenerator {
-    private final List<EnrichedObjectProperty> enrichedObjectProperties;
-    private final Map<ObjectProperty, EnrichedObjectProperty> objectPropertyGetters;
+    private List<EnrichedObjectProperty> enrichedObjectProperties;
+    private Map<ObjectProperty, EnrichedObjectProperty> objectPropertyGetters;
     private final List<ImplementsInterface> implementsInterfaces;
     private final List<EnrichedObjectProperty> extendedPropertyGetters;
     private Optional<XmlObjectEncoding> xmlObjectEncoding = Optional.empty();

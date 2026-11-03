@@ -40,7 +40,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	    TenantID: "tenant_id",
 //	    UserID: "user_id",
 //	}
-//	client.User.GetUser(
+//	_, err := client.User.GetUser(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -69,7 +69,7 @@ func (c *Client) GetUser(
 //	        "tags",
 //	    },
 //	}
-//	client.User.CreateUser(
+//	_, err := client.User.CreateUser(
 //	    context.TODO(),
 //	    "tenant_id",
 //	    request,
@@ -105,7 +105,7 @@ func (c *Client) CreateUser(
 //	        },
 //	    },
 //	}
-//	client.User.UpdateUser(
+//	_, err := client.User.UpdateUser(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -134,7 +134,7 @@ func (c *Client) UpdateUser(
 //	        1,
 //	    ),
 //	}
-//	client.User.SearchUsers(
+//	_, err := client.User.SearchUsers(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -163,7 +163,7 @@ func (c *Client) SearchUsers(
 //	    UserID: "user_id",
 //	    Version: 1,
 //	}
-//	client.User.GetUserMetadata(
+//	_, err := client.User.GetUserMetadata(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -193,7 +193,7 @@ func (c *Client) GetUserMetadata(
 //	    Version: 1,
 //	    Thought: "thought",
 //	}
-//	client.User.GetUserSpecifics(
+//	_, err := client.User.GetUserSpecifics(
 //	    context.TODO(),
 //	    request,
 //	)

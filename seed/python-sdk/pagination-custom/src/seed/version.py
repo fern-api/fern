@@ -1,3 +1,3 @@
 from importlib import metadata
 
-__version__ = metadata.version("fern_pagination-custom")
+__version__ = metadata.version("fern-pagination-custom")

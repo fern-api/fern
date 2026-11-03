@@ -40,7 +40,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	    Username: "username",
 //	    Password: "password",
 //	}
-//	client.Identity.GetToken(
+//	_, err := client.Identity.GetToken(
 //	    context.TODO(),
 //	    request,
 //	)

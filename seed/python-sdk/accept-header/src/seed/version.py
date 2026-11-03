@@ -1,3 +1,3 @@
 from importlib import metadata
 
-__version__ = metadata.version("fern_accept-header")
+__version__ = metadata.version("fern-accept-header")

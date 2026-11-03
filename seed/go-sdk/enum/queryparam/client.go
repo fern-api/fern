@@ -42,7 +42,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	        Color: fern.ColorRed,
 //	    },
 //	}
-//	client.QueryParam.Send(
+//	err := client.QueryParam.Send(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -82,7 +82,7 @@ func (c *Client) Send(
 //	        },
 //	    },
 //	}
-//	client.QueryParam.SendList(
+//	err := client.QueryParam.SendList(
 //	    context.TODO(),
 //	    request,
 //	)

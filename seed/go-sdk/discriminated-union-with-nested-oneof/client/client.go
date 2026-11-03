@@ -42,7 +42,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 //	        Model: "model",
 //	    },
 //	}
-//	client.CreateAst(
+//	_, err := client.CreateAst(
 //	    context.TODO(),
 //	    request,
 //	)

@@ -19,9 +19,9 @@ export class CreateCommand {
     public async handle(context: Context, args: CreateCommand.Args): Promise<void> {
         const token = await context.getTokenOrPrompt();
 
-        if (token.type === "organization") {
+        if (token.type !== "user") {
             context.stderr.error(
-                `${Icons.error} Organization tokens cannot create organizations. Unset the FERN_TOKEN environment variable and run 'fern auth login' to create an organization.`
+                `${Icons.error} Organization and guest tokens cannot create organizations. Unset the FERN_TOKEN environment variable and run 'fern auth login' to create an organization.`
             );
             throw new CliError({ code: CliError.Code.AuthError });
         }

@@ -16,7 +16,7 @@
 request := map[string]any{
     "key": "value",
 }
-client.Unknown.Post(
+_, err := client.Unknown.Post(
     context.TODO(),
     request,
 )
@@ -64,7 +64,7 @@ request := &fern.MyObject{
         "key": "value",
     },
 }
-client.Unknown.PostObject(
+_, err := client.Unknown.PostObject(
     context.TODO(),
     request,
 )

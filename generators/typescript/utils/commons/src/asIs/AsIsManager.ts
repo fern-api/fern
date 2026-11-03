@@ -32,6 +32,7 @@ export namespace AsIsManager {
         autoGenerateIdempotencyKey: boolean;
         idempotencyKeyHeaderName: string;
         esModulePackage: boolean;
+        esmOnly: boolean;
     }
 }
 
@@ -46,6 +47,7 @@ export class AsIsManager {
     private readonly autoGenerateIdempotencyKey: boolean;
     private readonly idempotencyKeyHeaderName: string;
     private readonly esModulePackage: boolean;
+    private readonly esmOnly: boolean;
 
     constructor({
         useBigInt,
@@ -57,7 +59,8 @@ export class AsIsManager {
         linter,
         autoGenerateIdempotencyKey,
         idempotencyKeyHeaderName,
-        esModulePackage
+        esModulePackage,
+        esmOnly
     }: AsIsManager.Init) {
         this.useBigInt = useBigInt;
         this.generateWireTests = generateWireTests;
@@ -69,6 +72,7 @@ export class AsIsManager {
         this.autoGenerateIdempotencyKey = autoGenerateIdempotencyKey;
         this.idempotencyKeyHeaderName = idempotencyKeyHeaderName;
         this.esModulePackage = esModulePackage;
+        this.esmOnly = esmOnly;
     }
 
     /**
@@ -120,7 +124,9 @@ export class AsIsManager {
             if (this.autoGenerateIdempotencyKey) {
                 filesToCopy.push(asIsFiles.core.idempotency);
             }
-            filesToCopy.push(asIsFiles.scripts.renameToEsmFiles);
+            if (!this.esmOnly) {
+                filesToCopy.push(asIsFiles.scripts.renameToEsmFiles);
+            }
             if (this.useBigInt) {
                 filesToCopy.push(asIsFiles.tests.bigintSetup);
                 filesToCopy.push(asIsFiles.core.json.bigint);

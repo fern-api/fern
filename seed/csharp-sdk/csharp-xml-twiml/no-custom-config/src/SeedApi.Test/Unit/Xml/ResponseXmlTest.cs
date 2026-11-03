@@ -9,7 +9,7 @@ public class ResponseXmlTest
     [NUnit.Framework.Test]
     public void FromXml_ToXml_RoundTrips()
     {
-        var xml = "<Response><Say /></Response>";
+        var xml = "<Response><Say></Say></Response>";
         var parsed = Response.FromXml(xml);
         var serialized = parsed.ToXml(false);
         Assert.That(
@@ -39,8 +39,8 @@ public class ResponseXmlTest
     [NUnit.Framework.Test]
     public void FromXml_PreservesChildOrder()
     {
-        var parsed = Response.FromXml("<Response><Say /><Pause /><Say /></Response>");
-        Assert.That(parsed.ToXml(false), Does.Contain("<Say /><Pause /><Say />"));
+        var parsed = Response.FromXml("<Response><Say></Say><Pause></Pause><Say></Say></Response>");
+        Assert.That(parsed.ToXml(false), Does.Contain("<Say></Say><Pause></Pause><Say></Say>"));
     }
 
     [NUnit.Framework.Test]

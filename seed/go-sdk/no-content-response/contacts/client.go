@@ -41,7 +41,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	request := &fern.CreateContactRequest{
 //	    Name: "name",
 //	}
-//	client.Contacts.Create(
+//	_, err := client.Contacts.Create(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -68,7 +68,7 @@ func (c *Client) Create(
 //	request := &fern.GetContactsRequest{
 //	    ID: "id",
 //	}
-//	client.Contacts.Get(
+//	_, err := client.Contacts.Get(
 //	    context.TODO(),
 //	    request,
 //	)

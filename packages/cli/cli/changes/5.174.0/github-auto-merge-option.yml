@@ -1,0 +1,8 @@
+- summary: |
+    Add `auto-merge: true` to the `github` block (pull-request mode) in generators.yml and a matching
+    `fern generate --auto-merge` flag. When set, Fern enables GitHub auto-merge (squash) on the pull
+    request it opens, so the SDK PR merges as soon as the repository's required checks pass. Auto-merge
+    is skipped when the release contains breaking changes (MAJOR bump) or version analysis is
+    unavailable, and the SDK repository must allow auto-merge. Applies to both `--local` and remote
+    generation (the flag is now forwarded to Fiddle).
+  type: feat

@@ -1,9 +1,9 @@
 [project]
-name = "fern_null-type"
+name = "fern-null-type"
 dynamic = ["version"]
 
 [tool.poetry]
-name = "fern_null-type"
+name = "fern-null-type"
 version = "0.0.1"
 description = ""
 readme = "README.md"

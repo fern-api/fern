@@ -36,11 +36,15 @@ import (
     client "github.com/error-property/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
-    client.PropertyBasedError.ThrowError(
+    _, err := client.PropertyBasedError.ThrowError(
         context.TODO(),
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

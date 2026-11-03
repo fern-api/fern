@@ -7,14 +7,18 @@ import (
     option "github.com/nullable-optional/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
         ),
     )
-    client.NullableOptional.GetUser(
+    _, err := client.NullableOptional.GetUser(
         context.TODO(),
         "userId",
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

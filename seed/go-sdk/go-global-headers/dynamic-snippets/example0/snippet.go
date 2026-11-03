@@ -7,7 +7,7 @@ import (
     option "github.com/go-global-headers/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -22,7 +22,11 @@ func do() {
             "<X-API-Version>",
         ),
     )
-    client.Service.Get(
+    _, err := client.Service.Get(
         context.TODO(),
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

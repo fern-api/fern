@@ -39,7 +39,7 @@ request := map[string]any{
         "tropical",
     },
 }
-client.CreatePlant(
+_, err := client.CreatePlant(
     context.TODO(),
     request,
 )
@@ -105,7 +105,7 @@ request := &fern.UpdatePlantRequest{
         "name": "Updated Venus Flytrap",
     },
 }
-client.UpdatePlant(
+_, err := client.UpdatePlant(
     context.TODO(),
     request,
 )
@@ -178,7 +178,7 @@ request := &fern.CreatePlantWithSchemaRequest{
         "Drosera capensis",
     ),
 }
-client.CreatePlantWithSchema(
+_, err := client.CreatePlantWithSchema(
     context.TODO(),
     request,
 )

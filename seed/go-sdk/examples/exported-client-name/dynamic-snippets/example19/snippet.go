@@ -10,7 +10,7 @@ import (
     uuid "github.com/google/uuid"
 )
 
-func do() {
+func do() error {
     client := client.NewAcmeClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -238,8 +238,12 @@ func do() {
             ),
         },
     }
-    client.Service.CreateBigEntity(
+    _, err := client.Service.CreateBigEntity(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

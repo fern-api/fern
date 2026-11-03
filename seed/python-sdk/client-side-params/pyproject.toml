@@ -1,9 +1,9 @@
 [project]
-name = "fern_client-side-params"
+name = "fern-client-side-params"
 dynamic = ["version"]
 
 [tool.poetry]
-name = "fern_client-side-params"
+name = "fern-client-side-params"
 version = "0.0.1"
 description = ""
 readme = "README.md"

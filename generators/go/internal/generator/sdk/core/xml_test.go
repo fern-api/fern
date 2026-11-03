@@ -15,7 +15,7 @@ func TestXmlElementToXml(t *testing.T) {
 		AddChild(NewXmlElement("Hangup"))
 	assert.Equal(
 		t,
-		`<Say voice="man">a &lt; b &amp; &#34;c&#34;<break time="1s" /><Hangup /></Say>`,
+		`<Say voice="man">a &lt; b &amp; &#34;c&#34;<break time="1s"/><Hangup/></Say>`,
 		element.ToXml(),
 	)
 	assert.Equal(t, XmlHeader+element.ToXml(), element.ToXmlDocument())
@@ -31,11 +31,11 @@ func TestXmlElementNamespaces(t *testing.T) {
 	)
 	root := &XmlElement{Name: "Root", Namespace: "urn:x", Prefix: "x"}
 	root.AddChild(&XmlElement{Name: "Child", Namespace: "urn:x", Prefix: "x"})
-	assert.Equal(t, `<x:Root xmlns:x="urn:x"><x:Child /></x:Root>`, root.ToXml())
+	assert.Equal(t, `<x:Root xmlns:x="urn:x"><x:Child/></x:Root>`, root.ToXml())
 }
 
 func TestParseXmlRoundTrip(t *testing.T) {
-	document := `<?xml version="1.0" encoding="UTF-8"?><Response><Say voice="man" xml:lang="en">hi<break time="1s" /></Say><tw:Dial xmlns:tw="urn:tw" tw:record="true">+1</tw:Dial><Unknown k="v"><Nested /></Unknown></Response>`
+	document := `<?xml version="1.0" encoding="UTF-8"?><Response><Say voice="man" xml:lang="en">hi<break time="1s"/></Say><tw:Dial xmlns:tw="urn:tw" tw:record="true">+1</tw:Dial><Unknown k="v"><Nested/></Unknown></Response>`
 	root, err := ParseXml(document)
 	require.NoError(t, err)
 	assert.Equal(t, "Response", root.Name)
@@ -68,7 +68,7 @@ func TestParseXmlErrors(t *testing.T) {
 	assert.ErrorContains(t, err, "no root element")
 	_, err = ParseXml(`<!DOCTYPE foo [<!ENTITY xxe SYSTEM "file:///etc/passwd">]><Response>&xxe;</Response>`)
 	assert.ErrorContains(t, err, "DOCTYPE")
-	_, err = ParseXml("<A /><B />")
+	_, err = ParseXml("<A/><B/>")
 	assert.ErrorContains(t, err, "multiple root")
 }
 
@@ -104,20 +104,20 @@ func (nilNode) ToXmlElement() *XmlElement { return nil }
 
 func TestXmlElementSkipsNilChildren(t *testing.T) {
 	element := NewXmlElement("A").AddChild(nil).AddChild(nilNode{})
-	assert.Equal(t, "<A />", element.ToXml())
+	assert.Equal(t, "<A/>", element.ToXml())
 }
 
 func TestParseXmlPrefixRedeclaration(t *testing.T) {
-	document := `<a:R xmlns:a="urn:x"><b:C xmlns:b="urn:x" b:k="v" /></a:R>`
+	document := `<a:R xmlns:a="urn:x"><b:C xmlns:b="urn:x" b:k="v"/></a:R>`
 	parsed, err := ParseXml(document)
 	require.NoError(t, err)
 	assert.Equal(t, "a", parsed.Prefix)
 	child := parsed.ChildElements()[0]
 	assert.Equal(t, "b", child.Prefix)
 	assert.Equal(t, "b:k", child.Attributes[0].Name)
-	assert.Equal(t, `<a:R xmlns:a="urn:x"><b:C xmlns:b="urn:x" b:k="v" /></a:R>`, parsed.ToXml())
+	assert.Equal(t, `<a:R xmlns:a="urn:x"><b:C xmlns:b="urn:x" b:k="v"/></a:R>`, parsed.ToXml())
 
-	rebound, err := ParseXml(`<foo:R xmlns:foo="http://www.w3.org/XML/1998/namespace" />`)
+	rebound, err := ParseXml(`<foo:R xmlns:foo="http://www.w3.org/XML/1998/namespace"/>`)
 	require.NoError(t, err)
 	assert.Equal(t, "foo", rebound.Prefix)
 }
@@ -126,7 +126,7 @@ func TestXmlDefaultNamespaceReset(t *testing.T) {
 	parent := &XmlElement{Name: "R", Namespace: "urn:x"}
 	parent.AddChild(NewXmlElement("C"))
 	serialized := parent.ToXml()
-	assert.Equal(t, `<R xmlns="urn:x"><C xmlns="" /></R>`, serialized)
+	assert.Equal(t, `<R xmlns="urn:x"><C xmlns=""/></R>`, serialized)
 	parsed, err := ParseXml(serialized)
 	require.NoError(t, err)
 	assert.Equal(t, "", parsed.ChildElements()[0].Namespace)
@@ -142,7 +142,7 @@ func TestTakeXmlElementAndMerge(t *testing.T) {
 	require.NotNil(t, taken)
 	assert.Len(t, rest, 2)
 	merged := NewXmlElement("W").AddChild(NewXmlElement("Y")).Merge(taken)
-	assert.Equal(t, `<W k="v"><Y /><X /></W>`, merged.ToXml())
+	assert.Equal(t, `<W k="v"><Y/><X/></W>`, merged.ToXml())
 	none, same := TakeXmlElement(nodes, "Z")
 	assert.Nil(t, none)
 	assert.Len(t, same, 3)
@@ -150,7 +150,7 @@ func TestTakeXmlElementAndMerge(t *testing.T) {
 
 func TestAddTextPreservesMixedContentOrder(t *testing.T) {
 	say := NewXmlElement("Say").SetText("Hi ").AddChild(NewXmlElement("break").SetAttribute("strength", "weak")).AddText(" world")
-	assert.Equal(t, `<Say>Hi <break strength="weak" /> world</Say>`, say.ToXml())
+	assert.Equal(t, `<Say>Hi <break strength="weak"/> world</Say>`, say.ToXml())
 	parsed, err := ParseXml(say.ToXml())
 	require.NoError(t, err)
 	assert.Equal(t, "Hi ", parsed.Text)
@@ -160,9 +160,9 @@ func TestAddTextPreservesMixedContentOrder(t *testing.T) {
 }
 
 func TestParseXmlDropsIndentationKeepsInlineWhitespace(t *testing.T) {
-	parsed, err := ParseXml("<R>\n  <A />\n  <B />text <C /> tail</R>")
+	parsed, err := ParseXml("<R>\n  <A/>\n  <B/>text <C/> tail</R>")
 	require.NoError(t, err)
-	assert.Equal(t, `<R><A /><B />text <C /> tail</R>`, parsed.ToXml())
+	assert.Equal(t, `<R><A/><B/>text <C/> tail</R>`, parsed.ToXml())
 }
 
 func TestOrderXmlContentKeepsReferencedDropsStaleAppendsExtra(t *testing.T) {
@@ -173,7 +173,7 @@ func TestOrderXmlContentKeepsReferencedDropsStaleAppendsExtra(t *testing.T) {
 }
 
 func TestAddXmlContentDealsWrappedItemsToRepeatedWrappers(t *testing.T) {
-	document := `<Dial><Numbers k="v"><Number>+1</Number></Numbers><Custom /><Numbers><Number>+2</Number><Number>+3</Number></Numbers></Dial>`
+	document := `<Dial><Numbers k="v"><Number>+1</Number></Numbers><Custom/><Numbers><Number>+2</Number><Number>+3</Number></Numbers></Dial>`
 	parsed, err := ParseXml(document)
 	require.NoError(t, err)
 	var content, items []XmlNode
@@ -220,7 +220,7 @@ func TestAddXmlContentTruncatedWrappedList(t *testing.T) {
 	marker := &XmlElement{Name: "Numbers", WrappedItemCount: 2}
 	element := NewXmlElement("Dial")
 	AddXmlContent(element, []XmlNode{marker, marker}, map[string][]XmlNode{"Numbers": {NewXmlElement("Number")}})
-	assert.Equal(t, `<Dial><Numbers><Number /></Numbers></Dial>`, element.ToXml())
+	assert.Equal(t, `<Dial><Numbers><Number/></Numbers></Dial>`, element.ToXml())
 }
 
 func TestXmlCommentsKeepTheirPosition(t *testing.T) {
@@ -228,7 +228,7 @@ func TestXmlCommentsKeepTheirPosition(t *testing.T) {
 		AddComment(" a comment ").
 		AddChild(NewXmlElement("Hangup")).
 		AddText("loose text")
-	assert.Equal(t, `<Response><!-- a comment --><Hangup />loose text</Response>`, element.ToXml())
+	assert.Equal(t, `<Response><!-- a comment --><Hangup/>loose text</Response>`, element.ToXml())
 
 	parsed, err := ParseXml(element.ToXml())
 	require.NoError(t, err)
@@ -247,12 +247,12 @@ func TestXmlSiblingCommentsRenderAroundTheirElement(t *testing.T) {
 	say := NewXmlElement("Say").SetText("x")
 	say.Children = append(say.Children, XmlCommentBefore("before"), XmlCommentAfter("after"))
 	response := NewXmlElement("Response").AddChild(NewXmlElement("Pause")).AddChild(say)
-	assert.Equal(t, `<Response><Pause /><!--before--><Say>x</Say><!--after--></Response>`, response.ToXml())
+	assert.Equal(t, `<Response><Pause/><!--before--><Say>x</Say><!--after--></Response>`, response.ToXml())
 	assert.Equal(t, XmlHeader+`<!--before--><Say>x</Say><!--after-->`, say.ToXmlDocument())
 
 	empty := NewXmlElement("Hangup")
 	empty.Children = append(empty.Children, XmlCommentAfter("done"))
-	assert.Equal(t, `<Hangup /><!--done-->`, empty.ToXml())
+	assert.Equal(t, `<Hangup/><!--done-->`, empty.ToXml())
 }
 
 func TestParseXmlRejectsUnterminatedComment(t *testing.T) {

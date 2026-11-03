@@ -144,6 +144,16 @@ export const LOCAL_FIELD_ADDITIONS: Record<string, FieldTreatment> = {
             { treatment: "Map", note: "`infer-discriminated-union-base-properties` in the spec and root `settings`." }
         ])
     ),
+    "source.specs[].origin": {
+        treatment: "Reject",
+        note: "Protobuf sources are not supported by the cli target yet; the expansion rejects them first."
+    },
+    ...Object.fromEntries(
+        ["source.apiImportSettings", "source.specs[].apiImportSettings"].map((prefix) => [
+            `${prefix}.respectByteFormat`,
+            { treatment: "Warn", note: "Not written: generators.yml has no respect-byte-format setting." }
+        ])
+    ),
     "package.bugs.url": {
         treatment: "Warn",
         note: "Not written: fern-cli-generator's packageIdentity has no bugs field."

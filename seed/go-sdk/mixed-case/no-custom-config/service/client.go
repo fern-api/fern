@@ -36,7 +36,7 @@ func NewClient(options *core.RequestOptions) *Client {
 
 // Example:
 //
-//	client.Service.GetResource(
+//	_, err := client.Service.GetResource(
 //	    context.TODO(),
 //	    "rsc-xyz",
 //	)
@@ -64,7 +64,7 @@ func (c *Client) GetResource(
 //	        "2023-01-01",
 //	    ),
 //	}
-//	client.Service.ListResources(
+//	_, err := client.Service.ListResources(
 //	    context.TODO(),
 //	    request,
 //	)

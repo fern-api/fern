@@ -16,7 +16,7 @@
 request := &fern.SendLiteralsInHeadersRequest{
     Query: "What is the weather today",
 }
-client.Headers.Send(
+_, err := client.Headers.Send(
     context.TODO(),
     request,
 )
@@ -75,7 +75,7 @@ client.Headers.Send(
 <dd>
 
 ```go
-client.Headers.SendLiteralsOnly(
+_, err := client.Headers.SendLiteralsOnly(
     context.TODO(),
 )
 ```
@@ -144,7 +144,7 @@ request := &fern.SendLiteralsInlinedRequest{
         NestedLiteral: &fern.ANestedLiteral{},
     },
 }
-client.Inlined.Send(
+_, err := client.Inlined.Send(
     context.TODO(),
     request,
 )
@@ -244,7 +244,7 @@ client.Inlined.Send(
 <dd>
 
 ```go
-client.Path.Send(
+_, err := client.Path.Send(
     context.TODO(),
     "123",
 )
@@ -309,7 +309,7 @@ request := &fern.SendLiteralsInQueryRequest{
     ),
     Query: "What is the weather today",
 }
-client.Query.Send(
+_, err := client.Query.Send(
     context.TODO(),
     request,
 )
@@ -430,7 +430,7 @@ request := &fern.SendRequest{
         },
     },
 }
-client.Reference.Send(
+_, err := client.Reference.Send(
     context.TODO(),
     request,
 )

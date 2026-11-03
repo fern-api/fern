@@ -8,7 +8,7 @@ import (
     option "github.com/fern-api/path-parameters-go/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -20,8 +20,12 @@ func do() {
         Version: 1,
         Thought: "thought",
     }
-    client.User.GetUserSpecifics(
+    _, err := client.User.GetUserSpecifics(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

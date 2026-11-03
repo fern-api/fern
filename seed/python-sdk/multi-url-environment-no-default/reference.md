@@ -1,6 +1,6 @@
 # Reference
 ## Ec2
-<details><summary><code>client.ec2.<a href="src/seed/ec2/client.py">boot_instance</a>(...)</code></summary>
+<details><summary><code>client.ec2.<a href="src/seed/ec2/client.py#L28-L55">boot_instance</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -60,7 +60,7 @@ client.ec2.boot_instance(
 </details>
 
 ## S3
-<details><summary><code>client.s3.<a href="src/seed/s3/client.py">get_presigned_url</a>(...) -> str</code></summary>
+<details><summary><code>client.s3.<a href="src/seed/s3/client.py#L28-L55">get_presigned_url</a>(...) -> str</code></summary>
 <dl>
 <dd>
 

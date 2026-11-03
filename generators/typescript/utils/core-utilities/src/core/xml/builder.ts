@@ -1,4 +1,4 @@
-import { XML_DECLARATION, type XmlContent, XmlSerializable } from "./serialize";
+import { XML_DECLARATION, type XmlContent, type XmlSerializable } from "./serialize";
 import { XmlComment, rememberXmlSiblingComments } from "./XmlComment";
 
 /** A mutable, fluent builder for an xml-encoded model of type `T`. */

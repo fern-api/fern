@@ -42,7 +42,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	        Name: "name",
 //	    },
 //	}
-//	client.Vendor.UpdateVendor(
+//	_, err := client.Vendor.UpdateVendor(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -67,7 +67,7 @@ func (c *Client) UpdateVendor(
 //	request := &fern.CreateVendorRequest{
 //	    Name: "name",
 //	}
-//	client.Vendor.CreateVendor(
+//	_, err := client.Vendor.CreateVendor(
 //	    context.TODO(),
 //	    request,
 //	)

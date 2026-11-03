@@ -27,7 +27,7 @@ Get a user by ID
 <dd>
 
 ```go
-client.NullableOptional.GetUser(
+_, err := client.NullableOptional.GetUser(
     context.TODO(),
     "userId",
 )
@@ -112,7 +112,7 @@ request := &fern.CreateUserRequest{
         ),
     },
 }
-client.NullableOptional.CreateUser(
+_, err := client.NullableOptional.CreateUser(
     context.TODO(),
     request,
 )
@@ -199,7 +199,7 @@ request := &fern.UpdateUserRequest{
         ),
     },
 }
-client.NullableOptional.UpdateUser(
+_, err := client.NullableOptional.UpdateUser(
     context.TODO(),
     "userId",
     request,
@@ -279,7 +279,7 @@ request := &fern.ListUsersRequest{
         "sortBy",
     ),
 }
-client.NullableOptional.ListUsers(
+_, err := client.NullableOptional.ListUsers(
     context.TODO(),
     request,
 )
@@ -372,7 +372,7 @@ request := &fern.SearchUsersRequest{
         true,
     ),
 }
-client.NullableOptional.SearchUsers(
+_, err := client.NullableOptional.SearchUsers(
     context.TODO(),
     request,
 )
@@ -631,7 +631,7 @@ request := &fern.ComplexProfile{
         "optionalMapOfEnums": fern.UserRoleAdmin,
     },
 }
-client.NullableOptional.CreateComplexProfile(
+_, err := client.NullableOptional.CreateComplexProfile(
     context.TODO(),
     request,
 )
@@ -688,7 +688,7 @@ Get a complex profile by ID
 <dd>
 
 ```go
-client.NullableOptional.GetComplexProfile(
+_, err := client.NullableOptional.GetComplexProfile(
     context.TODO(),
     "profileId",
 )
@@ -801,7 +801,7 @@ request := &fern.UpdateComplexProfileRequest{
         "nullableArray",
     },
 }
-client.NullableOptional.UpdateComplexProfile(
+_, err := client.NullableOptional.UpdateComplexProfile(
     context.TODO(),
     "profileId",
     request,
@@ -997,7 +997,7 @@ request := &fern.DeserializationTestRequest{
         ),
     },
 }
-client.NullableOptional.TestDeserialization(
+_, err := client.NullableOptional.TestDeserialization(
     context.TODO(),
     request,
 )
@@ -1059,7 +1059,7 @@ request := &fern.FilterByRoleRequest{
     Status: fern.UserStatusActive.Ptr(),
     SecondaryRole: fern.UserRoleAdmin.Ptr(),
 }
-client.NullableOptional.FilterByRole(
+_, err := client.NullableOptional.FilterByRole(
     context.TODO(),
     request,
 )
@@ -1132,7 +1132,7 @@ Get notification settings which may be null
 <dd>
 
 ```go
-client.NullableOptional.GetNotificationSettings(
+_, err := client.NullableOptional.GetNotificationSettings(
     context.TODO(),
     "userId",
 )
@@ -1203,7 +1203,7 @@ request := &fern.UpdateTagsRequest{
         "labels",
     },
 }
-client.NullableOptional.UpdateTags(
+_, err := client.NullableOptional.UpdateTags(
     context.TODO(),
     "userId",
     request,
@@ -1297,7 +1297,7 @@ request := &fern.SearchRequest{
         "includeTypes",
     },
 }
-client.NullableOptional.GetSearchResults(
+_, err := client.NullableOptional.GetSearchResults(
     context.TODO(),
     request,
 )

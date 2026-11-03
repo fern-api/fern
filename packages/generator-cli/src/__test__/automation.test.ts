@@ -81,10 +81,9 @@ describe("enrichPrBodyForAutomation", () => {
 });
 
 describe("shouldEnableAutomerge", () => {
-    it("returns true when automationMode + autoMerge + no breaking changes", () => {
+    it("returns true when autoMerge + no breaking changes", () => {
         expect(
             shouldEnableAutomerge({
-                automationMode: true,
                 autoMerge: true,
                 hasBreakingChanges: false
             })
@@ -94,7 +93,6 @@ describe("shouldEnableAutomerge", () => {
     it("returns true when hasBreakingChanges is undefined", () => {
         expect(
             shouldEnableAutomerge({
-                automationMode: true,
                 autoMerge: true
             })
         ).toBe(true);
@@ -103,7 +101,6 @@ describe("shouldEnableAutomerge", () => {
     it("returns false when breaking changes detected", () => {
         expect(
             shouldEnableAutomerge({
-                automationMode: true,
                 autoMerge: true,
                 hasBreakingChanges: true
             })
@@ -113,29 +110,18 @@ describe("shouldEnableAutomerge", () => {
     it("returns false when autoMerge is false", () => {
         expect(
             shouldEnableAutomerge({
-                automationMode: true,
                 autoMerge: false,
                 hasBreakingChanges: false
             })
         ).toBe(false);
     });
 
-    it("returns false when automationMode is false", () => {
+    it("returns false when version analysis is unavailable", () => {
         expect(
-            shouldEnableAutomerge({
-                automationMode: false,
-                autoMerge: true,
-                hasBreakingChanges: false
-            })
-        ).toBe(false);
-    });
-
-    it("returns false when automationMode is undefined", () => {
-        expect(
-            shouldEnableAutomerge({
-                autoMerge: true,
-                hasBreakingChanges: false
-            })
+            shouldEnableAutomerge(
+                { autoMerge: true, hasBreakingChanges: false },
+                { analysisWarning: "AI version analysis unavailable" }
+            )
         ).toBe(false);
     });
 

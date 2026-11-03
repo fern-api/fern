@@ -1,9 +1,9 @@
 [project]
-name = "fern_unions-with-local-date"
+name = "fern-unions-with-local-date"
 dynamic = ["version"]
 
 [tool.poetry]
-name = "fern_unions-with-local-date"
+name = "fern-unions-with-local-date"
 version = "0.0.1"
 description = ""
 readme = "README.md"

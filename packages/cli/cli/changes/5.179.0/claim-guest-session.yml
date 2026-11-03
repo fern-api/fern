@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `fern claim [--org <name>]`: claims the guest session recorded by `fern generate --guest` with your
+    Fern login (via Venus), points `fern.config.json` at the organization that now owns the work and forgets
+    the guest session.
+  type: feat

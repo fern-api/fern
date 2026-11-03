@@ -507,6 +507,28 @@ jobs:
       - name: Install dependencies
         run: |
           \${{ matrix.packages_install }}
+      # Signs the macOS binaries (\`macos-sign\` in dist-workspace.toml) when
+      # the repo has all three CODESIGN_* secrets. A binary signed with a
+      # stable identity keeps the macOS keychain's "Always Allow" across
+      # upgrades; an unsigned one is a new program to the keychain on every
+      # release. Without the secrets nothing is exported and dist skips
+      # signing, because an empty CODESIGN_* variable would fail the build.
+      - name: Load macOS signing secrets
+        if: \${{ runner.os == 'macOS' }}
+        shell: bash
+        env:
+          CODESIGN_CERTIFICATE: \${{ secrets.CODESIGN_CERTIFICATE }}
+          CODESIGN_CERTIFICATE_PASSWORD: \${{ secrets.CODESIGN_CERTIFICATE_PASSWORD }}
+          CODESIGN_IDENTITY: \${{ secrets.CODESIGN_IDENTITY }}
+        run: |
+          if [ -n "$CODESIGN_CERTIFICATE" ] && [ -n "$CODESIGN_CERTIFICATE_PASSWORD" ] && [ -n "$CODESIGN_IDENTITY" ]; then
+            delimiter="CODESIGN_$(openssl rand -hex 16)"
+            for name in CODESIGN_CERTIFICATE CODESIGN_CERTIFICATE_PASSWORD CODESIGN_IDENTITY; do
+              printf '%s<<%s\\n%s\\n%s\\n' "$name" "$delimiter" "\${!name}" "$delimiter" >> "$GITHUB_ENV"
+            done
+          else
+            echo "CODESIGN_CERTIFICATE, CODESIGN_CERTIFICATE_PASSWORD and CODESIGN_IDENTITY are not all set; macOS binaries stay unsigned."
+          fi
       - name: Build artifacts
         run: |
           # Actually do builds and make zips and whatnot

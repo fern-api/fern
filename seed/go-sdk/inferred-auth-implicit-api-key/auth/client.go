@@ -39,7 +39,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	request := &fern.GetTokenRequest{
 //	    APIKey: "api_key",
 //	}
-//	client.Auth.GetToken(
+//	_, err := client.Auth.GetToken(
 //	    context.TODO(),
 //	    request,
 //	)

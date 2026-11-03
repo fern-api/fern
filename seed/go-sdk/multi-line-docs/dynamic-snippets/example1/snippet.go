@@ -8,7 +8,7 @@ import (
     option "github.com/multi-line-docs/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -20,8 +20,12 @@ func do() {
             1,
         ),
     }
-    client.User.CreateUser(
+    _, err := client.User.CreateUser(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

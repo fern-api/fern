@@ -37,7 +37,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 
 // Example:
 //
-//	client.GetUnion(
+//	_, err := client.GetUnion(
 //	    context.TODO(),
 //	)
 func (c *Client) GetUnion(
@@ -56,7 +56,7 @@ func (c *Client) GetUnion(
 
 // Example:
 //
-//	client.ListUnions(
+//	_, err := client.ListUnions(
 //	    context.TODO(),
 //	)
 func (c *Client) ListUnions(

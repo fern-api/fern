@@ -7,7 +7,7 @@ import (
     option "github.com/examples/fern/pleaseinhere/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -17,8 +17,12 @@ func do() {
         ),
     )
     request := "Hello world!\\n\\nwith\\n\\tnewlines"
-    client.Echo(
+    _, err := client.Echo(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

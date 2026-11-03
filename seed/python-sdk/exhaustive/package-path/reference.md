@@ -1,6 +1,6 @@
 # Reference
 ## Endpoints Container
-<details><summary><code>client.endpoints.container.<a href="src/seed.matryoshka.doll.structure/endpoints/container/client.py">get_and_return_list_of_primitives</a>(...) -> typing.List[str]</code></summary>
+<details><summary><code>client.endpoints.container.<a href="src/seed/matryoshka/doll/structure/endpoints/container/client.py#L30-L58">get_and_return_list_of_primitives</a>(...) -> typing.List[str]</code></summary>
 <dl>
 <dd>
 
@@ -61,7 +61,7 @@ client.endpoints.container.get_and_return_list_of_primitives(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="src/seed.matryoshka.doll.structure/endpoints/container/client.py">get_and_return_list_of_objects</a>(...) -> typing.List[ObjectWithRequiredField]</code></summary>
+<details><summary><code>client.endpoints.container.<a href="src/seed/matryoshka/doll/structure/endpoints/container/client.py#L60-L99">get_and_return_list_of_objects</a>(...) -> typing.List[ObjectWithRequiredField]</code></summary>
 <dl>
 <dd>
 
@@ -127,7 +127,7 @@ client.endpoints.container.get_and_return_list_of_objects(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="src/seed.matryoshka.doll.structure/endpoints/container/client.py">get_and_return_set_of_primitives</a>(...) -> typing.Set[str]</code></summary>
+<details><summary><code>client.endpoints.container.<a href="src/seed/matryoshka/doll/structure/endpoints/container/client.py#L101-L129">get_and_return_set_of_primitives</a>(...) -> typing.Set[str]</code></summary>
 <dl>
 <dd>
 
@@ -187,7 +187,7 @@ client.endpoints.container.get_and_return_set_of_primitives(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="src/seed.matryoshka.doll.structure/endpoints/container/client.py">get_and_return_set_of_objects</a>(...) -> typing.Set[ObjectWithRequiredField]</code></summary>
+<details><summary><code>client.endpoints.container.<a href="src/seed/matryoshka/doll/structure/endpoints/container/client.py#L131-L167">get_and_return_set_of_objects</a>(...) -> typing.Set[ObjectWithRequiredField]</code></summary>
 <dl>
 <dd>
 
@@ -250,7 +250,7 @@ client.endpoints.container.get_and_return_set_of_objects(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="src/seed.matryoshka.doll.structure/endpoints/container/client.py">get_and_return_map_prim_to_prim</a>(...) -> typing.Dict[str, str]</code></summary>
+<details><summary><code>client.endpoints.container.<a href="src/seed/matryoshka/doll/structure/endpoints/container/client.py#L169-L197">get_and_return_map_prim_to_prim</a>(...) -> typing.Dict[str, str]</code></summary>
 <dl>
 <dd>
 
@@ -310,7 +310,7 @@ client.endpoints.container.get_and_return_map_prim_to_prim(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="src/seed.matryoshka.doll.structure/endpoints/container/client.py">get_and_return_map_of_prim_to_object</a>(...) -> typing.Dict[str, ObjectWithRequiredField]</code></summary>
+<details><summary><code>client.endpoints.container.<a href="src/seed/matryoshka/doll/structure/endpoints/container/client.py#L199-L237">get_and_return_map_of_prim_to_object</a>(...) -> typing.Dict[str, ObjectWithRequiredField]</code></summary>
 <dl>
 <dd>
 
@@ -373,7 +373,7 @@ client.endpoints.container.get_and_return_map_of_prim_to_object(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="src/seed.matryoshka.doll.structure/endpoints/container/client.py">get_and_return_map_of_prim_to_undiscriminated_union</a>(...) -> typing.Dict[str, MixedType]</code></summary>
+<details><summary><code>client.endpoints.container.<a href="src/seed/matryoshka/doll/structure/endpoints/container/client.py#L239-L269">get_and_return_map_of_prim_to_undiscriminated_union</a>(...) -> typing.Dict[str, MixedType]</code></summary>
 <dl>
 <dd>
 
@@ -433,7 +433,7 @@ client.endpoints.container.get_and_return_map_of_prim_to_undiscriminated_union(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="src/seed.matryoshka.doll.structure/endpoints/container/client.py">get_and_return_map_of_integer_to_object</a>(...) -> typing.Dict[int, ObjectWithRequiredField]</code></summary>
+<details><summary><code>client.endpoints.container.<a href="src/seed/matryoshka/doll/structure/endpoints/container/client.py#L271-L309">get_and_return_map_of_integer_to_object</a>(...) -> typing.Dict[int, ObjectWithRequiredField]</code></summary>
 <dl>
 <dd>
 
@@ -496,7 +496,7 @@ client.endpoints.container.get_and_return_map_of_integer_to_object(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="src/seed.matryoshka.doll.structure/endpoints/container/client.py">get_and_return_optional</a>(...) -> typing.Optional[ObjectWithRequiredField]</code></summary>
+<details><summary><code>client.endpoints.container.<a href="src/seed/matryoshka/doll/structure/endpoints/container/client.py#L311-L345">get_and_return_optional</a>(...) -> typing.Optional[ObjectWithRequiredField]</code></summary>
 <dl>
 <dd>
 
@@ -558,7 +558,7 @@ client.endpoints.container.get_and_return_optional(
 </details>
 
 ## Endpoints ContentType
-<details><summary><code>client.endpoints.content_type.<a href="src/seed.matryoshka.doll.structure/endpoints/content_type/client.py">post_json_patch_content_type</a>(...)</code></summary>
+<details><summary><code>client.endpoints.content_type.<a href="src/seed/matryoshka/doll/structure/endpoints/content_type/client.py#L30-L134">post_json_patch_content_type</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -637,7 +637,7 @@ client.endpoints.content_type.post_json_patch_content_type(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.content_type.<a href="src/seed.matryoshka.doll.structure/endpoints/content_type/client.py">post_json_patch_content_with_charset_type</a>(...)</code></summary>
+<details><summary><code>client.endpoints.content_type.<a href="src/seed/matryoshka/doll/structure/endpoints/content_type/client.py#L136-L240">post_json_patch_content_with_charset_type</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -717,7 +717,7 @@ client.endpoints.content_type.post_json_patch_content_with_charset_type(
 </details>
 
 ## Endpoints Enum
-<details><summary><code>client.endpoints.enum.<a href="src/seed.matryoshka.doll.structure/endpoints/enum/client.py">get_and_return_enum</a>(...) -> WeatherReport</code></summary>
+<details><summary><code>client.endpoints.enum.<a href="src/seed/matryoshka/doll/structure/endpoints/enum/client.py#L29-L57">get_and_return_enum</a>(...) -> WeatherReport</code></summary>
 <dl>
 <dd>
 
@@ -776,7 +776,7 @@ client.endpoints.enum.get_and_return_enum(
 </details>
 
 ## Endpoints HttpMethods
-<details><summary><code>client.endpoints.http_methods.<a href="src/seed.matryoshka.doll.structure/endpoints/http_methods/client.py">test_get</a>(...) -> str</code></summary>
+<details><summary><code>client.endpoints.http_methods.<a href="src/seed/matryoshka/doll/structure/endpoints/http_methods/client.py#L31-L57">test_get</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -834,7 +834,7 @@ client.endpoints.http_methods.test_get(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.http_methods.<a href="src/seed.matryoshka.doll.structure/endpoints/http_methods/client.py">test_post</a>(...) -> ObjectWithOptionalField</code></summary>
+<details><summary><code>client.endpoints.http_methods.<a href="src/seed/matryoshka/doll/structure/endpoints/http_methods/client.py#L59-L87">test_post</a>(...) -> ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -892,7 +892,7 @@ client.endpoints.http_methods.test_post(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.http_methods.<a href="src/seed.matryoshka.doll.structure/endpoints/http_methods/client.py">test_put</a>(...) -> ObjectWithOptionalField</code></summary>
+<details><summary><code>client.endpoints.http_methods.<a href="src/seed/matryoshka/doll/structure/endpoints/http_methods/client.py#L89-L120">test_put</a>(...) -> ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -959,7 +959,7 @@ client.endpoints.http_methods.test_put(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.http_methods.<a href="src/seed.matryoshka.doll.structure/endpoints/http_methods/client.py">test_patch</a>(...) -> ObjectWithOptionalField</code></summary>
+<details><summary><code>client.endpoints.http_methods.<a href="src/seed/matryoshka/doll/structure/endpoints/http_methods/client.py#L122-L231">test_patch</a>(...) -> ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -1047,7 +1047,7 @@ client.endpoints.http_methods.test_patch(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.http_methods.<a href="src/seed.matryoshka.doll.structure/endpoints/http_methods/client.py">test_delete</a>(...) -> bool</code></summary>
+<details><summary><code>client.endpoints.http_methods.<a href="src/seed/matryoshka/doll/structure/endpoints/http_methods/client.py#L233-L259">test_delete</a>(...) -> bool</code></summary>
 <dl>
 <dd>
 
@@ -1106,7 +1106,7 @@ client.endpoints.http_methods.test_delete(
 </details>
 
 ## Endpoints Object
-<details><summary><code>client.endpoints.object.<a href="src/seed.matryoshka.doll.structure/endpoints/object/client.py">get_and_return_with_optional_field</a>(...) -> ObjectWithOptionalField</code></summary>
+<details><summary><code>client.endpoints.object.<a href="src/seed/matryoshka/doll/structure/endpoints/object/client.py#L44-L148">get_and_return_with_optional_field</a>(...) -> ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -1185,7 +1185,7 @@ client.endpoints.object.get_and_return_with_optional_field(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="src/seed.matryoshka.doll.structure/endpoints/object/client.py">get_and_return_with_required_field</a>(...) -> ObjectWithRequiredField</code></summary>
+<details><summary><code>client.endpoints.object.<a href="src/seed/matryoshka/doll/structure/endpoints/object/client.py#L150-L178">get_and_return_with_required_field</a>(...) -> ObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -1243,7 +1243,7 @@ client.endpoints.object.get_and_return_with_required_field(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="src/seed.matryoshka.doll.structure/endpoints/object/client.py">get_and_return_with_map_of_map</a>(...) -> ObjectWithMapOfMap</code></summary>
+<details><summary><code>client.endpoints.object.<a href="src/seed/matryoshka/doll/structure/endpoints/object/client.py#L180-L208">get_and_return_with_map_of_map</a>(...) -> ObjectWithMapOfMap</code></summary>
 <dl>
 <dd>
 
@@ -1305,7 +1305,7 @@ client.endpoints.object.get_and_return_with_map_of_map(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="src/seed.matryoshka.doll.structure/endpoints/object/client.py">get_and_return_nested_with_optional_field</a>(...) -> NestedObjectWithOptionalField</code></summary>
+<details><summary><code>client.endpoints.object.<a href="src/seed/matryoshka/doll/structure/endpoints/object/client.py#L210-L271">get_and_return_nested_with_optional_field</a>(...) -> NestedObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -1388,7 +1388,7 @@ client.endpoints.object.get_and_return_nested_with_optional_field(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="src/seed.matryoshka.doll.structure/endpoints/object/client.py">get_and_return_nested_with_required_field</a>(...) -> NestedObjectWithRequiredField</code></summary>
+<details><summary><code>client.endpoints.object.<a href="src/seed/matryoshka/doll/structure/endpoints/object/client.py#L273-L338">get_and_return_nested_with_required_field</a>(...) -> NestedObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -1480,7 +1480,7 @@ client.endpoints.object.get_and_return_nested_with_required_field(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="src/seed.matryoshka.doll.structure/endpoints/object/client.py">get_and_return_nested_with_required_field_as_list</a>(...) -> NestedObjectWithRequiredField</code></summary>
+<details><summary><code>client.endpoints.object.<a href="src/seed/matryoshka/doll/structure/endpoints/object/client.py#L340-L429">get_and_return_nested_with_required_field_as_list</a>(...) -> NestedObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -1592,7 +1592,7 @@ client.endpoints.object.get_and_return_nested_with_required_field_as_list(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="src/seed.matryoshka.doll.structure/endpoints/object/client.py">get_and_return_with_unknown_field</a>(...) -> ObjectWithUnknownField</code></summary>
+<details><summary><code>client.endpoints.object.<a href="src/seed/matryoshka/doll/structure/endpoints/object/client.py#L431-L459">get_and_return_with_unknown_field</a>(...) -> ObjectWithUnknownField</code></summary>
 <dl>
 <dd>
 
@@ -1650,7 +1650,7 @@ client.endpoints.object.get_and_return_with_unknown_field(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="src/seed.matryoshka.doll.structure/endpoints/object/client.py">get_and_return_with_documented_unknown_type</a>(...) -> ObjectWithDocumentedUnknownType</code></summary>
+<details><summary><code>client.endpoints.object.<a href="src/seed/matryoshka/doll/structure/endpoints/object/client.py#L461-L491">get_and_return_with_documented_unknown_type</a>(...) -> ObjectWithDocumentedUnknownType</code></summary>
 <dl>
 <dd>
 
@@ -1708,7 +1708,7 @@ client.endpoints.object.get_and_return_with_documented_unknown_type(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="src/seed.matryoshka.doll.structure/endpoints/object/client.py">get_and_return_map_of_documented_unknown_type</a>(...) -> MapOfDocumentedUnknownType</code></summary>
+<details><summary><code>client.endpoints.object.<a href="src/seed/matryoshka/doll/structure/endpoints/object/client.py#L493-L523">get_and_return_map_of_documented_unknown_type</a>(...) -> MapOfDocumentedUnknownType</code></summary>
 <dl>
 <dd>
 
@@ -1768,7 +1768,7 @@ client.endpoints.object.get_and_return_map_of_documented_unknown_type(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="src/seed.matryoshka.doll.structure/endpoints/object/client.py">get_and_return_with_mixed_required_and_optional_fields</a>(...) -> ObjectWithMixedRequiredAndOptionalFields</code></summary>
+<details><summary><code>client.endpoints.object.<a href="src/seed/matryoshka/doll/structure/endpoints/object/client.py#L525-L577">get_and_return_with_mixed_required_and_optional_fields</a>(...) -> ObjectWithMixedRequiredAndOptionalFields</code></summary>
 <dl>
 <dd>
 
@@ -1844,7 +1844,7 @@ client.endpoints.object.get_and_return_with_mixed_required_and_optional_fields(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="src/seed.matryoshka.doll.structure/endpoints/object/client.py">get_and_return_with_required_nested_object</a>(...) -> ObjectWithRequiredNestedObject</code></summary>
+<details><summary><code>client.endpoints.object.<a href="src/seed/matryoshka/doll/structure/endpoints/object/client.py#L579-L628">get_and_return_with_required_nested_object</a>(...) -> ObjectWithRequiredNestedObject</code></summary>
 <dl>
 <dd>
 
@@ -1924,7 +1924,7 @@ client.endpoints.object.get_and_return_with_required_nested_object(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="src/seed.matryoshka.doll.structure/endpoints/object/client.py">get_and_return_with_datetime_like_string</a>(...) -> ObjectWithDatetimeLikeString</code></summary>
+<details><summary><code>client.endpoints.object.<a href="src/seed/matryoshka/doll/structure/endpoints/object/client.py#L630-L677">get_and_return_with_datetime_like_string</a>(...) -> ObjectWithDatetimeLikeString</code></summary>
 <dl>
 <dd>
 
@@ -2001,7 +2001,7 @@ client.endpoints.object.get_and_return_with_datetime_like_string(
 </details>
 
 ## Endpoints Pagination
-<details><summary><code>client.endpoints.pagination.<a href="src/seed.matryoshka.doll.structure/endpoints/pagination/client.py">list_items</a>(...) -> PaginatedResponse</code></summary>
+<details><summary><code>client.endpoints.pagination.<a href="src/seed/matryoshka/doll/structure/endpoints/pagination/client.py#L28-L71">list_items</a>(...) -> PaginatedResponse</code></summary>
 <dl>
 <dd>
 
@@ -2083,7 +2083,7 @@ client.endpoints.pagination.list_items(
 </details>
 
 ## Endpoints Params
-<details><summary><code>client.endpoints.params.<a href="src/seed.matryoshka.doll.structure/endpoints/params/client.py">get_with_path</a>(...) -> str</code></summary>
+<details><summary><code>client.endpoints.params.<a href="src/seed/matryoshka/doll/structure/endpoints/params/client.py#L30-L58">get_with_path</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -2155,7 +2155,7 @@ client.endpoints.params.get_with_path(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="src/seed.matryoshka.doll.structure/endpoints/params/client.py">get_with_inline_path</a>(...) -> str</code></summary>
+<details><summary><code>client.endpoints.params.<a href="src/seed/matryoshka/doll/structure/endpoints/params/client.py#L60-L88">get_with_inline_path</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -2227,7 +2227,7 @@ client.endpoints.params.get_with_path(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="src/seed.matryoshka.doll.structure/endpoints/params/client.py">get_with_query</a>(...)</code></summary>
+<details><summary><code>client.endpoints.params.<a href="src/seed/matryoshka/doll/structure/endpoints/params/client.py#L90-L123">get_with_query</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -2308,7 +2308,7 @@ client.endpoints.params.get_with_query(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="src/seed.matryoshka.doll.structure/endpoints/params/client.py">get_with_allow_multiple_query</a>(...)</code></summary>
+<details><summary><code>client.endpoints.params.<a href="src/seed/matryoshka/doll/structure/endpoints/params/client.py#L125-L164">get_with_allow_multiple_query</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -2389,7 +2389,7 @@ client.endpoints.params.get_with_query(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="src/seed.matryoshka.doll.structure/endpoints/params/client.py">get_with_path_and_query</a>(...)</code></summary>
+<details><summary><code>client.endpoints.params.<a href="src/seed/matryoshka/doll/structure/endpoints/params/client.py#L166-L199">get_with_path_and_query</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -2470,7 +2470,7 @@ client.endpoints.params.get_with_path_and_query(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="src/seed.matryoshka.doll.structure/endpoints/params/client.py">get_with_inline_path_and_query</a>(...)</code></summary>
+<details><summary><code>client.endpoints.params.<a href="src/seed/matryoshka/doll/structure/endpoints/params/client.py#L201-L234">get_with_inline_path_and_query</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -2551,7 +2551,7 @@ client.endpoints.params.get_with_path_and_query(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="src/seed.matryoshka.doll.structure/endpoints/params/client.py">modify_with_path</a>(...) -> str</code></summary>
+<details><summary><code>client.endpoints.params.<a href="src/seed/matryoshka/doll/structure/endpoints/params/client.py#L236-L269">modify_with_path</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -2632,7 +2632,7 @@ client.endpoints.params.modify_with_path(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="src/seed.matryoshka.doll.structure/endpoints/params/client.py">modify_with_inline_path</a>(...) -> str</code></summary>
+<details><summary><code>client.endpoints.params.<a href="src/seed/matryoshka/doll/structure/endpoints/params/client.py#L271-L304">modify_with_inline_path</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -2713,7 +2713,7 @@ client.endpoints.params.modify_with_path(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="src/seed.matryoshka.doll.structure/endpoints/params/client.py">upload_with_path</a>(...) -> ObjectWithRequiredField</code></summary>
+<details><summary><code>client.endpoints.params.<a href="src/seed/matryoshka/doll/structure/endpoints/params/client.py#L306-L342">upload_with_path</a>(...) -> ObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -2793,7 +2793,7 @@ client.endpoints.params.upload_with_path(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="src/seed.matryoshka.doll.structure/endpoints/params/client.py">create_with_body_and_query</a>(...) -> ObjectWithOptionalField</code></summary>
+<details><summary><code>client.endpoints.params.<a href="src/seed/matryoshka/doll/structure/endpoints/params/client.py#L344-L383">create_with_body_and_query</a>(...) -> ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -2874,7 +2874,7 @@ client.endpoints.params.create_with_body_and_query(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="src/seed.matryoshka.doll.structure/endpoints/params/client.py">upload_bytes_with_query</a>(...) -> ObjectWithOptionalField</code></summary>
+<details><summary><code>client.endpoints.params.<a href="src/seed/matryoshka/doll/structure/endpoints/params/client.py#L385-L411">upload_bytes_with_query</a>(...) -> ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -2944,7 +2944,7 @@ client.endpoints.params.upload_bytes_with_query(...)
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="src/seed.matryoshka.doll.structure/endpoints/params/client.py">get_with_boolean_path</a>(...) -> str</code></summary>
+<details><summary><code>client.endpoints.params.<a href="src/seed/matryoshka/doll/structure/endpoints/params/client.py#L413-L441">get_with_boolean_path</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -3016,7 +3016,7 @@ client.endpoints.params.get_with_boolean_path(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.params.<a href="src/seed.matryoshka.doll.structure/endpoints/params/client.py">get_with_path_and_errors</a>(...) -> str</code></summary>
+<details><summary><code>client.endpoints.params.<a href="src/seed/matryoshka/doll/structure/endpoints/params/client.py#L443-L471">get_with_path_and_errors</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -3089,7 +3089,7 @@ client.endpoints.params.get_with_path(
 </details>
 
 ## Endpoints Primitive
-<details><summary><code>client.endpoints.primitive.<a href="src/seed.matryoshka.doll.structure/endpoints/primitive/client.py">get_and_return_string</a>(...) -> str</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="src/seed/matryoshka/doll/structure/endpoints/primitive/client.py#L30-L56">get_and_return_string</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -3147,7 +3147,7 @@ client.endpoints.primitive.get_and_return_string(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="src/seed.matryoshka.doll.structure/endpoints/primitive/client.py">get_and_return_int</a>(...) -> int</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="src/seed/matryoshka/doll/structure/endpoints/primitive/client.py#L58-L84">get_and_return_int</a>(...) -> int</code></summary>
 <dl>
 <dd>
 
@@ -3205,7 +3205,7 @@ client.endpoints.primitive.get_and_return_int(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="src/seed.matryoshka.doll.structure/endpoints/primitive/client.py">get_and_return_long</a>(...) -> int</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="src/seed/matryoshka/doll/structure/endpoints/primitive/client.py#L86-L112">get_and_return_long</a>(...) -> int</code></summary>
 <dl>
 <dd>
 
@@ -3263,7 +3263,7 @@ client.endpoints.primitive.get_and_return_long(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="src/seed.matryoshka.doll.structure/endpoints/primitive/client.py">get_and_return_double</a>(...) -> float</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="src/seed/matryoshka/doll/structure/endpoints/primitive/client.py#L114-L142">get_and_return_double</a>(...) -> float</code></summary>
 <dl>
 <dd>
 
@@ -3321,7 +3321,7 @@ client.endpoints.primitive.get_and_return_double(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="src/seed.matryoshka.doll.structure/endpoints/primitive/client.py">get_and_return_bool</a>(...) -> bool</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="src/seed/matryoshka/doll/structure/endpoints/primitive/client.py#L144-L170">get_and_return_bool</a>(...) -> bool</code></summary>
 <dl>
 <dd>
 
@@ -3379,7 +3379,7 @@ client.endpoints.primitive.get_and_return_bool(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="src/seed.matryoshka.doll.structure/endpoints/primitive/client.py">get_and_return_datetime</a>(...) -> datetime.datetime</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="src/seed/matryoshka/doll/structure/endpoints/primitive/client.py#L172-L204">get_and_return_datetime</a>(...) -> datetime.datetime</code></summary>
 <dl>
 <dd>
 
@@ -3438,7 +3438,7 @@ client.endpoints.primitive.get_and_return_datetime(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="src/seed.matryoshka.doll.structure/endpoints/primitive/client.py">get_and_return_date</a>(...) -> datetime.date</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="src/seed/matryoshka/doll/structure/endpoints/primitive/client.py#L206-L238">get_and_return_date</a>(...) -> datetime.date</code></summary>
 <dl>
 <dd>
 
@@ -3497,7 +3497,7 @@ client.endpoints.primitive.get_and_return_date(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="src/seed.matryoshka.doll.structure/endpoints/primitive/client.py">get_and_return_uuid</a>(...) -> uuid.UUID</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="src/seed/matryoshka/doll/structure/endpoints/primitive/client.py#L240-L272">get_and_return_uuid</a>(...) -> uuid.UUID</code></summary>
 <dl>
 <dd>
 
@@ -3556,7 +3556,7 @@ client.endpoints.primitive.get_and_return_uuid(
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="src/seed.matryoshka.doll.structure/endpoints/primitive/client.py">get_and_return_base64</a>(...) -> str</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="src/seed/matryoshka/doll/structure/endpoints/primitive/client.py#L274-L300">get_and_return_base64</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -3615,7 +3615,7 @@ client.endpoints.primitive.get_and_return_base64(
 </details>
 
 ## Endpoints Put
-<details><summary><code>client.endpoints.put.<a href="src/seed.matryoshka.doll.structure/endpoints/put/client.py">add</a>(...) -> PutResponse</code></summary>
+<details><summary><code>client.endpoints.put.<a href="src/seed/matryoshka/doll/structure/endpoints/put/client.py#L26-L52">add</a>(...) -> PutResponse</code></summary>
 <dl>
 <dd>
 
@@ -3674,7 +3674,7 @@ client.endpoints.put.add(
 </details>
 
 ## Endpoints Union
-<details><summary><code>client.endpoints.union.<a href="src/seed.matryoshka.doll.structure/endpoints/union/client.py">get_and_return_union</a>(...) -> Animal</code></summary>
+<details><summary><code>client.endpoints.union.<a href="src/seed/matryoshka/doll/structure/endpoints/union/client.py#L29-L61">get_and_return_union</a>(...) -> Animal</code></summary>
 <dl>
 <dd>
 
@@ -3737,7 +3737,7 @@ client.endpoints.union.get_and_return_union(
 </details>
 
 ## Endpoints Urls
-<details><summary><code>client.endpoints.urls.<a href="src/seed.matryoshka.doll.structure/endpoints/urls/client.py">with_mixed_case</a>() -> str</code></summary>
+<details><summary><code>client.endpoints.urls.<a href="src/seed/matryoshka/doll/structure/endpoints/urls/client.py#L25-L47">with_mixed_case</a>() -> str</code></summary>
 <dl>
 <dd>
 
@@ -3785,7 +3785,7 @@ client.endpoints.urls.with_mixed_case()
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.urls.<a href="src/seed.matryoshka.doll.structure/endpoints/urls/client.py">no_ending_slash</a>() -> str</code></summary>
+<details><summary><code>client.endpoints.urls.<a href="src/seed/matryoshka/doll/structure/endpoints/urls/client.py#L49-L71">no_ending_slash</a>() -> str</code></summary>
 <dl>
 <dd>
 
@@ -3833,7 +3833,7 @@ client.endpoints.urls.no_ending_slash()
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.urls.<a href="src/seed.matryoshka.doll.structure/endpoints/urls/client.py">with_ending_slash</a>() -> str</code></summary>
+<details><summary><code>client.endpoints.urls.<a href="src/seed/matryoshka/doll/structure/endpoints/urls/client.py#L73-L95">with_ending_slash</a>() -> str</code></summary>
 <dl>
 <dd>
 
@@ -3881,7 +3881,7 @@ client.endpoints.urls.with_ending_slash()
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.urls.<a href="src/seed.matryoshka.doll.structure/endpoints/urls/client.py">with_underscores</a>() -> str</code></summary>
+<details><summary><code>client.endpoints.urls.<a href="src/seed/matryoshka/doll/structure/endpoints/urls/client.py#L97-L119">with_underscores</a>() -> str</code></summary>
 <dl>
 <dd>
 
@@ -3930,7 +3930,7 @@ client.endpoints.urls.with_underscores()
 </details>
 
 ## InlinedRequests
-<details><summary><code>client.inlined_requests.<a href="src/seed.matryoshka.doll.structure/inlined_requests/client.py">post_with_object_bodyand_response</a>(...) -> ObjectWithOptionalField</code></summary>
+<details><summary><code>client.inlined_requests.<a href="src/seed/matryoshka/doll/structure/inlined_requests/client.py#L29-L96">post_with_object_bodyand_response</a>(...) -> ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -4044,7 +4044,7 @@ client.inlined_requests.post_with_object_bodyand_response(
 </dl>
 </details>
 
-<details><summary><code>client.inlined_requests.<a href="src/seed.matryoshka.doll.structure/inlined_requests/client.py">post_with_array_body_and_headers</a>(...) -> str</code></summary>
+<details><summary><code>client.inlined_requests.<a href="src/seed/matryoshka/doll/structure/inlined_requests/client.py#L98-L137">post_with_array_body_and_headers</a>(...) -> str</code></summary>
 <dl>
 <dd>
 
@@ -4129,7 +4129,7 @@ client.inlined_requests.post_with_array_body_and_headers(
 </details>
 
 ## NoAuth
-<details><summary><code>client.no_auth.<a href="src/seed.matryoshka.doll.structure/no_auth/client.py">post_with_no_auth</a>(...) -> bool</code></summary>
+<details><summary><code>client.no_auth.<a href="src/seed/matryoshka/doll/structure/no_auth/client.py#L28-L58">post_with_no_auth</a>(...) -> bool</code></summary>
 <dl>
 <dd>
 
@@ -4202,7 +4202,7 @@ client.no_auth.post_with_no_auth(
 </details>
 
 ## NoReqBody
-<details><summary><code>client.no_req_body.<a href="src/seed.matryoshka.doll.structure/no_req_body/client.py">get_with_no_request_body</a>() -> ObjectWithOptionalField</code></summary>
+<details><summary><code>client.no_req_body.<a href="src/seed/matryoshka/doll/structure/no_req_body/client.py#L26-L50">get_with_no_request_body</a>() -> ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -4250,7 +4250,7 @@ client.no_req_body.get_with_no_request_body()
 </dl>
 </details>
 
-<details><summary><code>client.no_req_body.<a href="src/seed.matryoshka.doll.structure/no_req_body/client.py">post_with_no_request_body</a>() -> str</code></summary>
+<details><summary><code>client.no_req_body.<a href="src/seed/matryoshka/doll/structure/no_req_body/client.py#L52-L74">post_with_no_request_body</a>() -> str</code></summary>
 <dl>
 <dd>
 
@@ -4299,7 +4299,7 @@ client.no_req_body.post_with_no_request_body()
 </details>
 
 ## ReqWithHeaders
-<details><summary><code>client.req_with_headers.<a href="src/seed.matryoshka.doll.structure/req_with_headers/client.py">get_with_custom_header</a>(...)</code></summary>
+<details><summary><code>client.req_with_headers.<a href="src/seed/matryoshka/doll/structure/req_with_headers/client.py#L28-L72">get_with_custom_header</a>(...)</code></summary>
 <dl>
 <dd>
 

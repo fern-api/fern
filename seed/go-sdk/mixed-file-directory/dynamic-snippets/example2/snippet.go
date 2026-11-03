@@ -9,7 +9,7 @@ import (
     user "github.com/mixed-file-directory/fern/user"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -20,8 +20,12 @@ func do() {
             1,
         ),
     }
-    client.User.Events.ListEvents(
+    _, err := client.User.Events.ListEvents(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

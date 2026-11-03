@@ -49,7 +49,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	        "filter",
 //	    ),
 //	}
-//	client.Users.ListWithBodyCursorPagination(
+//	_, err := client.Users.ListWithBodyCursorPagination(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -112,7 +112,7 @@ func (c *Client) ListWithBodyCursorPagination(
 //	request := &fern.ListUsersRequiredBodyCursorPaginationRequest{
 //	    Cursor: "cursor",
 //	}
-//	client.Users.ListWithRequiredBodyCursorPagination(
+//	_, err := client.Users.ListWithRequiredBodyCursorPagination(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -180,7 +180,7 @@ func (c *Client) ListWithRequiredBodyCursorPagination(
 //	        ),
 //	    ),
 //	}
-//	client.Users.ListWithUUIDBodyCursorPagination(
+//	_, err := client.Users.ListWithUUIDBodyCursorPagination(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -246,7 +246,7 @@ func (c *Client) ListWithUUIDBodyCursorPagination(
 //	        "cursor",
 //	    ),
 //	}
-//	client.Users.ListWithAliasBodyCursorPagination(
+//	_, err := client.Users.ListWithAliasBodyCursorPagination(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -310,7 +310,7 @@ func (c *Client) ListWithAliasBodyCursorPagination(
 //	request := &fern.ListUsersRequiredAliasBodyCursorPaginationRequest{
 //	    Cursor: "cursor",
 //	}
-//	client.Users.ListWithRequiredAliasBodyCursorPagination(
+//	_, err := client.Users.ListWithRequiredAliasBodyCursorPagination(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -376,7 +376,7 @@ func (c *Client) ListWithRequiredAliasBodyCursorPagination(
 //	        "cursor",
 //	    ),
 //	}
-//	client.Users.ListWithNullableAliasBodyCursorPagination(
+//	_, err := client.Users.ListWithNullableAliasBodyCursorPagination(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -444,7 +444,7 @@ func (c *Client) ListWithNullableAliasBodyCursorPagination(
 //	        1,
 //	    ),
 //	}
-//	client.Users.ListWithBodyOffsetPagination(
+//	_, err := client.Users.ListWithBodyOffsetPagination(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -515,7 +515,7 @@ func (c *Client) ListWithBodyOffsetPagination(
 //	        ),
 //	    },
 //	}
-//	client.Users.ListWithNestedBodyCursorPagination(
+//	_, err := client.Users.ListWithNestedBodyCursorPagination(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -590,7 +590,7 @@ func (c *Client) ListWithNestedBodyCursorPagination(
 //	        Cursor: "cursor",
 //	    },
 //	}
-//	client.Users.ListWithNestedRequiredBodyCursorPagination(
+//	_, err := client.Users.ListWithNestedRequiredBodyCursorPagination(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -669,7 +669,7 @@ func (c *Client) ListWithNestedRequiredBodyCursorPagination(
 //	        },
 //	    },
 //	}
-//	client.Users.ListWithDeeplyNestedBodyCursorPagination(
+//	_, err := client.Users.ListWithDeeplyNestedBodyCursorPagination(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -754,7 +754,7 @@ func (c *Client) ListWithDeeplyNestedBodyCursorPagination(
 //	        ),
 //	    },
 //	}
-//	client.Users.ListWithNestedBodyOffsetPagination(
+//	_, err := client.Users.ListWithNestedBodyOffsetPagination(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -833,7 +833,7 @@ func (c *Client) ListWithNestedBodyOffsetPagination(
 //	        ),
 //	    },
 //	}
-//	client.Users.ListWithAliasedNestedBodyOffsetPagination(
+//	_, err := client.Users.ListWithAliasedNestedBodyOffsetPagination(
 //	    context.TODO(),
 //	    request,
 //	)

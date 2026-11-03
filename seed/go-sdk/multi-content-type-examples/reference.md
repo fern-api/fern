@@ -19,7 +19,7 @@ request := &fern.ClientRequest{
         Email: "contact@acme.com",
     },
 }
-client.Clients.Create(
+_, err := client.Clients.Create(
     context.TODO(),
     request,
 )

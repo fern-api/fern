@@ -7,7 +7,7 @@ import (
     option "github.com/exhaustive/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -19,8 +19,12 @@ func do() {
     request := []string{
         "string",
     }
-    client.Endpoints.Container.GetAndReturnSetOfPrimitives(
+    _, err := client.Endpoints.Container.GetAndReturnSetOfPrimitives(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

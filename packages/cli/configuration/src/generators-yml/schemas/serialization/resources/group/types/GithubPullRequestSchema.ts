@@ -16,6 +16,7 @@ export const GithubPullRequestSchema: core.serialization.ObjectSchema<
     mode: core.serialization.stringLiteral("pull-request"),
     reviewers: ReviewersSchema.optional(),
     workflows: core.serialization.boolean().optional(),
+    "auto-merge": core.serialization.boolean().optional(),
 });
 
 export declare namespace GithubPullRequestSchema {
@@ -26,5 +27,6 @@ export declare namespace GithubPullRequestSchema {
         mode: "pull-request";
         reviewers?: ReviewersSchema.Raw | null;
         workflows?: boolean | null;
+        "auto-merge"?: boolean | null;
     }
 }

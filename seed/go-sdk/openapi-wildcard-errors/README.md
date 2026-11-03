@@ -37,15 +37,19 @@ import (
     client "github.com/openapi-wildcard-errors/fern/client"
 )
 
-func do() {
+func do() error {
     client := client.NewClient()
     request := &fern.CreateItemRequest{
         Name: "name",
     }
-    client.Items.CreateItem(
+    _, err := client.Items.CreateItem(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
 ```
 

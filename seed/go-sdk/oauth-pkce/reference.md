@@ -43,7 +43,7 @@ request := &fern.AuthorizeRequest{
         "xyz",
     ),
 }
-client.Oauth.Authorize(
+_, err := client.Oauth.Authorize(
     context.TODO(),
     request,
 )

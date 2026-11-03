@@ -1,9 +1,9 @@
 [project]
-name = "fern_python-positional-single-property"
+name = "fern-python-positional-single-property"
 dynamic = ["version"]
 
 [tool.poetry]
-name = "fern_python-positional-single-property"
+name = "fern-python-positional-single-property"
 version = "0.0.1"
 description = ""
 readme = "README.md"

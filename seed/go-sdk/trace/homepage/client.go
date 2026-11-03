@@ -36,7 +36,7 @@ func NewClient(options *core.RequestOptions) *Client {
 
 // Example:
 //
-//	client.Homepage.GetHomepageProblems(
+//	_, err := client.Homepage.GetHomepageProblems(
 //	    context.TODO(),
 //	)
 func (c *Client) GetHomepageProblems(
@@ -59,7 +59,7 @@ func (c *Client) GetHomepageProblems(
 //	    "string",
 //	    "string",
 //	}
-//	client.Homepage.SetHomepageProblems(
+//	err := client.Homepage.SetHomepageProblems(
 //	    context.TODO(),
 //	    request,
 //	)

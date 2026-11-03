@@ -1,3 +1,3 @@
 from importlib import metadata
 
-__version__ = metadata.version("fern_streaming-parameter")
+__version__ = metadata.version("fern-streaming-parameter")

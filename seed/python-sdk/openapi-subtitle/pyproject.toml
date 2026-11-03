@@ -1,9 +1,9 @@
 [project]
-name = "fern_openapi-subtitle"
+name = "fern-openapi-subtitle"
 dynamic = ["version"]
 
 [tool.poetry]
-name = "fern_openapi-subtitle"
+name = "fern-openapi-subtitle"
 version = "0.0.1"
 description = ""
 readme = "README.md"

@@ -13,7 +13,6 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.annotation.JsonValue;
 import java.lang.Object;
-import java.lang.Override;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
@@ -73,18 +72,18 @@ public final class Animal {
     return Optional.empty();
   }
 
-  @Override
+  @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
     return other instanceof Animal && value.equals(((Animal) other).value);
   }
 
-  @Override
+  @java.lang.Override
   public int hashCode() {
     return Objects.hash(value);
   }
 
-  @Override
+  @java.lang.Override
   public String toString() {
     return value.toString();
   }

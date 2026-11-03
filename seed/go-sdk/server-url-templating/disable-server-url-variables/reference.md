@@ -12,7 +12,7 @@
 <dd>
 
 ```go
-client.GetUsers(
+_, err := client.GetUsers(
     context.TODO(),
 )
 ```
@@ -42,7 +42,7 @@ client.GetUsers(
 request := &fern.GetUserRequest{
     UserID: "userId",
 }
-client.GetUser(
+_, err := client.GetUser(
     context.TODO(),
     request,
 )
@@ -89,7 +89,7 @@ request := &fern.TokenRequest{
     ClientID: "client_id",
     ClientSecret: "client_secret",
 }
-client.GetToken(
+_, err := client.GetToken(
     context.TODO(),
     request,
 )

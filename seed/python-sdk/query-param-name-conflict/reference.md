@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.<a href="src/seed/client.py">bulk_update_tasks</a>(...) -> BulkUpdateTasksResponse</code></summary>
+<details><summary><code>client.<a href="src/seed/client.py#L101-L162">bulk_update_tasks</a>(...) -> BulkUpdateTasksResponse</code></summary>
 <dl>
 <dd>
 

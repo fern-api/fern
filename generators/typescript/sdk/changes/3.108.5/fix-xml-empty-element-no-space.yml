@@ -1,0 +1,4 @@
+- type: fix
+  summary: |
+    XML (TwiML) serialization writes empty elements as `<Hangup/>` instead of `<Hangup />`, matching the legacy
+    twilio-node output byte for byte.

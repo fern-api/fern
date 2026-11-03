@@ -8,7 +8,7 @@ import (
     option "github.com/package-yml/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -18,9 +18,13 @@ func do() {
         Name: "Hello world!",
         Size: 20,
     }
-    client.Echo(
+    _, err := client.Echo(
         context.TODO(),
         "id-ksfd9c1",
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }

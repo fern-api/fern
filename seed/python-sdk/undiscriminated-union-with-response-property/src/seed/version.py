@@ -1,3 +1,3 @@
 from importlib import metadata
 
-__version__ = metadata.version("fern_undiscriminated-union-with-response-property")
+__version__ = metadata.version("fern-undiscriminated-union-with-response-property")

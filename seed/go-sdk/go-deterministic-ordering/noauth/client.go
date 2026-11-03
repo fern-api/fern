@@ -40,7 +40,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	request := map[string]any{
 //	    "key": "value",
 //	}
-//	client.NoAuth.PostWithNoAuth(
+//	_, err := client.NoAuth.PostWithNoAuth(
 //	    context.TODO(),
 //	    request,
 //	)

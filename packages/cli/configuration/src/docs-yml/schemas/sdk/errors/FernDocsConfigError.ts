@@ -28,13 +28,31 @@ export class FernDocsConfigError extends Error {
             Error.captureStackTrace(this, this.constructor);
         }
 
-        this.name = this.constructor.name;
+        this.name = "FernDocsConfigError";
         this.statusCode = statusCode;
         this.body = body;
         this.rawResponse = rawResponse;
         if (cause != null) {
             this.cause = cause;
         }
+    }
+
+    public get requestId(): string | undefined {
+        const headers = this.rawResponse?.headers;
+        if (headers == null) {
+            return undefined;
+        }
+        const requestId = headers.get("X-Request-Id");
+        if (requestId != null) {
+            return requestId;
+        }
+        let fallback: string | undefined;
+        headers.forEach((value, name) => {
+            if (fallback === undefined && /request[-_]?id$/i.test(name)) {
+                fallback = value;
+            }
+        });
+        return fallback;
     }
 }
 

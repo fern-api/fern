@@ -42,7 +42,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	    Title: "title",
 //	    Rating: 1.1,
 //	}
-//	client.Imdb.CreateMovie(
+//	_, err := client.Imdb.CreateMovie(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -67,7 +67,7 @@ func (c *Client) CreateMovie(
 //	request := &inhereplease.GetMovieImdbRequest{
 //	    MovieID: "movieId",
 //	}
-//	client.Imdb.GetMovie(
+//	_, err := client.Imdb.GetMovie(
 //	    context.TODO(),
 //	    request,
 //	)

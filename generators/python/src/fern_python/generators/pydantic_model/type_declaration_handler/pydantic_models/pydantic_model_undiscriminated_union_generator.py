@@ -7,6 +7,10 @@ from ..undiscriminated_union_generator import (
     AbstractUndiscriminatedUnionSnippetGenerator,
 )
 from fern_python.codegen import AST, SourceFile
+from fern_python.generators.pydantic_model.type_declaration_handler.type_utilities import (
+    imports_after_recursive_type_alias,
+    is_recursive_type_alias,
+)
 from fern_python.snippet.snippet_writer import SnippetWriter
 
 import fern.ir.resources as ir_types
@@ -34,17 +38,23 @@ class PydanticModelUndiscriminatedUnionGenerator(AbstractUndiscriminatedUnionGen
         )
 
     def generate(self) -> None:
+        is_type_alias_type = is_recursive_type_alias(self._name.type_id, self._context, self._custom_config)
+        imports_after = (
+            imports_after_recursive_type_alias(self._name.type_id, self._context) if is_type_alias_type else None
+        )
+        members = (
+            self._context.get_type_hint_for_type_reference(
+                member.type,
+                must_import_after_current_declaration=imports_after,
+                as_if_type_checking_import=member.is_circular_reference and not is_type_alias_type,
+            )
+            for member in self._members
+        )
         self._source_file.add_declaration(
             AST.TypeAliasDeclaration(
-                type_hint=AST.TypeHint.union(
-                    *(
-                        self._context.get_type_hint_for_type_reference(
-                            member.type, as_if_type_checking_import=member.is_circular_reference
-                        )
-                        for member in self._members
-                    )
-                ),
+                type_hint=AST.TypeHint.union(*members),
                 name=self._context.get_class_name_for_type_id(self._name.type_id, as_request=False),
+                is_type_alias_type=is_type_alias_type,
             ),
             should_export=True,
         )

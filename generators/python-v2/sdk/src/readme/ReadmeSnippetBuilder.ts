@@ -180,6 +180,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             syncSnippet != null
                 ? this.extractExtraImportsFromSyncSnippet(syncSnippet)
                 : this.getClientConstructorExtraImports();
+        const extraPackageImportNames =
+            syncSnippet != null ? this.extractPackageImportNamesFromSyncSnippet(syncSnippet) : [];
 
         const methodCallBlock = syncSnippet != null ? this.extractMethodCallFromSyncSnippet(syncSnippet) : undefined;
 
@@ -216,7 +218,9 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             imports.push(imp);
         }
         imports.push("");
-        imports.push(`from ${this.packageName} import ${this.asyncClientClassName}`);
+        imports.push(
+            `from ${this.packageName} import ${[this.asyncClientClassName, ...extraPackageImportNames].join(", ")}`
+        );
         const importsBlock = imports.join("\n");
 
         // Build constructor block
@@ -279,7 +283,7 @@ asyncio.run(main())`
         if (clientLineIdx === -1) {
             return [];
         }
-        const packageImportPrefix = `from ${this.packageName} import`;
+        const packageImportPrefix = `from ${this.packageName} import `;
         return lines
             .slice(0, clientLineIdx)
             .filter(
@@ -288,6 +292,55 @@ asyncio.run(main())`
                     !line.startsWith(packageImportPrefix) &&
                     (line.startsWith("from ") || line.startsWith("import "))
             );
+    }
+
+    /**
+     * Returns the names imported from the package root in the sync snippet (e.g. request types),
+     * excluding the sync client class, so the async snippet can re-import them alongside the async client.
+     */
+    private extractPackageImportNamesFromSyncSnippet(syncSnippet: string): string[] {
+        const lines = syncSnippet.split("\n").map((line) => this.stripPythonComment(line));
+        const clientLineIdx = lines.findIndex((line) => line.startsWith("client = "));
+        if (clientLineIdx === -1) {
+            return [];
+        }
+        const packageImportPrefix = `from ${this.packageName} import `;
+        const names: string[] = [];
+        let lineIdx = 0;
+        while (lineIdx < clientLineIdx) {
+            const line = lines[lineIdx] ?? "";
+            lineIdx++;
+            if (!line.startsWith(packageImportPrefix)) {
+                continue;
+            }
+            let importList = line.slice(packageImportPrefix.length).trim();
+            if (importList.startsWith("(")) {
+                const parts = [importList.slice(1)];
+                while (!parts.some((part) => part.includes(")")) && lineIdx < clientLineIdx) {
+                    parts.push(lines[lineIdx] ?? "");
+                    lineIdx++;
+                }
+                const joined = parts.join(",");
+                const closeIdx = joined.indexOf(")");
+                if (closeIdx === -1) {
+                    // Unterminated parenthesized import; skip rather than emit a partial list.
+                    continue;
+                }
+                importList = joined.slice(0, closeIdx);
+            }
+            for (const name of importList.split(",")) {
+                const trimmed = name.trim();
+                if (trimmed !== "" && trimmed !== this.clientClassName && !names.includes(trimmed)) {
+                    names.push(trimmed);
+                }
+            }
+        }
+        return names;
+    }
+
+    private stripPythonComment(line: string): string {
+        const commentIdx = line.indexOf("#");
+        return commentIdx === -1 ? line : line.slice(0, commentIdx).trimEnd();
     }
 
     private getClientConstructorArgs(): string {

@@ -47,7 +47,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	        1,
 //	    ),
 //	}
-//	client.Plants.List(
+//	_, err := client.Plants.List(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -122,7 +122,7 @@ func (c *Client) List(
 //	    Offset: 1,
 //	    Count: 1,
 //	}
-//	client.Plants.ListWithRequiredOffset(
+//	_, err := client.Plants.ListWithRequiredOffset(
 //	    context.TODO(),
 //	    request,
 //	)
@@ -193,7 +193,7 @@ func (c *Client) ListWithRequiredOffset(
 //	        1,
 //	    ),
 //	}
-//	client.Plants.ListWithBodyOffset(
+//	_, err := client.Plants.ListWithBodyOffset(
 //	    context.TODO(),
 //	    request,
 //	)

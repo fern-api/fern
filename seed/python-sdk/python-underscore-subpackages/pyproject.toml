@@ -1,9 +1,9 @@
 [project]
-name = "fern_python-underscore-subpackages"
+name = "fern-python-underscore-subpackages"
 dynamic = ["version"]
 
 [tool.poetry]
-name = "fern_python-underscore-subpackages"
+name = "fern-python-underscore-subpackages"
 version = "0.0.1"
 description = ""
 readme = "README.md"

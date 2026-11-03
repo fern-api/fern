@@ -1,6 +1,6 @@
 # Reference
 ## User
-<details><summary><code>client.user.<a href="src/seed/user/client.py">get</a>(...) -> User</code></summary>
+<details><summary><code>client.user.<a href="src/seed/user/client.py#L26-L53">get</a>(...) -> User</code></summary>
 <dl>
 <dd>
 

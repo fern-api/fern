@@ -8,7 +8,7 @@ import (
     option "github.com/inferred-auth-explicit/fern/option"
 )
 
-func do() {
+func do() error {
     client := client.NewClient(
         option.WithBaseURL(
             "https://api.fern.com",
@@ -31,8 +31,12 @@ func do() {
             "scope",
         ),
     }
-    client.Auth.GetTokenWithClientCredentials(
+    _, err := client.Auth.GetTokenWithClientCredentials(
         context.TODO(),
         request,
     )
+    if err != nil {
+        return err
+    }
+    return nil
 }
