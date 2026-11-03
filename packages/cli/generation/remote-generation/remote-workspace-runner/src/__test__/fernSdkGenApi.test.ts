@@ -1140,7 +1140,7 @@ describe("isEligibleForFernSdkGenApi", () => {
         ).toBe(true);
     });
 
-    it("rejects non-SDK generators and unresolved SDK versions", () => {
+    it("rejects non-SDK generators and accepts omitted SDK versions", () => {
         expect(
             isEligibleForFernSdkGenApi({
                 generatorInvocation: invocation({
@@ -1156,7 +1156,7 @@ describe("isEligibleForFernSdkGenApi", () => {
                 sdkVersion: undefined,
                 specsTarGzBuffer: Buffer.from("archive")
             })
-        ).toBe(false);
+        ).toBe(true);
     });
 
     it("routes GitHub and registry output through sdk-gen-api", () => {
@@ -2078,8 +2078,8 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(changedSource.idempotencyKey).not.toBe(original.idempotencyKey);
     });
 
-    it("gives every AUTO request a new idempotency key, because its result depends on the SDK repository", () => {
-        const createRequest = (sdkVersion: string) =>
+    it("gives every AUTO or omitted request a new idempotency key because its result depends on external state", () => {
+        const createRequest = (sdkVersion?: string) =>
             createFernSdkGenApiRequest({
                 apiName: "Petstore",
                 organization: "acme",
@@ -2092,6 +2092,7 @@ describe("isEligibleForFernSdkGenApi", () => {
             });
 
         expect(createRequest("AUTO").idempotencyKey).not.toBe(createRequest("AUTO").idempotencyKey);
+        expect(createRequest().idempotencyKey).not.toBe(createRequest().idempotencyKey);
         expect(createRequest("1.2.3").idempotencyKey).toBe(createRequest("1.2.3").idempotencyKey);
     });
 
@@ -3689,6 +3690,20 @@ describe("fernapi/fern-mcp-server target", () => {
         expect(target?.requestedOutput).toEqual({ type: "download" });
     });
 
+    it("omits sdk.version so sdk-gen-api can resolve it server-side", () => {
+        const request = createFernSdkGenApiRequest({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation: mcpInvocation(),
+            sdkVersion: undefined,
+            specsTarGzBuffer: Buffer.from("archive"),
+            payload: sdkConfigPayload("{}")
+        });
+
+        expect(request.targets[0]?.sdk).toEqual({ name: "Petstore" });
+    });
+
     it("omits an unpinned SDK Config generator version from the wire request", () => {
         const [prepared] = prepareFernSdkGenApiRoutes({
             generators: [mcpInvocation({ version: SDK_CONFIG_UNPINNED_GENERATOR_VERSION })],
@@ -3840,20 +3855,6 @@ describe("describeFernSdkGenApiIneligibility", () => {
             })
         ).toBe(expected);
     });
-
-    it("tells the user to pass --version when the SDK version is unresolved", () => {
-        expect(
-            describeFernSdkGenApiIneligibility({
-                candidate: {
-                    generatorInvocation: invocation(),
-                    sdkVersion: undefined,
-                    specsTarGzBuffer: Buffer.from("archive")
-                },
-                isSdkConfigTarget: false,
-                isPreview: false
-            })
-        ).toBe("the SDK version could not be resolved. Pass one with --version (for example, --version 1.0.0)");
-    });
 });
 
 describe("GitHub delivery result", () => {
@@ -3869,7 +3870,17 @@ describe("GitHub delivery result", () => {
 
     async function runWithPublication(
         publication: Record<string, unknown> | undefined,
-        { sdkVersion = "1.2.3", actualVersion = "1.2.3" }: { sdkVersion?: string; actualVersion?: string | null } = {}
+        {
+            sdkVersion = "1.2.3",
+            actualVersion = "1.2.3",
+            autoVersionPreview = false,
+            artifactUrl = true
+        }: {
+            sdkVersion?: string;
+            actualVersion?: string | null;
+            autoVersionPreview?: boolean;
+            artifactUrl?: boolean;
+        } = {}
     ) {
         vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "https://sdk-gen-api.test");
         const generatorInvocation = githubInvocation();
@@ -3893,7 +3904,7 @@ describe("GitHub delivery result", () => {
                         status: "succeeded",
                         logs: [],
                         result: {
-                            artifactUrl: "https://example.test/artifact.zip",
+                            ...(artifactUrl ? { artifactUrl: "https://example.test/artifact.zip" } : {}),
                             ...(actualVersion == null ? {} : { actualVersion })
                         },
                         ...(publication == null ? {} : { publication })
@@ -3910,6 +3921,16 @@ describe("GitHub delivery result", () => {
             token: { value: "token" } as never,
             specsTarGzBuffer: validSourceArchive,
             payload: runtimePayload(validRuntimeBundle),
+            ...(autoVersionPreview
+                ? {
+                      requestedOutput: { type: "download" } as const,
+                      autoVersionPreviewOutput: {
+                          type: "github" as const,
+                          repository: "acme/sdk",
+                          mode: "pull-request" as const
+                      }
+                  }
+                : {}),
             absolutePathToPreview: undefined,
             context
         });
@@ -3956,6 +3977,20 @@ describe("GitHub delivery result", () => {
         expect(result.actualVersion).toBeUndefined();
         expect(result.noChangesDetected).toBe(true);
         expect(contextLogger.info).not.toHaveBeenCalledWith(expect.stringContaining("new version"));
+    });
+
+    it("completes an AUTO preview with no artifact when semantic analysis finds no changes", async () => {
+        const result = await runWithPublication(githubPublication({ noChangesDetected: true }), {
+            sdkVersion: "AUTO",
+            actualVersion: null,
+            autoVersionPreview: true,
+            artifactUrl: false
+        });
+
+        expect(result.actualVersion).toBeUndefined();
+        expect(result.noChangesDetected).toBe(true);
+        expect(result.publishTarget).toBeUndefined();
+        expect(contextLogger.info).toHaveBeenCalledWith("No changes detected; there is no SDK preview to download.");
     });
 
     it("reports a skip for no changes explicitly instead of as a created pull request", async () => {

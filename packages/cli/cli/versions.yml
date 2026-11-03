@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.193.1
+  changelogEntry:
+    - summary: |
+        `fern generate` now lets sdk-gen-api resolve omitted SDK versions instead of requiring `--version`.
+        `fern generate --preview --version AUTO` also resolves the semantic version from the configured GitHub
+        repository while keeping the preview download-only.
+      type: fix
+  createdAt: "2026-11-02"
+  irVersion: 67
 - version: 5.193.0
   changelogEntry:
     - summary: |
