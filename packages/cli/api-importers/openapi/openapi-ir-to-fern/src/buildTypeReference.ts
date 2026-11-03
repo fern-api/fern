@@ -498,14 +498,38 @@ export function buildReferenceTypeReference({
     if (resolvedSchema.type === "optional" && !type.startsWith("optional<")) {
         type = `optional<${type}>`;
     }
-    if (schema.description == null && displayName == null) {
+    const defaultValue = getReferencedPrimitiveDefault(resolvedSchema, context);
+    if (schema.description == null && displayName == null && defaultValue == null) {
         return type;
     }
     return {
         type,
+        ...(defaultValue != null ? { default: defaultValue } : {}),
         ...(schema.description != null ? { docs: schema.description } : {}),
         ...(schema.availability != null ? { availability: convertAvailability(schema.availability) } : {})
     };
+}
+
+function getReferencedPrimitiveDefault(schema: Schema, context: OpenApiIrConverterContext): unknown {
+    const visited = new Set<Schema>();
+    let current: Schema | undefined = schema;
+    while (current != null && !visited.has(current)) {
+        visited.add(current);
+        switch (current.type) {
+            case "primitive":
+                return getDefaultFromTypeReference(buildPrimitiveTypeReference(current));
+            case "optional":
+            case "nullable":
+                current = current.value;
+                break;
+            case "reference":
+                current = context.getSchema(current.schema, current.namespace);
+                break;
+            default:
+                return undefined;
+        }
+    }
+    return undefined;
 }
 
 export function buildArrayTypeReference({

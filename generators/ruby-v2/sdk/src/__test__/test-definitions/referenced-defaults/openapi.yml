@@ -1,0 +1,26 @@
+openapi: 3.0.3
+info: {title: Defaults, version: '1'}
+paths: {}
+components:
+  schemas:
+    Disabled: {type: boolean, default: false}
+    Enabled: {type: boolean, default: true}
+    Zero: {type: integer, default: 0}
+    Empty: {type: string, default: ''}
+    Alias: {$ref: '#/components/schemas/Disabled'}
+    Values:
+      type: object
+      required: [disabled, enabled, zero, empty, alias]
+      properties:
+        disabled: {$ref: '#/components/schemas/Disabled'}
+        enabled: {$ref: '#/components/schemas/Enabled'}
+        zero: {$ref: '#/components/schemas/Zero'}
+        empty: {$ref: '#/components/schemas/Empty'}
+        alias: {$ref: '#/components/schemas/Alias'}
+        optional: {$ref: '#/components/schemas/Disabled'}
+        list:
+          type: array
+          items: {$ref: '#/components/schemas/Disabled'}
+        map:
+          type: object
+          additionalProperties: {$ref: '#/components/schemas/Zero'}
