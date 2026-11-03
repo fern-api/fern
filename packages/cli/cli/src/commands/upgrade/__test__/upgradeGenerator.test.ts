@@ -57,12 +57,18 @@ vi.mock("@fern-api/configuration-loader", () => ({
 
 vi.mock("fs/promises");
 vi.mock("@fern-api/login", () => ({ askToLogin: sdkGenApiHelpers.askToLogin }));
-vi.mock("@fern-api/remote-workspace-runner", () => ({
-    getFernSdkGenApiOrigin: sdkGenApiHelpers.getOrigin,
-    getFernSdkGenApiLanguage: sdkGenApiHelpers.getLanguage,
-    isFernSdkGenApiEnabled: sdkGenApiHelpers.isEnabled,
-    USE_SDK_GEN_API_FEATURE_FLAG: "use-sdk-gen-api"
-}));
+vi.mock("@fern-api/remote-workspace-runner", async () => {
+    const { default: semver } = await import("semver");
+    return {
+        getFernSdkGenApiOrigin: sdkGenApiHelpers.getOrigin,
+        getFernSdkGenApiLanguage: sdkGenApiHelpers.getLanguage,
+        isFernSdkGenApiEnabled: sdkGenApiHelpers.isEnabled,
+        // Mirrors the TypeScript SDK Config cutover (4.0.0).
+        isPostCutoverGeneratorVersion: ({ generatorName, version }: { generatorName: string; version: string }) =>
+            generatorName.includes("typescript") && semver.valid(version) != null && semver.gte(version, "4.0.0"),
+        USE_SDK_GEN_API_FEATURE_FLAG: "use-sdk-gen-api"
+    };
+});
 vi.mock("../migrations", () => ({
     loadAndRunMigrations: vi.fn()
 }));
@@ -865,5 +871,155 @@ groups:
                 organization: "test-org"
             })
         ).rejects.toThrow(`configured version "${currentVersion}", candidate version "${candidateVersion}"`);
+    });
+
+    describe("SDK Config cutover", () => {
+        const typescriptYaml = (version: string) =>
+            `groups:\n  production:\n    generators:\n      - name: fernapi/fern-typescript-sdk\n        version: ${version}\n`;
+
+        async function mockGeneratorsYaml(version: string) {
+            const { getPathToGeneratorsConfiguration } = await import("@fern-api/configuration-loader");
+            vi.mocked(getPathToGeneratorsConfiguration).mockResolvedValue(testYamlPath as AbsoluteFilePath);
+            vi.mocked(readFile).mockResolvedValue(typescriptYaml(version));
+            const { loadAndRunMigrations } = await import("../migrations");
+            vi.mocked(loadAndRunMigrations).mockResolvedValue(undefined);
+        }
+
+        function stubSdkGenApiDiscovery(...results: Array<Record<string, string>>) {
+            sdkGenApiHelpers.isEnabled.mockResolvedValue(true);
+            vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "https://sdk-gen.example.com");
+            const fetchMock = vi.fn();
+            for (const result of results) {
+                fetchMock.mockResolvedValueOnce({
+                    ok: true,
+                    json: async () => ({ targets: [{ targetId: "generator", state: "RESOLVED", ...result }] })
+                });
+            }
+            vi.stubGlobal("fetch", fetchMock);
+            return fetchMock;
+        }
+
+        function load(includeMajor: boolean) {
+            return loadAndUpdateGenerators({
+                absolutePathToWorkspace: "/test" as AbsoluteFilePath,
+                context: mockContext,
+                generatorFilter: undefined,
+                groupFilter: undefined,
+                includeMajor,
+                skipAutoreleaseDisabled: false,
+                channel: undefined,
+                cliVersion: "1.0.0",
+                organization: "test-org",
+                getSdkGenApiToken
+            });
+        }
+
+        it("falls back to the same-major FDR version when --include-major would cross the cutover", async () => {
+            await mockGeneratorsYaml("3.80.0");
+            const { getLatestGeneratorVersion } = await import("@fern-api/configuration-loader");
+            vi.mocked(getLatestGeneratorVersion).mockImplementation(async ({ includeMajor }) =>
+                includeMajor ? "4.1.0" : "3.90.0"
+            );
+
+            const result = await load(true);
+
+            expect(result.updatedConfiguration).toContain("version: 3.90.0");
+            expect(result.appliedUpgrades).toEqual([
+                expect.objectContaining({ previousVersion: "3.80.0", newVersion: "3.90.0" })
+            ]);
+            expect(result.sdkConfigMigrationRequired).toEqual([
+                {
+                    generatorName: "fernapi/fern-typescript-sdk",
+                    groupName: "production",
+                    currentVersion: "3.80.0",
+                    sdkConfigVersion: "4.1.0"
+                }
+            ]);
+        });
+
+        it("falls back to the same-major SDK Gen API version when --include-major would cross the cutover", async () => {
+            await mockGeneratorsYaml("3.86.0");
+            const fetchMock = stubSdkGenApiDiscovery({ compatibleVersion: "4.1.0" }, { compatibleVersion: "3.87.0" });
+
+            const result = await load(true);
+
+            expect(fetchMock.mock.calls.map(([, init]) => JSON.parse(init.body).targets[0].includeMajor)).toEqual([
+                true,
+                false
+            ]);
+            expect(result.updatedConfiguration).toContain("version: 3.87.0");
+            expect(result.sdkConfigMigrationRequired).toEqual([
+                expect.objectContaining({ currentVersion: "3.86.0", sdkConfigVersion: "4.1.0" })
+            ]);
+        });
+
+        it("reports a withheld post-cutover major as a migration instead of an --include-major hint", async () => {
+            await mockGeneratorsYaml("3.86.0");
+            stubSdkGenApiDiscovery({ compatibleVersion: "3.87.0", withheldMajorVersion: "4.1.0" });
+
+            const result = await load(false);
+
+            expect(result.updatedConfiguration).toContain("version: 3.87.0");
+            expect(result.skippedMajorUpgrades).toEqual([]);
+            expect(result.sdkConfigMigrationRequired).toEqual([
+                expect.objectContaining({ currentVersion: "3.87.0", sdkConfigVersion: "4.1.0" })
+            ]);
+        });
+
+        it("keeps the configured version when no pre-cutover candidate exists", async () => {
+            await mockGeneratorsYaml("3.90.0");
+            const { getLatestGeneratorVersion } = await import("@fern-api/configuration-loader");
+            vi.mocked(getLatestGeneratorVersion).mockResolvedValue("4.1.0");
+
+            const result = await load(true);
+
+            expect(result.updatedConfiguration).toContain("version: 3.90.0");
+            expect(result.appliedUpgrades).toEqual([]);
+            expect(result.sdkConfigMigrationRequired).toHaveLength(1);
+        });
+
+        it("upgrades normally between versions that are already past the cutover", async () => {
+            await mockGeneratorsYaml("4.0.0");
+            const { getLatestGeneratorVersion } = await import("@fern-api/configuration-loader");
+            vi.mocked(getLatestGeneratorVersion).mockResolvedValue("4.1.0");
+
+            const result = await load(true);
+
+            expect(result.updatedConfiguration).toContain("version: 4.1.0");
+            expect(result.sdkConfigMigrationRequired).toEqual([]);
+        });
+
+        it("tells the user to run fern sdk migrate", async () => {
+            await mockGeneratorsYaml("3.90.0");
+            const { getLatestGeneratorVersion, loadRawGeneratorsConfiguration } = await import(
+                "@fern-api/configuration-loader"
+            );
+            vi.mocked(loadRawGeneratorsConfiguration).mockResolvedValue({ groups: {} });
+            vi.mocked(getLatestGeneratorVersion).mockResolvedValue("4.1.0");
+            const logger = { info: vi.fn(), error: vi.fn(), warn: vi.fn(), debug: vi.fn() };
+
+            await upgradeGenerator({
+                cliContext: {
+                    environment: { packageVersion: "1.0.0" },
+                    logger,
+                    runTaskForWorkspace: vi.fn(
+                        async (_workspace: unknown, run: (context: TaskContext) => Promise<void>) => run(mockContext)
+                    )
+                } as never,
+                generator: undefined,
+                group: undefined,
+                project: {
+                    apiWorkspaces: [{ absoluteFilePath: "/test", workspaceName: undefined }],
+                    config: { organization: "test-org" }
+                } as never,
+                includeMajor: true,
+                skipAutoreleaseDisabled: false,
+                channel: undefined
+            });
+
+            expect(logger.info).toHaveBeenCalledWith(expect.stringContaining("SDK Config migration required"));
+            expect(logger.info).toHaveBeenCalledWith(expect.stringContaining("fern sdk migrate"));
+            expect(logger.info).not.toHaveBeenCalledWith(expect.stringContaining("No generators found"));
+        });
     });
 });
