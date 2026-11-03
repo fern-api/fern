@@ -8,10 +8,6 @@ import { FernIr } from "@fern-fern/ir-sdk";
 import { SdkGeneratorContext } from "../SdkGeneratorContext.js";
 
 const DEFAULT_TIMESTAMP_TOLERANCE_SECONDS = 300;
-const MISSING_SIGNATURE_MESSAGE = "Webhook signature verification could not run: missing signature header";
-const UNSUPPORTED_ALGORITHM_MESSAGE = "Webhook signature verification could not run: unsupported algorithm";
-const UNRESOLVED_KEY_MESSAGE = "Webhook signature verification could not run: signing key could not be resolved";
-const MISSING_KEY_ID_MESSAGE = "Webhook signature verification could not run: settings header is missing the key ID";
 
 interface WebhookVerificationEntry {
     config: FernIr.HmacSignatureVerification;
@@ -250,7 +246,7 @@ class HmacHelperWriter {
                 writer.writeLine(`\t${parameter.name} ${parameter.type},`);
             }
             writer.writeLine(") (bool, error) {");
-            writer.writeLine("\treturn h.VerifySignatureWithAlgorithm(");
+            writer.writeLine("\treturn h.verifyWithDigest(");
             for (const parameter of this.buildParameters()) {
                 writer.writeLine(`\t\t${parameter.name},`);
             }
@@ -265,29 +261,48 @@ class HmacHelperWriter {
             );
             if (algorithmHeader != null) {
                 const names = algorithmHeader.algorithms.map((option) => `"${option.wireValue}"`).join(", ");
-                writer.writeLine(
-                    `// (${names}, or the generic "sha1", "sha256", "sha384" or "sha512"), overriding the configured default.`
-                );
+                writer.writeLine(`// (${names}), overriding the configured default.`);
+                writer.writeLine("// Any other algorithm name is rejected and returns (false, nil).");
             } else {
                 writer.writeLine('// ("sha1", "sha256", "sha384" or "sha512"), overriding the configured default.');
             }
-            writer.writeLine(`func (${this.className}) VerifySignatureWithAlgorithm(`);
+            writer.writeLine(`func (h ${this.className}) VerifySignatureWithAlgorithm(`);
             for (const parameter of this.buildParameters()) {
                 writer.writeLine(`\t${parameter.name} ${parameter.type},`);
             }
             writer.writeLine("\talgorithm string,");
             writer.writeLine(") (bool, error) {");
             if (algorithmHeader != null) {
-                writer.writeLine(`\tif mapped, ok := ${this.algorithmsVarName()}[algorithm]; ok {`);
-                writer.writeLine("\t\talgorithm = mapped");
+                // Only the configured wire values are accepted; anything else fails closed
+                // instead of reaching the digest factory.
+                writer.writeLine(`\tdigest, ok := ${this.algorithmsVarName()}[algorithm]`);
+                writer.writeLine("\tif !ok {");
+                writer.writeLine("\t\treturn false, nil");
                 writer.writeLine("\t}");
+            } else {
+                writer.writeLine("\tdigest := algorithm");
             }
+            writer.writeLine("\treturn h.verifyWithDigest(");
+            for (const parameter of this.buildParameters()) {
+                writer.writeLine(`\t\t${parameter.name},`);
+            }
+            writer.writeLine("\t\tdigest,");
+            writer.writeLine("\t)");
+            writer.writeLine("}");
+            writer.newLine();
+
+            writer.writeLine(`func (${this.className}) verifyWithDigest(`);
+            for (const parameter of this.buildParameters()) {
+                writer.writeLine(`\t${parameter.name} ${parameter.type},`);
+            }
+            writer.writeLine("\talgorithm string,");
+            writer.writeLine(") (bool, error) {");
             this.writeBody(writer, coreAlias, errorsAlias);
             writer.writeLine("}");
 
             if (algorithmHeader != null) {
                 writer.newLine();
-                this.writeVerifyRequest(writer, errorsAlias, algorithmHeader);
+                this.writeVerifyRequest(writer, algorithmHeader);
             }
         });
     }
@@ -315,11 +330,7 @@ class HmacHelperWriter {
      * handed to the caller's resolver because the SDK never holds secrets; when the header
      * is absent the resolver is called with "" and the configured default algorithm is used.
      */
-    private writeVerifyRequest(
-        writer: go.Writer,
-        errorsAlias: string,
-        algorithmHeader: FernIr.WebhookAlgorithmHeader
-    ): void {
+    private writeVerifyRequest(writer: go.Writer, algorithmHeader: FernIr.WebhookAlgorithmHeader): void {
         const httpAlias = writer.addImport("net/http");
         const varName = this.algorithmsVarName();
         const bodyType = this.hasBodySort ? "interface{}" : "string";
@@ -357,6 +368,12 @@ class HmacHelperWriter {
             "// and verifies the signature. signatureKey resolves the signing secret for the key id carried in"
         );
         writer.writeLine("// the settings header; it receives an empty key id when that header is absent.");
+        writer.writeLine("//");
+        writer.writeLine("// Expected rejections (missing signature header, missing key id, unsupported algorithm,");
+        writer.writeLine(
+            "// unresolved key, signature mismatch) return (false, nil); a non-nil error is only returned"
+        );
+        writer.writeLine("// when signatureKey fails or the inputs cannot be processed.");
         writer.writeLine(`func (h ${this.className}) VerifyRequest(`);
         writer.writeLine(`\theaders ${httpAlias}.Header,`);
         writer.writeLine(`\trequestBody ${bodyType},`);
@@ -367,7 +384,7 @@ class HmacHelperWriter {
         writer.writeLine(") (bool, error) {");
         writer.writeLine(`\tsignatureHeader := ${helperName}(headers, ${signatureHeader})`);
         writer.writeLine('\tif signatureHeader == "" {');
-        writer.writeLine(`\t\treturn false, ${errorsAlias}.New(${JSON.stringify(MISSING_SIGNATURE_MESSAGE)})`);
+        writer.writeLine("\t\treturn false, nil");
         writer.writeLine("\t}");
         writer.writeLine(`\talgorithm := "${this.mapAlgorithm(this.config.algorithm)}"`);
         writer.writeLine('\tkeyID := ""');
@@ -390,7 +407,7 @@ class HmacHelperWriter {
             if (algorithmHeader.keyIdParameter != null) {
                 writer.writeLine(`\t\tkeyID = settingsParts[${JSON.stringify(algorithmHeader.keyIdParameter)}]`);
                 writer.writeLine('\t\tif keyID == "" {');
-                writer.writeLine(`\t\t\treturn false, ${errorsAlias}.New(${JSON.stringify(MISSING_KEY_ID_MESSAGE)})`);
+                writer.writeLine("\t\t\treturn false, nil");
                 writer.writeLine("\t\t}");
             }
         } else if (algorithmHeader.keyIdDelimiter != null) {
@@ -403,21 +420,21 @@ class HmacHelperWriter {
         }
         writer.writeLine(`\t\tmapped, ok := ${varName}[algorithmValue]`);
         writer.writeLine("\t\tif !ok {");
-        writer.writeLine(`\t\t\treturn false, ${errorsAlias}.New(${JSON.stringify(UNSUPPORTED_ALGORITHM_MESSAGE)})`);
+        writer.writeLine("\t\t\treturn false, nil");
         writer.writeLine("\t\t}");
         writer.writeLine("\t\talgorithm = mapped");
         writer.writeLine("\t}");
         writer.writeLine("\tif signatureKey == nil {");
-        writer.writeLine(`\t\treturn false, ${errorsAlias}.New(${JSON.stringify(UNRESOLVED_KEY_MESSAGE)})`);
+        writer.writeLine("\t\treturn false, nil");
         writer.writeLine("\t}");
         writer.writeLine("\tresolvedKey, err := signatureKey(keyID)");
         writer.writeLine("\tif err != nil {");
         writer.writeLine("\t\treturn false, err");
         writer.writeLine("\t}");
         writer.writeLine('\tif resolvedKey == "" {');
-        writer.writeLine(`\t\treturn false, ${errorsAlias}.New(${JSON.stringify(UNRESOLVED_KEY_MESSAGE)})`);
+        writer.writeLine("\t\treturn false, nil");
         writer.writeLine("\t}");
-        writer.writeLine("\treturn h.VerifySignatureWithAlgorithm(");
+        writer.writeLine("\treturn h.verifyWithDigest(");
         writer.writeLine("\t\trequestBody,");
         writer.writeLine("\t\tsignatureHeader,");
         writer.writeLine("\t\tresolvedKey,");

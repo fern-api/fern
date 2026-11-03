@@ -6,7 +6,6 @@ import typing
 
 import pytest
 
-from fern_python.codegen.file_header import get_auto_generated_notice
 from core_utilities.shared.webhook_signature import (
     compute_hash,
     compute_hmac_signature,
@@ -14,6 +13,7 @@ from core_utilities.shared.webhook_signature import (
     notification_url_candidates,
     timing_safe_equal,
 )
+from fern_python.codegen.file_header import get_auto_generated_notice
 
 
 def test_compute_hash_sha256_hex() -> None:
@@ -880,3 +880,18 @@ def test_generated_verify_request_named_settings_fail_closed(caplog: typing.Any)
                 headers=headers, request_body="", notification_url=url, signature_key=resolve
             )
             assert "missing the key ID" in caplog.text
+
+
+def test_generated_verify_signature_unknown_algorithm_returns_false_without_raising(caplog: typing.Any) -> None:
+    helper = _settings_helper()
+    url = "https://example.com/sms"
+    common = dict(request_body="", signature_key=_AUTH_TOKEN, notification_url=url)
+    signature = _sign_with(url, _AUTH_TOKEN, "sha256")
+    # Only the configured wire values are accepted: raw digest names and unknown values fail
+    # closed with the same warning verify_request emits, instead of raising from the hash lookup.
+    for unsupported in ("sha256", "SHA256", "HMAC_SHA512", "sha384"):
+        caplog.clear()
+        with caplog.at_level(logging.WARNING):
+            assert not helper.verify_signature(signature_header=signature, algorithm=unsupported, **common)
+        assert "unsupported algorithm" in caplog.text
+    assert helper.verify_signature(signature_header=signature, algorithm="HMAC_SHA256", **common)

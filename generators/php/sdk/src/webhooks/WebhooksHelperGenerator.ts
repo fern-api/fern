@@ -448,6 +448,16 @@ export class WebhooksHelperGenerator {
             writer.writeLine("return false;");
             writer.dedent();
             writer.writeLine("}");
+            if (config.algorithmHeader != null) {
+                // Only the configured wire values are accepted; unknown names fail closed with the
+                // same warning verifyRequest emits instead of letting hash_hmac throw.
+                writer.writeLine("if ($algorithm !== null && !array_key_exists($algorithm, self::hmacAlgorithms())) {");
+                writer.indent();
+                writer.writeLine(`error_log(${this.phpString(UNSUPPORTED_ALGORITHM_MESSAGE)});`);
+                writer.writeLine("return false;");
+                writer.dedent();
+                writer.writeLine("}");
+            }
 
             if (config.timestamp != null) {
                 writer.newLine();
@@ -829,7 +839,7 @@ export class WebhooksHelperGenerator {
         if (config.algorithmHeader == null) {
             return `$algorithm ?? ${fallback}`;
         }
-        return `$algorithm !== null ? (self::hmacAlgorithms()[$algorithm] ?? $algorithm) : ${fallback}`;
+        return `$algorithm !== null ? self::hmacAlgorithms()[$algorithm] : ${fallback}`;
     }
 
     private mapHmacAlgorithm(algorithm: FernIr.HmacAlgorithm): string {

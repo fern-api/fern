@@ -335,7 +335,7 @@ export class WebhooksHelperGenerator extends FileGenerator<CSharpFile, SdkGenera
         writer.writeTextStatement("return false");
         writer.dedent();
         writer.writeLine("}");
-        writer.writeTextStatement("algorithm = HmacAlgorithms[algorithmValue]");
+        writer.writeTextStatement("algorithm = algorithmValue");
         writer.dedent();
         writer.writeLine("}");
         writer.writeTextStatement("var resolvedKey = signatureKey == null ? null : signatureKey(keyId)");
@@ -378,6 +378,17 @@ export class WebhooksHelperGenerator extends FileGenerator<CSharpFile, SdkGenera
         writer.writeTextStatement("return false");
         writer.dedent();
         writer.writeLine("}");
+        if (this.config.algorithmHeader != null) {
+            // Only the configured wire values are accepted; unknown names fail closed with the
+            // same warning VerifyRequest emits instead of throwing from the HMAC factory.
+            writer.writeLine("if (algorithm != null && !HmacAlgorithms.ContainsKey(algorithm))");
+            writer.writeLine("{");
+            writer.indent();
+            writer.writeTextStatement(`System.Diagnostics.Trace.TraceWarning("${UNSUPPORTED_ALGORITHM_MESSAGE}")`);
+            writer.writeTextStatement("return false");
+            writer.dedent();
+            writer.writeLine("}");
+        }
         writer.newLine();
 
         if (this.config.timestamp != null) {
@@ -727,18 +738,29 @@ export class WebhooksHelperGenerator extends FileGenerator<CSharpFile, SdkGenera
         writer.writeLine("}");
         // A form-parameter multimap: param -> string | collection of strings. Keys sorted;
         // per key, values deduped and sorted; key + value concatenated with no separator.
-        writer.writeLine(
-            "else if (requestBody is global::System.Collections.Generic.IReadOnlyDictionary<" +
-                "string, object?> bodyStringMap)"
-        );
+        // Matched via the non-generic IDictionary so that Dictionary<string, string>,
+        // Dictionary<string, object> and Dictionary<string, string[]> are all accepted
+        // (generic dictionary interfaces are invariant in their value type).
+        writer.writeLine("else if (requestBody is global::System.Collections.IDictionary bodyStringMap)");
         writer.writeLine("{");
         writer.indent();
         writer.writeTextStatement("var bodyStringBuilder = new global::System.Text.StringBuilder()");
-        writer.writeLine(
-            "foreach (var bodyStringKey in global::System.Linq.Enumerable.OrderBy(" +
-                "bodyStringMap.Keys, bodyStringItemKey => bodyStringItemKey, " +
-                "global::System.StringComparer.Ordinal))"
-        );
+        writer.writeTextStatement("var bodyStringKeys = new global::System.Collections.Generic.List<string>()");
+        writer.writeLine("foreach (var bodyStringRawKey in bodyStringMap.Keys)");
+        writer.writeLine("{");
+        writer.indent();
+        writer.writeLine("if (bodyStringRawKey is not string bodyStringTypedKey)");
+        writer.writeLine("{");
+        writer.indent();
+        // Non-string keys cannot be signed; fail closed rather than throwing.
+        writer.writeTextStatement("return false");
+        writer.dedent();
+        writer.writeLine("}");
+        writer.writeTextStatement("bodyStringKeys.Add(bodyStringTypedKey)");
+        writer.dedent();
+        writer.writeLine("}");
+        writer.writeTextStatement("bodyStringKeys.Sort(global::System.StringComparer.Ordinal)");
+        writer.writeLine("foreach (var bodyStringKey in bodyStringKeys)");
         writer.writeLine("{");
         writer.indent();
         writer.writeTextStatement("var bodyStringValue = bodyStringMap[bodyStringKey]");
@@ -836,7 +858,7 @@ export class WebhooksHelperGenerator extends FileGenerator<CSharpFile, SdkGenera
         if (this.config.algorithmHeader == null) {
             return `algorithm ?? ${fallback}`;
         }
-        return `(algorithm != null && HmacAlgorithms.TryGetValue(algorithm, out var mappedAlgorithm) ? mappedAlgorithm : algorithm ?? ${fallback})`;
+        return `(algorithm != null ? HmacAlgorithms[algorithm] : ${fallback})`;
     }
 
     private mapAlgorithm(algorithm: FernIr.HmacAlgorithm): string {

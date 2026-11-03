@@ -87,7 +87,7 @@ export class WebhooksHelperGenerator {
         if (config.algorithmHeader == null) {
             return `algorithm ?? ${fallback}`;
         }
-        return `algorithm != null ? (HMAC_ALGORITHMS[algorithm] ?? algorithm) : ${fallback}`;
+        return `algorithm != null ? HMAC_ALGORITHMS[algorithm] : ${fallback}`;
     }
 
     /**
@@ -328,6 +328,16 @@ export class WebhooksHelperGenerator {
             "    return false;",
             "}"
         );
+        if (config.algorithmHeader != null) {
+            // Only the configured wire values (e.g. "HMAC_SHA256") are accepted; anything else
+            // fails closed with the same warning `verifyRequest` emits instead of reaching crypto.
+            lines.push(
+                "if (algorithm != null && !isSupportedAlgorithm(algorithm)) {",
+                `    console.warn(${JSON.stringify(UNSUPPORTED_ALGORITHM_MESSAGE)});`,
+                "    return false;",
+                "}"
+            );
+        }
 
         // Timestamp validation
         if (config.timestamp != null) {

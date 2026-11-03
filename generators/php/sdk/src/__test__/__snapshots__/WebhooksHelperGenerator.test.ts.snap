@@ -56,6 +56,10 @@ class WebhooksHelper
         if ($requestBody === null || $requestBody === '' || $requestBody === [] || $signatureKey === null || $signatureKey === '') {
             return false;
         }
+        if ($algorithm !== null && !array_key_exists($algorithm, self::hmacAlgorithms())) {
+            error_log("Webhook signature verification could not run: unsupported algorithm");
+            return false;
+        }
 
         $signature = $signatureHeader;
 
@@ -88,7 +92,7 @@ class WebhooksHelper
             $expected = WebhookSignature::computeHmacSignature(
                 payload: $payload,
                 secret: $signatureKey,
-                algorithm: $algorithm !== null ? (self::hmacAlgorithms()[$algorithm] ?? $algorithm) : "sha1",
+                algorithm: $algorithm !== null ? self::hmacAlgorithms()[$algorithm] : "sha1",
                 encoding: "base64",
             );
             if (WebhookSignature::timingSafeEqual($signature, $expected)) {

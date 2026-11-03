@@ -257,7 +257,13 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
             invocation.add(first ? "$L" : ", $L", parameter.name);
             first = false;
         }
-        invocation.add(", $S)", mapHmacAlgorithm(config.getAlgorithm()));
+        if (config.getAlgorithmHeader().isPresent()) {
+            // With an algorithm header the main overload only accepts the configured wire values, so the
+            // default is selected by passing null rather than the digest name.
+            invocation.add(", null)");
+        } else {
+            invocation.add(", $S)", mapHmacAlgorithm(config.getAlgorithm()));
+        }
         method.addStatement(invocation.build());
         return method.build();
     }
@@ -282,6 +288,14 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
                         "if (requestBody == null || requestBody.isEmpty() || signatureKey == null || signatureKey.isEmpty())")
                 .addStatement("return false")
                 .endControlFlow();
+        if (config.getAlgorithmHeader().isPresent()) {
+            // Only the configured wire values are accepted; unknown names fail closed with the same warning
+            // verifyRequest emits instead of throwing from the Mac lookup.
+            method.beginControlFlow("if (algorithm != null && !HMAC_ALGORITHMS.containsKey(algorithm))")
+                    .addStatement("LOGGER.warning($S)", UNSUPPORTED_ALGORITHM_MESSAGE)
+                    .addStatement("return false")
+                    .endControlFlow();
+        }
 
         config.getTimestamp().ifPresent(timestamp -> addTimestampValidation(method, timestamp));
 
@@ -453,7 +467,7 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
                 .addStatement("LOGGER.warning($S)", UNSUPPORTED_ALGORITHM_MESSAGE)
                 .addStatement("return false")
                 .endControlFlow()
-                .addStatement("algorithm = HMAC_ALGORITHMS.get(algorithmValue)")
+                .addStatement("algorithm = algorithmValue")
                 .endControlFlow()
                 .addStatement("String resolvedKey = signatureKey == null ? null : signatureKey.apply(keyId)")
                 .beginControlFlow("if (resolvedKey == null || resolvedKey.isEmpty())")
@@ -814,6 +828,16 @@ public final class WebhooksHelperGenerator extends AbstractFileGenerator {
     }
 
     private String buildAlgorithmJavadoc() {
+        if (config.getAlgorithmHeader().isPresent()) {
+            String names = config.getAlgorithmHeader().get().getAlgorithms().stream()
+                    .map(option -> "\"" + option.getWireValue() + "\"")
+                    .collect(java.util.stream.Collectors.joining(", "));
+            return buildJavadoc()
+                    + "\nThe {@code algorithm} parameter selects the HMAC algorithm (" + names + ");"
+                    + " any other value logs a warning and returns {@code false}."
+                    + " Pass {@code null} to use the configured default (\""
+                    + mapHmacAlgorithm(config.getAlgorithm()) + "\").\n";
+        }
         return buildJavadoc()
                 + "\nThe {@code algorithm} parameter selects the HMAC algorithm (\"sha1\", \"sha256\", \"sha384\" or \"sha512\");"
                 + " pass {@code null} to use the configured default (\""

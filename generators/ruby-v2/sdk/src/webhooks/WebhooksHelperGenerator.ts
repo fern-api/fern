@@ -612,6 +612,16 @@ export class WebhooksHelperGenerator {
         writer.dedent();
         writer.writeLine("end");
         writer.writeLine("return false if request_body.nil? || signature_key.nil? || signature_key.empty?");
+        if (config.algorithmHeader != null) {
+            // Only the configured wire values are accepted; unknown names fail closed with the
+            // same warning verify_request emits instead of raising from the digest lookup.
+            writer.writeLine("if !algorithm.nil? && !HMAC_ALGORITHMS.key?(algorithm)");
+            writer.indent();
+            writer.writeLine(`warn(${JSON.stringify(UNSUPPORTED_ALGORITHM_MESSAGE)})`);
+            writer.writeLine("return false");
+            writer.dedent();
+            writer.writeLine("end");
+        }
 
         if (config.timestamp != null) {
             writer.newLine();
@@ -671,7 +681,7 @@ export class WebhooksHelperGenerator {
         if (config.algorithmHeader == null) {
             return `algorithm || ${fallback}`;
         }
-        return `algorithm.nil? ? ${fallback} : HMAC_ALGORITHMS.fetch(algorithm, algorithm)`;
+        return `algorithm.nil? ? ${fallback} : HMAC_ALGORITHMS.fetch(algorithm)`;
     }
 
     private static writeTimestampValidation(writer: ruby.Writer, timestamp: FernIr.WebhookTimestampConfig): void {

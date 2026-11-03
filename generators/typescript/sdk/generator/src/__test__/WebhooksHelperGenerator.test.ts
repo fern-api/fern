@@ -165,7 +165,9 @@ describe("WebhooksHelperGenerator", () => {
             );
             expect(text).toContain('getHeader(headers, "X-Twilio-Webhook-Signature-Settings")');
             expect(text).toContain("public static async verifyRequest(");
-            expect(text).toContain('algorithm != null ? (HMAC_ALGORITHMS[algorithm] ?? algorithm) : "sha1"');
+            expect(text).toContain('algorithm != null ? HMAC_ALGORITHMS[algorithm] : "sha1"');
+            expect(text).toContain("if (algorithm != null && !isSupportedAlgorithm(algorithm)) {");
+            expect(text).not.toContain("?? algorithm");
             expect(text).toMatchSnapshot();
         });
 

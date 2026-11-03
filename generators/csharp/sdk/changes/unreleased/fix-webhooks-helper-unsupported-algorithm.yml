@@ -1,0 +1,3 @@
+- summary: |
+    Generated `WebhooksHelper`: `verifySignature` with an unsupported `algorithm` now logs the same "unsupported algorithm" warning as `verifyRequest` and returns false instead of throwing; when an `algorithm-header` is configured only the configured wire values (e.g. `HMAC_SHA1`, `HMAC_SHA256`) are accepted, raw digest names are no longer passed through. `VerifyRequest`/`VerifySignature` also accept any `IDictionary` request body (e.g. `Dictionary<string, string>`), not only `IReadOnlyDictionary<string, object?>`.
+  type: fix

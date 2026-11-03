@@ -2,13 +2,13 @@ import json
 from dataclasses import dataclass, field
 from typing import List, Optional, Tuple
 
+import fern.ir.resources as ir_types
+
 from fern_python.codegen import Project
 from fern_python.codegen.filepath import Filepath
 from fern_python.codegen.module_manager import ModuleExport
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
 from fern_python.utils import pascal_case, snake_case
-
-import fern.ir.resources as ir_types
 
 WEBHOOKS_MODULE_NAME = "webhooks"
 WEBHOOKS_HELPER_FILE_NAME = "webhooks_helper"
@@ -296,7 +296,7 @@ class _HmacHelperWriter:
         fallback = json.dumps(_map_hmac_algorithm(self._config.algorithm))
         if self._algorithm_header is None:
             return f"algorithm or {fallback}"
-        return f"HMAC_ALGORITHMS.get(algorithm, algorithm) if algorithm is not None else {fallback}"
+        return f"HMAC_ALGORITHMS[algorithm] if algorithm is not None else {fallback}"
 
     def _build_verify_request_parameters(self) -> List[str]:
         body_type = (
@@ -481,6 +481,12 @@ class _HmacHelperWriter:
         lines.append('if signature_header is None or signature_header == "":')
         lines.append(f"    _logger.warning({json.dumps(MISSING_SIGNATURE_MESSAGE)})")
         lines.append("    return False")
+        if self._algorithm_header is not None:
+            # Only the configured wire values are accepted; unknown names fail closed with the
+            # same warning verify_request emits instead of raising from the hash lookup.
+            lines.append("if algorithm is not None and algorithm not in HMAC_ALGORITHMS:")
+            lines.append(f"    _logger.warning({json.dumps(UNSUPPORTED_ALGORITHM_MESSAGE)})")
+            lines.append("    return False")
         lines.append("if request_body is None or signature_key is None:")
         lines.append("    return False")
 
