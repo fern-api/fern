@@ -105,6 +105,47 @@ function jsonBlobRef(value: unknown): { ref: BlobRef; hash: string; buf: Buffer 
 }
 
 /**
+ * Well-known `fullPath` each docs.yml `agents` file is served from. Renderers
+ * look these files up by fixed name, so a file configured under another name
+ * (e.g. `robots-txt: ./seo/robots-noindex.txt`) is also published at its
+ * well-known path.
+ */
+const WELL_KNOWN_AGENT_FILE_PATHS = {
+    robotsTxt: "robots.txt",
+    llmsTxt: "llms.txt",
+    llmsFullTxt: "llms-full.txt"
+} as const;
+
+export function aliasWellKnownAgentFiles({
+    agents,
+    fileManifest,
+    fileIdToPath
+}: {
+    agents: DocsDefinition["config"]["agents"];
+    fileManifest: Record<string, FileManifestEntry> | undefined;
+    fileIdToPath: Map<string, string> | undefined;
+}): Record<string, FileManifestEntry> | undefined {
+    if (agents == null || fileManifest == null) {
+        return fileManifest;
+    }
+    let aliased: Record<string, FileManifestEntry> | undefined;
+    for (const [key, wellKnownPath] of Object.entries(WELL_KNOWN_AGENT_FILE_PATHS)) {
+        const fileId = agents[key as keyof typeof WELL_KNOWN_AGENT_FILE_PATHS];
+        if (fileId == null) {
+            continue;
+        }
+        const configuredPath = fileIdToPath?.get(fileId) ?? fileId;
+        const entry = fileManifest[configuredPath];
+        if (configuredPath === wellKnownPath || entry == null) {
+            continue;
+        }
+        aliased ??= { ...fileManifest };
+        aliased[wellKnownPath] = { ...entry, filename: wellKnownPath };
+    }
+    return aliased ?? fileManifest;
+}
+
+/**
  * Build a DocsPublishInput from a resolved DocsDefinition and collect
  * all content blobs that may need uploading.
  *
@@ -227,7 +268,11 @@ export function buildLedgerInput({
         config: ledgerConfig,
         apiManifest: apiManifestRef,
         jsFiles: jsFilesRef,
-        fileManifest,
+        fileManifest: aliasWellKnownAgentFiles({
+            agents: docsDefinition.config.agents,
+            fileManifest,
+            fileIdToPath
+        }),
         redirects: null,
         locale: locale ?? docsDefinition.config.translations?.defaultLocale ?? "en",
         git
