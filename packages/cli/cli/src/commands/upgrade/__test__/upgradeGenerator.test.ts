@@ -966,6 +966,19 @@ groups:
             ]);
         });
 
+        it("reports the newest post-cutover version once when both candidates cross the cutover", async () => {
+            await mockGeneratorsYaml("3.86.0");
+            stubSdkGenApiDiscovery({ compatibleVersion: "4.1.0", withheldMajorVersion: "5.0.0" });
+
+            const result = await load(false);
+
+            expect(result.updatedConfiguration).toContain("version: 3.86.0");
+            expect(result.skippedMajorUpgrades).toEqual([]);
+            expect(result.sdkConfigMigrationRequired).toEqual([
+                expect.objectContaining({ currentVersion: "3.86.0", sdkConfigVersion: "5.0.0" })
+            ]);
+        });
+
         it("keeps the configured version when no pre-cutover candidate exists", async () => {
             await mockGeneratorsYaml("3.90.0");
             const { getLatestGeneratorVersion } = await import("@fern-api/configuration-loader");

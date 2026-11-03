@@ -308,22 +308,26 @@ export async function loadAndUpdateGenerators({
             };
             const { version: candidateVersion, sdkGenApiVersions } = await resolveCandidateVersion(includeMajor);
             let latestVersion = candidateVersion;
-            const migrationRequired =
-                latestVersion != null &&
+            const crossingCandidate =
+                candidateVersion != null &&
                 crossesSdkConfigCutover({
                     generatorId,
                     currentVersion: currentGeneratorVersion,
-                    candidateVersion: latestVersion
-                });
-            if (migrationRequired && latestVersion != null) {
+                    candidateVersion
+                })
+                    ? candidateVersion
+                    : undefined;
+            let migrationEntry: SdkConfigMigrationRequired | undefined;
+            if (crossingCandidate != null) {
                 // A post-cutover version is configured from sdk-config.yml, so writing it into
                 // generators.yml would leave a configuration that `fern generate` rejects.
-                sdkConfigMigrationRequired.push({
+                migrationEntry = {
                     generatorName,
                     groupName,
                     currentVersion: currentGeneratorVersion,
-                    sdkConfigVersion: latestVersion
-                });
+                    sdkConfigVersion: crossingCandidate
+                };
+                sdkConfigMigrationRequired.push(migrationEntry);
                 const fallbackVersion = includeMajor ? (await resolveCandidateVersion(false)).version : undefined;
                 latestVersion =
                     fallbackVersion != null &&
@@ -462,7 +466,7 @@ export async function loadAndUpdateGenerators({
                                 currentVersion: versionToUse,
                                 latestMajorVersion
                             });
-                        } else if (!migrationRequired) {
+                        } else if (migrationEntry == null) {
                             // `--include-major` would cross the cutover, so point at migration instead.
                             sdkConfigMigrationRequired.push({
                                 generatorName,
@@ -470,6 +474,9 @@ export async function loadAndUpdateGenerators({
                                 currentVersion: versionToUse,
                                 sdkConfigVersion: latestMajorVersion
                             });
+                        } else if (semver.gt(latestMajorVersion, migrationEntry.sdkConfigVersion)) {
+                            // Report the newest post-cutover version, not the first one discovered.
+                            migrationEntry.sdkConfigVersion = latestMajorVersion;
                         }
                     }
                 }
