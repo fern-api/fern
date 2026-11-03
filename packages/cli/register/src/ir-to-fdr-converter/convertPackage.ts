@@ -562,7 +562,9 @@ function convertIrEnvironments({
                         return {
                             id: FdrCjsSdk.EnvironmentId(baseUrlId),
                             baseUrl: endpointBaseUrl,
-                            audiences: singleBaseUrlEnvironment.audiences
+                            audiences: singleBaseUrlEnvironment.audiences,
+                            environmentId: singleBaseUrlEnvironment.id,
+                            baseUrlId
                         };
                     });
                 });
@@ -588,7 +590,9 @@ function convertIrEnvironments({
                 return {
                     id: FdrCjsSdk.EnvironmentId(singleBaseUrlEnvironment.id),
                     baseUrl: endpointBaseUrl,
-                    audiences: singleBaseUrlEnvironment.audiences
+                    audiences: singleBaseUrlEnvironment.audiences,
+                    environmentId: singleBaseUrlEnvironment.id,
+                    baseUrlId: endpointBaseUrlId
                 };
             });
         default:
@@ -632,7 +636,9 @@ function convertIrWebSocketEnvironments({
                 return {
                     id: FdrCjsSdk.EnvironmentId(singleBaseUrlEnvironment.id),
                     baseUrl: channelBaseUrl,
-                    audiences: singleBaseUrlEnvironment.audiences
+                    audiences: singleBaseUrlEnvironment.audiences,
+                    environmentId: singleBaseUrlEnvironment.id,
+                    baseUrlId: channelBaseUrlId
                 };
             });
         default:

@@ -1,0 +1,6 @@
+- summary: |
+    When an environment has multiple base URLs, `fern generate --docs` now registers both the
+    environment name and the base URL name for each endpoint and websocket channel. The hosted
+    `openapi.json` export uses them to label servers, e.g. `Production (AgentRest)`, instead of
+    showing the environment name for some endpoints and the base URL name for others.
+  type: fix
