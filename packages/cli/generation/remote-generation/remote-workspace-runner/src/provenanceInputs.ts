@@ -1,5 +1,6 @@
 import { generatorsYml } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
+import { toPosixPath } from "@fern-api/fs-utils";
 import { createHash } from "crypto";
 import { readFile, stat } from "fs/promises";
 import path from "path";
@@ -163,7 +164,7 @@ async function digestFileIfPresent(
         return undefined;
     }
     return {
-        path: path.relative(fernDirectory, absolutePath).split(path.sep).join("/"),
+        path: toPosixPath(path.relative(fernDirectory, absolutePath)),
         sha256: sha256(await readFile(absolutePath))
     };
 }
