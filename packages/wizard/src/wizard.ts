@@ -8,6 +8,7 @@ import { pathToFileURL } from "url";
 import { parse as parseYaml } from "yaml";
 import { detectRepository } from "./detect";
 import { isFernCliInstalled } from "./detect/package-manager";
+import { detectFernProject } from "./detect/project";
 import {
     type Availability,
     type AvailabilityChecker,
@@ -22,6 +23,7 @@ import { pickAvailableName } from "./docs-site/name-picker";
 import { type DocsSiteChoices, defaultDocsSiteChoices } from "./docs-site/options";
 import { promptDocsSiteChoices } from "./docs-site/prompt";
 import { scaffoldDocsSite } from "./docs-site/scaffold";
+import { DOCS_SKILL_PATHS, type DocsSkillTarget } from "./docs-site/skill-paths";
 import { showSplash } from "./splash";
 import {
     type Command,
@@ -37,9 +39,12 @@ import {
     isDockerRunning,
     isNonEmptyDirectory,
     listApis,
+    matchSdkConfigTargets,
     readConfiguredSdks,
     readOrganization,
+    readSdkConfigTargets,
     SDK_LANGUAGES,
+    type SdkConfigTarget,
     type SdkLanguage,
     sdkGroupWritesOnlyLocally,
     setGeneratorVersion
@@ -75,16 +80,6 @@ import {
 interface SpecAnswers {
     specPath: string;
 }
-
-type DocsSkillTarget = Exclude<Agent, "vscode"> | "github-copilot";
-
-const DOCS_SKILL_PATHS: Record<DocsSkillTarget, string> = {
-    "claude-code": ".claude/skills/fern-docs/",
-    cursor: ".agents/skills/fern-docs/",
-    codex: ".agents/skills/fern-docs/",
-    "github-copilot": ".agents/skills/fern-docs/",
-    windsurf: ".windsurf/skills/fern-docs/"
-};
 
 const ORG_PLACEHOLDER = "<your-org>";
 
@@ -127,6 +122,7 @@ export function planActions(
     const notes: string[] = [];
     const wantsSdks = products.includes("sdks");
     const wantsDocs = products.includes("docs");
+    const docsInitializationOffered = wantsDocs && !detection.fernProject.docsConfigExists;
     if (detection.fernCliVersion === null && !flags.skipInstall) {
         actions.push({
             id: "install-cli",
@@ -145,7 +141,7 @@ export function planActions(
     if (detection.fernProject.exists) {
         notes.push("Existing Fern project found in fern/, so no new project is needed");
     } else if (wantsApiProject) {
-        const initApi = planInitApi(detection, flags, notes);
+        const initApi = planInitApi(detection, flags, notes, docsInitializationOffered);
         if (initApi !== undefined) {
             actions.push(initApi);
         }
@@ -172,7 +168,6 @@ export function planActions(
             selectedByDefault: true
         });
     }
-    const docsInitializationOffered = wantsDocs && !detection.fernProject.docsConfigExists;
     const docsSiteAlreadyExists = detection.fernProject.docsConfigExists === true;
     if (shouldOfferDocsSkill(docsInitializationOffered, docsSiteAlreadyExists, detection.docsSkillInstalled)) {
         actions.push(docsSkillAction(detection));
@@ -198,7 +193,8 @@ export function planActions(
         actions.push({
             id: "generate-sdks",
             title: "Pick your SDK languages, then generate them into sdks/",
-            description: "Adds a generator for each language you pick and generates the SDKs into this repository.",
+            description:
+                "Generates configured SDKs. Legacy projects can add languages; SDK Config projects must have the target in fern/sdk-config.yml.",
             commands: [displayFernCommand(detection, flags, ["generate"])],
             files: ["sdks/"],
             selectedByDefault: true
@@ -292,7 +288,12 @@ function agentMcpAction(detection: Detection, flags: WizardFlags): ActionPlan {
     };
 }
 
-function planInitApi(detection: Detection, flags: WizardFlags, notes: string[]): ActionPlan | undefined {
+function planInitApi(
+    detection: Detection,
+    flags: WizardFlags,
+    notes: string[],
+    initDocsSelected: boolean
+): ActionPlan | undefined {
     const openApiSpecs = getOpenApiSpecs(detection.apiSpecs);
     const org = flags.org ?? ORG_PLACEHOLDER;
     if (openApiSpecs.length > 0) {
@@ -303,16 +304,8 @@ function planInitApi(detection: Detection, flags: WizardFlags, notes: string[]):
                 spec === undefined
                     ? "Create a Fern project from your API spec"
                     : `Create a Fern project from ${spec.path}`,
-            description: `Creates fern/ with fern.config.json and generators.yml pointing at ${spec?.path ?? "the spec you pick next"}.`,
-            commands: [
-                displayFernCommand(detection, flags, [
-                    "init",
-                    "--openapi",
-                    spec?.path ?? "<selected-spec>",
-                    "--org",
-                    org
-                ])
-            ],
+            description: `Creates fern/ with fern.config.json and wires it to ${spec?.path ?? "the spec you pick next"} for SDK generation.`,
+            commands: [displayFernCommand(detection, flags, initApiArgs(spec, org, initDocsSelected))],
             files: [],
             selectedByDefault: true
         };
@@ -333,7 +326,7 @@ function planInitApi(detection: Detection, flags: WizardFlags, notes: string[]):
         id: "init-api",
         title: "Create a starter Fern project",
         description: "No API spec was found, so Fern creates fern/ with a sample OpenAPI spec you can replace.",
-        commands: [displayFernCommand(detection, flags, ["init", "--org", org])],
+        commands: [displayFernCommand(detection, flags, initApiArgs(undefined, org, initDocsSelected))],
         files: [],
         selectedByDefault: true
     };
@@ -491,7 +484,8 @@ export async function runWizard(flags: WizardFlags): Promise<number> {
                     detection,
                     { ...flags, org },
                     docsSiteChoices ?? scaffoldedDocsSite,
-                    published
+                    published,
+                    step.actions.some((candidate) => candidate.id === "init-docs")
                 );
                 if (action.id === "init-docs" && docsSiteChoices !== undefined) {
                     scaffoldedDocsSite = docsSiteChoices;
@@ -548,6 +542,28 @@ const AGENT_NAMES: Record<Agent, string> = {
     windsurf: "Windsurf"
 };
 
+export async function actionPrerequisiteSkipReason(actionId: ActionId, dir: string): Promise<string | undefined> {
+    switch (actionId) {
+        case "publish-docs":
+        case "docs-skills":
+            return (await isFile(path.join(dir, "fern", "docs.yml")))
+                ? undefined
+                : "Skipped: no docs site. Run `fern init --docs` first.";
+        case "generate-sdks":
+            return (await detectFernProject(dir)).exists
+                ? undefined
+                : "Skipped: no Fern project. Run `fern init` first.";
+        case "install-cli":
+        case "init-api":
+        case "init-docs":
+        case "agent-mcp":
+        case "agent-handoff":
+            return undefined;
+        default:
+            assertNever(actionId);
+    }
+}
+
 /** Runs one action quietly and prints a one-line result. */
 async function runAction(
     action: ActionPlan,
@@ -555,8 +571,14 @@ async function runAction(
     detection: Detection,
     flags: WizardFlags,
     docsSiteChoices: DocsSiteChoices | undefined,
-    published: PublishResult
+    published: PublishResult,
+    initDocsSelected: boolean
 ): Promise<void> {
+    const skipReason = await actionPrerequisiteSkipReason(action.id, dir);
+    if (skipReason !== undefined) {
+        printSkipped(skipReason);
+        return;
+    }
     switch (action.id) {
         case "install-cli":
             await withStatus("Installing the Fern CLI", () => runCommandQuietly(installCommand(detection), dir));
@@ -568,10 +590,7 @@ async function runAction(
         case "init-api": {
             // planActions only offers init-api when there is an OpenAPI spec or nothing to import at all.
             const spec = await chooseSpec(getOpenApiSpecs(detection.apiSpecs), flags.yes);
-            const args =
-                spec === undefined
-                    ? ["init", ...orgArgs(flags.org)]
-                    : ["init", "--openapi", spec.path, ...orgArgs(flags.org)];
+            const args = initApiArgs(spec, flags.org, initDocsSelected);
             await withStatus("Creating your Fern project", () => runFernQuietly(args, dir, detection));
             printDone(
                 spec === undefined ? "Created a starter Fern project in fern/" : `Created fern/ from ${spec.path}`
@@ -616,15 +635,17 @@ async function runAction(
             return;
         }
         case "agent-mcp":
-            if (flags.yes && (await readFernToken()) === undefined) {
-                // Signing in opens a browser and waits, which a non-interactive run can't do.
-                printSkipped(
-                    "Not signed in to Fern, so the MCP server wasn't connected. Run `fern login`, then `fern mcp install`."
-                );
-                return;
+            if ((await readFernToken()) === undefined) {
+                if (flags.yes) {
+                    // Signing in opens a browser and waits, which a non-interactive run can't do.
+                    printSkipped(
+                        "Not signed in to Fern, so the MCP server wasn't connected. Run `fern login`, then `fern mcp install`."
+                    );
+                    return;
+                }
+                // Signing in may open a browser and wait for it, so it keeps the terminal.
+                await runFernCommand(["login"], dir, detection);
             }
-            // Signing in may open a browser and wait for it, so it keeps the terminal.
-            await runFernCommand(["login"], dir, detection);
             await withStatus("Connecting Fern's MCP server", () => runFernQuietly(["mcp", "install"], dir, detection));
             printDone("Connected Fern's MCP server to your coding agents");
             return;
@@ -806,6 +827,12 @@ async function promptForDocsUrl(takenDomain: string): Promise<string> {
 
 /** Lets the user pick SDK languages, adds their generators, and generates the SDKs into this repository. */
 async function generateSdks(dir: string, detection: Detection, results: PublishResult): Promise<void> {
+    await checkProjectOrganization(dir);
+    const sdkConfigTargets = await readSdkConfigTargets(dir);
+    if (sdkConfigTargets !== undefined) {
+        await generateConfiguredSdkTargets(dir, detection, sdkConfigTargets, results);
+        return;
+    }
     const apis = await listApis(dir);
     if (apis.length > 1) {
         printSkipped(
@@ -813,7 +840,6 @@ async function generateSdks(dir: string, detection: Detection, results: PublishR
         );
         return;
     }
-    await checkProjectOrganization(dir);
     const group = await ensureSdkGroup(dir);
     const groupArgs = group === undefined ? [] : ["--group", group];
     const configured = await readConfiguredSdks(dir);
@@ -882,6 +908,92 @@ async function generateSdks(dir: string, detection: Detection, results: PublishR
         const reason = generatorError(output);
         throw new Error(
             `Fern wrote no files for the ${empty.join(", ")} SDK${empty.length === 1 ? "" : "s"}${reason === undefined ? "" : `. The generator reported: ${reason}`}. Run \`fern generate --log-level debug\` to see more.`
+        );
+    }
+}
+
+async function generateConfiguredSdkTargets(
+    dir: string,
+    detection: Detection,
+    targets: SdkConfigTarget[],
+    results: PublishResult
+): Promise<void> {
+    const configHint = "Add SDK targets to `fern/sdk-config.yml` first.";
+    if (targets.length === 0) {
+        printSkipped(`Skipped: no SDK targets are configured. ${configHint}`);
+        return;
+    }
+
+    const configured = await readConfiguredSdks(dir);
+    if (configured.length === 0) {
+        printSkipped(`Skipped: no supported SDK targets are configured. ${configHint}`);
+        return;
+    }
+    const configuredGenerators = new Set(configured.map((sdk) => sdk.language.generator));
+    const answer = await inquirer.prompt<{ generators: string[] }>([
+        {
+            type: "checkbox",
+            name: "generators",
+            message: "Which configured SDKs do you want?",
+            pageSize: SDK_LANGUAGES.length + 1,
+            choices: SDK_LANGUAGES.map((language) => ({
+                name: language.free ? language.label : `${language.label} ${chalk.dim("(Enterprise plan)")}`,
+                value: language.generator,
+                checked: configuredGenerators.has(language.generator)
+            }))
+        }
+    ]);
+    const selected = SDK_LANGUAGES.filter((language) => answer.generators.includes(language.generator));
+    const { targets: selectedTargets, unconfigured } = matchSdkConfigTargets(selected, configured);
+    if (unconfigured.length > 0) {
+        const names = unconfigured.map((language) => language.label).join(", ");
+        printSkipped(
+            `Skipped ${names} because ${unconfigured.length === 1 ? "it isn't" : "they aren't"} configured. ${configHint}`
+        );
+    }
+
+    const localTargets = selectedTargets.filter((sdk) => sdk.writesLocally !== false);
+    const publishingTargets = selectedTargets.filter((sdk) => sdk.writesLocally === false);
+    if (publishingTargets.length > 0) {
+        printSkipped(
+            `Skipped ${publishingTargets.map((sdk) => sdk.language.label).join(", ")} because their output in \`fern/sdk-config.yml\` may publish SDKs.`
+        );
+    }
+    if (localTargets.length === 0) {
+        return;
+    }
+
+    const targetLanguages = [...new Set(localTargets.map((sdk) => sdk.sdkConfigTarget))].filter(
+        (language): language is string => language !== undefined
+    );
+    const names = localTargets.map((sdk) => sdk.language.label).join(", ");
+    const output = await withStatus(`Generating ${names} SDKs on Fern's servers`, () =>
+        runFernQuietly(
+            ["generate", ...targetLanguages.flatMap((language) => ["--target", language]), "--no-prompt"],
+            dir,
+            detection
+        )
+    );
+
+    const generated: Array<{ label: string; path: string }> = [];
+    const empty: string[] = [];
+    for (const sdk of localTargets) {
+        if (sdk.outputPath === undefined) {
+            continue;
+        }
+        if (!(await isNonEmptyDirectory(sdk.outputPath))) {
+            empty.push(sdk.language.label);
+            continue;
+        }
+        const relative = path.relative(dir, sdk.outputPath) || ".";
+        generated.push({ label: sdk.language.label, path: relative });
+        printDone(`${sdk.language.label} SDK  ${chalk.cyan(hyperlink(relative, pathToFileURL(sdk.outputPath).href))}`);
+    }
+    results.generatedSdks = generated;
+    if (empty.length > 0) {
+        const reason = generatorError(output);
+        throw new Error(
+            `Fern wrote no files for the ${empty.join(", ")} SDK${empty.length === 1 ? "" : "s"}${reason === undefined ? "" : `. The generator reported: ${reason}`}. Run \`fern generate --target ${targetLanguages.join(",")}\` to see more.`
         );
     }
 }
@@ -1214,6 +1326,15 @@ export function docsInitArgs(mintJson: string, org: string | undefined): string[
     return ["init", "--mintlify", mintJson, ...orgArgs(org)];
 }
 
+export function initApiArgs(spec: ApiSpec | undefined, org: string | undefined, docsAlsoSelected: boolean): string[] {
+    return [
+        "init",
+        ...(spec === undefined ? [] : ["--openapi", spec.path]),
+        ...(docsAlsoSelected ? ["--api"] : []),
+        ...orgArgs(org)
+    ];
+}
+
 async function runFernCommand(args: string[], dir: string, detection: Detection): Promise<void> {
     await runCommand(fernRunner(detection, args), dir);
 }
@@ -1261,6 +1382,14 @@ function orgArgs(org: string | undefined): string[] {
 async function isDirectory(dir: string): Promise<boolean> {
     try {
         return (await stat(dir)).isDirectory();
+    } catch {
+        return false;
+    }
+}
+
+async function isFile(filePath: string): Promise<boolean> {
+    try {
+        return (await stat(filePath)).isFile();
     } catch {
         return false;
     }

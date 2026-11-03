@@ -40,7 +40,9 @@ export async function scaffoldDocsSite({
     const writtenFiles = new Set<string>();
     const skippedFiles = new Set<string>();
     const existingApi =
-        (await pathExists(path.join(fernDir, "generators.yml"))) || (await isDirectory(path.join(fernDir, "apis")));
+        (await pathExists(path.join(fernDir, "generators.yml"))) ||
+        (await pathExists(path.join(fernDir, "sdk-config.yml"))) ||
+        (await isDirectory(path.join(fernDir, "apis")));
     const apiNames = await listApiNames(fernDir);
     const copyOptions: CopyOptions = {
         protectedFiles,

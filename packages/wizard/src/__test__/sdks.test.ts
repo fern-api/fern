@@ -5,8 +5,10 @@ import { describe, expect, it } from "vitest";
 import {
     ensureSdkGroup,
     isNonEmptyDirectory,
+    matchSdkConfigTargets,
     readConfiguredSdks,
     readOrganization,
+    readSdkConfigTargets,
     SDK_LANGUAGES,
     sdkGroupWritesOnlyLocally,
     setGeneratorVersion
@@ -55,6 +57,52 @@ describe("SDK configuration", () => {
     it("handles projects without generators.yml", async () => {
         const dir = await project({});
         await expect(readConfiguredSdks(dir)).resolves.toEqual([]);
+        await expect(readSdkConfigTargets(dir)).resolves.toBeUndefined();
+        await rm(dir, { recursive: true, force: true });
+    });
+
+    it("reads SDK Config targets and does not create a legacy group", async () => {
+        const legacyConfig = "groups:\n  local:\n    generators: []\n";
+        const dir = await project({
+            "fern/sdk-config.yml": [
+                "schemaVersion: sdk-config/v1",
+                "sdkName: acme",
+                "targets:",
+                "  - language: typescript",
+                "    output:",
+                "      delivery: files",
+                "      path: ../sdks/typescript",
+                "  - language: python",
+                "    output:",
+                "      delivery: github"
+            ].join("\n"),
+            "fern/generators.yml": legacyConfig
+        });
+
+        const targets = await readSdkConfigTargets(dir);
+        expect(targets?.map((target) => target.language)).toEqual(["typescript", "python"]);
+        const sdks = await readConfiguredSdks(dir);
+        expect(sdks.map((sdk) => sdk.language.label)).toEqual(["TypeScript", "Python"]);
+        expect(sdks[0]?.outputPath).toBe(path.join(dir, "sdks", "typescript"));
+        expect(sdks.map((sdk) => sdk.writesLocally)).toEqual([true, false]);
+        const selection = matchSdkConfigTargets(
+            SDK_LANGUAGES.filter((language) => ["TypeScript", "Go"].includes(language.label)),
+            sdks
+        );
+        expect(selection.targets.map((sdk) => sdk.language.label)).toEqual(["TypeScript"]);
+        expect(selection.unconfigured.map((language) => language.label)).toEqual(["Go"]);
+        expect(await ensureSdkGroup(dir)).toBeUndefined();
+        await expect(readFile(path.join(dir, "fern", "generators.yml"), "utf8")).resolves.toBe(legacyConfig);
+        await rm(dir, { recursive: true, force: true });
+    });
+
+    it("returns no configured targets for an empty SDK Config", async () => {
+        const dir = await project({ "fern/sdk-config.yml": "targets: []\n" });
+
+        await expect(readSdkConfigTargets(dir)).resolves.toEqual([]);
+        await expect(readConfiguredSdks(dir)).resolves.toEqual([]);
+        await expect(ensureSdkGroup(dir)).resolves.toBeUndefined();
+
         await rm(dir, { recursive: true, force: true });
     });
 

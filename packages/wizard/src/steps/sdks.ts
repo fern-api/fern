@@ -1,5 +1,5 @@
 import { execFile } from "child_process";
-import { readdir, readFile, writeFile } from "fs/promises";
+import { access, readdir, readFile, writeFile } from "fs/promises";
 import path from "path";
 import { isMap, isSeq, parse, parseDocument } from "yaml";
 
@@ -9,6 +9,8 @@ export interface SdkLanguage {
     label: string;
     /** Generator name as written in generators.yml. */
     generator: string;
+    /** Target language as written in sdk-config.yml. */
+    sdkConfigLanguage: string;
     /** Other generator names that produce the same language. */
     aliases?: string[];
     /** Whether the Free plan includes this language; the rest need the Enterprise plan. */
@@ -19,28 +21,77 @@ export const SDK_LANGUAGES: SdkLanguage[] = [
     {
         label: "TypeScript",
         generator: "fern-typescript-sdk",
+        sdkConfigLanguage: "typescript",
         aliases: ["fern-typescript-node-sdk", "fern-typescript-browser-sdk"],
         free: true
     },
-    { label: "Python", generator: "fern-python-sdk", free: true },
-    { label: "Go", generator: "fern-go-sdk", free: false },
-    { label: "Java", generator: "fern-java-sdk", free: false },
-    { label: "C#", generator: "fern-csharp-sdk", free: false },
-    { label: "Ruby", generator: "fern-ruby-sdk", free: false },
-    { label: "PHP", generator: "fern-php-sdk", free: false },
-    { label: "Swift", generator: "fern-swift-sdk", free: false },
-    { label: "Rust", generator: "fern-rust-sdk", free: false }
+    { label: "Python", generator: "fern-python-sdk", sdkConfigLanguage: "python", free: true },
+    { label: "Go", generator: "fern-go-sdk", sdkConfigLanguage: "go", free: false },
+    { label: "Java", generator: "fern-java-sdk", sdkConfigLanguage: "java", free: false },
+    { label: "C#", generator: "fern-csharp-sdk", sdkConfigLanguage: "csharp", free: false },
+    { label: "Ruby", generator: "fern-ruby-sdk", sdkConfigLanguage: "ruby", free: false },
+    { label: "PHP", generator: "fern-php-sdk", sdkConfigLanguage: "php", free: false },
+    { label: "Swift", generator: "fern-swift-sdk", sdkConfigLanguage: "swift", free: false },
+    { label: "Rust", generator: "fern-rust-sdk", sdkConfigLanguage: "rust", free: false }
 ];
 
 export interface ConfiguredSdk {
     language: SdkLanguage;
     /** Absolute output directory, when the generator writes to the local file system. */
     outputPath?: string;
+    /** Set for targets read from sdk-config.yml. */
+    sdkConfigTarget?: string;
+    /** Whether this SDK Config target writes into the repository instead of publishing. */
+    writesLocally?: boolean;
 }
 
-/** The SDK generators in fern/generators.yml's SDK group (see sdkGroupName). */
+export interface SdkConfigTarget {
+    language: string;
+    outputPath?: string;
+    writesLocally: boolean;
+}
+
+export function matchSdkConfigTargets(
+    selectedLanguages: SdkLanguage[],
+    configuredSdks: ConfiguredSdk[]
+): { targets: ConfiguredSdk[]; unconfigured: SdkLanguage[] } {
+    const byLanguage = new Map<string, ConfiguredSdk>();
+    for (const sdk of configuredSdks) {
+        byLanguage.set(sdk.language.sdkConfigLanguage, sdk);
+    }
+    const targets: ConfiguredSdk[] = [];
+    const unconfigured: SdkLanguage[] = [];
+    for (const language of selectedLanguages) {
+        const sdk = byLanguage.get(language.sdkConfigLanguage);
+        if (sdk === undefined) {
+            unconfigured.push(language);
+        } else {
+            targets.push(sdk);
+        }
+    }
+    return { targets, unconfigured };
+}
+
+/** The SDK targets in sdk-config.yml, or the generators in fern/generators.yml's SDK group. */
 export async function readConfiguredSdks(dir: string): Promise<ConfiguredSdk[]> {
     const fernDir = path.join(dir, "fern");
+    const sdkConfigTargets = await readSdkConfigTargets(dir);
+    if (sdkConfigTargets !== undefined) {
+        return sdkConfigTargets.flatMap((target): ConfiguredSdk[] => {
+            const language = SDK_LANGUAGES.find((candidate) => candidate.sdkConfigLanguage === target.language);
+            if (language === undefined) {
+                return [];
+            }
+            return [
+                {
+                    language,
+                    sdkConfigTarget: target.language,
+                    writesLocally: target.writesLocally,
+                    ...(target.outputPath === undefined ? {} : { outputPath: target.outputPath })
+                }
+            ];
+        });
+    }
     return (await readSdkGroupGenerators(dir)).flatMap((generator): ConfiguredSdk[] => {
         if (!isRecord(generator) || typeof generator.name !== "string") {
             return [];
@@ -58,6 +109,39 @@ export async function readConfiguredSdks(dir: string): Promise<ConfiguredSdk[]> 
                 ? path.resolve(fernDir, output.path)
                 : undefined;
         return [{ language, outputPath }];
+    });
+}
+
+/** SDK Config targets, or undefined when this project uses the legacy generators.yml format. */
+export async function readSdkConfigTargets(dir: string): Promise<SdkConfigTarget[] | undefined> {
+    const fernDir = path.join(dir, "fern");
+    const configPath = path.join(fernDir, "sdk-config.yml");
+    try {
+        await access(configPath);
+    } catch {
+        return undefined;
+    }
+
+    const config: unknown = parse(await readFile(configPath, "utf8"));
+    if (!isRecord(config) || !Array.isArray(config.targets)) {
+        return [];
+    }
+    return config.targets.flatMap((target): SdkConfigTarget[] => {
+        if (!isRecord(target) || typeof target.language !== "string") {
+            return [];
+        }
+        const output = isRecord(target.output) ? target.output : undefined;
+        const outputPath =
+            output?.delivery === "files" && typeof output.path === "string"
+                ? path.resolve(fernDir, output.path)
+                : undefined;
+        return [
+            {
+                language: target.language,
+                writesLocally: output?.delivery === undefined || output.delivery === "files",
+                ...(outputPath === undefined ? {} : { outputPath })
+            }
+        ];
     });
 }
 
@@ -154,6 +238,12 @@ function sdkGroupName(config: Record<string, unknown>): string | undefined {
  * default group, like `fern init` writes. Undefined when there's no fern/generators.yml.
  */
 export async function ensureSdkGroup(dir: string): Promise<string | undefined> {
+    try {
+        await access(path.join(dir, "fern", "sdk-config.yml"));
+        return undefined;
+    } catch {
+        // Use the legacy group only when the project has no SDK Config.
+    }
     const generatorsPath = path.join(dir, "fern", "generators.yml");
     let contents: string;
     try {

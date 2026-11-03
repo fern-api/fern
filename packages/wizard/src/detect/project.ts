@@ -4,7 +4,13 @@ import type { FernProject } from "../types";
 
 export async function detectFernProject(dir: string): Promise<FernProject> {
     const docsConfigExists = await exists(path.join(dir, "fern", "docs.yml"));
-    const candidates = ["fern/fern.config.json", "fern.yml", "fern/docs.yml", "fern/generators.yml"];
+    const candidates = [
+        "fern/fern.config.json",
+        "fern.yml",
+        "fern/docs.yml",
+        "fern/generators.yml",
+        "fern/sdk-config.yml"
+    ];
     for (const candidate of candidates) {
         if (await exists(path.join(dir, candidate))) {
             return { exists: true, path: containingDir(candidate), docsConfigExists };

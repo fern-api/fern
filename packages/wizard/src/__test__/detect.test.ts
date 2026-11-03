@@ -111,6 +111,17 @@ describe("repository detection", () => {
         await rm(dir, { recursive: true, force: true });
     });
 
+    it("detects the docs-writing skill in Windsurf's directory", async () => {
+        const dir = await fixture();
+        const skillPath = path.join(dir, ".windsurf", "skills", "fern-docs", "SKILL.md");
+        await mkdir(path.dirname(skillPath), { recursive: true });
+        await writeFile(skillPath, "# Fern docs skill\n");
+
+        await expect(detectRepository(dir)).resolves.toMatchObject({ docsSkillInstalled: true });
+
+        await rm(dir, { recursive: true, force: true });
+    });
+
     it("reports the containing directory for a root Fern marker", async () => {
         const dir = await fixture();
         await writeFile(path.join(dir, "fern.yml"), "organization: acme\n");

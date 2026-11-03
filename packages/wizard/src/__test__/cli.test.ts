@@ -6,6 +6,7 @@ import {
     docsInitArgs,
     fernRunner,
     findSpec,
+    initApiArgs,
     installCommand,
     parsePublishedUrl,
     pickDefaultSpec,
@@ -201,7 +202,20 @@ describe("action planning", () => {
         const initApi = actions.find((action) => action.id === "init-api");
         expect(initApi?.title).toBe("Create a Fern project from openapi.yaml");
         expect(initApi?.description).toContain("openapi.yaml");
-        expect(initApi?.commands).toEqual(["fern init --openapi openapi.yaml --org acme"]);
+        expect(initApi?.description).not.toContain("generators.yml");
+        expect(initApi?.commands).toEqual(["fern init --openapi openapi.yaml --api --org acme"]);
+    });
+
+    it("passes --api to fern init when docs are also selected", () => {
+        expect(initApiArgs({ path: "openapi.yaml", format: "openapi" }, "acme", true)).toEqual([
+            "init",
+            "--openapi",
+            "openapi.yaml",
+            "--api",
+            "--org",
+            "acme"
+        ]);
+        expect(initApiArgs({ path: "openapi.yaml", format: "openapi" }, "acme", false)).not.toContain("--api");
     });
 
     it("plans a bare init when nothing can be imported", () => {
@@ -209,14 +223,14 @@ describe("action planning", () => {
             { ...baseDetection, fernCliVersion: "1.0.0", apiSpecs: [] },
             { ...flags, org: "acme" }
         ).actions;
-        expect(actions.find((action) => action.id === "init-api")?.commands).toEqual(["fern init --org acme"]);
+        expect(actions.find((action) => action.id === "init-api")?.commands).toEqual(["fern init --api --org acme"]);
     });
 
     it("shows commands through the package runner until the CLI is on PATH", () => {
         const actions = planActions({ ...baseDetection, packageManager: "pnpm" }, flags).actions;
         expect(actions.find((action) => action.id === "install-cli")?.commands).toEqual(["pnpm add -D fern-api"]);
         expect(actions.find((action) => action.id === "init-api")?.commands).toEqual([
-            "pnpm exec fern init --openapi openapi.yaml --org <your-org>"
+            "pnpm exec fern init --openapi openapi.yaml --api --org <your-org>"
         ]);
         const global = planActions({ ...baseDetection, hasPackageJson: false }, flags).actions;
         expect(global.find((action) => action.id === "init-docs")?.commands).toEqual([]);

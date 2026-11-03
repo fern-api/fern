@@ -75,14 +75,17 @@ describe("docs site scaffolding", () => {
     });
 
     it("keeps the overview and points API Reference at an existing API", async () => {
-        for (const existingApi of ["generators", "apis"]) {
+        for (const existingApi of ["generators", "apis", "sdk-config"]) {
             const dir = await tempRepo();
             const fernDir = path.join(dir, "fern");
             if (existingApi === "generators") {
                 await mkdir(fernDir, { recursive: true });
                 await writeFile(path.join(fernDir, "generators.yml"), "custom: true\n");
-            } else {
+            } else if (existingApi === "apis") {
                 await mkdir(path.join(fernDir, "apis"), { recursive: true });
+            } else {
+                await mkdir(fernDir, { recursive: true });
+                await writeFile(path.join(fernDir, "sdk-config.yml"), "targets:\n  - language: typescript\n");
             }
             await scaffoldDocsSite({ dir, org: "acme", choices: defaultDocsSiteChoices("acme") });
 
@@ -102,6 +105,11 @@ describe("docs site scaffolding", () => {
                 await expect(readFile(path.join(fernDir, "generators.yml"), "utf8")).resolves.toBe("custom: true\n");
             } else {
                 expect(await pathExists(path.join(fernDir, "generators.yml"))).toBe(false);
+            }
+            if (existingApi === "sdk-config") {
+                await expect(readFile(path.join(fernDir, "sdk-config.yml"), "utf8")).resolves.toBe(
+                    "targets:\n  - language: typescript\n"
+                );
             }
         }
     });

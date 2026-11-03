@@ -1,0 +1,3 @@
+- summary: |
+    Handle SDK Config projects and re-check action prerequisites while applying docs onboarding review fixes.
+  type: fix

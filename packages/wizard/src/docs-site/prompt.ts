@@ -45,6 +45,17 @@ interface FeaturesAnswer {
     features: DocsFeature[];
 }
 
+interface DocsSiteAnswers {
+    siteTitle: string;
+    subdomain: string;
+    layout: LayoutId;
+    primaryColor: string;
+    logoPath: string;
+    typography: TypographyStyle | undefined;
+    buttonShape: ButtonShape | undefined;
+    features: DocsFeature[];
+}
+
 export async function promptDocsSiteChoices(
     defaults: DocsSiteChoices,
     baseDir: string = process.cwd()
@@ -155,16 +166,34 @@ export async function promptDocsSiteChoices(
         }
     ]);
 
-    const primaryColor = color.primaryColor.trim();
-    const logoPath = logo.logoPath.trim();
-    return {
-        siteTitle: title.siteTitle.trim(),
-        subdomain: url.subdomain.trim(),
+    return mergeDocsSiteChoices(defaults, {
+        siteTitle: title.siteTitle,
+        subdomain: url.subdomain,
         layout: layout.layout,
-        ...(primaryColor.length > 0 ? { primaryColor: `#${primaryColor.replace(/^#/, "").toLowerCase()}` } : {}),
-        ...(logoPath.length > 0 ? { logoPath } : {}),
-        ...(typography.typography === undefined ? {} : { typography: typography.typography }),
-        ...(buttonShape.buttonShape === undefined ? {} : { buttonShape: buttonShape.buttonShape }),
+        primaryColor: color.primaryColor,
+        logoPath: logo.logoPath,
+        typography: typography.typography,
+        buttonShape: buttonShape.buttonShape,
         features: features.features
+    });
+}
+
+export function mergeDocsSiteChoices(defaults: DocsSiteChoices, answers: DocsSiteAnswers): DocsSiteChoices {
+    const primaryColor = answers.primaryColor.trim();
+    const logoPath = answers.logoPath.trim();
+    const choices: DocsSiteChoices = {
+        ...defaults,
+        siteTitle: answers.siteTitle.trim(),
+        subdomain: answers.subdomain.trim(),
+        layout: answers.layout,
+        ...(primaryColor.length > 0 ? { primaryColor: `#${primaryColor.replace(/^#/, "").toLowerCase()}` } : {}),
+        ...(answers.typography === undefined ? {} : { typography: answers.typography }),
+        ...(answers.buttonShape === undefined ? {} : { buttonShape: answers.buttonShape }),
+        features: answers.features
     };
+    if (logoPath.length > 0 && logoPath !== defaults.logoPath) {
+        choices.logoPath = logoPath;
+        delete choices.darkLogoPath;
+    }
+    return choices;
 }

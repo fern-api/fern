@@ -1,5 +1,6 @@
 import { access } from "fs/promises";
 import path from "path";
+import { DOCS_SKILL_PATHS } from "../docs-site/skill-paths";
 import type { Detection } from "../types";
 import { detectAgents } from "./agents";
 import { detectDocsTools } from "./docs";
@@ -50,10 +51,9 @@ export async function detectRepository(dir: string): Promise<Detection> {
 }
 
 async function hasDocsSkill(dir: string, files: string[]): Promise<boolean> {
-    const skillFiles = [
-        path.join(".agents", "skills", "fern-docs", "SKILL.md"),
-        path.join(".claude", "skills", "fern-docs", "SKILL.md")
-    ];
+    const skillFiles = [...new Set(Object.values(DOCS_SKILL_PATHS))].map((skillPath) =>
+        path.join(skillPath, "SKILL.md")
+    );
     for (const skillFile of skillFiles) {
         if (files.includes(skillFile)) {
             return true;
