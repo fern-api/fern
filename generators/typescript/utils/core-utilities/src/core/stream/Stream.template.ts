@@ -171,7 +171,7 @@ export class Stream<T> implements AsyncIterable<T> {
 
                     if (!line.trim()) {
                         if (this.prefix != null && dataValue != null) {
-                            if (this.streamTerminator != null && dataValue.includes(this.streamTerminator)) {
+                            if (this.streamTerminator != null && dataValue.trim() === this.streamTerminator) {
                                 return;
                             }
                             const data = await this.parse(fromJson(dataValue));
@@ -207,7 +207,7 @@ export class Stream<T> implements AsyncIterable<T> {
                         const val = line.slice(prefixIndex + this.prefix.length).trim();
                         dataValue = dataValue != null ? `${dataValue}\n${val}` : val;
                     } else {
-                        if (this.streamTerminator != null && line.includes(this.streamTerminator)) {
+                        if (this.streamTerminator != null && line.trim() === this.streamTerminator) {
                             return;
                         }
                         const data = await this.parse(fromJson(line));
@@ -219,7 +219,7 @@ export class Stream<T> implements AsyncIterable<T> {
             }
 
             if (this.prefix != null && dataValue != null) {
-                if (this.streamTerminator != null && dataValue.includes(this.streamTerminator)) {
+                if (this.streamTerminator != null && dataValue.trim() === this.streamTerminator) {
                     return;
                 }
                 const data = await this.parse(fromJson(dataValue));
@@ -360,7 +360,7 @@ export class Stream<T> implements AsyncIterable<T> {
      * Parses and returns a single SSE event, or returns null if the event is a stream terminator.
      */
     private async dispatchSseEvent(dataValue: string, eventType: string | undefined): Promise<T | null> {
-        if (this.streamTerminator != null && dataValue.includes(this.streamTerminator)) {
+        if (this.streamTerminator != null && dataValue.trim() === this.streamTerminator) {
             return null;
         }
         return this.parse(this.injectDiscriminator(fromJson(dataValue), eventType));

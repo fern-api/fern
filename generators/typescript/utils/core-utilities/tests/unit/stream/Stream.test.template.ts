@@ -139,6 +139,24 @@ describe("Stream", () => {
             expect(messages).toEqual([{ value: 1 }]);
         });
 
+        it("should not stop when event data merely contains the stream terminator", async () => {
+            const mockStream = createReadableStream([
+                'data: {"text": "the literal [DONE] marker"}\n\ndata: {"value": 2}\n\ndata: [DONE]\n\ndata: {"value": 3}\n',
+            ]);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val as unknown,
+                eventShape: { type: "sse", streamTerminator: "[DONE]" },
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([{ text: "the literal [DONE] marker" }, { value: 2 }]);
+        });
+
         it("should skip lines without data prefix", async () => {
             const mockStream = createReadableStream([
                 'event: message\ndata: {"value": 1}\nid: 123\n\ndata: {"value": 2}\n',
@@ -368,6 +386,24 @@ describe("Stream", () => {
             }
 
             expect(messages).toEqual([{ type: "heartbeat" }]);
+        });
+
+        it("should not stop when discriminated event data merely contains the stream terminator", async () => {
+            const mockStream = createReadableStream([
+                'data: {"type": "a", "text": "the literal [DONE] marker"}\n\ndata: [DONE]\n\ndata: {"type": "a", "text": "after"}\n',
+            ]);
+            const stream = new Stream({
+                stream: mockStream,
+                parse: async (val: unknown) => val as unknown,
+                eventShape: { type: "sse", eventDiscriminator: "type", streamTerminator: "[DONE]" },
+            });
+
+            const messages: unknown[] = [];
+            for await (const message of stream) {
+                messages.push(message);
+            }
+
+            expect(messages).toEqual([{ type: "a", text: "the literal [DONE] marker" }]);
         });
 
         it("should stop at stream terminator", async () => {

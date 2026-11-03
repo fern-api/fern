@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix SSE streams ending early when an event's data merely contains the stream
+    terminator text (for example `[DONE]` inside a message). The terminator is now
+    matched against the whole trimmed data value instead of as a substring.
+  type: fix
