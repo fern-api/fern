@@ -1049,18 +1049,18 @@ files = [
 
 [[package]]
 name = "jsonpatch"
-version = "1.40"
+version = "1.41"
 description = "Apply JSON-Patches (RFC 6902) "
 optional = false
 python-versions = ">=3.10"
 groups = ["dev"]
 files = [
-    {file = "jsonpatch-1.40-py3-none-any.whl", hash = "sha256:070d9d4cdce9613e23286f67fc7abbaae9b587a4f166cf506db2b408eb2946d8"},
-    {file = "jsonpatch-1.40.tar.gz", hash = "sha256:959d26914c1408c72947e7dcbd590b590241b0cd24d937543e1ada20ed082955"},
+    {file = "jsonpatch-1.41-py3-none-any.whl", hash = "sha256:fd493e82a57da7dd60e22ff2521f75d2be3ce41d76a845799d898de6da682922"},
+    {file = "jsonpatch-1.41.tar.gz", hash = "sha256:1aca06402f94e5cd7bc133af0cb4f7b2c2f9c0bc172f9de52c9aa4c6104b0d1c"},
 ]
 
 [package.dependencies]
-jsonpointer = ">=3.2"
+jsonpointer = ">=3.8"
 
 [[package]]
 name = "jsonpointer"
