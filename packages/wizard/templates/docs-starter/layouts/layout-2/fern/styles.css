@@ -1,0 +1,14 @@
+/* Remove sidebar and header border lines for seamless recessed look */
+#fern-sidebar {
+  border-right-width: 0 !important;
+}
+
+#fern-header {
+  border-color: transparent !important;
+}
+
+/* Draw the canvas border inside so it isn't clipped at the top */
+.canvas-wrapper {
+  border-color: transparent !important;
+  box-shadow: inset 0 0 0 1px var(--border);
+}

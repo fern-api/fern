@@ -1,0 +1,18 @@
+---
+title: October 29, 2025
+slug: 10-29-2025
+tags: ["plants-api", "inventory-management", "enhancements"]
+---
+
+## Enhancements
+
+### Inventory tracking improvements
+Added new `reserved` field to inventory responses, allowing better tracking of stock allocated to pending orders.
+
+### Bulk operations
+Introduced `/inventory/batch-update` endpoint for updating multiple plant inventory levels in a single request.
+
+## Bug fixes
+
+- Fixed an issue where low stock alerts weren't triggering when inventory reached exactly the reorder point
+- Corrected timezone handling in inventory history timestamps

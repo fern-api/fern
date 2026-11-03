@@ -1,0 +1,17 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Simplify setup into numbered steps after a docs/SDK product picker, and pull the docs site's logo, favicon, and accent color from your company's brand (`--brand`, `--skip-brand`).
+  type: feat
+- summary: |
+    Check the Fern organization name in step 1 and create it when it's free, suggesting other names when another team owns it. Existing projects use the organization in `fern.config.json`, and docs URLs are checked before publishing.
+  type: feat
+- summary: |
+    Add a step that builds a docs preview and asks before publishing (which adds the docs to your Fern Dashboard), and a step that generates SDKs. Enterprise-only languages link to Fern Dashboard billing.
+  type: feat
+- summary: |
+    Add `--products`, `--spec`, and `--skip-mcp`, a shorter `--help`, and a correct `--version`. With `--yes`, the MCP step no longer waits for a browser sign-in.
+  type: feat
+- summary: |
+    Fix SDK generation for `generators.yml` files without a default group, and give multi-API projects one API Reference entry per API.
+  type: fix

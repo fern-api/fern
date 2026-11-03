@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../versions-yml.schema.json
+- version: 0.1.0
+  changelogEntry:
+    - summary: |
+        Initial release of the Fern setup wizard (`npx @fern-api/wizard`).
+      type: feat
+  createdAt: "2026-09-21"

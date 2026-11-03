@@ -1,0 +1,342 @@
+openapi: 3.1.0
+servers:
+  - url: https://api.plantstore.dev/v3
+    description: Demo server
+info:
+  description: |
+    This is a sample Plant Store Server based on the OpenAPI 3.1 specification. It provides a comprehensive set of endpoints for managing plants, orders, and user authentication.
+    
+    ### Key Features
+    - **Rich API Documentation**: Includes detailed examples and schema definitions.
+    - **Search Functionality**: Search for plants by tags or status.
+    - **User-Friendly Endpoints**: Login, logout, and retrieve user information.
+    - **Error Handling**: Clear and consistent error responses.
+    
+    ### Developer Notes
+    - Use `api_key` for store endpoints requiring authorization.
+    - OAuth2 flow is available for plant-specific operations.
+    
+  version: 1.0.18
+  title: Swagger Plant Store - OpenAPI 3.1
+  termsOfService: "http://buildwithfern.com/tos/"
+  contact:
+    name: Plant Store API Support
+    url: https://support.plantstore.dev
+    email: support@buildwithfern.com
+  license:
+    name: Apache 2.0
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+tags:
+  - name: plant
+    description: Everything about your Plants
+    externalDocs:
+      description: Plant API Documentation
+      url: https://docs.plantstore.dev/plants
+  - name: store
+    description: Access to Plantstore orders
+    externalDocs:
+      description: Order Management Guide
+      url: https://docs.plantstore.dev/orders
+  - name: user
+    description: Operations about user
+    externalDocs:
+      description: User Management API
+      url: https://docs.plantstore.dev/users
+paths:
+  /plant:
+    post:
+      tags:
+        - plant
+      summary: Add a new plant to the store
+      operationId: addPlant
+      requestBody:
+        description: Details of the plant to add
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Plant"
+            examples:
+              example1:
+                summary: Add a Fern Plant
+                value:
+                  name: "Fern"
+                  category: "Indoor"
+                  tags: ["green", "leafy"]
+                  status: "available"
+      responses:
+        "200":
+          description: Plant successfully added
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlantResponse"
+              examples:
+                exampleResponse:
+                  summary: Successful Plant Addition
+                  value:
+                    id: 101
+                    name: "Fern"
+                    status: "available"
+                    tags: ["green", "leafy"]
+        "405":
+          description: Invalid input
+    put:
+      tags:
+        - plant
+      summary: Update an existing plant
+      operationId: updatePlant
+      requestBody:
+        description: Updated details of the plant
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Plant"
+            examples:
+              example1:
+                summary: Update plant status
+                value:
+                  name: "Fern"
+                  category: "Indoor"
+                  tags: ["green", "leafy"]
+                  status: "sold"
+      responses:
+        "200":
+          description: Plant successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlantResponse"
+              examples:
+                exampleResponse:
+                  summary: Successful Plant Update
+                  value:
+                    id: 101
+                    name: "Fern"
+                    status: "sold"
+                    tags: ["green", "leafy"]
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: Plant not found
+  /plant/search/status:
+    get:
+      tags:
+        - plant
+      summary: Search plants by status
+      description: Filter plants based on their current status.
+      operationId: searchPlantsByStatus
+      parameters:
+        - name: status
+          in: query
+          description: The status of plants to search for.
+          required: false
+          schema:
+            type: string
+            enum: [available, pending, sold]
+      responses:
+        "200":
+          description: List of plants matching the status filter
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PlantResponse"
+              examples:
+                exampleResponse:
+                  summary: Plants with status available
+                  value:
+                    - id: 101
+                      name: "Fern"
+                      status: "available"
+                      tags: ["green", "leafy"]
+                    - id: 102
+                      name: "Palm"
+                      status: "available"
+                      tags: ["tropical"]
+  /plant/search/tags:
+    get:
+      tags:
+        - plant
+      summary: Search plants by tags
+      description: Filter plants based on associated tags.
+      operationId: searchPlantsByTags
+      parameters:
+        - name: tags
+          in: query
+          description: Tags to filter plants (comma-separated).
+          schema:
+            type: array
+            items:
+              type: string
+      responses:
+        "200":
+          description: List of plants matching the tags filter
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PlantResponse"
+              examples:
+                exampleResponse:
+                  summary: Plants filtered by tags
+                  value:
+                    - id: 101
+                      name: "Fern"
+                      status: "available"
+                      tags: ["green", "leafy"]
+                    - id: 103
+                      name: "Cactus"
+                      status: "available"
+                      tags: ["spiky", "desert"]
+  /plant/{plantId}:
+    get:
+      tags:
+        - plant
+      summary: Find plant by ID
+      description: Retrieve a plant's details by its ID.
+      operationId: getPlantById
+      parameters:
+        - name: plantId
+          in: path
+          description: ID of the plant to retrieve
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Details of the requested plant
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PlantResponse"
+              examples:
+                exampleResponse:
+                  summary: Plant details
+                  value:
+                    id: 101
+                    name: "Fern"
+                    status: "available"
+                    tags: ["green", "leafy"]
+  /user/auth/login:
+    get:
+      tags:
+        - user
+      summary: Logs user into the system
+      operationId: loginUser
+      parameters:
+        - name: username
+          in: query
+          description: The username for login
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: The password for login
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful login
+          headers:
+            Set-Cookie:
+              description: Session token for user authentication
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserAuthResponse"
+              examples:
+                exampleResponse:
+                  summary: Successful login response
+                  value:
+                    token: "abc123token"
+                    expiresIn: 3600
+  /user/auth/logout:
+    get:
+      tags:
+        - user
+      summary: Logs out current logged-in user session
+      operationId: logoutUser
+      responses:
+        default:
+          description: Successful logout
+  /user/{username}:
+    get:
+      tags:
+        - user
+      summary: Get user by username
+      description: Retrieve user details using their username.
+      operationId: getUserByName
+      parameters:
+        - name: username
+          in: path
+          description: Username of the user to retrieve
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: User details retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+              examples:
+                exampleResponse:
+                  summary: User details response
+                  value:
+                    id: 1
+                    username: "john_doe"
+                    email: "john@example.com"
+components:
+  schemas:
+    Plant:
+      type: object
+      properties:
+        name:
+          type: string
+        category:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
+          enum: [available, pending, sold]
+    PlantResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        status:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+    UserAuthResponse:
+      type: object
+      properties:
+        token:
+          type: string
+          description: Authentication token
+        expiresIn:
+          type: integer
+          description: Token expiration time in seconds
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        email:
+          type: string

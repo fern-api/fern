@@ -1,0 +1,34 @@
+{
+  "name": "@fern-api/cli-art",
+  "version": "0.0.0",
+  "description": "Animated, colorful terminal art from any logo: bursts, iron filings, glass orbs, 3D spins, and gradient reveals",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fern-api/fern.git",
+    "directory": "packages/cli-art"
+  },
+  "type": "commonjs",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "source": "src/index.ts",
+  "bin": {
+    "cli-art": "bin/cli-art"
+  },
+  "files": ["bin", "lib"],
+  "license": "MIT",
+  "keywords": ["cli", "terminal", "ascii", "ansi", "animation", "logo", "splash"],
+  "scripts": {
+    "clean": "rm -rf ./lib",
+    "compile": "tsc --project tsconfig.build.json",
+    "test": "vitest --run --passWithNoTests --globals --disable-console-intercept",
+    "lint:eslint": "eslint --max-warnings 0 src",
+    "format": "biome check --write src",
+    "depcheck": "knip --config ../../knip.json --no-config-hints"
+  },
+  "devDependencies": {
+    "@fern-api/configs": "workspace:*",
+    "@types/node": "^22.0.0",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

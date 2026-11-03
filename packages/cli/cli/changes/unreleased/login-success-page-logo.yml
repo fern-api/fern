@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Show the Fern logo above the heading on the page `fern login` opens after you sign in.
+  type: chore

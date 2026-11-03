@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Combine the coding-agent instructions and the fern-docs skill into one step, and default the publish question to Yes.
+  type: feat
+- summary: |
+    Make SDK generation more reliable: when Docker generation fails, generate on Fern's servers (with a first version, and the newest generator version they offer), report an SDK that comes back empty along with the generator's error, and don't run generation that would publish packages.
+  type: fix
+- summary: |
+    Report a published docs site only when Fern says it published one, show Fern's own reason when a command fails, and keep the Fern Dashboard link in "Next steps" consistent with the publish step.
+  type: fix
