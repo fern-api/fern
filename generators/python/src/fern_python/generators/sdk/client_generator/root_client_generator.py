@@ -20,7 +20,7 @@ from .inferred_auth_token_provider_generator import (
 from .oauth_token_provider_generator import GRANT_TYPE_WIRE_VALUE
 from fern_python.codegen import AST, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
-from fern_python.external_dependencies import HttpX
+from fern_python.external_dependencies.httpx import HttpxPackage
 from fern_python.generators.sdk.client_generator.base_client_generator import (
     BaseClientGeneratorKwargs,
 )
@@ -967,9 +967,9 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             RootClientConstructorParameter(
                 constructor_parameter_name=RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME,
                 type_hint=(
-                    AST.TypeHint.optional(AST.TypeHint(HttpX.CLIENT))
+                    AST.TypeHint.optional(AST.TypeHint(self._context.httpx.CLIENT))
                     if not is_async
-                    else AST.TypeHint.optional(AST.TypeHint(HttpX.ASYNC_CLIENT))
+                    else AST.TypeHint.optional(AST.TypeHint(self._context.httpx.ASYNC_CLIENT))
                 ),
                 private_member_name=None,
                 initializer=AST.Expression(AST.TypeHint.none()),
@@ -983,9 +983,9 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 RootClientConstructorParameter(
                     constructor_parameter_name="http_client",
                     type_hint=(
-                        AST.TypeHint.optional(AST.TypeHint(HttpX.BASE_TRANSPORT))
+                        AST.TypeHint.optional(AST.TypeHint(self._context.httpx.BASE_TRANSPORT))
                         if not is_async
-                        else AST.TypeHint.optional(AST.TypeHint(HttpX.ASYNC_BASE_TRANSPORT))
+                        else AST.TypeHint.optional(AST.TypeHint(self._context.httpx.ASYNC_BASE_TRANSPORT))
                     ),
                     private_member_name=None,
                     initializer=AST.Expression(AST.TypeHint.none()),
@@ -2112,7 +2112,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         )
         return AST.Expression(
             AST.ClassInstantiation(
-                HttpX.ASYNC_HTTP_TRANSPORT if is_async else HttpX.HTTP_TRANSPORT,
+                self._context.httpx.ASYNC_HTTP_TRANSPORT if is_async else self._context.httpx.HTTP_TRANSPORT,
                 kwargs=[("socket_options", socket_options)],
             )
         )
@@ -2274,11 +2274,11 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                             left=AST.Expression(f"{RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME}"),
                             right=AST.ConditionalExpression(
                                 left=AST.ClassInstantiation(
-                                    HttpX.ASYNC_CLIENT if is_async else HttpX.CLIENT,
+                                    self._context.httpx.ASYNC_CLIENT if is_async else self._context.httpx.CLIENT,
                                     kwargs=httpx_client_kwargs_with_redirects,
                                 ),
                                 right=AST.ClassInstantiation(
-                                    HttpX.ASYNC_CLIENT if is_async else HttpX.CLIENT,
+                                    self._context.httpx.ASYNC_CLIENT if is_async else self._context.httpx.CLIENT,
                                     kwargs=httpx_client_kwargs_without_redirects,
                                 ),
                                 test=AST.Expression(f"{self.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME} is not None"),
@@ -2324,11 +2324,11 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                             left=AST.Expression(f"{RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME}"),
                             right=AST.ConditionalExpression(
                                 left=AST.ClassInstantiation(
-                                    HttpX.CLIENT,
+                                    self._context.httpx.CLIENT,
                                     kwargs=httpx_client_kwargs_with_redirects,
                                 ),
                                 right=AST.ClassInstantiation(
-                                    HttpX.CLIENT,
+                                    self._context.httpx.CLIENT,
                                     kwargs=httpx_client_kwargs_without_redirects,
                                 ),
                                 test=AST.Expression(f"{self.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME} is not None"),
@@ -2404,23 +2404,26 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 writer.write_line("transport: typing.Optional[httpx.AsyncBaseTransport] = None,")
         writer.write_line(") -> httpx.AsyncClient:")
         with writer.indent():
-            writer.write_line("try:")
-            with writer.indent():
-                writer.write_line("import httpx_aiohttp  # type: ignore[import-not-found]")
-            writer.write_line("except ImportError:")
-            with writer.indent():
-                writer.write_line("pass")
-            writer.write_line("else:")
-            with writer.indent():
-                # aiohttp uses its own TCPConnector, not httpx socket_options, so the
-                # keepalive/custom transport is a documented no-op on this path.
-                writer.write_line("if follow_redirects is not None:")
+            # httpx-aiohttp is built on httpx, so the aiohttp auto-detection only applies
+            # when the SDK itself uses httpx; with httpx2 it would hand back the wrong client type.
+            if self._context.custom_config.httpx_package == HttpxPackage.HTTPX:
+                writer.write_line("try:")
                 with writer.indent():
-                    writer.write_line(
-                        "return httpx_aiohttp.HttpxAiohttpClient(timeout=timeout, follow_redirects=follow_redirects)"
-                    )
-                writer.write_line("return httpx_aiohttp.HttpxAiohttpClient(timeout=timeout)")
-            writer.write_line("")
+                    writer.write_line("import httpx_aiohttp  # type: ignore[import-not-found]")
+                writer.write_line("except ImportError:")
+                with writer.indent():
+                    writer.write_line("pass")
+                writer.write_line("else:")
+                with writer.indent():
+                    # aiohttp uses its own TCPConnector, not httpx socket_options, so the
+                    # keepalive/custom transport is a documented no-op on this path.
+                    writer.write_line("if follow_redirects is not None:")
+                    with writer.indent():
+                        writer.write_line(
+                            "return httpx_aiohttp.HttpxAiohttpClient(timeout=timeout, follow_redirects=follow_redirects)"
+                        )
+                    writer.write_line("return httpx_aiohttp.HttpxAiohttpClient(timeout=timeout)")
+                writer.write_line("")
             if keepalive_enabled:
                 writer.write_line(
                     "mounts: typing.Optional[typing.Dict[str, typing.Optional[httpx.AsyncBaseTransport]]] = None"

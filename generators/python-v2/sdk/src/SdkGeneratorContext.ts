@@ -5,7 +5,7 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { PythonGeneratorAgent } from "./PythonGeneratorAgent.js";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder.js";
-import { SdkCustomConfigSchema } from "./SdkCustomConfig.js";
+import { type HttpxPackage, SdkCustomConfigSchema } from "./SdkCustomConfig.js";
 
 export class SdkGeneratorContext extends AbstractPythonGeneratorContext<SdkCustomConfigSchema> {
     public readonly generatorAgent: PythonGeneratorAgent;
@@ -53,5 +53,21 @@ export class SdkGeneratorContext extends AbstractPythonGeneratorContext<SdkCusto
             return `${orgName}.${packagePathDotted}`;
         }
         return orgName;
+    }
+
+    /**
+     * The package that provides the httpx API to the generated SDK (`httpx` unless configured).
+     */
+    public getHttpxPackage(): HttpxPackage {
+        return this.customConfig.httpx_package ?? "httpx";
+    }
+
+    /**
+     * The import statement for generated code that refers to `httpx.<name>`. httpx2 is
+     * imported under the `httpx` name so the rest of the generated code is unchanged.
+     */
+    public getHttpxImportStatement(): string {
+        const httpxPackage = this.getHttpxPackage();
+        return httpxPackage === "httpx" ? "import httpx" : `import ${httpxPackage} as httpx`;
     }
 }

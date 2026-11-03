@@ -11,6 +11,7 @@ from ..declaration_referencers.type_declaration_referencer import (
 )
 from fern_python.codegen import AST
 from fern_python.codegen.filepath import Filepath
+from fern_python.external_dependencies.httpx import HttpX
 from fern_python.generators.sdk.declaration_referencers.root_client_declaration_referencer import (
     RootClientDeclarationReferencer,
 )
@@ -105,6 +106,7 @@ class SdkGeneratorContext(ABC):
             auth_header_names=_get_auth_header_names(ir),
         )
         self.custom_config = custom_config
+        self.httpx = HttpX(custom_config.httpx_package)
         self.source_file_factory = SourceFileFactory(should_format=not custom_config.skip_formatting)
 
     @abstractmethod

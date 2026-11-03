@@ -3,6 +3,7 @@ from typing import Any, Dict, List, Literal, Optional, Union, cast
 import pydantic
 from fern_python.codegen.module_manager import ModuleExport
 from fern_python.codegen.project import OutputDirectory
+from fern_python.external_dependencies.httpx import HttpxPackage
 from fern_python.generators.pydantic_model.custom_config import PydanticModelCustomConfig
 
 
@@ -87,6 +88,12 @@ class SDKCustomConfig(pydantic.BaseModel):
     # plain install of a package used for its models only (e.g. TwiML) does not pull in
     # the HTTP stack. Off by default — the base install keeps httpx.
     http_client_extra: Optional[str] = None
+    # Which distribution provides the httpx API: `httpx` (default) or `httpx2`, the
+    # maintained, API-compatible fork (https://github.com/pydantic/httpx2). With
+    # `httpx2` the SDK depends on httpx2 instead of httpx and imports it as
+    # `import httpx2 as httpx`; users pass `httpx2.Client` instances as `httpx_client`.
+    # The aiohttp transport is unavailable because httpx-aiohttp is built on httpx.
+    httpx_package: HttpxPackage = HttpxPackage.HTTPX
     skip_formatting: bool = False
     client: ClientConfiguration = ClientConfiguration()
     include_union_utils: bool = False

@@ -6,6 +6,7 @@ from fern_python.codegen import AST
 from fern_python.generators.sdk.client_generator.root_client_generator import (
     RootClientGenerator,
 )
+from fern_python.external_dependencies.httpx import HttpX
 from fern_python.generators.sdk.custom_config import SDKCustomConfig
 from fern_python.source_file_factory import SourceFileFactory
 
@@ -38,6 +39,7 @@ class _FakeContext:
     def __init__(self, *, ir: _FakeIr, custom_config: SDKCustomConfig) -> None:
         self.ir = ir
         self.custom_config = custom_config
+        self.httpx = HttpX(custom_config.httpx_package)
         self.source_file_factory = SourceFileFactory(should_format=False)
         self.core_utilities = _FakeCoreUtilities()
 
