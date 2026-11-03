@@ -754,7 +754,7 @@ export async function upgradeGenerator({
                 cliContext.logger.info(
                     chalk.yellow(
                         `  - ${workspacePrefix}${item.generatorName}: ${item.currentVersion} → ${item.sdkConfigVersion} ` +
-                            "requires SDK Config, so generators.yml was not moved past the cutover"
+                            "requires SDK Config, so generators.yml was not upgraded to the latest major"
                     )
                 );
             }
