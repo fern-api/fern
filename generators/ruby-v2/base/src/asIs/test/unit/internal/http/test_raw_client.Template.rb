@@ -5,6 +5,19 @@ require "socket"
 require "zlib"
 
 describe <%= gem_namespace %>::Internal::Http::RawClient do
+  it "preserves false header values without opening a connection" do
+    client = <%= gem_namespace %>::Internal::Http::RawClient.new(base_url: "https://fixture.invalid")
+    [false, true, nil, "", "false", 0].each do |value|
+      request = client.__send__(:build_http_request, url: URI("https://fixture.invalid"), method: "GET",
+                                headers: { "X-Boolean" => value })
+      if value.nil?
+        assert_nil request["X-Boolean"]
+      else
+        assert_equal value.to_s, request["X-Boolean"]
+      end
+    end
+  end
+
   def make_response(status_code)
     response = Minitest::Mock.new
     response.expect(:code, status_code.to_s)
