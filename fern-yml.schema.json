@@ -6060,6 +6060,9 @@
             "paginated": {
               "type": "boolean"
             },
+            "show-scopes": {
+              "type": "boolean"
+            },
             "playground": {
               "type": "object",
               "properties": {

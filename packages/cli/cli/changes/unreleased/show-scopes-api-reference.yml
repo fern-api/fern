@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add a `show-scopes` option to API Reference sections in `docs.yml`. When set to `true`, each endpoint's
+    description lists the scopes from its `security` requirements, for example `**Required scopes:** \`plants:read\``.
+  type: feat

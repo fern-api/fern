@@ -1841,6 +1841,9 @@ types:
         availability: in-development
         type: optional<boolean>
         docs: If true, the API reference will be paginated rather than displayed in a single page (long-scrolling).
+      show-scopes:
+        type: optional<boolean>
+        docs: If true, appends the scopes each endpoint requires (from its `security` requirements) to the endpoint description.
       playground:
         type: optional<PlaygroundSettings>
         docs: Settings for the api playground that affects all endpoints.

@@ -449,6 +449,7 @@ export declare namespace DocsNavigationItem {
         sortByAvailability: SortByAvailabilityValue[] | undefined;
         flattened: boolean;
         paginated: boolean;
+        showScopes: boolean;
         playground: PlaygroundSettings | undefined;
     }
 

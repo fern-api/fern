@@ -1652,6 +1652,7 @@ async function convertNavigationItem({
             alphabetized: rawConfig.alphabetized ?? false,
             sortByAvailability: rawConfig.sortByAvailability,
             paginated: rawConfig.paginated ?? false,
+            showScopes: rawConfig.showScopes ?? false,
             playground: rawConfig.playground,
             viewers: parseRoles(rawConfig.viewers),
             orphaned: rawConfig.orphaned,
