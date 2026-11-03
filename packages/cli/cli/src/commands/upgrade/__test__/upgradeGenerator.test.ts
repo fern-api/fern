@@ -931,7 +931,7 @@ groups:
                 {
                     generatorName: "fernapi/fern-typescript-sdk",
                     groupName: "production",
-                    currentVersion: "3.80.0",
+                    currentVersion: "3.90.0",
                     sdkConfigVersion: "4.1.0"
                 }
             ]);
@@ -949,7 +949,7 @@ groups:
             ]);
             expect(result.updatedConfiguration).toContain("version: 3.87.0");
             expect(result.sdkConfigMigrationRequired).toEqual([
-                expect.objectContaining({ currentVersion: "3.86.0", sdkConfigVersion: "4.1.0" })
+                expect.objectContaining({ currentVersion: "3.87.0", sdkConfigVersion: "4.1.0" })
             ]);
         });
 

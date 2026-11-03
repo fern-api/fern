@@ -351,6 +351,10 @@ export async function loadAndUpdateGenerators({
             const upgradeAvailable = versionComparison === 1;
             const candidateIsOlder = versionComparison === -1;
             const versionToUse = upgradeAvailable && latestVersion != null ? latestVersion : currentGeneratorVersion;
+            if (migrationEntry != null) {
+                // Report the version left in generators.yml after any same-major fallback.
+                migrationEntry.currentVersion = versionToUse;
+            }
 
             if (latestVersion != null) {
                 if (upgradeAvailable) {
