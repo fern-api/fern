@@ -738,32 +738,56 @@ export class WebhooksHelperGenerator extends FileGenerator<CSharpFile, SdkGenera
         writer.writeLine("}");
         // A form-parameter multimap: param -> string | collection of strings. Keys sorted;
         // per key, values deduped and sorted; key + value concatenated with no separator.
-        // Matched via the non-generic IDictionary so that Dictionary<string, string>,
-        // Dictionary<string, object> and Dictionary<string, string[]> are all accepted
-        // (generic dictionary interfaces are invariant in their value type).
-        writer.writeLine("else if (requestBody is global::System.Collections.IDictionary bodyStringMap)");
+        // Accepts both the non-generic IDictionary (so Dictionary<string, string>,
+        // Dictionary<string, object> and Dictionary<string, string[]> all work - generic
+        // dictionary interfaces are invariant in their value type) and read-only
+        // IReadOnlyDictionary<string, object?> implementations.
+        const entriesType =
+            "global::System.Collections.Generic.List<global::System.Collections.Generic.KeyValuePair<string, object?>>";
+        const readOnlyMapType = "global::System.Collections.Generic.IReadOnlyDictionary<string, object?>";
+        writer.writeLine(
+            `else if (requestBody is global::System.Collections.IDictionary || requestBody is ${readOnlyMapType})`
+        );
         writer.writeLine("{");
         writer.indent();
         writer.writeTextStatement("var bodyStringBuilder = new global::System.Text.StringBuilder()");
-        writer.writeTextStatement("var bodyStringKeys = new global::System.Collections.Generic.List<string>()");
-        writer.writeLine("foreach (var bodyStringRawKey in bodyStringMap.Keys)");
+        writer.writeTextStatement(`var bodyStringEntries = new ${entriesType}()`);
+        writer.writeLine("if (requestBody is global::System.Collections.IDictionary bodyStringMap)");
         writer.writeLine("{");
         writer.indent();
-        writer.writeLine("if (bodyStringRawKey is not string bodyStringTypedKey)");
+        writer.writeLine("foreach (global::System.Collections.DictionaryEntry bodyStringEntry in bodyStringMap)");
+        writer.writeLine("{");
+        writer.indent();
+        writer.writeLine("if (bodyStringEntry.Key is not string bodyStringTypedKey)");
         writer.writeLine("{");
         writer.indent();
         // Non-string keys cannot be signed; fail closed rather than throwing.
         writer.writeTextStatement("return false");
         writer.dedent();
         writer.writeLine("}");
-        writer.writeTextStatement("bodyStringKeys.Add(bodyStringTypedKey)");
+        writer.writeTextStatement(
+            "bodyStringEntries.Add(new global::System.Collections.Generic.KeyValuePair<string, object?>(" +
+                "bodyStringTypedKey, bodyStringEntry.Value))"
+        );
         writer.dedent();
         writer.writeLine("}");
-        writer.writeTextStatement("bodyStringKeys.Sort(global::System.StringComparer.Ordinal)");
-        writer.writeLine("foreach (var bodyStringKey in bodyStringKeys)");
+        writer.dedent();
+        writer.writeLine("}");
+        writer.writeLine("else");
         writer.writeLine("{");
         writer.indent();
-        writer.writeTextStatement("var bodyStringValue = bodyStringMap[bodyStringKey]");
+        writer.writeTextStatement(`bodyStringEntries.AddRange((${readOnlyMapType})requestBody)`);
+        writer.dedent();
+        writer.writeLine("}");
+        writer.writeTextStatement(
+            "bodyStringEntries.Sort((bodyStringLeft, bodyStringRight) => " +
+                "global::System.StringComparer.Ordinal.Compare(bodyStringLeft.Key, bodyStringRight.Key))"
+        );
+        writer.writeLine("foreach (var bodyStringPair in bodyStringEntries)");
+        writer.writeLine("{");
+        writer.indent();
+        writer.writeTextStatement("var bodyStringKey = bodyStringPair.Key");
+        writer.writeTextStatement("var bodyStringValue = bodyStringPair.Value");
         writer.writeTextStatement(
             "var bodyStringValues = new global::System.Collections.Generic.SortedSet<string>(" +
                 "global::System.StringComparer.Ordinal)"
