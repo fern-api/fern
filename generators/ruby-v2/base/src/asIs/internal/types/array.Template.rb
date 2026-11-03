@@ -30,7 +30,7 @@ module <%= gem_namespace %>
         # @param value [Object]
         # @option strict [Boolean]
         # @return [::Array]
-        def coerce(value, strict: strict?)
+        def coerce(value, strict: strict?<% if (preserveIntegerInputs) { %>, preserve_integer_values: false<% } %>)
           unless value.is_a?(::Array)
             raise Errors::TypeError, "cannot coerce `#{value.class}` to Array<#{type}>" if strict
 
@@ -38,7 +38,7 @@ module <%= gem_namespace %>
           end
 
           value.map do |element|
-            Utils.coerce(type, element, strict: strict)
+            Utils.coerce(type, element, strict: strict<% if (preserveIntegerInputs) { %>, preserve_integer_values: preserve_integer_values<% } %>)
           end
         end
       end

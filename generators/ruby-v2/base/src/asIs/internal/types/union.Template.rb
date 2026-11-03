@@ -61,7 +61,7 @@ module <%= gem_namespace %>
         #
         # @param value [Object]
         # @return [Class]
-        private def resolve_member(value)
+        private def resolve_member(value<% if (preserveIntegerInputs) { %>, preserve_integer_values: false<% } %>)
           if discriminated? && value.is_a?(::Hash)
             # Try both symbol and string keys for the discriminant
             discriminant_value = value.fetch(@discriminant, nil) || value.fetch(@discriminant.to_s, nil)
@@ -102,7 +102,7 @@ module <%= gem_namespace %>
 
                 # Try to coerce the hash into this model type with strict mode
                 begin
-                  candidate = Utils.coerce(member_type, value, strict: true)
+                  candidate = Utils.coerce(member_type, value, strict: true<% if (preserveIntegerInputs) { %>, preserve_integer_values: preserve_integer_values<% } %>)
 
                   # Validate that all required (non-optional) fields are present
                   # This ensures undiscriminated unions properly distinguish between member types
@@ -119,8 +119,8 @@ module <%= gem_namespace %>
           end
         end
 
-        def coerce(value, strict: strict?)
-          type = resolve_member(value)
+        def coerce(value, strict: strict?<% if (preserveIntegerInputs) { %>, preserve_integer_values: false<% } %>)
+          type = resolve_member(value<% if (preserveIntegerInputs) { %>, preserve_integer_values: preserve_integer_values<% } %>)
 
           unless type
             return value unless strict
@@ -133,7 +133,7 @@ module <%= gem_namespace %>
             raise Errors::TypeError, "could not resolve to member of union #{self}"
           end
 
-          coerced = Utils.coerce(type, value, strict: strict)
+          coerced = Utils.coerce(type, value, strict: strict<% if (preserveIntegerInputs) { %>, preserve_integer_values: preserve_integer_values<% } %>)
 
           # For discriminated unions, store the discriminant info on the coerced instance
           # so it can be injected back during serialization (to_h)

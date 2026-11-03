@@ -19,7 +19,7 @@ module <%= gem_namespace %>
           @value_type = value_type
         end
 
-        def coerce(value, strict: strict?)
+        def coerce(value, strict: strict?<% if (preserveIntegerInputs) { %>, preserve_integer_values: false<% } %>)
           unless value.is_a?(::Hash)
             raise Errors::TypeError, "not hash" if strict
 
@@ -27,7 +27,7 @@ module <%= gem_namespace %>
           end
 
           value.to_h do |k, v|
-            [Utils.coerce(key_type, k, strict: strict), Utils.coerce(value_type, v, strict: strict)]
+            [Utils.coerce(key_type, k, strict: strict<% if (preserveIntegerInputs) { %>, preserve_integer_values: preserve_integer_values<% } %>), Utils.coerce(value_type, v, strict: strict<% if (preserveIntegerInputs) { %>, preserve_integer_values: preserve_integer_values<% } %>)]
           end
         end
       end

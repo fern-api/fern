@@ -31,6 +31,7 @@ function extractEmittedHelperSource(): string {
     const rendered = eta
         .renderString(template, {
             gem_namespace: "Seed",
+            preserveIntegerInputs: false,
             sdkName: "seed",
             rootFolderName: "seed",
             custom_pager_class_name: "CustomPager",

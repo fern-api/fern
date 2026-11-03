@@ -33,7 +33,70 @@ describe <%= gem_namespace %>::Internal::Types::Utils do
     SymbolModelHash = -> { <%= gem_namespace %>::Internal::Types::Hash[Symbol, TestUtils::M] }
   end
 
-  describe ".coerce" do
+<% if (preserveIntegerInputs) { %>  class NumericInput < <%= gem_namespace %>::Internal::Types::Model
+    field :amount, Float
+    field :numbers, <%= gem_namespace %>::Internal::Types::Array[Float], optional: true
+    field :mapping, <%= gem_namespace %>::Internal::Types::Hash[String, Float], optional: true
+    field :preserve_integer_values, String, optional: true
+  end
+
+  module NumericUnion
+    extend <%= gem_namespace %>::Internal::Types::Union
+
+    member -> { NumericInput }
+  end
+
+  class NestedNumericInput < <%= gem_namespace %>::Internal::Types::Model
+    field :child, NumericInput
+    field :children, <%= gem_namespace %>::Internal::Types::Array[NumericInput]
+    field :mapping, <%= gem_namespace %>::Internal::Types::Hash[String, NumericInput]
+    field :union, NumericUnion
+  end
+
+  describe "integer request inputs" do
+    it "preserves integers through nested models, arrays, maps and unions" do
+      amount = (2**80) + 1
+      child = { amount: amount, numbers: [amount, 1.25], mapping: { "value" => amount } }
+      input = { child: child, children: [child], mapping: { "item" => child }, union: child }
+      before = Marshal.dump(input)
+      model = NestedNumericInput.new(input)
+
+      [model.child, model.children.first, model.mapping["item"], model.union].each do |item|
+        assert_instance_of Integer, item.amount
+        assert_equal amount, item.amount
+        assert_equal [amount, 1.25], item.numbers
+        assert_instance_of Integer, item.mapping["value"]
+      end
+      assert_includes JSON.generate(model.to_h), amount.to_s
+      assert_equal before, Marshal.dump(input)
+    end
+
+    it "still coerces integral JSON response numbers to Float at every nesting level" do
+      child = { amount: 1, numbers: [2, 1.25], mapping: { "value" => 3 } }
+      model = NestedNumericInput.load(JSON.generate(child: child, children: [child], mapping: { "item" => child }, union: child))
+
+      [model.child, model.children.first, model.mapping["item"], model.union].each do |item|
+        assert_instance_of Float, item.amount
+        assert_instance_of Float, item.numbers.first
+        assert_instance_of Float, item.mapping["value"]
+      end
+      assert_instance_of Float, Utils.coerce(Float, 1)
+      assert_instance_of Float, NumericInput.coerce({ amount: 1 }).amount
+      assert_instance_of Integer, NumericInput.new(amount: 1).amount
+    end
+
+    it "preserves keyword constructors and ordinary Float and string coercion" do
+      model = NumericInput.new(amount: 1, preserve_integer_values: "a data field")
+
+      assert_equal "a data field", model.preserve_integer_values
+      assert_instance_of Integer, model.amount
+      assert_instance_of Float, NumericInput.new(amount: 1.25).amount
+      assert_in_delta 1.25, NumericInput.new(amount: "1.25").amount
+      assert_equal(-Float::INFINITY, 1.0 / NumericInput.new(amount: -0.0).amount)
+    end
+  end
+
+<% } %>  describe ".coerce" do
     describe "NilClass" do
       it "always returns nil" do
         assert_nil Utils.coerce(NilClass, "foobar")
