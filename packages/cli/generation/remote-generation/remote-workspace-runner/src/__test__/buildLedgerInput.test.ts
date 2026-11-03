@@ -650,6 +650,13 @@ describe("aliasWellKnownAgentFiles", () => {
         expect(buildWithAgents({ robotsTxt: "robots.txt" }, fileManifest)).toBe(fileManifest);
     });
 
+    it("prefers the configured file over an existing asset at the well-known path", () => {
+        const stale: FileManifestEntry = { ...entry, hash: "stale", filename: "llms.txt" };
+        const manifest = buildWithAgents({ llmsTxt: "ai/custom.txt" }, { "llms.txt": stale, "ai/custom.txt": entry });
+        expect(manifest?.["llms.txt"]).toEqual({ ...entry, filename: "llms.txt" });
+        expect(manifest?.["ai/custom.txt"]).toEqual(entry);
+    });
+
     it("resolves legacy FileIds through fileIdToPath", () => {
         const docsDefinition = makeDocsDefinition();
         (docsDefinition.config as Record<string, unknown>).agents = { robotsTxt: "file-id-1" };

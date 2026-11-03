@@ -139,6 +139,7 @@ export function aliasWellKnownAgentFiles({
         if (configuredPath === wellKnownPath || entry == null) {
             continue;
         }
+        // The explicitly configured file wins over any unrelated asset already at the well-known path.
         aliased ??= { ...fileManifest };
         aliased[wellKnownPath] = { ...entry, filename: wellKnownPath };
     }
