@@ -3880,6 +3880,7 @@
             "response": {
                 "type": "streaming"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_.streamProtocolCollision": {
@@ -3929,6 +3930,7 @@
             "response": {
                 "type": "streaming"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_.streamDataContext": {
@@ -3978,6 +3980,7 @@
             "response": {
                 "type": "streaming"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_.streamNoContext": {
@@ -4027,6 +4030,7 @@
             "response": {
                 "type": "streaming"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_.streamProtocolWithFlatSchema": {
@@ -4076,6 +4080,7 @@
             "response": {
                 "type": "streaming"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_.streamProtocolMixedSchema": {
@@ -4125,6 +4130,7 @@
             "response": {
                 "type": "streaming"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_.streamDataContextWithEnvelopeSchema": {
@@ -4174,6 +4180,7 @@
             "response": {
                 "type": "streaming"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_.streamOasSpecNative": {
@@ -4223,6 +4230,7 @@
             "response": {
                 "type": "streaming"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_.streamXFernStreamingCondition_stream": {
@@ -4364,6 +4372,7 @@
             "response": {
                 "type": "streaming"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_.streamXFernStreamingCondition": {
@@ -4505,6 +4514,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_.streamXFernStreamingSharedSchema_stream": {
@@ -4676,6 +4686,7 @@
             "response": {
                 "type": "streaming"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_.streamXFernStreamingSharedSchema": {
@@ -4847,6 +4858,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_.validateCompletion": {
@@ -5018,6 +5030,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_.streamXFernStreamingUnion_stream": {
@@ -5067,6 +5080,7 @@
             "response": {
                 "type": "streaming"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_.streamXFernStreamingUnion": {
@@ -5116,6 +5130,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_.validateUnionRequest": {
@@ -5165,6 +5180,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_.streamXFernStreamingNullableCondition_stream": {
@@ -5306,6 +5322,7 @@
             "response": {
                 "type": "streaming"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_.streamXFernStreamingNullableCondition": {
@@ -5447,6 +5464,7 @@
             "response": {
                 "type": "json"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_.streamXFernStreamingSseOnly": {
@@ -5496,6 +5514,7 @@
             "response": {
                 "type": "streaming"
             },
+            "hasResponseBody": true,
             "examples": null
         }
     },

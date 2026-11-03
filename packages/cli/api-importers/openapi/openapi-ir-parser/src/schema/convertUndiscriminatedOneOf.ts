@@ -1,7 +1,7 @@
+import { convertNumberToSnakeCase } from "@fern-api/core-utils";
 import {
     Availability,
     CommonPropertyWithExample,
-    convertNumberToSnakeCase,
     Encoding,
     isSchemaEqual,
     LiteralSchemaValue,

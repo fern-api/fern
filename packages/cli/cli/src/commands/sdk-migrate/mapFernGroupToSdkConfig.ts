@@ -1,5 +1,6 @@
 import type { FernDefinition, FernWorkspace } from "@fern-api/api-workspace-commons";
 import type { generatorsYml } from "@fern-api/configuration-loader";
+import { isRecord } from "@fern-api/core-utils";
 import {
     type FernConfigMappingDiagnostic,
     type FernResolvedGeneratorGroupInput,
@@ -9,7 +10,6 @@ import {
     type SdkConfigV1SourceConfig,
     validateSdkConfigV1
 } from "@postman/sdk-config/sdk-config/v1";
-
 import { mapFernAuthToSdkConfig } from "./mapFernAuthToSdkConfig.js";
 import type { SourceDerivedApiFields } from "./projectMigrationSource.js";
 
@@ -72,7 +72,8 @@ export function mapFernGroupToSdkConfig({
             ...validated,
             targets: validated.targets.map((target, index) => {
                 const credentials = migrationCredentials[index]?.credentials;
-                if (target.output?.publish == null) {
+                // Hosted MCP output has no registry publication, so there is nothing to carry credentials for.
+                if (target.output == null || target.output.delivery === "hosted" || target.output.publish == null) {
                     return target;
                 }
                 const publish = sanitizeMigratedPublishIntent(target.output.publish);
@@ -375,8 +376,4 @@ function isEmptyCredential(fieldName: string, value: unknown): boolean {
         typeof value === "string" &&
         value.trim() === ""
     );
-}
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-    return typeof value === "object" && value != null && !Array.isArray(value);
 }

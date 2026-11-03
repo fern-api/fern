@@ -1,0 +1,9 @@
+language js
+
+or {
+    `new Promise(($resolve) => setTimeout($resolve, $ms))`,
+    `new Promise(($resolve) => { setTimeout($resolve, $ms); })`,
+    `new Promise($resolve => setTimeout($resolve, $ms))`
+} as $wait where {
+    register_diagnostic(span=$wait, message="Use `delay` from `@fern-api/core-utils` instead of wrapping `setTimeout` in a promise.", severity="error")
+}

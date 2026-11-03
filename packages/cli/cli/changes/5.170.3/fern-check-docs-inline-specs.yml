@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern check` no longer reports "No API definition found" for docs-only projects that
+    reference their API specs inline from `docs.yml` (`api` navigation items with `specs`)
+    and keep the spec in an `openapi/` or `asyncapi/` directory without a `generators.yml`.
+    A directory that `docs.yml` does not reference still reports the error.
+  type: fix

@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    At `fern generate --docs`, find the snippets of the SDKs that docs.yml `snippets:` names (TypeScript,
+    Python, Java, Go, Ruby, C# and PHP) through sdk-gen-api, by the sdkName in sdk-config.yml, the language
+    and the version, and add them to the endpoints as code samples, in both deploy modes. The target needs
+    `docs.snippets.enabled` in sdk-config.yml so sdk-gen saves a snippets file with the build. This needs no
+    build ID and no files from the machine that built the SDK.
+    Off unless `FERN_UPLOAD_SDK_GEN_SNIPPETS=true` is set. A snippet failure never fails the docs publish.
+  type: feat

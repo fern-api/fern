@@ -1,3 +1,4 @@
+import { assertNeverNoThrow } from "@fern-api/core-utils";
 import {
     FernIr,
     HttpEndpoint,
@@ -22,6 +23,7 @@ import {
 } from "@open-rpc/meta-schema";
 import { OpenAPIV3 } from "openapi-types";
 
+import { FernExplorerExtension } from "../extensions/x-fern-explorer.js";
 import { OpenRPCConverterContext3_1 } from "../OpenRPCConverterContext3_1.js";
 
 export declare namespace MethodConverter {
@@ -31,6 +33,7 @@ export declare namespace MethodConverter {
         queryParameters?: FernIr.QueryParameter[];
         headers?: FernIr.HttpHeader[];
         topLevelServers?: ServerObject[];
+        globalApiPlayground?: boolean;
     }
 
     export interface Output {
@@ -47,6 +50,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
     private readonly queryParameters: FernIr.QueryParameter[];
     private readonly headers: FernIr.HttpHeader[];
     private readonly topLevelServers: ServerObject[];
+    private readonly globalApiPlayground: boolean | undefined;
     constructor({
         context,
         breadcrumbs,
@@ -54,7 +58,8 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
         pathParameters = [],
         queryParameters = [],
         headers = [],
-        topLevelServers = []
+        topLevelServers = [],
+        globalApiPlayground
     }: MethodConverter.Args) {
         super({ context, breadcrumbs });
         this.method = method;
@@ -62,6 +67,7 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
         this.queryParameters = queryParameters;
         this.headers = headers;
         this.topLevelServers = topLevelServers;
+        this.globalApiPlayground = globalApiPlayground;
     }
 
     public convert(): MethodConverter.Output | undefined {
@@ -217,11 +223,11 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
             },
             transport: undefined,
             availability: undefined,
-            source: HttpEndpointSource.openrpc(),
+            source: HttpEndpointSource.openrpc({ paramStructure: this.convertParamStructure() }),
             audiences,
             retries: undefined,
             globalParameters: undefined,
-            apiPlayground: undefined,
+            apiPlayground: this.convertApiPlayground(),
             responseHeaders: []
         };
 
@@ -231,6 +237,40 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
             inlinedTypes,
             servers: this.filterOutTopLevelServers(this.method.servers ?? [])
         };
+    }
+
+    private convertApiPlayground(): boolean | undefined {
+        const methodExplorer = new FernExplorerExtension({
+            breadcrumbs: [...this.breadcrumbs, this.method.name],
+            document: this.method,
+            context: this.context
+        }).convert();
+        return methodExplorer ?? this.globalApiPlayground;
+    }
+
+    private convertParamStructure(): FernIr.OpenRpcParamStructure | undefined {
+        const paramStructure = this.method.paramStructure;
+        switch (paramStructure) {
+            case "by-name":
+                return FernIr.OpenRpcParamStructure.ByName;
+            case "by-position":
+                return FernIr.OpenRpcParamStructure.ByPosition;
+            case "either":
+                return FernIr.OpenRpcParamStructure.Either;
+            case undefined:
+                return undefined;
+            default:
+                // The OpenRPC loader doesn't validate method fields, so ignore unknown values instead of failing the import.
+                assertNeverNoThrow(paramStructure);
+                return undefined;
+        }
+    }
+
+    private convertExampleParams(params: ExampleObject[]): unknown[] | Record<string, unknown> {
+        if (this.method.paramStructure === "by-name") {
+            return Object.fromEntries(params.map((param) => [param.name, param.value]));
+        }
+        return params.map((param) => param.value);
     }
 
     private filterOutTopLevelServers(servers: ServerObject[]): ServerObject[] {
@@ -350,18 +390,19 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
                         pathParameters,
                         queryParameters: {},
                         headers: {},
-                        requestBody: resolvedParams.map((param) => param.value) ?? undefined
+                        requestBody: this.convertExampleParams(resolvedParams)
                     },
                     response: {
                         docs: undefined,
                         statusCode: undefined,
-                        body: resolvedResult?.value
-                            ? FernIr.V2HttpEndpointResponseBody.json({
-                                  jsonrpc: "2.0",
-                                  id: resolvedExample.examplePairedRequest?.id || "1",
-                                  result: resolvedResult.value
-                              })
-                            : undefined
+                        body:
+                            resolvedResult?.value !== undefined
+                                ? FernIr.V2HttpEndpointResponseBody.json({
+                                      jsonrpc: "2.0",
+                                      id: resolvedExample.examplePairedRequest?.id || "1",
+                                      result: resolvedResult.value
+                                  })
+                                : undefined
                     },
                     codeSamples: []
                 };

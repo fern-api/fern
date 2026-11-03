@@ -10,4 +10,6 @@ export interface GithubSelfhostedSchema {
     license?: GeneratorsYml.GithubLicenseSchema;
     /** Whether generated `.github/workflows/*` files are committed. Defaults to true. When false, existing workflow files are left untouched and newly generated ones are skipped. */
     workflows?: boolean;
+    /** Enable GitHub auto-merge (squash) on the pull request opened by Fern. Defaults to false. Auto-merge is skipped when the release contains breaking changes (MAJOR bump), and the repository must allow auto-merge for GitHub to accept it. Only applies when `mode` is `pull-request`. */
+    "auto-merge"?: boolean;
 }

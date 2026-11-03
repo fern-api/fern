@@ -1,5 +1,5 @@
 import { docsYml } from "@fern-api/configuration";
-import { extractErrorMessage, sanitizeNullValues } from "@fern-api/core-utils";
+import { extractErrorMessage, isEnoentError, sanitizeNullValues } from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, resolve } from "@fern-api/fs-utils";
 import { CliError } from "@fern-api/task-context";
 
@@ -133,10 +133,6 @@ function isFilepathList(redirects: (string | docsYml.RawSchemas.RedirectConfig)[
     return redirects.every((redirect) => typeof redirect === "string");
 }
 
-function isNotFoundError(error: unknown): boolean {
-    return error instanceof Error && "code" in error && error.code === "ENOENT";
-}
-
 async function loadRedirectsFile({
     filepath,
     absoluteFilepathToDocsConfig
@@ -158,9 +154,10 @@ async function loadRedirectsFile({
         stats = await stat(absoluteFilepathToRedirects);
     } catch (error) {
         throw new CliError({
-            message: isNotFoundError(error)
-                ? `Failed to load redirects: ${absoluteFilepathToRedirects} does not exist`
-                : `Failed to load redirects from ${absoluteFilepathToRedirects}: ${extractErrorMessage(error)}`,
+            message:
+                error instanceof Error && isEnoentError(error)
+                    ? `Failed to load redirects: ${absoluteFilepathToRedirects} does not exist`
+                    : `Failed to load redirects from ${absoluteFilepathToRedirects}: ${extractErrorMessage(error)}`,
             code: CliError.Code.ParseError
         });
     }

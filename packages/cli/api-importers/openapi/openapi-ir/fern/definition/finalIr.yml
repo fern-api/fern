@@ -153,6 +153,12 @@ types:
       namespace:
         type: optional<string>
         docs: Namespace declared via `x-fern-sdk-namespace` on the response object itself.
+      isShared:
+        type: optional<boolean>
+        docs: |
+          True when this error was produced by the API-wide `error-responses` setting
+          (`api.settings`). Shared errors and their body type are declared in the root
+          package and reused by every namespaced spec.
 
   Webhook:
     extends:

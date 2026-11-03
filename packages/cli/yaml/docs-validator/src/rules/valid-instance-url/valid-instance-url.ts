@@ -1,3 +1,4 @@
+import { isHttpUrl } from "@fern-api/core-utils";
 import { Rule, RuleViolation } from "../../Rule.js";
 
 const VALID_FERN_DOMAINS = ["docs.buildwithfern.com", "docs.dev.buildwithfern.com"];
@@ -39,7 +40,7 @@ export function validateInstanceUrl(url: string): RuleViolation | null {
     let hostname: string;
     try {
         // Handle URLs with or without protocol
-        const urlWithProtocol = url.startsWith("http://") || url.startsWith("https://") ? url : `https://${url}`;
+        const urlWithProtocol = isHttpUrl(url) ? url : `https://${url}`;
         const parsedUrl = new URL(urlWithProtocol);
         hostname = parsedUrl.hostname.toLowerCase();
     } catch (e) {

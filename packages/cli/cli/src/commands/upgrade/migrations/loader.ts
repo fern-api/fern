@@ -1,5 +1,5 @@
 import type { generatorsYml } from "@fern-api/configuration";
-import { extractErrorMessage } from "@fern-api/core-utils";
+import { delay, extractErrorMessage } from "@fern-api/core-utils";
 import type { Logger } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { CliError } from "@fern-api/task-context";
@@ -134,7 +134,7 @@ async function acquireLock(logger: Logger, cacheDir: string): Promise<() => Prom
             }
 
             // Lock is held by a live process — wait and retry
-            await new Promise((resolve) => setTimeout(resolve, LOCK_POLL_MS));
+            await delay(LOCK_POLL_MS);
         }
     }
 }

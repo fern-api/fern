@@ -19,6 +19,7 @@ export const HttpErrorWithExample: core.serialization.ObjectSchema<
         schema: core.serialization.lazy(() => serializers.SchemaWithExample),
         fullExamples: core.serialization.list(NamedFullExample).optional(),
         namespace: core.serialization.string().optional(),
+        isShared: core.serialization.boolean().optional(),
     })
     .extend(WithDescription)
     .extend(WithName)
@@ -31,5 +32,6 @@ export declare namespace HttpErrorWithExample {
         schema: serializers.SchemaWithExample.Raw;
         fullExamples?: NamedFullExample.Raw[] | null;
         namespace?: string | null;
+        isShared?: boolean | null;
     }
 }

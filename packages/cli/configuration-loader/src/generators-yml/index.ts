@@ -2,6 +2,7 @@ export { addGenerator } from "./addGenerator.js";
 export {
     DEFAULT_MAVEN_REGISTRY_URL,
     isGithubSelfhosted,
+    mergeApiAndSpecSettings,
     mergeSettings,
     parseBaseApiDefinitionSettingsSchema,
     parseOpenApiDefinitionSettingsSchema

@@ -1,4 +1,4 @@
-import { ContainerRunner, extractErrorMessage } from "@fern-api/core-utils";
+import { ContainerRunner, errorMessageOrString, extractErrorMessage } from "@fern-api/core-utils";
 import {
     copyFromContainer,
     copyToContainer,
@@ -97,7 +97,7 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
                 throw error;
             }
             throw new CliError({
-                message: `Failed to start containers: ${error instanceof Error ? error.message : String(error)}`,
+                message: `Failed to start containers: ${errorMessageOrString(error)}`,
                 code: CliError.Code.ContainerError
             });
         }
@@ -125,7 +125,7 @@ export class ReusableContainerExecutionEnvironment implements ExecutionEnvironme
                 throw error;
             }
             throw new CliError({
-                message: `Container execution failed: ${error instanceof Error ? error.message : String(error)}`,
+                message: `Container execution failed: ${errorMessageOrString(error)}`,
                 code: CliError.Code.ContainerError
             });
         } finally {

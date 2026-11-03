@@ -3,8 +3,10 @@ import { join } from "../url/join.js";
 import { EndpointSupplier } from "./EndpointSupplier.js";
 import { getFetchFn } from "./getFetchFn.js";
 import { makeRequest } from "./makeRequest.js";
+import { redactUrl } from "./redactUrl.js";
 import { requestWithRetries } from "./requestWithRetries.js";
 import { Supplier } from "./Supplier.js";
+import { TIMEOUT } from "./signals.js";
 
 export declare namespace PassthroughRequest {
     /**
@@ -114,8 +116,10 @@ export async function makePassthroughRequest(
         }
     }
 
-    // Apply auth headers
-    if (clientOptions.getAuthHeaders != null) {
+    // Apply auth headers, but only when the resolved URL targets the configured base URL.
+    // This prevents the SDK's credentials from leaking to an unrelated host when a caller
+    // passes an absolute cross-origin URL into the passthrough fetch escape hatch.
+    if (clientOptions.getAuthHeaders != null && targetsBaseUrl(fullUrl, baseUrl)) {
         const authHeaders = await clientOptions.getAuthHeaders();
         for (const [key, value] of Object.entries(authHeaders)) {
             mergedHeaders[key.toLowerCase()] = value;
@@ -155,35 +159,70 @@ export async function makePassthroughRequest(
     if (logger.isDebug()) {
         logger.debug("Making passthrough HTTP request", {
             method,
-            url: fullUrl,
+            url: redactUrl(fullUrl),
             hasBody: body != null,
         });
     }
 
-    const response = await requestWithRetries(
-        async () =>
-            makeRequest(
-                fetchFn,
-                fullUrl,
-                method,
-                mergedHeaders,
-                body ?? undefined,
-                timeoutMs,
-                abortSignal,
-                effectiveInit?.credentials === "include",
-                undefined, // duplex
-                false, // disableCache
-            ),
-        maxRetries,
-    );
+    let response: Response;
+    try {
+        response = await requestWithRetries(
+            async () =>
+                makeRequest(
+                    fetchFn,
+                    fullUrl,
+                    method,
+                    mergedHeaders,
+                    body ?? undefined,
+                    timeoutMs,
+                    abortSignal,
+                    effectiveInit?.credentials === "include",
+                    undefined, // duplex
+                    false, // disableCache
+                ),
+            maxRetries,
+            abortSignal,
+        );
+    } catch (error) {
+        // Match `fetch`: a timeout rejects with an Error named "TimeoutError", not the bare abort reason.
+        if (error === TIMEOUT) {
+            throw createTimeoutError();
+        }
+        throw error;
+    }
 
     if (logger.isDebug()) {
         logger.debug("Passthrough HTTP request completed", {
             method,
-            url: fullUrl,
+            url: redactUrl(fullUrl),
             statusCode: response.status,
         });
     }
 
     return response;
+}
+
+function createTimeoutError(): Error {
+    const error = new Error("The request timed out.");
+    error.name = "TimeoutError";
+    return error;
+}
+
+/**
+ * Returns true when the resolved request URL points at the same origin as the
+ * configured base URL. Relative paths are always joined onto the base URL, so
+ * they resolve to the base origin and return true. Absolute URLs only match when
+ * their origin equals the base origin. When there is no base URL to compare
+ * against, or either value is not a parseable absolute URL, this returns false so
+ * auth headers are not attached.
+ */
+function targetsBaseUrl(fullUrl: string, baseUrl: string | undefined): boolean {
+    if (baseUrl == null) {
+        return false;
+    }
+    try {
+        return new URL(fullUrl).origin === new URL(baseUrl).origin;
+    } catch {
+        return false;
+    }
 }

@@ -1,0 +1,4 @@
+- summary: |
+    `fern token` now mints the key through the managed api-keys path (same `fern_` token class), so the
+    key gets a `tokenId`, appears in `fern org token list` and the dashboard API Keys page, and is revocable.
+  type: feat

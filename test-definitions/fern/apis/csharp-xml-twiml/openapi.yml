@@ -69,17 +69,6 @@ components:
         namespace: https://www.twilio.com/twiml
         prefix: tw
       properties:
-        number:
-          type: string
-          x-fern-xml-text: true
-        status_callback_event:
-          type: array
-          items:
-            type: string
-          xml:
-            name: statusCallbackEvent
-            attribute: true
-          x-fern-xml-list-separator: " "
         record:
           type: array
           items:
@@ -97,6 +86,17 @@ components:
           xml:
             name: Numbers
             wrapped: true
+        status_callback_event:
+          type: array
+          items:
+            type: string
+          xml:
+            name: statusCallbackEvent
+            attribute: true
+          x-fern-xml-list-separator: " "
+        number:
+          type: string
+          x-fern-xml-text: true
     Number:
       type: object
       xml:

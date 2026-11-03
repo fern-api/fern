@@ -17,6 +17,7 @@ export const Endpoint: core.serialization.ObjectSchema<serializers.dynamic.Endpo
         location: EndpointLocation,
         request: Request,
         response: Response,
+        hasResponseBody: core.serialization.boolean().optional(),
         examples: core.serialization.list(EndpointExample).optional(),
     });
 
@@ -27,6 +28,7 @@ export declare namespace Endpoint {
         location: EndpointLocation.Raw;
         request: Request.Raw;
         response: Response.Raw;
+        hasResponseBody?: boolean | null;
         examples?: EndpointExample.Raw[] | null;
     }
 }

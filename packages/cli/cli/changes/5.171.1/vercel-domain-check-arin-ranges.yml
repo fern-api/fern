@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    The `custom-domain` Vercel check now recognizes apex domains on all of Vercel's
+    IPv4 networks (per ARIN), not just a subset.
+  type: fix

@@ -1,7 +1,7 @@
 import { FernToken } from "@fern-api/auth";
 import { getFernDirectory, loadProjectConfig } from "@fern-api/configuration-loader";
 import { createFdrService } from "@fern-api/core";
-import { replaceEnvVariables } from "@fern-api/core-utils";
+import { replaceEnvVariables, stripTrailingSlashes } from "@fern-api/core-utils";
 import { buildPreviewDomain, isPreviewUrl } from "@fern-api/docs-preview";
 import { askToLogin } from "@fern-api/login";
 import { CliError } from "@fern-api/task-context";
@@ -40,7 +40,7 @@ function parseBasePath(instanceUrl: string): string {
     } catch {
         return "";
     }
-    const trimmed = pathname.replace(/\/+$/, "");
+    const trimmed = stripTrailingSlashes(pathname);
     return trimmed === "" || trimmed === "/" ? "" : trimmed;
 }
 

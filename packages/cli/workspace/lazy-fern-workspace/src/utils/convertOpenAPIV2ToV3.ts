@@ -1,3 +1,4 @@
+import { errorMessageOrString } from "@fern-api/core-utils";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import { OpenAPIV2, OpenAPIV3 } from "openapi-types";
 import { convertObj } from "swagger2openapi";
@@ -18,16 +19,14 @@ export async function convertOpenAPIV2ToV3(
     try {
         const conversionResult = await convertObj(openAPI, { patch: true });
         options?.context?.logger.warn(
-            `OpenAPI v2 (Swagger) document is not strictly valid and was converted in lenient (patch) mode: ${
-                strictError instanceof Error ? strictError.message : String(strictError)
-            }`
+            `OpenAPI v2 (Swagger) document is not strictly valid and was converted in lenient (patch) mode: ${errorMessageOrString(
+                strictError
+            )}`
         );
         return conversionResult.openapi;
     } catch {
         throw new CliError({
-            message: `Failed to convert OpenAPI v2 (Swagger) spec to OpenAPI v3: ${
-                strictError instanceof Error ? strictError.message : String(strictError)
-            }`,
+            message: `Failed to convert OpenAPI v2 (Swagger) spec to OpenAPI v3: ${errorMessageOrString(strictError)}`,
             code: CliError.Code.ParseError
         });
     }

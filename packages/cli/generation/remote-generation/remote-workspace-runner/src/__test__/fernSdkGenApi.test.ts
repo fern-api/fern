@@ -1,5 +1,6 @@
 // cspell:ignore kotlin octocat unstub
 import { generatorsYml } from "@fern-api/configuration";
+import { CliError } from "@fern-api/task-context";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import axios, { AxiosError } from "axios";
 import { createHash } from "crypto";
@@ -1139,7 +1140,7 @@ describe("isEligibleForFernSdkGenApi", () => {
         ).toBe(true);
     });
 
-    it("rejects non-SDK generators and unresolved SDK versions", () => {
+    it("rejects non-SDK generators and accepts omitted SDK versions", () => {
         expect(
             isEligibleForFernSdkGenApi({
                 generatorInvocation: invocation({
@@ -1155,7 +1156,7 @@ describe("isEligibleForFernSdkGenApi", () => {
                 sdkVersion: undefined,
                 specsTarGzBuffer: Buffer.from("archive")
             })
-        ).toBe(false);
+        ).toBe(true);
     });
 
     it("routes GitHub and registry output through sdk-gen-api", () => {
@@ -2077,8 +2078,8 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(changedSource.idempotencyKey).not.toBe(original.idempotencyKey);
     });
 
-    it("gives every AUTO request a new idempotency key, because its result depends on the SDK repository", () => {
-        const createRequest = (sdkVersion: string) =>
+    it("gives every AUTO or omitted request a new idempotency key because its result depends on external state", () => {
+        const createRequest = (sdkVersion?: string) =>
             createFernSdkGenApiRequest({
                 apiName: "Petstore",
                 organization: "acme",
@@ -2091,6 +2092,7 @@ describe("isEligibleForFernSdkGenApi", () => {
             });
 
         expect(createRequest("AUTO").idempotencyKey).not.toBe(createRequest("AUTO").idempotencyKey);
+        expect(createRequest().idempotencyKey).not.toBe(createRequest().idempotencyKey);
         expect(createRequest("1.2.3").idempotencyKey).toBe(createRequest("1.2.3").idempotencyKey);
     });
 
@@ -3688,6 +3690,20 @@ describe("fernapi/fern-mcp-server target", () => {
         expect(target?.requestedOutput).toEqual({ type: "download" });
     });
 
+    it("omits sdk.version so sdk-gen-api can resolve it server-side", () => {
+        const request = createFernSdkGenApiRequest({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation: mcpInvocation(),
+            sdkVersion: undefined,
+            specsTarGzBuffer: Buffer.from("archive"),
+            payload: sdkConfigPayload("{}")
+        });
+
+        expect(request.targets[0]?.sdk).toEqual({ name: "Petstore" });
+    });
+
     it("omits an unpinned SDK Config generator version from the wire request", () => {
         const [prepared] = prepareFernSdkGenApiRoutes({
             generators: [mcpInvocation({ version: SDK_CONFIG_UNPINNED_GENERATOR_VERSION })],
@@ -3839,20 +3855,6 @@ describe("describeFernSdkGenApiIneligibility", () => {
             })
         ).toBe(expected);
     });
-
-    it("tells the user to pass --version when the SDK version is unresolved", () => {
-        expect(
-            describeFernSdkGenApiIneligibility({
-                candidate: {
-                    generatorInvocation: invocation(),
-                    sdkVersion: undefined,
-                    specsTarGzBuffer: Buffer.from("archive")
-                },
-                isSdkConfigTarget: false,
-                isPreview: false
-            })
-        ).toBe("the SDK version could not be resolved. Pass one with --version (for example, --version 1.0.0)");
-    });
 });
 
 describe("GitHub delivery result", () => {
@@ -3868,7 +3870,17 @@ describe("GitHub delivery result", () => {
 
     async function runWithPublication(
         publication: Record<string, unknown> | undefined,
-        { sdkVersion = "1.2.3", actualVersion = "1.2.3" }: { sdkVersion?: string; actualVersion?: string | null } = {}
+        {
+            sdkVersion = "1.2.3",
+            actualVersion = "1.2.3",
+            autoVersionPreview = false,
+            artifactUrl = true
+        }: {
+            sdkVersion?: string;
+            actualVersion?: string | null;
+            autoVersionPreview?: boolean;
+            artifactUrl?: boolean;
+        } = {}
     ) {
         vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "https://sdk-gen-api.test");
         const generatorInvocation = githubInvocation();
@@ -3892,7 +3904,7 @@ describe("GitHub delivery result", () => {
                         status: "succeeded",
                         logs: [],
                         result: {
-                            artifactUrl: "https://example.test/artifact.zip",
+                            ...(artifactUrl ? { artifactUrl: "https://example.test/artifact.zip" } : {}),
                             ...(actualVersion == null ? {} : { actualVersion })
                         },
                         ...(publication == null ? {} : { publication })
@@ -3909,6 +3921,16 @@ describe("GitHub delivery result", () => {
             token: { value: "token" } as never,
             specsTarGzBuffer: validSourceArchive,
             payload: runtimePayload(validRuntimeBundle),
+            ...(autoVersionPreview
+                ? {
+                      requestedOutput: { type: "download" } as const,
+                      autoVersionPreviewOutput: {
+                          type: "github" as const,
+                          repository: "acme/sdk",
+                          mode: "pull-request" as const
+                      }
+                  }
+                : {}),
             absolutePathToPreview: undefined,
             context
         });
@@ -3955,6 +3977,20 @@ describe("GitHub delivery result", () => {
         expect(result.actualVersion).toBeUndefined();
         expect(result.noChangesDetected).toBe(true);
         expect(contextLogger.info).not.toHaveBeenCalledWith(expect.stringContaining("new version"));
+    });
+
+    it("completes an AUTO preview with no artifact when semantic analysis finds no changes", async () => {
+        const result = await runWithPublication(githubPublication({ noChangesDetected: true }), {
+            sdkVersion: "AUTO",
+            actualVersion: null,
+            autoVersionPreview: true,
+            artifactUrl: false
+        });
+
+        expect(result.actualVersion).toBeUndefined();
+        expect(result.noChangesDetected).toBe(true);
+        expect(result.publishTarget).toBeUndefined();
+        expect(contextLogger.info).toHaveBeenCalledWith("No changes detected; there is no SDK preview to download.");
     });
 
     it("reports a skip for no changes explicitly instead of as a created pull request", async () => {
@@ -4012,5 +4048,213 @@ describe("GitHub delivery result", () => {
         await expect(runWithPublication(undefined)).rejects.toThrow(
             "sdk-gen-api reported the build as succeeded but did not confirm the GitHub delivery to acme/sdk"
         );
+    });
+});
+
+describe("sdk-gen-api build status polling", () => {
+    const pollTimeoutMs = 18 * 60 * 1_000;
+
+    function startBuild(targetAfterDeadline: Record<string, unknown>) {
+        vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "https://sdk-gen-api.test");
+        const generatorInvocation = invocation();
+        const targetId = createFernSdkGenApiRequest({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation,
+            sdkVersion: "1.2.3",
+            specsTarGzBuffer: validSourceArchive,
+            payload: runtimePayload(validRuntimeBundle)
+        }).targets[0]?.targetId;
+        const failures: Array<{ message: string; code: CliError.Code | undefined }> = [];
+        const capturingContext = {
+            logger: contextLogger,
+            failAndThrow: (message: string, _error: unknown, options?: { code?: CliError.Code }) => {
+                failures.push({ message, code: options?.code });
+                throw new Error(message);
+            }
+        } as never;
+        const pollTimes: number[] = [];
+        vi.spyOn(axios, "post").mockResolvedValue({ data: { buildId: "build-1" } } as never);
+        vi.spyOn(axios, "get").mockImplementation((() => {
+            const now = Date.now();
+            pollTimes.push(now);
+            const target =
+                now >= pollTimeoutMs ? { targetId, ...targetAfterDeadline } : { targetId, status: "running", logs: [] };
+            return Promise.resolve({ data: { buildId: "build-1", status: "running", targets: [target] } });
+        }) as never);
+        const outcome = runFernSdkGenApiBuild({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation,
+            sdkVersion: "1.2.3",
+            token: { value: "token" } as never,
+            specsTarGzBuffer: validSourceArchive,
+            payload: runtimePayload(validRuntimeBundle),
+            absolutePathToPreview: undefined,
+            context: capturingContext
+        }).catch((error: unknown) => error);
+        return { outcome, failures, pollTimes };
+    }
+
+    beforeEach(() => {
+        vi.useFakeTimers({ toFake: ["setTimeout", "Date"] });
+        vi.setSystemTime(0);
+    });
+
+    afterEach(() => {
+        vi.useRealTimers();
+    });
+
+    it("finishes normally when the final poll after the deadline is terminal", async () => {
+        const { outcome, failures, pollTimes } = startBuild({
+            status: "succeeded",
+            logs: [],
+            result: { artifactUrl: "https://example.test/artifact.zip", actualVersion: "1.2.4" }
+        });
+
+        await vi.advanceTimersByTimeAsync(pollTimeoutMs);
+
+        await expect(outcome).resolves.toMatchObject({ actualVersion: "1.2.4" });
+        expect(failures).toEqual([]);
+        expect(pollTimes.filter((time) => time >= pollTimeoutMs)).toEqual([pollTimeoutMs]);
+    });
+
+    it("fails with a non-network error when the final poll after the deadline is not terminal", async () => {
+        const { outcome, failures, pollTimes } = startBuild({ status: "running", logs: [] });
+
+        await vi.advanceTimersByTimeAsync(pollTimeoutMs);
+
+        const message = "Timed out waiting for sdk-gen-api build build-1 after 18 minutes";
+        await expect(outcome).resolves.toMatchObject({ message });
+        expect(failures).toEqual([{ message, code: CliError.Code.InternalError }]);
+        expect(pollTimes.filter((time) => time >= pollTimeoutMs)).toEqual([pollTimeoutMs]);
+    });
+});
+
+describe("sdk-gen-api build telemetry", () => {
+    function startBuild(instrumentPostHogEvent: ReturnType<typeof vi.fn>) {
+        vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "https://sdk-gen-api.test");
+        const generatorInvocation = invocation();
+        const targetId = createFernSdkGenApiRequest({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation,
+            sdkVersion: "1.2.3",
+            specsTarGzBuffer: validSourceArchive,
+            payload: runtimePayload(validRuntimeBundle)
+        }).targets[0]?.targetId;
+        vi.spyOn(axios, "post").mockResolvedValue({ data: { buildId: "build-1" } } as never);
+        vi.spyOn(axios, "get").mockResolvedValue({
+            data: {
+                buildId: "build-1",
+                status: "failed",
+                targets: [{ targetId, status: "failed", logs: [], error: { message: "Generator crashed" } }]
+            }
+        } as never);
+        const outcome = runFernSdkGenApiBuild({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation,
+            sdkVersion: "1.2.3",
+            token: { value: "token" } as never,
+            specsTarGzBuffer: validSourceArchive,
+            payload: runtimePayload(validRuntimeBundle),
+            absolutePathToPreview: undefined,
+            context: {
+                logger: contextLogger,
+                failAndThrow: (message: string) => {
+                    throw new Error(message);
+                },
+                instrumentPostHogEvent
+            } as never
+        });
+        return { outcome, targetId };
+    }
+
+    it("records the build and target IDs for each target, even when the build fails", async () => {
+        const instrumentPostHogEvent = vi.fn();
+        const { outcome, targetId } = startBuild(instrumentPostHogEvent);
+
+        await expect(outcome).rejects.toMatchObject({ message: "Generator crashed" });
+        expect(instrumentPostHogEvent).toHaveBeenCalledExactlyOnceWith({
+            orgId: "acme",
+            command: "sdk-gen-api build submitted",
+            properties: {
+                sdkGenApiBuildId: "build-1",
+                sdkGenApiTargetId: targetId,
+                sdkGenApiTargetCount: 1,
+                sdkGenApiHost: "sdk-gen-api.test",
+                apiName: "Petstore",
+                generatorName: "fernapi/fern-typescript-sdk",
+                generatorVersion: "3.86.0",
+                language: "typescript",
+                payloadKind: "fern-runtime-bundle",
+                outputMode: "download",
+                sdkName: "Petstore",
+                sdkVersion: "1.2.3"
+            }
+        });
+    });
+
+    it("does not fail the build when telemetry throws", async () => {
+        const instrumentPostHogEvent = vi.fn(() => {
+            throw new Error("posthog unavailable");
+        });
+        const { outcome } = startBuild(instrumentPostHogEvent);
+
+        await expect(outcome).rejects.toMatchObject({ message: "Generator crashed" });
+        expect(instrumentPostHogEvent).toHaveBeenCalledOnce();
+    });
+});
+
+describe("sdk-gen-api target failure message", () => {
+    it.each([
+        [
+            "prefixes the message with the error code",
+            { code: "FERN_BUILD_TIMEOUT", message: "Build exceeded 15 minutes" },
+            "FERN_BUILD_TIMEOUT: Build exceeded 15 minutes"
+        ],
+        ["uses the message when there is no code", { message: "Generator crashed" }, "Generator crashed"],
+        ["uses the default text when there is no error", undefined, "sdk-gen-api generation failed"],
+        ["uses the default text when the message is empty", { message: "" }, "sdk-gen-api generation failed"]
+    ] as const)("%s", async (_name, error, expectedMessage) => {
+        vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "https://sdk-gen-api.test");
+        const generatorInvocation = invocation();
+        const targetId = createFernSdkGenApiRequest({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation,
+            sdkVersion: "1.2.3",
+            specsTarGzBuffer: validSourceArchive,
+            payload: runtimePayload(validRuntimeBundle)
+        }).targets[0]?.targetId;
+        vi.spyOn(axios, "post").mockResolvedValue({ data: { buildId: "build-1" } } as never);
+        vi.spyOn(axios, "get").mockResolvedValue({
+            data: {
+                buildId: "build-1",
+                status: "failed",
+                targets: [{ targetId, status: "failed", logs: [], ...(error == null ? {} : { error }) }]
+            }
+        } as never);
+
+        await expect(
+            runFernSdkGenApiBuild({
+                apiName: "Petstore",
+                organization: "acme",
+                cliVersion: "0.0.0",
+                generatorInvocation,
+                sdkVersion: "1.2.3",
+                token: { value: "token" } as never,
+                specsTarGzBuffer: validSourceArchive,
+                payload: runtimePayload(validRuntimeBundle),
+                absolutePathToPreview: undefined,
+                context
+            })
+        ).rejects.toMatchObject({ message: expectedMessage });
     });
 });

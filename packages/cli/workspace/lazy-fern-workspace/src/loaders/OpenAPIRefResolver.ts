@@ -1,3 +1,4 @@
+import { isHttpUrl } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExistSync } from "@fern-api/fs-utils";
 import { BaseResolver } from "@redocly/openapi-core";
 import path from "path";
@@ -25,7 +26,7 @@ export class OpenAPIRefResolver extends BaseResolver {
         const result = super.resolveExternalRef(base, ref);
 
         // If it's an HTTP/HTTPS URL, return it as-is and let Redocly handle fetching
-        if (result.startsWith("http://") || result.startsWith("https://")) {
+        if (isHttpUrl(result)) {
             return result;
         }
 

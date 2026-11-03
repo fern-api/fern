@@ -1,5 +1,5 @@
 import { getFernDirectory } from "@fern-api/configuration-loader";
-import { AbsoluteFilePath, Directory, File, getDirectoryContents, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { File, getFilesAndDirectories, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import { writeFile } from "fs/promises";
@@ -151,22 +151,4 @@ function migrateDeprecatedSettings(settings: Record<string, unknown>, context: T
     }
 
     return modified;
-}
-
-async function getFilesAndDirectories(
-    absoluteFilepath: AbsoluteFilePath
-): Promise<{ files: File[]; directories: Directory[] }> {
-    const contents = await getDirectoryContents(absoluteFilepath);
-
-    const files: File[] = [];
-    const directories: Directory[] = [];
-    for (const fileOrFolder of contents) {
-        if (fileOrFolder.type === "directory") {
-            directories.push(fileOrFolder);
-        } else {
-            files.push(fileOrFolder);
-        }
-    }
-
-    return { files, directories };
 }

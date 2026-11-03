@@ -1,3 +1,4 @@
+import { delay as sleep } from "@fern-api/core-utils";
 import { CliError } from "@fern-api/task-context";
 import { Browser, launch } from "puppeteer";
 
@@ -23,7 +24,7 @@ async function exponentialBackoff<T>(
         return await operation();
     } catch (error) {
         if (retries > 0) {
-            await new Promise((resolve) => setTimeout(resolve, delay));
+            await sleep(delay);
             return exponentialBackoff(operation, retries - 1, delay * factor, factor);
         } else {
             throw error;

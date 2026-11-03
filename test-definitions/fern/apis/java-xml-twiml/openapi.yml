@@ -19,6 +19,67 @@ components:
               - $ref: "#/components/schemas/Dial"
               - $ref: "#/components/schemas/Pause"
               - $ref: "#/components/schemas/Hangup"
+              - $ref: "#/components/schemas/Redirect"
+              - $ref: "#/components/schemas/Message"
+    Message:
+      type: object
+      description: A <Message> whose text property shares its name with the <Body> child element.
+      xml:
+        name: Message
+      properties:
+        body:
+          type: string
+          description: Inline message text.
+          x-fern-xml-text: true
+        to:
+          type: string
+          xml:
+            attribute: true
+        children:
+          type: array
+          description: Nested elements, rendered in order.
+          items:
+            oneOf:
+              - $ref: "#/components/schemas/Body"
+              - $ref: "#/components/schemas/Media"
+          xml:
+            wrapped: false
+    Body:
+      type: object
+      xml:
+        name: Body
+      properties:
+        message:
+          type: string
+          x-fern-xml-text: true
+    Media:
+      type: object
+      xml:
+        name: Media
+      required: [url]
+      properties:
+        url:
+          type: string
+          format: uri
+          x-fern-xml-text: true
+    Redirect:
+      type: object
+      description: <Redirect> TwiML Verb
+      xml:
+        name: Redirect
+      required: [url]
+      properties:
+        url:
+          type: string
+          format: uri
+          description: Redirect URL
+          x-fern-xml-text: true
+        method:
+          type: string
+          enum: [GET, POST]
+          description: Redirect URL method
+          xml:
+            attribute: true
     Say:
       type: object
       description: <Say> TwiML Verb

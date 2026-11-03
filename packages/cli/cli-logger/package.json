@@ -37,12 +37,11 @@
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
+    "@fern-api/fs-utils": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "@types/is-ci": "catalog:",
     "@types/node": "catalog:",
     "ansi-escapes": "catalog:",
-    "is-ci": "catalog:",
     "ora": "catalog:",
     "typescript": "catalog:",
     "vitest": "catalog:"

@@ -1,6 +1,6 @@
 import { DEFAULT_OPENAPI_BUNDLE_OPTIONS } from "@fern-api/api-workspace-commons";
+import { isHttpUrl } from "@fern-api/core-utils";
 import { BaseResolver, bundle, Source } from "@redocly/openapi-core";
-
 import { type RemoteTextResource, safeFetchRemoteText } from "./safeRemoteUrl.js";
 
 type RemoteLoader = (url: string) => Promise<RemoteTextResource>;
@@ -11,7 +11,7 @@ class SafeRemoteOpenAPIResolver extends BaseResolver {
     }
 
     public override async loadExternalRef(absoluteRef: string): Promise<Source> {
-        if (!absoluteRef.startsWith("http://") && !absoluteRef.startsWith("https://")) {
+        if (!isHttpUrl(absoluteRef)) {
             return super.loadExternalRef(absoluteRef);
         }
         const resource = await this.loadRemote(absoluteRef);

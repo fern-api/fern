@@ -1,4 +1,4 @@
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, errorMessageOrString } from "@fern-api/core-utils";
 import { FdrAPI, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
@@ -200,7 +200,7 @@ export class GraphQLConverter {
                 throw validationError;
             }
             this.context.logger.warn(
-                `Invalid GraphQL schema: ${validationError instanceof Error ? validationError.message : String(validationError)} ` +
+                `Invalid GraphQL schema: ${errorMessageOrString(validationError)} ` +
                     "Continuing without SDL validation."
             );
             return schema;

@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    SDK snippets from sdk-gen-api now show in the docs without a feature flag. `fern generate --docs` reads the
+    snippets of the SDKs that docs.yml `snippets:` names and adds them to the endpoints as code samples, so
+    `FERN_UPLOAD_SDK_GEN_SNIPPETS=true` is no longer needed and is ignored. A snippet failure never fails the docs
+    publish.
+  type: feat

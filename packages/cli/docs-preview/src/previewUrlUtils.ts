@@ -1,3 +1,4 @@
+import { sanitizePreviewId } from "@fern-api/core-utils";
 import { CliError } from "@fern-api/task-context";
 
 /**
@@ -34,22 +35,6 @@ export function isPreviewUrl(url: string): boolean {
 }
 
 /**
- * Sanitizes a preview ID to be valid in a DNS subdomain label.
- * This MUST match the server-side sanitizePreviewId in FDR.
- */
-export function sanitizePreviewId(id: string): string {
-    const sanitized = id
-        .toLowerCase()
-        .replace(/[^a-z0-9-]/g, "-")
-        .replace(/-{2,}/g, "-")
-        .replace(/^-+|-+$/g, "");
-    if (sanitized.length === 0) {
-        return "default";
-    }
-    return sanitized;
-}
-
-/**
  * Replicates the server-side truncateDomainName logic so the CLI can predict
  * the preview URL for a given previewId.
  */
@@ -74,3 +59,5 @@ export function buildPreviewDomain({ orgId, previewId }: { orgId: string; previe
     const truncatedId = sanitizedId.slice(0, availableSpace).replace(/-+$/, "");
     return `${prefix}${truncatedId}.${DOMAIN_SUFFIX}`;
 }
+
+export { sanitizePreviewId };

@@ -1,8 +1,8 @@
+import { errorMessageOrString } from "@fern-api/core-utils";
 import type { SdkConfigIrV1, SdkConfigIrV1Input } from "@postman/sdk-config";
 import { parseSdkConfigIrV1, SDK_CONFIG_IR_V1_SCHEMA_VERSION } from "@postman/sdk-config";
 import type { SdkConfigV1, SdkConfigV1Target } from "@postman/sdk-config/sdk-config/v1";
 import { splitSdkConfigV1TargetGeneration } from "@postman/sdk-config/sdk-config/v1";
-
 import type { RawSpecsManifest } from "../rawSpecs.js";
 import { collectOnPremSourceSpecs } from "./onPremSourceSpecs.js";
 
@@ -116,7 +116,7 @@ export function buildSdkConfigIrFromSdkConfig({
             success: false,
             message:
                 `Could not build SDK Config IR from sdk-config.yml for "${generatorName}": ` +
-                (error instanceof Error ? error.message : String(error))
+                errorMessageOrString(error)
         };
     }
 }

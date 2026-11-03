@@ -1,4 +1,5 @@
 import { GeneratorName } from "@fern-api/configuration-loader";
+import { errorMessageOrString } from "@fern-api/core-utils";
 import { IntermediateRepresentation, serialization as IrSerialization } from "@fern-api/ir-sdk";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { CliError, TaskContext } from "@fern-api/task-context";
@@ -269,7 +270,7 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
             return isVersionAhead(minVersionToExclude, targetGenerator.version);
         } catch (error) {
             throw new CliError({
-                message: `Failed to compare versions: ${error instanceof Error ? error.message : String(error)}`,
+                message: `Failed to compare versions: ${errorMessageOrString(error)}`,
                 code: CliError.Code.VersionError
             });
         }

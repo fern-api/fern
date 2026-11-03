@@ -1,8 +1,13 @@
 /**
- * Checks if the current process is running in a CI/CD environment
+ * Checks if the current process is running in a CI/CD environment.
+ * `CI=false` or `CI=0` explicitly opts out, even if other CI variables are set.
  * @returns true if running in any common CI/CD environment
  */
 export function isCI(): boolean {
+    const ci = process.env.CI?.trim().toLowerCase();
+    if (ci === "false" || ci === "0") {
+        return false;
+    }
     return !!(
         (
             process.env.CI || // Generic CI flag (used by many CI systems)

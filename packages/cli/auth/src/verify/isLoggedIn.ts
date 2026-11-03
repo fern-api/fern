@@ -14,6 +14,8 @@ export async function isLoggedIn(): Promise<boolean> {
             return verifyAccessToken(token);
         case "user":
             return verifyJwt(token);
+        case "guest":
+            return token.expiresAt.getTime() > Date.now();
         default:
             assertNever(token);
     }

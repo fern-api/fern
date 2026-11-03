@@ -1,0 +1,52 @@
+openapi: 3.0.0
+info:
+  title: API whose properties are named after JSON Schema keywords
+  version: 1.0.0
+paths:
+  /document-templates:
+    post:
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                extraction_config:
+                  $ref: "#/components/schemas/ExtractionConfig"
+      responses:
+        "200":
+          description: Successful response
+
+components:
+  schemas:
+    ExtractionConfig:
+      type: object
+      properties:
+        # A config field holding a JSON Schema. Its sub-schema declares properties whose
+        # names collide with the structural breadcrumbs used to generate type ids.
+        schema:
+          type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - object
+            properties:
+              type: object
+            allOf:
+              type: object
+            anyOf:
+              type: object
+            required:
+              type: array
+              items:
+                type: string
+          required:
+            - type
+            - properties
+            - allOf
+            - anyOf
+            - required
+      required:
+        - schema

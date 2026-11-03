@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern generate --preview` now asks sdk-gen-api for a file download instead of the
+    generators.yml GitHub or registry output, matching Fiddle's dry-run preview. A
+    `github.branch` set from `${ENV_VAR}` no longer fails with "Too small: expected string
+    to have >=1 characters", and previews no longer request a push or publish.
+  type: fix

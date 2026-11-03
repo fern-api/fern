@@ -9,6 +9,8 @@ import { DisplayNameExtension } from "../extensions/x-display-name.js";
  * Context class for converting OpenAPI 3.1 specifications
  */
 export class OpenAPIConverterContext3_1 extends AbstractConverterContext<OpenAPIV3_1.Document> {
+    /** Plain `x-fern-base-path` applied to each endpoint when `respect-per-spec-base-path` is set. */
+    public perSpecBasePath: string | undefined;
     public globalHeaderNames: string[] | undefined;
     private readonly tagToDisplayName: Record<string, string> = {};
     private readonly tagsWithExplicitDisplayName = new Set<string>();

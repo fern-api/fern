@@ -14,7 +14,7 @@ import {
 import { AsyncAPIConverter, AsyncAPIConverterContext } from "@fern-api/asyncapi-to-ir";
 import { constructCasingsGenerator } from "@fern-api/casings-generator";
 import { Audiences, generatorsYml } from "@fern-api/configuration";
-import { mergeSettings, parseOpenApiDefinitionSettingsSchema } from "@fern-api/configuration-loader";
+import { mergeApiAndSpecSettings, parseOpenApiDefinitionSettingsSchema } from "@fern-api/configuration-loader";
 import { extractErrorMessage, isNonNullish } from "@fern-api/core-utils";
 import { FdrAPI } from "@fern-api/fdr-sdk";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
@@ -878,7 +878,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                     absoluteFilepathToOverrides,
                     absoluteFilepathToOverlays,
                     settings: getOpenAPISettings({
-                        options: mergeSettings(
+                        options: mergeApiAndSpecSettings(
                             this.generatorsConfiguration?.api?.settings ??
                                 parseOpenApiDefinitionSettingsSchema(undefined),
                             parseOpenApiDefinitionSettingsSchema(spec.settings)
