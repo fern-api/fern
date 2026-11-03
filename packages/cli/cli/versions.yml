@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.193.3
+  changelogEntry:
+    - summary: |
+        `fern generator upgrade` and `fern automations upgrade` no longer move a generators.yml entry to a version at or past
+        its SDK Config cutover (for example TypeScript 4.0.0+, Python 6.0.0+), which `fern generate` rejects. With
+        `--include-major`, the generator upgrades within its current major instead. Cutover versions are reported
+        under "SDK Config migration required" with a `fern sdk migrate` instruction rather than an `--include-major` hint,
+        and `fern automations upgrade --json` lists them in `sdkConfigMigrationRequired`.
+      type: fix
+  createdAt: "2026-11-03"
+  irVersion: 67
 - version: 5.193.2
   changelogEntry:
     - summary: |
