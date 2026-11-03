@@ -319,7 +319,7 @@ import inspect
 import os
 ${reImport}${typingImport}
 
-import httpx
+${this.context.getHttpxImportStatement()}
 
 ${clientImport}
 ${environmentSetup.imports}

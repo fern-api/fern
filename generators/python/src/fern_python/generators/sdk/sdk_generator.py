@@ -27,7 +27,7 @@ from fern_python.codegen.ast.dependency.dependency import DependencyCompatibilit
 from fern_python.codegen.filepath import Filepath
 from fern_python.codegen.module_manager import ModuleExport
 from fern_python.codegen.project import ProjectConfig
-from fern_python.external_dependencies.httpx import HTTPX_MIN_VERSION
+from fern_python.external_dependencies.httpx import HttpxPackage
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.generators.context.pydantic_generator_context import has_xml_types
 from fern_python.generators.pydantic_model.pydantic_model_generator import PydanticModelGenerator
@@ -120,6 +120,8 @@ class SdkGenerator(AbstractGenerator):
         project: Project,
     ) -> None:
         custom_config = SDKCustomConfig.parse_obj(generator_config.custom_config or {})
+        if custom_config.httpx_package != HttpxPackage.HTTPX:
+            project.add_source_file_from_disk_rewrite(custom_config.httpx_package.rewrite_imports)
 
         if custom_config.client_filename is not None and not custom_config.client_filename.endswith(".py"):
             raise RuntimeError("client_filename must end in .py")
@@ -141,37 +143,46 @@ class SdkGenerator(AbstractGenerator):
                     is_user_override=True,
                 )
 
+        httpx_package = custom_config.httpx_package
+        httpx_name = httpx_package.value
+        # httpx-aiohttp (and so the aiohttp extra) is built on httpx, so SDKs on httpx2 omit it.
+        uses_httpx = httpx_package == HttpxPackage.HTTPX
+
         # Merge user-defined extras with the built-in aiohttp extra
         extras = dict(custom_config.extras)
-        aiohttp_deps = ["aiohttp", "httpx-aiohttp"]
-        existing = extras.get("aiohttp", [])
-        extras["aiohttp"] = list(dict.fromkeys(existing + aiohttp_deps))
+        if uses_httpx:
+            aiohttp_deps = ["aiohttp", "httpx-aiohttp"]
+            existing = extras.get("aiohttp", [])
+            extras["aiohttp"] = list(dict.fromkeys(existing + aiohttp_deps))
 
         if custom_config.http_client_extra is not None:
             extras[custom_config.http_client_extra] = list(
-                dict.fromkeys(extras.get(custom_config.http_client_extra, []) + ["httpx"])
+                dict.fromkeys(extras.get(custom_config.http_client_extra, []) + [httpx_name])
             )
-            extras["aiohttp"] = list(dict.fromkeys(extras["aiohttp"] + ["httpx"]))
-            user_httpx = custom_config.extra_dependencies.get("httpx")
+            if uses_httpx:
+                extras["aiohttp"] = list(dict.fromkeys(extras["aiohttp"] + ["httpx"]))
+            user_httpx = custom_config.extra_dependencies.get(httpx_name)
             if user_httpx is None:
                 httpx_dependency = AST.Dependency(
-                    name="httpx",
-                    version="0.25.0" if custom_config.tcp_keepalive.enabled else HTTPX_MIN_VERSION,
+                    name=httpx_name,
+                    version=(
+                        "0.25.0" if uses_httpx and custom_config.tcp_keepalive.enabled else httpx_package.min_version
+                    ),
                     compatibility=DependencyCompatibility.GREATER_THAN_OR_EQUAL,
                     optional=True,
                 )
             elif isinstance(user_httpx, str):
-                httpx_dependency = AST.Dependency(name="httpx", version=user_httpx, optional=True)
+                httpx_dependency = AST.Dependency(name=httpx_name, version=user_httpx, optional=True)
             else:
                 httpx_dependency = AST.Dependency(
-                    name="httpx", version=user_httpx.version, optional=True, python=user_httpx.python
+                    name=httpx_name, version=user_httpx.version, optional=True, python=user_httpx.python
                 )
             project.add_dependency(dependency=httpx_dependency, is_user_override=True)
             # Dev installs (`poetry install`) skip optional dependencies, so the generated
             # tests and type checks still need httpx from the dev group.
             project.add_dev_dependency(
                 dependency=AST.Dependency(
-                    name="httpx",
+                    name=httpx_name,
                     version=httpx_dependency.version,
                     compatibility=httpx_dependency.compatibility,
                     python=httpx_dependency.python,
@@ -180,21 +191,23 @@ class SdkGenerator(AbstractGenerator):
             )
         project.add_extra(extras)
 
-        # Add optional dependencies for aiohttp support.
-        # aiohttp >= 3.14 requires Python 3.10+; the marker restricts install
-        # accordingly so SDKs that still support older Python fall back to not
-        # installing the extra rather than pinning to a vulnerable aiohttp.
-        project.add_dependency(
-            dependency=AST.Dependency(name="httpx-aiohttp", version="^0.1.8", optional=True, python=">=3.10")
-        )
-        project.add_dependency(
-            dependency=AST.Dependency(name="aiohttp", version=">=3.14.1,<4", optional=True, python=">=3.10")
-        )
+        if uses_httpx:
+            # Add optional dependencies for aiohttp support.
+            # aiohttp >= 3.14 requires Python 3.10+; the marker restricts install
+            # accordingly so SDKs that still support older Python fall back to not
+            # installing the extra rather than pinning to a vulnerable aiohttp.
+            project.add_dependency(
+                dependency=AST.Dependency(name="httpx-aiohttp", version="^0.1.8", optional=True, python=">=3.10")
+            )
+            project.add_dependency(
+                dependency=AST.Dependency(name="aiohttp", version=">=3.14.1,<4", optional=True, python=">=3.10")
+            )
 
         # `socket_options=` on httpx.HTTPTransport/AsyncHTTPTransport (used for TCP
         # keepalive) was added in httpx>=0.25 / httpcore>=0.18. The generated SDK's
         # floor is otherwise httpx>=0.21.2, so bump it only when keepalive is opted in.
-        if custom_config.tcp_keepalive.enabled and custom_config.http_client_extra is None:
+        # Every httpx2 release already supports it.
+        if uses_httpx and custom_config.tcp_keepalive.enabled and custom_config.http_client_extra is None:
             project.add_dependency(
                 dependency=AST.Dependency(
                     name="httpx",
@@ -825,12 +838,14 @@ class SdkGenerator(AbstractGenerator):
         client_filename = context.custom_config.client_filename or context.custom_config.client.filename
         client_module = client_filename.removesuffix(".py")
         dist_name = project._project_config.package_name if project._project_config is not None else module_path
+        httpx_package = context.custom_config.httpx_package
+        uses_httpx = httpx_package == HttpxPackage.HTTPX
         contents = f'''import importlib
 import sys
 import unittest
 from unittest import mock
 
-import httpx
+{httpx_package.import_line}
 import pytest
 
 
@@ -866,7 +881,9 @@ class TestMakeDefaultAsyncClientWithoutAiohttp(unittest.TestCase):
             result = explicit_client if explicit_client is not None else mock_make(timeout=60, follow_redirects=True)
             mock_make.assert_not_called()
         self.assertIs(result, explicit_client)
-
+'''
+        if uses_httpx:
+            contents += f'''
 
 @pytest.mark.aiohttp
 class TestMakeDefaultAsyncClientWithAiohttp(unittest.TestCase):
@@ -892,7 +909,11 @@ class TestMakeDefaultAsyncClientWithAiohttp(unittest.TestCase):
         client = _make_default_async_client(timeout=60, follow_redirects=None)
         self.assertIsInstance(client, httpx_aiohttp.HttpxAiohttpClient)
         self.assertFalse(client.follow_redirects)
-
+'''
+        default_aiohttp_client_error = (
+            f"pip install {dist_name}[aiohttp]" if uses_httpx else "not available for SDKs built on httpx2"
+        )
+        contents += f'''
 
 class TestDefaultClientsWithoutAiohttp(unittest.TestCase):
     """Tests for _default_clients.py convenience classes (no aiohttp)."""
@@ -923,10 +944,12 @@ class TestDefaultClientsWithoutAiohttp(unittest.TestCase):
 
             with self.assertRaises(RuntimeError) as ctx:
                 {module_path}._default_clients.DefaultAioHttpClient()
-            self.assertIn("pip install {dist_name}[aiohttp]", str(ctx.exception))
+            self.assertIn("{default_aiohttp_client_error}", str(ctx.exception))
 
         importlib.reload({module_path}._default_clients)
-
+'''
+        if uses_httpx:
+            contents += f'''
 
 @pytest.mark.aiohttp
 class TestDefaultClientsWithAiohttp(unittest.TestCase):
@@ -983,7 +1006,9 @@ class TestTcpKeepaliveDefaultTransport(unittest.TestCase):
             options = transport._pool._socket_options  # type: ignore[attr-defined]
             self.assertIsNotNone(options)
             self.assertTrue(any(option[1] == socket.SO_KEEPALIVE for option in options))
-
+'''
+            if uses_httpx:
+                contents += f'''
 
 @pytest.mark.aiohttp
 class TestTcpKeepaliveAiohttpNoop(unittest.TestCase):
@@ -1050,15 +1075,8 @@ def pytest_collection_modifyitems(config: pytest.Config, items: list) -> None:
             file=Filepath.FilepathPart(module_name="_default_clients"),
         )
         filepath_nested = project.get_source_file_filepath(filepath, include_src_root=True)
-        contents = f"""{project.auto_generated_notice}
-
-import typing
-
-import httpx
-
-SDK_DEFAULT_TIMEOUT = 60
-
-try:
+        if context.custom_config.httpx_package == HttpxPackage.HTTPX:
+            aiohttp_client = f"""try:
     import httpx_aiohttp  # type: ignore[import-not-found]
 except ImportError:
 
@@ -1076,7 +1094,26 @@ else:
             kwargs.setdefault("timeout", SDK_DEFAULT_TIMEOUT)
             kwargs.setdefault("follow_redirects", True)
             super().__init__(**kwargs)
+"""
+        else:
+            # httpx-aiohttp is built on httpx, so it cannot back an httpx2 client. The name
+            # is kept so the SDK's public surface does not depend on the httpx package.
+            aiohttp_client = """class DefaultAioHttpClient(httpx.AsyncClient):  # type: ignore
+    def __init__(self, **kwargs: typing.Any) -> None:
+        raise RuntimeError(
+            "The aiohttp client is not available for SDKs built on httpx2; "
+            "use DefaultAsyncHttpxClient or pass your own httpx2.AsyncClient."
+        )
+"""
+        contents = f"""{project.auto_generated_notice}
 
+import typing
+
+{context.custom_config.httpx_package.import_line}
+
+SDK_DEFAULT_TIMEOUT = 60
+
+{aiohttp_client}
 
 class DefaultAsyncHttpxClient(httpx.AsyncClient):
     def __init__(self, **kwargs: typing.Any) -> None:

@@ -5,6 +5,13 @@ export const OUTPUT_DIRECTORY_OPTIONS = ["project-root", "source-root"] as const
 export type OutputDirectory = (typeof OUTPUT_DIRECTORY_OPTIONS)[number];
 
 /**
+ * The distribution that provides the httpx API to the generated SDK. `httpx2`
+ * (https://github.com/pydantic/httpx2) is the maintained, API-compatible fork of httpx.
+ */
+export const HTTPX_PACKAGE_OPTIONS = ["httpx", "httpx2"] as const;
+export type HttpxPackage = (typeof HTTPX_PACKAGE_OPTIONS)[number];
+
+/**
  * Schema for validating and normalizing relative paths.
  * Rejects absolute paths, parent traversal, and invalid characters.
  * Normalizes by stripping leading/trailing slashes.
@@ -86,7 +93,12 @@ export const SdkCustomConfigSchema = z.object({
      * This also affects WireMock stubs and wire test verification code to ensure
      * all three components (SDK, stubs, tests) use the same datetime format.
      */
-    datetime_milliseconds: z.boolean().optional()
+    datetime_milliseconds: z.boolean().optional(),
+    /**
+     * Which package provides the httpx API: `httpx` (default) or `httpx2`. Generated
+     * code imports httpx2 as `import httpx2 as httpx`.
+     */
+    httpx_package: z.enum(HTTPX_PACKAGE_OPTIONS).optional()
 });
 
 export type SdkCustomConfigSchema = z.infer<typeof SdkCustomConfigSchema>;

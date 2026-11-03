@@ -438,15 +438,16 @@ ${methodCall}(${hasParams ? "..., " : ""}request_options={
     }
 
     private renderCustomClientSnippet(): string {
+        const httpx = this.context.getHttpxPackage();
         return this.writeCode(
-            `import httpx
+            `import ${httpx}
 from ${this.packageName} import ${this.clientClassName}
 
 client = ${this.clientClassName}(
     ...,
-    httpx_client=httpx.Client(
+    httpx_client=${httpx}.Client(
         proxy="http://my.test.proxy.example.com",
-        transport=httpx.HTTPTransport(local_address="0.0.0.0"),
+        transport=${httpx}.HTTPTransport(local_address="0.0.0.0"),
     ),
 )`
         );

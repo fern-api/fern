@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add an `httpx_package` option to generate SDKs on [httpx2](https://github.com/pydantic/httpx2),
+    the maintained, API-compatible fork of httpx. Set `httpx_package: httpx2` and the SDK depends on
+    `httpx2` instead of `httpx`, and generated code imports it as `import httpx2 as httpx`. This covers
+    the core HTTP client, SSE helpers, generated tests, wire tests, and the README. Users then pass
+    `httpx2.Client` / `httpx2.AsyncClient` instances as `httpx_client`. The aiohttp transport (its
+    extra, auto-detection, tests, and CI steps) is left out because `httpx-aiohttp` is built on httpx.
+    The default stays `httpx`, and generated output for existing configurations is unchanged.
+  type: feat

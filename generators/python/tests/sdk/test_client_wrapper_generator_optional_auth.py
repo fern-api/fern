@@ -8,6 +8,7 @@ from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
     ClientWrapperGenerator,
     ConstructorParameter,
 )
+from fern_python.external_dependencies.httpx import HttpX
 from fern_python.generators.sdk.custom_config import SDKCustomConfig
 from fern_python.source_file_factory import SourceFileFactory
 
@@ -22,6 +23,7 @@ class _FakeContext:
     def __init__(self, *, ir: _FakeIr, custom_config: SDKCustomConfig) -> None:
         self.ir = ir
         self.custom_config = custom_config
+        self.httpx = HttpX(custom_config.httpx_package)
 
 
 class _FakeProject:

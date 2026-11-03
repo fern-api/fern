@@ -111,6 +111,8 @@ class Project:
         import_paths: Optional[List[str]] = None,
     ) -> None:
         relative_path_to_project = relative_path_to_project.replace(".", "/")
+        # Applied to every source file copied from disk (core utilities, copied tests).
+        self._source_file_from_disk_rewrites: List[typing.Callable[[str], str]] = []
 
         # Normalize package_path (strip leading/trailing slashes)
         normalized_package_path: Optional[str] = None
@@ -273,6 +275,10 @@ class Project:
             exports=exports,
         )
 
+    def add_source_file_from_disk_rewrite(self, rewrite: typing.Callable[[str], str]) -> None:
+        """Register a transformation applied to the contents of every file added via `add_source_file_from_disk`."""
+        self._source_file_from_disk_rewrites.append(rewrite)
+
     def add_source_file_from_disk(
         self,
         *,
@@ -293,6 +299,8 @@ class Project:
             if string_replacements is not None:
                 for k, v in string_replacements.items():
                     read_file = read_file.replace(k, v)
+            for rewrite in self._source_file_from_disk_rewrites:
+                read_file = rewrite(read_file)
 
             writer.write(read_file)
             writer.write_to_file(

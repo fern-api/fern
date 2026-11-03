@@ -389,6 +389,10 @@ fixtures:
           enabled: true
       outputFolder: tcp-keepalive
     - customConfig:
+        httpx_package: httpx2
+        enable_wire_tests: true
+      outputFolder: httpx2
+    - customConfig:
         datetime_milliseconds: true
       outputFolder: datetime-milliseconds
     - customConfig:
@@ -414,6 +418,9 @@ fixtures:
     - customConfig:
         exclude_types_from_init_exports: true
       outputFolder: exclude_types_from_init_exports
+    - customConfig:
+        httpx_package: httpx2
+      outputFolder: httpx2
   validation:
     - customConfig: null
       outputFolder: no-custom-config
@@ -489,6 +496,10 @@ fixtures:
     - customConfig:
         enable_wire_tests: true
       outputFolder: with-wire-tests
+    - customConfig:
+        httpx_package: httpx2
+        enable_wire_tests: true
+      outputFolder: httpx2
     - customConfig:
         stream_abstraction: true
       outputFolder: stream-abstraction
@@ -615,8 +626,8 @@ scripts:
         - export NPM_CONFIG_CACHE="$(pwd)/.cache"
         - export HOME="$(pwd)/"
         - poetry run pytest -rP .
-        - poetry install --extras aiohttp
-        - poetry run pytest -rP -n auto -m aiohttp .
+        # SDKs generated with `httpx_package: httpx2` have no aiohttp extra (httpx-aiohttp is built on httpx).
+        - if grep -q '^aiohttp *=' pyproject.toml; then poetry install --extras aiohttp && poetry run pytest -rP -n auto -m aiohttp .; fi
   # Test Pydantic V1
   - name: test-pydantic-v1
     image: fernapi/python-seed
@@ -633,5 +644,5 @@ scripts:
         - export NPM_CONFIG_CACHE="$(pwd)/.cache"
         - export HOME="$(pwd)/"
         - poetry run pytest -rP .
-        - poetry install --extras aiohttp
-        - poetry run pytest -rP -n auto -m aiohttp .
+        # SDKs generated with `httpx_package: httpx2` have no aiohttp extra (httpx-aiohttp is built on httpx).
+        - if grep -q '^aiohttp *=' pyproject.toml; then poetry install --extras aiohttp && poetry run pytest -rP -n auto -m aiohttp .; fi

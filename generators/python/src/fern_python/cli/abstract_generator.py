@@ -152,6 +152,13 @@ class AbstractGenerator(ABC):
         if generator_config.custom_config is not None and "license_header" in generator_config.custom_config:
             license_header = generator_config.custom_config.get("license_header")
 
+        # SDKs generated on httpx2 have no aiohttp extra (httpx-aiohttp is built on httpx),
+        # so their CI must not install or test it.
+        include_aiohttp_ci_steps = not (
+            generator_config.custom_config is not None
+            and generator_config.custom_config.get("httpx_package") == "httpx2"
+        )
+
         with Project(
             filepath=generator_config.output.path,
             relative_path_to_project=self._get_relative_path_for_project(
@@ -206,6 +213,7 @@ class AbstractGenerator(ABC):
                             and generator_config.write_unit_tests
                         ),
                         python_version_constraint=python_version,
+                        include_aiohttp_ci_steps=include_aiohttp_ci_steps,
                     ),
                     publish=lambda x: None,
                 )
@@ -311,6 +319,7 @@ class AbstractGenerator(ABC):
         write_unit_tests: bool,
         publish_config: GeneratorPublishConfig | None,
         python_version_constraint: str,
+        include_aiohttp_ci_steps: bool = True,
     ) -> None:
         import logging
 
@@ -364,10 +373,14 @@ class AbstractGenerator(ABC):
         workflow_path = ".github/workflows/ci.yml"
         logger.debug(f"Adding workflow file: {workflow_path} (use_oidc_workflow={use_oidc_workflow})")
         if use_oidc_workflow:
-            workflow_content = self._get_github_workflow(output_mode, write_unit_tests, ci_python_version)
+            workflow_content = self._get_github_workflow(
+                output_mode, write_unit_tests, ci_python_version, include_aiohttp_ci_steps=include_aiohttp_ci_steps
+            )
             logger.debug(f"CI workflow content from _get_github_workflow (OIDC):\n{workflow_content}")
         else:
-            workflow_content = self._get_github_workflow_legacy(output_mode, write_unit_tests, ci_python_version)
+            workflow_content = self._get_github_workflow_legacy(
+                output_mode, write_unit_tests, ci_python_version, include_aiohttp_ci_steps=include_aiohttp_ci_steps
+            )
             logger.debug(f"CI workflow content from _get_github_workflow_legacy (legacy):\n{workflow_content}")
 
         project.add_file(
@@ -383,7 +396,11 @@ class AbstractGenerator(ABC):
         logger.debug("Finished writing files for GitHub repository.")
 
     def _get_github_workflow_legacy(
-        self, output_mode: GithubOutputMode, write_unit_tests: bool, ci_python_version: str
+        self,
+        output_mode: GithubOutputMode,
+        write_unit_tests: bool,
+        ci_python_version: str,
+        include_aiohttp_ci_steps: bool = True,
     ) -> str:
         workflow_yaml = f"""name: ci
 on: [push]
@@ -437,7 +454,8 @@ jobs:
         run: poetry run pytest -rP -n auto .
 """
         # Add aiohttp extra install and test steps
-        workflow_yaml += """
+        if include_aiohttp_ci_steps:
+            workflow_yaml += """
       - name: Install aiohttp extra
         run: poetry install --extras aiohttp
 
@@ -481,7 +499,11 @@ jobs:
         return workflow_yaml
 
     def _get_github_workflow(
-        self, output_mode: GithubOutputMode, write_unit_tests: bool, ci_python_version: str
+        self,
+        output_mode: GithubOutputMode,
+        write_unit_tests: bool,
+        ci_python_version: str,
+        include_aiohttp_ci_steps: bool = True,
     ) -> str:
         # new workflow that supports automated OIDC-attestation signing and publishing to PyPI
         workflow_yaml = f"""name: ci
@@ -537,7 +559,8 @@ jobs:
         run: poetry run pytest -rP -n auto .
 """
         # Add aiohttp extra install and test steps
-        workflow_yaml += """
+        if include_aiohttp_ci_steps:
+            workflow_yaml += """
       - name: Install aiohttp extra
         run: poetry install --extras aiohttp
 

@@ -12,7 +12,6 @@ from ..environment_generators import GeneratedEnvironment
 from fdr import PayloadInput, Template, TemplateInput
 from fern_python.codegen import AST, Project, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
-from fern_python.external_dependencies import httpx
 from fern_python.generators.sdk.client_generator.base_client_generator import (
     ConstructorParameter as BaseClientGeneratorConstructorParameter,
 )
@@ -467,7 +466,7 @@ class ClientWrapperGenerator:
         named_parameters.append(
             AST.NamedFunctionParameter(
                 name=ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME,
-                type_hint=AST.TypeHint(httpx.HttpX.CLIENT),
+                type_hint=AST.TypeHint(self._context.httpx.CLIENT),
             )
         )
 
@@ -538,7 +537,7 @@ class ClientWrapperGenerator:
         named_parameters.append(
             AST.NamedFunctionParameter(
                 name=ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME,
-                type_hint=AST.TypeHint(httpx.HttpX.ASYNC_CLIENT),
+                type_hint=AST.TypeHint(self._context.httpx.ASYNC_CLIENT),
             )
         )
 
@@ -757,7 +756,7 @@ class ClientWrapperGenerator:
                         )
                         writer.write_node(
                             AST.ClassInstantiation(
-                                class_=httpx.HttpX.BASIC_AUTH,
+                                class_=self._context.httpx.BASIC_AUTH,
                                 args=[username_arg, password_arg],
                             )
                         )
@@ -1160,7 +1159,7 @@ class ClientWrapperGenerator:
                             writer.write(f'headers["{ClientWrapperGenerator.AUTHORIZATION_HEADER}"] = ')
                             writer.write_node(
                                 AST.ClassInstantiation(
-                                    class_=httpx.HttpX.BASIC_AUTH,
+                                    class_=self._context.httpx.BASIC_AUTH,
                                     args=[username_arg, password_arg],
                                 )
                             )
@@ -1184,7 +1183,7 @@ class ClientWrapperGenerator:
                         writer.write(f'headers["{ClientWrapperGenerator.AUTHORIZATION_HEADER}"] = ')
                         writer.write_node(
                             AST.ClassInstantiation(
-                                class_=httpx.HttpX.BASIC_AUTH,
+                                class_=self._context.httpx.BASIC_AUTH,
                                 args=[
                                     AST.Expression(username_getter),
                                     AST.Expression(password_getter),

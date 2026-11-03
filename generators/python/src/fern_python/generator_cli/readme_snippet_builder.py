@@ -2,7 +2,7 @@ from typing import Dict, List, Optional, Tuple
 
 import generatorcli
 from fern_python.codegen import AST
-from fern_python.external_dependencies.httpx import HttpX
+from fern_python.external_dependencies.httpx import HttpX, HttpxPackage
 from fern_python.generators.sdk.client_generator.endpoint_metadata_collector import (
     EndpointMetadata,
     EndpointMetadataCollector,
@@ -47,7 +47,10 @@ class ReadmeSnippetBuilder:
         source_file_factory: SourceFileFactory,
         pagination_enabled: Optional[bool] = False,
         websocket_enabled: Optional[bool] = False,
+        httpx_package: HttpxPackage = HttpxPackage.HTTPX,
     ):
+        # User-facing snippets name the package directly (`import httpx2`), not the alias.
+        self._httpx = HttpX(httpx_package, import_as_httpx=False)
         self._ir = ir
         self._package_name = package_name
         self._snippets = snippets
@@ -365,10 +368,15 @@ client.{endpoint.endpoint_package_path}{endpoint.method_name}({"..., " if has_pa
                         "httpx_client",
                         AST.Expression(
                             AST.ClassInstantiation(
-                                class_=HttpX.CLIENT,
+                                class_=self._httpx.CLIENT,
                                 kwargs=[
                                     ("proxy", AST.Expression('"http://my.test.proxy.example.com"')),
-                                    ("transport", AST.Expression('httpx.HTTPTransport(local_address="0.0.0.0")')),
+                                    (
+                                        "transport",
+                                        AST.Expression(
+                                            f'{self._httpx.package.import_name}.HTTPTransport(local_address="0.0.0.0")'
+                                        ),
+                                    ),
                                 ],
                             )
                         ),

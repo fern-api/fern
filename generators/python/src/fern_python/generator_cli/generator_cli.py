@@ -107,6 +107,7 @@ class GeneratorCli:
             api_error_reference=self._context.core_utilities.get_reference_to_api_error(as_snippet=True),
             endpoint_metadata=self._endpoint_metadata,
             source_file_factory=self._context.source_file_factory,
+            httpx_package=self._context.custom_config.httpx_package,
         )
         readme_config_filepath = self._write_readme_config(
             snippets=readme_snippet_builder.build_readme_snippets(),
