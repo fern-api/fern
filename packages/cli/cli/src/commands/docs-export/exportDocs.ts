@@ -196,7 +196,11 @@ export async function exportDocs({
     });
 }
 
-/** Runs one export step behind a spinner; a failure is logged once and fails the command. */
+/**
+ * Runs one export step behind a spinner; a failure is logged once and fails the command.
+ * The subtitle shows progress only: it clears on success, since the summary line the caller
+ * logs next (also printed without a TTY, where the spinner never renders) says the same.
+ */
 async function withSpinner(
     context: TaskContext,
     params: CreateInteractiveTaskParams,
@@ -205,6 +209,7 @@ async function withSpinner(
     const succeeded = await context.runInteractiveTask(params, async (task) => {
         try {
             await run(task);
+            task.setSubtitle(undefined);
         } catch (error) {
             task.failAndThrow(exportFailureMessage(error), error, { code: CliError.Code.NetworkError });
         }
