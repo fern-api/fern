@@ -5,6 +5,7 @@ require "net/http"
 require "securerandom"
 require "time"
 
+require_relative "seed/version"
 require_relative "seed/internal/json/serializable"
 require_relative "seed/internal/types/type"
 require_relative "seed/internal/types/utils"

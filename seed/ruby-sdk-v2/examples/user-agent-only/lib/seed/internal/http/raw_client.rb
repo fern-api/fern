@@ -34,7 +34,11 @@ module Seed
           @max_retries = max_retries
           @timeout = timeout
           @auth_provider = auth_provider
-          @default_headers = headers
+          @default_headers = {
+            "X-Fern-Language": "Ruby",
+            "X-Fern-SDK-Name": "seed",
+            "X-Fern-SDK-Version": Seed::VERSION
+          }.merge(headers)
           @overridable_headers = overridable_headers.to_set { |name| name.to_s.downcase }
         end
 

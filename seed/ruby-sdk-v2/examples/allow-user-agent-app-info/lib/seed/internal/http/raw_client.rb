@@ -35,7 +35,7 @@ module Seed
           @default_headers = {
             "X-Fern-Language": "Ruby",
             "X-Fern-SDK-Name": "seed",
-            "X-Fern-SDK-Version": "0.0.1"
+            "X-Fern-SDK-Version": Seed::VERSION
           }.merge(headers)
           @overridable_headers = overridable_headers.to_set { |name| name.to_s.downcase }
         end
