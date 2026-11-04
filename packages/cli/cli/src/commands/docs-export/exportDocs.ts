@@ -2,7 +2,7 @@ import { mkdir, readdir, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { getFernDirectory, loadProjectConfig } from "@fern-api/configuration-loader";
 import { delay, replaceEnvVariables } from "@fern-api/core-utils";
-import { createPdfExportClient, ORPCError } from "@fern-api/fdr-sdk/orpc-client";
+import { createExportClient, ORPCError } from "@fern-api/fdr-sdk/orpc-client";
 import { askToLogin } from "@fern-api/login";
 import {
     CliError,
@@ -179,7 +179,7 @@ export async function exportDocs({
         let count = 0;
         await withSpinner(
             context,
-            { name: `Exporting ${format === "md" ? "Markdown" : "HTML"}`, subtitle: outputDir },
+            { name: format === "md" ? "Exporting Markdown" : "Exporting site", subtitle: outputDir },
             async (task) => {
                 count = await writeExport({
                     source,
@@ -271,7 +271,7 @@ async function resolveHostedExport({
         loadProjectConfig({ directory: fernDirectory, context })
     );
     return {
-        client: createPdfExportClient({ baseUrl: FDR_ORIGIN, token: token.value }),
+        client: createExportClient({ baseUrl: FDR_ORIGIN, token: token.value }),
         orgId: projectConfig.organization,
         docsUrl: instanceUrl
     };

@@ -6,7 +6,7 @@ import { Readable } from "node:stream";
 import { pipeline } from "node:stream/promises";
 import type { ReadableStream as WebReadableStream } from "node:stream/web";
 import { delay } from "@fern-api/core-utils";
-import type { PdfExportClient } from "@fern-api/fdr-sdk/orpc-client";
+import type { ExportClient } from "@fern-api/fdr-sdk/orpc-client";
 import { toPosixPath } from "@fern-api/fs-utils";
 import yauzl from "yauzl";
 
@@ -25,7 +25,7 @@ export interface ExportSource {
 }
 
 /** The FDR calls a hosted export makes: start a task, poll it, get its file's download URL. */
-export type SiteExportClient = Pick<PdfExportClient, "createTask" | "getTask" | "getDownloadUrl">;
+export type SiteExportClient = Pick<ExportClient, "createTask" | "getTask" | "getDownloadUrl">;
 
 /**
  * A Fern-hosted site: FDR runs an export Job that zips the live build server-side. Waits for the
