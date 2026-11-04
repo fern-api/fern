@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "access_token": {
+      "type": "string"
+    },
+    "expires_in": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "access_token",
+    "expires_in"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

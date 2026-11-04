@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=../../../../../fern.schema.json
+types:
+  User:
+    properties:
+      id: string
+      name: string
+
+service:
+  auth: true
+  base-path: ""
+  endpoints:
+    getUser:
+      path: /user
+      method: GET
+      auth:
+        - Bearer: []
+      response: User
+      examples:
+        - response:
+            body:
+              id: "1"
+              name: Alice
