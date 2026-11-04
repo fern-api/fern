@@ -1,7 +1,12 @@
 import { mkdtemp, readFile, rm, stat } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import { GUEST_SESSION_POINTER_FILENAME, getPathToGuestSessionFile, writeStoredGuestSession } from "@fern-api/auth";
+import {
+    GUEST_SESSION_POINTER_FILENAME,
+    getPathToCurrentGuestSessionPointer,
+    getPathToGuestSessionFile,
+    writeStoredGuestSession
+} from "@fern-api/auth";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
@@ -119,8 +124,9 @@ describe("claimGuestSession", () => {
         expect(await exists(path.join(fernDirectory, GUEST_SESSION_POINTER_FILENAME))).toBe(true);
     });
 
-    it("explains when the repo has no guest session", async () => {
+    it("explains when neither the repo nor the machine has a guest session", async () => {
         await rm(path.join(fernDirectory, GUEST_SESSION_POINTER_FILENAME));
+        await rm(getPathToCurrentGuestSessionPointer());
         const claim = vi.fn();
         const { cliContext, logged } = createTestCliContext();
 

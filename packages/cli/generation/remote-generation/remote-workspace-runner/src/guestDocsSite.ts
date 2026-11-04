@@ -12,7 +12,7 @@ export function getFdrOrigin(): string {
     );
 }
 
-/** The Fern Drop site FDR gives a Venus guest session (one per session, created on first use). */
+/** The Fern Drop site FDR gives a Venus guest session for one docs URL (created on first use). */
 export interface GuestDocsSite {
     siteId: string;
     orgId: string;
@@ -20,6 +20,8 @@ export interface GuestDocsSite {
     url: string;
     status: string;
     expiresAt: string;
+    /** The docs.yml URL this site stands for, as FDR normalised it; older FDRs (one site per session) omit it. */
+    requestedUrl?: string;
 }
 
 function isGuestDocsSite(value: unknown): value is GuestDocsSite {
@@ -33,23 +35,31 @@ function isGuestDocsSite(value: unknown): value is GuestDocsSite {
         typeof record.domain === "string" &&
         typeof record.url === "string" &&
         typeof record.status === "string" &&
-        typeof record.expiresAt === "string"
+        typeof record.expiresAt === "string" &&
+        (record.requestedUrl === undefined || typeof record.requestedUrl === "string")
     );
 }
 
 /**
  * A guest publishes to its own drop host, never to the URL in docs.yml: FDR refuses any other target.
- * `GET /v2/registry/docs/anonymous/guest-site` resolves (and on first use creates) that site.
+ * `GET /v2/registry/docs/anonymous/guest-site` resolves (and on first use creates) the session's site for
+ * `docsUrl`, the URL docs.yml would have published to -- one drop site per docs project, so a session
+ * that publishes several keeps them apart and a claim of the session gets them all.
  */
 export async function fetchGuestDocsSite({
     fdrOrigin,
-    token
+    token,
+    docsUrl
 }: {
     fdrOrigin: string;
     token: FernGuestToken;
+    docsUrl?: string;
 }): Promise<GuestDocsSite> {
     const url = new URL("/v2/registry/docs/anonymous/guest-site", fdrOrigin);
     url.searchParams.set("orgId", token.organizationId);
+    if (docsUrl != null && docsUrl.length > 0) {
+        url.searchParams.set("docsUrl", docsUrl);
+    }
     const response = await fetch(url, {
         headers: { Authorization: `Bearer ${token.value}` },
         signal: AbortSignal.timeout(GUEST_SITE_TIMEOUT_MS)

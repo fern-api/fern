@@ -5,14 +5,16 @@ export type { StoredGuestSession } from "./guest/GuestSession.js";
 export {
     GUEST_SESSION_POINTER_FILENAME,
     getClaimSecret,
+    getPathToCurrentGuestSessionPointer,
     getPathToGuestSessionFile,
     getPathToGuestSessionPointer,
     isGuestSessionLive,
     readStoredGuestSession,
+    recordGuestSessionInRepo,
     removeStoredGuestSession,
     writeStoredGuestSession
 } from "./guest/GuestSession.js";
-export type { CreateGuestSession } from "./guest/getOrCreateGuestSession.js";
+export type { CheckGuestSession, CreateGuestSession } from "./guest/getOrCreateGuestSession.js";
 export { getOrCreateGuestSession } from "./guest/getOrCreateGuestSession.js";
 export type { OrganizationCheckResult } from "./orgs/checkOrganizationMembership.js";
 export { checkOrganizationMembership } from "./orgs/checkOrganizationMembership.js";

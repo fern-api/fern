@@ -61,7 +61,7 @@ export async function claimGuestSession({
     const stored = await readStoredGuestSession({ absolutePathToFernDirectory: fernDirectory });
     if (stored == null) {
         return cliContext.failAndThrow(
-            "No guest session is recorded for this repo. Run `fern generate --guest` first, then claim it.",
+            "No guest session is recorded for this repo or this machine. Run `fern generate --guest` first, then claim it.",
             undefined,
             { code: CliError.Code.ConfigError }
         );
