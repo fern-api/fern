@@ -8,13 +8,19 @@ describe("getGuestSdkBuildUrl", () => {
                 claimUrl: "https://dashboard.buildwithfern.com/claim/gs_ef86b1f3547a#secret",
                 buildId: "bld_01HZX"
             })
-        ).toBe("https://dashboard.buildwithfern.com/sdk/bld_01HZX");
+        ).toBe("https://dashboard.buildwithfern.com/sdk/bld_01HZX#secret");
     });
 
     it("follows a beta dashboard and keeps the ID URL-safe", () => {
         expect(
             getGuestSdkBuildUrl({ claimUrl: "https://dashboard-beta.example.dev/claim/gs_1#s", buildId: "a/b" })
-        ).toBe("https://dashboard-beta.example.dev/sdk/a%2Fb");
+        ).toBe("https://dashboard-beta.example.dev/sdk/a%2Fb#s");
+    });
+
+    it("has no fragment when the claim link has none", () => {
+        expect(getGuestSdkBuildUrl({ claimUrl: "https://d.example.com/claim/gs_1", buildId: "b" })).toBe(
+            "https://d.example.com/sdk/b"
+        );
     });
 
     it("is undefined for a claim link that is not a URL, so the log line never fails a build", () => {
