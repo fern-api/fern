@@ -146,6 +146,21 @@ function multipartRequestHasFile(
     );
 }
 
+function findRequestWithSchema({ content }: { content: Record<string, OpenAPIV3.MediaTypeObject> }):
+    | {
+          mediaType: string;
+          mediaTypeObject: OpenAPIV3.MediaTypeObject;
+          schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
+      }
+    | undefined {
+    for (const [mediaType, mediaTypeObject] of Object.entries(content)) {
+        if (mediaTypeObject.schema != null) {
+            return { mediaType, mediaTypeObject, schema: mediaTypeObject.schema };
+        }
+    }
+    return undefined;
+}
+
 export function convertToSingleRequest({
     content,
     description,
@@ -228,7 +243,7 @@ export function convertToSingleRequest({
     // convert as application/x-www-form-urlencoded
     if (urlEncodedRequest) {
         const [mediaType, mediaTypeObject] = urlEncodedRequest;
-        return convertRequest({
+        const convertedUrlEncoded = convertRequest({
             mediaType,
             mediaTypeObject,
             description,
@@ -238,6 +253,29 @@ export function convertToSingleRequest({
             source,
             namespace,
             bodyRequired
+        });
+        if (convertedUrlEncoded != null) {
+            return convertedUrlEncoded;
+        }
+    }
+
+    // convert any other media type that declares a schema (e.g. text/plain) so the
+    // request body is not dropped; the declared content type is preserved and the
+    // downstream Fern definition / final IR carry it on the request body reference
+    const otherRequest = findRequestWithSchema({ content });
+    if (otherRequest) {
+        const { mediaType, mediaTypeObject, schema } = otherRequest;
+        const requestSchema = convertSchema(schema, false, false, context, requestBreadcrumbs, source, namespace, true);
+        return RequestWithExample.json({
+            description,
+            schema: requestSchema,
+            contentType: mediaType,
+            required: bodyRequired,
+            fullExamples: getExamples(mediaTypeObject, context),
+            additionalProperties:
+                !isReferenceObject(schema) && isAdditionalPropertiesAny(schema.additionalProperties, context.options),
+            source,
+            sdkMethodName: getRequestSdkMethodName({ mediaTypeObject })
         });
     }
     return undefined;
