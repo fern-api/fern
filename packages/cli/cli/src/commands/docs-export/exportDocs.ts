@@ -4,7 +4,13 @@ import { getFernDirectory, loadProjectConfig } from "@fern-api/configuration-loa
 import { delay, replaceEnvVariables } from "@fern-api/core-utils";
 import { createPdfExportClient, ORPCError } from "@fern-api/fdr-sdk/orpc-client";
 import { askToLogin } from "@fern-api/login";
-import { CliError } from "@fern-api/task-context";
+import {
+    CliError,
+    type CreateInteractiveTaskParams,
+    type InteractiveTaskContext,
+    TaskAbortSignal,
+    type TaskContext
+} from "@fern-api/task-context";
 import { loadDocsWorkspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import { CliContext } from "../../cli-context/CliContext.js";
@@ -150,15 +156,12 @@ export async function exportDocs({
 }): Promise<void> {
     if (format === "pdf") {
         const hosted = await resolveHostedExport({ cliContext, instance });
-        const outputFile = pdfOutputPath(output);
+        const outputFile = path.resolve(pdfOutputPath(output));
         await cliContext.runTask(async (context) => {
-            context.logger.info(`Exporting PDF to ${outputFile}...`);
-            try {
-                await downloadHostedPdf({ ...hosted, outputFile });
-                context.logger.info(chalk.green(`Exported PDF to ${outputFile}`));
-            } catch (error) {
-                return context.failAndThrow(exportFailureMessage(error), error, { code: CliError.Code.NetworkError });
-            }
+            await withSpinner(context, { name: "Exporting PDF", subtitle: outputFile }, () =>
+                downloadHostedPdf({ ...hosted, outputFile })
+            );
+            context.logger.info(chalk.green(`Exported PDF to ${outputFile}`));
         });
         return;
     }
@@ -171,23 +174,44 @@ export async function exportDocs({
     }
     const source = hostedSource({ ...(await resolveHostedExport({ cliContext, instance })), format });
 
+    const outputDir = path.resolve(output);
     await cliContext.runTask(async (context) => {
-        context.logger.info(`Exporting ${format === "md" ? "Markdown" : "HTML"} to ${output}...`);
-        try {
-            const count = await writeExport({
-                source,
-                format,
-                outputDir: output,
-                onProgress: (written) => context.logger.debug(`${written} files written`)
-            });
-            context.logger.info(chalk.green(`Exported ${count} files to ${output}`));
-            if (format === "html") {
-                context.logger.info(`Serve it locally with: npx serve ${output}`);
+        let count = 0;
+        await withSpinner(
+            context,
+            { name: `Exporting ${format === "md" ? "Markdown" : "HTML"}`, subtitle: outputDir },
+            async (task) => {
+                count = await writeExport({
+                    source,
+                    format,
+                    outputDir,
+                    onProgress: (written) => task.setSubtitle(`${outputDir} (${written} files written)`)
+                });
             }
-        } catch (error) {
-            return context.failAndThrow(exportFailureMessage(error), error, { code: CliError.Code.NetworkError });
+        );
+        context.logger.info(chalk.green(`Exported ${count} files to ${outputDir}`));
+        if (format === "html") {
+            context.logger.info(`Serve it locally with: npx serve ${output}`);
         }
     });
+}
+
+/** Runs one export step behind a spinner; a failure is logged once and fails the command. */
+async function withSpinner(
+    context: TaskContext,
+    params: CreateInteractiveTaskParams,
+    run: (task: InteractiveTaskContext) => Promise<unknown>
+): Promise<void> {
+    const succeeded = await context.runInteractiveTask(params, async (task) => {
+        try {
+            await run(task);
+        } catch (error) {
+            task.failAndThrow(exportFailureMessage(error), error, { code: CliError.Code.NetworkError });
+        }
+    });
+    if (!succeeded) {
+        context.failAndThrow(undefined, new TaskAbortSignal(context.getLastFailureMessage()));
+    }
 }
 
 /** Finds the hosted site to export and logs in: the export client, the org and the docs URL. */
