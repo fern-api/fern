@@ -84,6 +84,33 @@ export abstract class EndpointRequest {
         writer.write(`${valueExpression}.nil? ? nil : `);
     }
 
+    protected usesLegacyNonObjectRequestBodies(): boolean {
+        return this.context.customConfig.legacyNonObjectRequestBodies === true;
+    }
+
+    /**
+     * The pre-1.34.1 body for non-object request bodies: every keyword argument except the path
+     * parameters, sent as-is.
+     */
+    protected getLegacyNonObjectBodyCodeBlock(omitContentTypeWithoutBody: boolean): RequestBodyCodeBlock {
+        const hasPathParameters = this.hasPathParameters();
+        const bodyParamsVar = hasPathParameters ? BODY_BAG_NAME : "params";
+        return {
+            omitContentTypeWithoutBody,
+            code: hasPathParameters
+                ? ruby.codeblock((writer) => {
+                      this.writePathParameterExclusion(writer);
+                  })
+                : undefined,
+            requestBodyReference: ruby.codeblock((writer) => {
+                if (omitContentTypeWithoutBody) {
+                    this.writeOptionalBodyGuard(writer, bodyParamsVar);
+                }
+                writer.write(bodyParamsVar);
+            })
+        };
+    }
+
     protected getPathParameterNames(): string[] {
         return this.endpoint.allPathParameters.map((pathParameter) => this.case.snakeSafe(pathParameter.name));
     }
