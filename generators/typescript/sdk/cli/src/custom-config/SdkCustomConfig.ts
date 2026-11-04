@@ -102,5 +102,6 @@ export interface SdkCustomConfig {
     flattenAnyAuthOptions: boolean;
     websocketHandlerMode: "replace" | "accumulate";
     retryStatusCodes: "legacy" | "recommended";
+    refreshAuthOnFailedPermissions: boolean;
     generateReactQueryHooks: boolean;
 }

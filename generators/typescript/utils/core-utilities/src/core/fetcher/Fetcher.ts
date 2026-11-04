@@ -41,6 +41,18 @@ export declare namespace Fetcher {
         endpointMetadata?: EndpointMetadata;
         fetchFn?: typeof fetch;
         logging?: LogConfig | Logger;
+        /**
+         * When set, 401 and 403 responses refresh the auth headers and retry the request
+         * with the same retry policy as other retryable status codes.
+         */
+        authRefresh?: AuthRefresh;
+    }
+
+    export interface AuthRefresh {
+        /** The auth headers that were merged into `headers` for the initial request. */
+        headers: Record<string, string>;
+        /** Resolves auth again, replacing `failedAuthHeaders` if they are still cached, and returns the new auth headers. */
+        refresh: (failedAuthHeaders: Record<string, string>) => Promise<Record<string, string>>;
     }
 
     export type Error = FailedStatusCodeError | NonJsonError | BodyIsNullError | TimeoutError | UnknownError;
@@ -153,6 +165,50 @@ async function getHeaders(args: Fetcher.Args): Promise<Headers> {
     return newHeaders;
 }
 
+class AuthRefreshFailure {
+    constructor(public readonly cause: unknown) {}
+}
+
+/**
+ * Returns a function that replaces the auth headers in `headers` with freshly resolved ones.
+ * Auth headers that were overridden by the caller (e.g. through request options) are left as is.
+ */
+function createAuthHeadersRefresher(authRefresh: Fetcher.AuthRefresh, headers: Headers): () => Promise<void> {
+    let currentAuthHeaders = authRefresh.headers;
+    return async () => {
+        let refreshedAuthHeaders: Record<string, string>;
+        try {
+            refreshedAuthHeaders = await authRefresh.refresh(currentAuthHeaders);
+        } catch (error) {
+            throw new AuthRefreshFailure(error);
+        }
+        for (const [key, value] of Object.entries(currentAuthHeaders)) {
+            if (headers.get(key) === value) {
+                headers.delete(key);
+            }
+        }
+        // Any header still present was supplied by the caller and takes precedence.
+        for (const [key, value] of Object.entries(refreshedAuthHeaders)) {
+            if (!headers.has(key)) {
+                headers.set(key, value);
+            }
+        }
+        currentAuthHeaders = refreshedAuthHeaders;
+    };
+}
+
+/** Stream bodies are consumed by the first attempt, so a request with one can't be resent. */
+function isReplayableBody(body: BodyInit | undefined): boolean {
+    if (body == null || typeof body !== "object") {
+        return true;
+    }
+    if (typeof ReadableStream !== "undefined" && body instanceof ReadableStream) {
+        return false;
+    }
+    const maybeStream = body as { pipe?: unknown; [Symbol.asyncIterator]?: unknown };
+    return typeof maybeStream.pipe !== "function" && typeof maybeStream[Symbol.asyncIterator] !== "function";
+}
+
 function isJsonContentType(contentType: string | null): boolean {
     const mediaType = contentType?.split(";")[0]?.trim().toLowerCase() ?? "";
     return mediaType === "application/json" || mediaType === "text/json" || mediaType.endsWith("+json");
@@ -189,27 +245,34 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
         args.responseType !== "streaming" && args.responseType !== "sse" && args.responseType !== "binary-response";
     const attemptResponses: Response[] = [];
     try {
-        const response = await requestWithRetries(async () => {
-            // A retry means the previous attempt is over; stop its timer now rather than at the end.
-            for (const previousResponse of attemptResponses) {
-                clearResponseTimeout(previousResponse);
-            }
-            const attemptResponse = await makeRequest(
-                fetchFn,
-                url,
-                args.method,
-                headers,
-                requestBody,
-                args.timeoutMs,
-                args.abortSignal,
-                args.withCredentials,
-                args.duplex,
-                args.responseType === "streaming" || args.responseType === "sse",
-                keepTimeoutUntilBodyRead,
-            );
-            attemptResponses.push(attemptResponse);
-            return attemptResponse;
-        }, args.maxRetries, args.abortSignal);
+        const response = await requestWithRetries(
+            async () => {
+                // A retry means the previous attempt is over; stop its timer now rather than at the end.
+                for (const previousResponse of attemptResponses) {
+                    clearResponseTimeout(previousResponse);
+                }
+                const attemptResponse = await makeRequest(
+                    fetchFn,
+                    url,
+                    args.method,
+                    headers,
+                    requestBody,
+                    args.timeoutMs,
+                    args.abortSignal,
+                    args.withCredentials,
+                    args.duplex,
+                    args.responseType === "streaming" || args.responseType === "sse",
+                    keepTimeoutUntilBodyRead,
+                );
+                attemptResponses.push(attemptResponse);
+                return attemptResponse;
+            },
+            args.maxRetries,
+            args.abortSignal,
+            args.authRefresh != null && isReplayableBody(requestBody)
+                ? createAuthHeadersRefresher(args.authRefresh, headers)
+                : undefined,
+        );
 
         if (response.status >= 200 && response.status < 400) {
             if (logger.isDebug()) {
@@ -261,6 +324,9 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
             };
         }
     } catch (error) {
+        if (error instanceof AuthRefreshFailure) {
+            throw error.cause;
+        }
         if (args.abortSignal?.aborted) {
             if (logger.isError()) {
                 const metadata = {

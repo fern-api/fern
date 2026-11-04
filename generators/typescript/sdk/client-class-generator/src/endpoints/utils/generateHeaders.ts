@@ -2,7 +2,7 @@ import { getWireValue } from "@fern-api/base-generator";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { FileContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
-
+import { FAILED_AUTH_HEADERS_ARG_NAME } from "../../auth-provider/getAuthRequestParameter.js";
 import { createEnvVarValueExpression } from "../../auth-provider/processEnvAccess.js";
 import { GeneratedHeader } from "../../GeneratedHeader.js";
 import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl.js";
@@ -11,6 +11,85 @@ import { getClientDefaultValue, getLiteralValueForHeader } from "./isLiteralHead
 import { REQUEST_OPTIONS_PARAMETER_NAME } from "./requestOptionsParameter.js";
 
 export const HEADERS_VAR_NAME = "_headers";
+const AUTH_REQUEST_VAR_NAME = "_authRequest";
+
+function shouldSendAuthHeaders({
+    context,
+    generatedSdkClientClass,
+    endpoint
+}: {
+    context: FileContext;
+    generatedSdkClientClass: GeneratedSdkClientClassImpl;
+    endpoint: FernIr.HttpEndpoint;
+}): boolean {
+    return (
+        generatedSdkClientClass.hasAuthProvider() &&
+        (endpoint.auth || generatedSdkClientClass.getAlwaysSendAuth()) &&
+        context.authProvider.isAuthEndpoint(endpoint) === false
+    );
+}
+
+/**
+ * When `refreshAuthOnFailedPermissions` is enabled, returns the fetcher `authRefresh` argument:
+ * the auth headers resolved by `generateHeaders` plus a callback that forces the auth provider to
+ * resolve them again, e.g.
+ *
+ *   { headers: _authRequest.headers, refresh: async (failedAuthHeaders) => (await this._options.authProvider.getAuthRequest({ forceRefresh: true, failedAuthHeaders })).headers }
+ */
+export function getAuthRefreshFetcherArg({
+    context,
+    generatedSdkClientClass,
+    endpoint
+}: {
+    context: FileContext;
+    generatedSdkClientClass: GeneratedSdkClientClassImpl;
+    endpoint: FernIr.HttpEndpoint;
+}): ts.Expression | undefined {
+    if (
+        !generatedSdkClientClass.getRefreshAuthOnFailedPermissions() ||
+        !shouldSendAuthHeaders({ context, generatedSdkClientClass, endpoint })
+    ) {
+        return undefined;
+    }
+    const getAuthRequestArgs: ts.ObjectLiteralElementLike[] = [];
+    if (generatedSdkClientClass.getGenerateEndpointMetadata()) {
+        getAuthRequestArgs.push(
+            ts.factory.createPropertyAssignment(
+                "endpointMetadata",
+                generatedSdkClientClass.getReferenceToMetadataForEndpointSupplier()
+            )
+        );
+    }
+    getAuthRequestArgs.push(ts.factory.createPropertyAssignment("forceRefresh", ts.factory.createTrue()));
+    getAuthRequestArgs.push(ts.factory.createShorthandPropertyAssignment(FAILED_AUTH_HEADERS_ARG_NAME));
+    const refreshedAuthRequest = context.coreUtilities.auth.AuthProvider.getAuthRequest.invoke(
+        generatedSdkClientClass.getReferenceToAuthProviderOrThrow(),
+        ts.factory.createObjectLiteralExpression(getAuthRequestArgs)
+    );
+    return ts.factory.createObjectLiteralExpression(
+        [
+            ts.factory.createPropertyAssignment(
+                "headers",
+                ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier(AUTH_REQUEST_VAR_NAME), "headers")
+            ),
+            ts.factory.createPropertyAssignment(
+                "refresh",
+                ts.factory.createArrowFunction(
+                    [ts.factory.createModifier(ts.SyntaxKind.AsyncKeyword)],
+                    undefined,
+                    [ts.factory.createParameterDeclaration(undefined, undefined, FAILED_AUTH_HEADERS_ARG_NAME)],
+                    undefined,
+                    ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+                    ts.factory.createPropertyAccessExpression(
+                        ts.factory.createParenthesizedExpression(refreshedAuthRequest),
+                        "headers"
+                    )
+                )
+            )
+        ],
+        true
+    );
+}
 export function generateHeaders({
     context,
     intermediateRepresentation,
@@ -37,11 +116,7 @@ export function generateHeaders({
     const statements: ts.Statement[] = [];
 
     let authProviderHeaders: ts.Expression | undefined;
-    if (
-        generatedSdkClientClass.hasAuthProvider() &&
-        (endpoint.auth || generatedSdkClientClass.getAlwaysSendAuth()) &&
-        context.authProvider.isAuthEndpoint(endpoint) === false
-    ) {
+    if (shouldSendAuthHeaders({ context, generatedSdkClientClass, endpoint })) {
         const metadataArg = generatedSdkClientClass.getGenerateEndpointMetadata()
             ? ts.factory.createObjectLiteralExpression([
                   ts.factory.createPropertyAssignment(
@@ -57,7 +132,7 @@ export function generateHeaders({
                 ts.factory.createVariableDeclarationList(
                     [
                         ts.factory.createVariableDeclaration(
-                            "_authRequest",
+                            AUTH_REQUEST_VAR_NAME,
                             undefined,
                             context.coreUtilities.auth.AuthRequest._getReferenceToType(),
                             context.coreUtilities.auth.AuthProvider.getAuthRequest.invoke(
@@ -70,7 +145,7 @@ export function generateHeaders({
                 )
             )
         );
-        authProviderHeaders = ts.factory.createIdentifier("_authRequest.headers");
+        authProviderHeaders = ts.factory.createIdentifier(`${AUTH_REQUEST_VAR_NAME}.headers`);
     }
 
     const elements: GeneratedHeader[] = [];

@@ -5,6 +5,11 @@ import type { FileContext } from "@fern-typescript/contexts";
 import { type OptionalKind, type PropertySignatureStructure, Scope, StructureKind, ts } from "ts-morph";
 
 import type { AuthProviderGenerator } from "./AuthProviderGenerator.js";
+import {
+    FAILED_AUTH_HEADERS_ARG_NAME,
+    FORCE_REFRESH_ARG_NAME,
+    getDestructuredAuthRequestParameter
+} from "./getAuthRequestParameter.js";
 import { emitEnvVarPresenceCheck, emitEnvVarValue } from "./processEnvAccess.js";
 
 export declare namespace OAuthAuthProviderGenerator {
@@ -15,6 +20,7 @@ export declare namespace OAuthAuthProviderGenerator {
         includeSerdeLayer: boolean;
         shouldUseWrapper: boolean;
         guardProcessEnvAccess?: boolean;
+        refreshAuthOnFailedPermissions?: boolean;
     }
 }
 
@@ -36,6 +42,7 @@ const REFRESH_PROMISE_FIELD_NAME = "refreshPromise";
 const DEFAULT_TOKEN_OVERRIDE_PROPERTY_NAME = "token";
 const DEFAULT_TOKEN_HEADER = "Authorization";
 const DEFAULT_TOKEN_PREFIX = "Bearer";
+const IS_CACHED_TOKEN_REJECTED_METHOD_NAME = "isCachedTokenRejected";
 const DEFAULT_EXPIRES_IN_SECONDS = 3600; // 1 hour
 const GRANT_TYPE_WIRE_VALUE = "grant_type";
 const CLIENT_CREDENTIALS_GRANT_TYPE = "client_credentials";
@@ -48,6 +55,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
     private readonly neverThrowErrors: boolean;
     private readonly includeSerdeLayer: boolean;
     private readonly guardProcessEnvAccess: boolean;
+    private readonly refreshAuthOnFailedPermissions: boolean;
     private readonly keepIfWrapper: (str: string) => string;
 
     constructor(init: OAuthAuthProviderGenerator.Init) {
@@ -56,6 +64,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         this.neverThrowErrors = init.neverThrowErrors;
         this.includeSerdeLayer = init.includeSerdeLayer;
         this.guardProcessEnvAccess = init.guardProcessEnvAccess ?? false;
+        this.refreshAuthOnFailedPermissions = init.refreshAuthOnFailedPermissions ?? false;
         this.keepIfWrapper = init.shouldUseWrapper ? (str: string) => str : () => "";
     }
 
@@ -355,9 +364,10 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             }
         ];
 
+        const skipCacheIfForcedRefresh = this.refreshAuthOnFailedPermissions ? `!${FORCE_REFRESH_ARG_NAME} && ` : "";
         const getTokenStatements = hasExpiration
             ? `
-        if (this.${ACCESS_TOKEN_FIELD_NAME} && this.${EXPIRES_AT_FIELD_NAME} > new Date()) {
+        if (${skipCacheIfForcedRefresh}this.${ACCESS_TOKEN_FIELD_NAME} && this.${EXPIRES_AT_FIELD_NAME} > new Date()) {
             return this.${ACCESS_TOKEN_FIELD_NAME};
         }
         // If a refresh is already in progress, return the existing promise
@@ -367,7 +377,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         return this.${REFRESH_METHOD_NAME}(${ENDPOINT_METADATA_ARG_NAME});
         `
             : `
-        if (this.${ACCESS_TOKEN_FIELD_NAME}) {
+        if (${skipCacheIfForcedRefresh}this.${ACCESS_TOKEN_FIELD_NAME}) {
             return this.${ACCESS_TOKEN_FIELD_NAME};
         }
         // If a refresh is already in progress, return the existing promise
@@ -510,20 +520,9 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                 name: "getAuthRequest",
                 isAsync: true,
                 parameters: [
-                    {
-                        name: "{ endpointMetadata }",
-                        type: getTextOfTsNode(
-                            ts.factory.createTypeLiteralNode([
-                                ts.factory.createPropertySignature(
-                                    undefined,
-                                    "endpointMetadata",
-                                    ts.factory.createToken(ts.SyntaxKind.QuestionToken),
-                                    context.coreUtilities.fetcher.EndpointMetadata._getReferenceToType()
-                                )
-                            ])
-                        ),
-                        initializer: "{}"
-                    }
+                    getDestructuredAuthRequestParameter(context, {
+                        includeForceRefresh: this.refreshAuthOnFailedPermissions
+                    })
                 ],
                 returnType: getTextOfTsNode(
                     ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Promise"), [
@@ -531,7 +530,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                     ])
                 ),
                 statements: `
-        const token = await this.getToken({ endpointMetadata });
+        const token = await this.getToken(${this.refreshAuthOnFailedPermissions ? `{ endpointMetadata, ${FORCE_REFRESH_ARG_NAME}: ${FORCE_REFRESH_ARG_NAME} === true && this.${IS_CACHED_TOKEN_REJECTED_METHOD_NAME}(${FAILED_AUTH_HEADERS_ARG_NAME}) }` : "{ endpointMetadata }"});
 
         return {
             headers: {
@@ -547,23 +546,37 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                 isAsync: true,
                 returnType: "Promise<string>",
                 parameters: [
-                    {
-                        name: "{ endpointMetadata }",
-                        type: getTextOfTsNode(
-                            ts.factory.createTypeLiteralNode([
-                                ts.factory.createPropertySignature(
-                                    undefined,
-                                    "endpointMetadata",
-                                    ts.factory.createToken(ts.SyntaxKind.QuestionToken),
-                                    context.coreUtilities.fetcher.EndpointMetadata._getReferenceToType()
-                                )
-                            ])
-                        ),
-                        initializer: "{}"
-                    }
+                    getDestructuredAuthRequestParameter(context, {
+                        includeForceRefresh: this.refreshAuthOnFailedPermissions,
+                        includeFailedAuthHeaders: false
+                    })
                 ],
                 statements: getTokenStatements
             },
+            ...(this.refreshAuthOnFailedPermissions
+                ? [
+                      {
+                          kind: StructureKind.Method as const,
+                          scope: Scope.Private,
+                          name: IS_CACHED_TOKEN_REJECTED_METHOD_NAME,
+                          returnType: "boolean",
+                          parameters: [
+                              {
+                                  name: FAILED_AUTH_HEADERS_ARG_NAME,
+                                  type: "Record<string, string> | undefined"
+                              }
+                          ],
+                          statements: `
+        // A different cached token means another request already refreshed it.
+        const token = this.${ACCESS_TOKEN_FIELD_NAME};
+        if (token == null || ${FAILED_AUTH_HEADERS_ARG_NAME} == null) {
+            return true;
+        }
+        return ${FAILED_AUTH_HEADERS_ARG_NAME}[${tokenHeader}] === ${tokenValue};
+        `
+                      }
+                  ]
+                : []),
             {
                 kind: StructureKind.Method,
                 scope: Scope.Private,
