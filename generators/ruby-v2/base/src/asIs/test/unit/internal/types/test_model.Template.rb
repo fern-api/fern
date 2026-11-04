@@ -129,6 +129,39 @@ describe <%= gem_namespace %>::Internal::Types::Model do
       assert_equal({ "name" => "Inception", "brand_new_field" => "kept" }, example.to_h)
     end
 
+    %w[hash to_h class initialize initialize_copy name=].each do |key|
+      it "preserves the unknown #{key} field without replacing model methods" do
+        model_class = Class.new(<%= gem_namespace %>::Internal::Types::Model) do
+          field :name, String
+        end
+        example = model_class.load({ "name" => "Original", key => "kept" }.to_json)
+
+        assert_instance_of model_class, example
+        assert_instance_of model_class, example.dup
+        assert_kind_of Integer, example.hash
+        assert_equal "kept", example.to_h[key]
+
+        example.name = "Updated"
+
+        assert_equal "Updated", example.name
+        assert_equal({ "name" => "Next" }, model_class.new(name: "Next").to_h)
+      end
+    end
+
+    it "does not replace an inherited protected method with an extra field" do
+      parent = Class.new(<%= gem_namespace %>::Internal::Types::Model) do
+        protected def label
+          "original"
+        end
+      end
+      model_class = Class.new(parent)
+      example = model_class.load('{"label":"kept"}')
+
+      assert model_class.protected_method_defined?(:label)
+      assert_equal "original", example.send(:label)
+      assert_equal({ "label" => "kept" }, example.to_h)
+    end
+
     it "sets the defaults where applicable" do
       example_using_defaults = ExampleWithDefaults.new
 

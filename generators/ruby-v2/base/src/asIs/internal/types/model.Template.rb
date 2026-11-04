@@ -107,6 +107,11 @@ module <%= gem_namespace %>
 
             extra_fields[name.to_sym] = Field.new(name: name, type: type, optional: true, nullable: false)
 
+            # Keep unknown data without replacing inherited methods or an existing setter.
+            return if [name.to_sym, :"#{name}="].any? do |method_name|
+              method_defined?(method_name) || private_method_defined?(method_name)
+            end
+
             define_accessor(name)
             define_setter(name)
           end
