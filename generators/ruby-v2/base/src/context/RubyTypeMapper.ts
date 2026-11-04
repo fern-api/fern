@@ -1,6 +1,6 @@
 import { CaseConverter } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
-import { ruby } from "@fern-api/ruby-ast";
+import { BaseRubyCustomConfigSchema, ruby } from "@fern-api/ruby-ast";
 import { FernIr } from "@fern-fern/ir-sdk";
 import { AbstractRubyGeneratorContext } from "./AbstractRubyGeneratorContext.js";
 
@@ -15,10 +15,10 @@ export declare namespace RubyTypeMapper {
 }
 
 export class RubyTypeMapper {
-    private context: AbstractRubyGeneratorContext<object>;
+    private context: AbstractRubyGeneratorContext<BaseRubyCustomConfigSchema>;
     private readonly case: CaseConverter;
 
-    constructor(context: AbstractRubyGeneratorContext<object>) {
+    constructor(context: AbstractRubyGeneratorContext<BaseRubyCustomConfigSchema>) {
         this.context = context;
         this.case = context.caseConverter;
     }
@@ -100,14 +100,18 @@ export class RubyTypeMapper {
         }
     }
 
+    private numberType(): ruby.Type {
+        return this.context.customConfig.legacyNumbersAsInteger === true ? ruby.Type.integer() : ruby.Type.float();
+    }
+
     private convertPrimitive({ primitive }: { primitive: FernIr.PrimitiveType }): ruby.Type {
         return FernIr.PrimitiveTypeV1._visit<ruby.Type>(primitive.v1, {
             integer: () => ruby.Type.integer(),
             long: () => ruby.Type.integer(),
             uint: () => ruby.Type.integer(),
             uint64: () => ruby.Type.integer(),
-            float: () => ruby.Type.float(),
-            double: () => ruby.Type.float(),
+            float: () => this.numberType(),
+            double: () => this.numberType(),
             boolean: () => ruby.Type.boolean(),
             string: () => ruby.Type.string(),
             date: () => ruby.Type.string(),
