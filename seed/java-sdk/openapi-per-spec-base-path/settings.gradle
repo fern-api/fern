@@ -1,3 +1,0 @@
-rootProject.name = 'openapi-per-spec-base-path'
-
-include 'sample-app'

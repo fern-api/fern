@@ -1,3 +1,0 @@
-- summary: |
-    Only generate `EncodeQueryValues` on undiscriminated unions that are reachable from a query parameter position, instead of on every union.
-  type: chore

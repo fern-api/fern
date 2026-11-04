@@ -1,9 +1,0 @@
-# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
-
-- summary: |
-    Drop the discriminant property from inlined discriminated-union variants. When a variant's object
-    also declared the discriminant (e.g. an OpenAPI `allOf` member with `protocol: const: API`), the
-    inlined variant got a `protocol` field next to `#[serde(tag = "protocol")]`, which fails to compile
-    with "variant field name `protocol` conflicts with internal tag". The variant's generated constructors
-    no longer take a parameter for the discriminant; serde writes it from the tag.
-  type: fix

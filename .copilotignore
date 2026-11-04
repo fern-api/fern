@@ -15,8 +15,6 @@ node_modules/
 **/*.tsbuildinfo
 
 # Massive test fixtures (seed contains generated code for all languages)
-seed/
-seed-remote-local/
 test-remote-local-logs-*/
 **/__snapshots__/
 **/__test__/**/fixtures/
@@ -40,7 +38,6 @@ test-remote-local-logs-*/
 pnpm-lock.yaml
 
 # Large files
-seed/python-sdk/trace/snippet-templates.json
 **/*.prof
 
 # Cache files

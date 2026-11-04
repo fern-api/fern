@@ -1,5 +1,0 @@
-name: api
-environments:
-  Production: https://yoursite.com
-  Staging: https://staging.yoursite.com
-default-environment: null

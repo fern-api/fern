@@ -1,9 +1,0 @@
-- summary: |
-    The generated npm publish workflow now skips any platform or launcher
-    package whose version is already on the configured registry, so re-running
-    failed jobs after a partial release completes it instead of failing on the
-    packages that already published. A failed version check (other than a 404)
-    still fails the job. When `npm publish` fails with `EOTP`, the job now
-    prints an error explaining the fix: use a granular npm access token with
-    "Bypass 2FA" enabled, or configure npm trusted publishing (OIDC).
-  type: fix

@@ -12,7 +12,6 @@
   "allowCompoundWords": true,
   "dictionaries": ["project-words"],
   "ignorePaths": [
-    "./seed/*/*/*",
     ".git",
     ".vscode",
     "**/__snapshots__/**",
