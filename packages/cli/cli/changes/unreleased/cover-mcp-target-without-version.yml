@@ -1,0 +1,3 @@
+- summary: |
+    Add a regression test that a `fern-hosted` MCP target in `generators.yml` is submitted without `--version`.
+  type: chore

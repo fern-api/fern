@@ -108,11 +108,7 @@ describe("runRemoteGenerationForGenerator synthesized SDK Config latest", () => 
         if (prepared?.route == null) {
             throw new Error("Expected an unpinned MCP SDK Config route");
         }
-        const run = vi.fn(async (parameters: FernSdkGenApiBuildParameters) => {
-            // An MCP server has no package version, so sdk-gen-api resolves it.
-            expect(parameters.sdkVersion).toBeUndefined();
-            return buildResponse();
-        });
+        const run = vi.fn((_parameters: FernSdkGenApiBuildParameters) => Promise.resolve(buildResponse()));
         const parameters = mcpRunParameters({
             generatorInvocation,
             prepared,
@@ -123,6 +119,8 @@ describe("runRemoteGenerationForGenerator synthesized SDK Config latest", () => 
 
         await expect(runRemoteGenerationForGenerator(parameters)).resolves.toMatchObject({ actualVersion: "1.2.3" });
         expect(run).toHaveBeenCalledTimes(1);
+        // An MCP server has no package version, so sdk-gen-api resolves it.
+        expect(run.mock.calls[0]?.[0].sdkVersion).toBeUndefined();
     });
 
     it("resolves generators.yml latest once for runtime bundle migration and request serialization", async () => {
@@ -554,7 +552,7 @@ function mcpRunParameters({
     version
 }: {
     generatorInvocation: generatorsYml.GeneratorInvocation;
-    prepared: ReturnType<typeof prepareRoute>[number];
+    prepared: NonNullable<ReturnType<typeof prepareRoute>[number]>;
     sourceArchive: FernSdkGenApiSourceArchive;
     run: (parameters: FernSdkGenApiBuildParameters) => Promise<ReturnType<typeof buildResponse>>;
     version: string | undefined;
