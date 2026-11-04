@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Expose response headers on Ruby API errors, retaining lowercase names and duplicate values. Existing constructors default to an empty header hash.
+  type: fix
