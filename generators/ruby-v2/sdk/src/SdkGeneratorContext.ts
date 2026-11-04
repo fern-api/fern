@@ -425,6 +425,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
 
             // HTTP tests
             AsIsFiles.TestHttpRawClient,
+            AsIsFiles.TestVersion,
 
             // JSON tests
             AsIsFiles.TestJsonRequest,

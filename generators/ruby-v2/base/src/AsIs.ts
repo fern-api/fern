@@ -83,6 +83,7 @@ export const AsIsFiles = {
     TestTypeUtils: "test/unit/internal/types/test_utils.Template.rb",
 
     // HTTP tests
+    TestVersion: "test/unit/test_version.Template.rb",
     TestHttpRawClient: "test/unit/internal/http/test_raw_client.Template.rb",
 
     // JSON tests
