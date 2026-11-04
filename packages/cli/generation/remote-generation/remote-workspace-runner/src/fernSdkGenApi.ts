@@ -20,6 +20,7 @@ import {
     validateFernSdkGenApiPublishUrl,
     validateFernSdkGenApiPublishTargets as validatePublishTargets
 } from "./directPublishCredentials.js";
+import { getGuestSdkBuildUrl } from "./guestSdkBuildLink.js";
 import { getSdkGenApiPreviewOutputDirectoryName } from "./previewOutputDirectory.js";
 import { type PublishTarget } from "./publishTarget.js";
 import { downloadArchiveForTask, downloadFilesForTask } from "./RemoteTaskHandler.js";
@@ -28,7 +29,6 @@ import {
     redactPublicationIdentifier,
     redactSensitiveValues
 } from "./redactSensitiveValues.js";
-import { getGuestSdkBuildUrl } from "./guestSdkBuildLink.js";
 import { parseExactSemver } from "./sdk-gen-client/exactSemver.js";
 import {
     type GenerationConfigKind,
