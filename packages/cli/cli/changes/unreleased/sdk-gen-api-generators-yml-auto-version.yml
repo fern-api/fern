@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern generate --version AUTO` can now use sdk-gen-api for legacy `generators.yml` SDK targets
+    with GitHub output.
+  type: fix

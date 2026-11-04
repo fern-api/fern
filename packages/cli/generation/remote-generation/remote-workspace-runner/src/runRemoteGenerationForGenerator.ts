@@ -350,7 +350,12 @@ export async function runRemoteGenerationForGenerator({
             sdkVersion: resolvedVersion,
             specsTarGzBuffer,
             whitelabel,
-            sdkConfigRequestedOutput: autoVersionPreviewOutput ?? sdkConfigRequestedOutput
+            requestedOutput:
+                autoVersionPreviewOutput ??
+                sdkConfigRequestedOutput ??
+                (sdkConfigTarget == null
+                    ? mapFernSdkGenApiOutput(generatorInvocation, githubOptions).requestedOutput
+                    : undefined)
         };
         if (!isEligibleForFernSdkGenApi(candidate)) {
             const reason = describeFernSdkGenApiIneligibility({
