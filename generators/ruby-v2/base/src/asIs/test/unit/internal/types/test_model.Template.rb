@@ -129,7 +129,7 @@ describe <%= gem_namespace %>::Internal::Types::Model do
       assert_equal({ "name" => "Inception", "brand_new_field" => "kept" }, example.to_h)
     end
 
-    %w[hash to_h class initialize initialize_copy name=].each do |key|
+<% if (protectModelMethods) { %>    %w[hash to_h class initialize initialize_copy name=].each do |key|
       it "preserves the unknown #{key} field without replacing model methods" do
         model_class = Class.new(<%= gem_namespace %>::Internal::Types::Model) do
           field :name, String
@@ -162,7 +162,40 @@ describe <%= gem_namespace %>::Internal::Types::Model do
       assert_equal({ "label" => "kept" }, example.to_h)
     end
 
-    it "sets the defaults where applicable" do
+    it "keeps an extra-field setter when only its reader collides" do
+      model_class = Class.new(<%= gem_namespace %>::Internal::Types::Model) do
+        def label
+          "existing"
+        end
+      end
+      model = model_class.new(label: "original")
+      model.label = "updated"
+      assert_equal "existing", model.label
+      assert_equal "updated", model.to_h["label"]
+    end
+
+    it "keeps an extra-field reader when only its setter collides" do
+      model_class = Class.new(<%= gem_namespace %>::Internal::Types::Model) do
+        attr_writer :label
+      end
+      model = model_class.new(label: "original")
+      model.label = "existing setter"
+      assert_equal "original", model.label
+      assert_equal "existing setter", model.instance_variable_get(:@label)
+    end
+
+    it "preserves private Kernel methods and keeps their data in exports" do
+      model_class = Class.new(<%= gem_namespace %>::Internal::Types::Model)
+      owner = model_class.instance_method(:format).owner
+      model = model_class.new(format: "json")
+      assert_equal owner, model_class.instance_method(:format).owner
+      assert model_class.private_method_defined?(:format)
+      assert_equal "json", model.to_h["format"]
+      model.format = "text"
+      assert_equal "text", model.to_h["format"]
+    end
+
+<% } %>    it "sets the defaults where applicable" do
       example_using_defaults = ExampleWithDefaults.new
 
       assert_equal "example", example_using_defaults.type

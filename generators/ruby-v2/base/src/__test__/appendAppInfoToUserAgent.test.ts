@@ -30,7 +30,8 @@ function extractEmittedHelperSource(): string {
     const template = readFileSync(TEMPLATE_PATH).toString();
     const rendered = eta
         .renderString(template, {
-            gem_namespace: "Seed",
+            protectModelMethods: false,
+        gem_namespace: "Seed",
             sdkName: "seed",
             rootFolderName: "seed",
             custom_pager_class_name: "CustomPager",

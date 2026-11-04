@@ -18,6 +18,7 @@ const eta = new Eta({ autoEscape: false, useWith: true, autoTrim: false });
 
 function render(path: string, omitUnsetModelFields: boolean): string {
     return eta.renderString(readFileSync(path).toString(), {
+        protectModelMethods: false,
         gem_namespace: "Seed",
         sdkName: "seed",
         rootFolderName: "seed",

@@ -107,14 +107,13 @@ module <%= gem_namespace %>
 
             extra_fields[name.to_sym] = Field.new(name: name, type: type, optional: true, nullable: false)
 
-            # Keep unknown data without replacing inherited methods or an existing setter.
-            return if [name.to_sym, :"#{name}="].any? do |method_name|
-              method_defined?(method_name) || private_method_defined?(method_name)
-            end
-
-            define_accessor(name)
+<% if (protectModelMethods) { %>            # Protect each existing method independently; keep the other accessor available.
+            define_accessor(name) unless method_defined?(name.to_sym) || private_method_defined?(name.to_sym)
+            setter = :"#{name}="
+            define_setter(name) unless method_defined?(setter) || private_method_defined?(setter)
+<% } else { %>            define_accessor(name)
             define_setter(name)
-          end
+<% } %>          end
 
           # Whether an unknown input key is dropped instead of kept as an extra field: it matches a declared
           # field's name or API name, ignoring case
