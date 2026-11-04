@@ -782,6 +782,14 @@ export class Extern {
                         namespace: "NUnit.Framework"
                     }),
                 /**
+                 * Reference to NUnit.Framework.SetUpAttribute class.
+                 */
+                SetUp: () =>
+                    this.csharp.classReference({
+                        name: "SetUp",
+                        namespace: "NUnit.Framework"
+                    }),
+                /**
                  * Reference to NUnit.Framework.SetUpFixtureAttribute class.
                  */
                 SetUpFixture: () =>

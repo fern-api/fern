@@ -38,6 +38,12 @@ public class BaseMockServerTest
         );
     }
 
+    [SetUp]
+    public void ResetMocks()
+    {
+        Server.ResetMappings();
+    }
+
     [OneTimeTearDown]
     public void GlobalTeardown()
     {

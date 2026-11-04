@@ -58,6 +58,12 @@ public class BaseMockServerTest
             "client_secret",
             clientOptions: new ClientOptions { BaseUrl = Server.Urls[0], MaxRetries = 0 }
         );
+    }
+
+    [SetUp]
+    public void ResetMocks()
+    {
+        Server.ResetMappings();
         MockOAuthEndpoint();
     }
 

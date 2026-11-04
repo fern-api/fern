@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix generated mock server tests getting another test's response when an endpoint has
+    multiple examples. Tests in a fixture share one WireMock server, so a request could match a
+    stub registered by an earlier test. `BaseMockServerTest` now resets the server's stubs before
+    each test (and re-registers the OAuth/inferred auth token stubs).
+  type: fix

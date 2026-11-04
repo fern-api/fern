@@ -102,7 +102,19 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
                         rootClientGenerator: this.rootClientGenerator
                     })
                 );
+            }),
+            isAsync: false,
+            parameters: [],
+            annotations: [this.NUnit.Framework.OneTimeSetUp]
+        });
 
+        // Tests in a fixture share one server, so clear the previous test's stubs; otherwise a
+        // request can match a stub registered by another example of the same endpoint.
+        class_.addMethod({
+            name: "ResetMocks",
+            access: ast.Access.Public,
+            body: this.csharp.codeblock((writer: Writer) => {
+                writer.writeLine("Server.ResetMappings();");
                 if (oauth) {
                     writer.writeNodeStatement(
                         this.csharp.invokeMethod({
@@ -122,7 +134,7 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkGe
             }),
             isAsync: false,
             parameters: [],
-            annotations: [this.NUnit.Framework.OneTimeSetUp]
+            annotations: [this.NUnit.Framework.SetUp]
         });
 
         if (oauth) {

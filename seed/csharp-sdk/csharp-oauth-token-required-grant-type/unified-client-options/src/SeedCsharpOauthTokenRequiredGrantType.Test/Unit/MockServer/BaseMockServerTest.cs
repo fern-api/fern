@@ -81,6 +81,12 @@ public class BaseMockServerTest
                 MaxRetries = 0,
             }
         );
+    }
+
+    [SetUp]
+    public void ResetMocks()
+    {
+        Server.ResetMappings();
         MockOAuthEndpoint();
     }
 
