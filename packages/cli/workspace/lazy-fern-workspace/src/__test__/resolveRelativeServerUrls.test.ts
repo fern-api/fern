@@ -76,6 +76,34 @@ describe("resolveRelativeServerUrls", () => {
     });
 });
 
+describe("trailing slash and variable-prefixed servers", () => {
+    it("does not add a trailing slash the spec did not have", () => {
+        expect(resolveRelativeServerUrls({ servers: [{ url: "/" }, { url: "/api/" }] }, SPEC_URL)).toEqual({
+            servers: [{ url: "https://petstore31.swagger.io/" }, { url: "https://petstore31.swagger.io/api/" }]
+        });
+        expect(resolveRelativeServerUrls({ servers: [{ url: "." }] }, SPEC_URL)).toEqual({
+            servers: [{ url: "https://petstore31.swagger.io/api/v31" }]
+        });
+    });
+
+    it("resolves a relative server that starts with a variable", () => {
+        const resolved = resolveRelativeServerUrls(
+            { servers: [{ url: "{stage}/api", variables: { stage: { default: "prod" } } }] },
+            "https://example.com/specs/openapi.json"
+        );
+
+        expect(resolved).toEqual({
+            servers: [{ url: "https://example.com/specs/{stage}/api", variables: { stage: { default: "prod" } } }]
+        });
+    });
+
+    it("keeps a server whose variable default is a full address", () => {
+        const servers = [{ url: "{base}/v1", variables: { base: { default: "https://api.example.com" } } }];
+
+        expect(resolveRelativeServerUrls({ servers }, SPEC_URL)).toEqual({ servers });
+    });
+});
+
 describe("isRelativeServerUrl", () => {
     it.each(["/api/v31", "v1", "../v1", "//api.example.com"])("treats %s as relative", (url) => {
         expect(isRelativeServerUrl(url)).toBe(true);

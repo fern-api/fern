@@ -34,18 +34,18 @@ export async function failOnRelativeMcpServerUrl({
     if ((source.overrides?.length ?? 0) > 0 || (source.overlays?.length ?? 0) > 0) {
         return;
     }
-    const serverUrl = await readFirstServerUrl(absoluteFilepath);
-    if (serverUrl == null || !isRelativeServerUrl(serverUrl)) {
+    const server = await readFirstServer(absoluteFilepath);
+    if (server == null || !isRelativeServerUrl(server.url, server.variables)) {
         return;
     }
     return context.failAndThrow(
-        `SDK Config source '${source.id}' has a relative servers URL ('${serverUrl}'), and an MCP server needs the full address of your API. Use the full address in servers, or set api.baseUrl in sdk-config.yml.`,
+        `SDK Config source '${source.id}' has a relative servers URL ('${server.url}'), and an MCP server needs the full address of your API. Use the full address in servers, or set api.baseUrl in sdk-config.yml.`,
         undefined,
         { code: CliError.Code.ConfigError }
     );
 }
 
-async function readFirstServerUrl(absoluteFilepath: string): Promise<string | undefined> {
+async function readFirstServer(absoluteFilepath: string): Promise<{ url: string; variables: unknown } | undefined> {
     let document: unknown;
     try {
         document = YAML.parse(await readFile(absoluteFilepath, "utf8"));
@@ -57,7 +57,8 @@ async function readFirstServerUrl(absoluteFilepath: string): Promise<string | un
         return undefined;
     }
     const [first] = Array.isArray(document.servers) ? document.servers : [];
-    return typeof first === "object" && first != null && "url" in first && typeof first.url === "string"
-        ? first.url
-        : undefined;
+    if (typeof first !== "object" || first == null || !("url" in first) || typeof first.url !== "string") {
+        return undefined;
+    }
+    return { url: first.url, variables: "variables" in first ? first.variables : undefined };
 }

@@ -13,7 +13,7 @@ import {
 } from "@fern-api/remote-workspace-runner";
 import { createMockTaskContext, TaskAbortSignal, type TaskContext } from "@fern-api/task-context";
 import { parseSdkConfigV1 } from "@postman/sdk-config/sdk-config/v1";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { createSdkConfigWorkspace } from "../createSdkConfigWorkspace.js";
 
@@ -393,6 +393,10 @@ describe("createSdkConfigWorkspace", () => {
             });
         }
         const errorLog = vi.fn();
+
+        beforeEach(() => {
+            errorLog.mockClear();
+        });
 
         it("fails an MCP target with a message that names servers and api.baseUrl", async () => {
             await expect(createWorkspaceFor({ api: {} })).rejects.toBeInstanceOf(TaskAbortSignal);
