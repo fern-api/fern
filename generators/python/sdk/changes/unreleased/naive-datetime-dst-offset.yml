@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Naive `datetime` values are now serialized with the local UTC offset that applies on their own
+    date. Previously the SDK attached today's offset, so in a time zone with daylight saving time a
+    naive `datetime` on the other side of a DST change was sent one hour off (for example,
+    `datetime(2026, 1, 15, 12, 0)` in New York was sent as `12:00:00-04:00` during summer time
+    instead of `12:00:00-05:00`).
+  type: fix

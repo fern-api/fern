@@ -47,7 +47,8 @@ def serialize_datetime(v: dt.datetime) -> str:
     """
     Serialize a datetime including timezone info.
 
-    Uses the timezone info provided if present, otherwise uses the current runtime's timezone info.
+    Uses the timezone info provided if present, otherwise uses the current runtime's timezone info,
+    with the UTC offset that applies on that date (so daylight saving time is accounted for).
 
     UTC datetimes end in "Z" while all other timezones are represented as offset from UTC, e.g. +05:00.
     """
@@ -63,6 +64,13 @@ def serialize_datetime(v: dt.datetime) -> str:
     if v.tzinfo is not None:
         return _serialize_zoned_datetime(v)
     else:
-        local_tz = dt.datetime.now().astimezone().tzinfo
-        localized_dt = v.replace(tzinfo=local_tz)
+        # astimezone() on a naive datetime treats it as local time and picks the offset for that date,
+        # rather than today's offset, which is wrong across a daylight saving time change.
+        # Only the offset is used so the wall-clock time is sent as given, even for a time that
+        # does not exist locally because of a daylight saving time change.
+        try:
+            localized_dt = v.replace(tzinfo=dt.timezone(v.astimezone().utcoffset() or dt.timedelta(0)))
+        except (OverflowError, OSError, ValueError):
+            # Some platforms (e.g. Windows) cannot look up local time for dates outside the epoch range.
+            localized_dt = v.replace(tzinfo=dt.datetime.now().astimezone().tzinfo)
         return _serialize_zoned_datetime(localized_dt)
