@@ -68,7 +68,14 @@ fn merge_into_path(
     if let Some(matching) = incoming.remove(&leaf) {
         merge_resource(entry, matching, &mut walked)?;
     }
-    merge_resources(&mut entry.resources, incoming, &mut walked)
+    merge_resource(
+        entry,
+        RestResource {
+            resources: incoming,
+            methods: HashMap::new(),
+        },
+        &mut walked,
+    )
 }
 
 fn empty_resource() -> RestResource {
@@ -79,8 +86,8 @@ fn empty_resource() -> RestResource {
 }
 
 /// Deep-merge `incoming` into `target`, where both sit at command path
-/// `path`. Resources sharing a key merge recursively; a method key present
-/// on both sides is a real command collision and errors.
+/// `path`. Resources sharing a key merge recursively. `target` must not
+/// carry methods: [`merge_resource`] checks child names against those.
 fn merge_resources(
     target: &mut HashMap<String, RestResource>,
     incoming: HashMap<String, RestResource>,
@@ -108,16 +115,36 @@ fn merge_resource(
 ) -> Result<(), CliError> {
     for (key, method) in incoming.methods {
         if target.methods.contains_key(&key) {
-            path.push(key);
-            let command = path.join(" ");
-            path.pop();
-            return Err(CliError::Discovery(format!(
-                "Method key collision: command '{command}' is defined by multiple specs"
-            )));
+            return Err(command_collision(path, &key, "is defined by multiple specs"));
+        }
+        if target.resources.contains_key(&key) {
+            return Err(command_collision(
+                path,
+                &key,
+                "is a command in one spec and a command group in another",
+            ));
         }
         target.methods.insert(key, method);
     }
+    if let Some(key) = incoming.resources.keys().find(|k| target.methods.contains_key(*k)) {
+        return Err(command_collision(
+            path,
+            key,
+            "is a command in one spec and a command group in another",
+        ));
+    }
     merge_resources(&mut target.resources, incoming.resources, path)
+}
+
+fn command_collision(path: &[String], key: &str, problem: &str) -> CliError {
+    let mut command = path.join(" ");
+    if !command.is_empty() {
+        command.push(' ');
+    }
+    command.push_str(key);
+    CliError::Discovery(format!(
+        "Method key collision: command '{command}' {problem}"
+    ))
 }
 
 /// Replace `{name}` substrings in `s` with values from `subs`. Variables not
@@ -6232,6 +6259,44 @@ paths:
             err.to_string().contains("'v1 stores profiles traits list'"),
             "error: {err}"
         );
+    }
+
+    #[test]
+    fn test_spec_under_method_vs_resource_name_collision_errors() {
+        // A method in one spec and a sub-resource in another with the same
+        // name on a shared resource would register two clap subcommands with
+        // one name, so it errors at merge time instead.
+        let spec_a = r#"
+openapi: "3.0.0"
+info: { title: "A", version: "1.0" }
+paths:
+  /profiles/traits:
+    get:
+      x-fern-sdk-group-name: ["profiles"]
+      x-fern-sdk-method-name: traits
+      responses: { "200": { description: ok } }
+"#;
+        let spec_b = r#"
+openapi: "3.0.0"
+info: { title: "B", version: "1.0" }
+paths:
+  /profiles/traits/all:
+    get:
+      x-fern-sdk-group-name: ["profiles", "traits"]
+      x-fern-sdk-method-name: list
+      responses: { "200": { description: ok } }
+"#;
+        for (first, second) in [(spec_a, spec_b), (spec_b, spec_a)] {
+            let err = CliApp::new("test")
+                .spec_under("stores", first)
+                .spec_under("stores", second)
+                .build_doc()
+                .expect_err("method/resource name clash should error");
+            assert!(
+                err.to_string().contains("'stores profiles traits' is a command in one spec and a command group in another"),
+                "error: {err}"
+            );
+        }
     }
 
     #[test]
