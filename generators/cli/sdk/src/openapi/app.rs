@@ -44,7 +44,7 @@ fn merge_into_path(
     mut incoming: HashMap<String, RestResource>,
 ) -> Result<(), CliError> {
     if path.is_empty() {
-        return merge_resources(target, incoming, &[]);
+        return merge_resources(target, incoming, &mut Vec::new());
     }
 
     let mut walked: Vec<String> = Vec::with_capacity(path.len());
@@ -61,11 +61,14 @@ fn merge_into_path(
     walked.push(leaf.clone());
     let entry = current.entry(leaf.clone()).or_insert_with(empty_resource);
 
-    // Hoist a matching-name resource from the spec into the namespace.
+    // Hoist a matching-name resource from the spec into the namespace. Its
+    // methods land on the namespace node itself, so `walked` (ending at the
+    // leaf) is already their command path; the remaining resources become
+    // children, and `merge_resources` pushes their names as it recurses.
     if let Some(matching) = incoming.remove(&leaf) {
         merge_resource(entry, matching, &mut walked)?;
     }
-    merge_resources(&mut entry.resources, incoming, &walked)
+    merge_resources(&mut entry.resources, incoming, &mut walked)
 }
 
 fn empty_resource() -> RestResource {
@@ -81,9 +84,8 @@ fn empty_resource() -> RestResource {
 fn merge_resources(
     target: &mut HashMap<String, RestResource>,
     incoming: HashMap<String, RestResource>,
-    path: &[String],
+    path: &mut Vec<String>,
 ) -> Result<(), CliError> {
-    let mut path = path.to_vec();
     for (key, resource) in incoming {
         match target.entry(key.clone()) {
             std::collections::hash_map::Entry::Vacant(slot) => {
@@ -91,7 +93,7 @@ fn merge_resources(
             }
             std::collections::hash_map::Entry::Occupied(mut slot) => {
                 path.push(key);
-                merge_resource(slot.get_mut(), resource, &mut path)?;
+                merge_resource(slot.get_mut(), resource, path)?;
                 path.pop();
             }
         }
