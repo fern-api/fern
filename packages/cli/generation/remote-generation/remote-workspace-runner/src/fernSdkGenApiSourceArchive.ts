@@ -4,6 +4,7 @@ import type {
     RawSpecsManifestEntry,
     RawSpecType
 } from "@fern-api/api-workspace-commons";
+import type { SdkConfigV1SourceSpec } from "@postman/sdk-config/sdk-config/v1";
 
 import type { GenerationConfigRoute } from "./sdk-gen-client/index.js";
 
@@ -16,6 +17,11 @@ export interface FernSdkGenApiSourceArchive {
     buffer: Buffer;
     manifest: FernSdkGenApiSourceManifest;
     specIndexes: number[];
+    /**
+     * The SDK Config `source.specs` that line up, by position, with `specIndexes`, when they differ from
+     * the customer's (protobuf converted to OpenAPI, docs-only protos dropped). Never uploaded as is.
+     */
+    sdkConfigSourceSpecs?: SdkConfigV1SourceSpec[];
 }
 
 /** Validates source selections before sdk-gen-api uploads them and constructs per-target IR. */
@@ -27,7 +33,9 @@ export function validateFernSdkGenApiSourceCompatibility(
         return;
     }
     if (sourceArchive.specIndexes.length === 0) {
-        throw new Error("SDK Config v1 requires at least one effective Fern source spec");
+        throw new Error(
+            "SDK Config v1 requires at least one effective Fern source spec (docs-only protobuf specs are not SDK sources)"
+        );
     }
     const seenIndexes = new Set<number>();
     for (const manifestIndex of sourceArchive.specIndexes) {
@@ -41,7 +49,7 @@ export function validateFernSdkGenApiSourceCompatibility(
         }
         if (!isSupportedSourceType(source.type)) {
             throw new Error(
-                `Generator ${route.generatorId} ${route.requestedVersion ?? "(unpinned)"} requires SDK Config v1, but selected source ${manifestIndex} cannot be represented downstream: SDK Config generation does not support Fern source type ${source.type} (${source.specPath}). Use an OpenAPI, AsyncAPI, or GraphQL source for this generator version.`
+                `Generator ${route.generatorId} ${route.requestedVersion ?? "(unpinned)"} requires SDK Config v1, but selected source ${manifestIndex} cannot be represented downstream: SDK Config generation does not support Fern source type ${source.type} (${source.specPath}). Use an OpenAPI, AsyncAPI, GraphQL, or from-openapi protobuf source for this generator version.`
             );
         }
     }

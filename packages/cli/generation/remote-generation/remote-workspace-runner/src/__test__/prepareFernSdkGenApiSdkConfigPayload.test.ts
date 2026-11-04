@@ -237,6 +237,50 @@ describe("prepareFernSdkGenApiSdkConfigPayload", () => {
         });
     });
 
+    it("describes OpenAPI converted from protobuf as an OpenAPI source with its forwarded overrides", () => {
+        const payload = prepareFernSdkGenApiSdkConfigPayload({
+            workspace: { definition: definition() },
+            generatorInvocation: mcpInvocation(),
+            audiences: { type: "all" },
+            sourceArchive: {
+                buffer: Buffer.alloc(0),
+                specIndexes: [0, 1],
+                manifest: {
+                    specs: [
+                        {
+                            type: "openapi",
+                            origin: "protobuf",
+                            specPath: "/fern/specs/openapi0.json",
+                            overridePaths: ["/fern/specs/openapi0-override-0.yml"]
+                        },
+                        {
+                            type: "openapi",
+                            origin: "protobuf",
+                            specPath: "/fern/specs/openapi1.json",
+                            overridePaths: ["/fern/specs/openapi1-override-0.yml"]
+                        }
+                    ]
+                }
+            },
+            mapFernGroupToSdkConfig: mappingCallback()
+        });
+
+        expect(JSON.parse(payload.body.toString("utf8")).source.specs).toEqual([
+            {
+                id: "source-0",
+                type: "openapi",
+                path: "fern/specs/openapi0.json",
+                overrides: ["fern/specs/openapi0-override-0.yml"]
+            },
+            {
+                id: "source-1",
+                type: "openapi",
+                path: "fern/specs/openapi1.json",
+                overrides: ["fern/specs/openapi1-override-0.yml"]
+            }
+        ]);
+    });
+
     it("refuses source types SDK Config generation cannot represent", () => {
         const mapFernGroupToSdkConfig = mappingCallback();
         expect(() =>

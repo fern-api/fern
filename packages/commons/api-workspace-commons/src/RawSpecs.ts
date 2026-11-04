@@ -26,6 +26,8 @@ export interface RawSpecImportSettings {
 export interface RawSpecsManifestEntry {
     type: RawSpecType;
     specPath: string;
+    /** Set on an `openapi` entry converted from protobuf; its `overridePaths` are forwarded, not applied. */
+    origin?: "protobuf";
     overridePaths?: string[];
     namespace?: string;
     apiImportSettings?: RawSpecImportSettings;

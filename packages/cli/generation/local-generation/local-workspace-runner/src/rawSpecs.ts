@@ -120,7 +120,8 @@ async function resolveAndWriteSpec({
 
 /**
  * Bundles an OpenAPI or AsyncAPI spec: resolves all external $refs, merges
- * overrides, applies overlays, and writes the result as compact JSON.
+ * overrides, applies overlays, and writes the result as compact JSON. OpenAPI converted from protobuf
+ * is marked `origin: protobuf` and its overrides are copied next to it instead of merged.
  */
 async function resolveOpenAPIOrAsyncAPI({
     spec,
@@ -140,8 +141,17 @@ async function resolveOpenAPIOrAsyncAPI({
     const isAsync = await isAsyncAPISpec(spec.absoluteFilepath);
     const filename = isAsync ? `asyncapi${index}.json` : `openapi${index}.json`;
 
+    // OpenAPI converted from protobuf: overrides are forwarded for sdk-gen-core to merge, not applied here.
+    const fromProtobuf = spec.source.type === "protobuf";
     let resolved: object;
-    if (isAsync) {
+    if (fromProtobuf) {
+        resolved = await loadOpenAPI({
+            context,
+            absolutePathToOpenAPI: spec.absoluteFilepath,
+            absolutePathToOpenAPIOverrides: undefined,
+            absolutePathToOpenAPIOverlays: undefined
+        });
+    } else if (isAsync) {
         resolved = await loadAsyncAPI({
             context,
             absoluteFilePath: spec.absoluteFilepath,
@@ -160,11 +170,25 @@ async function resolveOpenAPIOrAsyncAPI({
 
     await writeFile(path.join(hostOutputDir, filename), JSON.stringify(resolved));
     context.logger.debug(`Resolved ${isAsync ? "AsyncAPI" : "OpenAPI"} spec ${spec.absoluteFilepath} -> ${filename}`);
-    return {
+    const entry: RawSpecsManifestEntry = {
         type: isAsync ? "asyncapi" : "openapi",
         specPath: toContainerPath(filename, containerBaseDir),
         namespace: spec.namespace,
         apiImportSettings: mapApiImportSettings(getOpenAPISettings({ overrides: spec.settings }))
+    };
+    if (!fromProtobuf) {
+        return entry;
+    }
+    const overridePaths = await copyOverrides({
+        overrides: normalizeOverrides(spec.absoluteFilepathToOverrides),
+        prefix: `openapi${index}`,
+        hostOutputDir,
+        containerBaseDir
+    });
+    return {
+        ...entry,
+        origin: "protobuf",
+        ...(overridePaths.length === 0 ? {} : { overridePaths })
     };
 }
 
@@ -293,17 +317,38 @@ async function copyProtobuf({
         specPath: toContainerPath(dirName, containerBaseDir)
     };
 
-    const overrides = normalizeOverrides(spec.absoluteFilepathToOverrides);
-    if (overrides.length > 0) {
-        entry.overridePaths = [];
-        for (const [i, override] of overrides.entries()) {
-            const overrideName = `protobuf${index}-override-${i}${path.extname(override)}`;
-            await copyFile(override, path.join(hostOutputDir, overrideName));
-            entry.overridePaths.push(toContainerPath(overrideName, containerBaseDir));
-        }
+    const overridePaths = await copyOverrides({
+        overrides: normalizeOverrides(spec.absoluteFilepathToOverrides),
+        prefix: dirName,
+        hostOutputDir,
+        containerBaseDir
+    });
+    if (overridePaths.length > 0) {
+        entry.overridePaths = overridePaths;
     }
 
     return entry;
+}
+
+/** Copies override files as `<prefix>-override-<i><ext>` and returns their container paths. */
+async function copyOverrides({
+    overrides,
+    prefix,
+    hostOutputDir,
+    containerBaseDir
+}: {
+    overrides: string[];
+    prefix: string;
+    hostOutputDir: string;
+    containerBaseDir: string;
+}): Promise<string[]> {
+    const overridePaths: string[] = [];
+    for (const [i, override] of overrides.entries()) {
+        const overrideName = `${prefix}-override-${i}${path.extname(override)}`;
+        await copyFile(override, path.join(hostOutputDir, overrideName));
+        overridePaths.push(toContainerPath(overrideName, containerBaseDir));
+    }
+    return overridePaths;
 }
 
 /**
@@ -774,6 +819,7 @@ async function copyMaterializedSpec({
 const SUPPORTED_MATERIALIZED_MANIFEST_ENTRY_KEYS = new Set<string>([
     "type",
     "specPath",
+    "origin",
     "overridePaths",
     "namespace",
     "apiImportSettings"

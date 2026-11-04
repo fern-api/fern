@@ -9,17 +9,17 @@ export function isProtobufSource(spec: SdkConfigV1SourceSpec): spec is SdkConfig
 }
 
 /**
- * ponytail: no SDK Config generation route can consume protobuf yet. The hosted route would upload raw .proto
- * directories, which sdk-gen-api rejects; the --local Postman adapter accepts only OpenAPI and AsyncAPI. SDK-2212
- * converts protobuf sources to OpenAPI first; remove this guard there. `fern check` still loads them.
+ * ponytail: `--local` runs the on-prem adapter, which reads sdk-config.yml directly and accepts only OpenAPI
+ * and AsyncAPI. Hosted generation converts protobuf sources to OpenAPI before upload; SDK-2213 reuses that
+ * conversion for --local and removes this guard. `fern check` still loads them.
  */
-export function assertNoProtobufSourcesForGeneration(config: SdkConfigV1): void {
+export function assertNoProtobufSourcesForLocalGeneration(config: SdkConfigV1): void {
     const ids = config.source.specs.filter(isProtobufSource).map((spec) => `'${spec.id}'`);
     if (ids.length === 0) {
         return;
     }
     throw new CliError({
-        message: `SDK Config protobuf source${ids.length === 1 ? "" : "s"} ${ids.join(", ")} cannot be generated from yet: SDK Config generation does not convert protobuf to OpenAPI. \`fern check\` validates protobuf sources; to generate now, convert the protos to OpenAPI and use a path source.`,
+        message: `SDK Config protobuf source${ids.length === 1 ? "" : "s"} ${ids.join(", ")} cannot be generated with --local yet. Remove --local to generate them remotely, or convert the protos to OpenAPI and use a path source.`,
         code: CliError.Code.ConfigError
     });
 }

@@ -499,6 +499,64 @@ describe("collectRawSpecs", () => {
         );
     });
 
+    it("marks OpenAPI converted from protobuf and forwards a copy of its overrides per converted file", async () => {
+        const plainFile = path.join(sourceDir, "api", "plain.yaml");
+        const overrideFile = path.join(sourceDir, "overrides", "proto-override.yaml");
+        await writeFile(plainFile, MINIMAL_OPENAPI);
+        await writeFile(overrideFile, 'info:\n  description: "forwarded override"\n');
+        const protoRoot = AbsoluteFilePath.of(path.join(sourceDir, "proto"));
+        const converted = await Promise.all(
+            ["a", "b"].map(async (name) => {
+                const convertedFile = path.join(tmpDir.path, `converted-${name}.yaml`);
+                await writeFile(convertedFile, MINIMAL_OPENAPI.replace("title: Test", `title: ${name}`));
+                return {
+                    ...openApiSpec(convertedFile),
+                    absoluteFilepathToOverrides: [AbsoluteFilePath.of(overrideFile)],
+                    source: {
+                        type: "protobuf" as const,
+                        root: protoRoot,
+                        file: AbsoluteFilePath.of(path.join(protoRoot, "service", `${name}.proto`))
+                    }
+                };
+            })
+        );
+
+        const archive = await createGroupedSpecsTarGzArchive({
+            generatorSelections: [{ generatorIndex: 0, specs: [openApiSpec(plainFile), ...converted] }],
+            context: createMockContext()
+        });
+        const archivePath = path.join(tmpDir.path, "proto-sources.tar.gz");
+        const extractDir = path.join(tmpDir.path, "proto-extracted");
+        await writeFile(archivePath, archive.buffer);
+        await mkdir(extractDir);
+        await tar.extract({ file: archivePath, cwd: extractDir });
+
+        expect(archive.specIndexesByGeneratorIndex.get(0)).toEqual([0, 1, 2]);
+        expect(archive.manifest.specs[0]).not.toHaveProperty("origin");
+        expect(archive.manifest.specs.slice(1)).toEqual([
+            expect.objectContaining({
+                type: "openapi",
+                origin: "protobuf",
+                specPath: "/fern/specs/openapi1.json",
+                overridePaths: ["/fern/specs/openapi1-override-0.yaml"]
+            }),
+            expect.objectContaining({
+                type: "openapi",
+                origin: "protobuf",
+                specPath: "/fern/specs/openapi2.json",
+                overridePaths: ["/fern/specs/openapi2-override-0.yaml"]
+            })
+        ]);
+        for (const index of [1, 2]) {
+            expect(await readFile(path.join(extractDir, `openapi${index}-override-0.yaml`), "utf8")).toContain(
+                "forwarded override"
+            );
+            const packed = JSON.parse(await readFile(path.join(extractDir, `openapi${index}.json`), "utf8"));
+            expect(packed.info.description).toBeUndefined();
+        }
+        expect(JSON.parse(await readFile(path.join(extractDir, "openapi2.json"), "utf8")).info.title).toBe("b");
+    });
+
     it("accepts every effective import setting represented by SDK Config", () => {
         const spec = {
             ...openApiSpec(path.join(sourceDir, "api", "readonly.yaml")),

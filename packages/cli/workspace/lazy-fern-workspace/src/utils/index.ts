@@ -1,5 +1,6 @@
 export { bundleRemoteOpenAPI } from "./bundleRemoteOpenAPI.js";
 export { convertOpenAPIV2ToV3 } from "./convertOpenAPIV2ToV3.js";
+export { type ConvertedProtobufSpec, convertProtobufSpecs } from "./convertProtobufSpecs.js";
 export { getAllOpenAPISpecs } from "./getAllOpenAPISpecs.js";
 export { loadAsyncAPI } from "./loadAsyncAPI.js";
 export { loadDependency } from "./loadDependency.js";
