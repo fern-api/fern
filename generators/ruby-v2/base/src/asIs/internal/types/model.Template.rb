@@ -142,12 +142,12 @@ module <%= gem_namespace %>
             end
           end
 
-          def coerce(value, strict: (respond_to?(:strict?) ? strict? : false)) # rubocop:disable Lint/UnusedMethodArgument
+          def coerce(value, strict: (respond_to?(:strict?) ? strict? : false)<% if (preserveIntegerInputs) { %>, preserve_integer_values: false<% } %>) # rubocop:disable Lint/UnusedMethodArgument
             return value if value.is_a?(self)
 
             return value unless value.is_a?(::Hash)
 
-            new(value)
+            new(value<% if (preserveIntegerInputs) { %>, preserve_integer_values<% } %>)
           end
 
           def load(str)
@@ -165,7 +165,8 @@ module <%= gem_namespace %>
         # @param values [Hash]
         # @option strict [Boolean]
         # @return [self]
-        def initialize(values = {})
+<% if (preserveIntegerInputs) { %>        # Keep the internal mode positional so keyword-style model values remain a Hash.
+<% } %>        def initialize(values = {}<% if (preserveIntegerInputs) { %>, preserve_integer_values = true<% } %>)<% if (preserveIntegerInputs) { %> # rubocop:disable Style/OptionalBooleanParameter<% } %>
           @data = {}
           @explicit_fields = {}
 
@@ -192,7 +193,7 @@ module <%= gem_namespace %>
                             field.default
                           end
 
-            @data[field_name] = field_value.nil? ? nil : Utils.coerce(field.type, field_value)
+            @data[field_name] = field_value.nil? ? nil : Utils.coerce(field.type, field_value<% if (preserveIntegerInputs) { %>, preserve_integer_values: preserve_integer_values<% } %>)
           end
 
           # Any remaining values in the input become extra fields, except keys that match a declared field

@@ -28,6 +28,7 @@ function render(templatePath: string, allowCustomHttpClient: boolean): string {
     return eta
         .renderString(readFileSync(templatePath).toString(), {
             gem_namespace: "Seed",
+            preserveIntegerInputs: false,
             sdkName: "seed",
             rootFolderName: "seed",
             custom_pager_class_name: "CustomPager",

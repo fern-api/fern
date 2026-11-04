@@ -29,7 +29,7 @@ module <%= gem_namespace %>
         EXACT_SCALAR_TYPES = [String, Integer, Float].freeze
         private_constant :EXACT_SCALAR_TYPES
 
-        def self.coerce(target, value, strict: false)
+        def self.coerce(target, value, strict: false<% if (preserveIntegerInputs) { %>, preserve_integer_values: false<% } %>)
           type = unwrap_type(target)
 
           # Fast path: exact String/Integer/Float instances are returned as-is, as the branches below would.
@@ -40,16 +40,16 @@ module <%= gem_namespace %>
           in Array
             case value
             when ::Array
-              return type.coerce(value, strict: strict)
+              return type.coerce(value, strict: strict<% if (preserveIntegerInputs) { %>, preserve_integer_values: preserve_integer_values<% } %>)
             when Set, ::Hash
-              return coerce(type, value.to_a)
+              return coerce(type, value.to_a<% if (preserveIntegerInputs) { %>, preserve_integer_values: preserve_integer_values<% } %>)
             end
           in Hash
             case value
             when ::Hash
-              return type.coerce(value, strict: strict)
+              return type.coerce(value, strict: strict<% if (preserveIntegerInputs) { %>, preserve_integer_values: preserve_integer_values<% } %>)
             when ::Array
-              return coerce(type, value.to_h)
+              return coerce(type, value.to_h<% if (preserveIntegerInputs) { %>, preserve_integer_values: preserve_integer_values<% } %>)
             end
           in Class if type <= NilClass
             return nil
@@ -73,7 +73,9 @@ module <%= gem_namespace %>
               return parsed unless parsed.nil?
             end
           in Class if type <= Float
-            case value
+<% if (preserveIntegerInputs) { %>            return value if preserve_integer_values && value.is_a?(Integer)
+
+<% } %>            case value
             when Numeric, Time, String
               return value.to_f
             when Symbol
@@ -85,12 +87,14 @@ module <%= gem_namespace %>
             when type
               return value
             when ::Hash
-              return type.coerce(value, strict: strict)
+              return type.coerce(value, strict: strict<% if (preserveIntegerInputs) { %>, preserve_integer_values: preserve_integer_values<% } %>)
             end
           in Module
             case type
             in Enum | Union
-              return type.coerce(value, strict: strict)
+<% if (preserveIntegerInputs) { %>              return type.coerce(value, strict: strict, preserve_integer_values: preserve_integer_values) if type.is_a?(Union) && type != Boolean
+
+<% } %>              return type.coerce(value, strict: strict)
             else
               value # rubocop:disable Lint/Void
             end

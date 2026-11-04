@@ -216,6 +216,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                         this.rubyContext.customConfig.userAgentOnly === true &&
                         this.rubyContext.ir.sdkConfig.platformHeaders.userAgent != null,
                     allowCustomHttpClient: this.rubyContext.customConfig.allowCustomHttpClient,
+                    preserveIntegerInputs: this.rubyContext.customConfig.preserveIntegerInputs,
                     maxRetries: this.rubyContext.customConfig.maxRetries,
                     retryStatusCodes: this.rubyContext.customConfig.retryStatusCodes,
                     respectOptionalRequestBody: this.rubyContext.customConfig.respectOptionalRequestBody,
@@ -241,6 +242,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         allowUserAgentAppInfo,
         userAgentOnly,
         allowCustomHttpClient,
+        preserveIntegerInputs,
         maxRetries,
         retryStatusCodes,
         respectOptionalRequestBody,
@@ -259,6 +261,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         allowUserAgentAppInfo?: boolean;
         userAgentOnly?: boolean;
         allowCustomHttpClient?: boolean;
+        preserveIntegerInputs?: boolean;
         maxRetries?: number;
         retryStatusCodes?: string;
         respectOptionalRequestBody?: boolean;
@@ -279,6 +282,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                 allowUserAgentAppInfo,
                 userAgentOnly,
                 allowCustomHttpClient,
+                preserveIntegerInputs,
                 maxRetries,
                 respectOptionalRequestBody,
                 respectNullableUnionFields,
@@ -359,6 +363,7 @@ function getTemplateVariables({
     allowUserAgentAppInfo,
     userAgentOnly,
     allowCustomHttpClient,
+    preserveIntegerInputs,
     maxRetries,
     respectOptionalRequestBody,
     respectNullableUnionFields,
@@ -375,6 +380,7 @@ function getTemplateVariables({
     allowUserAgentAppInfo?: boolean;
     userAgentOnly?: boolean;
     allowCustomHttpClient?: boolean;
+    preserveIntegerInputs?: boolean;
     maxRetries?: number;
     respectOptionalRequestBody?: boolean;
     respectNullableUnionFields?: boolean;
@@ -400,6 +406,7 @@ function getTemplateVariables({
         // Emits the RawClient `http_client:` transport override only when the opt-in
         // flag is on, so flag-off raw_client.rb stays byte-identical.
         allowCustomHttpClient: allowCustomHttpClient ?? false,
+        preserveIntegerInputs: preserveIntegerInputs ?? false,
         defaultMaxRetries: maxRetries ?? 2,
         // Emits the JSON::Request omit_content_type_without_body parameter only when the
         // opt-in flag is on, so flag-off json/request.rb stays byte-identical.
