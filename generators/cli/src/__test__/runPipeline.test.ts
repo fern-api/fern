@@ -114,6 +114,7 @@ describe("runPipeline", () => {
         services: overrides.services ?? {},
         environments: overrides.environments,
         whiteLabel: overrides.whiteLabel ?? false,
+        readmeCustomSections: overrides.readmeCustomSections ?? [],
         requestedVersion: overrides.requestedVersion
     });
 

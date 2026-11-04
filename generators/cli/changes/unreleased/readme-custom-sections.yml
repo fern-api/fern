@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    The generated README now includes `readme.customSections` from `generators.yml`
+    whose `language` is `rust`, rendered after the Documentation section. Section content
+    supports `{{ apiName }}`, `{{ binaryName }}`, and (when publishing to npm)
+    `{{ packageName }}` placeholders.
+  type: feat

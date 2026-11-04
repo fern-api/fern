@@ -219,7 +219,8 @@ export async function runPipeline(args: {
         repoUrl: outputConfig.repoUrl,
         distribution,
         packageName: packageIdentity?.name,
-        whiteLabel: ir.whiteLabel
+        whiteLabel: ir.whiteLabel,
+        customSections: ir.readmeCustomSections
     });
     await emitReference({
         outputDir,

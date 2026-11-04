@@ -1,4 +1,5 @@
 import { Block, BlockMerger, ReadmeParser } from "@fern-api/generator-cli/readme";
+import type { FernIr } from "@fern-fern/ir-sdk";
 import { readFile, writeFile } from "fs/promises";
 import path from "path";
 
@@ -41,6 +42,12 @@ export async function emitReadme(args: {
      * shield, matching `ReadmeGenerator`'s behavior for SDK READMEs.
      */
     whiteLabel?: boolean;
+    /**
+     * The IR's `readmeConfig.customSections`. Sections whose `language` is
+     * `CUSTOM_SECTION_LANGUAGE` are rendered after Documentation, mirroring
+     * `ReadmeGenerator`'s handling of custom sections for SDK READMEs.
+     */
+    customSections?: FernIr.ReadmeCustomSection[];
 }): Promise<void> {
     const { outputDir, binaryName, apiDisplayName, authBindings, npmPublishInfo, repoUrl, distribution } = args;
     const installerName = args.packageName ?? TEMPLATE_PACKAGE_NAME;
@@ -54,7 +61,15 @@ export async function emitReadme(args: {
         npmPublishInfo,
         repoUrl,
         distribution,
-        installerName
+        installerName,
+        customSections: generateCustomSections({
+            customSections: args.customSections ?? [],
+            templateOptions: getCustomSectionTemplateOptions({
+                apiName: displayName,
+                binaryName,
+                npmPublishInfo
+            })
+        })
     });
 
     const readmePath = path.join(outputDir, "README.md");
@@ -181,8 +196,9 @@ function generateBlocks(args: {
     repoUrl: string | undefined;
     distribution: FernCliDistributionConfig | undefined;
     installerName: string;
+    customSections: Block[];
 }): Block[] {
-    const { binaryName, authBindings, npmPublishInfo, repoUrl, distribution, installerName } = args;
+    const { binaryName, authBindings, npmPublishInfo, repoUrl, distribution, installerName, customSections } = args;
     const envPrefix = toEnvVarPrefix(binaryName);
     return [
         generateInstallation({ binaryName, npmPublishInfo, repoUrl, distribution, installerName }),
@@ -190,6 +206,7 @@ function generateBlocks(args: {
         generateQuickStart(binaryName),
         generateUsage(binaryName),
         generateDocumentation(),
+        ...customSections,
         generateAdvanced({ binaryName, envPrefix }),
         generateAttribution()
     ];
@@ -425,6 +442,58 @@ function generateDocumentation(): Block {
         id: "DOCUMENTATION",
         content: lines("## Documentation", "", "See [reference.md](./reference.md) for the full command reference.", "")
     });
+}
+
+// ---------------------------------------------------------------------------
+// Custom sections — `readme.customSections` from generators.yml.
+//
+// The generated CLI is a Rust crate, so it picks up sections declared with
+// `language: rust`, the same way each SDK generator picks up the sections for
+// its own language. Content supports `{{ apiName }}`, `{{ binaryName }}` and,
+// when npm publishing is configured, `{{ packageName }}` placeholders.
+// ---------------------------------------------------------------------------
+
+export const CUSTOM_SECTION_LANGUAGE = "rust";
+
+function getCustomSectionTemplateOptions(args: {
+    apiName: string;
+    binaryName: string;
+    npmPublishInfo: ResolvedNpmPublishInfo | undefined;
+}): Record<string, string> {
+    const options: Record<string, string> = { apiName: args.apiName, binaryName: args.binaryName };
+    if (args.npmPublishInfo != null) {
+        options.packageName = args.npmPublishInfo.packageName;
+    }
+    return options;
+}
+
+function generateCustomSections(args: {
+    customSections: FernIr.ReadmeCustomSection[];
+    templateOptions: Record<string, string>;
+}): Block[] {
+    return args.customSections
+        .filter((section) => section.language.toLowerCase() === CUSTOM_SECTION_LANGUAGE)
+        .flatMap(
+            (section) =>
+                // Parsed rather than built directly so block ids match what
+                // `ReadmeParser` derives from the committed README on the next
+                // regeneration, letting `BlockMerger` replace the section in place.
+                new ReadmeParser().parse({
+                    content: lines(
+                        `## ${section.title}`,
+                        "",
+                        applyTemplateOptions(section.content, args.templateOptions).trimEnd()
+                    )
+                }).blocks
+        );
+}
+
+/**
+ * Replaces `{{ key }}` placeholders with known template options. Unknown
+ * placeholders are left as-is so literal braces in content survive.
+ */
+function applyTemplateOptions(content: string, options: Record<string, string>): string {
+    return content.replace(/{{\s*([A-Za-z0-9_]+)\s*}}/g, (match, key: string) => options[key] ?? match);
 }
 
 // ---------------------------------------------------------------------------
