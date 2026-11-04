@@ -29,7 +29,7 @@ module <%= gem_namespace %>
           @strict = true
         end
 
-        def coerce(value, strict: strict?)
+        def coerce(value, strict: strict?<% if (preserveIntegerInputs) { %>, preserve_integer_values: false<% } %>)<% if (preserveIntegerInputs) { %> # rubocop:disable Lint/UnusedMethodArgument<% } %>
           coerced_value = Utils.coerce(Symbol, value)
 
           return coerced_value if values.include?(coerced_value)

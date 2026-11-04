@@ -14,7 +14,7 @@ module <%= gem_namespace %>
         # @param value [Object]
         # @option strict [Boolean]
         # @return [Object]
-        def self.coerce(value, strict: strict?)
+        def self.coerce(value, strict: strict?<% if (preserveIntegerInputs) { %>, preserve_integer_values: false<% } %>)<% if (preserveIntegerInputs) { %> # rubocop:disable Lint/UnusedMethodArgument<% } %>
           case value
           when TrueClass, FalseClass
             return value

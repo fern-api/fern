@@ -92,9 +92,7 @@ module <%= gem_namespace %>
           in Module
             case type
             in Enum | Union
-<% if (preserveIntegerInputs) { %>              return type.coerce(value, strict: strict, preserve_integer_values: preserve_integer_values) if type.is_a?(Union) && type != Boolean
-
-<% } %>              return type.coerce(value, strict: strict)
+              return type.coerce(value, strict: strict<% if (preserveIntegerInputs) { %>, preserve_integer_values: preserve_integer_values<% } %>)
             else
               value # rubocop:disable Lint/Void
             end

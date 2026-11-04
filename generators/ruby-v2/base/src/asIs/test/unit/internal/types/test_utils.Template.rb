@@ -46,6 +46,34 @@ describe <%= gem_namespace %>::Internal::Types::Utils do
     member -> { NumericInput }
   end
 
+  module FloatFirstUnion
+    extend <%= gem_namespace %>::Internal::Types::Union
+    member Float
+    member Integer
+  end
+
+  module IntegerFirstUnion
+    extend <%= gem_namespace %>::Internal::Types::Union
+    member Integer
+    member Float
+  end
+
+  class IntegerInput < <%= gem_namespace %>::Internal::Types::Model
+    field :amount, Integer
+  end
+
+  module OverlappingModels
+    extend <%= gem_namespace %>::Internal::Types::Union
+    member -> { NumericInput }
+    member -> { IntegerInput }
+  end
+
+  module Choice
+    extend <%= gem_namespace %>::Internal::Types::Enum
+    A = :a
+    B = :b
+  end
+
   class NestedNumericInput < <%= gem_namespace %>::Internal::Types::Model
     field :child, NumericInput
     field :children, <%= gem_namespace %>::Internal::Types::Array[NumericInput]
@@ -85,6 +113,36 @@ describe <%= gem_namespace %>::Internal::Types::Utils do
       assert_instance_of Integer, NumericInput.new(amount: 1).amount
     end
 
+    it "keeps exact numeric union matching independent of member order" do
+      [FloatFirstUnion, IntegerFirstUnion].each do |union|
+        [false, true].each do |preserve|
+          assert_instance_of Integer, Utils.coerce(union, 1, preserve_integer_values: preserve)
+          assert_instance_of Float, Utils.coerce(union, 1.25, preserve_integer_values: preserve)
+        end
+      end
+    end
+
+    it "keeps overlapping model selection while preserving request values" do
+      amount = (2**80) + 1
+      request = Utils.coerce(OverlappingModels, { amount: amount }, preserve_integer_values: true)
+      response = Utils.coerce(OverlappingModels, { amount: amount })
+      assert_instance_of NumericInput, request
+      assert_instance_of NumericInput, response
+      assert_equal amount, request.amount
+      assert_instance_of Float, response.amount
+    end
+
+    it "passes the mode through Boolean and Enum aliases without changing their semantics" do
+      boolean = -> { <%= gem_namespace %>::Internal::Types::Boolean }
+      choice = -> { Choice }
+      [false, true].each do |preserve|
+        assert_equal false, Utils.coerce(boolean, false, preserve_integer_values: preserve)
+        assert_equal true, Utils.coerce(boolean, 1, preserve_integer_values: preserve)
+        assert_equal :a, Utils.coerce(choice, "a", preserve_integer_values: preserve)
+        assert_equal "future", Utils.coerce(choice, "future", preserve_integer_values: preserve)
+      end
+    end
+
     it "preserves keyword constructors and ordinary Float and string coercion" do
       model = NumericInput.new(amount: 1, preserve_integer_values: "a data field")
 
@@ -92,6 +150,7 @@ describe <%= gem_namespace %>::Internal::Types::Utils do
       assert_instance_of Integer, model.amount
       assert_instance_of Float, NumericInput.new(amount: 1.25).amount
       assert_in_delta 1.25, NumericInput.new(amount: "1.25").amount
+      # -0.0 must remain negative zero rather than collapse to 0.0.
       assert_equal(-Float::INFINITY, 1.0 / NumericInput.new(amount: -0.0).amount)
     end
   end

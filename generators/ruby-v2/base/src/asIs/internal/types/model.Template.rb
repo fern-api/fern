@@ -142,7 +142,8 @@ module <%= gem_namespace %>
             end
           end
 
-          def coerce(value, strict: (respond_to?(:strict?) ? strict? : false)<% if (preserveIntegerInputs) { %>, preserve_integer_values: false<% } %>) # rubocop:disable Lint/UnusedMethodArgument
+<% if (preserveIntegerInputs) { %>          # Response loading uses Float coercion; request constructors opt into integer preservation.
+<% } %>          def coerce(value, strict: (respond_to?(:strict?) ? strict? : false)<% if (preserveIntegerInputs) { %>, preserve_integer_values: false<% } %>) # rubocop:disable Lint/UnusedMethodArgument
             return value if value.is_a?(self)
 
             return value unless value.is_a?(::Hash)
@@ -165,7 +166,7 @@ module <%= gem_namespace %>
         # @param values [Hash]
         # @option strict [Boolean]
         # @return [self]
-<% if (preserveIntegerInputs) { %>        # Keep the internal mode positional so keyword-style model values remain a Hash.
+<% if (preserveIntegerInputs) { %>        # Keep this internal mode positional: a keyword would consume a real field named preserve_integer_values.
 <% } %>        def initialize(values = {}<% if (preserveIntegerInputs) { %>, preserve_integer_values = true<% } %>)<% if (preserveIntegerInputs) { %> # rubocop:disable Style/OptionalBooleanParameter<% } %>
           @data = {}
           @explicit_fields = {}
