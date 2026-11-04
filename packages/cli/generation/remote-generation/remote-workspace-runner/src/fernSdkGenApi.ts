@@ -2213,8 +2213,11 @@ async function finishFernSdkGenApiTarget(
     if (participant.token.type === "guest") {
         // Like the site-only claim link of a guest docs publish: where this one SDK can be
         // re-downloaded and claimed on its own while the guest session's work is kept.
+        const buildUrl = getGuestSdkBuildUrl({ claimUrl: participant.token.claimUrl, buildId });
         participant.context.logger.info(
-            `Build ${buildId} is kept for 7 days: ${getGuestSdkBuildUrl({ claimUrl: participant.token.claimUrl, buildId })} (claiming the session moves it into your organization)`
+            buildUrl != null
+                ? `Build ${buildId} is kept for 7 days: ${buildUrl} (claiming the session moves it into your organization)`
+                : `Build ${buildId} is kept for 7 days (claiming the session moves it into your organization)`
         );
     }
     // An AUTO build that released nothing has no version, and "AUTO" itself is not one.
