@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add isolateModelCopies to give dup and clone independent field and presence hashes. Disabled by default; nested objects retain Ruby shallow-copy semantics.
+  type: fix
