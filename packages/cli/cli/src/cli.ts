@@ -2423,7 +2423,7 @@ function addDocsExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                     choices: ["html", "md", "pdf"] as const,
                     default: "html" as const,
                     description:
-                        "html: the full site, served with any static file server. md: per-page Markdown and llms.txt. pdf: one PDF of the site"
+                        "html: the full site, including each page's .md copy, served with any static file server. md: only the per-page Markdown and llms.txt. pdf: one PDF of the site"
                 })
                 .option("output", {
                     type: "string",
