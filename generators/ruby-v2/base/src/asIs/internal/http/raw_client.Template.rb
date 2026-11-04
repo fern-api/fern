@@ -375,7 +375,7 @@ module <%= gem_namespace %>
           )
 
           request_headers = @default_headers.merge(auth_headers).merge(headers)
-          request_headers.each { |name, value| request[name] = value }
+          request_headers.each { |name, value| request[name] = value == false ? "false" : value }
           request.body = body if body
 
           # Net::HTTP disables its transparent gzip/deflate decoding as soon as an

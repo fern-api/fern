@@ -136,7 +136,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                         );
                     } else {
                         writer.writeLine(
-                            `${HEADER_BAG_NAME}["${wireValue}"] = params[:${snakeCaseName}] if params[:${snakeCaseName}]`
+                            `${HEADER_BAG_NAME}["${wireValue}"] = params[:${snakeCaseName}] unless params[:${snakeCaseName}].nil?`
                         );
                     }
                 }
