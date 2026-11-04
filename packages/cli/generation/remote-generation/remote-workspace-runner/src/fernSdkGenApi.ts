@@ -28,6 +28,7 @@ import {
     redactPublicationIdentifier,
     redactSensitiveValues
 } from "./redactSensitiveValues.js";
+import { getGuestSdkBuildUrl } from "./guestSdkBuildLink.js";
 import { parseExactSemver } from "./sdk-gen-client/exactSemver.js";
 import {
     type GenerationConfigKind,
@@ -1516,7 +1517,8 @@ async function executeFernSdkGenApiBuild(
                         participant,
                         request.targets[index]?.targetId,
                         status,
-                        request.targets[index]?.requestedOutput
+                        request.targets[index]?.requestedOutput,
+                        buildId
                     )
                 )
             );
@@ -2131,7 +2133,8 @@ async function finishFernSdkGenApiTarget(
     participant: FernSdkGenApiBuildParameters,
     targetId: string | undefined,
     status: FernBuildStatus,
-    requestedOutput: FernSdkGenApiRequestedOutput | undefined
+    requestedOutput: FernSdkGenApiRequestedOutput | undefined,
+    buildId: string
 ): Promise<FernSdkGenApiBuildResponse> {
     const target = status.targets.find((candidate) => candidate.targetId === targetId);
     if (target == null) {
@@ -2206,6 +2209,13 @@ async function finishFernSdkGenApiTarget(
                 skipFernignore: participant.skipFernignore
             });
         }
+    }
+    if (participant.token.type === "guest") {
+        // Like the site-only claim link of a guest docs publish: where this one SDK can be
+        // re-downloaded and claimed on its own while the guest session's work is kept.
+        participant.context.logger.info(
+            `Build ${buildId} is kept for 7 days: ${getGuestSdkBuildUrl({ claimUrl: participant.token.claimUrl, buildId })} (claiming the session moves it into your organization)`
+        );
     }
     // An AUTO build that released nothing has no version, and "AUTO" itself is not one.
     const actualVersion = target.result?.actualVersion ?? (autoVersion ? undefined : participant.sdkVersion);
