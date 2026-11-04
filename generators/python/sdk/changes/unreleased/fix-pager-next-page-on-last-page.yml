@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `SyncPager.next_page()` and `AsyncPager.next_page()` now return `None` on the last page.
+    Previously they called `get_next` even when `has_next` was false, so a cursor pager whose
+    next cursor was `null` requested the first page again, and `while page: page = page.next_page()`
+    never ended. Iterating with `for item in pager` or `iter_pages()` was not affected.
+  type: fix
