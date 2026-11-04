@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Load the generated VERSION constant through the public entrypoint and use it in the SDK version header.
+  type: fix
