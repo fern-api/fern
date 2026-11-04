@@ -203,15 +203,24 @@ describe("loadSdkConfigV1", () => {
         const { configPath } = await writeSdkConfig(temporaryDirectories, {
             language: "typescript",
             output: {
-                delivery: "zip",
+                delivery: "github",
+                github: { repository: "acme/sdk", mode: "pull-request" },
                 publish: { registry: "npm", url: "https://registry.npmjs.org", token: "${MISSING_TOKEN}" }
             }
         });
 
         const loaded = await loadSdkConfigV1(configPath, true);
 
-        expect(loaded.payload.targets[0]).toMatchObject({ requestedOutput: { type: "download" } });
+        expect(loaded.payload.targets[0]).toMatchObject({
+            requestedOutput: { type: "download" },
+            autoVersionPreviewOutput: {
+                type: "github",
+                repository: "acme/sdk",
+                publish: { registry: "npm" }
+            }
+        });
         expect(loaded.payload.targets[0]).not.toHaveProperty("publishCredential");
+        expect(JSON.stringify(loaded.payload.targets[0])).not.toContain("MISSING_TOKEN");
         expect(loaded.payload.targets[0]?.body.toString("utf8")).not.toContain("MISSING_TOKEN");
     });
 

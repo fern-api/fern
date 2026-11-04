@@ -13,6 +13,7 @@ export {
 export type {
     FernSdkConfigV1Payload,
     FernSdkGenApiFlagTarget,
+    FernSdkGenApiGithubRequestedOutput,
     FernSdkGenApiPackageConfig,
     FernSdkGenApiRequestedOutput
 } from "./fernSdkGenApi.js";
