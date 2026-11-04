@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Specs loaded under the same `namespace` that produce a resource with the same
+    name (for example two specs with operations under `/v1/ProfileStores/{storeId}/Profiles/...`)
+    now merge that resource's commands and sub-resources instead of failing at startup
+    with `Resource key collision`. The CLI only errors when two specs define the same
+    command, and the error names the full command path.
+  type: fix
