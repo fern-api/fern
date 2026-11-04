@@ -33,7 +33,7 @@ module Seed
         (response.body.to_s.empty? ? nil : JSON.parse(response.body, symbolize_names: true))
       else
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(response.body, code: code)
+        raise error_class.new(response.body, code: code, headers: response.to_hash)
       end
     end
 
@@ -68,7 +68,7 @@ module Seed
         (response.body.to_s.empty? ? nil : Seed::Types::Identifier.load(response.body))
       else
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(response.body, code: code)
+        raise error_class.new(response.body, code: code, headers: response.to_hash)
       end
     end
 

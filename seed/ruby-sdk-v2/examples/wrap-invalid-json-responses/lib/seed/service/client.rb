@@ -41,11 +41,11 @@ module Seed
           begin
             (response.body.to_s.empty? ? nil : Seed::Types::Types::Movie.load(response.body))
           rescue ::JSON::ParserError
-            raise Seed::Errors::ResponseError.new(response.body, code: code)
+            raise Seed::Errors::ResponseError.new(response.body, code: code, headers: response.to_hash)
           end
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(response.body, code: code)
+          raise error_class.new(response.body, code: code, headers: response.to_hash)
         end
       end
 
@@ -97,11 +97,11 @@ module Seed
           begin
             (response.body.to_s.empty? ? nil : Seed::Types::Types::MovieID.load(response.body))
           rescue ::JSON::ParserError
-            raise Seed::Errors::ResponseError.new(response.body, code: code)
+            raise Seed::Errors::ResponseError.new(response.body, code: code, headers: response.to_hash)
           end
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(response.body, code: code)
+          raise error_class.new(response.body, code: code, headers: response.to_hash)
         end
       end
 
@@ -150,11 +150,11 @@ module Seed
           begin
             (response.body.to_s.empty? ? nil : Seed::Types::Types::Metadata.load(response.body))
           rescue ::JSON::ParserError
-            raise Seed::Errors::ResponseError.new(response.body, code: code)
+            raise Seed::Errors::ResponseError.new(response.body, code: code, headers: response.to_hash)
           end
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(response.body, code: code)
+          raise error_class.new(response.body, code: code, headers: response.to_hash)
         end
       end
 
@@ -322,11 +322,11 @@ module Seed
           begin
             (response.body.to_s.empty? ? nil : Seed::Types::Types::Response.load(response.body))
           rescue ::JSON::ParserError
-            raise Seed::Errors::ResponseError.new(response.body, code: code)
+            raise Seed::Errors::ResponseError.new(response.body, code: code, headers: response.to_hash)
           end
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(response.body, code: code)
+          raise error_class.new(response.body, code: code, headers: response.to_hash)
         end
       end
 
@@ -362,7 +362,7 @@ module Seed
         return if code.between?(200, 299)
 
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(response.body, code: code)
+        raise error_class.new(response.body, code: code, headers: response.to_hash)
       end
     end
   end

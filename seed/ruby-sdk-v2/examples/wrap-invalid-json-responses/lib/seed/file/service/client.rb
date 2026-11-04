@@ -47,11 +47,11 @@ module Seed
             begin
               (response.body.to_s.empty? ? nil : Seed::Types::Types::File.load(response.body))
             rescue ::JSON::ParserError
-              raise Seed::Errors::ResponseError.new(response.body, code: code)
+              raise Seed::Errors::ResponseError.new(response.body, code: code, headers: response.to_hash)
             end
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-            raise error_class.new(response.body, code: code)
+            raise error_class.new(response.body, code: code, headers: response.to_hash)
           end
         end
       end
