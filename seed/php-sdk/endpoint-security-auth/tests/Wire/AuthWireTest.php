@@ -62,6 +62,7 @@ class AuthWireTest extends WireMockTestCase
                 password: 'test-password',
         options: [
             'baseUrl' => $wiremockUrl,
+            'maxRetries' => 0,
         ],
         );
     }

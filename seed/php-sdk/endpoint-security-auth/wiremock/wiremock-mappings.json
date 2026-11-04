@@ -27,6 +27,37 @@
       }
     },
     {
+      "id": "6a698f7d-82be-48e7-84f0-0a632a5c403a",
+      "name": "getToken - default - auth.get_token.0",
+      "request": {
+        "urlPathTemplate": "/token",
+        "method": "POST",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "auth.get_token.0"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"access_token\": \"access_token\",\n  \"expires_in\": 1,\n  \"refresh_token\": \"refresh_token\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "6a698f7d-82be-48e7-84f0-0a632a5c403a",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      }
+    },
+    {
       "id": "cae9ea94-d25c-41f8-bc89-e5d815d20b0e",
       "name": "getWithBearer - default",
       "request": {
@@ -43,6 +74,38 @@
       "uuid": "cae9ea94-d25c-41f8-bc89-e5d815d20b0e",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    },
+    {
+      "id": "0035a441-fadf-4136-bd92-f0876992a16f",
+      "name": "getWithBearer - default - user.get_with_bearer.0",
+      "request": {
+        "urlPathTemplate": "/users",
+        "method": "GET",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "user.get_with_bearer.0"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "[\n  {\n    \"id\": \"id\",\n    \"name\": \"name\"\n  },\n  {\n    \"id\": \"id\",\n    \"name\": \"name\"\n  }\n]",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "0035a441-fadf-4136-bd92-f0876992a16f",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -81,6 +144,38 @@
       "postServeActions": []
     },
     {
+      "id": "26ae7979-9615-4f52-8223-5429444e56fc",
+      "name": "getWithApiKey - default - user.get_with_api_key.0",
+      "request": {
+        "urlPathTemplate": "/users",
+        "method": "GET",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "user.get_with_api_key.0"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "[\n  {\n    \"id\": \"id\",\n    \"name\": \"name\"\n  },\n  {\n    \"id\": \"id\",\n    \"name\": \"name\"\n  }\n]",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "26ae7979-9615-4f52-8223-5429444e56fc",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    },
+    {
       "id": "58609790-426b-4d6b-8ded-5993cca43bfb",
       "name": "getWithOAuth - default",
       "request": {
@@ -97,6 +192,38 @@
       "uuid": "58609790-426b-4d6b-8ded-5993cca43bfb",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    },
+    {
+      "id": "2fa0a3a4-9aa0-47a1-81b5-8a0cbc49ba5b",
+      "name": "getWithOAuth - default - user.get_with_o_auth.0",
+      "request": {
+        "urlPathTemplate": "/users",
+        "method": "GET",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "user.get_with_o_auth.0"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "[\n  {\n    \"id\": \"id\",\n    \"name\": \"name\"\n  },\n  {\n    \"id\": \"id\",\n    \"name\": \"name\"\n  }\n]",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "2fa0a3a4-9aa0-47a1-81b5-8a0cbc49ba5b",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -135,6 +262,38 @@
       "postServeActions": []
     },
     {
+      "id": "5de89bdb-3f67-4465-8075-0a03054ad32d",
+      "name": "getWithBasic - default - user.get_with_basic.0",
+      "request": {
+        "urlPathTemplate": "/users",
+        "method": "GET",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "user.get_with_basic.0"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "[\n  {\n    \"id\": \"id\",\n    \"name\": \"name\"\n  },\n  {\n    \"id\": \"id\",\n    \"name\": \"name\"\n  }\n]",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "5de89bdb-3f67-4465-8075-0a03054ad32d",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    },
+    {
       "id": "da159ee5-6e07-42a7-b0ad-140684036c3f",
       "name": "getWithInferredAuth - default",
       "request": {
@@ -151,6 +310,38 @@
       "uuid": "da159ee5-6e07-42a7-b0ad-140684036c3f",
       "persistent": true,
       "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    },
+    {
+      "id": "fe16a085-9334-4413-8a01-13dfd5dffd92",
+      "name": "getWithInferredAuth - default - user.get_with_inferred_auth.0",
+      "request": {
+        "urlPathTemplate": "/users",
+        "method": "GET",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "user.get_with_inferred_auth.0"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "[\n  {\n    \"id\": \"id\",\n    \"name\": \"name\"\n  },\n  {\n    \"id\": \"id\",\n    \"name\": \"name\"\n  }\n]",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "fe16a085-9334-4413-8a01-13dfd5dffd92",
+      "persistent": true,
+      "priority": 1,
       "metadata": {
         "mocklab": {
           "created": {
@@ -189,6 +380,38 @@
       "postServeActions": []
     },
     {
+      "id": "8d761079-4de0-41d3-b8d0-91f7fc8c076e",
+      "name": "getWithAnyAuth - default - user.get_with_any_auth.0",
+      "request": {
+        "urlPathTemplate": "/users",
+        "method": "GET",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "user.get_with_any_auth.0"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "[\n  {\n    \"id\": \"id\",\n    \"name\": \"name\"\n  },\n  {\n    \"id\": \"id\",\n    \"name\": \"name\"\n  }\n]",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "8d761079-4de0-41d3-b8d0-91f7fc8c076e",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    },
+    {
       "id": "409fdf8b-a556-48b2-9c45-c726cfb20d61",
       "name": "getWithAllAuth - default",
       "request": {
@@ -214,9 +437,41 @@
         }
       },
       "postServeActions": []
+    },
+    {
+      "id": "3e98bf19-2776-472c-827b-31ddf6c7866c",
+      "name": "getWithAllAuth - default - user.get_with_all_auth.0",
+      "request": {
+        "urlPathTemplate": "/users",
+        "method": "GET",
+        "headers": {
+          "X-Test-Id": {
+            "equalTo": "user.get_with_all_auth.0"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "[\n  {\n    \"id\": \"id\",\n    \"name\": \"name\"\n  },\n  {\n    \"id\": \"id\",\n    \"name\": \"name\"\n  }\n]",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "3e98bf19-2776-472c-827b-31ddf6c7866c",
+      "persistent": true,
+      "priority": 1,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
     }
   ],
   "meta": {
-    "total": 8
+    "total": 16
   }
 }
