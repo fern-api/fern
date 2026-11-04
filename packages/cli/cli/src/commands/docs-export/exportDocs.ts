@@ -1,7 +1,7 @@
 import { mkdir, readdir, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { getFernDirectory, loadProjectConfig } from "@fern-api/configuration-loader";
-import { delay, replaceEnvVariables } from "@fern-api/core-utils";
+import { delay, replaceEnvVariables, stripTrailingSlashes } from "@fern-api/core-utils";
 import { createExportClient, ORPCError } from "@fern-api/fdr-sdk/orpc-client";
 import { askToLogin } from "@fern-api/login";
 import {
@@ -20,6 +20,7 @@ import {
     type ExportFile,
     type ExportSource,
     hostedSource,
+    type PdfExportOptions,
     type SiteExportClient,
     safeRelativePath
 } from "./exportSources.js";
@@ -125,9 +126,46 @@ async function forEachConcurrently<T>(items: T[], limit: number, run: (item: T) 
     await Promise.all(workers);
 }
 
-/** `--output` for a PDF export names a file; a bare name like the default `docs-export` gets `.pdf` added. */
+/** `--output` for a PDF export names a file; a bare name like `docs-export` gets `.pdf` added. */
 export function pdfOutputPath(output: string): string {
     return output.toLowerCase().endsWith(".pdf") ? output : `${output}.pdf`;
+}
+
+/**
+ * The default `--output`, named like the dashboard's download (`docs-acme-com.pdf`): one name per
+ * site and format, so exporting `md` after `html` does not empty the HTML export.
+ */
+export function defaultOutput(docsUrl: string, format: DocsExportFormat): string {
+    const site = stripTrailingSlashes(docsUrl.replace(/^https?:\/\//, "")).replace(/[^a-zA-Z0-9-]/g, "-");
+    return format === "pdf" ? `${site}.pdf` : `${site}-${format}`;
+}
+
+/** What `fern docs export --format pdf` can set, matching the dashboard's export settings. */
+export interface PdfSettings {
+    cover?: boolean;
+    toc?: boolean;
+    coverTitle?: string;
+    coverSubtitle?: string;
+    headerLeft?: string;
+    headerRight?: string;
+    footerLeft?: string;
+    footerRight?: string;
+}
+
+/** The export options for `settings`, or `undefined` when every setting is the site's default. */
+export function pdfExportOptions(settings: PdfSettings): PdfExportOptions | undefined {
+    const options = {
+        hideCover: settings.cover === false ? true : undefined,
+        hideToc: settings.toc === false ? true : undefined,
+        coverTitle: settings.coverTitle,
+        coverSubtitle: settings.coverSubtitle,
+        headerLeftTemplate: settings.headerLeft,
+        headerRightTemplate: settings.headerRight,
+        footerLeftTemplate: settings.footerLeft,
+        footerRightTemplate: settings.footerRight
+    };
+    const set = Object.fromEntries(Object.entries(options).filter(([, value]) => value != null));
+    return Object.keys(set).length === 0 ? undefined : { version: "v1", ...set };
 }
 
 /** The headline for a failed export; FDR's error code says whether to wait, check access, or re-run. */
@@ -146,20 +184,31 @@ export function exportFailureMessage(error: unknown): string {
 export async function exportDocs({
     cliContext,
     format,
-    output,
-    instance
+    output: requestedOutput,
+    instance,
+    pdf = {}
 }: {
     cliContext: CliContext;
     format: DocsExportFormat;
-    output: string;
+    output: string | undefined;
     instance: string | undefined;
+    pdf?: PdfSettings;
 }): Promise<void> {
+    const options = pdfExportOptions(pdf);
+    if (format !== "pdf" && options != null) {
+        return cliContext.failAndThrow(
+            "--no-cover, --no-toc, --cover-title, --cover-subtitle, --header-* and --footer-* only apply to --format pdf.",
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
+    }
+    const hosted = await resolveHostedExport({ cliContext, instance });
+    const output = requestedOutput ?? defaultOutput(hosted.docsUrl, format);
     if (format === "pdf") {
-        const hosted = await resolveHostedExport({ cliContext, instance });
         const outputFile = path.resolve(pdfOutputPath(output));
         await cliContext.runTask(async (context) => {
             await withSpinner(context, { name: "Exporting PDF", subtitle: outputFile }, () =>
-                downloadHostedPdf({ ...hosted, outputFile })
+                downloadHostedPdf({ ...hosted, outputFile, options })
             );
             context.logger.info(chalk.green(`Exported PDF to ${outputFile}`));
         });
@@ -172,7 +221,7 @@ export async function exportDocs({
             { code: CliError.Code.ConfigError }
         );
     }
-    const source = hostedSource({ ...(await resolveHostedExport({ cliContext, instance })), format });
+    const source = hostedSource({ ...hosted, format });
 
     const outputDir = path.resolve(output);
     await cliContext.runTask(async (context) => {

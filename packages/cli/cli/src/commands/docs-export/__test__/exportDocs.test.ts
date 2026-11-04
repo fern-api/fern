@@ -5,9 +5,11 @@ import { ORPCError } from "@fern-api/fdr-sdk/orpc-client";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import yazl from "yazl";
 import {
+    defaultOutput,
     exportFailureMessage,
     isSafeOutputDir,
     keepsFile,
+    pdfExportOptions,
     pdfOutputPath,
     safeRelativePath,
     writeExport
@@ -51,6 +53,33 @@ describe("pdfOutputPath", () => {
     it("adds .pdf to a bare name and keeps an explicit .pdf file", () => {
         expect(pdfOutputPath("docs-export")).toBe("docs-export.pdf");
         expect(pdfOutputPath("out/site.PDF")).toBe("out/site.PDF");
+    });
+});
+
+describe("defaultOutput", () => {
+    it("names the output after the site and format, like the dashboard's download", () => {
+        expect(defaultOutput("docs.acme.com", "html")).toBe("docs-acme-com-html");
+        expect(defaultOutput("https://acme.com/docs/", "md")).toBe("acme-com-docs-md");
+        expect(defaultOutput("docs.acme.com", "pdf")).toBe("docs-acme-com.pdf");
+    });
+});
+
+describe("pdfExportOptions", () => {
+    it("sends nothing when every setting is the default", () => {
+        expect(pdfExportOptions({})).toBeUndefined();
+        expect(pdfExportOptions({ cover: true, toc: true })).toBeUndefined();
+    });
+
+    it("maps the flags to the dashboard's export options", () => {
+        expect(
+            pdfExportOptions({ cover: false, toc: false, coverTitle: "Acme API", footerRight: "{pageIndex}" })
+        ).toEqual({
+            version: "v1",
+            hideCover: true,
+            hideToc: true,
+            coverTitle: "Acme API",
+            footerRightTemplate: "{pageIndex}"
+        });
     });
 });
 
@@ -240,11 +269,19 @@ describe("hostedSource", () => {
             orgId: "acme",
             docsUrl: "acme.docs.buildwithfern.com",
             outputFile,
+            options: { version: "v1", hideToc: true },
             pollIntervalMs: 0
         });
         expect(await readFile(outputFile, "utf8")).toBe("%PDF-1.7");
         expect(await readdir(path.dirname(outputFile))).toEqual(["docs-export.pdf"]);
-        expect(client.created).toEqual([{ orgId: "acme", docsUrl: "acme.docs.buildwithfern.com", format: "pdf" }]);
+        expect(client.created).toEqual([
+            {
+                orgId: "acme",
+                docsUrl: "acme.docs.buildwithfern.com",
+                format: "pdf",
+                options: { version: "v1", hideToc: true }
+            }
+        ]);
     });
 
     it("keeps a previous PDF when the PDF task fails", async () => {

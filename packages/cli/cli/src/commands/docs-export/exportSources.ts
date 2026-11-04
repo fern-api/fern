@@ -27,6 +27,9 @@ export interface ExportSource {
 /** The FDR calls a hosted export makes: start a task, poll it, get its file's download URL. */
 export type SiteExportClient = Pick<ExportClient, "createTask" | "getTask" | "getDownloadUrl">;
 
+/** The PDF settings the dashboard's export page sends: cover, table of contents, headers and footers. */
+export type PdfExportOptions = NonNullable<Parameters<SiteExportClient["createTask"]>[0]["options"]>;
+
 /**
  * A Fern-hosted site: FDR runs an export Job that zips the live build server-side. Waits for the
  * task, downloads the one zip to a temp dir, then unpacks it. Nothing is yielded until the whole
@@ -70,19 +73,21 @@ export async function downloadHostedPdf({
     orgId,
     docsUrl,
     outputFile,
+    options,
     pollIntervalMs = EXPORT_POLL_INTERVAL_MS
 }: {
     client: SiteExportClient;
     orgId: string;
     docsUrl: string;
     outputFile: string;
+    options?: PdfExportOptions;
     pollIntervalMs?: number;
 }): Promise<void> {
     const destination = path.resolve(outputFile);
     await mkdir(path.dirname(destination), { recursive: true });
     const partial = `${destination}.partial`;
     try {
-        await runHostedExport({ client, orgId, docsUrl, format: "pdf", pollIntervalMs, destination: partial });
+        await runHostedExport({ client, orgId, docsUrl, format: "pdf", options, pollIntervalMs, destination: partial });
         await rename(partial, destination);
     } finally {
         await rm(partial, { force: true });
@@ -95,6 +100,7 @@ async function runHostedExport({
     orgId,
     docsUrl,
     format,
+    options,
     pollIntervalMs,
     destination
 }: {
@@ -102,10 +108,11 @@ async function runHostedExport({
     orgId: string;
     docsUrl: string;
     format: "pdf" | "html" | "md";
+    options?: PdfExportOptions;
     pollIntervalMs: number;
     destination: string;
 }): Promise<void> {
-    const { id: taskId } = await client.createTask({ orgId, docsUrl, format });
+    const { id: taskId } = await client.createTask({ orgId, docsUrl, format, ...(options != null ? { options } : {}) });
     await waitForTask({ client, taskId, pollIntervalMs });
     const { downloadUrl } = await client.getDownloadUrl({ taskId });
     await downloadToFile(downloadUrl, destination);

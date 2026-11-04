@@ -2427,14 +2427,30 @@ function addDocsExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                 })
                 .option("output", {
                     type: "string",
-                    default: "docs-export",
                     description:
-                        "Folder to write the export into. Emptied first (except .git); must not contain the current folder. For pdf, the file to write (.pdf is added if missing)"
+                        "Folder to write the export into, by default named after the site and format (docs-acme-com-html). Emptied first (except .git); must not contain the current folder. For pdf, the file to write (.pdf is added if missing)"
                 })
                 .option("instance", {
                     type: "string",
                     description: "The docs.yml instance url to export. Required when docs.yml has more than one"
-                }),
+                })
+                .option("cover", {
+                    type: "boolean",
+                    description: "pdf: include the cover page (default). Use --no-cover to leave it out"
+                })
+                .option("toc", {
+                    type: "boolean",
+                    description: "pdf: include the table of contents (default). Use --no-toc to leave it out"
+                })
+                .option("cover-title", { type: "string", description: "pdf: title on the cover page" })
+                .option("cover-subtitle", { type: "string", description: "pdf: subtitle on the cover page" })
+                .option("header-left", {
+                    type: "string",
+                    description: "pdf: text at the top left of each page. Supports {pageIndex} and {totalPages}"
+                })
+                .option("header-right", { type: "string", description: "pdf: text at the top right of each page" })
+                .option("footer-left", { type: "string", description: "pdf: text at the bottom left of each page" })
+                .option("footer-right", { type: "string", description: "pdf: text at the bottom right of each page" }),
         async (argv) => {
             cliContext.instrumentPostHogEvent({
                 command: "fern docs export",
@@ -2444,7 +2460,17 @@ function addDocsExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                 cliContext,
                 format: argv.format,
                 output: argv.output,
-                instance: argv.instance
+                instance: argv.instance,
+                pdf: {
+                    cover: argv.cover,
+                    toc: argv.toc,
+                    coverTitle: argv.coverTitle,
+                    coverSubtitle: argv.coverSubtitle,
+                    headerLeft: argv.headerLeft,
+                    headerRight: argv.headerRight,
+                    footerLeft: argv.footerLeft,
+                    footerRight: argv.footerRight
+                }
             });
         }
     );
