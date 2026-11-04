@@ -10,8 +10,9 @@
  * categories. Both this module and CppDocsGenerator consume it.
  */
 
-import type { CppClassIr, CppFunctionIr, CppNamespaceIr } from "../../../src/types/CppLibraryDocsIr.js";
+import type { CppClassIr, CppEnumIr, CppFunctionIr, CppNamespaceIr } from "../../../src/types/CppLibraryDocsIr.js";
 import { buildLinkPath, stripTemplateArgs } from "../context.js";
+import { renderSegmentsPlainText } from "./DescriptionRenderer.js";
 import { renderFrontmatter, trimTrailingBlankLines } from "./shared.js";
 
 // ---------------------------------------------------------------------------
@@ -108,7 +109,7 @@ export const ENTITY_CATEGORIES: readonly CategoryDefinition[] = [
     {
         folderName: "enums",
         heading: "Enumerations",
-        collectEntries: (ns) => collectEntityEntries(ns.enums)
+        collectEntries: (ns) => collectEntityEntries(ns.enums.filter((e) => !e.name.startsWith("@")))
     },
     {
         folderName: "typedefs",
@@ -134,8 +135,16 @@ export const ENTITY_CATEGORIES: readonly CategoryDefinition[] = [
 /**
  * Check whether a namespace has any entities, either directly or in descendants.
  */
+/** Anonymous enums have no page, but they are listed on the enums index, so they count as content. */
+export function categoryHasEntries(category: CategoryDefinition, ns: CppNamespaceIr): boolean {
+    if (category.collectEntries(ns).length > 0) {
+        return true;
+    }
+    return category.folderName === "enums" && ns.enums.some((e) => e.name.startsWith("@"));
+}
+
 export function namespaceHasEntities(ns: CppNamespaceIr): boolean {
-    const hasDirectEntities = ENTITY_CATEGORIES.some((cat) => cat.collectEntries(ns).length > 0);
+    const hasDirectEntities = ENTITY_CATEGORIES.some((cat) => categoryHasEntries(cat, ns));
     if (hasDirectEntities) {
         return true;
     }
@@ -206,7 +215,8 @@ export function renderNamespaceIndexPage(
 export function renderCategoryIndexPage(
     nsPath: string,
     categoryWithEntries: CategoryWithEntries,
-    nsTitle: string
+    nsTitle: string,
+    anonymousEnums: CppEnumIr[] = []
 ): string {
     const { category, entries } = categoryWithEntries;
     const lines: string[] = [];
@@ -223,6 +233,18 @@ export function renderCategoryIndexPage(
             lines.push(`- [\`${entry.displayName}\`](${entry.linkPath})`);
         } else {
             lines.push(`- \`${entry.displayName}\``);
+        }
+    }
+
+    if (anonymousEnums.length > 0) {
+        lines.push("", "## Anonymous enumerations", "");
+        lines.push("Unnamed `enum { ... }` declarations; their enumerators are used directly.", "");
+        for (const enumIr of anonymousEnums) {
+            for (const value of enumIr.values) {
+                const summary = value.docstring ? renderSegmentsPlainText(value.docstring.summary) : "";
+                const initializer = value.initializer?.trim() ? ` ${value.initializer.trim()}` : "";
+                lines.push(`- \`${value.name}${initializer}\`${summary ? ` — ${summary}` : ""}`);
+            }
         }
     }
 

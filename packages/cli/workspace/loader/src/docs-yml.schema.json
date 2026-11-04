@@ -694,6 +694,13 @@
         "hyphenated"
       ]
     },
+    "docs.LibraryOrganizeBy": {
+      "type": "string",
+      "enum": [
+        "kind",
+        "header"
+      ]
+    },
     "docs.LibraryConfig": {
       "type": "object",
       "properties": {
@@ -729,6 +736,59 @@
             }
           ],
           "description": "How symbol names become page URLs. `compact` (default) drops underscores\n(`doca_pcc_dev_get_port_counter_id` -> `docapccdevgetportcounterid`);\n`hyphenated` keeps word boundaries (`doca-pcc-dev-get-port-counter-id`).\nChanging this renames every generated page. Only valid when lang is cpp."
+        },
+        "organize-by": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.LibraryOrganizeBy"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "`kind` (default) groups generated pages by symbol kind (functions/, structs/, ...).\n`header` additionally writes a `headers/` folder with one page per source header\nlisting everything it declares. Only valid when lang is cpp."
+        },
+        "include": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Files or directories to scan, relative to `input.path`. When set, only these are\nparsed (Doxygen `INPUT`). Only valid when lang is cpp."
+        },
+        "exclude": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Files, directories (relative to `input.path`) or glob patterns (containing `*`/`?`)\nto leave out of the scan (Doxygen `EXCLUDE` / `EXCLUDE_PATTERNS`). Only valid when lang is cpp."
+        },
+        "exclude-symbols": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Symbol names or patterns to leave out, e.g. `INTERNAL_*` or `detail::*`\n(Doxygen `EXCLUDE_SYMBOLS`). Only valid when lang is cpp."
         }
       },
       "additionalProperties": false,
