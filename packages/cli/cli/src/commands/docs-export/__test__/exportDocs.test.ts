@@ -8,7 +8,6 @@ import {
     exportFailureMessage,
     isSafeOutputDir,
     keepsFile,
-    parseInstanceUrl,
     pdfOutputPath,
     safeRelativePath,
     writeExport
@@ -52,19 +51,6 @@ describe("pdfOutputPath", () => {
     it("adds .pdf to a bare name and keeps an explicit .pdf file", () => {
         expect(pdfOutputPath("docs-export")).toBe("docs-export.pdf");
         expect(pdfOutputPath("out/site.PDF")).toBe("out/site.PDF");
-    });
-});
-
-describe("parseInstanceUrl", () => {
-    it("splits a docs.yml instance url into domain and basepath", () => {
-        expect(parseInstanceUrl("acme.docs.buildwithfern.com")).toEqual({
-            domain: "acme.docs.buildwithfern.com",
-            basepath: ""
-        });
-        expect(parseInstanceUrl("https://docs.acme.com/learn/")).toEqual({
-            domain: "docs.acme.com",
-            basepath: "/learn"
-        });
     });
 });
 

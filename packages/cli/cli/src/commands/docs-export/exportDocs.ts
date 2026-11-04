@@ -1,7 +1,7 @@
 import { mkdir, readdir, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { getFernDirectory, loadProjectConfig } from "@fern-api/configuration-loader";
-import { delay, replaceEnvVariables, stripTrailingSlashes } from "@fern-api/core-utils";
+import { delay, replaceEnvVariables } from "@fern-api/core-utils";
 import { createPdfExportClient, ORPCError } from "@fern-api/fdr-sdk/orpc-client";
 import { askToLogin } from "@fern-api/login";
 import { CliError } from "@fern-api/task-context";
@@ -15,8 +15,7 @@ import {
     type ExportSource,
     hostedSource,
     type SiteExportClient,
-    safeRelativePath,
-    selfHostedSource
+    safeRelativePath
 } from "./exportSources.js";
 
 export { safeRelativePath };
@@ -125,13 +124,6 @@ export function pdfOutputPath(output: string): string {
     return output.toLowerCase().endsWith(".pdf") ? output : `${output}.pdf`;
 }
 
-/** Splits a docs.yml instance url (`acme.docs.buildwithfern.com/learn`) into the domain and basepath FDR keys sites by. */
-export function parseInstanceUrl(instanceUrl: string): { domain: string; basepath: string } {
-    const url = new URL(/^https?:\/\//i.test(instanceUrl) ? instanceUrl : `https://${instanceUrl}`);
-    const basepath = stripTrailingSlashes(url.pathname);
-    return { domain: url.hostname, basepath: basepath === "/" ? "" : basepath };
-}
-
 /** The headline for a failed export; FDR's error code says whether to wait, check access, or re-run. */
 export function exportFailureMessage(error: unknown): string {
     if (error instanceof ORPCError) {
@@ -149,23 +141,14 @@ export async function exportDocs({
     cliContext,
     format,
     output,
-    instance,
-    selfHostedUrl,
-    adminToken
+    instance
 }: {
     cliContext: CliContext;
     format: DocsExportFormat;
     output: string;
     instance: string | undefined;
-    selfHostedUrl: string | undefined;
-    adminToken: string | undefined;
 }): Promise<void> {
     if (format === "pdf") {
-        if (selfHostedUrl != null) {
-            return cliContext.failAndThrow("--format pdf is only available for Fern-hosted docs.", undefined, {
-                code: CliError.Code.ConfigError
-            });
-        }
         const hosted = await resolveHostedExport({ cliContext, instance });
         const outputFile = pdfOutputPath(output);
         await cliContext.runTask(async (context) => {
@@ -186,19 +169,7 @@ export async function exportDocs({
             { code: CliError.Code.ConfigError }
         );
     }
-    if (selfHostedUrl != null && adminToken == null) {
-        return cliContext.failAndThrow("--admin-token is required with --url.", undefined, {
-            code: CliError.Code.ConfigError
-        });
-    }
-    const source =
-        selfHostedUrl != null && adminToken != null
-            ? selfHostedSource({
-                  url: selfHostedUrl,
-                  adminToken,
-                  basepath: instance != null ? parseInstanceUrl(instance).basepath : ""
-              })
-            : hostedSource({ ...(await resolveHostedExport({ cliContext, instance })), format });
+    const source = hostedSource({ ...(await resolveHostedExport({ cliContext, instance })), format });
 
     await cliContext.runTask(async (context) => {
         context.logger.info(`Exporting ${format === "md" ? "Markdown" : "HTML"} to ${output}...`);
@@ -230,7 +201,7 @@ async function resolveHostedExport({
     const fernDirectory = await getFernDirectory();
     if (fernDirectory == null) {
         return cliContext.failAndThrow(
-            "No fern directory found. Run this command from within a Fern project, or pass --url for a self-hosted site.",
+            "No fern directory found. Run this command from within a Fern project. For self-hosted docs, run /scripts/export.sh inside the container.",
             undefined,
             { code: CliError.Code.ValidationError }
         );

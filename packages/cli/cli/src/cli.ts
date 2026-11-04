@@ -2416,14 +2416,14 @@ function addDocsMdGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCo
 function addDocsExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "export",
-        "Download a copy of your live docs site as static HTML, a folder of Markdown, or one PDF",
+        "Download a copy of your live Fern-hosted docs site as static HTML, a folder of Markdown, or one PDF",
         (yargs) =>
             yargs
                 .option("format", {
                     choices: ["html", "md", "pdf"] as const,
                     default: "html" as const,
                     description:
-                        "html: the full site, served with any static file server. md: per-page Markdown and llms.txt. pdf: one PDF of the site (Fern-hosted only)"
+                        "html: the full site, served with any static file server. md: per-page Markdown and llms.txt. pdf: one PDF of the site"
                 })
                 .option("output", {
                     type: "string",
@@ -2434,36 +2434,17 @@ function addDocsExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                 .option("instance", {
                     type: "string",
                     description: "The docs.yml instance url to export. Required when docs.yml has more than one"
-                })
-                .option("url", {
-                    type: "string",
-                    description: "Base url of a self-hosted docs container to export from, instead of Fern-hosted docs"
-                })
-                .option("admin-token", {
-                    type: "string",
-                    description: "The self-hosted container's ADMIN_TOKEN. Required with --url"
-                })
-                .check((argv) => {
-                    if (argv.url != null && argv.adminToken == null) {
-                        throw new CliError({
-                            message: "--admin-token is required with --url.",
-                            code: CliError.Code.ConfigError
-                        });
-                    }
-                    return true;
                 }),
         async (argv) => {
             cliContext.instrumentPostHogEvent({
                 command: "fern docs export",
-                properties: { format: argv.format, selfHosted: argv.url != null }
+                properties: { format: argv.format }
             });
             await exportDocs({
                 cliContext,
                 format: argv.format,
                 output: argv.output,
-                instance: argv.instance,
-                selfHostedUrl: argv.url,
-                adminToken: argv.adminToken
+                instance: argv.instance
             });
         }
     );
