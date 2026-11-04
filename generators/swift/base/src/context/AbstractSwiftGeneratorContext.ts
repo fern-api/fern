@@ -73,6 +73,15 @@ export abstract class AbstractSwiftGeneratorContext<
         return typeId != null && this.recursiveTypeIdsForSwiftEnums.has(typeId);
     }
 
+    /** Whether the symbol is a string enum that decodes unlisted values into its `__unknown` case. */
+    public isForwardCompatibleEnum(symbol: swift.Symbol): boolean {
+        if (!this.customConfig.enableForwardCompatibleEnums) {
+            return false;
+        }
+        const typeId = this.getTypeIdForSchemaSymbol(symbol);
+        return typeId != null && this.ir.types[typeId]?.shape.type === "enum";
+    }
+
     private registerSourceSymbols(project: SwiftProject, ir: FernIr.IntermediateRepresentation) {
         const { nameRegistry } = project;
         const registeredSourceModuleSymbol = nameRegistry.registerSourceModuleSymbol({

@@ -154,5 +154,24 @@ describe("Statement.if", () => {
               "
             `);
         });
+
+        it("should write additional conditions as a comma-separated list", () => {
+            const ifStatement = swift.Statement.if({
+                condition: swift.Statement.constantDeclaration({
+                    unsafeName: "value",
+                    value: swift.Expression.reference("optionalValue"),
+                    noTrailingNewline: true
+                }),
+                additionalConditions: [swift.Expression.reference("value.isValid")],
+                body: [swift.Statement.expressionStatement(swift.Expression.reference("use(value)"))]
+            });
+
+            expect(ifStatement.toString()).toMatchInlineSnapshot(`
+              "if let value = optionalValue, value.isValid {
+                  use(value)
+              }
+              "
+            `);
+        });
     });
 });

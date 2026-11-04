@@ -8,6 +8,7 @@ export const BaseSwiftCustomConfigSchema = z.object({
     customReadmeSections: z.array(CustomReadmeSectionSchema).optional(),
     enableWireTests: z.boolean().optional(),
     nullableAsOptional: z.boolean().optional(),
+    enableForwardCompatibleEnums: z.boolean().optional(),
     maxRetries: z.number().int().min(0).optional(),
     retryStatusCodes: z.optional(z.enum(["legacy", "recommended"]))
 });

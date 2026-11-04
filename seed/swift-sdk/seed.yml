@@ -64,6 +64,12 @@ fixtures:
       outputFolder: with-custom-config
     - customConfig: null
       outputFolder: no-custom-config
+  enum:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        enableForwardCompatibleEnums: true
+      outputFolder: forward-compatible-enums
   examples:
     - customConfig: null
       outputFolder: no-custom-config

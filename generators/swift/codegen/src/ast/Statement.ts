@@ -99,9 +99,12 @@ type Switch = {
 type If = {
     type: "if";
     condition: Statement;
+    /** Further conditions, written after `condition` as a comma-separated list. */
+    additionalConditions?: Expression[];
     body: Statement[];
     elseIfs?: {
         condition: Statement;
+        additionalConditions?: Expression[];
         body: Statement[];
     }[];
     else?: Statement[];
@@ -281,12 +284,16 @@ export class Statement extends AstNode {
                 break;
             case "if": {
                 writer.write("if ");
-                this.internalStatement.condition.write(writer);
+                this.writeConditions(
+                    writer,
+                    this.internalStatement.condition,
+                    this.internalStatement.additionalConditions
+                );
                 writer.write(" ");
                 CodeBlock.withStatements(this.internalStatement.body).write(writer);
                 for (const elseIf of this.internalStatement.elseIfs ?? []) {
                     writer.write(" else if ");
-                    elseIf.condition.write(writer);
+                    this.writeConditions(writer, elseIf.condition, elseIf.additionalConditions);
                     writer.write(" ");
                     CodeBlock.withStatements(elseIf.body).write(writer);
                 }
@@ -308,6 +315,14 @@ export class Statement extends AstNode {
 
     public static typealiasDeclaration(params: Omit<TypealiasDeclaration, "type">): Statement {
         return new this({ type: "typealias-declaration", ...params });
+    }
+
+    private writeConditions(writer: Writer, condition: Statement, additionalConditions: Expression[] = []): void {
+        condition.write(writer);
+        for (const additionalCondition of additionalConditions) {
+            writer.write(", ");
+            additionalCondition.write(writer);
+        }
     }
 
     public static constantDeclaration(params: Omit<ConstantDeclaration, "type">): Statement {
