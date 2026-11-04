@@ -1,0 +1,44 @@
+# yaml-language-server: $schema=../../../../../../fern.schema.json
+types:
+  User:
+    properties:
+      id: string
+      name: string
+
+  ListUsersResponse:
+    properties:
+      data: list<User>
+      next: optional<string>
+
+errors:
+  NotFoundError:
+    status-code: 404
+    type: string
+
+service:
+  auth: true
+  base-path: /users
+  endpoints:
+    list:
+      path: ""
+      method: GET
+      pagination:
+        cursor: $request.cursor
+        next_cursor: $response.next
+        results: $response.data
+      request:
+        name: ListUsersRequest
+        query-parameters:
+          cursor: optional<string>
+      response: ListUsersResponse
+      errors:
+        - NotFoundError
+      examples:
+        - query-parameters:
+            cursor: abc
+          response:
+            body:
+              data:
+                - id: "1"
+                  name: Alice
+              next: def
