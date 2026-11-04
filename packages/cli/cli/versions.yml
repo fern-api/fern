@@ -1,4 +1,76 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.194.0
+  changelogEntry:
+    - summary: |
+        Add `fern docs dev stop`, which cleanly stops the `fern docs dev` server on port 3000, or on the port given with
+        `--port`, so agents and CI can shut down local docs without finding and killing the process. It exits 0 with a
+        message when there is nothing to stop, and `--json` writes the result to stdout. It uses a new local-only
+        `POST /__fern/shutdown` route on the `fern docs dev` server, alongside `GET /__fern/dev-server`, which identifies
+        the server. Both routes only accept requests from the same machine that carry the `x-fern-docs-dev: 1` header.
+        Once the server is ready, `fern docs dev` prints how to stop it: press Ctrl-C, run
+        `fern docs dev stop --port <port>`, or run `kill <pid>` with the server's PID. With `--json`, the `ready` event
+        includes the same instructions in a `stop` object (`keys`, `command`, `kill`).
+      type: feat
+  createdAt: "2026-11-03"
+  irVersion: 67
+- version: 5.193.3
+  changelogEntry:
+    - summary: |
+        `fern generator upgrade` and `fern automations upgrade` no longer move a generators.yml entry to a version at or past
+        its SDK Config cutover (for example TypeScript 4.0.0+, Python 6.0.0+), which `fern generate` rejects. With
+        `--include-major`, the generator upgrades within its current major instead. Cutover versions are reported
+        under "SDK Config migration required" with a `fern sdk migrate` instruction rather than an `--include-major` hint,
+        and `fern automations upgrade --json` lists them in `sdkConfigMigrationRequired`.
+      type: fix
+  createdAt: "2026-11-03"
+  irVersion: 67
+- version: 5.193.2
+  changelogEntry:
+    - summary: |
+        `fern generate --docs --guest` prints the published site's own claim link again, next to the guest session's
+        claim link. Opening it enables the Claim button in the site's banner, which claims just the docs site into an
+        organization you administer; the session link (`Claim it to keep this work`, or `fern claim`) still claims the
+        whole session.
+      type: fix
+  createdAt: "2026-11-03"
+  irVersion: 67
+- version: 5.193.1
+  changelogEntry:
+    - summary: |
+        `fern generate` now lets sdk-gen-api resolve omitted SDK versions instead of requiring `--version`.
+        `fern generate --preview --version AUTO` also resolves the semantic version from the configured GitHub
+        repository while keeping the preview download-only.
+      type: fix
+  createdAt: "2026-11-02"
+  irVersion: 67
+- version: 5.193.0
+  changelogEntry:
+    - summary: |
+        Remote generation now sends SHA-256 digests of its inputs to Fiddle: every spec, overlay and
+        overrides file referenced by `generators.yml`, `generators.yml` itself, and the generator's
+        entry in it. Fiddle uses them to build a signed provenance record for the generated SDK.
+      type: feat
+  createdAt: "2026-11-02"
+  irVersion: 67
+- version: 5.192.0
+  changelogEntry:
+    - summary: |
+        `fern docs md generate` now keeps LaTeX math (`$…$` and `$$…$$`) in Python library
+        docstrings intact instead of escaping its braces, shows `{`, `<` and `>` inside inline
+        code literally instead of as `&#123;`/`&lt;`, and renders `> [!NOTE]`-style alerts
+        (which the Python parser now emits for reStructuredText admonitions) as Fern callouts.
+      type: feat
+  createdAt: "2026-11-02"
+  irVersion: 67
+- version: 5.191.2
+  changelogEntry:
+    - summary: |
+        `fern generate` now builds SDKs for proto (gRPC) APIs in `generators.yml` on Fern's original
+        generation service, so `fern init --grpc` followed by `fern generate` works without setting
+        `FERN_USE_SDK_GEN_API=false`.
+      type: fix
+  createdAt: "2026-11-02"
+  irVersion: 67
 - version: 5.191.1
   changelogEntry:
     - summary: |

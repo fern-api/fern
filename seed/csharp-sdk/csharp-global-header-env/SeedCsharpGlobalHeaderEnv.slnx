@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="src/SeedCsharpGlobalHeaderEnv.Test/SeedCsharpGlobalHeaderEnv.Test.csproj" />
-  <Project Path="src/SeedCsharpGlobalHeaderEnv/SeedCsharpGlobalHeaderEnv.csproj" />
-</Solution>

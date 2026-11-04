@@ -84,7 +84,7 @@ import { getDocsDeployMode } from "./docsDeployMode.js";
 import { computeDynamicIRs, type DynamicIrGeneratorJob } from "./dynamicIr/computeDynamicIRs.js";
 import { DynamicIrWorkerPool, parseDynamicIrResult } from "./dynamicIr/DynamicIrWorkerPool.js";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
-import { getFdrOrigin } from "./guestDocsSite.js";
+import { getFdrOrigin, readGuestPublishOutcome } from "./guestDocsSite.js";
 import { measureImageSizes } from "./measureImageSizes.js";
 import { normalizeRepoUrlToHttps } from "./normalizeRepoUrl.js";
 import { publishDocsViaLedger } from "./publishDocsLedger.js";
@@ -1048,6 +1048,16 @@ export async function publishDocs({
                 context.logger.debug(
                     `[ledger] Deployment ${ledgerResult.reusedDeployment ? "reused" : "created"}: ${ledgerResult.deploymentId}`
                 );
+                if (token.type === "guest") {
+                    const outcome = readGuestPublishOutcome(ledgerResult);
+                    if (outcome.claimUrl != null) {
+                        const expiry =
+                            outcome.expiresAt != null ? ` (expires ${outcome.expiresAt.toLocaleString()})` : "";
+                        context.logger.info(
+                            `Claim only this docs site (opens its banner's Claim): ${outcome.claimUrl}${expiry}`
+                        );
+                    }
+                }
             }
         };
 

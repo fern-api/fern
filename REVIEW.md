@@ -4,7 +4,6 @@ This file provides guidance to [Devin Review](https://docs.devin.ai/work-with-de
 
 ## Ignore
 
-- **Seed test output files** in `seed/*/` directories -- these are generated outputs. Focus review on the source-of-truth files (generator source code, template files, `seed.yml` configs) rather than the generated copies.
 - Lock files (`pnpm-lock.yaml`) unless dependency changes are the point of the PR.
 - Auto-generated files in `packages/ir-sdk/src/sdk/` -- these are generated from the Fern IR definition. Review the definition files in `packages/ir-sdk/fern/` instead.
 
@@ -15,13 +14,10 @@ This file provides guidance to [Devin Review](https://docs.devin.ai/work-with-de
 - IR version bumps must be coordinated: update `irVersion` in the relevant `versions.yml` entry.
 
 ### Version Management
-- Generator changes (bug fixes or features) should include a `versions.yml` entry in the appropriate generator directory (e.g., `generators/typescript/sdk/versions.yml`, `generators/python/sdk/versions.yml`).
 - CLI changes should include a `versions.yml` entry in `packages/cli/cli/versions.yml`.
 - The `type` field in changelog entries should match the PR type: `fix` for bug fixes, `feat` for new features.
 
 ### Generator Template Files
-- Files matching `*.Template.*` or located under `asIs/` directories are the source of truth for generated code. Review these carefully for correctness -- seed output files are just copies.
-- When a template file changes, corresponding seed test outputs should also be updated (either via `seed test` or bulk update).
 
 ## Conventions
 
@@ -42,13 +38,11 @@ This file provides guidance to [Devin Review](https://docs.devin.ai/work-with-de
 
 ### Cross-Package Type Safety
 - When importing types across packages, watch for name collisions -- use namespace imports (`import * as X`) rather than direct imports when multiple packages export types with the same name.
-- Serialization schema files are particularly susceptible to this (see `generators/typescript/`).
 
 ## Performance
 
 - Flag any unbounded loops or recursive traversals over IR nodes without depth limits.
 - Watch for N+1 patterns when processing API definitions with many endpoints or types.
-- Docker-based generator tests (`seed test`) are expensive -- PRs should use `--fixture` to scope tests when possible rather than running all fixtures.
 
 ## Security
 

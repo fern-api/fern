@@ -1,9 +1,0 @@
-# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
-
-- summary: |
-    The generated API error class's `requestId` getter now reads the canonical
-    `X-Request-Id` header (previously the lowercase `x-request-id`), matching the
-    casing of every other header the SDK emits. Added the `requestIdHeader`
-    config option so SDKs can point `requestId` at a different response header,
-    e.g. `requestIdHeader: Twilio-Request-Id`.
-  type: feat

@@ -11,7 +11,7 @@
  */
 
 import type { FdrAPI } from "@fern-api/fdr-sdk";
-import { escapeMdx, generateAnchorId } from "../utils/mdx.js";
+import { escapeMdx, escapeMdxPreservingMath, generateAnchorId } from "../utils/mdx.js";
 import {
     extractLinksFromTypes,
     formatSignatureMultiline,
@@ -265,7 +265,7 @@ function renderTypedDictDetailed(cls: FdrAPI.libraryDocs.PythonClassIr, ctx: Ren
             const typeDisplay = getTypeDisplay(field.typeInfo) || "Any";
             lines.push(
                 `<ParamField path="${field.name}" type="${escapeMdx(typeDisplay)}">`,
-                field.description ? escapeMdx(field.description) : "",
+                field.description ? escapeMdxPreservingMath(field.description) : "",
                 "</ParamField>",
                 ""
             );
