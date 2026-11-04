@@ -127,6 +127,9 @@ fixtures:
         customPagerName: FooPager
       outputFolder: .
   examples:
+    - outputFolder: isolate-model-copies
+      customConfig:
+        isolateModelCopies: true
     - outputFolder: no-custom-config
       customConfig: null
     - outputFolder: omit-fern-headers
