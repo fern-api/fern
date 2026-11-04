@@ -5,4 +5,5 @@ export { loadAsyncAPI } from "./loadAsyncAPI.js";
 export { loadDependency } from "./loadDependency.js";
 export { loadOpenAPI } from "./loadOpenAPI.js";
 export { type WorkspaceLoader, WorkspaceLoaderFailureType } from "./Result.js";
+export { isRelativeServerUrl, resolveRelativeServerUrls } from "./resolveRelativeServerUrls.js";
 export { isPublicIpAddress, safeFetchRemoteText, validateRemoteUrl } from "./safeRemoteUrl.js";

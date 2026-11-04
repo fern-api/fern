@@ -1,6 +1,7 @@
 import { DEFAULT_OPENAPI_BUNDLE_OPTIONS } from "@fern-api/api-workspace-commons";
 import { isHttpUrl } from "@fern-api/core-utils";
 import { BaseResolver, bundle, Source } from "@redocly/openapi-core";
+import { resolveRelativeServerUrls } from "./resolveRelativeServerUrls.js";
 import { type RemoteTextResource, safeFetchRemoteText } from "./safeRemoteUrl.js";
 
 type RemoteLoader = (url: string) => Promise<RemoteTextResource>;
@@ -19,7 +20,10 @@ class SafeRemoteOpenAPIResolver extends BaseResolver {
     }
 }
 
-/** Bundles a remote OpenAPI document and all relative references into one in-memory document. */
+/**
+ * Bundles a remote OpenAPI document and all relative references into one in-memory document. Relative
+ * `servers` URLs are resolved against `url`, because the bundle no longer knows where it came from.
+ */
 export async function bundleRemoteOpenAPI(
     url: string,
     loadRemote: RemoteLoader = safeFetchRemoteText
@@ -33,5 +37,5 @@ export async function bundleRemoteOpenAPI(
     if (errors.length > 0) {
         throw new Error(errors.map((problem) => problem.message).join("; "));
     }
-    return result.bundle.parsed;
+    return resolveRelativeServerUrls(result.bundle.parsed, url);
 }

@@ -1,0 +1,6 @@
+- summary: |
+    A spec loaded from a URL in `sdk-config.yml` (for example from `fern init --openapi <url>`) now has relative
+    `servers` URLs resolved against the spec URL, so a hosted MCP server deploys without extra config. For a local
+    spec file, an MCP target with a relative `servers` URL and no `api.baseUrl` now fails with a message that names
+    `servers` and `api.baseUrl`.
+  type: fix
