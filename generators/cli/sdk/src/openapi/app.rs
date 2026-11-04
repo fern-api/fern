@@ -27,6 +27,10 @@ fn split_prefix(prefix: &str) -> Vec<String> {
 /// path. Empty path = flat top-level merge. Multi-segment path = walk/create
 /// intermediate resources, merge at the leaf.
 ///
+/// Resources that share a key are deep-merged (see [`merge_resources`]), so
+/// two specs can each contribute operations to the same resource tree; only
+/// two methods landing on the same command path error.
+///
 /// **Stutter elision:** at the leaf, if `incoming` contains a top-level
 /// resource whose name matches the leaf namespace, that resource's methods
 /// and sub-resources are *hoisted* into the namespace itself — eliminating
@@ -40,61 +44,78 @@ fn merge_into_path(
     mut incoming: HashMap<String, RestResource>,
 ) -> Result<(), CliError> {
     if path.is_empty() {
-        for key in incoming.keys() {
-            if target.contains_key(key) {
-                return Err(CliError::Discovery(format!(
-                    "Resource key collision: '{key}' appears in multiple specs"
-                )));
-            }
-        }
-        target.extend(incoming);
-        return Ok(());
+        return merge_resources(target, incoming, &[]);
     }
 
-    if path.len() == 1 {
-        let leaf = path[0].clone();
-        let entry = target.entry(leaf.clone()).or_insert_with(|| RestResource {
-            resources: HashMap::new(),
-            methods: HashMap::new(),
-        });
-
-        // Hoist a matching-name resource from the spec into the namespace.
-        if let Some(matching) = incoming.remove(&leaf) {
-            for (k, v) in matching.methods {
-                if entry.methods.contains_key(&k) {
-                    return Err(CliError::Discovery(format!(
-                        "Method key collision: '{k}' under namespace '{leaf}'"
-                    )));
-                }
-                entry.methods.insert(k, v);
-            }
-            for (k, v) in matching.resources {
-                if entry.resources.contains_key(&k) {
-                    return Err(CliError::Discovery(format!(
-                        "Resource key collision: '{k}' under namespace '{leaf}'"
-                    )));
-                }
-                entry.resources.insert(k, v);
-            }
-        }
-
-        for (k, v) in incoming {
-            if entry.resources.contains_key(&k) {
-                return Err(CliError::Discovery(format!(
-                    "Resource key collision: '{k}' under namespace '{leaf}'"
-                )));
-            }
-            entry.resources.insert(k, v);
-        }
-        return Ok(());
+    let mut walked: Vec<String> = Vec::with_capacity(path.len());
+    let mut current = target;
+    for segment in &path[..path.len() - 1] {
+        walked.push(segment.clone());
+        current = &mut current
+            .entry(segment.clone())
+            .or_insert_with(empty_resource)
+            .resources;
     }
 
-    let head = path[0].clone();
-    let entry = target.entry(head).or_insert_with(|| RestResource {
+    let leaf = path[path.len() - 1].clone();
+    walked.push(leaf.clone());
+    let entry = current.entry(leaf.clone()).or_insert_with(empty_resource);
+
+    // Hoist a matching-name resource from the spec into the namespace.
+    if let Some(matching) = incoming.remove(&leaf) {
+        merge_resource(entry, matching, &mut walked)?;
+    }
+    merge_resources(&mut entry.resources, incoming, &walked)
+}
+
+fn empty_resource() -> RestResource {
+    RestResource {
         resources: HashMap::new(),
         methods: HashMap::new(),
-    });
-    merge_into_path(&mut entry.resources, &path[1..], incoming)
+    }
+}
+
+/// Deep-merge `incoming` into `target`, where both sit at command path
+/// `path`. Resources sharing a key merge recursively; a method key present
+/// on both sides is a real command collision and errors.
+fn merge_resources(
+    target: &mut HashMap<String, RestResource>,
+    incoming: HashMap<String, RestResource>,
+    path: &[String],
+) -> Result<(), CliError> {
+    let mut path = path.to_vec();
+    for (key, resource) in incoming {
+        match target.entry(key.clone()) {
+            std::collections::hash_map::Entry::Vacant(slot) => {
+                slot.insert(resource);
+            }
+            std::collections::hash_map::Entry::Occupied(mut slot) => {
+                path.push(key);
+                merge_resource(slot.get_mut(), resource, &mut path)?;
+                path.pop();
+            }
+        }
+    }
+    Ok(())
+}
+
+fn merge_resource(
+    target: &mut RestResource,
+    incoming: RestResource,
+    path: &mut Vec<String>,
+) -> Result<(), CliError> {
+    for (key, method) in incoming.methods {
+        if target.methods.contains_key(&key) {
+            path.push(key);
+            let command = path.join(" ");
+            path.pop();
+            return Err(CliError::Discovery(format!(
+                "Method key collision: command '{command}' is defined by multiple specs"
+            )));
+        }
+        target.methods.insert(key, method);
+    }
+    merge_resources(&mut target.resources, incoming.resources, path)
 }
 
 /// Replace `{name}` substrings in `s` with values from `subs`. Variables not
@@ -1295,7 +1316,8 @@ impl CliApp {
     /// Add an OpenAPI spec whose resources are wrapped under `prefix`. Use
     /// slashes to nest: `"v3/customers"` puts the spec's resources under
     /// `v3.customers.*`. Multiple `spec_under` calls with the same path
-    /// merge into a shared namespace; inner-resource collisions error.
+    /// merge into a shared namespace; resources sharing a key deep-merge and
+    /// only two methods on the same command path error.
     pub fn spec_under(mut self, prefix: &str, yaml: &str) -> Self {
         self.specs.push(SpecEntry {
             yaml: yaml.to_string(),
@@ -1324,8 +1346,8 @@ impl CliApp {
     }
 
     /// Add multiple specs that all merge under the same `prefix` (flat).
-    /// Equivalent to repeated `spec_under` calls; inner-resource collisions
-    /// across the specs error at startup.
+    /// Equivalent to repeated `spec_under` calls; method collisions across
+    /// the specs error at startup.
     pub fn specs_under<I, S>(mut self, prefix: &str, yamls: I) -> Self
     where
         I: IntoIterator<Item = S>,
@@ -6087,7 +6109,8 @@ paths:
 
     #[test]
     fn test_spec_under_collides_on_inner_resource() {
-        // Two specs with the same inner resource under the same prefix collide.
+        // Two specs defining the same method on the same inner resource under
+        // the same prefix collide.
         let spec = r#"
 openapi: "3.0.0"
 info: { title: "T", version: "1.0" }
@@ -6105,6 +6128,178 @@ paths:
             .build_doc()
             .expect_err("inner-key collision should error");
         assert!(err.to_string().contains("things"), "error: {err}");
+    }
+
+    #[test]
+    fn test_spec_under_deep_merges_shared_resource_across_specs() {
+        // Two specs under one namespace both produce a top-level `profiles`
+        // resource (shared path prefix); their methods and sub-resources
+        // merge instead of colliding.
+        let crud = r#"
+openapi: "3.0.0"
+info: { title: "Profiles", version: "1.0" }
+servers: [{ url: "https://profiles.example.com" }]
+paths:
+  /v1/ProfileStores/{storeId}/Profiles:
+    get:
+      x-fern-sdk-group-name: ["profiles"]
+      x-fern-sdk-method-name: list
+      parameters:
+        - { name: storeId, in: path, required: true, schema: { type: string } }
+      responses: { "200": { description: ok } }
+  /v1/ProfileStores/{storeId}/Profiles/{profileId}/Traits:
+    get:
+      x-fern-sdk-group-name: ["profiles", "traits"]
+      x-fern-sdk-method-name: list
+      parameters:
+        - { name: storeId, in: path, required: true, schema: { type: string } }
+        - { name: profileId, in: path, required: true, schema: { type: string } }
+      responses: { "200": { description: ok } }
+"#;
+        let identifiers = r#"
+openapi: "3.0.0"
+info: { title: "Identifiers", version: "1.0" }
+servers: [{ url: "https://identifiers.example.com" }]
+paths:
+  /v1/ProfileStores/{storeId}/Profiles/Lookup:
+    post:
+      x-fern-sdk-group-name: ["profiles"]
+      x-fern-sdk-method-name: lookup
+      parameters:
+        - { name: storeId, in: path, required: true, schema: { type: string } }
+      responses: { "200": { description: ok } }
+  /v1/ProfileStores/{storeId}/Profiles/{profileId}/Identifiers:
+    get:
+      x-fern-sdk-group-name: ["profiles", "identifiers"]
+      x-fern-sdk-method-name: fetch
+      parameters:
+        - { name: storeId, in: path, required: true, schema: { type: string } }
+        - { name: profileId, in: path, required: true, schema: { type: string } }
+      responses: { "200": { description: ok } }
+"#;
+        let doc = CliApp::new("test")
+            .spec_under("profile-stores", crud)
+            .spec_under("profile-stores", identifiers)
+            .build_doc()
+            .expect("shared resource keys should deep-merge");
+        let profiles = &doc.resources["profile-stores"].resources["profiles"];
+        let mut methods: Vec<&str> = profiles.methods.keys().map(String::as_str).collect();
+        methods.sort();
+        assert_eq!(methods, ["list", "lookup"]);
+        assert!(profiles.resources["traits"].methods.contains_key("list"));
+        let fetch = &profiles.resources["identifiers"].methods["fetch"];
+        assert_eq!(fetch.root_url, "https://identifiers.example.com");
+        assert_eq!(
+            profiles.methods["list"].root_url,
+            "https://profiles.example.com"
+        );
+    }
+
+    #[test]
+    fn test_spec_under_method_collision_names_full_command() {
+        // Distinct sub-resources merge, but the same method on a shared
+        // nested resource is a real collision and names the full command.
+        let spec_a = r#"
+openapi: "3.0.0"
+info: { title: "A", version: "1.0" }
+servers: [{ url: "https://a.example.com" }]
+paths:
+  /profiles/traits:
+    get:
+      x-fern-sdk-group-name: ["profiles", "traits"]
+      x-fern-sdk-method-name: list
+      responses: { "200": { description: ok } }
+"#;
+        let spec_b = r#"
+openapi: "3.0.0"
+info: { title: "B", version: "1.0" }
+servers: [{ url: "https://b.example.com" }]
+paths:
+  /profiles/traits:
+    get:
+      x-fern-sdk-group-name: ["profiles", "traits"]
+      x-fern-sdk-method-name: list
+      responses: { "200": { description: ok } }
+"#;
+        let err = CliApp::new("test")
+            .spec_under("v1/stores", spec_a)
+            .spec_under("v1/stores", spec_b)
+            .build_doc()
+            .expect_err("same command path should error");
+        assert!(
+            err.to_string().contains("'v1 stores profiles traits list'"),
+            "error: {err}"
+        );
+    }
+
+    #[test]
+    fn test_multi_spec_deep_merges_top_level_resource() {
+        // Without a namespace, specs sharing a top-level resource merge too.
+        let spec_a = r#"
+openapi: "3.0.0"
+info: { title: "A", version: "1.0" }
+paths:
+  /users:
+    get:
+      x-fern-sdk-group-name: ["users"]
+      x-fern-sdk-method-name: list
+      responses: { "200": { description: ok } }
+"#;
+        let spec_b = r#"
+openapi: "3.0.0"
+info: { title: "B", version: "1.0" }
+paths:
+  /users/{id}:
+    get:
+      x-fern-sdk-group-name: ["users"]
+      x-fern-sdk-method-name: get
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: string } }
+      responses: { "200": { description: ok } }
+"#;
+        let doc = CliApp::new("test").spec(spec_a).spec(spec_b).build_doc().unwrap();
+        let users = &doc.resources["users"];
+        assert!(users.methods.contains_key("list"));
+        assert!(users.methods.contains_key("get"));
+    }
+
+    #[test]
+    fn test_spec_under_hoist_deep_merges_into_namespace() {
+        // A hoisted (namespace-matching) resource merges with sub-resources
+        // another spec already put under the namespace.
+        let spec_a = r#"
+openapi: "3.0.0"
+info: { title: "A", version: "1.0" }
+paths:
+  /customers/{id}/addresses:
+    get:
+      x-fern-sdk-group-name: ["addresses"]
+      x-fern-sdk-method-name: list
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: string } }
+      responses: { "200": { description: ok } }
+"#;
+        let spec_b = r#"
+openapi: "3.0.0"
+info: { title: "B", version: "1.0" }
+paths:
+  /customers/{id}/addresses/{addressId}:
+    get:
+      x-fern-sdk-group-name: ["customers", "addresses"]
+      x-fern-sdk-method-name: get
+      parameters:
+        - { name: id, in: path, required: true, schema: { type: string } }
+        - { name: addressId, in: path, required: true, schema: { type: string } }
+      responses: { "200": { description: ok } }
+"#;
+        let doc = CliApp::new("test")
+            .spec_under("customers", spec_a)
+            .spec_under("customers", spec_b)
+            .build_doc()
+            .unwrap();
+        let addresses = &doc.resources["customers"].resources["addresses"];
+        assert!(addresses.methods.contains_key("list"));
+        assert!(addresses.methods.contains_key("get"));
     }
 
     #[test]
