@@ -1,0 +1,8 @@
+- summary: |
+    Request bodies whose schemas use a `$ref` into a nested component schema
+    (for example `#/components/schemas/Wrapper/properties/Model`, or deeper
+    through `items` / `allOf/0`, with `~0` / `~1` decoded) now validate. The
+    parser used to reduce such a ref to its last segment (`Model`), so
+    validation failed with `Schema 'Model' not found` and the request was
+    never sent.
+  type: fix

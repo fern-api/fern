@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+#
+# Models live under a wrapper component's `properties` and are referenced
+# elsewhere by JSON pointer (`#/components/schemas/Models/properties/Address`),
+# not by a top-level component name. The CLI validates request bodies against
+# the embedded spec before sending, so the wire tests fail if it can't resolve
+# those pointers.
+api:
+  specs:
+    - openapi: ./openapi.yml

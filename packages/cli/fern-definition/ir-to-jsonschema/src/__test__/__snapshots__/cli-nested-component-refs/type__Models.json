@@ -1,0 +1,151 @@
+{
+  "type": "object",
+  "properties": {
+    "Address": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ModelsAddress"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "LineItem": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ModelsLineItem"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "OrderRequest": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ModelsOrderRequest"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "Order": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ModelsOrder"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "ModelsAddress": {
+      "type": "object",
+      "properties": {
+        "line1": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "line1",
+        "city"
+      ],
+      "additionalProperties": false
+    },
+    "ModelsLineItem": {
+      "type": "object",
+      "properties": {
+        "sku": {
+          "type": "string"
+        },
+        "quantity": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "sku",
+        "quantity"
+      ],
+      "additionalProperties": false
+    },
+    "ModelsOrderRequestShipTo": {
+      "type": "object",
+      "properties": {
+        "line1": {
+          "type": "string"
+        },
+        "city": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "line1",
+        "city"
+      ],
+      "additionalProperties": false
+    },
+    "ModelsOrderRequestLinesItem": {
+      "type": "object",
+      "properties": {
+        "sku": {
+          "type": "string"
+        },
+        "quantity": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "sku",
+        "quantity"
+      ],
+      "additionalProperties": false
+    },
+    "ModelsOrderRequest": {
+      "type": "object",
+      "properties": {
+        "customerId": {
+          "type": "string"
+        },
+        "shipTo": {
+          "$ref": "#/definitions/ModelsOrderRequestShipTo"
+        },
+        "lines": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ModelsOrderRequestLinesItem"
+          }
+        }
+      },
+      "required": [
+        "customerId",
+        "shipTo",
+        "lines"
+      ],
+      "additionalProperties": false
+    },
+    "ModelsOrder": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "status"
+      ],
+      "additionalProperties": false
+    }
+  }
+}
