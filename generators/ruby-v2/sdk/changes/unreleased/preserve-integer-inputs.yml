@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add the opt-in preserveIntegerInputs setting to preserve integer request values in number fields while retaining float response coercion.
+  type: fix
