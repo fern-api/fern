@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    The generated CLI now enforces the OpenAPI `pattern` keyword on string
+    values, for path/query/header parameters and request body fields, before
+    sending the request. A value that does not match is rejected with
+    `Invalid value for --<flag>: '<value>' does not match the pattern "<pattern>"`
+    (or `$.field: Value '<value>' does not match the pattern ...` for body
+    fields), the same way enum and type mismatches already are. Patterns are
+    ECMA-262 and unanchored, as JSON Schema defines them, so lookaround such as
+    `^(?!https?://(localhost|127\.0\.0\.1))` works. A pattern the regex engine
+    cannot compile is not enforced. `--schema` output now includes `pattern`.
+  type: feat

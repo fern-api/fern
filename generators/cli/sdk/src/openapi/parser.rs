@@ -764,6 +764,8 @@ struct OpenApiParamSchema {
     minimum: Option<f64>,
     #[serde(default)]
     maximum: Option<f64>,
+    #[serde(default)]
+    pattern: Option<String>,
     /// Raw `x-fern-enum` map keyed by wire value, deserialized straight
     /// off the YAML schema. Lowered to `discovery::FernEnumValue` in
     /// `convert_fern_enum`.
@@ -976,6 +978,9 @@ struct OpenApiSchemaObject {
     /// 3.0 vs 3.1 interaction notes.
     #[serde(default)]
     maximum: Option<f64>,
+    /// JSON Schema `pattern`. Enforced on string values by the validator.
+    #[serde(default)]
+    pattern: Option<String>,
     /// `exclusiveMinimum` in either OpenAPI 3.0 boolean form or 3.1
     /// numeric form. Resolved via `exclusive_min()`.
     #[serde(default)]
@@ -2078,6 +2083,7 @@ fn convert_schema_object(obj: &OpenApiSchemaObject) -> JsonSchema {
         // lowers to a single-member enum here exactly as it does everywhere
         // else the parser reads an enum.
         enum_values: effective_enum_values(obj),
+        pattern: obj.pattern.clone(),
         format: obj.format.clone(),
         required: obj.required.clone(),
         one_of: convert_composition_branches(&obj.one_of),
@@ -2104,6 +2110,8 @@ fn convert_schema_property(obj: &OpenApiSchemaObject) -> JsonSchemaProperty {
             // ref and rejected `null` with "Expected object". 121 body
             // properties on one customer's 3.0.1 spec.
             nullable: obj.is_nullable(),
+            // 3.1 allows `pattern` beside `$ref`; it narrows the component.
+            pattern: obj.pattern.clone(),
             ..Default::default()
         };
     }
@@ -2134,6 +2142,7 @@ fn convert_schema_property(obj: &OpenApiSchemaObject) -> JsonSchemaProperty {
             .as_ref()
             .and_then(|v| serde_json::to_value(v).ok()),
         enum_values: effective_enum_values(obj),
+        pattern: obj.pattern.clone(),
         minimum: obj.inclusive_min(),
         maximum: obj.inclusive_max(),
         exclusive_minimum: obj.exclusive_min(),
@@ -2452,7 +2461,7 @@ fn convert_parameter(
             .or_else(|| resolve_param_nullable_branch(s, component_schemas))
     });
 
-    let (param_type, enum_values, schema_default, format, fern_enum, minimum, maximum) =
+    let (param_type, enum_values, schema_default, format, fern_enum, minimum, maximum, pattern) =
         match (&param.schema, resolved_ref) {
             (Some(s), Some(r)) => (
                 r.schema_type().map(str::to_string),
@@ -2465,6 +2474,8 @@ fn convert_parameter(
                 convert_fern_enum(s.x_fern_enum.as_ref()),
                 r.minimum,
                 r.maximum,
+                // A ref-site `pattern` narrows the component's, like `x-fern-enum`.
+                s.pattern.clone().or_else(|| r.pattern.clone()),
             ),
             (Some(s), None) => (
                 s.schema_type.clone(),
@@ -2474,8 +2485,9 @@ fn convert_parameter(
                 convert_fern_enum(s.x_fern_enum.as_ref()),
                 s.minimum,
                 s.maximum,
+                s.pattern.clone(),
             ),
-            (None, _) => (None, None, None, None, None, None, None),
+            (None, _) => (None, None, None, None, None, None, None, None),
         };
 
     // An `array`-typed parameter is repeatable: `--labels a --labels b`
@@ -2601,6 +2613,7 @@ fn convert_parameter(
         enum_values,
         minimum,
         maximum,
+        pattern,
         style: param.style.clone(),
         explode: param.explode,
         deprecated: param.deprecated,
@@ -4739,6 +4752,7 @@ fn flatten_body_params_prefix(
                             required_by_spec: spec_required,
                         format: effective.format.clone(),
                         enum_values: effective_enum_values(effective),
+                        pattern: effective.pattern.clone(),
                         default_value: const_default,
                         documentation_default_value: const_doc_default,
                         repeated: is_array,
@@ -4907,6 +4921,7 @@ fn flatten_body_params_prefix(
                             required_by_spec: spec_required,
                 format: effective.format.clone(),
                 enum_values: effective_enum_values(effective),
+                pattern: effective.pattern.clone(),
                 default_value: const_default,
                 documentation_default_value: const_doc_default,
                 repeated: is_array,
@@ -4944,6 +4959,35 @@ fn flatten_body_params_prefix(
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn test_pattern_lowers_from_parameter_and_body_schemas() {
+        let raw = r#"
+            name: Sid
+            in: path
+            required: true
+            schema:
+                type: string
+                pattern: ^PN[0-9a-fA-F]{32}$
+        "#;
+        let p: OpenApiParameter = serde_yaml::from_str(raw).unwrap();
+        let (_, mp) = convert_parameter(&p, None, &HashMap::new());
+        assert_eq!(mp.pattern.as_deref(), Some("^PN[0-9a-fA-F]{32}$"));
+
+        let obj: OpenApiSchemaObject = serde_yaml::from_str(
+            "type: object\nproperties:\n  smsUrl:\n    type: string\n    pattern: ^https://\n",
+        )
+        .unwrap();
+        let schema = convert_schema_object(&obj);
+        assert_eq!(schema.properties["smsUrl"].pattern.as_deref(), Some("^https://"));
+
+        let obj: OpenApiSchemaObject = serde_yaml::from_str(
+            "type: object\nproperties:\n  voiceUrl:\n    $ref: '#/components/schemas/Url'\n    pattern: ^https://\n",
+        )
+        .unwrap();
+        let schema = convert_schema_object(&obj);
+        assert_eq!(schema.properties["voiceUrl"].pattern.as_deref(), Some("^https://"));
+    }
 
     #[test]
     fn test_convert_parameter_lowers_schema_min_max_into_method_parameter() {
