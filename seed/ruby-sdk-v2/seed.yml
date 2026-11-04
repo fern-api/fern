@@ -127,6 +127,9 @@ fixtures:
         customPagerName: FooPager
       outputFolder: .
   examples:
+    - outputFolder: preserve-integer-inputs
+      customConfig:
+        preserveIntegerInputs: true
     - outputFolder: no-custom-config
       customConfig: null
     - outputFolder: omit-fern-headers
