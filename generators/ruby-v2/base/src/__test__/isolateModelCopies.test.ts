@@ -6,7 +6,9 @@ import { describe, expect, it } from "vitest";
 const eta = new Eta({ autoEscape: false, useWith: true, autoTrim: false });
 function render(path: string, isolateModelCopies: boolean): string {
     return eta.renderString(readFileSync(join(__dirname, "../asIs", path), "utf8"), {
-        gem_namespace: "Seed", omitUnsetModelFields: false, isolateModelCopies
+        gem_namespace: "Seed",
+        omitUnsetModelFields: false,
+        isolateModelCopies
     });
 }
 describe("isolateModelCopies", () => {

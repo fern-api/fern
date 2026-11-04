@@ -267,7 +267,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         respectNullableUnionFields?: boolean;
         serializeTimeAsIso8601?: boolean;
         isolateModelCopies?: boolean;
-    omitUnsetModelFields?: boolean;
+        omitUnsetModelFields?: boolean;
         endpointSecurity?: boolean;
         requestLevelMaxRetries?: boolean;
     }): Promise<File> {
@@ -287,7 +287,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
                 respectNullableUnionFields,
                 serializeTimeAsIso8601,
                 isolateModelCopies,
-        omitUnsetModelFields,
+                omitUnsetModelFields,
                 endpointSecurity,
                 requestLevelMaxRetries
             })
