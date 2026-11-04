@@ -387,7 +387,7 @@ describe("generateAPIWorkspaces coexistence", () => {
         expect(vi.mocked(generateWorkspace)).toHaveBeenCalledOnce();
     });
 
-    it("generates the legacy default and SDK Config targets with --local, on the on-prem adapter", async () => {
+    it("generates without --version through the on-prem adapter", async () => {
         await runGenerate({
             project,
             cliContext,
@@ -401,6 +401,8 @@ describe("generateAPIWorkspaces coexistence", () => {
             "legacy",
             "sdk-config"
         ]);
+        const sdkConfigCall = calls.find(([args]) => args.sdkConfigV1 != null)?.[0];
+        expect(sdkConfigCall?.version).toBeUndefined();
         expect(sdkConfigGenerators()).toEqual([{ name: "fernapi/fern-typescript-sdk", version: "4.0.0" }]);
     });
 
