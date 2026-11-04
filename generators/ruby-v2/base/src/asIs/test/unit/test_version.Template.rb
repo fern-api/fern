@@ -9,7 +9,7 @@ describe "SDK version metadata" do
     program = <<~RUBY
       client = <%= gem_namespace %>::Internal::Http::RawClient.new(base_url: "https://unused.invalid")
       puts <%= gem_namespace %>::VERSION
-      puts client.instance_variable_get(:@default_headers)["X-Fern-SDK-Version"]
+      puts client.instance_variable_get(:@default_headers)[:"X-Fern-SDK-Version"]
     RUBY
     output, error, status = Open3.capture3(
       RbConfig.ruby, "-I", File.expand_path("../../lib", __dir__), "-r", "<%= rootFolderName %>", "-e", program
