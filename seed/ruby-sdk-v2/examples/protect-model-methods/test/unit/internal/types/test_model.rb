@@ -1,0 +1,317 @@
+# frozen_string_literal: true
+
+require "test_helper"
+
+describe Seed::Internal::Types::Model do
+  module StringInteger
+    extend Seed::Internal::Types::Union
+
+    member String
+    member Integer
+  end
+
+  class ExampleModel < Seed::Internal::Types::Model
+    field :name, String
+    field :rating, StringInteger, optional: true
+    field :year, Integer, optional: true, nullable: true, api_name: "yearOfRelease"
+  end
+
+  class ExampleModelInheritance < ExampleModel
+    field :director, String
+  end
+
+  class ExampleWithDefaults < ExampleModel
+    field :type, String, default: "example"
+  end
+
+  class ExampleWithBooleans < Seed::Internal::Types::Model
+    field :enabled, Seed::Internal::Types::Boolean
+    field :archived, Seed::Internal::Types::Boolean, default: true
+  end
+
+  class ExampleWithFalseDefault < Seed::Internal::Types::Model
+    field :archived, Seed::Internal::Types::Boolean, default: false
+  end
+
+  class ExampleChild < Seed::Internal::Types::Model
+    field :value, String
+  end
+
+  class ExampleParent < Seed::Internal::Types::Model
+    field :child, ExampleChild
+  end
+
+  class ExampleWithNumericKeyMaps < Seed::Internal::Types::Model
+    field :rates, Seed::Internal::Types::Hash[Float, Integer]
+    field :counts, Seed::Internal::Types::Hash[Integer, String]
+  end
+
+  class ExampleWithCoercedDefault < Seed::Internal::Types::Model
+    field :count, Integer, default: "3"
+  end
+
+  describe ".field" do
+    before do
+      @example = ExampleModel.new(name: "Inception", rating: 4)
+    end
+
+    it "defines fields on model" do
+      assert_equal %i[name rating year], ExampleModel.fields.keys
+    end
+
+    it "defines fields from parent models" do
+      assert_equal %i[name rating year director], ExampleModelInheritance.fields.keys
+    end
+
+    it "sets the field's type" do
+      assert_equal String, ExampleModel.fields[:name].type
+      assert_equal StringInteger, ExampleModel.fields[:rating].type
+    end
+
+    it "sets the `default` option" do
+      assert_equal "example", ExampleWithDefaults.fields[:type].default
+    end
+
+    it "defines getters" do
+      assert_respond_to @example, :name
+      assert_respond_to @example, :rating
+
+      assert_equal "Inception", @example.name
+      assert_equal 4, @example.rating
+    end
+
+    it "defines setters" do
+      assert_respond_to @example, :name=
+      assert_respond_to @example, :rating=
+
+      @example.name = "Inception 2"
+      @example.rating = 5
+
+      assert_equal "Inception 2", @example.name
+      assert_equal 5, @example.rating
+    end
+  end
+
+  describe "#initialize" do
+    it "sets the data" do
+      example = ExampleModel.new(name: "Inception", rating: 4)
+
+      assert_equal "Inception", example.name
+      assert_equal 4, example.rating
+    end
+
+    it "allows extra fields to be set" do
+      example = ExampleModel.new(name: "Inception", rating: 4, director: "Christopher Nolan")
+
+      assert_equal "Christopher Nolan", example.director
+    end
+
+    it "drops extra keys that match a declared field case-insensitively" do
+      example = ExampleModel.load({ name: "Inception", NAME: "Other", YearOfRelease: 1999, Year: 1998 }.to_json)
+
+      assert_equal "Inception", example.name
+      assert_equal({ "name" => "Inception" }, example.to_h)
+      refute_respond_to example, :NAME
+    end
+
+    it "drops case-insensitive collisions even when the declared field is absent" do
+      example = ExampleModel.new({ "NAME" => "Other", "yearofrelease" => 1999 })
+
+      assert_nil example.name
+      refute example.to_h.key?("NAME")
+      refute example.to_h.key?("yearofrelease")
+    end
+
+    it "keeps non-colliding extra keys" do
+      example = ExampleModel.load({ name: "Inception", brand_new_field: "kept" }.to_json)
+
+      assert_equal "kept", example.brand_new_field
+      assert_equal({ "name" => "Inception", "brand_new_field" => "kept" }, example.to_h)
+    end
+
+    %w[hash to_h class initialize initialize_copy name=].each do |key|
+      it "preserves the unknown #{key} field without replacing model methods" do
+        model_class = Class.new(Seed::Internal::Types::Model) do
+          field :name, String
+        end
+        example = model_class.load({ "name" => "Original", key => "kept" }.to_json)
+
+        assert_instance_of model_class, example
+        assert_instance_of model_class, example.dup
+        assert_kind_of Integer, example.hash
+        assert_equal "kept", example.to_h[key]
+
+        example.name = "Updated"
+
+        assert_equal "Updated", example.name
+        assert_equal({ "name" => "Next" }, model_class.new(name: "Next").to_h)
+      end
+    end
+
+    it "does not replace an inherited protected method with an extra field" do
+      parent = Class.new(Seed::Internal::Types::Model) do
+        protected def label
+          "original"
+        end
+      end
+      model_class = Class.new(parent)
+      example = model_class.load('{"label":"kept"}')
+
+      assert model_class.protected_method_defined?(:label)
+      assert_equal "original", example.send(:label)
+      assert_equal({ "label" => "kept" }, example.to_h)
+    end
+
+    it "keeps an extra-field setter when only its reader collides" do
+      model_class = Class.new(Seed::Internal::Types::Model) do
+        def label
+          "existing"
+        end
+      end
+      model = model_class.new(label: "original")
+      model.label = "updated"
+      assert_equal "existing", model.label
+      assert_equal "updated", model.to_h["label"]
+    end
+
+    it "keeps an extra-field reader when only its setter collides" do
+      model_class = Class.new(Seed::Internal::Types::Model) do
+        attr_writer :label
+      end
+      model = model_class.new(label: "original")
+      model.label = "existing setter"
+      assert_equal "original", model.label
+      assert_equal "existing setter", model.instance_variable_get(:@label)
+    end
+
+    it "preserves private Kernel methods and keeps their data in exports" do
+      model_class = Class.new(Seed::Internal::Types::Model)
+      owner = model_class.instance_method(:format).owner
+      model = model_class.new(format: "json")
+      assert_equal owner, model_class.instance_method(:format).owner
+      assert model_class.private_method_defined?(:format)
+      assert_equal "json", model.to_h["format"]
+      model.format = "text"
+      assert_equal "text", model.to_h["format"]
+    end
+
+    it "sets the defaults where applicable" do
+      example_using_defaults = ExampleWithDefaults.new
+
+      assert_equal "example", example_using_defaults.type
+
+      example_without_defaults = ExampleWithDefaults.new(type: "not example")
+
+      assert_equal "not example", example_without_defaults.type
+    end
+
+    it "coerces numeric map keys when loading JSON" do
+      model = ExampleWithNumericKeyMaps.load('{"rates":{"1.5":10},"counts":{"2":"two"}}')
+
+      assert_equal({ 1.5 => 10 }, model.rates)
+      assert_equal({ 2 => "two" }, model.counts)
+    end
+
+    it "coerces child models" do
+      parent = ExampleParent.new(child: { value: "foobar" })
+
+      assert_kind_of ExampleChild, parent.child
+    end
+
+    it "preserves false values instead of treating them as absent" do
+      example = ExampleWithBooleans.new(enabled: false)
+
+      refute example.enabled
+      assert_equal({ "enabled" => false, "archived" => true }, example.to_h)
+
+      loaded = ExampleWithBooleans.load({ enabled: false, archived: false }.to_json)
+
+      refute loaded.enabled
+      refute loaded.archived
+    end
+
+    it "prefers the first non-nil value when both api_name and field name are given" do
+      example = ExampleModel.new({ name: "Ruby", yearOfRelease: nil, year: 2014 })
+
+      assert_equal 2014, example.year
+      assert_equal({ "name" => "Ruby", "yearOfRelease" => 2014 }, example.to_h)
+
+      example = ExampleModel.new({ name: "Ruby", yearOfRelease: 2010, year: 2014 })
+
+      assert_equal 2010, example.year
+      assert_equal({ "name" => "Ruby", "yearOfRelease" => 2010 }, example.to_h)
+    end
+
+    it "applies a default of false" do
+      example = ExampleWithFalseDefault.new
+
+      refute example.archived
+      assert_equal({ "archived" => false }, example.to_h)
+    end
+
+    it "uses the api_name to pull the value" do
+      example = ExampleModel.new({ name: "Inception", yearOfRelease: 2014 })
+
+      assert_equal 2014, example.year
+      refute_respond_to example, :yearOfRelease
+    end
+
+    it "does not modify the input hash" do
+      input = { name: "Inception", yearOfRelease: 2014, extra: "kept" }
+      ExampleModel.new(input)
+
+      assert_equal({ name: "Inception", yearOfRelease: 2014, extra: "kept" }, input)
+    end
+
+    it "marks a field explicit when it is set through either key" do
+      assert_equal({ "name" => "Ruby", "yearOfRelease" => nil }, ExampleModel.new({ name: "Ruby", year: nil }).to_h)
+      assert_equal({ "name" => "Ruby", "yearOfRelease" => nil },
+                   ExampleModel.new({ name: "Ruby", yearOfRelease: nil, year: nil }).to_h)
+      assert_equal({ "name" => "Ruby" }, ExampleModel.new({ name: "Ruby" }).to_h)
+    end
+
+    it "coerces the default of a field whose value is nil" do
+      assert_equal 3, ExampleWithCoercedDefault.new(count: nil).count
+    end
+  end
+
+  describe "#inspect" do
+    class SensitiveModel < Seed::Internal::Types::Model
+      field :username, String
+      field :password, String
+      field :client_secret, String
+      field :access_token, String
+      field :api_key, String
+    end
+
+    it "redacts sensitive fields" do
+      model = SensitiveModel.new(
+        username: "user123",
+        password: "secret123",
+        client_secret: "cs_abc",
+        access_token: "token_xyz",
+        api_key: "key_123"
+      )
+
+      inspect_output = model.inspect
+
+      assert_includes inspect_output, "username=\"user123\""
+      assert_includes inspect_output, "password=[REDACTED]"
+      assert_includes inspect_output, "client_secret=[REDACTED]"
+      assert_includes inspect_output, "access_token=[REDACTED]"
+      assert_includes inspect_output, "api_key=[REDACTED]"
+      refute_includes inspect_output, "secret123"
+      refute_includes inspect_output, "cs_abc"
+      refute_includes inspect_output, "token_xyz"
+      refute_includes inspect_output, "key_123"
+    end
+
+    it "does not redact non-sensitive fields" do
+      example = ExampleModel.new(name: "Inception", rating: 4)
+      inspect_output = example.inspect
+
+      assert_includes inspect_output, "name=\"Inception\""
+      assert_includes inspect_output, "rating=4"
+    end
+  end
+end

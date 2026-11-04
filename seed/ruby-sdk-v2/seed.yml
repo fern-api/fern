@@ -127,6 +127,9 @@ fixtures:
         customPagerName: FooPager
       outputFolder: .
   examples:
+    - outputFolder: protect-model-methods
+      customConfig:
+        protectModelMethods: true
     - outputFolder: no-custom-config
       customConfig: null
     - outputFolder: omit-fern-headers
