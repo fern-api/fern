@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add the opt-in `keepIntegersInFloatFields` option. When set to `true`, Integer values in
+    `Float` fields (`float`/`double`, e.g. an OpenAPI `number`) stay Integers, as they did before
+    1.37.1: `5` is sent as `5` instead of `5.0`, and a response value of `3600` decodes as `3600`
+    instead of `3600.0`. Whole-number strings and map keys in these fields also become
+    Integers (`"5"` becomes `5`, and a response map key `"2"` becomes `2`, not `2.0`). Decimal values still decode as `Float`, so a list of `double` values can
+    hold both, e.g. `[1, 2.5]`. Arithmetic on these fields then follows Integer rules (`7 / 2` is
+    `3`). The default is unchanged: every value in these fields is converted to `Float`.
+  type: feat

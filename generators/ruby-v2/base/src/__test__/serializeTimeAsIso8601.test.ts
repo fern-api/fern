@@ -38,6 +38,7 @@ function render(filename: string, serializeTimeAsIso8601: boolean): string {
         respectOptionalRequestBody: false,
         respectNullableUnionFields: false,
         serializeTimeAsIso8601,
+        keepIntegersInFloatFields: false,
         endpointSecurity: false,
         requestLevelMaxRetries: false
     });

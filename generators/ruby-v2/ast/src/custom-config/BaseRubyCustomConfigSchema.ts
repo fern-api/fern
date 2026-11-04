@@ -83,6 +83,11 @@ export const BaseRubyCustomConfigSchema = z.object({
     // parameters, and form fields are serialized as RFC 3339 strings. Set to `false` to keep
     // the previous `Time#to_s` output (e.g. "2026-10-16 01:40:16 UTC"). Enabled by default.
     serializeTimeAsIso8601: z.boolean().optional(),
+    // Opt-in: an Integer value in a `Float` field (`float`/`double`, e.g. an OpenAPI `number`)
+    // stays an Integer, so `5` is sent as `5` and a response `3600` decodes as `3600` rather
+    // than `3600.0`. Decimals are unaffected. Disabled by default, so every value in such a
+    // field is converted to `Float`.
+    keepIntegersInFloatFields: z.boolean().optional(),
     // Opt-out: a map request body (e.g. `Hash[String, String]`) can also be passed as keyword
     // arguments, as before 1.34.1: `create(id: "h", MY_SECRET: "x")` sends `{"MY_SECRET":"x"}`.
     // `request:` (or the wrapped body key) still takes precedence. Set to `false` to only read the
