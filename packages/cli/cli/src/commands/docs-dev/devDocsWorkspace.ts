@@ -126,6 +126,7 @@ export async function previewDocsWorkspace({
             skipApi,
             timeoutMs,
             idleTimeoutMs,
+            cliName: cliContext.environment.cliName,
             onLifecycleEvent: json ? (event) => cliContext.writeTextToStdout(`${JSON.stringify(event)}\n`) : undefined
         });
     });
