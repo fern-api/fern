@@ -216,7 +216,7 @@ export class EnumGenerator {
             this.enumTypeDeclaration.values.forEach((enumValue) => {
                 const variantName = this.getVariantName(enumValue);
                 const wireValue = getWireValue(enumValue.name);
-                writer.writeLine(`Self::${variantName} => write!(f, ${JSON.stringify(wireValue)}),`);
+                writer.writeLine(`Self::${variantName} => write!(f, ${JSON.stringify(escapeFormatString(wireValue))}),`);
             });
 
             writer.writeLine("Self::__Unknown(val) => write!(f, \"{}\", val),");
@@ -243,4 +243,8 @@ export class EnumGenerator {
         writer.dedent();
         writer.writeLine("}");
     }
+}
+
+function escapeFormatString(value: string): string {
+    return value.replaceAll("{", "{{").replaceAll("}", "}}");
 }
