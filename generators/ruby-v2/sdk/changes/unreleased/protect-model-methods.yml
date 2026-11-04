@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add protectModelMethods to preserve inherited methods when loading unknown fields. Guard readers and setters independently; disabled by default for existing SDKs.
+  type: fix
