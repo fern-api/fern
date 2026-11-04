@@ -57,7 +57,9 @@ export class SentryClient {
                 integrations: [
                     Sentry.rewriteFramesIntegration(),
                     Sentry.onUncaughtExceptionIntegration(),
-                    Sentry.onUnhandledRejectionIntegration(),
+                    // "strict" exits with code 1, like Node's default; "warn" (Sentry's default) would let a
+                    // failed generator exit 0 and the CLI would treat its empty output as a successful run.
+                    Sentry.onUnhandledRejectionIntegration({ mode: "strict" }),
                     Sentry.linkedErrorsIntegration(),
                     Sentry.nodeContextIntegration(),
                     ...(shouldTrackLocalVariables

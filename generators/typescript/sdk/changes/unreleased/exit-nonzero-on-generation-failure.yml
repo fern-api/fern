@@ -1,0 +1,6 @@
+- summary: |
+    The generator now exits with a non-zero code when generation fails. Before, when error
+    reporting was enabled in the container, a failure (for example a README step that could
+    not clone the GitHub repository) was logged but the process exited 0. `fern generate --local`
+    then treated the empty output as a successful run.
+  type: fix
