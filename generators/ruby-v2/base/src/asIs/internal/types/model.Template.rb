@@ -207,13 +207,13 @@ module <%= gem_namespace %>
           end
         end
 
-        private def initialize_copy(other)
+<% if (isolateModelCopies) { %>        private def initialize_copy(other)
           super
           @data = @data.dup
           @explicit_fields = @explicit_fields.dup
         end
 
-        def to_h
+<% } %>        def to_h
           result = self.class.fields.merge(self.class.extra_fields).each_with_object({}) do |(name, field), acc|
 <% if (omitUnsetModelFields) { %>            # A field that was never provided is excluded, even when required, so sparse payloads only carry
             # what the caller set. An explicit `nil` is sent as `null` unless the field is optional but NOT nullable.

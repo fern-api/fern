@@ -25,6 +25,7 @@ const eta = new Eta({ autoEscape: false, useWith: true, autoTrim: false });
 
 function render(filename: string, serializeTimeAsIso8601: boolean): string {
     return eta.renderString(readFileSync(join(AS_IS_DIR, filename)).toString(), {
+        isolateModelCopies: false,
         gem_namespace: "Seed",
         sdkName: "seed",
         rootFolderName: "seed",

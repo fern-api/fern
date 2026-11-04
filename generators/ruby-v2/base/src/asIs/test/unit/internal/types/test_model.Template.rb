@@ -50,7 +50,7 @@ describe <%= gem_namespace %>::Internal::Types::Model do
     field :count, Integer, default: "3"
   end
 
-  %i[dup clone].each do |copy_method|
+<% if (isolateModelCopies) { %>  %i[dup clone].each do |copy_method|
     describe "##{copy_method}" do
       it "keeps field assignments and explicit nulls independent" do
         original = ExampleModel.new(name: "Original")
@@ -84,7 +84,7 @@ describe <%= gem_namespace %>::Internal::Types::Model do
     end
   end
 
-  describe ".field" do
+<% } %>  describe ".field" do
     before do
       @example = ExampleModel.new(name: "Inception", rating: 4)
     end

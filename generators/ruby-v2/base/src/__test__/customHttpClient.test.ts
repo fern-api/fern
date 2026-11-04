@@ -27,7 +27,8 @@ const eta = new Eta({ autoEscape: false, useWith: true, autoTrim: false });
 function render(templatePath: string, allowCustomHttpClient: boolean): string {
     return eta
         .renderString(readFileSync(templatePath).toString(), {
-            gem_namespace: "Seed",
+            isolateModelCopies: false,
+        gem_namespace: "Seed",
             sdkName: "seed",
             rootFolderName: "seed",
             custom_pager_class_name: "CustomPager",
