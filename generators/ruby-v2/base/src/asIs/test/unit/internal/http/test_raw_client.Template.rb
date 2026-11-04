@@ -96,6 +96,12 @@ describe <%= gem_namespace %>::Internal::Http::RawClient do
       server.close
 
       assert(request_lines.any? { |line| line.casecmp("accept-encoding: gzip\r\n").zero? })
+<% if (!omitFernHeaders && !userAgentOnly) { %>
+      version_header = request_lines.find { |line| line.downcase.start_with?("x-fern-sdk-version:") }
+
+      refute_nil version_header
+      assert_equal <%= gem_namespace %>::VERSION, version_header.split(":", 2).last.strip
+<% } %>
       assert_equal "200", response.code
       assert_equal body, response.body
     end

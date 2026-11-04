@@ -808,7 +808,9 @@ class ModuleFile {
     }
 
     public toString(): string {
-        const relativeImportPaths: Set<RelativeFilePath> = new Set();
+        const relativeImportPaths: Set<RelativeFilePath> = new Set([
+            RelativeFilePath.of(`${this.context.getRootFolderName()}/version.rb`)
+        ]);
 
         const coreFiles = this.context.getCoreAsIsFiles();
         coreFiles.sort((a, b) => topologicalCompareAsIsFiles(a, b));

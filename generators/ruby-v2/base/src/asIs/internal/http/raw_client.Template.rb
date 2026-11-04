@@ -46,7 +46,7 @@ module <%= gem_namespace %>
 <% } %>          @default_headers = <% if (!omitFernHeaders && !userAgentOnly) { %>{
             "X-Fern-Language": "Ruby",
             "X-Fern-SDK-Name": "<%= sdkName %>",
-            "X-Fern-SDK-Version": "0.0.1"
+            "X-Fern-SDK-Version": <%= gem_namespace %>::VERSION
           }.merge(headers)<% } else { %>headers<% } %>
           @overridable_headers = overridable_headers.to_set { |name| name.to_s.downcase }
         end
