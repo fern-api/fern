@@ -329,6 +329,18 @@ export async function runLocalGenerationForWorkspace({
                     }
                 }
 
+                if (
+                    selfhostedGithubConfig != null &&
+                    !selfhostedGithubConfig.previewMode &&
+                    selfhostedGithubConfig.token.trim() === ""
+                ) {
+                    interactiveTaskContext.logger.warn(
+                        `github.token for ${selfhostedGithubConfig.uri} in generators.yml resolved to an empty value ` +
+                            "(is the environment variable it references set but empty?). " +
+                            "The generator cannot clone a private repository without it."
+                    );
+                }
+
                 if (selfhostedGithubConfig != null) {
                     await fs.rm(absolutePathToLocalOutput, { recursive: true, force: true });
                     await fs.mkdir(absolutePathToLocalOutput, { recursive: true });

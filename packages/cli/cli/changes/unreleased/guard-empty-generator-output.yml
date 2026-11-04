@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern generate --local` now fails when the generator exits without writing any files,
+    instead of copying the empty output. Before, a generator that failed but still exited 0
+    could leave an empty output, and the CLI would delete every existing generated file. In
+    self-hosted GitHub mode it would then commit that deletion and open a PR.
+    The CLI also warns when `github.token` in `generators.yml` resolves to an empty value,
+    since the generator can't clone a private repository without it.
+  type: fix
