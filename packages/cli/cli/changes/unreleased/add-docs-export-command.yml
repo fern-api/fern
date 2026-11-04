@@ -1,14 +1,6 @@
 # yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
 
 - summary: |
-    Add `fern docs export` to download a copy of your live Fern-hosted docs site. `--format html` (default) writes the full
-    static site, including each page's `.md` copy, which you can open with any static file server
-    (`npx serve docs-acme-com-html`). `--format md` writes
-    only the per-page Markdown and `llms.txt`. `--format pdf` writes one PDF of the site, with
-    the dashboard's export settings as flags: `--no-cover`, `--no-toc`, `--cover-title`, `--cover-subtitle`,
-    `--header-left`, `--header-right`, `--footer-left` and `--footer-right`. By default the output is named
-    after the site and format, like the dashboard's download (`docs-acme-com-html`, `docs-acme-com-md`,
-    `docs-acme-com.pdf`). Fern builds the export server-side and the CLI downloads and unpacks
-    one zip. Self-hosted docs keep using `/scripts/export.sh` in the container. Each run empties
-    `--output` first (except `.git`), like local generation, but only after the export has downloaded.
+    Add `fern docs export` to download your live Fern-hosted docs as a static site (`--format html`),
+    Markdown (`--format md`) or one PDF (`--format pdf`).
   type: feat
