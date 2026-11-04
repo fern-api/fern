@@ -4,6 +4,7 @@ import { assertNever, errorMessageOrString, isRecord } from "@fern-api/core-util
 import { AbsoluteFilePath, cwd } from "@fern-api/fs-utils";
 import {
     type FernSdkConfigV1Payload,
+    type FernSdkGenApiGithubRequestedOutput,
     type FernSdkGenApiPackageConfig,
     type FernSdkGenApiRequestedOutput,
     toSdkGenApiTarget
@@ -101,6 +102,10 @@ export async function loadSdkConfigV1(
                 }
                 const output = target.output ?? parsed.output;
                 const duplicateTargetLanguageIndex = duplicateTargetLanguageIndexes[index];
+                const requestedOutput = toRequestedOutput(output, isPreview, apiKeySecretNames[index]);
+                const configuredOutput = isPreview
+                    ? toRequestedOutput(output, false, apiKeySecretNames[index])
+                    : undefined;
                 return {
                     body: Buffer.from(
                         `${JSON.stringify({ ...document, targets: [toSdkGenApiTarget(documentTarget)] })}\n`
@@ -112,7 +117,12 @@ export async function loadSdkConfigV1(
                     ...(target.client?.pathParameterStyle != null
                         ? { clientPathParameterStyle: target.client.pathParameterStyle }
                         : {}),
-                    requestedOutput: toRequestedOutput(output, isPreview, apiKeySecretNames[index]),
+                    requestedOutput,
+                    ...(configuredOutput?.type === "github"
+                        ? {
+                              autoVersionPreviewOutput: configuredOutput satisfies FernSdkGenApiGithubRequestedOutput
+                          }
+                        : {}),
                     ...(output?.delivery === "zip"
                         ? {
                               absolutePathToLocalOutputArchive: AbsoluteFilePath.of(
