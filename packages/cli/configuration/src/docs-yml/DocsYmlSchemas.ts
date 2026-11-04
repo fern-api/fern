@@ -389,6 +389,7 @@ export const DocsSettingsConfig = z.object({
     "disable-explorer-proxy": z.boolean().optional(),
     "disable-analytics": z.boolean().optional(),
     "require-analytics-consent": z.boolean().optional(),
+    "sibling-site-links": z.boolean().optional(),
     language: Language.optional(),
     "folder-title-source": TitleSource.optional(),
     "substitute-env-vars": z.boolean().optional(),

@@ -120,4 +120,13 @@ export interface DocsSettingsConfig {
      * @default: false
      */
     requireAnalyticsConsent?: boolean;
+    /**
+     * If set to true, root-relative links in page content that point under another site's basepath on
+     * the same domain (e.g. `/product-b/overview` from a site at `/product-a`) are left as written instead
+     * of getting this site's basepath. Sibling sites come from the sites live on the domain when this site
+     * publishes. The broken-link check reports these links as warnings, since it can't see the other site's pages.
+     *
+     * @default: false
+     */
+    siblingSiteLinks?: boolean;
 }

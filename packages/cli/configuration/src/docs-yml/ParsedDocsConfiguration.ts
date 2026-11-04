@@ -54,6 +54,7 @@ interface ParsedDocsSettingsConfig extends Omit<CjsFdrSdk.docs.v1.commons.DocsSe
     embedding: EmbeddingConfig | undefined;
     showHeadersInExamples: boolean | undefined;
     requireAnalyticsConsent: boolean | undefined;
+    siblingSiteLinks: boolean | undefined;
     search:
         | {
               prioritizeCurrentProduct: boolean | undefined;

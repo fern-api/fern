@@ -7051,6 +7051,17 @@
             }
           ],
           "description": "If set to true, Fern's built-in docs analytics (PostHog) stays off until visitor consent is given:\nno script, cookies, local storage or events. Grant consent from a custom script (e.g. your consent\nmanager's callback) by setting `window.fernAnalyticsConsent = true` and dispatching\n`new Event(\"fern-analytics-consent\")` on `window`.\n\n@default: false"
+        },
+        "sibling-site-links": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If set to true, root-relative links in page content that point under another site's basepath on\nthe same domain (e.g. `/product-b/overview` from a site at `/product-a`) are left as written instead\nof getting this site's basepath. Sibling sites come from the sites live on the domain when this site\npublishes. The broken-link check reports these links as warnings, since it can't see the other site's pages.\n\n@default: false"
         }
       },
       "additionalProperties": false
