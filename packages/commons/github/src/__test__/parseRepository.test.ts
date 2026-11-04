@@ -1,4 +1,9 @@
-import { getGitAuthorizationHeader, parseRepository } from "../parseRepository.js";
+import {
+    getGitAuthorizationConfig,
+    getGitAuthorizationHeader,
+    parseRepository,
+    redactGitCredentials
+} from "../parseRepository.js";
 
 describe("parseRepository", () => {
     it("fern-api/fern", async () => {
@@ -90,5 +95,26 @@ describe("parseRepository", () => {
         );
         expect(decode(getGitAuthorizationHeader("ghp_pat_value"))).toBe("ghp_pat_value:");
         expect(decode(getGitAuthorizationHeader("github_pat_value"))).toBe("github_pat_value:");
+    });
+
+    it("getGitAuthorizationConfig scopes the header to the repository host", () => {
+        const token = "ghp_abc";
+        expect(getGitAuthorizationConfig("github.com", token)).toBe(
+            `http.https://github.com/.extraHeader=${getGitAuthorizationHeader(token)}`
+        );
+        expect(getGitAuthorizationConfig("github.acme.com", token)).toMatch(
+            /^http\.https:\/\/github\.acme\.com\/\.extraHeader=/
+        );
+    });
+
+    it("redactGitCredentials removes the raw and encoded token", () => {
+        for (const token of ["ghp_abc", "ghs_xyz"]) {
+            const header = getGitAuthorizationHeader(token);
+            const message = `git clone --config http.https://github.com/.extraHeader=${header} https://${token}@github.com/o/r.git failed`;
+            const redacted = redactGitCredentials(message, token);
+            expect(redacted).not.toContain(token);
+            expect(redacted).not.toContain(header.replace("Authorization: Basic ", ""));
+            expect(redacted).toContain("Authorization: Basic [REDACTED]");
+        }
     });
 });

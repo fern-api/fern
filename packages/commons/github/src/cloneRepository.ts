@@ -3,7 +3,7 @@ import { execSync } from "child_process";
 import { simpleGit } from "simple-git";
 import tmp from "tmp-promise";
 import { ClonedRepository } from "./ClonedRepository.js";
-import { getGitAuthorizationHeader, parseRepository } from "./parseRepository.js";
+import { getGitAuthorizationConfig, parseRepository, redactGitCredentials } from "./parseRepository.js";
 
 /**
  * Sanitizes a clone URL by redacting any embedded tokens/credentials.
@@ -106,14 +106,17 @@ export async function cloneRepository({
     const startTime = Date.now();
     try {
         // `--config` persists the header in the clone, so later fetch/push calls authenticate too.
+        // It is scoped to the repository's host so no other host receives the token.
         const cloneOptions =
             installationToken != null
-                ? ["--config", `http.extraHeader=${getGitAuthorizationHeader(installationToken)}`]
+                ? ["--config", getGitAuthorizationConfig(repositoryReference.remote, installationToken)]
                 : [];
         await git.clone(cloneUrl, ".", cloneOptions);
     } catch (error) {
         const elapsed = Date.now() - startTime;
-        const errorMessage = extractErrorMessage(error);
+        const rawErrorMessage = extractErrorMessage(error);
+        const errorMessage =
+            installationToken != null ? redactGitCredentials(rawErrorMessage, installationToken) : rawErrorMessage;
 
         // Git binary not found
         if (errorMessage.includes("ENOENT") || errorMessage.includes("spawn git")) {
