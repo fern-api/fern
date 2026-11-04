@@ -150,6 +150,12 @@ fixtures:
         packageName: sse_events
         packageVersion: "0.1.0"
       outputFolder: with-wire-tests
+  query-parameters:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        dateQueryParamFormat: date
+      outputFolder: date-query-param-format
   respect-optional-request-body:
     - customConfig: null
       outputFolder: no-custom-config

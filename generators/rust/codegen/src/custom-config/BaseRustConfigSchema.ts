@@ -44,6 +44,10 @@ export const BaseRustCustomConfigSchema = z.object({
     // - "offset": DateTime<FixedOffset> (default) - preserves original timezone, accepts any format (assumes UTC when no timezone)
     // - "utc": DateTime<Utc> - converts everything to UTC, accepts any format (assumes UTC when no timezone)
     dateTimeType: z.enum(["offset", "utc"]).optional().default("offset"),
+    // How `date` query parameters (chrono::NaiveDate) are sent:
+    // - "datetime" (default): midnight UTC as RFC 3339, e.g. 2023-01-15T00:00:00Z
+    // - "date": RFC 3339 full-date (OpenAPI `format: date`), e.g. 2023-01-15
+    dateQueryParamFormat: z.enum(["datetime", "date"]).optional().default("datetime"),
 
     // =========================================================================
     // Cargo Features Configuration (control package dependencies)
