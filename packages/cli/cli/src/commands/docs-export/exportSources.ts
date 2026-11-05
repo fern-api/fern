@@ -134,7 +134,7 @@ async function waitForTask({
             return;
         }
         if (task.status === "FAILED") {
-            throw new Error(`Hosted export failed: ${task.errorMessage ?? "unknown error"}`);
+            throw new Error(`${task.errorMessage ?? "unknown error"} (task ${taskId})`);
         }
         if (Date.now() > deadline) {
             throw new Error(`Timed out waiting for export task ${taskId} to finish`);

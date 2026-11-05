@@ -152,7 +152,10 @@ describe("exportFailureMessage", () => {
     it("explains the daily limit and a site outside the organization", () => {
         expect(exportFailureMessage(new ORPCError("TOO_MANY_REQUESTS"))).toMatch(/daily export limit/);
         expect(exportFailureMessage(new ORPCError("FORBIDDEN"))).toMatch(/does not belong to the organization/);
-        expect(exportFailureMessage(new Error("boom"))).toBe("Docs export failed");
+        expect(exportFailureMessage(new Error("boom"))).toBe("Export failed: boom");
+        expect(exportFailureMessage(new Error("Export failed: no live build (task t1)"))).toBe(
+            "Export failed: no live build (task t1)"
+        );
     });
 });
 

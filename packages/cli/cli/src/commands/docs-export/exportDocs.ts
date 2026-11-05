@@ -170,17 +170,17 @@ export function pdfExportOptions(settings: PdfSettings): PdfExportOptions | unde
     return Object.keys(set).length === 0 ? undefined : { version: "v1", ...set };
 }
 
-/** The headline for a failed export; FDR's error code says whether to wait, check access, or re-run. */
+/** One line for a failed export: FDR's error code says whether to wait or check access; otherwise the cause. */
 export function exportFailureMessage(error: unknown): string {
     if (error instanceof ORPCError) {
         if (error.code === "TOO_MANY_REQUESTS") {
-            return "Docs export failed: the organization hit its daily export limit. Try again tomorrow.";
+            return "Export failed: the organization hit its daily export limit. Try again tomorrow.";
         }
         if (error.code === "FORBIDDEN") {
-            return "Docs export failed: this docs site does not belong to the organization in fern.config.json.";
+            return "Export failed: this docs site does not belong to the organization in fern.config.json.";
         }
     }
-    return "Docs export failed";
+    return `Export failed: ${extractErrorMessage(error).replace(/^Export failed:\s*/i, "")}`;
 }
 
 export async function exportDocs({
@@ -265,11 +265,10 @@ async function withSpinner(
         try {
             summary = await run(task);
         } catch (error) {
-            const headline = exportFailureMessage(error);
+            const message = exportFailureMessage(error);
             if (!isTTY) {
-                task.failAndThrow(headline, error, { code: CliError.Code.NetworkError });
+                task.failAndThrow(message, error, { code: CliError.Code.NetworkError });
             }
-            const message = `${headline}: ${extractErrorMessage(error)}`;
             task.setSubtitle(chalk.red(message));
             reportExportFailure(context, error);
             throw new TaskAbortSignal(message);
