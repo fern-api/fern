@@ -1,13 +1,15 @@
 import { mkdir, readdir, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { getFernDirectory, loadProjectConfig } from "@fern-api/configuration-loader";
-import { delay, replaceEnvVariables, stripTrailingSlashes } from "@fern-api/core-utils";
+import { delay, extractErrorMessage, replaceEnvVariables, stripTrailingSlashes } from "@fern-api/core-utils";
 import { createExportClient, ORPCError } from "@fern-api/fdr-sdk/orpc-client";
 import { askToLogin } from "@fern-api/login";
 import {
     CliError,
     type CreateInteractiveTaskParams,
     type InteractiveTaskContext,
+    resolveErrorCode,
+    shouldReportToSentry,
     TaskAbortSignal,
     type TaskContext
 } from "@fern-api/task-context";
@@ -207,10 +209,10 @@ export async function exportDocs({
     if (format === "pdf") {
         const outputFile = path.resolve(pdfOutputPath(output));
         await cliContext.runTask(async (context) => {
-            await withSpinner(context, { name: "Exporting PDF", subtitle: outputFile }, () =>
-                downloadHostedPdf({ ...hosted, outputFile, options })
-            );
-            context.logger.info(chalk.green(`Exported PDF to ${outputFile}`));
+            await withSpinner(context, cliContext.isTTY, { name: "Exporting PDF", subtitle: outputFile }, async () => {
+                await downloadHostedPdf({ ...hosted, outputFile, options });
+                return [chalk.green(`Exported PDF to ${outputFile}`)];
+            });
         });
         return;
     }
@@ -225,46 +227,72 @@ export async function exportDocs({
 
     const outputDir = path.resolve(output);
     await cliContext.runTask(async (context) => {
-        let count = 0;
         await withSpinner(
             context,
+            cliContext.isTTY,
             { name: format === "md" ? "Exporting Markdown" : "Exporting site", subtitle: outputDir },
             async (task) => {
-                count = await writeExport({
+                const count = await writeExport({
                     source,
                     format,
                     outputDir,
                     onProgress: (written) => task.setSubtitle(`${outputDir} (${written} files written)`)
                 });
+                const summary = [chalk.green(`Exported ${count} files to ${outputDir}`)];
+                if (format === "html") {
+                    summary.push(`Serve it locally with: npx serve ${output}`);
+                }
+                return summary;
             }
         );
-        context.logger.info(chalk.green(`Exported ${count} files to ${outputDir}`));
-        if (format === "html") {
-            context.logger.info(`Serve it locally with: npx serve ${output}`);
-        }
     });
 }
 
 /**
- * Runs one export step behind a spinner; a failure is logged once and fails the command.
- * The subtitle shows progress only: it clears on success, since the summary line the caller
- * logs next (also printed without a TTY, where the spinner never renders) says the same.
+ * Runs one export step behind a spinner and fails the command if it throws. The outcome (the
+ * summary lines `run` returns, or the error) prints after the spinner: on a TTY it replaces the
+ * spinner's subtitle, since logs print above the spinner box; without one the box never renders,
+ * so it is logged.
  */
 async function withSpinner(
     context: TaskContext,
+    isTTY: boolean,
     params: CreateInteractiveTaskParams,
-    run: (task: InteractiveTaskContext) => Promise<unknown>
+    run: (task: InteractiveTaskContext) => Promise<string[]>
 ): Promise<void> {
     const succeeded = await context.runInteractiveTask(params, async (task) => {
+        let summary: string[];
         try {
-            await run(task);
-            task.setSubtitle(undefined);
+            summary = await run(task);
         } catch (error) {
-            task.failAndThrow(exportFailureMessage(error), error, { code: CliError.Code.NetworkError });
+            const headline = exportFailureMessage(error);
+            if (!isTTY) {
+                task.failAndThrow(headline, error, { code: CliError.Code.NetworkError });
+            }
+            const message = `${headline}: ${extractErrorMessage(error)}`;
+            task.setSubtitle(chalk.red(message));
+            reportExportFailure(context, error);
+            throw new TaskAbortSignal(message);
+        }
+        if (isTTY) {
+            task.setSubtitle(summary.join("\n"));
+        } else {
+            for (const line of summary) {
+                context.logger.info(line);
+            }
         }
     });
     if (!succeeded) {
         context.failAndThrow(undefined, new TaskAbortSignal(context.getLastFailureMessage()));
+    }
+}
+
+/** The telemetry `failAndThrow` sends, for a failure shown in the spinner instead of logged. */
+function reportExportFailure(context: TaskContext, error: unknown): void {
+    const code = resolveErrorCode(error, CliError.Code.NetworkError);
+    context.instrumentPostHogEvent({ command: process.argv.join(" "), properties: { failed: true, errorCode: code } });
+    if (shouldReportToSentry(code)) {
+        context.captureException(error, { tags: { "error.code": code } });
     }
 }
 
