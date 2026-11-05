@@ -225,6 +225,9 @@ export interface DocsDefinitionResolverArgs {
     cliName?: string;
 }
 
+/** `${NAME}`, `\\${NAME}` or `\\$\\{NAME\\}`: every form the renderer or publish step treats as a reference. */
+const PROFILE_VAR_REFERENCE = /\$\\?\{(\w+)\\?\}/g;
+
 export class DocsDefinitionResolver {
     private domain: string;
     private docsWorkspace: DocsWorkspace;
@@ -1659,7 +1662,7 @@ export class DocsDefinitionResolver {
         pageProfile?: string
     ): { profileVars?: Record<string, string> } {
         const name = pageProfile ?? this.#profileScope.getStore() ?? this.parsedDocsConfig.profile;
-        if (name == null || absolutePath == null) {
+        if (name == null) {
             return {};
         }
         const profile = this.parsedDocsConfig.profiles?.[name];
@@ -1670,13 +1673,15 @@ export class DocsDefinitionResolver {
                 { code: CliError.Code.ConfigError }
             );
         }
+        if (absolutePath == null) {
+            return {};
+        }
         const markdown = this.parsedDocsConfig.pages[this.toRelativeFilepath(absolutePath)];
         if (markdown == null) {
             return {};
         }
-        const used = Object.entries(profile.vars).filter(
-            ([varName]) => markdown.includes(`\${${varName}}`) || markdown.includes(`\\$\\{${varName}\\}`)
-        );
+        const namesInPage = new Set(Array.from(markdown.matchAll(PROFILE_VAR_REFERENCE), (match) => match[1]));
+        const used = Object.entries(profile.vars).filter(([varName]) => namesInPage.has(varName));
         return used.length > 0 ? { profileVars: Object.fromEntries(used) } : {};
     }
 
@@ -3044,7 +3049,7 @@ export class DocsDefinitionResolver {
             noindex,
             featureFlags: item.featureFlags,
             availability: convertDocsAvailability(frontmatterAvailability ?? item.availability ?? parentAvailability),
-            ...this.profileVarsFor(item.overviewAbsolutePath)
+            ...this.profileVarsFor(item.overviewAbsolutePath, item.profile)
         };
     }
 
