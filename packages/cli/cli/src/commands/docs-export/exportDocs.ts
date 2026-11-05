@@ -249,14 +249,13 @@ export async function exportDocs({
                     outputDir,
                     onProgress: (written) => task.setSubtitle(`${written} files written`)
                 });
-                const summary = [chalk.green(`Exported ${count} files to ${displayPath(outputDir, process.cwd())}`)];
-                if (format === "html") {
-                    summary.push(`Serve it locally with: npx serve ${output}`);
-                }
-                return summary;
+                return [chalk.green(`Exported ${count} files to ${displayPath(outputDir, process.cwd())}`)];
             }
         );
     });
+    if (format === "html") {
+        cliContext.logAfterTasks(`Serve it locally with: npx serve ${output}`);
+    }
 }
 
 /**
