@@ -8,6 +8,7 @@ export const PageActionOption = {
     Claude: "claude",
     Cursor: "cursor",
     ClaudeCode: "claude-code",
+    Codex: "codex",
     Vscode: "vscode",
 } as const;
 export type PageActionOption = (typeof PageActionOption)[keyof typeof PageActionOption];
