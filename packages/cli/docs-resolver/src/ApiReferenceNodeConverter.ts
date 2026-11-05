@@ -78,6 +78,12 @@ const GRAPHQL_TYPE_SECTIONS: { category: FernNavigation.GraphQlTypeCategory; tit
 /**
  * The GraphQL type-page member of {@link FernNavigation.V1.ApiPackageChild}.
  */
+/** Profile values for a markdown page in the API layout; supplied by DocsDefinitionResolver. */
+export type ProfileVarsFor = (
+    absolutePath: AbsoluteFilePath | undefined,
+    pageProfile?: string
+) => { profileVars?: Record<string, string> };
+
 type GraphqlTypeChildNode = Extract<FernNavigation.V1.ApiPackageChild, { type: "graphqlType" }>;
 
 const GRAPHQL_TYPES_URL_SLUG = "types";
@@ -123,7 +129,8 @@ export class ApiReferenceNodeConverter {
         private parentAvailability?: docsYml.RawSchemas.Availability,
         private openApiTags?: Record<string, { id: string; description: string | undefined }>,
         graphqlNamespacesByOperationId?: Map<FdrAPI.GraphQlOperationId, string>,
-        graphqlTypeCategories?: Record<FdrAPI.TypeId, FernNavigation.GraphQlTypeCategory>
+        graphqlTypeCategories?: Record<FdrAPI.TypeId, FernNavigation.GraphQlTypeCategory>,
+        private profileVarsFor: ProfileVarsFor = () => ({})
     ) {
         this.#tagDescriptionContent = new Map();
         this.#graphqlNamespacesByOperationId = graphqlNamespacesByOperationId ?? new Map();
@@ -188,6 +195,7 @@ export class ApiReferenceNodeConverter {
         // IS enabled, the child overview pages belong to the individual tag sections and
         // should not bubble up to make the top-level API reference title clickable.
         let overviewPageId = this.#overviewPageId;
+        let overviewProfileVars = this.profileVarsFor(this.apiSection.overviewAbsolutePath);
         if (overviewPageId == null && !this.apiSection.tagDescriptionPages) {
             const apiPackageWithOverview = this.#children.find(
                 (child): child is FernNavigation.V1.ApiPackageNode =>
@@ -195,6 +203,8 @@ export class ApiReferenceNodeConverter {
             );
             if (apiPackageWithOverview != null) {
                 overviewPageId = apiPackageWithOverview.overviewPageId;
+                const { profileVars } = apiPackageWithOverview as { profileVars?: Record<string, string> };
+                overviewProfileVars = profileVars != null ? { profileVars } : {};
             }
         }
 
@@ -227,7 +237,8 @@ export class ApiReferenceNodeConverter {
             authed: undefined,
             viewers: this.apiSection.viewers,
             orphaned: this.apiSection.orphaned,
-            featureFlags: this.apiSection.featureFlags
+            featureFlags: this.apiSection.featureFlags,
+            ...overviewProfileVars
             // Temporary coercion to satisfy type checker until new fdr-sdk is integrated
         } as ApiReferenceNodeWithCollapsibleConfig;
     }
@@ -325,7 +336,7 @@ export class ApiReferenceNodeConverter {
         parentSlug: FernNavigation.V1.SlugGenerator,
         parentAvailability?: docsYml.RawSchemas.Availability
     ): FernNavigation.V1.PageNode {
-        return toPageNode({
+        const node = toPageNode({
             page: {
                 ...page,
                 availability: page.availability ?? parentAvailability
@@ -338,6 +349,7 @@ export class ApiReferenceNodeConverter {
             hideChildren: this.hideChildren,
             resolveIconFileId: this.resolveIconFileId.bind(this)
         });
+        return { ...node, ...this.profileVarsFor(page.absolutePath, page.profile) };
     }
 
     #convertPackage(
@@ -409,7 +421,8 @@ export class ApiReferenceNodeConverter {
                 authed: undefined,
                 viewers: pkg.viewers,
                 orphaned: pkg.orphaned,
-                featureFlags: pkg.featureFlags
+                featureFlags: pkg.featureFlags,
+                ...this.profileVarsFor(pkg.overviewAbsolutePath)
             } as ApiPackageNodeWithCollapsibleConfig;
         } else {
             this.taskContext.logger.warn(
@@ -442,7 +455,8 @@ export class ApiReferenceNodeConverter {
                 authed: undefined,
                 viewers: pkg.viewers,
                 orphaned: pkg.orphaned,
-                featureFlags: pkg.featureFlags
+                featureFlags: pkg.featureFlags,
+                ...this.profileVarsFor(pkg.overviewAbsolutePath)
             } as ApiPackageNodeWithCollapsibleConfig;
         }
     }
@@ -528,7 +542,8 @@ export class ApiReferenceNodeConverter {
             authed: undefined,
             viewers: section.viewers,
             orphaned: section.orphaned,
-            featureFlags: section.featureFlags
+            featureFlags: section.featureFlags,
+            ...this.profileVarsFor(section.overviewAbsolutePath)
         } as ApiPackageNodeWithCollapsibleConfig;
     }
 

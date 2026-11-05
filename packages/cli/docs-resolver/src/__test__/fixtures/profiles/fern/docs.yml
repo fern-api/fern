@@ -8,10 +8,21 @@ profiles:
   enterprise:
     vars:
       CLI: acme-ent
+  marketing:
+    vars:
+      PRODUCT: Acme
   enterprise-v1:
     vars:
       PRODUCT: Acme Old
 profile: community
+translations:
+  - lang: en
+    default: true
+  - lang: fr
+landing-page:
+  page: Welcome
+  path: ./pages/landing.mdx
+  profile: marketing
 tabs:
   guides:
     display-name: Guides
@@ -37,3 +48,9 @@ navigation:
             profile: community
           - page: Plain
             path: ./pages/plain.mdx
+          - page: Translated
+            path: ./pages/translated.mdx
+          - api: API
+            layout:
+              - page: API guide
+                path: ./pages/api-guide.mdx

@@ -1677,11 +1677,15 @@ export class DocsDefinitionResolver {
         if (absolutePath == null) {
             return {};
         }
-        const markdown = this.parsedDocsConfig.pages[this.toRelativeFilepath(absolutePath)];
-        if (markdown == null) {
-            return {};
-        }
-        const namesInPage = new Set(Array.from(markdown.matchAll(PROFILE_VAR_REFERENCE), (match) => match[1]));
+        // Translations share the page's nav node, so their references count too.
+        const relativePath = this.toRelativeFilepath(absolutePath);
+        const sources = [
+            this.parsedDocsConfig.pages[relativePath],
+            ...Object.values(this.parsedDocsConfig.translationPages ?? {}).map((pages) => pages[relativePath])
+        ].filter(isNonNullish);
+        const namesInPage = new Set(
+            sources.flatMap((markdown) => Array.from(markdown.matchAll(PROFILE_VAR_REFERENCE), (match) => match[1]))
+        );
         const used = Object.entries(profile.vars).filter(([varName]) => namesInPage.has(varName));
         // Publish skips every profile-owned name, so a name this profile lacks falls back to CI here.
         if (this.docsWorkspace.config.settings?.substituteEnvVars) {
@@ -1774,7 +1778,8 @@ export class DocsDefinitionResolver {
             pageId,
             authed: undefined,
             noindex: landingPageConfig.noindex || this.markdownFilesToNoIndex.get(landingPageConfig.absolutePath),
-            featureFlags: landingPageConfig.featureFlags
+            featureFlags: landingPageConfig.featureFlags,
+            ...this.profileVarsFor(landingPageConfig.absolutePath, landingPageConfig.profile)
         };
     }
 
@@ -2357,7 +2362,8 @@ export class DocsDefinitionResolver {
             parentAvailability ?? item.availability,
             openApiTags,
             graphqlData.namespacesByOperationId,
-            graphqlData.typeCategories
+            graphqlData.typeCategories,
+            this.profileVarsFor.bind(this)
         );
 
         // Extract tag description content and add it to both rawMarkdownFiles and parsedDocsConfig.pages
@@ -2471,7 +2477,11 @@ export class DocsDefinitionResolver {
             this.collectedFileIds,
             undefined,
             hideChildren,
-            parentAvailability ?? item.availability
+            parentAvailability ?? item.availability,
+            undefined,
+            undefined,
+            undefined,
+            this.profileVarsFor.bind(this)
         ).get();
     }
 

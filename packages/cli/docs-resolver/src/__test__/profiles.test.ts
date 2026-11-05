@@ -14,9 +14,10 @@ function collectPages(node: unknown, pages: PageLike[] = []): PageLike[] {
         node.forEach((child) => collectPages(child, pages));
     } else if (node != null && typeof node === "object") {
         const record = node as Record<string, unknown>;
-        if (record.type === "page") {
+        if (record.type === "page" || record.type === "landingPage") {
             pages.push(record as unknown as PageLike);
         }
+        collectPages(record.landingPage, pages);
         collectPages(record.child, pages);
         collectPages(record.children, pages);
     }
@@ -40,7 +41,8 @@ describe("profiles", () => {
             apiWorkspaces: [],
             taskContext: context,
             uploadFiles: async () => [],
-            registerApi: async () => ""
+            registerApi: async () => "",
+            skipApiReferences: true
         });
         const resolved = await resolver.resolve();
         const bySlug = Object.fromEntries(collectPages(resolved.config.root).map((page) => [page.slug, page]));
@@ -56,5 +58,11 @@ describe("profiles", () => {
         // pages without profile vars carry none, so search keeps stored sections
         expect(bySlug["guides/enterprise/plain"]).toBeDefined();
         expect(bySlug["guides/enterprise/plain"]?.profileVars).toBeUndefined();
+        // landing page takes its own profile
+        expect(bySlug["welcome"]?.profileVars).toEqual({ PRODUCT: "Acme" });
+        // a name used only in a translation still gets its value
+        expect(bySlug["guides/enterprise/translated"]?.profileVars).toEqual({ CLI: "acme-ent" });
+        // markdown pages inside an API reference layout
+        expect(bySlug["guides/enterprise/api/api-guide"]?.profileVars).toEqual({ CLI: "acme-ent" });
     });
 });
