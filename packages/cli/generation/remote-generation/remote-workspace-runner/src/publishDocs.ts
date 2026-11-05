@@ -17,6 +17,7 @@ import {
     findIncompatibleTranslatedApiIds,
     getApiRegistrationConcurrency,
     getTranslatedAnnouncement,
+    getTranslatedSettings,
     markUntranslatedNavNodesNoindex,
     type RegisterApiFn,
     replaceImagePathsAndUrls,
@@ -1360,7 +1361,8 @@ export async function publishDocs({
                                 ...docsDefinition.config,
                                 root: updatedRoot,
                                 announcement: translatedAnnouncement,
-                                navbarLinks: translatedNavbarLinks
+                                navbarLinks: translatedNavbarLinks,
+                                settings: getTranslatedSettings(docsDefinition.config.settings, localeNavOverlay)
                             }
                         };
                         const pageCount = Object.keys(localePages).length;

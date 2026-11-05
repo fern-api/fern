@@ -649,6 +649,8 @@ export interface TranslationNavigationOverlay {
      * navbar links in the FDR upload for this locale.
      */
     navbarLinks: CjsFdrSdk.docs.v1.commons.NavbarLink[] | undefined;
+    /** Translated `settings.search-text` (the search bar placeholder) for this locale. */
+    searchText?: string;
 }
 
 export interface TabOverlay {
