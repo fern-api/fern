@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.196.2
+  changelogEntry:
+    - summary: |
+        Serve `agents.robots-txt`, `agents.llms-txt`, and `agents.llms-full-txt` files that are not named
+        `robots.txt`, `llms.txt`, or `llms-full.txt` (or that live in a subfolder) on the new docs hosting.
+        The configured file is now also published at its well-known path.
+      type: fix
+  createdAt: "2026-11-05"
+  irVersion: 67
 - version: 5.196.1
   changelogEntry:
     - summary: |
