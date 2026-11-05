@@ -6,6 +6,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import yazl from "yazl";
 import {
     defaultOutput,
+    displayPath,
     exportFailureMessage,
     isSafeOutputDir,
     keepsFile,
@@ -46,6 +47,13 @@ describe("keepsFile", () => {
         const files = ["index.html", "guides/quickstart.md", "llms.txt", "_astro/main.css", "fern-nav/abc.json"];
         expect(files.filter((filePath) => keepsFile(filePath, "html"))).toEqual(files);
         expect(files.filter((filePath) => keepsFile(filePath, "md"))).toEqual(["guides/quickstart.md", "llms.txt"]);
+    });
+});
+
+describe("displayPath", () => {
+    it("is relative inside the folder the command runs from, else absolute", () => {
+        expect(displayPath("/work/site/docs-acme-com-html", "/work/site")).toBe("./docs-acme-com-html");
+        expect(displayPath("/tmp/out", "/work/site")).toBe("/tmp/out");
     });
 });
 

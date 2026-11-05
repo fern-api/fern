@@ -128,6 +128,17 @@ async function forEachConcurrently<T>(items: T[], limit: number, run: (item: T) 
     await Promise.all(workers);
 }
 
+/**
+ * `target` as the user would type it: `./name` inside `cwd`, else absolute. Short enough not to
+ * wrap, since the spinner redraw counts newlines, not wrapped rows, and leaves stray lines behind.
+ */
+export function displayPath(target: string, cwd: string): string {
+    const relative = path.relative(cwd, target);
+    return relative === "" || relative.startsWith("..") || path.isAbsolute(relative)
+        ? target
+        : `.${path.sep}${relative}`;
+}
+
 /** `--output` for a PDF export names a file; a bare name like `docs-export` gets `.pdf` added. */
 export function pdfOutputPath(output: string): string {
     return output.toLowerCase().endsWith(".pdf") ? output : `${output}.pdf`;
@@ -209,9 +220,9 @@ export async function exportDocs({
     if (format === "pdf") {
         const outputFile = path.resolve(pdfOutputPath(output));
         await cliContext.runTask(async (context) => {
-            await withSpinner(context, cliContext.isTTY, { name: "Exporting PDF", subtitle: outputFile }, async () => {
+            await withSpinner(context, cliContext.isTTY, { name: "Exporting PDF" }, async () => {
                 await downloadHostedPdf({ ...hosted, outputFile, options });
-                return [chalk.green(`Exported PDF to ${outputFile}`)];
+                return [chalk.green(`Exported PDF to ${displayPath(outputFile, process.cwd())}`)];
             });
         });
         return;
@@ -230,15 +241,15 @@ export async function exportDocs({
         await withSpinner(
             context,
             cliContext.isTTY,
-            { name: format === "md" ? "Exporting Markdown" : "Exporting site", subtitle: outputDir },
+            { name: format === "md" ? "Exporting Markdown" : "Exporting site" },
             async (task) => {
                 const count = await writeExport({
                     source,
                     format,
                     outputDir,
-                    onProgress: (written) => task.setSubtitle(`${outputDir} (${written} files written)`)
+                    onProgress: (written) => task.setSubtitle(`${written} files written`)
                 });
-                const summary = [chalk.green(`Exported ${count} files to ${outputDir}`)];
+                const summary = [chalk.green(`Exported ${count} files to ${displayPath(outputDir, process.cwd())}`)];
                 if (format === "html") {
                     summary.push(`Serve it locally with: npx serve ${output}`);
                 }
