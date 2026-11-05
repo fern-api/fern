@@ -11,6 +11,7 @@ import { docsYml, parseAudiences, parseDocsConfiguration, WithoutQuestionMarks }
 import {
     assertNever,
     extractErrorMessage,
+    getProfileVarNames,
     isNonNullish,
     replaceEnvVariables,
     visitDiscriminatedUnion
@@ -1682,6 +1683,15 @@ export class DocsDefinitionResolver {
         }
         const namesInPage = new Set(Array.from(markdown.matchAll(PROFILE_VAR_REFERENCE), (match) => match[1]));
         const used = Object.entries(profile.vars).filter(([varName]) => namesInPage.has(varName));
+        // Publish skips every profile-owned name, so a name this profile lacks falls back to CI here.
+        if (this.docsWorkspace.config.settings?.substituteEnvVars) {
+            for (const varName of getProfileVarNames(this.parsedDocsConfig.profiles)) {
+                const ciValue = process.env[varName];
+                if (namesInPage.has(varName) && profile.vars[varName] == null && ciValue != null) {
+                    used.push([varName, ciValue]);
+                }
+            }
+        }
         return used.length > 0 ? { profileVars: Object.fromEntries(used) } : {};
     }
 
