@@ -72,6 +72,7 @@ import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace.js";
 import { parseDocsDevDuration } from "./commands/docs-dev/parseDocsDevDuration.js";
 import { DEFAULT_DOCS_DEV_PORT, runDocsDevStop } from "./commands/docs-dev/stopDocsDevServer.js";
 import { docsDiff } from "./commands/docs-diff/docsDiff.js";
+import { exportDocs } from "./commands/docs-export/exportDocs.js";
 import { generateLibraryDocs } from "./commands/docs-md-generate/generateLibraryDocs.js";
 import { deleteDocsPreview } from "./commands/docs-preview/deleteDocsPreview.js";
 import { listDocsPreview } from "./commands/docs-preview/listDocsPreview.js";
@@ -2212,6 +2213,7 @@ function addDocsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         addDocsPreviewCommand(yargs, cliContext);
         addDocsDiffCommand(yargs, cliContext);
         addDocsMdCommand(yargs, cliContext);
+        addDocsExportCommand(yargs, cliContext);
         addDocsThemeCommand(yargs, cliContext);
         return yargs;
     });
@@ -2407,6 +2409,69 @@ function addDocsMdGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCo
                 library: argv.library,
                 local: !argv.remote,
                 keepLogs: argv.keepLogs
+            });
+        }
+    );
+}
+
+function addDocsExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "export",
+        "Download a copy of your live Fern-hosted docs site as static HTML, a folder of Markdown, or one PDF",
+        (yargs) =>
+            yargs
+                .option("format", {
+                    choices: ["html", "md", "pdf"] as const,
+                    default: "html" as const,
+                    description:
+                        "html: the full site, including each page's .md copy, served with any static file server. md: only the per-page Markdown and llms.txt. pdf: one PDF of the site"
+                })
+                .option("output", {
+                    type: "string",
+                    description:
+                        "Folder to write the export into, by default named after the site and format (docs-acme-com-html). Emptied first (except .git); must not contain the current folder. For pdf, the file to write (.pdf is added if missing)"
+                })
+                .option("instance", {
+                    type: "string",
+                    description: "The docs.yml instance url to export. Required when docs.yml has more than one"
+                })
+                .option("cover", {
+                    type: "boolean",
+                    description: "pdf: include the cover page (default). Use --no-cover to leave it out"
+                })
+                .option("toc", {
+                    type: "boolean",
+                    description: "pdf: include the table of contents (default). Use --no-toc to leave it out"
+                })
+                .option("cover-title", { type: "string", description: "pdf: title on the cover page" })
+                .option("cover-subtitle", { type: "string", description: "pdf: subtitle on the cover page" })
+                .option("header-left", {
+                    type: "string",
+                    description: "pdf: text at the top left of each page. Supports {pageIndex} and {totalPages}"
+                })
+                .option("header-right", { type: "string", description: "pdf: text at the top right of each page" })
+                .option("footer-left", { type: "string", description: "pdf: text at the bottom left of each page" })
+                .option("footer-right", { type: "string", description: "pdf: text at the bottom right of each page" }),
+        async (argv) => {
+            cliContext.instrumentPostHogEvent({
+                command: "fern docs export",
+                properties: { format: argv.format }
+            });
+            await exportDocs({
+                cliContext,
+                format: argv.format,
+                output: argv.output,
+                instance: argv.instance,
+                pdf: {
+                    cover: argv.cover,
+                    toc: argv.toc,
+                    coverTitle: argv.coverTitle,
+                    coverSubtitle: argv.coverSubtitle,
+                    headerLeft: argv.headerLeft,
+                    headerRight: argv.headerRight,
+                    footerLeft: argv.footerLeft,
+                    footerRight: argv.footerRight
+                }
             });
         }
     );
