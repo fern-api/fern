@@ -13,7 +13,12 @@ const h = vi.hoisted(() => ({
     getLatestGeneratorVersion: vi.fn(),
     loadGeneratorsConfiguration: vi.fn(),
     askToLogin: vi.fn(async () => ({ type: "organization" as const, value: "test-token" })),
-    getToken: vi.fn(async () => ({ type: "organization" as const, value: "test-token" }))
+    getToken: vi.fn(
+        async (): Promise<{ type: "organization"; value: string } | undefined> => ({
+            type: "organization",
+            value: "test-token"
+        })
+    )
 }));
 
 vi.mock("@fern-api/configuration-loader", () => ({
@@ -197,6 +202,20 @@ describe("generator upgrade version reporting", () => {
         expect(h.askToLogin).not.toHaveBeenCalled();
         expect(fetchMock).not.toHaveBeenCalled();
         expect(h.getLatestGeneratorVersion).not.toHaveBeenCalled();
+    });
+
+    it("treats an unreadable token at exit time as no account instead of failing the run", async () => {
+        h.resolvedSdkGenApiEnabled = true;
+        h.getToken.mockRejectedValueOnce(new Error("token file unreadable"));
+        const fetchMock = vi.fn();
+        vi.stubGlobal("fetch", fetchMock);
+
+        await expect(
+            getLatestGeneratorVersions({ cliContext, project, skipFeatureFlagRequest: true })
+        ).resolves.toBeDefined();
+
+        expect(h.askToLogin).not.toHaveBeenCalled();
+        expect(fetchMock).not.toHaveBeenCalled();
     });
 
     it("falls back to FDR when skipFeatureFlagRequest is set and the flag was never resolved", async () => {
