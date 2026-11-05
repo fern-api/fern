@@ -253,6 +253,9 @@ describe("runRemoteGenerationForGenerator synthesized SDK Config latest", () => 
         }
         const sourceArchive = archive();
         const run = vi.fn(async (parameters: FernSdkGenApiBuildParameters) => {
+            const runtimeBundle = JSON.parse(gunzipSync(parameters.payload.body).toString("utf8"));
+            expect(runtimeBundle.config.output.mode.version).toBe("0.0.0-fern-placeholder");
+
             const request = createFernSdkGenApiRequest({
                 apiName: parameters.apiName,
                 organization: parameters.organization,
@@ -333,7 +336,12 @@ describe("runRemoteGenerationForGenerator synthesized SDK Config latest", () => 
             }
             const sourceArchive = archive();
             let target: ReturnType<typeof createFernSdkGenApiRequest>["targets"][number] | undefined;
+            let runtimeBundleOutputVersion: string | undefined;
             const run = vi.fn(async (parameters: FernSdkGenApiBuildParameters) => {
+                if (parameters.payload.payloadKind === "fern-runtime-bundle" && parameters.sdkVersion === "AUTO") {
+                    const runtimeBundle = JSON.parse(gunzipSync(parameters.payload.body).toString("utf8"));
+                    runtimeBundleOutputVersion = runtimeBundle.config.output.mode.version;
+                }
                 target = createFernSdkGenApiRequest({
                     apiName: parameters.apiName,
                     organization: parameters.organization,
@@ -379,25 +387,27 @@ describe("runRemoteGenerationForGenerator synthesized SDK Config latest", () => 
             if (run.mock.calls.length !== 1) {
                 throw new Error(`Expected one sdk-gen-api build, got ${run.mock.calls.length}`);
             }
-            return target;
+            return { target, runtimeBundleOutputVersion };
         }
 
         it("requests a download instead of a GitHub push with a blanked branch", async () => {
-            await expect(submittedTarget({})).resolves.toMatchObject({ requestedOutput: { type: "download" } });
+            const { target } = await submittedTarget({});
+            expect(target).toMatchObject({ requestedOutput: { type: "download" } });
         });
 
         it("keeps AUTO and sends the GitHub context for semantic preview versioning", async () => {
-            const target = await submittedTarget({ version: "AUTO" });
+            const { target, runtimeBundleOutputVersion } = await submittedTarget({ version: "AUTO" });
 
             expect(target?.requestedOutput).toEqual({ type: "download" });
             expect(target?.sdk).toEqual({ name: "Petstore", version: "AUTO" });
             expect(target?.autoVersionPreview).toEqual({
                 github: expect.objectContaining({ type: "github", repository: "acme/sdk", mode: "push" })
             });
+            expect(runtimeBundleOutputVersion).toBe("0.0.0-fern-placeholder");
         });
 
         it("uses the sanitized GitHub context retained by the SDK Config preview loader", async () => {
-            const target = await submittedTarget({
+            const { target } = await submittedTarget({
                 version: undefined,
                 sdkConfigV1: {
                     sdkName: "Petstore",
@@ -426,14 +436,13 @@ describe("runRemoteGenerationForGenerator synthesized SDK Config latest", () => 
         });
 
         it("keeps the GitHub output when sdk preview pushes a preview branch", async () => {
-            await expect(
-                submittedTarget({
-                    absolutePathToPreview: undefined,
-                    isPreview: false,
-                    fiddlePreview: true,
-                    pushPreviewBranch: true
-                })
-            ).resolves.toMatchObject({
+            const { target } = await submittedTarget({
+                absolutePathToPreview: undefined,
+                isPreview: false,
+                fiddlePreview: true,
+                pushPreviewBranch: true
+            });
+            expect(target).toMatchObject({
                 requestedOutput: { type: "github", repository: "acme/sdk", mode: "push" }
             });
         });
