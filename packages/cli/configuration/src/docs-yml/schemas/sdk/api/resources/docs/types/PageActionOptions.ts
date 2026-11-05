@@ -62,6 +62,13 @@ export interface PageActionOptions {
      */
     mcp?: boolean;
     /**
+     * Overrides the server name used by the "Connect to Claude Code" and "Connect to Cursor"
+     * buttons, for example `my-product-docs`. Claude Code only accepts letters, numbers, `-` and `_`,
+     * so other characters are replaced with `-`. Defaults to a name derived from the docs hostname
+     * (`docs.example.com` becomes `docs-example-com`).
+     */
+    mcpServerName?: string;
+    /**
      * When enabled, displays an "Open in VS Code" button that allows users to open the page content in Visual Studio Code for editing and development.
      *
      * @default: false

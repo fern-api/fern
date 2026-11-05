@@ -41,6 +41,7 @@ export interface ParsedPageActionsConfig {
         claudeCode: boolean;
         vscode: boolean;
         mcp: boolean;
+        mcpServerName: string | undefined;
         custom: ParsedCustomPageAction[];
         skills: CjsFdrSdk.docs.v1.commons.PageActionOptions["skills"];
     };

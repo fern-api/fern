@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `page-actions.options.mcp-server-name` to `docs.yml` to set the MCP server name used by the
+    "Connect to Claude Code" and "Connect to Cursor" buttons (for example `my-product-docs`). The
+    default is still a name derived from the docs hostname.
+  type: feat

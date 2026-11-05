@@ -476,6 +476,13 @@ types:
           discovering the endpoint would cause confusion.
 
           @default: true
+      mcp-server-name:
+        type: optional<string>
+        docs: |
+          Overrides the server name used by the "Connect to Claude Code" and "Connect to Cursor"
+          buttons, for example `my-product-docs`. Claude Code only accepts letters, numbers, `-` and `_`,
+          so other characters are replaced with `-`. Defaults to a name derived from the docs hostname
+          (`docs.example.com` becomes `docs-example-com`).
       vscode:
         type: optional<boolean>
         docs: |
