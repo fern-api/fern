@@ -96,6 +96,7 @@ export * from "./LibraryConfiguration.js";
 export * from "./LibraryInputConfiguration.js";
 export * from "./LibraryLanguage.js";
 export * from "./LibraryName.js";
+export * from "./LibraryOrganizeBy.js";
 export * from "./LibraryOutputConfiguration.js";
 export * from "./LibraryReferenceConfiguration.js";
 export * from "./LibrarySlugStyle.js";
