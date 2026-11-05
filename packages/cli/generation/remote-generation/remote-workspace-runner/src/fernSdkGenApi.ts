@@ -20,6 +20,7 @@ import {
     validateFernSdkGenApiPublishUrl,
     validateFernSdkGenApiPublishTargets as validatePublishTargets
 } from "./directPublishCredentials.js";
+import { getGuestSdkBuildUrl } from "./guestSdkBuildLink.js";
 import { getSdkGenApiPreviewOutputDirectoryName } from "./previewOutputDirectory.js";
 import { type PublishTarget } from "./publishTarget.js";
 import { downloadArchiveForTask, downloadFilesForTask } from "./RemoteTaskHandler.js";
@@ -1510,7 +1511,7 @@ async function executeFernSdkGenApiBuild(
 
         const allTargetsTerminal = request.targets.every((requestTarget) => isTerminal(status, requestTarget.targetId));
         if (allTargetsTerminal || status.status === "failed" || status.status === "succeeded") {
-            return Promise.allSettled(
+            const results = await Promise.allSettled(
                 participants.map((participant, index) =>
                     finishFernSdkGenApiTarget(
                         participant,
@@ -1520,6 +1521,8 @@ async function executeFernSdkGenApiBuild(
                     )
                 )
             );
+            logGuestBuildLink({ participant: first, status, buildId });
+            return results;
         }
         if (isFinalPoll) {
             return first.context.failAndThrow(
@@ -2125,6 +2128,35 @@ function formatKiB(bytes: number): string {
 function isTerminal(status: FernBuildStatus, targetId: string): boolean {
     const target = status.targets.find((candidate) => candidate.targetId === targetId);
     return target?.status === "failed" || target?.status === "succeeded";
+}
+
+/**
+ * Like the site-only claim link of a guest docs publish: the one dashboard page of this build (all
+ * its SDKs), where they can be re-downloaded and claimed while the guest session's work is kept.
+ * Printed once per build, and only when the build produced something to download: a no-change
+ * AUTO preview has no artifact, so there is nothing to link to.
+ */
+function logGuestBuildLink({
+    participant,
+    status,
+    buildId
+}: {
+    participant: FernSdkGenApiBuildParameters;
+    status: FernBuildStatus;
+    buildId: string;
+}): void {
+    if (participant.token.type !== "guest") {
+        return;
+    }
+    if (!status.targets.some((target) => target.status === "succeeded" && target.result?.artifactUrl != null)) {
+        return;
+    }
+    const buildUrl = getGuestSdkBuildUrl({ claimUrl: participant.token.claimUrl, buildId });
+    participant.context.logger.info(
+        buildUrl != null
+            ? `Build ${buildId} is kept for 7 days: ${buildUrl} (claiming the session moves it into your organization)`
+            : `Build ${buildId} is kept for 7 days (claiming the session moves it into your organization)`
+    );
 }
 
 async function finishFernSdkGenApiTarget(
