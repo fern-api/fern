@@ -157,9 +157,13 @@ describe("safeRelativePath", () => {
 });
 
 describe("exportFailureMessage", () => {
-    it("explains the daily limit and a site outside the organization", () => {
+    it("explains the daily limit and passes on why FDR refused access", () => {
         expect(exportFailureMessage(new ORPCError("TOO_MANY_REQUESTS"))).toMatch(/daily export limit/);
-        expect(exportFailureMessage(new ORPCError("FORBIDDEN"))).toMatch(/does not belong to the organization/);
+        expect(
+            exportFailureMessage(new ORPCError("FORBIDDEN", { message: "User does not belong to organization" }))
+        ).toBe(
+            "Export failed: User does not belong to organization. Check the organization in fern.config.json and the docs URL in docs.yml."
+        );
         expect(exportFailureMessage(new Error("boom"))).toBe("Export failed: boom");
         expect(exportFailureMessage(new Error("Export failed: no live build (task t1)"))).toBe(
             "Export failed: no live build (task t1)"

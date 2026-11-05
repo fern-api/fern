@@ -188,7 +188,8 @@ export function exportFailureMessage(error: unknown): string {
             return "Export failed: the organization hit its daily export limit. Try again tomorrow.";
         }
         if (error.code === "FORBIDDEN") {
-            return "Export failed: this docs site does not belong to the organization in fern.config.json.";
+            const reason = error.message.replace(/\.$/, "");
+            return `Export failed: ${reason}. Check the organization in fern.config.json and the docs URL in docs.yml.`;
         }
     }
     return `Export failed: ${extractErrorMessage(error).replace(/^Export failed:\s*/i, "")}`;
