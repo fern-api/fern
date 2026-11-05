@@ -49,11 +49,11 @@ export function getTranslatedAnnouncement(overlay: docsYml.TranslationNavigation
 export function getTranslatedSettings<T extends { searchText?: string }>(
     settings: T | undefined,
     overlay: docsYml.TranslationNavigationOverlay | undefined
-): T | undefined {
+): T | { searchText: string } | undefined {
     if (overlay?.searchText == null) {
         return settings;
     }
-    return { ...settings, searchText: overlay.searchText } as T;
+    return { ...settings, searchText: overlay.searchText };
 }
 
 function walkAndApply(node: unknown, overlay: docsYml.TranslationNavigationOverlay): unknown {
