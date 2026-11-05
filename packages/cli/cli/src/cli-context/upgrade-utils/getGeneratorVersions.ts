@@ -1,3 +1,4 @@
+import { getToken } from "@fern-api/auth";
 import {
     addDefaultDockerOrgIfNotPresent,
     generatorsYml,
@@ -279,6 +280,11 @@ async function lookupLatestGeneratorVersion({
         skipFeatureFlagRequest
     });
     if (useSdkGenApi) {
+        // The exit-time nudge must not ask for a login: a run without an account (e.g. `fern generate --guest`)
+        // has just succeeded, and sdk-gen-api version discovery needs an account token. Say nothing instead.
+        if (skipFeatureFlagRequest === true && (await getToken()) == null) {
+            return undefined;
+        }
         return (
             await getSdkGenApiGeneratorVersions({
                 generatorId: addDefaultDockerOrgIfNotPresent(generatorName),
