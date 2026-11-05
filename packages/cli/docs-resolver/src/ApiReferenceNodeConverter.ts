@@ -81,7 +81,8 @@ const GRAPHQL_TYPE_SECTIONS: { category: FernNavigation.GraphQlTypeCategory; tit
 /** Profile values for a markdown page in the API layout; supplied by DocsDefinitionResolver. */
 export type ProfileVarsFor = (
     absolutePath: AbsoluteFilePath | undefined,
-    pageProfile?: string
+    pageProfile?: string,
+    generatedMarkdown?: string
 ) => { profileVars?: Record<string, string> };
 
 type GraphqlTypeChildNode = Extract<FernNavigation.V1.ApiPackageChild, { type: "graphqlType" }>;
@@ -241,6 +242,15 @@ export class ApiReferenceNodeConverter {
             ...overviewProfileVars
             // Temporary coercion to satisfy type checker until new fdr-sdk is integrated
         } as ApiReferenceNodeWithCollapsibleConfig;
+    }
+
+    #tagDescriptionProfileVars(pageId: FernNavigation.V1.PageId | undefined): { profileVars?: Record<string, string> } {
+        if (pageId == null) {
+            return {};
+        }
+        const path = AbsoluteFilePath.of(`/${pageId}`);
+        const content = this.#tagDescriptionContent.get(path);
+        return content == null ? {} : this.profileVarsFor(path, undefined, content);
     }
 
     public getTagDescriptionContent(): Map<AbsoluteFilePath, string> {
@@ -422,7 +432,9 @@ export class ApiReferenceNodeConverter {
                 viewers: pkg.viewers,
                 orphaned: pkg.orphaned,
                 featureFlags: pkg.featureFlags,
-                ...this.profileVarsFor(pkg.overviewAbsolutePath)
+                ...(explicitOverviewPageId != null
+                    ? this.profileVarsFor(pkg.overviewAbsolutePath)
+                    : this.#tagDescriptionProfileVars(overviewPageId))
             } as ApiPackageNodeWithCollapsibleConfig;
         } else {
             this.taskContext.logger.warn(
@@ -562,6 +574,7 @@ export class ApiReferenceNodeConverter {
         if (subpackage != null) {
             const subpackageId = ApiDefinitionHolder.getSubpackageId(subpackage);
             const subpackageNodeId = this.#idgen.get(`${this.apiDefinitionId}:${subpackageId}`);
+            const overviewPageId = this.createTagDescriptionPageId(subpackage, unknownIdentifier);
 
             if (this.#visitedSubpackages.has(subpackageId)) {
                 this.taskContext.logger.error(packageReuseError(unknownIdentifier));
@@ -582,7 +595,8 @@ export class ApiReferenceNodeConverter {
                 slug: slug.get(),
                 icon: undefined,
                 hidden: this.hideChildren,
-                overviewPageId: this.createTagDescriptionPageId(subpackage, unknownIdentifier),
+                ...this.#tagDescriptionProfileVars(overviewPageId),
+                overviewPageId,
                 collapsible: undefined,
                 collapsedByDefault: undefined,
                 availability: convertDocsAvailability(parentAvailability),
@@ -1153,6 +1167,7 @@ export class ApiReferenceNodeConverter {
                     icon: undefined,
                     hidden: this.hideChildren,
                     overviewPageId: tagDescriptionPageId,
+                    ...this.#tagDescriptionProfileVars(tagDescriptionPageId),
                     collapsible: undefined,
                     collapsedByDefault: undefined,
                     availability: convertDocsAvailability(parentAvailability),

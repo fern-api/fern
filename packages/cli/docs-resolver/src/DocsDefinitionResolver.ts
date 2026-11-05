@@ -1660,7 +1660,8 @@ export class DocsDefinitionResolver {
      */
     private profileVarsFor(
         absolutePath: AbsoluteFilePath | undefined,
-        pageProfile?: string
+        pageProfile?: string,
+        generatedMarkdown?: string
     ): { profileVars?: Record<string, string> } {
         const name = pageProfile ?? this.#profileScope.getStore() ?? this.parsedDocsConfig.profile;
         if (name == null) {
@@ -1674,15 +1675,19 @@ export class DocsDefinitionResolver {
                 { code: CliError.Code.ConfigError }
             );
         }
-        if (absolutePath == null) {
+        let sources: string[];
+        if (generatedMarkdown != null) {
+            sources = [generatedMarkdown];
+        } else if (absolutePath != null) {
+            // Translations share the page's nav node, so their references count too.
+            const relativePath = this.toRelativeFilepath(absolutePath);
+            sources = [
+                this.parsedDocsConfig.pages[relativePath],
+                ...Object.values(this.parsedDocsConfig.translationPages ?? {}).map((pages) => pages[relativePath])
+            ].filter(isNonNullish);
+        } else {
             return {};
         }
-        // Translations share the page's nav node, so their references count too.
-        const relativePath = this.toRelativeFilepath(absolutePath);
-        const sources = [
-            this.parsedDocsConfig.pages[relativePath],
-            ...Object.values(this.parsedDocsConfig.translationPages ?? {}).map((pages) => pages[relativePath])
-        ].filter(isNonNullish);
         const namesInPage = new Set(
             sources.flatMap((markdown) => Array.from(markdown.matchAll(PROFILE_VAR_REFERENCE), (match) => match[1]))
         );
@@ -2384,7 +2389,7 @@ export class DocsDefinitionResolver {
                                 `Error in tag description environment variable substitution: ${e}`
                             )
                     },
-                    { substituteAsEmpty: false }
+                    { substituteAsEmpty: false, keep: getProfileVarNames(this.parsedDocsConfig.profiles) }
                 );
             }
 
