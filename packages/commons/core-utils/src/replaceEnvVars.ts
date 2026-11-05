@@ -70,6 +70,9 @@ function deferredPlaceholder(name: string, before: string, after: string): strin
  *
  * Escaped patterns using `\$\{VAR\}` are converted to literal `${VAR}` without substitution.
  *
+ * Names in `options.keep` (profile-owned vars) are left for the docs renderer: `${VAR}` stays as is,
+ * and `\$\{VAR\}` becomes `\${VAR}`, the renderer's escape.
+ *
  * @param content
  * @param context
  * @param options
@@ -78,18 +81,25 @@ function deferredPlaceholder(name: string, before: string, after: string): strin
 export function replaceEnvVariables<T>(
     content: T,
     context: { onError: (message?: string) => unknown | void | never },
-    options: { substituteAsEmpty?: boolean } = {}
+    options: { substituteAsEmpty?: boolean; keep?: ReadonlySet<string> } = {}
 ): T {
     if (typeof content === "string") {
         const deferred = getDeferredEnvVars();
+        const keep = options.keep;
 
         // First, replace escaped patterns \$\{VAR\} with placeholders to protect them
         let transformed = (content as string).replace(ESCAPED_ENV_VAR_REGEX, (_substring, varName) => {
+            if (keep?.has(varName)) {
+                return `\\${PLACEHOLDER_PREFIX}${varName}\0`;
+            }
             return `${PLACEHOLDER_PREFIX}${varName}\0`;
         });
 
         // Then, substitute remaining (non-escaped) env var patterns
         transformed = transformed.replace(ENV_VAR_REGEX, (substring, envVarName, offset: number, whole: string) => {
+            if (keep?.has(envVarName)) {
+                return substring;
+            }
             if (deferred.has(envVarName)) {
                 return deferredPlaceholder(envVarName, whole.slice(0, offset), whole.slice(offset + substring.length));
             }

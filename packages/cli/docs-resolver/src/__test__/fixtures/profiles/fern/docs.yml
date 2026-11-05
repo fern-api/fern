@@ -1,0 +1,39 @@
+instances:
+  - url: profiles.docs.buildwithfern.com
+title: Profiles
+profiles:
+  community:
+    vars:
+      CLI: acme
+  enterprise:
+    vars:
+      CLI: acme-ent
+  enterprise-v1:
+    vars:
+      PRODUCT: Acme Old
+profile: community
+tabs:
+  guides:
+    display-name: Guides
+navigation:
+  - tab: guides
+    variants:
+      - title: Community
+        layout:
+          - page: Install
+            path: ./pages/install.mdx
+      - title: Enterprise
+        profile: enterprise
+        layout:
+          - page: Install
+            path: ./pages/install.mdx
+          - section: Old
+            profile: enterprise-v1
+            contents:
+              - page: Old install
+                path: ./pages/old-install.mdx
+          - page: Override
+            path: ./pages/override.mdx
+            profile: community
+          - page: Plain
+            path: ./pages/plain.mdx

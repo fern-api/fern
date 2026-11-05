@@ -37,6 +37,7 @@ import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { loadApis } from "@fern-api/project-loader";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
+import { AsyncLocalStorage } from "async_hooks";
 import { createHash } from "crypto";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
@@ -1643,6 +1644,42 @@ export class DocsDefinitionResolver {
         });
     }
 
+    #profileScope = new AsyncLocalStorage<string>();
+
+    private withProfile<T>(profile: string | undefined, run: () => Promise<T>): Promise<T> {
+        return profile == null ? run() : this.#profileScope.run(profile, run);
+    }
+
+    /**
+     * Profile values for one page: the innermost `profile:` (page, then section, tab variant, tab,
+     * version, product, site), limited to names the page uses so other pages keep stored search sections.
+     */
+    private profileVarsFor(
+        absolutePath: AbsoluteFilePath | undefined,
+        pageProfile?: string
+    ): { profileVars?: Record<string, string> } {
+        const name = pageProfile ?? this.#profileScope.getStore() ?? this.parsedDocsConfig.profile;
+        if (name == null || absolutePath == null) {
+            return {};
+        }
+        const profile = this.parsedDocsConfig.profiles?.[name];
+        if (profile == null) {
+            return this.taskContext.failAndThrow(
+                `Profile "${name}" is not defined in profiles: in docs.yml.`,
+                undefined,
+                { code: CliError.Code.ConfigError }
+            );
+        }
+        const markdown = this.parsedDocsConfig.pages[this.toRelativeFilepath(absolutePath)];
+        if (markdown == null) {
+            return {};
+        }
+        const used = Object.entries(profile.vars).filter(
+            ([varName]) => markdown.includes(`\${${varName}}`) || markdown.includes(`\\$\\{${varName}\\}`)
+        );
+        return used.length > 0 ? { profileVars: Object.fromEntries(used) } : {};
+    }
+
     private async toRootNode(): Promise<FernNavigation.V1.RootNode> {
         const slug = FernNavigation.V1.SlugGenerator.init(FernNavigation.slugjoin(this.getDocsBasePath()));
         const id = this.#idgen.get("root");
@@ -1816,6 +1853,15 @@ export class DocsDefinitionResolver {
         product: docsYml.ProductInfo,
         parentSlug: FernNavigation.V1.SlugGenerator
     ): Promise<FernNavigation.V1.ProductNode> {
+        return this.withProfile(product.type === "internal" ? product.profile : undefined, () =>
+            this.toProductNodeUnscoped(product, parentSlug)
+        );
+    }
+
+    private async toProductNodeUnscoped(
+        product: docsYml.ProductInfo,
+        parentSlug: FernNavigation.V1.SlugGenerator
+    ): Promise<FernNavigation.V1.ProductNode> {
         if (product.type === "internal") {
             const slug = parentSlug.setProductSlug(product.slug ?? kebabCase(product.product));
             let child: FernNavigation.V1.ProductChild;
@@ -1902,6 +1948,14 @@ export class DocsDefinitionResolver {
     }
 
     private async toVersionNode(
+        version: docsYml.VersionInfo,
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        isDefault: boolean
+    ): Promise<FernNavigation.V1.VersionNode> {
+        return this.withProfile(version.profile, () => this.toVersionNodeUnscoped(version, parentSlug, isDefault));
+    }
+
+    private async toVersionNodeUnscoped(
         version: docsYml.VersionInfo,
         parentSlug: FernNavigation.V1.SlugGenerator,
         isDefault: boolean
@@ -2012,6 +2066,17 @@ export class DocsDefinitionResolver {
     }
 
     private async toVariantNode(
+        item: docsYml.TabVariant,
+        prefix: string,
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        contentSource?: docsYml.VersionContentSource
+    ): Promise<FernNavigation.V1.VariantNode> {
+        return this.withProfile(item.profile, () =>
+            this.toVariantNodeUnscoped(item, prefix, parentSlug, contentSource)
+        );
+    }
+
+    private async toVariantNodeUnscoped(
         item: docsYml.TabVariant,
         prefix: string,
         parentSlug: FernNavigation.V1.SlugGenerator,
@@ -2866,11 +2931,18 @@ export class DocsDefinitionResolver {
             authed: undefined,
             noindex: item.noindex || this.markdownFilesToNoIndex.get(item.absolutePath),
             featureFlags: item.featureFlags,
-            availability: convertDocsAvailability(frontmatterAvailability ?? item.availability ?? parentAvailability)
+            availability: convertDocsAvailability(frontmatterAvailability ?? item.availability ?? parentAvailability),
+            ...this.profileVarsFor(item.absolutePath, item.profile)
         };
     }
 
-    private async toSectionNode({
+    private async toSectionNode(
+        args: Parameters<DocsDefinitionResolver["toSectionNodeUnscoped"]>[0]
+    ): Promise<FernNavigation.V1.SectionNode> {
+        return this.withProfile(args.item.profile, () => this.toSectionNodeUnscoped(args));
+    }
+
+    private async toSectionNodeUnscoped({
         prefix,
         item,
         parentSlug,
@@ -2971,7 +3043,8 @@ export class DocsDefinitionResolver {
             pointsTo: undefined,
             noindex,
             featureFlags: item.featureFlags,
-            availability: convertDocsAvailability(frontmatterAvailability ?? item.availability ?? parentAvailability)
+            availability: convertDocsAvailability(frontmatterAvailability ?? item.availability ?? parentAvailability),
+            ...this.profileVarsFor(item.overviewAbsolutePath)
         };
     }
 
@@ -3050,6 +3123,18 @@ export class DocsDefinitionResolver {
         parentSlug: FernNavigation.V1.SlugGenerator,
         contentSource?: docsYml.VersionContentSource
     ): Promise<FernNavigation.V1.TabNode> {
+        return this.withProfile(item.profile, () =>
+            this.toTabNodeUnscoped(prefix, item, layout, parentSlug, contentSource)
+        );
+    }
+
+    private async toTabNodeUnscoped(
+        prefix: string,
+        item: docsYml.TabbedNavigation,
+        layout: docsYml.DocsNavigationItem[],
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        contentSource?: docsYml.VersionContentSource
+    ): Promise<FernNavigation.V1.TabNode> {
         const id = this.#idgen.get(`${prefix}/tab`);
         const slug = parentSlug.apply({
             urlSlug: item.slug ?? kebabCase(item.title),
@@ -3073,6 +3158,18 @@ export class DocsDefinitionResolver {
     }
 
     private async toTabNodeWithVariants(
+        prefix: string,
+        item: docsYml.TabbedNavigation,
+        variants: docsYml.TabVariant[],
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        contentSource?: docsYml.VersionContentSource
+    ): Promise<FernNavigation.V1.TabNode> {
+        return this.withProfile(item.profile, () =>
+            this.toTabNodeWithVariantsUnscoped(prefix, item, variants, parentSlug, contentSource)
+        );
+    }
+
+    private async toTabNodeWithVariantsUnscoped(
         prefix: string,
         item: docsYml.TabbedNavigation,
         variants: docsYml.TabVariant[],

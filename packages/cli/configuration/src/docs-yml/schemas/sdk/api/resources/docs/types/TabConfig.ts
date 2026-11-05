@@ -17,4 +17,6 @@ export interface TabConfig extends FernDocsConfig.WithPermissions, FernDocsConfi
     target?: FernDocsConfig.Target;
     changelog?: FernDocsConfig.ChangelogFolderRelativePath;
     blog?: FernDocsConfig.ChangelogFolderRelativePath;
+    /** Name of a profile in `profiles:`. Pages under this item use its values for `${NAME}`. The innermost `profile:` wins. */
+    profile?: string;
 }
