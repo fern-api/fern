@@ -966,8 +966,8 @@ export interface FernSdkGenApiCandidate {
     sdkVersion: string | undefined;
     specsTarGzBuffer: Buffer | undefined;
     whitelabel?: FernFiddle.WhitelabelConfig;
-    /** The resolved SDK Config output. Absent for generators.yml groups. */
-    sdkConfigRequestedOutput?: FernSdkGenApiRequestedOutput;
+    /** The effective output used to decide whether AUTO can be resolved after generation. */
+    requestedOutput?: FernSdkGenApiRequestedOutput;
 }
 
 export interface EligibleFernSdkGenApiCandidate extends FernSdkGenApiCandidate {
@@ -982,13 +982,13 @@ export function isEligibleForFernSdkGenApi(
     const hasSupportedVersion =
         sdkVersion == null ||
         (sdkVersion.trim().length > 0 &&
-            (!isAutoVersion(sdkVersion) || supportsAutoVersion(candidate.sdkConfigRequestedOutput)));
+            (!isAutoVersion(sdkVersion) || supportsAutoVersion(candidate.requestedOutput)));
     return language != null && hasSupportedVersion && specsTarGzBuffer != null && whitelabel == null;
 }
 
 /** Only Fiddle's GitHub delivery replaces the AUTO placeholder; other outputs would ship it. */
-export function supportsAutoVersion(sdkConfigRequestedOutput: FernSdkGenApiRequestedOutput | undefined): boolean {
-    return sdkConfigRequestedOutput?.type === "github";
+export function supportsAutoVersion(requestedOutput: FernSdkGenApiRequestedOutput | undefined): boolean {
+    return requestedOutput?.type === "github";
 }
 
 /** The reason that isEligibleForFernSdkGenApi rejected a candidate. */
@@ -1005,9 +1005,9 @@ export function describeFernSdkGenApiIneligibility({
     if (whitelabel != null) {
         return "whitelabel generation has not yet moved from Fiddle to the shared pipeline";
     }
-    if (sdkVersion != null && isAutoVersion(sdkVersion) && !supportsAutoVersion(candidate.sdkConfigRequestedOutput)) {
+    if (sdkVersion != null && isAutoVersion(sdkVersion) && !supportsAutoVersion(candidate.requestedOutput)) {
         if (!isSdkConfigTarget) {
-            return "automatic SDK versioning has not yet moved from Fiddle to the shared pipeline";
+            return "automatic SDK versioning (--version AUTO) through sdk-gen-api requires GitHub output in generators.yml";
         }
         return isPreview
             ? "preview generation only downloads files, so it cannot use --version AUTO"

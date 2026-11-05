@@ -327,14 +327,16 @@ export async function runRemoteGenerationForGenerator({
         ? { type: "download" }
         : undefined;
     const githubOptions = getFernSdkGenApiGithubOptions({ replay, verify, skipIfNoDiff, noReplay });
+    const legacyRequestedOutput =
+        sdkGenApiRoute != null && sdkConfigTarget == null
+            ? mapFernSdkGenApiOutput(generatorInvocation, githubOptions).requestedOutput
+            : undefined;
     // Omitted versions intentionally keep download-only semantics: sdk-gen-api resolves them to the
     // deterministic initial version without consulting registry or GitHub state. Only explicit AUTO
     // previews need the configured GitHub destination for semantic version analysis.
     const configuredAutoVersionPreviewOutput =
         sdkGenApiRoute != null && isDryRunPreview && resolvedVersion != null && isAutoVersion(resolvedVersion)
-            ? (sdkConfigTarget?.autoVersionPreviewOutput ??
-              sdkConfigTarget?.requestedOutput ??
-              mapFernSdkGenApiOutput(generatorInvocation, githubOptions).requestedOutput)
+            ? (sdkConfigTarget?.autoVersionPreviewOutput ?? sdkConfigTarget?.requestedOutput ?? legacyRequestedOutput)
             : undefined;
     const autoVersionPreviewOutput: FernSdkGenApiGithubRequestedOutput | undefined =
         configuredAutoVersionPreviewOutput?.type === "github" ? configuredAutoVersionPreviewOutput : undefined;
@@ -350,7 +352,7 @@ export async function runRemoteGenerationForGenerator({
             sdkVersion: resolvedVersion,
             specsTarGzBuffer,
             whitelabel,
-            sdkConfigRequestedOutput: autoVersionPreviewOutput ?? sdkConfigRequestedOutput
+            requestedOutput: autoVersionPreviewOutput ?? sdkConfigRequestedOutput ?? legacyRequestedOutput
         };
         if (!isEligibleForFernSdkGenApi(candidate)) {
             const reason = describeFernSdkGenApiIneligibility({
@@ -703,8 +705,10 @@ export async function runRemoteGenerationForGenerator({
                               apiName: getOriginalName(ir.apiName),
                               organization,
                               generatorInvocation: runtimeGeneratorInvocation,
+                              // Keep the runtime bundle self-consistent with the IR. The request
+                              // retains AUTO so sdk-gen-api/Fiddle can compute the real version.
                               sdkVersion:
-                                  sdkGenApiCandidate.sdkVersion ??
+                                  effectiveIrVersion ??
                                   mapMagicVersionForLanguage(
                                       MAGIC_VERSION,
                                       runtimeGeneratorInvocation.language ??
