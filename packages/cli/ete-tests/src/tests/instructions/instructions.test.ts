@@ -7,12 +7,22 @@ import { runFernCli } from "../../utils/runFernCli.js";
 
 const TOPIC_CONCURRENCY = 6;
 
+let cwd: tmp.DirectoryResult | undefined;
+
+beforeAll(async () => {
+    cwd = await tmp.dir({ unsafeCleanup: true });
+});
+
+afterAll(async () => {
+    await cwd?.cleanup();
+});
+
 async function runInstructions(
     topic: string[],
     signal: AbortSignal
 ): Promise<{ exitCode: number | undefined; stdout: string; stderr: string }> {
     const { exitCode, stdout, stderr } = await runFernCli(["instructions", ...topic], {
-        cwd: (await tmp.dir()).path,
+        cwd: cwd?.path,
         includeAuthToken: false,
         reject: false,
         signal
@@ -75,9 +85,8 @@ describe("fern instructions", () => {
         expect(describeProblem(index)).toBeUndefined();
 
         const topics = parseTopicsFromIndex(index.stdout);
-        expect(topics.map((topic) => topic.join(" "))).toEqual(
-            expect.arrayContaining(["overview", "new-site", "troubleshoot", "docs publish domain", "sdks python"])
-        );
+        // `overview` is the index's documented starting point; other topic names can change freely.
+        expect(topics.map((topic) => topic.join(" "))).toContain("overview");
 
         const failures: string[] = [];
         const queue = [...topics];

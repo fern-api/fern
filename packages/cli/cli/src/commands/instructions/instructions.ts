@@ -143,8 +143,7 @@ export async function instructions({
 }): Promise<void> {
     const segments = parseTopicSegments(topic);
     const topicName = segments.join(" ");
-    const invalidSegment = segments.find((segment) => !TOPIC_SEGMENT_PATTERN.test(segment));
-    if (invalidSegment != null) {
+    if (segments.some((segment) => !TOPIC_SEGMENT_PATTERN.test(segment))) {
         return cliContext.failAndThrow(
             `"${topic.join(" ")}" is not a valid topic. Run \`fern instructions\` to list topics.`,
             undefined,
