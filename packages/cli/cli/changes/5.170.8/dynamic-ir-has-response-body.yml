@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    The dynamic IR now reports `hasResponseBody: false` for endpoints that have no response body
+    (previously every endpoint was reported as `response: json`). This lets dynamic snippet generators
+    distinguish `(response, error)` methods from `error`-only methods (e.g. Go deletes).
+  type: fix

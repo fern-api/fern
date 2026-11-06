@@ -62,6 +62,8 @@ export interface LocalParserConfig {
     doxyfileContent?: string;
     /** Also emit `#define`s without a doc comment; C++ parser only. */
     includeUndocumentedMacros?: boolean;
+    /** Persist the parser container logs at this path instead of a temporary file. */
+    logFilePath?: string;
 }
 
 /**
@@ -113,6 +115,7 @@ export async function runLocalParser({
             args: PARSER_CLI_COMMAND,
             binds: [`${sourcePath}:/repo:ro`, `${outputDir.path}:/output`, `${configFile.path}:/input/config.json:ro`],
             removeAfterCompletion: true,
+            logFilePath: config.logFilePath,
             // `latest` is a mutable tag, so force a pull to avoid reusing a stale local copy.
             // Immutable tags (e.g. a `:local` dev build via the env override) keep the
             // default pull-when-missing behavior.

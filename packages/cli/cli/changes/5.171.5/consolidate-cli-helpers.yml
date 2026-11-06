@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Internal cleanup: `isRecord`, `sanitizePreviewId`, `decodeJsonPointerSegment` and a few other
+    helpers that were copied across packages now have a single shared definition. No behavior change.
+  type: chore

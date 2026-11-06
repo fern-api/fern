@@ -1,4 +1,4 @@
-import { ContainerRunner } from "@fern-api/core-utils";
+import { ContainerRunner, errorMessageOrString } from "@fern-api/core-utils";
 import { runContainer } from "@fern-api/docker-utils";
 import { CliError } from "@fern-api/task-context";
 import {
@@ -158,7 +158,7 @@ export class ContainerExecutionEnvironment implements ExecutionEnvironment {
                 throw error;
             }
             throw new CliError({
-                message: `Container execution failed: ${error instanceof Error ? error.message : String(error)}`,
+                message: `Container execution failed: ${errorMessageOrString(error)}`,
                 code: CliError.Code.ContainerError
             });
         }

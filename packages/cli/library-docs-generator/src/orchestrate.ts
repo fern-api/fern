@@ -1,11 +1,12 @@
 import { readFile } from "node:fs/promises";
 import { docsYml } from "@fern-api/configuration";
-import { extractErrorMessage } from "@fern-api/core-utils";
+import { delay, extractErrorMessage } from "@fern-api/core-utils";
 import { FdrAPI } from "@fern-api/fdr-sdk";
-import { AbsoluteFilePath, resolve } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { cloneRepositoryAtRef, resolveRepositorySubpath } from "@fern-api/github";
 import { CliError, type TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
+import { createHash } from "crypto";
 
 import { generateCpp } from "./CppDocsGenerator.js";
 import { type LocalParserConfig, runLocalParser } from "./LocalParserRunner.js";
@@ -145,7 +146,8 @@ export async function runLibraryDocsGeneration({
     context,
     wrapStep = defaultWrapStep,
     local = false,
-    docsConfig
+    docsConfig,
+    logsDir
 }: {
     libraries: Record<string, docsYml.RawSchemas.LibraryConfiguration | undefined>;
     /** Optional library name to filter to a single entry. */
@@ -161,6 +163,11 @@ export async function runLibraryDocsGeneration({
     local?: boolean;
     /** docs.yml navigation, used to find the tab generated pages are listed under. */
     docsConfig?: Pick<docsYml.RawSchemas.DocsConfiguration, "navigation" | "tabs">;
+    /**
+     * Directory to keep local parser logs in (one `<library>.log` per library). When
+     * unset, logs go to a temporary file that may not survive the command.
+     */
+    logsDir?: AbsoluteFilePath;
 }): Promise<{ successful: number }> {
     if (Object.keys(libraries).length === 0) {
         throw new CliError({
@@ -212,7 +219,8 @@ export async function runLibraryDocsGeneration({
                 orgId,
                 wrapStep,
                 local,
-                docsConfig
+                docsConfig,
+                logsDir
             });
         })
     );
@@ -237,6 +245,18 @@ export async function runLibraryDocsGeneration({
     return { successful: results.length - failures.length };
 }
 
+/**
+ * Library names come from docs.yml keys; keep the log filename safe and unique even when two
+ * names only differ in characters the sanitizer replaces (`a b` vs `a_b`).
+ */
+function logFileStem(name: string): string {
+    const safe = name.replace(/[^a-zA-Z0-9._-]/g, "_");
+    if (safe === name) {
+        return safe;
+    }
+    return `${safe}-${createHash("sha1").update(name).digest("hex").slice(0, 8)}`;
+}
+
 async function generateSingleLibrary({
     client,
     context,
@@ -246,7 +266,8 @@ async function generateSingleLibrary({
     orgId,
     wrapStep,
     local,
-    docsConfig
+    docsConfig,
+    logsDir
 }: {
     client: LibraryDocsClient | undefined;
     context: TaskContext;
@@ -257,6 +278,7 @@ async function generateSingleLibrary({
     wrapStep: StepWrapper;
     local: boolean;
     docsConfig: Pick<docsYml.RawSchemas.DocsConfiguration, "navigation" | "tabs"> | undefined;
+    logsDir: AbsoluteFilePath | undefined;
 }): Promise<void> {
     const resolvedOutputPath = resolve(docsDirectoryPath, config.output.path);
 
@@ -272,7 +294,27 @@ async function generateSingleLibrary({
             code: CliError.Code.ConfigError
         });
     }
+    if (config.config?.slugStyle != null && config.lang !== "cpp") {
+        throw new CliError({
+            message: `Library '${name}': 'slug-style' config is only valid for lang: cpp`,
+            code: CliError.Code.ConfigError
+        });
+    }
+    for (const [field, label] of [
+        [config.config?.organizeBy, "organize-by"],
+        [config.config?.include, "include"],
+        [config.config?.exclude, "exclude"],
+        [config.config?.excludeSymbols, "exclude-symbols"]
+    ] as const) {
+        if (field != null && config.lang !== "cpp") {
+            throw new CliError({
+                message: `Library '${name}': '${label}' config is only valid for lang: cpp`,
+                code: CliError.Code.ConfigError
+            });
+        }
+    }
     const includeUndocumentedMacros = config.lang === "cpp" ? config.config?.includeUndocumentedMacros : undefined;
+    const logFilePath = logsDir != null ? join(logsDir, RelativeFilePath.of(`${logFileStem(name)}.log`)) : undefined;
 
     let doxyfileContent: string | undefined;
     if (config.lang === "cpp" && config.config?.doxyfile != null) {
@@ -286,6 +328,13 @@ async function generateSingleLibrary({
                     `(resolved to ${doxyfilePath})`,
                 code: CliError.Code.ConfigError
             });
+        }
+    }
+    if (config.lang === "cpp") {
+        const selection = renderSourceSelection(config.config);
+        if (selection.length > 0) {
+            // docs.yml settings come last so they take precedence over the user's Doxyfile
+            doxyfileContent = `${doxyfileContent ?? ""}\n${selection}\n`;
         }
     }
 
@@ -307,6 +356,7 @@ async function generateSingleLibrary({
             language,
             doxyfileContent,
             includeUndocumentedMacros,
+            logFilePath,
             wrapStep
         });
     } else if (client != null) {
@@ -335,7 +385,9 @@ async function generateSingleLibrary({
         const result = generateCpp({
             ir: cppIr,
             outputDir: resolvedOutputPath,
-            slug: name
+            slug: name,
+            slugStyle: config.config?.slugStyle,
+            organizeBy: config.config?.organizeBy
         });
         context.logger.info(
             chalk.green(`Library '${name}': generated ${result.pageCount} pages at ${resolvedOutputPath}`)
@@ -442,6 +494,7 @@ async function generateIrLocally({
     language,
     doxyfileContent,
     includeUndocumentedMacros,
+    logFilePath,
     wrapStep
 }: {
     context: TaskContext;
@@ -451,6 +504,7 @@ async function generateIrLocally({
     language: LibraryLanguage;
     doxyfileContent: string | undefined;
     includeUndocumentedMacros: boolean | undefined;
+    logFilePath: string | undefined;
     wrapStep: StepWrapper;
 }): Promise<unknown> {
     let sourcePath: AbsoluteFilePath;
@@ -476,11 +530,12 @@ async function generateIrLocally({
             sourceUrl: gitInput.git,
             branch: gitInput.ref,
             doxyfileContent,
-            includeUndocumentedMacros
+            includeUndocumentedMacros,
+            logFilePath
         };
     } else {
         sourcePath = resolve(docsDirectoryPath, config.input.path);
-        parserConfig = { doxyfileContent, includeUndocumentedMacros };
+        parserConfig = { doxyfileContent, includeUndocumentedMacros, logFilePath };
     }
 
     const result = await wrapStep({
@@ -533,7 +588,7 @@ async function pollForCompletion(client: LibraryDocsClient, jobId: string, libra
     const deadline = Date.now() + POLL_TIMEOUT_MS;
 
     while (Date.now() < deadline) {
-        await new Promise((r) => setTimeout(r, POLL_INTERVAL_MS));
+        await delay(POLL_INTERVAL_MS);
 
         let status;
         try {
@@ -656,4 +711,34 @@ function validateLibraryIr(ir: unknown, language: LibraryLanguage, libraryName: 
             code: CliError.Code.InternalError
         });
     }
+}
+
+/**
+ * Doxyfile lines for the `include` / `exclude` / `exclude-symbols` library settings.
+ * Entries of `exclude` containing a glob character are patterns (`EXCLUDE_PATTERNS`),
+ * the rest are paths (`EXCLUDE`); all paths are relative to the scanned source root.
+ */
+export function renderSourceSelection(
+    libraryConfig: { include?: string[]; exclude?: string[]; excludeSymbols?: string[] } | undefined
+): string {
+    if (libraryConfig == null) {
+        return "";
+    }
+    const lines: string[] = [];
+    const quote = (value: string): string => `"${value.replace(/"/g, '\\"')}"`;
+    const include = libraryConfig.include ?? [];
+    if (include.length > 0) {
+        // Reset so a user Doxyfile's own INPUT (and the parser's whole-root default) is replaced, not extended
+        lines.push("INPUT =");
+    }
+    for (const path of include) {
+        lines.push(`INPUT += ${quote(path)}`);
+    }
+    for (const entry of libraryConfig.exclude ?? []) {
+        lines.push(/[*?[\]]/.test(entry) ? `EXCLUDE_PATTERNS += ${quote(entry)}` : `EXCLUDE += ${quote(entry)}`);
+    }
+    for (const symbol of libraryConfig.excludeSymbols ?? []) {
+        lines.push(`EXCLUDE_SYMBOLS += ${quote(symbol)}`);
+    }
+    return lines.join("\n");
 }

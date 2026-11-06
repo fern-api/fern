@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `error-responses` configured on `api.settings` (shared by every spec of the API) now declares
+    the error body type and the status-code errors once in the root package instead of duplicating
+    them under each namespaced spec. SDKs expose one `BadRequestError`, `NotFoundError`, ... that
+    every namespace throws. `error-responses` set on an individual spec is unchanged.
+  type: fix

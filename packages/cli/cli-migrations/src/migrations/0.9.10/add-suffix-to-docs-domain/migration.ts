@@ -2,7 +2,7 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { readFile, writeFile } from "fs/promises";
 
 import { Migration } from "../../../types/Migration.js";
-import { getAllGeneratorYamlFiles } from "./getAllGeneratorYamlFiles.js";
+import { getAllGeneratorYamlFiles } from "../../../utils/getAllGeneratorYamlFiles.js";
 
 export const migration: Migration = {
     name: "add-suffix-to-docs-domain",

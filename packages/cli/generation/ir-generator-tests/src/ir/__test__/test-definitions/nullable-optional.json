@@ -37547,6 +37547,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_nullable-optional.createUser": {
@@ -37634,6 +37635,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_nullable-optional.updateUser": {
@@ -37752,6 +37754,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_nullable-optional.listUsers": {
@@ -38038,6 +38041,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_nullable-optional.searchUsers": {
@@ -38321,6 +38325,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_nullable-optional.createComplexProfile": {
@@ -38408,6 +38413,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_nullable-optional.getComplexProfile": {
@@ -38520,6 +38526,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_nullable-optional.updateComplexProfile": {
@@ -38888,6 +38895,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_nullable-optional.testDeserialization": {
@@ -38975,6 +38983,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_nullable-optional.filterByRole": {
@@ -39228,6 +39237,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_nullable-optional.getNotificationSettings": {
@@ -39340,6 +39350,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_nullable-optional.updateTags": {
@@ -39636,6 +39647,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             },
             "endpoint_nullable-optional.getSearchResults": {
@@ -39899,6 +39911,7 @@
                 "response": {
                     "type": "json"
                 },
+                "hasResponseBody": true,
                 "examples": null
             }
         },

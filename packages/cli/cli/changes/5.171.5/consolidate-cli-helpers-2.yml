@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Internal cleanup: trailing-slash stripping, forward-slash path conversion and first-letter
+    capitalization now use shared helpers instead of inline copies. No behavior change.
+  type: chore

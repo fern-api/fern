@@ -1,4 +1,4 @@
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, isHttpUrl } from "@fern-api/core-utils";
 
 /**
  * Converts a CI-source repo slug (e.g. "owner/repo") into an HTTPS URL
@@ -7,7 +7,7 @@ import { assertNever } from "@fern-api/core-utils";
  * If the value is already a full URL it is returned as-is.
  */
 export function normalizeRepoUrlToHttps(repo: string, provider: "github" | "gitlab" | "bitbucket"): string {
-    if (repo.startsWith("https://") || repo.startsWith("http://")) {
+    if (isHttpUrl(repo)) {
         return repo;
     }
 

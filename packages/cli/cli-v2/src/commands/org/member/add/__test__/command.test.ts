@@ -123,6 +123,25 @@ describe("InviteMemberCommand", () => {
         );
     });
 
+    it("should fail when the organization has no Auth0 organization", async () => {
+        const { createVenusService } = await import("@fern-api/core");
+        const mockGet = vi.fn().mockResolvedValue({ ok: true, body: { auth0Id: null } });
+        const mockInviteUser = vi.fn();
+        vi.mocked(createVenusService).mockReturnValue({
+            organization: { get: mockGet, inviteUser: mockInviteUser }
+        } as unknown as ReturnType<typeof createVenusService>);
+
+        const context = createMockContext();
+        await expect(
+            cmd.handle(context, { email: "user@example.com", org: "acme" } as InviteMemberCommand.Args)
+        ).rejects.toThrow(CliError);
+
+        expect(mockInviteUser).not.toHaveBeenCalled();
+        expect(context.stderr.error).toHaveBeenCalledWith(
+            expect.stringContaining("is not linked to an Auth0 organization")
+        );
+    });
+
     it("should handle UnauthorizedError from inviteUser", async () => {
         const { createVenusService } = await import("@fern-api/core");
         const mockGet = mockOrgLookupSuccess();

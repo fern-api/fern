@@ -1,4 +1,5 @@
 import { FernToken } from "@fern-api/auth";
+import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { runLibraryDocsGeneration } from "@fern-api/library-docs-generator";
 import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
@@ -14,6 +15,8 @@ export interface GenerateLibraryDocsOptions {
     library: string | undefined;
     /** Run the parser(s) locally in Docker instead of using Fern's servers. */
     local: boolean;
+    /** Persist parser logs under `<fern folder>/.fern/library-docs-logs/` instead of a temporary file. */
+    keepLogs?: boolean;
 }
 
 /**
@@ -30,7 +33,8 @@ export async function generateLibraryDocs({
     project,
     cliContext,
     library,
-    local
+    local,
+    keepLogs = false
 }: GenerateLibraryDocsOptions): Promise<void> {
     const docsWorkspace = project.docsWorkspaces;
 
@@ -85,7 +89,10 @@ export async function generateLibraryDocs({
             tokenValue,
             context,
             local,
-            docsConfig: docsWorkspace.config
+            docsConfig: docsWorkspace.config,
+            logsDir: keepLogs
+                ? join(docsWorkspace.absoluteFilePath, RelativeFilePath.of(".fern/library-docs-logs"))
+                : undefined
         });
 
         if (successful > 0) {

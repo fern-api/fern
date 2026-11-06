@@ -40,7 +40,6 @@
     "@fern-fern/docs-config": "catalog:",
     "@fern-fern/legacy-docs-config": "catalog:",
     "chalk": "catalog:",
-    "find-up": "catalog:",
     "glob": "catalog:",
     "inquirer": "^9.2.23",
     "js-yaml": "catalog:",

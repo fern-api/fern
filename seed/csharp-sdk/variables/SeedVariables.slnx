@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="src/SeedVariables.Test/SeedVariables.Test.csproj" />
-  <Project Path="src/SeedVariables/SeedVariables.csproj" />
-</Solution>

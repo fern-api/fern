@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    The v3 OpenAPI parser no longer crashes with `Maximum call stack size exceeded` on a
+    discriminated union that contains itself as a variant (for example a `Branch` whose
+    `parts` are a `Leaf` or another `Branch`) when the variants declare the discriminant property.
+  type: fix
+- summary: |
+    `fern generate --docs` and `fern docs dev` now log a warning when the v3 OpenAPI parser fails
+    and the API Reference falls back to the v2 parser, instead of falling back silently.
+  type: fix

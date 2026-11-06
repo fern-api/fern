@@ -1,3 +1,4 @@
+import { delay } from "@fern-api/core-utils";
 import { Logger } from "@fern-api/logger";
 
 export interface RetryWithBackoffOptions<T> {
@@ -27,7 +28,7 @@ export async function retryWithBackoff<T>({
     isRetryable = () => true,
     logger,
     label,
-    delayFn = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+    delayFn = delay
 }: RetryWithBackoffOptions<T>): Promise<T> {
     let lastError: unknown;
 

@@ -14,6 +14,7 @@
  * - Tab title generation from overload characteristics
  */
 
+import { capitalizeFirstLetter } from "@fern-api/core-utils";
 import type { CppClassIr, CppDocstringIr, CppFunctionIr } from "../../../src/types/CppLibraryDocsIr.js";
 import type { RenderContext } from "../context.js";
 import { buildLinkPath, getShortName, OPERATOR_SYMBOL_MAP } from "../context.js";
@@ -57,7 +58,7 @@ function trimToNounPhrase(summary: string, maxLen: number = 50): string | undefi
         .trim();
     // Capitalize first letter after stripping
     if (trimmed.length > 0) {
-        trimmed = trimmed[0]?.toUpperCase() + trimmed.slice(1);
+        trimmed = capitalizeFirstLetter(trimmed);
     }
     if (trimmed.length <= maxLen) {
         return trimmed;

@@ -87,6 +87,32 @@ const SDK_CONFIG_TARGET_DISPLAY_NAMES: Record<GeneratorLanguage, string> = {
     mcp: "MCP server"
 };
 
+/**
+ * gRPC (proto) generation is only supported on legacy Fern Fiddle generation, not on sdk-gen-api, which
+ * rejects raw `.proto` sources. A generators.yml generator that builds from a `proto` spec therefore stays on
+ * Fiddle whatever the `use-sdk-gen-api` flag says, as if `FERN_USE_SDK_GEN_API=false` were set for it only.
+ * `FERN_USE_SDK_GEN_API=true` still forces sdk-gen-api, for testing proto support there. Post-cutover
+ * generator versions have no Fiddle route, so they still use sdk-gen-api. Remove this once sdk-gen-api
+ * supports proto sources.
+ */
+export function shouldKeepProtobufGeneratorOnFiddle(
+    workspace: AbstractAPIWorkspace<unknown>,
+    generatorInvocation: generatorsYml.GeneratorInvocation
+): boolean {
+    if (getFernSdkGenApiEnvOverride() === true || !(workspace instanceof OSSWorkspace)) {
+        return false;
+    }
+    const specsOverride = generatorInvocation.apiOverride?.specs;
+    if (specsOverride != null) {
+        return Array.isArray(specsOverride) && specsOverride.some(isProtobufSpecSchema);
+    }
+    return [...workspace.specs, ...workspace.allSpecs].some((spec) => spec.type === "protobuf");
+}
+
+function isProtobufSpecSchema(spec: generatorsYml.SpecSchema): spec is generatorsYml.ProtobufSpecSchema {
+    return "proto" in spec;
+}
+
 export async function runRemoteGenerationForAPIWorkspace({
     projectConfig,
     organization,
@@ -221,11 +247,19 @@ export async function runRemoteGenerationForAPIWorkspace({
     // The flag is evaluated per generator, so an org, a language, or one generator in one org can be
     // routed (or kept off sdk-gen-api) independently. Values are memoized per process. Generators whose
     // routing the flag does not decide (SDK Config, post-cutover versions) make no flag request.
+    const generatorNamesKeptOnFiddle = new Set(
+        sdkConfigV1 == null
+            ? generatorGroup.generators
+                  .filter((generator) => shouldKeepProtobufGeneratorOnFiddle(workspace, generator))
+                  .map((generator) => generator.name)
+            : []
+    );
     const sdkGenApiEnabledByGenerator = await resolveFernSdkGenApiEnabledByGenerator({
         organization,
         generatorNames: generatorGroup.generators
             .filter(
                 (generator) =>
+                    !generatorNamesKeptOnFiddle.has(generator.name) &&
                     getFlagIndependentSdkGenApiRouting({
                         generatorName: generator.name,
                         version: generator.version,
@@ -238,7 +272,8 @@ export async function runRemoteGenerationForAPIWorkspace({
     // race a sibling into remote registration or generation.
     const routePreparation = prepareFernSdkGenApiRoutes({
         generators: generatorGroup.generators,
-        isSdkGenApiEnabled: (generatorName) => sdkGenApiEnabledByGenerator.get(generatorName) === true,
+        isSdkGenApiEnabled: (generatorName) =>
+            !generatorNamesKeptOnFiddle.has(generatorName) && sdkGenApiEnabledByGenerator.get(generatorName) === true,
         sdkConfigV1,
         requireEnvVars,
         isPreview: isSdkPreview,
@@ -681,7 +716,7 @@ function getFernSdkGenApiUnsupportedOutput({
     if (skipIfNoDiff === true && resolvedRequestedOutput.type !== "github") {
         unsupported.push("skipIfNoDiff=true is not implemented by sdk-gen-api for non-GitHub output");
     }
-    if (autoMerge === true) {
+    if (autoMerge === true || generatorsYml.isGithubAutoMergeEnabled(generatorInvocation.raw?.github)) {
         unsupported.push("autoMerge=true is not implemented by sdk-gen-api");
     }
     return unsupported.length > 0 ? unsupported.join("; ") : undefined;

@@ -599,6 +599,11 @@ types:
         docs: |
           Overrides the disclaimer shown in the Ask Fern chat
           (default: "Responses are generated using AI and may contain mistakes.").
+      "button-text":
+        type: optional<string>
+        docs: |
+          Overrides the "Ask AI" label on the header button and in the search dialog
+          (default: "Ask AI", translated on localized sites).
 
   AIChatLocation:
     enum:
@@ -760,6 +765,16 @@ types:
         type: optional<boolean>
         docs: |
           If true, this version will be hidden from navigation, search, and indexing, but still accessible via direct URL.
+      default:
+        type: optional<boolean>
+        docs: |
+          If true, this version is the default version: it is served at the unversioned URLs
+          (without the version slug) and is used for canonical URLs, the sitemap, search, and
+          `llms.txt`. The order of the `versions` list only controls the order in the version
+          switcher. At most one version in a `versions` list may set `default: true`, and the
+          default version cannot be `hidden`. A default version may be built from the working
+          tree (`path`) or from a git ref (`ref`). If no version sets `default`, the first
+          version in the list is the default.
       announcement: optional<AnnouncementConfig>
 
   Availability:
@@ -827,8 +842,8 @@ types:
   NavigationConfig:
     discriminated: false
     union:
-      - UntabbedNavigationConfig
       - TabbedNavigationConfig
+      - UntabbedNavigationConfig
 
   UntabbedNavigationConfig: list<NavigationItem>
 
@@ -1219,6 +1234,15 @@ types:
         docs: |
           If set to true, response examples in the API Reference include a raw HTTP block
           showing the response status line and response headers alongside the body.
+
+          @default: false
+      require-analytics-consent:
+        type: optional<boolean>
+        docs: |
+          If set to true, Fern's built-in docs analytics (PostHog) stays off until visitor consent is given:
+          no script, cookies, local storage or events. Grant consent from a custom script (e.g. your consent
+          manager's callback) by setting `window.fernAnalyticsConsent = true` and dispatching
+          `new Event("fern-analytics-consent")` on `window`.
 
           @default: false
 
@@ -1899,6 +1923,44 @@ types:
           Also generate pages for `#define`s that have no Doxygen comment.
           By default only documented macros are rendered. Include guards are never
           emitted (Doxygen drops them). Only valid when lang is cpp.
+      slug-style:
+        type: optional<LibrarySlugStyle>
+        docs: |
+          How symbol names become page URLs. `compact` (default) drops underscores
+          (`doca_pcc_dev_get_port_counter_id` -> `docapccdevgetportcounterid`);
+          `hyphenated` keeps word boundaries (`doca-pcc-dev-get-port-counter-id`).
+          Changing this renames every generated page. Only valid when lang is cpp.
+      organize-by:
+        type: optional<LibraryOrganizeBy>
+        docs: |
+          `kind` (default) groups generated pages by symbol kind (functions/, structs/, ...).
+          `header` additionally writes a `headers/` folder with one page per source header
+          listing everything it declares. Only valid when lang is cpp.
+      include:
+        type: optional<list<string>>
+        docs: |
+          Files or directories to scan, relative to `input.path`. When set, only these are
+          parsed (Doxygen `INPUT`). Only valid when lang is cpp.
+      exclude:
+        type: optional<list<string>>
+        docs: |
+          Files, directories (relative to `input.path`) or glob patterns (containing `*`/`?`)
+          to leave out of the scan (Doxygen `EXCLUDE` / `EXCLUDE_PATTERNS`). Only valid when lang is cpp.
+      exclude-symbols:
+        type: optional<list<string>>
+        docs: |
+          Symbol names or patterns to leave out, e.g. `INTERNAL_*` or `detail::*`
+          (Doxygen `EXCLUDE_SYMBOLS`). Only valid when lang is cpp.
+
+  LibrarySlugStyle:
+    enum:
+      - compact
+      - hyphenated
+
+  LibraryOrganizeBy:
+    enum:
+      - kind
+      - header
 
   LibraryConfiguration:
     docs: |

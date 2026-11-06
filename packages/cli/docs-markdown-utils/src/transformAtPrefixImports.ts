@@ -1,3 +1,4 @@
+import { errorMessageOrString } from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, RelativeFilePath, relative } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import grayMatter from "gray-matter";
@@ -47,7 +48,7 @@ function getCodeRanges(markdown: string, context: TaskContext | undefined): Rang
         return ranges;
     } catch (error) {
         context?.logger.debug(
-            `Failed to locate code blocks while resolving "@/" imports; imports inside code samples may be rewritten: ${error instanceof Error ? error.message : String(error)}`
+            `Failed to locate code blocks while resolving "@/" imports; imports inside code samples may be rewritten: ${errorMessageOrString(error)}`
         );
         return undefined;
     }

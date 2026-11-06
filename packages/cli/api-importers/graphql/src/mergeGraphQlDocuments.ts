@@ -1,3 +1,4 @@
+import { errorMessageOrString } from "@fern-api/core-utils";
 import {
     ASTNode,
     ConstDirectiveNode,
@@ -244,7 +245,7 @@ function parseSource(source: GraphQlSource): DocumentNode {
     try {
         return parse(source.sdl);
     } catch (error) {
-        throw new Error(`${source.filePath}: ${error instanceof Error ? error.message : String(error)}`);
+        throw new Error(`${source.filePath}: ${errorMessageOrString(error)}`);
     }
 }
 

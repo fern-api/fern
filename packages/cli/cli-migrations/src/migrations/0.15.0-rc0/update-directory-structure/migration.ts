@@ -1,12 +1,5 @@
-import {
-    AbsoluteFilePath,
-    Directory,
-    doesPathExist,
-    getDirectoryContents,
-    join,
-    RelativeFilePath
-} from "@fern-api/fs-utils";
-import { findUp } from "find-up";
+import { findFernDirectory } from "@fern-api/configuration-loader";
+import { Directory, doesPathExist, getDirectoryContents, join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { Migration } from "../../../types/Migration.js";
 import { getAbsolutePathToDocsYaml } from "./docs-config/index.js";
@@ -19,7 +12,7 @@ export const migration: Migration = {
     name: "flatten-fern-directory-structure",
     summary: "Flattens your fern directory structure. If you have one API, you no longer need an API folder.",
     run: async ({ context }) => {
-        const absolutePathToFernDirectory = await getFernDirectory();
+        const absolutePathToFernDirectory = await findFernDirectory();
         if (absolutePathToFernDirectory == null) {
             context.failAndThrow("Fern directory not found. Failed to run migration");
             return;
@@ -83,12 +76,3 @@ export const migration: Migration = {
         });
     }
 };
-
-const FERN_DIRECTORY = "fern";
-async function getFernDirectory(): Promise<AbsoluteFilePath | undefined> {
-    const fernDirectoryStr = await findUp(FERN_DIRECTORY, { type: "directory" });
-    if (fernDirectoryStr == null) {
-        return undefined;
-    }
-    return AbsoluteFilePath.of(fernDirectoryStr);
-}

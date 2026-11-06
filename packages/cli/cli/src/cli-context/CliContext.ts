@@ -1,5 +1,6 @@
 import { Log, logErrorMessage, TtyAwareLogger } from "@fern-api/cli-logger";
 import { extractErrorMessage } from "@fern-api/core-utils";
+import { isCI } from "@fern-api/fs-utils";
 import { createLogger, LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { flushFeatureFlagClient, getPosthogManager, type PosthogManager } from "@fern-api/posthog-manager";
 import { Project } from "@fern-api/project-loader";
@@ -61,6 +62,7 @@ export class CliContext {
     private isLocal: boolean;
     private readonly stdoutRedirector = new StdoutRedirector();
     private jsonMode = false;
+    private readonly linesAfterTasks: string[] = [];
 
     public static async create(
         stdout: NodeJS.WriteStream,
@@ -195,11 +197,26 @@ export class CliContext {
         }
     }
 
+    /**
+     * Logs a line that belongs after the command's task boxes, e.g. a next step. On a TTY, logs
+     * print above the boxes, so it is held until they finish; without one it is logged now.
+     */
+    public logAfterTasks(line: string): void {
+        if (this.isTTY) {
+            this.linesAfterTasks.push(line);
+        } else {
+            this.logger.info(line);
+        }
+    }
+
     public async exit({ code }: { code?: number } = {}): Promise<never> {
         if (!this._suppressUpgradeMessage && !this.isLocal) {
             await this.nudgeUpgradeIfAvailable();
         }
         this.ttyAwareLogger.finish();
+        for (const line of this.linesAfterTasks) {
+            process.stdout.write(`${line}\n`);
+        }
         try {
             await Promise.all([this.posthogManager.flush(), flushFeatureFlagClient()]);
         } catch {
@@ -462,9 +479,14 @@ export class CliContext {
      * @param defaultValue Optional default value (defaults to false - "No")
      * @returns Promise<boolean> representing the user's choice
      */
-    public async confirmPrompt(message: string, defaultValue = false): Promise<boolean> {
+    public async confirmPrompt(
+        message: string,
+        defaultValue = false,
+        { nonInteractiveError }: { nonInteractiveError?: string } = {}
+    ): Promise<boolean> {
         return this.selectPrompt({
             message,
+            nonInteractiveError,
             choices: [
                 { name: "No", value: false },
                 { name: "Yes", value: true }
@@ -476,12 +498,15 @@ export class CliContext {
     public async selectPrompt<T>({
         message,
         choices,
-        default: defaultValue
+        default: defaultValue,
+        nonInteractiveError
     }: {
         message: string;
         choices: Array<{ name: string; value: T }>;
         default?: T;
+        nonInteractiveError?: string;
     }): Promise<T> {
+        this.assertInteractive(message, nonInteractiveError);
         try {
             return await select({
                 message,
@@ -499,8 +524,7 @@ export class CliContext {
         } catch (error) {
             // User pressed Ctrl+C
             if ((error as Error)?.name === "ExitPromptError") {
-                this.logger.info("\nCancelled by user.");
-                throw new TaskAbortSignal();
+                this.abortCancelledPrompt();
             }
             throw error;
         }
@@ -510,13 +534,16 @@ export class CliContext {
         message,
         choices,
         required = false,
-        validate
+        validate,
+        nonInteractiveError
     }: {
         message: string;
         choices: Array<{ name: string; value: T; short?: string; checked?: boolean }>;
         required?: boolean;
         validate?: (values: T[]) => boolean | string | Promise<boolean | string>;
+        nonInteractiveError?: string;
     }): Promise<T[]> {
+        this.assertInteractive(message, nonInteractiveError);
         try {
             return await checkbox({
                 message,
@@ -537,8 +564,7 @@ export class CliContext {
             });
         } catch (error) {
             if ((error as Error)?.name === "ExitPromptError") {
-                this.logger.info("\nCancelled by user.");
-                throw new TaskAbortSignal();
+                this.abortCancelledPrompt();
             }
             throw error;
         }
@@ -548,18 +574,50 @@ export class CliContext {
      * Prompts the user for text input
      * @param message The message to display to the user
      * @param default Optional default value (defaults to undefined)
+     * @param nonInteractiveError Optional error to show instead of prompting when stdin is not a TTY or in CI
      * @returns Promise<string> representing the user's input
      */
-    public async getInput(config: { message: string; default?: string }): Promise<string> {
+    public async getInput(config: {
+        message: string;
+        default?: string;
+        nonInteractiveError?: string;
+    }): Promise<string> {
+        this.assertInteractive(config.message, config.nonInteractiveError);
         try {
             return await input({ message: config.message, default: config.default });
         } catch (error) {
             if ((error as Error)?.name === "ExitPromptError") {
-                this.logger.info("\nCancelled by user.");
-                throw new TaskAbortSignal();
+                this.abortCancelledPrompt();
             }
             throw error;
         }
+    }
+
+    private abortCancelledPrompt(): never {
+        this.logger.info("\nCancelled by user.");
+        this.didSucceed = false;
+        throw new TaskAbortSignal();
+    }
+
+    /** Whether the CLI can show interactive prompts: stdin is a terminal and we're not in CI. */
+    public get isInteractive(): boolean {
+        return process.stdin.isTTY === true && !isCI();
+    }
+
+    /**
+     * Fails fast instead of prompting when nobody can answer, since an
+     * interactive prompt on a non-TTY stdin waits forever (e.g. under an agent).
+     */
+    private assertInteractive(promptMessage: string, nonInteractiveError: string | undefined): void {
+        if (this.isInteractive) {
+            return;
+        }
+        this.failAndThrow(
+            nonInteractiveError ??
+                `Cannot prompt "${promptMessage}" in non-interactive mode (stdin is not a TTY or CI is set). Pass the value as a flag instead.`,
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
     }
 }
 

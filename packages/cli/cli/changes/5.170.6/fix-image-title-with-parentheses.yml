@@ -1,0 +1,6 @@
+- summary: |
+    Fix `fern generate --docs` failing with `ENOENT` on Markdown images whose quoted title contains
+    an unbalanced `)`, e.g. `![Diagram](./diagram.png "Flow: 1) Input, 2) Output")`. The scanner
+    ended the destination at the first `)` inside the title and tried to upload a file named
+    `diagram.png "Flow: 1`. Page links with such titles are resolved the same way.
+  type: fix

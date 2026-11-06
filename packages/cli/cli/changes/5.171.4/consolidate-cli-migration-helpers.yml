@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Internal cleanup: the CLI migrations now share one fern-directory lookup and one
+    files-and-directories listing helper instead of per-migration copies. No behavior change.
+  type: chore

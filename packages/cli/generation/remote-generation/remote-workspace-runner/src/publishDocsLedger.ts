@@ -1,3 +1,4 @@
+import { asyncPool, delay, isRecord } from "@fern-api/core-utils";
 import {
     applyTranslatedApiTitlesToNavTree,
     type DocsDefinitionResolver,
@@ -26,9 +27,7 @@ import type { TaskContext } from "@fern-api/task-context";
 import { createHash } from "crypto";
 import { readFile } from "fs/promises";
 import * as mime from "mime-types";
-
 import { mapDocsConfigToLedgerConfig } from "./mapDocsConfigToLedgerConfig.js";
-import { asyncPool } from "./utils/asyncPool.js";
 
 const UPLOAD_CONCURRENCY = 10;
 const TRANSLATION_BUILD_CONCURRENCY = 4;
@@ -84,7 +83,7 @@ interface BlobRef {
  */
 function stableStringify(value: unknown): string {
     return JSON.stringify(value, (_key, val) => {
-        if (val != null && typeof val === "object" && !Array.isArray(val)) {
+        if (isRecord(val)) {
             return Object.fromEntries(Object.entries(val).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)));
         }
         return val;
@@ -103,6 +102,48 @@ function jsonBlobRef(value: unknown): { ref: BlobRef; hash: string; buf: Buffer 
         hash,
         buf
     };
+}
+
+/**
+ * Well-known `fullPath` each docs.yml `agents` file is served from. Renderers
+ * look these files up by fixed name, so a file configured under another name
+ * (e.g. `robots-txt: ./seo/robots-noindex.txt`) is also published at its
+ * well-known path.
+ */
+const WELL_KNOWN_AGENT_FILE_PATHS = {
+    robotsTxt: "robots.txt",
+    llmsTxt: "llms.txt",
+    llmsFullTxt: "llms-full.txt"
+} as const;
+
+export function aliasWellKnownAgentFiles({
+    agents,
+    fileManifest,
+    fileIdToPath
+}: {
+    agents: DocsDefinition["config"]["agents"];
+    fileManifest: Record<string, FileManifestEntry> | undefined;
+    fileIdToPath: Map<string, string> | undefined;
+}): Record<string, FileManifestEntry> | undefined {
+    if (agents == null || fileManifest == null) {
+        return fileManifest;
+    }
+    let aliased: Record<string, FileManifestEntry> | undefined;
+    for (const [key, wellKnownPath] of Object.entries(WELL_KNOWN_AGENT_FILE_PATHS)) {
+        const fileId = agents[key as keyof typeof WELL_KNOWN_AGENT_FILE_PATHS];
+        if (fileId == null) {
+            continue;
+        }
+        const configuredPath = fileIdToPath?.get(fileId) ?? fileId;
+        const entry = fileManifest[configuredPath];
+        if (configuredPath === wellKnownPath || entry == null) {
+            continue;
+        }
+        // The explicitly configured file wins over any unrelated asset already at the well-known path.
+        aliased ??= { ...fileManifest };
+        aliased[wellKnownPath] = { ...entry, filename: wellKnownPath };
+    }
+    return aliased ?? fileManifest;
 }
 
 /**
@@ -228,7 +269,11 @@ export function buildLedgerInput({
         config: ledgerConfig,
         apiManifest: apiManifestRef,
         jsFiles: jsFilesRef,
-        fileManifest,
+        fileManifest: aliasWellKnownAgentFiles({
+            agents: docsDefinition.config.agents,
+            fileManifest,
+            fileIdToPath
+        }),
         redirects: null,
         locale: locale ?? docsDefinition.config.translations?.defaultLocale ?? "en",
         git
@@ -495,11 +540,11 @@ async function uploadBlobWithRetry(
 
         const isRetryable = response.status === 429 || response.status >= 500;
         if (isRetryable && attempt < UPLOAD_MAX_RETRIES) {
-            const delay = UPLOAD_INITIAL_DELAY_MS * 2 ** attempt;
+            const retryDelayMs = UPLOAD_INITIAL_DELAY_MS * 2 ** attempt;
             context.logger.debug(
-                `[ledger] Upload ${hash} got ${response.status}, retrying in ${delay}ms (attempt ${attempt + 1}/${UPLOAD_MAX_RETRIES})`
+                `[ledger] Upload ${hash} got ${response.status}, retrying in ${retryDelayMs}ms (attempt ${attempt + 1}/${UPLOAD_MAX_RETRIES})`
             );
-            await new Promise((resolve) => setTimeout(resolve, delay));
+            await delay(retryDelayMs);
             continue;
         }
 

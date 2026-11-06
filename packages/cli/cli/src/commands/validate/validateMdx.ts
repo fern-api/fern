@@ -1,4 +1,5 @@
 import { getAllPages, parseDocsConfiguration } from "@fern-api/configuration-loader";
+import { errorMessageOrString } from "@fern-api/core-utils";
 import { parseMarkdownToTree } from "@fern-api/docs-markdown-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
@@ -101,6 +102,14 @@ export async function validateMdxFiles({
     for (const filepath of filesToCheck) {
         const content = readFileSync(filepath, "utf-8");
 
+        const frontmatterError = getFrontmatterError(content);
+        if (frontmatterError != null) {
+            errors.push(new MdxValidationError(filepath, `Invalid frontmatter: ${frontmatterError}`, 1));
+            // Without parseable frontmatter the body offsets below are meaningless (gray-matter
+            // would throw again), so the MDX body check runs once the frontmatter is fixed.
+            continue;
+        }
+
         try {
             parseMarkdownToTree(content);
         } catch (error) {
@@ -109,7 +118,7 @@ export async function validateMdxFiles({
             const contentLines = contentWithoutFrontmatter.split("\n").length;
             const frontmatterLineCount = totalLines - contentLines;
 
-            const message = error instanceof Error ? error.message : String(error);
+            const message = errorMessageOrString(error);
             let line: number | undefined;
             let column: number | undefined;
 
@@ -155,6 +164,21 @@ export async function validateMdxFiles({
     }
 
     return { errors, totalFiles: filesToCheck.length };
+}
+
+/**
+ * Returns the YAML parse error for a page's frontmatter, if any. Fern falls back to an
+ * empty frontmatter when the YAML is malformed, which silently drops `title`/`description`
+ * (and can take the whole site down when the block is read as page content), so the
+ * check must fail loudly instead.
+ */
+export function getFrontmatterError(content: string): string | undefined {
+    try {
+        grayMatter(content);
+        return undefined;
+    } catch (error) {
+        return errorMessageOrString(error);
+    }
 }
 
 export function logMdxValidationResults({

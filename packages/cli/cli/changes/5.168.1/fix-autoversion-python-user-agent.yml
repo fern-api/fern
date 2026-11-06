@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    With `--version AUTO`, the Python SDK `User-Agent` header now gets the computed version instead
+    of keeping `0.0.0-fern-placeholder`. The IR version is now mapped per language (Python
+    `0.0.0.dev0`) like the generator config version, so the autoversion step replaces both.
+  type: fix

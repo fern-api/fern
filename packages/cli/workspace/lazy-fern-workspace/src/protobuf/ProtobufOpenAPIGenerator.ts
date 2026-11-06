@@ -1,3 +1,4 @@
+import { errorMessageOrString } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath, relative } from "@fern-api/fs-utils";
 import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { CliError, TaskContext } from "@fern-api/task-context";
@@ -417,7 +418,7 @@ export class ProtobufOpenAPIGenerator {
         try {
             this.resolvedBufCommand = await ensureBufCommand(this.context.logger);
         } catch (error) {
-            this.context.failAndThrow(error instanceof Error ? error.message : String(error), undefined, {
+            this.context.failAndThrow(errorMessageOrString(error), undefined, {
                 code: CliError.Code.EnvironmentError
             });
         }

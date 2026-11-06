@@ -687,6 +687,20 @@
       ],
       "description": "The programming language of the library source code."
     },
+    "docs.LibrarySlugStyle": {
+      "type": "string",
+      "enum": [
+        "compact",
+        "hyphenated"
+      ]
+    },
+    "docs.LibraryOrganizeBy": {
+      "type": "string",
+      "enum": [
+        "kind",
+        "header"
+      ]
+    },
     "docs.LibraryConfig": {
       "type": "object",
       "properties": {
@@ -711,6 +725,70 @@
             }
           ],
           "description": "Also generate pages for `#define`s that have no Doxygen comment.\nBy default only documented macros are rendered. Include guards are never\nemitted (Doxygen drops them). Only valid when lang is cpp."
+        },
+        "slug-style": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.LibrarySlugStyle"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "How symbol names become page URLs. `compact` (default) drops underscores\n(`doca_pcc_dev_get_port_counter_id` -> `docapccdevgetportcounterid`);\n`hyphenated` keeps word boundaries (`doca-pcc-dev-get-port-counter-id`).\nChanging this renames every generated page. Only valid when lang is cpp."
+        },
+        "organize-by": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.LibraryOrganizeBy"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "`kind` (default) groups generated pages by symbol kind (functions/, structs/, ...).\n`header` additionally writes a `headers/` folder with one page per source header\nlisting everything it declares. Only valid when lang is cpp."
+        },
+        "include": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Files or directories to scan, relative to `input.path`. When set, only these are\nparsed (Doxygen `INPUT`). Only valid when lang is cpp."
+        },
+        "exclude": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Files, directories (relative to `input.path`) or glob patterns (containing `*`/`?`)\nto leave out of the scan (Doxygen `EXCLUDE` / `EXCLUDE_PATTERNS`). Only valid when lang is cpp."
+        },
+        "exclude-symbols": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Symbol names or patterns to leave out, e.g. `INTERNAL_*` or `detail::*`\n(Doxygen `EXCLUDE_SYMBOLS`). Only valid when lang is cpp."
         }
       },
       "additionalProperties": false,
@@ -1262,6 +1340,17 @@
           ],
           "description": "If true, this version will be hidden from navigation, search, and indexing, but still accessible via direct URL."
         },
+        "default": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If true, this version is the default version: it is served at the unversioned URLs\n(without the version slug) and is used for canonical URLs, the sitemap, search, and\n`llms.txt`. The order of the `versions` list only controls the order in the version\nswitcher. At most one version in a `versions` list may set `default: true`, and the\ndefault version cannot be `hidden`. A default version may be built from the working\ntree (`path`) or from a git ref (`ref`). If no version sets `default`, the first\nversion in the list is the default."
+        },
         "announcement": {
           "oneOf": [
             {
@@ -1717,6 +1806,9 @@
         "path"
       ],
       "additionalProperties": false
+    },
+    "docs.TabId": {
+      "type": "string"
     },
     "docs.CollapsedStringValue": {
       "type": "string",
@@ -3574,15 +3666,6 @@
         }
       ]
     },
-    "docs.UntabbedNavigationConfig": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/docs.NavigationItem"
-      }
-    },
-    "docs.TabId": {
-      "type": "string"
-    },
     "docs.TabbedNavigationItemWithLayout": {
       "type": "object",
       "properties": {
@@ -3754,13 +3837,19 @@
         "$ref": "#/definitions/docs.TabbedNavigationItem"
       }
     },
+    "docs.UntabbedNavigationConfig": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/docs.NavigationItem"
+      }
+    },
     "docs.NavigationConfig": {
       "anyOf": [
         {
-          "$ref": "#/definitions/docs.UntabbedNavigationConfig"
+          "$ref": "#/definitions/docs.TabbedNavigationConfig"
         },
         {
-          "$ref": "#/definitions/docs.TabbedNavigationConfig"
+          "$ref": "#/definitions/docs.UntabbedNavigationConfig"
         }
       ]
     },
@@ -5310,6 +5399,17 @@
             }
           ],
           "description": "Overrides the disclaimer shown in the Ask Fern chat\n(default: \"Responses are generated using AI and may contain mistakes.\")."
+        },
+        "button-text": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Overrides the \"Ask AI\" label on the header button and in the search dialog\n(default: \"Ask AI\", translated on localized sites)."
         }
       },
       "additionalProperties": false
@@ -7011,6 +7111,17 @@
             }
           ],
           "description": "If set to true, response examples in the API Reference include a raw HTTP block\nshowing the response status line and response headers alongside the body.\n\n@default: false"
+        },
+        "require-analytics-consent": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If set to true, Fern's built-in docs analytics (PostHog) stays off until visitor consent is given:\nno script, cookies, local storage or events. Grant consent from a custom script (e.g. your consent\nmanager's callback) by setting `window.fernAnalyticsConsent = true` and dispatching\n`new Event(\"fern-analytics-consent\")` on `window`.\n\n@default: false"
         }
       },
       "additionalProperties": false

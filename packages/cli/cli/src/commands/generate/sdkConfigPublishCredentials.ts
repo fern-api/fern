@@ -1,4 +1,4 @@
-import { replaceEnvVariables } from "@fern-api/core-utils";
+import { isRecord, replaceEnvVariables } from "@fern-api/core-utils";
 import {
     type FernSdkGenApiPublishCredentialSource,
     parseSecretNameExpression
@@ -388,8 +388,4 @@ function validateCredentialFieldShape(
             }
         }
     }
-}
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-    return typeof value === "object" && value != null && !Array.isArray(value);
 }

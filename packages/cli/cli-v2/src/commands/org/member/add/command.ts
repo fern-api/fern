@@ -39,6 +39,12 @@ export class InviteMemberCommand {
             throw CliError.notFound();
         }
         const auth0OrgId = orgLookup.body.auth0Id;
+        if (auth0OrgId == null) {
+            context.stderr.error(
+                `${Icons.error} Organization "${args.org}" is not linked to an Auth0 organization, so its members cannot be managed from the CLI.`
+            );
+            throw CliError.notFound();
+        }
 
         const response = await withSpinner({
             message: `Inviting "${args.email}" to organization "${args.org}"`,

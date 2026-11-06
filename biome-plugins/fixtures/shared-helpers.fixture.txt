@@ -1,0 +1,40 @@
+// Fixture for biome-plugins/test-plugins.sh. Every line that ends in `// violation` must be reported by
+// a plugin, and no other line may be. Keep one line per pattern plus the negatives at the bottom.
+import path, { sep } from "path";
+
+export function fixture(value: unknown, text: string, maybeText?: string) {
+    // no-inline-is-record
+    const record1 = typeof value === "object" && value != null && !Array.isArray(value); // violation
+    const record2 = typeof value === "object" && value !== null && !Array.isArray(value); // violation
+    const record3 = value !== null && typeof value === "object" && !Array.isArray(value); // violation
+    const record4 = value != null && typeof value === "object" && !Array.isArray(value); // violation
+    const record5 = typeof value === "object" && !Array.isArray(value) && value !== null; // violation
+
+    // no-inline-strip-trailing-slashes
+    const strip1 = text.replace(/\/+$/, ""); // violation
+    const strip2 = maybeText?.replace(/\/+$/, ""); // violation
+
+    // no-inline-to-posix-path
+    const posix1 = text.split(path.sep).join("/"); // violation
+    const posix2 = text.split(sep).join("/"); // violation
+
+    // no-inline-capitalize
+    const capitalize1 = text.charAt(0).toUpperCase() + text.slice(1); // violation
+    const capitalize2 = text[0].toUpperCase() + text.slice(1); // violation
+    const capitalize3 = text[0]?.toUpperCase() + text.slice(1); // violation
+    const capitalize4 = `${text[0]?.toUpperCase()}${text.substring(1)}`; // violation
+
+    // Negatives: similar shapes that must not be reported.
+    const keepStrip = text.replace(/\/+$/, "x");
+    const keepPosix = text.split(sep).join("\\");
+    const keepCapitalize = text.charAt(0).toLowerCase() + text.slice(1);
+    const keepRecord = typeof value === "object" && value != null;
+
+    return [
+        record1, record2, record3, record4, record5,
+        strip1, strip2,
+        posix1, posix2,
+        capitalize1, capitalize2, capitalize3, capitalize4,
+        keepStrip, keepPosix, keepCapitalize, keepRecord
+    ];
+}

@@ -245,13 +245,13 @@ export class Context {
     /**
      * Verify that the current user has access to the given organization.
      *
-     * Organization tokens are already scoped to an organization, so this is a no-op.
+     * Organization and guest tokens are already scoped to an organization, so this is a no-op.
      * User tokens are checked for membership via the Venus API.
      *
      * @throws CliError if the organization doesn't exist or the user doesn't have access
      */
     public async verifyOrgAccess({ organization, token }: { organization: string; token: FernToken }): Promise<void> {
-        if (token.type === "organization") {
+        if (token.type !== "user") {
             return;
         }
 

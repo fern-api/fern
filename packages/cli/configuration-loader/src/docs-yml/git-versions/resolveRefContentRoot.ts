@@ -65,9 +65,15 @@ async function readVersionFile({
     };
 }
 
-/** The first version at the ref built from its own working tree (a `path:` entry, not another `ref:`). */
+/**
+ * The version at the ref built from its own working tree (a `path:` entry, not another `ref:`):
+ * the one marked `default: true` if it has a `path`, else the first such entry.
+ */
 function getWorkingTreeVersionPath(versions: docsYml.RawSchemas.VersionConfig[] | undefined): string | undefined {
-    return versions?.find((version) => getVersionContentRef(version) == null && version.path != null)?.path;
+    const workingTreeVersions = versions?.filter(
+        (version) => getVersionContentRef(version) == null && version.path != null
+    );
+    return (workingTreeVersions?.find((version) => version.default === true) ?? workingTreeVersions?.[0])?.path;
 }
 
 function isInternalProduct(product: docsYml.RawSchemas.ProductConfig): product is docsYml.RawSchemas.InternalProduct {
@@ -101,8 +107,9 @@ function findProductAtRef(
 /**
  * Locates the pages to build for a ref-backed version by reading the docs.yml committed
  * at the ref (`materialized`), in the scope the version is declared in on the current branch:
- * - `site`: the first entry in the ref docs.yml's `versions` list that has a `path`
- *   (entries with a `ref` are skipped); if none, the ref docs.yml's top-level `navigation`.
+ * - `site`: the entry in the ref docs.yml's `versions` list that has a `path` (entries with
+ *   a `ref` are skipped), preferring the one marked `default: true`, else the first; if none,
+ *   the ref docs.yml's top-level `navigation`.
  * - `product`: the product in the ref docs.yml with the same `slug` (or, when either side
  *   has no `slug`, the same `displayName`), then the same rule on that product's `versions`;
  *   if none, the `navigation` in that product's file.

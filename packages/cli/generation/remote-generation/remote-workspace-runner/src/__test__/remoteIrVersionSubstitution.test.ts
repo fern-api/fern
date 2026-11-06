@@ -1,4 +1,9 @@
-import { isAutoVersion, MAGIC_VERSION } from "@fern-api/generator-cli/autoversion";
+import {
+    isAutoVersion,
+    MAGIC_VERSION,
+    MAGIC_VERSION_PYTHON,
+    mapMagicVersionForLanguage
+} from "@fern-api/generator-cli/autoversion";
 import { describe, expect, it } from "vitest";
 
 /**
@@ -18,8 +23,13 @@ describe("remote IR version substitution", () => {
      * Replicates the effectiveIrVersion computation from runRemoteGenerationForGenerator.
      * This is the core logic being tested.
      */
-    function computeEffectiveIrVersion(resolvedVersion: string | undefined): string | undefined {
-        return resolvedVersion != null && isAutoVersion(resolvedVersion) ? MAGIC_VERSION : resolvedVersion;
+    function computeEffectiveIrVersion(
+        resolvedVersion: string | undefined,
+        language = "typescript"
+    ): string | undefined {
+        return resolvedVersion != null && isAutoVersion(resolvedVersion)
+            ? mapMagicVersionForLanguage(MAGIC_VERSION, language)
+            : resolvedVersion;
     }
 
     it("substitutes MAGIC_VERSION when resolvedVersion is 'AUTO'", () => {
@@ -32,6 +42,14 @@ describe("remote IR version substitution", () => {
 
     it("substitutes MAGIC_VERSION when resolvedVersion is 'Auto' (mixed case)", () => {
         expect(computeEffectiveIrVersion("Auto")).toBe(MAGIC_VERSION);
+    });
+
+    it("uses the Python placeholder for Python so User-Agent matches X-Fern-SDK-Version", () => {
+        expect(computeEffectiveIrVersion("AUTO", "python")).toBe(MAGIC_VERSION_PYTHON);
+    });
+
+    it("uses the v-prefixed placeholder for Go", () => {
+        expect(computeEffectiveIrVersion("AUTO", "go")).toBe(`v${MAGIC_VERSION}`);
     });
 
     it("passes through explicit version strings unchanged", () => {

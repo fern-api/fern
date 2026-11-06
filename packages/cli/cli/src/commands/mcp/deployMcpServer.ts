@@ -1,11 +1,11 @@
 import { getCodingAgentHeaders } from "@fern-api/core";
+import { isRecord } from "@fern-api/core-utils";
 import { getDashboardBaseUrl } from "@fern-api/login";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import { createHash } from "crypto";
 import { readdir, readFile } from "fs/promises";
 import path from "path";
-
 import { CISource, DeployerAuthor } from "../../utils/environment.js";
 import { describeFetchError, FDR_ORIGIN, parseErrorDetail } from "../docs-theme/themeOrigin.js";
 
@@ -420,10 +420,6 @@ interface ToolEntry {
     name: string;
     method?: unknown;
     path?: unknown;
-}
-
-function isRecord(value: unknown): value is Record<string, unknown> {
-    return typeof value === "object" && value != null && !Array.isArray(value);
 }
 
 function isToolEntry(value: unknown): value is ToolEntry {

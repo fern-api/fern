@@ -33,6 +33,7 @@
     "test:update": "vitest --run -u"
   },
   "dependencies": {
+    "@fern-api/core-utils": "workspace:*",
     "@fern-api/configuration": "workspace:*"
   },
   "optionalDependencies": {

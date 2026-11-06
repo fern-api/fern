@@ -350,6 +350,7 @@
             "response": {
                 "type": "streaming"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_events.stream": {
@@ -431,6 +432,7 @@
             "response": {
                 "type": "streaming"
             },
+            "hasResponseBody": true,
             "examples": null
         }
     },

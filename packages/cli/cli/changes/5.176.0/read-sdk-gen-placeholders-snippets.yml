@@ -1,0 +1,5 @@
+- summary: |
+    SDK snippets from sdk-gen are now read from the `placeholdersSnippetsUrl` link of each artifact, the file whose
+    values carry editable placeholders for the docs "Try it" panel. The SDKs whose snippets were read are left out of
+    the `snippetsConfiguration` sent to FDR, so FDR no longer fails looking them up in its own snippet store.
+  type: feat

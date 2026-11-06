@@ -12,6 +12,7 @@
  * currentPagePath) requires that pages are rendered one at a time.
  */
 
+import { errorMessageOrString } from "@fern-api/core-utils";
 import { CliError } from "@fern-api/task-context";
 import { existsSync, mkdirSync, mkdtempSync, renameSync, rmSync } from "fs";
 import { dirname, join, relative } from "path";
@@ -35,12 +36,14 @@ import {
     renderGroupPage,
     renderGroupsIndexPage
 } from "../cpp/src/renderers/GroupPageRenderer.js";
+import { renderHeaderPage, renderHeadersIndexPage } from "../cpp/src/renderers/HeaderPageRenderer.js";
 import type {
     CategoryDefinition,
     CategoryWithEntries,
     NamespaceListEntry
 } from "../cpp/src/renderers/IndexPageRenderer.js";
 import {
+    categoryHasEntries,
     ENTITY_CATEGORIES,
     namespaceHasEntities,
     renderCategoryIndexPage,
@@ -51,6 +54,8 @@ import { groupFunctionsByName, methodAnchorId } from "../cpp/src/renderers/Metho
 import type {
     CppClassIr,
     CppDocstringIr,
+    CppEnumIr,
+    CppFileIr,
     CppFunctionIr,
     CppGroupIr,
     CppLibraryDocsIr,
@@ -65,7 +70,18 @@ export interface CppGenerateOptions {
     outputDir: string;
     /** Base slug prefix for page URLs (e.g., "reference/cub") */
     slug: string;
+    /**
+     * How symbol names become page filenames (and therefore URLs). `compact` (default)
+     * keeps the name as-is, so Fern's slugifier drops underscores: `doca_pcc_dev_get_port_counter_id`
+     * -> `/docapccdevgetportcounterid`. `hyphenated` turns underscores into hyphens so the
+     * URL keeps word boundaries: `/doca-pcc-dev-get-port-counter-id`.
+     */
+    slugStyle?: CppSlugStyle;
+    /** `header` also writes `headers/` pages, one per source header (needs IR `files`). */
+    organizeBy?: "kind" | "header";
 }
+
+export type CppSlugStyle = "compact" | "hyphenated";
 
 export interface CppGenerateResult {
     /** Absolute paths of all written files */
@@ -115,7 +131,7 @@ export function generateCpp(options: CppGenerateOptions): CppGenerateResult {
     const collected = collectCompounds(ir.rootNamespace, rootPrefix);
 
     // Stage 2: Compute page keys (resolve collisions for template specializations)
-    const pageEntries = computePageKeys(collected, rootNsName);
+    const pageEntries = computePageKeys(collected, rootNsName, options.slugStyle ?? "compact");
 
     // Build entity registry for cross-reference link resolution
     const registry = buildEntityRegistry(pageEntries);
@@ -163,6 +179,11 @@ export function generateCpp(options: CppGenerateOptions): CppGenerateResult {
         // Stage 5: Generate pages for the library's Doxygen groups
         generateGroupPages(groups, writer, repo.trim() || (rootNsName ?? slug));
 
+        // Stage 6 (opt-in): one page per source header
+        if (options.organizeBy === "header") {
+            generateHeaderPages(ir.files ?? [], writer, repo.trim() || (rootNsName ?? slug));
+        }
+
         const result = writer.result();
         swapIntoPlace(stagingDir, outputDir, backupDir);
         rmSync(backupDir, { recursive: true, force: true });
@@ -207,18 +228,18 @@ function swapIntoPlace(staged: string, target: string, backup: string): void {
             try {
                 renameSync(stagedMetadata, previousMetadata);
             } catch (metadataError) {
-                restoreErrors.push(`metadata left at ${stagedMetadata}: ${errorMessage(metadataError)}`);
+                restoreErrors.push(`metadata left at ${stagedMetadata}: ${errorMessageOrString(metadataError)}`);
             }
         }
         try {
             renameSync(backup, target);
         } catch (pagesError) {
-            restoreErrors.push(`previous pages kept at ${backup}: ${errorMessage(pagesError)}`);
+            restoreErrors.push(`previous pages kept at ${backup}: ${errorMessageOrString(pagesError)}`);
         }
         if (restoreErrors.length > 0) {
             throw new Error(
                 `Failed to replace ${target} and could not fully restore the previous output. ` +
-                    `Replace error: ${errorMessage(error)}. Restore errors: ${restoreErrors.join("; ")}`
+                    `Replace error: ${errorMessageOrString(error)}. Restore errors: ${restoreErrors.join("; ")}`
             );
         }
         throw error;
@@ -226,10 +247,6 @@ function swapIntoPlace(staged: string, target: string, backup: string): void {
 }
 
 const METADATA_DIR = ".fern";
-
-function errorMessage(error: unknown): string {
-    return error instanceof Error ? error.message : String(error);
-}
 
 /**
  * A library with no namespaces, concepts, templates or C++ class features
@@ -359,7 +376,8 @@ function collectCompounds(ns: CppNamespaceIr, rootPrefix: string): CollectedComp
     }
 
     for (const enumIr of ns.enums) {
-        if (rootPrefix && !enumIr.path.startsWith(rootPrefix)) {
+        // Doxygen names `enum { A, B };` "@N": no page of its own, listed on the enums index
+        if (enumIr.name.startsWith("@") || (rootPrefix && !enumIr.path.startsWith(rootPrefix))) {
             continue;
         }
         result.push({
@@ -632,14 +650,18 @@ interface PageEntry {
     collected: CollectedCompound;
 }
 
-function computePageKeys(compounds: CollectedCompound[], rootNsName: string | undefined): PageEntry[] {
+function computePageKeys(
+    compounds: CollectedCompound[],
+    rootNsName: string | undefined,
+    slugStyle: CppSlugStyle
+): PageEntry[] {
     // Group by directory + category + base filename to detect collisions
     const groups = new Map<string, CollectedCompound[]>();
     for (const c of compounds) {
         const stripped = stripTemplateArgs(c.path);
         const allNsParts = stripped.split("::").slice(0, -1);
         const nsParts = rootNsName != null && allNsParts[0] === rootNsName ? allNsParts.slice(1) : allNsParts;
-        const baseFilename = sanitizeForFilename(stripped.split("::").pop() ?? "");
+        const baseFilename = applySlugStyle(sanitizeForFilename(stripped.split("::").pop() ?? ""), slugStyle);
         const dir = namespacePathToFilesystem(nsParts);
         const category = categoryFolderForCompound(c);
         const groupKey = dir ? `${dir}/${category}/${baseFilename}` : `${category}/${baseFilename}`;
@@ -676,10 +698,43 @@ function computePageKeys(compounds: CollectedCompound[], rootNsName: string | un
 }
 
 /**
+ * `hyphenated` collapses underscore runs and drops leading/trailing ones, so `__s_dup` and
+ * `s_dup` share a filename that `compact` keeps apart. Those extra collisions are resolved by
+ * `disambiguateSlugCollisions` (public name first, internal one gets `-2`).
+ */
+function applySlugStyle(filename: string, slugStyle: CppSlugStyle): string {
+    if (slugStyle !== "hyphenated") {
+        return filename;
+    }
+    return filename.replace(/_+/g, "-").replace(/^-+|-+$/g, "") || filename;
+}
+
+/**
+ * Symbols whose source name starts with `_` are reserved/internal in C and C++, so a
+ * public symbol that shares a URL with one (`s_dup` vs `__s_dup`) must get the plain URL.
+ */
+function isInternalName(entry: PageEntry): boolean {
+    return (stripTemplateArgs(entry.collected.path).split("::").pop() ?? "").startsWith("_");
+}
+
+function comparePageEntries(a: PageEntry, b: PageEntry): number {
+    const internalA = isInternalName(a) ? 1 : 0;
+    const internalB = isInternalName(b) ? 1 : 0;
+    if (internalA !== internalB) {
+        return internalA - internalB;
+    }
+    if (a.pageKey !== b.pageKey) {
+        return a.pageKey < b.pageKey ? -1 : 1;
+    }
+    return a.collected.path < b.collected.path ? -1 : a.collected.path > b.collected.path ? 1 : 0;
+}
+
+/**
  * Page keys that differ on disk can still slugify to the same URL (e.g. `FOO_BAR`
  * and `FOOBAR` both become `foobar`). Append a numeric `-N` suffix (which survives
  * slugification) to every entry after the first in such a group, in a deterministic
- * order, so every page has a unique URL. The `index` slug of every directory is
+ * order (public names before `_`-prefixed ones, then by filename), so every page has a
+ * unique URL. The `index` slug of every directory is
  * reserved for the generated category/namespace index page.
  */
 function disambiguateSlugCollisions(entries: PageEntry[]): PageEntry[] {
@@ -705,7 +760,7 @@ function disambiguateSlugCollisions(entries: PageEntry[]): PageEntry[] {
             result.push(...group);
             continue;
         }
-        const sorted = [...group].sort((a, b) => (a.pageKey < b.pageKey ? -1 : a.pageKey > b.pageKey ? 1 : 0));
+        const sorted = [...group].sort(comparePageEntries);
         sorted.forEach((entry, index) => {
             if (index === 0 && !isReserved) {
                 result.push(entry);
@@ -806,7 +861,7 @@ function generateIndexPages(
     // Identify which categories have entities (without resolving links yet)
     const nonEmptyCategories: CategoryDefinition[] = [];
     for (const category of ENTITY_CATEGORIES) {
-        if (category.collectEntries(ns).length > 0) {
+        if (categoryHasEntries(category, ns)) {
             nonEmptyCategories.push(category);
         }
     }
@@ -841,7 +896,12 @@ function generateIndexPages(
         setCurrentPageSlugPath(pageKeyToSlugPath(catPageKey));
         const entries = category.collectEntries(ns);
         const categoryWithEntries: CategoryWithEntries = { category, entries };
-        const categoryContent = renderCategoryIndexPage(ns.path, categoryWithEntries, title);
+        const categoryContent = renderCategoryIndexPage(
+            ns.path,
+            categoryWithEntries,
+            title,
+            category.folderName === "enums" ? anonymousEnums(ns) : []
+        );
         writer.writePage(catPageKey, categoryContent);
     }
 
@@ -975,4 +1035,41 @@ function writeGroupPage(group: CppGroupIr, dir: string, writer: MdxFileWriter, w
     for (const subgroup of subgroups) {
         writeGroupPage(subgroup, `${dir}/${folders.get(subgroup) ?? groupFolderName(subgroup)}`, writer, written);
     }
+}
+
+function anonymousEnums(ns: CppNamespaceIr): CppEnumIr[] {
+    return ns.enums.filter((e) => e.name.startsWith("@"));
+}
+
+/** `headers/<file>.mdx` per IR file plus `headers/index.mdx`; nested dirs are flattened into the slug. */
+function generateHeaderPages(files: CppFileIr[], writer: MdxFileWriter, libraryTitle: string): void {
+    if (files.length === 0) {
+        return;
+    }
+    const used = new Set<string>(["index"]);
+    const entries: { file: CppFileIr; slug: string }[] = [];
+    for (const file of files) {
+        const base = slugifySegment(file.path.replace(/\.[^.]+$/, "").replace(/[\\/]+/g, "-")) || "header";
+        let slug = base;
+        for (let n = 2; used.has(slug); n++) {
+            slug = `${base}-${n}`;
+        }
+        used.add(slug);
+        entries.push({ file, slug });
+    }
+    for (const { file, slug } of entries) {
+        const pageKey = `headers/${slug}.mdx`;
+        setCurrentPageSlugPath(pageKeyToSlugPath(pageKey));
+        writer.writePage(pageKey, renderHeaderPage(file));
+    }
+    const indexPageKey = "headers/index.mdx";
+    setCurrentPageSlugPath(pageKeyToSlugPath(indexPageKey));
+    writer.writePage(
+        indexPageKey,
+        renderHeadersIndexPage(
+            // the index is served at `.../headers`, so sibling pages are reached via `headers/<slug>`
+            entries.map(({ file, slug }) => ({ displayName: file.path, linkPath: `headers/${slug}` })),
+            libraryTitle
+        )
+    );
 }

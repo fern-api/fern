@@ -200,6 +200,141 @@ describe("generateCpp()", () => {
         rmSync(tmpDir, { recursive: true, force: true });
     });
 
+    it("renders the folded typedef alias on a C struct page", () => {
+        const ir = makeIr(
+            makeNamespace({
+                classes: [makeClass({ name: "Packet", path: "Packet", kind: "struct", typedefAlias: "Packet" })]
+            })
+        );
+        generateCpp({ ir, outputDir: tmpDir, slug: "safety" });
+        const page = readFileSync(join(tmpDir, "structs", "Packet.mdx"), "utf-8");
+        expect(page).toContain("typedef struct Packet Packet;");
+    });
+
+    it("lists anonymous enum values on the enums index instead of a page of their own", () => {
+        const anon = {
+            name: "@0",
+            path: "@0",
+            docstring: undefined,
+            isScoped: false,
+            underlyingType: undefined,
+            values: [
+                {
+                    name: "OPERATIONAL",
+                    initializer: undefined,
+                    docstring: makeDocstring({ summary: [{ type: "text", text: "Normal" }] })
+                },
+                { name: "CRITICAL", initializer: "= 2", docstring: undefined }
+            ]
+        } as unknown as CppNamespaceIr["enums"][number];
+        const named = { ...anon, name: "Mode", path: "Mode" };
+        const anonOnly = makeIr(makeNamespace({ enums: [anon] }));
+        generateCpp({ ir: anonOnly, outputDir: tmpDir, slug: "safety" });
+        expect(readFileSync(join(tmpDir, "enums", "index.mdx"), "utf-8")).toContain("- `OPERATIONAL` — Normal");
+        rmSync(tmpDir, { recursive: true, force: true });
+        mkdirSync(tmpDir);
+        const ir = makeIr(makeNamespace({ enums: [anon, named] }));
+        generateCpp({ ir, outputDir: tmpDir, slug: "safety" });
+        const files = collectMdxFiles(tmpDir).map((f) => f.split("/").pop());
+        expect(files).toContain("Mode.mdx");
+        expect(files.some((f) => f?.startsWith("0") || f?.includes("@"))).toBe(false);
+        const index = readFileSync(join(tmpDir, "enums", "index.mdx"), "utf-8");
+        expect(index).toContain("## Anonymous enumerations");
+        expect(index).toContain("- `OPERATIONAL` — Normal");
+        expect(index).toContain("- `CRITICAL = 2`");
+    });
+
+    it("writes one page per source header when organize-by is header", () => {
+        const ir: CppLibraryDocsIr = {
+            ...makeIr(
+                makeNamespace({
+                    classes: [makeClass({ name: "Packet", path: "Packet", kind: "struct" })],
+                    functions: [makeFunction({ name: "pss_send", path: "pss_send" })]
+                })
+            ),
+            files: [
+                {
+                    name: "pss_protocol.h",
+                    path: "include/pss_protocol.h",
+                    docstring: makeDocstring({ summary: [{ type: "text", text: "Wire protocol." }] }),
+                    includes: ["stdint.h"],
+                    classes: ["Packet"],
+                    functions: ["pss_send"],
+                    enums: ["@0"],
+                    typedefs: [],
+                    variables: [],
+                    macros: []
+                },
+                {
+                    name: "pss_protocol.h",
+                    path: "legacy/pss_protocol.h",
+                    includes: [],
+                    classes: [],
+                    functions: [],
+                    enums: [],
+                    typedefs: [],
+                    variables: [],
+                    macros: ["PSS_OLD"]
+                },
+                {
+                    name: "index.h",
+                    path: "index.h",
+                    includes: [],
+                    classes: [],
+                    functions: [],
+                    enums: [],
+                    typedefs: [],
+                    variables: [],
+                    macros: []
+                },
+                {
+                    name: "pss_protocol-2.h",
+                    path: "include/pss_protocol-2.h",
+                    includes: [],
+                    classes: [],
+                    functions: [],
+                    enums: [],
+                    typedefs: [],
+                    variables: [],
+                    macros: []
+                },
+                {
+                    name: "pss_protocol.h",
+                    path: "include/pss__protocol.h",
+                    includes: [],
+                    classes: [],
+                    functions: [],
+                    enums: [],
+                    typedefs: [],
+                    variables: [],
+                    macros: []
+                }
+            ]
+        };
+        const withoutHeaders = generateCpp({ ir, outputDir: tmpDir, slug: "safety" });
+        expect(existsSync(join(tmpDir, "headers"))).toBe(false);
+
+        const withHeaders = generateCpp({ ir, outputDir: tmpDir, slug: "safety", organizeBy: "header" });
+        expect(withHeaders.pageCount).toBe(withoutHeaders.pageCount + 6);
+        const page = readFileSync(join(tmpDir, "headers", "include-pssprotocol.mdx"), "utf-8");
+        expect(page).toContain("#include <include/pss_protocol.h>");
+        expect(page).toContain("Wire protocol.");
+        expect(page).toContain("[`Packet`](../structs/packet)");
+        expect(page).toContain("[`pss_send`](../functions/psssend)");
+        expect(page).toContain("- `(anonymous enum)`");
+        expect(page).toContain("- `stdint.h`");
+        expect(existsSync(join(tmpDir, "headers", "legacy-pssprotocol.mdx"))).toBe(true);
+        // `include/pss_protocol-2.h` claims `include-pssprotocol-2`; the later colliding `include/pss__protocol.h` moves on to `-3`
+        expect(existsSync(join(tmpDir, "headers", "include-pssprotocol-2.mdx"))).toBe(true);
+        expect(existsSync(join(tmpDir, "headers", "include-pssprotocol-3.mdx"))).toBe(true);
+        // `index.h` must not overwrite the headers index
+        expect(existsSync(join(tmpDir, "headers", "index-2.mdx"))).toBe(true);
+        const index = readFileSync(join(tmpDir, "headers", "index.mdx"), "utf-8");
+        expect(index).toContain("[`include/pss_protocol.h`](headers/include-pssprotocol)");
+        expect(index).toContain("[`legacy/pss_protocol.h`](headers/legacy-pssprotocol)");
+        expect(index).toContain("[`index.h`](headers/index-2)");
+    });
+
     // ------------------------------------------------------------------
     // 1. Phantom namespace filtering
     // ------------------------------------------------------------------
@@ -592,6 +727,70 @@ describe("generateCpp()", () => {
         const macroIndex = readFileSync(join(tmpDir, "macros/index.mdx"), "utf-8");
         expect(macroIndex).toContain("- [`ALWAYS_INLINE`](macros/alwaysinline)");
         expect(macroIndex).toContain("- [`__always_inline`](macros/alwaysinline-2)");
+    });
+
+    it("gives public symbols the plain URL ahead of _-prefixed ones that sanitize to the same filename", () => {
+        const internalDup = makeFunction({ name: "__s_dup", path: "__s_dup" });
+        const publicDup = makeFunction({ name: "s_dup", path: "s_dup" });
+        const upperCase = makeMacro({ name: "S_CASE", path: "S_CASE" });
+        const lowerCase = makeMacro({ name: "s_case", path: "s_case" });
+        const sab = makeFunction({ name: "s_a_b", path: "s_a_b" });
+        const saB = makeFunction({ name: "sa_b", path: "sa_b" });
+        // Internal name first in source order: it must still lose the plain URL.
+        const ir = makeIr(
+            makeNamespace({ functions: [internalDup, publicDup, saB, sab], macros: [lowerCase, upperCase] }),
+            {
+                packageName: "lib"
+            }
+        );
+
+        generateCpp({ ir, outputDir: tmpDir, slug: "reference/lib" });
+
+        const relativePaths = collectMdxFiles(tmpDir).map((f) => f.substring(tmpDir.length + 1));
+        expect(relativePaths).toContain("functions/s_dup.mdx");
+        expect(relativePaths).toContain("functions/s_dup-2.mdx");
+        expect(readFileSync(join(tmpDir, "functions/s_dup.mdx"), "utf-8")).toContain("title: s_dup");
+        expect(readFileSync(join(tmpDir, "functions/s_dup-2.mdx"), "utf-8")).toContain("title: __s_dup");
+        expect(relativePaths).toContain("macros/S_CASE.mdx");
+        expect(relativePaths).toContain("macros/s_case-2.mdx");
+        expect(relativePaths).toContain("functions/s_a_b.mdx");
+        expect(relativePaths).toContain("functions/sa_b-2.mdx");
+
+        const fnIndex = readFileSync(join(tmpDir, "functions/index.mdx"), "utf-8");
+        expect(fnIndex).toContain("- [`s_dup`](functions/sdup)");
+        expect(fnIndex).toContain("- [`__s_dup`](functions/sdup-2)");
+    });
+
+    it("slugStyle: hyphenated keeps word boundaries in filenames and URLs", () => {
+        const fn = makeFunction({ name: "doca_pcc_dev_get_port_counter_id", path: "doca_pcc_dev_get_port_counter_id" });
+        const sab = makeFunction({ name: "s_a_b", path: "s_a_b" });
+        const saB = makeFunction({ name: "sa_b", path: "sa_b" });
+        const ir = makeIr(makeNamespace({ functions: [fn, sab, saB] }), { packageName: "lib" });
+
+        generateCpp({ ir, outputDir: tmpDir, slug: "reference/lib", slugStyle: "hyphenated" });
+
+        const relativePaths = collectMdxFiles(tmpDir).map((f) => f.substring(tmpDir.length + 1));
+        expect(relativePaths).toContain("functions/doca-pcc-dev-get-port-counter-id.mdx");
+        expect(relativePaths).toContain("functions/s-a-b.mdx");
+        expect(relativePaths).toContain("functions/sa-b.mdx");
+        const fnIndex = readFileSync(join(tmpDir, "functions/index.mdx"), "utf-8");
+        expect(fnIndex).toContain("](functions/doca-pcc-dev-get-port-counter-id)");
+        expect(fnIndex).toContain("](functions/s-a-b)");
+        expect(fnIndex).toContain("](functions/sa-b)");
+    });
+
+    it("slugStyle: hyphenated still keeps colliding public/internal symbols on distinct pages", () => {
+        const internal = makeFunction({ name: "__s_dup", path: "__s_dup" });
+        const pub = makeFunction({ name: "s_dup", path: "s_dup" });
+        const ir = makeIr(makeNamespace({ functions: [internal, pub] }), { packageName: "lib" });
+
+        generateCpp({ ir, outputDir: tmpDir, slug: "reference/lib", slugStyle: "hyphenated" });
+
+        const relativePaths = collectMdxFiles(tmpDir).map((f) => f.substring(tmpDir.length + 1));
+        expect(relativePaths).toContain("functions/s-dup.mdx");
+        expect(relativePaths).toContain("functions/s-dup-2.mdx");
+        expect(readFileSync(join(tmpDir, "functions/s-dup.mdx"), "utf-8")).toContain("title: s_dup\n");
+        expect(readFileSync(join(tmpDir, "functions/s-dup-2.mdx"), "utf-8")).toContain("title: __s_dup\n");
     });
 
     it("drops leading underscores from page and group filenames so folder navigation includes them", () => {

@@ -1,0 +1,35 @@
+openapi: 3.0.0
+info:
+  title: Recursive Discriminated Union
+  version: 1.0.0
+paths:
+  /plants:
+    get:
+      operationId: getPlant
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Branch"
+components:
+  schemas:
+    Leaf:
+      type: object
+      properties:
+        type:
+          type: string
+    Branch:
+      type: object
+      properties:
+        type:
+          type: string
+        parts:
+          type: array
+          items:
+            discriminator:
+              propertyName: type
+            anyOf:
+              - $ref: "#/components/schemas/Leaf"
+              - $ref: "#/components/schemas/Branch"

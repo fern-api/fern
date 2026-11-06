@@ -1,3 +1,4 @@
+import { capitalizeFirstLetter } from "@fern-api/core-utils";
 import { FernFilepath, HttpHeader, ResponseError, TypeReference } from "@fern-api/ir-sdk";
 import {
     Converters,
@@ -97,7 +98,7 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
             }
             const convertedSchema = this.parseMediaTypeObject({
                 mediaTypeObject,
-                schemaId: uppercaseFirstChar(`${this.methodName}Request${errorName}`),
+                schemaId: capitalizeFirstLetter(`${this.methodName}Request${errorName}`),
                 contentType
             });
             if (convertedSchema == null) {
@@ -238,7 +239,7 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
 
     private getErrorIdFromErrorName(errorName: string): string {
         return this.context.enableUniqueErrorsPerEndpoint
-            ? uppercaseFirstChar(`${this.methodName}Request${errorName}`)
+            ? capitalizeFirstLetter(`${this.methodName}Request${errorName}`)
             : errorName;
     }
 
@@ -250,11 +251,4 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
         });
         return this.convertedResponseHeaders;
     }
-}
-
-function uppercaseFirstChar(str: string): string {
-    if (str.length === 0) {
-        return str;
-    }
-    return str.charAt(0).toUpperCase() + str.slice(1);
 }

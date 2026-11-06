@@ -82,6 +82,7 @@
             "response": {
                 "type": "text"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_service.getCsv": {
@@ -163,6 +164,7 @@
             "response": {
                 "type": "text"
             },
+            "hasResponseBody": true,
             "examples": null
         },
         "endpoint_service.getXml": {
@@ -244,6 +246,7 @@
             "response": {
                 "type": "text"
             },
+            "hasResponseBody": true,
             "examples": null
         }
     },

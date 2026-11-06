@@ -660,75 +660,6 @@
             "properties": [
                 {
                     "name": {
-                        "wireValue": "number",
-                        "name": {
-                            "originalName": "number",
-                            "camelCase": {
-                                "unsafeName": "number",
-                                "safeName": "number"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "number",
-                                "safeName": "number"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "NUMBER",
-                                "safeName": "NUMBER"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Number",
-                                "safeName": "Number"
-                            }
-                        }
-                    },
-                    "typeReference": {
-                        "type": "optional",
-                        "value": {
-                            "type": "primitive",
-                            "value": "STRING"
-                        }
-                    },
-                    "propertyAccess": null,
-                    "variable": null
-                },
-                {
-                    "name": {
-                        "wireValue": "status_callback_event",
-                        "name": {
-                            "originalName": "status_callback_event",
-                            "camelCase": {
-                                "unsafeName": "statusCallbackEvent",
-                                "safeName": "statusCallbackEvent"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "status_callback_event",
-                                "safeName": "status_callback_event"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "STATUS_CALLBACK_EVENT",
-                                "safeName": "STATUS_CALLBACK_EVENT"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "StatusCallbackEvent",
-                                "safeName": "StatusCallbackEvent"
-                            }
-                        }
-                    },
-                    "typeReference": {
-                        "type": "optional",
-                        "value": {
-                            "type": "list",
-                            "value": {
-                                "type": "primitive",
-                                "value": "STRING"
-                            }
-                        }
-                    },
-                    "propertyAccess": null,
-                    "variable": null
-                },
-                {
-                    "name": {
                         "wireValue": "record",
                         "name": {
                             "originalName": "record",
@@ -794,6 +725,75 @@
                                 "type": "named",
                                 "value": "type_:Number"
                             }
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "status_callback_event",
+                        "name": {
+                            "originalName": "status_callback_event",
+                            "camelCase": {
+                                "unsafeName": "statusCallbackEvent",
+                                "safeName": "statusCallbackEvent"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "status_callback_event",
+                                "safeName": "status_callback_event"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "STATUS_CALLBACK_EVENT",
+                                "safeName": "STATUS_CALLBACK_EVENT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "StatusCallbackEvent",
+                                "safeName": "StatusCallbackEvent"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "list",
+                            "value": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            }
+                        }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "wireValue": "number",
+                        "name": {
+                            "originalName": "number",
+                            "camelCase": {
+                                "unsafeName": "number",
+                                "safeName": "number"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "number",
+                                "safeName": "number"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NUMBER",
+                                "safeName": "NUMBER"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Number",
+                                "safeName": "Number"
+                            }
+                        }
+                    },
+                    "typeReference": {
+                        "type": "optional",
+                        "value": {
+                            "type": "primitive",
+                            "value": "STRING"
                         }
                     },
                     "propertyAccess": null,

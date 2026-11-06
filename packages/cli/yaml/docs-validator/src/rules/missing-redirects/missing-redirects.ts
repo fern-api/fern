@@ -1,10 +1,10 @@
 import { getToken } from "@fern-api/auth";
+import { errorMessageOrString } from "@fern-api/core-utils";
 import { DocsDefinitionResolver } from "@fern-api/docs-resolver";
 import { DocsV1Write, FernNavigation } from "@fern-api/fdr-sdk";
 import { createLogger, type Logger, type LogLevel } from "@fern-api/logger";
 import { createMockTaskContext, type TaskContext } from "@fern-api/task-context";
 import { type DocsWorkspace } from "@fern-api/workspace-loader";
-
 import { formatInitError } from "../../formatInitError.js";
 import { Rule, type RuleContext, type RuleViolation } from "../../Rule.js";
 import { getInstanceUrls, toBaseUrl } from "../valid-markdown-link/url-utils.js";
@@ -82,7 +82,7 @@ async function fetchMarkdownEntries(
             entries: data.entries
         };
     } catch (error) {
-        const message = error instanceof Error ? error.message : String(error);
+        const message = errorMessageOrString(error);
         return { error: message };
     }
 }

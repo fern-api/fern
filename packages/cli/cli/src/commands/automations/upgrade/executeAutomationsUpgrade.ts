@@ -12,24 +12,10 @@ import { writeFile } from "fs/promises";
 
 import { CliContext } from "../../../cli-context/CliContext.js";
 import { loadProjectAndRegisterWorkspacesWithContext } from "../../../cliCommons.js";
+import { getChangelogUrl } from "../../../utils/getChangelogUrl.js";
 import { createSdkGenApiTokenProvider } from "../../upgrade/getSdkGenApiGeneratorVersions.js";
 import { upgrade } from "../../upgrade/upgrade.js";
 import { loadAndUpdateGenerators } from "../../upgrade/upgradeGenerator.js";
-
-const CHANGELOG_BASE = "https://buildwithfern.com/learn/sdks/generators";
-
-/**
- * Derives the changelog URL from a generator name.
- * Generator names follow the pattern "fernapi/fern-<language>-sdk[-variant]",
- * and changelog pages live at buildwithfern.com/learn/sdks/generators/<language>/changelog.
- */
-export function getChangelogUrl(generatorName: string): string | undefined {
-    const match = generatorName.match(/^fernapi\/fern-([a-z]+)/);
-    if (!match?.[1]) {
-        return undefined;
-    }
-    return `${CHANGELOG_BASE}/${match[1]}/changelog`;
-}
 
 export interface AutomationsUpgradeOptions {
     includeMajor: boolean;
@@ -62,6 +48,12 @@ interface AlreadyUpToDateEntry {
     version: string;
 }
 
+interface SdkConfigMigrationRequiredEntry {
+    name: string;
+    current: string;
+    sdkConfigVersion: string;
+}
+
 interface PrSuggestion {
     title: string;
     body: string;
@@ -73,6 +65,7 @@ export interface AutomationsUpgradeResult {
     generators: GeneratorUpgradeEntry[];
     skippedMajor: SkippedMajorEntry[];
     alreadyUpToDate: AlreadyUpToDateEntry[];
+    sdkConfigMigrationRequired: SdkConfigMigrationRequiredEntry[];
     pr: PrSuggestion | null;
 }
 
@@ -117,6 +110,7 @@ async function getCurrentCliVersion(cliContext: CliContext): Promise<string> {
  *     ],
  *     "skippedMajor": [{ "name": "...", "current": "...", "latest": "..." }],
  *     "alreadyUpToDate": [{ "name": "...", "version": "..." }],
+ *     "sdkConfigMigrationRequired": [{ "name": "...", "current": "...", "sdkConfigVersion": "..." }],
  *     "pr": {
  *       "title": "chore(fern): upgrade CLI 4.66.0 → 4.96.0 and 2 generators",
  *       "body": "## Fern Upgrade\n...",
@@ -182,6 +176,7 @@ export async function executeAutomationsUpgrade({
         generators: generatorResults.generators,
         skippedMajor: generatorResults.skippedMajor,
         alreadyUpToDate: generatorResults.alreadyUpToDate,
+        sdkConfigMigrationRequired: generatorResults.sdkConfigMigrationRequired,
         pr
     };
 
@@ -204,10 +199,12 @@ async function upgradeGeneratorsForAllWorkspaces({
     generators: GeneratorUpgradeEntry[];
     skippedMajor: SkippedMajorEntry[];
     alreadyUpToDate: AlreadyUpToDateEntry[];
+    sdkConfigMigrationRequired: SdkConfigMigrationRequiredEntry[];
 }> {
     const generators: GeneratorUpgradeEntry[] = [];
     const skippedMajor: SkippedMajorEntry[] = [];
     const alreadyUpToDate: AlreadyUpToDateEntry[] = [];
+    const sdkConfigMigrationRequired: SdkConfigMigrationRequiredEntry[] = [];
     // Lazy: only generators the `use-sdk-gen-api` flag routes through sdk-gen-api trigger a login.
     const getSdkGenApiToken = createSdkGenApiTokenProvider(cliContext);
 
@@ -264,6 +261,14 @@ async function upgradeGeneratorsForAllWorkspaces({
                         version: upToDate.version
                     });
                 }
+
+                for (const required of result.sdkConfigMigrationRequired) {
+                    sdkConfigMigrationRequired.push({
+                        name: addDefaultDockerOrgIfNotPresent(required.generatorName),
+                        current: required.currentVersion,
+                        sdkConfigVersion: required.sdkConfigVersion
+                    });
+                }
             });
         })
     );
@@ -276,8 +281,9 @@ async function upgradeGeneratorsForAllWorkspaces({
     });
     skippedMajor.sort((a, b) => a.name.localeCompare(b.name));
     alreadyUpToDate.sort((a, b) => a.name.localeCompare(b.name));
+    sdkConfigMigrationRequired.sort((a, b) => a.name.localeCompare(b.name));
 
-    return { generators, skippedMajor, alreadyUpToDate };
+    return { generators, skippedMajor, alreadyUpToDate, sdkConfigMigrationRequired };
 }
 
 // ---------------------------------------------------------------------------
@@ -387,3 +393,5 @@ function buildPrSuggestion({
         commitMessage: buildCommitMessage({ cli, generators })
     };
 }
+
+export { getChangelogUrl };

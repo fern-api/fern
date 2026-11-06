@@ -1,0 +1,17 @@
+instances:
+  - url: https://example.docs.buildwithfern.com
+
+title: Version default (products)
+
+products:
+  - display-name: Plants
+    path: ./products/plants.yml
+    slug: plants
+    versions:
+      - display-name: Develop
+        path: ./versions/develop.yml
+        slug: develop
+      - display-name: 3.3.0
+        path: ./versions/index.yml
+        slug: 3-3-0
+        default: true

@@ -1,7 +1,7 @@
+import { errorMessageOrString } from "@fern-api/core-utils";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { readdir, readFile } from "fs/promises";
 import grayMatter from "gray-matter";
-
 import { Rule, RuleViolation } from "../../Rule.js";
 
 /**
@@ -74,9 +74,7 @@ export async function validateWellKnownSkillsDirectory({
         } catch (error) {
             violations.push({
                 severity: "error",
-                message: `${wellKnownDirectory}/index.json is not valid JSON: ${
-                    error instanceof Error ? error.message : String(error)
-                }`,
+                message: `${wellKnownDirectory}/index.json is not valid JSON: ${errorMessageOrString(error)}`,
                 relativeFilepath: RelativeFilePath.of(`${wellKnownDirectory}/index.json`)
             });
         }
@@ -124,7 +122,7 @@ export function validateSkillMarkdown({
         return [
             {
                 severity: "error",
-                message: `Failed to parse frontmatter: ${error instanceof Error ? error.message : String(error)}`,
+                message: `Failed to parse frontmatter: ${errorMessageOrString(error)}`,
                 relativeFilepath: skillMarkdownRelativePath
             }
         ];

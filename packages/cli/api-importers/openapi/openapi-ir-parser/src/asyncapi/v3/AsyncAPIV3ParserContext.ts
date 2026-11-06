@@ -1,3 +1,4 @@
+import { decodeJsonPointerSegment } from "@fern-api/core-utils";
 import { CliError } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractAsyncAPIParserContext } from "../AbstractAsyncAPIParserContext.js";
@@ -72,7 +73,7 @@ export class AsyncAPIV3ParserContext extends AbstractAsyncAPIParserContext<Async
             const parts = message.$ref.split("/");
             const rawChannelPath = parts[2];
             const messageKey = parts[4];
-            const channelPath = rawChannelPath?.replace(/~1/g, "/").replace(/~0/g, "~");
+            const channelPath = rawChannelPath != null ? decodeJsonPointerSegment(rawChannelPath) : undefined;
 
             if (channelPath == null || messageKey == null || !this.document.channels?.[channelPath]) {
                 throw new CliError({

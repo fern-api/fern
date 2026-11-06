@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="src/SeedCsharpOauthTokenRequiredGrantType.Test/SeedCsharpOauthTokenRequiredGrantType.Test.csproj" />
-  <Project Path="src/SeedCsharpOauthTokenRequiredGrantType/SeedCsharpOauthTokenRequiredGrantType.csproj" />
-</Solution>

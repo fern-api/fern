@@ -2,4 +2,4 @@
 
 import type * as FernDocsConfig from "../../../index.js";
 
-export type NavigationConfig = FernDocsConfig.UntabbedNavigationConfig | FernDocsConfig.TabbedNavigationConfig;
+export type NavigationConfig = FernDocsConfig.TabbedNavigationConfig | FernDocsConfig.UntabbedNavigationConfig;

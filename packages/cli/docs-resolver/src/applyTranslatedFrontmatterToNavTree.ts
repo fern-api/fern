@@ -1,3 +1,4 @@
+import { errorMessageOrString } from "@fern-api/core-utils";
 import { FernNavigation } from "@fern-api/fdr-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import matter from "gray-matter";
@@ -24,7 +25,7 @@ function parseFrontmatterOverrides(markdown: string): ParseResult {
         // TODO(translations-alpha): slug parsing removed until proper composition is implemented
         return { override: result };
     } catch (e) {
-        return { override: {}, error: e instanceof Error ? e.message : String(e) };
+        return { override: {}, error: errorMessageOrString(e) };
     }
 }
 

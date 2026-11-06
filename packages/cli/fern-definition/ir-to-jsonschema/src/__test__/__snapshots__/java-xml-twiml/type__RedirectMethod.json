@@ -1,0 +1,9 @@
+{
+  "type": "string",
+  "enum": [
+    "GET",
+    "POST"
+  ],
+  "description": "Redirect URL method",
+  "definitions": {}
+}

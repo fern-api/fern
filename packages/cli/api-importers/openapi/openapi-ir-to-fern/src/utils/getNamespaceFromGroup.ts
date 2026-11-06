@@ -27,5 +27,8 @@ export function getErrorNamespace({
     endpointNamespace: string | undefined;
     error: HttpError;
 }): string | undefined {
+    if (error.isShared) {
+        return undefined;
+    }
     return error.namespace ?? endpointNamespace;
 }

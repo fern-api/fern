@@ -21,6 +21,7 @@ export const VersionConfig: core.serialization.ObjectSchema<
         availability: VersionAvailability.optional(),
         audiences: Audience.optional(),
         hidden: core.serialization.boolean().optional(),
+        default: core.serialization.boolean().optional(),
         announcement: AnnouncementConfig.optional(),
     })
     .extend(WithPermissions)
@@ -35,6 +36,7 @@ export declare namespace VersionConfig {
         availability?: VersionAvailability.Raw | null;
         audiences?: Audience.Raw | null;
         hidden?: boolean | null;
+        default?: boolean | null;
         announcement?: AnnouncementConfig.Raw | null;
     }
 }

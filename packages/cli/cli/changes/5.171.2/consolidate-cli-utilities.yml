@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Internal cleanup: shared helpers for ENOENT checks, http(s) URL checks, delays,
+    `asyncPool` and `convertNumberToSnakeCase` now live in `core-utils` instead of being
+    copied across packages. No behavior change.
+  type: chore

@@ -741,10 +741,10 @@
     "docs.NavigationConfig": {
       "oneOf": [
         {
-          "$ref": "#/definitions/docs.UntabbedNavigationConfig"
+          "$ref": "#/definitions/docs.TabbedNavigationConfig"
         },
         {
-          "$ref": "#/definitions/docs.TabbedNavigationConfig"
+          "$ref": "#/definitions/docs.UntabbedNavigationConfig"
         }
       ]
     },
