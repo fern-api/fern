@@ -43,10 +43,7 @@ export async function prepareFernSdkGenApiRuntimeBundle({
         context,
         irVersionOverride
     });
-    const runtimeSnippetPath =
-        generatorInvocation.readme != null || shouldDownloadSnippets(generatorInvocation)
-            ? RUNTIME_SNIPPET_PATH
-            : undefined;
+    const runtimeSnippetPath = shouldIncludeSnippetPath(generatorInvocation) ? RUNTIME_SNIPPET_PATH : undefined;
     const config = getGeneratorConfig({
         workspaceName: apiName,
         organization,
@@ -79,7 +76,16 @@ export async function prepareFernSdkGenApiRuntimeBundle({
     );
 }
 
-function shouldDownloadSnippets(generatorInvocation: generatorsYml.GeneratorInvocation): boolean {
+function shouldIncludeSnippetPath(generatorInvocation: generatorsYml.GeneratorInvocation): boolean {
+    if (generatorInvocation.readme != null) {
+        return true;
+    }
     const outputMode = generatorInvocation.outputMode;
-    return outputMode.type === "downloadFiles" && outputMode.downloadSnippets === true;
+    // GitHub publication treats generator output as the complete repository snapshot. Supplying
+    // the snippet path ensures generators keep emitting their standard documentation files.
+    return (
+        outputMode.type === "github" ||
+        outputMode.type === "githubV2" ||
+        (outputMode.type === "downloadFiles" && outputMode.downloadSnippets === true)
+    );
 }

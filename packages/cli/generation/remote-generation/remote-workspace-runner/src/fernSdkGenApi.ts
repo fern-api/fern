@@ -112,6 +112,7 @@ export type FernSdkGenApiRequestedOutput =
           branch?: string;
           mode?: "release" | "pull-request" | "push";
           reviewers?: { teams?: string[]; users?: string[] };
+          license?: FernFiddle.GithubLicense;
           publish?: FernSdkGenApiPublishConfig;
           /**
            * `false` keeps generated `.github/workflows/*` files out of the commit and leaves existing
@@ -485,6 +486,7 @@ export function mapFernSdkGenApiOutput(
                 repo: outputMode.repo,
                 branch: outputMode.branch,
                 mode: outputMode.makePr === true ? "pull-request" : "release",
+                license: outputMode.license,
                 publishInfo: outputMode.publishInfo,
                 githubOptions
             });
@@ -497,6 +499,7 @@ export function mapFernSdkGenApiOutput(
                 branch: github.branch,
                 mode: github.type === "pullRequest" ? "pull-request" : github.type === "push" ? "push" : "release",
                 reviewers: github.type === "pullRequest" ? mapGithubReviewers(github.reviewers) : undefined,
+                license: github.license,
                 publishInfo: github.publishInfo,
                 workflows: github.workflows,
                 githubOptions
@@ -526,6 +529,7 @@ function mapGithubOutput({
     branch,
     mode,
     reviewers,
+    license,
     publishInfo,
     workflows,
     githubOptions
@@ -536,6 +540,7 @@ function mapGithubOutput({
     branch?: string;
     mode: "release" | "pull-request" | "push";
     reviewers?: { teams?: string[]; users?: string[] };
+    license?: FernFiddle.GithubLicense;
     publishInfo?: FernFiddle.GithubPublishInfo;
     workflows?: boolean;
     githubOptions?: FernSdkGenApiGithubOptions;
@@ -552,6 +557,7 @@ function mapGithubOutput({
             ...(branch != null ? { branch } : {}),
             mode,
             ...(reviewers != null ? { reviewers } : {}),
+            ...(license != null ? { license } : {}),
             ...(publication != null ? { publish: publication.publish } : {}),
             // generators.yml resolves an unset `github.workflows` to true, so only the opt-out is
             // sent. Every request that keeps the default stays unchanged on the wire.
