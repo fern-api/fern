@@ -1,4 +1,11 @@
 export { findGeneratorLineNumber, GeneratorOccurrenceTracker, getOutputRepoUrl } from "./automationMetadata.js";
+export type { CompiledGlobalTheme } from "./compileGlobalTheme.js";
+export {
+    canMergeThemeServerSide,
+    compileGlobalTheme,
+    shouldMergeThemeServerSide,
+    themeReferencesRemoteAssets
+} from "./compileGlobalTheme.js";
 export type { FernSdkGenApiPublishCredentialSource } from "./directPublishCredentials.js";
 export {
     discoverLatestSdkGenApiGeneratorVersions,
@@ -33,15 +40,6 @@ export {
     validateFernSdkGenApiPublishCredentialSources,
     validateFernSdkGenApiPublishTargets
 } from "./fernSdkGenApi.js";
-export type { CompiledGlobalTheme } from "./compileGlobalTheme.js";
-export {
-    canMergeThemeServerSide,
-    compileGlobalTheme,
-    shouldMergeThemeServerSide,
-    themeReferencesRemoteAssets
-} from "./compileGlobalTheme.js";
-export type { FernSdkConfigV1Payload } from "./fernSdkGenApi.js";
-export { getFernSdkGenApiLanguage, isFernSdkGenApiEnabled } from "./fernSdkGenApi.js";
 export type {
     FernSdkGenApiImportSettings,
     FernSdkGenApiSourceArchive,

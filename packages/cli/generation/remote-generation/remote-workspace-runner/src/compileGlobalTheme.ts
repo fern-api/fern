@@ -1,5 +1,5 @@
 import { docsYml } from "@fern-api/configuration";
-import { MediaType } from "@fern-api/core-utils";
+import { isRecord, MediaType } from "@fern-api/core-utils";
 import { DocsDefinitionResolver, FetchedGlobalTheme, mergeThemeOverride } from "@fern-api/docs-resolver";
 import type { FileManifestEntry, LedgerConfig } from "@fern-api/fdr-sdk/orpc-client";
 import { AbsoluteFilePath, isURL, join, RelativeFilePath } from "@fern-api/fs-utils";
@@ -87,7 +87,7 @@ export function themeReferencesRemoteAssets(rawTheme: Record<string, unknown>): 
     const pushDarkLight = (value: unknown) => {
         if (typeof value === "string") {
             values.push(value);
-        } else if (isPlainObject(value)) {
+        } else if (isRecord(value)) {
             values.push(value.dark, value.light);
         }
     };
@@ -112,7 +112,7 @@ export function shouldMergeThemeServerSide({
     deployMode: DocsDeployMode;
     theme: FetchedGlobalTheme | undefined;
 }): boolean {
-    return deployMode === "ledger" && theme?.compiledHash != null && canMergeThemeServerSide(theme.config);
+    return deployMode === "ledger" && theme?.hasLedger === true && canMergeThemeServerSide(theme.config);
 }
 
 /**
@@ -232,7 +232,7 @@ async function compileThemeDefaults({
 }): Promise<LedgerConfig> {
     const emptyObjects: Record<string, unknown> = {};
     for (const key of themeKeys) {
-        if (key !== "colors" && isPlainObject(rawTheme[camelToKebab(key)] ?? rawTheme[key])) {
+        if (key !== "colors" && isRecord(rawTheme[camelToKebab(key)] ?? rawTheme[key])) {
             emptyObjects[key] = {};
         }
     }
@@ -269,7 +269,7 @@ function stripDefaults(value: unknown, defaults: unknown): unknown {
     if (value === undefined || defaults === undefined) {
         return value;
     }
-    if (!isPlainObject(value) || !isPlainObject(defaults)) {
+    if (!isRecord(value) || !isRecord(defaults)) {
         return isDeepStrictEqual(value, defaults) ? undefined : value;
     }
     const stripped: Record<string, unknown> = {};
@@ -280,10 +280,6 @@ function stripDefaults(value: unknown, defaults: unknown): unknown {
         }
     }
     return Object.keys(stripped).length > 0 ? stripped : undefined;
-}
-
-function isPlainObject(value: unknown): value is Record<string, unknown> {
-    return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
 type LedgerColors = NonNullable<LedgerConfig["colorsV3"]>;
@@ -303,10 +299,10 @@ function pickThemeColors(
     if (colors == null) {
         return undefined;
     }
-    const rawColors = isPlainObject(rawTheme.colors) ? rawTheme.colors : {};
+    const rawColors = isRecord(rawTheme.colors) ? rawTheme.colors : {};
     const setsColor = (key: string, mode: "dark" | "light"): boolean => {
         const value = rawColors[camelToKebab(key)] ?? rawColors[key];
-        return typeof value === "string" || (isPlainObject(value) && value[mode] != null);
+        return typeof value === "string" || (isRecord(value) && value[mode] != null);
     };
     const pick = (palette: LedgerPalette, mode: "dark" | "light"): Partial<LedgerPalette> => {
         const picked: Record<string, unknown> = {};

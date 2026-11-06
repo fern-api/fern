@@ -142,7 +142,7 @@ describe("themeReferencesRemoteAssets", () => {
 });
 
 describe("shouldMergeThemeServerSide", () => {
-    const compiledTheme = { config: { announcement: { message: "Hi" } }, compiledHash: "abc" };
+    const compiledTheme = { config: { announcement: { message: "Hi" } }, hasLedger: true };
 
     it("merges server-side only for ledger deploys of themes with a compiled fragment", () => {
         expect(shouldMergeThemeServerSide({ deployMode: "ledger", theme: compiledTheme })).toBe(true);
@@ -152,7 +152,7 @@ describe("shouldMergeThemeServerSide", () => {
 
     it("falls back to local stitching for themes uploaded by CLIs without compiled fragments", () => {
         expect(
-            shouldMergeThemeServerSide({ deployMode: "ledger", theme: { ...compiledTheme, compiledHash: undefined } })
+            shouldMergeThemeServerSide({ deployMode: "ledger", theme: { ...compiledTheme, hasLedger: false } })
         ).toBe(false);
     });
 

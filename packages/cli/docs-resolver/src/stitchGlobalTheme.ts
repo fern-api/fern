@@ -359,11 +359,10 @@ export interface FetchedGlobalTheme {
     /** Raw theme config with file references resolved to presigned URLs. */
     config: Record<string, unknown>;
     /**
-     * CAS hash of the compiled ledger fragment, when the theme was uploaded by a
-     * CLI that produces one. Its presence means FDR can merge the theme
+     * True when the theme was uploaded with a ledger form, so FDR can merge it
      * server-side at publish time.
      */
-    compiledHash: string | undefined;
+    hasLedger: boolean;
 }
 
 /**
@@ -422,7 +421,7 @@ export async function fetchGlobalTheme({
         // ORPC can encode errors (e.g. NOT_FOUND) inside a 200 response body
         const body = parsed as {
             config?: Record<string, unknown>;
-            compiledHash?: string | null;
+            hasLedger?: boolean;
             error?: { code?: string; message?: string };
         };
         if (body.error != null) {
@@ -449,7 +448,7 @@ export async function fetchGlobalTheme({
             );
         }
 
-        return { config: body.config, compiledHash: body.compiledHash ?? undefined };
+        return { config: body.config, hasLedger: body.hasLedger === true };
     } catch (err) {
         if (err instanceof Error && err.message.includes("fetch failed")) {
             taskContext.failAndThrow(`Could not reach FDR at ${fdrOrigin} to fetch global theme "${themeName}"`, err, {

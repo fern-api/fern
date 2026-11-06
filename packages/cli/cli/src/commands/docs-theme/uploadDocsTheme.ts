@@ -1,4 +1,5 @@
 import { FernToken } from "@fern-api/auth";
+import { errorMessageOrString } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
 import {
@@ -111,9 +112,7 @@ export async function uploadDocsTheme({
         } catch (err) {
             compiled = undefined;
             context.logger.warn(
-                `Could not compile theme for server-side merging; sites using it will stitch it at publish instead: ${
-                    err instanceof Error ? err.message : String(err)
-                }`
+                `Could not compile theme for server-side merging; sites using it will stitch it at publish instead: ${errorMessageOrString(err)}`
             );
         }
 
@@ -129,7 +128,7 @@ export async function uploadDocsTheme({
                     name,
                     config: processedConfig,
                     ...(compiled != null && {
-                        compiled: { config: compiled.config, fileManifest: compiled.fileManifest }
+                        ledger: { config: compiled.config, files: compiled.fileManifest }
                     })
                 })
             });
