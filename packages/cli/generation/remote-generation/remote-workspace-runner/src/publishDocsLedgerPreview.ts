@@ -46,7 +46,8 @@ export async function publishDocsViaLedgerPreview({
     filePaths,
     fileIdToPath,
     editThisPage,
-    resolver
+    resolver,
+    sourceInstanceUrl
 }: {
     docsDefinition: DocsDefinition;
     organization: string;
@@ -66,6 +67,11 @@ export async function publishDocsViaLedgerPreview({
     editThisPage?: { github?: { owner: string; repo: string; branch?: string; host?: string } };
     /** Resolver instance for accessing translation pages/overlays. Optional. */
     resolver?: DocsDefinitionResolver;
+    /**
+     * The docs.yml `instance.url` the preview is built from. FDR records it so an org's
+     * `authed-previews` `authed-instance-domains` can gate only previews of listed instances.
+     */
+    sourceInstanceUrl?: string;
 }): Promise<LedgerPreviewResult> {
     // ── Phase 1: Build all locales upfront ──────────────────────────────
     // Every locale must be present in previewRegister so the ledger can
@@ -140,15 +146,21 @@ export async function publishDocsViaLedgerPreview({
     // in a single call.
     context.logger.debug("[ledger-preview] Finishing preview deployment...");
     const finishStart = performance.now();
-    const finishResult = await client.finish({
+    // Built before the call so `sourceInstanceUrl` type-checks against SDKs that predate it (the
+    // rest of the payload is still checked for required fields and types); FDR versions that
+    // predate it drop the unknown key.
+    // TODO: pass the literal straight to `finish` once @fern-api/fdr-sdk includes `sourceInstanceUrl`.
+    const finishInput = {
         orgId: organization,
         domain: registerResult.domain,
         basepath: registerResult.basepath,
         customDomains: [],
         previewId: registerResult.previewId,
+        sourceInstanceUrl,
         defaultLocale: baseLocale.locale,
         locales
-    });
+    };
+    const finishResult = await client.finish(finishInput);
     const finishTime = performance.now() - finishStart;
     context.logger.debug(
         `[ledger-preview] Finished in ${finishTime.toFixed(0)}ms — deploymentId=${finishResult.deploymentId}, ` +
