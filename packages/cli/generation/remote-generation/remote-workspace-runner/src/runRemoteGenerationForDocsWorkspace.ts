@@ -43,7 +43,8 @@ export async function runRemoteGenerationForDocsWorkspace({
     ciSource,
     deployerAuthor,
     loginCommand,
-    docsVisibility
+    docsVisibility,
+    uploadSource = false
 }: {
     organization: string;
     apiWorkspaces: AbstractAPIWorkspace<unknown>[];
@@ -68,6 +69,8 @@ export async function runRemoteGenerationForDocsWorkspace({
     loginCommand?: string;
     /** Which `x-twilio.docsVisibility` tiers to publish; defaults to `public`. */
     docsVisibility?: VisibilityFilter;
+    /** With a guest token: send the `fern/` folder with the publish (`--guest`, unless `--no-source`). */
+    uploadSource?: boolean;
 }): Promise<string | undefined> {
     // Substitute templated environment variables:
     // If substitute-env-vars is enabled, we'll attempt to read and replace the templated
@@ -193,6 +196,7 @@ export async function runRemoteGenerationForDocsWorkspace({
                 deployerAuthor,
                 loginCommand,
                 multiSource: maybeInstance.multiSource ?? false,
+                uploadSource: uploadSource && publishesToGuestDropSite,
                 docsVisibility
             });
 

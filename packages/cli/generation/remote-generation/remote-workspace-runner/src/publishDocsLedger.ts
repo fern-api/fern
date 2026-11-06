@@ -319,7 +319,8 @@ export async function publishDocsViaLedger({
     filePaths,
     fileIdToPath,
     editThisPage,
-    resolver
+    resolver,
+    source
 }: {
     docsDefinition: DocsDefinition;
     organization: string;
@@ -343,6 +344,8 @@ export async function publishDocsViaLedger({
     editThisPage?: { github?: { owner: string; repo: string; branch?: string; host?: string } };
     /** Resolver instance for accessing translation pages/overlays. Optional. */
     resolver?: DocsDefinitionResolver;
+    /** The `fern/` folder as a JSON file list, kept with the site so it can be written to a repo later. */
+    source?: Buffer;
 }): Promise<LedgerPublishResult> {
     // ── Phase 1: Build all locales upfront ──────────────────────────────
     // If any locale fails to build, the entire publish aborts before any
@@ -386,7 +389,16 @@ export async function publishDocsViaLedger({
 
     const locales: LocaleEntry[] = [baseLocale, ...builtTranslations.map((t) => t.localeEntry)];
 
-    const publishInput: DocsPublishInput = {
+    let sourceRef: BlobRef | undefined;
+    if (source != null) {
+        const hash = sha256(source);
+        blobs.set(hash, source);
+        // uploadMissingBlobs sends in-memory blobs as application/octet-stream.
+        sourceRef = { hash, contentType: "application/octet-stream", contentLength: source.length };
+    }
+
+    // `source` is newer than some FDRs, which drop the unknown field.
+    const publishInput: DocsPublishInput & { source?: BlobRef } = {
         orgId: organization,
         domain,
         basepath: basepath ?? "",
@@ -394,7 +406,8 @@ export async function publishDocsViaLedger({
         customDomains: customDomains ?? [],
         previewId: previewId ?? null,
         defaultLocale: baseLocale.locale,
-        locales
+        locales,
+        ...(sourceRef != null && { source: sourceRef })
     };
 
     // Register — server computes deployment hash, returns presigned S3

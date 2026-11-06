@@ -1037,6 +1037,12 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     description:
                         "Run without a Fern account: start (or reuse) a temporary guest session and generate under its guest organization. Claim the session from the printed link to keep the output. Cannot be combined with FERN_TOKEN or a saved login."
                 })
+                .option("source", {
+                    boolean: true,
+                    default: true,
+                    description:
+                        "With --guest --docs: upload the fern/ folder with the site, so connecting a GitHub repo after claiming adds it there. Pass --no-source to publish without it."
+                })
                 .option("new-session", {
                     boolean: true,
                     default: false,
@@ -1262,7 +1268,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     skipUpload: argv.skipUpload,
                     includePrivate: argv.private,
                     guest: argv.guest,
-                    newSession: argv.newSession
+                    newSession: argv.newSession,
+                    uploadSource: argv.source
                 });
             }
             // default to loading api workspace to preserve legacy behavior
