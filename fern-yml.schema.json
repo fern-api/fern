@@ -123,6 +123,36 @@
         "title": {
           "type": "string"
         },
+        "profiles": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "vars": {
+                "type": "object",
+                "propertyNames": {
+                  "type": "string"
+                },
+                "additionalProperties": {
+                  "type": "string"
+                }
+              },
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "profile": {
+          "type": "string"
+        },
         "libraries": {
           "type": "object",
           "propertyNames": {
@@ -360,6 +390,9 @@
               "display-name": {
                 "type": "string"
               },
+              "profile": {
+                "type": "string"
+              },
               "icon": {
                 "type": "string"
               },
@@ -457,6 +490,9 @@
                 ]
               },
               "display-name": {
+                "type": "string"
+              },
+              "profile": {
                 "type": "string"
               },
               "path": {
@@ -647,6 +683,9 @@
                         "display-name": {
                           "type": "string"
                         },
+                        "profile": {
+                          "type": "string"
+                        },
                         "path": {
                           "type": "string"
                         },
@@ -699,6 +738,9 @@
                       ],
                       "additionalProperties": false
                     }
+                  },
+                  "profile": {
+                    "type": "string"
                   },
                   "audiences": {
                     "anyOf": [
@@ -869,6 +911,9 @@
                         "display-name": {
                           "type": "string"
                         },
+                        "profile": {
+                          "type": "string"
+                        },
                         "path": {
                           "type": "string"
                         },
@@ -921,6 +966,9 @@
                       ],
                       "additionalProperties": false
                     }
+                  },
+                  "profile": {
+                    "type": "string"
                   },
                   "audiences": {
                     "anyOf": [
@@ -1015,6 +1063,9 @@
               ]
             },
             "page": {
+              "type": "string"
+            },
+            "profile": {
               "type": "string"
             },
             "path": {
@@ -1143,6 +1194,9 @@
                               ]
                             },
                             "title": {
+                              "type": "string"
+                            },
+                            "profile": {
                               "type": "string"
                             },
                             "subtitle": {
@@ -5375,6 +5429,9 @@
             "page": {
               "type": "string"
             },
+            "profile": {
+              "type": "string"
+            },
             "path": {
               "type": "string"
             },
@@ -5469,6 +5526,9 @@
               ]
             },
             "section": {
+              "type": "string"
+            },
+            "profile": {
               "type": "string"
             },
             "path": {
@@ -7069,6 +7129,9 @@
               ]
             },
             "page": {
+              "type": "string"
+            },
+            "profile": {
               "type": "string"
             },
             "path": {
