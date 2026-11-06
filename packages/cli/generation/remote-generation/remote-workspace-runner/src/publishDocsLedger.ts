@@ -320,7 +320,8 @@ export async function publishDocsViaLedger({
     filePaths,
     fileIdToPath,
     editThisPage,
-    resolver
+    resolver,
+    source
 }: {
     docsDefinition: DocsDefinition;
     /** ISO time the publish command started. FDR orders overlapping publishes of one URL by it. */
@@ -346,6 +347,8 @@ export async function publishDocsViaLedger({
     editThisPage?: { github?: { owner: string; repo: string; branch?: string; host?: string } };
     /** Resolver instance for accessing translation pages/overlays. Optional. */
     resolver?: DocsDefinitionResolver;
+    /** The `fern/` folder as a JSON file list, kept with the site so it can be written to a repo later. */
+    source?: Buffer;
 }): Promise<LedgerPublishResult> {
     // ── Phase 1: Build all locales upfront ──────────────────────────────
     // If any locale fails to build, the entire publish aborts before any
@@ -389,8 +392,16 @@ export async function publishDocsViaLedger({
 
     const locales: LocaleEntry[] = [baseLocale, ...builtTranslations.map((t) => t.localeEntry)];
 
-    // `publishStartedAt` isn't in the published fdr-sdk type yet; older FDRs strip it.
-    const publishInput: DocsPublishInput & { publishStartedAt?: string } = {
+    let sourceRef: BlobRef | undefined;
+    if (source != null) {
+        const hash = sha256(source);
+        blobs.set(hash, source);
+        // uploadMissingBlobs sends in-memory blobs as application/octet-stream.
+        sourceRef = { hash, contentType: "application/octet-stream", contentLength: source.length };
+    }
+
+    // `source` and `publishStartedAt` aren't in the published fdr-sdk type yet; older FDRs strip them.
+    const publishInput: DocsPublishInput & { source?: BlobRef; publishStartedAt?: string } = {
         orgId: organization,
         domain,
         basepath: basepath ?? "",
@@ -399,6 +410,7 @@ export async function publishDocsViaLedger({
         previewId: previewId ?? null,
         defaultLocale: baseLocale.locale,
         locales,
+        ...(sourceRef != null && { source: sourceRef }),
         ...(publishStartedAt != null && { publishStartedAt })
     };
 

@@ -81,6 +81,7 @@ import {
     type SdkGenSnippets
 } from "./attachSdkGenSnippets.js";
 import { getDocsDeployMode } from "./docsDeployMode.js";
+import { buildDocsSourceArchive, findFernRoot } from "./docsSourceArchive.js";
 import { computeDynamicIRs, type DynamicIrGeneratorJob } from "./dynamicIr/computeDynamicIRs.js";
 import { DynamicIrWorkerPool, parseDynamicIrResult } from "./dynamicIr/DynamicIrWorkerPool.js";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
@@ -219,7 +220,8 @@ export async function publishDocs({
     ciSource,
     deployerAuthor,
     loginCommand = "fern login",
-    multiSource = false
+    multiSource = false,
+    uploadSource = false
 }: {
     token: FernToken;
     organization: string;
@@ -250,6 +252,8 @@ export async function publishDocs({
      */
     loginCommand?: string;
     multiSource?: boolean;
+    /** Send the `fern/` folder with the publish, so a claimed guest site can be written to a repo. */
+    uploadSource?: boolean;
 }): Promise<string> {
     const publishStartedAt = new Date().toISOString();
     const fdrOrigin = getFdrOrigin();
@@ -1026,6 +1030,7 @@ export async function publishDocs({
                 }
                 context.logger.debug(`[ledger] Preview deployment created: ${previewResult.deploymentId}`);
             } else {
+                const source = uploadSource ? await readDocsSource(docsWorkspace, context) : undefined;
                 const ledgerResult = await publishDocsViaLedger({
                     docsDefinition,
                     publishStartedAt,
@@ -1045,7 +1050,8 @@ export async function publishDocs({
                     filePaths: ledgerFilePaths.size > 0 ? ledgerFilePaths : undefined,
                     fileIdToPath: ledgerFileIdToPath.size > 0 ? ledgerFileIdToPath : undefined,
                     editThisPage,
-                    resolver
+                    resolver,
+                    source
                 });
                 context.logger.debug(
                     `[ledger] Deployment ${ledgerResult.reusedDeployment ? "reused" : "created"}: ${ledgerResult.deploymentId}`
@@ -2488,4 +2494,28 @@ function extractErrorDetails(error: unknown): Record<string, unknown> {
         // Include the raw error for complete debugging if needed
         rawError: error
     };
+}
+
+async function readDocsSource(docsWorkspace: DocsWorkspace, context: TaskContext): Promise<Buffer | undefined> {
+    try {
+        const archive = await buildDocsSourceArchive({ fernRoot: await findFernRoot(docsWorkspace.absoluteFilePath) });
+        if (archive.type === "skipped") {
+            context.logger.warn(
+                `Not uploading your fern/ folder with the site: ${archive.reason}. Claiming still works, but connecting a GitHub repo won't add the folder to it.`
+            );
+            return undefined;
+        }
+        if (archive.unreadable.length > 0) {
+            context.logger.warn(
+                `Leaving ${archive.unreadable.length} unreadable file(s) out of the uploaded fern/ folder: ${archive.unreadable.slice(0, 5).join(", ")}`
+            );
+        }
+        context.logger.info(
+            `Uploading your fern/ folder (${archive.fileCount} files) with the site, so connecting a GitHub repo after claiming adds it there. Pass --no-source to skip.`
+        );
+        return archive.buffer;
+    } catch (error) {
+        context.logger.warn(`Not uploading your fern/ folder with the site: ${errorMessageOrString(error)}`);
+        return undefined;
+    }
 }
