@@ -137,7 +137,11 @@ export class CliContext {
         );
     }
 
-    public failAndThrow(message?: string, error?: unknown, options?: { code?: CliError.Code }): never {
+    public failAndThrow(
+        message?: string,
+        error?: unknown,
+        options?: { code?: CliError.Code; instructionsTopic?: string }
+    ): never {
         this.failWithoutThrowing(message, error, options);
         throw new TaskAbortSignal(
             message ??
@@ -149,12 +153,16 @@ export class CliContext {
         );
     }
 
-    public failWithoutThrowing(message?: string, error?: unknown, options?: { code?: CliError.Code }): void {
+    public failWithoutThrowing(
+        message?: string,
+        error?: unknown,
+        options?: { code?: CliError.Code; instructionsTopic?: string }
+    ): void {
         this.didSucceed = false;
         if (error instanceof TaskAbortSignal) {
             return;
         }
-        logErrorMessage({ message, error, logger: this.logger });
+        logErrorMessage({ message, error, logger: this.logger, instructionsTopic: options?.instructionsTopic });
         reportError(this, error, { ...options, message });
     }
 

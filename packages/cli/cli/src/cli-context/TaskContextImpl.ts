@@ -107,7 +107,11 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
 
     public takeOverTerminal: (run: () => void | Promise<void>) => Promise<void>;
 
-    public failAndThrow(message?: string, error?: unknown, options?: { code?: CliError.Code }): never {
+    public failAndThrow(
+        message?: string,
+        error?: unknown,
+        options?: { code?: CliError.Code; instructionsTopic?: string }
+    ): never {
         this.failWithoutThrowing(message, error, options);
         this.finish();
         throw new TaskAbortSignal(
@@ -115,7 +119,11 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
         );
     }
 
-    public failWithoutThrowing(message?: string, error?: unknown, options?: { code?: CliError.Code }): void {
+    public failWithoutThrowing(
+        message?: string,
+        error?: unknown,
+        options?: { code?: CliError.Code; instructionsTopic?: string }
+    ): void {
         this.result = TaskResult.Failure;
         if (error instanceof TaskAbortSignal) {
             return;
@@ -123,7 +131,7 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
         if (message != null) {
             this.lastFailureMessage = message;
         }
-        logErrorMessage({ message, error, logger: this.logger });
+        logErrorMessage({ message, error, logger: this.logger, instructionsTopic: options?.instructionsTopic });
         reportError(this, error, { ...options, message });
     }
 

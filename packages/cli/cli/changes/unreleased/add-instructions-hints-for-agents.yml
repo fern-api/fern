@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Errors can now name a `fern instructions` topic. When the CLI runs inside a coding agent
+    (Claude Code, Cursor, Codex, Gemini CLI, Devin and others, or any shell with `AI_AGENT` set),
+    those errors end with "For guidance, run `fern instructions <topic>`." People running the CLI
+    directly don't see the hint.
+  type: feat
