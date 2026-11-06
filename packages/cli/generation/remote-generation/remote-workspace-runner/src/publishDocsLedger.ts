@@ -303,6 +303,7 @@ export interface LedgerPublishResult {
  */
 export async function publishDocsViaLedger({
     docsDefinition,
+    publishStartedAt,
     organization,
     domain,
     basepath,
@@ -323,6 +324,8 @@ export async function publishDocsViaLedger({
     source
 }: {
     docsDefinition: DocsDefinition;
+    /** ISO time the publish command started. FDR orders overlapping publishes of one URL by it. */
+    publishStartedAt?: string;
     organization: string;
     domain: string;
     basepath: string | undefined;
@@ -397,8 +400,8 @@ export async function publishDocsViaLedger({
         sourceRef = { hash, contentType: "application/octet-stream", contentLength: source.length };
     }
 
-    // `source` is newer than some FDRs, which drop the unknown field.
-    const publishInput: DocsPublishInput & { source?: BlobRef } = {
+    // `source` and `publishStartedAt` aren't in the published fdr-sdk type yet; older FDRs strip them.
+    const publishInput: DocsPublishInput & { source?: BlobRef; publishStartedAt?: string } = {
         orgId: organization,
         domain,
         basepath: basepath ?? "",
@@ -407,7 +410,8 @@ export async function publishDocsViaLedger({
         previewId: previewId ?? null,
         defaultLocale: baseLocale.locale,
         locales,
-        ...(sourceRef != null && { source: sourceRef })
+        ...(sourceRef != null && { source: sourceRef }),
+        ...(publishStartedAt != null && { publishStartedAt })
     };
 
     // Register — server computes deployment hash, returns presigned S3

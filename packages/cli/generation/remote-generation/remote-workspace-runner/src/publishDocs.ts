@@ -255,6 +255,7 @@ export async function publishDocs({
     /** Send the `fern/` folder with the publish, so a claimed guest site can be written to a repo. */
     uploadSource?: boolean;
 }): Promise<string> {
+    const publishStartedAt = new Date().toISOString();
     const fdrOrigin = getFdrOrigin();
     const isAirGapped = await detectAirGappedMode(`${fdrOrigin}/health`, context.logger);
     if (isAirGapped) {
@@ -1032,6 +1033,7 @@ export async function publishDocs({
                 const source = uploadSource ? await readDocsSource(docsWorkspace, context) : undefined;
                 const ledgerResult = await publishDocsViaLedger({
                     docsDefinition,
+                    publishStartedAt,
                     organization,
                     domain,
                     basepath: basePath,
