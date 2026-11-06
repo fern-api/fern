@@ -1285,6 +1285,36 @@ describe("isEligibleForFernSdkGenApi", () => {
     });
 
     it.each([
+        ["basic", FernFiddle.GithubLicense.basic({ id: FernFiddle.GithubLicenseId.Mit })],
+        ["custom", FernFiddle.GithubLicense.custom({ contents: "ElevenLabs custom license" })]
+    ] as const)("includes a %s GitHub license in the sdk-gen-api wire request", (_kind, license) => {
+        const generatorInvocation = invocation({
+            outputMode: FernFiddle.OutputMode.githubV2(
+                FernFiddle.GithubOutputModeV2.pullRequest({
+                    owner: "acme",
+                    repo: "sdk",
+                    reviewers: [],
+                    license
+                })
+            )
+        });
+        const request = createFernSdkGenApiRequest({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation,
+            sdkVersion: "1.2.3",
+            specsTarGzBuffer: Buffer.from("archive"),
+            payload: runtimePayload(validRuntimeBundle)
+        });
+
+        expect(mapFernSdkGenApiOutput(generatorInvocation).requestedOutput).toEqual(
+            expect.objectContaining({ license })
+        );
+        expect(request.targets[0]?.requestedOutput).toEqual(expect.objectContaining({ license }));
+    });
+
+    it.each([
         [
             "npm",
             FernFiddle.PublishOutputModeV2.npmOverride({
@@ -2346,6 +2376,25 @@ describe("isEligibleForFernSdkGenApi", () => {
             generatePaginatedClients: true
         });
         expect(bundle.config.output.snippetFilepath).toBeNull();
+    });
+
+    it("includes the snippet file path for GitHub output without a readme block", async () => {
+        const compressed = await prepareFernSdkGenApiRuntimeBundle({
+            apiName: "Petstore",
+            organization: "acme",
+            generatorInvocation: invocation({
+                outputMode: FernFiddle.OutputMode.githubV2(
+                    FernFiddle.GithubOutputModeV2.push({ owner: "acme", repo: "typescript-sdk" })
+                )
+            }),
+            sdkVersion: "1.2.3",
+            intermediateRepresentation: { apiName: "Petstore" } as never,
+            irVersionOverride: undefined,
+            context
+        });
+        const bundle = JSON.parse(gunzipSync(compressed).toString("utf8"));
+
+        expect(bundle.config.output.snippetFilepath).toBe("/tmp/fern-runtime/snippet.json");
     });
 
     it("preserves trusted OIDC markers while omitting actual GitHub publish credentials", () => {
