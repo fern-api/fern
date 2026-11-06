@@ -255,6 +255,86 @@
       "additionalProperties": false,
       "description": "<Redirect> TwiML Verb"
     },
+    "Body": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "Media": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "url"
+      ],
+      "additionalProperties": false
+    },
+    "MessageChildrenItem": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/Body"
+        },
+        {
+          "$ref": "#/definitions/Media"
+        }
+      ]
+    },
+    "Message": {
+      "type": "object",
+      "properties": {
+        "body": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Inline message text."
+        },
+        "to": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "children": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/MessageChildrenItem"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Nested elements, rendered in order."
+        }
+      },
+      "additionalProperties": false,
+      "description": "A <Message> whose text property shares its name with the <Body> child element."
+    },
     "ResponseChildrenItem": {
       "anyOf": [
         {
@@ -271,6 +351,9 @@
         },
         {
           "$ref": "#/definitions/Redirect"
+        },
+        {
+          "$ref": "#/definitions/Message"
         }
       ]
     }

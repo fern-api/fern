@@ -12,7 +12,13 @@ const h = vi.hoisted(() => ({
     isFernSdkGenApiEnabled: vi.fn(),
     getLatestGeneratorVersion: vi.fn(),
     loadGeneratorsConfiguration: vi.fn(),
-    askToLogin: vi.fn(async () => ({ type: "organization" as const, value: "test-token" }))
+    askToLogin: vi.fn(async () => ({ type: "organization" as const, value: "test-token" })),
+    getToken: vi.fn(
+        async (): Promise<{ type: "organization"; value: string } | undefined> => ({
+            type: "organization",
+            value: "test-token"
+        })
+    )
 }));
 
 vi.mock("@fern-api/configuration-loader", () => ({
@@ -30,6 +36,7 @@ vi.mock("@fern-api/remote-workspace-runner", () => ({
     USE_SDK_GEN_API_FEATURE_FLAG: "use-sdk-gen-api"
 }));
 vi.mock("@fern-api/login", () => ({ askToLogin: h.askToLogin }));
+vi.mock("@fern-api/auth", () => ({ getToken: h.getToken }));
 
 describe("generator upgrade version reporting", () => {
     let context: TaskContext;
@@ -182,6 +189,33 @@ describe("generator upgrade version reporting", () => {
         expect(h.isFernSdkGenApiEnabled).not.toHaveBeenCalled();
         expect(fetchMock).toHaveBeenCalledOnce();
         expect(h.getLatestGeneratorVersion).not.toHaveBeenCalled();
+    });
+
+    it("skips sdk-gen-api discovery at exit time when there is no account, without asking to log in", async () => {
+        h.resolvedSdkGenApiEnabled = true;
+        h.getToken.mockResolvedValueOnce(undefined);
+        const fetchMock = vi.fn();
+        vi.stubGlobal("fetch", fetchMock);
+
+        await getLatestGeneratorVersions({ cliContext, project, skipFeatureFlagRequest: true });
+
+        expect(h.askToLogin).not.toHaveBeenCalled();
+        expect(fetchMock).not.toHaveBeenCalled();
+        expect(h.getLatestGeneratorVersion).not.toHaveBeenCalled();
+    });
+
+    it("treats an unreadable token at exit time as no account instead of failing the run", async () => {
+        h.resolvedSdkGenApiEnabled = true;
+        h.getToken.mockRejectedValueOnce(new Error("token file unreadable"));
+        const fetchMock = vi.fn();
+        vi.stubGlobal("fetch", fetchMock);
+
+        await expect(
+            getLatestGeneratorVersions({ cliContext, project, skipFeatureFlagRequest: true })
+        ).resolves.toBeDefined();
+
+        expect(h.askToLogin).not.toHaveBeenCalled();
+        expect(fetchMock).not.toHaveBeenCalled();
     });
 
     it("falls back to FDR when skipFeatureFlagRequest is set and the flag was never resolved", async () => {

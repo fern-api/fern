@@ -27,6 +27,11 @@ import {
 } from "../projectMigrationSource.js";
 import { selectMigrationTarget } from "../selectMigrationTarget.js";
 
+/** Hosted MCP output has no registry publication, so read `publish` only where the output has one. */
+function publishOf(output: object | undefined): unknown {
+    return output != null && "publish" in output ? output.publish : undefined;
+}
+
 describe("SDK Config migration", () => {
     it("maps a resolved generator group without reparsing Fern configuration", () => {
         const result = mapFernGroupToSdkConfig({
@@ -150,9 +155,9 @@ describe("SDK Config migration", () => {
             source: createSource()
         });
 
-        expect(result.sdkConfig.targets[0]?.output?.publish).toMatchObject({ token: "${NPM_TOKEN}" });
-        expect(result.sdkConfig.targets[1]?.output?.publish).toMatchObject({ username: "__token__" });
-        expect(result.sdkConfig.targets[1]?.output?.publish).not.toHaveProperty("password");
+        expect(publishOf(result.sdkConfig.targets[0]?.output)).toMatchObject({ token: "${NPM_TOKEN}" });
+        expect(publishOf(result.sdkConfig.targets[1]?.output)).toMatchObject({ username: "__token__" });
+        expect(publishOf(result.sdkConfig.targets[1]?.output)).not.toHaveProperty("password");
         expect(JSON.stringify(result.sdkConfig)).not.toContain("literal-secret");
         expect(result.diagnostics).toEqual(
             expect.arrayContaining([
@@ -186,7 +191,7 @@ describe("SDK Config migration", () => {
             source: createSource()
         });
 
-        expect(result.sdkConfig.targets[0]?.output?.publish).not.toHaveProperty("username");
+        expect(publishOf(result.sdkConfig.targets[0]?.output)).not.toHaveProperty("username");
         expect(JSON.stringify(result.sdkConfig)).not.toContain("literal-user-token");
         expect(result.diagnostics).toEqual(
             expect.arrayContaining([
@@ -221,11 +226,11 @@ describe("SDK Config migration", () => {
             source: createSource()
         });
 
-        expect(result.sdkConfig.targets[0]?.output?.publish).toMatchObject({
+        expect(publishOf(result.sdkConfig.targets[0]?.output)).toMatchObject({
             username: "${MAVEN_USERNAME}",
             password: "${MAVEN_PASSWORD}"
         });
-        expect(result.sdkConfig.targets[0]?.output?.publish).not.toHaveProperty("signature");
+        expect(publishOf(result.sdkConfig.targets[0]?.output)).not.toHaveProperty("signature");
         expect(JSON.stringify(result.sdkConfig)).not.toContain("literal-signing-secret");
     });
 

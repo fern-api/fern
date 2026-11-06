@@ -1930,11 +1930,37 @@ types:
           (`doca_pcc_dev_get_port_counter_id` -> `docapccdevgetportcounterid`);
           `hyphenated` keeps word boundaries (`doca-pcc-dev-get-port-counter-id`).
           Changing this renames every generated page. Only valid when lang is cpp.
+      organize-by:
+        type: optional<LibraryOrganizeBy>
+        docs: |
+          `kind` (default) groups generated pages by symbol kind (functions/, structs/, ...).
+          `header` additionally writes a `headers/` folder with one page per source header
+          listing everything it declares. Only valid when lang is cpp.
+      include:
+        type: optional<list<string>>
+        docs: |
+          Files or directories to scan, relative to `input.path`. When set, only these are
+          parsed (Doxygen `INPUT`). Only valid when lang is cpp.
+      exclude:
+        type: optional<list<string>>
+        docs: |
+          Files, directories (relative to `input.path`) or glob patterns (containing `*`/`?`)
+          to leave out of the scan (Doxygen `EXCLUDE` / `EXCLUDE_PATTERNS`). Only valid when lang is cpp.
+      exclude-symbols:
+        type: optional<list<string>>
+        docs: |
+          Symbol names or patterns to leave out, e.g. `INTERNAL_*` or `detail::*`
+          (Doxygen `EXCLUDE_SYMBOLS`). Only valid when lang is cpp.
 
   LibrarySlugStyle:
     enum:
       - compact
       - hyphenated
+
+  LibraryOrganizeBy:
+    enum:
+      - kind
+      - header
 
   LibraryConfiguration:
     docs: |

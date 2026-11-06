@@ -1,3 +1,0 @@
-- summary: |
-    Publish new docker image after name change fernapi/fern-cli -> fernapi/fern-cli-generator
-  type: chore

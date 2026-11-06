@@ -1,3 +1,0 @@
-- summary: |
-    Add webhook body-hash binding verification before HMAC signature checks.
-  type: feat

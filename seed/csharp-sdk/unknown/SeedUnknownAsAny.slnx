@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="src/SeedUnknownAsAny.Test/SeedUnknownAsAny.Test.csproj" />
-  <Project Path="src/SeedUnknownAsAny/SeedUnknownAsAny.csproj" />
-</Solution>

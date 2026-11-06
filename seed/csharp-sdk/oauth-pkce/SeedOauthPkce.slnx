@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="src/SeedOauthPkce.Test/SeedOauthPkce.Test.csproj" />
-  <Project Path="src/SeedOauthPkce/SeedOauthPkce.csproj" />
-</Solution>

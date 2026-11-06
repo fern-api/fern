@@ -1,0 +1,5 @@
+- summary: |
+    `fern generate` now records the sdk-gen-api build and target IDs in its usage telemetry once
+    the build is accepted, so a server-side build can be traced back to the organization and CLI
+    run that requested it. Generation is unaffected if telemetry fails.
+  type: feat

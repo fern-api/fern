@@ -1,3 +1,0 @@
-- summary: |
-    `Page<T>` now exposes `Url` alongside `StatusCode` and `Headers`, matching the shape of the `RawResponse` exposed on `*ApiException` and on `WithRawResponse<T>`.
-  type: feat
