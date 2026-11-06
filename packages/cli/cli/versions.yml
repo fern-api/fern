@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.200.0
+  changelogEntry:
+    - summary: |
+        `fern generate --docs --guest` now uploads your `fern/` folder with the site, so connecting a GitHub
+        repository after claiming the site adds the folder to it. Files ignored by git, `.env*` files and
+        `node_modules` are left out. Pass `--no-source` to publish without it.
+      type: feat
+  createdAt: "2026-11-06"
+  irVersion: 67
 - version: 5.199.1
   changelogEntry:
     - summary: |
