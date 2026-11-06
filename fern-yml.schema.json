@@ -1895,6 +1895,9 @@
             },
             "disclaimer": {
               "type": "string"
+            },
+            "button-text": {
+              "type": "string"
             }
           },
           "additionalProperties": false
@@ -1946,6 +1949,9 @@
               "type": "boolean"
             },
             "disclaimer": {
+              "type": "string"
+            },
+            "button-text": {
               "type": "string"
             }
           },

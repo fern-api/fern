@@ -599,6 +599,11 @@ types:
         docs: |
           Overrides the disclaimer shown in the Ask Fern chat
           (default: "Responses are generated using AI and may contain mistakes.").
+      "button-text":
+        type: optional<string>
+        docs: |
+          Overrides the "Ask AI" label on the header button and in the search dialog
+          (default: "Ask AI", translated on localized sites).
 
   AIChatLocation:
     enum:
