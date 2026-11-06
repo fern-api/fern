@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.199.0
+  changelogEntry:
+    - summary: |
+        Add `fern instructions [topic]`, which prints task-scoped instructions for coding agents
+        working in a Fern project. With no topic it prints the topic index from the Fern docs;
+        with a topic (for example `fern instructions docs publish domain`) it prints that page as
+        Markdown, without the docs site's agent preamble. It needs no login or workspace and is
+        exempt from version redirection, so it works in projects that pin an older CLI.
+      type: feat
+  createdAt: "2026-11-06"
+  irVersion: 67
 - version: 5.198.0
   changelogEntry:
     - summary: |
