@@ -27,15 +27,17 @@ const MEASURE_IMAGE_BATCH_SIZE = 10;
  * `colorsV3` is handled separately because `colors`, `logo` and
  * `backgroundImage` all fold into it.
  */
-const THEME_KEY_TO_LEDGER_KEYS: Record<docsYml.ThemeEligibleField, ReadonlyArray<keyof LedgerConfig>> = {
+type CompiledLedgerConfig = ReturnType<typeof mapDocsConfigToLedgerConfig>;
+
+const THEME_KEY_TO_LEDGER_KEYS: Record<docsYml.ThemeEligibleField, ReadonlyArray<keyof CompiledLedgerConfig>> = {
     logo: ["logoHeight", "logoHref", "logoRightText"],
     favicon: ["favicon"],
     backgroundImage: [],
     colors: [],
     typography: ["typographyV2"],
     layout: ["layout"],
-    settings: ["settings"],
-    theme: ["theme"],
+    settings: ["settings", "embedding"],
+    theme: ["theme", "layout"],
     integrations: ["integrations"],
     css: ["css"],
     js: ["js"],
@@ -146,7 +148,7 @@ export async function compileGlobalTheme({
 }): Promise<CompiledGlobalTheme> {
     const themeKeys = docsYml.THEME_ELIGIBLE_FIELDS.filter((field) => themeSetsField(rawTheme, field));
 
-    const emptyDocsConfig = { instances: [], navigation: [] } as unknown as DocsWorkspace["config"];
+    const emptyDocsConfig: DocsWorkspace["config"] = { instances: [], navigation: [] };
     const workspace: DocsWorkspace = {
         type: "docs",
         workspaceName: undefined,
@@ -241,7 +243,7 @@ async function compileThemeDefaults({
     themeDirectory: AbsoluteFilePath;
     taskContext: TaskContext;
     cliVersion: string;
-}): Promise<LedgerConfig> {
+}): Promise<CompiledLedgerConfig> {
     const emptyObjects: Record<string, unknown> = {};
     for (const key of themeKeys) {
         if (key !== "colors" && isRecord(rawTheme[camelToKebab(key)] ?? rawTheme[key])) {
@@ -249,9 +251,9 @@ async function compileThemeDefaults({
         }
     }
     if (Object.keys(emptyObjects).length === 0) {
-        return {} as LedgerConfig;
+        return {};
     }
-    const emptyDocsConfig = { instances: [], navigation: [] } as unknown as DocsWorkspace["config"];
+    const emptyDocsConfig: DocsWorkspace["config"] = { instances: [], navigation: [] };
     const resolver = new DocsDefinitionResolver({
         domain: "theme.invalid",
         docsWorkspace: {
