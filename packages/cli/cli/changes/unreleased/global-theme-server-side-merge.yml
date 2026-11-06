@@ -1,0 +1,7 @@
+- summary: |
+    `fern docs theme upload` now also uploads the theme converted to ledger config, and
+    `fern generate --docs` sends the site's own docs config plus the theme name so FDR
+    merges the global theme server-side. FDR can then rebuild every site that uses a theme
+    when the theme changes. Themes uploaded by older CLIs, themes with header/footer
+    components, and FDR versions without server-side merging keep local stitching.
+  type: feat
