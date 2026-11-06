@@ -592,7 +592,7 @@ describe("generateAPIWorkspaces coexistence", () => {
         expect(vi.mocked(generateWorkspace)).not.toHaveBeenCalled();
     });
 
-    describe("cli target npm token", () => {
+    describe("cli target", () => {
         const githubNpm = (repository: string, token: string) => ({
             delivery: "github",
             github: { repository, mode: "release" },
@@ -627,17 +627,26 @@ describe("generateAPIWorkspaces coexistence", () => {
                 : undefined;
         }
 
+        function sdkConfigLanguages(): string[] {
+            return vi
+                .mocked(generateWorkspace)
+                .mock.calls.flatMap(([args]) => args.sdkConfigV1?.targets.map((target) => target.language) ?? []);
+        }
+
         it.each([
-            { name: "every target", targetNames: undefined },
-            { name: "--target cli", targetNames: ["cli"] },
-            { name: "--target go cli", targetNames: ["go", "cli"] }
-        ])("passes the cli target's own token, not another target's, with $name", async ({ targetNames }) => {
+            { name: "every target", targetNames: undefined, expected: ["cli", "go", "typescript"] },
+            { name: "--target cli", targetNames: ["cli"], expected: ["cli"] },
+            { name: "--target go cli", targetNames: ["go", "cli"], expected: ["cli", "go"] }
+        ])("sends the cli target as SDK Config, like any other language, with $name", async ({
+            targetNames,
+            expected
+        }) => {
             await writeSdkConfig(TARGETS);
             await runGenerate({ project, cliContext, groupNames: undefined, targetNames });
-            expect(cliNpmToken()).toMatchObject({ type: "npm", packageName: "@acme/cli", token: "${CLI_NPM_TOKEN}" });
+            expect(sdkConfigLanguages().sort()).toEqual(expected);
         });
 
-        it("passes the cli target's own token with --sdk-config and a generator index", async () => {
+        it("sends the cli target as SDK Config with --sdk-config and a generator index", async () => {
             const configPath = path.join(temporaryDirectory, "npm-sdk-config.yml");
             await writeFile(
                 configPath,
@@ -657,7 +666,20 @@ describe("generateAPIWorkspaces coexistence", () => {
                 sdkConfigPath: configPath
             });
             expect(vi.mocked(generateWorkspace)).toHaveBeenCalledOnce();
-            expect(cliNpmToken()).toMatchObject({ token: "${CLI_NPM_TOKEN}" });
+            expect(sdkConfigLanguages()).toEqual(["cli"]);
+        });
+
+        it.each([
+            { name: "every target", targetNames: undefined },
+            { name: "--target cli", targetNames: ["cli"] },
+            { name: "--target go cli", targetNames: ["go", "cli"] }
+        ])("with --local, passes the cli target's own token, not another target's, with $name", async ({
+            targetNames
+        }) => {
+            await writeSdkConfig(TARGETS);
+            await runGenerate({ project, cliContext, groupNames: undefined, targetNames, useLocalDocker: true });
+            expect(sdkConfigLanguages()).not.toContain("cli");
+            expect(cliNpmToken()).toMatchObject({ type: "npm", packageName: "@acme/cli", token: "${CLI_NPM_TOKEN}" });
         });
     });
 });

@@ -484,10 +484,13 @@ async function prepareSdkConfigGenerations({
                     { code: CliError.Code.ConfigError }
                 );
             }
+            // A cli target is sent to sdk-gen-api as SDK Config like any other language. Only --local still
+            // translates it into a generators.yml for Fern's CLI generator (cliGeneratorConfigAdapter).
+            const isTranslatedCliTarget = (target: { language: string }): boolean =>
+                useLocalDocker && target.language === CLI_LANGUAGE;
             if (sdkConfigPath != null) {
                 for (const { target } of selectedTargets) {
-                    // The cli target is translated locally (cliGeneratorConfigAdapter), not routed as SDK Config.
-                    if (target.generatorVersion == null || target.language === CLI_LANGUAGE) {
+                    if (target.generatorVersion == null || isTranslatedCliTarget(target)) {
                         continue;
                     }
                     const generatorId = getSdkConfigGeneratorName(target.language);
@@ -510,7 +513,7 @@ async function prepareSdkConfigGenerations({
                 }
             }
             const sourceRoot = resolveSourceRoot(candidate.owner, loaded.absolutePath);
-            const selectedCliTargets = selectedTargets.filter(({ target }) => target.language === CLI_LANGUAGE);
+            const selectedCliTargets = selectedTargets.filter(({ target }) => isTranslatedCliTarget(target));
             if (selectedCliTargets.length > 0) {
                 const cliTarget = await cliContext.runTask(async (context) =>
                     prepareCliTargetWorkspace({
@@ -536,7 +539,7 @@ async function prepareSdkConfigGenerations({
                     cleanup: cliTarget.cleanup
                 });
             }
-            const nonCliTargets = selectedTargets.filter(({ target }) => target.language !== CLI_LANGUAGE);
+            const nonCliTargets = selectedTargets.filter(({ target }) => !isTranslatedCliTarget(target));
             if (nonCliTargets.length === 0) {
                 cliContext.logger.info(`Using SDK Config v1 from ${loaded.absolutePath}`);
                 continue;
