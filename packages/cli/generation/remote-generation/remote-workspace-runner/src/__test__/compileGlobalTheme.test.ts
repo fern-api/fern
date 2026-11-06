@@ -134,6 +134,13 @@ describe("themeReferencesRemoteAssets", () => {
         expect(themeReferencesRemoteAssets({ logo: { dark: "https://cdn.example.com/logo.png" } })).toBe(true);
         expect(themeReferencesRemoteAssets({ favicon: "https://cdn.example.com/favicon.ico" })).toBe(true);
         expect(themeReferencesRemoteAssets({ "background-image": "https://cdn.example.com/bg.png" })).toBe(true);
+        expect(themeReferencesRemoteAssets({ js: [{ url: "https://cdn.example.com/a.js" }] })).toBe(true);
+        expect(
+            themeReferencesRemoteAssets({
+                typography: { "body-font": { paths: [{ path: "https://cdn.example.com/f.woff2" }] } }
+            })
+        ).toBe(true);
+        expect(themeReferencesRemoteAssets({ js: "./a.js" })).toBe(false);
         expect(themeReferencesRemoteAssets({ css: ["local.css", "https://cdn.example.com/a.css"] })).toBe(true);
         expect(themeReferencesRemoteAssets({ logo: { dark: "logo.png" }, favicon: "favicon.png", css: "a.css" })).toBe(
             false

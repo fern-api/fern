@@ -96,6 +96,18 @@ export function themeReferencesRemoteAssets(rawTheme: Record<string, unknown>): 
     values.push(rawTheme.favicon);
     const css = rawTheme.css;
     values.push(...(Array.isArray(css) ? css : [css]));
+    const js = rawTheme.js;
+    for (const entry of Array.isArray(js) ? js : [js]) {
+        values.push(isRecord(entry) ? (entry.path ?? entry.url) : entry);
+    }
+    const typography = rawTheme.typography;
+    if (isRecord(typography)) {
+        for (const font of Object.values(typography)) {
+            if (isRecord(font) && Array.isArray(font.paths)) {
+                values.push(...font.paths.map((entry) => (isRecord(entry) ? entry.path : entry)));
+            }
+        }
+    }
     return values.some((value) => typeof value === "string" && isURL(value));
 }
 
