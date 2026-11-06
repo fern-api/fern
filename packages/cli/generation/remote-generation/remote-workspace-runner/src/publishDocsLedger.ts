@@ -303,6 +303,7 @@ export interface LedgerPublishResult {
  */
 export async function publishDocsViaLedger({
     docsDefinition,
+    publishStartedAt,
     organization,
     domain,
     basepath,
@@ -322,6 +323,8 @@ export async function publishDocsViaLedger({
     resolver
 }: {
     docsDefinition: DocsDefinition;
+    /** ISO time the publish command started. FDR orders overlapping publishes of one URL by it. */
+    publishStartedAt?: string;
     organization: string;
     domain: string;
     basepath: string | undefined;
@@ -386,7 +389,8 @@ export async function publishDocsViaLedger({
 
     const locales: LocaleEntry[] = [baseLocale, ...builtTranslations.map((t) => t.localeEntry)];
 
-    const publishInput: DocsPublishInput = {
+    // `publishStartedAt` isn't in the published fdr-sdk type yet; older FDRs strip it.
+    const publishInput: DocsPublishInput & { publishStartedAt?: string } = {
         orgId: organization,
         domain,
         basepath: basepath ?? "",
@@ -394,7 +398,8 @@ export async function publishDocsViaLedger({
         customDomains: customDomains ?? [],
         previewId: previewId ?? null,
         defaultLocale: baseLocale.locale,
-        locales
+        locales,
+        ...(publishStartedAt != null && { publishStartedAt })
     };
 
     // Register — server computes deployment hash, returns presigned S3

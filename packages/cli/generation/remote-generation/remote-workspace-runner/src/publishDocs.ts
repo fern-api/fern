@@ -251,6 +251,7 @@ export async function publishDocs({
     loginCommand?: string;
     multiSource?: boolean;
 }): Promise<string> {
+    const publishStartedAt = new Date().toISOString();
     const fdrOrigin = getFdrOrigin();
     const isAirGapped = await detectAirGappedMode(`${fdrOrigin}/health`, context.logger);
     if (isAirGapped) {
@@ -1027,6 +1028,7 @@ export async function publishDocs({
             } else {
                 const ledgerResult = await publishDocsViaLedger({
                     docsDefinition,
+                    publishStartedAt,
                     organization,
                     domain,
                     basepath: basePath,
