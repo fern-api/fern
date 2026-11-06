@@ -1,6 +1,6 @@
 import { toPosixPath } from "@fern-api/fs-utils";
 import { execFile } from "child_process";
-import { access, readdir, readFile } from "fs/promises";
+import { access, lstat, readdir, readFile } from "fs/promises";
 import path from "path";
 import { promisify } from "util";
 
@@ -8,7 +8,7 @@ import { promisify } from "util";
 export const DOCS_SOURCE_MAX_BYTES = 20 * 1024 * 1024;
 export const DOCS_SOURCE_MAX_FILES = 5_000;
 
-const EXCLUDED_NAMES = new Set([".git", "node_modules", ".guest-session", ".DS_Store"]);
+const EXCLUDED_NAMES = new Set([".git", "node_modules", ".guest-session", ".DS_Store", ".envrc", ".npmrc", ".netrc"]);
 const FERN_CONFIG_FILENAME = "fern.config.json";
 const SOURCE_ROOT = "fern";
 
@@ -56,7 +56,14 @@ export async function findFernRoot(docsDirectory: string): Promise<string> {
  * the guest session pointer and dependency folders.
  */
 export async function buildDocsSourceArchive({ fernRoot }: { fernRoot: string }): Promise<DocsSourceArchive> {
-    const relativePaths = ((await listWithGit(fernRoot)) ?? (await listByWalking(fernRoot)))
+    const listed = await listWithGit(fernRoot);
+    if (listed === "failed") {
+        return {
+            type: "skipped",
+            reason: "git couldn't list the fern/ folder, so Fern can't tell which files it ignores"
+        };
+    }
+    const relativePaths = (listed ?? (await listByWalking(fernRoot)))
         .map((relativePath) => toPosixPath(relativePath))
         .filter((relativePath) => isInsideRoot(relativePath) && !isExcluded(relativePath))
         .sort();
@@ -76,6 +83,11 @@ export async function buildDocsSourceArchive({ fernRoot }: { fernRoot: string })
     for (const relativePath of relativePaths) {
         let bytes: Buffer;
         try {
+            // A symlink can point outside the project, at credentials; only regular files are read.
+            if (!(await lstat(path.join(fernRoot, relativePath))).isFile()) {
+                unreadable.push(relativePath);
+                continue;
+            }
             bytes = await readFile(path.join(fernRoot, relativePath));
         } catch {
             // Tracked by git but deleted locally, a submodule, or not readable.
@@ -135,17 +147,26 @@ function decodeText(bytes: Buffer): string | undefined {
     }
 }
 
-/** Tracked and untracked files git does not ignore, relative to `directory`; undefined outside a git repo. */
-async function listWithGit(directory: string): Promise<string[] | undefined> {
+/**
+ * Tracked and untracked files git does not ignore, relative to `directory`; undefined outside a git
+ * repo, and "failed" when git is there but can't list, so ignored files are never walked into.
+ */
+async function listWithGit(directory: string): Promise<string[] | undefined | "failed"> {
+    const run = promisify(execFile);
     try {
-        const { stdout } = await promisify(execFile)(
+        await run("git", ["rev-parse", "--is-inside-work-tree"], { cwd: directory });
+    } catch {
+        return undefined;
+    }
+    try {
+        const { stdout } = await run(
             "git",
             ["-c", "core.quotePath=false", "ls-files", "--cached", "--others", "--exclude-standard", "-z", "--", "."],
             { cwd: directory, maxBuffer: 64 * 1024 * 1024 }
         );
         return [...new Set(stdout.split("\0").filter((entry) => entry !== ""))];
     } catch {
-        return undefined;
+        return "failed";
     }
 }
 
@@ -167,8 +188,10 @@ async function listByWalking(directory: string, prefix = ""): Promise<string[]> 
 }
 
 async function exists(filePath: string): Promise<boolean> {
-    return access(filePath).then(
-        () => true,
-        () => false
-    );
+    try {
+        await access(filePath);
+        return true;
+    } catch {
+        return false;
+    }
 }

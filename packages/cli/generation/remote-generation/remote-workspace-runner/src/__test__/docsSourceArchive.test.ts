@@ -1,4 +1,4 @@
-import { mkdir, mkdtemp, rm, writeFile } from "fs/promises";
+import { mkdir, mkdtemp, rm, symlink, writeFile } from "fs/promises";
 import { tmpdir } from "os";
 import path from "path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
@@ -50,6 +50,8 @@ describe("docsSourceArchive", () => {
         await write(".env", "SECRET=1");
         await write(".env.local", "SECRET=1");
         await write(".guest-session", "gs_1");
+        await write(".envrc", "export SECRET=1");
+        await symlink("/etc/hostname", path.join(root, "linked.txt"));
         await write("node_modules/pkg/index.js", "x");
         await write("components/.env.production", "SECRET=1");
 
