@@ -3,6 +3,7 @@ import {
     applyTranslatedNavigationOverlays,
     type DocsDefinitionResolver,
     getTranslatedAnnouncement,
+    getTranslatedSettings,
     markUntranslatedNavNodesNoindex,
     replaceImagePathsAndUrls,
     replaceReferencedCode,
@@ -176,7 +177,8 @@ export async function buildTranslatedDocsDefinition({
             ...docsDefinition.config,
             root: updatedRoot,
             announcement: translatedAnnouncement,
-            navbarLinks: translatedNavbarLinks
+            navbarLinks: translatedNavbarLinks,
+            settings: getTranslatedSettings(docsDefinition.config.settings, localeNavOverlay)
         }
     };
 }
