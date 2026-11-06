@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.198.0
+  changelogEntry:
+    - summary: |
+        Add an optional `button-text` field to the `ai-search`/`ai-chat` docs.yml config.
+        It replaces the "Ask AI" label on the docs header button and in the search dialog.
+      type: feat
+  createdAt: "2026-11-06"
+  irVersion: 67
 - version: 5.197.1
   changelogEntry:
     - summary: |
