@@ -37,6 +37,7 @@ describe("docsSourceArchive", () => {
             return;
         }
         expect(archive.fileCount).toBe(3);
+        expect(archive.unreadable).toEqual([]);
         expect(parse(archive.buffer)).toEqual([
             { path: "fern/assets/logo.png", content: "iVBORwD/", encoding: "base64" },
             { path: "fern/docs.yml", content: "title: Acme" },
@@ -57,6 +58,14 @@ describe("docsSourceArchive", () => {
         expect(archive.type === "ok" ? parse(archive.buffer).map((file) => file.path) : archive).toEqual([
             "fern/docs.yml"
         ]);
+    });
+
+    it("skips a folder that is too large once packed, counting base64 and JSON escaping", async () => {
+        await write("big.bin", Buffer.alloc(16 * 1024 * 1024, 0xff));
+
+        const archive = await buildDocsSourceArchive({ fernRoot: root });
+
+        expect(archive).toEqual({ type: "skipped", reason: "the fern/ folder is larger than 20 MB once packed" });
     });
 
     it("skips an empty folder instead of uploading nothing", async () => {

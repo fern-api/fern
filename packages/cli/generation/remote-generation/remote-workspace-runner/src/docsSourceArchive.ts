@@ -21,7 +21,15 @@ export interface DocsSourceFile {
     encoding?: "base64";
 }
 
-export type DocsSourceArchive = { type: "ok"; buffer: Buffer; fileCount: number } | { type: "skipped"; reason: string };
+export type DocsSourceArchive =
+    | {
+          type: "ok";
+          buffer: Buffer;
+          fileCount: number;
+          /** Listed files that could not be read, so were left out. */
+          unreadable: string[];
+      }
+    | { type: "skipped"; reason: string };
 
 /**
  * The `fern/` folder the docs workspace lives in: the nearest folder at or above `docsDirectory`
@@ -50,7 +58,7 @@ export async function findFernRoot(docsDirectory: string): Promise<string> {
 export async function buildDocsSourceArchive({ fernRoot }: { fernRoot: string }): Promise<DocsSourceArchive> {
     const relativePaths = ((await listWithGit(fernRoot)) ?? (await listByWalking(fernRoot)))
         .map((relativePath) => toPosixPath(relativePath))
-        .filter((relativePath) => !isExcluded(relativePath))
+        .filter((relativePath) => isInsideRoot(relativePath) && !isExcluded(relativePath))
         .sort();
     if (relativePaths.length === 0) {
         return { type: "skipped", reason: "the fern/ folder has no files" };
@@ -63,30 +71,35 @@ export async function buildDocsSourceArchive({ fernRoot }: { fernRoot: string })
     }
 
     const files: DocsSourceFile[] = [];
+    const unreadable: string[] = [];
     let totalBytes = 0;
     for (const relativePath of relativePaths) {
         let bytes: Buffer;
         try {
             bytes = await readFile(path.join(fernRoot, relativePath));
         } catch {
-            // Tracked by git but deleted locally, or a directory git lists as a submodule.
+            // Tracked by git but deleted locally, a submodule, or not readable.
+            unreadable.push(relativePath);
             continue;
         }
-        totalBytes += bytes.length;
-        if (totalBytes > DOCS_SOURCE_MAX_BYTES) {
-            return {
-                type: "skipped",
-                reason: `the fern/ folder is larger than ${DOCS_SOURCE_MAX_BYTES / (1024 * 1024)} MB`
-            };
-        }
         const repoPath = `${SOURCE_ROOT}/${relativePath}`;
-        files.push(
-            isText(bytes)
-                ? { path: repoPath, content: bytes.toString("utf-8") }
-                : { path: repoPath, content: bytes.toString("base64"), encoding: "base64" }
-        );
+        const text = decodeText(bytes);
+        const file: DocsSourceFile =
+            text != null
+                ? { path: repoPath, content: text }
+                : { path: repoPath, content: bytes.toString("base64"), encoding: "base64" };
+        // Count what is uploaded: base64 and JSON escaping make it larger than the files.
+        totalBytes += Buffer.byteLength(JSON.stringify(file), "utf-8") + 1;
+        if (totalBytes > DOCS_SOURCE_MAX_BYTES) {
+            return { type: "skipped", reason: tooLarge() };
+        }
+        files.push(file);
     }
-    return { type: "ok", buffer: Buffer.from(JSON.stringify(files), "utf-8"), fileCount: files.length };
+    const buffer = Buffer.from(JSON.stringify(files), "utf-8");
+    if (buffer.length > DOCS_SOURCE_MAX_BYTES) {
+        return { type: "skipped", reason: tooLarge() };
+    }
+    return { type: "ok", buffer, fileCount: files.length, unreadable };
 }
 
 export function isExcluded(relativePath: string): boolean {
@@ -95,8 +108,31 @@ export function isExcluded(relativePath: string): boolean {
         .some((segment) => EXCLUDED_NAMES.has(segment) || segment === ".env" || segment.startsWith(".env."));
 }
 
-function isText(bytes: Buffer): boolean {
-    return !bytes.includes(0) && Buffer.from(bytes.toString("utf-8"), "utf-8").equals(bytes);
+function tooLarge(): string {
+    return `the fern/ folder is larger than ${DOCS_SOURCE_MAX_BYTES / (1024 * 1024)} MB once packed`;
+}
+
+/** Git can list paths outside the folder (a submodule, `..`); only files inside it are read. */
+function isInsideRoot(relativePath: string): boolean {
+    return (
+        relativePath !== "" &&
+        !path.posix.isAbsolute(relativePath) &&
+        !relativePath.split("/").some((segment) => segment === ".." || segment === "")
+    );
+}
+
+const UTF8 = new TextDecoder("utf-8", { fatal: true });
+
+/** The file as UTF-8 text, or undefined for a binary file. */
+function decodeText(bytes: Buffer): string | undefined {
+    if (bytes.includes(0)) {
+        return undefined;
+    }
+    try {
+        return UTF8.decode(bytes);
+    } catch {
+        return undefined;
+    }
 }
 
 /** Tracked and untracked files git does not ignore, relative to `directory`; undefined outside a git repo. */
@@ -104,7 +140,7 @@ async function listWithGit(directory: string): Promise<string[] | undefined> {
     try {
         const { stdout } = await promisify(execFile)(
             "git",
-            ["ls-files", "--cached", "--others", "--exclude-standard", "-z", "--", "."],
+            ["-c", "core.quotePath=false", "ls-files", "--cached", "--others", "--exclude-standard", "-z", "--", "."],
             { cwd: directory, maxBuffer: 64 * 1024 * 1024 }
         );
         return [...new Set(stdout.split("\0").filter((entry) => entry !== ""))];

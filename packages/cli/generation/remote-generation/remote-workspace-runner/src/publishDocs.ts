@@ -2503,6 +2503,11 @@ async function readDocsSource(docsWorkspace: DocsWorkspace, context: TaskContext
             );
             return undefined;
         }
+        if (archive.unreadable.length > 0) {
+            context.logger.warn(
+                `Leaving ${archive.unreadable.length} unreadable file(s) out of the uploaded fern/ folder: ${archive.unreadable.slice(0, 5).join(", ")}`
+            );
+        }
         context.logger.info(
             `Uploading your fern/ folder (${archive.fileCount} files) with the site, so connecting a GitHub repo after claiming adds it there. Pass --no-source to skip.`
         );

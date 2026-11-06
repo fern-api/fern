@@ -1041,7 +1041,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     boolean: true,
                     default: true,
                     description:
-                        "With --guest --docs: upload the fern/ folder with the site, so connecting a GitHub repo after claiming adds it there. Pass --no-source to publish without it."
+                        "Only with --guest --docs (ignored otherwise): upload the fern/ folder with the site, so connecting a GitHub repo after claiming adds it there. Pass --no-source to publish without it."
                 })
                 .option("new-session", {
                     boolean: true,
