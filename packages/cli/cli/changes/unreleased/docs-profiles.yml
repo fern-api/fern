@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `profiles:` to `docs.yml`: named sets of values for `${NAME}` in pages. Set `profile: <name>`
+    on the site, a product, version, tab, tab variant, section or page; the innermost one wins and
+    profiles never merge. Profile-owned names skip publish-time `substitute-env-vars` and are filled
+    per page by the docs renderer, so one page can show different values per product. `fern check`
+    flags a `profile:` that names no profile.
+  type: feat

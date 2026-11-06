@@ -72,6 +72,7 @@ export async function buildAstroPreviewModel({
     domain,
     basepath,
     substituteEnvVars,
+    profileVarNames,
     context
 }: {
     previewResult: PreviewDocsResult;
@@ -79,11 +80,13 @@ export async function buildAstroPreviewModel({
     domain: string;
     basepath: string;
     substituteEnvVars: boolean;
+    /** Left as `${NAME}` so the renderer fills them per page. */
+    profileVarNames?: ReadonlySet<string>;
     context: TaskContext;
 }): Promise<AstroPreviewModel> {
     const { writeApiDefinitions, resolver, uploadedFiles } = previewResult.ledgerSource;
     const substitutedDefinition = substituteEnvVars
-        ? substituteEnvVarsInDefinition(previewResult.ledgerSource.writeDocsDefinition, context)
+        ? substituteEnvVarsInDefinition(previewResult.ledgerSource.writeDocsDefinition, context, profileVarNames)
         : previewResult.ledgerSource.writeDocsDefinition;
 
     const { fileManifest, fileIdToPath, files } = await buildFileManifest(uploadedFiles, context);
@@ -224,14 +227,15 @@ export async function buildAstroPreviewModel({
 
 function substituteEnvVarsInDefinition(
     definition: DocsV1Write.DocsDefinition,
-    context: TaskContext
+    context: TaskContext,
+    profileVarNames: ReadonlySet<string> | undefined
 ): DocsV1Write.DocsDefinition {
     // jsFiles are excluded so JS/TS template literals are left untouched.
     const { jsFiles, ...rest } = definition;
     const substituted = replaceEnvVariables(
         rest,
         { onError: (e) => context.logger.error(e ?? "Unknown error during environment variable substitution") },
-        { substituteAsEmpty: true }
+        { substituteAsEmpty: true, keep: profileVarNames }
     );
     return { ...substituted, jsFiles };
 }

@@ -462,6 +462,8 @@ export async function visitDocsConfigFileYamlAst({
             );
         },
         roles: noop,
+        profiles: noop,
+        profile: noop,
         languages: noop,
         translations: noop,
         theme: noop,

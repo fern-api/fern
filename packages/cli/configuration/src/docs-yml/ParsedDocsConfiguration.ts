@@ -63,9 +63,18 @@ interface ParsedDocsSettingsConfig extends Omit<CjsFdrSdk.docs.v1.commons.DocsSe
         | undefined;
 }
 
+export interface ParsedProfile {
+    vars: Record<string, string>;
+    tags: string[];
+}
+
 export interface ParsedDocsConfiguration {
     instances: DocsInstance[];
     title: string | undefined;
+    /** `profiles:` from docs.yml: name to values for `${NAME}`. */
+    profiles?: Record<string, ParsedProfile> | undefined;
+    /** Name from `profile:` in docs.yml. The innermost one wins for the pages below it. */
+    profile?: string | undefined;
 
     /* filepath of page to contents */
     pages: Record<RelativeFilePath, string>;
@@ -258,6 +267,8 @@ export interface VersionInfo
     landingPage: DocsNavigationItem.Page | undefined;
     navigation: UntabbedDocsNavigation | TabbedDocsNavigation;
     version: string;
+    /** Name from `profile:` in docs.yml. The innermost one wins for the pages below it. */
+    profile?: string | undefined;
     availability: VersionAvailability | undefined;
     slug: string | undefined;
     hidden: boolean | undefined;
@@ -302,6 +313,8 @@ export interface InternalProduct
         CjsFdrSdk.navigation.latest.WithFeatureFlags {
     type: "internal";
     landingPage: DocsNavigationItem.Page | undefined;
+    /** Name from `profile:` in docs.yml. The innermost one wins for the pages below it. */
+    profile?: string | undefined;
     subtitle: string | undefined;
     product: string;
     navigation: UnversionedNavigationConfiguration | VersionedDocsNavigation;
@@ -336,6 +349,8 @@ export interface TabbedNavigation
         CjsFdrSdk.navigation.latest.WithFeatureFlags {
     // tab: string;
     title: string;
+    /** Name from `profile:` in docs.yml. The innermost one wins for the pages below it. */
+    profile?: string | undefined;
     icon: string | AbsoluteFilePath | undefined;
     slug: string | undefined;
     skipUrlSlug: boolean | undefined;
@@ -383,6 +398,8 @@ export interface TabVariant
     skipUrlSlug: boolean | undefined;
     hidden: boolean | undefined;
     default: boolean | undefined;
+    /** Name from `profile:` in docs.yml. The innermost one wins for the pages below it. */
+    profile?: string | undefined;
 }
 
 export type DocsNavigationItem =
@@ -399,6 +416,8 @@ export declare namespace DocsNavigationItem {
             CjsFdrSdk.navigation.latest.WithFeatureFlags {
         type: "page";
         title: string;
+        /** Name from `profile:` in docs.yml. The innermost one wins for the pages below it. */
+        profile?: string | undefined;
         icon: string | AbsoluteFilePath | undefined;
         absolutePath: AbsoluteFilePath;
         slug: string | undefined;
@@ -412,6 +431,8 @@ export declare namespace DocsNavigationItem {
             CjsFdrSdk.navigation.latest.WithFeatureFlags {
         type: "section";
         title: string;
+        /** Name from `profile:` in docs.yml. The innermost one wins for the pages below it. */
+        profile?: string | undefined;
         icon: string | AbsoluteFilePath | undefined;
         contents: DocsNavigationItem[];
         collapsed: boolean | "open-by-default" | undefined;

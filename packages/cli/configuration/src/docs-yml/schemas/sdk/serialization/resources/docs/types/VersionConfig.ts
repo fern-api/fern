@@ -15,6 +15,7 @@ export const VersionConfig: core.serialization.ObjectSchema<
 > = core.serialization
     .object({
         displayName: core.serialization.property("display-name", core.serialization.string()),
+        profile: core.serialization.string().optional(),
         path: core.serialization.string().optional(),
         ref: core.serialization.string().optional(),
         slug: core.serialization.string().optional(),
@@ -30,6 +31,7 @@ export const VersionConfig: core.serialization.ObjectSchema<
 export declare namespace VersionConfig {
     export interface Raw extends WithPermissions.Raw, WithFeatureFlags.Raw {
         "display-name": string;
+        profile?: string | null;
         path?: string | null;
         ref?: string | null;
         slug?: string | null;

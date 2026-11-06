@@ -20,6 +20,7 @@ export const TabConfig: core.serialization.ObjectSchema<serializers.TabConfig.Ra
             target: Target.optional(),
             changelog: ChangelogFolderRelativePath.optional(),
             blog: ChangelogFolderRelativePath.optional(),
+            profile: core.serialization.string().optional(),
         })
         .extend(WithPermissions)
         .extend(WithFeatureFlags);
@@ -35,5 +36,6 @@ export declare namespace TabConfig {
         target?: Target.Raw | null;
         changelog?: ChangelogFolderRelativePath.Raw | null;
         blog?: ChangelogFolderRelativePath.Raw | null;
+        profile?: string | null;
     }
 }

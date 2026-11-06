@@ -245,6 +245,8 @@ export async function parseDocsConfiguration({
         title,
         // absoluteFilepath: absoluteFilepathToDocsConfig,
         instances,
+        profiles: parseProfiles(rawDocsConfiguration.profiles),
+        profile: rawDocsConfiguration.profile,
         roles: rawDocsConfiguration.roles,
 
         /* library documentation */
@@ -833,6 +835,7 @@ async function loadWorkingTreeVersion({
     return {
         landingPage: parsePageConfig(versionResult.landingPage, absoluteFilepathToVersionFile),
         version: version.displayName,
+        profile: version.profile,
         navigation: versionNavigation,
         availability: version.availability,
         slug: version.slug,
@@ -875,6 +878,7 @@ async function loadRefVersion({
     return {
         landingPage: parsePageConfig(contentRoot.landingPage, contentRoot.absoluteFilepathToConfig),
         version: version.displayName,
+        profile: version.profile,
         navigation: versionNavigation,
         availability: version.availability,
         slug: version.slug,
@@ -1085,6 +1089,7 @@ async function getNavigationConfiguration({
 
                 productNavbars.push({
                     type: "internal",
+                    profile: product.profile,
                     landingPage: parsePageConfig(result.landingPage, absoluteFilepathToProductFile),
                     product: product.displayName,
                     navigation,
@@ -1322,6 +1327,7 @@ async function convertNavigationTabConfiguration({
                     layout,
                     slug: variant.slug,
                     skipUrlSlug: variant.skipSlug,
+                    profile: variant.profile,
                     hidden: variant.hidden,
                     default: variant.default,
                     viewers: parseRoles(variant.viewers),
@@ -1335,6 +1341,7 @@ async function convertNavigationTabConfiguration({
             icon: resolveIconPath(tab.icon, absolutePathToConfig),
             slug: tab.slug,
             skipUrlSlug: tab.skipSlug,
+            profile: tab.profile,
             hidden: tab.hidden,
             child: {
                 type: "variants",
@@ -1363,6 +1370,7 @@ async function convertNavigationTabConfiguration({
             icon: resolveIconPath(tab.icon, absolutePathToConfig),
             slug: tab.slug,
             skipUrlSlug: tab.skipSlug,
+            profile: tab.profile,
             hidden: tab.hidden,
             child: {
                 type: "layout",
@@ -1380,6 +1388,7 @@ async function convertNavigationTabConfiguration({
             icon: resolveIconPath(tab.icon, absolutePathToConfig),
             slug: tab.slug,
             skipUrlSlug: tab.skipSlug,
+            profile: tab.profile,
             hidden: tab.hidden,
             child: {
                 type: "link",
@@ -1399,6 +1408,7 @@ async function convertNavigationTabConfiguration({
             icon: resolveIconPath(tab.icon, absolutePathToConfig),
             slug: tab.slug,
             skipUrlSlug: tab.skipSlug,
+            profile: tab.profile,
             hidden: tab.hidden,
             child: {
                 type: "changelog",
@@ -1584,6 +1594,7 @@ async function convertNavigationItem({
             collapsible: rawConfig.collapsible ?? undefined,
             collapsedByDefault: rawConfig.collapsedByDefault ?? undefined,
             hidden: rawConfig.hidden ?? undefined,
+            profile: rawConfig.profile,
             skipUrlSlug: rawConfig.skipSlug ?? false,
             overviewAbsolutePath: resolveFilepath(rawConfig.path, absolutePathToConfig),
             viewers: parseRoles(rawConfig.viewers),
@@ -1716,6 +1727,7 @@ function parsePageConfig(
         icon: resolveIconPath(item.icon, absolutePathToConfig),
         hidden: item.hidden,
         noindex: item.noindex,
+        profile: item.profile,
         viewers: parseRoles(item.viewers),
         orphaned: item.orphaned,
         featureFlags: convertFeatureFlag(item.featureFlag),
@@ -2915,4 +2927,15 @@ function parseVariantOverlays(variants: unknown[]): docsYml.VariantOverlay[] {
         });
     }
     return result;
+}
+
+function parseProfiles(
+    raw: Record<string, docsYml.RawSchemas.ProfileConfig> | undefined
+): Record<string, docsYml.ParsedProfile> | undefined {
+    if (raw == null) {
+        return undefined;
+    }
+    return Object.fromEntries(
+        Object.entries(raw).map(([name, profile]) => [name, { vars: profile.vars ?? {}, tags: profile.tags ?? [] }])
+    );
 }

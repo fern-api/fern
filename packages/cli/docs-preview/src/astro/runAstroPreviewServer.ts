@@ -1,4 +1,4 @@
-import { extractErrorMessage, stripTrailingSlashes } from "@fern-api/core-utils";
+import { extractErrorMessage, getProfileVarNames, stripTrailingSlashes } from "@fern-api/core-utils";
 import { wrapWithHttps } from "@fern-api/docs-resolver";
 import { AbsoluteFilePath, dirname, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { runExeca } from "@fern-api/logging-execa";
@@ -159,6 +159,7 @@ export async function runAstroPreviewServer({
                 domain,
                 basepath,
                 substituteEnvVars: project.docsWorkspaces?.config.settings?.substituteEnvVars ?? false,
+                profileVarNames: getProfileVarNames(project.docsWorkspaces?.config.profiles),
                 context
             });
 

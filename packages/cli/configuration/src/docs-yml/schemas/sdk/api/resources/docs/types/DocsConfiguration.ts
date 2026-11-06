@@ -4,6 +4,15 @@ import type * as FernDocsConfig from "../../../index.js";
 
 export interface DocsConfiguration {
     instances: FernDocsConfig.DocsInstance[];
+    /**
+     * Named sets of values. Set `profile: <name>` on the site, a product, version, tab, tab variant,
+     * section or page, and `${NAME}` in its pages is filled from that profile when rendered.
+     * The innermost `profile:` wins; profiles never merge. Names no profile defines keep
+     * today's publish-time substitution.
+     */
+    profiles?: Record<string, FernDocsConfig.ProfileConfig>;
+    /** Name of a profile in `profiles:`. Pages under this item use its values for `${NAME}`. The innermost `profile:` wins. */
+    profile?: string;
     /** A string that is used as the tab bar title. */
     title?: string;
     /**
