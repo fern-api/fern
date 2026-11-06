@@ -148,24 +148,13 @@ export async function compileGlobalTheme({
 }): Promise<CompiledGlobalTheme> {
     const themeKeys = docsYml.THEME_ELIGIBLE_FIELDS.filter((field) => themeSetsField(rawTheme, field));
 
-    const emptyDocsConfig: DocsWorkspace["config"] = { instances: [], navigation: [] };
-    const workspace: DocsWorkspace = {
-        type: "docs",
-        workspaceName: undefined,
-        absoluteFilePath: themeDirectory,
-        absoluteFilepathToDocsConfig: join(themeDirectory, RelativeFilePath.of("theme.yml")),
-        config: mergeThemeOverride(emptyDocsConfig, rawTheme)
-    };
-
     const fileManifest: Record<string, FileManifestEntry> = {};
     const files = new Map<string, AbsoluteFilePath>();
     const fileIdToPath = new Map<string, string>();
 
-    const resolver = new DocsDefinitionResolver({
-        domain: "theme.invalid",
-        docsWorkspace: workspace,
-        ossWorkspaces: [],
-        apiWorkspaces: [],
+    const resolver = createThemeResolver({
+        theme: rawTheme,
+        themeDirectory,
         taskContext,
         cliVersion,
         uploadFiles: async (uploads) => {
@@ -211,7 +200,9 @@ export async function compileGlobalTheme({
     const config: Record<string, unknown> = {};
     for (const themeKey of themeKeys) {
         for (const ledgerKey of THEME_KEY_TO_LEDGER_KEYS[themeKey]) {
-            const value = stripDefaults(full[ledgerKey], defaults[ledgerKey]);
+            const explicit =
+                ledgerKey === themeKey ? (rawTheme[camelToKebab(themeKey)] ?? rawTheme[themeKey]) : undefined;
+            const value = stripDefaults(full[ledgerKey], defaults[ledgerKey], explicit);
             if (value !== undefined) {
                 config[ledgerKey] = value;
             }
@@ -223,6 +214,40 @@ export async function compileGlobalTheme({
     }
 
     return { config: config as LedgerConfig, fileManifest, files };
+}
+
+type UploadFiles = ConstructorParameters<typeof DocsDefinitionResolver>[0]["uploadFiles"];
+
+/** A docs resolver over an empty site with only `theme` applied. */
+function createThemeResolver({
+    theme,
+    themeDirectory,
+    taskContext,
+    cliVersion,
+    uploadFiles
+}: {
+    theme: Record<string, unknown>;
+    themeDirectory: AbsoluteFilePath;
+    taskContext: TaskContext;
+    cliVersion: string;
+    uploadFiles: UploadFiles;
+}): DocsDefinitionResolver {
+    const emptyDocsConfig: DocsWorkspace["config"] = { instances: [], navigation: [] };
+    return new DocsDefinitionResolver({
+        domain: "theme.invalid",
+        docsWorkspace: {
+            type: "docs",
+            workspaceName: undefined,
+            absoluteFilePath: themeDirectory,
+            absoluteFilepathToDocsConfig: join(themeDirectory, RelativeFilePath.of("theme.yml")),
+            config: mergeThemeOverride(emptyDocsConfig, theme)
+        },
+        ossWorkspaces: [],
+        apiWorkspaces: [],
+        taskContext,
+        cliVersion,
+        uploadFiles
+    });
 }
 
 /**
@@ -253,18 +278,9 @@ async function compileThemeDefaults({
     if (Object.keys(emptyObjects).length === 0) {
         return {};
     }
-    const emptyDocsConfig: DocsWorkspace["config"] = { instances: [], navigation: [] };
-    const resolver = new DocsDefinitionResolver({
-        domain: "theme.invalid",
-        docsWorkspace: {
-            type: "docs",
-            workspaceName: undefined,
-            absoluteFilePath: themeDirectory,
-            absoluteFilepathToDocsConfig: join(themeDirectory, RelativeFilePath.of("theme.yml")),
-            config: mergeThemeOverride(emptyDocsConfig, emptyObjects)
-        },
-        ossWorkspaces: [],
-        apiWorkspaces: [],
+    const resolver = createThemeResolver({
+        theme: emptyObjects,
+        themeDirectory,
         taskContext,
         cliVersion,
         uploadFiles: async (uploads) => uploads.map((file) => ({ ...file, fileId: file.relativeFilePath }))
@@ -278,17 +294,21 @@ async function compileThemeDefaults({
     });
 }
 
-/** Removes every leaf of `value` that equals the corresponding leaf of `defaults`. */
-function stripDefaults(value: unknown, defaults: unknown): unknown {
+/**
+ * Removes every leaf of `value` that equals the corresponding leaf of
+ * `defaults`, unless the raw theme (`explicit`) sets that leaf itself.
+ */
+function stripDefaults(value: unknown, defaults: unknown, explicit: unknown): unknown {
     if (value === undefined || defaults === undefined) {
         return value;
     }
     if (!isRecord(value) || !isRecord(defaults)) {
-        return isDeepStrictEqual(value, defaults) ? undefined : value;
+        return explicit === undefined && isDeepStrictEqual(value, defaults) ? undefined : value;
     }
     const stripped: Record<string, unknown> = {};
     for (const [key, child] of Object.entries(value)) {
-        const kept = stripDefaults(child, defaults[key]);
+        const explicitChild = isRecord(explicit) ? (explicit[camelToKebab(key)] ?? explicit[key]) : undefined;
+        const kept = stripDefaults(child, defaults[key], explicitChild);
         if (kept !== undefined) {
             stripped[key] = kept;
         }

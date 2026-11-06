@@ -75,6 +75,18 @@ describe("compileGlobalTheme", () => {
         expect(compiled.config.settings).toEqual({ httpSnippets: false });
     });
 
+    it("keeps theme values that are set explicitly even when they equal resolver defaults", async () => {
+        const themeDirectory = await writeThemeDir();
+        const compiled = await compileGlobalTheme({
+            rawTheme: { settings: { "http-snippets": true } },
+            themeDirectory,
+            taskContext: createMockTaskContext(),
+            cliVersion: "0.0.0"
+        });
+
+        expect(compiled.config.settings).toEqual({ httpSnippets: true });
+    });
+
     it("only keeps the colors the theme explicitly sets, per mode", async () => {
         const compiled = await compileGlobalTheme({
             rawTheme: { colors: { background: { dark: "#000000", light: "#ffffff" }, border: "#123456" } },
