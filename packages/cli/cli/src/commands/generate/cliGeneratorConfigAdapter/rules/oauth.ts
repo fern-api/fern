@@ -77,6 +77,7 @@ function flowEntry(
             return authorizationCode(context, scheme, flow, flowPath);
         case "implicit":
         case "password":
+        case "device-code":
             context.error(
                 `${flowPath}.type`,
                 "CLI_TARGET_OAUTH_FLOW",
