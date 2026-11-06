@@ -254,6 +254,7 @@ export async function publishDocs({
     loginCommand?: string;
     multiSource?: boolean;
 }): Promise<string> {
+    const publishStartedAt = new Date().toISOString();
     const fdrOrigin =
         process.env.FERN_FDR_ORIGIN ??
         process.env.OVERRIDE_FDR_ORIGIN ??
@@ -983,6 +984,7 @@ export async function publishDocs({
             } else {
                 const ledgerResult = await publishDocsViaLedger({
                     docsDefinition,
+                    publishStartedAt,
                     organization,
                     domain,
                     basepath: basePath,
