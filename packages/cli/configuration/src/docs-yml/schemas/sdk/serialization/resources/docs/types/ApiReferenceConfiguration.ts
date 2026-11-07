@@ -28,6 +28,10 @@ export const ApiReferenceConfiguration: core.serialization.ObjectSchema<
             "tag-description-pages",
             core.serialization.boolean().optional(),
         ),
+        endpointIndexPages: core.serialization.property(
+            "endpoint-index-pages",
+            core.serialization.boolean().optional(),
+        ),
         snippets: SnippetsConfiguration.optional(),
         postman: core.serialization.string().optional(),
         summary: core.serialization.string().optional(),
@@ -59,6 +63,7 @@ export declare namespace ApiReferenceConfiguration {
         audiences?: Audience.Raw | null;
         "display-errors"?: boolean | null;
         "tag-description-pages"?: boolean | null;
+        "endpoint-index-pages"?: boolean | null;
         snippets?: SnippetsConfiguration.Raw | null;
         postman?: string | null;
         summary?: string | null;

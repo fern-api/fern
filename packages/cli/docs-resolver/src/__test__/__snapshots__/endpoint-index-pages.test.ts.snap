@@ -1,0 +1,62 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`endpoint-index-pages > flag on > generates a summary page for a section without one > users-section 1`] = `
+"# users
+
+## Endpoints
+
+| Endpoint | Method | Path | Description |
+| --- | --- | --- | --- |
+| [List users](/api-reference/users/list-users) | \`GET\` | \`/users\` | Lists every gardener with access to the garden. |
+"
+`;
+
+exports[`endpoint-index-pages > flag on > generates an All Endpoints page grouped by section > all-endpoints 1`] = `
+"## [plants](/api-reference/plants)
+
+| Endpoint | Method | Path | Description |
+| --- | --- | --- | --- |
+| [List plants](/api-reference/plants/list-plants) | \`GET\` | \`/plants\` | Returns all plants in the garden. |
+| [Create plant](/api-reference/plants/create-plant) *(Beta)* | \`POST\` | \`/plants\` | Adds a plant to the garden. |
+| [Delete plant](/api-reference/plants/delete-plant) *(Deprecated)* | \`DELETE\` | \`/plants/{plantId}\` | Removes a plant. |
+
+## [users](/api-reference/users)
+
+| Endpoint | Method | Path | Description |
+| --- | --- | --- | --- |
+| [List users](/api-reference/users/list-users) | \`GET\` | \`/users\` | Lists every gardener with access to the garden. |
+
+## [store](/api-reference/store)
+
+| Endpoint | Method | Path | Description |
+| --- | --- | --- | --- |
+| [Create order](/api-reference/store/create-order) | \`POST\` | \`/store/orders\` | Places an order for seeds. |
+"
+`;
+
+exports[`endpoint-index-pages > flag on > keeps a manual summary and appends the endpoint list > plants-section 1`] = `
+"# Plants
+
+Manage the plants in your garden.
+
+## Endpoints
+
+| Endpoint | Method | Path | Description |
+| --- | --- | --- | --- |
+| [List plants](/api-reference/plants/list-plants) | \`GET\` | \`/plants\` | Returns all plants in the garden. |
+| [Create plant](/api-reference/plants/create-plant) *(Beta)* | \`POST\` | \`/plants\` | Adds a plant to the garden. |
+| [Delete plant](/api-reference/plants/delete-plant) *(Deprecated)* | \`DELETE\` | \`/plants/{plantId}\` | Removes a plant. |
+"
+`;
+
+exports[`endpoint-index-pages > tag description pages > keeps the tag description and appends the endpoint list > store-tag-description 1`] = `
+"# Store
+
+Order seeds and supplies from the garden store.
+
+## Endpoints
+
+| Endpoint | Method | Path | Description |
+| --- | --- | --- | --- |
+| [Create order](/docs/api-reference/store/create-order) | \`POST\` | \`/store/orders\` | Places an order for seeds. |"
+`;
