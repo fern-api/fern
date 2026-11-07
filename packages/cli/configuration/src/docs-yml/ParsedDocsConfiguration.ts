@@ -39,6 +39,7 @@ export interface ParsedPageActionsConfig {
         claude: boolean;
         cursor: boolean;
         claudeCode: boolean;
+        codex: boolean;
         vscode: boolean;
         mcp: boolean;
         custom: ParsedCustomPageAction[];
