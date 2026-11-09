@@ -13,15 +13,6 @@ updates:
       - "packages/cli/api-importers/**"
       - "packages/cli/docs-importers/**"
       - "packages/cli/yaml/**"
-      - "generators/**"
-      - "generators/csharp/**"
-      - "generators/php/**"
-      - "generators/ruby/**"
-      - "generators/swift/**"
-      - "generators/typescript/**"
-      - "generators/typescript/model/**"
-      - "generators/typescript/sdk/**"
-      - "generators/typescript/utils/**"
     schedule:
       interval: "weekly"
     groups:
@@ -51,13 +42,3 @@ updates:
       fern:
         patterns:
           - "@fern*"
-  - package-ecosystem: "gomod"
-    directory: "/generators/go"
-    schedule:
-      interval: "weekly"
-  # The CLI generator vendors a Rust SDK whose Cargo.lock ships verbatim into
-  # every generated CLI, so an advisory here reaches every consumer.
-  - package-ecosystem: "cargo"
-    directory: "/generators/cli/sdk"
-    schedule:
-      interval: "weekly"

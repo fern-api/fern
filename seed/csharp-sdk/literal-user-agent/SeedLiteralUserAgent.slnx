@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="src/SeedLiteralUserAgent.Test/SeedLiteralUserAgent.Test.csproj" />
-  <Project Path="src/SeedLiteralUserAgent/SeedLiteralUserAgent.csproj" />
-</Solution>

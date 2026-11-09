@@ -30,4 +30,9 @@ export interface AiChatConfig {
      * (default: "Responses are generated using AI and may contain mistakes.").
      */
     disclaimer?: string;
+    /**
+     * Overrides the "Ask AI" label on the header button and in the search dialog
+     * (default: "Ask AI", translated on localized sites).
+     */
+    buttonText?: string;
 }

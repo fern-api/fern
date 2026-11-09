@@ -77,10 +77,11 @@ interface DocsConfigWithTranslations extends DocsV1Write.DocsConfig {
 }
 
 // TODO: Remove this shim once the published @fern-api/fdr-sdk type for
-// DocsV1Write.AIChatConfig includes the maskPii and disclaimer fields.
+// DocsV1Write.AIChatConfig includes the maskPii, disclaimer and buttonText fields.
 type AIChatConfigWithUnpublishedFields = NonNullable<DocsV1Write.DocsConfig["aiChatConfig"]> & {
     maskPii?: boolean;
     disclaimer?: string;
+    buttonText?: string;
 };
 
 import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter.js";
@@ -1118,7 +1119,8 @@ export class DocsDefinitionResolver {
                               title: ds.title
                           })),
                           maskPii: this.parsedDocsConfig.aiChatConfig.maskPii,
-                          disclaimer: this.parsedDocsConfig.aiChatConfig.disclaimer
+                          disclaimer: this.parsedDocsConfig.aiChatConfig.disclaimer,
+                          buttonText: this.parsedDocsConfig.aiChatConfig.buttonText
                       } as AIChatConfigWithUnpublishedFields as DocsV1Write.DocsConfig["aiChatConfig"])
                     : undefined,
             hideNavLinks: undefined,

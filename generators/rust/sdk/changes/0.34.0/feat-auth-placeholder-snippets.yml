@@ -1,4 +1,0 @@
-- summary: |
-    Use auth scheme placeholder values in snippets when configured via
-    `placeholder` field on auth schemes.
-  type: feat

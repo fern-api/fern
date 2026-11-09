@@ -2,20 +2,10 @@ import { isPlainObject } from "@fern-api/core-utils";
 import { type HttpMethod, HttpMethodSchema } from "@fern-api/fdr-sdk/orpc-client";
 import axios from "axios";
 
-/**
- * The SDK snippets are read into the docs only when this variable is `true`. The name says "upload" for the
- * teams that already set it.
- */
-export const SDK_GEN_SNIPPETS_ENV_VAR = "FERN_UPLOAD_SDK_GEN_SNIPPETS";
-
 export interface SdkGenEndpointSnippet {
     path: string;
     method: HttpMethod;
     code: string;
-}
-
-export function isSdkGenSnippetsEnabled(): boolean {
-    return process.env[SDK_GEN_SNIPPETS_ENV_VAR]?.trim().toLowerCase() === "true";
 }
 
 /**

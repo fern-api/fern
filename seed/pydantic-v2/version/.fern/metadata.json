@@ -1,8 +1,0 @@
-{
-  "cliVersion": "DUMMY",
-  "generatorName": "fernapi/fern-pydantic-model-v2",
-  "generatorVersion": "local",
-  "originGitCommit": "DUMMY",
-  "invokedBy": "manual",
-  "requestedVersion": "0.0.1"
-}

@@ -15,8 +15,6 @@ node_modules/
 **/*.tsbuildinfo
 
 # Test outputs and fixtures (seed contains massive amounts of generated test code)
-seed/
-seed-remote-local/
 test-remote-local-logs-*/
 **/__snapshots__/
 **/__test__/**/fixtures/
@@ -48,7 +46,6 @@ test-remote-local-logs-*/
 pnpm-lock.yaml
 
 # Large generated files
-seed/python-sdk/trace/snippet-templates.json
 
 # IDE and system files
 .DS_Store

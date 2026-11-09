@@ -296,7 +296,8 @@ export const AIChatConfig = z.object({
     location: z.array(AIChatLocation).optional(),
     datasources: z.array(AIChatDatasource).optional(),
     "mask-pii": z.boolean().optional(),
-    disclaimer: z.string().optional()
+    disclaimer: z.string().optional(),
+    "button-text": z.string().optional()
 });
 
 // ===== Font schemas =====
@@ -1013,7 +1014,7 @@ export const TabbedNavigationItem = z.union([TabbedNavigationItemWithLayout, Tab
 
 export const TabbedNavigationConfig = z.array(TabbedNavigationItem);
 
-export const NavigationConfig = z.union([UntabbedNavigationConfig, TabbedNavigationConfig]);
+export const NavigationConfig = z.union([TabbedNavigationConfig, UntabbedNavigationConfig]);
 
 // ===== Tab Config =====
 

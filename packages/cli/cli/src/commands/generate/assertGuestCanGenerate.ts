@@ -3,10 +3,6 @@ import { CliError } from "@fern-api/task-context";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { type GenerationTelemetryInput, listRequestedGenerators } from "./buildGeneratePosthogProperties.js";
 
-export const GUEST_DOCS_REQUIRE_PREVIEW_MESSAGE =
-    "--guest only supports preview docs generation: a guest organization cannot publish to a production docs URL. " +
-    "Re-run with --preview, or claim the session (fern claim) / run 'fern login' to publish.";
-
 /** Output modes a guest can run: the result is downloaded, nothing is pushed or published. */
 const GUEST_OUTPUT_MODES = new Set(["downloadFiles", "download"]);
 

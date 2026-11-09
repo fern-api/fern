@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="src/SeedBasicAuthPwOmitted.Test/SeedBasicAuthPwOmitted.Test.csproj" />
-  <Project Path="src/SeedBasicAuthPwOmitted/SeedBasicAuthPwOmitted.csproj" />
-</Solution>

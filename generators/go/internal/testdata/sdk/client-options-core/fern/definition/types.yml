@@ -1,4 +1,0 @@
-types:
-  WithAuthToken:
-    properties:
-      value: string

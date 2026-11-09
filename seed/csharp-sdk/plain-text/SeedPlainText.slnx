@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="src/SeedPlainText.Test/SeedPlainText.Test.csproj" />
-  <Project Path="src/SeedPlainText/SeedPlainText.csproj" />
-</Solution>
