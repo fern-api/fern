@@ -35,6 +35,8 @@ export const BaseRubyCustomConfigSchema = z.object({
     ),
     // Apply IR-defined default values to query parameters and headers in request wrappers
     useDefaultRequestParameterValues: z.boolean().optional(),
+    // Enable a per-request on_response callback for successful HTTP status and headers.
+    exposeResponseMetadata: z.boolean().optional(),
     omitFernHeaders: z.boolean().optional(),
     // Opt-in: emit the X-Fern-Runtime, X-Fern-Runtime-Version, and X-Fern-Platform
     // observability headers. Disabled by default so existing output is unchanged.

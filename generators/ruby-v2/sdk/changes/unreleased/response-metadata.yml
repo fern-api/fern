@@ -1,0 +1,4 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: Add opt-in exposeResponseMetadata for per-request successful response status and headers without changing decoded return values.
+  type: feat

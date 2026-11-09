@@ -9,6 +9,7 @@ import { getEndpointReturnType } from "../utils/getEndpointReturnType.js";
 import { getItemIteratorDocs, getItemIteratorReturnType } from "../utils/itemIteratorPagination.js";
 import { responseBodyLoader } from "../utils/responseBody.js";
 import { RAW_CLIENT_REQUEST_VARIABLE_NAME, RawClient } from "./RawClient.js";
+import { responseMetadataCallback } from "./responseMetadataCallback.js";
 
 export declare namespace HttpEndpointGenerator {
     export interface GenerateArgs {
@@ -544,6 +545,9 @@ export class HttpEndpointGenerator {
         );
 
         statements.push(ruby.codeblock(`${CODE_VN} = ${HTTP_RESPONSE_VN}.code.to_i`));
+        if (this.context.customConfig.exposeResponseMetadata === true) {
+            statements.push(ruby.codeblock(responseMetadataCallback()));
+        }
 
         const jsonResponseBody =
             endpoint.response?.body != null && endpoint.response.body.type === "json"
@@ -821,6 +825,9 @@ export class HttpEndpointGenerator {
         optionTags.push("@option request_options [Hash{String => Object}] :additional_query_parameters");
         optionTags.push("@option request_options [Hash{String => Object}] :additional_body_parameters");
         optionTags.push("@option request_options [Integer] :timeout_in_seconds");
+        if (this.context.customConfig.exposeResponseMetadata === true) {
+            optionTags.push("@option request_options [#call] :on_response Called with status: Integer and headers: Hash on each 2xx response, before decoding. Callback exceptions propagate. Return values are unchanged.");
+        }
         return optionTags;
     }
 
