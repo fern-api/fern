@@ -165,9 +165,75 @@ export interface PdfSettings {
     footerRight?: string;
 }
 
+/** `--page` and `--section` for `fern docs export --format pdf`: site-absolute slugs, as in the page URL. */
+export interface PdfScopeFlags {
+    pages: string[];
+    sections: string[];
+}
+
+/** A slug as typed (`/docs/quickstart/`) in the form the site lists it (`docs/quickstart`). */
+export function normalizeSlug(slug: string): string {
+    return slug.trim().replace(/^\/+|\/+$/g, "");
+}
+
+/** Whether `slug` is the section `section` or a page under it. */
+function isInSection(slug: string, section: string): boolean {
+    return slug === section || slug.startsWith(`${section}/`);
+}
+
+/**
+ * The pages a scoped PDF keeps, in the site's order: each `--page`, plus every page under each
+ * `--section`. Throws when a `--page` is not on the site or a `--section` holds no pages.
+ */
+export function resolvePdfScope(flags: PdfScopeFlags, sitePageSlugs: string[]): string[] {
+    const pages = flags.pages.map(normalizeSlug);
+    const sections = flags.sections.map(normalizeSlug);
+    const missingPages = pages.filter((page) => !sitePageSlugs.includes(page));
+    if (missingPages.length > 0) {
+        throw new Error(`--page ${missingPages.join(", ")} is not a page on the site.`);
+    }
+    const emptySections = sections.filter((section) => !sitePageSlugs.some((slug) => isInSection(slug, section)));
+    if (emptySections.length > 0) {
+        throw new Error(`--section ${emptySections.join(", ")} has no pages on the site.`);
+    }
+    return sitePageSlugs.filter(
+        (slug) => pages.includes(slug) || sections.some((section) => isInSection(slug, section))
+    );
+}
+
+/** The URL of the site's printable page list, the same list the PDF exporter renders. */
+export function printPagesUrl(docsUrl: string): string {
+    const base = stripTrailingSlashes(/^https?:\/\//.test(docsUrl) ? docsUrl : `https://${docsUrl}`);
+    return `${base}/_print/pages`;
+}
+
+function isPrintPagesResponse(value: unknown): value is { pages: { slug: string }[] } {
+    if (typeof value !== "object" || value == null || !("pages" in value) || !Array.isArray(value.pages)) {
+        return false;
+    }
+    return value.pages.every(
+        (page: unknown) => typeof page === "object" && page != null && "slug" in page && typeof page.slug === "string"
+    );
+}
+
+/** The slugs of every page the PDF exporter would render for the live site, in order. */
+async function fetchSitePageSlugs({ docsUrl, token }: { docsUrl: string; token: string }): Promise<string[]> {
+    const url = printPagesUrl(docsUrl);
+    const response = await fetch(url, { headers: { Accept: "application/json", "x-fern-token": token } });
+    if (!response.ok) {
+        throw new Error(`Listing the site's pages failed: HTTP ${response.status} from ${url}`);
+    }
+    const body: unknown = await response.json();
+    if (!isPrintPagesResponse(body)) {
+        throw new Error(`Listing the site's pages failed: unexpected response from ${url}`);
+    }
+    return body.pages.map((page) => page.slug);
+}
+
 /** The export options for `settings`, or `undefined` when every setting is the site's default. */
-export function pdfExportOptions(settings: PdfSettings): PdfExportOptions | undefined {
+export function pdfExportOptions(settings: PdfSettings, pageSlugs: string[] = []): PdfExportOptions | undefined {
     const options = {
+        scope: pageSlugs.length > 0 ? { pageSlugs } : undefined,
         hideCover: settings.cover === false ? true : undefined,
         hideToc: settings.toc === false ? true : undefined,
         coverTitle: settings.coverTitle,
@@ -200,30 +266,36 @@ export async function exportDocs({
     format,
     output: requestedOutput,
     instance,
-    pdf = {}
+    pdf = {},
+    scope = { pages: [], sections: [] }
 }: {
     cliContext: CliContext;
     format: DocsExportFormat;
     output: string | undefined;
     instance: string | undefined;
     pdf?: PdfSettings;
+    scope?: PdfScopeFlags;
 }): Promise<void> {
-    const options = pdfExportOptions(pdf);
-    if (format !== "pdf" && options != null) {
+    const scoped = scope.pages.length > 0 || scope.sections.length > 0;
+    if (format !== "pdf" && (pdfExportOptions(pdf) != null || scoped)) {
         return cliContext.failAndThrow(
-            "--no-cover, --no-toc, --cover-title, --cover-subtitle, --header-* and --footer-* only apply to --format pdf.",
+            "--no-cover, --no-toc, --cover-title, --cover-subtitle, --header-*, --footer-*, --page and --section only apply to --format pdf.",
             undefined,
             { code: CliError.Code.ConfigError }
         );
     }
-    const hosted = await resolveHostedExport({ cliContext, instance });
+    const { token, ...hosted } = await resolveHostedExport({ cliContext, instance });
     const output = requestedOutput ?? defaultOutput(hosted.docsUrl, format);
     if (format === "pdf") {
         const outputFile = path.resolve(pdfOutputPath(output));
         await cliContext.runTask(async (context) => {
             await withSpinner(context, cliContext.isTTY, { name: "Exporting PDF" }, async () => {
-                await downloadHostedPdf({ ...hosted, outputFile, options });
-                return [chalk.green(`Exported PDF to ${displayPath(outputFile, process.cwd())}`)];
+                const pageSlugs = scoped
+                    ? resolvePdfScope(scope, await fetchSitePageSlugs({ docsUrl: hosted.docsUrl, token }))
+                    : [];
+                await downloadHostedPdf({ ...hosted, outputFile, options: pdfExportOptions(pdf, pageSlugs) });
+                const pages = scoped ? ` (${pageSlugs.length} ${pageSlugs.length === 1 ? "page" : "pages"})` : "";
+                return [chalk.green(`Exported PDF${pages} to ${displayPath(outputFile, process.cwd())}`)];
             });
         });
         return;
@@ -306,14 +378,14 @@ function reportExportFailure(context: TaskContext, error: unknown): void {
     }
 }
 
-/** Finds the hosted site to export and logs in: the export client, the org and the docs URL. */
+/** Finds the hosted site to export and logs in: the export client, the org, the docs URL and the token. */
 async function resolveHostedExport({
     cliContext,
     instance
 }: {
     cliContext: CliContext;
     instance: string | undefined;
-}): Promise<{ client: SiteExportClient; orgId: string; docsUrl: string }> {
+}): Promise<{ client: SiteExportClient; orgId: string; docsUrl: string; token: string }> {
     const fernDirectory = await getFernDirectory();
     if (fernDirectory == null) {
         return cliContext.failAndThrow(
@@ -365,6 +437,7 @@ async function resolveHostedExport({
     return {
         client: createExportClient({ baseUrl: FDR_ORIGIN, token: token.value }),
         orgId: projectConfig.organization,
-        docsUrl: instanceUrl
+        docsUrl: instanceUrl,
+        token: token.value
     };
 }

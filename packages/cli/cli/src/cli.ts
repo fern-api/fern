@@ -2480,11 +2480,25 @@ function addDocsExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                 })
                 .option("header-right", { type: "string", description: "pdf: text at the top right of each page" })
                 .option("footer-left", { type: "string", description: "pdf: text at the bottom left of each page" })
-                .option("footer-right", { type: "string", description: "pdf: text at the bottom right of each page" }),
+                .option("footer-right", { type: "string", description: "pdf: text at the bottom right of each page" })
+                .option("page", {
+                    type: "string",
+                    array: true,
+                    default: [] as string[],
+                    description:
+                        "pdf: only include this page, by its slug as in the page URL (docs/quickstart). Repeat to add more"
+                })
+                .option("section", {
+                    type: "string",
+                    array: true,
+                    default: [] as string[],
+                    description:
+                        "pdf: only include the pages under this slug (docs/guides). Repeat to add more; combines with --page"
+                }),
         async (argv) => {
             cliContext.instrumentPostHogEvent({
                 command: "fern docs export",
-                properties: { format: argv.format }
+                properties: { format: argv.format, scoped: argv.page.length > 0 || argv.section.length > 0 }
             });
             await exportDocs({
                 cliContext,
@@ -2500,7 +2514,8 @@ function addDocsExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                     headerRight: argv.headerRight,
                     footerLeft: argv.footerLeft,
                     footerRight: argv.footerRight
-                }
+                },
+                scope: { pages: argv.page, sections: argv.section }
             });
         }
     );

@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern docs export --format pdf` can now export part of the site. Pass `--section <slug>` to include
+    every page under a slug (`--section docs/guides`) and `--page <slug>` to include single pages. Both
+    can be repeated and combined; pages keep the site's order.
+  type: feat
