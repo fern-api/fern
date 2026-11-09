@@ -642,11 +642,31 @@ types:
   ProfileConfig:
     properties:
       vars:
-        type: optional<map<string, string>>
+        type: optional<ProfileVarsConfiguration>
         docs: Values for `${NAME}` in pages that use this profile. Profile values are committed to the repo; never put secrets here.
       tags:
         type: optional<list<string>>
         docs: Labels for conditional content. The profile name also counts as a tag.
+
+  ProfileVarsConfiguration:
+    discriminated: false
+    docs: |
+      Either an inline map of values, or one or more filepaths to YAML files containing
+      only a `vars` map. A name defined in two files is an error.
+
+      ```yaml
+      vars: ./vars/enterprise.yml
+      ```
+
+      ```yaml
+      vars:
+        - ./vars/common.yml
+        - ./vars/enterprise.yml
+      ```
+    union:
+      - map<string, string>
+      - string
+      - list<string>
 
   TabConfig:
     extends: [WithPermissions, WithFeatureFlags]

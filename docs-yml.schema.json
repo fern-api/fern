@@ -629,16 +629,33 @@
       ],
       "additionalProperties": false
     },
+    "docs.ProfileVarsConfiguration": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ],
+      "description": "Either an inline map of values, or one or more filepaths to YAML files containing\nonly a `vars` map. A name defined in two files is an error.\n\n```yaml\nvars: ./vars/enterprise.yml\n```\n\n```yaml\nvars:\n  - ./vars/common.yml\n  - ./vars/enterprise.yml\n```"
+    },
     "docs.ProfileConfig": {
       "type": "object",
       "properties": {
         "vars": {
           "oneOf": [
             {
-              "type": "object",
-              "additionalProperties": {
-                "type": "string"
-              }
+              "$ref": "#/definitions/docs.ProfileVarsConfiguration"
             },
             {
               "type": "null"

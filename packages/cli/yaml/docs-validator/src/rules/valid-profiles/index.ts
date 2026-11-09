@@ -12,7 +12,13 @@ export const ValidProfilesRule: Rule = {
                     message: `Profile "${name}" is used but not defined in profiles: in docs.yml.`
                 }));
         return {
-            file: ({ config }) => check({ ...config, profiles: undefined }),
+            file: ({ config }) => [
+                // fatal so that generation fails: vars that could not be read would leave `${NAME}` unfilled
+                ...(config._profileVarsFileErrors ?? []).map(
+                    (message): RuleViolation => ({ severity: "fatal", message })
+                ),
+                ...check({ ...config, profiles: undefined, _profileVarsFileErrors: undefined })
+            ],
             productFile: ({ content }) => check(content),
             versionFile: ({ content }) => check(content)
         };

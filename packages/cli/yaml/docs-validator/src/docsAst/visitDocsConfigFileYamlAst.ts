@@ -405,6 +405,8 @@ export async function visitDocsConfigFileYamlAst({
         redirects: noop,
         _absoluteFilepathsToRedirectsFiles: noop,
         _redirectsFileErrors: noop,
+        _absoluteFilepathsToProfileVarsFiles: noop,
+        _profileVarsFileErrors: noop,
         tabs: noop,
         title: noop,
         typography: async (typography) => {

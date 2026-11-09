@@ -3,18 +3,19 @@
 import type * as FernDocsConfig from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { ProfileVarsConfiguration } from "./ProfileVarsConfiguration.js";
 
 export const ProfileConfig: core.serialization.ObjectSchema<
     serializers.ProfileConfig.Raw,
     FernDocsConfig.ProfileConfig
 > = core.serialization.object({
-    vars: core.serialization.record(core.serialization.string(), core.serialization.string()).optional(),
+    vars: ProfileVarsConfiguration.optional(),
     tags: core.serialization.list(core.serialization.string()).optional(),
 });
 
 export declare namespace ProfileConfig {
     export interface Raw {
-        vars?: Record<string, string> | null;
+        vars?: ProfileVarsConfiguration.Raw | null;
         tags?: string[] | null;
     }
 }

@@ -1020,8 +1020,22 @@ export const NavigationConfig = z.union([TabbedNavigationConfig, UntabbedNavigat
 
 // ===== Profile Config =====
 
+/**
+ * Either an inline map of values, or one or more filepaths to YAML files containing only a `vars` map.
+ */
+export const ProfileVarsConfiguration = z.union([z.record(z.string(), z.string()), z.string(), z.array(z.string())]);
+
+/**
+ * The contents of a standalone vars file referenced by a profile's `vars` in docs.yml.
+ */
+export const ProfileVarsFile = z
+    .object({
+        vars: z.record(z.string(), z.string())
+    })
+    .strict();
+
 export const ProfileConfig = z.object({
-    vars: z.record(z.string(), z.string()).optional(),
+    vars: ProfileVarsConfiguration.optional(),
     tags: z.array(z.string()).optional()
 });
 

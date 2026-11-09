@@ -198,11 +198,10 @@ export async function runAstroPreviewServer({
     const additionalFilepaths = project.apiWorkspaces.flatMap((workspace) => workspace.getAbsoluteFilePaths());
     if (previewResult != null) {
         additionalFilepaths.push(
-            ...getExternalDocsWatchPaths(
-                absoluteFilePathToFern,
-                previewResult.docsDefinition,
-                project.docsWorkspaces?.config._absoluteFilepathsToRedirectsFiles
-            )
+            ...getExternalDocsWatchPaths(absoluteFilePathToFern, previewResult.docsDefinition, [
+                ...(project.docsWorkspaces?.config._absoluteFilepathsToRedirectsFiles ?? []),
+                ...(project.docsWorkspaces?.config._absoluteFilepathsToProfileVarsFiles ?? [])
+            ])
         );
     }
     let watcher: Awaited<ReturnType<typeof createDocsPreviewWatcher>>;

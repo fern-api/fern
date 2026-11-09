@@ -57,4 +57,8 @@ describe("valid-profiles", () => {
         });
         expect(violations).toHaveLength(1);
     });
+    it("reports profile vars files that could not be read", async () => {
+        const violations = await run({ profiles, _profileVarsFileErrors: ["vars file broke"] });
+        expect(violations).toEqual([{ severity: "fatal", message: "vars file broke" }]);
+    });
 });

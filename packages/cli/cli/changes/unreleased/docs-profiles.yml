@@ -7,3 +7,8 @@
     per page by the docs renderer, so one page can show different values per product. `fern check`
     flags a `profile:` that names no profile.
   type: feat
+- summary: |
+    A profile's `vars` can now point at one YAML file or a list of them, like `redirects`:
+    `vars: ./vars/enterprise.yml`. Each file holds only a `vars:` map. A name defined in two files
+    is an error, and `fern check` reports files that are missing or malformed.
+  type: feat

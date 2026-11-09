@@ -14,6 +14,7 @@ import { getVersionContentRef } from "./git-versions/getVersionContentRef.js";
 import { materializeGitRef } from "./git-versions/materializeGitRef.js";
 import { type RefVersionScope, resolveRefContentRoot } from "./git-versions/resolveRefContentRoot.js";
 import { buildNavigationForDirectory, getFrontmatterMetadata, nameToSlug, nameToTitle } from "./navigationUtils.js";
+import { type ProfileConfigWithResolvedVars, resolveProfiles } from "./resolveProfileVars.js";
 import { resolveRedirects } from "./resolveRedirects.js";
 import { tabbedNavigationItemHasLayout, tabbedNavigationItemHasVariants } from "./tabbedNavigationItemGuards.js";
 
@@ -140,6 +141,7 @@ export async function parseDocsConfiguration({
             : undefined;
 
     const redirectsPromise = resolveRedirects({ redirects, absoluteFilepathToDocsConfig });
+    const profilesPromise = resolveProfiles({ profiles: rawDocsConfiguration.profiles, absoluteFilepathToDocsConfig });
 
     const cssPromise = convertCssConfig(rawCssConfig, absoluteFilepathToDocsConfig);
     const jsPromise = convertJsConfig(rawJsConfig, absoluteFilepathToDocsConfig);
@@ -245,7 +247,7 @@ export async function parseDocsConfiguration({
         title,
         // absoluteFilepath: absoluteFilepathToDocsConfig,
         instances,
-        profiles: parseProfiles(rawDocsConfiguration.profiles),
+        profiles: parseProfiles(await profilesPromise),
         profile: rawDocsConfiguration.profile,
         roles: rawDocsConfiguration.roles,
 
@@ -2930,7 +2932,7 @@ function parseVariantOverlays(variants: unknown[]): docsYml.VariantOverlay[] {
 }
 
 function parseProfiles(
-    raw: Record<string, docsYml.RawSchemas.ProfileConfig> | undefined
+    raw: Record<string, ProfileConfigWithResolvedVars> | undefined
 ): Record<string, docsYml.ParsedProfile> | undefined {
     if (raw == null) {
         return undefined;
