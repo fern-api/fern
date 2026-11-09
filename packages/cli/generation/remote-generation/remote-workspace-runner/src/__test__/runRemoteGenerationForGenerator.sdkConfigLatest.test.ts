@@ -549,7 +549,7 @@ describe("runRemoteGenerationForGenerator synthesized SDK Config latest", () => 
                 "SDK_CONFIG_V1_REQUIRED; generator=fernapi/fern-typescript-sdk; language=typescript; requestedVersion=4.0.0; cutoverVersion=4.0.0; receivedConfigKind=legacy-fern; expectedConfigKind=sdk-config-v1"
             ),
             undefined,
-            { code: CliError.Code.ConfigError }
+            { code: CliError.Code.ConfigError, instructionsTopic: "sdks migrate" }
         );
         expect(migrateIntermediateRepresentationForInvocation).not.toHaveBeenCalled();
         expect(run).not.toHaveBeenCalled();

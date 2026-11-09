@@ -49,6 +49,7 @@ import {
     formatGeneratorConfigCompatibilityError,
     getFernSdkGenApiLanguage,
     getFernSdkGenApiOrigin,
+    getGeneratorConfigCompatibilityInstructionsTopic,
     isEligibleForFernSdkGenApi,
     mapFernSdkGenApiOutput,
     resolveSdkConfigRequestedOutput,
@@ -659,7 +660,8 @@ export async function runRemoteGenerationForGenerator({
                     throw error;
                 }
                 interactiveTaskContext.failAndThrow(formatGeneratorConfigCompatibilityError(error), undefined, {
-                    code: CliError.Code.ConfigError
+                    code: CliError.Code.ConfigError,
+                    instructionsTopic: getGeneratorConfigCompatibilityInstructionsTopic(error)
                 });
             }
         }

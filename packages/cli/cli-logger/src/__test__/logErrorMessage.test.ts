@@ -52,10 +52,17 @@ describe("logErrorMessage instructions hint", () => {
         const error = new CliError({
             message: "Cause.",
             code: CliError.Code.UserError,
-            instructionsTopic: "troubleshoot"
+            instructionsTopic: "sdks migrate"
         });
         logErrorMessage({ message: "Something failed.", error, logger, instructionsTopic: "new-site" });
         expect(lines).toEqual(["Something failed.", "Cause.", HINT]);
+    });
+
+    it("points to the topic list for the index topic", () => {
+        vi.stubEnv("AI_AGENT", "codex");
+        const { lines, logger } = captureLogs();
+        logErrorMessage({ message: "Unknown argument: foo", error: undefined, logger, instructionsTopic: "" });
+        expect(lines).toEqual(["Unknown argument: foo", "For guidance, run `fern instructions`."]);
     });
 
     it("omits the hint outside coding agents", () => {

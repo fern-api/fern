@@ -1,7 +1,7 @@
 import { runAppPreviewServer, runAstroPreviewServer } from "@fern-api/docs-preview";
 import { filterOssWorkspaces } from "@fern-api/docs-resolver";
 import { Project } from "@fern-api/project-loader";
-import { CliError, TaskContext } from "@fern-api/task-context";
+import { CliError, InstructionsTopic, TaskContext } from "@fern-api/task-context";
 
 import { CliContext } from "../../cli-context/CliContext.js";
 import { validateDocsWorkspaceWithoutExiting } from "../validate/validateDocsWorkspaceAndLogIssues.js";
@@ -51,7 +51,7 @@ export async function previewDocsWorkspace({
         cliContext.failAndThrow(
             "No docs.yml found in your Fern project. Add a docs.yml to configure your documentation site.",
             undefined,
-            { code: CliError.Code.ConfigError }
+            { code: CliError.Code.ConfigError, instructionsTopic: InstructionsTopic.NewSite }
         );
         return;
     }

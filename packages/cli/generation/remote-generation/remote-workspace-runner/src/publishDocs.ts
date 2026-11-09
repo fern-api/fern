@@ -62,7 +62,7 @@ import {
 import { getOriginalName } from "@fern-api/ir-utils";
 import { detectAirGappedMode, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { convertIrToFdrApi } from "@fern-api/register";
-import { CliError, TaskContext } from "@fern-api/task-context";
+import { CliError, InstructionsTopic, TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import axios from "axios";
 import chalk from "chalk";
@@ -1545,7 +1545,8 @@ async function startDocsRegisterFailed(
         const rejection = readGuestRejection(error);
         if (isGuestRejection(rejection)) {
             return context.failAndThrow(describeGuestRejection(rejection), undefined, {
-                code: CliError.Code.AuthError
+                code: CliError.Code.AuthError,
+                instructionsTopic: InstructionsTopic.NewSite
             });
         }
     }

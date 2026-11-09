@@ -1,6 +1,6 @@
 import { isCodingAgent } from "@fern-api/fs-utils";
 import { Logger, LogLevel } from "@fern-api/logger";
-import { CliError, TaskAbortSignal } from "@fern-api/task-context";
+import { CliError, InstructionsTopic, TaskAbortSignal } from "@fern-api/task-context";
 import chalk from "chalk";
 
 const USE_NODE_18_OR_ABOVE_MESSAGE = "The Fern CLI requires Node 18+ or above.";
@@ -17,7 +17,7 @@ export function logErrorMessage({
     logger: Logger;
     logLevel?: LogLevel;
     /** Overrides the error's own `CliError.instructionsTopic`. */
-    instructionsTopic?: string;
+    instructionsTopic?: InstructionsTopic;
 }): void {
     if (message != null) {
         logger.log(logLevel, message);
@@ -48,8 +48,9 @@ export function logErrorMessage({
     }
 }
 
-function getInstructionsHint(topic: string): string {
-    return `For guidance, run \`fern instructions ${topic}\`.`;
+function getInstructionsHint(topic: InstructionsTopic): string {
+    const command = topic === InstructionsTopic.Index ? "fern instructions" : `fern instructions ${topic}`;
+    return `For guidance, run \`${command}\`.`;
 }
 
 function convertErrorToString(error: unknown): string | undefined {

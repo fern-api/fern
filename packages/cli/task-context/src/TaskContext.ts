@@ -1,6 +1,7 @@
 import { Logger } from "@fern-api/logger";
 
 import { type CliError } from "./CliError.js";
+import { type InstructionsTopic } from "./InstructionsTopic.js";
 
 export interface CaptureExceptionOptions {
     tags?: Record<string, string>;
@@ -13,12 +14,12 @@ export interface TaskContext {
     failAndThrow: (
         message?: string,
         error?: unknown,
-        options?: { code?: CliError.Code; instructionsTopic?: string }
+        options?: { code?: CliError.Code; instructionsTopic?: InstructionsTopic }
     ) => never;
     failWithoutThrowing: (
         message?: string,
         error?: unknown,
-        options?: { code?: CliError.Code; instructionsTopic?: string }
+        options?: { code?: CliError.Code; instructionsTopic?: InstructionsTopic }
     ) => void;
     captureException: (error: unknown, options?: CaptureExceptionOptions) => string | undefined;
     getResult: () => TaskResult;

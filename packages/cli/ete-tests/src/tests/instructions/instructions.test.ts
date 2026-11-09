@@ -1,3 +1,4 @@
+import { InstructionsTopic } from "@fern-api/task-context";
 import tmp from "tmp-promise";
 
 import { runFernCli } from "../../utils/runFernCli.js";
@@ -102,6 +103,17 @@ describe("fern instructions", () => {
         );
         expect(failures).toEqual([]);
     }, 300_000);
+
+    it("resolves every topic that CLI errors point to", async ({ signal }) => {
+        const failures: string[] = [];
+        for (const topic of Object.values(InstructionsTopic)) {
+            const problem = describeProblem(await runInstructions(topic.split(" ").filter(Boolean), signal));
+            if (problem != null) {
+                failures.push(`"${topic}": ${problem}`);
+            }
+        }
+        expect(failures).toEqual([]);
+    }, 120_000);
 
     it("fails with a pointer to the topic list for an unknown topic", async ({ signal }) => {
         const { exitCode, stdout, stderr } = await runInstructions(["not-a-real-topic"], signal);

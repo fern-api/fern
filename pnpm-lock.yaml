@@ -2597,6 +2597,9 @@ importers:
       '@fern-api/logging-execa':
         specifier: workspace:*
         version: link:../../commons/logging-execa
+      '@fern-api/task-context':
+        specifier: workspace:*
+        version: link:../task-context
       execa:
         specifier: ^5.1.1
         version: 5.1.1

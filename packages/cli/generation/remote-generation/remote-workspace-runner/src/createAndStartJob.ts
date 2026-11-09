@@ -5,7 +5,7 @@ import { createFiddleService, getFiddleOrigin } from "@fern-api/core";
 import { errorMessageOrString } from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
-import { CliError, TaskContext } from "@fern-api/task-context";
+import { CliError, InstructionsTopic, TaskContext } from "@fern-api/task-context";
 import { FernDefinition, FernWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import axios, { AxiosError } from "axios";
@@ -303,14 +303,14 @@ async function createJob({
                     return context.failAndThrow(
                         describeGuestRejection({ statusCode: 403, code: undefined, message: undefined }),
                         undefined,
-                        { code: CliError.Code.AuthError }
+                        { code: CliError.Code.AuthError, instructionsTopic: InstructionsTopic.NewSite }
                     );
                 }
                 return context.failAndThrow(
                     `You do not have permission to run this generator for organization '${organization}'. Please run '${loginCommand}' to ensure you are logged in with the correct account.\n\n` +
                         "Please ensure you have membership at https://dashboard.buildwithfern.com, and ask a team member for an invite if not.",
                     undefined,
-                    { code: CliError.Code.AuthError }
+                    { code: CliError.Code.AuthError, instructionsTopic: InstructionsTopic.AccessTeam }
                 );
             },
             orgNotConfiguredForWhitelabel: () => {
@@ -338,7 +338,8 @@ async function createJob({
                     const rejection = readGuestRejection(content);
                     if (isGuestRejection(rejection)) {
                         return context.failAndThrow(describeGuestRejection(rejection), undefined, {
-                            code: CliError.Code.AuthError
+                            code: CliError.Code.AuthError,
+                            instructionsTopic: InstructionsTopic.NewSite
                         });
                     }
                 }

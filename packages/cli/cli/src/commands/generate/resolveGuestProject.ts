@@ -1,7 +1,7 @@
 import { FernGuestToken, getOrCreateGuestSession, getToken } from "@fern-api/auth";
 import { dirname } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
-import { CliError } from "@fern-api/task-context";
+import { CliError, InstructionsTopic } from "@fern-api/task-context";
 import chalk from "chalk";
 
 import { CliContext } from "../../cli-context/CliContext.js";
@@ -32,7 +32,7 @@ export async function resolveGuestProject({
                 ? "--guest cannot be combined with FERN_TOKEN. Unset it to continue as a guest, or drop --guest to use the token."
                 : "--guest cannot be combined with a saved login. Run 'fern logout' to continue as a guest, or drop --guest to use your account.",
             undefined,
-            { code: CliError.Code.ConfigError }
+            { code: CliError.Code.ConfigError, instructionsTopic: InstructionsTopic.NewSite }
         );
     }
 

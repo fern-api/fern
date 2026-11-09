@@ -6,6 +6,7 @@ import {
     CliError,
     CreateInteractiveTaskParams,
     Finishable,
+    type InstructionsTopic,
     InteractiveTaskContext,
     PosthogEvent,
     Startable,
@@ -110,7 +111,7 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
     public failAndThrow(
         message?: string,
         error?: unknown,
-        options?: { code?: CliError.Code; instructionsTopic?: string }
+        options?: { code?: CliError.Code; instructionsTopic?: InstructionsTopic }
     ): never {
         this.failWithoutThrowing(message, error, options);
         this.finish();
@@ -122,7 +123,7 @@ export class TaskContextImpl implements Startable<TaskContext>, Finishable, Task
     public failWithoutThrowing(
         message?: string,
         error?: unknown,
-        options?: { code?: CliError.Code; instructionsTopic?: string }
+        options?: { code?: CliError.Code; instructionsTopic?: InstructionsTopic }
     ): void {
         this.result = TaskResult.Failure;
         if (error instanceof TaskAbortSignal) {

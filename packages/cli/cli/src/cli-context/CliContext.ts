@@ -9,6 +9,7 @@ import {
     type CaptureExceptionOptions,
     CliError,
     Finishable,
+    type InstructionsTopic,
     type PosthogAutomationEvent,
     type PosthogEvent,
     Startable,
@@ -140,7 +141,7 @@ export class CliContext {
     public failAndThrow(
         message?: string,
         error?: unknown,
-        options?: { code?: CliError.Code; instructionsTopic?: string }
+        options?: { code?: CliError.Code; instructionsTopic?: InstructionsTopic }
     ): never {
         this.failWithoutThrowing(message, error, options);
         throw new TaskAbortSignal(
@@ -156,7 +157,7 @@ export class CliContext {
     public failWithoutThrowing(
         message?: string,
         error?: unknown,
-        options?: { code?: CliError.Code; instructionsTopic?: string }
+        options?: { code?: CliError.Code; instructionsTopic?: InstructionsTopic }
     ): void {
         this.didSucceed = false;
         if (error instanceof TaskAbortSignal) {
