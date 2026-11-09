@@ -31,6 +31,12 @@ describe("stripMdxComments", () => {
         expect(stripMdxComments(input)).toBe(input);
     });
 
+    it("keeps a longer fence open across nested triple-backtick lines", () => {
+        const input = "Before\n````md\n```jsx\n{/* keep this example */}\n```\n````\n{/* strip me */}\nAfter";
+        const expected = "Before\n````md\n```jsx\n{/* keep this example */}\n```\n````\nAfter";
+        expect(stripMdxComments(input)).toBe(expected);
+    });
+
     it("does not strip comments inside inline code", () => {
         const input = "Use `{/* comment */}` for MDX comments";
         expect(stripMdxComments(input)).toBe(input);

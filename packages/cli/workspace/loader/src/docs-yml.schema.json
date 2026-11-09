@@ -671,6 +671,17 @@
         "path": {
           "type": "string",
           "description": "The output directory where MDX files will be generated.\nExample: ./static/sdk-docs"
+        },
+        "pages": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Whether to write the auto-generated per-module/per-symbol MDX pages and\n`_navigation.yml`. Set to `false` when composing pages by hand with\n`<LibrarySymbol />`; the library IR is still persisted to\n`<path>/.fern/library-ir.json`. Defaults to `true`."
         }
       },
       "required": [

@@ -9,25 +9,30 @@ export function stripMdxComments(content: string): string {
     let result = "";
     let i = 0;
     const len = content.length;
-    let inCodeFence = false;
+    // Length of the backtick run that opened the current fence (0 = not in a fence).
+    // A fence only closes on a run at least as long, per CommonMark.
+    let openFenceLength = 0;
     let inInlineCode = false;
 
     while (i < len) {
-        // Track code fences at start of line — skip past the three backticks
+        // Track code fences at start of line — skip past the backticks
         // so they aren't misinterpreted as inline code toggles
-        if (
-            (i === 0 || content[i - 1] === "\n") &&
-            content[i] === "`" &&
-            content[i + 1] === "`" &&
-            content[i + 2] === "`"
-        ) {
-            inCodeFence = !inCodeFence;
-            result += "```";
-            i += 3;
+        if ((i === 0 || content[i - 1] === "\n") && content.startsWith("```", i)) {
+            let runLength = 3;
+            while (content[i + runLength] === "`") {
+                runLength++;
+            }
+            if (openFenceLength === 0) {
+                openFenceLength = runLength;
+            } else if (runLength >= openFenceLength) {
+                openFenceLength = 0;
+            }
+            result += content.slice(i, i + runLength);
+            i += runLength;
             continue;
         }
 
-        if (!inCodeFence) {
+        if (openFenceLength === 0) {
             // Track inline code
             if (content[i] === "`" && (i === 0 || content[i - 1] !== "\\")) {
                 // Check if it's a double backtick (used to display backticks: `` `backtick` ``)
