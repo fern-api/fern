@@ -33,7 +33,34 @@ describe <%= gem_namespace %>::Internal::Types::Model do
     field :archived, <%= gem_namespace %>::Internal::Types::Boolean, default: false
   end
 
-  class ExampleChild < <%= gem_namespace %>::Internal::Types::Model
+<% if (typeof useSchemaDefaults !== "undefined" && useSchemaDefaults) { %>  class ExampleWithSchemaDefaults < <%= gem_namespace %>::Internal::Types::Model
+    field :count, Integer, optional: true, nullable: true, api_name: "pageSize", default_factory: -> { 25 }
+    field :enabled, <%= gem_namespace %>::Internal::Types::Boolean, optional: true, default_factory: -> { false }
+    field :labels, <%= gem_namespace %>::Internal::Types::Unknown, optional: true, default_factory: -> { ["initial"] }
+  end
+
+  describe "schema default factories" do
+    it "serializes omitted defaults, including false, and loads them in responses" do
+      assert_equal 25, ExampleWithSchemaDefaults.new.to_h.fetch("pageSize")
+      assert_equal false, ExampleWithSchemaDefaults.load("{}").to_h.fetch("enabled")
+    end
+
+    it "preserves explicit nil, false and zero through Ruby and API field names" do
+      assert_nil ExampleWithSchemaDefaults.new(count: nil).count
+      assert_nil ExampleWithSchemaDefaults.load('{"pageSize":null}').count
+      assert_equal 0, ExampleWithSchemaDefaults.new(pageSize: 0).count
+      assert_equal false, ExampleWithSchemaDefaults.new(enabled: false).enabled
+    end
+
+    it "does not share mutable defaults between instances" do
+      first = ExampleWithSchemaDefaults.new
+      second = ExampleWithSchemaDefaults.new
+      first.labels << "changed"
+      assert_equal ["initial"], second.labels
+    end
+  end
+
+<% } %>  class ExampleChild < <%= gem_namespace %>::Internal::Types::Model
     field :value, String
   end
 

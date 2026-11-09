@@ -40,7 +40,8 @@ export class ObjectGenerator extends FileGenerator<RubyFile, ModelCustomConfigSc
             typeDeclaration: this.typeDeclaration,
             properties,
             context: this.context,
-            documentFields: xml != null
+            documentFields: xml != null,
+            applyDefaults: this.context.customConfig.useSchemaDefaults
         });
 
         if (xml != null) {

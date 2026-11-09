@@ -71,6 +71,7 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
             });
         }
 
+        const bodyPropertyStart = properties.length;
         this.endpoint.requestBody?._visit({
             reference: (reference) => {
                 properties.push({
@@ -101,10 +102,14 @@ export class WrappedRequestGenerator extends FileGenerator<RubyFile, SdkCustomCo
             _other: () => undefined
         });
 
-        const statements = generateFields({
-            properties,
-            context: this.context
-        });
+        const statements = [
+            ...generateFields({ properties: properties.slice(0, bodyPropertyStart), context: this.context }),
+            ...generateFields({
+                properties: properties.slice(bodyPropertyStart),
+                context: this.context,
+                applyDefaults: this.context.customConfig.useSchemaDefaults
+            })
+        ];
 
         class_.addStatements(statements);
 

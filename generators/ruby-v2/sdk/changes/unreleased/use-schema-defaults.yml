@@ -1,0 +1,4 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: Add opt-in useSchemaDefaults to apply omitted model and request-body defaults while preserving explicit nulls.
+  type: feat

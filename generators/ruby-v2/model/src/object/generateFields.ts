@@ -7,13 +7,15 @@ export function generateFields({
     typeDeclaration,
     properties,
     context,
-    documentFields = false
+    documentFields = false,
+    applyDefaults = false
 }: {
     typeDeclaration?: FernIr.TypeDeclaration;
     properties: FernIr.ObjectProperty[];
     context: ModelGeneratorContext;
     /* Whether to render each property's docs as a comment above its `field` declaration */
     documentFields?: boolean;
+    applyDefaults?: boolean;
 }): ruby.AstNode[] {
     return properties.map((prop, index) => {
         const fieldName = context.caseConverter.snakeSafe(prop.name);
@@ -40,6 +42,11 @@ export function generateFields({
             rubyType.write(writer);
             writer.write(" }");
             writer.write(`, optional: ${isOptional}, nullable: ${isNullable}`);
+            if (applyDefaults && prop.defaultValue != null) {
+                const jsonDefault = JSON.stringify(prop.defaultValue);
+                const rubyString = JSON.stringify(jsonDefault).replace(/#(?=[{$@])/g, "\\#");
+                writer.write(`, default_factory: -> { ::JSON.parse(${rubyString}) }`);
+            }
             if (wireValue !== fieldName) {
                 writer.write(`, api_name: "${wireValue}"`);
             }

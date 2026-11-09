@@ -11,9 +11,9 @@ module <%= gem_namespace %>
             client_secret client_id credential bearer authorization
           ].freeze
 
-          attr_reader :name, :type, :optional, :nullable, :api_name, :value, :default
+          attr_reader :name, :type, :optional, :nullable, :api_name, :value, :default<% if (typeof useSchemaDefaults !== "undefined" && useSchemaDefaults) { %>, :default_factory<% } %>
 
-          def initialize(name:, type:, optional: false, nullable: false, api_name: nil, value: nil, default: nil)
+          def initialize(name:, type:, optional: false, nullable: false, api_name: nil, value: nil, default: nil<% if (typeof useSchemaDefaults !== "undefined" && useSchemaDefaults) { %>, default_factory: nil<% } %>)
             @name = name.to_sym
             @type = type
             @optional = optional
@@ -21,7 +21,8 @@ module <%= gem_namespace %>
             @api_name = api_name || name.to_s
             @value = value
             @default = default
-          end
+<% if (typeof useSchemaDefaults !== "undefined" && useSchemaDefaults) { %>            @default_factory = default_factory
+<% } %>          end
 
           def literal?
             !value.nil?

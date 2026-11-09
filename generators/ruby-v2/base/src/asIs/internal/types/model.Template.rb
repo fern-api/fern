@@ -58,9 +58,9 @@ module <%= gem_namespace %>
           # @option api_name [Symbol, String] Name in the API of this field. When serializing/deserializing, will use
           #   this field name
           # @return [void]
-          def field(name, type, optional: false, nullable: false, api_name: nil, default: nil)
+          def field(name, type, optional: false, nullable: false, api_name: nil, default: nil<% if (typeof useSchemaDefaults !== "undefined" && useSchemaDefaults) { %>, default_factory: nil<% } %>)
             add_field_definition(name: name, type: type, optional: optional, nullable: nullable, api_name: api_name,
-                                 default: default)
+                                 default: default<% if (typeof useSchemaDefaults !== "undefined" && useSchemaDefaults) { %>, default_factory: default_factory<% } %>)
 
             define_accessor(name)
             define_setter(name)
@@ -87,10 +87,10 @@ module <%= gem_namespace %>
           # @param type [Class]
           # @option optional [Boolean]
           # @return [void]
-          private def add_field_definition(name:, type:, optional:, nullable:, api_name:, default: nil, value: nil)
+          private def add_field_definition(name:, type:, optional:, nullable:, api_name:, default: nil, value: nil<% if (typeof useSchemaDefaults !== "undefined" && useSchemaDefaults) { %>, default_factory: nil<% } %>)
             fields[name.to_sym] =
               Field.new(name: name, type: type, optional: optional, nullable: nullable, api_name: api_name,
-                        value: value, default: default)
+                        value: value, default: default<% if (typeof useSchemaDefaults !== "undefined" && useSchemaDefaults) { %>, default_factory: default_factory<% } %>)
           end
 
           # Adds a new field definition into the class's extra fields registry
@@ -188,7 +188,9 @@ module <%= gem_namespace %>
                             value
                           elsif field.literal?
                             field.value
-                          elsif !field.default.nil?
+<% if (typeof useSchemaDefaults !== "undefined" && useSchemaDefaults) { %>                          elsif field.default_factory && !@explicit_fields.key?(field_name)
+                            field.default_factory.call
+<% } %>                          elsif !field.default.nil?
                             field.default
                           end
 
