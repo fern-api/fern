@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+- summary: |
+    Set `ENABLE_SDK_GEN_RUST_CLI=true` to send a `cli` target in `sdk-config.yml` to sdk-gen-api as SDK Config, like
+    every other language. sdk-gen-api picks the CLI generator. Without it, the `cli` target is translated into a
+    `generators.yml` for the Fern CLI generator, as before.
+  type: feat
