@@ -321,7 +321,8 @@ export async function publishDocsViaLedger({
     fileIdToPath,
     editThisPage,
     resolver,
-    source
+    source,
+    globalTheme
 }: {
     docsDefinition: DocsDefinition;
     /** ISO time the publish command started. FDR orders overlapping publishes of one URL by it. */
@@ -349,6 +350,8 @@ export async function publishDocsViaLedger({
     resolver?: DocsDefinitionResolver;
     /** The `fern/` folder as a JSON file list, kept with the site so it can be written to a repo later. */
     source?: Buffer;
+    /** Org-level theme FDR merges into the (unmerged) locale configs at publish. */
+    globalTheme?: string;
 }): Promise<LedgerPublishResult> {
     // ── Phase 1: Build all locales upfront ──────────────────────────────
     // If any locale fails to build, the entire publish aborts before any
@@ -400,8 +403,8 @@ export async function publishDocsViaLedger({
         sourceRef = { hash, contentType: "application/octet-stream", contentLength: source.length };
     }
 
-    // `source` and `publishStartedAt` aren't in the published fdr-sdk type yet; older FDRs strip them.
-    const publishInput: DocsPublishInput & { source?: BlobRef; publishStartedAt?: string } = {
+    // `source`, `publishStartedAt` and `globalTheme` aren't in the published fdr-sdk type yet; older FDRs strip them.
+    const publishInput: DocsPublishInput & { source?: BlobRef; publishStartedAt?: string; globalTheme?: string } = {
         orgId: organization,
         domain,
         basepath: basepath ?? "",
@@ -411,7 +414,8 @@ export async function publishDocsViaLedger({
         defaultLocale: baseLocale.locale,
         locales,
         ...(sourceRef != null && { source: sourceRef }),
-        ...(publishStartedAt != null && { publishStartedAt })
+        ...(publishStartedAt != null && { publishStartedAt }),
+        ...(globalTheme != null && { globalTheme })
     };
 
     // Register — server computes deployment hash, returns presigned S3

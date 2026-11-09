@@ -46,7 +46,8 @@ export async function publishDocsViaLedgerPreview({
     filePaths,
     fileIdToPath,
     editThisPage,
-    resolver
+    resolver,
+    globalTheme
 }: {
     docsDefinition: DocsDefinition;
     organization: string;
@@ -66,6 +67,8 @@ export async function publishDocsViaLedgerPreview({
     editThisPage?: { github?: { owner: string; repo: string; branch?: string; host?: string } };
     /** Resolver instance for accessing translation pages/overlays. Optional. */
     resolver?: DocsDefinitionResolver;
+    /** Org-level theme FDR merges into the (unmerged) locale configs at publish. */
+    globalTheme?: string;
 }): Promise<LedgerPreviewResult> {
     // ── Phase 1: Build all locales upfront ──────────────────────────────
     // Every locale must be present in previewRegister so the ledger can
@@ -123,6 +126,7 @@ export async function publishDocsViaLedgerPreview({
         jsFiles: baseLocale.jsFiles,
         redirects: baseLocale.redirects,
         locale: baseLocale.locale,
+        ...(globalTheme != null && { globalTheme }),
         version: baseLocale.version,
         repo: baseLocale.repo,
         git
@@ -147,7 +151,8 @@ export async function publishDocsViaLedgerPreview({
         customDomains: [],
         previewId: registerResult.previewId,
         defaultLocale: baseLocale.locale,
-        locales
+        locales,
+        ...(globalTheme != null && { globalTheme })
     });
     const finishTime = performance.now() - finishStart;
     context.logger.debug(
