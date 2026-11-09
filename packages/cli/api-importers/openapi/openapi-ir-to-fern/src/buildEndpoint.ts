@@ -13,6 +13,7 @@ import {
 import { RelativeFilePath } from "@fern-api/path-utils";
 import { CliError } from "@fern-api/task-context";
 import { buildEndpointExample } from "./buildEndpointExample.js";
+import { resolveEndpointSecurity } from "./resolveEndpointSecurity.js";
 import { ERROR_DECLARATIONS_FILENAME, EXTERNAL_AUDIENCE } from "./buildFernDefinition.js";
 import { buildHeader } from "./buildHeader.js";
 import { buildPathParameter } from "./buildPathParameter.js";
@@ -576,6 +577,11 @@ function convertEndpointAuth({
     endpoint: Endpoint;
     context: OpenApiIrConverterContext;
 }): boolean | undefined | RawSchemas.HttpEndpointSecurity {
+    const auth = context.authOverrides?.auth;
+    if (auth != null && typeof auth === "object" && "endpoint-security" in auth) {
+        return resolveEndpointSecurity(endpoint.security, context.ir.security);
+    }
+
     if (endpoint.security == null) {
         if (context.authOverrides?.auth != null) {
             return true;

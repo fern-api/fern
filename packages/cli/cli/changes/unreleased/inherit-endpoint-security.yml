@@ -1,0 +1,4 @@
+# yaml-language-server: $schema=../../../../../generators/fern-changes-yml.schema.json
+
+- summary: Preserve inherited and matching OpenAPI security requirements when using endpoint-security authentication, while keeping explicitly public operations unauthenticated.
+  type: fix
