@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.202.0
+  changelogEntry:
+    - summary: |
+        FDR now merges global themes server-side when it supports it; older FDR versions keep CLI-side stitching.
+      type: feat
+  createdAt: "2026-11-09"
+  irVersion: 67
 - version: 5.201.0
   changelogEntry:
     - summary: |
