@@ -95,7 +95,7 @@ describe("tab-menu", () => {
 
     it("falls back to a single-list sidebar selector without header tabs", async () => {
         const [menu] = collect(await resolveFixture("sidebar")).varianted;
-        expect(menu?.location).toBe("sidebar");
+        expect(menu?.location).toBeUndefined();
         expect(menu?.columnHeight).toBeUndefined();
         expect(menu?.children.map((variant) => variant.slug)).toEqual([
             "products/agents",

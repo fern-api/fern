@@ -111,7 +111,7 @@ type VariantMenuEntry =
       };
 type VariantMenuItem = VariantMenuEntry | { type: "group"; title: string; children: VariantMenuEntry[] };
 export interface VariantedNodeWithMenu extends FernNavigation.V1.VariantedNode {
-    location?: "tab" | "sidebar";
+    location?: "tab";
     columnHeight?: number;
     interactOnClickOnly?: boolean;
     menu?: VariantMenuItem[];
@@ -2097,7 +2097,7 @@ export class DocsDefinitionResolver {
             id,
             collapsed: undefined,
             children: variantNodes,
-            location: settings.location,
+            location: settings.location === "tab" ? "tab" : undefined,
             columnHeight: settings.columnHeight,
             interactOnClickOnly: settings.interactOnClickOnly,
             menu: menu?.flatMap((item): VariantMenuItem[] =>
