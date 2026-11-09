@@ -223,13 +223,16 @@ function isPrintPagesResponse(value: unknown): value is { pages: { slug: string 
 
 const PRINT_PAGES_TIMEOUT_MS = 30_000;
 
-/** The slugs of every page the PDF exporter would render for the live site, in order. */
-async function fetchSitePageSlugs({ docsUrl, token }: { docsUrl: string; token: string }): Promise<string[]> {
+/**
+ * The slugs of every page the PDF exporter would render for the live site, in order. Sent without the
+ * Fern token: the docs URL comes from the project, which may not be trusted.
+ */
+async function fetchSitePageSlugs(docsUrl: string): Promise<string[]> {
     const url = printPagesUrl(docsUrl);
     let response: Response;
     try {
         response = await fetch(url, {
-            headers: { Accept: "application/json", "x-fern-token": token },
+            headers: { Accept: "application/json" },
             signal: AbortSignal.timeout(PRINT_PAGES_TIMEOUT_MS)
         });
     } catch (error) {
@@ -299,14 +302,14 @@ export async function exportDocs({
             { code: CliError.Code.ConfigError }
         );
     }
-    const { token, ...hosted } = await resolveHostedExport({ cliContext, instance });
+    const hosted = await resolveHostedExport({ cliContext, instance });
     const output = requestedOutput ?? defaultOutput(hosted.docsUrl, format);
     if (format === "pdf") {
         const outputFile = path.resolve(pdfOutputPath(output));
         await cliContext.runTask(async (context) => {
             await withSpinner(context, cliContext.isTTY, { name: "Exporting PDF" }, async () => {
                 const pageSlugs = scoped
-                    ? resolvePdfScope(scope, await fetchSitePageSlugs({ docsUrl: hosted.docsUrl, token }))
+                    ? resolvePdfScope(scope, await fetchSitePageSlugs(hosted.docsUrl))
                     : [];
                 await downloadHostedPdf({ ...hosted, outputFile, options: pdfExportOptions(pdf, pageSlugs) });
                 const pages = scoped ? ` (${pageSlugs.length} ${pageSlugs.length === 1 ? "page" : "pages"})` : "";
@@ -393,14 +396,14 @@ function reportExportFailure(context: TaskContext, error: unknown): void {
     }
 }
 
-/** Finds the hosted site to export and logs in: the export client, the org, the docs URL and the token. */
+/** Finds the hosted site to export and logs in: the export client, the org and the docs URL. */
 async function resolveHostedExport({
     cliContext,
     instance
 }: {
     cliContext: CliContext;
     instance: string | undefined;
-}): Promise<{ client: SiteExportClient; orgId: string; docsUrl: string; token: string }> {
+}): Promise<{ client: SiteExportClient; orgId: string; docsUrl: string }> {
     const fernDirectory = await getFernDirectory();
     if (fernDirectory == null) {
         return cliContext.failAndThrow(
@@ -452,7 +455,6 @@ async function resolveHostedExport({
     return {
         client: createExportClient({ baseUrl: FDR_ORIGIN, token: token.value }),
         orgId: projectConfig.organization,
-        docsUrl: instanceUrl,
-        token: token.value
+        docsUrl: instanceUrl
     };
 }
