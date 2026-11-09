@@ -6626,6 +6626,17 @@
             }
           ],
           "description": "If `current-page` is set to true, the current page is appended to the breadcrumb trail\nas a non-clickable item. Defaults to false."
+        },
+        "sticky": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If `sticky` is set to true, the breadcrumb row stays pinned below the header\nwhile the page scrolls. Defaults to false."
         }
       },
       "additionalProperties": false

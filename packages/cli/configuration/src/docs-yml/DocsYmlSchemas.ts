@@ -346,7 +346,8 @@ export const ThemeConfig = z.object({
 // ===== Layout schemas =====
 
 export const BreadcrumbsConfig = z.object({
-    "current-page": z.boolean().optional()
+    "current-page": z.boolean().optional(),
+    sticky: z.boolean().optional()
 });
 
 export const LayoutConfig = z.object({
