@@ -43,7 +43,14 @@ export interface Detection {
     fernCliVersion: string | null;
     docsSkillInstalled: boolean;
     /** How to run the Fern CLI, when the caller already knows (the Fern CLI running the wizard). */
-    fernCommand?: { executable: string; args: string[] };
+    fernCommand?: FernCommand;
+}
+
+/** How to run the Fern CLI, with any environment variables its commands need. */
+export interface FernCommand {
+    executable: string;
+    args: string[];
+    env?: Record<string, string>;
 }
 
 /** What the user wants Fern to produce for this repository. */
@@ -85,8 +92,8 @@ export interface ActionPlan {
 export interface SetupStep {
     id: StepId;
     title: string;
-    /** Yes/no question asked before the step runs. */
-    question: string;
+    /** Yes/no question asked before the step runs, when it asks one. */
+    question?: string;
     actions: ActionPlan[];
 }
 
@@ -115,8 +122,13 @@ export interface WizardFlags {
     spec?: string;
     /** Don't connect Fern's MCP server to the coding agents. */
     skipMcp?: boolean;
-    /** Set when the Fern CLI runs the wizard: the CLI version that new projects are pinned to. */
+    /** Set when the Fern CLI runs the wizard: the version of that CLI. */
     fernVersion?: string;
+    /**
+     * The released CLI version new projects pin in fern.config.json, when it differs from
+     * `fernVersion` (an unreleased build pins the newest release instead of its own version).
+     */
+    projectFernVersion?: string;
     /** Set when the Fern CLI runs the wizard: how to run that same CLI for `fern` commands. */
-    fernCommand?: { executable: string; args: string[] };
+    fernCommand?: FernCommand;
 }

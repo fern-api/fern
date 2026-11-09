@@ -1,78 +1,72 @@
-import { access, appendFile, mkdir, readFile, writeFile } from "fs/promises";
+import { access, mkdir, writeFile } from "fs/promises";
 import path from "path";
-import type { Detection } from "../types";
+import type { Agent, Detection } from "../types";
 
-const HANDOFF_BODY = `# Set up and use Fern
+/** Who a skill is installed for, named the way the `skills` installer names them. */
+export type SkillTarget = Exclude<Agent, "vscode"> | "github-copilot";
+
+/**
+ * Where each coding agent reads project skills, relative to the repository. The Fern skill goes here
+ * too, next to the fern-docs skill, so all of Fern's agent instructions live in one place.
+ */
+export const SKILL_DIRECTORIES: Record<SkillTarget, string> = {
+    "claude-code": ".claude/skills",
+    cursor: ".agents/skills",
+    codex: ".agents/skills",
+    "github-copilot": ".agents/skills",
+    windsurf: ".windsurf/skills"
+};
+
+export const SKILL_TARGET_NAMES: Record<SkillTarget, string> = {
+    "claude-code": "Claude Code",
+    cursor: "Cursor",
+    codex: "Codex",
+    "github-copilot": "GitHub Copilot",
+    windsurf: "Windsurf"
+};
+
+/** The agents to install skills for: the ones found in the repository, or the common ones when none are. */
+export function skillTargets(detection: Detection): SkillTarget[] {
+    const targets: SkillTarget[] =
+        detection.agents.length === 0
+            ? ["claude-code", "cursor", "codex"]
+            : detection.agents.map((agent) => (agent === "vscode" ? "github-copilot" : agent));
+    return [...new Set(targets)];
+}
+
+const FERN_SKILL = `---
+name: fern
+description: Set up and use Fern for API docs and SDKs. Use when working with the fern/ folder, fern.config.json, sdk-config.yml, generators.yml, docs.yml, or the fern CLI.
+---
+
+# Set up and use Fern
 
 Read https://buildwithfern.com/learn/home/get-started.md and follow it.
 
-Fern configuration lives under \`fern/\`, including \`fern.config.json\`, \`generators.yml\`, and \`docs.yml\`.
+Fern configuration lives under \`fern/\`, including \`fern.config.json\`, \`sdk-config.yml\` (or \`generators.yml\`), and \`docs.yml\`.
 
 Run \`fern check\` before committing.
 
 For reference, consult https://buildwithfern.com/learn/llms.txt. Append \`.md\` to any \`buildwithfern.com/learn\` page URL when you need Markdown.
 `;
 
-/** Files {@link writeAgentHandoff} writes or appends to, relative to the repository. */
+/** Files {@link writeAgentHandoff} writes, relative to the repository. */
 export function agentHandoffFiles(detection: Detection): string[] {
-    const files: string[] = [];
-    if (detection.agents.includes("claude-code")) {
-        files.push(".claude/skills/fern/SKILL.md");
-    }
-    if (detection.agents.includes("cursor")) {
-        files.push(".cursor/rules/fern.mdc");
-    }
-    return files.length > 0 ? files : ["AGENTS.md"];
+    return [...new Set(skillTargets(detection).map((target) => `${SKILL_DIRECTORIES[target]}/fern/SKILL.md`))];
 }
 
 export interface HandoffResult {
-    /** Files created or appended to, relative to the repository. */
+    /** Files created, relative to the repository. */
     written: string[];
-    /** Files left alone because they already contain Fern instructions. */
+    /** Files left alone because they already exist. */
     skipped: string[];
 }
 
+/** Adds the Fern skill for the repository's coding agents, leaving any existing copy alone. */
 export async function writeAgentHandoff(dir: string, detection: Detection): Promise<HandoffResult> {
     const result: HandoffResult = { written: [], skipped: [] };
-    if (detection.agents.includes("claude-code")) {
-        await writeIfMissing(
-            dir,
-            path.join(dir, ".claude", "skills", "fern", "SKILL.md"),
-            `---
-name: fern
-description: Set up and use Fern docs and SDKs
----
-
-${HANDOFF_BODY}`,
-            result
-        );
-    }
-    if (detection.agents.includes("cursor")) {
-        await writeIfMissing(
-            dir,
-            path.join(dir, ".cursor", "rules", "fern.mdc"),
-            `---
-description: Fern docs and SDK setup
-alwaysApply: false
----
-
-${HANDOFF_BODY}`,
-            result
-        );
-    }
-    if (!detection.agents.includes("claude-code") && !detection.agents.includes("cursor")) {
-        const agentsPath = path.join(dir, "AGENTS.md");
-        if (await exists(agentsPath)) {
-            const existing = await readFile(agentsPath, "utf8");
-            if (existing.includes("## Fern")) {
-                result.skipped.push("AGENTS.md");
-            } else {
-                await appendFile(agentsPath, `\n## Fern\n\n${HANDOFF_BODY}`);
-                result.written.push("AGENTS.md");
-            }
-        } else {
-            await writeIfMissing(dir, agentsPath, `## Fern\n\n${HANDOFF_BODY}`, result);
-        }
+    for (const file of agentHandoffFiles(detection)) {
+        await writeIfMissing(dir, path.join(dir, file), FERN_SKILL, result);
     }
     return result;
 }

@@ -4,9 +4,9 @@ import { CliContext } from "../../cli-context/CliContext.js";
 import { installMcpServer } from "../mcp/installMcpServer.js";
 
 /**
- * `fern agent setup`: teaches the repository's coding agents about Fern. Writes Fern instructions for
- * Claude Code, Cursor, or AGENTS.md (leaving existing ones alone), adds the fern-docs skill when there's a
- * docs site, and with `mcp`, connects Fern's MCP server.
+ * `fern agent setup`: teaches the repository's coding agents about Fern. Adds the Fern skill for each
+ * coding agent (leaving existing copies alone), adds the fern-docs skill when there's a docs site, and
+ * with `mcp`, connects Fern's MCP server.
  */
 export async function setupAgent({
     cliContext,
@@ -24,10 +24,10 @@ export async function setupAgent({
 
     const handoff = await writeAgentHandoff(dir, detection);
     for (const file of handoff.written) {
-        cliContext.logger.info(`Wrote Fern instructions to ${file}.`);
+        cliContext.logger.info(`Added the Fern skill at ${file}.`);
     }
     for (const file of handoff.skipped) {
-        cliContext.logger.info(`${file} already has Fern instructions.`);
+        cliContext.logger.info(`${file} already exists, so it was left alone.`);
     }
 
     if (!skipSkill) {

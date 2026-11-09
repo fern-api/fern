@@ -76,4 +76,22 @@ describe("applying a brand to an existing docs site", () => {
         expect(nothing).toEqual({ written: [], settings: [] });
         await expect(readFile(path.join(fernDir, "docs.yml"), "utf8")).resolves.toBe("title: Untouched\n");
     });
+
+    it("keeps an existing image with the same name and writes the brand's next to it", async () => {
+        const { fernDir, images } = await repo();
+        await writeFile(path.join(fernDir, "docs.yml"), "title: Acme\n");
+        const assets = path.join(fernDir, "docs", "assets");
+        await mkdir(assets, { recursive: true });
+        await writeFile(path.join(assets, "logo-light.svg"), "<svg id='used-by-a-page'/>");
+        const brand = { logos: [] };
+        const files = { logoPath: path.join(images, "logo.svg"), sources: {} };
+
+        const applied = await applyBrandToDocsSite({ fernDir, brand, files });
+        expect(applied.written).toEqual(["fern/docs/assets/logo-light-2.svg"]);
+        await expect(readFile(path.join(assets, "logo-light.svg"), "utf8")).resolves.toBe("<svg id='used-by-a-page'/>");
+
+        // Applying the same brand again reuses its image instead of adding another copy.
+        const again = await applyBrandToDocsSite({ fernDir, brand, files });
+        expect(again.written[0]).toBe("fern/docs/assets/logo-light-2.svg");
+    });
 });

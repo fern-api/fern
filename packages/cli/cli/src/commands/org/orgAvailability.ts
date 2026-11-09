@@ -68,14 +68,12 @@ export async function createOrganization({
                 base: name,
                 check: (candidate) => checker.organization(candidate)
             });
-            cliContext.failAndThrow(
+            return cliContext.failAndThrow(
                 `${name} belongs to another team.${suggestions.length === 0 ? "" : ` Free names: ${suggestions.join(", ")}`}`
             );
-            return;
         }
         case "unknown":
-            cliContext.failAndThrow(`Couldn't create ${name} right now. Try again in a moment.`);
-            return;
+            return cliContext.failAndThrow(`Couldn't create ${name} right now. Try again in a moment.`);
         default:
             assertNever(result);
     }

@@ -26,41 +26,35 @@ async function tempDir(): Promise<string> {
 }
 
 describe("agent handoff", () => {
-    it("writes Claude, Cursor, or AGENTS handoffs", async () => {
+    it("writes the Fern skill next to the fern-docs skill for each agent", async () => {
         const claudeDir = await tempDir();
-        await mkdir(path.join(claudeDir, ".claude"), { recursive: true });
-        await writeAgentHandoff(claudeDir, detection(["claude-code"]));
+        const claude = await writeAgentHandoff(claudeDir, detection(["claude-code"]));
+        expect(claude.written).toEqual([".claude/skills/fern/SKILL.md"]);
         await expect(readFile(path.join(claudeDir, ".claude/skills/fern/SKILL.md"), "utf8")).resolves.toContain(
             "name: fern"
         );
 
         const cursorDir = await tempDir();
-        await mkdir(path.join(cursorDir, ".cursor"), { recursive: true });
-        await writeAgentHandoff(cursorDir, detection(["cursor"]));
-        await expect(readFile(path.join(cursorDir, ".cursor/rules/fern.mdc"), "utf8")).resolves.toContain(
-            "alwaysApply: false"
-        );
+        const cursor = await writeAgentHandoff(cursorDir, detection(["cursor", "codex"]));
+        expect(cursor.written).toEqual([".agents/skills/fern/SKILL.md"]);
 
-        const agentsDir = await tempDir();
-        await writeAgentHandoff(agentsDir, detection([]));
-        await expect(readFile(path.join(agentsDir, "AGENTS.md"), "utf8")).resolves.toContain("## Fern");
+        // With no agents found, the common ones get it, the same as the fern-docs skill.
+        const defaultDir = await tempDir();
+        const defaults = await writeAgentHandoff(defaultDir, detection([]));
+        expect(defaults.written).toEqual([".claude/skills/fern/SKILL.md", ".agents/skills/fern/SKILL.md"]);
+        await expect(access(path.join(defaultDir, "AGENTS.md"))).rejects.toThrow();
 
-        await Promise.all([
-            rm(claudeDir, { recursive: true, force: true }),
-            rm(cursorDir, { recursive: true, force: true }),
-            rm(agentsDir, { recursive: true, force: true })
-        ]);
+        await Promise.all([claudeDir, cursorDir, defaultDir].map((dir) => rm(dir, { recursive: true, force: true })));
     });
 
-    it("does not overwrite an existing handoff", async () => {
+    it("does not overwrite an existing skill", async () => {
         const dir = await tempDir();
-        await mkdir(path.join(dir, ".cursor"), { recursive: true });
-        const target = path.join(dir, ".cursor/rules/fern.mdc");
+        const target = path.join(dir, ".agents/skills/fern/SKILL.md");
         await mkdir(path.dirname(target), { recursive: true });
         await writeFile(target, "original");
-        await writeAgentHandoff(dir, detection(["cursor"]));
+        const result = await writeAgentHandoff(dir, detection(["cursor"]));
+        expect(result.skipped).toEqual([".agents/skills/fern/SKILL.md"]);
         await expect(readFile(target, "utf8")).resolves.toBe("original");
-        await expect(access(target)).resolves.toBeUndefined();
         await rm(dir, { recursive: true, force: true });
     });
 });

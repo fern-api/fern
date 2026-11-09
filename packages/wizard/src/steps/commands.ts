@@ -4,12 +4,19 @@ import { spawn } from "child_process";
 export interface Command {
     executable: string;
     args: string[];
+    /** Environment variables to set for the command, on top of this process's. */
+    env?: Record<string, string>;
+}
+
+function commandEnv(command: Command): NodeJS.ProcessEnv {
+    return command.env === undefined ? process.env : { ...process.env, ...command.env };
 }
 
 export async function runCommand(command: Command, cwd: string): Promise<void> {
     await new Promise<void>((resolve, reject) => {
         const child: ChildProcess = spawn(command.executable, command.args, {
             cwd,
+            env: commandEnv(command),
             stdio: "inherit",
             shell: false
         });
@@ -42,6 +49,7 @@ export async function runCommandQuietly(command: Command, cwd: string): Promise<
     return new Promise<string>((resolve, reject) => {
         const child: ChildProcess = spawn(command.executable, command.args, {
             cwd,
+            env: commandEnv(command),
             stdio: ["ignore", "pipe", "pipe"],
             shell: false
         });

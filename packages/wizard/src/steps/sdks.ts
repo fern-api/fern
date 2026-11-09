@@ -1,9 +1,9 @@
-import { execFile } from "child_process";
-import { readdir, readFile, writeFile } from "fs/promises";
+import { access, readdir, readFile, writeFile } from "fs/promises";
 import path from "path";
 import { isMap, isSeq, parse, parseDocument } from "yaml";
 
-// Which SDK languages a Fern project generates, and where each one is written.
+// Which SDK languages a Fern project generates, and where each one is written. New projects list
+// their SDKs as targets in fern/sdk-config.yml; older ones as generators in fern/generators.yml.
 
 export interface SdkLanguage {
     label: string;
@@ -11,6 +11,8 @@ export interface SdkLanguage {
     generator: string;
     /** Other generator names that produce the same language. */
     aliases?: string[];
+    /** The target's `language` in sdk-config.yml. */
+    target: string;
     /** Whether the Free plan includes this language; the rest need the Enterprise plan. */
     free: boolean;
 }
@@ -20,17 +22,23 @@ export const SDK_LANGUAGES: SdkLanguage[] = [
         label: "TypeScript",
         generator: "fern-typescript-sdk",
         aliases: ["fern-typescript-node-sdk", "fern-typescript-browser-sdk"],
+        target: "typescript",
         free: true
     },
-    { label: "Python", generator: "fern-python-sdk", free: true },
-    { label: "Go", generator: "fern-go-sdk", free: false },
-    { label: "Java", generator: "fern-java-sdk", free: false },
-    { label: "C#", generator: "fern-csharp-sdk", free: false },
-    { label: "Ruby", generator: "fern-ruby-sdk", free: false },
-    { label: "PHP", generator: "fern-php-sdk", free: false },
-    { label: "Swift", generator: "fern-swift-sdk", free: false },
-    { label: "Rust", generator: "fern-rust-sdk", free: false }
+    { label: "Python", generator: "fern-python-sdk", target: "python", free: true },
+    { label: "Go", generator: "fern-go-sdk", target: "go", free: false },
+    { label: "Java", generator: "fern-java-sdk", target: "java", free: false },
+    { label: "C#", generator: "fern-csharp-sdk", target: "csharp", free: false },
+    { label: "Ruby", generator: "fern-ruby-sdk", aliases: ["fern-ruby-sdk-v2"], target: "ruby", free: false },
+    { label: "PHP", generator: "fern-php-sdk", target: "php", free: false },
+    { label: "Swift", generator: "fern-swift-sdk", target: "swift", free: false },
+    { label: "Rust", generator: "fern-rust-sdk", target: "rust", free: false }
 ];
+
+const SDK_CONFIG_FILENAME = "sdk-config.yml";
+
+/** Where the Fern CLI writes a `files` target that names no path, relative to sdk-config.yml. */
+const DEFAULT_SDK_CONFIG_OUTPUT_DIRECTORY = "generated";
 
 export interface ConfiguredSdk {
     language: SdkLanguage;
@@ -38,8 +46,98 @@ export interface ConfiguredSdk {
     outputPath?: string;
 }
 
-/** The SDK generators in fern/generators.yml's SDK group (see sdkGroupName). */
+/** The SDKs `fern generate` builds: fern/sdk-config.yml's targets and fern/generators.yml's SDK group. */
 export async function readConfiguredSdks(dir: string): Promise<ConfiguredSdk[]> {
+    return [...(await readSdkConfigTargets(dir)), ...(await readLegacySdks(dir))];
+}
+
+/** Whether the project lists its SDKs in fern/sdk-config.yml, as `fern init` sets up new projects. */
+export async function usesSdkConfig(dir: string): Promise<boolean> {
+    try {
+        await access(path.join(dir, "fern", SDK_CONFIG_FILENAME));
+        return true;
+    } catch {
+        return false;
+    }
+}
+
+/** The targets in fern/sdk-config.yml, and where each one writes. */
+async function readSdkConfigTargets(dir: string): Promise<ConfiguredSdk[]> {
+    const config = await readSdkConfig(dir);
+    if (config === undefined || !Array.isArray(config.targets)) {
+        return [];
+    }
+    const fernDir = path.join(dir, "fern");
+    return config.targets.flatMap((target): ConfiguredSdk[] => {
+        if (!isRecord(target)) {
+            return [];
+        }
+        const language = SDK_LANGUAGES.find((candidate) => candidate.target === target.language);
+        if (language === undefined) {
+            return [];
+        }
+        const output = targetOutput(config, target);
+        const outputPath =
+            output?.delivery === "files"
+                ? path.resolve(
+                      fernDir,
+                      typeof output.path === "string"
+                          ? output.path
+                          : `${DEFAULT_SDK_CONFIG_OUTPUT_DIRECTORY}/${language.target}`
+                  )
+                : undefined;
+        return [{ language, outputPath }];
+    });
+}
+
+/** A target's output, which falls back to the file's top-level output. */
+function targetOutput(
+    config: Record<string, unknown>,
+    target: Record<string, unknown>
+): Record<string, unknown> | undefined {
+    if (isRecord(target.output)) {
+        return target.output;
+    }
+    return isRecord(config.output) ? config.output : undefined;
+}
+
+async function readSdkConfig(dir: string): Promise<Record<string, unknown> | undefined> {
+    try {
+        const config: unknown = parse(await readFile(path.join(dir, "fern", SDK_CONFIG_FILENAME), "utf8"));
+        return isRecord(config) ? config : undefined;
+    } catch {
+        // No sdk-config.yml.
+        return undefined;
+    }
+}
+
+/**
+ * Adds a target for each language to fern/sdk-config.yml, writing into sdks/<language>/ in this
+ * repository. Targets pin no generator version, so Fern uses the newest one.
+ */
+export async function addSdkConfigTargets(dir: string, languages: SdkLanguage[]): Promise<void> {
+    if (languages.length === 0) {
+        return;
+    }
+    const configPath = path.join(dir, "fern", SDK_CONFIG_FILENAME);
+    const document = parseDocument(await readFile(configPath, "utf8"));
+    const existing = document.get("targets");
+    const targets = languages.map((language) => ({
+        language: language.target,
+        output: { delivery: "files", path: `../sdks/${language.target}` }
+    }));
+    if (isSeq(existing)) {
+        for (const target of targets) {
+            existing.add(document.createNode(target));
+        }
+    } else {
+        document.set("targets", targets);
+    }
+    await writeFile(configPath, document.toString());
+}
+
+/** The SDK generators in fern/generators.yml's SDK group (see sdkGroupName). */
+async function readLegacySdks(dir: string): Promise<ConfiguredSdk[]> {
     const fernDir = path.join(dir, "fern");
     return (await readSdkGroupGenerators(dir)).flatMap((generator): ConfiguredSdk[] => {
         if (!isRecord(generator) || typeof generator.name !== "string") {
@@ -79,14 +177,28 @@ async function readSdkGroupGenerators(dir: string): Promise<unknown[]> {
 }
 
 /**
- * Whether every generator in the SDK group writes into this repository. Any other output (npm, PyPI,
- * GitHub, …) publishes when `fern generate` runs, so the wizard leaves generating those to the user.
+ * Whether every SDK writes into this repository. Any other output (npm, PyPI, GitHub, …) publishes
+ * when `fern generate` runs, so the wizard leaves generating those to the user.
  */
-export async function sdkGroupWritesOnlyLocally(dir: string): Promise<boolean> {
-    return (await readSdkGroupGenerators(dir)).every(
+export async function sdksWriteOnlyLocally(dir: string): Promise<boolean> {
+    const legacyLocal = (await readSdkGroupGenerators(dir)).every(
         (generator) =>
             isRecord(generator) && isRecord(generator.output) && generator.output.location === "local-file-system"
     );
+    const config = await readSdkConfig(dir);
+    const targets = config !== undefined && Array.isArray(config.targets) ? config.targets : [];
+    const targetsLocal = targets.every((target) => {
+        if (config === undefined || !isRecord(target)) {
+            return false;
+        }
+        // No output downloads the files; `files` and `zip` stay local unless they also publish.
+        const output = targetOutput(config, target);
+        return (
+            output === undefined ||
+            ((output.delivery === "files" || output.delivery === "zip") && output.publish === undefined)
+        );
+    });
+    return legacyLocal && targetsLocal;
 }
 
 /** Changes a generator's pinned version in fern/generators.yml. Returns whether anything changed. */
@@ -193,13 +305,6 @@ export async function readOrganization(dir: string): Promise<string | undefined>
         // No Fern project.
         return undefined;
     }
-}
-
-/** Whether Docker is running, so SDKs can be generated on this machine. */
-export async function isDockerRunning(): Promise<boolean> {
-    return new Promise((resolve) => {
-        execFile("docker", ["info"], { timeout: 10000 }, (error) => resolve(error === null));
-    });
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {

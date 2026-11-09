@@ -32,18 +32,25 @@ import {
     runCommand,
     runCommandQuietly
 } from "./steps/commands";
-import { agentHandoffFiles, writeAgentHandoff } from "./steps/handoff";
 import {
+    agentHandoffFiles,
+    SKILL_DIRECTORIES,
+    SKILL_TARGET_NAMES,
+    skillTargets,
+    writeAgentHandoff
+} from "./steps/handoff";
+import {
+    addSdkConfigTargets,
     ensureSdkGroup,
-    isDockerRunning,
     isNonEmptyDirectory,
     listApis,
     readConfiguredSdks,
     readOrganization,
     SDK_LANGUAGES,
     type SdkLanguage,
-    sdkGroupWritesOnlyLocally,
-    setGeneratorVersion
+    sdksWriteOnlyLocally,
+    setGeneratorVersion,
+    usesSdkConfig
 } from "./steps/sdks";
 import type {
     ActionId,
@@ -77,31 +84,21 @@ interface SpecAnswers {
     specPath: string;
 }
 
-type DocsSkillTarget = Exclude<Agent, "vscode"> | "github-copilot";
-
-const DOCS_SKILL_PATHS: Record<DocsSkillTarget, string> = {
-    "claude-code": ".claude/skills/fern-docs/",
-    cursor: ".agents/skills/fern-docs/",
-    codex: ".agents/skills/fern-docs/",
-    "github-copilot": ".agents/skills/fern-docs/",
-    windsurf: ".windsurf/skills/fern-docs/"
-};
-
 const ORG_PLACEHOLDER = "<your-org>";
 
 const ALL_PRODUCTS: Product[] = ["sdks", "docs"];
 
-const STEPS: Array<{ id: StepId; title: string; question: string; actions: ActionId[] }> = [
+const STEPS: Array<{ id: StepId; title: string; question?: string; actions: ActionId[] }> = [
     {
+        // Running the wizard already asked for this, so it doesn't ask again.
         id: "cli-setup",
         title: "Set up Fern",
-        question: "Set up Fern in this repo?",
         actions: ["install-cli", "init-api", "init-docs"]
     },
     {
         id: "agent",
-        title: "Teach your coding agent",
-        question: "Teach your coding agent about Fern?",
+        title: "Set up your coding agent",
+        question: "Add Fern skills so your coding agent can help you with anything Fern?",
         // Connecting the MCP server also signs you in and edits global agent configs, so it asks again.
         actions: ["agent-handoff", "docs-skills", "agent-mcp"]
     },
@@ -146,7 +143,7 @@ export function planActions(
     if (detection.fernProject.exists) {
         notes.push("Existing Fern project found in fern/, so no new project is needed");
     } else if (wantsApiProject) {
-        const initApi = planInitApi(detection, flags, notes);
+        const initApi = planInitApi(detection, { ...flags, products }, notes);
         if (initApi !== undefined) {
             actions.push(initApi);
         }
@@ -208,7 +205,8 @@ export function planActions(
     actions.push({
         id: "agent-handoff",
         title: handoffTitle(detection),
-        description: "Writes Fern setup instructions your agent picks up automatically. Existing files are left alone.",
+        description:
+            "Adds a Fern skill your agent uses when you ask it about Fern, next to the fern-docs skill. Existing files are left alone.",
         commands: [],
         files: agentHandoffFiles(detection),
         selectedByDefault: true
@@ -216,13 +214,11 @@ export function planActions(
     return { actions, notes };
 }
 
-/** Names the agents that will get Fern instructions, e.g. "Claude Code and Cursor". */
+/** Names the agents that will get the Fern skill, e.g. "Add the Fern skill for Claude Code and Cursor". */
 function handoffTitle(detection: Detection): string {
-    const agents = detection.agents.filter((agent) => agent === "claude-code" || agent === "cursor");
-    if (agents.length === 0) {
-        return "Add Fern instructions to AGENTS.md";
-    }
-    return `Write Fern instructions for ${agents.map((agent) => AGENT_NAMES[agent]).join(" and ")}`;
+    const names = skillTargets(detection).map((target) => SKILL_TARGET_NAMES[target]);
+    const list = names.length <= 1 ? names.join("") : `${names.slice(0, -1).join(", ")} and ${names.at(-1)}`;
+    return `Add the Fern skill for ${list}`;
 }
 
 /** Groups planned actions into the wizard's steps, dropping steps with nothing to do. */
@@ -248,32 +244,16 @@ export function shouldOfferDocsSkill(
     return !skillAlreadyInstalled && (docsInitializationOffered || docsSiteAlreadyExists);
 }
 
-function docsSkillTargets(detection: Detection): DocsSkillTarget[] {
-    const targets: DocsSkillTarget[] =
-        detection.agents.length === 0
-            ? ["claude-code", "cursor", "codex"]
-            : detection.agents.map((agent) => {
-                  if (agent === "vscode") {
-                      return "github-copilot";
-                  }
-                  return agent;
-              });
-    return [...new Set(targets)];
-}
-
 function docsSkillAction(detection: Detection): ActionPlan {
-    const targets = docsSkillTargets(detection);
-    const command = formatCommand({
-        executable: "npx",
-        args: ["-y", "skills@1.6.0", "add", "fern-api/skills", "--skill", "fern-docs", "-a", ...targets, "-y"]
-    });
+    const targets = skillTargets(detection);
+    const command = formatCommand(docsSkillCommand(detection));
     return {
         id: "docs-skills",
         title: "Add the fern-docs skill",
         description:
             "Installs the fern-docs skill from fern-api/skills so your coding agent follows Fern's conventions for docs.yml, navigation, components, changelogs, redirects, and access control. Commit the files so your team gets it too.",
         commands: [command],
-        files: [...new Set(targets.map((target) => DOCS_SKILL_PATHS[target])), "skills-lock.json"],
+        files: [...new Set(targets.map((target) => `${SKILL_DIRECTORIES[target]}/fern-docs/`)), "skills-lock.json"],
         selectedByDefault: true
     };
 }
@@ -306,13 +286,7 @@ function planInitApi(detection: Detection, flags: WizardFlags, notes: string[]):
                     : `Create a Fern project from ${spec.path}`,
             description: `Creates fern/ with fern.config.json and generators.yml pointing at ${spec?.path ?? "the spec you pick next"}.`,
             commands: [
-                displayFernCommand(detection, flags, [
-                    "init",
-                    "--openapi",
-                    spec?.path ?? "<selected-spec>",
-                    "--org",
-                    org
-                ])
+                displayFernCommand(detection, flags, initApiArgs(spec?.path ?? "<selected-spec>", { ...flags, org }))
             ],
             files: [],
             selectedByDefault: true
@@ -334,7 +308,7 @@ function planInitApi(detection: Detection, flags: WizardFlags, notes: string[]):
         id: "init-api",
         title: "Create a starter Fern project",
         description: "No API spec was found, so Fern creates fern/ with a sample OpenAPI spec you can replace.",
-        commands: [displayFernCommand(detection, flags, ["init", "--org", org])],
+        commands: [displayFernCommand(detection, flags, initApiArgs(undefined, { ...flags, org }))],
         files: [],
         selectedByDefault: true
     };
@@ -422,7 +396,7 @@ export async function runWizard(flags: WizardFlags): Promise<number> {
             }
         }
         printStepPreview(step.actions.filter((action) => action.id !== "agent-mcp"));
-        if (!flags.yes && !(await confirm(step.question))) {
+        if (!flags.yes && step.question !== undefined && !(await confirm(step.question))) {
             printSkipped("Skipped");
             continue;
         }
@@ -503,7 +477,7 @@ export async function runWizard(flags: WizardFlags): Promise<number> {
                     action,
                     dir,
                     detection,
-                    { ...flags, org },
+                    { ...flags, org, products },
                     docsSiteChoices ?? scaffoldedDocsSite,
                     published
                 );
@@ -526,20 +500,25 @@ export async function runWizard(flags: WizardFlags): Promise<number> {
     return failed ? 1 : 0;
 }
 
+/** One choice per combination, so picking SDKs never also sets up docs (or the reverse) by accident. */
+const PRODUCT_CHOICES: Array<{ name: string; value: "sdks" | "docs" | "both" }> = [
+    { name: "SDKs", value: "sdks" },
+    { name: "API docs", value: "docs" },
+    { name: "SDKs and API docs", value: "both" }
+];
+
 async function chooseProducts(detection: Detection): Promise<Product[]> {
     const preselected = defaultProducts(detection);
-    const answer = await inquirer.prompt<{ products: Product[] }>([
+    const answer = await inquirer.prompt<{ products: "sdks" | "docs" | "both" }>([
         {
-            type: "checkbox",
+            type: "list",
             name: "products",
             message: "What do you want to set up?",
-            choices: [
-                { name: "SDK generation", value: "sdks", checked: preselected.includes("sdks") },
-                { name: "API docs", value: "docs", checked: preselected.includes("docs") }
-            ]
+            choices: PRODUCT_CHOICES,
+            default: preselected.length === 2 ? "both" : preselected[0]
         }
     ]);
-    return answer.products;
+    return answer.products === "both" ? ["sdks", "docs"] : [answer.products];
 }
 
 async function confirm(message: string): Promise<boolean> {
@@ -582,11 +561,9 @@ async function runAction(
         case "init-api": {
             // planActions only offers init-api when there is an OpenAPI spec or nothing to import at all.
             const spec = await chooseSpec(getOpenApiSpecs(detection.apiSpecs), flags.yes);
-            const args =
-                spec === undefined
-                    ? ["init", ...orgArgs(flags.org)]
-                    : ["init", "--openapi", spec.path, ...orgArgs(flags.org)];
+            const args = initApiArgs(spec?.path, flags);
             await withStatus("Creating your Fern project", () => runFernQuietly(args, dir, detection));
+            await pinNewProjectCliVersion(dir, detection, flags);
             printDone(
                 spec === undefined ? "Created a starter Fern project in fern/" : `Created fern/ from ${spec.path}`
             );
@@ -598,6 +575,7 @@ async function runAction(
                 await withStatus("Importing your Mintlify docs", () =>
                     runFernQuietly(docsInitArgs(mintJson, flags.org), dir, detection)
                 );
+                await pinNewProjectCliVersion(dir, detection, flags);
                 printDone(`Imported your Mintlify docs from ${mintJson}`);
                 return;
             }
@@ -615,6 +593,7 @@ async function runAction(
                 await withStatus("Creating your docs site", () =>
                     runFernQuietly(["init", "--docs", ...orgArgs(flags.org)], dir, detection)
                 );
+                await pinNewProjectCliVersion(dir, detection, flags);
                 printDone("Created a basic docs site in fern/");
                 return;
             }
@@ -624,8 +603,8 @@ async function runAction(
                     org: flags.org ?? ORG_PLACEHOLDER,
                     choices,
                     templateDir,
-                    // Pin new projects to the CLI that set them up ("*" runs whichever CLI is installed).
-                    fernVersion: flags.fernVersion ?? detection.fernCliVersion ?? "*"
+                    // Pin new projects to a released CLI ("*" runs whichever CLI is installed).
+                    fernVersion: projectCliVersion(flags, detection)
                 })
             );
             printDone(`Created your docs site in fern/ (${result.written.length} files)`);
@@ -686,10 +665,11 @@ async function promptForOrganization(suggestion: string | undefined): Promise<st
         {
             type: "input",
             name: "organization",
-            message: "Fern organization name (used for fern.config.json)",
+            message: "Your organization's name on Fern (lowercase, no spaces or punctuation, like acme)",
             default: suggestion,
             validate: (input: string) =>
-                isValidName(input.trim()) || "Use lowercase letters, numbers, and hyphens (not at the start or end)."
+                isValidName(input.trim()) ||
+                "Use lowercase letters and numbers, like acme. Hyphens are fine between words, like acme-corp."
         }
     ]);
     return answer.organization.trim();
@@ -784,6 +764,12 @@ async function previewAndPublish(
     const previewUrl = parsePublishedUrl(previewOutput);
     published.previewUrl = previewUrl;
     printDone(previewUrl === undefined ? "Built a preview of your docs" : `Preview ready: ${chalk.cyan(previewUrl)}`);
+    if (previewUrl !== undefined) {
+        // A new preview isn't served right away, and an early click looks like a broken link.
+        printDetail(
+            chalk.dim("The link can take a minute or two to start working. If it doesn't load yet, wait and refresh.")
+        );
+    }
 
     const siteUrl = await ensureFreeDocsUrl(dir, await docsSiteUrl(dir, docsSiteChoices));
     const dashboard = dashboardUrl(await readOrganization(dir));
@@ -838,7 +824,7 @@ async function promptForDocsUrl(takenDomain: string): Promise<string> {
     return pickAvailableName({ name: taken, noun: "docs URL", check, display: (name) => `${name}.${DOCS_DOMAIN}` });
 }
 
-/** Lets the user pick SDK languages, adds their generators, and generates the SDKs into this repository. */
+/** Lets the user pick SDK languages, adds them to the project, and generates the SDKs into this repository. */
 async function generateSdks(dir: string, detection: Detection, results: PublishResult): Promise<void> {
     const apis = await listApis(dir);
     if (apis.length > 1) {
@@ -847,8 +833,15 @@ async function generateSdks(dir: string, detection: Detection, results: PublishR
         );
         return;
     }
+    if ((await readFernToken()) === undefined) {
+        // Fern's servers generate the SDKs, which needs a signed-in user. Signing in may open a
+        // browser and wait for it, so it keeps the terminal.
+        await runFernCommand(["login"], dir, detection);
+    }
     await checkProjectOrganization(dir);
-    const group = await ensureSdkGroup(dir);
+    // New projects list SDKs as targets in sdk-config.yml; older ones as generators in generators.yml.
+    const sdkConfig = await usesSdkConfig(dir);
+    const group = sdkConfig ? undefined : await ensureSdkGroup(dir);
     const groupArgs = group === undefined ? [] : ["--group", group];
     const configured = await readConfiguredSdks(dir);
     const configuredGenerators = new Set(configured.map((sdk) => sdk.language.generator));
@@ -861,21 +854,25 @@ async function generateSdks(dir: string, detection: Detection, results: PublishR
             choices: SDK_LANGUAGES.map((language) => ({
                 name: language.free ? language.label : `${language.label} ${chalk.dim("(Enterprise plan)")}`,
                 value: language.generator,
-                // Languages already in generators.yml are always generated, so they can't be unchecked here.
+                // Languages the project already has are always generated, so they can't be unchecked here.
                 ...(configuredGenerators.has(language.generator)
                     ? { checked: true, disabled: "already set up" }
                     : { checked: configured.length === 0 && language.generator === "fern-typescript-sdk" })
             }))
         }
     ]);
-    const added = SDK_LANGUAGES.filter(
+    const chosen = SDK_LANGUAGES.filter(
         (language) => answer.generators.includes(language.generator) && !configuredGenerators.has(language.generator)
     );
-    const enterprise = added.filter((language) => !language.free);
-    const includeEnterprise =
-        enterprise.length === 0 || (await continueWithEnterpriseLanguages(enterprise, await readOrganization(dir)));
-    for (const language of added) {
-        if (language.free || includeEnterprise) {
+    const enterprise = chosen.filter((language) => !language.free);
+    if (enterprise.length > 0) {
+        await explainEnterpriseLanguages(enterprise, await readOrganization(dir), sdkConfig);
+    }
+    const added = chosen.filter((language) => language.free);
+    if (sdkConfig) {
+        await addSdkConfigTargets(dir, added);
+    } else {
+        for (const language of added) {
             await withStatus(`Adding the ${language.label} SDK`, () =>
                 runFernQuietly(["add", language.generator, ...groupArgs], dir, detection)
             );
@@ -887,9 +884,9 @@ async function generateSdks(dir: string, detection: Detection, results: PublishR
         printSkipped("No SDKs to generate");
         return;
     }
-    if (!(await sdkGroupWritesOnlyLocally(dir))) {
+    if (!(await sdksWriteOnlyLocally(dir))) {
         printSkipped(
-            `fern/generators.yml also publishes SDKs (for example to npm), so the wizard won't run it. Run \`fern generate${group === undefined ? "" : ` --group ${group}`}\` when you're ready.`
+            `fern/${sdkConfig ? "sdk-config.yml" : "generators.yml"} also publishes SDKs (for example to npm), so the wizard won't run it. Run \`fern generate${group === undefined ? "" : ` --group ${group}`}\` when you're ready.`
         );
         return;
     }
@@ -924,8 +921,8 @@ async function generateSdks(dir: string, detection: Detection, results: PublishR
 const FIRST_SDK_VERSION = "0.1.0";
 
 /**
- * Generates with Docker when it's running, and on Fern's servers otherwise or if Docker fails (some
- * Docker setups, like Colima's defaults, can't see the files Fern shares with the generator).
+ * Generates on Fern's servers, which build the full SDK (README, package files, and so on) with the
+ * newest generators. Docker (`--local`) is for self-hosted setups, so the wizard never uses it.
  * Returns what Fern printed.
  */
 async function generateSdkFiles({
@@ -939,16 +936,6 @@ async function generateSdkFiles({
     groupArgs: string[];
     names: string;
 }): Promise<string> {
-    if (await isDockerRunning()) {
-        try {
-            return await withStatus(`Generating ${names} with Docker (this can take a few minutes)`, () =>
-                runFernQuietly(["generate", ...groupArgs, "--local", "--no-prompt"], dir, detection)
-            );
-        } catch (error) {
-            const reason = error instanceof Error ? error.message.split("\n")[0] : String(error);
-            printSkipped(`Generating with Docker failed (${reason}), so Fern's servers will generate ${names}`);
-        }
-    }
     // Every output is a folder in this repository (checked above), so a version only names the package.
     const generate = (): Promise<string> =>
         withStatus(`Generating ${names} on Fern's servers (this can take a few minutes)`, () =>
@@ -965,7 +952,7 @@ async function generateSdkFiles({
         ) {
             throw error;
         }
-        // `fern init` pins the newest generator, which Fern's servers may not offer yet.
+        // generators.yml can pin a generator version Fern's servers don't offer yet.
         printSkipped(
             `Fern's servers don't have ${unavailable.generator} ${unavailable.requested} yet, so fern/generators.yml now uses ${unavailable.available}`
         );
@@ -992,52 +979,36 @@ export function generatorError(output: string): string | undefined {
 }
 
 /**
- * The Free plan includes TypeScript and Python SDKs; other languages need the Enterprise plan. Sends
- * the user to the billing page in the Fern Dashboard to upgrade, unless their organization already has
- * it. Returns whether to set up the Enterprise languages now.
+ * The Free plan includes TypeScript and Python SDKs; other languages need the Enterprise plan. The
+ * wizard can't check an organization's plan, so it doesn't set those languages up: it offers the
+ * billing page and says how to add them once the organization has the plan.
  */
-async function continueWithEnterpriseLanguages(
+async function explainEnterpriseLanguages(
     languages: SdkLanguage[],
-    organization: string | undefined
-): Promise<boolean> {
+    organization: string | undefined,
+    sdkConfig: boolean
+): Promise<void> {
     const names = languages.map((language) => language.label).join(", ");
-    const them = languages.length === 1 ? "it" : "them";
     const billing = billingUrl(organization);
-    const answer = await inquirer.prompt<{ choice: "upgrade" | "enterprise" | "skip" }>([
+    const howToAdd = sdkConfig
+        ? `add ${languages.length === 1 ? "a target" : "targets"} for ${languages.map((language) => `\`${language.target}\``).join(", ")} to fern/sdk-config.yml`
+        : `run ${languages.map((language) => `\`fern add ${language.generator}\``).join(", ")}`;
+    const answer = await inquirer.prompt<{ upgrade: boolean }>([
         {
-            type: "list",
-            name: "choice",
-            message: `${names} ${languages.length === 1 ? "SDK needs" : "SDKs need"} the Enterprise plan (TypeScript and Python are free). What next?`,
-            choices: [
-                { name: "Upgrade in the Fern Dashboard (opens the billing page)", value: "upgrade" },
-                { name: `My organization already has Enterprise: set up ${names}`, value: "enterprise" },
-                { name: `Skip ${names} for now`, value: "skip" }
-            ]
+            type: "confirm",
+            name: "upgrade",
+            message: `${names} ${languages.length === 1 ? "SDK needs" : "SDKs need"} the Enterprise plan (TypeScript and Python are free), so the wizard will skip ${languages.length === 1 ? "it" : "them"}. Open the billing page to upgrade?`,
+            default: false
         }
     ]);
-    switch (answer.choice) {
-        case "enterprise":
-            return true;
-        case "skip":
-            printSkipped(`Skipped ${names}. Upgrade at ${billing} to add ${them} later.`);
-            return false;
-        case "upgrade": {
-            if (await openInBrowser(billing)) {
-                printDone(`Opened the billing page: ${chalk.cyan(billing)}`);
-            } else {
-                printDetail(`Open this page to upgrade: ${chalk.cyan(billing)}`);
-            }
-            if (await confirm(`Finished upgrading? Set up ${names} now?`)) {
-                return true;
-            }
-            printSkipped(
-                `Skipped ${names}. After upgrading, add ${them} with ${languages.map((language) => `\`fern add ${language.generator}\``).join(", ")}.`
-            );
-            return false;
+    if (answer.upgrade) {
+        if (await openInBrowser(billing)) {
+            printDone(`Opened the billing page: ${chalk.cyan(billing)}`);
+        } else {
+            printDetail(`Open this page to upgrade: ${chalk.cyan(billing)}`);
         }
-        default:
-            assertNever(answer.choice);
     }
+    printSkipped(`Skipped ${names}. With the Enterprise plan, ${howToAdd}, then run \`fern generate\`.`);
 }
 
 /**
@@ -1214,7 +1185,7 @@ export function docsSkillCommand(detection: Detection): Command {
             "--skill",
             "fern-docs",
             "-a",
-            ...docsSkillTargets(detection),
+            ...skillTargets(detection),
             "-y"
         ]
     };
@@ -1274,7 +1245,8 @@ export function installCommand(detection: Detection): Command {
 
 export function fernRunner(detection: Detection, args: string[] = []): Command {
     if (detection.fernCommand !== undefined) {
-        return { executable: detection.fernCommand.executable, args: [...detection.fernCommand.args, ...args] };
+        const { executable, env } = detection.fernCommand;
+        return { executable, args: [...detection.fernCommand.args, ...args], ...(env === undefined ? {} : { env }) };
     }
     if (detection.fernCliVersion !== null) {
         return { executable: "fern", args };
@@ -1289,6 +1261,42 @@ export function fernRunner(detection: Detection, args: string[] = []): Command {
         return { executable: "bunx", args: ["fern-api", ...args] };
     }
     return { executable: "npx", args: ["-y", "fern-api", ...args] };
+}
+
+/**
+ * `fern init` for the API project. Without docs in the plan, `--api` keeps it from also creating a
+ * docs site.
+ */
+export function initApiArgs(specPath: string | undefined, flags: WizardFlags): string[] {
+    const apiOnly = flags.products !== undefined && !flags.products.includes("docs") ? ["--api"] : [];
+    return ["init", ...apiOnly, ...(specPath === undefined ? [] : ["--openapi", specPath]), ...orgArgs(flags.org)];
+}
+
+/** The CLI version a new project pins in fern.config.json. */
+function projectCliVersion(flags: WizardFlags, detection: Detection): string {
+    return flags.projectFernVersion ?? flags.fernVersion ?? detection.fernCliVersion ?? "*";
+}
+
+/**
+ * `fern init` pins the CLI that ran it, which for an unreleased build is a version that can't be
+ * installed. Points a project this run created at a released one instead.
+ */
+async function pinNewProjectCliVersion(dir: string, detection: Detection, flags: WizardFlags): Promise<void> {
+    if (detection.fernProject.exists || flags.projectFernVersion === undefined) {
+        return;
+    }
+    const configPath = path.join(dir, "fern", "fern.config.json");
+    let config: unknown;
+    try {
+        config = JSON.parse(await readFile(configPath, "utf8"));
+    } catch {
+        // fern init didn't write one.
+        return;
+    }
+    if (!isRecord(config) || config.version === flags.projectFernVersion) {
+        return;
+    }
+    await writeFile(configPath, `${JSON.stringify({ ...config, version: flags.projectFernVersion }, null, 4)}\n`);
 }
 
 function orgArgs(org: string | undefined): string[] {

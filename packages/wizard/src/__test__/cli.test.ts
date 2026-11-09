@@ -6,6 +6,7 @@ import {
     docsInitArgs,
     fernRunner,
     findSpec,
+    initApiArgs,
     installCommand,
     parsePublishedUrl,
     pickDefaultSpec,
@@ -52,9 +53,12 @@ describe("action planning", () => {
 
     it("groups actions into setup, coding agent, publish, and SDK steps", () => {
         const steps = planSteps(planActions({ ...baseDetection, agents: ["cursor"] }, flags).actions);
+        // Running the wizard already agrees to set up Fern, so only the later steps ask.
+        expect(steps.find((step) => step.id === "cli-setup")?.question).toBeUndefined();
+        expect(steps.find((step) => step.id === "agent")?.question).toBeDefined();
         expect(steps.map((step) => [step.title, step.actions.map((action) => action.id)])).toEqual([
             ["Set up Fern", ["install-cli", "init-api", "init-docs"]],
-            ["Teach your coding agent", ["agent-handoff", "docs-skills", "agent-mcp"]],
+            ["Set up your coding agent", ["agent-handoff", "docs-skills", "agent-mcp"]],
             ["Preview and publish your docs", ["publish-docs"]],
             ["Generate your SDKs", ["generate-sdks"]]
         ]);
@@ -204,6 +208,27 @@ describe("action planning", () => {
         expect(initApi?.commands).toEqual(["fern init --openapi openapi.yaml --org acme"]);
     });
 
+    it("keeps fern init from creating docs when only SDKs were chosen", () => {
+        expect(initApiArgs("openapi.yaml", { ...flags, org: "acme", products: ["sdks"] })).toEqual([
+            "init",
+            "--api",
+            "--openapi",
+            "openapi.yaml",
+            "--org",
+            "acme"
+        ]);
+        expect(initApiArgs(undefined, { ...flags, org: "acme", products: ["sdks", "docs"] })).toEqual([
+            "init",
+            "--org",
+            "acme"
+        ]);
+        expect(
+            planActions(baseDetection, { ...flags, org: "acme", products: ["sdks"] }, ["sdks"]).actions.find(
+                (action) => action.id === "init-api"
+            )?.commands
+        ).toEqual(["npx -y fern-api init --api --openapi openapi.yaml --org acme"]);
+    });
+
     it("plans a bare init when nothing can be imported", () => {
         const actions = planActions(
             { ...baseDetection, fernCliVersion: "1.0.0", apiSpecs: [] },
@@ -236,13 +261,12 @@ describe("action planning", () => {
             "fern login",
             "fern mcp install"
         ]);
-        expect(actions.find((action) => action.id === "agent-handoff")?.files).toEqual([
-            ".claude/skills/fern/SKILL.md",
-            ".cursor/rules/fern.mdc"
-        ]);
+        const handoff = actions.find((action) => action.id === "agent-handoff");
+        expect(handoff?.title).toBe("Add the Fern skill for Cursor and Claude Code");
+        expect(handoff?.files).toEqual([".agents/skills/fern/SKILL.md", ".claude/skills/fern/SKILL.md"]);
         expect(
             planActions(baseDetection, flags).actions.find((action) => action.id === "agent-handoff")?.files
-        ).toEqual(["AGENTS.md"]);
+        ).toEqual([".claude/skills/fern/SKILL.md", ".agents/skills/fern/SKILL.md"]);
     });
 
     it("skips API init when only a framework or a non-OpenAPI spec is found", () => {

@@ -92,7 +92,7 @@ async function download(url: string, fetchImpl: Fetch): Promise<Buffer> {
     return Buffer.from(await response.arrayBuffer());
 }
 
-/** A manifest entry with a safe relative path (no absolute paths or `..`). */
+/** A manifest entry with a safe, canonical relative path (no absolute paths, `.`, or `..`). */
 function isStarterFile(value: unknown): value is StarterFile {
     if (
         !isRecord(value) ||
@@ -103,7 +103,10 @@ function isStarterFile(value: unknown): value is StarterFile {
         return false;
     }
     const segments = value.path.split("/");
-    return !value.path.startsWith("/") && segments.every((segment) => segment !== "" && segment !== "..");
+    return (
+        !value.path.startsWith("/") &&
+        segments.every((segment) => segment !== "" && segment !== "." && segment !== "..")
+    );
 }
 
 async function forEachInParallel<T>(items: T[], limit: number, task: (item: T) => Promise<void>): Promise<void> {

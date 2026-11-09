@@ -464,7 +464,7 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 await runInitWizard({ cliContext });
                 return;
             }
-            if (argv.template != null && argv.docs == null) {
+            if (argv.template != null && argv.docs !== true) {
                 return cliContext.failWithoutThrowing("--template only works with --docs.", undefined, {
                     code: CliError.Code.ConfigError
                 });
@@ -508,7 +508,7 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                         versionOfCli: await getLatestVersionOfCli({ cliEnvironment: cliContext.environment })
                     });
                 });
-            } else if (argv.docs != null && argv.template != null) {
+            } else if (argv.docs === true && argv.template != null) {
                 await initDocsFromStarter({
                     cliContext,
                     organization: argv.organization ?? "fern",
@@ -4524,7 +4524,7 @@ function addAgentCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         yargs
             .command(
                 "setup",
-                "Write Fern instructions for your coding agents and add the fern-docs skill",
+                "Add the Fern and fern-docs skills for your coding agents",
                 (setupYargs) =>
                     setupYargs
                         .option("mcp", {

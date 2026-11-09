@@ -3,13 +3,15 @@ import os from "os";
 import path from "path";
 import { describe, expect, it } from "vitest";
 import {
+    addSdkConfigTargets,
     ensureSdkGroup,
     isNonEmptyDirectory,
     readConfiguredSdks,
     readOrganization,
     SDK_LANGUAGES,
-    sdkGroupWritesOnlyLocally,
-    setGeneratorVersion
+    sdksWriteOnlyLocally,
+    setGeneratorVersion,
+    usesSdkConfig
 } from "../steps/sdks";
 import { billingUrl } from "../ui";
 import { generatorError, parseUnavailableGeneratorVersion, summarizeFailure } from "../wizard";
@@ -49,6 +51,57 @@ describe("SDK configuration", () => {
         expect(sdks[0]?.outputPath).toBe(path.join(dir, "sdks", "typescript"));
         // Published SDKs aren't written to the repository.
         expect(sdks[1]?.outputPath).toBeUndefined();
+        await rm(dir, { recursive: true, force: true });
+    });
+
+    it("reads sdk-config.yml targets and adds new ones that write into the repository", async () => {
+        const dir = await project({
+            "fern/sdk-config.yml": [
+                "# keep me",
+                "schemaVersion: sdk-config/v1",
+                "sdkName: api",
+                "targets:",
+                "  - language: typescript",
+                "    output:",
+                "      delivery: files",
+                "      path: ../sdks/typescript"
+            ].join("\n")
+        });
+        await expect(usesSdkConfig(dir)).resolves.toBe(true);
+        const python = SDK_LANGUAGES.find((language) => language.target === "python");
+        if (python === undefined) {
+            throw new Error("Python is missing from SDK_LANGUAGES");
+        }
+        await addSdkConfigTargets(dir, [python]);
+        const written = await readFile(path.join(dir, "fern", "sdk-config.yml"), "utf8");
+        expect(written).toContain("# keep me");
+        // No generator version is pinned, so Fern uses the newest one.
+        expect(written).not.toContain("version:");
+        const sdks = await readConfiguredSdks(dir);
+        expect(sdks.map((sdk) => [sdk.language.label, sdk.outputPath])).toEqual([
+            ["TypeScript", path.join(dir, "sdks", "typescript")],
+            ["Python", path.join(dir, "sdks", "python")]
+        ]);
+        await expect(sdksWriteOnlyLocally(dir)).resolves.toBe(true);
+        await rm(dir, { recursive: true, force: true });
+    });
+
+    it("doesn't generate automatically when an sdk-config.yml target publishes", async () => {
+        const dir = await project({
+            "fern/sdk-config.yml": [
+                "schemaVersion: sdk-config/v1",
+                "targets:",
+                "  - language: typescript",
+                "    output:",
+                "      delivery: files",
+                "      publish:",
+                "        registry: npm"
+            ].join("\n")
+        });
+        await expect(sdksWriteOnlyLocally(dir)).resolves.toBe(false);
+        // A files target without a path writes where the Fern CLI puts it.
+        const [typescript] = await readConfiguredSdks(dir);
+        expect(typescript?.outputPath).toBe(path.join(dir, "fern", "generated", "typescript"));
         await rm(dir, { recursive: true, force: true });
     });
 
@@ -114,8 +167,8 @@ describe("SDK configuration", () => {
                 "          package-name: acme"
             ].join("\n")
         });
-        await expect(sdkGroupWritesOnlyLocally(local)).resolves.toBe(true);
-        await expect(sdkGroupWritesOnlyLocally(publishing)).resolves.toBe(false);
+        await expect(sdksWriteOnlyLocally(local)).resolves.toBe(true);
+        await expect(sdksWriteOnlyLocally(publishing)).resolves.toBe(false);
         await Promise.all([local, publishing].map((dir) => rm(dir, { recursive: true, force: true })));
     });
 

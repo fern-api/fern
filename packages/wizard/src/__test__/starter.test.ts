@@ -90,6 +90,15 @@ describe("docs starter download", () => {
         ).rejects.toThrow("manifest");
     });
 
+    it("refuses manifest paths with `.` segments, which could stand in for another file", async () => {
+        const server = fakeServer({
+            [`${SOURCE}/manifest.json`]: JSON.stringify({ files: [{ path: "base/./docs.yml", size: 1, sha256: "x" }] })
+        });
+        await expect(
+            getDocsStarter({ source: SOURCE, cacheDir: await cacheDir(), fetchImpl: server.fetchImpl })
+        ).rejects.toThrow("manifest");
+    });
+
     it("uses a local folder as is", async () => {
         await expect(getDocsStarter({ source: STARTER_DIR })).resolves.toBe(STARTER_DIR);
     });
