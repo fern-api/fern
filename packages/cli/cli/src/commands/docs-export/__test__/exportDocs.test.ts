@@ -123,6 +123,9 @@ describe("resolvePdfScope", () => {
         expect(() => resolvePdfScope({ pages: [], sections: ["docs/gui"] }, site)).toThrow(
             "--section docs/gui has no pages on the site."
         );
+        expect(() => resolvePdfScope({ pages: ["docs/a", "docs/b"], sections: [] }, site)).toThrow(
+            "--page docs/a, --page docs/b are not pages on the site."
+        );
     });
 });
 
@@ -136,6 +139,7 @@ describe("printPagesUrl", () => {
     it("points at the site's print page list", () => {
         expect(printPagesUrl("acme.docs.buildwithfern.com")).toBe("https://acme.docs.buildwithfern.com/_print/pages");
         expect(printPagesUrl("https://acme.com/docs/")).toBe("https://acme.com/docs/_print/pages");
+        expect(printPagesUrl("https://acme.com/docs?preview=1#top")).toBe("https://acme.com/docs/_print/pages");
     });
 });
 

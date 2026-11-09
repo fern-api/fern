@@ -190,11 +190,13 @@ export function resolvePdfScope(flags: PdfScopeFlags, sitePageSlugs: string[]): 
     const sections = flags.sections.map(normalizeSlug);
     const missingPages = pages.filter((page) => !sitePageSlugs.includes(page));
     if (missingPages.length > 0) {
-        throw new Error(`--page ${missingPages.join(", ")} is not a page on the site.`);
+        const flags = missingPages.map((page) => `--page ${page}`).join(", ");
+        throw new Error(`${flags} ${missingPages.length === 1 ? "is not a page" : "are not pages"} on the site.`);
     }
     const emptySections = sections.filter((section) => !sitePageSlugs.some((slug) => isInSection(slug, section)));
     if (emptySections.length > 0) {
-        throw new Error(`--section ${emptySections.join(", ")} has no pages on the site.`);
+        const flags = emptySections.map((section) => `--section ${section}`).join(", ");
+        throw new Error(`${flags} ${emptySections.length === 1 ? "has" : "have"} no pages on the site.`);
     }
     return sitePageSlugs.filter(
         (slug) => pages.includes(slug) || sections.some((section) => isInSection(slug, section))
@@ -203,8 +205,11 @@ export function resolvePdfScope(flags: PdfScopeFlags, sitePageSlugs: string[]): 
 
 /** The URL of the site's printable page list, the same list the PDF exporter renders. */
 export function printPagesUrl(docsUrl: string): string {
-    const base = stripTrailingSlashes(/^https?:\/\//.test(docsUrl) ? docsUrl : `https://${docsUrl}`);
-    return `${base}/_print/pages`;
+    const url = new URL(/^https?:\/\//.test(docsUrl) ? docsUrl : `https://${docsUrl}`);
+    url.pathname = `${stripTrailingSlashes(url.pathname)}/_print/pages`;
+    url.search = "";
+    url.hash = "";
+    return url.toString();
 }
 
 function isPrintPagesResponse(value: unknown): value is { pages: { slug: string }[] } {
@@ -216,10 +221,20 @@ function isPrintPagesResponse(value: unknown): value is { pages: { slug: string 
     );
 }
 
+const PRINT_PAGES_TIMEOUT_MS = 30_000;
+
 /** The slugs of every page the PDF exporter would render for the live site, in order. */
 async function fetchSitePageSlugs({ docsUrl, token }: { docsUrl: string; token: string }): Promise<string[]> {
     const url = printPagesUrl(docsUrl);
-    const response = await fetch(url, { headers: { Accept: "application/json", "x-fern-token": token } });
+    let response: Response;
+    try {
+        response = await fetch(url, {
+            headers: { Accept: "application/json", "x-fern-token": token },
+            signal: AbortSignal.timeout(PRINT_PAGES_TIMEOUT_MS)
+        });
+    } catch (error) {
+        throw new Error(`Listing the site's pages failed: ${extractErrorMessage(error)} (${url})`);
+    }
     if (!response.ok) {
         throw new Error(`Listing the site's pages failed: HTTP ${response.status} from ${url}`);
     }
