@@ -104,27 +104,55 @@ describe("pdfExportOptions", () => {
 
 describe("resolvePdfScope", () => {
     const site = ["docs/welcome", "docs/guides/install", "docs/guides/configure", "docs/guides-extra", "docs/api/auth"];
+    const none = { pages: [], sections: [], excludePages: [], excludeSections: [] };
 
     it("keeps each page and every page under each section, in the site's order", () => {
-        expect(resolvePdfScope({ pages: ["docs/api/auth"], sections: ["/docs/guides/"] }, site)).toEqual([
+        expect(resolvePdfScope({ ...none, pages: ["docs/api/auth"], sections: ["/docs/guides/"] }, site)).toEqual([
             "docs/guides/install",
             "docs/guides/configure",
             "docs/api/auth"
         ]);
-        expect(resolvePdfScope({ pages: ["docs/welcome", "/docs/welcome"], sections: [] }, site)).toEqual([
-            "docs/welcome"
+        expect(resolvePdfScope({ ...none, pages: ["docs/welcome", "/docs/welcome"] }, site)).toEqual(["docs/welcome"]);
+        expect(resolvePdfScope({ ...none, sections: ["docs/guides", "docs/api"] }, site)).toEqual([
+            "docs/guides/install",
+            "docs/guides/configure",
+            "docs/api/auth"
         ]);
     });
 
-    it("refuses a page that is not on the site and a section with no pages", () => {
-        expect(() => resolvePdfScope({ pages: ["docs/missing"], sections: [] }, site)).toThrow(
+    it("drops excluded pages and sections from the selection, or from the whole site", () => {
+        expect(
+            resolvePdfScope(
+                { ...none, sections: ["docs/guides", "docs/api"], excludePages: ["docs/guides/configure"] },
+                site
+            )
+        ).toEqual(["docs/guides/install", "docs/api/auth"]);
+        expect(
+            resolvePdfScope({ ...none, excludeSections: ["docs/guides"], excludePages: ["docs/welcome"] }, site)
+        ).toEqual(["docs/guides-extra", "docs/api/auth"]);
+        expect(
+            resolvePdfScope({ ...none, pages: ["docs/welcome"], excludePages: ["docs/api/auth", "docs/missing"] }, site)
+        ).toEqual(["docs/welcome"]);
+    });
+
+    it("refuses a page that is not on the site, a section with no pages and an empty slug", () => {
+        expect(() => resolvePdfScope({ ...none, pages: ["docs/missing"] }, site)).toThrow(
             "--page docs/missing is not a page on the site."
         );
-        expect(() => resolvePdfScope({ pages: [], sections: ["docs/gui"] }, site)).toThrow(
+        expect(() => resolvePdfScope({ ...none, pages: ["docs/a", "docs/b"] }, site)).toThrow(
+            "--page docs/a, --page docs/b are not pages on the site."
+        );
+        expect(() => resolvePdfScope({ ...none, sections: ["docs/gui"] }, site)).toThrow(
             "--section docs/gui has no pages on the site."
         );
-        expect(() => resolvePdfScope({ pages: ["docs/a", "docs/b"], sections: [] }, site)).toThrow(
-            "--page docs/a, --page docs/b are not pages on the site."
+        expect(() => resolvePdfScope({ ...none, sections: ["/"] }, site)).toThrow(
+            '--section needs a slug such as docs/guides; "/" is empty.'
+        );
+    });
+
+    it("refuses excludes that leave nothing", () => {
+        expect(() => resolvePdfScope({ ...none, sections: ["docs/api"], excludeSections: ["docs/api"] }, site)).toThrow(
+            "--exclude-page and --exclude-section leave no pages to export."
         );
     });
 });

@@ -165,10 +165,24 @@ export interface PdfSettings {
     footerRight?: string;
 }
 
-/** `--page` and `--section` for `fern docs export --format pdf`: site-absolute slugs, as in the page URL. */
+/**
+ * `--page`, `--section`, `--exclude-page` and `--exclude-section` for `fern docs export --format pdf`:
+ * site-absolute slugs, as in the page URL.
+ */
 export interface PdfScopeFlags {
     pages: string[];
     sections: string[];
+    excludePages: string[];
+    excludeSections: string[];
+}
+
+export function hasPdfScope(flags: PdfScopeFlags): boolean {
+    return (
+        flags.pages.length > 0 ||
+        flags.sections.length > 0 ||
+        flags.excludePages.length > 0 ||
+        flags.excludeSections.length > 0
+    );
 }
 
 /** A slug as typed (`/docs/quickstart/`) in the form the site lists it (`docs/quickstart`). */
@@ -181,26 +195,50 @@ function isInSection(slug: string, section: string): boolean {
     return slug === section || slug.startsWith(`${section}/`);
 }
 
+function normalizeFlag(flag: string, slugs: string[]): string[] {
+    return slugs.map((slug) => {
+        const normalized = normalizeSlug(slug);
+        if (normalized === "") {
+            throw new Error(`--${flag} needs a slug such as docs/guides; "${slug}" is empty.`);
+        }
+        return normalized;
+    });
+}
+
 /**
- * The pages a scoped PDF keeps, in the site's order: each `--page`, plus every page under each
- * `--section`. Throws when a `--page` is not on the site or a `--section` holds no pages.
+ * The pages a scoped PDF keeps, in the site's order. The selection is each `--page` plus every page
+ * under each `--section`, or the whole site when neither is given. `--exclude-page` and
+ * `--exclude-section` then drop matching pages from it; excludes outside the selection do nothing.
+ * Throws when a `--page` is not on the site, a `--section` holds no pages, or nothing is left.
  */
 export function resolvePdfScope(flags: PdfScopeFlags, sitePageSlugs: string[]): string[] {
-    const pages = flags.pages.map(normalizeSlug);
-    const sections = flags.sections.map(normalizeSlug);
+    const pages = normalizeFlag("page", flags.pages);
+    const sections = normalizeFlag("section", flags.sections);
+    const excludePages = normalizeFlag("exclude-page", flags.excludePages);
+    const excludeSections = normalizeFlag("exclude-section", flags.excludeSections);
     const missingPages = pages.filter((page) => !sitePageSlugs.includes(page));
     if (missingPages.length > 0) {
-        const flags = missingPages.map((page) => `--page ${page}`).join(", ");
-        throw new Error(`${flags} ${missingPages.length === 1 ? "is not a page" : "are not pages"} on the site.`);
+        const list = missingPages.map((page) => `--page ${page}`).join(", ");
+        throw new Error(`${list} ${missingPages.length === 1 ? "is not a page" : "are not pages"} on the site.`);
     }
     const emptySections = sections.filter((section) => !sitePageSlugs.some((slug) => isInSection(slug, section)));
     if (emptySections.length > 0) {
-        const flags = emptySections.map((section) => `--section ${section}`).join(", ");
-        throw new Error(`${flags} ${emptySections.length === 1 ? "has" : "have"} no pages on the site.`);
+        const list = emptySections.map((section) => `--section ${section}`).join(", ");
+        throw new Error(`${list} ${emptySections.length === 1 ? "has" : "have"} no pages on the site.`);
     }
-    return sitePageSlugs.filter(
-        (slug) => pages.includes(slug) || sections.some((section) => isInSection(slug, section))
+    const selected =
+        pages.length === 0 && sections.length === 0
+            ? sitePageSlugs
+            : sitePageSlugs.filter(
+                  (slug) => pages.includes(slug) || sections.some((section) => isInSection(slug, section))
+              );
+    const kept = selected.filter(
+        (slug) => !excludePages.includes(slug) && !excludeSections.some((section) => isInSection(slug, section))
     );
+    if (kept.length === 0) {
+        throw new Error("--exclude-page and --exclude-section leave no pages to export.");
+    }
+    return kept;
 }
 
 /** The URL of the site's printable page list, the same list the PDF exporter renders. */
@@ -285,7 +323,7 @@ export async function exportDocs({
     output: requestedOutput,
     instance,
     pdf = {},
-    scope = { pages: [], sections: [] }
+    scope = { pages: [], sections: [], excludePages: [], excludeSections: [] }
 }: {
     cliContext: CliContext;
     format: DocsExportFormat;
@@ -294,10 +332,10 @@ export async function exportDocs({
     pdf?: PdfSettings;
     scope?: PdfScopeFlags;
 }): Promise<void> {
-    const scoped = scope.pages.length > 0 || scope.sections.length > 0;
+    const scoped = hasPdfScope(scope);
     if (format !== "pdf" && (pdfExportOptions(pdf) != null || scoped)) {
         return cliContext.failAndThrow(
-            "--no-cover, --no-toc, --cover-title, --cover-subtitle, --header-*, --footer-*, --page and --section only apply to --format pdf.",
+            "--no-cover, --no-toc, --cover-title, --cover-subtitle, --header-*, --footer-*, --page, --section, --exclude-page and --exclude-section only apply to --format pdf.",
             undefined,
             { code: CliError.Code.ConfigError }
         );
@@ -308,9 +346,7 @@ export async function exportDocs({
         const outputFile = path.resolve(pdfOutputPath(output));
         await cliContext.runTask(async (context) => {
             await withSpinner(context, cliContext.isTTY, { name: "Exporting PDF" }, async () => {
-                const pageSlugs = scoped
-                    ? resolvePdfScope(scope, await fetchSitePageSlugs(hosted.docsUrl))
-                    : [];
+                const pageSlugs = scoped ? resolvePdfScope(scope, await fetchSitePageSlugs(hosted.docsUrl)) : [];
                 await downloadHostedPdf({ ...hosted, outputFile, options: pdfExportOptions(pdf, pageSlugs) });
                 const pages = scoped ? ` (${pageSlugs.length} ${pageSlugs.length === 1 ? "page" : "pages"})` : "";
                 return [chalk.green(`Exported PDF${pages} to ${displayPath(outputFile, process.cwd())}`)];

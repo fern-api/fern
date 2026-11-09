@@ -1,7 +1,8 @@
 # yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
 
 - summary: |
-    `fern docs export --format pdf` can now export part of the site. Pass `--section <slug>` to include
-    every page under a slug (`--section docs/guides`) and `--page <slug>` to include single pages. Both
-    can be repeated and combined; pages keep the site's order.
+    `fern docs export --format pdf` can now export part of the site. `--section <slug>` includes every
+    page under a slug (`--section docs/guides`) and `--page <slug>` includes single pages.
+    `--exclude-page` and `--exclude-section` then drop pages from that selection, or from the whole site
+    when no `--page` or `--section` is given. All four can be repeated; pages keep the site's order.
   type: feat
