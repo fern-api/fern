@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.204.0
+  changelogEntry:
+    - summary: |
+        Add `remote-paths` to `docs.yml`. Each entry reverse-proxies a path prefix on your docs domain
+        (for example `/ui`) to an HTTPS service you run, while Fern keeps serving the rest of the site.
+        `fern check` validates each path and destination with the new `valid-remote-paths` rule.
+      type: feat
+    - summary: |
+        A generators.yml build sent to sdk-gen-api is filed under the workspace name (`fern/apis/<name>`) when the
+        API definition carries the default name "api", so each API of an organization gets its own SDK.
+      type: fix
+  createdAt: "2026-11-10"
+  irVersion: 67
 - version: 5.203.0
   changelogEntry:
     - summary: |
