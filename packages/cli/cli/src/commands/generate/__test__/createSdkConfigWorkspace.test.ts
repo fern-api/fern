@@ -480,6 +480,53 @@ describe("createSdkConfigWorkspace", () => {
         await cleanup();
     });
 
+    it("maps the object import settings to the importer's generators.yml key names", async () => {
+        const directory = await mkdtemp(path.join(tmpdir(), "fern-sdk-config-workspace-"));
+        temporaryDirectories.push(directory);
+        await writeFile(
+            path.join(directory, "openapi.yml"),
+            "openapi: 3.0.0\ninfo:\n  title: Sample API\n  version: 1.0.0\npaths: {}\n"
+        );
+
+        const { workspace, cleanup } = await createSdkConfigWorkspace({
+            sdkConfig: parseSdkConfigV1({
+                schemaVersion: "sdk-config/v1",
+                sdkName: "sample-sdk",
+                source: {
+                    apiImportSettings: {
+                        useReadVariantForResponses: true,
+                        exampleGeneration: { request: { maxDepth: 1 }, response: { maxDepth: 5 } },
+                        errorResponses: {
+                            schema: { type: "object" },
+                            applyTo: "untyped",
+                            ensure: [{ statusCode: 422, methods: ["post"] }, { statusCode: 500 }]
+                        }
+                    },
+                    specs: [{ id: "sample-api", type: "openapi", path: "./openapi.yml" }]
+                },
+                targets: [{ language: "python", output: { delivery: "files" } }]
+            }),
+            absolutePathToConfig: path.join(directory, "sdk-config.yml"),
+            cliVersion: "0.0.0",
+            context: createMockTaskContext()
+        });
+
+        const spec = workspace.allSpecs[0];
+        if (spec?.type !== "openapi") {
+            throw new Error("Expected an OpenAPI specification");
+        }
+        expect(spec.settings).toMatchObject({
+            useReadVariantForResponses: true,
+            exampleGeneration: { request: { "max-depth": 1 }, response: { "max-depth": 5 } },
+            errorResponses: {
+                schema: { type: "object" },
+                "apply-to": "untyped",
+                ensure: [{ "status-code": 422, methods: ["post"] }, { "status-code": 500 }]
+            }
+        });
+        await cleanup();
+    });
+
     it("materializes a bundled OpenAPI URL source and cleans it up", async () => {
         vi.mocked(bundleRemoteOpenAPI).mockResolvedValue({
             openapi: "3.0.0",

@@ -27,11 +27,51 @@ export const SETTINGS_KEYS: Partial<Record<keyof ApiImportSettings, string>> = {
     titleAsSchemaName: "title-as-schema-name",
     typeDatesAsStrings: "type-dates-as-strings",
     undiscriminatedUnionsWithLiterals: "prefer-undiscriminated-unions-with-literals",
-    wrapReferencesToNullableInOptional: "wrap-references-to-nullable-in-optional"
+    wrapReferencesToNullableInOptional: "wrap-references-to-nullable-in-optional",
+    additionalPropertiesDefaultsTo: "additional-properties-defaults-to",
+    optionalAdditionalProperties: "optional-additional-properties",
+    anyOfSiblingPropertiesAsObject: "any-of-sibling-properties-as-object",
+    preserveSingleSchemaOneOf: "preserve-single-schema-oneof",
+    preserveOneOfInAllOf: "preserve-one-of-in-all-of",
+    removeDiscriminantsFromSchemas: "remove-discriminants-from-schemas",
+    coerceConstsTo: "coerce-consts-to",
+    resolveAliases: "resolve-aliases",
+    respectForwardCompatibleEnums: "respect-forward-compatible-enums",
+    inferForwardCompatible: "infer-forward-compatible",
+    respectOperationIdWordBoundaries: "respect-operation-id-word-boundaries",
+    namespacedErrors: "namespaced-errors",
+    defaultFormParameterEncoding: "default-form-parameter-encoding",
+    respectParameterContent: "respect-parameter-content",
+    useBytesForBinaryResponse: "use-bytes-for-binary-response",
+    useReadVariantForResponses: "use-read-variant-for-responses",
+    groupEnvironmentsByHost: "group-environments-by-host",
+    multiServerStrategy: "multi-server-strategy",
+    inferDefaultEnvironment: "infer-default-environment",
+    respectPerSpecBasePath: "respect-per-spec-base-path",
+    exampleGeneration: "example-generation",
+    filter: "filter",
+    errorResponses: "error-responses"
 };
 
+/**
+ * Settings that are objects in both SDK Config and generators.yml. The values are the same apart from camelCase
+ * names, so their leaves are listed (a container is not a leaf path) and `settingValue` renames the keys.
+ */
+const OBJECT_SETTING_LEAVES: Partial<Record<keyof ApiImportSettings, string[]>> = {
+    resolveAliases: ["except"],
+    exampleGeneration: ["request.maxDepth", "response.maxDepth"],
+    filter: ["endpoints"],
+    errorResponses: ["schema.*", "name", "applyTo", "ensure[].statusCode", "ensure[].methods"]
+};
+
+/** Every import setting path (under `source.apiImportSettings` and `source.specs[].apiImportSettings`) written. */
+export const SETTING_PATHS: string[] = Object.keys(SETTINGS_KEYS).flatMap((name) => {
+    const leaves = OBJECT_SETTING_LEAVES[name as keyof ApiImportSettings];
+    const isContainerOnly = ["exampleGeneration", "filter", "errorResponses"].includes(name);
+    return [...(isContainerOnly ? [] : [name]), ...(leaves ?? []).map((leaf) => `${name}.${leaf}`)];
+});
+
 const OPENAPI_TYPES = new Set(["openapi", "swagger"]);
-const SETTING_NAMES = Object.keys(SETTINGS_KEYS);
 
 /** Folder, under the generators.yml folder, for files the translation writes besides generators.yml. */
 export const TRANSLATION_FILES_DIRECTORY = ".cli-target";
@@ -48,8 +88,8 @@ export const specsRule: MapperRule = {
         "source.specs[].namespace",
         "source.specs[].overrides",
         "source.specs[].overlays",
-        ...SETTING_NAMES.map((name) => `source.apiImportSettings.${name}`),
-        ...SETTING_NAMES.map((name) => `source.specs[].apiImportSettings.${name}`)
+        ...SETTING_PATHS.map((path) => `source.apiImportSettings.${path}`),
+        ...SETTING_PATHS.map((path) => `source.specs[].apiImportSettings.${path}`)
     ],
     apply(context) {
         const rootSettings = context.ir.source.apiImportSettings ?? {};
@@ -136,10 +176,49 @@ function kebabSettings(settings: ApiImportSettings): Record<string, unknown> {
     for (const [name, value] of Object.entries(settings)) {
         const key = settingKey(name);
         if (key != null && value !== undefined) {
-            mapped[key] = value;
+            mapped[key] = settingValue(name, value);
         }
     }
     return mapped;
+}
+
+/** The value in generators.yml: object settings use kebab-case keys where SDK Config uses camelCase. */
+function settingValue(name: string, value: unknown): unknown {
+    const object = value as Record<string, unknown>;
+    switch (name) {
+        case "exampleGeneration":
+            return Object.fromEntries(
+                Object.entries(object).map(([side, depth]) => [
+                    side,
+                    Object.fromEntries(
+                        Object.entries(depth as Record<string, unknown>).map(([key, entry]) => [
+                            key === "maxDepth" ? "max-depth" : key,
+                            entry
+                        ])
+                    )
+                ])
+            );
+        case "errorResponses": {
+            const { applyTo, ensure, ...rest } = object as {
+                applyTo?: unknown;
+                ensure?: Array<{ statusCode: number; methods?: unknown }>;
+            } & Record<string, unknown>;
+            return {
+                ...rest,
+                ...(applyTo !== undefined ? { "apply-to": applyTo } : {}),
+                ...(ensure !== undefined
+                    ? {
+                          ensure: ensure.map(({ statusCode, methods }) => ({
+                              "status-code": statusCode,
+                              ...(methods !== undefined ? { methods } : {})
+                          }))
+                      }
+                    : {})
+            };
+        }
+        default:
+            return value;
+    }
 }
 
 function settingKey(name: string): string | undefined {

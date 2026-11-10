@@ -1,6 +1,7 @@
 import type { FieldTreatment } from "./fieldTreatments.js";
 import { HOSTED_FIELD_TREATMENTS } from "./hostedFieldTreatments.js";
 import { CLI_GENERATION_PATHS, DISTRIBUTION_PATHS } from "./rules/cliConfig.js";
+import { SETTING_PATHS } from "./rules/specs.js";
 
 const LOCAL_GITHUB_FIELDS = new Set(["output.github.repository", "output.github.mode", "output.github.branch"]);
 
@@ -79,6 +80,18 @@ const CLI_GENERATION_SETTINGS: Record<string, FieldTreatment> = Object.fromEntri
         path,
         { treatment: "Map", note: "The fern-cli-generator `config` key of the same name." }
     ])
+);
+
+/** Import settings newer than the hosted table's @postman/sdk-config version, written under their generators.yml key. */
+const NEW_IMPORT_SETTINGS: Record<string, FieldTreatment> = Object.fromEntries(
+    ["source.apiImportSettings", "source.specs[].apiImportSettings"].flatMap((prefix) =>
+        SETTING_PATHS.map((path) => `${prefix}.${path}`)
+            .filter((path) => HOSTED_FIELD_TREATMENTS[path] == null)
+            .map((path) => [
+                path,
+                { treatment: "Map", note: "The generators.yml `settings` key of the same name, in kebab-case." }
+            ])
+    )
 );
 
 const DISTRIBUTION_FIELDS: Record<string, FieldTreatment> = Object.fromEntries(
@@ -176,6 +189,7 @@ export const FIELD_TREATMENT_OVERRIDES: Record<string, FieldTreatment> = {
 export const LOCAL_FIELD_ADDITIONS: Record<string, FieldTreatment> = {
     ...CLI_GENERATION_SETTINGS,
     ...DISTRIBUTION_FIELDS,
+    ...NEW_IMPORT_SETTINGS,
     "api.auth.schemes[].flows[].clientId": {
         treatment: "Map",
         note: "`client-id` on an authorization-code OAuth scheme: the public client ID browser login sends."

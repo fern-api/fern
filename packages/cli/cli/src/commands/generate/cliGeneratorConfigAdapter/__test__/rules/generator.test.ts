@@ -119,6 +119,7 @@ describe("generator rule", () => {
 
     it("copies the typed CLI generation settings into config under the generator's key names", () => {
         const cli = {
+            banner: { text: "ACME", lineColors: ["#ff0000", "#00ff00"], direction: "vertical", animate: true },
             binaryName: "Acme CLI",
             customCommands: false,
             rootGroup: "api",
@@ -129,7 +130,10 @@ describe("generator rule", () => {
                 provisionOperation: {
                     operation: "iam.keys.create",
                     credential: { username: "sid", password: "secret" },
-                    revokeParameters: { Sid: "sid" }
+                    revokeParameters: { Sid: "sid" },
+                    flag: "api-key",
+                    parameters: { FriendlyName: "{cli} for {user}" },
+                    profileParameters: { AccountSid: "username" }
                 }
             },
             splitTypeCrates: true,

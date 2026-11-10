@@ -351,9 +351,39 @@ async function createProtobufSpec({
 
 function getImportSettings(sdkConfig: SdkConfigV1, spec: SdkConfigV1SourceSpec): OpenAPISettings {
     const settings = { ...sdkConfig.source.apiImportSettings, ...spec.apiImportSettings };
+    const { exampleGeneration, errorResponses } = settings;
     return getOpenAPISettings({
         overrides: {
             ...settings,
+            // SDK Config names the depth `maxDepth`; the importer reads Fern's generators.yml key `max-depth`.
+            exampleGeneration:
+                exampleGeneration == null
+                    ? undefined
+                    : {
+                          ...(exampleGeneration.request != null
+                              ? { request: { "max-depth": exampleGeneration.request.maxDepth } }
+                              : {}),
+                          ...(exampleGeneration.response != null
+                              ? { response: { "max-depth": exampleGeneration.response.maxDepth } }
+                              : {})
+                      },
+            // Likewise `applyTo` and `statusCode` are `apply-to` and `status-code` in Fern's schema.
+            errorResponses:
+                errorResponses == null
+                    ? undefined
+                    : {
+                          schema: errorResponses.schema,
+                          ...(errorResponses.name != null ? { name: errorResponses.name } : {}),
+                          ...(errorResponses.applyTo != null ? { "apply-to": errorResponses.applyTo } : {}),
+                          ...(errorResponses.ensure != null
+                              ? {
+                                    ensure: errorResponses.ensure.map(({ statusCode, methods }) => ({
+                                        "status-code": statusCode,
+                                        ...(methods != null ? { methods } : {})
+                                    }))
+                                }
+                              : {})
+                      },
             useTitlesAsName: settings.titleAsSchemaName,
             shouldUseIdiomaticRequestNames: settings.idiomaticRequestNames,
             shouldUseUndiscriminatedUnionsWithLiterals: settings.undiscriminatedUnionsWithLiterals,

@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+- summary: |
+    Bumps `@postman/sdk-config` to 0.21.0. With `--local`, the `cli` target translation writes the new
+    `apiImportSettings` (respect-forward-compatible-enums, use-read-variant-for-responses, example-generation,
+    filter, error-responses, resolve-aliases, and the rest of the importer settings) under their `generators.yml`
+    `settings` keys, and passes `generation.language.cli.banner` and the profile provision operation's `flag`,
+    `parameters` and `profileParameters` to the CLI generator's config.
+  type: feat

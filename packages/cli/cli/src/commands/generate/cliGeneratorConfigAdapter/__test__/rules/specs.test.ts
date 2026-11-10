@@ -101,6 +101,72 @@ describe("specs rule", () => {
         ]);
     });
 
+    it("writes the import settings added in sdk-config 0.21.0 under their generators.yml keys", () => {
+        const result = map({
+            specs: [
+                spec({
+                    apiImportSettings: {
+                        additionalPropertiesDefaultsTo: false,
+                        preserveSingleSchemaOneOf: true,
+                        removeDiscriminantsFromSchemas: "never",
+                        coerceConstsTo: "enums",
+                        respectForwardCompatibleEnums: true,
+                        inferForwardCompatible: true,
+                        defaultFormParameterEncoding: "json",
+                        useReadVariantForResponses: true,
+                        multiServerStrategy: "urls-per-environment",
+                        respectPerSpecBasePath: true
+                    }
+                })
+            ]
+        });
+        expect(api(result).specs).toEqual([
+            {
+                openapi: "./openapi.yml",
+                settings: {
+                    "additional-properties-defaults-to": false,
+                    "preserve-single-schema-oneof": true,
+                    "remove-discriminants-from-schemas": "never",
+                    "coerce-consts-to": "enums",
+                    "respect-forward-compatible-enums": true,
+                    "infer-forward-compatible": true,
+                    "default-form-parameter-encoding": "json",
+                    "use-read-variant-for-responses": true,
+                    "multi-server-strategy": "urls-per-environment",
+                    "respect-per-spec-base-path": true
+                }
+            }
+        ]);
+    });
+
+    it("renames the keys inside the object import settings", () => {
+        const result = map({
+            specs: [spec()],
+            apiImportSettings: {
+                resolveAliases: { except: ["Id"] },
+                exampleGeneration: { request: { maxDepth: 1 }, response: { maxDepth: 5 } },
+                filter: { endpoints: ["GET /users"] },
+                errorResponses: {
+                    schema: { type: "object", title: "Problem" },
+                    name: "Problem",
+                    applyTo: "untyped",
+                    ensure: [{ statusCode: 422, methods: ["post", "put"] }, { statusCode: 500 }]
+                }
+            }
+        });
+        expect(api(result).settings).toEqual({
+            "resolve-aliases": { except: ["Id"] },
+            "example-generation": { request: { "max-depth": 1 }, response: { "max-depth": 5 } },
+            filter: { endpoints: ["GET /users"] },
+            "error-responses": {
+                schema: { type: "object", title: "Problem" },
+                name: "Problem",
+                "apply-to": "untyped",
+                ensure: [{ "status-code": 422, methods: ["post", "put"] }, { "status-code": 500 }]
+            }
+        });
+    });
+
     it("lets a spec-level setting win over the root value", () => {
         const result = map({
             specs: [spec({ apiImportSettings: { titleAsSchemaName: true } })],

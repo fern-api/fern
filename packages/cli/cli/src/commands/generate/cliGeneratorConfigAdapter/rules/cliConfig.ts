@@ -2,6 +2,7 @@ import type { SdkConfigIrV1 } from "@postman/sdk-config";
 
 /** CLI generation settings that fern-cli-generator reads from `config` under the same key. */
 const CLI_GENERATION_KEYS = [
+    "banner",
     "binaryName",
     "customCommands",
     "rootGroup",
@@ -11,6 +12,12 @@ const CLI_GENERATION_KEYS = [
 ] as const;
 
 export const CLI_GENERATION_PATHS = [
+    "generation.language.cli.banner",
+    "generation.language.cli.banner.text",
+    "generation.language.cli.banner.colors",
+    "generation.language.cli.banner.lineColors",
+    "generation.language.cli.banner.direction",
+    "generation.language.cli.banner.animate",
     "generation.language.cli.binaryName",
     "generation.language.cli.customCommands",
     "generation.language.cli.rootGroup",
@@ -19,6 +26,9 @@ export const CLI_GENERATION_PATHS = [
     "generation.language.cli.profiles.revokeOperation",
     "generation.language.cli.profiles.provisionOperation.operation",
     "generation.language.cli.profiles.provisionOperation.credential.*",
+    "generation.language.cli.profiles.provisionOperation.flag",
+    "generation.language.cli.profiles.provisionOperation.parameters.*",
+    "generation.language.cli.profiles.provisionOperation.profileParameters.*",
     "generation.language.cli.profiles.provisionOperation.revokeParameters.*",
     "generation.language.cli.splitTypeCrates",
     "generation.language.cli.userAgentSuffixFlag"
