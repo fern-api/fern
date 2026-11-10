@@ -15,8 +15,7 @@ export {
 export { applyTranslatedFrontmatterToNavTree } from "./applyTranslatedFrontmatterToNavTree.js";
 export {
     applyTranslatedNavigationOverlays,
-    getTranslatedAnnouncement,
-    getTranslatedSettings
+    getTranslatedAnnouncement
 } from "./applyTranslatedNavigationOverlays.js";
 export { markUntranslatedNavNodesNoindex } from "./markUntranslatedNavNodesNoindex.js";
 export type TranslationNavigationOverlay = docsYml.TranslationNavigationOverlay;
