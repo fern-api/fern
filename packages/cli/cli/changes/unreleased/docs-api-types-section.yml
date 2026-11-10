@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `types: true` to the `api` navigation item in `docs.yml`. When set, every schema that no endpoint,
+    webhook or WebSocket of the API references gets its own page under a `Types` section at the end of the
+    API reference (e.g. a schema-only OpenAPI document such as TwiML). Off by default.
+  type: feat

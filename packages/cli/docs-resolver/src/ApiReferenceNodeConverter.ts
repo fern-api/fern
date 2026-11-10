@@ -83,6 +83,15 @@ type GraphqlTypeChildNode = Extract<FernNavigation.V1.ApiPackageChild, { type: "
 const GRAPHQL_TYPES_URL_SLUG = "types";
 
 /**
+ * The standalone-type-page member of {@link FernNavigation.V1.ApiPackageChild}, emitted for
+ * schemas no operation references when the API section sets `types: true`.
+ */
+type ApiTypeChildNode = Extract<FernNavigation.V1.ApiPackageChild, { type: "apiType" }>;
+
+const API_TYPES_URL_SLUG = "types";
+const API_TYPES_TITLE = "Types";
+
+/**
  * Title of the single section holding every GraphQL kind. Types belong to the schema rather than
  * to any one package, so every GraphQL spec in the API section contributes to this one section.
  */
@@ -1172,6 +1181,12 @@ export class ApiReferenceNodeConverter {
             if (graphqlTypesSection != null) {
                 additionalChildren.push(graphqlTypesSection);
             }
+            if (this.apiSection.types) {
+                const apiTypesSection = this.#convertUnreferencedTypesToSection(parentSlug, parentAvailability);
+                if (apiTypesSection != null) {
+                    additionalChildren.push(apiTypesSection);
+                }
+            }
         }
 
         additionalChildren = this.mergeEndpointPairs(additionalChildren);
@@ -1452,6 +1467,115 @@ export class ApiReferenceNodeConverter {
             orphaned: undefined,
             featureFlags: undefined
         } as ApiPackageNodeWithCollapsibleConfig;
+    }
+
+    /**
+     * Every type id an endpoint, WebSocket, webhook or GraphQL operation of the API reaches,
+     * directly or through another type. Those types are documented inline on the operation
+     * pages; the remainder (e.g. a schema-only spec such as TwiML, or a webhook payload the
+     * spec never wires to an operation) is what `types: true` gives a page to.
+     */
+    #collectReferencedTypeIds(): Set<FdrAPI.TypeId> {
+        const api = this.#holder.api;
+        const referenced = new Set<FdrAPI.TypeId>();
+        const queue: FdrAPI.TypeId[] = [];
+        const visit = (typeId: FdrAPI.TypeId): void => {
+            if (!referenced.has(typeId)) {
+                referenced.add(typeId);
+                queue.push(typeId);
+            }
+        };
+        for (const pkg of [api.rootPackage, ...Object.values(api.subpackages)]) {
+            pkg.endpoints.forEach((endpoint) =>
+                FernNavigation.ApiTypeIdVisitor.visitEndpointDefinition(endpoint, visit)
+            );
+            pkg.websockets.forEach((channel) => FernNavigation.ApiTypeIdVisitor.visitWebSocketChannel(channel, visit));
+            pkg.webhooks.forEach((webhook) => FernNavigation.ApiTypeIdVisitor.visitWebhookDefinition(webhook, visit));
+            pkg.graphqlOperations?.forEach((operation) =>
+                FernNavigation.ApiTypeIdVisitor.visitGraphQlOperation(operation, visit)
+            );
+        }
+        for (let typeId = queue.shift(); typeId != null; typeId = queue.shift()) {
+            const type = api.types[typeId];
+            if (type != null) {
+                FernNavigation.ApiTypeIdVisitor.visitTypeDefinition(type, visit);
+            }
+        }
+        return referenced;
+    }
+
+    /**
+     * One "Types" section at the API root with a page per schema no operation references (see
+     * {@link #collectReferencedTypeIds}). GraphQL types have their own section; they are left out.
+     */
+    #convertUnreferencedTypesToSection(
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        parentAvailability?: docsYml.RawSchemas.Availability
+    ): FernNavigation.V1.ApiPackageChild | undefined {
+        const referenced = this.#collectReferencedTypeIds();
+        const typesSlug = parentSlug.append(API_TYPES_URL_SLUG);
+        const children: FernNavigation.V1.ApiPackageChild[] = Object.keys(this.#holder.api.types)
+            .map((typeIdRaw) => FdrAPI.TypeId(typeIdRaw))
+            .filter((typeId) => !referenced.has(typeId) && this.#graphqlTypeCategories[typeId] == null)
+            .map((typeId) => this.#buildApiTypeChildNode(typeId, typesSlug, parentAvailability))
+            .filter(isNonNullish)
+            .sort((a, b) => a.title.localeCompare(b.title));
+
+        if (children.length === 0) {
+            return undefined;
+        }
+
+        return {
+            id: this.#idgen.get(`${this.apiDefinitionId}:types`),
+            type: "apiPackage",
+            collapsed: undefined,
+            children,
+            title: API_TYPES_TITLE,
+            slug: typesSlug.get(),
+            icon: undefined,
+            hidden: this.hideChildren,
+            overviewPageId: undefined,
+            collapsible: undefined,
+            collapsedByDefault: undefined,
+            availability: convertDocsAvailability(parentAvailability),
+            apiDefinitionId: this.apiDefinitionId,
+            pointsTo: undefined,
+            noindex: undefined,
+            playground: undefined,
+            authed: undefined,
+            viewers: undefined,
+            orphaned: undefined,
+            featureFlags: undefined
+        } as ApiPackageNodeWithCollapsibleConfig;
+    }
+
+    #buildApiTypeChildNode(
+        typeId: FdrAPI.TypeId,
+        sectionSlug: FernNavigation.V1.SlugGenerator,
+        parentAvailability?: docsYml.RawSchemas.Availability
+    ): ApiTypeChildNode | undefined {
+        const type = this.#holder.api.types[typeId];
+        if (type == null) {
+            return undefined;
+        }
+        const title = type.displayName ?? type.name ?? typeId;
+        return {
+            id: this.#idgen.get(`${this.apiDefinitionId}:apiType:${typeId}`),
+            type: "apiType",
+            collapsed: undefined,
+            typeId: FernNavigation.TypeId(typeId),
+            title,
+            slug: sectionSlug.append(kebabCase(title)).get(),
+            icon: undefined,
+            hidden: this.hideChildren,
+            apiDefinitionId: this.apiDefinitionId,
+            availability:
+                FernNavigation.V1.convertAvailability(type.availability) ?? convertDocsAvailability(parentAvailability),
+            authed: undefined,
+            viewers: undefined,
+            orphaned: undefined,
+            featureFlags: undefined
+        };
     }
 
     #buildGraphqlTypeChildNode(
