@@ -1,5 +1,5 @@
 import { createLogger, LogLevel } from "@fern-api/logger";
-import { CliError, TaskAbortSignal } from "@fern-api/task-context";
+import { CliError, InstructionsTopic, TaskAbortSignal } from "@fern-api/task-context";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { logErrorMessage } from "../logErrorMessage.js";
@@ -61,7 +61,12 @@ describe("logErrorMessage instructions hint", () => {
     it("points to the topic list for the index topic", () => {
         vi.stubEnv("AI_AGENT", "codex");
         const { lines, logger } = captureLogs();
-        logErrorMessage({ message: "Unknown argument: foo", error: undefined, logger, instructionsTopic: "" });
+        logErrorMessage({
+            message: "Unknown argument: foo",
+            error: undefined,
+            logger,
+            instructionsTopic: InstructionsTopic.Index
+        });
         expect(lines).toEqual(["Unknown argument: foo", "For guidance, run `fern instructions`."]);
     });
 

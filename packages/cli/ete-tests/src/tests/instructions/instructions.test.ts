@@ -107,13 +107,19 @@ describe("fern instructions", () => {
     it("resolves every topic that CLI errors point to", async ({ signal }) => {
         const failures: string[] = [];
         for (const topic of Object.values(InstructionsTopic)) {
-            const problem = describeProblem(await runInstructions(topic.split(" ").filter(Boolean), signal));
+            const problem = describeProblem(await runInstructions(topic.split(" "), signal));
             if (problem != null) {
                 failures.push(`"${topic}": ${problem}`);
             }
         }
         expect(failures).toEqual([]);
     }, 120_000);
+
+    it("prints the same index for `fern instructions index`", async ({ signal }) => {
+        const [bare, index] = await Promise.all([runInstructions([], signal), runInstructions(["index"], signal)]);
+        expect(describeProblem(index)).toBeUndefined();
+        expect(index.stdout).toBe(bare.stdout);
+    }, 60_000);
 
     it("fails with a pointer to the topic list for an unknown topic", async ({ signal }) => {
         const { exitCode, stdout, stderr } = await runInstructions(["not-a-real-topic"], signal);

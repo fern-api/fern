@@ -4,8 +4,8 @@
  */
 export type InstructionsTopic = (typeof InstructionsTopic)[keyof typeof InstructionsTopic];
 export const InstructionsTopic = {
-    /** The topic list itself: `fern instructions` with no topic. */
-    Index: "",
+    /** The topic list itself. Hints print it as bare `fern instructions`; `fern instructions index` also works. */
+    Index: "index",
     NewSite: "new-site",
     SdksMigrate: "sdks migrate",
     AccessTeam: "access team"
