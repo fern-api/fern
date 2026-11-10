@@ -141,7 +141,7 @@ export class CliContext {
     public failAndThrow(
         message?: string,
         error?: unknown,
-        options?: { code?: CliError.Code; instructionsTopic?: InstructionsTopic }
+        options?: { code?: CliError.Code; instructionsTopic?: InstructionsTopic | readonly InstructionsTopic[] }
     ): never {
         this.failWithoutThrowing(message, error, options);
         throw new TaskAbortSignal(
@@ -157,7 +157,7 @@ export class CliContext {
     public failWithoutThrowing(
         message?: string,
         error?: unknown,
-        options?: { code?: CliError.Code; instructionsTopic?: InstructionsTopic }
+        options?: { code?: CliError.Code; instructionsTopic?: InstructionsTopic | readonly InstructionsTopic[] }
     ): void {
         this.didSucceed = false;
         if (error instanceof TaskAbortSignal) {

@@ -14,12 +14,12 @@ export interface TaskContext {
     failAndThrow: (
         message?: string,
         error?: unknown,
-        options?: { code?: CliError.Code; instructionsTopic?: InstructionsTopic }
+        options?: { code?: CliError.Code; instructionsTopic?: InstructionsTopic | readonly InstructionsTopic[] }
     ) => never;
     failWithoutThrowing: (
         message?: string,
         error?: unknown,
-        options?: { code?: CliError.Code; instructionsTopic?: InstructionsTopic }
+        options?: { code?: CliError.Code; instructionsTopic?: InstructionsTopic | readonly InstructionsTopic[] }
     ) => void;
     captureException: (error: unknown, options?: CaptureExceptionOptions) => string | undefined;
     getResult: () => TaskResult;

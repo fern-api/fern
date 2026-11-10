@@ -16,12 +16,16 @@ export function logErrorMessage({
     error: unknown;
     logger: Logger;
     logLevel?: LogLevel;
-    /** Overrides the error's own `CliError.instructionsTopic`. */
-    instructionsTopic?: InstructionsTopic;
+    /** Overrides the error's own `CliError.instructionsTopic`. Each topic gets its own hint line. */
+    instructionsTopic?: InstructionsTopic | readonly InstructionsTopic[];
 }): void {
+    const topics = toTopicList(instructionsTopic ?? (error instanceof CliError ? error.instructionsTopic : undefined));
+
     if (message != null) {
         logger.log(logLevel, message);
     } else if (error == null) {
+        // e.g. `fern check`, which has already printed its report and only adds hints here
+        logInstructionsHints({ topics, logger, logLevel });
         return;
     }
 
@@ -37,14 +41,39 @@ export function logErrorMessage({
         }
     }
 
-    const topic = instructionsTopic ?? (error instanceof CliError ? error.instructionsTopic : undefined);
-    if (topic != null && isCodingAgent()) {
-        logger.log(logLevel, getInstructionsHint(topic));
-    }
+    logInstructionsHints({ topics, logger, logLevel });
 
     const stack = error instanceof Error ? error.stack : new Error(JSON.stringify(error)).stack;
     if (stack != null) {
         logger.debug(chalk.red(stack));
+    }
+}
+
+function toTopicList(topic: InstructionsTopic | readonly InstructionsTopic[] | undefined): InstructionsTopic[] {
+    if (topic == null) {
+        return [];
+    }
+    return isTopicList(topic) ? [...new Set(topic)] : [topic];
+}
+
+function isTopicList(topic: InstructionsTopic | readonly InstructionsTopic[]): topic is readonly InstructionsTopic[] {
+    return Array.isArray(topic);
+}
+
+function logInstructionsHints({
+    topics,
+    logger,
+    logLevel
+}: {
+    topics: InstructionsTopic[];
+    logger: Logger;
+    logLevel: LogLevel;
+}): void {
+    if (topics.length === 0 || !isCodingAgent()) {
+        return;
+    }
+    for (const topic of topics) {
+        logger.log(logLevel, getInstructionsHint(topic));
     }
 }
 
