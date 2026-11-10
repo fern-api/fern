@@ -5,6 +5,7 @@ import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { kebabCase, last } from "lodash-es";
 
+import type { ProfileVarsFor } from "./ApiReferenceNodeConverter.js";
 import { NodeIdGenerator } from "./NodeIdGenerator.js";
 import { extractDatetimeFromChangelogTitle } from "./utils/extractDatetimeFromChangelogTitle.js";
 
@@ -33,7 +34,8 @@ export class ChangelogNodeConverter {
         private markdownToTags: Map<AbsoluteFilePath, string[]>,
         private changelogFiles: AbsoluteFilePath[] | undefined,
         private docsWorkspace: DocsWorkspace,
-        private idgen: NodeIdGenerator
+        private idgen: NodeIdGenerator,
+        private profileVarsFor: ProfileVarsFor = () => ({})
     ) {}
 
     public toChangelogNode(opts: ConvertOptions): FernNavigation.V1.ChangelogNode {
@@ -100,7 +102,8 @@ export class ChangelogNodeConverter {
                 viewers: undefined,
                 orphaned: undefined,
                 featureFlags: undefined,
-                tags: this.markdownToTags.get(item.absoluteFilepath)
+                tags: this.markdownToTags.get(item.absoluteFilepath),
+                ...this.profileVarsFor(item.absoluteFilepath)
             };
         });
 
@@ -124,7 +127,8 @@ export class ChangelogNodeConverter {
             authed: undefined,
             viewers: opts.viewers,
             orphaned: opts.orphaned,
-            featureFlags: undefined
+            featureFlags: undefined,
+            ...(overviewPagePath != null ? this.profileVarsFor(overviewPagePath) : {})
         };
     }
 

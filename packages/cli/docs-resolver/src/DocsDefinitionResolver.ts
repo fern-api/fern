@@ -2501,7 +2501,8 @@ export class DocsDefinitionResolver {
             this.markdownFilesToTags,
             item.changelog,
             this.docsWorkspace,
-            this.#idgen
+            this.#idgen,
+            this.profileVarsFor.bind(this)
         );
 
         return changelogResolver.toChangelogNode({
@@ -3118,7 +3119,8 @@ export class DocsDefinitionResolver {
             this.markdownFilesToTags,
             changelog,
             this.docsWorkspace,
-            this.#idgen
+            this.#idgen,
+            this.profileVarsFor.bind(this)
         );
         return changelogResolver.toChangelogNode({
             parentSlug,

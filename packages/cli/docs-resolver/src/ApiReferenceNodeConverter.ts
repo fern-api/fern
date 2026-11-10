@@ -188,7 +188,8 @@ export class ApiReferenceNodeConverter {
             this.markdownFilesToTags,
             this.workspace?.changelog?.files.map((file) => file.absoluteFilepath),
             this.docsWorkspace,
-            this.#idgen
+            this.#idgen,
+            this.profileVarsFor
         ).orUndefined();
 
         // When no explicit overview is set and tag-description-pages is NOT enabled,

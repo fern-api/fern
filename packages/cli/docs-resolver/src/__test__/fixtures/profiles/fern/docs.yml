@@ -50,6 +50,8 @@ navigation:
             path: ./pages/plain.mdx
           - page: Translated
             path: ./pages/translated.mdx
+          - changelog: ./changelog
+            title: Changelog
           - api: API
             layout:
               - page: API guide
