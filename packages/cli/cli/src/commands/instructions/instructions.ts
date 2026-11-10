@@ -1,5 +1,5 @@
 import { assertNever, errorMessageOrString } from "@fern-api/core-utils";
-import { CliError } from "@fern-api/task-context";
+import { CliError, InstructionsTopic } from "@fern-api/task-context";
 
 import { CliContext } from "../../cli-context/CliContext.js";
 
@@ -20,12 +20,14 @@ export type InstructionsPageResult =
 /**
  * Splits topic words into URL path segments. Accepts `docs publish domain`
  * as separate arguments, as one quoted argument, or as `docs/publish/domain`.
+ * The reserved `index` topic maps to no segments, the topic list itself.
  */
 export function parseTopicSegments(topic: string[]): string[] {
-    return topic
+    const segments = topic
         .flatMap((part) => part.split(/[\s/]+/))
         .map((segment) => segment.trim().toLowerCase())
         .filter((segment) => segment.length > 0);
+    return segments.length === 1 && segments[0] === InstructionsTopic.Index ? [] : segments;
 }
 
 export function getInstructionsUrl(segments: string[], baseUrl: string = INSTRUCTIONS_BASE_URL): string {

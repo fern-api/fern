@@ -4,6 +4,7 @@ import type { ReadStream, WriteStream } from "node:tty";
 import { fromBinary, toBinary } from "@bufbuild/protobuf";
 import { CodeGeneratorRequestSchema, CodeGeneratorResponseSchema } from "@bufbuild/protobuf/wkt";
 import { getToken } from "@fern-api/auth";
+import { logErrorMessage } from "@fern-api/cli-logger";
 import { getOrCreateFernRunId } from "@fern-api/cli-telemetry";
 import type { OutputFormat } from "@fern-api/cli-v2";
 import {
@@ -52,7 +53,7 @@ import {
     registerDynamicIrWorkerEntrypoint,
     runDynamicIrWorkerThread
 } from "@fern-api/remote-workspace-runner";
-import { CliError } from "@fern-api/task-context";
+import { CliError, InstructionsTopic } from "@fern-api/task-context";
 import chalk from "chalk";
 import getPort from "get-port";
 import { Argv } from "yargs";
@@ -261,7 +262,12 @@ async function tryRunCli(cliContext: CliContext) {
             // if error is null, it's a yargs validation error
             if (error == null) {
                 argv.showHelp();
-                cliContext.logger.error(message);
+                logErrorMessage({
+                    message,
+                    error: undefined,
+                    logger: cliContext.logger,
+                    instructionsTopic: InstructionsTopic.Index
+                });
             }
         })
         .strict()

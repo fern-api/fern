@@ -15,6 +15,7 @@ export {
 export { getFilename } from "./getFilename.js";
 export { getFilesAndDirectories } from "./getFilesAndDirectories.js";
 export { isCI } from "./isCI.js";
+export { isCodingAgent } from "./isCodingAgent.js";
 export { isURL } from "./isUrl.js";
 export { join } from "./join.js";
 export { listFiles } from "./listFiles.js";

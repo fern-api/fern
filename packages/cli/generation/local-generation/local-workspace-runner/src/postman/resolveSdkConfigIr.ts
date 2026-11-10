@@ -1,5 +1,6 @@
 import { type generatorsYml, LEGACY_GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/configuration";
 import type { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { InstructionsTopic } from "@fern-api/task-context";
 import type { SdkConfigIrV1 } from "@postman/sdk-config";
 
 import { onPremAdapterLanguage } from "../constants.js";
@@ -25,7 +26,7 @@ export declare namespace resolveSdkConfigIr {
 
     type Result =
         | { success: true; sdkConfigIr: SdkConfigIrV1; warnings: string[] }
-        | { success: false; message: string };
+        | { success: false; message: string; instructionsTopic?: InstructionsTopic };
 }
 
 /**
@@ -60,7 +61,11 @@ export async function resolveSdkConfigIr({
         case "invalid":
             return { success: false, message: `${loaded.absolutePath}: ${loaded.message}` };
         case "absent":
-            return { success: false, message: migrationRequiredMessage(generatorInvocation) };
+            return {
+                success: false,
+                message: migrationRequiredMessage(generatorInvocation),
+                instructionsTopic: InstructionsTopic.SdksMigrate
+            };
         case "loaded":
             return buildSdkConfigIrFromSdkConfig({
                 sdkConfig: loaded.sdkConfig,

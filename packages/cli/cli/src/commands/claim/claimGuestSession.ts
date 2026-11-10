@@ -13,7 +13,7 @@ import {
 import { createVenusService } from "@fern-api/core";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
-import { CliError } from "@fern-api/task-context";
+import { CliError, InstructionsTopic } from "@fern-api/task-context";
 import chalk from "chalk";
 import { writeFile } from "fs/promises";
 import { produce } from "immer";
@@ -54,7 +54,8 @@ export async function claimGuestSession({
     const fernDirectory = absolutePathToFernDirectory ?? (await getFernDirectory());
     if (fernDirectory == null) {
         return cliContext.failAndThrow(`Directory "${FERN_DIRECTORY}" not found.`, undefined, {
-            code: CliError.Code.ConfigError
+            code: CliError.Code.ConfigError,
+            instructionsTopic: InstructionsTopic.NewSite
         });
     }
 
@@ -63,7 +64,7 @@ export async function claimGuestSession({
         return cliContext.failAndThrow(
             "No guest session is recorded for this repo. Run `fern generate --guest` first, then claim it.",
             undefined,
-            { code: CliError.Code.ConfigError }
+            { code: CliError.Code.ConfigError, instructionsTopic: InstructionsTopic.NewSite }
         );
     }
     const claimSecret = getClaimSecret(stored.claimUrl);
@@ -71,7 +72,7 @@ export async function claimGuestSession({
         return cliContext.failAndThrow(
             `The recorded guest session has no claim secret. Open ${stored.claimUrl} in a browser to claim it.`,
             undefined,
-            { code: CliError.Code.ConfigError }
+            { code: CliError.Code.ConfigError, instructionsTopic: InstructionsTopic.NewSite }
         );
     }
 
@@ -80,7 +81,7 @@ export async function claimGuestSession({
         return cliContext.failAndThrow(
             "Claiming needs a signed-in user. Unset the FERN_TOKEN environment variable and run `fern login`, then retry `fern claim`.",
             undefined,
-            { code: CliError.Code.AuthError }
+            { code: CliError.Code.AuthError, instructionsTopic: InstructionsTopic.NewSite }
         );
     }
 

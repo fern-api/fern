@@ -6,7 +6,7 @@ import { delay } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { isAutoVersion } from "@fern-api/generator-cli/autoversion";
 import { type FeatureFlagContext, getFeatureFlagClient } from "@fern-api/posthog-manager";
-import { CliError, InteractiveTaskContext } from "@fern-api/task-context";
+import { CliError, InstructionsTopic, InteractiveTaskContext } from "@fern-api/task-context";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import axios, { AxiosError } from "axios";
 import { createHash, randomUUID } from "crypto";
@@ -1870,7 +1870,8 @@ function assertGeneratorConfigCompatibility(participants: FernSdkGenApiBuildPara
                 throw error;
             }
             participant.context.failAndThrow(formatGeneratorConfigCompatibilityError(error), undefined, {
-                code: CliError.Code.ConfigError
+                code: CliError.Code.ConfigError,
+                instructionsTopic: getGeneratorConfigCompatibilityInstructionsTopic(error)
             });
         }
         if (route.payloadKind !== participant.payload.payloadKind) {
@@ -1933,6 +1934,12 @@ export function formatGeneratorConfigCompatibilityError(error: GeneratorConfigCo
             ? " Run `fern sdk migrate`, then pass the generated document with `fern generate --sdk-config <path>` before using this generator version."
             : "";
     return `Cannot submit SDK generation to sdk-gen-api: ${error.message} [${diagnostic}].${migrationHint}`;
+}
+
+export function getGeneratorConfigCompatibilityInstructionsTopic(
+    error: GeneratorConfigCompatibilityError
+): InstructionsTopic | undefined {
+    return error.recommendedAction === "USE_SDK_CONFIG_V1" ? InstructionsTopic.SdksMigrate : undefined;
 }
 
 function resolveFernGeneratorWireVersion(
