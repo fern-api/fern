@@ -73,4 +73,49 @@ describe("profiles", () => {
         expect(bySlug["guides/enterprise/changelog"]?.profileVars).toEqual({ CLI: "acme-ent" });
         expect(bySlug["guides/enterprise/changelog/2026/1/1"]?.profileVars).toEqual({ CLI: "acme-ent" });
     });
+
+    it("fills CI values with no profile in scope and fills nav strings from each scope", async () => {
+        const previousCli = process.env.CLI;
+        process.env.CLI = "acme";
+        try {
+            const context = createMockTaskContext();
+            const docsWorkspace = await loadDocsWorkspace({
+                fernDirectory: resolve(AbsoluteFilePath.of(__dirname), "fixtures/profiles-no-site/fern"),
+                context
+            });
+            if (docsWorkspace == null) {
+                throw new Error("Failed to load docs workspace");
+            }
+            const resolver = new DocsDefinitionResolver({
+                domain: "https://profiles-no-site.docs.buildwithfern.com",
+                docsWorkspace,
+                ossWorkspaces: [],
+                apiWorkspaces: [],
+                taskContext: context,
+                uploadFiles: async () => [],
+                registerApi: async () => "",
+                skipApiReferences: true
+            });
+            const resolved = await resolver.resolve();
+            const pages = collectPages(resolved.config.root) as Array<PageLike & { title: string }>;
+            const bySlug = Object.fromEntries(pages.map((page) => [page.slug, page]));
+
+            // no profile in scope: profile-owned CLI falls back to CI
+            expect(bySlug["install-product"]?.profileVars).toEqual({ CLI: "acme" });
+            expect(bySlug["enterprise/install-product"]?.profileVars).toEqual({ CLI: "acme-ent" });
+            // nav titles and sidebar-title use their scope's profile; no value leaves the name raw
+            expect(bySlug["install-product"]?.title).toBe("Install ${PRODUCT}");
+            expect(bySlug["enterprise/install-product"]?.title).toBe("Install Acme Enterprise");
+            expect(bySlug["enterprise/cli-page"]?.title).toBe("Acme Enterprise CLI");
+            // site strings outside the nav get CI for profile-owned names
+            expect(resolved.config.announcement?.text).toBe("Try acme today");
+            expect(JSON.stringify(resolved.config.navbarLinks)).toContain("Get acme");
+        } finally {
+            if (previousCli == null) {
+                delete process.env.CLI;
+            } else {
+                process.env.CLI = previousCli;
+            }
+        }
+    });
 });

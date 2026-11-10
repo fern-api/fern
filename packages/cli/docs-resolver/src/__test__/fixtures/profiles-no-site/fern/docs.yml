@@ -1,0 +1,26 @@
+instances:
+  - url: profiles-no-site.docs.buildwithfern.com
+title: Profiles without a site profile
+settings:
+  substitute-env-vars: true
+announcement:
+  message: Try ${CLI} today
+navbar-links:
+  - type: minimal
+    text: Get ${CLI}
+    url: https://example.com
+profiles:
+  enterprise:
+    vars:
+      CLI: acme-ent
+      PRODUCT: Acme Enterprise
+navigation:
+  - page: Install ${PRODUCT}
+    path: ./pages/install.mdx
+  - section: Enterprise
+    profile: enterprise
+    contents:
+      - page: Install ${PRODUCT}
+        path: ./pages/install.mdx
+      - page: CLI page
+        path: ./pages/cli.mdx
