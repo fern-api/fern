@@ -1736,6 +1736,17 @@
           ],
           "description": "If true, a page will be created for each tag in the OpenAPI spec that contains a description."
         },
+        "endpoint-index-pages": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If true, the CLI generates an \"All Endpoints\" page listing every endpoint grouped by section, and appends an endpoint list to each section's summary page (creating one when the section has none)."
+        },
         "snippets": {
           "oneOf": [
             {

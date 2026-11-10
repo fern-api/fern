@@ -5752,6 +5752,9 @@
             "tag-description-pages": {
               "type": "boolean"
             },
+            "endpoint-index-pages": {
+              "type": "boolean"
+            },
             "snippets": {
               "type": "object",
               "properties": {

@@ -15,6 +15,8 @@ export interface ApiReferenceConfiguration extends FernDocsConfig.WithPermission
     displayErrors?: boolean;
     /** If true, a page will be created for each tag in the OpenAPI spec that contains a description. */
     tagDescriptionPages?: boolean;
+    /** If true, the CLI generates an "All Endpoints" page listing every endpoint grouped by section, and appends an endpoint list to each section's summary page (creating one when the section has none). */
+    endpointIndexPages?: boolean;
     snippets?: FernDocsConfig.SnippetsConfiguration;
     /** URL to a Postman collection for this API reference */
     postman?: string;

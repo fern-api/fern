@@ -172,6 +172,7 @@ async function visitNavigationItem({
         },
         displayErrors: noop,
         tagDescriptionPages: noop,
+        endpointIndexPages: noop,
         snippets: noop,
         summary: noop,
         title: noop,

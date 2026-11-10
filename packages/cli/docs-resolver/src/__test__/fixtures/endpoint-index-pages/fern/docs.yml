@@ -1,0 +1,14 @@
+instances: []
+title: Endpoint Index Pages Test
+navigation:
+  - api: API Reference
+    endpoint-index-pages: true
+    tag-description-pages: true
+    layout:
+      - plants:
+          summary: ./pages/plants-summary.mdx
+      - users:
+          - GET /users
+          - endpoint: DELETE /users/{userId}
+            hidden: true
+      - store
