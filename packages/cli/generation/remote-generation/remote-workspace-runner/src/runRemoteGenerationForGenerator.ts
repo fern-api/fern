@@ -699,6 +699,10 @@ export async function runRemoteGenerationForGenerator({
                       generatorInvocation: sdkGenApiCandidate.generatorInvocation,
                       resolvedGeneratorVersion: resolvedRuntimeGeneratorVersion,
                       sdkGenApiRoute,
+                      sdkName: guestSdkName({
+                          apiName: getOriginalName(ir.apiName),
+                          workspaceName: workspace.workspaceName
+                      }),
                       sdkVersion: sdkGenApiCandidate.sdkVersion,
                       apiVersion: ir.specVersion,
                       token,
