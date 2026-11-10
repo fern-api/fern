@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.202.1
+  changelogEntry:
+    - summary: |
+        The claim link `fern generate --guest` prints says what the run made (`from=sdk` for an SDK run, `from=docs` for a docs publish), so claiming it lands on that page of the organization — the SDKs after an SDK run even when the organization already has docs.
+      type: fix
+  createdAt: "2026-11-10"
+  irVersion: 67
 - version: 5.202.0
   changelogEntry:
     - summary: |
