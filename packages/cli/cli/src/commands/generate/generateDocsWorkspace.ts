@@ -106,7 +106,8 @@ export async function generateDocsWorkspace({
     // on its own, --guest.
     if (!guest && !process.stdout.isTTY && (await getToken()) == null) {
         cliContext.failAndThrow(getMissingLoginMessage({ suggestGuest: true }), undefined, {
-            code: CliError.Code.AuthError
+            code: CliError.Code.AuthError,
+            instructionsTopic: InstructionsTopic.NewSite
         });
         return;
     }
@@ -136,7 +137,8 @@ export async function generateDocsWorkspace({
         const fernToken = await getToken();
         if (!fernToken) {
             cliContext.failAndThrow(getMissingLoginMessage({ suggestGuest: true }), undefined, {
-                code: CliError.Code.AuthError
+                code: CliError.Code.AuthError,
+                instructionsTopic: InstructionsTopic.NewSite
             });
             return;
         }
