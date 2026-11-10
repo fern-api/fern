@@ -498,14 +498,71 @@ export function buildReferenceTypeReference({
     if (resolvedSchema.type === "optional" && !type.startsWith("optional<")) {
         type = `optional<${type}>`;
     }
-    if (schema.description == null && displayName == null) {
+    const defaultValue = getReferencedPrimitiveDefault(resolvedSchema, context);
+    if (schema.description == null && displayName == null && defaultValue == null) {
         return type;
     }
     return {
         type,
+        ...(defaultValue != null ? { default: defaultValue } : {}),
         ...(schema.description != null ? { docs: schema.description } : {}),
         ...(schema.availability != null ? { availability: convertAvailability(schema.availability) } : {})
     };
+}
+
+function getReferencedPrimitiveDefault(schema: Schema, context: OpenApiIrConverterContext): unknown {
+    const visited = new Set<Schema>();
+    let current: Schema | undefined = schema;
+    while (current != null && !visited.has(current)) {
+        visited.add(current);
+        switch (current.type) {
+            case "primitive": {
+                const defaultValue = getDefaultFromTypeReference(buildPrimitiveTypeReference(current));
+                return isDefaultValidForPrimitive(current, defaultValue) ? defaultValue : undefined;
+            }
+            case "optional":
+            case "nullable":
+                current = current.value;
+                break;
+            case "reference":
+                current = context.getSchema(current.schema, current.namespace);
+                break;
+            // Collections must not inherit element defaults; other shapes carry no primitive default.
+            case "object":
+            case "array":
+            case "map":
+            case "enum":
+            case "literal":
+            case "oneOf":
+            case "unknown":
+                return undefined;
+            default:
+                assertNever(current);
+        }
+    }
+    return undefined;
+}
+
+// A mistyped default (e.g. `type: integer, default: "100"`) would fail definition validation once attached.
+function isDefaultValidForPrimitive(schema: PrimitiveSchema, defaultValue: unknown): boolean {
+    if (defaultValue == null) {
+        return false;
+    }
+    return schema.schema._visit<boolean>({
+        int: () => Number.isInteger(defaultValue),
+        int64: () => Number.isInteger(defaultValue),
+        uint: () => Number.isInteger(defaultValue),
+        uint64: () => Number.isInteger(defaultValue),
+        float: () => typeof defaultValue === "number",
+        double: () => typeof defaultValue === "number",
+        string: () => typeof defaultValue === "string",
+        datetime: () => typeof defaultValue === "string",
+        datetimeRfc2822: () => typeof defaultValue === "string",
+        date: () => typeof defaultValue === "string",
+        base64: () => typeof defaultValue === "string",
+        boolean: () => typeof defaultValue === "boolean",
+        _other: () => false
+    });
 }
 
 export function buildArrayTypeReference({
