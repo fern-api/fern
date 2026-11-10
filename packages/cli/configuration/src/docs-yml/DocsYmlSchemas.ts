@@ -296,7 +296,8 @@ export const AIChatConfig = z.object({
     location: z.array(AIChatLocation).optional(),
     datasources: z.array(AIChatDatasource).optional(),
     "mask-pii": z.boolean().optional(),
-    disclaimer: z.string().optional()
+    disclaimer: z.string().optional(),
+    "button-text": z.string().optional()
 });
 
 // ===== Font schemas =====
@@ -663,6 +664,15 @@ export const RedirectsConfiguration = z.union([z.array(RedirectConfig), z.string
 export const RedirectsFile = z
     .object({
         redirects: z.array(RedirectConfig.strict())
+    })
+    .strict();
+
+// ===== Remote paths =====
+
+export const RemotePathConfig = z
+    .object({
+        path: z.string(),
+        destination: z.string()
     })
     .strict();
 
@@ -1192,6 +1202,7 @@ export const DocsConfiguration = z.object({
     agents: AgentsConfig.optional(),
     metadata: MetadataConfig.optional(),
     redirects: RedirectsConfiguration.optional(),
+    "remote-paths": z.array(RemotePathConfig).optional(),
     check: CheckConfig.optional(),
     logo: LogoConfiguration.optional(),
     favicon: z.string().optional(),

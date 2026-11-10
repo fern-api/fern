@@ -132,6 +132,7 @@ export * from "./ProgrammingLanguage.js";
 export * from "./RedirectConfig.js";
 export * from "./RedirectsConfiguration.js";
 export * from "./RelativeProductPath.js";
+export * from "./RemotePathConfig.js";
 export * from "./Role.js";
 export * from "./RoleId.js";
 export * from "./SearchbarPlacement.js";

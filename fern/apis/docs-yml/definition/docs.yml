@@ -364,6 +364,11 @@ types:
       # seo
       metadata: optional<MetadataConfig>
       redirects: optional<RedirectsConfiguration>
+      remote-paths:
+        type: optional<list<RemotePathConfig>>
+        docs: |
+          Path prefixes on your docs domain that Fern reverse-proxies to another HTTPS service
+          you run. Fern keeps serving the rest of the site.
 
       # validation
       check: optional<CheckConfig>
@@ -609,6 +614,11 @@ types:
         docs: |
           Overrides the disclaimer shown in the Ask Fern chat
           (default: "Responses are generated using AI and may contain mistakes.").
+      "button-text":
+        type: optional<string>
+        docs: |
+          Overrides the "Ask AI" label on the header button and in the search dialog
+          (default: "Ask AI", translated on localized sites).
 
   AIChatLocation:
     enum:
@@ -2684,6 +2694,29 @@ types:
           By default, uses the 308 status code to instructs clients and search engines to cache the redirect forever. Set to `false` only if you need a temporary redirect using the 307 status code, which won't be cached.
 
           @default: true
+
+  RemotePathConfig:
+    docs: |
+      Reverse-proxy a path prefix on your docs domain to another HTTPS service. The path matches
+      itself and everything below it on whole segments (`/ui` matches `/ui` and `/ui/settings`,
+      not `/uix`). The rest of the request path and the query string are appended to `destination`.
+
+      ```yaml
+      remote-paths:
+        - path: /ui
+          destination: https://app.example.com/ui
+      ```
+    properties:
+      path:
+        type: string
+        docs: |
+          The path prefix to proxy, relative to the site's basepath, for example `/ui`. Can't
+          overlap a docs page or a path Fern reserves (such as `/api/fern-docs` or `/_fern-files`).
+      destination:
+        type: string
+        docs: |
+          The `https` URL to proxy to, for example `https://app.example.com/ui`. Must be a public
+          hostname, not an IP address, a Fern-hosted domain, or this site's own domain.
 
   IntegrationsConfig:
     properties:

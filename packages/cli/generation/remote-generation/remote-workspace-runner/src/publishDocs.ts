@@ -18,6 +18,7 @@ import {
     findIncompatibleTranslatedApiIds,
     getApiRegistrationConcurrency,
     getTranslatedAnnouncement,
+    getTranslatedSettings,
     markUntranslatedNavNodesNoindex,
     type RegisterApiFn,
     replaceImagePathsAndUrls,
@@ -50,7 +51,7 @@ type SnippetsConfig = APIV1Write.SnippetsConfig;
 type DocsDefinition = DocsV1Write.DocsDefinition;
 
 import { logViolations } from "@fern-api/api-workspace-validator";
-import { stitchGlobalTheme } from "@fern-api/docs-resolver";
+import { fetchGlobalTheme, stitchGlobalTheme } from "@fern-api/docs-resolver";
 import { validateMissingRedirects } from "@fern-api/docs-validator";
 import {
     AbsoluteFilePath,
@@ -81,7 +82,9 @@ import {
     readSdkGenSnippets,
     type SdkGenSnippets
 } from "./attachSdkGenSnippets.js";
+import { shouldMergeThemeServerSide } from "./compileGlobalTheme.js";
 import { getDocsDeployMode } from "./docsDeployMode.js";
+import { buildDocsSourceArchive, findFernRoot } from "./docsSourceArchive.js";
 import { computeDynamicIRs, type DynamicIrGeneratorJob } from "./dynamicIr/computeDynamicIRs.js";
 import { DynamicIrWorkerPool, parseDynamicIrResult } from "./dynamicIr/DynamicIrWorkerPool.js";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
@@ -220,7 +223,8 @@ export async function publishDocs({
     ciSource,
     deployerAuthor,
     loginCommand = "fern login",
-    multiSource = false
+    multiSource = false,
+    uploadSource = false
 }: {
     token: FernToken;
     organization: string;
@@ -251,7 +255,10 @@ export async function publishDocs({
      */
     loginCommand?: string;
     multiSource?: boolean;
+    /** Send the `fern/` folder with the publish, so a claimed guest site can be written to a repo. */
+    uploadSource?: boolean;
 }): Promise<string> {
+    const publishStartedAt = new Date().toISOString();
     const fdrOrigin = getFdrOrigin();
     const isAirGapped = await detectAirGappedMode(`${fdrOrigin}/health`, context.logger);
     if (isAirGapped) {
@@ -326,13 +333,32 @@ export async function publishDocs({
 
     let dynamicIrWorkerPool: DynamicIrWorkerPool | undefined;
     try {
-        const effectiveWorkspace = await stitchGlobalTheme({
-            docsWorkspace,
-            organization,
-            fdrOrigin,
-            token: token.value,
-            taskContext: context
-        });
+        const globalThemeName = docsWorkspace.config.globalTheme;
+        const fetchedTheme =
+            globalThemeName != null
+                ? await fetchGlobalTheme({
+                      themeName: globalThemeName,
+                      organization,
+                      fdrOrigin,
+                      token: token.value,
+                      taskContext: context
+                  })
+                : undefined;
+        const mergeThemeServerSide = shouldMergeThemeServerSide({ deployMode, theme: fetchedTheme });
+        const effectiveWorkspace = mergeThemeServerSide
+            ? docsWorkspace
+            : await stitchGlobalTheme({
+                  docsWorkspace,
+                  organization,
+                  fdrOrigin,
+                  token: token.value,
+                  taskContext: context,
+                  theme: fetchedTheme
+              });
+        const ledgerGlobalTheme = mergeThemeServerSide ? globalThemeName : undefined;
+        if (ledgerGlobalTheme != null) {
+            context.logger.debug(`Global theme "${ledgerGlobalTheme}" will be merged by FDR at publish`);
+        }
 
         // Translated API definitions are registered to FDR after the base definition
         // resolves; the per-locale nav tree is then repointed at them (see below), which
@@ -1019,15 +1045,18 @@ export async function publishDocs({
                     filePaths: ledgerFilePaths.size > 0 ? ledgerFilePaths : undefined,
                     fileIdToPath: ledgerFileIdToPath.size > 0 ? ledgerFileIdToPath : undefined,
                     editThisPage,
-                    resolver
+                    resolver,
+                    globalTheme: ledgerGlobalTheme
                 });
                 if (deployMode === "ledger") {
                     urlToOutput = previewResult.previewUrl;
                 }
                 context.logger.debug(`[ledger] Preview deployment created: ${previewResult.deploymentId}`);
             } else {
+                const source = uploadSource ? await readDocsSource(docsWorkspace, context) : undefined;
                 const ledgerResult = await publishDocsViaLedger({
                     docsDefinition,
+                    publishStartedAt,
                     organization,
                     domain,
                     basepath: basePath,
@@ -1044,7 +1073,9 @@ export async function publishDocs({
                     filePaths: ledgerFilePaths.size > 0 ? ledgerFilePaths : undefined,
                     fileIdToPath: ledgerFileIdToPath.size > 0 ? ledgerFileIdToPath : undefined,
                     editThisPage,
-                    resolver
+                    resolver,
+                    source,
+                    globalTheme: ledgerGlobalTheme
                 });
                 context.logger.debug(
                     `[ledger] Deployment ${ledgerResult.reusedDeployment ? "reused" : "created"}: ${ledgerResult.deploymentId}`
@@ -1361,7 +1392,8 @@ export async function publishDocs({
                                 ...docsDefinition.config,
                                 root: updatedRoot,
                                 announcement: translatedAnnouncement,
-                                navbarLinks: translatedNavbarLinks
+                                navbarLinks: translatedNavbarLinks,
+                                settings: getTranslatedSettings(docsDefinition.config.settings, localeNavOverlay)
                             }
                         };
                         const pageCount = Object.keys(localePages).length;
@@ -2487,4 +2519,28 @@ function extractErrorDetails(error: unknown): Record<string, unknown> {
         // Include the raw error for complete debugging if needed
         rawError: error
     };
+}
+
+async function readDocsSource(docsWorkspace: DocsWorkspace, context: TaskContext): Promise<Buffer | undefined> {
+    try {
+        const archive = await buildDocsSourceArchive({ fernRoot: await findFernRoot(docsWorkspace.absoluteFilePath) });
+        if (archive.type === "skipped") {
+            context.logger.warn(
+                `Not uploading your fern/ folder with the site: ${archive.reason}. Claiming still works, but connecting a GitHub repo won't add the folder to it.`
+            );
+            return undefined;
+        }
+        if (archive.unreadable.length > 0) {
+            context.logger.warn(
+                `Leaving ${archive.unreadable.length} unreadable file(s) out of the uploaded fern/ folder: ${archive.unreadable.slice(0, 5).join(", ")}`
+            );
+        }
+        context.logger.info(
+            `Uploading your fern/ folder (${archive.fileCount} files) with the site, so connecting a GitHub repo after claiming adds it there. Pass --no-source to skip.`
+        );
+        return archive.buffer;
+    } catch (error) {
+        context.logger.warn(`Not uploading your fern/ folder with the site: ${errorMessageOrString(error)}`);
+        return undefined;
+    }
 }

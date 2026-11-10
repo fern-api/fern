@@ -1,0 +1,3 @@
+- summary: |
+    FDR now merges global themes server-side when it supports it; older FDR versions keep CLI-side stitching.
+  type: feat

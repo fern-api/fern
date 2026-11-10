@@ -95,6 +95,7 @@ import { generateOpenAPIIrForWorkspaces } from "./commands/generate-openapi-ir/g
 import { compareOpenAPISpecs } from "./commands/generate-overrides/compareOpenAPISpecs.js";
 import { writeOverridesForWorkspaces } from "./commands/generate-overrides/writeOverridesForWorkspaces.js";
 import { installDependencies } from "./commands/install-dependencies/installDependencies.js";
+import { instructions } from "./commands/instructions/instructions.js";
 import { generateJsonschemaForWorkspaces } from "./commands/jsonschema/generateJsonschemaForWorkspace.js";
 import { installMcpServer } from "./commands/mcp/installMcpServer.js";
 import { MCP_CLIENTS, McpClient } from "./commands/mcp/mcpConfig.js";
@@ -309,6 +310,7 @@ async function tryRunCli(cliContext: CliContext) {
     addLogoutCommand(cli, cliContext);
     addClaimCommand(cli, cliContext);
     addWhoamiCommand(cli, cliContext);
+    addInstructionsCommand(cli, cliContext);
     addMcpCommand(cli, cliContext);
     addFormatCommand(cli, cliContext);
     addWriteDefinitionCommand(cli, cliContext);
@@ -1035,6 +1037,12 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     description:
                         "Run without a Fern account: start (or reuse) a temporary guest session and generate under its guest organization. Claim the session from the printed link to keep the output. Cannot be combined with FERN_TOKEN or a saved login."
                 })
+                .option("source", {
+                    boolean: true,
+                    default: true,
+                    description:
+                        "Only with --guest --docs (ignored otherwise): upload the fern/ folder with the site, so connecting a GitHub repo after claiming adds it there. Pass --no-source to publish without it."
+                })
                 .option("new-session", {
                     boolean: true,
                     default: false,
@@ -1260,7 +1268,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     skipUpload: argv.skipUpload,
                     includePrivate: argv.private,
                     guest: argv.guest,
-                    newSession: argv.newSession
+                    newSession: argv.newSession,
+                    uploadSource: argv.source
                 });
             }
             // default to loading api workspace to preserve legacy behavior
@@ -1918,6 +1927,26 @@ function addClaimCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         async (argv) => {
             cliContext.instrumentPostHogEvent({ command: "fern claim" });
             await claimGuestSession({ cliContext, organization: argv.org });
+        }
+    );
+}
+
+function addInstructionsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "instructions [topic..]",
+        "Print task-scoped instructions for coding agents working in a Fern project. Run without a topic to list topics",
+        (yargs) =>
+            yargs
+                .positional("topic", {
+                    type: "string",
+                    array: true,
+                    description: "Topic to print, for example `docs publish domain`"
+                })
+                .example("$0 instructions", "List topics and when to use each one")
+                .example("$0 instructions docs publish domain", "Set up a custom domain"),
+        async (argv) => {
+            cliContext.instrumentPostHogEvent({ command: "fern instructions" });
+            await instructions({ cliContext, topic: argv.topic ?? [] });
         }
     );
 }

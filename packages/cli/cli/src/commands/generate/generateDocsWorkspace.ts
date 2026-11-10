@@ -61,7 +61,8 @@ export async function generateDocsWorkspace({
     skipUpload,
     includePrivate = false,
     guest = false,
-    newSession = false
+    newSession = false,
+    uploadSource = true
 }: {
     project: Project;
     cliContext: CliContext;
@@ -80,6 +81,8 @@ export async function generateDocsWorkspace({
     guest?: boolean;
     /** With `--guest`: ignore the session recorded for this repo and mint a new one (`--new-session`). */
     newSession?: boolean;
+    /** With `--guest`: send the `fern/` folder with the publish; `--no-source` turns it off. */
+    uploadSource?: boolean;
 }): Promise<void> {
     const docsWorkspace = project.docsWorkspaces;
     if (docsWorkspace == null) {
@@ -90,7 +93,7 @@ export async function generateDocsWorkspace({
     }
     let guestToken: FernGuestToken | undefined;
     if (guest) {
-        const resolved = await resolveGuestProject({ project, cliContext, newSession });
+        const resolved = await resolveGuestProject({ project, cliContext, work: "docs", newSession });
         project = resolved.project;
         guestToken = resolved.token;
     }
@@ -256,7 +259,8 @@ export async function generateDocsWorkspace({
             cliVersion: cliContext.environment.packageVersion,
             ciSource: detectCISource(),
             deployerAuthor: detectDeployerAuthor(),
-            docsVisibility: includePrivate ? "private" : "public"
+            docsVisibility: includePrivate ? "private" : "public",
+            uploadSource: guest && uploadSource
         });
         const generationTime = performance.now() - generationStart;
         context.logger.debug(`Remote docs generation completed in ${generationTime.toFixed(0)}ms`);

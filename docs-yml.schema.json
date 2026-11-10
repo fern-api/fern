@@ -318,6 +318,20 @@
         }
       ]
     },
+    "remote-paths": {
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/docs.RemotePathConfig"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Path prefixes on your docs domain that Fern reverse-proxies to another HTTPS service\nyou run. Fern keeps serving the rest of the site."
+    },
     "check": {
       "oneOf": [
         {
@@ -5552,6 +5566,17 @@
             }
           ],
           "description": "Overrides the disclaimer shown in the Ask Fern chat\n(default: \"Responses are generated using AI and may contain mistakes.\")."
+        },
+        "button-text": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Overrides the \"Ask AI\" label on the header button and in the search dialog\n(default: \"Ask AI\", translated on localized sites)."
         }
       },
       "additionalProperties": false
@@ -6020,6 +6045,25 @@
         }
       ],
       "description": "Either an inline list of redirects, or one or more filepaths to YAML files containing\nonly a list of redirects.\n\n```yaml\nredirects: ./redirects.yml\n```\n\n```yaml\nredirects:\n  - ./redirects/a.yml\n  - ./redirects/b.yml\n```"
+    },
+    "docs.RemotePathConfig": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "description": "The path prefix to proxy, relative to the site's basepath, for example `/ui`. Can't\noverlap a docs page or a path Fern reserves (such as `/api/fern-docs` or `/_fern-files`)."
+        },
+        "destination": {
+          "type": "string",
+          "description": "The `https` URL to proxy to, for example `https://app.example.com/ui`. Must be a public\nhostname, not an IP address, a Fern-hosted domain, or this site's own domain."
+        }
+      },
+      "required": [
+        "path",
+        "destination"
+      ],
+      "additionalProperties": false,
+      "description": "Reverse-proxy a path prefix on your docs domain to another HTTPS service. The path matches\nitself and everything below it on whole segments (`/ui` matches `/ui` and `/ui/settings`,\nnot `/uix`). The rest of the request path and the query string are appended to `destination`.\n\n```yaml\nremote-paths:\n  - path: /ui\n    destination: https://app.example.com/ui\n```"
     },
     "docs.CheckRuleSeverity": {
       "type": "string",
