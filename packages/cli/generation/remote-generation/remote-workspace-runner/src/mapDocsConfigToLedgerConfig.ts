@@ -2,10 +2,11 @@ import { assertNever } from "@fern-api/core-utils";
 import type { DocsV1Write } from "@fern-api/fdr-sdk";
 import type { FileManifestEntry, ImageRef, LedgerConfig, PathOrUrl } from "@fern-api/fdr-sdk/orpc-client";
 
-// TODO: Drop the `embedding` shim once the published @fern-api/fdr-sdk
-// DocsConfig / LedgerConfig types include it.
+// TODO: Drop the `embedding` and `remotePaths` shims once the published @fern-api/fdr-sdk
+// DocsConfig / LedgerConfig types include them.
 type EmbeddingConfig = { allowedOrigins: string[] };
-type DocsConfig = DocsV1Write.DocsConfig & { embedding?: EmbeddingConfig };
+type RemotePathConfig = { path: string; destination: string };
+type DocsConfig = DocsV1Write.DocsConfig & { embedding?: EmbeddingConfig; remotePaths?: RemotePathConfig[] };
 
 /**
  * Resolve a FileId reference produced by the classic docs publish flow
@@ -284,6 +285,7 @@ export function mapDocsConfigToLedgerConfig({
 }): LedgerConfig & {
     editThisPageGithub?: { owner: string; repo: string; branch: string; host: string };
     embedding?: EmbeddingConfig;
+    remotePaths?: RemotePathConfig[];
 } {
     return {
         title: docsConfig.title,
@@ -299,6 +301,7 @@ export function mapDocsConfigToLedgerConfig({
         agents: mapAgents(docsConfig.agents),
         metadata: mapMetadata(docsConfig.metadata, fileIdToPath),
         redirects: docsConfig.redirects,
+        remotePaths: docsConfig.remotePaths,
         colorsV3: mapColorsV3(docsConfig.colorsV3, fileManifest, fileIdToPath),
         layout: docsConfig.layout,
         theme: docsConfig.theme,

@@ -2123,6 +2123,25 @@
             }
           ]
         },
+        "remote-paths": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string"
+              },
+              "destination": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "path",
+              "destination"
+            ],
+            "additionalProperties": false
+          }
+        },
         "check": {
           "type": "object",
           "properties": {

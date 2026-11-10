@@ -76,6 +76,7 @@ export async function parseDocsConfiguration({
         /* seo */
         metadata: rawMetadata,
         redirects,
+        remotePaths,
 
         /* branding */
         logo: rawLogo,
@@ -272,6 +273,7 @@ export async function parseDocsConfiguration({
         /* seo */
         metadata,
         redirects: resolvedRedirects,
+        remotePaths,
 
         /* branding */
         logo,
