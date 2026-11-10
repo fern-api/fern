@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.205.1
+  changelogEntry:
+    - summary: |
+        The OpenAPI importer now keeps the `default` of a primitive schema when a property or parameter references it
+        (following `$ref` chains and optional/nullable wrappers), so `consent: {$ref: Consent}` with
+        `Consent: {type: boolean, default: false}` imports with a `false` default instead of none. Arrays and maps whose
+        elements reference a defaulted schema do not inherit that default. A referenced default whose type does not match
+        its primitive (for example `type: integer, default: "100"`) is dropped, so it can't fail definition validation.
+      type: fix
+  createdAt: "2026-11-10"
+  irVersion: 67
 - version: 5.205.0
   changelogEntry:
     - summary: |
