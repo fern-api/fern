@@ -109,6 +109,23 @@ class OffsetItemIteratorTest < Minitest::Test
     end
   end
 
+  def test_pages_remain_exhausted_until_rewound
+    [0, 3].each do |total|
+      config = TestIteratorConfig.new(initial_page: 0, step: true, has_next_field: nil, total_item_count: total, per_page: 2)
+      pages = make_iterator(config).pages
+      expected = (1..total).to_a
+
+      assert_equal expected, pages.flat_map(&:items)
+      calls_after_exhaustion = @times_called
+      3.times do
+        refute pages.next?
+        assert_nil pages.next_page
+      end
+      assert_equal calls_after_exhaustion, @times_called
+      assert_equal expected, pages.flat_map(&:items)
+    end
+  end
+
   def test_items_iterator_iterates_lazily
     iterator = make_iterator(LAZY_TEST_ITERATOR_CONFIG)
 

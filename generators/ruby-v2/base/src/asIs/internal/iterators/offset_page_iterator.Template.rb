@@ -84,6 +84,8 @@ module <%= gem_namespace %>
       #
       # @return [Boolean]
       def next?
+        return false if @page_number.nil?
+
         return @has_next_page unless @has_next_page.nil?
         return true if @next_page && page_has_items?(@next_page)
         return @has_next_page = false if @next_page
