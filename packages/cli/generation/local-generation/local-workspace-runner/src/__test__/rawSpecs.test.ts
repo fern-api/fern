@@ -162,6 +162,62 @@ describe("collectRawSpecs", () => {
         expect(content).not.toContain("\n");
     });
 
+    it("writes the settings added in SDK Config 0.21.0 to the manifest only when a spec sets them", async () => {
+        const specFile = path.join(sourceDir, "api", "openapi.yaml");
+        await writeFile(specFile, MINIMAL_OPENAPI);
+        const outputDir = path.join(tmpDir.path, "output");
+        await mkdir(outputDir, { recursive: true });
+        const collect = async (overrides: Parameters<typeof getOpenAPISettings>[0]) =>
+            (
+                await collectRawSpecs({
+                    specs: [{ ...openApiSpec(specFile), settings: getOpenAPISettings(overrides) }],
+                    hostOutputDir: AbsoluteFilePath.of(outputDir),
+                    containerBaseDir: "/fern/specs",
+                    context: createMockContext()
+                })
+            ).specs[0]?.apiImportSettings;
+
+        const unused = await collect({});
+        for (const key of [
+            "filter",
+            "exampleGeneration",
+            "errorResponses",
+            "respectForwardCompatibleEnums",
+            "useReadVariantForResponses",
+            "inferDiscriminatedUnionBaseProperties"
+        ]) {
+            expect(unused?.[key as keyof typeof unused]).toBeUndefined();
+        }
+
+        expect(
+            await collect({
+                overrides: {
+                    respectForwardCompatibleEnums: true,
+                    useReadVariantForResponses: true,
+                    shouldInferDiscriminatedUnionBaseProperties: true,
+                    filter: { endpoints: ["GET /pet/{petId}"] },
+                    exampleGeneration: { request: { "max-depth": 1 }, response: { "max-depth": 5 } },
+                    errorResponses: {
+                        schema: { type: "object" },
+                        "apply-to": "untyped",
+                        ensure: [{ "status-code": 422, methods: ["post"] }, { "status-code": 500 }]
+                    }
+                }
+            })
+        ).toMatchObject({
+            respectForwardCompatibleEnums: true,
+            useReadVariantForResponses: true,
+            inferDiscriminatedUnionBaseProperties: true,
+            filter: { endpoints: ["GET /pet/{petId}"] },
+            exampleGeneration: { request: { maxDepth: 1 }, response: { maxDepth: 5 } },
+            errorResponses: {
+                schema: { type: "object" },
+                applyTo: "untyped",
+                ensure: [{ statusCode: 422, methods: ["post"] }, { statusCode: 500 }]
+            }
+        });
+    });
+
     it("creates byte-identical source archives for identical inputs", async () => {
         const specFile = path.join(sourceDir, "api", "deterministic.yaml");
         await writeFile(specFile, MINIMAL_OPENAPI);
@@ -512,6 +568,26 @@ describe("collectRawSpecs", () => {
                     inlineAllOfSchemas: true,
                     resolveSchemaCollisions: true,
                     asyncApiNaming: "v2"
+                }
+            })
+        };
+
+        expect(() => validateSdkConfigImportSettings([spec])).not.toThrow();
+    });
+
+    it("accepts the effective import settings added in SDK Config 0.21.0", () => {
+        const spec = {
+            ...openApiSpec(path.join(sourceDir, "api", "readonly.yaml")),
+            settings: getOpenAPISettings({
+                overrides: {
+                    filter: { endpoints: ["GET /pet/{petId}"] },
+                    exampleGeneration: { response: { "max-depth": 1 } },
+                    errorResponses: { schema: { type: "object" }, "apply-to": "untyped" },
+                    respectForwardCompatibleEnums: true,
+                    useReadVariantForResponses: true,
+                    resolveAliases: { except: ["Id"] },
+                    multiServerStrategy: "urls-per-environment",
+                    coerceConstsTo: "enums"
                 }
             })
         };

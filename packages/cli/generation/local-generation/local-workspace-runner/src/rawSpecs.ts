@@ -170,6 +170,8 @@ async function resolveOpenAPIOrAsyncAPI({
 
 type ApiImportSettingMapper = (settings: OpenAPISettings) => RawSpecImportSettings;
 
+const DEFAULT_OPENAPI_SETTINGS = getOpenAPISettings();
+
 // Raw source archives are independently validated by sdk-gen-api. Add fields here only after the
 // deployed archive schema accepts them; SDK Config source settings travel in the SDK Config payload.
 const SDK_CONFIG_IMPORT_SETTING_MAPPERS = {
@@ -207,10 +209,99 @@ const SDK_CONFIG_IMPORT_SETTING_MAPPERS = {
     defaultIntegerFormat: (settings) => ({ defaultIntegerFormat: settings.defaultIntegerFormat })
 } satisfies Partial<Record<keyof OpenAPISettings, ApiImportSettingMapper>>;
 
+/**
+ * Settings added in @postman/sdk-config 0.21.0. Unlike the ones above they are written only when they differ from the
+ * importer's default, so a server whose archive schema predates them is not sent keys a spec does not use.
+ */
+const SDK_CONFIG_0_21_IMPORT_SETTING_MAPPERS = {
+    shouldInferDiscriminatedUnionBaseProperties: (settings) => ({
+        inferDiscriminatedUnionBaseProperties: settings.shouldInferDiscriminatedUnionBaseProperties
+    }),
+    respectByteFormat: (settings) => ({ respectByteFormat: settings.respectByteFormat }),
+    additionalPropertiesDefaultsTo: (settings) => ({
+        additionalPropertiesDefaultsTo: settings.additionalPropertiesDefaultsTo
+    }),
+    optionalAdditionalProperties: (settings) => ({
+        optionalAdditionalProperties: settings.optionalAdditionalProperties
+    }),
+    anyOfSiblingPropertiesAsObject: (settings) => ({
+        anyOfSiblingPropertiesAsObject: settings.anyOfSiblingPropertiesAsObject
+    }),
+    preserveSingleSchemaOneOf: (settings) => ({ preserveSingleSchemaOneOf: settings.preserveSingleSchemaOneOf }),
+    preserveOneOfInAllOf: (settings) => ({ preserveOneOfInAllOf: settings.preserveOneOfInAllOf }),
+    removeDiscriminantsFromSchemas: (settings) => ({
+        removeDiscriminantsFromSchemas: settings.removeDiscriminantsFromSchemas
+    }),
+    coerceConstsTo: (settings) => ({ coerceConstsTo: settings.coerceConstsTo }),
+    resolveAliases: (settings) => ({ resolveAliases: settings.resolveAliases }),
+    respectForwardCompatibleEnums: (settings) => ({
+        respectForwardCompatibleEnums: settings.respectForwardCompatibleEnums
+    }),
+    inferForwardCompatible: (settings) => ({ inferForwardCompatible: settings.inferForwardCompatible }),
+    respectOperationIdWordBoundaries: (settings) => ({
+        respectOperationIdWordBoundaries: settings.respectOperationIdWordBoundaries
+    }),
+    namespacedErrors: (settings) => ({ namespacedErrors: settings.namespacedErrors }),
+    defaultFormParameterEncoding: (settings) => ({
+        defaultFormParameterEncoding: settings.defaultFormParameterEncoding
+    }),
+    respectParameterContent: (settings) => ({ respectParameterContent: settings.respectParameterContent }),
+    useBytesForBinaryResponse: (settings) => ({ useBytesForBinaryResponse: settings.useBytesForBinaryResponse }),
+    useReadVariantForResponses: (settings) => ({ useReadVariantForResponses: settings.useReadVariantForResponses }),
+    // The importer reads Fern's generators.yml names (`max-depth`, `apply-to`, `status-code`); SDK Config uses camelCase.
+    exampleGeneration: (settings) => ({
+        exampleGeneration:
+            settings.exampleGeneration == null
+                ? undefined
+                : {
+                      ...(settings.exampleGeneration.request != null
+                          ? { request: { maxDepth: settings.exampleGeneration.request["max-depth"] } }
+                          : {}),
+                      ...(settings.exampleGeneration.response != null
+                          ? { response: { maxDepth: settings.exampleGeneration.response["max-depth"] } }
+                          : {})
+                  }
+    }),
+    filter: (settings) => ({
+        filter: settings.filter?.endpoints == null ? undefined : { endpoints: settings.filter.endpoints }
+    }),
+    groupEnvironmentsByHost: (settings) => ({ groupEnvironmentsByHost: settings.groupEnvironmentsByHost }),
+    multiServerStrategy: (settings) => ({ multiServerStrategy: settings.multiServerStrategy }),
+    inferDefaultEnvironment: (settings) => ({ inferDefaultEnvironment: settings.inferDefaultEnvironment }),
+    respectPerSpecBasePath: (settings) => ({ respectPerSpecBasePath: settings.respectPerSpecBasePath }),
+    errorResponses: (settings) => ({
+        errorResponses:
+            settings.errorResponses == null
+                ? undefined
+                : {
+                      schema: settings.errorResponses.schema as Record<string, unknown>,
+                      ...(settings.errorResponses.name != null ? { name: settings.errorResponses.name } : {}),
+                      ...(settings.errorResponses["apply-to"] != null
+                          ? { applyTo: settings.errorResponses["apply-to"] }
+                          : {}),
+                      ...(settings.errorResponses.ensure != null
+                          ? {
+                                ensure: settings.errorResponses.ensure.map((entry) => ({
+                                    statusCode: entry["status-code"],
+                                    ...(entry.methods != null ? { methods: entry.methods } : {})
+                                }))
+                            }
+                          : {})
+                  }
+    })
+} satisfies Partial<Record<keyof OpenAPISettings, ApiImportSettingMapper>>;
+
 function mapApiImportSettings(settings: OpenAPISettings): RawSpecImportSettings {
     const mappedSettings: RawSpecImportSettings = {};
     for (const mapSetting of Object.values(SDK_CONFIG_IMPORT_SETTING_MAPPERS)) {
         Object.assign(mappedSettings, mapSetting(settings));
+    }
+    for (const [key, mapSetting] of Object.entries(SDK_CONFIG_0_21_IMPORT_SETTING_MAPPERS) as Array<
+        [keyof OpenAPISettings, ApiImportSettingMapper]
+    >) {
+        if (!isDeepStrictEqual(Reflect.get(settings, key), Reflect.get(DEFAULT_OPENAPI_SETTINGS, key))) {
+            Object.assign(mappedSettings, mapSetting(settings));
+        }
     }
     return mappedSettings;
 }
@@ -807,8 +898,10 @@ function assertGeneratorSelectionOutcomes({
     }
 }
 
-const SDK_CONFIG_IMPORT_SETTING_KEYS = new Set(Object.keys(SDK_CONFIG_IMPORT_SETTING_MAPPERS));
-const DEFAULT_OPENAPI_SETTINGS = getOpenAPISettings();
+const SDK_CONFIG_IMPORT_SETTING_KEYS = new Set([
+    ...Object.keys(SDK_CONFIG_IMPORT_SETTING_MAPPERS),
+    ...Object.keys(SDK_CONFIG_0_21_IMPORT_SETTING_MAPPERS)
+]);
 
 /** Rejects effective Fern import behavior that the downstream SDK Config contract cannot carry. */
 export function validateSdkConfigImportSettings(

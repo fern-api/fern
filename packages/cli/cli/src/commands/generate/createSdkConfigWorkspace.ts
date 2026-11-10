@@ -386,6 +386,7 @@ function getImportSettings(sdkConfig: SdkConfigV1, spec: SdkConfigV1SourceSpec):
                       },
             useTitlesAsName: settings.titleAsSchemaName,
             shouldUseIdiomaticRequestNames: settings.idiomaticRequestNames,
+            shouldInferDiscriminatedUnionBaseProperties: settings.inferDiscriminatedUnionBaseProperties,
             shouldUseUndiscriminatedUnionsWithLiterals: settings.undiscriminatedUnionsWithLiterals,
             asyncApiNaming: settings.asyncApiMessageNaming
         }

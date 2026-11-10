@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+- summary: |
+    `fern generate` no longer rejects the import settings added in `@postman/sdk-config` 0.21.0 (for example `filter`,
+    `errorResponses`, `exampleGeneration`, `respectForwardCompatibleEnums`, `useReadVariantForResponses`) with "SDK Config
+    v1 cannot preserve effective OpenAPI import setting". They are written to the source archive manifest when a spec sets
+    them, and left out otherwise so a server that predates them is unaffected. `inferDiscriminatedUnionBaseProperties` from
+    `sdk-config.yml` now reaches the importer.
+  type: fix
