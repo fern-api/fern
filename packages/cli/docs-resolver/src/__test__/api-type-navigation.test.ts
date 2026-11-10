@@ -17,7 +17,10 @@ const apiDefinitionId = "550e8400-e29b-41d4-a716-446655440000";
 
 const FIXTURE = "fixtures/api-type-navigation/fern";
 
-async function convertFixture({ types = true }: { types?: boolean } = {}): Promise<FernNavigation.V1.ApiReferenceNode> {
+async function convertFixture({ types = true }: { types?: boolean } = {}): Promise<{
+    node: FernNavigation.V1.ApiReferenceNode;
+    apiDefinition: FdrAPI.api.v1.read.ApiDefinition;
+}> {
     const fernDirectory = resolve(AbsoluteFilePath.of(__dirname), FIXTURE);
 
     const docsWorkspace = await loadDocsWorkspace({ fernDirectory, context });
@@ -67,7 +70,7 @@ async function convertFixture({ types = true }: { types?: boolean } = {}): Promi
 
     const apiDefinition = convertIrToApiDefinition({ ir, apiDefinitionId, context });
 
-    return new ApiReferenceNodeConverter(
+    const node = new ApiReferenceNodeConverter(
         { ...apiSection, types },
         apiDefinition,
         FernNavigation.V1.SlugGenerator.init("/base/path"),
@@ -86,6 +89,7 @@ async function convertFixture({ types = true }: { types?: boolean } = {}): Promi
         undefined,
         types ? collectInlineTypeIds(ir) : undefined
     ).get();
+    return { node, apiDefinition };
 }
 
 function typesSection(node: FernNavigation.V1.ApiReferenceNode): FernNavigation.V1.ApiPackageNode | undefined {
@@ -102,7 +106,7 @@ function apiTypeChildren(section: FernNavigation.V1.ApiPackageNode | undefined) 
 
 describe("API type navigation (`types: true`)", () => {
     it("emits one page per schema no operation references, sorted by title", async () => {
-        const node = await convertFixture();
+        const { node } = await convertFixture();
         const section = typesSection(node);
         expect(section).toBeDefined();
         // `Pet` is the endpoint's response and `Owner` is reached through it, so neither gets a
@@ -111,7 +115,7 @@ describe("API type navigation (`types: true`)", () => {
     });
 
     it("places the section last, after the endpoint packages, under <api>/types/<type>", async () => {
-        const node = await convertFixture();
+        const { node } = await convertFixture();
         const last = node.children[node.children.length - 1];
         expect(last?.type === "apiPackage" && last.title === "Types").toBe(true);
         const children = apiTypeChildren(typesSection(node));
@@ -126,8 +130,24 @@ describe("API type navigation (`types: true`)", () => {
         }
     });
 
+    it("keeps the XML encoding of an XML element type so the page can show an XML example", async () => {
+        const { apiDefinition } = await convertFixture({ types: true });
+        const say = apiDefinition.types[FdrAPI.TypeId("type_:Say")];
+        expect(say?.shape.type === "object" ? say.shape.xml : undefined).toEqual({ name: "Say" });
+        expect(
+            say?.shape.type === "object"
+                ? say.shape.properties.map((property) => [property.key, property.xml?.kind, property.xml?.name])
+                : undefined
+        ).toEqual([
+            ["voice", "attribute", undefined],
+            ["loop", "attribute", "loop"],
+            ["message", "text", undefined],
+            ["children", "element", undefined]
+        ]);
+    });
+
     it("emits nothing when the flag is off", async () => {
-        const node = await convertFixture({ types: false });
+        const { node } = await convertFixture({ types: false });
         expect(typesSection(node)).toBeUndefined();
     });
 });

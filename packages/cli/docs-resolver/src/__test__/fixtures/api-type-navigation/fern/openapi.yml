@@ -35,17 +35,29 @@ components:
     Say:
       type: object
       description: A TwiML verb no endpoint returns.
+      xml:
+        name: Say
       properties:
         voice:
           type: string
           enum: [man, woman]
           description: An inline enum; the importer lifts it to its own type, which gets no page.
+          xml:
+            attribute: true
         loop:
           type: integer
+          xml:
+            name: loop
+            attribute: true
+        message:
+          type: string
+          x-fern-xml-text: true
         children:
           type: array
           items:
             $ref: "#/components/schemas/Break"
+          xml:
+            wrapped: false
     Break:
       type: object
       description: Reached only through Say, which is itself unreferenced.
