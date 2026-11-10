@@ -1,7 +1,7 @@
 import { docsYml } from "@fern-api/configuration";
 import { describe, expect, it } from "vitest";
 
-import { siteHosts } from "../valid-remote-paths.js";
+import { siteHosts, ValidRemotePathsRule } from "../valid-remote-paths.js";
 
 const ui = (destination: string, path = "/ui") => [{ path, destination }];
 
@@ -79,6 +79,25 @@ describe("siteHosts", () => {
             "moss.docs.buildwithfern.com",
             "a.moss.example",
             "b.moss.example"
+        ]);
+    });
+});
+
+describe("ValidRemotePathsRule", () => {
+    const run = async (remotePaths: unknown) => {
+        const { redirects: _redirects, ...config } = docsYml.RawSchemas.Serializer.DocsConfiguration.parseOrThrow({
+            instances: [{ url: "fernwood.docs.buildwithfern.com" }],
+            "remote-paths": remotePaths
+        });
+        const visitor = await ValidRemotePathsRule.create({} as never);
+        return visitor.file?.({ config });
+    };
+
+    it("reads `remote-paths` from a parsed docs.yml", async () => {
+        expect(await run([{ path: "/ui", destination: "https://portal.fernwood.example/ui" }])).toEqual([]);
+        expect(await run([{ path: "/_astro", destination: "http://localhost" }])).toEqual([
+            expect.objectContaining({ severity: "fatal" }),
+            expect.objectContaining({ severity: "fatal" })
         ]);
     });
 });

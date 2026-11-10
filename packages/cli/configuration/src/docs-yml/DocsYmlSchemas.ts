@@ -669,10 +669,12 @@ export const RedirectsFile = z
 
 // ===== Remote paths =====
 
-export const RemotePathConfig = z.object({
-    path: z.string(),
-    destination: z.string()
-});
+export const RemotePathConfig = z
+    .object({
+        path: z.string(),
+        destination: z.string()
+    })
+    .strict();
 
 // ===== Check =====
 
