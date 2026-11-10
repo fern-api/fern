@@ -21,6 +21,7 @@ export function isCodingAgent(): boolean {
     if (CODING_AGENT_ENV_VARS.some((name) => (process.env[name]?.trim() ?? "") !== "")) {
         return true;
     }
-    // Devin points EDITOR at its own editor binary instead of setting a dedicated variable.
-    return /devin/i.test(process.env.EDITOR ?? "");
+    // Devin points EDITOR at its own `devin_editor` binary instead of setting a dedicated variable. Match the
+    // binary name, not any path containing "devin" (e.g. /home/devin/bin/vim).
+    return /(^|[/\\])devin_editor(\.[a-z]+)?(\s|$)/i.test(process.env.EDITOR ?? "");
 }

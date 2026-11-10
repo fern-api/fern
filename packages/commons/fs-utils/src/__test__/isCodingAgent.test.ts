@@ -49,4 +49,22 @@ describe("isCodingAgent", () => {
         stubCleanEnv({ EDITOR: "/opt/.devin/package/custom_binaries/devin_editor" });
         expect(isCodingAgent()).toBe(true);
     });
+
+    it.each([
+        "devin_editor",
+        "C:\\devin\\devin_editor.exe",
+        "/opt/.devin/package/custom_binaries/devin_editor --wait"
+    ])("detects Devin from EDITOR %s", (editor) => {
+        stubCleanEnv({ EDITOR: editor });
+        expect(isCodingAgent()).toBe(true);
+    });
+
+    it.each([
+        "/home/devin/bin/vim",
+        "devin",
+        "/usr/bin/devin_editor_wrapper"
+    ])("does not treat EDITOR %s as Devin", (editor) => {
+        stubCleanEnv({ EDITOR: editor });
+        expect(isCodingAgent()).toBe(false);
+    });
 });
