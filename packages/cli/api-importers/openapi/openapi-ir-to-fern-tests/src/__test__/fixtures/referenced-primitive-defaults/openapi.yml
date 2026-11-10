@@ -1,0 +1,46 @@
+openapi: 3.0.3
+info:
+  title: Referenced primitive defaults
+  version: "1"
+paths:
+  /logs:
+    get:
+      operationId: getLogs
+      parameters:
+        - name: tailLines
+          in: query
+          schema:
+            $ref: "#/components/schemas/MistypedInteger"
+        - name: limit
+          in: query
+          schema:
+            $ref: "#/components/schemas/Limit"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Values"
+components:
+  schemas:
+    Disabled: {type: boolean, default: false}
+    Limit: {type: integer, default: 25}
+    Label: {type: string, default: ""}
+    MistypedInteger: {type: integer, default: "100"}
+    Alias:
+      $ref: "#/components/schemas/Disabled"
+    Values:
+      type: object
+      properties:
+        disabled: {$ref: "#/components/schemas/Disabled"}
+        limit: {$ref: "#/components/schemas/Limit"}
+        label: {$ref: "#/components/schemas/Label"}
+        alias: {$ref: "#/components/schemas/Alias"}
+        mistyped: {$ref: "#/components/schemas/MistypedInteger"}
+        list:
+          type: array
+          items: {$ref: "#/components/schemas/Disabled"}
+        map:
+          type: object
+          additionalProperties: {$ref: "#/components/schemas/Limit"}

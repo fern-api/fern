@@ -1,0 +1,397 @@
+{
+  "specVersion": "1",
+  "title": "Referenced primitive defaults",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "getLogs",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [
+        {
+          "name": "tailLines",
+          "schema": {
+            "generatedName": "GetLogsRequestTailLines",
+            "value": {
+              "generatedName": "GetLogsRequestTailLines",
+              "schema": "MistypedInteger",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            "type": "optional"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "name": "limit",
+          "schema": {
+            "generatedName": "GetLogsRequestLimit",
+            "value": {
+              "generatedName": "GetLogsRequestLimit",
+              "schema": "Limit",
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "reference"
+            },
+            "type": "optional"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "headers": [],
+      "generatedRequestName": "GetLogsRequest",
+      "response": {
+        "description": "OK",
+        "schema": {
+          "generatedName": "GetLogsResponse",
+          "schema": "Values",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "method": "GET",
+      "path": "/logs",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "disabled": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                },
+                "limit": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                },
+                "label": {
+                  "value": {
+                    "value": "label",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "alias": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                },
+                "mistyped": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                },
+                "list": {
+                  "value": [
+                    {
+                      "value": {
+                        "value": true,
+                        "type": "boolean"
+                      },
+                      "type": "primitive"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "map": {
+                  "value": [
+                    {
+                      "key": {
+                        "value": "key",
+                        "type": "string"
+                      },
+                      "value": {
+                        "value": {
+                          "value": 1,
+                          "type": "int"
+                        },
+                        "type": "primitive"
+                      }
+                    }
+                  ],
+                  "type": "map"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "Disabled": {
+        "schema": {
+          "default": false,
+          "type": "boolean"
+        },
+        "generatedName": "Disabled",
+        "groupName": [],
+        "type": "primitive"
+      },
+      "Limit": {
+        "schema": {
+          "default": 25,
+          "type": "int"
+        },
+        "generatedName": "Limit",
+        "groupName": [],
+        "type": "primitive"
+      },
+      "Label": {
+        "schema": {
+          "default": "",
+          "type": "string"
+        },
+        "generatedName": "Label",
+        "groupName": [],
+        "type": "primitive"
+      },
+      "MistypedInteger": {
+        "schema": {
+          "default": "100",
+          "type": "int"
+        },
+        "generatedName": "MistypedInteger",
+        "groupName": [],
+        "type": "primitive"
+      },
+      "Alias": {
+        "generatedName": "Alias",
+        "schema": "Disabled",
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "reference"
+      },
+      "Values": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "valuesDisabled",
+            "key": "disabled",
+            "schema": {
+              "generatedName": "ValuesDisabled",
+              "value": {
+                "generatedName": "ValuesDisabled",
+                "schema": "Disabled",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "valuesLimit",
+            "key": "limit",
+            "schema": {
+              "generatedName": "ValuesLimit",
+              "value": {
+                "generatedName": "ValuesLimit",
+                "schema": "Limit",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "valuesLabel",
+            "key": "label",
+            "schema": {
+              "generatedName": "ValuesLabel",
+              "value": {
+                "generatedName": "ValuesLabel",
+                "schema": "Label",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "valuesAlias",
+            "key": "alias",
+            "schema": {
+              "generatedName": "ValuesAlias",
+              "value": {
+                "generatedName": "ValuesAlias",
+                "schema": "Alias",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "valuesMistyped",
+            "key": "mistyped",
+            "schema": {
+              "generatedName": "ValuesMistyped",
+              "value": {
+                "generatedName": "ValuesMistyped",
+                "schema": "MistypedInteger",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "valuesList",
+            "key": "list",
+            "schema": {
+              "generatedName": "ValuesList",
+              "value": {
+                "value": {
+                  "generatedName": "ValuesListItem",
+                  "schema": "Disabled",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "generatedName": "ValuesList",
+                "groupName": [],
+                "type": "array"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "valuesMap",
+            "key": "map",
+            "schema": {
+              "generatedName": "ValuesMap",
+              "value": {
+                "key": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ValuesMapKey",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "value": {
+                  "generatedName": "ValuesMapValue",
+                  "schema": "Limit",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "generatedName": "ValuesMap",
+                "groupName": [],
+                "type": "map"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Values",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}
