@@ -92,6 +92,7 @@ import { collectMdxComponentFiles } from "./utils/collectMdxComponentFiles.js";
 import { collectWellKnownSkillsFiles } from "./utils/collectWellKnownSkillsFiles.js";
 import { convertDocsAvailability } from "./utils/convertDocsAvailability.js";
 import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfigToFdr.js";
+import { collectInlineTypeIds } from "./utils/collectInlineTypeIds.js";
 import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition.js";
 import { collectFilesFromDocsConfig } from "./utils/getImageFilepathsToUpload.js";
 import { mapWithConcurrency } from "./utils/mapWithConcurrency.js";
@@ -2279,7 +2280,8 @@ export class DocsDefinitionResolver {
             parentAvailability ?? item.availability,
             openApiTags,
             graphqlData.namespacesByOperationId,
-            graphqlData.typeCategories
+            graphqlData.typeCategories,
+            item.types ? collectInlineTypeIds(ir) : undefined
         );
 
         // Extract tag description content and add it to both rawMarkdownFiles and parsedDocsConfig.pages

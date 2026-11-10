@@ -38,6 +38,8 @@ components:
       properties:
         voice:
           type: string
+          enum: [man, woman]
+          description: An inline enum; the importer lifts it to its own type, which gets no page.
         loop:
           type: integer
         children:

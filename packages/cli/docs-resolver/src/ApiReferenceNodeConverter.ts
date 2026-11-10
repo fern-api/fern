@@ -116,6 +116,7 @@ export class ApiReferenceNodeConverter {
     #tagDescriptionContent: Map<AbsoluteFilePath, string>;
     #graphqlNamespacesByOperationId: Map<FdrAPI.GraphQlOperationId, string>;
     #graphqlTypeCategories: Record<FdrAPI.TypeId, FernNavigation.GraphQlTypeCategory>;
+    #inlineTypeIds: ReadonlySet<FdrAPI.TypeId>;
     constructor(
         private apiSection: docsYml.DocsNavigationItem.ApiSection,
         api: APIV1Read.ApiDefinition,
@@ -132,11 +133,13 @@ export class ApiReferenceNodeConverter {
         private parentAvailability?: docsYml.RawSchemas.Availability,
         private openApiTags?: Record<string, { id: string; description: string | undefined }>,
         graphqlNamespacesByOperationId?: Map<FdrAPI.GraphQlOperationId, string>,
-        graphqlTypeCategories?: Record<FdrAPI.TypeId, FernNavigation.GraphQlTypeCategory>
+        graphqlTypeCategories?: Record<FdrAPI.TypeId, FernNavigation.GraphQlTypeCategory>,
+        inlineTypeIds?: ReadonlySet<FdrAPI.TypeId>
     ) {
         this.#tagDescriptionContent = new Map();
         this.#graphqlNamespacesByOperationId = graphqlNamespacesByOperationId ?? new Map();
         this.#graphqlTypeCategories = graphqlTypeCategories ?? {};
+        this.#inlineTypeIds = inlineTypeIds ?? new Set();
         this.disableEndpointPairs = docsWorkspace.config.experimental?.disableStreamToggle ?? false;
         this.apiDefinitionId = FernNavigation.V1.ApiDefinitionId(api.id);
         this.#holder = ApiDefinitionHolder.create(api, taskContext);
@@ -1506,7 +1509,9 @@ export class ApiReferenceNodeConverter {
 
     /**
      * One "Types" section at the API root with a page per schema no operation references (see
-     * {@link #collectReferencedTypeIds}). GraphQL types have their own section; they are left out.
+     * {@link #collectReferencedTypeIds}). GraphQL types have their own section, and types the importer
+     * lifted out of an inline schema (an enum or object declared inside another schema's property) are
+     * shown nested on their parent's page; both are left out.
      */
     #convertUnreferencedTypesToSection(
         parentSlug: FernNavigation.V1.SlugGenerator,
@@ -1516,7 +1521,12 @@ export class ApiReferenceNodeConverter {
         const typesSlug = parentSlug.append(API_TYPES_URL_SLUG);
         const children: FernNavigation.V1.ApiPackageChild[] = Object.keys(this.#holder.api.types)
             .map((typeIdRaw) => FdrAPI.TypeId(typeIdRaw))
-            .filter((typeId) => !referenced.has(typeId) && this.#graphqlTypeCategories[typeId] == null)
+            .filter(
+                (typeId) =>
+                    !referenced.has(typeId) &&
+                    this.#graphqlTypeCategories[typeId] == null &&
+                    !this.#inlineTypeIds.has(typeId)
+            )
             .map((typeId) => this.#buildApiTypeChildNode(typeId, typesSlug, parentAvailability))
             .filter(isNonNullish)
             .sort((a, b) => a.title.localeCompare(b.title));

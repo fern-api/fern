@@ -8,6 +8,7 @@ import { loadAPIWorkspace, loadDocsWorkspace } from "@fern-api/workspace-loader"
 
 import { ApiReferenceNodeConverter } from "../ApiReferenceNodeConverter.js";
 import { NodeIdGenerator } from "../NodeIdGenerator.js";
+import { collectInlineTypeIds } from "../utils/collectInlineTypeIds.js";
 import { convertIrToApiDefinition } from "../utils/convertIrToApiDefinition.js";
 
 const context = createMockTaskContext();
@@ -77,7 +78,13 @@ async function convertFixture({ types = true }: { types?: boolean } = {}): Promi
         new Map(),
         NodeIdGenerator.init(),
         new Map(),
-        apiWorkspace
+        apiWorkspace,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        types ? collectInlineTypeIds(ir) : undefined
     ).get();
 }
 
