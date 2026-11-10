@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.204.1
+  changelogEntry:
+    - summary: |
+        A generators.yml build sent to sdk-gen-api as a runtime bundle (the path `fern generate --guest` takes) is also
+        filed under the workspace name when the API definition carries the default name "api".
+      type: fix
+  createdAt: "2026-11-10"
+  irVersion: 67
 - version: 5.204.0
   changelogEntry:
     - summary: |
