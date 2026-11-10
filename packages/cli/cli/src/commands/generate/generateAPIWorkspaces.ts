@@ -230,7 +230,7 @@ export async function generateAPIWorkspaces({
         if (guest) {
             // Before minting a session: a guest organization can only download generated code.
             assertGuestCanGenerate({ generations, isAutomation, preview, cliContext });
-            const resolved = await resolveGuestProject({ project, cliContext, newSession });
+            const resolved = await resolveGuestProject({ project, cliContext, work: "sdk", newSession });
             project = resolved.project;
             token = resolved.token;
         }

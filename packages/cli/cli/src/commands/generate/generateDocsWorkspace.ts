@@ -93,7 +93,7 @@ export async function generateDocsWorkspace({
     }
     let guestToken: FernGuestToken | undefined;
     if (guest) {
-        const resolved = await resolveGuestProject({ project, cliContext, newSession });
+        const resolved = await resolveGuestProject({ project, cliContext, work: "docs", newSession });
         project = resolved.project;
         guestToken = resolved.token;
     }
