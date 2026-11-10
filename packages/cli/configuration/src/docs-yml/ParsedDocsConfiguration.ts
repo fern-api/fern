@@ -91,6 +91,7 @@ export interface ParsedDocsConfiguration {
     /* seo */
     metadata: ParsedMetadataConfig | undefined;
     redirects: CjsFdrSdk.docs.v1.commons.RedirectConfig[] | undefined;
+    remotePaths: RemotePathConfig[] | undefined;
 
     /* branding */
     logo: Logo | undefined;
@@ -751,4 +752,10 @@ export interface VariantOverlay {
     title: string | undefined;
     subtitle: string | undefined;
     slug: string | undefined;
+}
+
+/** A docs.yml `remote-paths` entry: a path prefix reverse-proxied to an HTTPS destination. */
+export interface RemotePathConfig {
+    path: string;
+    destination: string;
 }

@@ -70,10 +70,11 @@ interface DocsTranslationsConfig {
 }
 
 // TODO: Remove this shim once the published @fern-api/fdr-sdk type for
-// DocsV1Write.DocsConfig includes the translations and embedding fields.
+// DocsV1Write.DocsConfig includes the translations, embedding and remotePaths fields.
 interface DocsConfigWithTranslations extends DocsV1Write.DocsConfig {
     translations: DocsTranslationsConfig | undefined;
     embedding: { allowedOrigins: string[] } | undefined;
+    remotePaths: docsYml.RemotePathConfig[] | undefined;
 }
 
 // TODO: Remove this shim once the published @fern-api/fdr-sdk type for
@@ -1182,6 +1183,7 @@ export class DocsDefinitionResolver {
                     : undefined,
             metadata: this.convertMetadata(),
             redirects: this.parsedDocsConfig.redirects,
+            remotePaths: this.parsedDocsConfig.remotePaths,
             integrations,
             footerLinks: this.parsedDocsConfig.footerLinks?.map((footerLink) => ({
                 ...footerLink,

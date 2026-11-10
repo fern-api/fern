@@ -403,6 +403,7 @@ export async function visitDocsConfigFileYamlAst({
         },
         check: noop,
         redirects: noop,
+        remotePaths: noop,
         _absoluteFilepathsToRedirectsFiles: noop,
         _redirectsFileErrors: noop,
         tabs: noop,

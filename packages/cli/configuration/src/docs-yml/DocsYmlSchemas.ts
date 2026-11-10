@@ -667,6 +667,13 @@ export const RedirectsFile = z
     })
     .strict();
 
+// ===== Remote paths =====
+
+export const RemotePathConfig = z.object({
+    path: z.string(),
+    destination: z.string()
+});
+
 // ===== Check =====
 
 export const CheckRuleSeverity = z.enum(["warn", "error"]);
@@ -1164,6 +1171,7 @@ export const DocsConfiguration = z.object({
     agents: AgentsConfig.optional(),
     metadata: MetadataConfig.optional(),
     redirects: RedirectsConfiguration.optional(),
+    "remote-paths": z.array(RemotePathConfig).optional(),
     check: CheckConfig.optional(),
     logo: LogoConfiguration.optional(),
     favicon: z.string().optional(),
