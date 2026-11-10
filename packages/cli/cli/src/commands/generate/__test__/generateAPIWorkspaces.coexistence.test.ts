@@ -4,11 +4,11 @@ import path from "node:path";
 import type { AbstractAPIWorkspace } from "@fern-api/api-workspace-commons";
 import type { fernConfigJson, generatorsYml } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { createLogger, LogLevel } from "@fern-api/logger";
 import type { Project } from "@fern-api/project-loader";
 import { CliError, createMockTaskContext } from "@fern-api/task-context";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
-import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { afterEach, beforeEach, describe, expect, it, type Mock, vi } from "vitest";
 import YAML from "yaml";
 
