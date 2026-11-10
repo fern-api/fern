@@ -453,6 +453,10 @@ export async function runRemoteGenerationForGenerator({
                     cliVersion: workspace.cliVersion,
                     generatorInvocation: candidate.generatorInvocation,
                     sdkGenApiRoute,
+                    sdkName: guestSdkName({
+                        apiName: getOriginalName(ir.apiName),
+                        workspaceName: workspace.workspaceName
+                    }),
                     sdkVersion: candidate.sdkVersion,
                     apiVersion: ir.specVersion,
                     token,
@@ -697,6 +701,10 @@ export async function runRemoteGenerationForGenerator({
                       generatorInvocation: sdkGenApiCandidate.generatorInvocation,
                       resolvedGeneratorVersion: resolvedRuntimeGeneratorVersion,
                       sdkGenApiRoute,
+                      sdkName: guestSdkName({
+                          apiName: getOriginalName(ir.apiName),
+                          workspaceName: workspace.workspaceName
+                      }),
                       sdkVersion: sdkGenApiCandidate.sdkVersion,
                       apiVersion: ir.specVersion,
                       token,
@@ -1160,4 +1168,19 @@ export function resolveVersionFallback(resolvedVersion: string | undefined): str
         return undefined;
     }
     return resolvedVersion;
+}
+
+/**
+ * The name sdk-gen-api files a generators.yml build under. Every OpenAPI workspace's definition is
+ * named "api", so without this each API of an organization would fold into one SDK; the workspace
+ * name (`fern/apis/<name>`) tells them apart, and a single-API `fern/generators.yml` stays "api".
+ */
+export function guestSdkName({
+    apiName,
+    workspaceName
+}: {
+    apiName: string;
+    workspaceName: string | undefined;
+}): string {
+    return apiName === "api" && workspaceName != null && workspaceName !== "" ? workspaceName : apiName;
 }

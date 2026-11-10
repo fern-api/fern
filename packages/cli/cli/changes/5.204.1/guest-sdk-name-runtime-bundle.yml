@@ -1,0 +1,4 @@
+- summary: |
+    A generators.yml build sent to sdk-gen-api as a runtime bundle (the path `fern generate --guest` takes) is also
+    filed under the workspace name when the API definition carries the default name "api".
+  type: fix

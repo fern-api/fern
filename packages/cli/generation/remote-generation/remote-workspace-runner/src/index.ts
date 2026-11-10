@@ -1,4 +1,11 @@
 export { findGeneratorLineNumber, GeneratorOccurrenceTracker, getOutputRepoUrl } from "./automationMetadata.js";
+export type { CompiledGlobalTheme } from "./compileGlobalTheme.js";
+export {
+    canMergeThemeServerSide,
+    compileGlobalTheme,
+    shouldMergeThemeServerSide,
+    themeReferencesRemoteAssets
+} from "./compileGlobalTheme.js";
 export type { FernSdkGenApiPublishCredentialSource } from "./directPublishCredentials.js";
 export {
     discoverLatestSdkGenApiGeneratorVersions,

@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
-import { resolveGuestProject } from "../resolveGuestProject.js";
+import { describeClaimLink, resolveGuestProject } from "../resolveGuestProject.js";
 import { createTestCliContext, createTestProject, type TestProject } from "./commandHarness.js";
 
 const auth = vi.hoisted(() => ({
@@ -53,7 +53,7 @@ describe("resolveGuestProject", () => {
         const { cliContext, logged } = createTestCliContext();
 
         // The harness's failAndThrow logs the message and aborts the task.
-        await expect(resolveGuestProject({ project: testProject.project, cliContext })).rejects.toThrow();
+        await expect(resolveGuestProject({ project: testProject.project, cliContext, work: "sdk" })).rejects.toThrow();
         expect(logged("--guest cannot be combined with FERN_TOKEN")).toBe(true);
         expect(auth.getOrCreateGuestSession).not.toHaveBeenCalled();
     });
@@ -62,7 +62,7 @@ describe("resolveGuestProject", () => {
         auth.getToken.mockResolvedValue({ type: "user", value: "user-jwt" });
         const { cliContext, logged } = createTestCliContext();
 
-        await expect(resolveGuestProject({ project: testProject.project, cliContext })).rejects.toThrow();
+        await expect(resolveGuestProject({ project: testProject.project, cliContext, work: "sdk" })).rejects.toThrow();
         expect(logged("--guest cannot be combined with a saved login")).toBe(true);
         expect(auth.getOrCreateGuestSession).not.toHaveBeenCalled();
     });
@@ -72,7 +72,7 @@ describe("resolveGuestProject", () => {
         auth.getOrCreateGuestSession.mockResolvedValue({ token: GUEST_TOKEN, reused: false });
         const { cliContext, logged } = createTestCliContext();
 
-        const resolved = await resolveGuestProject({ project: testProject.project, cliContext });
+        const resolved = await resolveGuestProject({ project: testProject.project, cliContext, work: "sdk" });
 
         expect(resolved.token).toBe(GUEST_TOKEN);
         expect(resolved.project.config.organization).toBe("guest-gs_123");
@@ -85,7 +85,8 @@ describe("resolveGuestProject", () => {
             })
         );
         expect(logged("Started guest session")).toBe(true);
-        expect(logged(GUEST_TOKEN.claimUrl)).toBe(true);
+        // The link says the run made an SDK, so the dashboard lands the claim on the organization's SDKs.
+        expect(logged("https://dashboard.buildwithfern.com/claim/gs_123?from=sdk#secret")).toBe(true);
         expect(logged('Ignoring organization "acme"')).toBe(true);
     });
 
@@ -94,7 +95,7 @@ describe("resolveGuestProject", () => {
         auth.getOrCreateGuestSession.mockResolvedValue({ token: GUEST_TOKEN, reused: true });
         const { cliContext, logged } = createTestCliContext();
 
-        await resolveGuestProject({ project: testProject.project, cliContext });
+        await resolveGuestProject({ project: testProject.project, cliContext, work: "sdk" });
 
         expect(logged("Reusing guest session")).toBe(true);
     });
@@ -104,7 +105,7 @@ describe("resolveGuestProject", () => {
         auth.getOrCreateGuestSession.mockResolvedValue({ token: GUEST_TOKEN, reused: false });
         const { cliContext, logged } = createTestCliContext();
 
-        await resolveGuestProject({ project: testProject.project, cliContext, newSession: true });
+        await resolveGuestProject({ project: testProject.project, cliContext, work: "sdk", newSession: true });
 
         expect(auth.getOrCreateGuestSession).toHaveBeenCalledWith(expect.objectContaining({ forceNew: true }));
         expect(logged("Started a new (--new-session) guest session")).toBe(true);
@@ -117,7 +118,7 @@ describe("resolveGuestProject", () => {
         auth.getOrCreateGuestSession.mockResolvedValue({ token: soon, reused: true });
         const { cliContext, logged } = createTestCliContext();
 
-        const resolved = await resolveGuestProject({ project: testProject.project, cliContext, now });
+        const resolved = await resolveGuestProject({ project: testProject.project, cliContext, work: "sdk", now });
 
         expect(resolved.token).toBe(soon);
         expect(logged("expires in 25 minutes")).toBe(true);
@@ -129,8 +130,23 @@ describe("resolveGuestProject", () => {
         auth.getOrCreateGuestSession.mockResolvedValue({ token: GUEST_TOKEN, reused: true });
         const { cliContext, logged } = createTestCliContext();
 
-        await resolveGuestProject({ project: testProject.project, cliContext });
+        await resolveGuestProject({ project: testProject.project, cliContext, work: "sdk" });
 
         expect(logged("expires in")).toBe(false);
+    });
+});
+
+describe("describeClaimLink", () => {
+    it("adds what the run made before the secret", () => {
+        expect(describeClaimLink("https://dashboard.buildwithfern.com/claim/gs_123#secret", "sdk")).toBe(
+            "https://dashboard.buildwithfern.com/claim/gs_123?from=sdk#secret"
+        );
+        expect(describeClaimLink("https://dashboard-dev.buildwithfern.com/claim/gs_123#secret", "docs")).toBe(
+            "https://dashboard-dev.buildwithfern.com/claim/gs_123?from=docs#secret"
+        );
+    });
+
+    it("keeps a link it cannot parse as it is", () => {
+        expect(describeClaimLink("not a link", "sdk")).toBe("not a link");
     });
 });

@@ -1,4 +1,78 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.204.1
+  changelogEntry:
+    - summary: |
+        A generators.yml build sent to sdk-gen-api as a runtime bundle (the path `fern generate --guest` takes) is also
+        filed under the workspace name when the API definition carries the default name "api".
+      type: fix
+  createdAt: "2026-11-10"
+  irVersion: 67
+- version: 5.204.0
+  changelogEntry:
+    - summary: |
+        Add `remote-paths` to `docs.yml`. Each entry reverse-proxies a path prefix on your docs domain
+        (for example `/ui`) to an HTTPS service you run, while Fern keeps serving the rest of the site.
+        `fern check` validates each path and destination with the new `valid-remote-paths` rule.
+      type: feat
+    - summary: |
+        A generators.yml build sent to sdk-gen-api is filed under the workspace name (`fern/apis/<name>`) when the
+        API definition carries the default name "api", so each API of an organization gets its own SDK.
+      type: fix
+  createdAt: "2026-11-10"
+  irVersion: 67
+- version: 5.203.0
+  changelogEntry:
+    - summary: |
+        `settings.search-text` in `translations/<lang>/docs.yml` now sets the search bar placeholder for that locale.
+        Locales without it keep the docs-level `search-text`.
+      type: feat
+  createdAt: "2026-11-10"
+  irVersion: 67
+- version: 5.202.1
+  changelogEntry:
+    - summary: |
+        The claim link `fern generate --guest` prints says what the run made (`from=sdk` for an SDK run, `from=docs` for a docs publish), so claiming it lands on that page of the organization — the SDKs after an SDK run even when the organization already has docs.
+      type: fix
+  createdAt: "2026-11-10"
+  irVersion: 67
+- version: 5.202.0
+  changelogEntry:
+    - summary: |
+        FDR now merges global themes server-side when it supports it; older FDR versions keep CLI-side stitching.
+      type: feat
+  createdAt: "2026-11-09"
+  irVersion: 67
+- version: 5.201.0
+  changelogEntry:
+    - summary: |
+        Set `ENABLE_SDK_GEN_RUST_CLI=true` to send a `cli` target in `sdk-config.yml` to sdk-gen-api as SDK Config, like
+        every other language. sdk-gen-api picks the CLI generator. Without it, the `cli` target is translated into a
+        `generators.yml` for the Fern CLI generator, as before.
+      type: feat
+    - summary: |
+        The `cli` target translation now knows the fields added in `@postman/sdk-config` 0.20.0. The OAuth redirect,
+        parameter and device-authorization settings, custom `oauthTokenEndpoints` property names and `omitTokenPrefix`
+        are rejected with a clear error instead of being reported as unknown; `crateName` is reported as not written.
+      type: chore
+  createdAt: "2026-11-09"
+  irVersion: 67
+- version: 5.200.0
+  changelogEntry:
+    - summary: |
+        `fern generate --docs --guest` now uploads your `fern/` folder with the site, so connecting a GitHub
+        repository after claiming the site adds the folder to it. Files ignored by git, `.env*` files and
+        `node_modules` are left out. Pass `--no-source` to publish without it.
+      type: feat
+  createdAt: "2026-11-06"
+  irVersion: 67
+- version: 5.199.1
+  changelogEntry:
+    - summary: |
+        `fern generate --docs` now sends the time the publish started. When two publishes of the same
+        docs site overlap, the one that started later stays live, even if its build finishes first.
+      type: fix
+  createdAt: "2026-11-06"
+  irVersion: 67
 - version: 5.199.0
   changelogEntry:
     - summary: |

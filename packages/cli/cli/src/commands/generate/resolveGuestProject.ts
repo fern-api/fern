@@ -13,14 +13,36 @@ import { CliContext } from "../../cli-context/CliContext.js";
 /** Warn this close to expiry. The session is still reused until it expires: a new one is a new guest org. */
 const EXPIRY_WARNING_MS = 60 * 60 * 1000;
 
+/** What a guest run produces; the claim link says so, and the dashboard lands the claim on that page. */
+export type GuestWork = "sdk" | "docs";
+
+/**
+ * The claim link with `from=<work>` added, so the dashboard's claim page lands on the organization's
+ * SDKs or docs — whichever this run made — instead of guessing from what else the organization has.
+ * The secret stays in the fragment. An unparsable link is printed as Venus gave it.
+ */
+export function describeClaimLink(claimUrl: string, work: GuestWork): string {
+    let parsed: URL;
+    try {
+        parsed = new URL(claimUrl);
+    } catch {
+        return claimUrl;
+    }
+    parsed.searchParams.set("from", work);
+    return parsed.toString();
+}
+
 export async function resolveGuestProject({
     project,
     cliContext,
+    work,
     newSession = false,
     now = new Date()
 }: {
     project: Project;
     cliContext: CliContext;
+    /** What this run generates: the claim link lands on that page of the organization. */
+    work: GuestWork;
     /** `--new-session`: ignore the stored session and mint another one. */
     newSession?: boolean;
     now?: Date;
@@ -49,7 +71,7 @@ export async function resolveGuestProject({
     cliContext.logger.info(
         `${verb} guest session ${chalk.bold(token.sessionId)} as organization ${chalk.bold(token.organizationId)} (expires ${token.expiresAt.toLocaleString()}).`
     );
-    cliContext.logger.info(`Claim it to keep this work: ${chalk.cyan(token.claimUrl)}`);
+    cliContext.logger.info(`Claim it to keep this work: ${chalk.cyan(describeClaimLink(token.claimUrl, work))}`);
     const msLeft = token.expiresAt.getTime() - now.getTime();
     if (msLeft < EXPIRY_WARNING_MS) {
         cliContext.logger.warn(
