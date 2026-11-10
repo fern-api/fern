@@ -6,7 +6,7 @@ export const ValidRemotePathsRule: Rule = {
     name: "valid-remote-paths",
     create: () => {
         return {
-            file: async ({ config }) => {
+            file: ({ config }) => {
                 const remotePaths = config.remotePaths;
                 if (remotePaths == null || remotePaths.length === 0) {
                     return [];
