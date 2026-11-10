@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.203.0
+  changelogEntry:
+    - summary: |
+        `settings.search-text` in `translations/<lang>/docs.yml` now sets the search bar placeholder for that locale.
+        Locales without it keep the docs-level `search-text`.
+      type: feat
+  createdAt: "2026-11-10"
+  irVersion: 67
 - version: 5.202.1
   changelogEntry:
     - summary: |
