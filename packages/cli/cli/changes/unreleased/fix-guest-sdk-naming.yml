@@ -1,0 +1,5 @@
+- summary: |
+    `fern generate --guest` no longer names the generated SDK after the throwaway guest organization
+    (`Guest<id>ApiClient`, `Guest<id>ApiError`, ...): client and error classes keep the names derived from the
+    organization in fern.config.json, while the build still runs under the guest session.
+  type: fix
