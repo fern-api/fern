@@ -91,6 +91,11 @@ export interface AutoVersionStepConfig {
     specCommitMessage?: string;
     /** When true, strips "🌿 Generated with Fern" trailers from commit messages (whitelabel customers). */
     isWhitelabel?: boolean;
+    /**
+     * When true, fail the step instead of falling back to a PATCH bump when AI analysis is
+     * unavailable or incomplete, and stop the pipeline before any GitHub push.
+     */
+    strict?: boolean;
 }
 
 /**

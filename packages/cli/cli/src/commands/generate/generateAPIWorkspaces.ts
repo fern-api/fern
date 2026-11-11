@@ -92,6 +92,7 @@ export async function generateAPIWorkspaces({
     sdkConfigPath,
     fernignorePath,
     skipFernignore,
+    strictVersion,
     dynamicIrOnly,
     outputDir,
     noReplay,
@@ -132,6 +133,8 @@ export async function generateAPIWorkspaces({
     sdkConfigPath?: string;
     fernignorePath: string | undefined;
     skipFernignore: boolean;
+    /** With `--version AUTO`, fail instead of falling back to PATCH when AI analysis is unavailable. */
+    strictVersion?: boolean;
     dynamicIrOnly: boolean;
     outputDir: string | undefined;
     noReplay: boolean;
@@ -338,6 +341,7 @@ export async function generateAPIWorkspaces({
                         sdkConfigV1: generation.sdkConfigV1,
                         fernignorePath,
                         skipFernignore,
+                        strictVersion,
                         dynamicIrOnly,
                         noReplay,
                         verify,

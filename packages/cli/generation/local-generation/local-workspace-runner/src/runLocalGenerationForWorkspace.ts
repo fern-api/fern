@@ -69,6 +69,7 @@ export async function runLocalGenerationForWorkspace({
     validateWorkspace,
     requireEnvVars,
     skipFernignore,
+    strictVersion,
     publishToRegistry,
     isPreview: isPreviewOverride,
     automationMode,
@@ -98,6 +99,8 @@ export async function runLocalGenerationForWorkspace({
     verify?: boolean;
     requireEnvVars?: boolean;
     skipFernignore?: boolean;
+    /** With `--version AUTO`, fail instead of falling back to PATCH when AI analysis is unavailable. */
+    strictVersion?: boolean;
     publishToRegistry?: boolean;
     isPreview?: boolean;
     automationMode?: boolean;
@@ -456,6 +459,7 @@ export async function runLocalGenerationForWorkspace({
                     autoVersioningCache,
                     absolutePathToSpecRepo: dirname(workspace.absoluteFilePath),
                     skipFernignore,
+                    strictVersion,
                     disableTelemetry,
                     rawApiSpecs: wantsRawSpecs ? workspace.allSpecs : undefined
                 });
