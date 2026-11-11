@@ -1,0 +1,3 @@
+- summary: |
+    `fern generate` resolves `source.specs` paths in `sdk-config.yml` relative to the file when a `generators.yml` in the same folder references files outside it. Before, those paths could resolve against a parent folder or the filesystem root and fail with `ENOENT`.
+  type: fix

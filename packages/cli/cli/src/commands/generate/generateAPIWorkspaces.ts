@@ -15,6 +15,7 @@ import {
 } from "@fern-api/remote-workspace-runner";
 import { CliError } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
+import type { SdkConfigV1 } from "@postman/sdk-config/sdk-config/v1";
 import { CliContext } from "../../cli-context/CliContext.js";
 import { PREVIEW_DIRECTORY } from "../../constants.js";
 import { assertGuestCanGenerate } from "./assertGuestCanGenerate.js";
@@ -30,7 +31,7 @@ import { resolveGroupsForWorkspace } from "./resolveGroupsForWorkspace.js";
 import { resolveGuestProject } from "./resolveGuestProject.js";
 import { resolvePosthogCommandLabel } from "./resolvePosthogCommandLabel.js";
 import { getSdkConfigGeneratorName } from "./sdkConfigGeneratorName.js";
-import { assertNoProtobufSourcesForGeneration } from "./sdkConfigProtobufSources.js";
+import { assertNoProtobufSourcesForGeneration, isProtobufSource } from "./sdkConfigProtobufSources.js";
 import { shouldPreflightGenerator } from "./shouldPreflightGenerator.js";
 
 export const GenerationMode = {
@@ -515,7 +516,7 @@ async function prepareSdkConfigGenerations({
                     }
                 }
             }
-            const sourceRoot = resolveSourceRoot(candidate.owner, loaded.absolutePath);
+            const sourceRoot = await resolveSourceRoot(candidate.owner, loaded.absolutePath, loaded.config);
             const selectedCliTargets = selectedTargets.filter(({ target }) => isTranslatedCliTarget(target));
             if (selectedCliTargets.length > 0) {
                 const cliTarget = await cliContext.runTask(async (context) =>
@@ -601,11 +602,12 @@ async function findLocalRunnerSdkConfig(directory: string): Promise<string | und
     return undefined;
 }
 
-function resolveSourceRoot(
+async function resolveSourceRoot(
     owner: SdkConfigWorkspaceOwner | undefined,
-    absolutePathToConfig: string
-): string | undefined {
-    if (owner == null) {
+    absolutePathToConfig: string,
+    sdkConfig: SdkConfigV1
+): Promise<string | undefined> {
+    if (owner == null || (await areSourcePathsRelativeToConfig(sdkConfig, path.dirname(absolutePathToConfig)))) {
         return undefined;
     }
     const boundary = commonAncestor(path.dirname(path.resolve(absolutePathToConfig)), owner.absoluteFilePath);
@@ -613,6 +615,32 @@ function resolveSourceRoot(
         (current, absoluteFilePath) => commonAncestor(current, absoluteFilePath),
         boundary
     );
+}
+
+/**
+ * SDK Config paths are documented as relative to sdk-config.yml. `fern sdk migrate` may instead write them relative to
+ * the common ancestor of the legacy workspace's files, so keep that root only when the paths don't resolve from the
+ * config's own directory.
+ */
+async function areSourcePathsRelativeToConfig(sdkConfig: SdkConfigV1, configDirectory: string): Promise<boolean> {
+    const specs = sdkConfig.source.specs;
+    if (specs.some(isProtobufSource)) {
+        return false;
+    }
+    const relativePaths = specs.flatMap((spec) =>
+        isProtobufSource(spec)
+            ? []
+            : [...("path" in spec ? [spec.path] : []), ...(spec.overlays ?? []), ...(spec.overrides ?? [])]
+    );
+    if (relativePaths.length === 0) {
+        return false;
+    }
+    const existence = await Promise.all(
+        relativePaths.map((relativePath) =>
+            doesPathExist(AbsoluteFilePath.of(path.resolve(configDirectory, relativePath)))
+        )
+    );
+    return existence.every(Boolean);
 }
 
 function commonAncestor(candidateRoot: string, candidatePath: string): string {
