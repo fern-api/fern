@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.205.2
+  changelogEntry:
+    - summary: |
+        `sdkConfig.isAuthMandatory` no longer turns off because an OAuth or inferred auth scheme's
+        `get-token` (or `refresh-token`) endpoint is unauthenticated. Those endpoints are called by the
+        SDK's own auth flow, so an API where every other endpoint requires auth now generates SDKs that
+        require credentials instead of silently sending unauthenticated requests.
+      type: fix
+  createdAt: "2026-11-11"
+  irVersion: 67
 - version: 5.205.1
   changelogEntry:
     - summary: |
