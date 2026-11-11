@@ -4,7 +4,6 @@ import {
     applyTranslatedNavigationOverlays,
     findIncompatibleTranslatedApiIds,
     getTranslatedAnnouncement,
-    getTranslatedSettings,
     replaceImagePathsAndUrls,
     replaceReferencedCode,
     replaceReferencedMarkdown,
@@ -222,8 +221,7 @@ export async function computeTranslatedDefinitions(
                     ...docsDefinition.config,
                     root: updatedRoot,
                     announcement: translatedAnnouncement,
-                    navbarLinks: translatedNavbarLinks,
-                    settings: getTranslatedSettings(docsDefinition.config.settings, localeNavOverlay)
+                    navbarLinks: translatedNavbarLinks
                 }
             };
 

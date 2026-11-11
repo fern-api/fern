@@ -42,20 +42,6 @@ export function getTranslatedAnnouncement(overlay: docsYml.TranslationNavigation
     return undefined;
 }
 
-/**
- * Returns `settings` with the overlay's translated `search-text` applied, or `settings`
- * unchanged when the overlay doesn't set one.
- */
-export function getTranslatedSettings<T extends { searchText?: string }>(
-    settings: T | undefined,
-    overlay: docsYml.TranslationNavigationOverlay | undefined
-): T | { searchText: string } | undefined {
-    if (overlay?.searchText == null) {
-        return settings;
-    }
-    return { ...settings, searchText: overlay.searchText };
-}
-
 function walkAndApply(node: unknown, overlay: docsYml.TranslationNavigationOverlay): unknown {
     if (node == null || typeof node !== "object") {
         return node;
@@ -344,8 +330,7 @@ function applyTabOverlayToNode(
                 versions: undefined,
                 announcement: undefined,
                 navigation: tabNavOverlay.layout,
-                navbarLinks: undefined,
-                searchText: undefined
+                navbarLinks: undefined
             };
             return walkAndApply(node, scopedOverlay);
         }

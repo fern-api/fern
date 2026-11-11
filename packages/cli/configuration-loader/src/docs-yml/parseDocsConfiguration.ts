@@ -2580,8 +2580,7 @@ async function parseNavigationOverlayFromDocsYml({
         versions: undefined,
         announcement: undefined,
         navigation: undefined,
-        navbarLinks: undefined,
-        searchText: undefined
+        navbarLinks: undefined
     };
 
     // Parse announcement
@@ -2606,14 +2605,6 @@ async function parseNavigationOverlayFromDocsYml({
     }
     // If `navbar-links` is absent, leave `overlay.navbarLinks` undefined so the
     // docs-level CTAs are inherited.
-
-    // Parse settings.search-text (search bar placeholder). Absent ⇒ inherit the docs-level value.
-    if (isPlainObject(docsYmlContent.settings)) {
-        const searchText = extractString(docsYmlContent.settings, "search-text");
-        if (searchText != null) {
-            overlay.searchText = searchText;
-        }
-    }
 
     // Parse top-level tabs
     if (isPlainObject(docsYmlContent.tabs)) {
