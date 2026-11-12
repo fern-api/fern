@@ -50,7 +50,7 @@ import { cannotFindSubpackageByLocatorError, packageReuseError } from "./utils/e
 import { isSubpackage } from "./utils/isSubpackage.js";
 import { mergeAndFilterChildren } from "./utils/mergeAndFilterChildren.js";
 import { mergeEndpointPairs } from "./utils/mergeEndpointPairs.js";
-import { pickApiTypesSection } from "./utils/pickApiTypesSectionSlug.js";
+import { pickApiTypesSection } from "./utils/pickApiTypesSection.js";
 import { sortChildrenByAvailability } from "./utils/sortChildrenByAvailability.js";
 import {
     stringifyEndpointPathParts,
