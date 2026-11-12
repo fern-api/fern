@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.209.1
+  changelogEntry:
+    - summary: |
+        `fern docs link check --output csv` and `--output json` now print only the results to stdout.
+        Warnings from loading the local Fern project (such as `Missing file: examples.yml`) and their
+        GitHub Actions `::error::` annotations go to stderr, so `> results.csv` no longer puts log lines
+        above the CSV header.
+      type: fix
+  createdAt: "2026-11-12"
+  irVersion: 67
 - version: 5.209.0
   changelogEntry:
     - summary: |
