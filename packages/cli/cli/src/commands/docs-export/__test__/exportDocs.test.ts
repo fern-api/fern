@@ -13,7 +13,6 @@ import {
     normalizeSlug,
     pdfExportOptions,
     pdfOutputPath,
-    printPagesUrl,
     resolvePdfScope,
     safeRelativePath,
     writeExport
@@ -160,14 +159,6 @@ describe("resolvePdfScope", () => {
 describe("normalizeSlug", () => {
     it("drops surrounding slashes and spaces", () => {
         expect(normalizeSlug(" /docs/quickstart/ ")).toBe("docs/quickstart");
-    });
-});
-
-describe("printPagesUrl", () => {
-    it("points at the site's print page list", () => {
-        expect(printPagesUrl("acme.docs.buildwithfern.com")).toBe("https://acme.docs.buildwithfern.com/_print/pages");
-        expect(printPagesUrl("https://acme.com/docs/")).toBe("https://acme.com/docs/_print/pages");
-        expect(printPagesUrl("https://acme.com/docs?preview=1#top")).toBe("https://acme.com/docs/_print/pages");
     });
 });
 
