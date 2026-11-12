@@ -1099,6 +1099,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "0.0.0",
   "apiName": "Test extension `x-fern-type-name`.",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

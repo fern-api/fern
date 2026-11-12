@@ -222,6 +222,7 @@
     "swiftSdk": undefined,
     "typescriptSdk": undefined,
   },
+  "specVersion": "1.0.0",
   "subpackages": {},
   "types": {
     "FixedRate": {

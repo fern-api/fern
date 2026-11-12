@@ -909,6 +909,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Schema Pruning Test",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

@@ -1780,6 +1780,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Test x-fern-global-parameters extension",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

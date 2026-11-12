@@ -633,6 +633,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Test vnd.fern.user+json;version=1 and /application-json",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

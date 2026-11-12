@@ -503,6 +503,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Security Single Override Test",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

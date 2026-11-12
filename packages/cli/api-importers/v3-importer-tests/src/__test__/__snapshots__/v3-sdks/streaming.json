@@ -2141,6 +2141,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Streaming API",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

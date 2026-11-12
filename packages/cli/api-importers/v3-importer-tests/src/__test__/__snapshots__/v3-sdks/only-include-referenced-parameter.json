@@ -501,6 +501,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Parameter Reference Test",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

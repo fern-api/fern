@@ -452,6 +452,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "allOf Array Items Narrowing",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

@@ -269,6 +269,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0",
   "apiName": "Acme API",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

@@ -542,6 +542,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Code Samples API",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

@@ -855,6 +855,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Filter Test",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

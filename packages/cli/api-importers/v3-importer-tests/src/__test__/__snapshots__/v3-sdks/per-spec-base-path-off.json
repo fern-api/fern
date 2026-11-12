@@ -5,6 +5,7 @@
     "parts": []
   },
   "selfHosted": false,
+  "specVersion": "1.0.0",
   "apiDisplayName": "Auth",
   "auth": {
     "requirement": "ALL",

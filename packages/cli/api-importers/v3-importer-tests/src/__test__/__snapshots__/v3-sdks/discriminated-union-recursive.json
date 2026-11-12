@@ -594,6 +594,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Recursive Discriminated Union",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

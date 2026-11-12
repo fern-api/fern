@@ -716,6 +716,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "API with Default Values",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

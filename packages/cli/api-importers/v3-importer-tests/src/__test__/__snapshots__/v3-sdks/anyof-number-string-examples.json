@@ -797,6 +797,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Test spec for anyOf [number, string] with string examples",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

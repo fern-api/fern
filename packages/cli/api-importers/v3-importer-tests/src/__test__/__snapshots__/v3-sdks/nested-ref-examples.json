@@ -1933,6 +1933,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Nested Ref Examples Test",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

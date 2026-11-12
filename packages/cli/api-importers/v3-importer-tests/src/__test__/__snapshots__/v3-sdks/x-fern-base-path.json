@@ -5,6 +5,7 @@
     "parts": []
   },
   "selfHosted": false,
+  "specVersion": "1.0",
   "apiDisplayName": "Acme API",
   "auth": {
     "requirement": "ALL",

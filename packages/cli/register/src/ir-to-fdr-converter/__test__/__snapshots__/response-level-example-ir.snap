@@ -1443,7 +1443,7 @@
     },
   },
   "sourceConfig": undefined,
-  "specVersion": undefined,
+  "specVersion": "1.0.18",
   "subpackages": {
     "subpackage_plant": {
       "displayName": undefined,

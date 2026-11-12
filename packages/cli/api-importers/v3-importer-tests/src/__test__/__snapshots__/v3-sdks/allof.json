@@ -2217,6 +2217,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "allOf Reproduction",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

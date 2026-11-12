@@ -322,6 +322,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Test setting to disable usage of title param",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"
