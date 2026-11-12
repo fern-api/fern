@@ -20,11 +20,13 @@ const include = [
     "src/__test__/library-hardfail.test.ts",
     "src/__test__/direct-api-spec.test.ts",
     "src/__test__/graphql-type-navigation.test.ts",
+    "src/__test__/api-type-navigation.test.ts",
     "src/__test__/convertThemeTabs.test.ts",
     "src/__test__/root-changelog.test.ts",
     "src/__test__/stitchGlobalTheme.test.ts",
     "src/__test__/sort-by-availability.test.ts",
-    "src/__test__/ref-version-image-title.test.ts"
+    "src/__test__/ref-version-image-title.test.ts",
+    "src/__test__/tab-menu.test.ts"
 ];
 
 export default defineConfig({

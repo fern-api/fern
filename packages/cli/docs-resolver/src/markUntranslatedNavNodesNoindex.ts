@@ -9,7 +9,7 @@ const MARKDOWN_NODE_TYPES = new Set([
     "apiPackage",
     "changelog"
 ]);
-const API_LEAF_TYPES = new Set(["endpoint", "webSocket", "webhook", "grpc", "graphql", "graphqlType"]);
+const API_LEAF_TYPES = new Set(["endpoint", "webSocket", "webhook", "grpc", "graphql", "graphqlType", "apiType"]);
 
 /**
  * Marks nodes in a translated locale's navigation tree as `noindex` when they

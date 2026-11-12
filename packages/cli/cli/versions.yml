@@ -1,4 +1,51 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.210.1
+  changelogEntry:
+    - summary: |
+        When an API with `types: true` also has a GraphQL schema, the standalone schema section is titled
+        `Schemas` (matching its `schemas` slug) instead of a second `Types` section; type pages sort
+        with an explicit locale so their order is the same on every machine.
+      type: fix
+  createdAt: "2026-11-12"
+  irVersion: 67
+- version: 5.210.0
+  changelogEntry:
+    - summary: |
+        Add `types: true` to the `api` navigation item in `docs.yml`. When set, every schema that no endpoint,
+        webhook or WebSocket of the API references gets its own page under a `Types` section at the end of the
+        API reference (e.g. a schema-only OpenAPI document such as TwiML). Enums and objects declared inline in
+        another schema stay nested on their parent's page. The XML encoding of a type (OpenAPI `xml` object,
+        `x-fern-xml-text`) is kept so an XML element's page shows an XML example. Off by default.
+      type: feat
+  createdAt: "2026-11-12"
+  irVersion: 67
+- version: 5.209.1
+  changelogEntry:
+    - summary: |
+        `fern docs link check --output csv` and `--output json` now print only the results to stdout.
+        Warnings from loading the local Fern project (such as `Missing file: examples.yml`) and their
+        GitHub Actions `::error::` annotations go to stderr, so `> results.csv` no longer puts log lines
+        above the CSV header.
+      type: fix
+  createdAt: "2026-11-12"
+  irVersion: 67
+- version: 5.209.0
+  changelogEntry:
+    - summary: |
+        A tab can now have a `tab-menu`: a menu of other tabs that opens from the header tab. Menu entries are tabs
+        (`tab` id plus `display-name`, optional `subtitle` and `icon`), top-level `group` entries with a header and
+        `tabs`, and external links (`link` + `href`). Each menu tab gets its own `- tab:` entry in `navigation` with a
+        `layout` or `variants` (whose selector sits at the top of that tab's sidebar), and the menu tab's own bare
+        `- tab:` entry sets where the menu sits in the header. Member URLs nest under the menu tab
+        (`/products/agents/...`). Without header tabs, the menu falls back to a sidebar selector and `fern check` warns;
+        it also errors on members missing from `navigation`, members listed twice, and undefined navigation tabs. Tab
+        `variants` lists also accept `group` entries (a header plus `items`). Split menus into columns with
+        `tab-menu-column-height` on the tab (an integer or `no-limit`), with a site-wide default in
+        `layout.tab-menu.default-column-height`; sidebar selectors stay a single list. Menus open on hover; set
+        `layout.tab-menu.interact-on-click-only: true` to open them on click only, with no animation.
+      type: feat
+  createdAt: "2026-11-12"
+  irVersion: 67
 - version: 5.208.0
   changelogEntry:
     - summary: |

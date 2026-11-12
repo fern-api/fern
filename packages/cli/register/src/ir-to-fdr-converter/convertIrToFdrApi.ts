@@ -46,7 +46,7 @@ export function convertIrToFdrApi({
         fdrApi.types[FdrCjsSdk.TypeId(typeId)] = {
             description: type.docs ?? undefined,
             name: getOriginalName(type.name.name),
-            shape: convertTypeShape(type.shape),
+            shape: convertTypeShape(type.shape, type.encoding?.xml),
             availability: convertIrAvailability(type.availability),
             displayName: type.name.displayName
         };

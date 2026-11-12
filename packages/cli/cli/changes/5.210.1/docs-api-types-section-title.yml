@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    When an API with `types: true` also has a GraphQL schema, the standalone schema section is titled
+    `Schemas` (matching its `schemas` slug) instead of a second `Types` section; type pages sort
+    with an explicit locale so their order is the same on every machine.
+  type: fix

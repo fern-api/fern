@@ -17,4 +17,15 @@ export interface TabConfig extends FernDocsConfig.WithPermissions, FernDocsConfi
     target?: FernDocsConfig.Target;
     changelog?: FernDocsConfig.ChangelogFolderRelativePath;
     blog?: FernDocsConfig.ChangelogFolderRelativePath;
+    /**
+     * Turns this tab into a menu of other tabs that opens from the header tab. Entries are tabs (defined here,
+     * with their pages under their own `- tab:` entry in `navigation`), `group` entries with a header and `tabs`,
+     * and links. Without header tabs, the menu falls back to a selector at the top of the sidebar.
+     */
+    tabMenu?: FernDocsConfig.TabMenuEntry[];
+    /**
+     * Maximum number of items per column in this tab's header menu. `no-limit` keeps a single column.
+     * Overrides `layout.tab-menu.default-column-height`. Only applies when the tab has a `tab-menu`.
+     */
+    tabMenuColumnHeight?: FernDocsConfig.VariantsColumnHeight;
 }
