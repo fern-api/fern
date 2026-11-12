@@ -1,5 +1,5 @@
 import { FernToken, getToken, isLoggedIn } from "@fern-api/auth";
-import { CliError, TaskContext } from "@fern-api/task-context";
+import { CliError, InstructionsTopic, TaskContext } from "@fern-api/task-context";
 import inquirer, { ConfirmQuestion } from "inquirer";
 
 import { login } from "./login.js";
@@ -18,7 +18,10 @@ export async function askToLogin(
     }
     const token = await getToken();
     if (token == null) {
-        context.failAndThrow(getMissingLoginMessage({ suggestGuest }), undefined, { code: CliError.Code.AuthError });
+        context.failAndThrow(getMissingLoginMessage({ suggestGuest }), undefined, {
+            code: CliError.Code.AuthError,
+            instructionsTopic: InstructionsTopic.NewSite
+        });
     }
 
     return token;

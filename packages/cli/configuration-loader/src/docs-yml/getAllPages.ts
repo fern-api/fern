@@ -66,8 +66,8 @@ function getAllPagesFromNavigationConfig(navigation: docsYml.DocsNavigationConfi
                         });
                     });
                 } else if (tab.child.type === "variants") {
-                    return tab.child.variants.flatMap((variant) =>
-                        variant.layout.flatMap((item) => {
+                    return docsYml.flattenTabVariantLayouts(tab.child.variants).flatMap((layout) =>
+                        layout.flatMap((item) => {
                             return getAllPagesFromNavigationItem({
                                 item
                             });

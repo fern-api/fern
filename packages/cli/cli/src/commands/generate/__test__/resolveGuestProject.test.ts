@@ -67,7 +67,7 @@ describe("resolveGuestProject", () => {
         expect(auth.getOrCreateGuestSession).not.toHaveBeenCalled();
     });
 
-    it("swaps the organization for the guest org for this run and prints the claim link", async () => {
+    it("swaps the organization for the guest org for this run, keeps the configured one for naming, and prints the claim link", async () => {
         auth.getToken.mockResolvedValue(undefined);
         auth.getOrCreateGuestSession.mockResolvedValue({ token: GUEST_TOKEN, reused: false });
         const { cliContext, logged } = createTestCliContext();
@@ -76,6 +76,8 @@ describe("resolveGuestProject", () => {
 
         expect(resolved.token).toBe(GUEST_TOKEN);
         expect(resolved.project.config.organization).toBe("guest-gs_123");
+        // Generated code keeps the configured organization's names: no Guest<id>ApiClient.
+        expect(resolved.project.config.sdkOrganization).toBe("acme");
         expect(resolved.project.config._absolutePath).toBe(testProject.project.config._absolutePath);
         expect(testProject.project.config.organization).toBe("acme");
         expect(auth.getOrCreateGuestSession).toHaveBeenCalledWith(
@@ -87,7 +89,7 @@ describe("resolveGuestProject", () => {
         expect(logged("Started guest session")).toBe(true);
         // The link says the run made an SDK, so the dashboard lands the claim on the organization's SDKs.
         expect(logged("https://dashboard.buildwithfern.com/claim/gs_123?from=sdk#secret")).toBe(true);
-        expect(logged('Ignoring organization "acme"')).toBe(true);
+        expect(logged('the SDK keeps the names of organization "acme"')).toBe(true);
     });
 
     it("says when it reuses the repo's existing session", async () => {

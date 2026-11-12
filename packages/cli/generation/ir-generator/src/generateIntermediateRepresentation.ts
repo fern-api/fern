@@ -1,7 +1,7 @@
 import { FernWorkspace, visitAllDefinitionFiles, visitAllPackageMarkers } from "@fern-api/api-workspace-commons";
 import { constructCasingsGenerator } from "@fern-api/casings-generator";
 import { Audiences, FERN_PACKAGE_MARKER_FILENAME, generatorsYml } from "@fern-api/configuration";
-import { noop, visitObject } from "@fern-api/core-utils";
+import { assertNever, noop, visitObject } from "@fern-api/core-utils";
 import { isGeneric, RawSchemas } from "@fern-api/fern-definition-schema";
 import {
     dynamic,
@@ -578,9 +578,7 @@ export function generateIntermediateRepresentation({
 
     const isAuthMandatory =
         workspace.definition.rootApiFile.contents.auth != null &&
-        Object.values(intermediateRepresentationForAudiences.services).every((service) => {
-            return service.endpoints.every((endpoint) => endpoint.auth);
-        });
+        everyEndpointRequiresAuth(intermediateRepresentationForAudiences);
 
     const hasStreamingEndpoints = Object.values(intermediateRepresentationForAudiences.services).some((service) => {
         return service.endpoints.some((endpoint) => endpoint.response?.body?.type === "streaming");
@@ -715,4 +713,52 @@ function computeServiceTypeReferenceInfo(irGraph: IrGraph): ServiceTypeReference
 function getVariableEnvVar(env: string | undefined): string | undefined {
     const trimmed = env?.trim();
     return trimmed != null && trimmed.length > 0 ? trimmed : undefined;
+}
+
+/**
+ * Whether every endpoint of the API requires auth, ignoring the endpoints that the auth schemes
+ * themselves call to obtain or refresh a token. Those endpoints are necessarily unauthenticated
+ * (the SDK has no token yet when it calls them), so they must not make the SDK treat auth as optional.
+ */
+function everyEndpointRequiresAuth(ir: Pick<IntermediateRepresentation, "auth" | "services">): boolean {
+    const authFlowEndpointIds = getAuthFlowEndpointIds(ir.auth);
+    return Object.values(ir.services).every((service) =>
+        service.endpoints.every((endpoint) => endpoint.auth || authFlowEndpointIds.has(endpoint.id))
+    );
+}
+
+function getAuthFlowEndpointIds(auth: FernIr.ApiAuth): Set<string> {
+    const endpointIds = new Set<string>();
+    for (const scheme of auth.schemes) {
+        switch (scheme.type) {
+            case "oauth": {
+                const configuration = scheme.configuration;
+                switch (configuration.type) {
+                    case "clientCredentials":
+                        endpointIds.add(configuration.tokenEndpoint.endpointReference.endpointId);
+                        if (configuration.refreshEndpoint != null) {
+                            endpointIds.add(configuration.refreshEndpoint.endpointReference.endpointId);
+                        }
+                        break;
+                    case "authorizationCode":
+                    case "deviceCode":
+                        // these flows use absolute token URLs rather than endpoints of the API
+                        break;
+                    default:
+                        assertNever(configuration);
+                }
+                break;
+            }
+            case "inferred":
+                endpointIds.add(scheme.tokenEndpoint.endpoint.endpointId);
+                break;
+            case "bearer":
+            case "basic":
+            case "header":
+                break;
+            default:
+                assertNever(scheme);
+        }
+    }
+    return endpointIds;
 }

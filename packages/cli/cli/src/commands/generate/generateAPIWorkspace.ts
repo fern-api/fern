@@ -13,7 +13,7 @@ import {
     isSdkGenApiOnly,
     runRemoteGenerationForAPIWorkspace
 } from "@fern-api/remote-workspace-runner";
-import { CliError, TaskContext } from "@fern-api/task-context";
+import { CliError, InstructionsTopic, TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { isTelemetryDisabled } from "../../telemetry/isTelemetryDisabled.js";
@@ -133,7 +133,10 @@ export async function generateWorkspace({
 
     // Pre-check token for remote generation before starting any work
     if (!useLocalDocker && !token) {
-        return context.failAndThrow("Please run fern login", undefined, { code: CliError.Code.AuthError });
+        return context.failAndThrow("Please run fern login", undefined, {
+            code: CliError.Code.AuthError,
+            instructionsTopic: InstructionsTopic.NewSite
+        });
     }
 
     // One tracker per workspace so duplicate generator names in the same generators.yml get
