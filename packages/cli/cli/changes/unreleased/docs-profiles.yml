@@ -1,16 +1,6 @@
 # yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
 
 - summary: |
-    Add `profiles:` to `docs.yml`: named sets of values for `${NAME}` in pages. Set `profile: <name>`
-    on the site, a product, version, tab, tab variant, section or page; the innermost one wins and
-    profiles never merge. Profile-owned names skip publish-time `substitute-env-vars` and are filled
-    per page by the docs renderer, so one page can show different values per product. Changelog
-    entries and overviews get values too. Nav titles, `sidebar-title`, navbar, announcement and
-    footer strings are filled at resolve time from their scope's profile. With no profile in scope,
-    profile-owned names fall back to CI env vars. `fern check` flags a `profile:` that names no profile.
-  type: feat
-- summary: |
-    A profile's `vars` can now point at one YAML file or a list of them, like `redirects`:
-    `vars: ./vars/enterprise.yml`. Each file holds only a `vars:` map. A name defined in two files
-    is an error, and `fern check` reports files that are missing or malformed.
+    Add `profiles:` to `docs.yml` so one page can show different `${NAME}` values per product,
+    version, tab, section or page. Set `profile: <name>` on any scope; the innermost one wins.
   type: feat
