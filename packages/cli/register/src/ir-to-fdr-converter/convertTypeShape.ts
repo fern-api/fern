@@ -40,11 +40,11 @@ export function convertTypeShape(
                         valueType: convertTypeReference(property.valueType, property.defaultValue),
                         availability: convertIrAvailability(property.availability),
                         propertyAccess: property.propertyAccess,
-                        xml: convertXmlPropertyEncoding(property.xml)
+                        ...(property.xml != null ? { xml: convertXmlPropertyEncoding(property.xml) } : {})
                     })
                 ),
                 extraProperties: convertExtraProperties(object.extraProperties),
-                xml: xml != null ? { name: xml.name, namespace: xml.namespace, prefix: xml.prefix } : undefined
+                ...(xml != null ? { xml: { name: xml.name, namespace: xml.namespace, prefix: xml.prefix } } : {})
             };
         },
         union: (union) => {
