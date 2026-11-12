@@ -358,7 +358,12 @@ async function tryRunCli(cliContext: CliContext) {
         // write to stdout. At this point argv._ is yargs' resolved command path, and aliases have
         // already populated argv.output.
         const isSdkMigrateStdout = argv._[0] === "sdk" && argv._[1] === "migrate" && argv.output === "-";
-        if ((argv as Record<string, unknown>).json === true || isSdkMigrateStdout) {
+        const isDocsLinkCheckMachineOutput =
+            argv._[0] === "docs" &&
+            argv._[1] === "link" &&
+            argv._[2] === "check" &&
+            (argv.output === "json" || argv.output === "csv");
+        if ((argv as Record<string, unknown>).json === true || isSdkMigrateStdout || isDocsLinkCheckMachineOutput) {
             cliContext.enableJsonMode();
         }
         cliContext.logFernVersionDebug();
@@ -2917,7 +2922,7 @@ function addDocsLinkCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
                 });
 
                 if (argv.output === "json" || argv.output === "csv") {
-                    await writeAndDrain(process.stdout, output + "\n");
+                    await cliContext.withRealStdout(() => writeAndDrain(process.stdout, output + "\n"));
                 } else {
                     await writeAndDrain(process.stderr, output + "\n");
                 }
