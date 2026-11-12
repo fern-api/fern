@@ -38,7 +38,6 @@ import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { loadApis } from "@fern-api/project-loader";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
-import { AsyncLocalStorage } from "async_hooks";
 import { createHash } from "crypto";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
@@ -90,6 +89,7 @@ type AIChatConfigWithUnpublishedFields = NonNullable<DocsV1Write.DocsConfig["aiC
 import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter.js";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter.js";
 import { NodeIdGenerator } from "./NodeIdGenerator.js";
+import { type ProfileVarsScope } from "./ProfileVarsScope.js";
 import { maybeBundleMdxComponent } from "./utils/bundleMdxComponent.js";
 import { collectMdxComponentFiles } from "./utils/collectMdxComponentFiles.js";
 import { collectWellKnownSkillsFiles } from "./utils/collectWellKnownSkillsFiles.js";
@@ -230,22 +230,49 @@ export interface DocsDefinitionResolverArgs {
 
 /** `${NAME}` or `\\$\\{NAME\\}`: every form the renderer treats as a reference. */
 const PROFILE_VAR_REFERENCE = /\$\\?\{(\w+)\\?\}/g;
-const PROFILE_VAR_TOKEN = /\\\$\\\{(\w+)\\\}|\$\{(\w+)\}/g;
 
-/**
- * Same rule as the renderer's `FernNavigation.utils.applyProfileVars`: `${NAME}` takes the value,
- * `\$\{NAME\}` shows a literal `${NAME}`, and names not in `vars` stay as written.
- */
-function fillProfileText(text: string, vars: Record<string, string>): string {
-    if (!text.includes("$")) {
-        return text;
-    }
-    return text.replace(PROFILE_VAR_TOKEN, (match, escapedName: string | undefined, name: string | undefined) => {
-        if (escapedName != null) {
-            return Object.hasOwn(vars, escapedName) ? `\${${escapedName}}` : match;
+/** Maps every docs.yml navigation item to its innermost `profile:` (its own, else its parent's). */
+function indexProfiles(roots: unknown[], siteProfile: string | undefined): WeakMap<object, string | undefined> {
+    const index = new WeakMap<object, string | undefined>();
+    const walk = (value: unknown, inherited: string | undefined): void => {
+        if (Array.isArray(value)) {
+            for (const child of value) {
+                walk(child, inherited);
+            }
+            return;
         }
-        return name != null && Object.hasOwn(vars, name) ? (vars[name] ?? match) : match;
-    });
+        if (value == null || typeof value !== "object" || index.has(value)) {
+            return;
+        }
+        const profile = "profile" in value && typeof value.profile === "string" ? value.profile : inherited;
+        index.set(value, profile);
+        for (const child of Object.values(value)) {
+            walk(child, profile);
+        }
+    };
+    for (const root of roots) {
+        walk(root, siteProfile);
+    }
+    return index;
+}
+
+function collectStrings(value: unknown): string[] {
+    if (typeof value === "string") {
+        return [value];
+    }
+    if (Array.isArray(value)) {
+        return value.flatMap(collectStrings);
+    }
+    return value != null && typeof value === "object" ? Object.values(value).flatMap(collectStrings) : [];
+}
+
+function namesUsed(sources: (string | undefined)[]): Set<string> {
+    return new Set(
+        sources
+            .filter(isNonNullish)
+            .flatMap((text) => Array.from(text.matchAll(PROFILE_VAR_REFERENCE), (match) => match[1]))
+            .filter(isNonNullish)
+    );
 }
 
 export class DocsDefinitionResolver {
@@ -895,9 +922,15 @@ export class DocsDefinitionResolver {
 
         this.taskContext.logger.debug("Converting docs configuration...");
         const configStart = performance.now();
-        // Navbar, announcement, footer and other site strings use the site profile; nav titles were filled per scope.
-        const { root: filledRoot, ...siteConfig } = await this.convertDocsConfiguration(root);
-        const config: DocsV1Write.DocsConfig = { ...this.fillProfileVarsDeep(siteConfig), root: filledRoot };
+        // The root carries the site profile's values for navbar, announcement, footer and other site strings.
+        const { root: configRoot, ...siteConfig } = await this.convertDocsConfiguration(root);
+        const siteProfileVars = this.profileScope(this.parsedDocsConfig.profile).forNode({
+            texts: [...collectStrings(siteConfig), configRoot?.title]
+        });
+        const config: DocsV1Write.DocsConfig = {
+            ...siteConfig,
+            root: configRoot != null ? { ...configRoot, ...siteProfileVars } : configRoot
+        };
         const configTime = performance.now() - configStart;
         this.taskContext.logger.debug(`Converted docs configuration in ${configTime.toFixed(0)}ms`);
 
@@ -1671,48 +1704,53 @@ export class DocsDefinitionResolver {
         });
     }
 
-    #profileScope = new AsyncLocalStorage<string>();
+    #profileIndex: WeakMap<object, string | undefined> | undefined;
 
-    private withProfile<T>(profile: string | undefined, run: () => Promise<T>): Promise<T> {
-        return profile == null ? run() : this.#profileScope.run(profile, run);
-    }
-
-    /**
-     * Profile values for one page: the innermost `profile:` (page, then section, tab variant, tab,
-     * version, product, site), limited to names the page uses so other pages keep stored search sections.
-     */
-    private profileVarsFor(
-        absolutePath: AbsoluteFilePath | undefined,
-        pageProfile?: string,
-        generatedMarkdown?: string
-    ): { profileVars?: Record<string, string> } {
-        const scopeVars = this.scopeProfileVars(pageProfile);
-        let sources: string[];
-        if (generatedMarkdown != null) {
-            sources = [generatedMarkdown];
-        } else if (absolutePath != null) {
-            // Translations share the page's nav node, so their references count too.
-            const relativePath = this.toRelativeFilepath(absolutePath);
-            sources = [
-                this.parsedDocsConfig.pages[relativePath],
-                ...Object.values(this.parsedDocsConfig.translationPages ?? {}).map((pages) => pages[relativePath])
-            ].filter(isNonNullish);
-        } else {
-            return {};
-        }
-        const namesInPage = new Set(
-            sources.flatMap((markdown) => Array.from(markdown.matchAll(PROFILE_VAR_REFERENCE), (match) => match[1]))
+    /** The innermost `profile:` above a docs.yml item: page, section, tab variant, tab, version, product, site. */
+    private profileOf(item: object): string | undefined {
+        this.#profileIndex ??= indexProfiles(
+            [this.parsedDocsConfig.navigation, this.parsedDocsConfig.landingPage],
+            this.parsedDocsConfig.profile
         );
-        const used = Object.entries(scopeVars).filter(([varName]) => namesInPage.has(varName));
-        return used.length > 0 ? { profileVars: Object.fromEntries(used) } : {};
+        return this.#profileIndex.has(item) ? this.#profileIndex.get(item) : this.parsedDocsConfig.profile;
+    }
+
+    /** Profile values for nodes under one profile, limited per node to the names it uses. */
+    private profileScope(profile: string | undefined): ProfileVarsScope {
+        return {
+            forNode: ({ texts = [], absolutePath, pageProfile }) => {
+                const scopeVars = this.scopeProfileVars(pageProfile ?? profile);
+                // Translations share the page's nav node, so their references count too.
+                const relativePath = absolutePath != null ? this.toRelativeFilepath(absolutePath) : undefined;
+                const pageSources =
+                    relativePath != null
+                        ? [
+                              this.parsedDocsConfig.pages[relativePath],
+                              ...Object.values(this.parsedDocsConfig.translationPages ?? {}).map(
+                                  (pages) => pages[relativePath]
+                              )
+                          ]
+                        : [];
+                const used = namesUsed([...texts, ...pageSources]);
+                const vars = Object.entries(scopeVars).filter(([varName]) => used.has(varName));
+                return vars.length > 0 ? { profileVars: Object.fromEntries(vars) } : {};
+            }
+        };
+    }
+
+    /** Profile values for a docs.yml item's nav node: names in `texts` or in the page at `absolutePath`. */
+    private profileVarsOf(
+        item: object,
+        args: { texts?: (string | undefined)[]; absolutePath?: AbsoluteFilePath }
+    ): { profileVars?: Record<string, string> } {
+        return this.profileScope(this.profileOf(item)).forNode(args);
     }
 
     /**
-     * Values of profile-owned names in the current scope: the innermost profile's vars, then CI for names it lacks.
+     * Values of profile-owned names for one profile: its vars, then CI for names it lacks.
      * Publish skips every profile-owned name, so CI fills them here, even with no profile in scope.
      */
-    private scopeProfileVars(pageProfile?: string): Record<string, string> {
-        const name = pageProfile ?? this.#profileScope.getStore() ?? this.parsedDocsConfig.profile;
+    private scopeProfileVars(name: string | undefined): Record<string, string> {
         const profile = name != null ? this.parsedDocsConfig.profiles?.[name] : undefined;
         if (name != null && profile == null) {
             return this.taskContext.failAndThrow(
@@ -1731,32 +1769,6 @@ export class DocsDefinitionResolver {
             }
         }
         return vars;
-    }
-
-    /** Fills profile-owned `${NAME}` in a docs.yml or frontmatter string from the current scope. */
-    private fillProfileVars<T extends string | undefined>(text: T, pageProfile?: string): T {
-        if (text == null || !text.includes("$")) {
-            return text;
-        }
-        return fillProfileText(text, this.scopeProfileVars(pageProfile)) as T;
-    }
-
-    /** Fills profile-owned names in every string of a value, using the current scope. */
-    private fillProfileVarsDeep<T>(value: T): T {
-        const vars = this.scopeProfileVars();
-        const fill = (item: unknown): unknown => {
-            if (typeof item === "string") {
-                return fillProfileText(item, vars);
-            }
-            if (Array.isArray(item)) {
-                return item.map(fill);
-            }
-            if (item != null && typeof item === "object") {
-                return Object.fromEntries(Object.entries(item).map(([key, child]) => [key, fill(child)]));
-            }
-            return item;
-        };
-        return fill(value) as T;
     }
 
     private async toRootNode(): Promise<FernNavigation.V1.RootNode> {
@@ -1829,7 +1841,7 @@ export class DocsDefinitionResolver {
             type: "landingPage",
             id: this.#idgen.get(pageId),
             collapsed: undefined,
-            title: this.fillProfileVars(landingPageConfig.title, landingPageConfig.profile),
+            title: landingPageConfig.title,
             slug: slug.get(),
             icon: this.resolveIconFileId(landingPageConfig.icon),
             hidden: landingPageConfig.hidden,
@@ -1839,7 +1851,10 @@ export class DocsDefinitionResolver {
             authed: undefined,
             noindex: landingPageConfig.noindex || this.markdownFilesToNoIndex.get(landingPageConfig.absolutePath),
             featureFlags: landingPageConfig.featureFlags,
-            ...this.profileVarsFor(landingPageConfig.absolutePath, landingPageConfig.profile)
+            ...this.profileVarsOf(landingPageConfig, {
+                texts: [landingPageConfig.title],
+                absolutePath: landingPageConfig.absolutePath
+            })
         };
     }
 
@@ -1933,15 +1948,6 @@ export class DocsDefinitionResolver {
         product: docsYml.ProductInfo,
         parentSlug: FernNavigation.V1.SlugGenerator
     ): Promise<FernNavigation.V1.ProductNode> {
-        return this.withProfile(product.type === "internal" ? product.profile : undefined, () =>
-            this.toProductNodeUnscoped(product, parentSlug)
-        );
-    }
-
-    private async toProductNodeUnscoped(
-        product: docsYml.ProductInfo,
-        parentSlug: FernNavigation.V1.SlugGenerator
-    ): Promise<FernNavigation.V1.ProductNode> {
         if (product.type === "internal") {
             const slug = parentSlug.setProductSlug(product.slug ?? kebabCase(product.product));
             let child: FernNavigation.V1.ProductChild;
@@ -1991,8 +1997,8 @@ export class DocsDefinitionResolver {
                 id: this.#idgen.get(product.product),
                 collapsed: undefined,
                 productId: FernNavigation.V1.ProductId(product.product),
-                title: this.fillProfileVars(product.product),
-                subtitle: this.fillProfileVars(product.subtitle ?? ""),
+                title: product.product,
+                subtitle: product.subtitle ?? "",
                 slug: slug.get(),
                 child,
                 default: false,
@@ -2004,10 +2010,10 @@ export class DocsDefinitionResolver {
                 viewers: product.viewers,
                 orphaned: product.orphaned,
                 featureFlags: product.featureFlags,
-                announcement:
-                    product.announcement != null
-                        ? { text: this.fillProfileVars(product.announcement.message) }
-                        : undefined
+                announcement: product.announcement != null ? { text: product.announcement.message } : undefined,
+                ...this.profileVarsOf(product, {
+                    texts: [product.product, product.subtitle, product.announcement?.message]
+                })
             };
         } else {
             return {
@@ -2015,8 +2021,8 @@ export class DocsDefinitionResolver {
                 id: this.#idgen.get(product.product),
                 collapsed: undefined,
                 productId: FernNavigation.V1.ProductId(product.product),
-                title: this.fillProfileVars(product.product),
-                subtitle: this.fillProfileVars(product.subtitle ?? ""),
+                title: product.product,
+                subtitle: product.subtitle ?? "",
                 href: DocsV1Write.Url(product.href ?? ""),
                 target: product.target,
                 default: false,
@@ -2025,20 +2031,13 @@ export class DocsDefinitionResolver {
                 icon: this.resolveIconFileId(product.icon),
                 image: product.image != null ? this.getFileId(product.image) : undefined,
                 viewers: product.viewers,
-                orphaned: product.orphaned
+                orphaned: product.orphaned,
+                ...this.profileVarsOf(product, { texts: [product.product, product.subtitle] })
             };
         }
     }
 
     private async toVersionNode(
-        version: docsYml.VersionInfo,
-        parentSlug: FernNavigation.V1.SlugGenerator,
-        isDefault: boolean
-    ): Promise<FernNavigation.V1.VersionNode> {
-        return this.withProfile(version.profile, () => this.toVersionNodeUnscoped(version, parentSlug, isDefault));
-    }
-
-    private async toVersionNodeUnscoped(
         version: docsYml.VersionInfo,
         parentSlug: FernNavigation.V1.SlugGenerator,
         isDefault: boolean
@@ -2054,7 +2053,7 @@ export class DocsDefinitionResolver {
             id,
             collapsed: undefined,
             versionId: FernNavigation.VersionId(version.version),
-            title: this.fillProfileVars(version.version),
+            title: version.version,
             slug: slug.get(),
             child,
             // TODO: the `default` property should be deprecated, and moved to the parent `versioned` node
@@ -2068,7 +2067,8 @@ export class DocsDefinitionResolver {
             icon: undefined,
             pointsTo: undefined,
             featureFlags: version.featureFlags,
-            announcement: version.announcement != null ? { text: version.announcement.message } : undefined
+            announcement: version.announcement != null ? { text: version.announcement.message } : undefined,
+            ...this.profileVarsOf(version, { texts: [version.version, version.announcement?.message] })
         };
     }
 
@@ -2154,17 +2154,6 @@ export class DocsDefinitionResolver {
         parentSlug: FernNavigation.V1.SlugGenerator,
         contentSource?: docsYml.VersionContentSource
     ): Promise<FernNavigation.V1.VariantNode> {
-        return this.withProfile(item.profile, () =>
-            this.toVariantNodeUnscoped(item, prefix, parentSlug, contentSource)
-        );
-    }
-
-    private async toVariantNodeUnscoped(
-        item: docsYml.TabVariant,
-        prefix: string,
-        parentSlug: FernNavigation.V1.SlugGenerator,
-        contentSource?: docsYml.VersionContentSource
-    ): Promise<FernNavigation.V1.VariantNode> {
         const id = this.#idgen.get(`${prefix}/variant/${item.slug ?? kebabCase(item.title)}`);
         const variantSlug = parentSlug.apply({
             urlSlug: item.slug ?? kebabCase(item.title),
@@ -2182,8 +2171,9 @@ export class DocsDefinitionResolver {
             default: item.default ?? false,
             image: undefined,
             children,
-            title: this.fillProfileVars(item.title),
-            subtitle: this.fillProfileVars(item.subtitle ?? ""),
+            title: item.title,
+            subtitle: item.subtitle ?? "",
+            ...this.profileVarsOf(item, { texts: [item.title, item.subtitle] }),
             slug: variantSlug.get(),
             icon: this.resolveIconFileId(item.icon),
             hidden: item.hidden,
@@ -2426,7 +2416,7 @@ export class DocsDefinitionResolver {
             openApiTags,
             graphqlData.namespacesByOperationId,
             graphqlData.typeCategories,
-            this.profileVarsFor.bind(this)
+            this.profileScope(this.profileOf(item))
         );
 
         // Extract tag description content and add it to both rawMarkdownFiles and parsedDocsConfig.pages
@@ -2544,7 +2534,7 @@ export class DocsDefinitionResolver {
             undefined,
             undefined,
             undefined,
-            this.profileVarsFor.bind(this)
+            this.profileScope(this.profileOf(item))
         ).get();
     }
 
@@ -2560,12 +2550,12 @@ export class DocsDefinitionResolver {
             item.changelog,
             this.docsWorkspace,
             this.#idgen,
-            this.profileVarsFor.bind(this)
+            this.profileScope(this.profileOf(item))
         );
 
         return changelogResolver.toChangelogNode({
             parentSlug,
-            title: this.fillProfileVars(item.title),
+            title: item.title,
             icon: this.resolveIconFileId(item.icon),
             viewers: item.viewers,
             hidden: hideChildren || item.hidden,
@@ -2578,10 +2568,11 @@ export class DocsDefinitionResolver {
             type: "link",
             id: this.#idgen.get(item.url),
             collapsed: undefined,
-            title: this.fillProfileVars(item.text),
+            title: item.text,
             url: FernNavigation.V1.Url(item.url),
             icon: this.resolveIconFileId(item.icon),
-            target: item.target
+            target: item.target,
+            ...this.profileVarsOf(item, { texts: [item.text] })
         };
     }
 
@@ -3011,10 +3002,7 @@ export class DocsDefinitionResolver {
             type: "page",
             collapsed: undefined,
             slug: slug.get(),
-            title: this.fillProfileVars(
-                this.markdownFilesToSidebarTitle.get(item.absolutePath) ?? item.title,
-                item.profile
-            ),
+            title: this.markdownFilesToSidebarTitle.get(item.absolutePath) ?? item.title,
             icon: this.resolveIconFileId(item.icon),
             hidden: hideChildren || item.hidden,
             viewers: item.viewers,
@@ -3024,17 +3012,11 @@ export class DocsDefinitionResolver {
             noindex: item.noindex || this.markdownFilesToNoIndex.get(item.absolutePath),
             featureFlags: item.featureFlags,
             availability: convertDocsAvailability(frontmatterAvailability ?? item.availability ?? parentAvailability),
-            ...this.profileVarsFor(item.absolutePath, item.profile)
+            ...this.profileVarsOf(item, { texts: [item.title], absolutePath: item.absolutePath })
         };
     }
 
-    private async toSectionNode(
-        args: Parameters<DocsDefinitionResolver["toSectionNodeUnscoped"]>[0]
-    ): Promise<FernNavigation.V1.SectionNode> {
-        return this.withProfile(args.item.profile, () => this.toSectionNodeUnscoped(args));
-    }
-
-    private async toSectionNodeUnscoped({
+    private async toSectionNode({
         prefix,
         item,
         parentSlug,
@@ -3119,12 +3101,10 @@ export class DocsDefinitionResolver {
             type: "section",
             overviewPageId: pageId,
             slug: sectionSlug.get(),
-            title: this.fillProfileVars(
+            title:
                 item.overviewAbsolutePath != null
                     ? (this.markdownFilesToSidebarTitle.get(item.overviewAbsolutePath) ?? item.title)
                     : item.title,
-                item.profile
-            ),
             icon: this.resolveIconFileId(item.icon),
             collapsed: item.collapsed,
             collapsible: item.collapsible,
@@ -3138,7 +3118,7 @@ export class DocsDefinitionResolver {
             noindex,
             featureFlags: item.featureFlags,
             availability: convertDocsAvailability(frontmatterAvailability ?? item.availability ?? parentAvailability),
-            ...this.profileVarsFor(item.overviewAbsolutePath, item.profile)
+            ...this.profileVarsOf(item, { texts: [item.title], absolutePath: item.overviewAbsolutePath })
         };
     }
 
@@ -3183,11 +3163,11 @@ export class DocsDefinitionResolver {
             changelog,
             this.docsWorkspace,
             this.#idgen,
-            this.profileVarsFor.bind(this)
+            this.profileScope(this.profileOf(item))
         );
         return changelogResolver.toChangelogNode({
             parentSlug,
-            title: this.fillProfileVars(item.title),
+            title: item.title,
             icon: this.resolveIconFileId(item.icon),
             viewers: item.viewers,
             hidden: item.hidden,
@@ -3204,10 +3184,11 @@ export class DocsDefinitionResolver {
             type: "link",
             id: this.#idgen.get(href),
             collapsed: undefined,
-            title: this.fillProfileVars(item.title),
+            title: item.title,
             url: FernNavigation.V1.Url(href),
             target: target,
-            icon: this.resolveIconFileId(item.icon)
+            icon: this.resolveIconFileId(item.icon),
+            ...this.profileVarsOf(item, { texts: [item.title] })
         };
     }
 
@@ -3218,18 +3199,6 @@ export class DocsDefinitionResolver {
         parentSlug: FernNavigation.V1.SlugGenerator,
         contentSource?: docsYml.VersionContentSource
     ): Promise<FernNavigation.V1.TabNode> {
-        return this.withProfile(item.profile, () =>
-            this.toTabNodeUnscoped(prefix, item, layout, parentSlug, contentSource)
-        );
-    }
-
-    private async toTabNodeUnscoped(
-        prefix: string,
-        item: docsYml.TabbedNavigation,
-        layout: docsYml.DocsNavigationItem[],
-        parentSlug: FernNavigation.V1.SlugGenerator,
-        contentSource?: docsYml.VersionContentSource
-    ): Promise<FernNavigation.V1.TabNode> {
         const id = this.#idgen.get(`${prefix}/tab`);
         const slug = parentSlug.apply({
             urlSlug: item.slug ?? kebabCase(item.title),
@@ -3239,7 +3208,7 @@ export class DocsDefinitionResolver {
             type: "tab",
             id,
             collapsed: undefined,
-            title: this.fillProfileVars(item.title),
+            title: item.title,
             slug: slug.get(),
             icon: this.resolveIconFileId(item.icon),
             hidden: item.hidden,
@@ -3248,7 +3217,8 @@ export class DocsDefinitionResolver {
             orphaned: item.orphaned,
             pointsTo: undefined,
             child: await this.toSidebarRootNode(id, layout, slug, contentSource),
-            featureFlags: item.featureFlags
+            featureFlags: item.featureFlags,
+            ...this.profileVarsOf(item, { texts: [item.title] })
         };
     }
 
@@ -3259,18 +3229,6 @@ export class DocsDefinitionResolver {
         parentSlug: FernNavigation.V1.SlugGenerator,
         contentSource?: docsYml.VersionContentSource
     ): Promise<FernNavigation.V1.TabNode> {
-        return this.withProfile(item.profile, () =>
-            this.toTabNodeWithVariantsUnscoped(prefix, item, variants, parentSlug, contentSource)
-        );
-    }
-
-    private async toTabNodeWithVariantsUnscoped(
-        prefix: string,
-        item: docsYml.TabbedNavigation,
-        variants: docsYml.TabVariant[],
-        parentSlug: FernNavigation.V1.SlugGenerator,
-        contentSource?: docsYml.VersionContentSource
-    ): Promise<FernNavigation.V1.TabNode> {
         const id = this.#idgen.get(`${prefix}/tab`);
         const slug = parentSlug.apply({
             urlSlug: item.slug ?? kebabCase(item.title),
@@ -3280,7 +3238,7 @@ export class DocsDefinitionResolver {
             type: "tab",
             id,
             collapsed: undefined,
-            title: this.fillProfileVars(item.title),
+            title: item.title,
             slug: slug.get(),
             icon: this.resolveIconFileId(item.icon),
             hidden: item.hidden,
@@ -3289,7 +3247,8 @@ export class DocsDefinitionResolver {
             orphaned: item.orphaned,
             pointsTo: undefined,
             child: await this.toSidebarRootNodeWithVariants(id, variants, slug, contentSource),
-            featureFlags: item.featureFlags
+            featureFlags: item.featureFlags,
+            ...this.profileVarsOf(item, { texts: [item.title] })
         };
     }
 

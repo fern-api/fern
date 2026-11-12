@@ -102,14 +102,19 @@ describe("profiles", () => {
 
             // no profile in scope: profile-owned CLI falls back to CI
             expect(bySlug["install-product"]?.profileVars).toEqual({ CLI: "acme" });
-            expect(bySlug["enterprise/install-product"]?.profileVars).toEqual({ CLI: "acme-ent" });
-            // nav titles and sidebar-title use their scope's profile; no value leaves the name raw
-            expect(bySlug["install-product"]?.title).toBe("Install ${PRODUCT}");
-            expect(bySlug["enterprise/install-product"]?.title).toBe("Install Acme Enterprise");
-            expect(bySlug["enterprise/cli-page"]?.title).toBe("Acme Enterprise CLI");
-            // site strings outside the nav get CI for profile-owned names
-            expect(resolved.config.announcement?.text).toBe("Try acme today");
-            expect(JSON.stringify(resolved.config.navbarLinks)).toContain("Get acme");
+            // nav titles and sidebar-title stay as written; each node carries its scope's values for the renderer
+            expect(bySlug["enterprise/install-product"]?.title).toBe("Install ${PRODUCT}");
+            expect(bySlug["enterprise/install-product"]?.profileVars).toEqual({
+                CLI: "acme-ent",
+                PRODUCT: "Acme Enterprise"
+            });
+            expect(bySlug["enterprise/cli-page"]?.title).toBe("${PRODUCT} CLI");
+            expect(bySlug["enterprise/cli-page"]?.profileVars).toMatchObject({ PRODUCT: "Acme Enterprise" });
+            // no value for PRODUCT outside the enterprise variant, so the renderer leaves it raw
+            expect(bySlug["install-product"]?.profileVars?.PRODUCT).toBeUndefined();
+            // site strings stay as written; the root carries CI values for profile-owned names they use
+            expect(resolved.config.announcement?.text).toBe("Try ${CLI} today");
+            expect(resolved.config.root).toMatchObject({ profileVars: { CLI: "acme" } });
         } finally {
             if (previousCli == null) {
                 delete process.env.CLI;

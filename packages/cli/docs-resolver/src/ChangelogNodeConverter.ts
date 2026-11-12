@@ -4,9 +4,8 @@ import { DocsWorkspace } from "@fern-api/workspace-loader";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import { kebabCase, last } from "lodash-es";
-
-import type { ProfileVarsFor } from "./ApiReferenceNodeConverter.js";
 import { NodeIdGenerator } from "./NodeIdGenerator.js";
+import type { ProfileVarsScope } from "./ProfileVarsScope.js";
 import { extractDatetimeFromChangelogTitle } from "./utils/extractDatetimeFromChangelogTitle.js";
 
 dayjs.extend(utc);
@@ -35,7 +34,7 @@ export class ChangelogNodeConverter {
         private changelogFiles: AbsoluteFilePath[] | undefined,
         private docsWorkspace: DocsWorkspace,
         private idgen: NodeIdGenerator,
-        private profileVarsFor: ProfileVarsFor = () => ({})
+        private profileVars: ProfileVarsScope
     ) {}
 
     public toChangelogNode(opts: ConvertOptions): FernNavigation.V1.ChangelogNode {
@@ -103,7 +102,7 @@ export class ChangelogNodeConverter {
                 orphaned: undefined,
                 featureFlags: undefined,
                 tags: this.markdownToTags.get(item.absoluteFilepath),
-                ...this.profileVarsFor(item.absoluteFilepath)
+                ...this.profileVars.forNode({ absolutePath: item.absoluteFilepath })
             };
         });
 
@@ -128,7 +127,7 @@ export class ChangelogNodeConverter {
             viewers: opts.viewers,
             orphaned: opts.orphaned,
             featureFlags: undefined,
-            ...(overviewPagePath != null ? this.profileVarsFor(overviewPagePath) : {})
+            ...this.profileVars.forNode({ texts: [title], absolutePath: overviewPagePath })
         };
     }
 
