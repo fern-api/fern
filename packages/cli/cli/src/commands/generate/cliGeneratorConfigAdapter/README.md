@@ -1,29 +1,32 @@
 # cliGeneratorConfigAdapter
 
-No generator takes SDK Config for the `cli` target, so `fern generate` translates it. When `sdk-config.yml` has a
-`cli` target, this folder turns that target into a `generators.yml` for Fern's CLI generator,
-`fernapi/fern-cli-generator`, in a temporary folder. It loads the folder as an ordinary workspace and generates it
-as a `generators.yml` group. The user runs nothing extra and no file in their project changes.
+`fern generate --local` runs generators in Docker, and no Docker generator takes SDK Config for the `cli` target. So
+with `--local`, `fern generate` translates it. When `sdk-config.yml` has a `cli` target, this folder turns that target
+into a `generators.yml` for Fern's CLI generator, `fernapi/fern-cli-generator`, in a temporary folder. It loads the
+folder as an ordinary workspace and generates it as a `generators.yml` group. The user runs nothing extra and no file
+in their project changes.
 
-It is a stopgap until Postman's own CLI generator ships. Everything is in this folder, plus one branch in
+Without `--local`, none of this runs: the `cli` target is sent to sdk-gen-api as SDK Config, like every other
+language.
+
+It exists because sdk-gen-api's CLI generator has no local counterpart. Everything is in this folder, plus one branch in
 `prepareSdkConfigGenerations` (`../generateAPIWorkspaces.ts`).
 
 ## How it runs
 
-1. `prepareSdkConfigGenerations` loads `sdk-config.yml` as before and splits off the `cli` target. Other targets keep
-   the SDK Config path.
+1. With `--local`, `prepareSdkConfigGenerations` loads `sdk-config.yml` as before and splits off the `cli` target.
+   Other targets keep the SDK Config path.
 2. `prepareCliTargetWorkspace` expands the `cli` target, reads its specs, classifies every field and maps it
    (`translateCliTarget`).
 3. It writes the result as `generators.yml` in a temporary folder. Spec paths and the output path point at the user's
    files.
-4. Fern's workspace loader loads the folder, and the `cli` group runs like any group: `--local` runs Docker, the
-   default route uses Fiddle, and `FERN_USE_SDK_GEN_API=true` uses sdk-gen-api.
+4. Fern's workspace loader loads the folder, and the `cli` group runs in Docker like any `--local` group.
 5. The temporary folder is deleted when generation ends.
 
 Details:
 
-- **Selection:** `fern generate`, `fern generate --target cli` and `--sdk-config <path>` select the `cli` target the
-  same way they select any SDK Config target. `--group` alone does not.
+- **Selection:** `fern generate --local`, `fern generate --local --target cli` and `--local --sdk-config <path>` select the `cli` target the same way they select any SDK Config target. `--group` alone does
+  not.
 - **Version:** the SDK version is `sdk-config.yml`'s `sdkVersion` (1.0.0 by default), unless `--version` is passed.
 - **Ownership:** the translated group counts as owned by `sdk-config.yml`. A `generators.yml` group that also
   selects `cli` still fails the language ownership check.
@@ -119,9 +122,7 @@ Specs are read with Fern's own loader, so overrides, overlays and references to 
 `fern generate`. The facts are used to skip headers the spec already declares, and to find OAuth token operations.
 
 When the `cli` target pins no `generatorVersion`, the generator is written as `version: latest`, like an unpinned
-generator in `generators.yml`: with `FERN_USE_SDK_GEN_API=true`, sdk-gen-api's version discovery
-(`/v1/fern/generator-versions/discover`) picks the newest version it can run; Fiddle and `--local` use the newest
-published version. A pinned version must be exact; anything else is an error.
+generator in `generators.yml`: `--local` uses the newest published version. A pinned version must be exact; anything else is an error.
 
 ## Diagnostic codes
 
