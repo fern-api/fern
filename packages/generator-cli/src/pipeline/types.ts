@@ -290,6 +290,8 @@ export interface GithubStepResult extends StepResult {
     skippedNoDiff?: boolean;
     /** True when automerge was enabled on the PR */
     autoMergeEnabled?: boolean;
+    /** Why automerge was requested but could not be enabled (GitHub rejected the mutation) */
+    autoMergeError?: string;
     /** URL of the GitHub release created in commit-and-release mode */
     releaseUrl?: string;
 }

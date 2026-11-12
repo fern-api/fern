@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
+- version: 0.12.2
+  changelogEntry:
+    - summary: |
+        When `github.autoMerge` is requested but GitHub rejects `enablePullRequestAutoMerge` (auto-merge
+        disabled on the repo, no required checks, insufficient permissions), the reason is now recorded on
+        the GitHub step result (`autoMergeError`) and added to the pipeline `warnings`, so hosted
+        consumers that only read the pipeline JSON surface a `Could not enable automerge on PR #N: ...`
+        warning instead of silently dropping it.
+      type: fix
+  createdAt: "2026-11-12"
 - version: 0.12.1
   changelogEntry:
     - summary: |
