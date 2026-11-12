@@ -91,6 +91,7 @@ import { ChangelogNodeConverter } from "./ChangelogNodeConverter.js";
 import { NodeIdGenerator } from "./NodeIdGenerator.js";
 import { type ProfileVarsScope } from "./ProfileVarsScope.js";
 import { maybeBundleMdxComponent } from "./utils/bundleMdxComponent.js";
+import { collectInlineTypeIds } from "./utils/collectInlineTypeIds.js";
 import { collectMdxComponentFiles } from "./utils/collectMdxComponentFiles.js";
 import { collectWellKnownSkillsFiles } from "./utils/collectWellKnownSkillsFiles.js";
 import { convertDocsAvailability } from "./utils/convertDocsAvailability.js";
@@ -2534,6 +2535,7 @@ export class DocsDefinitionResolver {
             openApiTags,
             graphqlData.namespacesByOperationId,
             graphqlData.typeCategories,
+            item.types ? collectInlineTypeIds(ir) : undefined,
             this.profileScope(this.profileOf(item))
         );
 
@@ -2649,6 +2651,7 @@ export class DocsDefinitionResolver {
             undefined,
             hideChildren,
             parentAvailability ?? item.availability,
+            undefined,
             undefined,
             undefined,
             undefined,
