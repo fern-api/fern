@@ -41,9 +41,12 @@ import {
 } from "./steps/handoff";
 import {
     addSdkConfigTargets,
+    CLI_TARGET,
+    type ConfiguredSdk,
     ensureSdkGroup,
     isNonEmptyDirectory,
     listApis,
+    MCP_SERVER_TARGET,
     readConfiguredSdks,
     readOrganization,
     SDK_LANGUAGES,
@@ -68,6 +71,7 @@ import type {
 import {
     billingUrl,
     dashboardUrl,
+    generatedProductsLabel,
     hyperlink,
     printDetail,
     printDone,
@@ -86,7 +90,17 @@ interface SpecAnswers {
 
 const ORG_PLACEHOLDER = "<your-org>";
 
-const ALL_PRODUCTS: Product[] = ["sdks", "docs"];
+/** What planActions and planSteps assume when they aren't told which products were picked. */
+const SDKS_AND_DOCS: Product[] = ["sdks", "docs"];
+
+/** Products built by `fern generate` from the API spec (everything but docs). */
+const GENERATED_PRODUCTS: Product[] = ["sdks", "cli", "mcp"];
+
+/** The CLI and MCP server are sdk-config.yml targets, generated in the same step as SDKs. */
+const PRODUCT_TARGETS: Array<[Product, SdkLanguage]> = [
+    ["cli", CLI_TARGET],
+    ["mcp", MCP_SERVER_TARGET]
+];
 
 const STEPS: Array<{ id: StepId; title: string; question?: string; actions: ActionId[] }> = [
     {
@@ -119,11 +133,12 @@ const STEPS: Array<{ id: StepId; title: string; question?: string; actions: Acti
 export function planActions(
     detection: Detection,
     flags: WizardFlags,
-    products: Product[] = ALL_PRODUCTS
+    products: Product[] = SDKS_AND_DOCS
 ): ActionPlanResult {
     const actions: ActionPlan[] = [];
     const notes: string[] = [];
     const wantsSdks = products.includes("sdks");
+    const wantsGenerated = products.some((product) => GENERATED_PRODUCTS.includes(product));
     const wantsDocs = products.includes("docs");
     if (detection.fernCliVersion === null && !flags.skipInstall) {
         actions.push({
@@ -139,7 +154,7 @@ export function planActions(
     }
     // API docs alone only need `fern init` when there is a spec to wire into the API reference;
     // otherwise the docs template creates the project itself.
-    const wantsApiProject = wantsSdks || (wantsDocs && getOpenApiSpecs(detection.apiSpecs).length > 0);
+    const wantsApiProject = wantsGenerated || (wantsDocs && getOpenApiSpecs(detection.apiSpecs).length > 0);
     if (detection.fernProject.exists) {
         notes.push("Existing Fern project found in fern/, so no new project is needed");
     } else if (wantsApiProject) {
@@ -192,13 +207,17 @@ export function planActions(
             selectedByDefault: true
         });
     }
-    if (wantsSdks && (detection.fernProject.exists || actions.some((action) => action.id === "init-api"))) {
+    if (wantsGenerated && (detection.fernProject.exists || actions.some((action) => action.id === "init-api"))) {
+        const generated = generatedProductsLabel(products) ?? "SDKs";
+        const tools = PRODUCT_TARGETS.filter(([product]) => products.includes(product)).map(([, target]) => target);
         actions.push({
             id: "generate-sdks",
-            title: "Pick your SDK languages, then generate them into sdks/",
-            description: "Adds a generator for each language you pick and generates the SDKs into this repository.",
+            title: wantsSdks
+                ? `Pick your SDK languages, then generate your ${generated}`
+                : `Generate your ${generated}`,
+            description: `Adds ${wantsSdks ? "each SDK language you pick" : `the ${generated}`} to your Fern project and generates ${wantsSdks || tools.length > 1 ? "them" : "it"} into this repository.`,
             commands: [displayFernCommand(detection, flags, ["generate"])],
-            files: ["sdks/"],
+            files: [...(wantsSdks ? ["sdks/"] : []), ...tools.map((target) => `${target.outputDirectory}/`)],
             selectedByDefault: true
         });
     }
@@ -222,11 +241,12 @@ function handoffTitle(detection: Detection): string {
 }
 
 /** Groups planned actions into the wizard's steps, dropping steps with nothing to do. */
-export function planSteps(actions: ActionPlan[]): SetupStep[] {
+export function planSteps(actions: ActionPlan[], products: Product[] = SDKS_AND_DOCS): SetupStep[] {
+    const generated = generatedProductsLabel(products) ?? "SDKs";
     return STEPS.map((step) => ({
         id: step.id,
-        title: step.title,
-        question: step.question,
+        title: step.id === "generate" ? `Generate your ${generated}` : step.title,
+        question: step.id === "generate" ? `Generate ${generated} now?` : step.question,
         actions: step.actions.flatMap((id) => actions.filter((action) => action.id === id))
     })).filter((step) => step.actions.length > 0);
 }
@@ -368,7 +388,7 @@ export async function runWizard(flags: WizardFlags): Promise<number> {
     const products = flags.products ?? (flags.yes ? defaultProducts(detection) : await chooseProducts(detection));
     const planned = planActions(detection, flags, products);
     // Publishing and generating SDKs need a person to make choices, so non-interactive runs stop short of them.
-    const steps = planSteps(planned.actions).filter(
+    const steps = planSteps(planned.actions, products).filter(
         (step) => !(flags.yes && (step.id === "publish" || step.id === "generate"))
     );
     // An existing Fern project already names its organization.
@@ -500,25 +520,25 @@ export async function runWizard(flags: WizardFlags): Promise<number> {
     return failed ? 1 : 0;
 }
 
-/** One choice per combination, so picking SDKs never also sets up docs (or the reverse) by accident. */
-const PRODUCT_CHOICES: Array<{ name: string; value: "sdks" | "docs" | "both" }> = [
+export const PRODUCT_CHOICES: Array<{ name: string; value: Product }> = [
     { name: "SDKs", value: "sdks" },
-    { name: "API docs", value: "docs" },
-    { name: "SDKs and API docs", value: "both" }
+    { name: "Docs", value: "docs" },
+    { name: "CLI", value: "cli" },
+    { name: "MCP Server", value: "mcp" }
 ];
 
 async function chooseProducts(detection: Detection): Promise<Product[]> {
     const preselected = defaultProducts(detection);
-    const answer = await inquirer.prompt<{ products: "sdks" | "docs" | "both" }>([
+    const answer = await inquirer.prompt<{ products: Product[] }>([
         {
-            type: "list",
+            type: "checkbox",
             name: "products",
             message: "What do you want to set up?",
-            choices: PRODUCT_CHOICES,
-            default: preselected.length === 2 ? "both" : preselected[0]
+            choices: PRODUCT_CHOICES.map((choice) => ({ ...choice, checked: preselected.includes(choice.value) })),
+            validate: (chosen: Product[]) => chosen.length > 0 || "Pick at least one, with the space bar."
         }
     ]);
-    return answer.products === "both" ? ["sdks", "docs"] : [answer.products];
+    return answer.products;
 }
 
 async function confirm(message: string): Promise<boolean> {
@@ -645,7 +665,7 @@ async function runAction(
             await previewAndPublish(dir, detection, docsSiteChoices, published);
             return;
         case "generate-sdks":
-            await generateSdks(dir, detection, published);
+            await generateSdks(dir, detection, published, flags.products ?? SDKS_AND_DOCS);
             return;
         default:
             assertNever(action.id);
@@ -825,11 +845,17 @@ async function promptForDocsUrl(takenDomain: string): Promise<string> {
 }
 
 /** Lets the user pick SDK languages, adds them to the project, and generates the SDKs into this repository. */
-async function generateSdks(dir: string, detection: Detection, results: PublishResult): Promise<void> {
+async function generateSdks(
+    dir: string,
+    detection: Detection,
+    results: PublishResult,
+    products: Product[]
+): Promise<void> {
+    const generatedLabel = generatedProductsLabel(products) ?? "SDKs";
     const apis = await listApis(dir);
     if (apis.length > 1) {
         printSkipped(
-            `This project has several APIs (${apis.join(", ")}). Add SDKs to one with \`fern add <generator> --api <name>\`, then run \`fern generate --api <name>\`.`
+            `This project has several APIs (${apis.join(", ")}). Add your ${generatedLabel} to one with \`fern add <generator> --api <name>\`, then run \`fern generate --api <name>\`.`
         );
         return;
     }
@@ -845,6 +871,77 @@ async function generateSdks(dir: string, detection: Detection, results: PublishR
     const groupArgs = group === undefined ? [] : ["--group", group];
     const configured = await readConfiguredSdks(dir);
     const configuredGenerators = new Set(configured.map((sdk) => sdk.language.generator));
+    const chosen = products.includes("sdks") ? await chooseSdkLanguages(configured, configuredGenerators) : [];
+    const enterprise = chosen.filter((language) => !language.free);
+    if (enterprise.length > 0) {
+        await explainEnterpriseLanguages(enterprise, await readOrganization(dir), sdkConfig);
+    }
+    // The CLI and MCP server come from the product picker, not the language question.
+    const tools = PRODUCT_TARGETS.filter(
+        ([product, target]) => products.includes(product) && !configuredGenerators.has(target.generator)
+    ).map(([, target]) => target);
+    const added = chosen.filter((language) => language.free);
+    if (sdkConfig) {
+        await addSdkConfigTargets(dir, [...added, ...tools]);
+    } else {
+        for (const language of added) {
+            await withStatus(`Adding the ${language.displayName}`, () =>
+                runFernQuietly(["add", language.generator, ...groupArgs], dir, detection)
+            );
+        }
+        for (const tool of tools) {
+            printSkipped(
+                `This project lists its SDKs in fern/generators.yml, so the wizard can't add a ${tool.displayName} to it. Add a \`${tool.target}\` target to fern/sdk-config.yml, or the ${tool.generator} generator to fern/generators.yml.`
+            );
+        }
+    }
+
+    const sdks = await readConfiguredSdks(dir);
+    if (sdks.length === 0) {
+        printSkipped("Nothing to generate");
+        return;
+    }
+    if (!(await sdksWriteOnlyLocally(dir))) {
+        printSkipped(
+            `fern/${sdkConfig ? "sdk-config.yml" : "generators.yml"} also publishes (for example to npm), so the wizard won't run it. Run \`fern generate${group === undefined ? "" : ` --group ${group}`}\` when you're ready.`
+        );
+        return;
+    }
+    const names = sdks.map((sdk) => sdk.language.displayName).join(", ");
+    const output = await generateSdkFiles({ dir, detection, groupArgs, names });
+
+    const generated: Array<{ label: string; path: string }> = [];
+    const empty: string[] = [];
+    for (const sdk of sdks) {
+        if (sdk.outputPath === undefined) {
+            continue;
+        }
+        if (!(await isNonEmptyDirectory(sdk.outputPath))) {
+            empty.push(sdk.language.displayName);
+            continue;
+        }
+        const relative = path.relative(dir, sdk.outputPath) || ".";
+        generated.push({ label: sdk.language.displayName, path: relative });
+        printDone(
+            `${sdk.language.displayName}  ${chalk.cyan(hyperlink(relative, pathToFileURL(sdk.outputPath).href))}`
+        );
+    }
+    results.generated = generated;
+    if (empty.length > 0) {
+        // Fern can report success even when a generator crashed and wrote nothing.
+        const reason = generatorError(output);
+        throw new Error(
+            `Fern wrote no files for the ${empty.join(", ")}${reason === undefined ? "" : `. The generator reported: ${reason}`}. Run \`fern generate --log-level debug\` to see more.`
+        );
+    }
+}
+
+/** Asks which SDK languages to add; languages the project already has stay checked. */
+async function chooseSdkLanguages(
+    configured: ConfiguredSdk[],
+    configuredGenerators: Set<string>
+): Promise<SdkLanguage[]> {
+    const configuredSdks = configured.filter((sdk) => SDK_LANGUAGES.includes(sdk.language));
     const answer = await inquirer.prompt<{ generators: string[] }>([
         {
             type: "checkbox",
@@ -857,64 +954,13 @@ async function generateSdks(dir: string, detection: Detection, results: PublishR
                 // Languages the project already has are always generated, so they can't be unchecked here.
                 ...(configuredGenerators.has(language.generator)
                     ? { checked: true, disabled: "already set up" }
-                    : { checked: configured.length === 0 && language.generator === "fern-typescript-sdk" })
+                    : { checked: configuredSdks.length === 0 && language.generator === "fern-typescript-sdk" })
             }))
         }
     ]);
-    const chosen = SDK_LANGUAGES.filter(
+    return SDK_LANGUAGES.filter(
         (language) => answer.generators.includes(language.generator) && !configuredGenerators.has(language.generator)
     );
-    const enterprise = chosen.filter((language) => !language.free);
-    if (enterprise.length > 0) {
-        await explainEnterpriseLanguages(enterprise, await readOrganization(dir), sdkConfig);
-    }
-    const added = chosen.filter((language) => language.free);
-    if (sdkConfig) {
-        await addSdkConfigTargets(dir, added);
-    } else {
-        for (const language of added) {
-            await withStatus(`Adding the ${language.label} SDK`, () =>
-                runFernQuietly(["add", language.generator, ...groupArgs], dir, detection)
-            );
-        }
-    }
-
-    const sdks = await readConfiguredSdks(dir);
-    if (sdks.length === 0) {
-        printSkipped("No SDKs to generate");
-        return;
-    }
-    if (!(await sdksWriteOnlyLocally(dir))) {
-        printSkipped(
-            `fern/${sdkConfig ? "sdk-config.yml" : "generators.yml"} also publishes SDKs (for example to npm), so the wizard won't run it. Run \`fern generate${group === undefined ? "" : ` --group ${group}`}\` when you're ready.`
-        );
-        return;
-    }
-    const names = sdks.map((sdk) => sdk.language.label).join(", ");
-    const output = await generateSdkFiles({ dir, detection, groupArgs, names });
-
-    const generated: Array<{ label: string; path: string }> = [];
-    const empty: string[] = [];
-    for (const sdk of sdks) {
-        if (sdk.outputPath === undefined) {
-            continue;
-        }
-        if (!(await isNonEmptyDirectory(sdk.outputPath))) {
-            empty.push(sdk.language.label);
-            continue;
-        }
-        const relative = path.relative(dir, sdk.outputPath) || ".";
-        generated.push({ label: sdk.language.label, path: relative });
-        printDone(`${sdk.language.label} SDK  ${chalk.cyan(hyperlink(relative, pathToFileURL(sdk.outputPath).href))}`);
-    }
-    results.generatedSdks = generated;
-    if (empty.length > 0) {
-        // Fern can report success even when a generator crashed and wrote nothing.
-        const reason = generatorError(output);
-        throw new Error(
-            `Fern wrote no files for the ${empty.join(", ")} SDK${empty.length === 1 ? "" : "s"}${reason === undefined ? "" : `. The generator reported: ${reason}`}. Run \`fern generate --log-level debug\` to see more.`
-        );
-    }
 }
 
 /** The version a first SDK build gets; it only names the generated package, since nothing is published. */

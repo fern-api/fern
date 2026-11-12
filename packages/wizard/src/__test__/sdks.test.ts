@@ -4,8 +4,10 @@ import path from "path";
 import { describe, expect, it } from "vitest";
 import {
     addSdkConfigTargets,
+    CLI_TARGET,
     ensureSdkGroup,
     isNonEmptyDirectory,
+    MCP_SERVER_TARGET,
     readConfiguredSdks,
     readOrganization,
     SDK_LANGUAGES,
@@ -13,7 +15,7 @@ import {
     setGeneratorVersion,
     usesSdkConfig
 } from "../steps/sdks";
-import { billingUrl } from "../ui";
+import { billingUrl, generatedProductsLabel } from "../ui";
 import { generatorError, parseUnavailableGeneratorVersion, summarizeFailure } from "../wizard";
 
 async function project(files: Record<string, string>): Promise<string> {
@@ -84,6 +86,31 @@ describe("SDK configuration", () => {
         ]);
         await expect(sdksWriteOnlyLocally(dir)).resolves.toBe(true);
         await rm(dir, { recursive: true, force: true });
+    });
+
+    it("adds the CLI and MCP server as sdk-config.yml targets in their own folders", async () => {
+        const dir = await project({
+            "fern/sdk-config.yml": ["schemaVersion: sdk-config/v1", "sdkName: api"].join("\n")
+        });
+        await addSdkConfigTargets(dir, [CLI_TARGET, MCP_SERVER_TARGET]);
+        const written = await readFile(path.join(dir, "fern", "sdk-config.yml"), "utf8");
+        expect(written).toContain("language: cli");
+        expect(written).toContain("language: mcp");
+        const sdks = await readConfiguredSdks(dir);
+        expect(sdks.map((sdk) => [sdk.language.displayName, sdk.outputPath])).toEqual([
+            ["CLI", path.join(dir, "cli")],
+            ["MCP server", path.join(dir, "mcp-server")]
+        ]);
+        await expect(sdksWriteOnlyLocally(dir)).resolves.toBe(true);
+        await rm(dir, { recursive: true, force: true });
+    });
+
+    it("names what fern generate builds for the chosen products", () => {
+        expect(generatedProductsLabel(["docs"])).toBeUndefined();
+        expect(generatedProductsLabel(["sdks", "docs"])).toBe("SDKs");
+        expect(generatedProductsLabel(["cli"])).toBe("CLI");
+        expect(generatedProductsLabel(["sdks", "mcp"])).toBe("SDKs and MCP server");
+        expect(generatedProductsLabel(["mcp", "cli", "sdks"])).toBe("SDKs, CLI, and MCP server");
     });
 
     it("doesn't generate automatically when an sdk-config.yml target publishes", async () => {

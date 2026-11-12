@@ -2,11 +2,13 @@ import { access, readdir, readFile, writeFile } from "fs/promises";
 import path from "path";
 import { isMap, isSeq, parse, parseDocument } from "yaml";
 
-// Which SDK languages a Fern project generates, and where each one is written. New projects list
-// their SDKs as targets in fern/sdk-config.yml; older ones as generators in fern/generators.yml.
+// Which SDKs (and CLI or MCP server) a Fern project generates, and where each one is written. New
+// projects list them as targets in fern/sdk-config.yml; older ones as generators in fern/generators.yml.
 
 export interface SdkLanguage {
     label: string;
+    /** How the wizard names what it generates, like "TypeScript SDK" or "CLI". */
+    displayName: string;
     /** Generator name as written in generators.yml. */
     generator: string;
     /** Other generator names that produce the same language. */
@@ -15,25 +17,56 @@ export interface SdkLanguage {
     target: string;
     /** Whether the Free plan includes this language; the rest need the Enterprise plan. */
     free: boolean;
+    /** Where a new target writes, relative to the repository root. Defaults to sdks/<target>. */
+    outputDirectory?: string;
 }
 
 export const SDK_LANGUAGES: SdkLanguage[] = [
     {
         label: "TypeScript",
+        displayName: "TypeScript SDK",
         generator: "fern-typescript-sdk",
         aliases: ["fern-typescript-node-sdk", "fern-typescript-browser-sdk"],
         target: "typescript",
         free: true
     },
-    { label: "Python", generator: "fern-python-sdk", target: "python", free: true },
-    { label: "Go", generator: "fern-go-sdk", target: "go", free: false },
-    { label: "Java", generator: "fern-java-sdk", target: "java", free: false },
-    { label: "C#", generator: "fern-csharp-sdk", target: "csharp", free: false },
-    { label: "Ruby", generator: "fern-ruby-sdk", aliases: ["fern-ruby-sdk-v2"], target: "ruby", free: false },
-    { label: "PHP", generator: "fern-php-sdk", target: "php", free: false },
-    { label: "Swift", generator: "fern-swift-sdk", target: "swift", free: false },
-    { label: "Rust", generator: "fern-rust-sdk", target: "rust", free: false }
+    { label: "Python", displayName: "Python SDK", generator: "fern-python-sdk", target: "python", free: true },
+    { label: "Go", displayName: "Go SDK", generator: "fern-go-sdk", target: "go", free: false },
+    { label: "Java", displayName: "Java SDK", generator: "fern-java-sdk", target: "java", free: false },
+    { label: "C#", displayName: "C# SDK", generator: "fern-csharp-sdk", target: "csharp", free: false },
+    {
+        label: "Ruby",
+        displayName: "Ruby SDK",
+        generator: "fern-ruby-sdk",
+        aliases: ["fern-ruby-sdk-v2"],
+        target: "ruby",
+        free: false
+    },
+    { label: "PHP", displayName: "PHP SDK", generator: "fern-php-sdk", target: "php", free: false },
+    { label: "Swift", displayName: "Swift SDK", generator: "fern-swift-sdk", target: "swift", free: false },
+    { label: "Rust", displayName: "Rust SDK", generator: "fern-rust-sdk", target: "rust", free: false }
 ];
+
+/** Besides SDKs, Fern generates a CLI and an MCP server for an API, each its own sdk-config.yml target. */
+export const CLI_TARGET: SdkLanguage = {
+    label: "CLI",
+    displayName: "CLI",
+    generator: "fern-cli-generator",
+    target: "cli",
+    free: true,
+    outputDirectory: "cli"
+};
+
+export const MCP_SERVER_TARGET: SdkLanguage = {
+    label: "MCP server",
+    displayName: "MCP server",
+    generator: "fern-mcp-server",
+    target: "mcp",
+    free: true,
+    outputDirectory: "mcp-server"
+};
+
+const ALL_TARGETS: SdkLanguage[] = [...SDK_LANGUAGES, CLI_TARGET, MCP_SERVER_TARGET];
 
 const SDK_CONFIG_FILENAME = "sdk-config.yml";
 
@@ -72,7 +105,7 @@ async function readSdkConfigTargets(dir: string): Promise<ConfiguredSdk[]> {
         if (!isRecord(target)) {
             return [];
         }
-        const language = SDK_LANGUAGES.find((candidate) => candidate.target === target.language);
+        const language = ALL_TARGETS.find((candidate) => candidate.target === target.language);
         if (language === undefined) {
             return [];
         }
@@ -112,8 +145,9 @@ async function readSdkConfig(dir: string): Promise<Record<string, unknown> | und
 }
 
 /**
- * Adds a target for each language to fern/sdk-config.yml, writing into sdks/<language>/ in this
- * repository. Targets pin no generator version, so Fern uses the newest one.
+ * Adds a target for each language to fern/sdk-config.yml, writing into sdks/<language>/ (or the
+ * target's own folder, like cli/) in this repository. Targets pin no generator version, so Fern uses
+ * the newest one.
  */
 export async function addSdkConfigTargets(dir: string, languages: SdkLanguage[]): Promise<void> {
     if (languages.length === 0) {
@@ -124,7 +158,7 @@ export async function addSdkConfigTargets(dir: string, languages: SdkLanguage[])
     const existing = document.get("targets");
     const targets = languages.map((language) => ({
         language: language.target,
-        output: { delivery: "files", path: `../sdks/${language.target}` }
+        output: { delivery: "files", path: `../${language.outputDirectory ?? `sdks/${language.target}`}` }
     }));
     if (isSeq(existing)) {
         for (const target of targets) {
@@ -144,7 +178,7 @@ async function readLegacySdks(dir: string): Promise<ConfiguredSdk[]> {
             return [];
         }
         const name = withoutImagePrefix(generator.name);
-        const language = SDK_LANGUAGES.find(
+        const language = ALL_TARGETS.find(
             (candidate) => candidate.generator === name || candidate.aliases?.includes(name) === true
         );
         if (language === undefined) {

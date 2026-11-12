@@ -99,6 +99,21 @@ export function billingUrl(organization: string | undefined): string {
     return organization === undefined ? dashboardUrl(undefined) : `${dashboardUrl(organization)}/billing`;
 }
 
+const GENERATED_PRODUCT_NAMES: Array<[Product, string]> = [
+    ["sdks", "SDKs"],
+    ["cli", "CLI"],
+    ["mcp", "MCP server"]
+];
+
+/** Names what `fern generate` builds for these products, like "SDKs and CLI"; undefined for docs only. */
+export function generatedProductsLabel(products: Product[]): string | undefined {
+    const names = GENERATED_PRODUCT_NAMES.filter(([product]) => products.includes(product)).map(([, name]) => name);
+    if (names.length === 0) {
+        return undefined;
+    }
+    return names.length <= 2 ? names.join(" and ") : `${names.slice(0, -1).join(", ")}, and ${names.at(-1)}`;
+}
+
 export function printNextSteps(
     products: Product[],
     results: {
@@ -106,7 +121,7 @@ export function printNextSteps(
         docsUrl?: string;
         previewUrl?: string;
         publishedUrl?: string;
-        generatedSdks?: Array<{ label: string; path: string }>;
+        generated?: Array<{ label: string; path: string }>;
     }
 ): void {
     console.log(chalk.bold("\nNext steps\n"));
@@ -121,8 +136,8 @@ export function printNextSteps(
     } else if (results.previewUrl !== undefined) {
         console.log(`  ${Icons.success} Preview: ${chalk.cyan(results.previewUrl)}`);
     }
-    for (const sdk of results.generatedSdks ?? []) {
-        console.log(`  ${Icons.success} ${sdk.label} SDK: ${chalk.cyan(sdk.path)}`);
+    for (const output of results.generated ?? []) {
+        console.log(`  ${Icons.success} ${output.label}: ${chalk.cyan(output.path)}`);
     }
     if (products.includes("docs")) {
         console.log(`  ${Icons.info} Edit your docs locally: fern docs dev`);
@@ -132,9 +147,10 @@ export function printNextSteps(
             );
         }
     }
-    if (products.includes("sdks")) {
+    const generatedProducts = generatedProductsLabel(products);
+    if (generatedProducts !== undefined) {
         console.log(
-            `  ${Icons.info} ${(results.generatedSdks ?? []).length > 0 ? "Regenerate" : "Generate"} SDKs: fern generate`
+            `  ${Icons.info} ${(results.generated ?? []).length > 0 ? "Regenerate" : "Generate"} ${generatedProducts}: fern generate`
         );
     }
     if (results.organization === undefined) {

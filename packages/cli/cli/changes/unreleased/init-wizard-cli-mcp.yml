@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    The `fern init` setup wizard now asks what to set up with a checklist of SDKs, Docs, CLI, and MCP Server. Picking CLI or MCP Server adds a `cli` or `mcp` target to `fern/sdk-config.yml` and generates it into `cli/` or `mcp-server/` in the same step as SDKs.
+  type: feat

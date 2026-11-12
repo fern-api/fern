@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 import { defaultDocsSiteChoices, layoutFromFlag } from "../docs-site/options";
-import type { Detection, WizardFlags } from "../types";
+import type { Detection, Product, WizardFlags } from "../types";
 import {
     defaultProducts,
     docsInitArgs,
@@ -8,6 +8,7 @@ import {
     findSpec,
     initApiArgs,
     installCommand,
+    PRODUCT_CHOICES,
     parsePublishedUrl,
     pickDefaultSpec,
     planActions,
@@ -65,14 +66,40 @@ describe("action planning", () => {
     });
 
     it("offers SDK generation only when SDKs were chosen", () => {
-        const ids = (products: Array<"sdks" | "docs">) =>
+        const ids = (products: Product[]) =>
             planActions(baseDetection, flags, products).actions.map((action) => action.id);
         expect(ids(["sdks"])).toContain("generate-sdks");
         expect(ids(["docs"])).not.toContain("generate-sdks");
     });
 
+    it("generates a CLI or MCP server in the same step as SDKs", () => {
+        for (const products of [["cli"], ["mcp"]] satisfies Product[][]) {
+            const planned = planActions(baseDetection, flags, products).actions;
+            expect(planned.map((action) => action.id)).toEqual(expect.arrayContaining(["init-api", "generate-sdks"]));
+            expect(planned.map((action) => action.id)).not.toContain("init-docs");
+        }
+        const all: Product[] = ["sdks", "docs", "cli", "mcp"];
+        const generate = planActions(baseDetection, flags, all).actions.find((action) => action.id === "generate-sdks");
+        expect(generate?.title).toBe("Pick your SDK languages, then generate your SDKs, CLI, and MCP server");
+        expect(generate?.files).toEqual(["sdks/", "cli/", "mcp-server/"]);
+        const cliOnly = planActions(baseDetection, flags, ["cli"]).actions.find(
+            (action) => action.id === "generate-sdks"
+        );
+        expect(cliOnly?.title).toBe("Generate your CLI");
+        expect(cliOnly?.files).toEqual(["cli/"]);
+        const step = planSteps(planActions(baseDetection, flags, ["cli", "mcp"]).actions, ["cli", "mcp"]).find(
+            (candidate) => candidate.id === "generate"
+        );
+        expect(step?.title).toBe("Generate your CLI and MCP server");
+        expect(step?.question).toBe("Generate CLI and MCP server now?");
+    });
+
+    it("lists SDKs, Docs, CLI and MCP Server in the product picker", () => {
+        expect(PRODUCT_CHOICES.map((choice) => choice.name)).toEqual(["SDKs", "Docs", "CLI", "MCP Server"]);
+    });
+
     it("offers preview and publishing only when there are docs", () => {
-        const ids = (products: Array<"sdks" | "docs">) =>
+        const ids = (products: Product[]) =>
             planActions(baseDetection, flags, products).actions.map((action) => action.id);
         expect(ids(["docs"])).toContain("publish-docs");
         expect(ids(["sdks"])).not.toContain("publish-docs");
