@@ -13,6 +13,7 @@ type ApiReferenceNodeWithCollapsibleConfig = FernNavigation.V1.ApiReferenceNode 
 };
 type ApiPackageNodeWithCollapsibleConfig = FernNavigation.V1.ApiPackageNode & {
     collapsed?: boolean | "open-by-default";
+    profileVars?: Record<string, string>;
 };
 
 /**
@@ -200,12 +201,12 @@ export class ApiReferenceNodeConverter {
         let overviewProfileVars = this.profileVarsFor(this.apiSection.overviewAbsolutePath);
         if (overviewPageId == null && !this.apiSection.tagDescriptionPages) {
             const apiPackageWithOverview = this.#children.find(
-                (child): child is FernNavigation.V1.ApiPackageNode =>
+                (child): child is ApiPackageNodeWithCollapsibleConfig =>
                     child.type === "apiPackage" && child.overviewPageId != null
             );
             if (apiPackageWithOverview != null) {
                 overviewPageId = apiPackageWithOverview.overviewPageId;
-                const { profileVars } = apiPackageWithOverview as { profileVars?: Record<string, string> };
+                const { profileVars } = apiPackageWithOverview;
                 overviewProfileVars = profileVars != null ? { profileVars } : {};
             }
         }

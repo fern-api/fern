@@ -1045,8 +1045,7 @@ export const ProfileVarsFile = z
     .strict();
 
 export const ProfileConfig = z.object({
-    vars: ProfileVarsConfiguration.optional(),
-    tags: z.array(z.string()).optional()
+    vars: ProfileVarsConfiguration.optional()
 });
 
 // ===== Tab Config =====

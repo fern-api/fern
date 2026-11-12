@@ -175,7 +175,7 @@ describe("substituteEnvVariables", () => {
     it("leaves profile-owned names for the renderer and substitutes the rest", () => {
         process.env.API_URL = "https://api.example.com";
         process.env.CLI = "from-ci";
-        const content = { page: "Run `${CLI}` at ${API_URL}. Literal \\${CLI} and \\$\\{API_URL\\}." };
+        const content = { page: "Run `${CLI}` at ${API_URL}. Literal \\$\\{CLI\\} and \\$\\{API_URL\\}." };
         const context = createMockTaskContext();
         const substituted = replaceEnvVariables(
             content,
@@ -183,7 +183,7 @@ describe("substituteEnvVariables", () => {
             { keep: new Set(["CLI"]) }
         );
         expect(substituted).toEqual({
-            page: "Run `${CLI}` at https://api.example.com. Literal \\${CLI} and ${API_URL}."
+            page: "Run `${CLI}` at https://api.example.com. Literal \\$\\{CLI\\} and ${API_URL}."
         });
     });
 

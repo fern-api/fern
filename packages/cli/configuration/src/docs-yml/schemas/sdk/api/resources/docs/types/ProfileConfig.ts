@@ -5,6 +5,4 @@ import type * as FernDocsConfig from "../../../index.js";
 export interface ProfileConfig {
     /** Values for `${NAME}` in pages that use this profile. Profile values are committed to the repo; never put secrets here. */
     vars?: FernDocsConfig.ProfileVarsConfiguration;
-    /** Labels for conditional content. The profile name also counts as a tag. */
-    tags?: string[];
 }

@@ -65,7 +65,6 @@ interface ParsedDocsSettingsConfig extends Omit<CjsFdrSdk.docs.v1.commons.DocsSe
 
 export interface ParsedProfile {
     vars: Record<string, string>;
-    tags: string[];
 }
 
 export interface ParsedDocsConfiguration {

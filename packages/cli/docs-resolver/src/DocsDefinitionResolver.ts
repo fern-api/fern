@@ -228,9 +228,25 @@ export interface DocsDefinitionResolverArgs {
     cliName?: string;
 }
 
-/** `${NAME}`, `\\${NAME}` or `\\$\\{NAME\\}`: every form the renderer or publish step treats as a reference. */
+/** `${NAME}` or `\\$\\{NAME\\}`: every form the renderer treats as a reference. */
 const PROFILE_VAR_REFERENCE = /\$\\?\{(\w+)\\?\}/g;
-const PROFILE_VAR_NAME = /(?<!\\)\$\{(\w+)\}/g;
+const PROFILE_VAR_TOKEN = /\\\$\\\{(\w+)\\\}|\$\{(\w+)\}/g;
+
+/**
+ * Same rule as the renderer's `FernNavigation.utils.applyProfileVars`: `${NAME}` takes the value,
+ * `\$\{NAME\}` shows a literal `${NAME}`, and names not in `vars` stay as written.
+ */
+function fillProfileText(text: string, vars: Record<string, string>): string {
+    if (!text.includes("$")) {
+        return text;
+    }
+    return text.replace(PROFILE_VAR_TOKEN, (match, escapedName: string | undefined, name: string | undefined) => {
+        if (escapedName != null) {
+            return Object.hasOwn(vars, escapedName) ? `\${${escapedName}}` : match;
+        }
+        return name != null && Object.hasOwn(vars, name) ? (vars[name] ?? match) : match;
+    });
+}
 
 export class DocsDefinitionResolver {
     private domain: string;
@@ -1719,11 +1735,10 @@ export class DocsDefinitionResolver {
 
     /** Fills profile-owned `${NAME}` in a docs.yml or frontmatter string from the current scope. */
     private fillProfileVars<T extends string | undefined>(text: T, pageProfile?: string): T {
-        if (text == null || !text.includes("${")) {
+        if (text == null || !text.includes("$")) {
             return text;
         }
-        const vars = this.scopeProfileVars(pageProfile);
-        return text.replace(PROFILE_VAR_NAME, (match, varName: string) => vars[varName] ?? match) as T;
+        return fillProfileText(text, this.scopeProfileVars(pageProfile)) as T;
     }
 
     /** Fills profile-owned names in every string of a value, using the current scope. */
@@ -1731,9 +1746,7 @@ export class DocsDefinitionResolver {
         const vars = this.scopeProfileVars();
         const fill = (item: unknown): unknown => {
             if (typeof item === "string") {
-                return item.includes("${")
-                    ? item.replace(PROFILE_VAR_NAME, (match, varName: string) => vars[varName] ?? match)
-                    : item;
+                return fillProfileText(item, vars);
             }
             if (Array.isArray(item)) {
                 return item.map(fill);

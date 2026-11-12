@@ -22,7 +22,7 @@ describe("resolveProfiles", () => {
     });
 
     it("passes through inline vars and undefined", async () => {
-        const profiles = { community: { vars: { CLI: "nemoclaw" }, tags: ["oss"] } };
+        const profiles = { community: { vars: { CLI: "nemoclaw" } } };
         expect(await resolveProfiles({ profiles, absoluteFilepathToDocsConfig })).toEqual(profiles);
         expect(await resolveProfiles({ profiles: undefined, absoluteFilepathToDocsConfig })).toBeUndefined();
     });
@@ -36,10 +36,10 @@ describe("resolveProfiles", () => {
     it("merges vars from several files", async () => {
         expect(
             await resolveProfiles({
-                profiles: { ent: { vars: ["./common.yml", "./enterprise.yml"], tags: ["sso"] } },
+                profiles: { ent: { vars: ["./common.yml", "./enterprise.yml"] } },
                 absoluteFilepathToDocsConfig
             })
-        ).toEqual({ ent: { vars: { PRODUCT_NAME: "NemoClaw", CLI: "nemoclaw-ent" }, tags: ["sso"] } });
+        ).toEqual({ ent: { vars: { PRODUCT_NAME: "NemoClaw", CLI: "nemoclaw-ent" } } });
     });
 
     it("keeps ${NAME} in file values for later env substitution", async () => {

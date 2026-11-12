@@ -10,12 +10,10 @@ export const ProfileConfig: core.serialization.ObjectSchema<
     FernDocsConfig.ProfileConfig
 > = core.serialization.object({
     vars: ProfileVarsConfiguration.optional(),
-    tags: core.serialization.list(core.serialization.string()).optional(),
 });
 
 export declare namespace ProfileConfig {
     export interface Raw {
         vars?: ProfileVarsConfiguration.Raw | null;
-        tags?: string[] | null;
     }
 }

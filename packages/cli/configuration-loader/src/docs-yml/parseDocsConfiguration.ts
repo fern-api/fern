@@ -2948,7 +2948,5 @@ function parseProfiles(
     if (raw == null) {
         return undefined;
     }
-    return Object.fromEntries(
-        Object.entries(raw).map(([name, profile]) => [name, { vars: profile.vars ?? {}, tags: profile.tags ?? [] }])
-    );
+    return Object.fromEntries(Object.entries(raw).map(([name, profile]) => [name, { vars: profile.vars ?? {} }]));
 }
