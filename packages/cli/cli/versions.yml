@@ -1,4 +1,98 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.208.0
+  changelogEntry:
+    - summary: |
+        When `fern check` or `fern generate --docs` fails validation inside a coding agent, the CLI now
+        suggests up to three `fern instructions` topics based on which rules failed (for example,
+        `fern instructions docs configure seo` for a missing redirect).
+      type: feat
+  createdAt: "2026-11-12"
+  irVersion: 67
+- version: 5.207.0
+  changelogEntry:
+    - summary: |
+        A `cli` target in `sdk-config.yml` is always sent to sdk-gen-api as SDK Config, like every other language.
+        `ENABLE_SDK_GEN_RUST_CLI` is no longer read. With `--local`, the target is still translated into a
+        `generators.yml` for Fern's CLI generator and run in Docker.
+      type: feat
+  createdAt: "2026-11-12"
+  irVersion: 67
+- version: 5.206.0
+  changelogEntry:
+    - summary: |
+        Add the `layout.breadcrumbs.sticky` docs.yml setting. When set to true, the
+        breadcrumb row stays pinned below the header while the page scrolls.
+        Defaults to false.
+      type: feat
+    - summary: |
+        `fern generate --guest` no longer names the generated SDK after the throwaway guest organization
+        (`Guest<id>ApiClient`, `Guest<id>ApiError`, ...): client and error classes keep the names derived from the
+        organization in fern.config.json, while the build still runs under the guest session.
+      type: fix
+  createdAt: "2026-11-12"
+  irVersion: 67
+- version: 5.205.2
+  changelogEntry:
+    - summary: |
+        `sdkConfig.isAuthMandatory` no longer turns off because an OAuth or inferred auth scheme's
+        `get-token` (or `refresh-token`) endpoint is unauthenticated. Those endpoints are called by the
+        SDK's own auth flow, so an API where every other endpoint requires auth now generates SDKs that
+        require credentials instead of silently sending unauthenticated requests.
+      type: fix
+  createdAt: "2026-11-11"
+  irVersion: 67
+- version: 5.205.1
+  changelogEntry:
+    - summary: |
+        The OpenAPI importer now keeps the `default` of a primitive schema when a property or parameter references it
+        (following `$ref` chains and optional/nullable wrappers), so `consent: {$ref: Consent}` with
+        `Consent: {type: boolean, default: false}` imports with a `false` default instead of none. Arrays and maps whose
+        elements reference a defaulted schema do not inherit that default. A referenced default whose type does not match
+        its primitive (for example `type: integer, default: "100"`) is dropped, so it can't fail definition validation.
+      type: fix
+  createdAt: "2026-11-10"
+  irVersion: 67
+- version: 5.205.0
+  changelogEntry:
+    - summary: |
+        When the CLI runs inside a coding agent (Claude Code, Cursor, Codex, Gemini CLI, Devin and others,
+        or any shell with `AI_AGENT` set), common errors now end with "For guidance, run
+        `fern instructions <topic>`." These include a missing `fern/` directory or `docs.yml`, missing
+        authentication, guest-session and `fern claim` failures, permission errors, generators that need
+        `fern sdk migrate`, and unknown commands or flags. People running the CLI directly don't see the hint.
+        `fern instructions index` now also prints the topic list, the same as `fern instructions`.
+      type: feat
+  createdAt: "2026-11-10"
+  irVersion: 67
+- version: 5.204.1
+  changelogEntry:
+    - summary: |
+        A generators.yml build sent to sdk-gen-api as a runtime bundle (the path `fern generate --guest` takes) is also
+        filed under the workspace name when the API definition carries the default name "api".
+      type: fix
+  createdAt: "2026-11-10"
+  irVersion: 67
+- version: 5.204.0
+  changelogEntry:
+    - summary: |
+        Add `remote-paths` to `docs.yml`. Each entry reverse-proxies a path prefix on your docs domain
+        (for example `/ui`) to an HTTPS service you run, while Fern keeps serving the rest of the site.
+        `fern check` validates each path and destination with the new `valid-remote-paths` rule.
+      type: feat
+    - summary: |
+        A generators.yml build sent to sdk-gen-api is filed under the workspace name (`fern/apis/<name>`) when the
+        API definition carries the default name "api", so each API of an organization gets its own SDK.
+      type: fix
+  createdAt: "2026-11-10"
+  irVersion: 67
+- version: 5.203.0
+  changelogEntry:
+    - summary: |
+        `settings.search-text` in `translations/<lang>/docs.yml` now sets the search bar placeholder for that locale.
+        Locales without it keep the docs-level `search-text`.
+      type: feat
+  createdAt: "2026-11-10"
+  irVersion: 67
 - version: 5.202.1
   changelogEntry:
     - summary: |

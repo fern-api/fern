@@ -49,6 +49,7 @@ import {
     formatGeneratorConfigCompatibilityError,
     getFernSdkGenApiLanguage,
     getFernSdkGenApiOrigin,
+    getGeneratorConfigCompatibilityInstructionsTopic,
     isEligibleForFernSdkGenApi,
     mapFernSdkGenApiOutput,
     resolveSdkConfigRequestedOutput,
@@ -175,6 +176,8 @@ export async function runRemoteGenerationForGenerator({
      */
     generateFullProject?: boolean;
 }): Promise<RemoteTaskHandler.Response | undefined> {
+    // Generated code is named after the organization the person configured, not a guest run's throwaway org.
+    const sdkOrganization = projectConfig.sdkOrganization ?? organization;
     const requiresFdrRegistration = sdkGenApiRoute?.payloadKind !== "sdk-config-v1";
     const fdr = createFdrService({ token: token.value });
 
@@ -294,7 +297,7 @@ export async function runRemoteGenerationForGenerator({
         userAgentTemplate,
         idempotencyKeyGeneration,
         webhookSignature: getWebhookSignatureFromGeneratorConfig(generatorInvocation, interactiveTaskContext),
-        organization,
+        organization: sdkOrganization,
         version: effectiveIrVersion,
         context: interactiveTaskContext,
         sourceResolver: new SourceResolverImpl(interactiveTaskContext, workspace),
@@ -452,6 +455,10 @@ export async function runRemoteGenerationForGenerator({
                     cliVersion: workspace.cliVersion,
                     generatorInvocation: candidate.generatorInvocation,
                     sdkGenApiRoute,
+                    sdkName: guestSdkName({
+                        apiName: getOriginalName(ir.apiName),
+                        workspaceName: workspace.workspaceName
+                    }),
                     sdkVersion: candidate.sdkVersion,
                     apiVersion: ir.specVersion,
                     token,
@@ -659,7 +666,8 @@ export async function runRemoteGenerationForGenerator({
                     throw error;
                 }
                 interactiveTaskContext.failAndThrow(formatGeneratorConfigCompatibilityError(error), undefined, {
-                    code: CliError.Code.ConfigError
+                    code: CliError.Code.ConfigError,
+                    instructionsTopic: getGeneratorConfigCompatibilityInstructionsTopic(error)
                 });
             }
         }
@@ -695,6 +703,10 @@ export async function runRemoteGenerationForGenerator({
                       generatorInvocation: sdkGenApiCandidate.generatorInvocation,
                       resolvedGeneratorVersion: resolvedRuntimeGeneratorVersion,
                       sdkGenApiRoute,
+                      sdkName: guestSdkName({
+                          apiName: getOriginalName(ir.apiName),
+                          workspaceName: workspace.workspaceName
+                      }),
                       sdkVersion: sdkGenApiCandidate.sdkVersion,
                       apiVersion: ir.specVersion,
                       token,
@@ -703,7 +715,7 @@ export async function runRemoteGenerationForGenerator({
                           payloadKind: "fern-runtime-bundle",
                           body: await prepareFernSdkGenApiRuntimeBundle({
                               apiName: getOriginalName(ir.apiName),
-                              organization,
+                              organization: sdkOrganization,
                               generatorInvocation: runtimeGeneratorInvocation,
                               // Keep the runtime bundle self-consistent with the IR. The request
                               // retains AUTO so sdk-gen-api/Fiddle can compute the real version.
@@ -1158,4 +1170,19 @@ export function resolveVersionFallback(resolvedVersion: string | undefined): str
         return undefined;
     }
     return resolvedVersion;
+}
+
+/**
+ * The name sdk-gen-api files a generators.yml build under. Every OpenAPI workspace's definition is
+ * named "api", so without this each API of an organization would fold into one SDK; the workspace
+ * name (`fern/apis/<name>`) tells them apart, and a single-API `fern/generators.yml` stays "api".
+ */
+export function guestSdkName({
+    apiName,
+    workspaceName
+}: {
+    apiName: string;
+    workspaceName: string | undefined;
+}): string {
+    return apiName === "api" && workspaceName != null && workspaceName !== "" ? workspaceName : apiName;
 }

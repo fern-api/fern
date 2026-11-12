@@ -166,6 +166,9 @@ describe("runRemoteGenerationForGenerator synthesized SDK Config latest", () => 
         const run = vi.fn(async (parameters: FernSdkGenApiBuildParameters) => {
             const bundle = JSON.parse(gunzipSync(parameters.payload.body).toString("utf8"));
             expect(JSON.stringify(bundle)).not.toContain('"latest"');
+            // sdk-gen-api owns the build as the guest org; the generator names the SDK after "acme" (no Guest…ApiClient).
+            expect(parameters.organization).toBe("guest-gs_1");
+            expect(bundle.config.organization).toBe("acme");
             expect(bundle.ir.generationMetadata.generatorVersion).toBe("3.99.4");
             expect(bundle.ir.publishConfig).toMatchObject({ type: "filesystem", generateFullProject: true });
 
@@ -190,8 +193,9 @@ describe("runRemoteGenerationForGenerator synthesized SDK Config latest", () => 
         });
 
         await runRemoteGenerationForGenerator({
-            projectConfig: { organization: "acme" } as never,
-            organization: "acme",
+            // A guest run: the build belongs to the guest org, the generated code keeps the configured org's names.
+            projectConfig: { organization: "guest-gs_1", sdkOrganization: "acme" } as never,
+            organization: "guest-gs_1",
             workspace: workspace() as never,
             interactiveTaskContext: context() as never,
             generatorInvocation,
@@ -230,6 +234,9 @@ describe("runRemoteGenerationForGenerator synthesized SDK Config latest", () => 
             currentVersion: "latest",
             includeMajor: true
         });
+        expect(generateIntermediateRepresentation).toHaveBeenCalledWith(
+            expect.objectContaining({ organization: "acme" })
+        );
         expect(migrateIntermediateRepresentationForInvocation).toHaveBeenCalledWith(
             expect.objectContaining({
                 generatorInvocation: expect.objectContaining({ version: "3.99.4" })
@@ -549,7 +556,7 @@ describe("runRemoteGenerationForGenerator synthesized SDK Config latest", () => 
                 "SDK_CONFIG_V1_REQUIRED; generator=fernapi/fern-typescript-sdk; language=typescript; requestedVersion=4.0.0; cutoverVersion=4.0.0; receivedConfigKind=legacy-fern; expectedConfigKind=sdk-config-v1"
             ),
             undefined,
-            { code: CliError.Code.ConfigError }
+            { code: CliError.Code.ConfigError, instructionsTopic: "sdks migrate" }
         );
         expect(migrateIntermediateRepresentationForInvocation).not.toHaveBeenCalled();
         expect(run).not.toHaveBeenCalled();

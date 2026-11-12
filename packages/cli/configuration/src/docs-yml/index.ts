@@ -4,3 +4,4 @@ export * from "./ParsedDocsConfiguration.js";
 export * as RawSchemas from "./schemas/index.js";
 export * from "./themeEligibleFields.js";
 export * from "./validateEmbeddingOrigin.js";
+export * from "./validateRemotePaths.js";

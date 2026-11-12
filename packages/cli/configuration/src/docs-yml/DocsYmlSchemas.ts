@@ -346,7 +346,8 @@ export const ThemeConfig = z.object({
 // ===== Layout schemas =====
 
 export const BreadcrumbsConfig = z.object({
-    "current-page": z.boolean().optional()
+    "current-page": z.boolean().optional(),
+    sticky: z.boolean().optional()
 });
 
 export const LayoutConfig = z.object({
@@ -664,6 +665,15 @@ export const RedirectsConfiguration = z.union([z.array(RedirectConfig), z.string
 export const RedirectsFile = z
     .object({
         redirects: z.array(RedirectConfig.strict())
+    })
+    .strict();
+
+// ===== Remote paths =====
+
+export const RemotePathConfig = z
+    .object({
+        path: z.string(),
+        destination: z.string()
     })
     .strict();
 
@@ -1165,6 +1175,7 @@ export const DocsConfiguration = z.object({
     agents: AgentsConfig.optional(),
     metadata: MetadataConfig.optional(),
     redirects: RedirectsConfiguration.optional(),
+    "remote-paths": z.array(RemotePathConfig).optional(),
     check: CheckConfig.optional(),
     logo: LogoConfiguration.optional(),
     favicon: z.string().optional(),

@@ -25,6 +25,7 @@ import {
     getFernSdkGenApiEnvOverride,
     getFernSdkGenApiLanguage,
     getFlagIndependentSdkGenApiRouting,
+    getGeneratorConfigCompatibilityInstructionsTopic,
     isSdkGenApiOnly,
     mapFernSdkGenApiOutput,
     resolveFernSdkGenApiEnabledByGenerator,
@@ -663,7 +664,8 @@ export function prepareFernSdkGenApiRoutes({
                 error instanceof GeneratorConfigCompatibilityError
                     ? new CliError({
                           message: formatGeneratorConfigCompatibilityError(error),
-                          code: CliError.Code.ConfigError
+                          code: CliError.Code.ConfigError,
+                          instructionsTopic: getGeneratorConfigCompatibilityInstructionsTopic(error)
                       })
                     : error;
             return {

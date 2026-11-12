@@ -9,6 +9,7 @@ import { CliContext } from "../../cli-context/CliContext.js";
 import { type CreatedSdkConfigWorkspace, createSdkConfigWorkspace } from "../generate/createSdkConfigWorkspace.js";
 import { assertNoSdkConfigDirectRubyGemsPublishing, loadSdkConfigV1 } from "../generate/loadSdkConfigV1.js";
 import { buildCheckJsonResult } from "./buildCheckJsonResult.js";
+import { getInstructionsTopicsForViolations } from "./getInstructionsTopicsForViolations.js";
 import { ApiValidationResult, DocsValidationResult, printCheckReport } from "./printCheckReport.js";
 import { collectDocsWorkspaceViolations } from "./validateDocsWorkspaceAndLogIssues.js";
 
@@ -181,7 +182,14 @@ export async function validateWorkspaces({
 
         if (hasErrors || hasAnyErrors) {
             abortReason = "validation errors";
-            cliContext.failAndThrow(undefined, undefined, { code: CliError.Code.ValidationError });
+            cliContext.failAndThrow(undefined, undefined, {
+                code: CliError.Code.ValidationError,
+                instructionsTopic: getInstructionsTopicsForViolations({
+                    docsViolations: docsResult?.violations,
+                    apiViolations: apiResults.flatMap((result) => result.violations),
+                    errorOnBrokenLinks
+                })
+            });
         }
     } catch (error) {
         if (abortReason == null) {

@@ -32,6 +32,7 @@ import { PageConfiguration } from "./PageConfiguration.js";
 import { ProductConfig } from "./ProductConfig.js";
 import { ProgrammingLanguage } from "./ProgrammingLanguage.js";
 import { RedirectsConfiguration } from "./RedirectsConfiguration.js";
+import { RemotePathConfig } from "./RemotePathConfig.js";
 import { RoleId } from "./RoleId.js";
 import { TabConfig } from "./TabConfig.js";
 import { TabId } from "./TabId.js";
@@ -69,6 +70,7 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
     agents: AgentsConfig.optional(),
     metadata: MetadataConfig.optional(),
     redirects: RedirectsConfiguration.optional(),
+    remotePaths: core.serialization.property("remote-paths", core.serialization.list(RemotePathConfig).optional()),
     check: CheckConfig.optional(),
     logo: LogoConfiguration.optional(),
     favicon: core.serialization.string().optional(),
@@ -113,6 +115,7 @@ export declare namespace DocsConfiguration {
         agents?: AgentsConfig.Raw | null;
         metadata?: MetadataConfig.Raw | null;
         redirects?: RedirectsConfiguration.Raw | null;
+        "remote-paths"?: RemotePathConfig.Raw[] | null;
         check?: CheckConfig.Raw | null;
         logo?: LogoConfiguration.Raw | null;
         favicon?: string | null;

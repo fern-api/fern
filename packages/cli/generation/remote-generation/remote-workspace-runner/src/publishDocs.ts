@@ -17,6 +17,7 @@ import {
     findIncompatibleTranslatedApiIds,
     getApiRegistrationConcurrency,
     getTranslatedAnnouncement,
+    getTranslatedSettings,
     markUntranslatedNavNodesNoindex,
     type RegisterApiFn,
     replaceImagePathsAndUrls,
@@ -62,7 +63,7 @@ import {
 import { getOriginalName } from "@fern-api/ir-utils";
 import { detectAirGappedMode, OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { convertIrToFdrApi } from "@fern-api/register";
-import { CliError, TaskContext } from "@fern-api/task-context";
+import { CliError, InstructionsTopic, TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import axios from "axios";
 import chalk from "chalk";
@@ -1390,7 +1391,8 @@ export async function publishDocs({
                                 ...docsDefinition.config,
                                 root: updatedRoot,
                                 announcement: translatedAnnouncement,
-                                navbarLinks: translatedNavbarLinks
+                                navbarLinks: translatedNavbarLinks,
+                                settings: getTranslatedSettings(docsDefinition.config.settings, localeNavOverlay)
                             }
                         };
                         const pageCount = Object.keys(localePages).length;
@@ -1575,7 +1577,8 @@ async function startDocsRegisterFailed(
         const rejection = readGuestRejection(error);
         if (isGuestRejection(rejection)) {
             return context.failAndThrow(describeGuestRejection(rejection), undefined, {
-                code: CliError.Code.AuthError
+                code: CliError.Code.AuthError,
+                instructionsTopic: InstructionsTopic.NewSite
             });
         }
     }

@@ -90,6 +90,13 @@ describe("parseTopicSegments", () => {
         expect(parseTopicSegments(["SDKs", "Python"])).toEqual(["sdks", "python"]);
         expect(parseTopicSegments([])).toEqual([]);
     });
+
+    it("maps the reserved `index` topic to the topic list", () => {
+        expect(parseTopicSegments(["index"])).toEqual([]);
+        expect(parseTopicSegments(["INDEX"])).toEqual([]);
+        expect(parseTopicSegments(["docs", "index"])).toEqual(["docs", "index"]);
+        expect(parseTopicSegments(["index", "docs"])).toEqual(["index", "docs"]);
+    });
 });
 
 describe("getInstructionsUrl", () => {
@@ -169,6 +176,13 @@ describe("instructions", () => {
     it("prints the index without the preamble", async () => {
         const { cliContext, writeTextToStdout, fetchFn } = setup(markdownResponse(NEXT_PAGE));
         await instructions({ cliContext, topic: [], fetchFn });
+        expect(fetchFn).toHaveBeenCalledWith(`${INSTRUCTIONS_BASE_URL}.md`, expect.anything());
+        expect(writeTextToStdout).toHaveBeenCalledWith(PAGE_BODY);
+    });
+
+    it("prints the index for the reserved `index` topic", async () => {
+        const { cliContext, writeTextToStdout, fetchFn } = setup(markdownResponse(NEXT_PAGE));
+        await instructions({ cliContext, topic: ["index"], fetchFn });
         expect(fetchFn).toHaveBeenCalledWith(`${INSTRUCTIONS_BASE_URL}.md`, expect.anything());
         expect(writeTextToStdout).toHaveBeenCalledWith(PAGE_BODY);
     });

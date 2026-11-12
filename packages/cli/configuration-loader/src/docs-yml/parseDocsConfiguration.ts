@@ -76,6 +76,7 @@ export async function parseDocsConfiguration({
         /* seo */
         metadata: rawMetadata,
         redirects,
+        remotePaths,
 
         /* branding */
         logo: rawLogo,
@@ -272,6 +273,7 @@ export async function parseDocsConfiguration({
         /* seo */
         metadata,
         redirects: resolvedRedirects,
+        remotePaths,
 
         /* branding */
         logo,
@@ -747,10 +749,17 @@ function convertLayoutConfig(
         // of the `as unknown as` cast below until the published FDR SDK adds the field.
         hideWebhookMethodBadges: layout.hideWebhookMethodBadges,
         // Opt-in (default off, resolved by the fern-platform companion PR):
-        // when `breadcrumbs.current-page` is true the current page is appended to
-        // the breadcrumb trail as a non-clickable item. Part of the `as unknown as`
-        // cast below until the published FDR SDK adds the field.
-        breadcrumbs: layout.breadcrumbs != null ? { currentPage: layout.breadcrumbs.currentPage ?? false } : undefined,
+        // `breadcrumbs.current-page` appends the current page to the breadcrumb trail
+        // as a non-clickable item; `breadcrumbs.sticky` pins the breadcrumb row below
+        // the header on scroll. Part of the `as unknown as` cast below until the
+        // published FDR SDK adds the field.
+        breadcrumbs:
+            layout.breadcrumbs != null
+                ? {
+                      currentPage: layout.breadcrumbs.currentPage ?? false,
+                      sticky: layout.breadcrumbs.sticky ?? false
+                  }
+                : undefined,
         tabsAlignment: resolvedTabsAlignment
     } as unknown as docsYml.ParsedDocsConfiguration["layout"];
 }
@@ -2579,7 +2588,8 @@ async function parseNavigationOverlayFromDocsYml({
         versions: undefined,
         announcement: undefined,
         navigation: undefined,
-        navbarLinks: undefined
+        navbarLinks: undefined,
+        searchText: undefined
     };
 
     // Parse announcement
@@ -2604,6 +2614,14 @@ async function parseNavigationOverlayFromDocsYml({
     }
     // If `navbar-links` is absent, leave `overlay.navbarLinks` undefined so the
     // docs-level CTAs are inherited.
+
+    // Parse settings.search-text (search bar placeholder). Absent ⇒ inherit the docs-level value.
+    if (isPlainObject(docsYmlContent.settings)) {
+        const searchText = extractString(docsYmlContent.settings, "search-text");
+        if (searchText != null) {
+            overlay.searchText = searchText;
+        }
+    }
 
     // Parse top-level tabs
     if (isPlainObject(docsYmlContent.tabs)) {

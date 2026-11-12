@@ -9,7 +9,7 @@ import { askToLogin, getMissingLoginMessage } from "@fern-api/login";
 import { type ValidationViolation, validateOSSWorkspace } from "@fern-api/oss-validator";
 import { Project } from "@fern-api/project-loader";
 import { runRemoteGenerationForDocsWorkspace } from "@fern-api/remote-workspace-runner";
-import { CliError } from "@fern-api/task-context";
+import { CliError, InstructionsTopic } from "@fern-api/task-context";
 import type { DocsWorkspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import { CliContext } from "../../cli-context/CliContext.js";
@@ -87,7 +87,8 @@ export async function generateDocsWorkspace({
     const docsWorkspace = project.docsWorkspaces;
     if (docsWorkspace == null) {
         cliContext.failAndThrow("No docs.yml file found. Please make sure your project has one.", undefined, {
-            code: CliError.Code.ConfigError
+            code: CliError.Code.ConfigError,
+            instructionsTopic: InstructionsTopic.NewSite
         });
         return;
     }
@@ -105,7 +106,8 @@ export async function generateDocsWorkspace({
     // on its own, --guest.
     if (!guest && !process.stdout.isTTY && (await getToken()) == null) {
         cliContext.failAndThrow(getMissingLoginMessage({ suggestGuest: true }), undefined, {
-            code: CliError.Code.AuthError
+            code: CliError.Code.AuthError,
+            instructionsTopic: InstructionsTopic.NewSite
         });
         return;
     }
@@ -135,7 +137,8 @@ export async function generateDocsWorkspace({
         const fernToken = await getToken();
         if (!fernToken) {
             cliContext.failAndThrow(getMissingLoginMessage({ suggestGuest: true }), undefined, {
-                code: CliError.Code.AuthError
+                code: CliError.Code.AuthError,
+                instructionsTopic: InstructionsTopic.NewSite
             });
             return;
         }
