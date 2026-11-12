@@ -25,8 +25,8 @@ It exists because sdk-gen-api's CLI generator has no local counterpart. Everythi
 
 Details:
 
-- **Selection:** `fern generate --local`, `fern generate --local --target cli` and `--local --sdk-config <path>` select the `cli` target the same way they select any SDK Config target. `--group` alone does
-  not.
+- **Selection:** `fern generate --local`, `fern generate --local --target cli` and `--local --sdk-config <path>`
+  select the `cli` target the same way they select any SDK Config target. `--group` alone does not.
 - **Version:** the SDK version is `sdk-config.yml`'s `sdkVersion` (1.0.0 by default), unless `--version` is passed.
 - **Ownership:** the translated group counts as owned by `sdk-config.yml`. A `generators.yml` group that also
   selects `cli` still fails the language ownership check.
