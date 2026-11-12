@@ -1,8 +1,0 @@
-# Simple test for generating a Fern definition with a go.{mod,sum} file.
-imports:
-  bar: ./bar/bar.yml
-types:
-  Foo:
-    properties:
-      name: string
-      bar: bar.Bar

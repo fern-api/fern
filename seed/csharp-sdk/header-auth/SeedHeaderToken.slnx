@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="src/SeedHeaderToken.Test/SeedHeaderToken.Test.csproj" />
-  <Project Path="src/SeedHeaderToken/SeedHeaderToken.csproj" />
-</Solution>

@@ -39,6 +39,7 @@
     "@fern-api/lazy-fern-workspace": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-api/logging-execa": "workspace:*",
+    "@fern-api/task-context": "workspace:*",
     "execa": "^5.1.1",
     "express": "catalog:",
     "js-yaml": "catalog:",

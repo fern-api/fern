@@ -1,3 +1,0 @@
-rootProject.name = 'websocket-bearer-auth'
-
-include 'sample-app'

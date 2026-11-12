@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Remote generation now sends SHA-256 digests of its inputs to Fiddle: every spec, overlay and
+    overrides file referenced by `generators.yml`, `generators.yml` itself, and the generator's
+    entry in it. Fiddle uses them to build a signed provenance record for the generated SDK.
+  type: feat

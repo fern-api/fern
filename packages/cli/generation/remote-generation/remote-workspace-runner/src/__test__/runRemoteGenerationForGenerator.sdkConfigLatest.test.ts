@@ -10,6 +10,8 @@ const generateIntermediateRepresentation = vi.hoisted(() => vi.fn());
 const migrateIntermediateRepresentationForInvocation = vi.hoisted(() =>
     vi.fn(async ({ intermediateRepresentation }) => intermediateRepresentation)
 );
+const createAndStartJob = vi.hoisted(() => vi.fn());
+const pollJobAndReportStatus = vi.hoisted(() => vi.fn());
 
 vi.mock("@fern-api/api-workspace-commons", async (importOriginal) => ({
     ...(await importOriginal<typeof import("@fern-api/api-workspace-commons")>()),
@@ -36,6 +38,9 @@ vi.mock("../migrateIntermediateRepresentationForInvocation.js", () => ({
     migrateIntermediateRepresentationForInvocation
 }));
 
+vi.mock("../createAndStartJob.js", () => ({ createAndStartJob }));
+vi.mock("../pollJobAndReportStatus.js", () => ({ pollJobAndReportStatus }));
+
 import { discoverLatestSdkGenApiGeneratorVersions } from "../discoverSdkGenApiGeneratorVersions.js";
 import {
     createFernSdkGenApiRequest,
@@ -51,6 +56,8 @@ describe("runRemoteGenerationForGenerator synthesized SDK Config latest", () => 
         vi.unstubAllGlobals();
         vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "https://sdk-gen-api.test");
         migrateIntermediateRepresentationForInvocation.mockClear();
+        createAndStartJob.mockReset().mockResolvedValue({ jobId: "job-1", taskIds: ["task-1"] });
+        pollJobAndReportStatus.mockReset().mockResolvedValue(buildResponse());
         generateIntermediateRepresentation.mockReset().mockReturnValue({
             apiName: "Petstore",
             specVersion: "1.0.0"
@@ -159,6 +166,9 @@ describe("runRemoteGenerationForGenerator synthesized SDK Config latest", () => 
         const run = vi.fn(async (parameters: FernSdkGenApiBuildParameters) => {
             const bundle = JSON.parse(gunzipSync(parameters.payload.body).toString("utf8"));
             expect(JSON.stringify(bundle)).not.toContain('"latest"');
+            // sdk-gen-api owns the build as the guest org; the generator names the SDK after "acme" (no Guest…ApiClient).
+            expect(parameters.organization).toBe("guest-gs_1");
+            expect(bundle.config.organization).toBe("acme");
             expect(bundle.ir.generationMetadata.generatorVersion).toBe("3.99.4");
             expect(bundle.ir.publishConfig).toMatchObject({ type: "filesystem", generateFullProject: true });
 
@@ -183,8 +193,9 @@ describe("runRemoteGenerationForGenerator synthesized SDK Config latest", () => 
         });
 
         await runRemoteGenerationForGenerator({
-            projectConfig: { organization: "acme" } as never,
-            organization: "acme",
+            // A guest run: the build belongs to the guest org, the generated code keeps the configured org's names.
+            projectConfig: { organization: "guest-gs_1", sdkOrganization: "acme" } as never,
+            organization: "guest-gs_1",
             workspace: workspace() as never,
             interactiveTaskContext: context() as never,
             generatorInvocation,
@@ -223,6 +234,9 @@ describe("runRemoteGenerationForGenerator synthesized SDK Config latest", () => 
             currentVersion: "latest",
             includeMajor: true
         });
+        expect(generateIntermediateRepresentation).toHaveBeenCalledWith(
+            expect.objectContaining({ organization: "acme" })
+        );
         expect(migrateIntermediateRepresentationForInvocation).toHaveBeenCalledWith(
             expect.objectContaining({
                 generatorInvocation: expect.objectContaining({ version: "3.99.4" })
@@ -232,30 +246,110 @@ describe("runRemoteGenerationForGenerator synthesized SDK Config latest", () => 
         expect(intermediateRepresentation.generationMetadata.generatorVersion).toBe("latest");
     });
 
+    it("submits generators.yml AUTO generation when the target output is GitHub", async () => {
+        const generatorInvocation = {
+            ...typescriptInvocation(),
+            version: "3.96.0",
+            outputMode: FernFiddle.OutputMode.githubV2(
+                FernFiddle.GithubOutputModeV2.pullRequest({ owner: "acme", repo: "sdk", reviewers: [] })
+            )
+        };
+        const [prepared] = prepareRoute(generatorInvocation);
+        if (prepared?.route == null || prepared.route.payloadKind !== "fern-runtime-bundle") {
+            throw new Error("Expected a legacy Fern runtime bundle route");
+        }
+        const sourceArchive = archive();
+        const run = vi.fn(async (parameters: FernSdkGenApiBuildParameters) => {
+            const runtimeBundle = JSON.parse(gunzipSync(parameters.payload.body).toString("utf8"));
+            expect(runtimeBundle.config.output.mode.version).toBe("0.0.0-fern-placeholder");
+
+            const request = createFernSdkGenApiRequest({
+                apiName: parameters.apiName,
+                organization: parameters.organization,
+                cliVersion: parameters.cliVersion,
+                generatorInvocation: parameters.generatorInvocation,
+                sdkGenApiRoute: parameters.sdkGenApiRoute,
+                sdkVersion: parameters.sdkVersion,
+                apiVersion: parameters.apiVersion,
+                specsTarGzBuffer: parameters.specsTarGzBuffer,
+                payload: parameters.payload,
+                requestedOutput: parameters.requestedOutput,
+                githubOptions: parameters.githubOptions
+            });
+
+            expect(request.targets[0]).toMatchObject({
+                payloadKind: "fern-runtime-bundle",
+                sdk: { version: "AUTO" },
+                requestedOutput: {
+                    type: "github",
+                    repository: "acme/sdk",
+                    mode: "pull-request"
+                }
+            });
+            return buildResponse();
+        });
+
+        await expect(
+            runRemoteGenerationForGenerator({
+                projectConfig: { organization: "acme" } as never,
+                organization: "acme",
+                workspace: workspace() as never,
+                interactiveTaskContext: context() as never,
+                generatorInvocation: prepared.generatorInvocation,
+                version: "AUTO",
+                audiences: { type: "all" },
+                shouldLogS3Url: false,
+                token: { value: "token" } as never,
+                whitelabel: undefined,
+                replay: undefined,
+                irVersionOverride: undefined,
+                absolutePathToPreview: undefined,
+                isPreview: false,
+                readme: undefined,
+                fernignorePath: undefined,
+                dynamicIrOnly: false,
+                retryRateLimited: false,
+                requireEnvVars: true,
+                specsTarGzBuffer: sourceArchive.buffer,
+                sdkGenApiSourceArchive: sourceArchive,
+                sdkGenApiRoute: prepared.route,
+                sdkGenApiPreparationBatch: new FernSdkGenApiPreparationBatch(["0"]),
+                sdkGenApiBatch: { run } as never,
+                sdkGenApiTargetIdSeed: "0",
+                generateFullProject: true
+            })
+        ).resolves.toMatchObject({ actualVersion: "1.2.3" });
+        expect(run).toHaveBeenCalledTimes(1);
+    });
+
     describe("fern generate --preview with GitHub output", () => {
         const githubPush = () =>
             FernFiddle.OutputMode.githubV2(
                 FernFiddle.GithubOutputModeV2.push({ owner: "acme", repo: "sdk", branch: "${SDK_BRANCH}" })
             );
 
-        async function submittedRequestedOutput(
-            overrides: Partial<Parameters<typeof runRemoteGenerationForGenerator>[0]>
-        ) {
+        async function submittedTarget(overrides: Partial<Parameters<typeof runRemoteGenerationForGenerator>[0]>) {
             vi.stubEnv("SDK_BRANCH", "api-updates-293596b");
             const generatorInvocation = { ...typescriptInvocation(), version: "3.54.0", outputMode: githubPush() };
             const [prepared] = prepareFernSdkGenApiRoutes({
                 generators: [generatorInvocation],
                 isSdkGenApiEnabled: () => true,
+                sdkConfigV1: overrides.sdkConfigV1,
                 requireEnvVars: true,
                 isPreview: true
             });
-            if (prepared?.route == null || prepared.route.payloadKind !== "fern-runtime-bundle") {
-                throw new Error("Expected a Fern runtime bundle route");
+            if (prepared?.route == null) {
+                throw new Error("Expected an sdk-gen-api route");
             }
             const sourceArchive = archive();
-            let requestedOutput: unknown;
+            let target: ReturnType<typeof createFernSdkGenApiRequest>["targets"][number] | undefined;
+            let runtimeBundleOutputVersion: string | undefined;
             const run = vi.fn(async (parameters: FernSdkGenApiBuildParameters) => {
-                requestedOutput = createFernSdkGenApiRequest({
+                if (parameters.payload.payloadKind === "fern-runtime-bundle" && parameters.sdkVersion === "AUTO") {
+                    const runtimeBundle = JSON.parse(gunzipSync(parameters.payload.body).toString("utf8"));
+                    runtimeBundleOutputVersion = runtimeBundle.config.output.mode.version;
+                }
+                target = createFernSdkGenApiRequest({
                     apiName: parameters.apiName,
                     organization: parameters.organization,
                     cliVersion: parameters.cliVersion,
@@ -265,8 +359,9 @@ describe("runRemoteGenerationForGenerator synthesized SDK Config latest", () => 
                     specsTarGzBuffer: parameters.specsTarGzBuffer,
                     payload: parameters.payload,
                     requestedOutput: parameters.requestedOutput,
+                    autoVersionPreviewOutput: parameters.autoVersionPreviewOutput,
                     githubOptions: parameters.githubOptions
-                }).targets[0]?.requestedOutput;
+                }).targets[0];
                 return buildResponse();
             });
             await runRemoteGenerationForGenerator({
@@ -299,23 +394,111 @@ describe("runRemoteGenerationForGenerator synthesized SDK Config latest", () => 
             if (run.mock.calls.length !== 1) {
                 throw new Error(`Expected one sdk-gen-api build, got ${run.mock.calls.length}`);
             }
-            return requestedOutput;
+            return { target, runtimeBundleOutputVersion };
         }
 
         it("requests a download instead of a GitHub push with a blanked branch", async () => {
-            await expect(submittedRequestedOutput({})).resolves.toEqual({ type: "download" });
+            const { target } = await submittedTarget({});
+            expect(target).toMatchObject({ requestedOutput: { type: "download" } });
+        });
+
+        it("keeps AUTO and sends the GitHub context for semantic preview versioning", async () => {
+            const { target, runtimeBundleOutputVersion } = await submittedTarget({ version: "AUTO" });
+
+            expect(target?.requestedOutput).toEqual({ type: "download" });
+            expect(target?.sdk).toEqual({ name: "Petstore", version: "AUTO" });
+            expect(target?.autoVersionPreview).toEqual({
+                github: expect.objectContaining({ type: "github", repository: "acme/sdk", mode: "push" })
+            });
+            expect(runtimeBundleOutputVersion).toBe("0.0.0-fern-placeholder");
+        });
+
+        it("uses the sanitized GitHub context retained by the SDK Config preview loader", async () => {
+            const { target } = await submittedTarget({
+                version: undefined,
+                sdkConfigV1: {
+                    sdkName: "Petstore",
+                    sdkVersion: "AUTO",
+                    targets: [
+                        {
+                            body: Buffer.from('{"schemaVersion":"sdk-config/v1"}'),
+                            language: "typescript",
+                            generatorVersion: "4.0.0",
+                            requestedOutput: { type: "download" },
+                            autoVersionPreviewOutput: {
+                                type: "github",
+                                repository: "acme/sdk",
+                                mode: "pull-request"
+                            }
+                        }
+                    ]
+                }
+            });
+
+            expect(target?.requestedOutput).toEqual({ type: "download" });
+            expect(target?.sdk).toEqual({ name: "Petstore", version: "AUTO" });
+            expect(target?.autoVersionPreview).toEqual({
+                github: expect.objectContaining({ type: "github", repository: "acme/sdk", mode: "pull-request" })
+            });
         });
 
         it("keeps the GitHub output when sdk preview pushes a preview branch", async () => {
-            await expect(
-                submittedRequestedOutput({
-                    absolutePathToPreview: undefined,
-                    isPreview: false,
-                    fiddlePreview: true,
-                    pushPreviewBranch: true
-                })
-            ).resolves.toMatchObject({ type: "github", repository: "acme/sdk", mode: "push" });
+            const { target } = await submittedTarget({
+                absolutePathToPreview: undefined,
+                isPreview: false,
+                fiddlePreview: true,
+                pushPreviewBranch: true
+            });
+            expect(target).toMatchObject({
+                requestedOutput: { type: "github", repository: "acme/sdk", mode: "push" }
+            });
         });
+    });
+
+    it("keeps legacy Postman publication on Fiddle without sdk-gen-api output mapping", async () => {
+        const generatorInvocation = {
+            ...typescriptInvocation(),
+            outputMode: FernFiddle.OutputMode.publishV2(
+                FernFiddle.PublishOutputModeV2.postman({
+                    apiKey: "postman-api-key",
+                    workspaceId: "postman-workspace"
+                })
+            )
+        };
+        const sourceArchive = archive();
+
+        await expect(
+            runRemoteGenerationForGenerator({
+                projectConfig: { organization: "acme" } as never,
+                organization: "acme",
+                workspace: workspace() as never,
+                interactiveTaskContext: context() as never,
+                generatorInvocation,
+                version: "1.2.3",
+                audiences: { type: "all" },
+                shouldLogS3Url: false,
+                token: { value: "token" } as never,
+                whitelabel: undefined,
+                replay: undefined,
+                irVersionOverride: undefined,
+                absolutePathToPreview: undefined,
+                isPreview: false,
+                readme: undefined,
+                fernignorePath: undefined,
+                dynamicIrOnly: false,
+                retryRateLimited: false,
+                requireEnvVars: true,
+                specsTarGzBuffer: sourceArchive.buffer,
+                sdkGenApiRoute: undefined,
+                generateFullProject: true
+            })
+        ).resolves.toMatchObject({ actualVersion: "1.2.3" });
+
+        expect(createAndStartJob).toHaveBeenCalledTimes(1);
+        expect(createAndStartJob).toHaveBeenCalledWith(
+            expect.objectContaining({ generatorInvocation, version: "1.2.3" })
+        );
+        expect(pollJobAndReportStatus).toHaveBeenCalledTimes(1);
     });
 
     it("rejects latest runtime resolution at the SDK Config cutover before migration or submission", async () => {
@@ -373,7 +556,7 @@ describe("runRemoteGenerationForGenerator synthesized SDK Config latest", () => 
                 "SDK_CONFIG_V1_REQUIRED; generator=fernapi/fern-typescript-sdk; language=typescript; requestedVersion=4.0.0; cutoverVersion=4.0.0; receivedConfigKind=legacy-fern; expectedConfigKind=sdk-config-v1"
             ),
             undefined,
-            { code: CliError.Code.ConfigError }
+            { code: CliError.Code.ConfigError, instructionsTopic: "sdks migrate" }
         );
         expect(migrateIntermediateRepresentationForInvocation).not.toHaveBeenCalled();
         expect(run).not.toHaveBeenCalled();

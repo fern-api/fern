@@ -1,4 +1,455 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.206.0
+  changelogEntry:
+    - summary: |
+        Add the `layout.breadcrumbs.sticky` docs.yml setting. When set to true, the
+        breadcrumb row stays pinned below the header while the page scrolls.
+        Defaults to false.
+      type: feat
+    - summary: |
+        `fern generate --guest` no longer names the generated SDK after the throwaway guest organization
+        (`Guest<id>ApiClient`, `Guest<id>ApiError`, ...): client and error classes keep the names derived from the
+        organization in fern.config.json, while the build still runs under the guest session.
+      type: fix
+  createdAt: "2026-11-12"
+  irVersion: 67
+- version: 5.205.2
+  changelogEntry:
+    - summary: |
+        `sdkConfig.isAuthMandatory` no longer turns off because an OAuth or inferred auth scheme's
+        `get-token` (or `refresh-token`) endpoint is unauthenticated. Those endpoints are called by the
+        SDK's own auth flow, so an API where every other endpoint requires auth now generates SDKs that
+        require credentials instead of silently sending unauthenticated requests.
+      type: fix
+  createdAt: "2026-11-11"
+  irVersion: 67
+- version: 5.205.1
+  changelogEntry:
+    - summary: |
+        The OpenAPI importer now keeps the `default` of a primitive schema when a property or parameter references it
+        (following `$ref` chains and optional/nullable wrappers), so `consent: {$ref: Consent}` with
+        `Consent: {type: boolean, default: false}` imports with a `false` default instead of none. Arrays and maps whose
+        elements reference a defaulted schema do not inherit that default. A referenced default whose type does not match
+        its primitive (for example `type: integer, default: "100"`) is dropped, so it can't fail definition validation.
+      type: fix
+  createdAt: "2026-11-10"
+  irVersion: 67
+- version: 5.205.0
+  changelogEntry:
+    - summary: |
+        When the CLI runs inside a coding agent (Claude Code, Cursor, Codex, Gemini CLI, Devin and others,
+        or any shell with `AI_AGENT` set), common errors now end with "For guidance, run
+        `fern instructions <topic>`." These include a missing `fern/` directory or `docs.yml`, missing
+        authentication, guest-session and `fern claim` failures, permission errors, generators that need
+        `fern sdk migrate`, and unknown commands or flags. People running the CLI directly don't see the hint.
+        `fern instructions index` now also prints the topic list, the same as `fern instructions`.
+      type: feat
+  createdAt: "2026-11-10"
+  irVersion: 67
+- version: 5.204.1
+  changelogEntry:
+    - summary: |
+        A generators.yml build sent to sdk-gen-api as a runtime bundle (the path `fern generate --guest` takes) is also
+        filed under the workspace name when the API definition carries the default name "api".
+      type: fix
+  createdAt: "2026-11-10"
+  irVersion: 67
+- version: 5.204.0
+  changelogEntry:
+    - summary: |
+        Add `remote-paths` to `docs.yml`. Each entry reverse-proxies a path prefix on your docs domain
+        (for example `/ui`) to an HTTPS service you run, while Fern keeps serving the rest of the site.
+        `fern check` validates each path and destination with the new `valid-remote-paths` rule.
+      type: feat
+    - summary: |
+        A generators.yml build sent to sdk-gen-api is filed under the workspace name (`fern/apis/<name>`) when the
+        API definition carries the default name "api", so each API of an organization gets its own SDK.
+      type: fix
+  createdAt: "2026-11-10"
+  irVersion: 67
+- version: 5.203.0
+  changelogEntry:
+    - summary: |
+        `settings.search-text` in `translations/<lang>/docs.yml` now sets the search bar placeholder for that locale.
+        Locales without it keep the docs-level `search-text`.
+      type: feat
+  createdAt: "2026-11-10"
+  irVersion: 67
+- version: 5.202.1
+  changelogEntry:
+    - summary: |
+        The claim link `fern generate --guest` prints says what the run made (`from=sdk` for an SDK run, `from=docs` for a docs publish), so claiming it lands on that page of the organization — the SDKs after an SDK run even when the organization already has docs.
+      type: fix
+  createdAt: "2026-11-10"
+  irVersion: 67
+- version: 5.202.0
+  changelogEntry:
+    - summary: |
+        FDR now merges global themes server-side when it supports it; older FDR versions keep CLI-side stitching.
+      type: feat
+  createdAt: "2026-11-09"
+  irVersion: 67
+- version: 5.201.0
+  changelogEntry:
+    - summary: |
+        Set `ENABLE_SDK_GEN_RUST_CLI=true` to send a `cli` target in `sdk-config.yml` to sdk-gen-api as SDK Config, like
+        every other language. sdk-gen-api picks the CLI generator. Without it, the `cli` target is translated into a
+        `generators.yml` for the Fern CLI generator, as before.
+      type: feat
+    - summary: |
+        The `cli` target translation now knows the fields added in `@postman/sdk-config` 0.20.0. The OAuth redirect,
+        parameter and device-authorization settings, custom `oauthTokenEndpoints` property names and `omitTokenPrefix`
+        are rejected with a clear error instead of being reported as unknown; `crateName` is reported as not written.
+      type: chore
+  createdAt: "2026-11-09"
+  irVersion: 67
+- version: 5.200.0
+  changelogEntry:
+    - summary: |
+        `fern generate --docs --guest` now uploads your `fern/` folder with the site, so connecting a GitHub
+        repository after claiming the site adds the folder to it. Files ignored by git, `.env*` files and
+        `node_modules` are left out. Pass `--no-source` to publish without it.
+      type: feat
+  createdAt: "2026-11-06"
+  irVersion: 67
+- version: 5.199.1
+  changelogEntry:
+    - summary: |
+        `fern generate --docs` now sends the time the publish started. When two publishes of the same
+        docs site overlap, the one that started later stays live, even if its build finishes first.
+      type: fix
+  createdAt: "2026-11-06"
+  irVersion: 67
+- version: 5.199.0
+  changelogEntry:
+    - summary: |
+        Add `fern instructions [topic]`, which prints task-scoped instructions for coding agents
+        working in a Fern project. With no topic it prints the topic index from the Fern docs;
+        with a topic (for example `fern instructions docs publish domain`) it prints that page as
+        Markdown, without the docs site's agent preamble. It needs no login or workspace and is
+        exempt from version redirection, so it works in projects that pin an older CLI.
+      type: feat
+  createdAt: "2026-11-06"
+  irVersion: 67
+- version: 5.198.0
+  changelogEntry:
+    - summary: |
+        Add an optional `button-text` field to the `ai-search`/`ai-chat` docs.yml config.
+        It replaces the "Ask AI" label on the docs header button and in the search dialog.
+      type: feat
+  createdAt: "2026-11-06"
+  irVersion: 67
+- version: 5.197.1
+  changelogEntry:
+    - summary: |
+        Preserve repository files when GitHub SDK generation is routed through sdk-gen-api. The CLI now
+        forwards the configured GitHub license and supplies the runtime snippet path for GitHub outputs,
+        so LICENSE, README.md, reference.md, and CONTRIBUTING.md are generated before publishing.
+      type: fix
+  createdAt: "2026-11-06"
+  irVersion: 67
+- version: 5.197.0
+  changelogEntry:
+    - summary: |
+        Add `fern docs export` to download your live Fern-hosted docs as a static site (`--format html`),
+        Markdown (`--format md`) or one PDF (`--format pdf`).
+      type: feat
+  createdAt: "2026-11-05"
+  irVersion: 67
+- version: 5.196.2
+  changelogEntry:
+    - summary: |
+        Serve `agents.robots-txt`, `agents.llms-txt`, and `agents.llms-full-txt` files that are not named
+        `robots.txt`, `llms.txt`, or `llms-full.txt` (or that live in a subfolder) on the new docs hosting.
+        The configured file is now also published at its well-known path.
+      type: fix
+  createdAt: "2026-11-05"
+  irVersion: 67
+- version: 5.196.1
+  changelogEntry:
+    - summary: |
+        `fern generate --guest` no longer prints "Authentication required. Please run 'fern login'..." after a
+        successful run. The end-of-run generator upgrade check asked sdk-gen-api for newer versions with an account
+        token; without an account it now stays quiet instead.
+      type: fix
+  createdAt: "2026-11-05"
+  irVersion: 67
+- version: 5.196.0
+  changelogEntry:
+    - summary: |
+        `fern generate --guest` prints, for each generated SDK, its build ID and dashboard link
+        (`/sdk/<buildId>`), where the SDK can be re-downloaded for 7 days and claimed; claiming the
+        session moves the builds into the claimed organization.
+      type: feat
+    - summary: |
+        `fern generate --version AUTO` can now use sdk-gen-api for legacy `generators.yml` SDK targets
+        with GitHub output.
+      type: fix
+  createdAt: "2026-11-05"
+  irVersion: 67
+- version: 5.195.0
+  changelogEntry:
+    - summary: |
+        C/C++ library docs: structs show their `typedef struct X X;` line, anonymous `enum { ... }`
+        values are listed on the enums index, and array extents are kept on struct fields (with the
+        matching parser release). New cpp `config:` options: `organize-by: header` writes a `headers/`
+        folder with one page per source header; `include`, `exclude` and `exclude-symbols` select which
+        files and symbols are parsed (Doxygen `INPUT` / `EXCLUDE` / `EXCLUDE_PATTERNS` / `EXCLUDE_SYMBOLS`).
+        `include-undocumented-macros: true` remains the way to render `#define`s without a Doxygen comment.
+      type: feat
+    - summary: |
+        Remove the unused dynamic snippet test generation path from local generation. `fern generate`
+        never enabled it, so local generation output is unchanged.
+      type: internal
+  createdAt: "2026-11-04"
+  irVersion: 67
+- version: 5.194.0
+  changelogEntry:
+    - summary: |
+        Add `fern docs dev stop`, which cleanly stops the `fern docs dev` server on port 3000, or on the port given with
+        `--port`, so agents and CI can shut down local docs without finding and killing the process. It exits 0 with a
+        message when there is nothing to stop, and `--json` writes the result to stdout. It uses a new local-only
+        `POST /__fern/shutdown` route on the `fern docs dev` server, alongside `GET /__fern/dev-server`, which identifies
+        the server. Both routes only accept requests from the same machine that carry the `x-fern-docs-dev: 1` header.
+        Once the server is ready, `fern docs dev` prints how to stop it: press Ctrl-C, run
+        `fern docs dev stop --port <port>`, or run `kill <pid>` with the server's PID. With `--json`, the `ready` event
+        includes the same instructions in a `stop` object (`keys`, `command`, `kill`).
+      type: feat
+  createdAt: "2026-11-03"
+  irVersion: 67
+- version: 5.193.3
+  changelogEntry:
+    - summary: |
+        `fern generator upgrade` and `fern automations upgrade` no longer move a generators.yml entry to a version at or past
+        its SDK Config cutover (for example TypeScript 4.0.0+, Python 6.0.0+), which `fern generate` rejects. With
+        `--include-major`, the generator upgrades within its current major instead. Cutover versions are reported
+        under "SDK Config migration required" with a `fern sdk migrate` instruction rather than an `--include-major` hint,
+        and `fern automations upgrade --json` lists them in `sdkConfigMigrationRequired`.
+      type: fix
+  createdAt: "2026-11-03"
+  irVersion: 67
+- version: 5.193.2
+  changelogEntry:
+    - summary: |
+        `fern generate --docs --guest` prints the published site's own claim link again, next to the guest session's
+        claim link. Opening it enables the Claim button in the site's banner, which claims just the docs site into an
+        organization you administer; the session link (`Claim it to keep this work`, or `fern claim`) still claims the
+        whole session.
+      type: fix
+  createdAt: "2026-11-03"
+  irVersion: 67
+- version: 5.193.1
+  changelogEntry:
+    - summary: |
+        `fern generate` now lets sdk-gen-api resolve omitted SDK versions instead of requiring `--version`.
+        `fern generate --preview --version AUTO` also resolves the semantic version from the configured GitHub
+        repository while keeping the preview download-only.
+      type: fix
+  createdAt: "2026-11-02"
+  irVersion: 67
+- version: 5.193.0
+  changelogEntry:
+    - summary: |
+        Remote generation now sends SHA-256 digests of its inputs to Fiddle: every spec, overlay and
+        overrides file referenced by `generators.yml`, `generators.yml` itself, and the generator's
+        entry in it. Fiddle uses them to build a signed provenance record for the generated SDK.
+      type: feat
+  createdAt: "2026-11-02"
+  irVersion: 67
+- version: 5.192.0
+  changelogEntry:
+    - summary: |
+        `fern docs md generate` now keeps LaTeX math (`$…$` and `$$…$$`) in Python library
+        docstrings intact instead of escaping its braces, shows `{`, `<` and `>` inside inline
+        code literally instead of as `&#123;`/`&lt;`, and renders `> [!NOTE]`-style alerts
+        (which the Python parser now emits for reStructuredText admonitions) as Fern callouts.
+      type: feat
+  createdAt: "2026-11-02"
+  irVersion: 67
+- version: 5.191.2
+  changelogEntry:
+    - summary: |
+        `fern generate` now builds SDKs for proto (gRPC) APIs in `generators.yml` on Fern's original
+        generation service, so `fern init --grpc` followed by `fern generate` works without setting
+        `FERN_USE_SDK_GEN_API=false`.
+      type: fix
+  createdAt: "2026-11-02"
+  irVersion: 67
+- version: 5.191.1
+  changelogEntry:
+    - summary: |
+        `fern init --grpc` and `fern init --proto <path>` no longer fail with "gRPC initialization is not supported by
+        this version of fern init". They now always write a `generators.yml`, since SDK Config does not support gRPC yet.
+      type: fix
+  createdAt: "2026-11-02"
+  irVersion: 67
+- version: 5.191.0
+  changelogEntry:
+    - summary: |
+        Point unauthenticated non-interactive runs at `--guest`. `fern generate --docs` run without a login or
+        `FERN_TOKEN` from a script or agent now fails on the missing account first (naming `--guest` as the way to publish
+        without one) instead of on the production-site confirmation, and no longer prints the site URL with a doubled
+        `https://`. `fern init` without `--organization` in non-interactive mode derives the organization from the
+        directory name instead of failing, and `fern init --docs` prints the publish command to run next
+        (`fern generate --docs --guest` when there is no account).
+      type: feat
+  createdAt: "2026-11-02"
+  irVersion: 67
+- version: 5.190.0
+  changelogEntry:
+    - summary: |
+        Docs can now show SDK snippets from sdk-gen for some languages and from Fern's dynamic IR for the others in
+        the same publish. A language whose snippets were read from sdk-gen no longer gets a dynamic IR built, uploaded
+        or warned about, and the publish log names the source of each language. The warning for a `snippets:` entry
+        that matched nothing no longer claims sdk-config.yml SDKs have no snippets.
+      type: feat
+  createdAt: "2026-10-30"
+  irVersion: 67
+- version: 5.189.0
+  changelogEntry:
+    - summary: |
+        Add `fern init --grpc` and `fern init --proto <path>`, which set up a gRPC API with a C# SDK, the only
+        language with native gRPC output.
+
+        `--grpc` writes a sample unary `.proto` service. `--proto` takes your own `.proto` file or a directory of
+        them and copies them into the workspace, adding the `google/api` protos if they are imported but missing.
+        Both write a `generators.yml` that compiles the proto locally with `buf` and generates the SDK remotely.
+        `--proto` warns when the proto has streaming RPCs, uses `google.protobuf.Struct` or `FieldMask`, or
+        imports files that cannot be found. These make the C# SDK fail to build.
+      type: feat
+  createdAt: "2026-10-30"
+  irVersion: 67
+- version: 5.188.1
+  changelogEntry:
+    - summary: |
+        `fern check` now warns when a docs page uses Mintlify-only components (`<ResponseField>`,
+        `<Danger>`, `<Columns>`, `<Tree>`, `<RequestExample>`, `<ResponseExample>`, `<Visibility>`)
+        and suggests the Fern component to use instead.
+      type: fix
+  createdAt: "2026-10-30"
+  irVersion: 67
+- version: 5.188.0
+  changelogEntry:
+    - summary: |
+        SDK snippets from sdk-gen-api now show in the docs without a feature flag. `fern generate --docs` reads the
+        snippets of the SDKs that docs.yml `snippets:` names and adds them to the endpoints as code samples, so
+        `FERN_UPLOAD_SDK_GEN_SNIPPETS=true` is no longer needed and is ignored. A snippet failure never fails the docs
+        publish.
+      type: feat
+  createdAt: "2026-10-30"
+  irVersion: 67
+- version: 5.187.0
+  changelogEntry:
+    - summary: |
+        `fern generate` now records the sdk-gen-api build and target IDs in its usage telemetry once
+        the build is accepted, so a server-side build can be traced back to the organization and CLI
+        run that requested it. Generation is unaffected if telemetry fails.
+      type: feat
+  createdAt: "2026-10-30"
+  irVersion: 67
+- version: 5.186.0
+  changelogEntry:
+    - summary: |
+        An MCP target in `sdk-config.yml` can now host its server with `output.delivery: hosted` and a
+        `slug`, the equivalent of `output.location: fern-hosted` in `generators.yml`. `fern generate
+        --sdk-config` deploys it like the `generators.yml` path does, and `fern sdk migrate` keeps
+        the hosting and the slug instead of converting the output to a zip download. The request sent to
+        sdk-gen-api still asks only for a download.
+      type: feat
+  createdAt: "2026-10-29"
+  irVersion: 67
+- version: 5.185.0
+  changelogEntry:
+    - summary: |
+        The CLI generator's `config.banner.file` in `generators.yml` points at a text asset (resolved relative to
+        `generators.yml`) whose contents become the generated CLI's startup banner, so logo art can live in the
+        config repo instead of inline in YAML.
+      type: feat
+  createdAt: "2026-10-29"
+  irVersion: 67
+- version: 5.184.0
+  changelogEntry:
+    - summary: |
+        Support `x-fern-explorer` in OpenRPC specs. Set it at the document root to
+        enable or disable the API Explorer for every method, or on a method to
+        override the root value.
+      type: feat
+  createdAt: "2026-10-29"
+  irVersion: 67
+- version: 5.183.2
+  changelogEntry:
+    - summary: |
+        `fern generate --docs --guest` no longer prints the published site's own "Claim this site to keep it" link
+        next to the guest session's claim link. A guest session owns its docs site, so claiming the session (the
+        `Claim it to keep this work` link, or `fern claim`) is what keeps the site; the second link did not work.
+      type: fix
+  createdAt: "2026-10-28"
+  irVersion: 67
+- version: 5.183.1
+  changelogEntry:
+    - summary: |
+        Fix OpenRPC specs being dropped from docs when a schema or method example is a single
+        string, number or boolean value. The OpenRPC importer no longer crashes on these examples,
+        and falsy example results such as `0` or `false` are kept in the endpoint's response example.
+      type: fix
+  createdAt: "2026-10-28"
+  irVersion: 67
+- version: 5.183.0
+  changelogEntry:
+    - summary: |
+        OpenRPC methods now pass their `paramStructure` through to the docs, so the API Explorer
+        and code snippets can send JSON-RPC `params` as an object keyed by name for `by-name` methods.
+      type: feat
+  createdAt: "2026-10-28"
+  irVersion: 67
+- version: 5.182.2
+  changelogEntry:
+    - summary: |
+        Cloning a private repository with a personal access token (for example when generating the README in
+        self-hosted GitHub mode) no longer fails with `could not read Username` in containers with libcurl 8.23+.
+        The token is now also sent as an `Authorization` header, which git keeps after it rewrites the remote URL.
+      type: fix
+  createdAt: "2026-10-28"
+  irVersion: 67
+- version: 5.182.1
+  changelogEntry:
+    - summary: |
+        Large untabbed docs sites with very big API reference layouts (tens of thousands of endpoints) no longer fail
+        `fern check` / `fern generate --docs` with "Maximum call stack size exceeded". The docs.yml parser is now
+        generated with TypeScript SDK generator 3.108.3, which collects validation errors without spreading them.
+      type: fix
+  createdAt: "2026-10-28"
+  irVersion: 67
+- version: 5.182.0
+  changelogEntry:
+    - summary: |
+        `fern generate --docs --guest` publishes without `--preview`: the guest session publishes to the Fern Drop
+        site FDR holds for it (its own `drop-<id>` host, ignoring the docs.yml instance URL) and prints the drop URL
+        and the claim link, so a guest's docs can be claimed into an organization.
+      type: feat
+  createdAt: "2026-10-28"
+  irVersion: 67
+- version: 5.181.0
+  changelogEntry:
+    - summary: |
+        `fern sdk migrate` now carries every `proto` spec in `generators.yml` into `sdk-config.yml` as a
+        `proto` source, with its root (local or git), target, overrides, dependencies, `localGeneration` and an
+        explicit `fromOpenApi`. Proto-only APIs no longer fail to migrate, and `from-openapi: true` protos are no
+        longer dropped when the API also has OpenAPI specs. `docs.yml` is left unchanged, with a warning, for APIs
+        with proto specs, because docs API references cannot list them.
+      type: feat
+  createdAt: "2026-10-28"
+  irVersion: 67
+- version: 5.180.2
+  changelogEntry:
+    - summary: |
+        `fern check` and `fern generate --docs` no longer fail with "Maximum call stack size exceeded"
+        on large sites whose `docs.yml` uses `tabs`. The parser now tries the tabbed navigation shape
+        before the untabbed one, so a tab's `layout` is no longer validated as an API reference layout
+        first.
+      type: fix
+  createdAt: "2026-10-28"
+  irVersion: 67
 - version: 5.180.1
   changelogEntry:
     - summary: |

@@ -1,11 +1,7 @@
-import { CliError } from "@fern-api/task-context";
+import { CliError, InstructionsTopic } from "@fern-api/task-context";
 
 import { CliContext } from "../../cli-context/CliContext.js";
 import { type GenerationTelemetryInput, listRequestedGenerators } from "./buildGeneratePosthogProperties.js";
-
-export const GUEST_DOCS_REQUIRE_PREVIEW_MESSAGE =
-    "--guest only supports preview docs generation: a guest organization cannot publish to a production docs URL. " +
-    "Re-run with --preview, or claim the session (fern claim) / run 'fern login' to publish.";
 
 /** Output modes a guest can run: the result is downloaded, nothing is pushed or published. */
 const GUEST_OUTPUT_MODES = new Set(["downloadFiles", "download"]);
@@ -58,6 +54,6 @@ export function assertGuestCanGenerate({
             `These generators publish: ${list}. Re-run with --preview to write them locally, switch their output to local-file-system, ` +
             "or claim the session (fern claim) / run 'fern login' to publish.",
         undefined,
-        { code: CliError.Code.ConfigError }
+        { code: CliError.Code.ConfigError, instructionsTopic: InstructionsTopic.NewSite }
     );
 }

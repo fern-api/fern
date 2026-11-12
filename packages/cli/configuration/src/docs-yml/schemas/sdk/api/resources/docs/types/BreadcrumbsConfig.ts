@@ -6,4 +6,9 @@ export interface BreadcrumbsConfig {
      * as a non-clickable item. Defaults to false.
      */
     currentPage?: boolean;
+    /**
+     * If `sticky` is set to true, the breadcrumb row stays pinned below the header
+     * while the page scrolls. Defaults to false.
+     */
+    sticky?: boolean;
 }

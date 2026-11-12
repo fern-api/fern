@@ -114,7 +114,19 @@ types:
     union:
       proto: ProtoSourceInfo
       openapi: {}
-      openrpc: {}
+      openrpc: OpenRpcSourceInfo
+
+  OpenRpcSourceInfo:
+    properties:
+      paramStructure:
+        type: optional<OpenRpcParamStructure>
+        docs: The method's `paramStructure`. When `by-name`, JSON-RPC `params` are sent as an object keyed by parameter name instead of a positional array.
+
+  OpenRpcParamStructure:
+    enum:
+      - BY_NAME
+      - BY_POSITION
+      - EITHER
 
   ProtoSourceInfo:
     properties:

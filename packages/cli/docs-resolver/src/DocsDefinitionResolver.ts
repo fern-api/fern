@@ -70,17 +70,19 @@ interface DocsTranslationsConfig {
 }
 
 // TODO: Remove this shim once the published @fern-api/fdr-sdk type for
-// DocsV1Write.DocsConfig includes the translations and embedding fields.
+// DocsV1Write.DocsConfig includes the translations, embedding and remotePaths fields.
 interface DocsConfigWithTranslations extends DocsV1Write.DocsConfig {
     translations: DocsTranslationsConfig | undefined;
     embedding: { allowedOrigins: string[] } | undefined;
+    remotePaths: docsYml.RemotePathConfig[] | undefined;
 }
 
 // TODO: Remove this shim once the published @fern-api/fdr-sdk type for
-// DocsV1Write.AIChatConfig includes the maskPii and disclaimer fields.
+// DocsV1Write.AIChatConfig includes the maskPii, disclaimer and buttonText fields.
 type AIChatConfigWithUnpublishedFields = NonNullable<DocsV1Write.DocsConfig["aiChatConfig"]> & {
     maskPii?: boolean;
     disclaimer?: string;
+    buttonText?: string;
 };
 
 import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter.js";
@@ -1137,7 +1139,8 @@ export class DocsDefinitionResolver {
                               title: ds.title
                           })),
                           maskPii: this.parsedDocsConfig.aiChatConfig.maskPii,
-                          disclaimer: this.parsedDocsConfig.aiChatConfig.disclaimer
+                          disclaimer: this.parsedDocsConfig.aiChatConfig.disclaimer,
+                          buttonText: this.parsedDocsConfig.aiChatConfig.buttonText
                       } as AIChatConfigWithUnpublishedFields as DocsV1Write.DocsConfig["aiChatConfig"])
                     : undefined,
             hideNavLinks: undefined,
@@ -1199,6 +1202,7 @@ export class DocsDefinitionResolver {
                     : undefined,
             metadata: this.convertMetadata(),
             redirects: this.parsedDocsConfig.redirects,
+            remotePaths: this.parsedDocsConfig.remotePaths,
             integrations,
             footerLinks: this.parsedDocsConfig.footerLinks?.map((footerLink) => ({
                 ...footerLink,

@@ -3,6 +3,10 @@ const MAX_RETRY_DELAY = 60000; // in milliseconds
 const DEFAULT_MAX_RETRIES = 2;
 const JITTER_FACTOR = 0.2; // 20% random jitter
 
+function isRetryableStatusCode(statusCode: number): boolean {
+    return [408, 429].includes(statusCode) || statusCode >= 500;
+}
+
 function addPositiveJitter(delay: number): number {
     const jitterMultiplier = 1 + Math.random() * JITTER_FACTOR;
     return delay * jitterMultiplier;
@@ -44,17 +48,40 @@ function getRetryDelayFromHeaders(response: Response, retryAttempt: number): num
     return addSymmetricJitter(Math.min(INITIAL_RETRY_DELAY * 2 ** retryAttempt, MAX_RETRY_DELAY));
 }
 
+/**
+ * Waits `ms` milliseconds, or rejects as soon as `abortSignal` aborts. The timer and
+ * the abort listener are always removed, so a cancelled wait never keeps the process alive.
+ */
+function sleep(ms: number, abortSignal: AbortSignal | undefined): Promise<void> {
+    return new Promise((resolve, reject) => {
+        if (abortSignal?.aborted) {
+            reject(abortSignal.reason);
+            return;
+        }
+        const onAbort = () => {
+            clearTimeout(timeoutId);
+            reject(abortSignal?.reason);
+        };
+        const timeoutId = setTimeout(() => {
+            abortSignal?.removeEventListener("abort", onAbort);
+            resolve();
+        }, ms);
+        abortSignal?.addEventListener("abort", onAbort, { once: true });
+    });
+}
+
 export async function requestWithRetries(
     requestFn: () => Promise<Response>,
     maxRetries: number = DEFAULT_MAX_RETRIES,
+    abortSignal?: AbortSignal,
 ): Promise<Response> {
     let response: Response = await requestFn();
 
     for (let i = 0; i < maxRetries; ++i) {
-        if ([408, 429].includes(response.status) || response.status >= 500) {
+        if (isRetryableStatusCode(response.status)) {
             const delay = getRetryDelayFromHeaders(response, i);
 
-            await new Promise((resolve) => setTimeout(resolve, delay));
+            await sleep(delay, abortSignal);
             response = await requestFn();
         } else {
             break;

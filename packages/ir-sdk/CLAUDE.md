@@ -72,7 +72,7 @@ pnpm compile                  # Recompile to check for breaking changes
 - **Circular References**: Complex type relationships can cause issues
 
 ### Common Debugging Steps
-1. **Check Generator Versions**: Verify required IR version in `generators/<lang>/sdk/versions.yml`
+1. **Check Generator Versions**: Verify the IR version each generator requires (generator versions.yml files live outside this repo)
 2. **Test Migrations**: Ensure IR can migrate from latest to target version
 3. **Validate Schema**: Check Fern definitions compile successfully
 4. **Cross-Generator Testing**: Test changes across multiple generator types
@@ -152,7 +152,7 @@ vim packages/cli/generation/ir-migrations/src/migrations/
 3. Add `packages/cli/generation/ir-migrations/src/migrations/v{N+1}-to-v{N}/` with backward migration logic
 4. Re-alias `packages/cli/generation/ir-migrations/src/ir-versions/IrVersions.ts` so `V{N+1} = @fern-api/ir-sdk` and add a frozen `@fern-fern/ir-v{N}-sdk` import
 5. Update `packages/cli/cli/versions.yml` `irVersion: {N}` → `{N+1}` for the next CLI release
-6. Run full test suite (`pnpm test:ete`) and seed across all generators
+6. Run full test suite (`pnpm test:ete`)
 
 ## Best Practices
 
@@ -180,5 +180,3 @@ vim packages/cli/generation/ir-migrations/src/migrations/
 - CLI automatically migrates IR to match generator requirements
 
 ### Testing Integration
-- `packages/seed/` - Tests generators against IR fixtures
-- `/seed/<generator>/<fixture>/` - Contains IR files for testing

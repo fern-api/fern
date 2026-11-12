@@ -1,5 +1,0 @@
-- summary: |
-    Remove duplicate JavaDoc descriptions in staged builder implementation methods.
-    Previously, builder methods would display the field description twice in IDE
-    inline documentation.
-  type: fix

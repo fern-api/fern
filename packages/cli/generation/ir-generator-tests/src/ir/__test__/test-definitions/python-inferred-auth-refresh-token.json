@@ -1749,7 +1749,7 @@
         "docs": null
     },
     "sdkConfig": {
-        "isAuthMandatory": false,
+        "isAuthMandatory": true,
         "hasStreamingEndpoints": false,
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,
