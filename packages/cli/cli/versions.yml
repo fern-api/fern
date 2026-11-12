@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.210.0
+  changelogEntry:
+    - summary: |
+        Add `types: true` to the `api` navigation item in `docs.yml`. When set, every schema that no endpoint,
+        webhook or WebSocket of the API references gets its own page under a `Types` section at the end of the
+        API reference (e.g. a schema-only OpenAPI document such as TwiML). Enums and objects declared inline in
+        another schema stay nested on their parent's page. The XML encoding of a type (OpenAPI `xml` object,
+        `x-fern-xml-text`) is kept so an XML element's page shows an XML example. Off by default.
+      type: feat
+  createdAt: "2026-11-12"
+  irVersion: 67
 - version: 5.209.1
   changelogEntry:
     - summary: |
