@@ -1,8 +1,4 @@
-import {
-    docsYml,
-    tabbedNavigationItemHasLayout,
-    tabbedNavigationItemHasVariants
-} from "@fern-api/configuration-loader";
+import { docsYml, tabbedNavigationItemHasLayout } from "@fern-api/configuration-loader";
 
 import { Rule, RuleViolation } from "../../Rule.js";
 
@@ -31,7 +27,7 @@ export const TabWithHrefRule: Rule = {
                         }
 
                         const hasLayout = tabbedNavigationItemHasLayout(tabItem);
-                        const hasVariants = tabbedNavigationItemHasVariants(tabItem);
+                        const hasVariants = docsYml.isRawTabWithVariantLayouts(tabItem);
 
                         if (tabConfig.href != null && (hasLayout || hasVariants)) {
                             ruleViolations.push({
