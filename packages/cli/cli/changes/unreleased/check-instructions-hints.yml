@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    When `fern check` or `fern generate --docs` fails validation inside a coding agent, the CLI now
+    suggests up to three `fern instructions` topics based on which rules failed (for example,
+    `fern instructions docs configure seo` for a missing redirect).
+  type: feat
