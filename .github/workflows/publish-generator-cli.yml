@@ -43,6 +43,8 @@ jobs:
 
       - name: Get version
         id: get_version
+        env:
+          INPUT_VERSION: ${{ inputs.version }}
         run: |
           # Build seed CLI
           pnpm seed:build
@@ -69,8 +71,12 @@ jobs:
           has_new=$(echo "$result" | jq -r '.has_new_version')
           # Manual runs always publish (optionally a specific version)
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            if [ -n "${{ inputs.version }}" ]; then
-              version="${{ inputs.version }}"
+            if [ -n "${INPUT_VERSION}" ]; then
+              if ! echo "${INPUT_VERSION}" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$'; then
+                echo "::error::Invalid version input: ${INPUT_VERSION}"
+                exit 1
+              fi
+              version="${INPUT_VERSION}"
             fi
             has_new=true
           fi
