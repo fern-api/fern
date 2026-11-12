@@ -604,6 +604,10 @@ export async function runLocalGenerationForWorkspace({
 
                     if (pipelineResult.steps.github?.autoMergeEnabled) {
                         interactiveTaskContext.logger.info(chalk.green("Automerge enabled on PR"));
+                    } else if (pipelineResult.steps.github?.autoMergeError != null) {
+                        interactiveTaskContext.logger.warn(
+                            `Could not enable automerge on PR: ${pipelineResult.steps.github.autoMergeError}`
+                        );
                     }
 
                     if (!pipelineResult.success) {

@@ -389,7 +389,9 @@ export async function runRemoteGenerationForAPIWorkspace({
                         retryRateLimited,
                         requireEnvVars,
                         automationMode,
-                        autoMerge,
+                        autoMerge:
+                            autoMerge === true ||
+                            generatorsYml.isGithubAutoMergeEnabled(generatorInvocation.raw?.github),
                         skipIfNoDiff,
                         verify,
                         noReplay,

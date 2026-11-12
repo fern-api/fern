@@ -346,8 +346,11 @@ export class GithubStep extends BaseStep {
             this.logger.info(`Enabled automerge on PR #${pullRequestNumber}`);
             result.autoMergeEnabled = true;
         } catch (autoMergeError) {
-            // Automerge may not be available (repo settings, branch protection, permissions)
-            this.logger.warn(`Could not enable automerge: ${extractErrorMessage(autoMergeError)}`);
+            // Automerge may not be available (repo settings, branch protection, permissions).
+            // Record it on the result so consumers that only read stdout JSON (e.g. Fiddle) can surface it.
+            const message = extractErrorMessage(autoMergeError);
+            this.logger.warn(`Could not enable automerge: ${message}`);
+            result.autoMergeError = message;
         }
     }
 
