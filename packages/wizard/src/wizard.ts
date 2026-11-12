@@ -1310,12 +1310,11 @@ export function fernRunner(detection: Detection, args: string[] = []): Command {
 }
 
 /**
- * `fern init` for the API project. Without docs in the plan, `--api` keeps it from also creating a
- * docs site.
+ * `fern init` for the API project. `--api` keeps it from also creating a docs site: the wizard's own
+ * docs step builds that, and the docs starter never replaces a docs.yml that's already there.
  */
 export function initApiArgs(specPath: string | undefined, flags: WizardFlags): string[] {
-    const apiOnly = flags.products !== undefined && !flags.products.includes("docs") ? ["--api"] : [];
-    return ["init", ...apiOnly, ...(specPath === undefined ? [] : ["--openapi", specPath]), ...orgArgs(flags.org)];
+    return ["init", "--api", ...(specPath === undefined ? [] : ["--openapi", specPath]), ...orgArgs(flags.org)];
 }
 
 /** The CLI version a new project pins in fern.config.json. */

@@ -3,3 +3,6 @@
 - summary: |
     The `fern init` setup wizard now asks what to set up with a checklist of SDKs, Docs, CLI, and MCP Server. Picking CLI or MCP Server adds a `cli` or `mcp` target to `fern/sdk-config.yml` and generates it into `cli/` or `mcp-server/` in the same step as SDKs.
   type: feat
+- summary: |
+    The `fern init` setup wizard's docs site now keeps the docs starter and your company's logo, favicon, and accent color. Before, the API step also created a basic docs.yml first, which the starter left in place, and new projects with `fern/sdk-config.yml` also got the starter's sample Plant Store API.
+  type: fix

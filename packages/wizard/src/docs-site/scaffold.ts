@@ -44,8 +44,12 @@ export async function scaffoldDocsSite({
     const protectedFiles = await listFiles(fernDir);
     const writtenFiles = new Set<string>();
     const skippedFiles = new Set<string>();
+    // `fern init` lists a new project's specs in sdk-config.yml; older projects use generators.yml.
+    const sdkConfigSpecs = await readSdkConfigSpecs(fernDir);
     const existingApi =
-        (await pathExists(path.join(fernDir, "generators.yml"))) || (await isDirectory(path.join(fernDir, "apis")));
+        sdkConfigSpecs.length > 0 ||
+        (await pathExists(path.join(fernDir, "generators.yml"))) ||
+        (await isDirectory(path.join(fernDir, "apis")));
     const apiNames = await listApiNames(fernDir);
     const copyOptions: CopyOptions = {
         protectedFiles,
@@ -76,7 +80,7 @@ export async function scaffoldDocsSite({
         deepMergePlainObjects(baseConfig, await readYamlObject(partialPath));
     }
 
-    customizeConfig(baseConfig, choices, existingApi, apiNames);
+    customizeConfig(baseConfig, choices, existingApi, apiNames, sdkConfigSpecs);
     const assetFiles = { protectedFiles, writtenFiles, skippedFiles };
     if (choices.logoPath !== undefined) {
         const light = await copyBrandAsset(fernDir, dir, choices.logoPath, "logo-light", assetFiles);
@@ -248,7 +252,8 @@ function customizeConfig(
     config: PlainObject,
     choices: DocsSiteChoices,
     existingApi: boolean,
-    apiNames: string[]
+    apiNames: string[],
+    sdkConfigSpecs: PlainObject[]
 ): void {
     const instances = Array.isArray(config.instances) ? config.instances : [];
     const firstInstance = isPlainObject(instances[0]) ? instances[0] : {};
@@ -278,7 +283,7 @@ function customizeConfig(
             config.navigation = config.navigation.filter((item) => !isTab(item, "API Reference"));
         }
     } else if (existingApi) {
-        replacePlantStoreApi(config, apiNames);
+        replacePlantStoreApi(config, apiNames, sdkConfigSpecs);
     }
 
     if (!choices.features.includes("changelog")) {
@@ -414,16 +419,19 @@ function removeChangelogReferences(value: unknown): unknown {
 
 /**
  * Points the API Reference at the project's API. A project with several APIs under fern/apis/ gets one
- * entry per API, since an entry without `api-name` can't tell them apart.
+ * entry per API, since an entry without `api-name` can't tell them apart. A project whose specs are
+ * in sdk-config.yml names them in the entry, as `fern init` does.
  */
-function replacePlantStoreApi(config: PlainObject, apiNames: string[]): void {
+function replacePlantStoreApi(config: PlainObject, apiNames: string[], sdkConfigSpecs: PlainObject[]): void {
     if (!Array.isArray(config.navigation)) {
         return;
     }
     const entries =
         apiNames.length > 1
             ? apiNames.map((name) => ({ api: toTitle(name), "api-name": name }))
-            : [{ api: "API Reference" }];
+            : sdkConfigSpecs.length > 0
+              ? [{ api: "API Reference", specs: sdkConfigSpecs }]
+              : [{ api: "API Reference" }];
     for (const item of config.navigation) {
         if (!isTab(item, "API Reference") || !Array.isArray(item.layout)) {
             continue;
@@ -432,6 +440,27 @@ function replacePlantStoreApi(config: PlainObject, apiNames: string[]): void {
             isPlainObject(entry) && entry.api === "Plant Store API" ? entries : [entry]
         );
     }
+}
+
+/**
+ * The specs in fern/sdk-config.yml, as docs.yml's API Reference lists them. Both files are in fern/,
+ * so the paths carry over unchanged.
+ */
+async function readSdkConfigSpecs(fernDir: string): Promise<PlainObject[]> {
+    let config: unknown;
+    try {
+        config = parse(await readFile(path.join(fernDir, "sdk-config.yml"), "utf8"));
+    } catch {
+        // No sdk-config.yml.
+        return [];
+    }
+    const source = isPlainObject(config) ? config.source : undefined;
+    const specs = isPlainObject(source) && Array.isArray(source.specs) ? source.specs : [];
+    return specs.flatMap((spec): PlainObject[] =>
+        isPlainObject(spec) && typeof spec.type === "string" && typeof spec.path === "string"
+            ? [{ type: spec.type, path: spec.path }]
+            : []
+    );
 }
 
 /** The API folders under fern/apis/, which `api-name` refers to. */

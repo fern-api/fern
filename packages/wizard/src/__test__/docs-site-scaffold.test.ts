@@ -113,6 +113,39 @@ describe("docs site scaffolding", () => {
         }
     });
 
+    it("points API Reference at sdk-config.yml's specs and skips the sample API", async () => {
+        const dir = await tempRepo();
+        const fernDir = path.join(dir, "fern");
+        await mkdir(fernDir, { recursive: true });
+        await writeFile(
+            path.join(fernDir, "sdk-config.yml"),
+            [
+                "schemaVersion: sdk-config/v1",
+                "sdkName: api",
+                "source:",
+                "  specs:",
+                "    - id: api",
+                "      type: openapi",
+                "      path: ./openapi.yml"
+            ].join("\n")
+        );
+        await scaffoldDocsSite({ ...STARTER, dir, org: "acme", choices: defaultDocsSiteChoices("acme") });
+
+        for (const file of ["openapi.yaml", "asyncapi.yaml", "generators.yml"]) {
+            expect(await pathExists(path.join(fernDir, file))).toBe(false);
+        }
+        const apiNavigation = arrayField(await readDocsConfig(dir), "navigation").find(
+            (item) => isRecord(item) && item.tab === "API Reference"
+        );
+        if (!isRecord(apiNavigation)) {
+            throw new Error("API Reference navigation was not written.");
+        }
+        expect(arrayField(apiNavigation, "layout").find((item) => isRecord(item) && "api" in item)).toEqual({
+            api: "API Reference",
+            specs: [{ type: "openapi", path: "./openapi.yml" }]
+        });
+    });
+
     it("adds one API Reference entry per API when the project has several", async () => {
         const dir = await tempRepo();
         const fernDir = path.join(dir, "fern");
