@@ -163,12 +163,26 @@ describe("fetchSitePageSlugs", () => {
         expect(requests.every((request) => request.authorization === "Bearer tok")).toBe(true);
     });
 
+    it("fails instead of dropping a segment whose navigation is missing", async () => {
+        stubRegistry({
+            "/docs-ledger/current-version": { body: { deploymentId: "dep-1", basepath: "" } },
+            "/docs-ledger/version-metadata/dep-1": {
+                body: { configJson: {}, segments: [{ segmentHash: "gone", metadata: { type: "tabRoot" } }] }
+            }
+        });
+        await expect(
+            fetchSitePageSlugs({ fdrOrigin: "https://registry.test", token: "tok", docsUrl: "acme.com" })
+        ).rejects.toThrow("HTTP 404: Resource not found (docs-ledger/nav/gone)");
+    });
+
     it("explains a registry refusal", async () => {
         stubRegistry({
             "/docs-ledger/current-version": { status: 403, body: { message: "User does not belong to organization" } }
         });
         await expect(
             fetchSitePageSlugs({ fdrOrigin: "https://registry.test", token: "tok", docsUrl: "acme.com" })
-        ).rejects.toThrow("Listing the pages of acme.com failed: HTTP 403: User does not belong to organization");
+        ).rejects.toThrow(
+            "Listing the pages of acme.com failed: HTTP 403: User does not belong to organization (docs-ledger/current-version)"
+        );
     });
 });

@@ -70,13 +70,29 @@ export function exportablePageSlugs(subtree: FernNavigation.NavigationNode): str
 
 const LEDGER_TIMEOUT_MS = 30_000;
 
-/** GET a docs-ledger read route; `undefined` when the registry has no such record. */
-async function getLedger<T>(fdrOrigin: string, token: string, route: string): Promise<T | undefined> {
-    const response = await fetch(`${stripTrailingSlashes(fdrOrigin)}/docs-ledger${route}`, {
-        headers: { Accept: "application/json", Authorization: `Bearer ${token}` },
-        signal: AbortSignal.timeout(LEDGER_TIMEOUT_MS)
-    });
-    if (response.status === 404) {
+const NAV_CONCURRENCY = 8;
+
+/**
+ * GET a docs-ledger read route. A 404 throws, except with `optional`, where it returns `undefined`
+ * (a site the ledger doesn't know, which may be a legacy site).
+ */
+async function getLedger<T>(
+    fdrOrigin: string,
+    token: string,
+    route: string,
+    { optional = false }: { optional?: boolean } = {}
+): Promise<T | undefined> {
+    const path = route.split("?")[0];
+    let response: Response;
+    try {
+        response = await fetch(`${stripTrailingSlashes(fdrOrigin)}/docs-ledger${route}`, {
+            headers: { Accept: "application/json", Authorization: `Bearer ${token}` },
+            signal: AbortSignal.timeout(LEDGER_TIMEOUT_MS)
+        });
+    } catch (error) {
+        throw new Error(`${extractErrorMessage(error)} (docs-ledger${path})`);
+    }
+    if (response.status === 404 && optional) {
         return undefined;
     }
     if (!response.ok) {
@@ -95,9 +111,24 @@ async function getLedger<T>(fdrOrigin: string, token: string, route: string): Pr
         } catch {
             // not JSON; keep the raw body
         }
-        throw new Error(`HTTP ${response.status}${message !== "" ? `: ${message}` : ""}`);
+        throw new Error(`HTTP ${response.status}${message !== "" ? `: ${message}` : ""} (docs-ledger${path})`);
     }
     return (await response.json()) as T;
+}
+
+/** `run` over every item, at most `limit` at a time, keeping the input order in the result. */
+async function mapConcurrently<T, R>(items: T[], limit: number, run: (item: T) => Promise<R>): Promise<R[]> {
+    const results: R[] = new Array(items.length);
+    let next = 0;
+    await Promise.all(
+        Array.from({ length: Math.min(limit, items.length) }, async () => {
+            while (next < items.length) {
+                const index = next++;
+                results[index] = await run(items[index] as T);
+            }
+        })
+    );
+    return results;
 }
 
 async function loadLedgerRoot({
@@ -112,7 +143,9 @@ async function loadLedgerRoot({
     basepath: string;
 }): Promise<FernNavigation.RootNode | undefined> {
     const query = new URLSearchParams({ domain, basepath });
-    const current = await getLedger<CurrentVersionResponse>(fdrOrigin, token, `/current-version?${query}`);
+    const current = await getLedger<CurrentVersionResponse>(fdrOrigin, token, `/current-version?${query}`, {
+        optional: true
+    });
     if (current == null) {
         return undefined;
     }
@@ -125,16 +158,17 @@ async function loadLedgerRoot({
         throw new Error(`deployment ${current.deploymentId} not found`);
     }
     const navBySegment = new Map(
-        await Promise.all(
-            metadata.segments.map(async (segment) => {
-                const nav = await getLedger<NavResponse>(
-                    fdrOrigin,
-                    token,
-                    `/nav/${encodeURIComponent(segment.segmentHash)}`
-                );
-                return [segment.segmentHash, nav?.routes ?? []] as const;
-            })
-        )
+        await mapConcurrently(metadata.segments, NAV_CONCURRENCY, async (segment) => {
+            const nav = await getLedger<NavResponse>(
+                fdrOrigin,
+                token,
+                `/nav/${encodeURIComponent(segment.segmentHash)}`
+            );
+            if (nav == null) {
+                throw new Error(`segment ${segment.segmentHash} has no navigation`);
+            }
+            return [segment.segmentHash, nav.routes] as const;
+        })
     );
     return buildFullRootFromSegments({
         basePath: current.basepath,
