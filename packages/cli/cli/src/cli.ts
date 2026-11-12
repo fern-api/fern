@@ -2486,11 +2486,46 @@ function addDocsExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                 })
                 .option("header-right", { type: "string", description: "pdf: text at the top right of each page" })
                 .option("footer-left", { type: "string", description: "pdf: text at the bottom left of each page" })
-                .option("footer-right", { type: "string", description: "pdf: text at the bottom right of each page" }),
+                .option("footer-right", { type: "string", description: "pdf: text at the bottom right of each page" })
+                .option("page", {
+                    type: "string",
+                    array: true,
+                    default: [] as string[],
+                    description:
+                        "pdf: only include this page, by its slug as in the page URL (docs/quickstart). Repeat to add more"
+                })
+                .option("section", {
+                    type: "string",
+                    array: true,
+                    default: [] as string[],
+                    description:
+                        "pdf: only include the pages under this slug (docs/guides). Repeat to add more; combines with --page"
+                })
+                .option("exclude-page", {
+                    type: "string",
+                    array: true,
+                    default: [] as string[],
+                    description:
+                        "pdf: leave this page out of the selected pages (the whole site without --page or --section). Repeat to add more"
+                })
+                .option("exclude-section", {
+                    type: "string",
+                    array: true,
+                    default: [] as string[],
+                    description:
+                        "pdf: leave the pages under this slug out of the selected pages (the whole site without --page or --section). Repeat to add more"
+                }),
         async (argv) => {
             cliContext.instrumentPostHogEvent({
                 command: "fern docs export",
-                properties: { format: argv.format }
+                properties: {
+                    format: argv.format,
+                    scoped:
+                        argv.page.length > 0 ||
+                        argv.section.length > 0 ||
+                        argv.excludePage.length > 0 ||
+                        argv.excludeSection.length > 0
+                }
             });
             await exportDocs({
                 cliContext,
@@ -2506,6 +2541,12 @@ function addDocsExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                     headerRight: argv.headerRight,
                     footerLeft: argv.footerLeft,
                     footerRight: argv.footerRight
+                },
+                scope: {
+                    pages: argv.page,
+                    sections: argv.section,
+                    excludePages: argv.excludePage,
+                    excludeSections: argv.excludeSection
                 }
             });
         }
