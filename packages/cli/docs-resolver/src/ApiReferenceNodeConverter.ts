@@ -89,6 +89,8 @@ const GRAPHQL_TYPES_URL_SLUG = "types";
 type ApiTypeChildNode = Extract<FernNavigation.V1.ApiPackageChild, { type: "apiType" }>;
 
 const API_TYPES_URL_SLUG = "types";
+/** Used instead of `types` when a GraphQL schema in the same API already has a `types` section. */
+const API_SCHEMAS_URL_SLUG = "schemas";
 const API_TYPES_TITLE = "Types";
 
 /**
@@ -1494,6 +1496,8 @@ export class ApiReferenceNodeConverter {
             );
             pkg.websockets.forEach((channel) => FernNavigation.ApiTypeIdVisitor.visitWebSocketChannel(channel, visit));
             pkg.webhooks.forEach((webhook) => FernNavigation.ApiTypeIdVisitor.visitWebhookDefinition(webhook, visit));
+            // GraphQL operations can reference non-GraphQL (REST) types; GraphQL's own types are filtered
+            // out later via `#graphqlTypeCategories`, since they have their own section.
             pkg.graphqlOperations?.forEach((operation) =>
                 FernNavigation.ApiTypeIdVisitor.visitGraphQlOperation(operation, visit)
             );
@@ -1518,7 +1522,10 @@ export class ApiReferenceNodeConverter {
         parentAvailability?: docsYml.RawSchemas.Availability
     ): FernNavigation.V1.ApiPackageChild | undefined {
         const referenced = this.#collectReferencedTypeIds();
-        const typesSlug = parentSlug.append(API_TYPES_URL_SLUG);
+        // A GraphQL schema in the same API already owns `<api>/types`; keep the two sections apart.
+        const hasGraphqlTypes = Object.keys(this.#graphqlTypeCategories).length > 0;
+        const typesSlug = parentSlug.append(hasGraphqlTypes ? API_SCHEMAS_URL_SLUG : API_TYPES_URL_SLUG);
+        const usedSlugs = new Set<string>();
         const children: FernNavigation.V1.ApiPackageChild[] = Object.keys(this.#holder.api.types)
             .map((typeIdRaw) => FdrAPI.TypeId(typeIdRaw))
             .filter(
@@ -1527,9 +1534,13 @@ export class ApiReferenceNodeConverter {
                     this.#graphqlTypeCategories[typeId] == null &&
                     !this.#inlineTypeIds.has(typeId)
             )
-            .map((typeId) => this.#buildApiTypeChildNode(typeId, typesSlug, parentAvailability))
-            .filter(isNonNullish)
-            .sort((a, b) => a.title.localeCompare(b.title));
+            .sort((a, b) => {
+                const titleA = this.#holder.api.types[a]?.displayName ?? this.#holder.api.types[a]?.name ?? a;
+                const titleB = this.#holder.api.types[b]?.displayName ?? this.#holder.api.types[b]?.name ?? b;
+                return titleA.localeCompare(titleB) || a.localeCompare(b);
+            })
+            .map((typeId) => this.#buildApiTypeChildNode(typeId, typesSlug, usedSlugs, parentAvailability))
+            .filter(isNonNullish);
 
         if (children.length === 0) {
             return undefined;
@@ -1562,6 +1573,7 @@ export class ApiReferenceNodeConverter {
     #buildApiTypeChildNode(
         typeId: FdrAPI.TypeId,
         sectionSlug: FernNavigation.V1.SlugGenerator,
+        usedSlugs: Set<string>,
         parentAvailability?: docsYml.RawSchemas.Availability
     ): ApiTypeChildNode | undefined {
         const type = this.#holder.api.types[typeId];
@@ -1569,13 +1581,20 @@ export class ApiReferenceNodeConverter {
             return undefined;
         }
         const title = type.displayName ?? type.name ?? typeId;
+        // Titles that kebab-case alike (`SayV2` / `Say_V2`) get a numeric suffix so no two pages share a URL.
+        const baseSlug = kebabCase(title);
+        let slug = baseSlug;
+        for (let n = 2; usedSlugs.has(slug); n++) {
+            slug = `${baseSlug}-${n}`;
+        }
+        usedSlugs.add(slug);
         return {
             id: this.#idgen.get(`${this.apiDefinitionId}:apiType:${typeId}`),
             type: "apiType",
             collapsed: undefined,
             typeId: FernNavigation.TypeId(typeId),
             title,
-            slug: sectionSlug.append(kebabCase(title)).get(),
+            slug: sectionSlug.append(slug).get(),
             icon: undefined,
             hidden: this.hideChildren,
             apiDefinitionId: this.apiDefinitionId,
