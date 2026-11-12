@@ -92,6 +92,8 @@ const API_TYPES_URL_SLUG = "types";
 /** Used instead of `types` when a GraphQL schema in the same API already has a `types` section. */
 const API_SCHEMAS_URL_SLUG = "schemas";
 const API_TYPES_TITLE = "Types";
+/** Used instead of `Types` when a GraphQL schema in the same API already has a `Types` section. */
+const API_SCHEMAS_TITLE = "Schemas";
 
 /**
  * Title of the single section holding every GraphQL kind. Types belong to the schema rather than
@@ -1537,7 +1539,7 @@ export class ApiReferenceNodeConverter {
             .sort((a, b) => {
                 const titleA = this.#holder.api.types[a]?.displayName ?? this.#holder.api.types[a]?.name ?? a;
                 const titleB = this.#holder.api.types[b]?.displayName ?? this.#holder.api.types[b]?.name ?? b;
-                return titleA.localeCompare(titleB) || a.localeCompare(b);
+                return titleA.localeCompare(titleB, "en") || a.localeCompare(b, "en");
             })
             .map((typeId) => this.#buildApiTypeChildNode(typeId, typesSlug, usedSlugs, parentAvailability))
             .filter(isNonNullish);
@@ -1551,7 +1553,7 @@ export class ApiReferenceNodeConverter {
             type: "apiPackage",
             collapsed: undefined,
             children,
-            title: API_TYPES_TITLE,
+            title: hasGraphqlTypes ? API_SCHEMAS_TITLE : API_TYPES_TITLE,
             slug: typesSlug.get(),
             icon: undefined,
             hidden: this.hideChildren,
