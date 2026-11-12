@@ -10,8 +10,8 @@ import { getLatestVersionOfCli } from "../../cli-context/upgrade-utils/getLatest
 const UNRELEASED_VERSION = "0.0.0";
 
 /**
- * `fern init` on its own in a terminal: the guided setup wizard (the same one `npx @fern-api/wizard`
- * runs), which sets up a Fern project, a docs site, coding-agent instructions, docs publishing, and SDKs.
+ * `fern init` on its own in a terminal: the guided setup wizard, which sets up a Fern project, a docs
+ * site, coding-agent instructions, docs publishing, and SDKs.
  */
 export async function runInitWizard({ cliContext }: { cliContext: CliContext }): Promise<void> {
     const exitCode = await runWizard({

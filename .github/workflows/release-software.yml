@@ -8,7 +8,6 @@ on:
       # Auto-updated by scripts/release-setup.ts — do not edit manually
       - "packages/cli/cli/changes/**"
       - "packages/generator-cli/changes/**"
-      - "packages/wizard/changes/**"
   workflow_dispatch:
     inputs:
       software:
@@ -21,7 +20,6 @@ on:
           - all
           - cli
           - generator-cli
-          - wizard
 
 # Prevent concurrent release runs to avoid git conflicts.
 # NOTE: cancel-in-progress: false protects the running job, but GitHub still
