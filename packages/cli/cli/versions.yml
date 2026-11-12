@@ -1,4 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.206.0
+  changelogEntry:
+    - summary: |
+        Add the `layout.breadcrumbs.sticky` docs.yml setting. When set to true, the
+        breadcrumb row stays pinned below the header while the page scrolls.
+        Defaults to false.
+      type: feat
+    - summary: |
+        `fern generate --guest` no longer names the generated SDK after the throwaway guest organization
+        (`Guest<id>ApiClient`, `Guest<id>ApiError`, ...): client and error classes keep the names derived from the
+        organization in fern.config.json, while the build still runs under the guest session.
+      type: fix
+  createdAt: "2026-11-12"
+  irVersion: 67
 - version: 5.205.2
   changelogEntry:
     - summary: |
