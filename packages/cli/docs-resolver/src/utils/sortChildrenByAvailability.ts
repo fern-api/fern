@@ -56,6 +56,7 @@ function getChildAvailability(
         case "apiType":
         case "page":
             return child.availability;
+        case "apiType":
         case "link":
             return undefined;
         default:

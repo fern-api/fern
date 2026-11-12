@@ -4,19 +4,19 @@ import type * as FernDocsConfig from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { TabId } from "./TabId.js";
-import { TabVariant } from "./TabVariant.js";
+import { TabVariantItem } from "./TabVariantItem.js";
 
 export const TabbedNavigationItemWithVariants: core.serialization.ObjectSchema<
     serializers.TabbedNavigationItemWithVariants.Raw,
     FernDocsConfig.TabbedNavigationItemWithVariants
 > = core.serialization.object({
     tab: TabId,
-    variants: core.serialization.list(TabVariant),
+    variants: core.serialization.list(TabVariantItem),
 });
 
 export declare namespace TabbedNavigationItemWithVariants {
     export interface Raw {
         tab: TabId.Raw;
-        variants: TabVariant.Raw[];
+        variants: TabVariantItem.Raw[];
     }
 }
