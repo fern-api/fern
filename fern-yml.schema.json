@@ -6066,6 +6066,9 @@
             "paginated": {
               "type": "boolean"
             },
+            "types": {
+              "type": "boolean"
+            },
             "playground": {
               "type": "object",
               "properties": {
