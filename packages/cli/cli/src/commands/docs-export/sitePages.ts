@@ -189,11 +189,10 @@ async function loadLegacyRoot({
     docsUrl: string;
 }): Promise<FernNavigation.RootNode | undefined> {
     const fdr = createFdrService({ environment: fdrOrigin, token });
-    const response = await fdr.docs.v2.read.getDocsForUrl({ url: docsUrl, excludeApis: true });
-    if (!response.ok) {
-        throw new Error(JSON.stringify(response.error));
-    }
-    const docs = response.body as DocsV2Read.LoadDocsForUrlResponse;
+    const docs = (await fdr.docs.v2.read.getDocsForUrl({
+        url: docsUrl,
+        excludeApis: true
+    })) as DocsV2Read.LoadDocsForUrlResponse;
     const { root, navigation } = docs.definition.config;
     if (root != null) {
         return FernNavigation.migrate.FernNavigationV1ToLatest.create().root(root);
