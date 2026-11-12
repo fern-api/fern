@@ -10,7 +10,7 @@ const FAKE_CONFIG_PATH = "/fern/docs.yml" as AbsoluteFilePath;
 
 // The published FDR SDK's DocsLayoutConfig does not carry this field yet
 // (parseDocsConfiguration casts it through), so read it structurally here.
-type LayoutWithBreadcrumbs = { breadcrumbs?: { currentPage: boolean } } | undefined;
+type LayoutWithBreadcrumbs = { breadcrumbs?: { currentPage: boolean; sticky: boolean } } | undefined;
 
 async function parseLayout(rawDocsYml: unknown): Promise<LayoutWithBreadcrumbs> {
     const rawDocsConfiguration = docsYml.RawSchemas.Serializer.DocsConfiguration.parseOrThrow(rawDocsYml);
@@ -23,7 +23,7 @@ async function parseLayout(rawDocsYml: unknown): Promise<LayoutWithBreadcrumbs> 
     return parsed.layout as LayoutWithBreadcrumbs;
 }
 
-describe("parseDocsConfiguration — layout.breadcrumbs.current-page", () => {
+describe("parseDocsConfiguration — layout.breadcrumbs", () => {
     it("is undefined when the layout key is omitted", async () => {
         const layout = await parseLayout({ instances: [], navigation: [] });
         expect(layout?.breadcrumbs).toBeUndefined();
@@ -34,9 +34,9 @@ describe("parseDocsConfiguration — layout.breadcrumbs.current-page", () => {
         expect(layout?.breadcrumbs).toBeUndefined();
     });
 
-    it("defaults current-page to false when breadcrumbs is an empty object", async () => {
+    it("defaults current-page and sticky to false when breadcrumbs is an empty object", async () => {
         const layout = await parseLayout({ instances: [], navigation: [], layout: { breadcrumbs: {} } });
-        expect(layout?.breadcrumbs).toEqual({ currentPage: false });
+        expect(layout?.breadcrumbs).toEqual({ currentPage: false, sticky: false });
     });
 
     it("maps the kebab-case key to the camelCase currentPage field", async () => {
@@ -45,13 +45,29 @@ describe("parseDocsConfiguration — layout.breadcrumbs.current-page", () => {
             navigation: [],
             layout: { breadcrumbs: { "current-page": true } }
         });
-        expect(enabled?.breadcrumbs).toEqual({ currentPage: true });
+        expect(enabled?.breadcrumbs).toEqual({ currentPage: true, sticky: false });
 
         const disabled = await parseLayout({
             instances: [],
             navigation: [],
             layout: { breadcrumbs: { "current-page": false } }
         });
-        expect(disabled?.breadcrumbs).toEqual({ currentPage: false });
+        expect(disabled?.breadcrumbs).toEqual({ currentPage: false, sticky: false });
+    });
+
+    it("maps sticky independently of current-page", async () => {
+        const sticky = await parseLayout({
+            instances: [],
+            navigation: [],
+            layout: { breadcrumbs: { sticky: true } }
+        });
+        expect(sticky?.breadcrumbs).toEqual({ currentPage: false, sticky: true });
+
+        const both = await parseLayout({
+            instances: [],
+            navigation: [],
+            layout: { breadcrumbs: { "current-page": true, sticky: true } }
+        });
+        expect(both?.breadcrumbs).toEqual({ currentPage: true, sticky: true });
     });
 });

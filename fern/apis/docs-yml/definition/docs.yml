@@ -1130,6 +1130,11 @@ types:
         docs: |
           If `current-page` is set to true, the current page is appended to the breadcrumb trail
           as a non-clickable item. Defaults to false.
+      sticky:
+        type: optional<boolean>
+        docs: |
+          If `sticky` is set to true, the breadcrumb row stays pinned below the header
+          while the page scrolls. Defaults to false.
 
   DocsSettingsConfig:
     properties:

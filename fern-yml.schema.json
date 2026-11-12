@@ -2990,6 +2990,9 @@
               "properties": {
                 "current-page": {
                   "type": "boolean"
+                },
+                "sticky": {
+                  "type": "boolean"
                 }
               },
               "additionalProperties": false
