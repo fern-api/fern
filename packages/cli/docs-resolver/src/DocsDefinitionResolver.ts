@@ -1712,7 +1712,10 @@ export class DocsDefinitionResolver {
             [this.parsedDocsConfig.navigation, this.parsedDocsConfig.landingPage],
             this.parsedDocsConfig.profile
         );
-        return this.#profileIndex.has(item) ? this.#profileIndex.get(item) : this.parsedDocsConfig.profile;
+        if (!this.#profileIndex.has(item)) {
+            throw new Error("Internal error: docs.yml item missing from the profile index (copied before lookup?)");
+        }
+        return this.#profileIndex.get(item);
     }
 
     /** Profile values for nodes under one profile, limited per node to the names it uses. */
