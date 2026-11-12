@@ -72,7 +72,9 @@ jobs:
           # Manual runs always publish (optionally a specific version)
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
             if [ -n "${INPUT_VERSION}" ]; then
-              if ! echo "${INPUT_VERSION}" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$'; then
+              # bash regex match anchors the whole string (grep -E matches per line, so a multiline
+              # input could smuggle an extra GITHUB_OUTPUT assignment past a per-line check)
+              if [[ ! "${INPUT_VERSION}" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$ ]]; then
                 echo "::error::Invalid version input: ${INPUT_VERSION}"
                 exit 1
               fi
