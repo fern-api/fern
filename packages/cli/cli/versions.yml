@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.210.2
+  changelogEntry:
+    - summary: |
+        `fern generate` now warns with the GitHub error when `github.auto-merge: true` (or `--auto-merge`)
+        was requested but auto-merge could not be enabled on the pull request (for example when the
+        repository has "Allow auto-merge" disabled or no required status checks), instead of failing
+        silently. Hosted-generation telemetry now reports `auto_merge_requested` from the effective
+        setting (flag or generators.yml) rather than the CLI flag alone.
+      type: fix
+  createdAt: "2026-11-12"
+  irVersion: 67
 - version: 5.210.1
   changelogEntry:
     - summary: |
