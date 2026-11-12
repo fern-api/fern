@@ -929,6 +929,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Test file upload",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

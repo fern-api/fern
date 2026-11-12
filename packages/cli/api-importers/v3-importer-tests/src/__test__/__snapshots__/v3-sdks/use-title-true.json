@@ -130,6 +130,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "0.1.0",
   "apiName": "Hume AI Batch API",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

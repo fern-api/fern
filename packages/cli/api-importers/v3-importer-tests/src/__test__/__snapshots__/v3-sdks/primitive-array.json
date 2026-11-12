@@ -807,6 +807,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Primitive Array API",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

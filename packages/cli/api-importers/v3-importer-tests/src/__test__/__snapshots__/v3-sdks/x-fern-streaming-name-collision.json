@@ -2340,6 +2340,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Test streaming request name collision when x-fern-type-name is set on a shared $ref schema.",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

@@ -590,6 +590,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Test spec for `uint` types specified as number formats.",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

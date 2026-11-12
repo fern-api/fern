@@ -2421,6 +2421,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Readonly and Writeonly Properties API",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

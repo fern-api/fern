@@ -3199,6 +3199,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Nested allOf $ref Resolution",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

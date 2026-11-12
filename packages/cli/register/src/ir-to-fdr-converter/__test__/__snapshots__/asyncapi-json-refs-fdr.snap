@@ -27,6 +27,7 @@
     "swiftSdk": undefined,
     "typescriptSdk": undefined,
   },
+  "specVersion": undefined,
   "subpackages": {
     "subpackage_plantOrders": {
       "description": undefined,

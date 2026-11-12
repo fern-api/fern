@@ -681,6 +681,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Test spec for `date` and `date-time` types.",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

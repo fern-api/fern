@@ -423,6 +423,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Callbacks Test API",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

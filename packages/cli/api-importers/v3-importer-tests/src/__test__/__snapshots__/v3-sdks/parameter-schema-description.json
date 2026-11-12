@@ -525,6 +525,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "0.1.0",
   "apiName": "Plant API",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

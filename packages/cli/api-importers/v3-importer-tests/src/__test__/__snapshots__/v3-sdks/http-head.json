@@ -876,6 +876,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Test HEAD method",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

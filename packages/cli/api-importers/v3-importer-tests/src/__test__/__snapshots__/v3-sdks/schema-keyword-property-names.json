@@ -687,6 +687,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "API whose properties are named after JSON Schema keywords",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

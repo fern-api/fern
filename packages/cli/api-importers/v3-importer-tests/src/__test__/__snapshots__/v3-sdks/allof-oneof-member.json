@@ -2874,6 +2874,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "allOf with a oneOf member",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

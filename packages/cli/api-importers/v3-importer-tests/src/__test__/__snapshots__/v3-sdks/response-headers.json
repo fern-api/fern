@@ -2040,6 +2040,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Response Headers Test API",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

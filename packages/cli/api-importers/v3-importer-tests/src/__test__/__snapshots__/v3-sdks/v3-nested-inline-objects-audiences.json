@@ -2687,6 +2687,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Nested object audience-filtering regression fixture",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

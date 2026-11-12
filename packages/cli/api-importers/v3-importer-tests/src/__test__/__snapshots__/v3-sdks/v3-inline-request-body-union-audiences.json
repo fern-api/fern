@@ -872,6 +872,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0",
   "apiName": "Plants",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

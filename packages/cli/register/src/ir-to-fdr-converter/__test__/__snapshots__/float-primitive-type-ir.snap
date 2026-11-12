@@ -316,7 +316,7 @@
     },
   },
   "sourceConfig": undefined,
-  "specVersion": undefined,
+  "specVersion": "1.0.0",
   "subpackages": {},
   "types": {
     "Measurement": {

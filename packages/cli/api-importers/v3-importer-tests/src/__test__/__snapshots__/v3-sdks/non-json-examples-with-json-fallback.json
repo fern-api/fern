@@ -430,6 +430,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Non-JSON Examples with JSON Fallback API",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

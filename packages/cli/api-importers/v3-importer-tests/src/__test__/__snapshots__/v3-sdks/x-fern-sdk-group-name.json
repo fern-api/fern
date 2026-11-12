@@ -726,6 +726,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Test extension `x-fern-sdk-group-name` for schemas",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

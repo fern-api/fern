@@ -1132,6 +1132,7 @@
       "sdkVersion": ""
     }
   },
+  "specVersion": "1.0.0",
   "apiName": "Test inferring SSE streaming from text/event-stream MIME type",
   "constants": {
     "errorInstanceIdKey": "errorInstanceId"

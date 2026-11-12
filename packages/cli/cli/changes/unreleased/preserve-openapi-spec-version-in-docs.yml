@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern generate --docs` now registers the OpenAPI `info.version` with the API definition, so the
+    `/openapi.json` and `/openapi/<api>.json` downloads on a docs site show the source spec's version
+    instead of `1.0.0`.
+  type: fix
