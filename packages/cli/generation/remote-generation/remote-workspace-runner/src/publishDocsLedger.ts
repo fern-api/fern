@@ -27,6 +27,7 @@ import type { TaskContext } from "@fern-api/task-context";
 import { createHash } from "crypto";
 import { readFile } from "fs/promises";
 import * as mime from "mime-types";
+import { getPublishWarnings } from "./getPublishWarnings.js";
 import { mapDocsConfigToLedgerConfig } from "./mapDocsConfigToLedgerConfig.js";
 
 const UPLOAD_CONCURRENCY = 10;
@@ -440,6 +441,10 @@ export async function publishDocsViaLedger({
     context.logger.debug(
         `[ledger] Finished in ${finishTime.toFixed(0)}ms — deploymentId=${finishResult.deploymentId}, reused=${finishResult.reusedDeployment}`
     );
+
+    for (const warning of getPublishWarnings(finishResult)) {
+        context.logger.warn(warning);
+    }
 
     // Log translation results if any were processed.
     if (finishResult.translationsProcessed != null) {
