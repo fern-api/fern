@@ -1,4 +1,11 @@
 export { findGeneratorLineNumber, GeneratorOccurrenceTracker, getOutputRepoUrl } from "./automationMetadata.js";
+export type { CompiledGlobalTheme } from "./compileGlobalTheme.js";
+export {
+    canMergeThemeServerSide,
+    compileGlobalTheme,
+    shouldMergeThemeServerSide,
+    themeReferencesRemoteAssets
+} from "./compileGlobalTheme.js";
 export type { FernSdkGenApiPublishCredentialSource } from "./directPublishCredentials.js";
 export {
     discoverLatestSdkGenApiGeneratorVersions,
@@ -13,6 +20,7 @@ export {
 export type {
     FernSdkConfigV1Payload,
     FernSdkGenApiFlagTarget,
+    FernSdkGenApiGithubRequestedOutput,
     FernSdkGenApiPackageConfig,
     FernSdkGenApiRequestedOutput
 } from "./fernSdkGenApi.js";
@@ -73,3 +81,4 @@ export {
     resolveSdkConfigGeneratorVersion,
     SDK_CONFIG_UNPINNED_GENERATOR_VERSION
 } from "./sdkConfigGeneratorVersion.js";
+export { toSdkGenApiTarget } from "./sdkConfigWireOutput.js";

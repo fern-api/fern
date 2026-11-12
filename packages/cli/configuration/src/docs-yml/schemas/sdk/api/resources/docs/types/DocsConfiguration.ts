@@ -100,6 +100,11 @@ export interface DocsConfiguration {
     agents?: FernDocsConfig.AgentsConfig;
     metadata?: FernDocsConfig.MetadataConfig;
     redirects?: FernDocsConfig.RedirectsConfiguration;
+    /**
+     * Path prefixes on your docs domain that Fern reverse-proxies to another HTTPS service
+     * you run. Fern keeps serving the rest of the site.
+     */
+    remotePaths?: FernDocsConfig.RemotePathConfig[];
     check?: FernDocsConfig.CheckConfig;
     logo?: FernDocsConfig.LogoConfiguration;
     /** Relative filepath to the favicon. */

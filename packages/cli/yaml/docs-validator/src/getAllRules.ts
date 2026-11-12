@@ -22,7 +22,9 @@ import { ValidMarkdownRule } from "./rules/valid-markdown/index.js";
 import { ValidMarkdownLinks } from "./rules/valid-markdown-link/index.js";
 import { ValidOpenApiExamples } from "./rules/valid-openapi-examples/index.js";
 import { ValidRedirectsFilesRule } from "./rules/valid-redirects-files/index.js";
+import { ValidRemotePathsRule } from "./rules/valid-remote-paths/index.js";
 import { ValidSkillsPageActionRule } from "./rules/valid-skills-page-action/index.js";
+import { ValidTabMenuRule } from "./rules/valid-tab-menu/index.js";
 import { ValidTranslationsConfigRule } from "./rules/valid-translations-config/index.js";
 import { ValidVersionRefRule } from "./rules/valid-version-ref/index.js";
 import { ValidWellKnownSkillsRule } from "./rules/valid-well-known-skills/index.js";
@@ -44,6 +46,7 @@ const allRules = [
     ValidateProductFileRule,
     ValidInstanceUrlRule, // Validate instance URLs have valid subdomains
     ValidEmbeddingOriginsRule, // Validate settings.embedding.allowed-origins are well-formed CSP frame-ancestors sources
+    ValidRemotePathsRule, // Validate remote-paths: safe path prefixes and public https destinations
     RobotsTxtOnInstanceUrlRequiresRobotsTxtRule, // Warn when experimental.robots-txt-on-instance-url is set without agents.robots-txt
     NoCircularRedirectsRule, // Detect circular redirect chains
     ValidTranslationsConfigRule,
@@ -57,6 +60,7 @@ const allRules = [
     ValidFrontmatter,
     TranslationDirectoriesExistRule,
     ValidChangelogSlugRule,
+    ValidTabMenuRule, // tab-menu members need exactly one navigation entry with a layout or variants
     ValidWellKnownSkillsRule, // Validate author-supplied Agent Skills bundles under .well-known/
     ValidSkillsPageActionRule // Validate the "Install skills" page action display config
     // ValidMarkdownFileReferences

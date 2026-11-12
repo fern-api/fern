@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
+- version: 0.12.1
+  changelogEntry:
+    - summary: |
+        Cloning a private repository with a personal access token (for example when generating the README in
+        self-hosted GitHub mode) no longer fails with `could not read Username` in containers with libcurl 8.23+.
+        The token is now also sent as an `Authorization` header, which git keeps after it rewrites the remote URL.
+      type: fix
+  createdAt: "2026-10-28"
 - version: 0.12.0
   changelogEntry:
     - summary: |

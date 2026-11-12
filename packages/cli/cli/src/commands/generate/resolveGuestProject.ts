@@ -1,26 +1,50 @@
 import { FernGuestToken, getOrCreateGuestSession, getToken } from "@fern-api/auth";
 import { dirname } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
-import { CliError } from "@fern-api/task-context";
+import { CliError, InstructionsTopic } from "@fern-api/task-context";
 import chalk from "chalk";
 
 import { CliContext } from "../../cli-context/CliContext.js";
 
 /**
  * `--guest`: swap the project's organization for the guest session's `guest-<id>` org for this run and return the
- * guest token to generate with. fern.config.json is left untouched; `fern claim` rewrites it later.
+ * guest token to generate with. The fern.config.json organization stays as `sdkOrganization`, so generated code
+ * (client and error class names, user agents) is named after it and not after the throwaway guest org.
+ * fern.config.json is left untouched; `fern claim` rewrites it later.
  */
 /** Warn this close to expiry. The session is still reused until it expires: a new one is a new guest org. */
 const EXPIRY_WARNING_MS = 60 * 60 * 1000;
 
+/** What a guest run produces; the claim link says so, and the dashboard lands the claim on that page. */
+export type GuestWork = "sdk" | "docs";
+
+/**
+ * The claim link with `from=<work>` added, so the dashboard's claim page lands on the organization's
+ * SDKs or docs — whichever this run made — instead of guessing from what else the organization has.
+ * The secret stays in the fragment. An unparsable link is printed as Venus gave it.
+ */
+export function describeClaimLink(claimUrl: string, work: GuestWork): string {
+    let parsed: URL;
+    try {
+        parsed = new URL(claimUrl);
+    } catch {
+        return claimUrl;
+    }
+    parsed.searchParams.set("from", work);
+    return parsed.toString();
+}
+
 export async function resolveGuestProject({
     project,
     cliContext,
+    work,
     newSession = false,
     now = new Date()
 }: {
     project: Project;
     cliContext: CliContext;
+    /** What this run generates: the claim link lands on that page of the organization. */
+    work: GuestWork;
     /** `--new-session`: ignore the stored session and mint another one. */
     newSession?: boolean;
     now?: Date;
@@ -32,7 +56,7 @@ export async function resolveGuestProject({
                 ? "--guest cannot be combined with FERN_TOKEN. Unset it to continue as a guest, or drop --guest to use the token."
                 : "--guest cannot be combined with a saved login. Run 'fern logout' to continue as a guest, or drop --guest to use your account.",
             undefined,
-            { code: CliError.Code.ConfigError }
+            { code: CliError.Code.ConfigError, instructionsTopic: InstructionsTopic.NewSite }
         );
     }
 
@@ -49,7 +73,7 @@ export async function resolveGuestProject({
     cliContext.logger.info(
         `${verb} guest session ${chalk.bold(token.sessionId)} as organization ${chalk.bold(token.organizationId)} (expires ${token.expiresAt.toLocaleString()}).`
     );
-    cliContext.logger.info(`Claim it to keep this work: ${chalk.cyan(token.claimUrl)}`);
+    cliContext.logger.info(`Claim it to keep this work: ${chalk.cyan(describeClaimLink(token.claimUrl, work))}`);
     const msLeft = token.expiresAt.getTime() - now.getTime();
     if (msLeft < EXPIRY_WARNING_MS) {
         cliContext.logger.warn(
@@ -57,14 +81,21 @@ export async function resolveGuestProject({
         );
     }
     if (project.config.organization !== token.organizationId) {
-        cliContext.logger.warn(
-            `Ignoring organization "${project.config.organization}" from fern.config.json while running as a guest.`
+        cliContext.logger.info(
+            `Generating as guest organization ${token.organizationId}; the SDK keeps the names of organization "${project.config.organization}" from fern.config.json.`
         );
     }
 
     return {
         token,
-        project: { ...project, config: { ...project.config, organization: token.organizationId } }
+        project: {
+            ...project,
+            config: {
+                ...project.config,
+                organization: token.organizationId,
+                sdkOrganization: project.config.sdkOrganization ?? project.config.organization
+            }
+        }
     };
 }
 

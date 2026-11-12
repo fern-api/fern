@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+- summary: |
+    A `cli` target in `sdk-config.yml` is always sent to sdk-gen-api as SDK Config, like every other language.
+    `ENABLE_SDK_GEN_RUST_CLI` is no longer read. With `--local`, the target is still translated into a
+    `generators.yml` for Fern's CLI generator and run in Docker.
+  type: feat

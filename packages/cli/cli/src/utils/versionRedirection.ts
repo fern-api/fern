@@ -6,7 +6,9 @@ import { hideBin } from "yargs/helpers";
 // changed back (redirection would re-exec a CLI that lacks the command).
 // `claim` and `whoami` act on the repo's guest session and only talk to Venus;
 // they must work even when fern.config.json pins a CLI predating them.
-export const VERSION_REDIRECTION_EXEMPT_COMMANDS = new Set(["org", "claim", "whoami"]);
+// `instructions` only fetches public docs pages and must work in any project,
+// whatever CLI version it pins.
+export const VERSION_REDIRECTION_EXEMPT_COMMANDS = new Set(["org", "claim", "whoami", "instructions"]);
 
 export function isVersionRedirectionExempt(argv: string[]): boolean {
     const command = getInvokedCommandName(argv);

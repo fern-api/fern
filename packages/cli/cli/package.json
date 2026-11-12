@@ -122,6 +122,7 @@
     "@types/pngjs": "catalog:",
     "@types/semver": "catalog:",
     "@types/tar": "catalog:",
+    "@types/yauzl": "catalog:",
     "@types/yazl": "catalog:",
     "@types/url-join": "4.0.1",
     "@types/ws": "catalog:",
@@ -152,6 +153,7 @@
     "ws": "catalog:",
     "yaml": "catalog:",
     "yargs": "^17.4.1",
+    "yauzl": "catalog:",
     "yazl": "catalog:"
   }
 }

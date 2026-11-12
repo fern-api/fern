@@ -6,6 +6,7 @@ export {
 } from "./docsAst/DocsConfigFileAstVisitor.js";
 export { validateVersionConfigFileSchema } from "./docsAst/validateVersionConfig.js";
 export { visitDocsConfigFileYamlAst } from "./docsAst/visitDocsConfigFileYamlAst.js";
+export { getAllRules } from "./getAllRules.js";
 export * as Rules from "./rules/index.js";
 export { FrontmatterSchema } from "./rules/valid-markdown/valid-markdown.js";
 export { collectLinksAndSources } from "./rules/valid-markdown-link/collect-links.js";

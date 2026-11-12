@@ -3,7 +3,7 @@ import { execSync } from "child_process";
 import { simpleGit } from "simple-git";
 import tmp from "tmp-promise";
 import { ClonedRepository } from "./ClonedRepository.js";
-import { parseRepository } from "./parseRepository.js";
+import { getGitAuthorizationHeader, parseRepository } from "./parseRepository.js";
 
 /**
  * Sanitizes a clone URL by redacting any embedded tokens/credentials.
@@ -105,7 +105,12 @@ export async function cloneRepository({
 
     const startTime = Date.now();
     try {
-        await git.clone(cloneUrl, ".");
+        // `--config` persists the header in the clone, so later fetch/push calls authenticate too.
+        const cloneOptions =
+            installationToken != null
+                ? ["--config", `http.extraHeader=${getGitAuthorizationHeader(installationToken)}`]
+                : [];
+        await git.clone(cloneUrl, ".", cloneOptions);
     } catch (error) {
         const elapsed = Date.now() - startTime;
         const errorMessage = extractErrorMessage(error);

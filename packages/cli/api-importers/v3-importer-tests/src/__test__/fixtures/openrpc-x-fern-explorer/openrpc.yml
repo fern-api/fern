@@ -1,0 +1,31 @@
+openrpc: 1.2.4
+info:
+  title: Test x-fern-explorer extension for OpenRPC
+  version: 1.0.0
+x-fern-explorer: false
+servers:
+  - url: https://api.example.com/rpc
+    name: Production
+methods:
+  - name: plant_get
+    x-fern-explorer: true
+    params:
+      - name: plantId
+        required: true
+        schema:
+          type: string
+    result:
+      name: plant
+      schema:
+        type: object
+        properties:
+          plantId:
+            type: string
+  - name: plant_list
+    params: []
+    result:
+      name: plants
+      schema:
+        type: array
+        items:
+          type: string

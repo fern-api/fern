@@ -1,4 +1,0 @@
-types:
-  Bar:
-    properties:
-      name: string

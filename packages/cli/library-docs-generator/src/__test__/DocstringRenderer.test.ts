@@ -29,6 +29,58 @@ function docstring(overrides: Partial<FdrAPI.libraryDocs.DocstringIr>): FdrAPI.l
 }
 
 describe("renderDocstring", () => {
+    // --- reStructuredText converted by the parser (math, alerts, tables) ---
+
+    it("renders GitHub-style alerts in descriptions as Fern callouts", () => {
+        const result = renderDocstring(
+            docstring({
+                description:
+                    "Intro <T>.\n\n> [!NOTE]\n> Uses {x}.\n>\n> ```python\n> run()\n> ```\n\n> [!CAUTION]\n> Destroys $\\text{CZ}$.\n\nAfter."
+            })
+        );
+        expect(result).toContain("Intro &lt;T&gt;.");
+        expect(result).toContain(
+            "<Note>\n\nUses &#123;x&#125;.\n\n<CodeBlock showLineNumbers={false}>\n\n```python\nrun()\n```\n\n</CodeBlock>\n\n</Note>"
+        );
+        expect(result).toContain("<Error>\n\nDestroys $\\text{CZ}$.\n\n</Error>");
+        expect(result).toContain("After.");
+        expect(result).not.toContain("[!NOTE]");
+    });
+
+    it("does not close a backtick fence on a tilde line", () => {
+        const result = renderDocstring(docstring({ description: "```text\n~~~\n> [!NOTE]\n> x\n```" }));
+        expect(result).toContain("> [!NOTE]");
+        expect(result).not.toContain("<Note>");
+    });
+
+    it("keeps math in parameter and raises descriptions", () => {
+        const result = renderDocstring(
+            docstring({
+                params: [
+                    { name: "gate", description: "Gate $\\text{CZ}$ with {opts}", type: "str", default: undefined }
+                ],
+                raises: [{ type: "ValueError", description: "If $\\text{x}$ is bad" }]
+            })
+        );
+        expect(result).toContain("Gate $\\text{CZ}$ with &#123;opts&#125;");
+        expect(result).toContain("If $\\text{x}$ is bad");
+    });
+
+    it("leaves alerts inside code blocks alone", () => {
+        const result = renderDocstring(docstring({ description: "```python\n> [!NOTE]\n```" }));
+        expect(result).toContain("> [!NOTE]");
+        expect(result).not.toContain("<Note>");
+    });
+
+    it("keeps math in tables intact", () => {
+        const result = renderDocstring(
+            docstring({
+                description: "| name | description |\n| --- | --- |\n| reset | Reset to $\\vert 0\\rangle$. |"
+            })
+        );
+        expect(result).toContain("| reset | Reset to $\\vert 0\\rangle$. |");
+    });
+
     // --- Null / empty handling ---
 
     it("returns empty string for null", () => {

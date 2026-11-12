@@ -225,6 +225,45 @@ describe("initializeDocs", () => {
         expect(warnings.join("\n")).toContain("could not be parsed");
     });
 
+    describe("next steps", () => {
+        beforeEach(() => {
+            vi.stubEnv("LOCAL_STORAGE_FOLDER", ".fern-test-no-login");
+        });
+
+        afterEach(() => {
+            vi.unstubAllEnvs();
+        });
+
+        async function initializeAndCollectInfo(): Promise<string> {
+            const messages: string[] = [];
+            const logger = createLogger((level, ...args) => {
+                if (level === LogLevel.Info) {
+                    messages.push(args.join(" "));
+                }
+            });
+            await initialize(await writeSpec(), createMockTaskContext({ logger }));
+            return messages.join("\n");
+        }
+
+        it("points at fern generate --docs --guest when there is no login or FERN_TOKEN", async () => {
+            vi.stubEnv("FERN_TOKEN", "");
+
+            const output = await initializeAndCollectInfo();
+
+            expect(output).toContain("fern generate --docs --guest");
+            expect(output).toContain("fern claim");
+        });
+
+        it("points at fern generate --docs when FERN_TOKEN is set", async () => {
+            vi.stubEnv("FERN_TOKEN", "token");
+
+            const output = await initializeAndCollectInfo();
+
+            expect(output).toContain("fern generate --docs");
+            expect(output).not.toContain("--guest");
+        });
+    });
+
     it("keeps the welcome page and no api entry when no spec is given", async () => {
         await initialize();
 

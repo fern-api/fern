@@ -9,8 +9,8 @@ import { UntabbedNavigationConfig } from "./UntabbedNavigationConfig.js";
 export const NavigationConfig: core.serialization.Schema<
     serializers.NavigationConfig.Raw,
     FernDocsConfig.NavigationConfig
-> = core.serialization.undiscriminatedUnion([UntabbedNavigationConfig, TabbedNavigationConfig]);
+> = core.serialization.undiscriminatedUnion([TabbedNavigationConfig, UntabbedNavigationConfig]);
 
 export declare namespace NavigationConfig {
-    export type Raw = UntabbedNavigationConfig.Raw | TabbedNavigationConfig.Raw;
+    export type Raw = TabbedNavigationConfig.Raw | UntabbedNavigationConfig.Raw;
 }

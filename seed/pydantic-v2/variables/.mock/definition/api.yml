@@ -1,7 +1,0 @@
-name: variables
-
-variables:
-  rootVariable:
-    type: string
-    env: ROOT_VARIABLE
-    docs: Falls back to the ROOT_VARIABLE environment variable when not passed to the client.

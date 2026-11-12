@@ -15,7 +15,8 @@ export {
 export { applyTranslatedFrontmatterToNavTree } from "./applyTranslatedFrontmatterToNavTree.js";
 export {
     applyTranslatedNavigationOverlays,
-    getTranslatedAnnouncement
+    getTranslatedAnnouncement,
+    getTranslatedSettings
 } from "./applyTranslatedNavigationOverlays.js";
 export { markUntranslatedNavNodesNoindex } from "./markUntranslatedNavNodesNoindex.js";
 export type TranslationNavigationOverlay = docsYml.TranslationNavigationOverlay;
@@ -28,7 +29,8 @@ export {
     type TranslatedApiSpec,
     type UploadedFile
 } from "./DocsDefinitionResolver.js";
-export { resolveThemeFileUrls, stitchGlobalTheme } from "./stitchGlobalTheme.js";
+export type { FetchedGlobalTheme } from "./stitchGlobalTheme.js";
+export { fetchGlobalTheme, mergeThemeOverride, resolveThemeFileUrls, stitchGlobalTheme } from "./stitchGlobalTheme.js";
 export { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition.js";
 export { filterOssWorkspaces } from "./utils/filterOssWorkspaces.js";
 export { generateFdrFromOpenApiWorkspaceV3 } from "./utils/generateFdrFromOpenAPIWorkspaceV3.js";

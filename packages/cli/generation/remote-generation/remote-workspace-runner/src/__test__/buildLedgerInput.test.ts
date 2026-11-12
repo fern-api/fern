@@ -615,3 +615,57 @@ describe("buildLedgerInput", () => {
         ]);
     });
 });
+
+describe("aliasWellKnownAgentFiles", () => {
+    const entry: FileManifestEntry = {
+        hash: "abc",
+        contentType: "text/plain",
+        contentLength: 10,
+        filename: "robots-noindex.txt"
+    };
+
+    function buildWithAgents(agents: Record<string, string>, fileManifest: Record<string, FileManifestEntry>) {
+        const docsDefinition = makeDocsDefinition();
+        (docsDefinition.config as Record<string, unknown>).agents = agents;
+        return buildLedgerInput({ docsDefinition, apiDefinitions: new Map(), fileManifest }).localeEntry.fileManifest;
+    }
+
+    it("publishes a custom-named robots.txt at the well-known robots.txt path", () => {
+        const manifest = buildWithAgents({ robotsTxt: "seo/robots-noindex.txt" }, { "seo/robots-noindex.txt": entry });
+        expect(manifest?.["robots.txt"]).toEqual({ ...entry, filename: "robots.txt" });
+        expect(manifest?.["seo/robots-noindex.txt"]).toEqual(entry);
+    });
+
+    it("publishes custom-named llms.txt and llms-full.txt at their well-known paths", () => {
+        const manifest = buildWithAgents(
+            { llmsTxt: "ai/llms.txt", llmsFullTxt: "ai/full.txt" },
+            { "ai/llms.txt": entry, "ai/full.txt": entry }
+        );
+        expect(manifest?.["llms.txt"]?.filename).toBe("llms.txt");
+        expect(manifest?.["llms-full.txt"]?.filename).toBe("llms-full.txt");
+    });
+
+    it("leaves the manifest unchanged when the file is already at its well-known path", () => {
+        const fileManifest = { "robots.txt": { ...entry, filename: "robots.txt" } };
+        expect(buildWithAgents({ robotsTxt: "robots.txt" }, fileManifest)).toBe(fileManifest);
+    });
+
+    it("prefers the configured file over an existing asset at the well-known path", () => {
+        const stale: FileManifestEntry = { ...entry, hash: "stale", filename: "llms.txt" };
+        const manifest = buildWithAgents({ llmsTxt: "ai/custom.txt" }, { "llms.txt": stale, "ai/custom.txt": entry });
+        expect(manifest?.["llms.txt"]).toEqual({ ...entry, filename: "llms.txt" });
+        expect(manifest?.["ai/custom.txt"]).toEqual(entry);
+    });
+
+    it("resolves legacy FileIds through fileIdToPath", () => {
+        const docsDefinition = makeDocsDefinition();
+        (docsDefinition.config as Record<string, unknown>).agents = { robotsTxt: "file-id-1" };
+        const { localeEntry } = buildLedgerInput({
+            docsDefinition,
+            apiDefinitions: new Map(),
+            fileManifest: { "robots-noindex.txt": entry },
+            fileIdToPath: new Map([["file-id-1", "robots-noindex.txt"]])
+        });
+        expect(localeEntry.fileManifest?.["robots.txt"]?.hash).toBe("abc");
+    });
+});

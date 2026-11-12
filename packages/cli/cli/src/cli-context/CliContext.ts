@@ -9,6 +9,7 @@ import {
     type CaptureExceptionOptions,
     CliError,
     Finishable,
+    type InstructionsTopic,
     type PosthogAutomationEvent,
     type PosthogEvent,
     Startable,
@@ -62,6 +63,7 @@ export class CliContext {
     private isLocal: boolean;
     private readonly stdoutRedirector = new StdoutRedirector();
     private jsonMode = false;
+    private readonly linesAfterTasks: string[] = [];
 
     public static async create(
         stdout: NodeJS.WriteStream,
@@ -136,7 +138,11 @@ export class CliContext {
         );
     }
 
-    public failAndThrow(message?: string, error?: unknown, options?: { code?: CliError.Code }): never {
+    public failAndThrow(
+        message?: string,
+        error?: unknown,
+        options?: { code?: CliError.Code; instructionsTopic?: InstructionsTopic | readonly InstructionsTopic[] }
+    ): never {
         this.failWithoutThrowing(message, error, options);
         throw new TaskAbortSignal(
             message ??
@@ -148,12 +154,16 @@ export class CliContext {
         );
     }
 
-    public failWithoutThrowing(message?: string, error?: unknown, options?: { code?: CliError.Code }): void {
+    public failWithoutThrowing(
+        message?: string,
+        error?: unknown,
+        options?: { code?: CliError.Code; instructionsTopic?: InstructionsTopic | readonly InstructionsTopic[] }
+    ): void {
         this.didSucceed = false;
         if (error instanceof TaskAbortSignal) {
             return;
         }
-        logErrorMessage({ message, error, logger: this.logger });
+        logErrorMessage({ message, error, logger: this.logger, instructionsTopic: options?.instructionsTopic });
         reportError(this, error, { ...options, message });
     }
 
@@ -196,11 +206,26 @@ export class CliContext {
         }
     }
 
+    /**
+     * Logs a line that belongs after the command's task boxes, e.g. a next step. On a TTY, logs
+     * print above the boxes, so it is held until they finish; without one it is logged now.
+     */
+    public logAfterTasks(line: string): void {
+        if (this.isTTY) {
+            this.linesAfterTasks.push(line);
+        } else {
+            this.logger.info(line);
+        }
+    }
+
     public async exit({ code }: { code?: number } = {}): Promise<never> {
         if (!this._suppressUpgradeMessage && !this.isLocal) {
             await this.nudgeUpgradeIfAvailable();
         }
         this.ttyAwareLogger.finish();
+        for (const line of this.linesAfterTasks) {
+            process.stdout.write(`${line}\n`);
+        }
         try {
             await Promise.all([this.posthogManager.flush(), flushFeatureFlagClient()]);
         } catch {

@@ -1,3 +1,0 @@
-- summary: |
-    Fix wire test verification for endpoints with multi-value array query parameters.
-  type: fix

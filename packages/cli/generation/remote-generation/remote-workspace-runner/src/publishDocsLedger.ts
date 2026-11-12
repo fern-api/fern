@@ -105,6 +105,48 @@ function jsonBlobRef(value: unknown): { ref: BlobRef; hash: string; buf: Buffer 
 }
 
 /**
+ * Well-known `fullPath` each docs.yml `agents` file is served from. Renderers
+ * look these files up by fixed name, so a file configured under another name
+ * (e.g. `robots-txt: ./seo/robots-noindex.txt`) is also published at its
+ * well-known path.
+ */
+const WELL_KNOWN_AGENT_FILE_PATHS = {
+    robotsTxt: "robots.txt",
+    llmsTxt: "llms.txt",
+    llmsFullTxt: "llms-full.txt"
+} as const;
+
+export function aliasWellKnownAgentFiles({
+    agents,
+    fileManifest,
+    fileIdToPath
+}: {
+    agents: DocsDefinition["config"]["agents"];
+    fileManifest: Record<string, FileManifestEntry> | undefined;
+    fileIdToPath: Map<string, string> | undefined;
+}): Record<string, FileManifestEntry> | undefined {
+    if (agents == null || fileManifest == null) {
+        return fileManifest;
+    }
+    let aliased: Record<string, FileManifestEntry> | undefined;
+    for (const [key, wellKnownPath] of Object.entries(WELL_KNOWN_AGENT_FILE_PATHS)) {
+        const fileId = agents[key as keyof typeof WELL_KNOWN_AGENT_FILE_PATHS];
+        if (fileId == null) {
+            continue;
+        }
+        const configuredPath = fileIdToPath?.get(fileId) ?? fileId;
+        const entry = fileManifest[configuredPath];
+        if (configuredPath === wellKnownPath || entry == null) {
+            continue;
+        }
+        // The explicitly configured file wins over any unrelated asset already at the well-known path.
+        aliased ??= { ...fileManifest };
+        aliased[wellKnownPath] = { ...entry, filename: wellKnownPath };
+    }
+    return aliased ?? fileManifest;
+}
+
+/**
  * Build a DocsPublishInput from a resolved DocsDefinition and collect
  * all content blobs that may need uploading.
  *
@@ -227,7 +269,11 @@ export function buildLedgerInput({
         config: ledgerConfig,
         apiManifest: apiManifestRef,
         jsFiles: jsFilesRef,
-        fileManifest,
+        fileManifest: aliasWellKnownAgentFiles({
+            agents: docsDefinition.config.agents,
+            fileManifest,
+            fileIdToPath
+        }),
         redirects: null,
         locale: locale ?? docsDefinition.config.translations?.defaultLocale ?? "en",
         git
@@ -257,6 +303,7 @@ export interface LedgerPublishResult {
  */
 export async function publishDocsViaLedger({
     docsDefinition,
+    publishStartedAt,
     organization,
     domain,
     basepath,
@@ -273,9 +320,13 @@ export async function publishDocsViaLedger({
     filePaths,
     fileIdToPath,
     editThisPage,
-    resolver
+    resolver,
+    source,
+    globalTheme
 }: {
     docsDefinition: DocsDefinition;
+    /** ISO time the publish command started. FDR orders overlapping publishes of one URL by it. */
+    publishStartedAt?: string;
     organization: string;
     domain: string;
     basepath: string | undefined;
@@ -297,6 +348,10 @@ export async function publishDocsViaLedger({
     editThisPage?: { github?: { owner: string; repo: string; branch?: string; host?: string } };
     /** Resolver instance for accessing translation pages/overlays. Optional. */
     resolver?: DocsDefinitionResolver;
+    /** The `fern/` folder as a JSON file list, kept with the site so it can be written to a repo later. */
+    source?: Buffer;
+    /** Org-level theme FDR merges into the (unmerged) locale configs at publish. */
+    globalTheme?: string;
 }): Promise<LedgerPublishResult> {
     // ── Phase 1: Build all locales upfront ──────────────────────────────
     // If any locale fails to build, the entire publish aborts before any
@@ -340,7 +395,16 @@ export async function publishDocsViaLedger({
 
     const locales: LocaleEntry[] = [baseLocale, ...builtTranslations.map((t) => t.localeEntry)];
 
-    const publishInput: DocsPublishInput = {
+    let sourceRef: BlobRef | undefined;
+    if (source != null) {
+        const hash = sha256(source);
+        blobs.set(hash, source);
+        // uploadMissingBlobs sends in-memory blobs as application/octet-stream.
+        sourceRef = { hash, contentType: "application/octet-stream", contentLength: source.length };
+    }
+
+    // `source`, `publishStartedAt` and `globalTheme` aren't in the published fdr-sdk type yet; older FDRs strip them.
+    const publishInput: DocsPublishInput & { source?: BlobRef; publishStartedAt?: string; globalTheme?: string } = {
         orgId: organization,
         domain,
         basepath: basepath ?? "",
@@ -348,7 +412,10 @@ export async function publishDocsViaLedger({
         customDomains: customDomains ?? [],
         previewId: previewId ?? null,
         defaultLocale: baseLocale.locale,
-        locales
+        locales,
+        ...(sourceRef != null && { source: sourceRef }),
+        ...(publishStartedAt != null && { publishStartedAt }),
+        ...(globalTheme != null && { globalTheme })
     };
 
     // Register — server computes deployment hash, returns presigned S3

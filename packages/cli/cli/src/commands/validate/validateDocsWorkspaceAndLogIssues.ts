@@ -6,6 +6,8 @@ import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace } from "@fern-api/workspace-loader";
 
+import { getInstructionsTopicsForViolations } from "./getInstructionsTopicsForViolations.js";
+
 export interface CollectedDocsViolations {
     violations: ValidationViolation[];
     elapsedMillis: number;
@@ -82,7 +84,7 @@ export async function validateDocsWorkspaceWithoutExiting({
     excludeRules?: string[];
     /** Set by `fern docs dev --skip-api`; see `runRulesOnDocsWorkspace`. */
     skipApiReferences?: boolean;
-}): Promise<{ hasErrors: boolean }> {
+}): Promise<{ hasErrors: boolean; violations: ValidationViolation[] }> {
     // Apply env var substitution if settings.substitute-env-vars is enabled
     // This matches the behavior of `fern generate --docs` which throws errors for missing env vars
     // The entire config including instances (with custom domains) goes through substitution
@@ -124,7 +126,7 @@ export async function validateDocsWorkspaceWithoutExiting({
         hasErrors = hasErrors || violations.some((violation) => violation.name === "valid-markdown-links");
     }
 
-    return { hasErrors };
+    return { hasErrors, violations };
 }
 
 export async function validateDocsWorkspaceAndLogIssues({
@@ -144,7 +146,7 @@ export async function validateDocsWorkspaceAndLogIssues({
     errorOnBrokenLinks?: boolean;
     excludeRules?: string[];
 }): Promise<void> {
-    const { hasErrors } = await validateDocsWorkspaceWithoutExiting({
+    const { hasErrors, violations } = await validateDocsWorkspaceWithoutExiting({
         workspace,
         context,
         logWarnings,
@@ -155,6 +157,9 @@ export async function validateDocsWorkspaceAndLogIssues({
     });
 
     if (hasErrors) {
-        context.failAndThrow(undefined, undefined, { code: CliError.Code.ValidationError });
+        context.failAndThrow(undefined, undefined, {
+            code: CliError.Code.ValidationError,
+            instructionsTopic: getInstructionsTopicsForViolations({ docsViolations: violations, errorOnBrokenLinks })
+        });
     }
 }

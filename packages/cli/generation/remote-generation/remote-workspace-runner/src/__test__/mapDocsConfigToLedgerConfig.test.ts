@@ -25,3 +25,15 @@ describe("mapDocsConfigToLedgerConfig agents", () => {
         expect(mapAgents({ siteDescription: "desc" })).not.toHaveProperty("robotsTxtOnInstanceUrl");
     });
 });
+
+describe("mapDocsConfigToLedgerConfig remotePaths", () => {
+    it("forwards docs.yml remote-paths", () => {
+        const remotePaths = [{ path: "/ui", destination: "https://portal.fernwood.example/ui" }];
+        const ledger = mapDocsConfigToLedgerConfig({
+            docsConfig: { remotePaths } as unknown as DocsV1Write.DocsConfig,
+            fileManifest: undefined,
+            fileIdToPath: undefined
+        });
+        expect(ledger.remotePaths).toEqual(remotePaths);
+    });
+});

@@ -16,7 +16,7 @@ export namespace HttpEndpointSource {
         type: "openapi";
     }
 
-    export interface Openrpc extends _Utils {
+    export interface Openrpc extends FernIr.OpenRpcSourceInfo, _Utils {
         type: "openrpc";
     }
 
@@ -27,7 +27,7 @@ export namespace HttpEndpointSource {
     export interface _Visitor<_Result> {
         proto: (value: FernIr.ProtoSourceInfo) => _Result;
         openapi: () => _Result;
-        openrpc: () => _Result;
+        openrpc: (value: FernIr.OpenRpcSourceInfo) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
@@ -58,8 +58,9 @@ export const HttpEndpointSource = {
         };
     },
 
-    openrpc: (): FernIr.HttpEndpointSource.Openrpc => {
+    openrpc: (value: FernIr.OpenRpcSourceInfo): FernIr.HttpEndpointSource.Openrpc => {
         return {
+            ...value,
             type: "openrpc",
             _visit: function <_Result>(
                 this: FernIr.HttpEndpointSource.Openrpc,
@@ -80,7 +81,7 @@ export const HttpEndpointSource = {
             case "openapi":
                 return visitor.openapi();
             case "openrpc":
-                return visitor.openrpc();
+                return visitor.openrpc(value);
             default:
                 return visitor._other(value);
         }

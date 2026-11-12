@@ -1,0 +1,193 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "getLogs": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "response": {
+                    "body": {
+                      "alias": true,
+                      "disabled": true,
+                      "label": "label",
+                      "limit": 1,
+                      "list": [
+                        true,
+                      ],
+                      "map": {
+                        "key": 1,
+                      },
+                      "mistyped": 1,
+                    },
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/logs",
+              "request": {
+                "name": "GetLogsRequest",
+                "query-parameters": {
+                  "limit": {
+                    "default": 25,
+                    "type": "optional<Limit>",
+                  },
+                  "tailLines": "optional<MistypedInteger>",
+                },
+              },
+              "response": {
+                "docs": "OK",
+                "status-code": 200,
+                "type": "Values",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "Alias": {
+            "default": false,
+            "type": "Disabled",
+          },
+          "Disabled": {
+            "type": "boolean",
+          },
+          "Label": {
+            "type": "string",
+          },
+          "Limit": {
+            "type": "integer",
+          },
+          "MistypedInteger": {
+            "type": "integer",
+          },
+          "Values": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "alias": {
+                "default": false,
+                "type": "optional<Alias>",
+              },
+              "disabled": {
+                "default": false,
+                "type": "optional<Disabled>",
+              },
+              "label": {
+                "default": "",
+                "type": "optional<Label>",
+              },
+              "limit": {
+                "default": 25,
+                "type": "optional<Limit>",
+              },
+              "list": "optional<list<Disabled>>",
+              "map": "optional<map<string, Limit>>",
+              "mistyped": "optional<MistypedInteger>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    getLogs:
+      path: /logs
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: GetLogsRequest
+        query-parameters:
+          tailLines: optional<MistypedInteger>
+          limit:
+            type: optional<Limit>
+            default: 25
+      response:
+        docs: OK
+        type: Values
+        status-code: 200
+      examples:
+        - response:
+            body:
+              disabled: true
+              limit: 1
+              label: label
+              alias: true
+              mistyped: 1
+              list:
+                - true
+              map:
+                key: 1
+  source:
+    openapi: ../openapi.yml
+types:
+  Disabled:
+    type: boolean
+  Limit:
+    type: integer
+  Label:
+    type: string
+  MistypedInteger:
+    type: integer
+  Alias:
+    type: Disabled
+    default: false
+  Values:
+    properties:
+      disabled:
+        type: optional<Disabled>
+        default: false
+      limit:
+        type: optional<Limit>
+        default: 25
+      label:
+        type: optional<Label>
+        default: ''
+      alias:
+        type: optional<Alias>
+        default: false
+      mistyped: optional<MistypedInteger>
+      list: optional<list<Disabled>>
+      map: optional<map<string, Limit>>
+    source:
+      openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Referenced primitive defaults",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Referenced primitive defaults
+",
+  },
+  "specVersion": "1",
+}
