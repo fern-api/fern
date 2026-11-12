@@ -89,6 +89,7 @@ import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter.js";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter.js";
 import { NodeIdGenerator } from "./NodeIdGenerator.js";
 import { maybeBundleMdxComponent } from "./utils/bundleMdxComponent.js";
+import { collectInlineTypeIds } from "./utils/collectInlineTypeIds.js";
 import { collectMdxComponentFiles } from "./utils/collectMdxComponentFiles.js";
 import { collectWellKnownSkillsFiles } from "./utils/collectWellKnownSkillsFiles.js";
 import { convertDocsAvailability } from "./utils/convertDocsAvailability.js";
@@ -2396,7 +2397,8 @@ export class DocsDefinitionResolver {
             parentAvailability ?? item.availability,
             openApiTags,
             graphqlData.namespacesByOperationId,
-            graphqlData.typeCategories
+            graphqlData.typeCategories,
+            item.types ? collectInlineTypeIds(ir) : undefined
         );
 
         // Extract tag description content and add it to both rawMarkdownFiles and parsedDocsConfig.pages

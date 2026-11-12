@@ -107,6 +107,7 @@ async function visitNavigationItem({
         hidden: noop,
         skipSlug: noop,
         paginated: noop,
+        types: noop,
         playground: noop,
         flattened: noop,
         path: noop,

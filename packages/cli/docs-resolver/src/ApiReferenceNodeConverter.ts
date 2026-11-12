@@ -83,6 +83,17 @@ type GraphqlTypeChildNode = Extract<FernNavigation.V1.ApiPackageChild, { type: "
 const GRAPHQL_TYPES_URL_SLUG = "types";
 
 /**
+ * The standalone-type-page member of {@link FernNavigation.V1.ApiPackageChild}, emitted for
+ * schemas no operation references when the API section sets `types: true`.
+ */
+type ApiTypeChildNode = Extract<FernNavigation.V1.ApiPackageChild, { type: "apiType" }>;
+
+const API_TYPES_URL_SLUG = "types";
+/** Used instead of `types` when a GraphQL schema in the same API already has a `types` section. */
+const API_SCHEMAS_URL_SLUG = "schemas";
+const API_TYPES_TITLE = "Types";
+
+/**
  * Title of the single section holding every GraphQL kind. Types belong to the schema rather than
  * to any one package, so every GraphQL spec in the API section contributes to this one section.
  */
@@ -107,6 +118,7 @@ export class ApiReferenceNodeConverter {
     #tagDescriptionContent: Map<AbsoluteFilePath, string>;
     #graphqlNamespacesByOperationId: Map<FdrAPI.GraphQlOperationId, string>;
     #graphqlTypeCategories: Record<FdrAPI.TypeId, FernNavigation.GraphQlTypeCategory>;
+    #inlineTypeIds: ReadonlySet<FdrAPI.TypeId>;
     constructor(
         private apiSection: docsYml.DocsNavigationItem.ApiSection,
         api: APIV1Read.ApiDefinition,
@@ -123,11 +135,13 @@ export class ApiReferenceNodeConverter {
         private parentAvailability?: docsYml.RawSchemas.Availability,
         private openApiTags?: Record<string, { id: string; description: string | undefined }>,
         graphqlNamespacesByOperationId?: Map<FdrAPI.GraphQlOperationId, string>,
-        graphqlTypeCategories?: Record<FdrAPI.TypeId, FernNavigation.GraphQlTypeCategory>
+        graphqlTypeCategories?: Record<FdrAPI.TypeId, FernNavigation.GraphQlTypeCategory>,
+        inlineTypeIds?: ReadonlySet<FdrAPI.TypeId>
     ) {
         this.#tagDescriptionContent = new Map();
         this.#graphqlNamespacesByOperationId = graphqlNamespacesByOperationId ?? new Map();
         this.#graphqlTypeCategories = graphqlTypeCategories ?? {};
+        this.#inlineTypeIds = inlineTypeIds ?? new Set();
         this.disableEndpointPairs = docsWorkspace.config.experimental?.disableStreamToggle ?? false;
         this.apiDefinitionId = FernNavigation.V1.ApiDefinitionId(api.id);
         this.#holder = ApiDefinitionHolder.create(api, taskContext);
@@ -1172,6 +1186,12 @@ export class ApiReferenceNodeConverter {
             if (graphqlTypesSection != null) {
                 additionalChildren.push(graphqlTypesSection);
             }
+            if (this.apiSection.types) {
+                const apiTypesSection = this.#convertUnreferencedTypesToSection(parentSlug, parentAvailability);
+                if (apiTypesSection != null) {
+                    additionalChildren.push(apiTypesSection);
+                }
+            }
         }
 
         additionalChildren = this.mergeEndpointPairs(additionalChildren);
@@ -1452,6 +1472,139 @@ export class ApiReferenceNodeConverter {
             orphaned: undefined,
             featureFlags: undefined
         } as ApiPackageNodeWithCollapsibleConfig;
+    }
+
+    /**
+     * Every type id an endpoint, WebSocket, webhook or GraphQL operation of the API reaches,
+     * directly or through another type. Those types are documented inline on the operation
+     * pages; the remainder (e.g. a schema-only spec such as TwiML, or a webhook payload the
+     * spec never wires to an operation) is what `types: true` gives a page to.
+     */
+    #collectReferencedTypeIds(): Set<FdrAPI.TypeId> {
+        const api = this.#holder.api;
+        const referenced = new Set<FdrAPI.TypeId>();
+        const queue: FdrAPI.TypeId[] = [];
+        const visit = (typeId: FdrAPI.TypeId): void => {
+            if (!referenced.has(typeId)) {
+                referenced.add(typeId);
+                queue.push(typeId);
+            }
+        };
+        for (const pkg of [api.rootPackage, ...Object.values(api.subpackages)]) {
+            pkg.endpoints.forEach((endpoint) =>
+                FernNavigation.ApiTypeIdVisitor.visitEndpointDefinition(endpoint, visit)
+            );
+            pkg.websockets.forEach((channel) => FernNavigation.ApiTypeIdVisitor.visitWebSocketChannel(channel, visit));
+            pkg.webhooks.forEach((webhook) => FernNavigation.ApiTypeIdVisitor.visitWebhookDefinition(webhook, visit));
+            // GraphQL operations can reference non-GraphQL (REST) types; GraphQL's own types are filtered
+            // out later via `#graphqlTypeCategories`, since they have their own section.
+            pkg.graphqlOperations?.forEach((operation) =>
+                FernNavigation.ApiTypeIdVisitor.visitGraphQlOperation(operation, visit)
+            );
+        }
+        for (let typeId = queue.shift(); typeId != null; typeId = queue.shift()) {
+            const type = api.types[typeId];
+            if (type != null) {
+                FernNavigation.ApiTypeIdVisitor.visitTypeDefinition(type, visit);
+            }
+        }
+        return referenced;
+    }
+
+    /**
+     * One "Types" section at the API root with a page per schema no operation references (see
+     * {@link #collectReferencedTypeIds}). GraphQL types have their own section, and types the importer
+     * lifted out of an inline schema (an enum or object declared inside another schema's property) are
+     * shown nested on their parent's page; both are left out.
+     */
+    #convertUnreferencedTypesToSection(
+        parentSlug: FernNavigation.V1.SlugGenerator,
+        parentAvailability?: docsYml.RawSchemas.Availability
+    ): FernNavigation.V1.ApiPackageChild | undefined {
+        const referenced = this.#collectReferencedTypeIds();
+        // A GraphQL schema in the same API already owns `<api>/types`; keep the two sections apart.
+        const hasGraphqlTypes = Object.keys(this.#graphqlTypeCategories).length > 0;
+        const typesSlug = parentSlug.append(hasGraphqlTypes ? API_SCHEMAS_URL_SLUG : API_TYPES_URL_SLUG);
+        const usedSlugs = new Set<string>();
+        const children: FernNavigation.V1.ApiPackageChild[] = Object.keys(this.#holder.api.types)
+            .map((typeIdRaw) => FdrAPI.TypeId(typeIdRaw))
+            .filter(
+                (typeId) =>
+                    !referenced.has(typeId) &&
+                    this.#graphqlTypeCategories[typeId] == null &&
+                    !this.#inlineTypeIds.has(typeId)
+            )
+            .sort((a, b) => {
+                const titleA = this.#holder.api.types[a]?.displayName ?? this.#holder.api.types[a]?.name ?? a;
+                const titleB = this.#holder.api.types[b]?.displayName ?? this.#holder.api.types[b]?.name ?? b;
+                return titleA.localeCompare(titleB) || a.localeCompare(b);
+            })
+            .map((typeId) => this.#buildApiTypeChildNode(typeId, typesSlug, usedSlugs, parentAvailability))
+            .filter(isNonNullish);
+
+        if (children.length === 0) {
+            return undefined;
+        }
+
+        return {
+            id: this.#idgen.get(`${this.apiDefinitionId}:types`),
+            type: "apiPackage",
+            collapsed: undefined,
+            children,
+            title: API_TYPES_TITLE,
+            slug: typesSlug.get(),
+            icon: undefined,
+            hidden: this.hideChildren,
+            overviewPageId: undefined,
+            collapsible: undefined,
+            collapsedByDefault: undefined,
+            availability: convertDocsAvailability(parentAvailability),
+            apiDefinitionId: this.apiDefinitionId,
+            pointsTo: undefined,
+            noindex: undefined,
+            playground: undefined,
+            authed: undefined,
+            viewers: undefined,
+            orphaned: undefined,
+            featureFlags: undefined
+        } as ApiPackageNodeWithCollapsibleConfig;
+    }
+
+    #buildApiTypeChildNode(
+        typeId: FdrAPI.TypeId,
+        sectionSlug: FernNavigation.V1.SlugGenerator,
+        usedSlugs: Set<string>,
+        parentAvailability?: docsYml.RawSchemas.Availability
+    ): ApiTypeChildNode | undefined {
+        const type = this.#holder.api.types[typeId];
+        if (type == null) {
+            return undefined;
+        }
+        const title = type.displayName ?? type.name ?? typeId;
+        // Titles that kebab-case alike (`SayV2` / `Say_V2`) get a numeric suffix so no two pages share a URL.
+        const baseSlug = kebabCase(title);
+        let slug = baseSlug;
+        for (let n = 2; usedSlugs.has(slug); n++) {
+            slug = `${baseSlug}-${n}`;
+        }
+        usedSlugs.add(slug);
+        return {
+            id: this.#idgen.get(`${this.apiDefinitionId}:apiType:${typeId}`),
+            type: "apiType",
+            collapsed: undefined,
+            typeId: FernNavigation.TypeId(typeId),
+            title,
+            slug: sectionSlug.append(slug).get(),
+            icon: undefined,
+            hidden: this.hideChildren,
+            apiDefinitionId: this.apiDefinitionId,
+            availability:
+                FernNavigation.V1.convertAvailability(type.availability) ?? convertDocsAvailability(parentAvailability),
+            authed: undefined,
+            viewers: undefined,
+            orphaned: undefined,
+            featureFlags: undefined
+        };
     }
 
     #buildGraphqlTypeChildNode(

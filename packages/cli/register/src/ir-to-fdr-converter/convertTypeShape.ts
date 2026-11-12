@@ -1,10 +1,14 @@
+import { assertNever } from "@fern-api/core-utils";
 import { FdrAPI as FdrCjsSdk } from "@fern-api/fdr-sdk";
 import { FernIr as Ir, TypeReference } from "@fern-api/ir-sdk";
 import { CliError } from "@fern-api/task-context";
 import { convertIrAvailability } from "./convertPackage.js";
 import { getOriginalName, getWireValue } from "./nameUtils.js";
 
-export function convertTypeShape(irType: Ir.types.Type): FdrCjsSdk.api.v1.register.TypeShape {
+export function convertTypeShape(
+    irType: Ir.types.Type,
+    xml?: Ir.types.XmlEncoding
+): FdrCjsSdk.api.v1.register.TypeShape {
     return irType._visit<FdrCjsSdk.api.v1.register.TypeShape>({
         alias: (alias) => {
             return {
@@ -35,10 +39,12 @@ export function convertTypeShape(irType: Ir.types.Type): FdrCjsSdk.api.v1.regist
                         key: FdrCjsSdk.PropertyKey(getWireValue(property.name)),
                         valueType: convertTypeReference(property.valueType, property.defaultValue),
                         availability: convertIrAvailability(property.availability),
-                        propertyAccess: property.propertyAccess
+                        propertyAccess: property.propertyAccess,
+                        ...(property.xml != null ? { xml: convertXmlPropertyEncoding(property.xml) } : {})
                     })
                 ),
-                extraProperties: convertExtraProperties(object.extraProperties)
+                extraProperties: convertExtraProperties(object.extraProperties),
+                ...(xml != null ? { xml: { name: xml.name, namespace: xml.namespace, prefix: xml.prefix } } : {})
             };
         },
         union: (union) => {
@@ -421,5 +427,32 @@ function convertExtraProperties(
         };
     } else {
         return convertTypeReference(extraProperties);
+    }
+}
+
+function convertXmlPropertyEncoding(
+    xml: Ir.types.XmlPropertyEncoding | undefined
+): FdrCjsSdk.api.v1.register.XmlPropertyEncoding | undefined {
+    if (xml == null) {
+        return undefined;
+    }
+    return {
+        kind: convertXmlPropertyKind(xml.kind),
+        name: xml.name,
+        wrapped: xml.wrapped,
+        listSeparator: xml.listSeparator
+    };
+}
+
+function convertXmlPropertyKind(kind: Ir.types.XmlPropertyKind): FdrCjsSdk.api.v1.register.XmlPropertyKind {
+    switch (kind) {
+        case "ATTRIBUTE":
+            return "attribute";
+        case "TEXT":
+            return "text";
+        case "ELEMENT":
+            return "element";
+        default:
+            assertNever(kind);
     }
 }
