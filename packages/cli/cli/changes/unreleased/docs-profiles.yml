@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
 
 - summary: |
-    Add `profiles:` to `docs.yml` so one page can show different `${NAME}` values per product,
-    version, tab, section or page. Set `profile: <name>` on any scope; the innermost one wins.
+    Add docs profiles. A profile is a named set of values, like a product name or CLI command, that
+    fills `${NAME}` placeholders. Publish one set of pages as several editions without copying them.
   type: feat
