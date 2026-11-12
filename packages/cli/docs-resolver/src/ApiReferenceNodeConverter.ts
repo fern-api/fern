@@ -50,7 +50,7 @@ import { cannotFindSubpackageByLocatorError, packageReuseError } from "./utils/e
 import { isSubpackage } from "./utils/isSubpackage.js";
 import { mergeAndFilterChildren } from "./utils/mergeAndFilterChildren.js";
 import { mergeEndpointPairs } from "./utils/mergeEndpointPairs.js";
-import { API_SCHEMAS_URL_SLUG, pickApiTypesSectionSlug } from "./utils/pickApiTypesSectionSlug.js";
+import { pickApiTypesSection } from "./utils/pickApiTypesSectionSlug.js";
 import { sortChildrenByAvailability } from "./utils/sortChildrenByAvailability.js";
 import {
     stringifyEndpointPathParts,
@@ -88,10 +88,6 @@ const GRAPHQL_TYPES_URL_SLUG = "types";
  * schemas no operation references when the API section sets `types: true`.
  */
 type ApiTypeChildNode = Extract<FernNavigation.V1.ApiPackageChild, { type: "apiType" }>;
-
-const API_TYPES_TITLE = "Types";
-/** Used instead of `Types` when a sibling (e.g. the GraphQL types section) already owns `<api>/types`. */
-const API_SCHEMAS_TITLE = "Schemas";
 
 function getChildSlug(child: FernNavigation.V1.ApiPackageChild): string | undefined {
     switch (child.type) {
@@ -1200,7 +1196,9 @@ export class ApiReferenceNodeConverter {
             if (this.apiSection.types) {
                 const apiTypesSection = this.#convertUnreferencedTypesToSection(
                     parentSlug,
-                    new Set(additionalChildren.map(getChildSlug).filter(isNonNullish)),
+                    // Everything else that will sit next to the section at the API root: the items laid
+                    // out by hand in docs.yml (`this.#children`) and the ones derived from the definition.
+                    new Set([...this.#children, ...additionalChildren].map(getChildSlug).filter(isNonNullish)),
                     parentAvailability
                 );
                 if (apiTypesSection != null) {
@@ -1540,8 +1538,8 @@ export class ApiReferenceNodeConverter {
         const referenced = this.#collectReferencedTypeIds();
         // `<api>/types` may already belong to a sibling (the GraphQL types section, a package named
         // "Types"); fall back to `schemas`, then a numbered slug, so the two never share a URL.
-        const sectionSlug = pickApiTypesSectionSlug(parentSlug, siblingSlugs);
-        const typesSlug = parentSlug.append(sectionSlug);
+        const section = pickApiTypesSection(parentSlug, siblingSlugs);
+        const typesSlug = parentSlug.append(section.slug);
         const usedSlugs = new Set<string>();
         const children: FernNavigation.V1.ApiPackageChild[] = Object.keys(this.#holder.api.types)
             .map((typeIdRaw) => FdrAPI.TypeId(typeIdRaw))
@@ -1568,7 +1566,7 @@ export class ApiReferenceNodeConverter {
             type: "apiPackage",
             collapsed: undefined,
             children,
-            title: sectionSlug === API_SCHEMAS_URL_SLUG ? API_SCHEMAS_TITLE : API_TYPES_TITLE,
+            title: section.title,
             slug: typesSlug.get(),
             icon: undefined,
             hidden: this.hideChildren,

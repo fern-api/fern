@@ -1,8 +1,7 @@
 # yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
 
 - summary: |
-    The section `types: true` adds no longer shares a URL with a sibling: when `<api>/types` is already
-    taken (the GraphQL types section, a package named "Types") it is titled `Schemas` at `<api>/schemas`
-    (then `types-2`, ...). Type pages sort with an explicit locale so their order is the same on every
-    machine.
+    When an API with `types: true` also has a GraphQL schema, the standalone schema section is titled
+    `Schemas` (matching its `schemas` slug) instead of a second `Types` section; type pages sort
+    with an explicit locale so their order is the same on every machine.
   type: fix
