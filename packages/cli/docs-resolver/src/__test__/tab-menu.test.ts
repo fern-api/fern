@@ -93,6 +93,28 @@ describe("tab-menu", () => {
         expect(new Set(ids).size).toBe(ids.length);
     });
 
+    it("nests a member's own variants as a sidebar selector under that member", async () => {
+        const { varianted, pageSlugs } = collect(await resolveFixture("nested"));
+        const [menu, nested] = varianted;
+        expect(varianted).toHaveLength(2);
+        expect(menu?.location).toBe("tab");
+        expect(menu?.children.map((variant) => variant.slug)).toEqual(["products/agents", "products/studio"]);
+        expect(menu?.children[0]?.children).toEqual([nested]);
+        expect(nested?.location).toBeUndefined();
+        expect(nested?.children.map((variant) => [variant.variantId, variant.slug, variant.default])).toEqual([
+            ["agents/Python", "products/agents/python", true],
+            ["agents/TypeScript", "products/agents/typescript", false]
+        ]);
+        expect(nested?.menu?.map((entry) => entry.type)).toEqual(["group"]);
+        expect(pageSlugs).toEqual(
+            expect.arrayContaining([
+                "products/agents/python/overview",
+                "products/agents/typescript/overview",
+                "products/studio/overview"
+            ])
+        );
+    });
+
     it("falls back to a single-list sidebar selector without header tabs", async () => {
         const [menu] = collect(await resolveFixture("sidebar")).varianted;
         expect(menu?.location).toBeUndefined();

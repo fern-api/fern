@@ -2137,7 +2137,6 @@ export class DocsDefinitionResolver {
                 contentSource,
                 variantIdPrefix: ownVariantId
             });
-            // @ts-expect-error The pinned fdr-sdk's VariantChild predates varianted nodes under a variant; remove after bumping it.
             children.push(nested);
         }
         return {
