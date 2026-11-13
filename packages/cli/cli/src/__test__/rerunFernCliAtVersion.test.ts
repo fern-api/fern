@@ -24,7 +24,7 @@ describe.sequential("rerunFernCliAtVersion", () => {
         const { path: projectDir, cleanup } = await tmp.dir({ unsafeCleanup: true });
         try {
             const cliContext = await createMockCliContext();
-            const version = "1.2.3";
+            const version = "99.0.0";
             const markerPath = path.join(projectDir, "marker.txt");
             const binDir = path.join(projectDir, "node_modules", ".bin");
             await mkdir(binDir, { recursive: true });
@@ -137,7 +137,7 @@ describe.sequential("rerunFernCliAtVersion", () => {
                 throw failure;
             }
         );
-        await expect(rerunFernCliAtVersion({ version: "1.2.3", cliContext })).rejects.toBe(failure);
+        await expect(rerunFernCliAtVersion({ version: "99.0.0", cliContext })).rejects.toBe(failure);
         expect(npxDirectory).toBeDefined();
         expect(existsSync(npxDirectory ?? "")).toBe(false);
     });

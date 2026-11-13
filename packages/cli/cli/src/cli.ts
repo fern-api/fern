@@ -129,6 +129,11 @@ import { whoami } from "./commands/whoami/whoami.js";
 import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeDefinitionForWorkspaces.js";
 import { writeDocsDefinitionForProject } from "./commands/write-docs-definition/writeDocsDefinitionForProject.js";
 import { FERN_CWD_ENV_VAR } from "./cwd.js";
+import {
+    ALLOW_OLD_CLI_VERSION_FLAG,
+    isOlderThanMinimumIsolatedCliVersion,
+    MINIMUM_ISOLATED_CLI_VERSION
+} from "./oldCliVersionGate.js";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion.js";
 import { resolveGroupGithubConfig } from "./resolveGroupGithubConfig.js";
 import { RUNTIME } from "./runtime.js";
@@ -227,7 +232,11 @@ async function runCli() {
             await tryRunCli(cliContext);
         } else {
             const versionOfCliToRun = await getIntendedVersionOfCli(cliContext);
-            if (cliContext.environment.packageVersion === versionOfCliToRun) {
+            // Older CLIs upgrade through an unisolated npx, so upgrade away from them with this CLI.
+            const isUpgradeFromOldCli =
+                getInvokedCommandName(process.argv) === "upgrade" &&
+                isOlderThanMinimumIsolatedCliVersion(versionOfCliToRun);
+            if (cliContext.environment.packageVersion === versionOfCliToRun || isUpgradeFromOldCli) {
                 await tryRunCli(cliContext);
             } else {
                 await rerunFernCliAtVersion({
@@ -294,6 +303,10 @@ async function tryRunCli(cliContext: CliContext) {
         .option("log-level", {
             default: LogLevel.Info,
             choices: LOG_LEVELS
+        })
+        .option(ALLOW_OLD_CLI_VERSION_FLAG.slice(2), {
+            boolean: true,
+            description: `Run the CLI version pinned in fern.config.json even if it is older than ${MINIMUM_ISOLATED_CLI_VERSION}, which can run executables from the project directory`
         })
         .demandCommand()
         .recommendCommands();

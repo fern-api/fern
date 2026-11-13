@@ -6,6 +6,7 @@ import os from "os";
 import path from "path";
 import { CliContext } from "./cli-context/CliContext.js";
 import { FERN_CWD_ENV_VAR } from "./cwd.js";
+import { confirmOldCliVersionAllowed, withoutAllowOldCliVersionFlag } from "./oldCliVersionGate.js";
 
 export class RerunCliError extends Error {
     public readonly stdout: string;
@@ -36,6 +37,33 @@ export async function rerunFernCliAtVersion({
     cwd?: string;
     throwOnError?: boolean;
 }): Promise<void> {
+    const forwardedArgs = args ?? process.argv.slice(2);
+    await confirmOldCliVersionAllowed({ version, cliContext, args: forwardedArgs });
+    await runFernCliAtVersion({
+        version,
+        cliContext,
+        env,
+        args: withoutAllowOldCliVersionFlag(forwardedArgs),
+        cwd,
+        throwOnError
+    });
+}
+
+async function runFernCliAtVersion({
+    version,
+    cliContext,
+    env,
+    args,
+    cwd,
+    throwOnError
+}: {
+    version: string;
+    cliContext: CliContext;
+    env: Record<string, string> | undefined;
+    args: string[];
+    cwd: string;
+    throwOnError: boolean;
+}): Promise<void> {
     cliContext.suppressUpgradeMessage();
 
     const commandLineArgs = [
@@ -46,7 +74,7 @@ export async function rerunFernCliAtVersion({
         "--",
         // Local builds display "fern-local" but redirect to the published fern-api package.
         cliContext.environment.packageName === "fern-api" ? "fern" : cliContext.environment.cliName,
-        ...(args ?? process.argv.slice(2))
+        ...args
     ];
     cliContext.logger.debug(
         [
@@ -79,7 +107,7 @@ export async function rerunFernCliAtVersion({
     const { failed, stdout, stderr } = result;
     if (stdout.includes("code EEXIST") || stderr.includes("code EEXIST")) {
         // try again if there is a npx conflict
-        return await rerunFernCliAtVersion({
+        return await runFernCliAtVersion({
             version,
             cliContext,
             env,
