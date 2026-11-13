@@ -460,11 +460,19 @@ export class AutoVersionStep extends BaseStep {
                 };
             }
             logSplit();
+            const analysis =
+                cappedChunks.length <= 1
+                    ? await this.analyzeSingle(cleanedDiff, language, previousVersion)
+                    : await this.analyzeChunks(cappedChunks, language, previousVersion);
+            if (skippedChunks === 0) {
+                return { analysis };
+            }
             return {
-                analysis:
-                    cappedChunks.length <= 1
-                        ? await this.analyzeSingle(cleanedDiff, language, previousVersion)
-                        : await this.analyzeChunks(cappedChunks, language, previousVersion)
+                analysis,
+                warning: {
+                    reason: "partial-analysis",
+                    message: `${skippedChunks} of ${chunks.length} diff chunks were not analyzed (capped at ${MAX_CHUNKS})`
+                }
             };
         } catch (error) {
             const message = `FAI analysis failed (${String(error)})`;
