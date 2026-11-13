@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern generate --local --version AUTO` logs a stable `AUTO versioning fallback: reason=<code>` line
+    (`diff-too-large` or `analysis-failed`) when it falls back to a PATCH bump, so CI can tell the
+    two cases apart. The diff size limit for AI analysis is raised from 10MB to 50MB.
+  type: feat
