@@ -4,6 +4,13 @@ export { getReferencedApiSections } from "./getReferencedApiSections.js";
 export { getVersionContentRef } from "./git-versions/getVersionContentRef.js";
 export { parseAudiences, parseDocsConfiguration, resolveFilepath } from "./parseDocsConfiguration.js";
 export {
+    getProfileVarsFilepaths,
+    type LoadedProfiles,
+    loadProfiles,
+    type ProfileConfigWithResolvedVars,
+    resolveProfiles
+} from "./resolveProfileVars.js";
+export {
     type DocsConfigurationWithResolvedRedirects,
     getRedirectsFilepaths,
     type LoadedRedirects,

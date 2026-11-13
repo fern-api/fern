@@ -6,6 +6,7 @@ import { CliError, TaskContext } from "@fern-api/task-context";
 import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import { camelCase, kebabCase } from "lodash-es";
 import urlJoin from "url-join";
+import { NO_PROFILE_VARS, type ProfileVarsScope } from "./ProfileVarsScope.js";
 
 // TODO: Remove these when the new fdr-sdk is integrated
 type ApiReferenceNodeWithCollapsibleConfig = FernNavigation.V1.ApiReferenceNode & {
@@ -13,6 +14,7 @@ type ApiReferenceNodeWithCollapsibleConfig = FernNavigation.V1.ApiReferenceNode 
 };
 type ApiPackageNodeWithCollapsibleConfig = FernNavigation.V1.ApiPackageNode & {
     collapsed?: boolean | "open-by-default";
+    profileVars?: Record<string, string>;
 };
 
 /**
@@ -138,7 +140,8 @@ export class ApiReferenceNodeConverter {
         private openApiTags?: Record<string, { id: string; description: string | undefined }>,
         graphqlNamespacesByOperationId?: Map<FdrAPI.GraphQlOperationId, string>,
         graphqlTypeCategories?: Record<FdrAPI.TypeId, FernNavigation.GraphQlTypeCategory>,
-        inlineTypeIds?: ReadonlySet<FdrAPI.TypeId>
+        inlineTypeIds?: ReadonlySet<FdrAPI.TypeId>,
+        private profileVars: ProfileVarsScope = NO_PROFILE_VARS
     ) {
         this.#tagDescriptionContent = new Map();
         this.#graphqlNamespacesByOperationId = graphqlNamespacesByOperationId ?? new Map();
@@ -196,7 +199,8 @@ export class ApiReferenceNodeConverter {
             this.markdownFilesToTags,
             this.workspace?.changelog?.files.map((file) => file.absoluteFilepath),
             this.docsWorkspace,
-            this.#idgen
+            this.#idgen,
+            this.profileVars
         ).orUndefined();
 
         // When no explicit overview is set and tag-description-pages is NOT enabled,
@@ -204,13 +208,20 @@ export class ApiReferenceNodeConverter {
         // IS enabled, the child overview pages belong to the individual tag sections and
         // should not bubble up to make the top-level API reference title clickable.
         let overviewPageId = this.#overviewPageId;
+        let overviewProfileVars = this.profileVars.forNode({
+            texts: [this.apiSection.title],
+            absolutePath: this.apiSection.overviewAbsolutePath
+        });
         if (overviewPageId == null && !this.apiSection.tagDescriptionPages) {
             const apiPackageWithOverview = this.#children.find(
-                (child): child is FernNavigation.V1.ApiPackageNode =>
+                (child): child is ApiPackageNodeWithCollapsibleConfig =>
                     child.type === "apiPackage" && child.overviewPageId != null
             );
             if (apiPackageWithOverview != null) {
                 overviewPageId = apiPackageWithOverview.overviewPageId;
+                const { profileVars } = apiPackageWithOverview;
+                const merged = { ...overviewProfileVars.profileVars, ...profileVars };
+                overviewProfileVars = Object.keys(merged).length > 0 ? { profileVars: merged } : {};
             }
         }
 
@@ -243,9 +254,19 @@ export class ApiReferenceNodeConverter {
             authed: undefined,
             viewers: this.apiSection.viewers,
             orphaned: this.apiSection.orphaned,
-            featureFlags: this.apiSection.featureFlags
+            featureFlags: this.apiSection.featureFlags,
+            ...overviewProfileVars
             // Temporary coercion to satisfy type checker until new fdr-sdk is integrated
         } as ApiReferenceNodeWithCollapsibleConfig;
+    }
+
+    #tagDescriptionProfileVars(pageId: FernNavigation.V1.PageId | undefined): { profileVars?: Record<string, string> } {
+        if (pageId == null) {
+            return {};
+        }
+        const path = AbsoluteFilePath.of(`/${pageId}`);
+        const content = this.#tagDescriptionContent.get(path);
+        return content == null ? {} : this.profileVars.forNode({ texts: [content] });
     }
 
     public getTagDescriptionContent(): Map<AbsoluteFilePath, string> {
@@ -341,7 +362,7 @@ export class ApiReferenceNodeConverter {
         parentSlug: FernNavigation.V1.SlugGenerator,
         parentAvailability?: docsYml.RawSchemas.Availability
     ): FernNavigation.V1.PageNode {
-        return toPageNode({
+        const node = toPageNode({
             page: {
                 ...page,
                 availability: page.availability ?? parentAvailability
@@ -354,6 +375,14 @@ export class ApiReferenceNodeConverter {
             hideChildren: this.hideChildren,
             resolveIconFileId: this.resolveIconFileId.bind(this)
         });
+        return {
+            ...node,
+            ...this.profileVars.forNode({
+                texts: [page.title],
+                absolutePath: page.absolutePath,
+                pageProfile: page.profile
+            })
+        };
     }
 
     #convertPackage(
@@ -425,7 +454,10 @@ export class ApiReferenceNodeConverter {
                 authed: undefined,
                 viewers: pkg.viewers,
                 orphaned: pkg.orphaned,
-                featureFlags: pkg.featureFlags
+                featureFlags: pkg.featureFlags,
+                ...(explicitOverviewPageId != null
+                    ? this.profileVars.forNode({ texts: [pkg.title], absolutePath: pkg.overviewAbsolutePath })
+                    : this.#tagDescriptionProfileVars(overviewPageId))
             } as ApiPackageNodeWithCollapsibleConfig;
         } else {
             this.taskContext.logger.warn(
@@ -458,7 +490,8 @@ export class ApiReferenceNodeConverter {
                 authed: undefined,
                 viewers: pkg.viewers,
                 orphaned: pkg.orphaned,
-                featureFlags: pkg.featureFlags
+                featureFlags: pkg.featureFlags,
+                ...this.profileVars.forNode({ texts: [pkg.title], absolutePath: pkg.overviewAbsolutePath })
             } as ApiPackageNodeWithCollapsibleConfig;
         }
     }
@@ -544,7 +577,8 @@ export class ApiReferenceNodeConverter {
             authed: undefined,
             viewers: section.viewers,
             orphaned: section.orphaned,
-            featureFlags: section.featureFlags
+            featureFlags: section.featureFlags,
+            ...this.profileVars.forNode({ texts: [section.title], absolutePath: section.overviewAbsolutePath })
         } as ApiPackageNodeWithCollapsibleConfig;
     }
 
@@ -563,6 +597,7 @@ export class ApiReferenceNodeConverter {
         if (subpackage != null) {
             const subpackageId = ApiDefinitionHolder.getSubpackageId(subpackage);
             const subpackageNodeId = this.#idgen.get(`${this.apiDefinitionId}:${subpackageId}`);
+            const overviewPageId = this.createTagDescriptionPageId(subpackage, unknownIdentifier);
 
             if (this.#visitedSubpackages.has(subpackageId)) {
                 this.taskContext.logger.error(packageReuseError(unknownIdentifier));
@@ -583,7 +618,8 @@ export class ApiReferenceNodeConverter {
                 slug: slug.get(),
                 icon: undefined,
                 hidden: this.hideChildren,
-                overviewPageId: this.createTagDescriptionPageId(subpackage, unknownIdentifier),
+                ...this.#tagDescriptionProfileVars(overviewPageId),
+                overviewPageId,
                 collapsible: undefined,
                 collapsedByDefault: undefined,
                 availability: convertDocsAvailability(parentAvailability),
@@ -1154,6 +1190,7 @@ export class ApiReferenceNodeConverter {
                     icon: undefined,
                     hidden: this.hideChildren,
                     overviewPageId: tagDescriptionPageId,
+                    ...this.#tagDescriptionProfileVars(tagDescriptionPageId),
                     collapsible: undefined,
                     collapsedByDefault: undefined,
                     availability: convertDocsAvailability(parentAvailability),

@@ -16,6 +16,7 @@ export const SectionConfiguration: core.serialization.ObjectSchema<
         section: core.serialization.string(),
         path: core.serialization.string().optional(),
         contents: core.serialization.list(core.serialization.lazy(() => serializers.NavigationItem)),
+        profile: core.serialization.string().optional(),
         collapsed: CollapsedValue.optional(),
         collapsible: core.serialization.boolean().optional(),
         collapsedByDefault: core.serialization.property(
@@ -36,6 +37,7 @@ export declare namespace SectionConfiguration {
         section: string;
         path?: string | null;
         contents: serializers.NavigationItem.Raw[];
+        profile?: string | null;
         collapsed?: CollapsedValue.Raw | null;
         collapsible?: boolean | null;
         "collapsed-by-default"?: boolean | null;

@@ -21,6 +21,7 @@ import { ValidLocalReferencesRule } from "./rules/valid-local-references/index.j
 import { ValidMarkdownRule } from "./rules/valid-markdown/index.js";
 import { ValidMarkdownLinks } from "./rules/valid-markdown-link/index.js";
 import { ValidOpenApiExamples } from "./rules/valid-openapi-examples/index.js";
+import { ValidProfilesRule } from "./rules/valid-profiles/index.js";
 import { ValidRedirectsFilesRule } from "./rules/valid-redirects-files/index.js";
 import { ValidRemotePathsRule } from "./rules/valid-remote-paths/index.js";
 import { ValidSkillsPageActionRule } from "./rules/valid-skills-page-action/index.js";
@@ -57,6 +58,7 @@ const allRules = [
     ValidFileTypes,
     ValidDocsEndpoints,
     AllRolesMustBeDeclaredRule,
+    ValidProfilesRule, // Every `profile:` must name an entry in `profiles:`
     ValidFrontmatter,
     TranslationDirectoriesExistRule,
     ValidChangelogSlugRule,

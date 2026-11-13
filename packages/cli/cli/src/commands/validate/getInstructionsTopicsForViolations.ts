@@ -18,6 +18,7 @@ export const DOCS_RULE_INSTRUCTIONS_TOPICS: ReadonlyMap<string, InstructionsTopi
     ["validate-version-file", InstructionsTopic.DocsConfigureNavigation],
     ["valid-version-ref", InstructionsTopic.DocsConfigureNavigation],
     ["valid-tab-menu", InstructionsTopic.DocsConfigureNavigation],
+    ["valid-profiles", InstructionsTopic.DocsConfigureNavigation],
     ["missing-redirects", InstructionsTopic.DocsConfigureSeo],
     ["no-circular-redirects", InstructionsTopic.DocsConfigureSeo],
     ["valid-redirects-files", InstructionsTopic.DocsConfigureSeo],
