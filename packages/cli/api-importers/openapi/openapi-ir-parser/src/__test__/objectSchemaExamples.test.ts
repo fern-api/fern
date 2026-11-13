@@ -72,25 +72,34 @@ describe("object schema examples", () => {
             options: DEFAULT_PARSE_OPENAPI_SETTINGS
         });
         const schemas = ir.groupedSchemas.rootSchemas;
+        // JSON round-trip drops the generated `_visit` helpers so the examples compare as plain data.
         const examplesOf = (name: string): unknown => {
             const schema = schemas[name];
-            return schema?.type === "object" ? schema.examples : "not-an-object";
+            if (schema?.type !== "object") {
+                return "not-an-object";
+            }
+            return schema.examples == null ? undefined : JSON.parse(JSON.stringify(schema.examples));
         };
-        console.log(
-            JSON.stringify(
-                {
-                    Say: examplesOf("Say"),
-                    VoiceResponse: examplesOf("VoiceResponse"),
-                    Pause: examplesOf("Pause"),
-                    Hangup: examplesOf("Hangup")
-                },
-                null,
-                1
-            )
-        );
+        const sayExample = {
+            type: "object",
+            properties: {
+                voice: { type: "enum", value: "alice" },
+                loop: { type: "primitive", value: { type: "int", value: 2 } },
+                message: { type: "primitive", value: { type: "string", value: "Thanks for calling." } }
+            }
+        };
         expect(examplesOf("Hangup")).toBeUndefined();
-        expect(examplesOf("Say")).toHaveLength(1);
-        expect(examplesOf("Pause")).toHaveLength(1);
-        expect(examplesOf("VoiceResponse")).toHaveLength(1);
+        expect(examplesOf("Say")).toEqual([sayExample]);
+        expect(examplesOf("Pause")).toEqual([
+            { type: "object", properties: { length: { type: "primitive", value: { type: "int", value: 5 } } } }
+        ]);
+        expect(examplesOf("VoiceResponse")).toEqual([
+            {
+                type: "object",
+                properties: {
+                    children: { type: "array", value: [sayExample, { type: "object", properties: {} }] }
+                }
+            }
+        ]);
     });
 });
