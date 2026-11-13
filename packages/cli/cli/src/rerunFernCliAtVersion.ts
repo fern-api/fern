@@ -1,6 +1,9 @@
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskAbortSignal } from "@fern-api/task-context";
 import chalk from "chalk";
+import { mkdtemp, rm } from "fs/promises";
+import os from "os";
+import path from "path";
 import { CliContext } from "./cli-context/CliContext.js";
 import { FERN_CWD_ENV_VAR } from "./cwd.js";
 
@@ -46,7 +49,11 @@ export async function rerunFernCliAtVersion({
         ].join("\n")
     );
 
+    // Run npx from an empty directory, not the user's project, so it can't resolve the CLI
+    // from files in the project. The child changes back to the user's directory via FERN_CWD.
+    const npxDirectory = await mkdtemp(path.join(os.tmpdir(), "fern-cli-"));
     const { failed, stdout, stderr } = await loggingExeca(cliContext.logger, "npx", commandLineArgs, {
+        cwd: npxDirectory,
         stdio: "inherit",
         reject: false,
         env: {
@@ -55,6 +62,7 @@ export async function rerunFernCliAtVersion({
             FERN_NO_VERSION_REDIRECTION: "true"
         }
     });
+    await rm(npxDirectory, { recursive: true, force: true });
     if (stdout.includes("code EEXIST") || stderr.includes("code EEXIST")) {
         // try again if there is a npx conflict
         return await rerunFernCliAtVersion({

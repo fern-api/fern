@@ -1,10 +1,11 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
-import { mkdir, rm, symlink, writeFile } from "fs/promises";
+import { existsSync } from "fs";
+import { chmod, mkdir, rm, symlink, writeFile } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";
 
-import { getThirdPartyImports, maybeBundleMdxComponent } from "../bundleMdxComponent.js";
+import { getThirdPartyImports, maybeBundleMdxComponent, ROLLDOWN_VERSION } from "../bundleMdxComponent.js";
 
 const context = createMockTaskContext();
 
@@ -132,6 +133,49 @@ describe("maybeBundleMdxComponent", () => {
             // Renderer-provided modules and relative imports stay external
             expect(bundled).toContain("react");
             expect(bundled).toContain("./constants");
+        } finally {
+            await cleanup();
+        }
+    }, 120_000);
+
+    it("does not run a rolldown executable from the docs project", async () => {
+        const { path: projectDir, cleanup } = await tmp.dir({ unsafeCleanup: true });
+        try {
+            const packageDir = path.join(projectDir, "node_modules", "fake-greeting-lib");
+            await mkdir(packageDir, { recursive: true });
+            await writeFile(
+                path.join(packageDir, "package.json"),
+                JSON.stringify({ name: "fake-greeting-lib", version: "1.0.0", main: "index.js" })
+            );
+            await writeFile(
+                path.join(packageDir, "index.js"),
+                `export function greet(name) { return "MARKER_FROM_FAKE_LIB " + name; }`
+            );
+
+            // npx would resolve this file for `rolldown@<version>` if it ran inside the project.
+            const markerPath = path.join(projectDir, "marker.txt");
+            const plantedPath = path.join(projectDir, "node_modules", ".bin", `rolldown@${ROLLDOWN_VERSION}`);
+            await mkdir(path.dirname(plantedPath), { recursive: true });
+            await writeFile(plantedPath, `#!/bin/sh\necho ran > "${markerPath}"\n`);
+            await chmod(plantedPath, 0o755);
+
+            const componentsDir = path.join(projectDir, "components");
+            await mkdir(componentsDir, { recursive: true });
+            const componentPath = path.join(componentsDir, "Greeting.tsx");
+            const contents = [
+                `import { greet } from "fake-greeting-lib";`,
+                `export const Greeting = ({ name }: { name: string }) => <div>{greet(name)}</div>;`
+            ].join("\n");
+            await writeFile(componentPath, contents);
+
+            const bundled = await maybeBundleMdxComponent({
+                absoluteFilePath: AbsoluteFilePath.of(componentPath),
+                contents,
+                context
+            });
+
+            expect(existsSync(markerPath)).toBe(false);
+            expect(bundled).toContain("MARKER_FROM_FAKE_LIB");
         } finally {
             await cleanup();
         }

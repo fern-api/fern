@@ -31,7 +31,7 @@ const BUNDLE_CACHE_DIR_ENV_VAR = "FERN_MDX_BUNDLE_CACHE_DIR";
  * The rolldown version invoked via npx. Pinned so bundling is reproducible
  * across CLI runs.
  */
-const ROLLDOWN_VERSION = "1.1.4";
+export const ROLLDOWN_VERSION = "1.1.4";
 
 /**
  * Bumped whenever the generated rolldown config changes the bundle output, so
@@ -181,7 +181,10 @@ export async function maybeBundleMdxComponent({
             "npx",
             ["--quiet", "--yes", `rolldown@${ROLLDOWN_VERSION}`, "-c", configFilePath],
             {
-                cwd: path.dirname(absoluteFilePath),
+                // Run from Fern's temp directory, not the docs project, so npx can't resolve a
+                // rolldown executable or npm config from the project. Imports still resolve from
+                // the component's own path.
+                cwd: tmpDir,
                 doNotPipeOutput: true,
                 reject: false
             }
