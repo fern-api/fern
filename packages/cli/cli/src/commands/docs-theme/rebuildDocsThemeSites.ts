@@ -12,6 +12,14 @@ interface StaleThemeSite {
     globalTheme: string;
 }
 
+function isStaleThemeSite(value: unknown): value is StaleThemeSite {
+    if (value == null || typeof value !== "object") {
+        return false;
+    }
+    const site = value as Record<string, unknown>;
+    return typeof site.domain === "string" && typeof site.basepath === "string" && typeof site.globalTheme === "string";
+}
+
 export async function rebuildDocsThemeSites({
     cliContext,
     name,
@@ -71,10 +79,10 @@ export async function rebuildDocsThemeSites({
         let sites: StaleThemeSite[];
         try {
             const parsed = (await res.json()) as { sites?: unknown };
-            if (!Array.isArray(parsed.sites)) {
-                throw new Error("response has no `sites` list");
+            if (!Array.isArray(parsed.sites) || !parsed.sites.every(isStaleThemeSite)) {
+                throw new Error("response has no valid `sites` list");
             }
-            sites = parsed.sites as StaleThemeSite[];
+            sites = parsed.sites;
         } catch (err) {
             context.failAndThrow(
                 `Failed to rebuild theme sites: unexpected response from ${FDR_ORIGIN}: ${errorMessageOrString(err)}`,
