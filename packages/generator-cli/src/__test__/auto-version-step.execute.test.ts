@@ -25,7 +25,7 @@ vi.mock("@fern-api/cli-ai", () => ({
     VersionBump: { MAJOR: "MAJOR", MINOR: "MINOR", PATCH: "PATCH", NO_CHANGE: "NO_CHANGE" }
 }));
 
-import { MAX_AI_DIFF_BYTES, MAX_CHUNKS } from "../autoversion/VersionUtils";
+import { MAX_AI_DIFF_BYTES, MAX_CHUNKS, MAX_SINGLE_REQUEST_DIFF_BYTES } from "../autoversion/VersionUtils";
 import type { PipelineLogger } from "../pipeline/PipelineLogger";
 import { AutoVersionStep } from "../pipeline/steps/AutoVersionStep";
 import type { AutoVersionStepConfig, PipelineContext } from "../pipeline/types";
@@ -1232,6 +1232,7 @@ describe("AutoVersionStep.execute() — FAI service path with a multi-chunk diff
         expect(result.version).toBe("2.1.0");
         expect(result.changelogEntry).toContain("bigFeature()");
         expect(result.analysisWarning).toMatch(/\d+ of \d+ FAI chunk requests failed/);
+        expect(result.analysisWarningCode).toBe("partial-analysis");
     });
 
     it("flags a NO_CHANGE result when some chunks failed and the rest reported NO_CHANGE", async () => {
@@ -1269,6 +1270,7 @@ describe("AutoVersionStep.execute() — FAI service path with a multi-chunk diff
         expect(result.changelogEntry).toBeUndefined();
         expect(result.analysisWarning).toContain("FAI analysis failed");
         expect(result.analysisWarning).toContain("chunk requests failed");
+        expect(result.analysisWarningCode).toBe("analysis-failed");
     });
 
     it("flags chunks dropped by the chunk cap during the chunked retry", async () => {
@@ -1295,6 +1297,43 @@ describe("AutoVersionStep.execute() — FAI service path with a multi-chunk diff
         expect(mockFetch).toHaveBeenCalledTimes(MAX_CHUNKS + 1);
         expect(result.versionBump).toBe("PATCH");
         expect(result.analysisWarning).toMatch(/\d+ of \d+ diff chunks were not analyzed \(capped at \d+\)/);
+        expect(result.analysisWarningCode).toBe("partial-analysis");
+    });
+});
+
+describe("AutoVersionStep.execute() — BAML chunk cap", () => {
+    beforeEach(() => {
+        mockAnalyzeSdkDiff.mockReset();
+        mockConsolidateChangelog.mockReset();
+    });
+
+    it("reports partial-analysis when chunks beyond MAX_CHUNKS are skipped", async () => {
+        const repo = await setupTwoGenerations({
+            previousVersion: "2.0.0",
+            featureFile: {
+                path: "src/bigFeature.ts",
+                content: "export function bigFeature() {}\n"
+            },
+            fillerKB: (MAX_CHUNKS + 5) * (MAX_AI_DIFF_BYTES / 1024),
+            fillerFiles: MAX_CHUNKS + 5
+        });
+        try {
+            mockAnalyzeSdkDiff.mockResolvedValue({ version_bump: "PATCH", message: "chore: regen" });
+            const step = new AutoVersionStep(repo.repoPath, makeLogger(), baseConfig);
+            const prepared = fakePreparedReplay({
+                outputDir: repo.repoPath,
+                previousGenerationSha: repo.previousSha,
+                currentGenerationSha: repo.currentSha
+            });
+
+            const result = await step.execute(makeContext(prepared));
+
+            expect(mockAnalyzeSdkDiff).toHaveBeenCalledTimes(MAX_CHUNKS);
+            expect(result.analysisWarning).toMatch(/\d+ of \d+ diff chunks were not analyzed \(capped at \d+\)/);
+            expect(result.analysisWarningCode).toBe("partial-analysis");
+        } finally {
+            await repo.cleanup();
+        }
     });
 });
 
@@ -1523,5 +1562,157 @@ describe("AutoVersionStep.execute() — FAI service path (fernToken, no ai confi
         expect(result.versionBump).toBe("PATCH");
         expect(result.commitMessage).toContain("SDK regeneration");
         expect(result.changelogEntry).toBeUndefined();
+    });
+});
+
+describe("AutoVersionStep.execute() — hosted FAI diffs over the single-request limit", () => {
+    let repo: TwoGenerations;
+    const mockFetch = vi.fn();
+
+    beforeEach(async () => {
+        mockFetch.mockReset();
+        vi.stubGlobal("fetch", mockFetch);
+        repo = await setupTwoGenerations({
+            previousVersion: "2.0.0",
+            featureFile: { path: "src/bigFeature.ts", content: "export function bigFeature() {}\n" },
+            fillerKB: Math.ceil((MAX_SINGLE_REQUEST_DIFF_BYTES * 1.05) / 1024 / 0.86),
+            fillerFiles: 300
+        });
+    });
+
+    afterEach(async () => {
+        vi.unstubAllGlobals();
+        await repo.cleanup();
+    });
+
+    it("skips the single full-diff request, analyzes the top chunks, and reports partial-analysis", async () => {
+        mockFetch.mockResolvedValue({
+            ok: true,
+            json: async () => ({ message: "feat: add bigFeature", version_bump: "MINOR", changelog_entry: "### Added" })
+        });
+        const logger = makeLogger();
+        const step = new AutoVersionStep(repo.repoPath, logger, {
+            enabled: true,
+            language: "typescript",
+            fernToken: "fern-token-123"
+        });
+        const prepared = fakePreparedReplay({
+            outputDir: repo.repoPath,
+            previousGenerationSha: repo.previousSha,
+            currentGenerationSha: repo.currentSha
+        });
+
+        const result = await step.execute(makeContext(prepared));
+
+        expect(mockFetch).toHaveBeenCalledTimes(MAX_CHUNKS);
+        for (const call of mockFetch.mock.calls) {
+            const body = JSON.parse((call[1] as RequestInit).body as string) as { diff: string };
+            expect(body.diff.length).toBeLessThan(MAX_SINGLE_REQUEST_DIFF_BYTES);
+        }
+        expect(result.versionBump).toBe("MINOR");
+        expect(result.version).toBe("2.1.0");
+        expect(result.analysisWarningCode).toBe("partial-analysis");
+        expect(
+            logger.warns.some((message) => message.startsWith("AUTO versioning fallback: reason=partial-analysis"))
+        ).toBe(true);
+    });
+});
+
+describe("AutoVersionStep.execute() — fixed version (explicit --version)", () => {
+    let repo: TwoGenerations;
+    const mockFetch = vi.fn();
+    const fixedVersion = "1.1.0-rc.1";
+
+    beforeEach(async () => {
+        mockFetch.mockReset();
+        vi.stubGlobal("fetch", mockFetch);
+        repo = await setupTwoGenerations({
+            previousVersion: "1.0.0",
+            magicVersion: fixedVersion,
+            featureFile: {
+                path: "src/newFeature.ts",
+                content: "export function newFeature(): number {\n    return 42;\n}\n"
+            }
+        });
+    });
+
+    afterEach(async () => {
+        vi.unstubAllGlobals();
+        await repo.cleanup();
+    });
+
+    function run(logger = makeLogger()) {
+        const step = new AutoVersionStep(repo.repoPath, logger, {
+            enabled: true,
+            language: "typescript",
+            fernToken: "fern-token-123",
+            fixedVersion
+        });
+        const prepared = fakePreparedReplay({
+            outputDir: repo.repoPath,
+            previousGenerationSha: repo.previousSha,
+            currentGenerationSha: repo.currentSha
+        });
+        return step.execute(makeContext(prepared));
+    }
+
+    it("keeps the given version and writes the AI changelog entry", async () => {
+        mockFetch.mockResolvedValue({
+            ok: true,
+            json: async () => ({
+                message: "feat!: add newFeature helper",
+                version_bump: "MAJOR",
+                changelog_entry: "### Added\n- `newFeature()` helper.",
+                version_bump_reason: "New public API surface added."
+            })
+        });
+
+        const result = await run();
+
+        expect(result.success).toBe(true);
+        expect(result.version).toBe(fixedVersion);
+        expect(result.versionBump).toBeUndefined();
+        expect(result.analysisWarning).toBeUndefined();
+        expect(result.analysisWarningCode).toBeUndefined();
+        expect(result.changelogEntry).toContain("newFeature");
+        expect(result.versionBumpReason).toBe("New public API surface added.");
+        expect(result.commitSha).toBeDefined();
+        expect(gitExec(["log", "-1", "--format=%s"], repo.repoPath)).toContain("[fern-autoversion]");
+        const changelog = readFileSync(join(repo.repoPath, "changelog.md"), "utf-8");
+        expect(changelog).toContain(`## [${fixedVersion}]`);
+        expect(changelog).toContain("`newFeature()` helper.");
+        expect(readFileSync(join(repo.repoPath, "package.json"), "utf-8")).toContain(`"version": "${fixedVersion}"`);
+
+        const body = JSON.parse((mockFetch.mock.calls[0]?.[1] as RequestInit).body as string) as { diff: string };
+        expect(body.diff).toContain("newFeature");
+        expect(body.diff).not.toContain(fixedVersion);
+    });
+
+    it("keeps the version and reports analysis-failed without writing a changelog entry", async () => {
+        mockFetch.mockResolvedValue({ ok: false, status: 502, text: async () => "upstream timeout" });
+        const logger = makeLogger();
+
+        const result = await run(logger);
+
+        expect(result.success).toBe(true);
+        expect(result.version).toBe(fixedVersion);
+        expect(result.analysisWarning).toBeUndefined();
+        expect(result.analysisWarningCode).toBe("analysis-failed");
+        expect(result.changelogEntry).toBeUndefined();
+        expect(result.commitSha).toBeUndefined();
+        expect(
+            logger.warns.some((message) => message.startsWith("AUTO versioning fallback: reason=analysis-failed"))
+        ).toBe(true);
+        expect(gitExec(["rev-parse", "HEAD"], repo.repoPath)).toBe(repo.currentSha);
+    });
+
+    it("skips the analysis when FAI reports NO_CHANGE", async () => {
+        mockFetch.mockResolvedValue({ ok: true, json: async () => ({ message: "chore", version_bump: "NO_CHANGE" }) });
+
+        const result = await run();
+
+        expect(result.version).toBe(fixedVersion);
+        expect(result.changelogEntry).toBeUndefined();
+        expect(result.analysisWarningCode).toBeUndefined();
     });
 });
