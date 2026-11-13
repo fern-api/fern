@@ -16,8 +16,20 @@ function isAllowOldCliVersionArg(arg: string): boolean {
     return arg === ALLOW_OLD_CLI_VERSION_FLAG || arg === `${ALLOW_OLD_CLI_VERSION_FLAG}=true`;
 }
 
+function isAnyAllowOldCliVersionArg(arg: string): boolean {
+    return (
+        arg === ALLOW_OLD_CLI_VERSION_FLAG ||
+        arg.startsWith(`${ALLOW_OLD_CLI_VERSION_FLAG}=`) ||
+        arg === `--no-${ALLOW_OLD_CLI_VERSION_FLAG.slice(2)}`
+    );
+}
+
 export function withoutAllowOldCliVersionFlag(args: string[]): string[] {
-    return args.filter((arg) => !isAllowOldCliVersionArg(arg));
+    return args.filter((arg) => !isAnyAllowOldCliVersionArg(arg));
+}
+
+export function hasOldCliVersionConsent(args: string[]): boolean {
+    return process.env[ALLOW_OLD_CLI_VERSION_ENV_VAR] === "true" || args.some(isAllowOldCliVersionArg);
 }
 
 /**
@@ -39,8 +51,7 @@ export async function confirmOldCliVersionAllowed({
     const risk =
         `Fern CLI ${version} is older than ${MINIMUM_ISOLATED_CLI_VERSION} and runs npx from the project directory, ` +
         "so a package.json or node_modules/.bin in this project could run its own code in place of the CLI or its tools.";
-    const isAllowed = process.env[ALLOW_OLD_CLI_VERSION_ENV_VAR] === "true" || args.some(isAllowOldCliVersionArg);
-    if (isAllowed) {
+    if (hasOldCliVersionConsent(args)) {
         cliContext.logger.warn(risk);
         return;
     }

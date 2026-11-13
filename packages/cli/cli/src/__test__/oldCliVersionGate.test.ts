@@ -6,6 +6,7 @@ import {
     ALLOW_OLD_CLI_VERSION_ENV_VAR,
     ALLOW_OLD_CLI_VERSION_FLAG,
     confirmOldCliVersionAllowed,
+    hasOldCliVersionConsent,
     isOlderThanMinimumIsolatedCliVersion,
     MINIMUM_ISOLATED_CLI_VERSION,
     withoutAllowOldCliVersionFlag
@@ -48,6 +49,31 @@ describe("withoutAllowOldCliVersionFlag", () => {
                 `${ALLOW_OLD_CLI_VERSION_FLAG}=true`
             ])
         ).toEqual(["generate", "--group", "a"]);
+    });
+
+    it("removes disabled forms of the flag", () => {
+        expect(
+            withoutAllowOldCliVersionFlag([
+                "check",
+                `${ALLOW_OLD_CLI_VERSION_FLAG}=false`,
+                `--no-${ALLOW_OLD_CLI_VERSION_FLAG.slice(2)}`
+            ])
+        ).toEqual(["check"]);
+    });
+});
+
+describe("hasOldCliVersionConsent", () => {
+    afterEach(() => {
+        vi.unstubAllEnvs();
+    });
+
+    it("accepts the flag or the environment variable", () => {
+        vi.stubEnv(ALLOW_OLD_CLI_VERSION_ENV_VAR, "");
+        expect(hasOldCliVersionConsent(["upgrade"])).toBe(false);
+        expect(hasOldCliVersionConsent(["upgrade", `${ALLOW_OLD_CLI_VERSION_FLAG}=false`])).toBe(false);
+        expect(hasOldCliVersionConsent(["upgrade", ALLOW_OLD_CLI_VERSION_FLAG])).toBe(true);
+        vi.stubEnv(ALLOW_OLD_CLI_VERSION_ENV_VAR, "true");
+        expect(hasOldCliVersionConsent(["upgrade"])).toBe(true);
     });
 });
 
