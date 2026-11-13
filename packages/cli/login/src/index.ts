@@ -1,4 +1,4 @@
-export { askToLogin, getMissingLoginMessage } from "./askToLogin.js";
+export { askToLogin, CODING_AGENT_SKILLS_HINT, getMissingLoginMessage } from "./askToLogin.js";
 export { getDashboardBaseUrl } from "./constants.js";
 export type { Auth0TokenResponse } from "./login.js";
 export { getTokenFromAuth0, login } from "./login.js";
