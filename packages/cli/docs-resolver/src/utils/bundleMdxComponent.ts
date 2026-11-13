@@ -172,6 +172,8 @@ export async function maybeBundleMdxComponent({
 
     const { path: tmpDir, cleanup } = await tmp.dir({ unsafeCleanup: true });
     try {
+        // A temp directory may be inside a project; establish an independent npm prefix.
+        await writeFile(path.join(tmpDir, "package.json"), JSON.stringify({ private: true }));
         const outputFilePath = path.join(tmpDir, "bundle.js");
         const configFilePath = path.join(tmpDir, "rolldown.config.mjs");
         await writeFile(configFilePath, buildRolldownConfig({ absoluteFilePath, outputFilePath }));
@@ -179,11 +181,11 @@ export async function maybeBundleMdxComponent({
         const result = await loggingExeca(
             context.logger,
             "npx",
-            ["--quiet", "--yes", `rolldown@${ROLLDOWN_VERSION}`, "-c", configFilePath],
+            ["--quiet", "--yes", "--package", `rolldown@${ROLLDOWN_VERSION}`, "--", "rolldown", "-c", configFilePath],
             {
-                // Run from Fern's temp directory, not the docs project, so npx can't resolve a
-                // rolldown executable or npm config from the project. Imports still resolve from
-                // the component's own path.
+                // Run from Fern's temp directory, not the docs project, so npx can't resolve
+                // npm config from the project. Explicit --package skips npx's ancestor binary
+                // lookup, even above our package.json boundary. Imports resolve from the component.
                 cwd: tmpDir,
                 doNotPipeOutput: true,
                 reject: false

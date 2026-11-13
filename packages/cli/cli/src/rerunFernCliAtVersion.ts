@@ -1,7 +1,7 @@
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskAbortSignal } from "@fern-api/task-context";
 import chalk from "chalk";
-import { mkdtemp, rm } from "fs/promises";
+import { mkdtemp, rm, writeFile } from "fs/promises";
 import os from "os";
 import path from "path";
 import { CliContext } from "./cli-context/CliContext.js";
@@ -26,12 +26,14 @@ export async function rerunFernCliAtVersion({
     cliContext,
     env,
     args,
+    cwd = process.env[FERN_CWD_ENV_VAR] ?? process.cwd(),
     throwOnError = false
 }: {
     version: string;
     cliContext: CliContext;
     env?: Record<string, string>;
     args?: string[];
+    cwd?: string;
     throwOnError?: boolean;
 }): Promise<void> {
     cliContext.suppressUpgradeMessage();
@@ -39,7 +41,11 @@ export async function rerunFernCliAtVersion({
     const commandLineArgs = [
         "--quiet",
         "--yes",
+        "--package",
         `${cliContext.environment.packageName}@${version}`,
+        "--",
+        // Local builds display "fern-local" but redirect to the published fern-api package.
+        cliContext.environment.packageName === "fern-api" ? "fern" : cliContext.environment.cliName,
         ...(args ?? process.argv.slice(2))
     ];
     cliContext.logger.debug(
@@ -49,20 +55,28 @@ export async function rerunFernCliAtVersion({
         ].join("\n")
     );
 
-    // Run npx from an empty directory, not the user's project, so it can't resolve the CLI
+    // Run npx from an isolated directory, not the user's project, so it can't resolve the CLI
     // from files in the project. The child changes back to the user's directory via FERN_CWD.
     const npxDirectory = await mkdtemp(path.join(os.tmpdir(), "fern-cli-"));
-    const { failed, stdout, stderr } = await loggingExeca(cliContext.logger, "npx", commandLineArgs, {
-        cwd: npxDirectory,
-        stdio: "inherit",
-        reject: false,
-        env: {
-            ...env,
-            [FERN_CWD_ENV_VAR]: process.env[FERN_CWD_ENV_VAR] ?? process.cwd(),
-            FERN_NO_VERSION_REDIRECTION: "true"
-        }
-    });
-    await rm(npxDirectory, { recursive: true, force: true });
+    let result: loggingExeca.ReturnValue;
+    try {
+        // A temp directory may be inside a project; establish an independent npm prefix.
+        await writeFile(path.join(npxDirectory, "package.json"), JSON.stringify({ private: true }));
+        // Explicit --package also skips npx's binary search through ancestor directories.
+        result = await loggingExeca(cliContext.logger, "npx", commandLineArgs, {
+            cwd: npxDirectory,
+            stdio: "inherit",
+            reject: false,
+            env: {
+                ...env,
+                [FERN_CWD_ENV_VAR]: cwd,
+                FERN_NO_VERSION_REDIRECTION: "true"
+            }
+        });
+    } finally {
+        await rm(npxDirectory, { recursive: true, force: true });
+    }
+    const { failed, stdout, stderr } = result;
     if (stdout.includes("code EEXIST") || stderr.includes("code EEXIST")) {
         // try again if there is a npx conflict
         return await rerunFernCliAtVersion({
@@ -70,6 +84,7 @@ export async function rerunFernCliAtVersion({
             cliContext,
             env,
             args,
+            cwd,
             throwOnError
         });
     }

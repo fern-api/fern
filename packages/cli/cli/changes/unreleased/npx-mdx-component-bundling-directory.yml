@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
 
 - summary: |
-    Bundling custom MDX components now runs `npx rolldown` from a temporary directory instead of
+    Bundling custom MDX components now runs `npx rolldown` from a temporary npm project instead of
     the component's folder, so rolldown always comes from the registry.
   type: fix
