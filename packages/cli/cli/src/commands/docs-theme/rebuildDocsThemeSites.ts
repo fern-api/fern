@@ -1,4 +1,5 @@
 import { FernToken } from "@fern-api/auth";
+import { errorMessageOrString } from "@fern-api/core-utils";
 import { askToLogin } from "@fern-api/login";
 import { CliError } from "@fern-api/task-context";
 import { CliContext } from "../../cli-context/CliContext.js";
@@ -67,7 +68,21 @@ export async function rebuildDocsThemeSites({
             return;
         }
 
-        const { sites } = (await res.json()) as { sites: StaleThemeSite[] };
+        let sites: StaleThemeSite[];
+        try {
+            const parsed = (await res.json()) as { sites?: unknown };
+            if (!Array.isArray(parsed.sites)) {
+                throw new Error("response has no `sites` list");
+            }
+            sites = parsed.sites as StaleThemeSite[];
+        } catch (err) {
+            context.failAndThrow(
+                `Failed to rebuild theme sites: unexpected response from ${FDR_ORIGIN}: ${errorMessageOrString(err)}`,
+                undefined,
+                { code: CliError.Code.NetworkError }
+            );
+            return;
+        }
         if (sites.length === 0) {
             context.logger.info(
                 `Every site using ${scope} in org "${orgId}" is already built with its latest version.`
