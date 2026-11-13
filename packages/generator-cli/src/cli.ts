@@ -10,6 +10,7 @@ import {
     formatBootstrapSummary,
     generateReadmeToStream,
     generateReferenceToStream,
+    generateSkillToStream,
     githubPr,
     githubPush,
     replayForget,
@@ -57,6 +58,35 @@ void yargs(hideBin(process.argv))
                 argv.originalReadme != null ? await readFile(argv.originalReadme, "utf8") : undefined;
             await generateReadmeToStream({
                 originalReadmeContent,
+                readmeConfig,
+                outputStream: await createWriteStream(argv.output)
+            });
+            process.exit(0);
+        }
+    )
+    .command(
+        "generate-skill",
+        "Generate an agent skill (`SKILL.md`) for the SDK using the same configuration file as `generate readme`.",
+        (argv) =>
+            argv
+                .option("config", {
+                    string: true,
+                    required: true
+                })
+                .option("output", {
+                    string: true,
+                    required: false
+                }),
+        async (argv) => {
+            if (argv.config == null) {
+                process.stderr.write("missing required arguments; please specify the --config flag\n");
+                process.exit(1);
+            }
+            const wd = cwd();
+            const readmeConfig = await loadReadmeConfig({
+                absolutePathToConfig: resolve(wd, argv.config)
+            });
+            await generateSkillToStream({
                 readmeConfig,
                 outputStream: await createWriteStream(argv.output)
             });

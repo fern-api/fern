@@ -11,6 +11,16 @@ export {
     generateReference,
     generateReferenceToStream
 } from "./api/generate-reference.js";
+export {
+    type GenerateSkillParams,
+    type GenerateSkillToStreamParams,
+    generateSkill,
+    generateSkillToStream,
+    getSkillDirectory,
+    getSkillName,
+    SKILL_FILENAME,
+    SKILLS_DIRECTORY
+} from "./api/generate-skill.js";
 export { type GithubPrParams, githubPr } from "./api/github-pr.js";
 export { type GithubPushParams, githubPush } from "./api/github-push.js";
 export { type GithubReleaseParams, githubRelease } from "./api/github-release.js";
