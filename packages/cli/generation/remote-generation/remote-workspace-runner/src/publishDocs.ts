@@ -5,6 +5,7 @@ import { createFdrService } from "@fern-api/core";
 import {
     asyncPool,
     errorMessageOrString,
+    getProfileVarNames,
     MediaType,
     replaceEnvVariables,
     sanitizePreviewId
@@ -957,7 +958,7 @@ export async function publishDocs({
             const substitutedDocs = replaceEnvVariables(
                 docsWithoutJsFiles,
                 { onError: (e) => context.failAndThrow(undefined, e, { code: CliError.Code.EnvironmentError }) },
-                { substituteAsEmpty: false }
+                { substituteAsEmpty: false, keep: getProfileVarNames(docsWorkspace.config.profiles) }
             );
             docsDefinition = { ...substitutedDocs, jsFiles };
         }

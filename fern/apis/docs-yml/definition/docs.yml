@@ -236,6 +236,16 @@ types:
   DocsConfiguration:
     properties:
       instances: list<DocsInstance>
+      profiles:
+        type: optional<map<string, ProfileConfig>>
+        docs: |
+          Named sets of values. Set `profile: <name>` on the site, a product, version, tab, tab variant,
+          section or page, and `${NAME}` in its pages is filled from that profile when rendered.
+          The innermost `profile:` wins; profiles never merge. Names no profile defines keep
+          today's publish-time substitution.
+      profile:
+        type: optional<string>
+        docs: Name of a profile in `profiles:`. Pages under this item use its values for `${NAME}`. The innermost `profile:` wins.
       title:
         type: optional<string>
         docs: A string that is used as the tab bar title.
@@ -639,6 +649,32 @@ types:
       - value: command-a
         name: command_a
 
+  ProfileConfig:
+    properties:
+      vars:
+        type: optional<ProfileVarsConfiguration>
+        docs: Values for `${NAME}` in pages that use this profile. Profile values are committed to the repo; never put secrets here.
+
+  ProfileVarsConfiguration:
+    discriminated: false
+    docs: |
+      Either an inline map of values, or one or more filepaths to YAML files containing
+      only a `vars` map. A name defined in two files is an error.
+
+      ```yaml
+      vars: ./vars/enterprise.yml
+      ```
+
+      ```yaml
+      vars:
+        - ./vars/common.yml
+        - ./vars/enterprise.yml
+      ```
+    union:
+      - map<string, string>
+      - string
+      - list<string>
+
   TabConfig:
     extends: [WithPermissions, WithFeatureFlags]
     properties:
@@ -656,6 +692,9 @@ types:
       target: optional<Target>
       changelog: optional<ChangelogFolderRelativePath>
       blog: optional<ChangelogFolderRelativePath>
+      profile:
+        type: optional<string>
+        docs: Name of a profile in `profiles:`. Pages under this item use its values for `${NAME}`. The innermost `profile:` wins.
       tab-menu:
         type: optional<list<TabMenuEntry>>
         docs: |
@@ -745,6 +784,9 @@ types:
     extends: [WithPermissions, WithFeatureFlags]
     properties:
       display-name: string
+      profile:
+        type: optional<string>
+        docs: Name of a profile in `profiles:`. Pages under this item use its values for `${NAME}`. The innermost `profile:` wins.
       path:
         type: optional<string>
         docs: |
@@ -963,6 +1005,9 @@ types:
       skip-slug: optional<boolean>
       hidden: optional<boolean>
       default: optional<boolean>
+      profile:
+        type: optional<string>
+        docs: Name of a profile in `profiles:`. Pages under this item use its values for `${NAME}`. The innermost `profile:` wins.
 
   NavigationItem:
     discriminated: false
@@ -1696,6 +1741,9 @@ types:
       hidden: optional<boolean>
       noindex: optional<boolean>
       availability: optional<Availability>
+      profile:
+        type: optional<string>
+        docs: Name of a profile in `profiles:`. Pages under this item use its values for `${NAME}`. The innermost `profile:` wins.
 
   ChangelogConfiguration:
     extends: [WithPermissions, WithFeatureFlags]
@@ -1726,6 +1774,9 @@ types:
         docs: |
           The relative path to the markdown file that will be displayed when the section is clicked.
       contents: list<NavigationItem>
+      profile:
+        type: optional<string>
+        docs: Name of a profile in `profiles:`. Pages under this item use its values for `${NAME}`. The innermost `profile:` wins.
       collapsed:
         type: optional<CollapsedValue>
         docs: |
@@ -2921,6 +2972,9 @@ types:
         docs: The image to display in the product card. This will override the icon field if both are set.
       versions: optional<list<VersionConfig>>
       audiences: optional<Audience>
+      profile:
+        type: optional<string>
+        docs: Name of a profile in `profiles:`. Pages under this item use its values for `${NAME}`. The innermost `profile:` wins.
 
   ProductConfig:
     discriminated: false

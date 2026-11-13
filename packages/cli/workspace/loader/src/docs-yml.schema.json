@@ -7,6 +7,31 @@
         "$ref": "#/definitions/docs.DocsInstance"
       }
     },
+    "profiles": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/docs.ProfileConfig"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Named sets of values. Set `profile: <name>` on the site, a product, version, tab, tab variant,\nsection or page, and `${NAME}` in its pages is filled from that profile when rendered.\nThe innermost `profile:` wins; profiles never merge. Names no profile defines keep\ntoday's publish-time substitution."
+    },
+    "profile": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Name of a profile in `profiles:`. Pages under this item use its values for `${NAME}`. The innermost `profile:` wins."
+    },
     "title": {
       "oneOf": [
         {
@@ -616,6 +641,43 @@
       "required": [
         "url"
       ],
+      "additionalProperties": false
+    },
+    "docs.ProfileVarsConfiguration": {
+      "anyOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "string"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ],
+      "description": "Either an inline map of values, or one or more filepaths to YAML files containing\nonly a `vars` map. A name defined in two files is an error.\n\n```yaml\nvars: ./vars/enterprise.yml\n```\n\n```yaml\nvars:\n  - ./vars/common.yml\n  - ./vars/enterprise.yml\n```"
+    },
+    "docs.ProfileConfig": {
+      "type": "object",
+      "properties": {
+        "vars": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ProfileVarsConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Values for `${NAME}` in pages that use this profile. Profile values are committed to the repo; never put secrets here."
+        }
+      },
       "additionalProperties": false
     },
     "docs.GitLibraryInputSchema": {
@@ -1437,6 +1499,17 @@
             }
           ]
         },
+        "profile": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Name of a profile in `profiles:`. Pages under this item use its values for `${NAME}`. The innermost `profile:` wins."
+        },
         "tab-menu": {
           "oneOf": [
             {
@@ -1516,6 +1589,17 @@
         },
         "display-name": {
           "type": "string"
+        },
+        "profile": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Name of a profile in `profiles:`. Pages under this item use its values for `${NAME}`. The innermost `profile:` wins."
         },
         "path": {
           "oneOf": [
@@ -1669,6 +1753,17 @@
             }
           ]
         },
+        "profile": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Name of a profile in `profiles:`. Pages under this item use its values for `${NAME}`. The innermost `profile:` wins."
+        },
         "viewers": {
           "oneOf": [
             {
@@ -1791,6 +1886,17 @@
               "type": "null"
             }
           ]
+        },
+        "profile": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Name of a profile in `profiles:`. Pages under this item use its values for `${NAME}`. The innermost `profile:` wins."
         },
         "viewers": {
           "oneOf": [
@@ -2041,6 +2147,17 @@
               "type": "null"
             }
           ]
+        },
+        "profile": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Name of a profile in `profiles:`. Pages under this item use its values for `${NAME}`. The innermost `profile:` wins."
         }
       },
       "required": [
@@ -2118,6 +2235,17 @@
           "items": {
             "$ref": "#/definitions/docs.NavigationItem"
           }
+        },
+        "profile": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Name of a profile in `profiles:`. Pages under this item use its values for `${NAME}`. The innermost `profile:` wins."
         },
         "collapsed": {
           "oneOf": [
@@ -4008,6 +4136,17 @@
               "type": "null"
             }
           ]
+        },
+        "profile": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Name of a profile in `profiles:`. Pages under this item use its values for `${NAME}`. The innermost `profile:` wins."
         }
       },
       "required": [

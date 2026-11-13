@@ -4,6 +4,8 @@ import type * as FernDocsConfig from "../../../index.js";
 
 export interface VersionConfig extends FernDocsConfig.WithPermissions, FernDocsConfig.WithFeatureFlags {
     displayName: string;
+    /** Name of a profile in `profiles:`. Pages under this item use its values for `${NAME}`. The innermost `profile:` wins. */
+    profile?: string;
     /**
      * The relative path to the version's docs.yml file. Required unless `ref` is set,
      * in which case the version's content is built from that git ref.

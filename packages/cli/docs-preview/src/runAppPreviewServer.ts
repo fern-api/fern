@@ -670,11 +670,10 @@ export async function runAppPreviewServer({
     // Watch directories containing docs files referenced from outside the fern folder
     // (e.g., `path: ../docs/page.mdx` or `redirects: ../redirects.yml` in docs.yml)
     if (previewResult != null) {
-        const externalDocsPaths = getExternalDocsWatchPaths(
-            absoluteFilePathToFern,
-            previewResult.docsDefinition,
-            project.docsWorkspaces?.config._absoluteFilepathsToRedirectsFiles
-        );
+        const externalDocsPaths = getExternalDocsWatchPaths(absoluteFilePathToFern, previewResult.docsDefinition, [
+            ...(project.docsWorkspaces?.config._absoluteFilepathsToRedirectsFiles ?? []),
+            ...(project.docsWorkspaces?.config._absoluteFilepathsToProfileVarsFiles ?? [])
+        ]);
         if (externalDocsPaths.length > 0) {
             context.logger.debug(`Watching external docs directories: ${externalDocsPaths.join(", ")}`);
             additionalFilepaths.push(...externalDocsPaths);

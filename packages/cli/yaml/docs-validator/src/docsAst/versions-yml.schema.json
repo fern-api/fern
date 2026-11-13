@@ -453,6 +453,17 @@
             }
           ]
         },
+        "profile": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Name of a profile in `profiles:`. Pages under this item use its values for `${NAME}`. The innermost `profile:` wins."
+        },
         "tab-menu": {
           "oneOf": [
             {
@@ -587,6 +598,17 @@
               "type": "null"
             }
           ]
+        },
+        "profile": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Name of a profile in `profiles:`. Pages under this item use its values for `${NAME}`. The innermost `profile:` wins."
         }
       },
       "required": [
@@ -664,6 +686,17 @@
           "items": {
             "$ref": "#/definitions/docs.NavigationItem"
           }
+        },
+        "profile": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Name of a profile in `profiles:`. Pages under this item use its values for `${NAME}`. The innermost `profile:` wins."
         },
         "collapsed": {
           "oneOf": [
@@ -2655,6 +2688,17 @@
               "type": "null"
             }
           ]
+        },
+        "profile": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Name of a profile in `profiles:`. Pages under this item use its values for `${NAME}`. The innermost `profile:` wins."
         }
       },
       "required": [

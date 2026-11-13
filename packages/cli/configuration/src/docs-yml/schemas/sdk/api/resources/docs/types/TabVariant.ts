@@ -11,4 +11,6 @@ export interface TabVariant extends FernDocsConfig.WithPermissions, FernDocsConf
     skipSlug?: boolean;
     hidden?: boolean;
     default?: boolean;
+    /** Name of a profile in `profiles:`. Pages under this item use its values for `${NAME}`. The innermost `profile:` wins. */
+    profile?: string;
 }
