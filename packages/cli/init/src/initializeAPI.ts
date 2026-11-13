@@ -126,6 +126,7 @@ export async function initializeAPI({
         context.logger.info(chalk.green("Created new API: ./" + path.relative(process.cwd(), directoryOfWorkspace)));
     }
 
+    let docsInitialized = false;
     // The docs cannot read an SDK Config API, so they are given its spec instead.
     if (useSdkConfig) {
         await repointRelocatedSpecs({ absolutePathToFernDirectory, taskContext: context });
@@ -137,9 +138,11 @@ export async function initializeAPI({
                 useSdkConfig,
                 openApi: openApiUrl ?? getSpecPathOfNewApi({ directoryOfWorkspace, relocatedOpenApiPath })
             });
+            docsInitialized = true;
         }
     }
-    if (!(useSdkConfig && includeDocs)) {
+    // initializeDocs ends with the same hint.
+    if (!docsInitialized) {
         context.logger.info(CODING_AGENT_SKILLS_HINT);
     }
 }
