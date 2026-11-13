@@ -272,7 +272,9 @@
       "description": undefined,
       "displayName": undefined,
       "examples": [
-        {},
+        {
+          "message": "Basic auth successful",
+        },
       ],
       "name": "getBasicProtected_Response_200",
       "shape": {
@@ -309,7 +311,9 @@
       "description": undefined,
       "displayName": undefined,
       "examples": [
-        {},
+        {
+          "message": "Bearer auth successful",
+        },
       ],
       "name": "getBearerProtected_Response_200",
       "shape": {

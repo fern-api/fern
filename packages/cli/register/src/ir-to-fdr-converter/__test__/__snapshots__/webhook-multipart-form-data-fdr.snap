@@ -286,6 +286,12 @@
           "document": "string",
           "eventId": "evt_doc_abc123",
           "eventType": "document.uploaded",
+          "metadata": "{"filename": "contract.pdf", "size": 1024000, "pages": 5}",
+          "tags": [
+            "contract",
+            "legal",
+            "important",
+          ],
           "timestamp": "2024-01-15T09:30:00Z",
           "uploadedBy": "user_xyz789",
         },

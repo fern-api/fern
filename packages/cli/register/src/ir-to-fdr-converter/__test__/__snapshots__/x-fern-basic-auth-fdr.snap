@@ -435,6 +435,7 @@
         {
           "id": "plant-123",
           "name": "Monstera Deliciosa",
+          "species": "Monstera",
         },
       ],
       "name": "Plant",

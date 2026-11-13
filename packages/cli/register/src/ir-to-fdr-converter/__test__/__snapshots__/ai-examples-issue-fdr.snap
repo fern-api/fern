@@ -237,8 +237,15 @@
       "displayName": undefined,
       "examples": [
         {
+          "category": "Indoor Plants",
+          "description": "A beautiful indoor plant",
           "name": "Fiddle Leaf Fig",
+          "price": 29.99,
           "status": "available",
+          "tags": [
+            "leafy",
+            "green",
+          ],
         },
       ],
       "name": "Plant",
@@ -373,7 +380,10 @@
       "description": undefined,
       "displayName": undefined,
       "examples": [
-        {},
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440000",
+          "name": "Fiddle Leaf Fig",
+        },
       ],
       "name": "PlantResponse",
       "shape": {

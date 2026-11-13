@@ -21,7 +21,9 @@ const doc: OpenAPIV3.Document = {
                 properties: {
                     children: {
                         type: "array",
-                        items: { oneOf: [{ $ref: "#/components/schemas/Say" }, { $ref: "#/components/schemas/Hangup" }] },
+                        items: {
+                            oneOf: [{ $ref: "#/components/schemas/Say" }, { $ref: "#/components/schemas/Hangup" }]
+                        },
                         xml: { wrapped: false }
                     }
                 },
@@ -31,7 +33,12 @@ const doc: OpenAPIV3.Document = {
                 type: "object",
                 xml: { name: "Say" },
                 properties: {
-                    voice: { type: "string", enum: ["man", "woman", "alice"], xml: { attribute: true }, example: "alice" },
+                    voice: {
+                        type: "string",
+                        enum: ["man", "woman", "alice"],
+                        xml: { attribute: true },
+                        example: "alice"
+                    },
                     loop: { type: "integer", xml: { attribute: true }, example: 2 },
                     message: { type: "string", example: "Thanks for calling." }
                 },
@@ -54,7 +61,14 @@ describe("object schema examples", () => {
     it("keeps the schema-level example, assembles one from property examples, and leaves bare objects without one", () => {
         const ir = parse({
             context: mockTaskContext,
-            documents: [{ type: "openapi", value: doc, source: Source.openapi({ file: "twiml.yml" }), settings: DEFAULT_PARSE_OPENAPI_SETTINGS }],
+            documents: [
+                {
+                    type: "openapi",
+                    value: doc,
+                    source: Source.openapi({ file: "twiml.yml" }),
+                    settings: DEFAULT_PARSE_OPENAPI_SETTINGS
+                }
+            ],
             options: DEFAULT_PARSE_OPENAPI_SETTINGS
         });
         const schemas = ir.groupedSchemas.rootSchemas;
@@ -62,7 +76,18 @@ describe("object schema examples", () => {
             const schema = schemas[name];
             return schema?.type === "object" ? schema.examples : "not-an-object";
         };
-        console.log(JSON.stringify({ Say: examplesOf("Say"), VoiceResponse: examplesOf("VoiceResponse"), Pause: examplesOf("Pause"), Hangup: examplesOf("Hangup") }, null, 1));
+        console.log(
+            JSON.stringify(
+                {
+                    Say: examplesOf("Say"),
+                    VoiceResponse: examplesOf("VoiceResponse"),
+                    Pause: examplesOf("Pause"),
+                    Hangup: examplesOf("Hangup")
+                },
+                null,
+                1
+            )
+        );
         expect(examplesOf("Hangup")).toBeUndefined();
         expect(examplesOf("Say")).toHaveLength(1);
         expect(examplesOf("Pause")).toHaveLength(1);

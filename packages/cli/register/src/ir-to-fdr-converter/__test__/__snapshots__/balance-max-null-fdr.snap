@@ -342,6 +342,7 @@
       "displayName": undefined,
       "examples": [
         {
+          "balance_max": "100000000",
           "balance_min": "0",
           "rate_bps": 200,
         },

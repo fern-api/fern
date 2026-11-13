@@ -283,6 +283,7 @@
         {
           "errorCode": "AUTH_FAILED",
           "message": "Authentication failed for user",
+          "severity": "high",
           "type": "error",
         },
       ],
@@ -725,6 +726,7 @@
       "examples": [
         {
           "action": "login",
+          "timestamp": "2023-12-01T12:00:00Z",
           "type": "user",
           "userId": "user_123",
         },

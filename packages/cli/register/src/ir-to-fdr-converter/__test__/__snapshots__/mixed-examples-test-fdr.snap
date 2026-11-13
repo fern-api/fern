@@ -353,6 +353,8 @@
       "displayName": undefined,
       "examples": [
         {
+          "category": "Electronics",
+          "description": "A useful widget",
           "id": "prod-456",
           "name": "Widget",
           "price": 29.99,
@@ -470,7 +472,10 @@
       "displayName": undefined,
       "examples": [
         {
+          "avatar": "https://example.com/avatar.jpg",
+          "bio": "Software engineer passionate about APIs",
           "email": "user@example.com",
+          "id": "user-123",
           "name": "John Doe",
           "role": "user",
         },

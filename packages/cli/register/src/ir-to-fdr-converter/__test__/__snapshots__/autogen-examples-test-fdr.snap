@@ -317,7 +317,13 @@
       "displayName": undefined,
       "examples": [
         {
+          "established": "2023-01-01",
+          "id": "garden-456",
           "name": "Main Garden",
+          "plants": [
+            "plant-1",
+            "plant-2",
+          ],
           "size": "small",
         },
       ],
@@ -461,7 +467,9 @@
       "displayName": undefined,
       "examples": [
         {
+          "description": "A beautiful flower",
           "id": "plant-123",
+          "location": "Garden bed 1",
           "name": "Rose",
           "status": "healthy",
         },

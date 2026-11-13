@@ -349,7 +349,9 @@
       "description": undefined,
       "displayName": undefined,
       "examples": [
-        {},
+        {
+          "detail": "Request was throttled. Expected available in 10 seconds.",
+        },
       ],
       "name": "GetResourceRequestTooManyRequestsError",
       "shape": {

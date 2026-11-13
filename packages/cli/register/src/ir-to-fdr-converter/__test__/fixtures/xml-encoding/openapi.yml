@@ -103,6 +103,11 @@ components:
           type: integer
           xml:
             attribute: true
+          example: 5
+        label:
+          type: string
+          xml:
+            attribute: true
     PlainObject:
       type: object
       description: Not XML-encoded; properties must not carry xml metadata.

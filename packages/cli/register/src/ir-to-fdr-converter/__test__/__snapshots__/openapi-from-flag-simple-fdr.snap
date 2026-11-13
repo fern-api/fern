@@ -544,6 +544,8 @@
       "examples": [
         {
           "email": "newuser@example.com",
+          "firstName": "Jane",
+          "lastName": "Smith",
         },
       ],
       "name": "CreateUserRequest",
@@ -733,6 +735,7 @@
         {
           "status": "healthy",
           "timestamp": "2024-01-15T09:30:00Z",
+          "version": "1.0.0",
         },
       ],
       "name": "HealthResponse",
@@ -822,7 +825,9 @@
         {
           "createdAt": "2024-01-15T09:30:00Z",
           "email": "user@example.com",
+          "firstName": "John",
           "id": "user123",
+          "lastName": "Doe",
         },
       ],
       "name": "User",
