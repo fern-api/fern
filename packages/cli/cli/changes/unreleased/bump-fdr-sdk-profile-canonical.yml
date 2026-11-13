@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern docs dev` gives each profile edition of a page its own canonical URL and sitemap entry,
+    matching hosted docs. Bumps `@fern-api/fdr-sdk` to `1.2.174-306a382ffb`.
+  type: fix
