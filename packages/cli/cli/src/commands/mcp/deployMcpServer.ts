@@ -447,15 +447,18 @@ export function describeHostedMcpAuth(
         const issuer = serverAuth.issuer == null ? "" : ` with ${serverAuth.issuer}`;
         return `Sign-in: OAuth${issuer}. MCP clients sign users in when they connect.`;
     }
+    // Only a registry that reports header mode says sign-in is off; an older one reports nothing.
+    if (serverAuth?.mode !== "headers") {
+        return undefined;
+    }
     const flows = declaredOAuthFlows(metadata);
     if (flows == null) {
         return undefined;
     }
-    const detail = flows.length > 0 ? ` (${flows.join(", ")})` : "";
-    return `OAuth detected in your API definition${detail}. Turn on OAuth sign-in at ${dashboardUrl}?tab=settings`;
+    return `OAuth detected in your API definition (${flows.join(", ")}). Turn on OAuth sign-in at ${dashboardUrl}?tab=settings`;
 }
 
-/** The OAuth flow names the spec declares, or undefined when it declares no OAuth or OpenID Connect scheme. */
+/** The OAuth flow names the spec declares, or undefined when it declares none this CLI recognizes. */
 function declaredOAuthFlows(metadata: unknown): string[] | undefined {
     if (!isRecord(metadata) || !isRecord(metadata.auth) || !isRecord(metadata.auth.oauth)) {
         return undefined;
@@ -478,7 +481,7 @@ function declaredOAuthFlows(metadata: unknown): string[] | undefined {
             }
         }
     }
-    return [...flows];
+    return flows.size > 0 ? [...flows] : undefined;
 }
 
 export function getToolNameValidationErrors(metadata: unknown): string[] {

@@ -669,13 +669,22 @@ describe("describeHostedMcpAuth", () => {
         );
     });
 
-    it("prints nothing for a server without OAuth, and tolerates old metadata and old FDRs", () => {
+    it("prints nothing without OAuth, for unrecognized schemes, or when the registry does not report sign-in", () => {
+        const declaresOAuth = { auth: { oauth: { schemes: [{ type: "oauth2", flows: { authorizationCode: {} } }] } } };
         expect(
-            describeHostedMcpAuth({ auth: { schemes: [], required: false } }, undefined, dashboardUrl)
+            describeHostedMcpAuth({ auth: { schemes: [], required: false } }, { mode: "headers" }, dashboardUrl)
         ).toBeUndefined();
-        expect(describeHostedMcpAuth(undefined, undefined, dashboardUrl)).toBeUndefined();
+        expect(describeHostedMcpAuth(undefined, { mode: "headers" }, dashboardUrl)).toBeUndefined();
         expect(
             describeHostedMcpAuth({ auth: { oauth: { schemes: [] } } }, { mode: "headers" }, dashboardUrl)
         ).toBeUndefined();
+        expect(
+            describeHostedMcpAuth(
+                { auth: { oauth: { schemes: [{ type: "mystery" }, 3] } } },
+                { mode: "headers" },
+                dashboardUrl
+            )
+        ).toBeUndefined();
+        expect(describeHostedMcpAuth(declaresOAuth, undefined, dashboardUrl)).toBeUndefined();
     });
 });
