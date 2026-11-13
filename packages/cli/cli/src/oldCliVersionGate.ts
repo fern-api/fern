@@ -39,10 +39,7 @@ export async function confirmOldCliVersionAllowed({
     const risk =
         `Fern CLI ${version} is older than ${MINIMUM_ISOLATED_CLI_VERSION} and runs npx from the project directory, ` +
         "so a package.json or node_modules/.bin in this project could run its own code in place of the CLI or its tools.";
-    const isAllowed =
-        process.env[ALLOW_OLD_CLI_VERSION_ENV_VAR] === "true" ||
-        args.some(isAllowOldCliVersionArg) ||
-        process.argv.slice(2).some(isAllowOldCliVersionArg);
+    const isAllowed = process.env[ALLOW_OLD_CLI_VERSION_ENV_VAR] === "true" || args.some(isAllowOldCliVersionArg);
     if (isAllowed) {
         cliContext.logger.warn(risk);
         return;
