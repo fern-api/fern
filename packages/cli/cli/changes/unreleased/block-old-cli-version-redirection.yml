@@ -5,5 +5,5 @@
     versions run `npx` from the project directory, so a project could run its own executables in place
     of the CLI or its tools. Interactive terminals ask for confirmation; elsewhere, pass
     `--allow-old-cli-version` or set `FERN_ALLOW_OLD_CLI_VERSION=true` to run the older version anyway.
-    `fern upgrade` from such a project now runs in the current CLI instead of the older one.
+    Without that opt-in, `fern upgrade` from such a project runs in the current CLI instead of the older one.
   type: feat

@@ -131,6 +131,7 @@ import { writeDocsDefinitionForProject } from "./commands/write-docs-definition/
 import { FERN_CWD_ENV_VAR } from "./cwd.js";
 import {
     ALLOW_OLD_CLI_VERSION_FLAG,
+    hasOldCliVersionConsent,
     isOlderThanMinimumIsolatedCliVersion,
     MINIMUM_ISOLATED_CLI_VERSION
 } from "./oldCliVersionGate.js";
@@ -232,10 +233,12 @@ async function runCli() {
             await tryRunCli(cliContext);
         } else {
             const versionOfCliToRun = await getIntendedVersionOfCli(cliContext);
-            // Older CLIs upgrade through an unisolated npx, so upgrade away from them with this CLI.
+            // Older CLIs upgrade through an unisolated npx, so upgrade away from them with this CLI
+            // unless the user opted into running the older CLI.
             const isUpgradeFromOldCli =
                 getInvokedCommandName(process.argv) === "upgrade" &&
-                isOlderThanMinimumIsolatedCliVersion(versionOfCliToRun);
+                isOlderThanMinimumIsolatedCliVersion(versionOfCliToRun) &&
+                !hasOldCliVersionConsent(process.argv.slice(2));
             if (cliContext.environment.packageVersion === versionOfCliToRun || isUpgradeFromOldCli) {
                 await tryRunCli(cliContext);
             } else {
