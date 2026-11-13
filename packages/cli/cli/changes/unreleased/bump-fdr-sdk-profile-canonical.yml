@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
 
 - summary: |
-    Fix a bug in docs profiles.
+    Docs profiles: each edition of a page now gets its own sitemap entry and canonical URL in `fern docs dev`.
   type: fix
