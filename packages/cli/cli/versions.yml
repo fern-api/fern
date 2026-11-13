@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.212.0
+  changelogEntry:
+    - summary: |
+        Add docs profiles. A profile is a named set of values, like a product name or CLI command, that
+        fills `${NAME}` placeholders. Publish one set of pages as several editions without copying them.
+      type: feat
+  createdAt: "2026-11-13"
+  irVersion: 67
 - version: 5.211.0
   changelogEntry:
     - summary: |
