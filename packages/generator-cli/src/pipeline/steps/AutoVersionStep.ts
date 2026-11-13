@@ -388,7 +388,7 @@ export class AutoVersionStep extends BaseStep {
         const message =
             `diff too large for FAI (${formatSizeKB(cleanedBytes)}KB, ` +
             `limit ${formatSizeKB(MAX_RAW_DIFF_BYTES)}KB)`;
-        this.logger.warn(`${label}: ${message}. Skipping AI analysis.`);
+        this.logger.warn(`${label}: ${message}.`);
         return { reason: "diff-too-large", message };
     }
 
@@ -425,7 +425,8 @@ export class AutoVersionStep extends BaseStep {
                 // cleaned diff in one request first; if that single large request fails,
                 // retry chunk-by-chunk so one timeout/5xx can't discard the whole analysis.
                 // Diffs over MAX_SINGLE_REQUEST_DIFF_BYTES skip the single request and go
-                // straight to the highest-priority chunks.
+                // straight to the highest-priority chunks. A successful single request covers the
+                // whole diff (FAI does its own chunking), so MAX_CHUNKS doesn't apply to it.
                 const cleanedBytes = Buffer.byteLength(cleanedDiff, "utf-8");
                 if (cleanedBytes <= MAX_SINGLE_REQUEST_DIFF_BYTES || cappedChunks.length <= 1) {
                     try {
@@ -523,6 +524,8 @@ export class AutoVersionStep extends BaseStep {
             previousVersion: this.config.baseVersion ?? fixedVersion,
             label
         });
+        // On analysis-failed, analyze() returns the PATCH fallback analysis. Its placeholder
+        // message must not become the changelog entry for an explicit version, so bail out too.
         if (analysis == null || warning?.reason === "analysis-failed") {
             return withReason(warning);
         }
