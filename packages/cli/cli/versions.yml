@@ -1,4 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.211.0
+  changelogEntry:
+    - summary: |
+        `fern generate --local --version AUTO` logs a stable `AUTO versioning fallback: reason=<code>` line
+        (`diff-too-large` or `analysis-failed`) when it falls back to a PATCH bump, so CI can tell the
+        two cases apart. The diff size limit for AI analysis is raised from 10MB to 50MB.
+      type: feat
+    - summary: |
+        `fern generate --docs --guest` no longer prints a "Missing redirects check skipped: could not
+        reach FDR (FDR returned 403)" warning. The check needs to read the site's previously published
+        pages, which a guest token is not allowed to do, and a guest's drop site has no redirects to
+        protect, so the check is skipped silently for guest publishes.
+      type: fix
+  createdAt: "2026-11-13"
+  irVersion: 67
 - version: 5.210.3
   changelogEntry:
     - summary: |
