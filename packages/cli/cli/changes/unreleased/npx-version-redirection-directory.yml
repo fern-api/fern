@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    When `fern.config.json` pins a different CLI version, the CLI now runs `npx` from a temporary
+    npm project instead of the project directory, so the pinned version always comes from the registry.
+  type: fix

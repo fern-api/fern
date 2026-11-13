@@ -31,7 +31,7 @@ const BUNDLE_CACHE_DIR_ENV_VAR = "FERN_MDX_BUNDLE_CACHE_DIR";
  * The rolldown version invoked via npx. Pinned so bundling is reproducible
  * across CLI runs.
  */
-const ROLLDOWN_VERSION = "1.1.4";
+export const ROLLDOWN_VERSION = "1.1.4";
 
 /**
  * Bumped whenever the generated rolldown config changes the bundle output, so
@@ -172,6 +172,8 @@ export async function maybeBundleMdxComponent({
 
     const { path: tmpDir, cleanup } = await tmp.dir({ unsafeCleanup: true });
     try {
+        // A temp directory may be inside a project; establish an independent npm prefix.
+        await writeFile(path.join(tmpDir, "package.json"), JSON.stringify({ private: true }));
         const outputFilePath = path.join(tmpDir, "bundle.js");
         const configFilePath = path.join(tmpDir, "rolldown.config.mjs");
         await writeFile(configFilePath, buildRolldownConfig({ absoluteFilePath, outputFilePath }));
@@ -179,9 +181,12 @@ export async function maybeBundleMdxComponent({
         const result = await loggingExeca(
             context.logger,
             "npx",
-            ["--quiet", "--yes", `rolldown@${ROLLDOWN_VERSION}`, "-c", configFilePath],
+            ["--quiet", "--yes", "--package", `rolldown@${ROLLDOWN_VERSION}`, "--", "rolldown", "-c", configFilePath],
             {
-                cwd: path.dirname(absoluteFilePath),
+                // Run from Fern's temp directory, not the docs project, so npx can't resolve
+                // npm config from the project. Explicit --package skips npx's ancestor binary
+                // lookup, even above our package.json boundary. Imports resolve from the component.
+                cwd: tmpDir,
                 doNotPipeOutput: true,
                 reject: false
             }
