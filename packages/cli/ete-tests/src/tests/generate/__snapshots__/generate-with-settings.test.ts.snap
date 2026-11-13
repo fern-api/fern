@@ -696,6 +696,20 @@ from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class Booking(UniversalBaseModel):
+    """
+    Examples
+    --------
+    from fern.api.resources import Booking
+
+    Booking(
+        id="3f3e3e1-c824-4d63-b37a-d8d698862f1d",
+        trip_id="4f4e4e1-c824-4d63-b37a-d8d698862f1d",
+        passenger_name="John Doe",
+        has_bicycle=True,
+        has_dog=True,
+    )
+    """
+
     id: typing.Optional[str] = pydantic.Field(default=None)
     """
     Unique identifier for the booking
@@ -744,6 +758,31 @@ from .booking_payment_status import BookingPaymentStatus
 
 
 class BookingPayment(UniversalBaseModel):
+    """
+    Examples
+    --------
+    from fern.api.resources import BookingPayment, BookingPaymentSource_Card
+
+    BookingPayment(
+        id="id",
+        amount=49.99,
+        currency="bam",
+        source=BookingPaymentSource_Card(
+            name="Francis Bourgeois",
+            number="4242424242424242",
+            cvc=123,
+            exp_month=12,
+            exp_year=2025,
+            address_line1="address_line1",
+            address_line2="address_line2",
+            address_city="address_city",
+            address_country="address_country",
+            address_post_code="address_post_code",
+        ),
+        status="pending",
+    )
+    """
+
     id: typing.Optional[str] = pydantic.Field(default=None)
     """
     Unique identifier for the payment. This will be a unique identifier for the payment, and is used to reference the payment in other objects.
@@ -993,6 +1032,16 @@ from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class LinksBooking(UniversalBaseModel):
+    """
+    Examples
+    --------
+    from fern.api.resources import LinksBooking
+
+    LinksBooking(
+        booking="https://api.example.com/bookings/1725ff48-ab45-4bb5-9d02-88745177dedb",
+    )
+    """
+
     booking: typing.Optional[str] = None
 
     if IS_PYDANTIC_V2:
@@ -1070,6 +1119,20 @@ from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class Station(UniversalBaseModel):
+    """
+    Examples
+    --------
+    from fern.api.resources import Station
+
+    Station(
+        id="efdbb9d1-02c2-4bc3-afb7-6788d8782b1e",
+        name="Berlin Hauptbahnhof",
+        address="Invalidenstraße 10557 Berlin, Germany",
+        country_code="DE",
+        timezone="Europe/Berlin",
+    )
+    """
+
     id: str = pydantic.Field()
     """
     Unique identifier for the station.
@@ -1116,6 +1179,30 @@ from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class Trip(UniversalBaseModel):
+    """
+    Examples
+    --------
+    import datetime
+
+    from fern.api.resources import Trip
+
+    Trip(
+        id="4f4e4e1-c824-4d63-b37a-d8d698862f1d",
+        origin="Berlin Hauptbahnhof",
+        destination="Paris Gare du Nord",
+        departure_time=datetime.datetime.fromisoformat(
+            "2024-02-01 10:00:00+00:00",
+        ),
+        arrival_time=datetime.datetime.fromisoformat(
+            "2024-02-01 16:00:00+00:00",
+        ),
+        operator="Deutsche Bahn",
+        price=50.0,
+        bicycles_allowed=True,
+        dogs_allowed=True,
+    )
+    """
+
     id: typing.Optional[str] = pydantic.Field(default=None)
     """
     Unique identifier for the trip
