@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Keep the Maven `signature` block when GitHub SDK generation runs through sdk-gen-api. The runtime
+    bundle omits publish credentials on that route and dropped the signature with them, so Java SDKs
+    configured for Maven Central got a release workflow that ran `./gradlew publish` without the
+    `MAVEN_SIGNATURE_*` secrets. The signature is now sent with empty values, so the generator writes
+    the signed `./gradlew sonatypeCentralUpload` workflow without receiving any credentials.
+  type: fix

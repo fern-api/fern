@@ -139,12 +139,20 @@ export function getGithubPublishConfig(
                       passwordEnvironmentVariable: EnvironmentVariable(
                           omitPublishCredentials ? "" : (value.credentials?.password ?? "")
                       ),
+                      // Without credentials the signature is still sent with empty values, because its presence
+                      // is what makes generators emit a signed (Maven Central) publish workflow.
                       signature:
-                          value.signature != null && !omitPublishCredentials
+                          value.signature != null
                               ? {
-                                    keyIdEnvironmentVariable: EnvironmentVariable(value.signature.keyId ?? ""),
-                                    passwordEnvironmentVariable: EnvironmentVariable(value.signature.password ?? ""),
-                                    secretKeyEnvironmentVariable: EnvironmentVariable(value.signature.secretKey ?? "")
+                                    keyIdEnvironmentVariable: EnvironmentVariable(
+                                        omitPublishCredentials ? "" : (value.signature.keyId ?? "")
+                                    ),
+                                    passwordEnvironmentVariable: EnvironmentVariable(
+                                        omitPublishCredentials ? "" : (value.signature.password ?? "")
+                                    ),
+                                    secretKeyEnvironmentVariable: EnvironmentVariable(
+                                        omitPublishCredentials ? "" : (value.signature.secretKey ?? "")
+                                    )
                                 }
                               : undefined
                   }),
