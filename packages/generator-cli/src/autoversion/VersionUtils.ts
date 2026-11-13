@@ -90,9 +90,16 @@ export const MAX_CHUNKS = 40;
  * Maximum raw diff size (in bytes) accepted for chunked analysis.
  * Diffs larger than this are rejected before chunking to prevent
  * excessive memory/CPU usage from parsing extremely large inputs
- * (e.g. accidental binary file inclusion). 10 MB.
+ * (e.g. accidental binary file inclusion). 50 MB.
  */
-export const MAX_RAW_DIFF_BYTES = 10_000_000;
+export const MAX_RAW_DIFF_BYTES = 50_000_000;
+
+/**
+ * Largest cleaned diff sent to the hosted FAI service in a single request.
+ * Larger diffs (up to MAX_RAW_DIFF_BYTES) go straight to chunk-by-chunk analysis
+ * of the MAX_CHUNKS highest-priority chunks. 10 MB.
+ */
+export const MAX_SINGLE_REQUEST_DIFF_BYTES = 10_000_000;
 
 export enum VersionBump {
     MAJOR = "MAJOR",

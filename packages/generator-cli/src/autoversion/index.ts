@@ -1,3 +1,9 @@
+export {
+    AUTO_VERSION_FALLBACK_LOG_PREFIX,
+    type AutoVersionFallbackReason,
+    formatAutoVersionFallbackLog,
+    parseAutoVersionFallbackReason
+} from "./AutoVersionFallback.js";
 export { AutoVersioningCache, type CachedAnalysis } from "./AutoVersioningCache.js";
 export {
     AutoVersioningException,
@@ -20,6 +26,7 @@ export {
     MAX_AI_DIFF_BYTES,
     MAX_CHUNKS,
     MAX_RAW_DIFF_BYTES,
+    MAX_SINGLE_REQUEST_DIFF_BYTES,
     mapMagicVersionForLanguage,
     maxVersionBump,
     VersionBump

@@ -1460,7 +1460,7 @@ async function executeFernSdkGenApiBuild(
         logFernSdkGenApiSubmissionFailureDebug(first.context, error, sensitiveValues);
         const sanitizedError = sanitizeFernSdkGenApiSubmissionError(error, sensitiveValues);
         return first.context.failAndThrow(
-            `Failed to submit sdk-gen-api build: ${sanitizedError.message}`,
+            `Failed to submit sdk-gen-api build: ${sanitizedError.message}${describeSpentGuestBuild(sanitizedError, first.token)}`,
             sanitizedError,
             { code: CliError.Code.NetworkError }
         );
@@ -1717,6 +1717,18 @@ function logFernSdkGenApiMessage(
         default:
             context.logger.info(log.message);
     }
+}
+
+/**
+ * A guest build identical to an earlier one that already ended is refused (409, the quota unit was spent) by
+ * sdk-gen-api versions that reserve before replaying; say what to change instead of leaving the agent with the
+ * server's wording.
+ */
+function describeSpentGuestBuild(error: FernSdkGenApiSubmissionError, token: FernToken): string {
+    if (token.type !== "guest" || error.status !== 409 || !/idempotency key/i.test(error.message)) {
+        return "";
+    }
+    return " This run is identical to an earlier guest build that has already ended. Change the input (for example --version), or start a fresh guest session with --new-session.";
 }
 
 function sanitizeFernSdkGenApiSubmissionError(error: unknown, sensitiveValues: string[]): FernSdkGenApiSubmissionError {

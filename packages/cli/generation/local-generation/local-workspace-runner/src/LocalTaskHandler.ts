@@ -11,6 +11,7 @@ import {
     CachedAnalysis,
     changelogContainsVersion,
     countFilesInDiff,
+    formatAutoVersionFallbackLog,
     formatSizeKB,
     isAutoVersion,
     isPlaceholderVersion,
@@ -340,10 +341,11 @@ export class LocalTaskHandler {
             // Reject absurdly large diffs before chunking to prevent excessive resource usage
             const cleanedDiffBytes = Buffer.byteLength(cleanedDiff, "utf-8");
             if (cleanedDiffBytes > MAX_RAW_DIFF_BYTES) {
-                this.context.logger.warn(
+                const tooLargeDetail =
                     `Diff too large for analysis (${(cleanedDiffBytes / 1_000_000).toFixed(1)}MB, ` +
-                        `limit ${MAX_RAW_DIFF_BYTES / 1_000_000}MB). Falling back to PATCH increment.`
-                );
+                    `limit ${MAX_RAW_DIFF_BYTES / 1_000_000}MB)`;
+                this.context.logger.warn(`${tooLargeDetail}. Falling back to PATCH increment.`);
+                this.context.logger.warn(formatAutoVersionFallbackLog("diff-too-large", tooLargeDetail));
                 const newVersion = this.incrementVersion(previousVersion, VersionBump.PATCH);
                 const fallbackMessage = this.isWhitelabel
                     ? "SDK regeneration"
@@ -500,6 +502,7 @@ export class LocalTaskHandler {
                             : "") +
                         `Error: ${errorMessage}`
                 );
+                this.context.logger.warn(formatAutoVersionFallbackLog("analysis-failed", errorMessage));
                 const newVersion = this.incrementVersion(previousVersion, VersionBump.PATCH);
                 const fallbackMessage = this.isWhitelabel
                     ? "SDK regeneration"

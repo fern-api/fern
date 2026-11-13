@@ -1,3 +1,4 @@
+import type { AutoVersionFallbackReason } from "../autoversion/AutoVersionFallback";
 export interface PipelineConfig {
     outputDir: string;
 
@@ -67,6 +68,11 @@ export interface AutoVersionStepConfig {
     priorChangelog?: string;
     /** Fallback version when no prior generation exists (first run). Defaults to "0.0.1" (or "v0.0.1" for Go). */
     baseVersion?: string;
+    /**
+     * Explicit version from `--version X.Y.Z`. The step keeps this version and only runs the
+     * AI analysis to write the changelog entry and PR description; it never bumps the version.
+     */
+    fixedVersion?: string;
     /**
      * BAML AI service configuration (provider + model). When absent, the step calls the
      * hosted FAI service using `fernToken` instead. If neither is supplied, AI analysis
@@ -275,6 +281,12 @@ export interface AutoVersionStepResult extends StepResult {
      * in the PR body and never automerges such a PR.
      */
     analysisWarning?: string;
+    /**
+     * Machine-readable reason the analysis was unavailable or incomplete. Set whenever
+     * `analysisWarning` is, and in `fixedVersion` mode (where `analysisWarning` is not set
+     * because the version itself is not in question).
+     */
+    analysisWarningCode?: AutoVersionFallbackReason;
     /** SHA of the `[fern-autoversion]` commit once it's been made. TS-only; no fiddle counterpart. */
     commitSha?: string;
 }
@@ -290,6 +302,8 @@ export interface GithubStepResult extends StepResult {
     skippedNoDiff?: boolean;
     /** True when automerge was enabled on the PR */
     autoMergeEnabled?: boolean;
+    /** Why automerge was requested but could not be enabled (GitHub rejected the mutation) */
+    autoMergeError?: string;
     /** URL of the GitHub release created in commit-and-release mode */
     releaseUrl?: string;
 }
