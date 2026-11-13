@@ -73,17 +73,6 @@
           },
           "Pet": {
             "docs": undefined,
-            "examples": [
-              {
-                "value": {
-                  "breed": "Golden Retriever",
-                  "id": 123,
-                  "name": "Fluffy",
-                  "status": "active",
-                  "type": "pet",
-                },
-              },
-            ],
             "inline": undefined,
             "properties": {
               "breed": "optional<string>",
@@ -136,13 +125,6 @@
     source:
       openapi: ../openapi.yml
   Pet:
-    examples:
-      - value:
-          id: 123
-          type: pet
-          name: Fluffy
-          breed: Golden Retriever
-          status: active
     properties:
       id: integer
       type: PetType

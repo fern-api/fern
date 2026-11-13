@@ -13,10 +13,6 @@
                 "value": {
                   "currency": "EUR",
                   "iban": "DE2310010010123456788",
-                  "other": {
-                    "identification": "identification",
-                    "schemeNameCone": "schemeNameCone",
-                  },
                 },
               },
             ],
@@ -117,9 +113,6 @@
       - value:
           currency: EUR
           iban: DE2310010010123456788
-          other:
-            identification: identification
-            schemeNameCone: schemeNameCone
     properties:
       currency: optional<string>
       iban: optional<nullable<string>>

@@ -82,16 +82,6 @@
           },
           "ExtensionV1": {
             "docs": undefined,
-            "examples": [
-              {
-                "value": {
-                  "date_created": "2024-01-15T09:30:00Z",
-                  "id": "73df0106-1781-4b03-a288-e749e1a43481",
-                  "name": "Special Widget",
-                  "upload_uri": "upload_uri",
-                },
-              },
-            ],
             "inline": undefined,
             "properties": {
               "date_created": {
@@ -123,39 +113,6 @@
           },
           "ExtensionV1EnvelopeDefaultMetaWrapper": {
             "docs": undefined,
-            "examples": [
-              {
-                "value": {
-                  "data": {
-                    "date_created": "2024-01-15T09:30:00Z",
-                    "id": "73df0106-1781-4b03-a288-e749e1a43481",
-                    "name": "Special Widget",
-                    "upload_uri": "upload_uri",
-                  },
-                  "errors": [
-                    {
-                      "code": "code",
-                      "details": {
-                        "key": "value",
-                      },
-                      "message": "message",
-                    },
-                  ],
-                  "meta": {
-                    "requestId": "requestId",
-                  },
-                  "warnings": [
-                    {
-                      "code": "code",
-                      "details": {
-                        "key": "value",
-                      },
-                      "message": "message",
-                    },
-                  ],
-                },
-              },
-            ],
             "inline": undefined,
             "properties": {
               "data": "ExtensionV1",
@@ -231,41 +188,6 @@
           },
           "ListExtensionV1EnvelopeDefaultMetaWrapper": {
             "docs": undefined,
-            "examples": [
-              {
-                "value": {
-                  "data": [
-                    {
-                      "date_created": "2024-01-15T09:30:00Z",
-                      "id": "73df0106-1781-4b03-a288-e749e1a43481",
-                      "name": "Special Widget",
-                      "upload_uri": "upload_uri",
-                    },
-                  ],
-                  "errors": [
-                    {
-                      "code": "code",
-                      "details": {
-                        "key": "value",
-                      },
-                      "message": "message",
-                    },
-                  ],
-                  "meta": {
-                    "requestId": "requestId",
-                  },
-                  "warnings": [
-                    {
-                      "code": "code",
-                      "details": {
-                        "key": "value",
-                      },
-                      "message": "message",
-                    },
-                  ],
-                },
-              },
-            ],
             "inline": undefined,
             "properties": {
               "data": "nullable<list<ExtensionV1>>",
@@ -279,44 +201,6 @@
           },
           "ListProfileV1EnvelopeDefaultMetaWrapper": {
             "docs": undefined,
-            "examples": [
-              {
-                "value": {
-                  "data": [
-                    {
-                      "name": "Acme corp login",
-                      "status": "status",
-                      "tags": [
-                        "blue",
-                        "red",
-                      ],
-                      "upload_uri": "upload_uri",
-                    },
-                  ],
-                  "errors": [
-                    {
-                      "code": "code",
-                      "details": {
-                        "key": "value",
-                      },
-                      "message": "message",
-                    },
-                  ],
-                  "meta": {
-                    "requestId": "requestId",
-                  },
-                  "warnings": [
-                    {
-                      "code": "code",
-                      "details": {
-                        "key": "value",
-                      },
-                      "message": "message",
-                    },
-                  ],
-                },
-              },
-            ],
             "inline": undefined,
             "properties": {
               "data": "nullable<list<ProfileV1>>",
@@ -391,12 +275,6 @@
               {
                 "value": {
                   "name": "Acme corp login",
-                  "status": "status",
-                  "tags": [
-                    "blue",
-                    "red",
-                  ],
-                  "upload_uri": "upload_uri",
                 },
               },
             ],
@@ -437,42 +315,6 @@
           },
           "ProfileV1EnvelopeDefaultMetaWrapper": {
             "docs": undefined,
-            "examples": [
-              {
-                "value": {
-                  "data": {
-                    "name": "Acme corp login",
-                    "status": "status",
-                    "tags": [
-                      "blue",
-                      "red",
-                    ],
-                    "upload_uri": "upload_uri",
-                  },
-                  "errors": [
-                    {
-                      "code": "code",
-                      "details": {
-                        "key": "value",
-                      },
-                      "message": "message",
-                    },
-                  ],
-                  "meta": {
-                    "requestId": "requestId",
-                  },
-                  "warnings": [
-                    {
-                      "code": "code",
-                      "details": {
-                        "key": "value",
-                      },
-                      "message": "message",
-                    },
-                  ],
-                },
-              },
-            ],
             "inline": undefined,
             "properties": {
               "data": "ProfileV1",
@@ -552,9 +394,6 @@
                 "value": {
                   "persist_profile": true,
                   "persist_profile_name": "default",
-                  "persist_profile_tags": [
-                    "persist_profile_tags",
-                  ],
                   "profile_id": "linkedin",
                   "timeoutMinutes": 10,
                 },
@@ -602,9 +441,6 @@
                 "value": {
                   "persist_profile": true,
                   "persist_profile_name": "default",
-                  "persist_profile_tags": [
-                    "persist_profile_tags",
-                  ],
                   "profile_id": "linkedin",
                   "timeoutMinutes": 10,
                 },
@@ -650,9 +486,6 @@
             "examples": [
               {
                 "value": {
-                  "cdp_url": "cdp_url",
-                  "cdp_ws_url": "cdp_ws_url",
-                  "chromedriver_url": "chromedriver_url",
                   "configuration": {
                     "persist_profile": true,
                     "persist_profile_name": "default",
@@ -662,16 +495,8 @@
                     "profile_id": "linkedin",
                     "timeoutMinutes": 10,
                   },
-                  "current_usage": 1000000,
-                  "date_created": "2024-01-15T09:30:00Z",
                   "id": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
-                  "last_activity": "2024-01-15T09:30:00Z",
-                  "live_view": {
-                    "airtop_browser_url": "airtop_browser_url",
-                    "token": "token",
-                  },
                   "status": "active",
-                  "url": "url",
                 },
               },
             ],
@@ -734,57 +559,6 @@
           },
           "SessionWithConnectionInfoEnvelopeDefaultMetaWrapper": {
             "docs": undefined,
-            "examples": [
-              {
-                "value": {
-                  "data": {
-                    "cdp_url": "cdp_url",
-                    "cdp_ws_url": "cdp_ws_url",
-                    "chromedriver_url": "chromedriver_url",
-                    "configuration": {
-                      "persist_profile": true,
-                      "persist_profile_name": "default",
-                      "persist_profile_tags": [
-                        "persist_profile_tags",
-                      ],
-                      "profile_id": "linkedin",
-                      "timeoutMinutes": 10,
-                    },
-                    "current_usage": 1000000,
-                    "date_created": "2024-01-15T09:30:00Z",
-                    "id": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
-                    "last_activity": "2024-01-15T09:30:00Z",
-                    "live_view": {
-                      "airtop_browser_url": "airtop_browser_url",
-                      "token": "token",
-                    },
-                    "status": "active",
-                    "url": "url",
-                  },
-                  "errors": [
-                    {
-                      "code": "code",
-                      "details": {
-                        "key": "value",
-                      },
-                      "message": "message",
-                    },
-                  ],
-                  "meta": {
-                    "requestId": "requestId",
-                  },
-                  "warnings": [
-                    {
-                      "code": "code",
-                      "details": {
-                        "key": "value",
-                      },
-                      "message": "message",
-                    },
-                  ],
-                },
-              },
-            ],
             "inline": undefined,
             "properties": {
               "data": "SessionWithConnectionInfo",
@@ -798,44 +572,6 @@
           },
           "SessionsWithPagination": {
             "docs": undefined,
-            "examples": [
-              {
-                "value": {
-                  "pagination": {
-                    "currentLimit": 1000000,
-                    "currentPage": 1000000,
-                    "finalCount": 1000000,
-                    "hasMore": true,
-                    "initialCount": 1000000,
-                    "nextOffset": 1000000,
-                    "numberOfPages": 1000000,
-                    "totalItems": 1000000,
-                  },
-                  "sessions": [
-                    {
-                      "cdp_url": "cdp_url",
-                      "cdp_ws_url": "cdp_ws_url",
-                      "chromedriver_url": "chromedriver_url",
-                      "configuration": {
-                        "persist_profile": true,
-                        "persist_profile_name": "default",
-                        "profile_id": "linkedin",
-                        "timeoutMinutes": 10,
-                      },
-                      "current_usage": 1000000,
-                      "date_created": "2024-01-15T09:30:00Z",
-                      "id": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
-                      "last_activity": "2024-01-15T09:30:00Z",
-                      "live_view": {
-                        "airtop_browser_url": "airtop_browser_url",
-                      },
-                      "status": "active",
-                      "url": "url",
-                    },
-                  ],
-                },
-              },
-            ],
             "inline": undefined,
             "properties": {
               "pagination": {
@@ -853,57 +589,6 @@
           },
           "SessionsWithPaginationEnvelopeDefaultMetaWrapper": {
             "docs": undefined,
-            "examples": [
-              {
-                "value": {
-                  "data": {
-                    "pagination": {
-                      "currentLimit": 1000000,
-                      "currentPage": 1000000,
-                      "finalCount": 1000000,
-                      "hasMore": true,
-                      "initialCount": 1000000,
-                      "nextOffset": 1000000,
-                      "numberOfPages": 1000000,
-                      "totalItems": 1000000,
-                    },
-                    "sessions": [
-                      {
-                        "configuration": {
-                          "persist_profile": true,
-                          "persist_profile_name": "default",
-                          "profile_id": "linkedin",
-                          "timeoutMinutes": 10,
-                        },
-                        "id": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
-                        "status": "active",
-                      },
-                    ],
-                  },
-                  "errors": [
-                    {
-                      "code": "code",
-                      "details": {
-                        "key": "value",
-                      },
-                      "message": "message",
-                    },
-                  ],
-                  "meta": {
-                    "requestId": "requestId",
-                  },
-                  "warnings": [
-                    {
-                      "code": "code",
-                      "details": {
-                        "key": "value",
-                      },
-                      "message": "message",
-                    },
-                  ],
-                },
-              },
-            ],
             "inline": undefined,
             "properties": {
               "data": "SessionsWithPagination",
@@ -1038,12 +723,6 @@ types:
     source:
       openapi: ../openapi.yml
   ExtensionV1:
-    examples:
-      - value:
-          date_created: '2024-01-15T09:30:00Z'
-          id: 73df0106-1781-4b03-a288-e749e1a43481
-          name: Special Widget
-          upload_uri: upload_uri
     properties:
       date_created:
         type: datetime
@@ -1062,25 +741,6 @@ types:
     source:
       openapi: ../openapi.yml
   ExtensionV1EnvelopeDefaultMetaWrapper:
-    examples:
-      - value:
-          data:
-            date_created: '2024-01-15T09:30:00Z'
-            id: 73df0106-1781-4b03-a288-e749e1a43481
-            name: Special Widget
-            upload_uri: upload_uri
-          errors:
-            - code: code
-              details:
-                key: value
-              message: message
-          meta:
-            requestId: requestId
-          warnings:
-            - code: code
-              details:
-                key: value
-              message: message
     properties:
       data: ExtensionV1
       errors: nullable<list<Issue>>
@@ -1128,25 +788,6 @@ types:
     source:
       openapi: ../openapi.yml
   ListExtensionV1EnvelopeDefaultMetaWrapper:
-    examples:
-      - value:
-          data:
-            - date_created: '2024-01-15T09:30:00Z'
-              id: 73df0106-1781-4b03-a288-e749e1a43481
-              name: Special Widget
-              upload_uri: upload_uri
-          errors:
-            - code: code
-              details:
-                key: value
-              message: message
-          meta:
-            requestId: requestId
-          warnings:
-            - code: code
-              details:
-                key: value
-              message: message
     properties:
       data: nullable<list<ExtensionV1>>
       errors: nullable<list<Issue>>
@@ -1155,27 +796,6 @@ types:
     source:
       openapi: ../openapi.yml
   ListProfileV1EnvelopeDefaultMetaWrapper:
-    examples:
-      - value:
-          data:
-            - name: Acme corp login
-              status: status
-              tags:
-                - blue
-                - red
-              upload_uri: upload_uri
-          errors:
-            - code: code
-              details:
-                key: value
-              message: message
-          meta:
-            requestId: requestId
-          warnings:
-            - code: code
-              details:
-                key: value
-              message: message
     properties:
       data: nullable<list<ProfileV1>>
       errors: nullable<list<Issue>>
@@ -1224,11 +844,6 @@ types:
     examples:
       - value:
           name: Acme corp login
-          status: status
-          tags:
-            - blue
-            - red
-          upload_uri: upload_uri
     properties:
       name:
         type: string
@@ -1250,27 +865,6 @@ types:
     source:
       openapi: ../openapi.yml
   ProfileV1EnvelopeDefaultMetaWrapper:
-    examples:
-      - value:
-          data:
-            name: Acme corp login
-            status: status
-            tags:
-              - blue
-              - red
-            upload_uri: upload_uri
-          errors:
-            - code: code
-              details:
-                key: value
-              message: message
-          meta:
-            requestId: requestId
-          warnings:
-            - code: code
-              details:
-                key: value
-              message: message
     properties:
       data: ProfileV1
       errors: nullable<list<Issue>>
@@ -1319,8 +913,6 @@ types:
       - value:
           persist_profile: true
           persist_profile_name: default
-          persist_profile_tags:
-            - persist_profile_tags
           profile_id: linkedin
           timeoutMinutes: 10
     properties:
@@ -1354,8 +946,6 @@ types:
       - value:
           persist_profile: true
           persist_profile_name: default
-          persist_profile_tags:
-            - persist_profile_tags
           profile_id: linkedin
           timeoutMinutes: 10
     properties:
@@ -1387,9 +977,6 @@ types:
   SessionWithConnectionInfo:
     examples:
       - value:
-          cdp_url: cdp_url
-          cdp_ws_url: cdp_ws_url
-          chromedriver_url: chromedriver_url
           configuration:
             persist_profile: true
             persist_profile_name: default
@@ -1397,15 +984,8 @@ types:
               - persist_profile_tags
             profile_id: linkedin
             timeoutMinutes: 10
-          current_usage: 1000000
-          date_created: '2024-01-15T09:30:00Z'
           id: 6aac6f73-bd89-4a76-ab32-5a6c422e8b0b
-          last_activity: '2024-01-15T09:30:00Z'
-          live_view:
-            airtop_browser_url: airtop_browser_url
-            token: token
           status: active
-          url: url
     properties:
       cdp_url:
         type: optional<string>
@@ -1451,40 +1031,6 @@ types:
     source:
       openapi: ../openapi.yml
   SessionWithConnectionInfoEnvelopeDefaultMetaWrapper:
-    examples:
-      - value:
-          data:
-            cdp_url: cdp_url
-            cdp_ws_url: cdp_ws_url
-            chromedriver_url: chromedriver_url
-            configuration:
-              persist_profile: true
-              persist_profile_name: default
-              persist_profile_tags:
-                - persist_profile_tags
-              profile_id: linkedin
-              timeoutMinutes: 10
-            current_usage: 1000000
-            date_created: '2024-01-15T09:30:00Z'
-            id: 6aac6f73-bd89-4a76-ab32-5a6c422e8b0b
-            last_activity: '2024-01-15T09:30:00Z'
-            live_view:
-              airtop_browser_url: airtop_browser_url
-              token: token
-            status: active
-            url: url
-          errors:
-            - code: code
-              details:
-                key: value
-              message: message
-          meta:
-            requestId: requestId
-          warnings:
-            - code: code
-              details:
-                key: value
-              message: message
     properties:
       data: SessionWithConnectionInfo
       errors: nullable<list<Issue>>
@@ -1493,34 +1039,6 @@ types:
     source:
       openapi: ../openapi.yml
   SessionsWithPagination:
-    examples:
-      - value:
-          pagination:
-            currentLimit: 1000000
-            currentPage: 1000000
-            finalCount: 1000000
-            hasMore: true
-            initialCount: 1000000
-            nextOffset: 1000000
-            numberOfPages: 1000000
-            totalItems: 1000000
-          sessions:
-            - cdp_url: cdp_url
-              cdp_ws_url: cdp_ws_url
-              chromedriver_url: chromedriver_url
-              configuration:
-                persist_profile: true
-                persist_profile_name: default
-                profile_id: linkedin
-                timeoutMinutes: 10
-              current_usage: 1000000
-              date_created: '2024-01-15T09:30:00Z'
-              id: 6aac6f73-bd89-4a76-ab32-5a6c422e8b0b
-              last_activity: '2024-01-15T09:30:00Z'
-              live_view:
-                airtop_browser_url: airtop_browser_url
-              status: active
-              url: url
     properties:
       pagination:
         type: Pagination
@@ -1531,38 +1049,6 @@ types:
     source:
       openapi: ../openapi.yml
   SessionsWithPaginationEnvelopeDefaultMetaWrapper:
-    examples:
-      - value:
-          data:
-            pagination:
-              currentLimit: 1000000
-              currentPage: 1000000
-              finalCount: 1000000
-              hasMore: true
-              initialCount: 1000000
-              nextOffset: 1000000
-              numberOfPages: 1000000
-              totalItems: 1000000
-            sessions:
-              - configuration:
-                  persist_profile: true
-                  persist_profile_name: default
-                  profile_id: linkedin
-                  timeoutMinutes: 10
-                id: 6aac6f73-bd89-4a76-ab32-5a6c422e8b0b
-                status: active
-          errors:
-            - code: code
-              details:
-                key: value
-              message: message
-          meta:
-            requestId: requestId
-          warnings:
-            - code: code
-              details:
-                key: value
-              message: message
     properties:
       data: SessionsWithPagination
       errors: nullable<list<Issue>>

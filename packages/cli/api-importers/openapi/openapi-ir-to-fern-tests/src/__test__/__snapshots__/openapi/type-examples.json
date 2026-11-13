@@ -33,7 +33,6 @@
             "examples": [
               {
                 "value": {
-                  "label": "label",
                   "length": 5,
                 },
               },
@@ -266,7 +265,6 @@
     examples:
       - value:
           length: 5
-          label: label
     properties:
       length:
         type: optional<integer>

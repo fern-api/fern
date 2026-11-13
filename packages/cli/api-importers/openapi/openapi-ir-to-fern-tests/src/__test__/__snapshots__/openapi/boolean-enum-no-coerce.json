@@ -8,18 +8,6 @@
         "types": {
           "Plant": {
             "docs": undefined,
-            "examples": [
-              {
-                "value": {
-                  "id": 123,
-                  "isIndoor": true,
-                  "isPoisonous": true,
-                  "isSeedling": true,
-                  "name": "Fern",
-                  "status": "active",
-                },
-              },
-            ],
             "inline": undefined,
             "properties": {
               "id": "integer",
@@ -52,14 +40,6 @@
     source:
       openapi: ../openapi.yml
   Plant:
-    examples:
-      - value:
-          id: 123
-          name: Fern
-          isIndoor: true
-          isPoisonous: true
-          status: active
-          isSeedling: true
     properties:
       id: integer
       name: string

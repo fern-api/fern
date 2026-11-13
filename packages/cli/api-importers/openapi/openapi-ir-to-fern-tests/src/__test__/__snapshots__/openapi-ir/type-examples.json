@@ -341,13 +341,6 @@
                   "type": "int"
                 },
                 "type": "primitive"
-              },
-              "label": {
-                "value": {
-                  "value": "label",
-                  "type": "string"
-                },
-                "type": "primitive"
               }
             },
             "type": "object"

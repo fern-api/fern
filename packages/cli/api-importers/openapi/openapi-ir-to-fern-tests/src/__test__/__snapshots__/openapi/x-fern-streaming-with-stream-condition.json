@@ -460,7 +460,6 @@
               {
                 "value": {
                   "query": "How can I use the Vectara platform?",
-                  "stream_response": true,
                 },
               },
             ],
@@ -868,7 +867,6 @@ types:
     examples:
       - value:
           query: How can I use the Vectara platform?
-          stream_response: true
     properties:
       query:
         type: string

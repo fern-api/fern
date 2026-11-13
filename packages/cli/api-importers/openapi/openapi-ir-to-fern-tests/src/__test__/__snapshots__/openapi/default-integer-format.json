@@ -248,23 +248,6 @@
           },
           "IntegerResponse": {
             "docs": "Response schema testing integer scenarios",
-            "examples": [
-              {
-                "value": {
-                  "metadata": {
-                    "count": 1000000000000,
-                    "maxValue": 9223372036854776000,
-                    "minValue": -2147483648,
-                  },
-                  "responseInteger": 9223372036854776000,
-                  "results": [
-                    9223372036854776000,
-                    1000000000000,
-                    500000000000,
-                  ],
-                },
-              },
-            ],
             "inline": undefined,
             "properties": {
               "metadata": {
@@ -495,17 +478,6 @@ types:
     inline: true
   IntegerResponse:
     docs: Response schema testing integer scenarios
-    examples:
-      - value:
-          responseInteger: 9223372036854776000
-          metadata:
-            count: 1000000000000
-            maxValue: 9223372036854776000
-            minValue: -2147483648
-          results:
-            - 9223372036854776000
-            - 1000000000000
-            - 500000000000
     properties:
       responseInteger:
         type: long

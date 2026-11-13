@@ -275,25 +275,6 @@
                   "type": "string"
                 },
                 "type": "primitive"
-              },
-              "other": {
-                "properties": {
-                  "identification": {
-                    "value": {
-                      "value": "identification",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "schemeNameCone": {
-                    "value": {
-                      "value": "schemeNameCone",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
-                },
-                "type": "object"
               }
             },
             "type": "object"

@@ -1448,23 +1448,6 @@ Used to submit feedback regarding the quality of previously generated completion
                   "count": 123,
                   "next": "http://api.example.org/accounts/?offset=400&limit=100",
                   "previous": "http://api.example.org/accounts/?offset=200&limit=100",
-                  "results": [
-                    {
-                      "document_to_document_indexes": [
-                        {},
-                      ],
-                      "external_id": "external_id",
-                      "id": "id",
-                      "keywords": [
-                        "keywords",
-                      ],
-                      "label": "label",
-                      "last_uploaded_at": "2024-01-15T09:30:00Z",
-                      "processing_failure_reason": "EXCEEDED_CHARACTER_LIMIT",
-                      "processing_state": "QUEUED",
-                      "status": "ACTIVE",
-                    },
-                  ],
                 },
               },
             ],
@@ -3661,18 +3644,6 @@ types:
           count: 123
           next: http://api.example.org/accounts/?offset=400&limit=100
           previous: http://api.example.org/accounts/?offset=200&limit=100
-          results:
-            - id: id
-              external_id: external_id
-              last_uploaded_at: '2024-01-15T09:30:00Z'
-              label: label
-              processing_state: QUEUED
-              processing_failure_reason: EXCEEDED_CHARACTER_LIMIT
-              status: ACTIVE
-              keywords:
-                - keywords
-              document_to_document_indexes:
-                - {}
     properties:
       count: optional<integer>
       next:

@@ -5,6 +5,7 @@ import {
     EndpointExample,
     EndpointWithExample,
     ErrorExample,
+    FullExample,
     GlobalSecurity,
     HttpError,
     LiteralSchemaValue,
@@ -724,37 +725,85 @@ function getAudiences({ operation }: { operation: ConvertedOperation }): string[
 }
 
 /**
- * Attaches the validated examples of a named object schema: every schema-level `example`/`examples`
- * entry, or one assembled from the property-level examples when the schema has none. Objects
- * without any example stay bare, so a type page can fall back to a placeholder example.
+ * Attaches the validated examples of a named object schema (also when the object is wrapped in a
+ * `nullable`): every schema-level `example`/`examples` entry, or one assembled from the property-level
+ * examples when the schema has none. Objects without any example stay bare, so a type page can fall
+ * back to a placeholder example.
  */
 function withObjectExamples(
     schema: Schema,
     schemaWithExample: SchemaWithExample,
     exampleTypeFactory: ExampleTypeFactory
 ): Schema {
+    if (schema.type === "nullable" && schemaWithExample.type === "nullable") {
+        return {
+            ...schema,
+            value: withObjectExamples(schema.value, schemaWithExample.value, exampleTypeFactory)
+        };
+    }
     if (schema.type !== "object" || schemaWithExample.type !== "object") {
         return schema;
     }
     // Optional properties are included to the same depth as response examples, so the example documents them.
     const options = { ignoreOptionals: false, isParameter: false, maxDepth: 3, maxCheckerDepth: 5 };
     const userExamples = schemaWithExample.fullExamples ?? [];
-    const sources: { exampleId: string | undefined; example: unknown }[] =
+    const examples =
         userExamples.length > 0
-            ? userExamples.map((fullExample) => ({ exampleId: fullExample.name, example: fullExample.value }))
-            : exampleTypeFactory.hasExample(schemaWithExample, 0, new Set(), options)
-              ? [{ exampleId: undefined, example: undefined }]
-              : [];
-    const examples = sources
-        .map(({ exampleId, example }) =>
-            exampleTypeFactory.buildExample({
-                schema: schemaWithExample,
-                example,
-                exampleId,
-                skipReadonly: false,
-                options
-            })
-        )
-        .filter(isNonNullish);
+            ? userExamples
+                  .map((fullExample) =>
+                      exampleTypeFactory.buildExample({
+                          schema: schemaWithExample,
+                          example: fullExample.value,
+                          exampleId: fullExample.name,
+                          skipReadonly: false,
+                          options
+                      })
+                  )
+                  .filter(isNonNullish)
+            : assembleExampleFromPropertyExamples(schemaWithExample, exampleTypeFactory, options);
     return examples.length > 0 ? { ...schema, examples } : schema;
+}
+
+/**
+ * An example built from the property-level examples alone: the properties that carry one, plus the
+ * required ones. Nothing is assembled when a required property has no example of its own, since the
+ * placeholder the factory would fill in may not satisfy the property's constraints, and the result is
+ * validated like a user-written example.
+ */
+function assembleExampleFromPropertyExamples(
+    schemaWithExample: SchemaWithExample.Object_,
+    exampleTypeFactory: ExampleTypeFactory,
+    options: ExampleTypeFactory.Options
+): FullExample[] {
+    const propertiesWithExamples = new Set(
+        schemaWithExample.properties
+            .filter((property) => exampleTypeFactory.hasExample(property.schema, 0, new Set(), options))
+            .map((property) => property.key)
+    );
+    if (propertiesWithExamples.size === 0) {
+        return [];
+    }
+    const isRequired = (property: ObjectPropertyWithExample): boolean =>
+        property.schema.type !== "optional" && property.schema.type !== "nullable";
+    if (
+        schemaWithExample.properties.some(
+            (property) => isRequired(property) && !propertiesWithExamples.has(property.key)
+        )
+    ) {
+        return [];
+    }
+    const built = exampleTypeFactory.buildExample({
+        schema: schemaWithExample,
+        example: undefined,
+        exampleId: undefined,
+        skipReadonly: false,
+        options
+    });
+    if (built == null || built.type !== "object") {
+        return built == null ? [] : [built];
+    }
+    const properties = Object.fromEntries(
+        Object.entries(built.properties).filter(([key]) => propertiesWithExamples.has(key))
+    );
+    return [FullExample.object({ properties })];
 }
