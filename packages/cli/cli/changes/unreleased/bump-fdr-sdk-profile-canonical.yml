@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
 
 - summary: |
-    Bug fixes for docs previews.
+    Fix a bug in docs profiles.
   type: fix
