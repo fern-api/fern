@@ -6,6 +6,7 @@ import {
     SDK_CONFIG_FILENAME
 } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { CODING_AGENT_SKILLS_HINT } from "@fern-api/login";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import { mkdir } from "fs/promises";
@@ -137,6 +138,9 @@ export async function initializeAPI({
                 openApi: openApiUrl ?? getSpecPathOfNewApi({ directoryOfWorkspace, relocatedOpenApiPath })
             });
         }
+    }
+    if (!(useSdkConfig && includeDocs)) {
+        context.logger.info(CODING_AGENT_SKILLS_HINT);
     }
 }
 
