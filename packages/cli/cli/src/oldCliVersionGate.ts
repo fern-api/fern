@@ -52,18 +52,21 @@ export async function confirmOldCliVersionAllowed({
         `Fern CLI ${version} is older than ${MINIMUM_ISOLATED_CLI_VERSION} and runs npx from the project directory, ` +
         "so a package.json or node_modules/.bin in this project could run its own code in place of the CLI or its tools.";
     if (hasOldCliVersionConsent(args)) {
-        cliContext.logger.warn(risk);
+        cliContext.stderr.warn(risk);
         return;
     }
     const resolution =
         `Run \`fern upgrade\` to update the version in fern.config.json, or pass ${ALLOW_OLD_CLI_VERSION_FLAG} ` +
         `(or set ${ALLOW_OLD_CLI_VERSION_ENV_VAR}=true) to run ${version} anyway if you trust this project.`;
+    // Keep these on stderr: scripts capture stdout, e.g. `$(fern --version)`.
     if (!cliContext.isInteractive) {
-        return cliContext.failAndThrow(`${risk}\n${resolution}`, undefined, { code: CliError.Code.ConfigError });
+        cliContext.stderr.error(`${risk}\n${resolution}`);
+        return cliContext.failAndThrow(undefined, undefined, { code: CliError.Code.ConfigError });
     }
-    cliContext.logger.warn(risk);
+    cliContext.stderr.warn(risk);
     const confirmed = await cliContext.confirmPrompt(`Run Fern CLI ${version} anyway?`, false);
     if (!confirmed) {
-        return cliContext.failAndThrow(resolution, undefined, { code: CliError.Code.ConfigError });
+        cliContext.stderr.error(resolution);
+        return cliContext.failAndThrow(undefined, undefined, { code: CliError.Code.ConfigError });
     }
 }

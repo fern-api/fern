@@ -21,8 +21,12 @@ async function createContext({ isInteractive }: { isInteractive: boolean }) {
     vi.spyOn(cliContext, "isInteractive", "get").mockReturnValue(isInteractive);
     const confirmPrompt = vi.spyOn(cliContext, "confirmPrompt");
     const failAndThrow = vi.spyOn(cliContext, "failAndThrow");
-    const warn = vi.spyOn(cliContext.logger, "warn");
-    return { cliContext, confirmPrompt, failAndThrow, warn };
+    const warn = vi.spyOn(cliContext.stderr, "warn");
+    const error = vi.spyOn(cliContext.stderr, "error");
+    const stdoutInfo = vi.spyOn(cliContext.logger, "info");
+    const stdoutWarn = vi.spyOn(cliContext.logger, "warn");
+    const stdoutError = vi.spyOn(cliContext.logger, "error");
+    return { cliContext, confirmPrompt, failAndThrow, warn, error, stdoutInfo, stdoutWarn, stdoutError };
 }
 
 describe("isOlderThanMinimumIsolatedCliVersion", () => {
@@ -91,12 +95,18 @@ describe("confirmOldCliVersionAllowed", () => {
 
     it("fails without a prompt when not interactive", async () => {
         vi.stubEnv(ALLOW_OLD_CLI_VERSION_ENV_VAR, "");
-        const { cliContext, confirmPrompt, failAndThrow } = await createContext({ isInteractive: false });
+        const { cliContext, confirmPrompt, failAndThrow, error, stdoutInfo, stdoutWarn, stdoutError } =
+            await createContext({ isInteractive: false });
         await expect(
             confirmOldCliVersionAllowed({ version: OLD_VERSION, cliContext, args: ["generate"] })
         ).rejects.toBeInstanceOf(TaskAbortSignal);
         expect(confirmPrompt).not.toHaveBeenCalled();
-        expect(failAndThrow.mock.calls[0]?.[0]).toContain(ALLOW_OLD_CLI_VERSION_FLAG);
+        expect(failAndThrow).toHaveBeenCalled();
+        expect(error.mock.calls[0]?.[0]).toContain(ALLOW_OLD_CLI_VERSION_FLAG);
+        // Scripts capture stdout (e.g. `$(fern --version)`), so nothing may be printed there.
+        expect(stdoutInfo).not.toHaveBeenCalled();
+        expect(stdoutWarn).not.toHaveBeenCalled();
+        expect(stdoutError).not.toHaveBeenCalled();
     });
 
     it("allows the version with the flag", async () => {
