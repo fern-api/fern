@@ -2480,7 +2480,7 @@ export class DocsDefinitionResolver {
                             { code: CliError.Code.EnvironmentError }
                         )
                 },
-                { substituteAsEmpty: false }
+                { substituteAsEmpty: false, keep: getProfileVarNames(this.parsedDocsConfig.profiles) }
             );
         }
 
