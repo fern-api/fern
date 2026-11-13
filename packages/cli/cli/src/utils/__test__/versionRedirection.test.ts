@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { getInvokedCommandName, isVersionRedirectionExempt } from "../versionRedirection.js";
+import { getInvokedCommandName, isVersionQuery, isVersionRedirectionExempt } from "../versionRedirection.js";
 
 // argv mimics process.argv: [node, script, ...args]
 function argv(...args: string[]): string[] {
@@ -47,5 +47,19 @@ describe("isVersionRedirectionExempt", () => {
         expect(isVersionRedirectionExempt(argv("check"))).toBe(false);
         expect(isVersionRedirectionExempt(argv("generate"))).toBe(false);
         expect(isVersionRedirectionExempt(argv())).toBe(false);
+    });
+});
+
+describe("isVersionQuery", () => {
+    it("matches --version and -v without a command", () => {
+        expect(isVersionQuery(argv("--version"))).toBe(true);
+        expect(isVersionQuery(argv("-v"))).toBe(true);
+        expect(isVersionQuery(argv("--log-level", "debug", "--version"))).toBe(true);
+    });
+
+    it("does not match commands or a bare invocation", () => {
+        expect(isVersionQuery(argv())).toBe(false);
+        expect(isVersionQuery(argv("upgrade", "--version", "5.0.0"))).toBe(false);
+        expect(isVersionQuery(argv("generate", "-v"))).toBe(false);
     });
 });

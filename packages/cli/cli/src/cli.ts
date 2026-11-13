@@ -140,7 +140,7 @@ import { resolveGroupGithubConfig } from "./resolveGroupGithubConfig.js";
 import { RUNTIME } from "./runtime.js";
 import { installProcessHandlers } from "./telemetry/processHandlers.js";
 import { isSdkConfigInitEnabled } from "./utils/isSdkConfigInitEnabled.js";
-import { getInvokedCommandName, isVersionRedirectionExempt } from "./utils/versionRedirection.js";
+import { getInvokedCommandName, isVersionQuery, isVersionRedirectionExempt } from "./utils/versionRedirection.js";
 
 // Node 26+ on Linux enables io_uring in libuv, which has a busy-loop bug that
 // hangs the process. UV_USE_IO_URING must be set before Node starts (libuv
@@ -239,8 +239,15 @@ async function runCli() {
                 getInvokedCommandName(process.argv) === "upgrade" &&
                 isOlderThanMinimumIsolatedCliVersion(versionOfCliToRun) &&
                 !hasOldCliVersionConsent(process.argv.slice(2));
+            // Printing the version doesn't need the older CLI, so answer here instead of running it.
+            const isVersionQueryForOldCli =
+                isVersionQuery(process.argv) &&
+                isOlderThanMinimumIsolatedCliVersion(versionOfCliToRun) &&
+                !hasOldCliVersionConsent(process.argv.slice(2));
             if (cliContext.environment.packageVersion === versionOfCliToRun || isUpgradeFromOldCli) {
                 await tryRunCli(cliContext);
+            } else if (isVersionQueryForOldCli) {
+                cliContext.logger.info(versionOfCliToRun);
             } else {
                 await rerunFernCliAtVersion({
                     version: versionOfCliToRun,
