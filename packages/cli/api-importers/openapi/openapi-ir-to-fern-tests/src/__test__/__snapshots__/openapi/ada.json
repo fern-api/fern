@@ -124,6 +124,40 @@
         "types": {
           "EndUser": {
             "docs": undefined,
+            "examples": [
+              {
+                "value": {
+                  "created_at": "2023-12-08T19:06:04.890000",
+                  "end_user_id": "5f7e0e2c1e7c7e000f0f9c3a",
+                  "profile": {
+                    "email": "ada.lovelace@ada.cx",
+                    "first_name": "Ada",
+                    "language": "en-US",
+                    "last_name": "Lovelace",
+                    "metadata": {
+                      "example_key1": "example_string_value",
+                      "example_key2": true,
+                      "example_key3": 123,
+                    },
+                    "system_properties": {
+                      "browser": "Chrome",
+                      "browser_version": "119.0.0.0",
+                      "device": "macos",
+                      "introshown": false,
+                      "last_answer_id": "650071321ef45533437f6f29",
+                      "last_question_asked": "What is my account balance?",
+                      "sunshine_conversation_id": "12345abc",
+                      "sunshine_end_user_channel": "whatsapp",
+                      "sunshine_first_message_id": "65736922f17d0bf841d8eeb4",
+                      "sunshine_signed_up_at": "2023-12-08T19:06:04.890000",
+                      "sunshine_user_id": "5f7e0e2c1e7c7e000f0f9c3a",
+                      "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
+                    },
+                  },
+                  "updated_at": "2023-12-08T19:06:04.890000",
+                },
+              },
+            ],
             "inline": undefined,
             "properties": {
               "created_at": {
@@ -152,6 +186,44 @@
           },
           "EndUserCreatedWebhookPayload": {
             "docs": undefined,
+            "examples": [
+              {
+                "value": {
+                  "data": {
+                    "created_at": "2023-12-08T19:06:04.890000",
+                    "end_user_id": "5f7e0e2c1e7c7e000f0f9c3a",
+                    "profile": {
+                      "email": "ada.lovelace@ada.cx",
+                      "first_name": "Ada",
+                      "language": "en-US",
+                      "last_name": "Lovelace",
+                      "metadata": {
+                        "example_key1": "example_string_value",
+                        "example_key2": true,
+                        "example_key3": 123,
+                      },
+                      "system_properties": {
+                        "browser": "Chrome",
+                        "browser_version": "119.0.0.0",
+                        "device": "macos",
+                        "introshown": false,
+                        "last_answer_id": "650071321ef45533437f6f29",
+                        "last_question_asked": "What is my account balance?",
+                        "sunshine_conversation_id": "12345abc",
+                        "sunshine_end_user_channel": "whatsapp",
+                        "sunshine_first_message_id": "65736922f17d0bf841d8eeb4",
+                        "sunshine_signed_up_at": "2023-12-08T19:06:04.890000",
+                        "sunshine_user_id": "5f7e0e2c1e7c7e000f0f9c3a",
+                        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
+                      },
+                    },
+                    "updated_at": "2023-12-08T19:06:04.890000",
+                  },
+                  "timestamp": "2024-01-17T22:23:35.835",
+                  "type": "v1.end_user.created",
+                },
+              },
+            ],
             "inline": undefined,
             "properties": {
               "data": {
@@ -300,6 +372,44 @@
           },
           "EndUserUpdatedWebhookPayload": {
             "docs": undefined,
+            "examples": [
+              {
+                "value": {
+                  "data": {
+                    "created_at": "2023-12-08T19:06:04.890000",
+                    "end_user_id": "5f7e0e2c1e7c7e000f0f9c3a",
+                    "profile": {
+                      "email": "ada.lovelace@ada.cx",
+                      "first_name": "Ada",
+                      "language": "en-US",
+                      "last_name": "Lovelace",
+                      "metadata": {
+                        "example_key1": "example_string_value",
+                        "example_key2": true,
+                        "example_key3": 123,
+                      },
+                      "system_properties": {
+                        "browser": "Chrome",
+                        "browser_version": "119.0.0.0",
+                        "device": "macos",
+                        "introshown": false,
+                        "last_answer_id": "650071321ef45533437f6f29",
+                        "last_question_asked": "What is my account balance?",
+                        "sunshine_conversation_id": "12345abc",
+                        "sunshine_end_user_channel": "whatsapp",
+                        "sunshine_first_message_id": "65736922f17d0bf841d8eeb4",
+                        "sunshine_signed_up_at": "2023-12-08T19:06:04.890000",
+                        "sunshine_user_id": "5f7e0e2c1e7c7e000f0f9c3a",
+                        "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
+                      },
+                    },
+                    "updated_at": "2023-12-08T19:06:04.890000",
+                  },
+                  "timestamp": "2024-01-17T22:23:35.835",
+                  "type": "v1.end_user.updated",
+                },
+              },
+            ],
             "inline": undefined,
             "properties": {
               "data": {
@@ -346,6 +456,47 @@
           },
           "EndUsers": {
             "docs": undefined,
+            "examples": [
+              {
+                "value": {
+                  "end_users": [
+                    {
+                      "created_at": "2023-12-08T19:06:04.890000",
+                      "end_user_id": "5f7e0e2c1e7c7e000f0f9c3a",
+                      "profile": {
+                        "email": "ada.lovelace@ada.cx",
+                        "first_name": "Ada",
+                        "language": "en-US",
+                        "last_name": "Lovelace",
+                        "metadata": {
+                          "example_key1": "example_string_value",
+                          "example_key2": true,
+                          "example_key3": 123,
+                        },
+                        "system_properties": {
+                          "browser": "Chrome",
+                          "browser_version": "119.0.0.0",
+                          "device": "macos",
+                          "introshown": false,
+                          "last_answer_id": "650071321ef45533437f6f29",
+                          "last_question_asked": "What is my account balance?",
+                          "sunshine_conversation_id": "12345abc",
+                          "sunshine_end_user_channel": "whatsapp",
+                          "sunshine_first_message_id": "65736922f17d0bf841d8eeb4",
+                          "sunshine_signed_up_at": "2023-12-08T19:06:04.890000",
+                          "sunshine_user_id": "5f7e0e2c1e7c7e000f0f9c3a",
+                          "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
+                        },
+                      },
+                      "updated_at": "2023-12-08T19:06:04.890000",
+                    },
+                  ],
+                  "meta": {
+                    "next_page_url": "https://example.ada.support/api/end-users/v1?cursor=65a17e3f43bec88e2792d0eb",
+                  },
+                },
+              },
+            ],
             "inline": undefined,
             "properties": {
               "end_users": {
@@ -376,6 +527,14 @@
           },
           "Error": {
             "docs": undefined,
+            "examples": [
+              {
+                "value": {
+                  "details": "The requested resource with ID 123456abcdef was not found",
+                  "msg": "resource_not_found",
+                },
+              },
+            ],
             "inline": undefined,
             "properties": {
               "details": {
@@ -393,6 +552,18 @@
           },
           "Errors": {
             "docs": undefined,
+            "examples": [
+              {
+                "value": {
+                  "errors": [
+                    {
+                      "details": "The requested resource with ID 123456abcdef was not found",
+                      "msg": "resource_not_found",
+                    },
+                  ],
+                },
+              },
+            ],
             "inline": undefined,
             "properties": {
               "errors": {
@@ -563,6 +734,36 @@ types:
       openapi: ../openapi.json
     inline: true
   EndUser:
+    examples:
+      - value:
+          end_user_id: 5f7e0e2c1e7c7e000f0f9c3a
+          profile:
+            first_name: Ada
+            last_name: Lovelace
+            email: ada.lovelace@ada.cx
+            language: en-US
+            metadata:
+              example_key1: example_string_value
+              example_key2: true
+              example_key3: 123
+            system_properties:
+              user_agent: >-
+                Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)
+                AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0
+                Safari/537.36
+              device: macos
+              browser: Chrome
+              browser_version: 119.0.0.0
+              introshown: false
+              last_answer_id: 650071321ef45533437f6f29
+              last_question_asked: What is my account balance?
+              sunshine_first_message_id: 65736922f17d0bf841d8eeb4
+              sunshine_conversation_id: 12345abc
+              sunshine_end_user_channel: whatsapp
+              sunshine_signed_up_at: '2023-12-08T19:06:04.890000'
+              sunshine_user_id: 5f7e0e2c1e7c7e000f0f9c3a
+          created_at: '2023-12-08T19:06:04.890000'
+          updated_at: '2023-12-08T19:06:04.890000'
     properties:
       end_user_id:
         type: optional<string>
@@ -582,6 +783,10 @@ types:
     source:
       openapi: ../openapi.json
   Error:
+    examples:
+      - value:
+          msg: resource_not_found
+          details: The requested resource with ID 123456abcdef was not found
     properties:
       msg:
         type: string
@@ -592,6 +797,11 @@ types:
     source:
       openapi: ../openapi.json
   Errors:
+    examples:
+      - value:
+          errors:
+            - msg: resource_not_found
+              details: The requested resource with ID 123456abcdef was not found
     properties:
       errors:
         docs: A list of errors
@@ -610,6 +820,40 @@ types:
       openapi: ../openapi.json
     inline: true
   EndUsers:
+    examples:
+      - value:
+          end_users:
+            - end_user_id: 5f7e0e2c1e7c7e000f0f9c3a
+              profile:
+                first_name: Ada
+                last_name: Lovelace
+                email: ada.lovelace@ada.cx
+                language: en-US
+                metadata:
+                  example_key1: example_string_value
+                  example_key2: true
+                  example_key3: 123
+                system_properties:
+                  user_agent: >-
+                    Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)
+                    AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0
+                    Safari/537.36
+                  device: macos
+                  browser: Chrome
+                  browser_version: 119.0.0.0
+                  introshown: false
+                  last_answer_id: 650071321ef45533437f6f29
+                  last_question_asked: What is my account balance?
+                  sunshine_first_message_id: 65736922f17d0bf841d8eeb4
+                  sunshine_conversation_id: 12345abc
+                  sunshine_end_user_channel: whatsapp
+                  sunshine_signed_up_at: '2023-12-08T19:06:04.890000'
+                  sunshine_user_id: 5f7e0e2c1e7c7e000f0f9c3a
+              created_at: '2023-12-08T19:06:04.890000'
+              updated_at: '2023-12-08T19:06:04.890000'
+          meta:
+            next_page_url: >-
+              https://example.ada.support/api/end-users/v1?cursor=65a17e3f43bec88e2792d0eb
     properties:
       end_users:
         type: optional<list<EndUser>>
@@ -640,6 +884,39 @@ types:
       openapi: ../openapi.json
     inline: true
   EndUserCreatedWebhookPayload:
+    examples:
+      - value:
+          type: v1.end_user.created
+          timestamp: '2024-01-17T22:23:35.835'
+          data:
+            end_user_id: 5f7e0e2c1e7c7e000f0f9c3a
+            profile:
+              first_name: Ada
+              last_name: Lovelace
+              email: ada.lovelace@ada.cx
+              language: en-US
+              metadata:
+                example_key1: example_string_value
+                example_key2: true
+                example_key3: 123
+              system_properties:
+                user_agent: >-
+                  Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)
+                  AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0
+                  Safari/537.36
+                device: macos
+                browser: Chrome
+                browser_version: 119.0.0.0
+                introshown: false
+                last_answer_id: 650071321ef45533437f6f29
+                last_question_asked: What is my account balance?
+                sunshine_first_message_id: 65736922f17d0bf841d8eeb4
+                sunshine_conversation_id: 12345abc
+                sunshine_end_user_channel: whatsapp
+                sunshine_signed_up_at: '2023-12-08T19:06:04.890000'
+                sunshine_user_id: 5f7e0e2c1e7c7e000f0f9c3a
+            created_at: '2023-12-08T19:06:04.890000'
+            updated_at: '2023-12-08T19:06:04.890000'
     properties:
       type:
         type: optional<string>
@@ -673,6 +950,39 @@ types:
       openapi: ../openapi.json
     inline: true
   EndUserUpdatedWebhookPayload:
+    examples:
+      - value:
+          type: v1.end_user.updated
+          timestamp: '2024-01-17T22:23:35.835'
+          data:
+            end_user_id: 5f7e0e2c1e7c7e000f0f9c3a
+            profile:
+              first_name: Ada
+              last_name: Lovelace
+              email: ada.lovelace@ada.cx
+              language: en-US
+              metadata:
+                example_key1: example_string_value
+                example_key2: true
+                example_key3: 123
+              system_properties:
+                user_agent: >-
+                  Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)
+                  AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0
+                  Safari/537.36
+                device: macos
+                browser: Chrome
+                browser_version: 119.0.0.0
+                introshown: false
+                last_answer_id: 650071321ef45533437f6f29
+                last_question_asked: What is my account balance?
+                sunshine_first_message_id: 65736922f17d0bf841d8eeb4
+                sunshine_conversation_id: 12345abc
+                sunshine_end_user_channel: whatsapp
+                sunshine_signed_up_at: '2023-12-08T19:06:04.890000'
+                sunshine_user_id: 5f7e0e2c1e7c7e000f0f9c3a
+            created_at: '2023-12-08T19:06:04.890000'
+            updated_at: '2023-12-08T19:06:04.890000'
     properties:
       type:
         type: optional<string>

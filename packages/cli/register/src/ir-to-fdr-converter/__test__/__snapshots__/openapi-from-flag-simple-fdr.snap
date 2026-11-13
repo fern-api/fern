@@ -541,6 +541,11 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "email": "newuser@example.com",
+        },
+      ],
       "name": "CreateUserRequest",
       "shape": {
         "extends": [],
@@ -642,6 +647,12 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "code": "USER_NOT_FOUND",
+          "message": "The requested user could not be found",
+        },
+      ],
       "name": "Error",
       "shape": {
         "extends": [],
@@ -718,6 +729,12 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "status": "healthy",
+          "timestamp": "2024-01-15T09:30:00Z",
+        },
+      ],
       "name": "HealthResponse",
       "shape": {
         "extends": [],
@@ -776,6 +793,9 @@
       "availability": undefined,
       "description": "The current health status",
       "displayName": undefined,
+      "examples": [
+        "healthy",
+      ],
       "name": "HealthResponseStatus",
       "shape": {
         "default": undefined,
@@ -798,6 +818,13 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "createdAt": "2024-01-15T09:30:00Z",
+          "email": "user@example.com",
+          "id": "user123",
+        },
+      ],
       "name": "User",
       "shape": {
         "extends": [],

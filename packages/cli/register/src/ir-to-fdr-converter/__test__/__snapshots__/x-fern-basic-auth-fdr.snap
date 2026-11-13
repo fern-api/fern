@@ -378,6 +378,12 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "code": "UNAUTHORIZED",
+          "message": "Invalid credentials",
+        },
+      ],
       "name": "Error",
       "shape": {
         "extends": [],
@@ -425,6 +431,12 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "id": "plant-123",
+          "name": "Monstera Deliciosa",
+        },
+      ],
       "name": "Plant",
       "shape": {
         "extends": [],

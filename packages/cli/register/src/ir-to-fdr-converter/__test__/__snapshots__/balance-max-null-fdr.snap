@@ -228,6 +228,16 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "tiers": [
+            {
+              "balance_min": "0",
+              "rate_bps": 200,
+            },
+          ],
+        },
+      ],
       "name": "FixedRate",
       "shape": {
         "extends": [],
@@ -257,6 +267,19 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "fixed_rate": {
+            "tiers": [
+              {
+                "balance_min": "0",
+                "rate_bps": 200,
+              },
+            ],
+          },
+          "rate_type": "fixed",
+        },
+      ],
       "name": "RateResponse",
       "shape": {
         "extends": [],
@@ -292,6 +315,9 @@
       "availability": undefined,
       "description": "The type of rate structure",
       "displayName": undefined,
+      "examples": [
+        "fixed",
+      ],
       "name": "RateResponseRateType",
       "shape": {
         "default": undefined,
@@ -314,6 +340,12 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "balance_min": "0",
+          "rate_bps": 200,
+        },
+      ],
       "name": "RateTier",
       "shape": {
         "extends": [],

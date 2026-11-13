@@ -5037,6 +5037,41 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "examples": [
+          {
+            "properties": {
+              "date_created": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              },
+              "id": {
+                "value": {
+                  "value": "73df0106-1781-4b03-a288-e749e1a43481",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "name": {
+                "value": {
+                  "value": "Special Widget",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "upload_uri": {
+                "value": {
+                  "value": "upload_uri",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          }
+        ],
         "type": "object"
       },
       "ExtensionV1EnvelopeDefaultMetaWrapper": {
@@ -5131,6 +5166,148 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "examples": [
+          {
+            "properties": {
+              "data": {
+                "properties": {
+                  "date_created": {
+                    "value": {
+                      "value": "2024-01-15T09:30:00Z",
+                      "type": "datetime"
+                    },
+                    "type": "primitive"
+                  },
+                  "id": {
+                    "value": {
+                      "value": "73df0106-1781-4b03-a288-e749e1a43481",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "name": {
+                    "value": {
+                      "value": "Special Widget",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "upload_uri": {
+                    "value": {
+                      "value": "upload_uri",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              },
+              "errors": {
+                "value": [
+                  {
+                    "properties": {
+                      "code": {
+                        "value": {
+                          "value": "code",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "details": {
+                        "value": [
+                          {
+                            "key": {
+                              "value": "key",
+                              "type": "string"
+                            },
+                            "value": {
+                              "value": {
+                                "value": {
+                                  "value": "value",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "type": "unknown"
+                            }
+                          }
+                        ],
+                        "type": "map"
+                      },
+                      "message": {
+                        "value": {
+                          "value": "message",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    },
+                    "type": "object"
+                  }
+                ],
+                "type": "array"
+              },
+              "meta": {
+                "properties": {
+                  "requestId": {
+                    "value": {
+                      "value": "requestId",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              },
+              "warnings": {
+                "value": [
+                  {
+                    "properties": {
+                      "code": {
+                        "value": {
+                          "value": "code",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "details": {
+                        "value": [
+                          {
+                            "key": {
+                              "value": "key",
+                              "type": "string"
+                            },
+                            "value": {
+                              "value": {
+                                "value": {
+                                  "value": "value",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "type": "unknown"
+                            }
+                          }
+                        ],
+                        "type": "map"
+                      },
+                      "message": {
+                        "value": {
+                          "value": "message",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    },
+                    "type": "object"
+                  }
+                ],
+                "type": "array"
+              }
+            },
+            "type": "object"
+          }
+        ],
         "type": "object"
       },
       "Extensions-postRequest": {
@@ -5161,6 +5338,20 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "examples": [
+          {
+            "properties": {
+              "name": {
+                "value": {
+                  "value": "Special Widget",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          }
+        ],
         "type": "object"
       },
       "ExternalSessionAiResponseMetadata": {
@@ -5500,6 +5691,153 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "examples": [
+          {
+            "properties": {
+              "data": {
+                "value": [
+                  {
+                    "properties": {
+                      "date_created": {
+                        "value": {
+                          "value": "2024-01-15T09:30:00Z",
+                          "type": "datetime"
+                        },
+                        "type": "primitive"
+                      },
+                      "id": {
+                        "value": {
+                          "value": "73df0106-1781-4b03-a288-e749e1a43481",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "name": {
+                        "value": {
+                          "value": "Special Widget",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "upload_uri": {
+                        "value": {
+                          "value": "upload_uri",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    },
+                    "type": "object"
+                  }
+                ],
+                "type": "array"
+              },
+              "errors": {
+                "value": [
+                  {
+                    "properties": {
+                      "code": {
+                        "value": {
+                          "value": "code",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "details": {
+                        "value": [
+                          {
+                            "key": {
+                              "value": "key",
+                              "type": "string"
+                            },
+                            "value": {
+                              "value": {
+                                "value": {
+                                  "value": "value",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "type": "unknown"
+                            }
+                          }
+                        ],
+                        "type": "map"
+                      },
+                      "message": {
+                        "value": {
+                          "value": "message",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    },
+                    "type": "object"
+                  }
+                ],
+                "type": "array"
+              },
+              "meta": {
+                "properties": {
+                  "requestId": {
+                    "value": {
+                      "value": "requestId",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              },
+              "warnings": {
+                "value": [
+                  {
+                    "properties": {
+                      "code": {
+                        "value": {
+                          "value": "code",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "details": {
+                        "value": [
+                          {
+                            "key": {
+                              "value": "key",
+                              "type": "string"
+                            },
+                            "value": {
+                              "value": {
+                                "value": {
+                                  "value": "value",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "type": "unknown"
+                            }
+                          }
+                        ],
+                        "type": "map"
+                      },
+                      "message": {
+                        "value": {
+                          "value": "message",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    },
+                    "type": "object"
+                  }
+                ],
+                "type": "array"
+              }
+            },
+            "type": "object"
+          }
+        ],
         "type": "object"
       },
       "ListProfileV1EnvelopeDefaultMetaWrapper": {
@@ -5604,6 +5942,165 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "examples": [
+          {
+            "properties": {
+              "data": {
+                "value": [
+                  {
+                    "properties": {
+                      "name": {
+                        "value": {
+                          "value": "Acme corp login",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "status": {
+                        "value": {
+                          "value": "status",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "tags": {
+                        "value": [
+                          {
+                            "value": {
+                              "value": "blue",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          {
+                            "value": {
+                              "value": "red",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          }
+                        ],
+                        "type": "array"
+                      },
+                      "upload_uri": {
+                        "value": {
+                          "value": "upload_uri",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    },
+                    "type": "object"
+                  }
+                ],
+                "type": "array"
+              },
+              "errors": {
+                "value": [
+                  {
+                    "properties": {
+                      "code": {
+                        "value": {
+                          "value": "code",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "details": {
+                        "value": [
+                          {
+                            "key": {
+                              "value": "key",
+                              "type": "string"
+                            },
+                            "value": {
+                              "value": {
+                                "value": {
+                                  "value": "value",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "type": "unknown"
+                            }
+                          }
+                        ],
+                        "type": "map"
+                      },
+                      "message": {
+                        "value": {
+                          "value": "message",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    },
+                    "type": "object"
+                  }
+                ],
+                "type": "array"
+              },
+              "meta": {
+                "properties": {
+                  "requestId": {
+                    "value": {
+                      "value": "requestId",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              },
+              "warnings": {
+                "value": [
+                  {
+                    "properties": {
+                      "code": {
+                        "value": {
+                          "value": "code",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "details": {
+                        "value": [
+                          {
+                            "key": {
+                              "value": "key",
+                              "type": "string"
+                            },
+                            "value": {
+                              "value": {
+                                "value": {
+                                  "value": "value",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "type": "unknown"
+                            }
+                          }
+                        ],
+                        "type": "map"
+                      },
+                      "message": {
+                        "value": {
+                          "value": "message",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    },
+                    "type": "object"
+                  }
+                ],
+                "type": "array"
+              }
+            },
+            "type": "object"
+          }
+        ],
         "type": "object"
       },
       "LiveViewConnectionInfo": {
@@ -5966,6 +6463,39 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "examples": [
+          {
+            "properties": {
+              "name": {
+                "value": {
+                  "value": "Acme corp login",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "tags": {
+                "value": [
+                  {
+                    "value": {
+                      "value": "yellow",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  {
+                    "value": {
+                      "value": "orange",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                ],
+                "type": "array"
+              }
+            },
+            "type": "object"
+          }
+        ],
         "type": "object"
       },
       "ProfileV1": {
@@ -6067,6 +6597,53 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "examples": [
+          {
+            "properties": {
+              "name": {
+                "value": {
+                  "value": "Acme corp login",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "status": {
+                "value": {
+                  "value": "status",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "tags": {
+                "value": [
+                  {
+                    "value": {
+                      "value": "blue",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  {
+                    "value": {
+                      "value": "red",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                ],
+                "type": "array"
+              },
+              "upload_uri": {
+                "value": {
+                  "value": "upload_uri",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          }
+        ],
         "type": "object"
       },
       "ProfileV1EnvelopeDefaultMetaWrapper": {
@@ -6161,6 +6738,160 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "examples": [
+          {
+            "properties": {
+              "data": {
+                "properties": {
+                  "name": {
+                    "value": {
+                      "value": "Acme corp login",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "status": {
+                    "value": {
+                      "value": "status",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "tags": {
+                    "value": [
+                      {
+                        "value": {
+                          "value": "blue",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      {
+                        "value": {
+                          "value": "red",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    ],
+                    "type": "array"
+                  },
+                  "upload_uri": {
+                    "value": {
+                      "value": "upload_uri",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              },
+              "errors": {
+                "value": [
+                  {
+                    "properties": {
+                      "code": {
+                        "value": {
+                          "value": "code",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "details": {
+                        "value": [
+                          {
+                            "key": {
+                              "value": "key",
+                              "type": "string"
+                            },
+                            "value": {
+                              "value": {
+                                "value": {
+                                  "value": "value",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "type": "unknown"
+                            }
+                          }
+                        ],
+                        "type": "map"
+                      },
+                      "message": {
+                        "value": {
+                          "value": "message",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    },
+                    "type": "object"
+                  }
+                ],
+                "type": "array"
+              },
+              "meta": {
+                "properties": {
+                  "requestId": {
+                    "value": {
+                      "value": "requestId",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              },
+              "warnings": {
+                "value": [
+                  {
+                    "properties": {
+                      "code": {
+                        "value": {
+                          "value": "code",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "details": {
+                        "value": [
+                          {
+                            "key": {
+                              "value": "key",
+                              "type": "string"
+                            },
+                            "value": {
+                              "value": {
+                                "value": {
+                                  "value": "value",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "type": "unknown"
+                            }
+                          }
+                        ],
+                        "type": "map"
+                      },
+                      "message": {
+                        "value": {
+                          "value": "message",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    },
+                    "type": "object"
+                  }
+                ],
+                "type": "array"
+              }
+            },
+            "type": "object"
+          }
+        ],
         "type": "object"
       },
       "Prompt-contentRequest": {
@@ -6271,6 +7002,48 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "examples": [
+          {
+            "properties": {
+              "clientRequestId": {
+                "value": {
+                  "value": "clientRequestId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "costThresholdCredits": {
+                "value": {
+                  "value": 1.1,
+                  "type": "float"
+                },
+                "type": "primitive"
+              },
+              "followPaginationLinks": {
+                "value": {
+                  "value": false,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              },
+              "prompt": {
+                "value": {
+                  "value": "What is the main idea of this page?",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "timeThresholdSeconds": {
+                "value": {
+                  "value": 1000000,
+                  "type": "int64"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          }
+        ],
         "type": "object"
       },
       "ScrapeModelResponse": {
@@ -6641,6 +7414,53 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "examples": [
+          {
+            "properties": {
+              "persist_profile": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              },
+              "persist_profile_name": {
+                "value": {
+                  "value": "default",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "persist_profile_tags": {
+                "value": [
+                  {
+                    "value": {
+                      "value": "persist_profile_tags",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                ],
+                "type": "array"
+              },
+              "profile_id": {
+                "value": {
+                  "value": "linkedin",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "timeoutMinutes": {
+                "value": {
+                  "value": 10,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          }
+        ],
         "type": "object"
       },
       "SessionConfigV1": {
@@ -6778,6 +7598,53 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "examples": [
+          {
+            "properties": {
+              "persist_profile": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              },
+              "persist_profile_name": {
+                "value": {
+                  "value": "default",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "persist_profile_tags": {
+                "value": [
+                  {
+                    "value": {
+                      "value": "persist_profile_tags",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                ],
+                "type": "array"
+              },
+              "profile_id": {
+                "value": {
+                  "value": "linkedin",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "timeoutMinutes": {
+                "value": {
+                  "value": 10,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          }
+        ],
         "type": "object"
       },
       "SessionRestInputV1": {
@@ -6812,6 +7679,58 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "examples": [
+          {
+            "properties": {
+              "configuration": {
+                "properties": {
+                  "persist_profile": {
+                    "value": {
+                      "value": true,
+                      "type": "boolean"
+                    },
+                    "type": "primitive"
+                  },
+                  "persist_profile_name": {
+                    "value": {
+                      "value": "default",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "persist_profile_tags": {
+                    "value": [
+                      {
+                        "value": {
+                          "value": "persist_profile_tags",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    ],
+                    "type": "array"
+                  },
+                  "profile_id": {
+                    "value": {
+                      "value": "linkedin",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "timeoutMinutes": {
+                    "value": {
+                      "value": 10,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        ],
         "type": "object"
       },
       "SessionWithConnectionInfo": {
@@ -7042,6 +7961,140 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "examples": [
+          {
+            "properties": {
+              "cdp_url": {
+                "value": {
+                  "value": "cdp_url",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "cdp_ws_url": {
+                "value": {
+                  "value": "cdp_ws_url",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "chromedriver_url": {
+                "value": {
+                  "value": "chromedriver_url",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "configuration": {
+                "properties": {
+                  "persist_profile": {
+                    "value": {
+                      "value": true,
+                      "type": "boolean"
+                    },
+                    "type": "primitive"
+                  },
+                  "persist_profile_name": {
+                    "value": {
+                      "value": "default",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "persist_profile_tags": {
+                    "value": [
+                      {
+                        "value": {
+                          "value": "persist_profile_tags",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    ],
+                    "type": "array"
+                  },
+                  "profile_id": {
+                    "value": {
+                      "value": "linkedin",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "timeoutMinutes": {
+                    "value": {
+                      "value": 10,
+                      "type": "int"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              },
+              "current_usage": {
+                "value": {
+                  "value": 1000000,
+                  "type": "int64"
+                },
+                "type": "primitive"
+              },
+              "date_created": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              },
+              "id": {
+                "value": {
+                  "value": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "last_activity": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              },
+              "live_view": {
+                "properties": {
+                  "airtop_browser_url": {
+                    "value": {
+                      "value": "airtop_browser_url",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "token": {
+                    "value": {
+                      "value": "token",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              },
+              "status": {
+                "value": {
+                  "value": "active",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "url": {
+                "value": {
+                  "value": "url",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          }
+        ],
         "type": "object"
       },
       "SessionWithConnectionInfoEnvelopeDefaultMetaWrapper": {
@@ -7136,6 +8189,247 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "examples": [
+          {
+            "properties": {
+              "data": {
+                "properties": {
+                  "cdp_url": {
+                    "value": {
+                      "value": "cdp_url",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "cdp_ws_url": {
+                    "value": {
+                      "value": "cdp_ws_url",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "chromedriver_url": {
+                    "value": {
+                      "value": "chromedriver_url",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "configuration": {
+                    "properties": {
+                      "persist_profile": {
+                        "value": {
+                          "value": true,
+                          "type": "boolean"
+                        },
+                        "type": "primitive"
+                      },
+                      "persist_profile_name": {
+                        "value": {
+                          "value": "default",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "persist_profile_tags": {
+                        "value": [
+                          {
+                            "value": {
+                              "value": "persist_profile_tags",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          }
+                        ],
+                        "type": "array"
+                      },
+                      "profile_id": {
+                        "value": {
+                          "value": "linkedin",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "timeoutMinutes": {
+                        "value": {
+                          "value": 10,
+                          "type": "int"
+                        },
+                        "type": "primitive"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "current_usage": {
+                    "value": {
+                      "value": 1000000,
+                      "type": "int64"
+                    },
+                    "type": "primitive"
+                  },
+                  "date_created": {
+                    "value": {
+                      "value": "2024-01-15T09:30:00Z",
+                      "type": "datetime"
+                    },
+                    "type": "primitive"
+                  },
+                  "id": {
+                    "value": {
+                      "value": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "last_activity": {
+                    "value": {
+                      "value": "2024-01-15T09:30:00Z",
+                      "type": "datetime"
+                    },
+                    "type": "primitive"
+                  },
+                  "live_view": {
+                    "properties": {
+                      "airtop_browser_url": {
+                        "value": {
+                          "value": "airtop_browser_url",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "token": {
+                        "value": {
+                          "value": "token",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "status": {
+                    "value": {
+                      "value": "active",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "url": {
+                    "value": {
+                      "value": "url",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              },
+              "errors": {
+                "value": [
+                  {
+                    "properties": {
+                      "code": {
+                        "value": {
+                          "value": "code",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "details": {
+                        "value": [
+                          {
+                            "key": {
+                              "value": "key",
+                              "type": "string"
+                            },
+                            "value": {
+                              "value": {
+                                "value": {
+                                  "value": "value",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "type": "unknown"
+                            }
+                          }
+                        ],
+                        "type": "map"
+                      },
+                      "message": {
+                        "value": {
+                          "value": "message",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    },
+                    "type": "object"
+                  }
+                ],
+                "type": "array"
+              },
+              "meta": {
+                "properties": {
+                  "requestId": {
+                    "value": {
+                      "value": "requestId",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              },
+              "warnings": {
+                "value": [
+                  {
+                    "properties": {
+                      "code": {
+                        "value": {
+                          "value": "code",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "details": {
+                        "value": [
+                          {
+                            "key": {
+                              "value": "key",
+                              "type": "string"
+                            },
+                            "value": {
+                              "value": {
+                                "value": {
+                                  "value": "value",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "type": "unknown"
+                            }
+                          }
+                        ],
+                        "type": "map"
+                      },
+                      "message": {
+                        "value": {
+                          "value": "message",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    },
+                    "type": "object"
+                  }
+                ],
+                "type": "array"
+              }
+            },
+            "type": "object"
+          }
+        ],
         "type": "object"
       },
       "SessionsWithPagination": {
@@ -7193,6 +8487,192 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "examples": [
+          {
+            "properties": {
+              "pagination": {
+                "properties": {
+                  "currentLimit": {
+                    "value": {
+                      "value": 1000000,
+                      "type": "int64"
+                    },
+                    "type": "primitive"
+                  },
+                  "currentPage": {
+                    "value": {
+                      "value": 1000000,
+                      "type": "int64"
+                    },
+                    "type": "primitive"
+                  },
+                  "finalCount": {
+                    "value": {
+                      "value": 1000000,
+                      "type": "int64"
+                    },
+                    "type": "primitive"
+                  },
+                  "hasMore": {
+                    "value": {
+                      "value": true,
+                      "type": "boolean"
+                    },
+                    "type": "primitive"
+                  },
+                  "initialCount": {
+                    "value": {
+                      "value": 1000000,
+                      "type": "int64"
+                    },
+                    "type": "primitive"
+                  },
+                  "nextOffset": {
+                    "value": {
+                      "value": 1000000,
+                      "type": "int64"
+                    },
+                    "type": "primitive"
+                  },
+                  "numberOfPages": {
+                    "value": {
+                      "value": 1000000,
+                      "type": "int64"
+                    },
+                    "type": "primitive"
+                  },
+                  "totalItems": {
+                    "value": {
+                      "value": 1000000,
+                      "type": "int64"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              },
+              "sessions": {
+                "value": [
+                  {
+                    "properties": {
+                      "cdp_url": {
+                        "value": {
+                          "value": "cdp_url",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "cdp_ws_url": {
+                        "value": {
+                          "value": "cdp_ws_url",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "chromedriver_url": {
+                        "value": {
+                          "value": "chromedriver_url",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "configuration": {
+                        "properties": {
+                          "persist_profile": {
+                            "value": {
+                              "value": true,
+                              "type": "boolean"
+                            },
+                            "type": "primitive"
+                          },
+                          "persist_profile_name": {
+                            "value": {
+                              "value": "default",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "profile_id": {
+                            "value": {
+                              "value": "linkedin",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "timeoutMinutes": {
+                            "value": {
+                              "value": 10,
+                              "type": "int"
+                            },
+                            "type": "primitive"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "current_usage": {
+                        "value": {
+                          "value": 1000000,
+                          "type": "int64"
+                        },
+                        "type": "primitive"
+                      },
+                      "date_created": {
+                        "value": {
+                          "value": "2024-01-15T09:30:00Z",
+                          "type": "datetime"
+                        },
+                        "type": "primitive"
+                      },
+                      "id": {
+                        "value": {
+                          "value": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "last_activity": {
+                        "value": {
+                          "value": "2024-01-15T09:30:00Z",
+                          "type": "datetime"
+                        },
+                        "type": "primitive"
+                      },
+                      "live_view": {
+                        "properties": {
+                          "airtop_browser_url": {
+                            "value": {
+                              "value": "airtop_browser_url",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          }
+                        },
+                        "type": "object"
+                      },
+                      "status": {
+                        "value": {
+                          "value": "active",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "url": {
+                        "value": {
+                          "value": "url",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    },
+                    "type": "object"
+                  }
+                ],
+                "type": "array"
+              }
+            },
+            "type": "object"
+          }
+        ],
         "type": "object"
       },
       "SessionsWithPaginationEnvelopeDefaultMetaWrapper": {
@@ -7287,6 +8767,238 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "examples": [
+          {
+            "properties": {
+              "data": {
+                "properties": {
+                  "pagination": {
+                    "properties": {
+                      "currentLimit": {
+                        "value": {
+                          "value": 1000000,
+                          "type": "int64"
+                        },
+                        "type": "primitive"
+                      },
+                      "currentPage": {
+                        "value": {
+                          "value": 1000000,
+                          "type": "int64"
+                        },
+                        "type": "primitive"
+                      },
+                      "finalCount": {
+                        "value": {
+                          "value": 1000000,
+                          "type": "int64"
+                        },
+                        "type": "primitive"
+                      },
+                      "hasMore": {
+                        "value": {
+                          "value": true,
+                          "type": "boolean"
+                        },
+                        "type": "primitive"
+                      },
+                      "initialCount": {
+                        "value": {
+                          "value": 1000000,
+                          "type": "int64"
+                        },
+                        "type": "primitive"
+                      },
+                      "nextOffset": {
+                        "value": {
+                          "value": 1000000,
+                          "type": "int64"
+                        },
+                        "type": "primitive"
+                      },
+                      "numberOfPages": {
+                        "value": {
+                          "value": 1000000,
+                          "type": "int64"
+                        },
+                        "type": "primitive"
+                      },
+                      "totalItems": {
+                        "value": {
+                          "value": 1000000,
+                          "type": "int64"
+                        },
+                        "type": "primitive"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  "sessions": {
+                    "value": [
+                      {
+                        "properties": {
+                          "configuration": {
+                            "properties": {
+                              "persist_profile": {
+                                "value": {
+                                  "value": true,
+                                  "type": "boolean"
+                                },
+                                "type": "primitive"
+                              },
+                              "persist_profile_name": {
+                                "value": {
+                                  "value": "default",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "profile_id": {
+                                "value": {
+                                  "value": "linkedin",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "timeoutMinutes": {
+                                "value": {
+                                  "value": 10,
+                                  "type": "int"
+                                },
+                                "type": "primitive"
+                              }
+                            },
+                            "type": "object"
+                          },
+                          "id": {
+                            "value": {
+                              "value": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "status": {
+                            "value": {
+                              "value": "active",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          }
+                        },
+                        "type": "object"
+                      }
+                    ],
+                    "type": "array"
+                  }
+                },
+                "type": "object"
+              },
+              "errors": {
+                "value": [
+                  {
+                    "properties": {
+                      "code": {
+                        "value": {
+                          "value": "code",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "details": {
+                        "value": [
+                          {
+                            "key": {
+                              "value": "key",
+                              "type": "string"
+                            },
+                            "value": {
+                              "value": {
+                                "value": {
+                                  "value": "value",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "type": "unknown"
+                            }
+                          }
+                        ],
+                        "type": "map"
+                      },
+                      "message": {
+                        "value": {
+                          "value": "message",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    },
+                    "type": "object"
+                  }
+                ],
+                "type": "array"
+              },
+              "meta": {
+                "properties": {
+                  "requestId": {
+                    "value": {
+                      "value": "requestId",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              },
+              "warnings": {
+                "value": [
+                  {
+                    "properties": {
+                      "code": {
+                        "value": {
+                          "value": "code",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "details": {
+                        "value": [
+                          {
+                            "key": {
+                              "value": "key",
+                              "type": "string"
+                            },
+                            "value": {
+                              "value": {
+                                "value": {
+                                  "value": "value",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              },
+                              "type": "unknown"
+                            }
+                          }
+                        ],
+                        "type": "map"
+                      },
+                      "message": {
+                        "value": {
+                          "value": "message",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    },
+                    "type": "object"
+                  }
+                ],
+                "type": "array"
+              }
+            },
+            "type": "object"
+          }
+        ],
         "type": "object"
       },
       "StatusMessage": {
@@ -7477,6 +9189,41 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "examples": [
+          {
+            "properties": {
+              "clientRequestId": {
+                "value": {
+                  "value": "clientRequestId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "costThresholdCredits": {
+                "value": {
+                  "value": 1.1,
+                  "type": "float"
+                },
+                "type": "primitive"
+              },
+              "prompt": {
+                "value": {
+                  "value": "What is the main idea of this page?",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "timeThresholdSeconds": {
+                "value": {
+                  "value": 1000000,
+                  "type": "int64"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          }
+        ],
         "type": "object"
       },
       "Window": {

@@ -60,6 +60,13 @@
         "types": {
           "Meta": {
             "docs": undefined,
+            "examples": [
+              {
+                "value": {
+                  "hasMore": true,
+                },
+              },
+            ],
             "inline": undefined,
             "properties": {
               "hasMore": "optional<boolean>",
@@ -70,6 +77,17 @@
           },
           "User": {
             "docs": undefined,
+            "examples": [
+              {
+                "value": {
+                  "age": 25,
+                  "email": "jane@example.com",
+                  "id": "123e4567-e89b-12d3-a456-426614174000",
+                  "name": "Jane Doe",
+                  "not_ignored_field": "this-field-is-visible",
+                },
+              },
+            ],
             "inline": undefined,
             "properties": {
               "age": "optional<integer>",
@@ -92,6 +110,31 @@
           },
           "UsersResponse": {
             "docs": undefined,
+            "examples": [
+              {
+                "value": {
+                  "meta": {
+                    "hasMore": true,
+                  },
+                  "users": [
+                    {
+                      "age": 28,
+                      "email": "alice@example.com",
+                      "id": "123e4567-e89b-12d3-a456-426614174000",
+                      "name": "Alice Smith",
+                      "not_ignored_field": "value1",
+                    },
+                    {
+                      "age": 35,
+                      "email": "bob@example.com",
+                      "id": "987fcdeb-51a2-43f7-9876-543210fedcba",
+                      "name": "Bob Jones",
+                      "not_ignored_field": "value2",
+                    },
+                  ],
+                },
+              },
+            ],
             "inline": undefined,
             "properties": {
               "meta": "optional<Meta>",
@@ -138,17 +181,42 @@
     openapi: ../openapi.yml
 types:
   Meta:
+    examples:
+      - value:
+          hasMore: true
     properties:
       hasMore: optional<boolean>
     source:
       openapi: ../openapi.yml
   UsersResponse:
+    examples:
+      - value:
+          meta:
+            hasMore: true
+          users:
+            - id: 123e4567-e89b-12d3-a456-426614174000
+              name: Alice Smith
+              email: alice@example.com
+              age: 28
+              not_ignored_field: value1
+            - id: 987fcdeb-51a2-43f7-9876-543210fedcba
+              name: Bob Jones
+              email: bob@example.com
+              age: 35
+              not_ignored_field: value2
     properties:
       meta: optional<Meta>
       users: optional<list<User>>
     source:
       openapi: ../openapi.yml
   User:
+    examples:
+      - value:
+          id: 123e4567-e89b-12d3-a456-426614174000
+          name: Jane Doe
+          email: jane@example.com
+          age: 25
+          not_ignored_field: this-field-is-visible
     properties:
       id:
         type: optional<string>

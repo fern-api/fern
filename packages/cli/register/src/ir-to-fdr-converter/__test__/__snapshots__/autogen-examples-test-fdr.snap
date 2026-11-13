@@ -315,6 +315,12 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "name": "Main Garden",
+          "size": "small",
+        },
+      ],
       "name": "Garden",
       "shape": {
         "extends": [],
@@ -423,6 +429,9 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        "small",
+      ],
       "name": "GardenSize",
       "shape": {
         "default": undefined,
@@ -450,6 +459,13 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "id": "plant-123",
+          "name": "Rose",
+          "status": "healthy",
+        },
+      ],
       "name": "Plant",
       "shape": {
         "extends": [],
@@ -556,6 +572,9 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        "healthy",
+      ],
       "name": "PlantStatus",
       "shape": {
         "default": undefined,

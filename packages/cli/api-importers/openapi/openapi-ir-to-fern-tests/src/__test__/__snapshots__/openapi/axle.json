@@ -8,6 +8,18 @@
         "types": {
           "Address": {
             "docs": undefined,
+            "examples": [
+              {
+                "value": {
+                  "addressLine1": "addressLine1",
+                  "addressLine2": "addressLine2",
+                  "city": "city",
+                  "country": "country",
+                  "postalCode": "postalCode",
+                  "state": "state",
+                },
+              },
+            ],
             "inline": undefined,
             "properties": {
               "addressLine1": "optional<string>",
@@ -23,6 +35,26 @@
           },
           "Carrier": {
             "docs": undefined,
+            "examples": [
+              {
+                "value": {
+                  "address": {
+                    "addressLine1": "addressLine1",
+                    "addressLine2": "addressLine2",
+                    "city": "city",
+                    "country": "country",
+                    "postalCode": "postalCode",
+                    "state": "state",
+                  },
+                  "domain": "domain",
+                  "id": "id",
+                  "logoUrl": "logoUrl",
+                  "modifiedAt": "modifiedAt",
+                  "name": "name",
+                  "phone": "phone",
+                },
+              },
+            ],
             "inline": undefined,
             "properties": {
               "address": {
@@ -41,6 +73,18 @@
           },
           "Coverage": {
             "docs": undefined,
+            "examples": [
+              {
+                "value": {
+                  "code": "BI",
+                  "deductible": 1,
+                  "label": "Bodily Injury Liability",
+                  "limitPerAccident": 500000,
+                  "limitPerPerson": 250000,
+                  "property": "property",
+                },
+              },
+            ],
             "inline": undefined,
             "properties": {
               "code": "CoverageCode",
@@ -86,6 +130,21 @@
           },
           "Insured": {
             "docs": undefined,
+            "examples": [
+              {
+                "value": {
+                  "dateOfBirth": "",
+                  "dateOfBirthYear": "1993",
+                  "firstName": "Armaan",
+                  "lastName": "Sikand",
+                  "licenseNo": "•••••7259",
+                  "licenseState": "GA",
+                  "licenseStatus": "Valid",
+                  "property": "property",
+                  "type": "Primary named insured",
+                },
+              },
+            ],
             "inline": undefined,
             "properties": {
               "dateOfBirth": "optional<string>",
@@ -104,6 +163,21 @@
           },
           "Property": {
             "docs": undefined,
+            "examples": [
+              {
+                "value": {
+                  "data": {
+                    "bodyStyle": "bodyStyle",
+                    "make": "TRIUMPH",
+                    "model": "STREET SCRAMBLER",
+                    "vin": "SMTD44GN3HT812287",
+                    "year": "2017",
+                  },
+                  "id": "prp_uSdzLVpi8c76H7kl6AQ-F",
+                  "type": "vehicle",
+                },
+              },
+            ],
             "inline": undefined,
             "properties": {
               "data": {
@@ -131,6 +205,23 @@
           },
           "ThirdParty": {
             "docs": undefined,
+            "examples": [
+              {
+                "value": {
+                  "address": {
+                    "addressLine1": "Po Box 105205",
+                    "addressLine2": "addressLine2",
+                    "city": "Atlanta",
+                    "country": "country",
+                    "postalCode": "30348-5205",
+                    "state": "GA",
+                  },
+                  "name": "Georgias Own Credit Union",
+                  "property": "property",
+                  "type": "lienholder",
+                },
+              },
+            ],
             "inline": undefined,
             "properties": {
               "address": "optional<Address>",
@@ -159,6 +250,17 @@
           },
           "User": {
             "docs": "User to attach to Ignition session. If user is set, unique `id` must be provided.",
+            "examples": [
+              {
+                "value": {
+                  "email": "email",
+                  "firstName": "firstName",
+                  "id": "id",
+                  "lastName": "lastName",
+                  "phone": "phone",
+                },
+              },
+            ],
             "inline": undefined,
             "properties": {
               "email": {
@@ -188,6 +290,17 @@
           },
           "Vehicle": {
             "docs": undefined,
+            "examples": [
+              {
+                "value": {
+                  "bodyStyle": "bodyStyle",
+                  "make": "make",
+                  "model": "model",
+                  "vin": "vin",
+                  "year": "year",
+                },
+              },
+            ],
             "inline": undefined,
             "properties": {
               "bodyStyle": "optional<string>",
@@ -204,6 +317,14 @@
       },
       "rawContents": "types:
   Address:
+    examples:
+      - value:
+          addressLine1: addressLine1
+          country: country
+          addressLine2: addressLine2
+          state: state
+          city: city
+          postalCode: postalCode
     properties:
       addressLine1: optional<string>
       country: optional<string>
@@ -214,6 +335,21 @@
     source:
       openapi: ../openapi.yml
   Carrier:
+    examples:
+      - value:
+          id: id
+          name: name
+          domain: domain
+          address:
+            addressLine1: addressLine1
+            country: country
+            addressLine2: addressLine2
+            state: state
+            city: city
+            postalCode: postalCode
+          phone: phone
+          logoUrl: logoUrl
+          modifiedAt: modifiedAt
     properties:
       id: string
       name: string
@@ -239,6 +375,14 @@
     source:
       openapi: ../openapi.yml
   Coverage:
+    examples:
+      - value:
+          property: property
+          code: BI
+          label: Bodily Injury Liability
+          limitPerPerson: 250000
+          limitPerAccident: 500000
+          deductible: 1
     properties:
       property: optional<string>
       code: CoverageCode
@@ -255,6 +399,16 @@
     source:
       openapi: ../openapi.yml
   Property:
+    examples:
+      - value:
+          id: prp_uSdzLVpi8c76H7kl6AQ-F
+          type: vehicle
+          data:
+            bodyStyle: bodyStyle
+            vin: SMTD44GN3HT812287
+            model: STREET SCRAMBLER
+            year: '2017'
+            make: TRIUMPH
     properties:
       id: string
       type: PropertyType
@@ -263,6 +417,13 @@
     source:
       openapi: ../openapi.yml
   Vehicle:
+    examples:
+      - value:
+          bodyStyle: bodyStyle
+          vin: vin
+          model: model
+          year: year
+          make: make
     properties:
       bodyStyle: optional<string>
       vin: string
@@ -272,6 +433,17 @@
     source:
       openapi: ../openapi.yml
   Insured:
+    examples:
+      - value:
+          property: property
+          firstName: Armaan
+          lastName: Sikand
+          dateOfBirthYear: '1993'
+          licenseNo: •••••7259
+          licenseState: GA
+          licenseStatus: Valid
+          dateOfBirth: ''
+          type: Primary named insured
     properties:
       property: optional<string>
       firstName: string
@@ -294,6 +466,18 @@
     source:
       openapi: ../openapi.yml
   ThirdParty:
+    examples:
+      - value:
+          property: property
+          type: lienholder
+          name: Georgias Own Credit Union
+          address:
+            addressLine1: Po Box 105205
+            country: country
+            addressLine2: addressLine2
+            state: GA
+            city: Atlanta
+            postalCode: 30348-5205
     properties:
       property: optional<string>
       type:
@@ -307,6 +491,13 @@
     docs: >-
       User to attach to Ignition session. If user is set, unique `id` must be
       provided.
+    examples:
+      - value:
+          id: id
+          firstName: firstName
+          lastName: lastName
+          email: email
+          phone: phone
     properties:
       id:
         type: string
@@ -417,6 +608,24 @@
         "types": {
           "Account": {
             "docs": "An Account represents an account with an insurance carrier and includes high-level account information (e.g. name) and any Policy objects associated with the Account.",
+            "examples": [
+              {
+                "value": {
+                  "carrier": "carrier",
+                  "createdAt": "createdAt",
+                  "email": "email",
+                  "firstName": "firstName",
+                  "id": "id",
+                  "lastName": "lastName",
+                  "modifiedAt": "modifiedAt",
+                  "phone": "phone",
+                  "policies": [
+                    "policies",
+                  ],
+                  "refreshedAt": "refreshedAt",
+                },
+              },
+            ],
             "inline": undefined,
             "properties": {
               "carrier": "string",
@@ -447,6 +656,79 @@
           },
           "Policy": {
             "docs": "A Policy represents a specific policy associated with an Account and includes high-level policy information (e.g. policy number) and any children objects (e.g., coverages) associated with the policy.",
+            "examples": [
+              {
+                "value": {
+                  "account": "account",
+                  "address": {
+                    "addressLine1": "addressLine1",
+                    "addressLine2": "addressLine2",
+                    "city": "city",
+                    "country": "country",
+                    "postalCode": "postalCode",
+                    "state": "state",
+                  },
+                  "carrier": "carrier",
+                  "coverages": [
+                    {
+                      "code": "BI",
+                      "deductible": 1,
+                      "label": "Bodily Injury Liability",
+                      "limitPerAccident": 500000,
+                      "limitPerPerson": 250000,
+                      "property": "property",
+                    },
+                  ],
+                  "createdAt": "createdAt",
+                  "effectiveDate": "effectiveDate",
+                  "expirationDate": "expirationDate",
+                  "id": "id",
+                  "insureds": [
+                    {
+                      "dateOfBirth": "",
+                      "dateOfBirthYear": "1993",
+                      "firstName": "Armaan",
+                      "lastName": "Sikand",
+                      "licenseNo": "•••••7259",
+                      "licenseState": "GA",
+                      "licenseStatus": "Valid",
+                      "property": "property",
+                      "type": "Primary named insured",
+                    },
+                  ],
+                  "isActive": true,
+                  "modifiedAt": "modifiedAt",
+                  "policyNumber": "policyNumber",
+                  "properties": [
+                    {
+                      "data": {
+                        "make": "TRIUMPH",
+                        "model": "STREET SCRAMBLER",
+                        "vin": "SMTD44GN3HT812287",
+                        "year": "2017",
+                      },
+                      "id": "prp_uSdzLVpi8c76H7kl6AQ-F",
+                      "type": "vehicle",
+                    },
+                  ],
+                  "refreshedAt": "refreshedAt",
+                  "thirdParties": [
+                    {
+                      "address": {
+                        "addressLine1": "Po Box 105205",
+                        "city": "Atlanta",
+                        "postalCode": "30348-5205",
+                        "state": "GA",
+                      },
+                      "name": "Georgias Own Credit Union",
+                      "property": "property",
+                      "type": "lienholder",
+                    },
+                  ],
+                  "type": "auto",
+                },
+              },
+            ],
             "inline": undefined,
             "properties": {
               "account": "string",
@@ -510,6 +792,19 @@ types:
       An Account represents an account with an insurance carrier and includes
       high-level account information (e.g. name) and any Policy objects
       associated with the Account.
+    examples:
+      - value:
+          id: id
+          carrier: carrier
+          firstName: firstName
+          lastName: lastName
+          phone: phone
+          email: email
+          policies:
+            - policies
+          createdAt: createdAt
+          modifiedAt: modifiedAt
+          refreshedAt: refreshedAt
     properties:
       id: string
       carrier: string
@@ -535,6 +830,60 @@ types:
       A Policy represents a specific policy associated with an Account and
       includes high-level policy information (e.g. policy number) and any
       children objects (e.g., coverages) associated with the policy.
+    examples:
+      - value:
+          id: id
+          account: account
+          type: auto
+          carrier: carrier
+          policyNumber: policyNumber
+          isActive: true
+          effectiveDate: effectiveDate
+          expirationDate: expirationDate
+          address:
+            addressLine1: addressLine1
+            country: country
+            addressLine2: addressLine2
+            state: state
+            city: city
+            postalCode: postalCode
+          coverages:
+            - property: property
+              code: BI
+              label: Bodily Injury Liability
+              limitPerPerson: 250000
+              limitPerAccident: 500000
+              deductible: 1
+          properties:
+            - id: prp_uSdzLVpi8c76H7kl6AQ-F
+              type: vehicle
+              data:
+                vin: SMTD44GN3HT812287
+                model: STREET SCRAMBLER
+                year: '2017'
+                make: TRIUMPH
+          insureds:
+            - property: property
+              firstName: Armaan
+              lastName: Sikand
+              dateOfBirthYear: '1993'
+              licenseNo: •••••7259
+              licenseState: GA
+              licenseStatus: Valid
+              dateOfBirth: ''
+              type: Primary named insured
+          thirdParties:
+            - property: property
+              type: lienholder
+              name: Georgias Own Credit Union
+              address:
+                addressLine1: Po Box 105205
+                state: GA
+                city: Atlanta
+                postalCode: 30348-5205
+          createdAt: createdAt
+          modifiedAt: modifiedAt
+          refreshedAt: refreshedAt
     properties:
       id: string
       account: string

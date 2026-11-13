@@ -216,6 +216,31 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "examples": [
+          {
+            "properties": {
+              "name": {
+                "value": {
+                  "value": "Fern",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "isIndoor": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              },
+              "status": {
+                "value": "active",
+                "type": "enum"
+              }
+            },
+            "type": "object"
+          }
+        ],
         "type": "object"
       },
       "Plant": {
@@ -324,6 +349,52 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "examples": [
+          {
+            "properties": {
+              "id": {
+                "value": {
+                  "value": 123,
+                  "type": "int"
+                },
+                "type": "primitive"
+              },
+              "name": {
+                "value": {
+                  "value": "Fern",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "isIndoor": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              },
+              "isPoisonous": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              },
+              "status": {
+                "value": "active",
+                "type": "enum"
+              },
+              "isSeedling": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          }
+        ],
         "type": "object"
       }
     },

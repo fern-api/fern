@@ -42,6 +42,19 @@
         "types": {
           "TreeNode": {
             "docs": undefined,
+            "examples": [
+              {
+                "value": {
+                  "left": {
+                    "value": "root",
+                  },
+                  "right": {
+                    "value": "root",
+                  },
+                  "value": "root",
+                },
+              },
+            ],
             "inline": undefined,
             "properties": {
               "left": {
@@ -85,6 +98,13 @@
     openapi: ../openapi.yml
 types:
   TreeNode:
+    examples:
+      - value:
+          value: root
+          left:
+            value: root
+          right:
+            value: root
     properties:
       value:
         type: optional<string>

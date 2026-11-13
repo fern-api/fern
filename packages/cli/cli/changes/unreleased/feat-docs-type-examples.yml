@@ -1,0 +1,7 @@
+- summary: |
+    Standalone type pages (`types: true` on an `api` navigation item) use the schema's own example:
+    an OpenAPI object schema's `example`/`examples`, or one assembled from its property-level `example`
+    values, now reaches the Fern definition (`examples`), the IR (`userProvidedExamples`) and FDR
+    (`TypeDefinition.examples`), so the XML/JSON example on the page shows those values instead of
+    placeholders and renders every variant of a `oneOf` array the example lists.
+  type: feat

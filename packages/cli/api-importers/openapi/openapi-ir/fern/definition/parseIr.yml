@@ -1,6 +1,7 @@
 imports:
   commons: commons.yml
   finalIr: finalIr.yml
+  example: example.yml
 
 types:
   NamedFullExample:
@@ -411,6 +412,9 @@ types:
       additionalProperties: boolean
       minProperties: optional<integer>
       maxProperties: optional<integer>
+      examples:
+        docs: Set on named schemas once their examples are validated; see `finalIr.ObjectSchema.examples`.
+        type: optional<list<example.FullExample>>
 
   ObjectPropertyWithExample:
     extends:

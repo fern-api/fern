@@ -351,6 +351,13 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "id": "prod-456",
+          "name": "Widget",
+          "price": 29.99,
+        },
+      ],
       "name": "Product",
       "shape": {
         "extends": [],
@@ -461,6 +468,13 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "email": "user@example.com",
+          "name": "John Doe",
+          "role": "user",
+        },
+      ],
       "name": "User",
       "shape": {
         "extends": [],
@@ -588,6 +602,9 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        "user",
+      ],
       "name": "UserRole",
       "shape": {
         "default": undefined,

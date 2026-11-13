@@ -217,6 +217,20 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "examples": [
+          {
+            "properties": {
+              "hasMore": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          }
+        ],
         "type": "object"
       },
       "UsersResponse": {
@@ -275,6 +289,110 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "examples": [
+          {
+            "properties": {
+              "meta": {
+                "properties": {
+                  "hasMore": {
+                    "value": {
+                      "value": true,
+                      "type": "boolean"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              },
+              "users": {
+                "value": [
+                  {
+                    "properties": {
+                      "id": {
+                        "value": {
+                          "value": "123e4567-e89b-12d3-a456-426614174000",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "name": {
+                        "value": {
+                          "value": "Alice Smith",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "email": {
+                        "value": {
+                          "value": "alice@example.com",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "age": {
+                        "value": {
+                          "value": 28,
+                          "type": "int"
+                        },
+                        "type": "primitive"
+                      },
+                      "not_ignored_field": {
+                        "value": {
+                          "value": "value1",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  {
+                    "properties": {
+                      "id": {
+                        "value": {
+                          "value": "987fcdeb-51a2-43f7-9876-543210fedcba",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "name": {
+                        "value": {
+                          "value": "Bob Jones",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "email": {
+                        "value": {
+                          "value": "bob@example.com",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "age": {
+                        "value": {
+                          "value": 35,
+                          "type": "int"
+                        },
+                        "type": "primitive"
+                      },
+                      "not_ignored_field": {
+                        "value": {
+                          "value": "value2",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    },
+                    "type": "object"
+                  }
+                ],
+                "type": "array"
+              }
+            },
+            "type": "object"
+          }
+        ],
         "type": "object"
       },
       "User": {
@@ -390,6 +508,48 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "examples": [
+          {
+            "properties": {
+              "id": {
+                "value": {
+                  "value": "123e4567-e89b-12d3-a456-426614174000",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "name": {
+                "value": {
+                  "value": "Jane Doe",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "email": {
+                "value": {
+                  "value": "jane@example.com",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "age": {
+                "value": {
+                  "value": 25,
+                  "type": "int"
+                },
+                "type": "primitive"
+              },
+              "not_ignored_field": {
+                "value": {
+                  "value": "this-field-is-visible",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          }
+        ],
         "type": "object"
       }
     },

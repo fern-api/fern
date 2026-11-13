@@ -213,6 +213,14 @@
           },
           "ExperimentalStreamResponse": {
             "docs": "ExperimentalStreamResponse represents generated audio stream info",
+            "examples": [
+              {
+                "value": {
+                  "audio_url": "https://streaming.sws.speechify.com/v1/stream/abc.mp3?exp=2024-07-26T10:54:44.429Z&s=xyz",
+                  "expires": "2024-07-26T11:18:41.236Z",
+                },
+              },
+            ],
             "inline": undefined,
             "properties": {
               "audio_url": {
@@ -578,6 +586,11 @@ types:
       openapi: ../openapi.json
   ExperimentalStreamResponse:
     docs: ExperimentalStreamResponse represents generated audio stream info
+    examples:
+      - value:
+          audio_url: >-
+            https://streaming.sws.speechify.com/v1/stream/abc.mp3?exp=2024-07-26T10:54:44.429Z&s=xyz
+          expires: '2024-07-26T11:18:41.236Z'
     properties:
       audio_url:
         type: optional<string>

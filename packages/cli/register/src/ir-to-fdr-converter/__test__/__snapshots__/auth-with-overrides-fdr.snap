@@ -345,6 +345,9 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {},
+      ],
       "name": "User",
       "shape": {
         "extends": [],

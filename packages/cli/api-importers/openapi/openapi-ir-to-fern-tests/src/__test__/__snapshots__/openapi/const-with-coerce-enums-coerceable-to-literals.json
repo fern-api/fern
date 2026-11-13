@@ -62,6 +62,16 @@
         "types": {
           "Pet": {
             "docs": undefined,
+            "examples": [
+              {
+                "value": {
+                  "id": 123,
+                  "name": "Fluffy",
+                  "status": "active",
+                  "type": "pet",
+                },
+              },
+            ],
             "inline": undefined,
             "properties": {
               "id": "integer",
@@ -110,6 +120,12 @@
     openapi: ../openapi.yml
 types:
   Pet:
+    examples:
+      - value:
+          id: 123
+          type: pet
+          name: Fluffy
+          status: active
     properties:
       id: integer
       type: literal<"pet">

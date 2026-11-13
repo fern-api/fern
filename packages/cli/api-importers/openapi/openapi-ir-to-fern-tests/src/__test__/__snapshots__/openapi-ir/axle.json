@@ -2207,6 +2207,88 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "examples": [
+          {
+            "properties": {
+              "id": {
+                "value": {
+                  "value": "id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "carrier": {
+                "value": {
+                  "value": "carrier",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "firstName": {
+                "value": {
+                  "value": "firstName",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "lastName": {
+                "value": {
+                  "value": "lastName",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "phone": {
+                "value": {
+                  "value": "phone",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "email": {
+                "value": {
+                  "value": "email",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "policies": {
+                "value": [
+                  {
+                    "value": {
+                      "value": "policies",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                ],
+                "type": "array"
+              },
+              "createdAt": {
+                "value": {
+                  "value": "createdAt",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "modifiedAt": {
+                "value": {
+                  "value": "modifiedAt",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "refreshedAt": {
+                "value": {
+                  "value": "refreshedAt",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          }
+        ],
         "type": "object"
       },
       "Policy": {
@@ -2491,6 +2573,371 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "examples": [
+          {
+            "properties": {
+              "id": {
+                "value": {
+                  "value": "id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "account": {
+                "value": {
+                  "value": "account",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": {
+                "value": "auto",
+                "type": "enum"
+              },
+              "carrier": {
+                "value": {
+                  "value": "carrier",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "policyNumber": {
+                "value": {
+                  "value": "policyNumber",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "isActive": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              },
+              "effectiveDate": {
+                "value": {
+                  "value": "effectiveDate",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "expirationDate": {
+                "value": {
+                  "value": "expirationDate",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "address": {
+                "properties": {
+                  "addressLine1": {
+                    "value": {
+                      "value": "addressLine1",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "country": {
+                    "value": {
+                      "value": "country",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "addressLine2": {
+                    "value": {
+                      "value": "addressLine2",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "state": {
+                    "value": {
+                      "value": "state",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "city": {
+                    "value": {
+                      "value": "city",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "postalCode": {
+                    "value": {
+                      "value": "postalCode",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              },
+              "coverages": {
+                "value": [
+                  {
+                    "properties": {
+                      "property": {
+                        "value": {
+                          "value": "property",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "code": {
+                        "value": "BI",
+                        "type": "enum"
+                      },
+                      "label": {
+                        "value": {
+                          "value": "Bodily Injury Liability",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "limitPerPerson": {
+                        "value": {
+                          "value": 250000,
+                          "type": "int"
+                        },
+                        "type": "primitive"
+                      },
+                      "limitPerAccident": {
+                        "value": {
+                          "value": 500000,
+                          "type": "int"
+                        },
+                        "type": "primitive"
+                      },
+                      "deductible": {
+                        "value": {
+                          "value": 1,
+                          "type": "int"
+                        },
+                        "type": "primitive"
+                      }
+                    },
+                    "type": "object"
+                  }
+                ],
+                "type": "array"
+              },
+              "properties": {
+                "value": [
+                  {
+                    "properties": {
+                      "id": {
+                        "value": {
+                          "value": "prp_uSdzLVpi8c76H7kl6AQ-F",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "type": {
+                        "value": "vehicle",
+                        "type": "enum"
+                      },
+                      "data": {
+                        "properties": {
+                          "vin": {
+                            "value": {
+                              "value": "SMTD44GN3HT812287",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "model": {
+                            "value": {
+                              "value": "STREET SCRAMBLER",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "year": {
+                            "value": {
+                              "value": "2017",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "make": {
+                            "value": {
+                              "value": "TRIUMPH",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          }
+                        },
+                        "type": "object"
+                      }
+                    },
+                    "type": "object"
+                  }
+                ],
+                "type": "array"
+              },
+              "insureds": {
+                "value": [
+                  {
+                    "properties": {
+                      "property": {
+                        "value": {
+                          "value": "property",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "firstName": {
+                        "value": {
+                          "value": "Armaan",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "lastName": {
+                        "value": {
+                          "value": "Sikand",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "dateOfBirthYear": {
+                        "value": {
+                          "value": "1993",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "licenseNo": {
+                        "value": {
+                          "value": "•••••7259",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "licenseState": {
+                        "value": {
+                          "value": "GA",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "licenseStatus": {
+                        "value": {
+                          "value": "Valid",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "dateOfBirth": {
+                        "value": {
+                          "value": "",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "type": {
+                        "value": {
+                          "value": "Primary named insured",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    },
+                    "type": "object"
+                  }
+                ],
+                "type": "array"
+              },
+              "thirdParties": {
+                "value": [
+                  {
+                    "properties": {
+                      "property": {
+                        "value": {
+                          "value": "property",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "type": {
+                        "value": "lienholder",
+                        "type": "enum"
+                      },
+                      "name": {
+                        "value": {
+                          "value": "Georgias Own Credit Union",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "address": {
+                        "properties": {
+                          "addressLine1": {
+                            "value": {
+                              "value": "Po Box 105205",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "state": {
+                            "value": {
+                              "value": "GA",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "city": {
+                            "value": {
+                              "value": "Atlanta",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          },
+                          "postalCode": {
+                            "value": {
+                              "value": "30348-5205",
+                              "type": "string"
+                            },
+                            "type": "primitive"
+                          }
+                        },
+                        "type": "object"
+                      }
+                    },
+                    "type": "object"
+                  }
+                ],
+                "type": "array"
+              },
+              "createdAt": {
+                "value": {
+                  "value": "createdAt",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "modifiedAt": {
+                "value": {
+                  "value": "modifiedAt",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "refreshedAt": {
+                "value": {
+                  "value": "refreshedAt",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          }
+        ],
         "type": "object"
       },
       "Address": {
@@ -2620,6 +3067,55 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "examples": [
+          {
+            "properties": {
+              "addressLine1": {
+                "value": {
+                  "value": "addressLine1",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "country": {
+                "value": {
+                  "value": "country",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "addressLine2": {
+                "value": {
+                  "value": "addressLine2",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "state": {
+                "value": {
+                  "value": "state",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "city": {
+                "value": {
+                  "value": "city",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "postalCode": {
+                "value": {
+                  "value": "postalCode",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          }
+        ],
         "type": "object"
       },
       "Carrier": {
@@ -2739,6 +3235,102 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "examples": [
+          {
+            "properties": {
+              "id": {
+                "value": {
+                  "value": "id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "name": {
+                "value": {
+                  "value": "name",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "domain": {
+                "value": {
+                  "value": "domain",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "address": {
+                "properties": {
+                  "addressLine1": {
+                    "value": {
+                      "value": "addressLine1",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "country": {
+                    "value": {
+                      "value": "country",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "addressLine2": {
+                    "value": {
+                      "value": "addressLine2",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "state": {
+                    "value": {
+                      "value": "state",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "city": {
+                    "value": {
+                      "value": "city",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "postalCode": {
+                    "value": {
+                      "value": "postalCode",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              },
+              "phone": {
+                "value": {
+                  "value": "phone",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "logoUrl": {
+                "value": {
+                  "value": "logoUrl",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "modifiedAt": {
+                "value": {
+                  "value": "modifiedAt",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          }
+        ],
         "type": "object"
       },
       "Coverage": {
@@ -2901,6 +3493,52 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "examples": [
+          {
+            "properties": {
+              "property": {
+                "value": {
+                  "value": "property",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "code": {
+                "value": "BI",
+                "type": "enum"
+              },
+              "label": {
+                "value": {
+                  "value": "Bodily Injury Liability",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "limitPerPerson": {
+                "value": {
+                  "value": 250000,
+                  "type": "int"
+                },
+                "type": "primitive"
+              },
+              "limitPerAccident": {
+                "value": {
+                  "value": 500000,
+                  "type": "int"
+                },
+                "type": "primitive"
+              },
+              "deductible": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          }
+        ],
         "type": "object"
       },
       "Property": {
@@ -2967,6 +3605,64 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "examples": [
+          {
+            "properties": {
+              "id": {
+                "value": {
+                  "value": "prp_uSdzLVpi8c76H7kl6AQ-F",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": {
+                "value": "vehicle",
+                "type": "enum"
+              },
+              "data": {
+                "properties": {
+                  "bodyStyle": {
+                    "value": {
+                      "value": "bodyStyle",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "vin": {
+                    "value": {
+                      "value": "SMTD44GN3HT812287",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "model": {
+                    "value": {
+                      "value": "STREET SCRAMBLER",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "year": {
+                    "value": {
+                      "value": "2017",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "make": {
+                    "value": {
+                      "value": "TRIUMPH",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        ],
         "type": "object"
       },
       "Vehicle": {
@@ -3057,6 +3753,48 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "examples": [
+          {
+            "properties": {
+              "bodyStyle": {
+                "value": {
+                  "value": "bodyStyle",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "vin": {
+                "value": {
+                  "value": "vin",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "model": {
+                "value": {
+                  "value": "model",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "year": {
+                "value": {
+                  "value": "year",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "make": {
+                "value": {
+                  "value": "make",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          }
+        ],
         "type": "object"
       },
       "Insured": {
@@ -3233,6 +3971,76 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "examples": [
+          {
+            "properties": {
+              "property": {
+                "value": {
+                  "value": "property",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "firstName": {
+                "value": {
+                  "value": "Armaan",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "lastName": {
+                "value": {
+                  "value": "Sikand",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "dateOfBirthYear": {
+                "value": {
+                  "value": "1993",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "licenseNo": {
+                "value": {
+                  "value": "•••••7259",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "licenseState": {
+                "value": {
+                  "value": "GA",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "licenseStatus": {
+                "value": {
+                  "value": "Valid",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "dateOfBirth": {
+                "value": {
+                  "value": "",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": {
+                "value": {
+                  "value": "Primary named insured",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          }
+        ],
         "type": "object"
       },
       "ThirdParty": {
@@ -3337,6 +4145,78 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "examples": [
+          {
+            "properties": {
+              "property": {
+                "value": {
+                  "value": "property",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "type": {
+                "value": "lienholder",
+                "type": "enum"
+              },
+              "name": {
+                "value": {
+                  "value": "Georgias Own Credit Union",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "address": {
+                "properties": {
+                  "addressLine1": {
+                    "value": {
+                      "value": "Po Box 105205",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "country": {
+                    "value": {
+                      "value": "country",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "addressLine2": {
+                    "value": {
+                      "value": "addressLine2",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "state": {
+                    "value": {
+                      "value": "GA",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "city": {
+                    "value": {
+                      "value": "Atlanta",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  },
+                  "postalCode": {
+                    "value": {
+                      "value": "30348-5205",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        ],
         "type": "object"
       },
       "User": {
@@ -3452,6 +4332,48 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "examples": [
+          {
+            "properties": {
+              "id": {
+                "value": {
+                  "value": "id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "firstName": {
+                "value": {
+                  "value": "firstName",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "lastName": {
+                "value": {
+                  "value": "lastName",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "email": {
+                "value": {
+                  "value": "email",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "phone": {
+                "value": {
+                  "value": "phone",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          }
+        ],
         "type": "object"
       },
       "Success": {

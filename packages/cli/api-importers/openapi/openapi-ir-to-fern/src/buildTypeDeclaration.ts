@@ -30,6 +30,7 @@ import {
 } from "./buildTypeReference.js";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext.js";
 import { convertAvailability } from "./utils/convertAvailability.js";
+import { convertFullExample } from "./utils/convertFullExample.js";
 import { convertToEncodingSchema, convertXmlPropertyToEncodingSchema } from "./utils/convertToEncodingSchema.js";
 import { convertToSourceSchema } from "./utils/convertToSourceSchema.js";
 import { getTypeFromTypeReference, stripNullableWrapperForExtends } from "./utils/getTypeFromTypeReference.js";
@@ -259,6 +260,9 @@ export function buildObjectTypeDeclaration({
 
     const objectTypeDeclaration: RawSchemas.ObjectSchema = {
         docs: schema.description ?? undefined,
+        ...(schema.examples != null && schema.examples.length > 0
+            ? { examples: schema.examples.map((example) => ({ value: convertFullExample(example) })) }
+            : {}),
         properties: Object.fromEntries(
             Object.entries(properties).map(([propertyKey, propertyDefinition]) => {
                 if (startsWithNumber(propertyKey)) {

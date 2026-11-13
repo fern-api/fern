@@ -8,6 +8,18 @@
         "types": {
           "CounterPartyAccount": {
             "docs": undefined,
+            "examples": [
+              {
+                "value": {
+                  "currency": "EUR",
+                  "iban": "DE2310010010123456788",
+                  "other": {
+                    "identification": "identification",
+                    "schemeNameCone": "schemeNameCone",
+                  },
+                },
+              },
+            ],
             "inline": undefined,
             "properties": {
               "currency": "optional<string>",
@@ -20,6 +32,13 @@
           },
           "IbanField": {
             "docs": undefined,
+            "examples": [
+              {
+                "value": {
+                  "iban": "DE2310010010123456788",
+                },
+              },
+            ],
             "inline": undefined,
             "properties": {
               "iban": "optional<nullable<string>>",
@@ -75,6 +94,9 @@
     source:
       openapi: ../openapi.yml
   IbanField:
+    examples:
+      - value:
+          iban: DE2310010010123456788
     properties:
       iban: optional<nullable<string>>
     source:
@@ -91,6 +113,13 @@
     source:
       openapi: ../openapi.yml
   CounterPartyAccount:
+    examples:
+      - value:
+          currency: EUR
+          iban: DE2310010010123456788
+          other:
+            identification: identification
+            schemeNameCone: schemeNameCone
     properties:
       currency: optional<string>
       iban: optional<nullable<string>>

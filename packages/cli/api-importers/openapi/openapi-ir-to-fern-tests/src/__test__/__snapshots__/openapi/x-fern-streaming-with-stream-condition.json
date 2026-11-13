@@ -456,6 +456,14 @@
           },
           "ChatRequest": {
             "docs": undefined,
+            "examples": [
+              {
+                "value": {
+                  "query": "How can I use the Vectara platform?",
+                  "stream_response": true,
+                },
+              },
+            ],
             "inline": undefined,
             "properties": {
               "query": {
@@ -474,6 +482,13 @@
           },
           "ChatStreamedResponse": {
             "docs": "An individual event when the response is streamed.",
+            "examples": [
+              {
+                "value": {
+                  "chunk": "Hello, how can I help you today?",
+                },
+              },
+            ],
             "inline": undefined,
             "properties": {
               "chunk": {
@@ -850,6 +865,10 @@ types:
     source:
       openapi: ../openapi.yml
   ChatRequest:
+    examples:
+      - value:
+          query: How can I use the Vectara platform?
+          stream_response: true
     properties:
       query:
         type: string
@@ -876,6 +895,9 @@ types:
       openapi: ../openapi.yml
   ChatStreamedResponse:
     docs: An individual event when the response is streamed.
+    examples:
+      - value:
+          chunk: Hello, how can I help you today?
     properties:
       chunk:
         type: optional<string>

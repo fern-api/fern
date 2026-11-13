@@ -271,6 +271,9 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {},
+      ],
       "name": "getBasicProtected_Response_200",
       "shape": {
         "extends": [],
@@ -305,6 +308,9 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {},
+      ],
       "name": "getBearerProtected_Response_200",
       "shape": {
         "extends": [],

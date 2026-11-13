@@ -29,7 +29,8 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                 source: schema.source,
                 inline: schema.inline,
                 minProperties: schema.minProperties,
-                maxProperties: schema.maxProperties
+                maxProperties: schema.maxProperties,
+                examples: schema.examples
             });
         case "array":
             return Schema.array({

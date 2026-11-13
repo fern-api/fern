@@ -177,6 +177,24 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "examples": [
+          {
+            "properties": {
+              "type": {
+                "value": "pet",
+                "type": "enum"
+              },
+              "name": {
+                "value": {
+                  "value": "Fluffy",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          }
+        ],
         "type": "object"
       },
       "Pet": {
@@ -258,6 +276,38 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "examples": [
+          {
+            "properties": {
+              "id": {
+                "value": {
+                  "value": 123,
+                  "type": "int"
+                },
+                "type": "primitive"
+              },
+              "type": {
+                "value": "pet",
+                "type": "enum"
+              },
+              "name": {
+                "value": {
+                  "value": "Fluffy",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "status": {
+                "value": {
+                  "value": "active",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            "type": "object"
+          }
+        ],
         "type": "object"
       }
     },

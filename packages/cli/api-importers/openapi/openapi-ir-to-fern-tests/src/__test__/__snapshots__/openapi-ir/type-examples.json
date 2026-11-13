@@ -1,0 +1,367 @@
+{
+  "specVersion": "1.0",
+  "title": "TwiML repro",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "VoiceResponse": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "voiceResponseChildren",
+            "key": "children",
+            "xml": {
+              "wrapped": false
+            },
+            "schema": {
+              "generatedName": "VoiceResponseChildren",
+              "description": "Nested TwiML elements, rendered in order.",
+              "value": {
+                "description": "Nested TwiML elements, rendered in order.",
+                "value": {
+                  "value": {
+                    "generatedName": "VoiceResponseChildrenItem",
+                    "schemas": [
+                      {
+                        "generatedName": "VoiceResponseChildrenItemZero",
+                        "schema": "Say",
+                        "source": {
+                          "file": "openapi/twiml.yaml",
+                          "type": "openapi"
+                        },
+                        "type": "reference"
+                      },
+                      {
+                        "generatedName": "VoiceResponseChildrenItemOne",
+                        "schema": "Hangup",
+                        "source": {
+                          "file": "openapi/twiml.yaml",
+                          "type": "openapi"
+                        },
+                        "type": "reference"
+                      }
+                    ],
+                    "groupName": [],
+                    "source": {
+                      "file": "openapi/twiml.yaml",
+                      "type": "openapi"
+                    },
+                    "type": "undiscriminated"
+                  },
+                  "type": "oneOf"
+                },
+                "generatedName": "VoiceResponseChildren",
+                "groupName": [],
+                "type": "array"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "description": "<Response> TwiML for Voice",
+        "generatedName": "VoiceResponse",
+        "groupName": [],
+        "additionalProperties": false,
+        "encoding": {
+          "name": "Response",
+          "type": "xml"
+        },
+        "source": {
+          "file": "openapi/twiml.yaml",
+          "type": "openapi"
+        },
+        "examples": [
+          {
+            "properties": {
+              "children": {
+                "value": [
+                  {
+                    "properties": {
+                      "voice": {
+                        "value": "alice",
+                        "type": "enum"
+                      },
+                      "loop": {
+                        "value": {
+                          "value": 2,
+                          "type": "int"
+                        },
+                        "type": "primitive"
+                      },
+                      "message": {
+                        "value": {
+                          "value": "Thanks for calling.",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    },
+                    "type": "object"
+                  },
+                  {
+                    "properties": {},
+                    "type": "object"
+                  }
+                ],
+                "type": "array"
+              }
+            },
+            "type": "object"
+          }
+        ],
+        "type": "object"
+      },
+      "Say": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "sayVoice",
+            "key": "voice",
+            "xml": {
+              "name": "voice",
+              "attribute": true
+            },
+            "schema": {
+              "generatedName": "SayVoice",
+              "value": {
+                "generatedName": "SayVoice",
+                "values": [
+                  {
+                    "generatedName": "man",
+                    "value": "man",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "woman",
+                    "value": "woman",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "alice",
+                    "value": "alice",
+                    "casing": {}
+                  }
+                ],
+                "groupName": [],
+                "source": {
+                  "file": "openapi/twiml.yaml",
+                  "type": "openapi"
+                },
+                "type": "enum"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "sayLoop",
+            "key": "loop",
+            "xml": {
+              "name": "loop",
+              "attribute": true
+            },
+            "schema": {
+              "generatedName": "SayLoop",
+              "value": {
+                "schema": {
+                  "example": 2,
+                  "type": "int"
+                },
+                "generatedName": "SayLoop",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "sayMessage",
+            "key": "message",
+            "schema": {
+              "generatedName": "SayMessage",
+              "value": {
+                "schema": {
+                  "example": "Thanks for calling.",
+                  "type": "string"
+                },
+                "generatedName": "SayMessage",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "description": "<Say> TwiML Verb",
+        "generatedName": "Say",
+        "groupName": [],
+        "additionalProperties": false,
+        "encoding": {
+          "name": "Say",
+          "type": "xml"
+        },
+        "source": {
+          "file": "openapi/twiml.yaml",
+          "type": "openapi"
+        },
+        "examples": [
+          {
+            "properties": {
+              "voice": {
+                "value": "alice",
+                "type": "enum"
+              },
+              "loop": {
+                "value": {
+                  "value": 2,
+                  "type": "int"
+                },
+                "type": "primitive"
+              },
+              "message": {
+                "value": {
+                  "value": "Thanks for calling.",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          }
+        ],
+        "type": "object"
+      },
+      "Hangup": {
+        "allOf": [],
+        "properties": [],
+        "allOfPropertyConflicts": [],
+        "description": "<Hangup> TwiML Verb",
+        "generatedName": "Hangup",
+        "groupName": [],
+        "additionalProperties": false,
+        "encoding": {
+          "name": "Hangup",
+          "type": "xml"
+        },
+        "source": {
+          "file": "openapi/twiml.yaml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Pause": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "pauseLength",
+            "key": "length",
+            "xml": {
+              "attribute": true
+            },
+            "schema": {
+              "generatedName": "PauseLength",
+              "value": {
+                "schema": {
+                  "example": 5,
+                  "type": "int"
+                },
+                "generatedName": "PauseLength",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "pauseLabel",
+            "key": "label",
+            "xml": {
+              "attribute": true
+            },
+            "schema": {
+              "generatedName": "PauseLabel",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "PauseLabel",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "description": "<Pause> no schema example, property example only",
+        "generatedName": "Pause",
+        "groupName": [],
+        "additionalProperties": false,
+        "encoding": {
+          "name": "Pause",
+          "type": "xml"
+        },
+        "source": {
+          "file": "openapi/twiml.yaml",
+          "type": "openapi"
+        },
+        "examples": [
+          {
+            "properties": {
+              "length": {
+                "value": {
+                  "value": 5,
+                  "type": "int"
+                },
+                "type": "primitive"
+              },
+              "label": {
+                "value": {
+                  "value": "label",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          }
+        ],
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

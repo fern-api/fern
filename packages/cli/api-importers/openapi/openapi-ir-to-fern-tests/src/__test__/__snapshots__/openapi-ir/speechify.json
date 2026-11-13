@@ -2468,6 +2468,27 @@
           "file": "../openapi.json",
           "type": "openapi"
         },
+        "examples": [
+          {
+            "properties": {
+              "audio_url": {
+                "value": {
+                  "value": "https://streaming.sws.speechify.com/v1/stream/abc.mp3?exp=2024-07-26T10:54:44.429Z&s=xyz",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "expires": {
+                "value": {
+                  "value": "2024-07-26T11:18:41.236Z",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            "type": "object"
+          }
+        ],
         "type": "object"
       },
       "GetSpeechOptionsRequest": {

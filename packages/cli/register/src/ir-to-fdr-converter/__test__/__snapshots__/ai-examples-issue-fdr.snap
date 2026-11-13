@@ -235,6 +235,12 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "name": "Fiddle Leaf Fig",
+          "status": "available",
+        },
+      ],
       "name": "Plant",
       "shape": {
         "extends": [],
@@ -366,6 +372,9 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {},
+      ],
       "name": "PlantResponse",
       "shape": {
         "extends": [],
@@ -572,6 +581,9 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        "basic",
+      ],
       "name": "PlantResponseResponseType",
       "shape": {
         "default": undefined,
@@ -594,6 +606,9 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        "available",
+      ],
       "name": "PlantResponseStatus",
       "shape": {
         "default": undefined,
@@ -621,6 +636,9 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        "available",
+      ],
       "name": "PlantStatus",
       "shape": {
         "default": undefined,

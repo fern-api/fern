@@ -499,6 +499,9 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {},
+      ],
       "name": "AuthResponse",
       "shape": {
         "extends": [],
@@ -533,6 +536,9 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {},
+      ],
       "name": "Contact",
       "shape": {
         "extends": [],
@@ -588,6 +594,9 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {},
+      ],
       "name": "Payment",
       "shape": {
         "extends": [],
@@ -644,6 +653,9 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {},
+      ],
       "name": "PaymentRequest",
       "shape": {
         "extends": [],

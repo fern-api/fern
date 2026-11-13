@@ -150,6 +150,44 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
+        "examples": [
+          {
+            "properties": {
+              "value": {
+                "value": {
+                  "value": "root",
+                  "type": "string"
+                },
+                "type": "primitive"
+              },
+              "left": {
+                "properties": {
+                  "value": {
+                    "value": {
+                      "value": "root",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              },
+              "right": {
+                "properties": {
+                  "value": {
+                    "value": {
+                      "value": "root",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                },
+                "type": "object"
+              }
+            },
+            "type": "object"
+          }
+        ],
         "type": "object"
       }
     },

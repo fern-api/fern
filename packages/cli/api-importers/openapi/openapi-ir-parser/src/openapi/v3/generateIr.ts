@@ -250,10 +250,19 @@ export function generateIr({
     const schemasWithoutDiscriminants = maybeRemoveDiscriminantsFromSchemas(schemasWithExample, context, source);
     // Add them back when declared as union metadata, as that means we're treating discriminated unions as undiscriminated unions.
     const schemasWithDiscriminants = maybeAddBackDiscriminantsFromSchemas(schemasWithoutDiscriminants, context);
+    const exampleTypeFactory = new ExampleTypeFactory(
+        schemasWithDiscriminants,
+        context.nonRequestReferencedSchemas,
+        context
+    );
     const collisionTracker = createSchemaCollisionTracker();
     const schemas: Record<string, Schema> = {};
     for (const [key, schemaWithExample] of Object.entries(schemasWithDiscriminants)) {
-        const schema = convertSchemaWithExampleToSchema(schemaWithExample);
+        const schema = withObjectExamples(
+            convertSchemaWithExampleToSchema(schemaWithExample),
+            schemaWithExample,
+            exampleTypeFactory
+        );
         if (context.isSchemaExcluded(key)) {
             continue;
         }
@@ -261,12 +270,6 @@ export function generateIr({
         const uniqueKey = collisionTracker.getUniqueSchemaId(key, context.logger, options.resolveSchemaCollisions);
         schemas[uniqueKey] = schema;
     }
-
-    const exampleTypeFactory = new ExampleTypeFactory(
-        schemasWithDiscriminants,
-        context.nonRequestReferencedSchemas,
-        context
-    );
 
     const webhooks: Webhook[] = webhooksWithExample.map((webhookWithExample) => {
         const extensionExamples = webhookWithExample.examples;
@@ -718,4 +721,40 @@ function getAudiences({ operation }: { operation: ConvertedOperation }): string[
             assertNever(operation);
     }
     return endpointAudiences;
+}
+
+/**
+ * Attaches the validated examples of a named object schema: every schema-level `example`/`examples`
+ * entry, or one assembled from the property-level examples when the schema has none. Objects
+ * without any example stay bare, so a type page can fall back to a placeholder example.
+ */
+function withObjectExamples(
+    schema: Schema,
+    schemaWithExample: SchemaWithExample,
+    exampleTypeFactory: ExampleTypeFactory
+): Schema {
+    if (schema.type !== "object" || schemaWithExample.type !== "object") {
+        return schema;
+    }
+    // Optional properties are included to the same depth as response examples, so the example documents them.
+    const options = { ignoreOptionals: false, isParameter: false, maxDepth: 3, maxCheckerDepth: 5 };
+    const userExamples = schemaWithExample.fullExamples ?? [];
+    const sources: { exampleId: string | undefined; example: unknown }[] =
+        userExamples.length > 0
+            ? userExamples.map((fullExample) => ({ exampleId: fullExample.name, example: fullExample.value }))
+            : exampleTypeFactory.hasExample(schemaWithExample, 0, new Set(), options)
+              ? [{ exampleId: undefined, example: undefined }]
+              : [];
+    const examples = sources
+        .map(({ exampleId, example }) =>
+            exampleTypeFactory.buildExample({
+                schema: schemaWithExample,
+                example,
+                exampleId,
+                skipReadonly: false,
+                options
+            })
+        )
+        .filter(isNonNullish);
+    return examples.length > 0 ? { ...schema, examples } : schema;
 }

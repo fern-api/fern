@@ -178,6 +178,11 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "name": "Acme Inc.",
+        },
+      ],
       "name": "Company",
       "shape": {
         "extends": [],
@@ -223,6 +228,9 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {},
+      ],
       "name": "File",
       "shape": {
         "extends": [],
