@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.215.2
+  changelogEntry:
+    - summary: |
+        Docs profiles: each edition of a page now gets its own sitemap entry and canonical URL in `fern docs dev`.
+      type: fix
+  createdAt: "2026-11-13"
+  irVersion: 67
 - version: 5.215.1
   changelogEntry:
     - summary: |
