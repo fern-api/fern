@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.214.0
+  changelogEntry:
+    - summary: |
+        `fern init` ends with a hint for users who drive Fern through a coding agent: `npx skills add fern-api/skills --all`
+        installs the Fern skills, which teach the agent the whole workflow (docs, SDKs, publishing). The "No Fern account
+        found" error a run hits without a login or `FERN_TOKEN` carries the same hint next to its `--guest` suggestion.
+      type: feat
+  createdAt: "2026-11-13"
+  irVersion: 67
 - version: 5.213.0
   changelogEntry:
     - summary: |
