@@ -30,6 +30,7 @@ import {
 } from "./buildTypeReference.js";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext.js";
 import { convertAvailability } from "./utils/convertAvailability.js";
+import { convertFullExample } from "./utils/convertFullExample.js";
 import { convertToEncodingSchema, convertXmlPropertyToEncodingSchema } from "./utils/convertToEncodingSchema.js";
 import { convertToSourceSchema } from "./utils/convertToSourceSchema.js";
 import { getTypeFromTypeReference, stripNullableWrapperForExtends } from "./utils/getTypeFromTypeReference.js";
@@ -259,6 +260,11 @@ export function buildObjectTypeDeclaration({
 
     const objectTypeDeclaration: RawSchemas.ObjectSchema = {
         docs: schema.description ?? undefined,
+        // The examples describe the full object; a variant stripped of its readonly properties would fail
+        // validation against them, so it carries none.
+        ...(schema.examples != null && schema.examples.length > 0 && !shouldSkipReadonly
+            ? { examples: schema.examples.map((example) => ({ value: convertFullExample(example) })) }
+            : {}),
         properties: Object.fromEntries(
             Object.entries(properties).map(([propertyKey, propertyDefinition]) => {
                 if (startsWithNumber(propertyKey)) {

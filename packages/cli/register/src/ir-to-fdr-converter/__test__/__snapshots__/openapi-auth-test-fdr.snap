@@ -296,6 +296,12 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "code": "UNAUTHORIZED",
+          "message": "Authentication required",
+        },
+      ],
       "name": "Error",
       "shape": {
         "extends": [],
@@ -343,6 +349,12 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "data": "sensitive information",
+          "id": "resource123",
+        },
+      ],
       "name": "ProtectedResource",
       "shape": {
         "extends": [],

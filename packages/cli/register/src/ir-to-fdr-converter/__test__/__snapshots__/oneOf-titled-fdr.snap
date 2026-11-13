@@ -210,6 +210,11 @@
       "availability": undefined,
       "description": "Error variant A with title",
       "displayName": undefined,
+      "examples": [
+        {
+          "errorA": "string",
+        },
+      ],
       "name": "ErrorTitledA",
       "shape": {
         "extends": [],
@@ -240,6 +245,11 @@
       "availability": undefined,
       "description": "Error variant B with title",
       "displayName": undefined,
+      "examples": [
+        {
+          "errorB": 1,
+        },
+      ],
       "name": "ErrorTitledB",
       "shape": {
         "extends": [],
@@ -271,6 +281,11 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "errorA": "string",
+        },
+      ],
       "name": "OneOfExampleTitledRequestBadRequestError",
       "shape": {
         "type": "undiscriminatedUnion",
@@ -304,6 +319,11 @@
       "availability": undefined,
       "description": "First variant for oneOf with title",
       "displayName": undefined,
+      "examples": [
+        {
+          "titledFieldA": "string",
+        },
+      ],
       "name": "OneOfTitledA",
       "shape": {
         "extends": [],
@@ -334,6 +354,11 @@
       "availability": undefined,
       "description": "Second variant for oneOf with title",
       "displayName": undefined,
+      "examples": [
+        {
+          "titledFieldB": 1,
+        },
+      ],
       "name": "OneOfTitledB",
       "shape": {
         "extends": [],
@@ -365,6 +390,11 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "titledFieldA": "string",
+        },
+      ],
       "name": "oneOf Examples_oneOfExampleTitled_Request",
       "shape": {
         "type": "undiscriminatedUnion",
@@ -398,6 +428,9 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {},
+      ],
       "name": "oneOf Examples_oneOfExampleTitled_Response_200",
       "shape": {
         "extends": [],

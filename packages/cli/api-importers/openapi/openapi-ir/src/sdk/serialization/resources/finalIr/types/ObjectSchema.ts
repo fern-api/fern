@@ -24,6 +24,7 @@ export const ObjectSchema: core.serialization.ObjectSchema<serializers.ObjectSch
             additionalProperties: core.serialization.boolean(),
             minProperties: core.serialization.number().optional(),
             maxProperties: core.serialization.number().optional(),
+            examples: core.serialization.list(core.serialization.lazy(() => serializers.FullExample)).optional(),
         })
         .extend(WithSdkGroupName)
         .extend(WithNamespace)
@@ -52,5 +53,6 @@ export declare namespace ObjectSchema {
         additionalProperties: boolean;
         minProperties?: number | null;
         maxProperties?: number | null;
+        examples?: serializers.FullExample.Raw[] | null;
     }
 }

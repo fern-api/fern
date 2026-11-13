@@ -556,6 +556,12 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "id": "string",
+          "name": "string",
+        },
+      ],
       "name": "Item",
       "shape": {
         "extends": [],
@@ -629,6 +635,13 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "description": "string",
+          "id": "string",
+          "name": "string",
+        },
+      ],
       "name": "ItemDetails",
       "shape": {
         "extends": [],

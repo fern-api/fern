@@ -1551,7 +1551,7 @@ export class DocsDefinitionResolver {
                                 generateV1Examples: false,
                                 logWarnings: false
                             },
-                            { docsVisibility: this.docsVisibility }
+                            { docsVisibility: this.docsVisibility, objectSchemaExamples: item.types === true }
                         );
                     } catch (error) {
                         this.taskContext.logger.warn(
@@ -2401,7 +2401,7 @@ export class DocsDefinitionResolver {
                         logWarnings: false,
                         cacheResult: true
                     },
-                    { docsVisibility: this.docsVisibility }
+                    { docsVisibility: this.docsVisibility, objectSchemaExamples: item.types === true }
                 );
             } catch (error) {
                 openapiError = error;

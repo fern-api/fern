@@ -93,6 +93,7 @@
     "coerceConstsTo": "enums-coerceable-to-literals",
     "respectByteFormat": false,
     "shouldInferDiscriminatedUnionBaseProperties": false,
+    "objectSchemaExamples": false,
     "disambiguateRequestNames": true,
     "ignoreTags": false,
     "respectParameterContent": false,

@@ -666,6 +666,12 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "code": "UNAUTHORIZED",
+          "message": "Authentication required",
+        },
+      ],
       "name": "Error",
       "shape": {
         "extends": [],
@@ -713,6 +719,12 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "merchantId": "merchant_123",
+          "name": "Example Merchant",
+        },
+      ],
       "name": "MerchantSettings",
       "shape": {
         "extends": [],
@@ -760,6 +772,12 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "amount": 100.5,
+          "currency": "USD",
+        },
+      ],
       "name": "TransactionRequest",
       "shape": {
         "extends": [],
@@ -808,6 +826,12 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "id": "txn_123456",
+          "status": "completed",
+        },
+      ],
       "name": "TransactionResponse",
       "shape": {
         "extends": [],
@@ -855,6 +879,12 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "email": "user@example.com",
+          "id": "user_123",
+        },
+      ],
       "name": "User",
       "shape": {
         "extends": [],
