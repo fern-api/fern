@@ -81,6 +81,7 @@ import { deleteDocsTheme } from "./commands/docs-theme/deleteDocsTheme.js";
 import { downloadDocsTheme } from "./commands/docs-theme/downloadDocsTheme.js";
 import { exportDocsTheme } from "./commands/docs-theme/exportDocsTheme.js";
 import { listDocsThemes } from "./commands/docs-theme/listDocsThemes.js";
+import { rebuildDocsThemeSites } from "./commands/docs-theme/rebuildDocsThemeSites.js";
 import { uploadDocsTheme } from "./commands/docs-theme/uploadDocsTheme.js";
 import { downgrade } from "./commands/downgrade/downgrade.js";
 import { generateOpenAPIForWorkspaces } from "./commands/export/generateOpenAPIForWorkspaces.js";
@@ -2288,6 +2289,7 @@ function addDocsThemeCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext
         addDocsThemeDownloadCommand(yargs, cliContext);
         addDocsThemeExportCommand(yargs, cliContext);
         addDocsThemeListCommand(yargs, cliContext);
+        addDocsThemeRebuildCommand(yargs, cliContext);
         addDocsThemeUploadCommand(yargs, cliContext);
         return yargs;
     });
@@ -2391,6 +2393,35 @@ function addDocsThemeListCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
         async (argv) => {
             cliContext.instrumentPostHogEvent({ command: "fern docs theme list" });
             await listDocsThemes({ cliContext, org: argv.org, json: argv.json });
+        }
+    );
+}
+
+function addDocsThemeRebuildCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "rebuild",
+        "Rebuild docs sites built with an older version of an org theme",
+        (yargs) =>
+            yargs
+                .option("name", {
+                    alias: "n",
+                    type: "string",
+                    description: "Only rebuild sites using this theme (default: every theme)"
+                })
+                .option("org", {
+                    type: "string",
+                    description: "Override the org ID from fern.config.json"
+                })
+                .option("dry-run", {
+                    type: "boolean",
+                    default: false,
+                    description: "List the sites that would be rebuilt without rebuilding them"
+                })
+                .example("$0 docs theme rebuild --dry-run", "List sites built with an older theme version")
+                .example("$0 docs theme rebuild --name dark", "Rebuild sites using the theme named 'dark'"),
+        async (argv) => {
+            cliContext.instrumentPostHogEvent({ command: "fern docs theme rebuild" });
+            await rebuildDocsThemeSites({ cliContext, name: argv.name, org: argv.org, dryRun: argv.dryRun });
         }
     );
 }
