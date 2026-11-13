@@ -259,11 +259,13 @@ export function generateIr({
     const collisionTracker = createSchemaCollisionTracker();
     const schemas: Record<string, Schema> = {};
     for (const [key, schemaWithExample] of Object.entries(schemasWithDiscriminants)) {
-        const schema = withObjectExamples(
-            convertSchemaWithExampleToSchema(schemaWithExample),
-            schemaWithExample,
-            exampleTypeFactory
-        );
+        const schema = options.objectSchemaExamples
+            ? withObjectExamples(
+                  convertSchemaWithExampleToSchema(schemaWithExample),
+                  schemaWithExample,
+                  exampleTypeFactory
+              )
+            : convertSchemaWithExampleToSchema(schemaWithExample);
         if (context.isSchemaExcluded(key)) {
             continue;
         }

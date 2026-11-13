@@ -3,13 +3,6 @@ types:
     encoding:
       xml:
         name: booking
-    examples:
-      - value:
-          has_bicycle: true
-          has_dog: true
-          id: 3f3e3e1-c824-4d63-b37a-d8d698862f1d
-          passenger_name: John Doe
-          trip_id: 4f4e4e1-c824-4d63-b37a-d8d698862f1d
     properties:
       has_bicycle:
         docs: Indicates whether the passenger has a bicycle.
@@ -34,24 +27,6 @@ types:
     source:
       openapi: openapi/trains/openapi.yml
   BookingPayment:
-    examples:
-      - value:
-          amount: 49.99
-          currency: bam
-          id: id
-          source:
-            address_city: address_city
-            address_country: address_country
-            address_line1: address_line1
-            address_line2: address_line2
-            address_post_code: address_post_code
-            cvc: 123
-            exp_month: 12
-            exp_year: 2025
-            name: Francis Bourgeois
-            number: '4242424242424242'
-            object: card
-          status: pending
     properties:
       amount:
         docs: >-
@@ -205,10 +180,6 @@ types:
     source:
       openapi: openapi/trains/openapi.yml
   LinksBooking:
-    examples:
-      - value:
-          booking: >-
-            https://api.example.com/bookings/1725ff48-ab45-4bb5-9d02-88745177dedb
     properties:
       booking:
         type: optional<string>
@@ -247,13 +218,6 @@ types:
       xml:
         name: problem
         namespace: urn:ietf:rfc:7807
-    examples:
-      - value:
-          detail: Your current balance is 30, but that costs 50.
-          instance: /account/12345/msgs/abc
-          status: 400
-          title: You do not have enough credit.
-          type: https://example.com/probs/out-of-credit
     properties:
       detail:
         docs: >-
@@ -278,18 +242,6 @@ types:
     encoding:
       xml:
         name: station
-    examples:
-      - value:
-          address: Invalidenstraße 10557 Berlin, Germany
-          country_code: DE
-          id: efdbb9d1-02c2-4bc3-afb7-6788d8782b1e
-          messages:
-            - key: value
-          name: Berlin Hauptbahnhof
-          pet:
-            id: 1000000
-            name: name
-          timezone: Europe/Berlin
     properties:
       address:
         docs: The address of the station.
@@ -318,17 +270,6 @@ types:
     encoding:
       xml:
         name: trip
-    examples:
-      - value:
-          arrival_time: '2024-02-01T16:00:00Z'
-          bicycles_allowed: true
-          departure_time: '2024-02-01T10:00:00Z'
-          destination: Paris Gare du Nord
-          dogs_allowed: true
-          id: 4f4e4e1-c824-4d63-b37a-d8d698862f1d
-          operator: Deutsche Bahn
-          origin: Berlin Hauptbahnhof
-          price: 50
     properties:
       arrival_time:
         docs: The date and time when the trip arrives

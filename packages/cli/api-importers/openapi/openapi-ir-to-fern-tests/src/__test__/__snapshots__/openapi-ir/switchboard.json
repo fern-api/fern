@@ -5161,20 +5161,6 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
-        "examples": [
-          {
-            "properties": {
-              "name": {
-                "value": {
-                  "value": "Special Widget",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            "type": "object"
-          }
-        ],
         "type": "object"
       },
       "ExternalSessionAiResponseMetadata": {
@@ -5980,20 +5966,6 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
-        "examples": [
-          {
-            "properties": {
-              "name": {
-                "value": {
-                  "value": "Acme corp login",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            "type": "object"
-          }
-        ],
         "type": "object"
       },
       "ProfileV1": {
@@ -6095,20 +6067,6 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
-        "examples": [
-          {
-            "properties": {
-              "name": {
-                "value": {
-                  "value": "Acme corp login",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            "type": "object"
-          }
-        ],
         "type": "object"
       },
       "ProfileV1EnvelopeDefaultMetaWrapper": {
@@ -6313,27 +6271,6 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
-        "examples": [
-          {
-            "properties": {
-              "followPaginationLinks": {
-                "value": {
-                  "value": false,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              },
-              "prompt": {
-                "value": {
-                  "value": "What is the main idea of this page?",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            "type": "object"
-          }
-        ],
         "type": "object"
       },
       "ScrapeModelResponse": {
@@ -6704,41 +6641,6 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
-        "examples": [
-          {
-            "properties": {
-              "persist_profile": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              },
-              "persist_profile_name": {
-                "value": {
-                  "value": "default",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "profile_id": {
-                "value": {
-                  "value": "linkedin",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "timeoutMinutes": {
-                "value": {
-                  "value": 10,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            "type": "object"
-          }
-        ],
         "type": "object"
       },
       "SessionConfigV1": {
@@ -6876,41 +6778,6 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
-        "examples": [
-          {
-            "properties": {
-              "persist_profile": {
-                "value": {
-                  "value": true,
-                  "type": "boolean"
-                },
-                "type": "primitive"
-              },
-              "persist_profile_name": {
-                "value": {
-                  "value": "default",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "profile_id": {
-                "value": {
-                  "value": "linkedin",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "timeoutMinutes": {
-                "value": {
-                  "value": 10,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            "type": "object"
-          }
-        ],
         "type": "object"
       },
       "SessionRestInputV1": {
@@ -6945,58 +6812,6 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
-        "examples": [
-          {
-            "properties": {
-              "configuration": {
-                "properties": {
-                  "persist_profile": {
-                    "value": {
-                      "value": true,
-                      "type": "boolean"
-                    },
-                    "type": "primitive"
-                  },
-                  "persist_profile_name": {
-                    "value": {
-                      "value": "default",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "persist_profile_tags": {
-                    "value": [
-                      {
-                        "value": {
-                          "value": "persist_profile_tags",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
-                    ],
-                    "type": "array"
-                  },
-                  "profile_id": {
-                    "value": {
-                      "value": "linkedin",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "timeoutMinutes": {
-                    "value": {
-                      "value": 10,
-                      "type": "int"
-                    },
-                    "type": "primitive"
-                  }
-                },
-                "type": "object"
-              }
-            },
-            "type": "object"
-          }
-        ],
         "type": "object"
       },
       "SessionWithConnectionInfo": {
@@ -7227,72 +7042,6 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
-        "examples": [
-          {
-            "properties": {
-              "configuration": {
-                "properties": {
-                  "persist_profile": {
-                    "value": {
-                      "value": true,
-                      "type": "boolean"
-                    },
-                    "type": "primitive"
-                  },
-                  "persist_profile_name": {
-                    "value": {
-                      "value": "default",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "persist_profile_tags": {
-                    "value": [
-                      {
-                        "value": {
-                          "value": "persist_profile_tags",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
-                    ],
-                    "type": "array"
-                  },
-                  "profile_id": {
-                    "value": {
-                      "value": "linkedin",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  "timeoutMinutes": {
-                    "value": {
-                      "value": 10,
-                      "type": "int"
-                    },
-                    "type": "primitive"
-                  }
-                },
-                "type": "object"
-              },
-              "id": {
-                "value": {
-                  "value": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "status": {
-                "value": {
-                  "value": "active",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            "type": "object"
-          }
-        ],
         "type": "object"
       },
       "SessionWithConnectionInfoEnvelopeDefaultMetaWrapper": {
@@ -7728,20 +7477,6 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
-        "examples": [
-          {
-            "properties": {
-              "prompt": {
-                "value": {
-                  "value": "What is the main idea of this page?",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            "type": "object"
-          }
-        ],
         "type": "object"
       },
       "Window": {

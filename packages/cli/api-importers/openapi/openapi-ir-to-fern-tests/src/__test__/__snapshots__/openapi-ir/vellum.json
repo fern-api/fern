@@ -7754,34 +7754,6 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
-        "examples": [
-          {
-            "properties": {
-              "count": {
-                "value": {
-                  "value": 123,
-                  "type": "int"
-                },
-                "type": "primitive"
-              },
-              "next": {
-                "value": {
-                  "value": "http://api.example.org/accounts/?offset=400&limit=100",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "previous": {
-                "value": {
-                  "value": "http://api.example.org/accounts/?offset=200&limit=100",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            "type": "object"
-          }
-        ],
         "type": "object"
       },
       "ProcessingFailureReasonEnum": {

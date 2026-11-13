@@ -1376,20 +1376,6 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
-        "examples": [
-          {
-            "properties": {
-              "query": {
-                "value": {
-                  "value": "How can I use the Vectara platform?",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            "type": "object"
-          }
-        ],
         "type": "object"
       },
       "ChatFullResponse": {
@@ -1505,20 +1491,6 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
-        "examples": [
-          {
-            "properties": {
-              "chunk": {
-                "value": {
-                  "value": "Hello, how can I help you today?",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            "type": "object"
-          }
-        ],
         "type": "object"
       },
       "InteractionRequest": {

@@ -82,20 +82,6 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
-        "examples": [
-          {
-            "properties": {
-              "iban": {
-                "value": {
-                  "value": "DE2310010010123456788",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            "type": "object"
-          }
-        ],
         "type": "object"
       },
       "OtherField": {
@@ -259,27 +245,6 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
-        "examples": [
-          {
-            "properties": {
-              "currency": {
-                "value": {
-                  "value": "EUR",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "iban": {
-                "value": {
-                  "value": "DE2310010010123456788",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            "type": "object"
-          }
-        ],
         "type": "object"
       }
     },

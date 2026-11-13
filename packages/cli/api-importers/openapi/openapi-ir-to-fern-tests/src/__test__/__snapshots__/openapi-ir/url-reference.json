@@ -274,27 +274,6 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
-        "examples": [
-          {
-            "properties": {
-              "id": {
-                "value": {
-                  "value": 6,
-                  "type": "int64"
-                },
-                "type": "primitive"
-              },
-              "name": {
-                "value": {
-                  "value": "name",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            "type": "object"
-          }
-        ],
         "type": "object"
       },
       "Tag": {
@@ -353,27 +332,6 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
-        "examples": [
-          {
-            "properties": {
-              "id": {
-                "value": {
-                  "value": 1,
-                  "type": "int64"
-                },
-                "type": "primitive"
-              },
-              "name": {
-                "value": {
-                  "value": "name",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
-            "type": "object"
-          }
-        ],
         "type": "object"
       },
       "Pet": {
@@ -541,112 +499,6 @@
           "file": "../openapi.yml",
           "type": "openapi"
         },
-        "examples": [
-          {
-            "properties": {
-              "id": {
-                "value": {
-                  "value": 0,
-                  "type": "int64"
-                },
-                "type": "primitive"
-              },
-              "category": {
-                "properties": {
-                  "id": {
-                    "value": {
-                      "value": 6,
-                      "type": "int64"
-                    },
-                    "type": "primitive"
-                  },
-                  "name": {
-                    "value": {
-                      "value": "name",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
-                },
-                "type": "object"
-              },
-              "name": {
-                "value": {
-                  "value": "doggie",
-                  "type": "string"
-                },
-                "type": "primitive"
-              },
-              "photoUrls": {
-                "value": [
-                  {
-                    "value": {
-                      "value": "photoUrls",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  },
-                  {
-                    "value": {
-                      "value": "photoUrls",
-                      "type": "string"
-                    },
-                    "type": "primitive"
-                  }
-                ],
-                "type": "array"
-              },
-              "tags": {
-                "value": [
-                  {
-                    "properties": {
-                      "id": {
-                        "value": {
-                          "value": 1,
-                          "type": "int64"
-                        },
-                        "type": "primitive"
-                      },
-                      "name": {
-                        "value": {
-                          "value": "name",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  },
-                  {
-                    "properties": {
-                      "id": {
-                        "value": {
-                          "value": 1,
-                          "type": "int64"
-                        },
-                        "type": "primitive"
-                      },
-                      "name": {
-                        "value": {
-                          "value": "name",
-                          "type": "string"
-                        },
-                        "type": "primitive"
-                      }
-                    },
-                    "type": "object"
-                  }
-                ],
-                "type": "array"
-              },
-              "status": {
-                "value": "available",
-                "type": "enum"
-              }
-            },
-            "type": "object"
-          }
-        ],
         "type": "object"
       }
     },

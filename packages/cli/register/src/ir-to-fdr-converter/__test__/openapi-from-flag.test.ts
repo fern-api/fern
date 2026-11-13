@@ -3896,13 +3896,16 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
             );
         }
 
-        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
-            context,
-            audiences: { type: "all" },
-            enableUniqueErrorsPerEndpoint: true,
-            generateV1Examples: false,
-            logWarnings: false
-        });
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation(
+            {
+                context,
+                audiences: { type: "all" },
+                enableUniqueErrorsPerEndpoint: true,
+                generateV1Examples: false,
+                logWarnings: false
+            },
+            { objectSchemaExamples: true }
+        );
 
         const typesByName = Object.fromEntries(
             Object.values(intermediateRepresentation.types).map((type) => [getOriginalName(type.name.name), type])

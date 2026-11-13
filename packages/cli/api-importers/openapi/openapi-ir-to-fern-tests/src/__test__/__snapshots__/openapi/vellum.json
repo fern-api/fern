@@ -1442,15 +1442,6 @@ Used to submit feedback regarding the quality of previously generated completion
           },
           "PaginatedSlimDocumentList": {
             "docs": undefined,
-            "examples": [
-              {
-                "value": {
-                  "count": 123,
-                  "next": "http://api.example.org/accounts/?offset=400&limit=100",
-                  "previous": "http://api.example.org/accounts/?offset=200&limit=100",
-                },
-              },
-            ],
             "inline": undefined,
             "properties": {
               "count": "optional<integer>",
@@ -3639,11 +3630,6 @@ types:
     source:
       openapi: ../openapi.yml
   PaginatedSlimDocumentList:
-    examples:
-      - value:
-          count: 123
-          next: http://api.example.org/accounts/?offset=400&limit=100
-          previous: http://api.example.org/accounts/?offset=200&limit=100
     properties:
       count: optional<integer>
       next:

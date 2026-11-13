@@ -81,30 +81,6 @@
           },
           "BasicVal": {
             "docs": "A Val",
-            "examples": [
-              {
-                "value": {
-                  "author": {
-                    "id": "00000000-0000-0000-0000-000000000000",
-                    "username": "tmcw",
-                  },
-                  "code": "export const count = 1;",
-                  "createdAt": "2024-06-11T22:05:12Z",
-                  "id": "00000000-0000-0000-0000-000000000000",
-                  "links": {
-                    "module": "module",
-                    "self": "self",
-                    "versions": "versions",
-                  },
-                  "name": "counter",
-                  "privacy": "public",
-                  "public": true,
-                  "type": "script",
-                  "url": "https://val.town/v/tmcw/counter",
-                  "version": 0,
-                },
-              },
-            ],
             "inline": undefined,
             "properties": {
               "author": {
@@ -540,20 +516,6 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
           },
           "User": {
             "docs": "User object",
-            "examples": [
-              {
-                "value": {
-                  "bio": "Hello world",
-                  "id": "00000000-0000-0000-0000-000000000000",
-                  "links": {
-                    "self": "self",
-                  },
-                  "profileImageUrl": null,
-                  "url": "https://val.town/u/tmcw",
-                  "username": "tmcw",
-                },
-              },
-            ],
             "inline": undefined,
             "properties": {
               "bio": {
@@ -652,15 +614,6 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
     inline: true
   User:
     docs: User object
-    examples:
-      - value:
-          id: 00000000-0000-0000-0000-000000000000
-          bio: Hello world
-          username: tmcw
-          profileImageUrl: null
-          url: https://val.town/u/tmcw
-          links:
-            self: self
     properties:
       id:
         type: string
@@ -920,24 +873,6 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
     inline: true
   BasicVal:
     docs: A Val
-    examples:
-      - value:
-          name: counter
-          id: 00000000-0000-0000-0000-000000000000
-          version: 0
-          code: export const count = 1;
-          public: true
-          createdAt: '2024-06-11T22:05:12Z'
-          privacy: public
-          type: script
-          url: https://val.town/v/tmcw/counter
-          links:
-            self: self
-            versions: versions
-            module: module
-          author:
-            id: 00000000-0000-0000-0000-000000000000
-            username: tmcw
     properties:
       name:
         type: string

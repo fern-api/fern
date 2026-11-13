@@ -271,13 +271,6 @@
           },
           "ProfileV1": {
             "docs": undefined,
-            "examples": [
-              {
-                "value": {
-                  "name": "Acme corp login",
-                },
-              },
-            ],
             "inline": undefined,
             "properties": {
               "name": {
@@ -389,16 +382,6 @@
           },
           "SessionConfig": {
             "docs": undefined,
-            "examples": [
-              {
-                "value": {
-                  "persist_profile": true,
-                  "persist_profile_name": "default",
-                  "profile_id": "linkedin",
-                  "timeoutMinutes": 10,
-                },
-              },
-            ],
             "inline": undefined,
             "properties": {
               "persist_profile": {
@@ -436,16 +419,6 @@
           },
           "SessionConfigV1": {
             "docs": undefined,
-            "examples": [
-              {
-                "value": {
-                  "persist_profile": true,
-                  "persist_profile_name": "default",
-                  "profile_id": "linkedin",
-                  "timeoutMinutes": 10,
-                },
-              },
-            ],
             "inline": undefined,
             "properties": {
               "persist_profile": {
@@ -483,23 +456,6 @@
           },
           "SessionWithConnectionInfo": {
             "docs": undefined,
-            "examples": [
-              {
-                "value": {
-                  "configuration": {
-                    "persist_profile": true,
-                    "persist_profile_name": "default",
-                    "persist_profile_tags": [
-                      "persist_profile_tags",
-                    ],
-                    "profile_id": "linkedin",
-                    "timeoutMinutes": 10,
-                  },
-                  "id": "6aac6f73-bd89-4a76-ab32-5a6c422e8b0b",
-                  "status": "active",
-                },
-              },
-            ],
             "inline": undefined,
             "properties": {
               "cdp_url": {
@@ -841,9 +797,6 @@ types:
     source:
       openapi: ../openapi.yml
   ProfileV1:
-    examples:
-      - value:
-          name: Acme corp login
     properties:
       name:
         type: string
@@ -909,12 +862,6 @@ types:
     source:
       openapi: ../openapi.yml
   SessionConfig:
-    examples:
-      - value:
-          persist_profile: true
-          persist_profile_name: default
-          profile_id: linkedin
-          timeoutMinutes: 10
     properties:
       persist_profile:
         type: optional<boolean>
@@ -942,12 +889,6 @@ types:
     source:
       openapi: ../openapi.yml
   SessionConfigV1:
-    examples:
-      - value:
-          persist_profile: true
-          persist_profile_name: default
-          profile_id: linkedin
-          timeoutMinutes: 10
     properties:
       persist_profile:
         type: optional<boolean>
@@ -975,17 +916,6 @@ types:
     source:
       openapi: ../openapi.yml
   SessionWithConnectionInfo:
-    examples:
-      - value:
-          configuration:
-            persist_profile: true
-            persist_profile_name: default
-            persist_profile_tags:
-              - persist_profile_tags
-            profile_id: linkedin
-            timeoutMinutes: 10
-          id: 6aac6f73-bd89-4a76-ab32-5a6c422e8b0b
-          status: active
     properties:
       cdp_url:
         type: optional<string>

@@ -58,7 +58,7 @@ const doc: OpenAPIV3.Document = {
 };
 
 describe("object schema examples", () => {
-    it("keeps the schema-level example, assembles one from property examples, and leaves bare objects without one", () => {
+    it("leaves every object without examples unless objectSchemaExamples is on", () => {
         const ir = parse({
             context: mockTaskContext,
             documents: [
@@ -70,6 +70,24 @@ describe("object schema examples", () => {
                 }
             ],
             options: DEFAULT_PARSE_OPENAPI_SETTINGS
+        });
+        for (const schema of Object.values(ir.groupedSchemas.rootSchemas)) {
+            expect(schema.type === "object" ? schema.examples : undefined).toBeUndefined();
+        }
+    });
+
+    it("keeps the schema-level example, assembles one from property examples, and leaves bare objects without one", () => {
+        const ir = parse({
+            context: mockTaskContext,
+            documents: [
+                {
+                    type: "openapi",
+                    value: doc,
+                    source: Source.openapi({ file: "twiml.yml" }),
+                    settings: DEFAULT_PARSE_OPENAPI_SETTINGS
+                }
+            ],
+            options: { ...DEFAULT_PARSE_OPENAPI_SETTINGS, objectSchemaExamples: true }
         });
         const schemas = ir.groupedSchemas.rootSchemas;
         // JSON round-trip drops the generated `_visit` helpers so the examples compare as plain data.
