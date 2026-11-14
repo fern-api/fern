@@ -96,32 +96,66 @@ interface SearchState {
     query: string | undefined;
 }
 
-/** Searches for the brand, lets the user confirm it, and downloads its logos, favicon, and color. */
+/**
+ * Searches for the brand, lets the user pick it, downloads its logos, favicon, and color, and asks
+ * the user to confirm them (or pick a different company) before they are used.
+ */
 async function lookUpBrand(
     search: SearchState,
     token: string,
     yes: boolean,
     explicit: boolean
 ): Promise<BrandSelection | undefined> {
-    const match = await pickBrand(search, token, yes, explicit);
-    if (match === undefined) {
-        printSkipped("Keeping the starter branding");
-        return undefined;
-    }
-    const selection = await withStatus(`Fetching ${match.name}'s logo and colors`, async () => {
-        const brand = await fetchBrand(match.domain, token);
-        if (brand === undefined) {
+    for (;;) {
+        const match = await pickBrand(search, token, yes, explicit);
+        if (match === undefined) {
+            printSkipped("Keeping the starter branding");
             return undefined;
         }
-        const withFavicon = withSearchResultFavicon(brand, match);
-        return { brand: withFavicon, files: await downloadBrandFiles(withFavicon) };
-    });
-    if (selection === undefined) {
-        printSkipped(`Couldn't load ${match.name}'s brand, so keeping the starter branding`);
-        return undefined;
+        const selection = await withStatus(`Fetching ${match.name}'s logo and colors`, async () => {
+            const brand = await fetchBrand(match.domain, token);
+            if (brand === undefined) {
+                return undefined;
+            }
+            const withFavicon = withSearchResultFavicon(brand, match);
+            return { brand: withFavicon, files: await downloadBrandFiles(withFavicon) };
+        });
+        if (selection === undefined) {
+            printSkipped(`Couldn't load ${match.name}'s brand, so keeping the starter branding`);
+            return undefined;
+        }
+        printBrandSummary(selection, match.name);
+        if (yes) {
+            return selection;
+        }
+        const decision = await confirmBrand(selection.brand.name ?? match.name);
+        if (decision === "use") {
+            return selection;
+        }
+        if (decision === "skip") {
+            printSkipped("Keeping the starter branding");
+            return undefined;
+        }
+        // Ask for the company again instead of repeating the same search.
+        search.query = undefined;
     }
-    printBrandSummary(selection, match.name);
-    return selection;
+}
+
+/** Lets the user check the logos and color (each line above links to it) before they are used. */
+export async function confirmBrand(name: string): Promise<"use" | "search-again" | "skip"> {
+    const answer = await inquirer.prompt<{ decision: "use" | "search-again" | "skip" }>([
+        {
+            type: "list",
+            name: "decision",
+            message: `Use ${name}'s logo and colors?`,
+            choices: [
+                { name: "Yes, use them", value: "use" },
+                { name: "Choose a different company", value: "search-again" },
+                { name: "Skip and keep the starter branding", value: "skip" }
+            ]
+        }
+    ]);
+    return answer.decision;
 }
 
 /** Applies a brand on top of the template defaults. */

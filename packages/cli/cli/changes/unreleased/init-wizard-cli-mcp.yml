@@ -9,3 +9,6 @@
 - summary: |
     When your Fern login has expired, the `fern init` setup wizard now signs you in again and repeats the brand search, instead of skipping your company's branding.
   type: fix
+- summary: |
+    The `fern init` setup wizard now shows the logo, favicon, and accent color it found for your company and asks before using them, so you can choose a different company or keep the starter branding.
+  type: feat
