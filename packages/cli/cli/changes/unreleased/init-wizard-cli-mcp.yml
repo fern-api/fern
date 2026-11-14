@@ -12,3 +12,6 @@
 - summary: |
     The `fern init` setup wizard now shows the logo, favicon, and accent color it found for your company and asks before using them, so you can choose a different company or keep the starter branding.
   type: feat
+- summary: |
+    The `fern init` setup wizard now generates the MCP server separately from SDKs and the CLI, so when Fern can't generate an MCP server for the organization, the SDKs and CLI are still generated and the wizard explains how to retry.
+  type: fix

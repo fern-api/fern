@@ -16,7 +16,12 @@ import {
     usesSdkConfig
 } from "../steps/sdks";
 import { billingUrl, generatedProductsLabel } from "../ui";
-import { generatorError, parseUnavailableGeneratorVersion, summarizeFailure } from "../wizard";
+import {
+    generatorError,
+    isMcpGenerationNotEnabled,
+    parseUnavailableGeneratorVersion,
+    summarizeFailure
+} from "../wizard";
 
 async function project(files: Record<string, string>): Promise<string> {
     const dir = await mkdtemp(path.join(os.tmpdir(), "fern-wizard-sdks-"));
@@ -103,6 +108,20 @@ describe("SDK configuration", () => {
         ]);
         await expect(sdksWriteOnlyLocally(dir)).resolves.toBe(true);
         await rm(dir, { recursive: true, force: true });
+    });
+
+    it("recognizes Fern refusing an MCP server the organization can't generate yet", () => {
+        expect(
+            isMcpGenerationNotEnabled(
+                "sdk-config Cannot prepare sdk-gen-api target fernapi/fern-mcp-server: SDK Config v1 generation requires the sdk-gen-api generation backend\nsdk-config Failed."
+            )
+        ).toBe(true);
+        expect(
+            isMcpGenerationNotEnabled(
+                "fernapi/fern-mcp-server requires sdk-gen-api generation, which FERN_USE_SDK_GEN_API=false turns off."
+            )
+        ).toBe(true);
+        expect(isMcpGenerationNotEnabled("Error: Failed to generate the MCP server")).toBe(false);
     });
 
     it("names what fern generate builds for the chosen products", () => {

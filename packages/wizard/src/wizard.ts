@@ -907,13 +907,56 @@ async function generateSdks(
         );
         return;
     }
-    const names = sdks.map((sdk) => sdk.language.displayName).join(", ");
-    const output = await generateSdkFiles({ dir, detection, groupArgs, names });
+    // MCP server generation is turned on per organization, and one target Fern refuses fails the
+    // whole `fern generate`. So the MCP server runs on its own, after everything else.
+    const mcp = sdkConfig ? sdks.filter((sdk) => sdk.language === MCP_SERVER_TARGET) : [];
+    const rest = sdks.filter((sdk) => !mcp.includes(sdk));
+    const outputs: string[] = [];
+    if (rest.length > 0) {
+        outputs.push(
+            await generateSdkFiles({
+                dir,
+                detection,
+                groupArgs,
+                targetArgs: mcp.length === 0 ? [] : targetArgs(rest),
+                names: rest.map((sdk) => sdk.language.displayName).join(", ")
+            })
+        );
+    }
+    const notEnabled = new Set<ConfiguredSdk>();
+    let mcpError: unknown;
+    if (mcp.length > 0) {
+        try {
+            outputs.push(
+                await generateSdkFiles({
+                    dir,
+                    detection,
+                    groupArgs,
+                    targetArgs: targetArgs(mcp),
+                    names: MCP_SERVER_TARGET.displayName
+                })
+            );
+        } catch (error) {
+            if (error instanceof FernCommandError && isMcpGenerationNotEnabled(error.output)) {
+                const organization = await readOrganization(dir);
+                printSkipped(
+                    `Fern didn't generate the MCP server: MCP server generation is turned on per organization, and it isn't on for ${organization ?? "your organization"} yet. A new organization can take a few minutes; run \`fern generate --target mcp\` to try again, or ask Fern to turn it on. The mcp target stays in fern/sdk-config.yml.`
+                );
+                for (const sdk of mcp) {
+                    notEnabled.add(sdk);
+                }
+            } else {
+                // Report what did generate before the MCP server's error.
+                mcpError = error;
+            }
+        }
+    }
+    const output = outputs.join("\n");
 
     const generated: Array<{ label: string; path: string }> = [];
     const empty: string[] = [];
     for (const sdk of sdks) {
-        if (sdk.outputPath === undefined) {
+        if (sdk.outputPath === undefined || notEnabled.has(sdk) || (mcpError !== undefined && mcp.includes(sdk))) {
             continue;
         }
         if (!(await isNonEmptyDirectory(sdk.outputPath))) {
@@ -927,6 +970,9 @@ async function generateSdks(
         );
     }
     results.generated = generated;
+    if (mcpError !== undefined) {
+        throw mcpError;
+    }
     if (empty.length > 0) {
         // Fern can report success even when a generator crashed and wrote nothing.
         const reason = generatorError(output);
@@ -934,6 +980,16 @@ async function generateSdks(
             `Fern wrote no files for the ${empty.join(", ")}${reason === undefined ? "" : `. The generator reported: ${reason}`}. Run \`fern generate --log-level debug\` to see more.`
         );
     }
+}
+
+/** `--target` for each sdk-config.yml target, which limits `fern generate` to them. */
+function targetArgs(sdks: ConfiguredSdk[]): string[] {
+    return [...new Set(sdks.map((sdk) => sdk.language.target))].flatMap((target) => ["--target", target]);
+}
+
+/** Whether Fern refused the MCP server because the organization can't generate it yet. */
+export function isMcpGenerationNotEnabled(output: string): boolean {
+    return /requires (?:the )?sdk-gen-api generation/.test(output);
 }
 
 /** Asks which SDK languages to add; languages the project already has stay checked. */
@@ -975,17 +1031,24 @@ async function generateSdkFiles({
     dir,
     detection,
     groupArgs,
+    targetArgs,
     names
 }: {
     dir: string;
     detection: Detection;
     groupArgs: string[];
+    /** Limits generation to some sdk-config.yml targets; empty generates all of them. */
+    targetArgs: string[];
     names: string;
 }): Promise<string> {
     // Every output is a folder in this repository (checked above), so a version only names the package.
     const generate = (): Promise<string> =>
         withStatus(`Generating ${names} on Fern's servers (this can take a few minutes)`, () =>
-            runFernQuietly(["generate", ...groupArgs, "--version", FIRST_SDK_VERSION, "--no-prompt"], dir, detection)
+            runFernQuietly(
+                ["generate", ...groupArgs, ...targetArgs, "--version", FIRST_SDK_VERSION, "--no-prompt"],
+                dir,
+                detection
+            )
         );
     try {
         return await generate();
