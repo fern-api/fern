@@ -47,7 +47,6 @@ import {
     ensureSdkGroup,
     isNonEmptyDirectory,
     listApis,
-    MCP_SERVER_TARGET,
     readConfiguredSdks,
     readOrganization,
     SDK_LANGUAGES,
@@ -95,13 +94,10 @@ const ORG_PLACEHOLDER = "<your-org>";
 const SDKS_AND_DOCS: Product[] = ["sdks", "docs"];
 
 /** Products built by `fern generate` from the API spec (everything but docs). */
-const GENERATED_PRODUCTS: Product[] = ["sdks", "cli", "mcp"];
+const GENERATED_PRODUCTS: Product[] = ["sdks", "cli"];
 
-/** The CLI and MCP server are sdk-config.yml targets, generated in the same step as SDKs. */
-const PRODUCT_TARGETS: Array<[Product, SdkLanguage]> = [
-    ["cli", CLI_TARGET],
-    ["mcp", MCP_SERVER_TARGET]
-];
+/** The CLI is an sdk-config.yml target, generated in the same step as SDKs. */
+const PRODUCT_TARGETS: Array<[Product, SdkLanguage]> = [["cli", CLI_TARGET]];
 
 const STEPS: Array<{ id: StepId; title: string; question?: string; actions: ActionId[] }> = [
     {
@@ -524,8 +520,7 @@ export async function runWizard(flags: WizardFlags): Promise<number> {
 export const PRODUCT_CHOICES: Array<{ name: string; value: Product }> = [
     { name: "SDKs", value: "sdks" },
     { name: "Docs", value: "docs" },
-    { name: "CLI", value: "cli" },
-    { name: "MCP Server", value: "mcp" }
+    { name: "CLI", value: "cli" }
 ];
 
 async function chooseProducts(detection: Detection): Promise<Product[]> {
@@ -877,7 +872,7 @@ async function generateSdks(
     if (enterprise.length > 0) {
         await explainEnterpriseLanguages(enterprise, await readOrganization(dir), sdkConfig);
     }
-    // The CLI and MCP server come from the product picker, not the language question.
+    // The CLI comes from the product picker, not the language question.
     const tools = PRODUCT_TARGETS.filter(
         ([product, target]) => products.includes(product) && !configuredGenerators.has(target.generator)
     ).map(([, target]) => target);
@@ -908,56 +903,20 @@ async function generateSdks(
         );
         return;
     }
-    // MCP server generation is turned on per organization, and one target Fern refuses fails the
-    // whole `fern generate`. So the MCP server runs on its own, after everything else.
-    const mcp = sdkConfig ? sdks.filter((sdk) => sdk.language === MCP_SERVER_TARGET) : [];
-    const rest = sdks.filter((sdk) => !mcp.includes(sdk));
-    const outputs: string[] = [];
-    if (rest.length > 0) {
-        outputs.push(
-            await generateSdkFiles({
-                dir,
-                detection,
-                groupArgs,
-                targetArgs: mcp.length === 0 ? [] : targetArgs(rest),
-                names: rest.map((sdk) => sdk.language.displayName).join(", ")
-            })
-        );
-    }
-    const notEnabled = new Set<ConfiguredSdk>();
-    let mcpError: unknown;
-    if (mcp.length > 0) {
-        try {
-            outputs.push(
-                await generateSdkFiles({
-                    dir,
-                    detection,
-                    groupArgs,
-                    targetArgs: targetArgs(mcp),
-                    names: MCP_SERVER_TARGET.displayName
-                })
-            );
-        } catch (error) {
-            if (error instanceof FernCommandError && isMcpGenerationNotEnabled(error.output)) {
-                const organization = await readOrganization(dir);
-                printSkipped(
-                    `Fern didn't generate the MCP server: MCP server generation is turned on per organization, and it isn't on for ${organization ?? "your organization"} yet. A new organization can take a few minutes; run \`fern generate --target mcp\` to try again, or ask Fern to turn it on. The mcp target stays in fern/sdk-config.yml.`
-                );
-                for (const sdk of mcp) {
-                    notEnabled.add(sdk);
-                }
-            } else {
-                // Report what did generate before the MCP server's error.
-                mcpError = error;
-            }
-        }
-    }
-    const output = outputs.join("\n");
+    // In sdk-config.yml, name the targets: `fern generate` would also build any others the project
+    // lists (an MCP server, say), and one target Fern refuses fails the whole run.
+    const output = await generateSdkFiles({
+        dir,
+        detection,
+        groupArgs,
+        targetArgs: sdkConfig ? targetArgs(sdks) : [],
+        names: sdks.map((sdk) => sdk.language.displayName).join(", ")
+    });
 
     const generated: Array<{ label: string; path: string }> = [];
     const empty: string[] = [];
     for (const sdk of sdks) {
-        if (sdk.outputPath === undefined || notEnabled.has(sdk) || (mcpError !== undefined && mcp.includes(sdk))) {
+        if (sdk.outputPath === undefined) {
             continue;
         }
         if (!(await isNonEmptyDirectory(sdk.outputPath))) {
@@ -971,9 +930,6 @@ async function generateSdks(
         );
     }
     results.generated = generated;
-    if (mcpError !== undefined) {
-        throw mcpError;
-    }
     if (empty.length > 0) {
         // Fern can report success even when a generator crashed and wrote nothing.
         const reason = generatorError(output);
@@ -986,11 +942,6 @@ async function generateSdks(
 /** `--target` for each sdk-config.yml target, which limits `fern generate` to them. */
 function targetArgs(sdks: ConfiguredSdk[]): string[] {
     return [...new Set(sdks.map((sdk) => sdk.language.target))].flatMap((target) => ["--target", target]);
-}
-
-/** Whether Fern refused the MCP server because the organization can't generate it yet. */
-export function isMcpGenerationNotEnabled(output: string): boolean {
-    return /requires (?:the )?sdk-gen-api generation/.test(output);
 }
 
 /** Asks which SDK languages to add; languages the project already has stay checked. */

@@ -54,7 +54,7 @@ export interface FernCommand {
 }
 
 /** What the user wants Fern to produce for this repository. */
-export type Product = "sdks" | "docs" | "cli" | "mcp";
+export type Product = "sdks" | "docs" | "cli";
 
 export type StepId = "cli-setup" | "agent" | "publish" | "generate";
 
@@ -73,7 +73,7 @@ export type ActionId =
 export interface PublishResult {
     previewUrl?: string;
     publishedUrl?: string;
-    /** SDKs, CLIs and MCP servers written to this repository, with their output directories. */
+    /** SDKs and CLIs written to this repository, with their output directories. */
     generated?: Array<{ label: string; path: string }>;
 }
 

@@ -2,7 +2,7 @@ import { access, readdir, readFile, writeFile } from "fs/promises";
 import path from "path";
 import { isMap, isSeq, parse, parseDocument } from "yaml";
 
-// Which SDKs (and CLI or MCP server) a Fern project generates, and where each one is written. New
+// Which SDKs (and CLI) a Fern project generates, and where each one is written. New
 // projects list them as targets in fern/sdk-config.yml; older ones as generators in fern/generators.yml.
 
 export interface SdkLanguage {
@@ -47,7 +47,7 @@ export const SDK_LANGUAGES: SdkLanguage[] = [
     { label: "Rust", displayName: "Rust SDK", generator: "fern-rust-sdk", target: "rust", free: false }
 ];
 
-/** Besides SDKs, Fern generates a CLI and an MCP server for an API, each its own sdk-config.yml target. */
+/** Besides SDKs, Fern generates a CLI for an API, as its own sdk-config.yml target. */
 export const CLI_TARGET: SdkLanguage = {
     label: "CLI",
     displayName: "CLI",
@@ -57,16 +57,7 @@ export const CLI_TARGET: SdkLanguage = {
     outputDirectory: "cli"
 };
 
-export const MCP_SERVER_TARGET: SdkLanguage = {
-    label: "MCP server",
-    displayName: "MCP server",
-    generator: "fern-mcp-server",
-    target: "mcp",
-    free: true,
-    outputDirectory: "mcp-server"
-};
-
-const ALL_TARGETS: SdkLanguage[] = [...SDK_LANGUAGES, CLI_TARGET, MCP_SERVER_TARGET];
+const ALL_TARGETS: SdkLanguage[] = [...SDK_LANGUAGES, CLI_TARGET];
 
 const SDK_CONFIG_FILENAME = "sdk-config.yml";
 

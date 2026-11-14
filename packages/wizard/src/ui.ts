@@ -101,8 +101,7 @@ export function billingUrl(organization: string | undefined): string {
 
 const GENERATED_PRODUCT_NAMES: Array<[Product, string]> = [
     ["sdks", "SDKs"],
-    ["cli", "CLI"],
-    ["mcp", "MCP server"]
+    ["cli", "CLI"]
 ];
 
 /** Names what `fern generate` builds for these products, like "SDKs and CLI"; undefined for docs only. */

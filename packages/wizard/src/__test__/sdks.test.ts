@@ -7,7 +7,6 @@ import {
     CLI_TARGET,
     ensureSdkGroup,
     isNonEmptyDirectory,
-    MCP_SERVER_TARGET,
     readConfiguredSdks,
     readOrganization,
     SDK_LANGUAGES,
@@ -16,12 +15,7 @@ import {
     usesSdkConfig
 } from "../steps/sdks";
 import { billingUrl, generatedProductsLabel } from "../ui";
-import {
-    generatorError,
-    isMcpGenerationNotEnabled,
-    parseUnavailableGeneratorVersion,
-    summarizeFailure
-} from "../wizard";
+import { generatorError, parseUnavailableGeneratorVersion, summarizeFailure } from "../wizard";
 
 async function project(files: Record<string, string>): Promise<string> {
     const dir = await mkdtemp(path.join(os.tmpdir(), "fern-wizard-sdks-"));
@@ -93,43 +87,32 @@ describe("SDK configuration", () => {
         await rm(dir, { recursive: true, force: true });
     });
 
-    it("adds the CLI and MCP server as sdk-config.yml targets in their own folders", async () => {
+    it("adds the CLI as an sdk-config.yml target in its own folder and ignores an MCP server", async () => {
         const dir = await project({
-            "fern/sdk-config.yml": ["schemaVersion: sdk-config/v1", "sdkName: api"].join("\n")
+            "fern/sdk-config.yml": [
+                "schemaVersion: sdk-config/v1",
+                "sdkName: api",
+                "targets:",
+                "  - language: mcp",
+                "    output:",
+                "      delivery: files",
+                "      path: ../mcp-server"
+            ].join("\n")
         });
-        await addSdkConfigTargets(dir, [CLI_TARGET, MCP_SERVER_TARGET]);
+        await addSdkConfigTargets(dir, [CLI_TARGET]);
         const written = await readFile(path.join(dir, "fern", "sdk-config.yml"), "utf8");
         expect(written).toContain("language: cli");
-        expect(written).toContain("language: mcp");
+        // The wizard doesn't set up or generate MCP servers, so it leaves an existing mcp target alone.
         const sdks = await readConfiguredSdks(dir);
-        expect(sdks.map((sdk) => [sdk.language.displayName, sdk.outputPath])).toEqual([
-            ["CLI", path.join(dir, "cli")],
-            ["MCP server", path.join(dir, "mcp-server")]
-        ]);
-        await expect(sdksWriteOnlyLocally(dir)).resolves.toBe(true);
+        expect(sdks.map((sdk) => [sdk.language.displayName, sdk.outputPath])).toEqual([["CLI", path.join(dir, "cli")]]);
         await rm(dir, { recursive: true, force: true });
-    });
-
-    it("recognizes Fern refusing an MCP server the organization can't generate yet", () => {
-        expect(
-            isMcpGenerationNotEnabled(
-                "sdk-config Cannot prepare sdk-gen-api target fernapi/fern-mcp-server: SDK Config v1 generation requires the sdk-gen-api generation backend\nsdk-config Failed."
-            )
-        ).toBe(true);
-        expect(
-            isMcpGenerationNotEnabled(
-                "fernapi/fern-mcp-server requires sdk-gen-api generation, which FERN_USE_SDK_GEN_API=false turns off."
-            )
-        ).toBe(true);
-        expect(isMcpGenerationNotEnabled("Error: Failed to generate the MCP server")).toBe(false);
     });
 
     it("names what fern generate builds for the chosen products", () => {
         expect(generatedProductsLabel(["docs"])).toBeUndefined();
         expect(generatedProductsLabel(["sdks", "docs"])).toBe("SDKs");
         expect(generatedProductsLabel(["cli"])).toBe("CLI");
-        expect(generatedProductsLabel(["sdks", "mcp"])).toBe("SDKs and MCP server");
-        expect(generatedProductsLabel(["mcp", "cli", "sdks"])).toBe("SDKs, CLI, and MCP server");
+        expect(generatedProductsLabel(["cli", "sdks"])).toBe("SDKs and CLI");
     });
 
     it("doesn't generate automatically when an sdk-config.yml target publishes", async () => {
