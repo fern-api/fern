@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `ai-search.datasources` entries now accept an optional `locale`, e.g.
+    `- url: https://help.example.com/ja-jp` / `locale: ja`. When set, every page of
+    that website is indexed into the Ask Fern index of that site locale instead of
+    relying on per-page locale detection. The CLI warns when the locale does not
+    match any site locale.
+  type: feat

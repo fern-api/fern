@@ -1194,7 +1194,8 @@ export class DocsDefinitionResolver {
                           ),
                           datasources: this.parsedDocsConfig.aiChatConfig.datasources?.map((ds) => ({
                               url: ds.url,
-                              title: ds.title
+                              title: ds.title,
+                              locale: ds.locale
                           })),
                           maskPii: this.parsedDocsConfig.aiChatConfig.maskPii,
                           disclaimer: this.parsedDocsConfig.aiChatConfig.disclaimer,
