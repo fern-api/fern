@@ -171,4 +171,30 @@ describe("substituteEnvVariables", () => {
         // (i.e., we don't call replaceEnvVariables at all)
         expect(irLikeStructure.apiDocs).toEqual("Base URL: ${API_BASE_URL}");
     });
+
+    it("leaves profile-owned names for the renderer and substitutes the rest", () => {
+        process.env.API_URL = "https://api.example.com";
+        process.env.CLI = "from-ci";
+        const content = { page: "Run `${CLI}` at ${API_URL}. Literal \\$\\{CLI\\} and \\$\\{API_URL\\}." };
+        const context = createMockTaskContext();
+        const substituted = replaceEnvVariables(
+            content,
+            { onError: (e) => context.failAndThrow(e) },
+            { keep: new Set(["CLI"]) }
+        );
+        expect(substituted).toEqual({
+            page: "Run `${CLI}` at https://api.example.com. Literal \\$\\{CLI\\} and ${API_URL}."
+        });
+    });
+
+    it("does not fail on a profile-owned name missing from CI", () => {
+        delete process.env.PROFILE_ONLY_VAR;
+        const context = createMockTaskContext({ logger: NOOP_LOGGER });
+        const substituted = replaceEnvVariables(
+            { page: "${PROFILE_ONLY_VAR}" },
+            { onError: (e) => context.failAndThrow(e) },
+            { keep: new Set(["PROFILE_ONLY_VAR"]) }
+        );
+        expect(substituted).toEqual({ page: "${PROFILE_ONLY_VAR}" });
+    });
 });

@@ -212,6 +212,12 @@
       "availability": undefined,
       "description": "Invalid type error with discriminator",
       "displayName": undefined,
+      "examples": [
+        {
+          "expectedType": "string",
+          "message": "string",
+        },
+      ],
       "name": "InvalidTypeError",
       "shape": {
         "extends": [],
@@ -259,6 +265,11 @@
       "availability": undefined,
       "description": "First variant for discriminated oneOf",
       "displayName": undefined,
+      "examples": [
+        {
+          "variantAField": "string",
+        },
+      ],
       "name": "OneOfDiscriminatedA",
       "shape": {
         "extends": [],
@@ -289,6 +300,11 @@
       "availability": undefined,
       "description": "Second variant for discriminated oneOf",
       "displayName": undefined,
+      "examples": [
+        {
+          "variantBField": 1,
+        },
+      ],
       "name": "OneOfDiscriminatedB",
       "shape": {
         "extends": [],
@@ -320,6 +336,13 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "errorType": "string",
+          "field": "string",
+          "message": "string",
+        },
+      ],
       "name": "OneOfExampleRequestBadRequestError",
       "shape": {
         "discriminant": "errorType",
@@ -358,6 +381,12 @@
       "availability": undefined,
       "description": "Validation error with discriminator",
       "displayName": undefined,
+      "examples": [
+        {
+          "field": "string",
+          "message": "string",
+        },
+      ],
       "name": "ValidationError",
       "shape": {
         "extends": [],
@@ -405,6 +434,12 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "type": "string",
+          "variantAField": "string",
+        },
+      ],
       "name": "oneOf Examples_oneOfExample_Request",
       "shape": {
         "discriminant": "type",
@@ -443,6 +478,9 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {},
+      ],
       "name": "oneOf Examples_oneOfExample_Response_200",
       "shape": {
         "extends": [],

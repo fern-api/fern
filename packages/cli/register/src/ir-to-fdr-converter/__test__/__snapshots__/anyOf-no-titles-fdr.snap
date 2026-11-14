@@ -210,6 +210,11 @@
       "availability": undefined,
       "description": "AnyOf error variant A",
       "displayName": undefined,
+      "examples": [
+        {
+          "fieldError": "string",
+        },
+      ],
       "name": "AnyOfErrorA",
       "shape": {
         "extends": [],
@@ -240,6 +245,11 @@
       "availability": undefined,
       "description": "AnyOf error variant B",
       "displayName": undefined,
+      "examples": [
+        {
+          "formatError": true,
+        },
+      ],
       "name": "AnyOfErrorB",
       "shape": {
         "extends": [],
@@ -266,6 +276,11 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "fieldError": "string",
+        },
+      ],
       "name": "AnyOfExampleNoTitlesRequestBadRequestError",
       "shape": {
         "type": "undiscriminatedUnion",
@@ -299,6 +314,11 @@
       "availability": undefined,
       "description": "First variant for anyOf without title",
       "displayName": undefined,
+      "examples": [
+        {
+          "optionA": "string",
+        },
+      ],
       "name": "AnyOfVariantA",
       "shape": {
         "extends": [],
@@ -329,6 +349,11 @@
       "availability": undefined,
       "description": "Second variant for anyOf without title",
       "displayName": undefined,
+      "examples": [
+        {
+          "optionB": true,
+        },
+      ],
       "name": "AnyOfVariantB",
       "shape": {
         "extends": [],
@@ -355,6 +380,11 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "optionA": "string",
+        },
+      ],
       "name": "anyOf Examples_anyOfExampleNoTitles_Request",
       "shape": {
         "type": "undiscriminatedUnion",
@@ -388,6 +418,9 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {},
+      ],
       "name": "anyOf Examples_anyOfExampleNoTitles_Response_200",
       "shape": {
         "extends": [],

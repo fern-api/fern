@@ -178,6 +178,11 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "name": "Acme Inc.",
+        },
+      ],
       "name": "Company",
       "shape": {
         "extends": [],
@@ -223,6 +228,13 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "display_name": "INV-00042",
+          "mimetype": "application/pdf",
+          "url": "https://example.com/path/to/invoice.pdf",
+        },
+      ],
       "name": "File",
       "shape": {
         "extends": [],

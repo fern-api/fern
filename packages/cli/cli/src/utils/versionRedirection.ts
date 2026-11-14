@@ -56,3 +56,8 @@ export function getInvokedCommandName(argv: string[]): string | undefined {
     }
     return undefined;
 }
+
+/** True for `fern --version` / `fern -v`, which only print the version of the CLI that would run. */
+export function isVersionQuery(argv: string[]): boolean {
+    return getInvokedCommandName(argv) == null && hideBin(argv).some((arg) => arg === "--version" || arg === "-v");
+}

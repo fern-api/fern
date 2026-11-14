@@ -137,12 +137,23 @@ import { whoami } from "./commands/whoami/whoami.js";
 import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeDefinitionForWorkspaces.js";
 import { writeDocsDefinitionForProject } from "./commands/write-docs-definition/writeDocsDefinitionForProject.js";
 import { FERN_CWD_ENV_VAR } from "./cwd.js";
+import {
+    ALLOW_OLD_CLI_VERSION_FLAG,
+    hasOldCliVersionConsent,
+    isOlderThanMinimumIsolatedCliVersion,
+    MINIMUM_ISOLATED_CLI_VERSION
+} from "./oldCliVersionGate.js";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion.js";
 import { resolveGroupGithubConfig } from "./resolveGroupGithubConfig.js";
 import { RUNTIME } from "./runtime.js";
 import { installProcessHandlers } from "./telemetry/processHandlers.js";
 import { isSdkConfigInitEnabled } from "./utils/isSdkConfigInitEnabled.js";
-import { getInvokedCommandName, isBareInit, isVersionRedirectionExempt } from "./utils/versionRedirection.js";
+import {
+    getInvokedCommandName,
+    isBareInit,
+    isVersionQuery,
+    isVersionRedirectionExempt
+} from "./utils/versionRedirection.js";
 
 // Node 26+ on Linux enables io_uring in libuv, which has a busy-loop bug that
 // hangs the process. UV_USE_IO_URING must be set before Node starts (libuv
@@ -235,8 +246,21 @@ async function runCli() {
             await tryRunCli(cliContext);
         } else {
             const versionOfCliToRun = await getIntendedVersionOfCli(cliContext);
-            if (cliContext.environment.packageVersion === versionOfCliToRun) {
+            // Older CLIs upgrade through an unisolated npx, so upgrade away from them with this CLI
+            // unless the user opted into running the older CLI.
+            const isUpgradeFromOldCli =
+                getInvokedCommandName(process.argv) === "upgrade" &&
+                isOlderThanMinimumIsolatedCliVersion(versionOfCliToRun) &&
+                !hasOldCliVersionConsent(process.argv.slice(2));
+            // Printing the version doesn't need the older CLI, so answer here instead of running it.
+            const isVersionQueryForOldCli =
+                isVersionQuery(process.argv) &&
+                isOlderThanMinimumIsolatedCliVersion(versionOfCliToRun) &&
+                !hasOldCliVersionConsent(process.argv.slice(2));
+            if (cliContext.environment.packageVersion === versionOfCliToRun || isUpgradeFromOldCli) {
                 await tryRunCli(cliContext);
+            } else if (isVersionQueryForOldCli) {
+                cliContext.logger.info(versionOfCliToRun);
             } else {
                 await rerunFernCliAtVersion({
                     version: versionOfCliToRun,
@@ -302,6 +326,10 @@ async function tryRunCli(cliContext: CliContext) {
         .option("log-level", {
             default: LogLevel.Info,
             choices: LOG_LEVELS
+        })
+        .option(ALLOW_OLD_CLI_VERSION_FLAG.slice(2), {
+            boolean: true,
+            description: `Run the CLI version pinned in fern.config.json even if it is older than ${MINIMUM_ISOLATED_CLI_VERSION}, which can run executables from the project directory`
         })
         .demandCommand()
         .recommendCommands();
@@ -369,7 +397,12 @@ async function tryRunCli(cliContext: CliContext) {
         // write to stdout. At this point argv._ is yargs' resolved command path, and aliases have
         // already populated argv.output.
         const isSdkMigrateStdout = argv._[0] === "sdk" && argv._[1] === "migrate" && argv.output === "-";
-        if ((argv as Record<string, unknown>).json === true || isSdkMigrateStdout) {
+        const isDocsLinkCheckMachineOutput =
+            argv._[0] === "docs" &&
+            argv._[1] === "link" &&
+            argv._[2] === "check" &&
+            (argv.output === "json" || argv.output === "csv");
+        if ((argv as Record<string, unknown>).json === true || isSdkMigrateStdout || isDocsLinkCheckMachineOutput) {
             cliContext.enableJsonMode();
         }
         cliContext.logFernVersionDebug();
@@ -1073,7 +1106,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     boolean: true,
                     default: false,
                     description:
-                        "Run without a Fern account: start (or reuse) a temporary guest session and generate under its guest organization. Claim the session from the printed link to keep the output. Cannot be combined with FERN_TOKEN or a saved login."
+                        "Run without a Fern account: start (or reuse) a temporary guest session and generate under its guest organization. SDKs are written to their output paths (download only, with a 7-day build link; generated code keeps the fern.config.json organization's names); --docs publishes a temporary site. Claim the session from the printed link (or fern claim) to move the work into an organization, where SDKs can be published to GitHub from the dashboard. Cannot be combined with FERN_TOKEN or a saved login."
                 })
                 .option("source", {
                     boolean: true,
@@ -3002,7 +3035,7 @@ function addDocsLinkCheckCommand(cli: Argv<GlobalCliOptions>, cliContext: CliCon
                 });
 
                 if (argv.output === "json" || argv.output === "csv") {
-                    await writeAndDrain(process.stdout, output + "\n");
+                    await cliContext.withRealStdout(() => writeAndDrain(process.stdout, output + "\n"));
                 } else {
                     await writeAndDrain(process.stderr, output + "\n");
                 }

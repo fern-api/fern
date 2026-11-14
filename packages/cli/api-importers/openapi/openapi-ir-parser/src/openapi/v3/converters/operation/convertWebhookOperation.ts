@@ -105,7 +105,8 @@ export function convertWebhookOperation({
             source,
             inline: undefined,
             minProperties: undefined,
-            maxProperties: undefined
+            maxProperties: undefined,
+            examples: undefined
         });
 
         const webhook: WebhookWithExample = {

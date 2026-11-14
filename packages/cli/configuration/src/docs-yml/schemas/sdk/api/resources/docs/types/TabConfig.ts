@@ -17,6 +17,8 @@ export interface TabConfig extends FernDocsConfig.WithPermissions, FernDocsConfi
     target?: FernDocsConfig.Target;
     changelog?: FernDocsConfig.ChangelogFolderRelativePath;
     blog?: FernDocsConfig.ChangelogFolderRelativePath;
+    /** Name of a profile in `profiles:`. Pages under this item use its values for `${NAME}`. The innermost `profile:` wins. */
+    profile?: string;
     /**
      * Turns this tab into a menu of other tabs that opens from the header tab. Entries are tabs (defined here,
      * with their pages under their own `- tab:` entry in `navigation`), `group` entries with a header and `tabs`,

@@ -90,6 +90,20 @@ describe("resolveGuestProject", () => {
         // The link says the run made an SDK, so the dashboard lands the claim on the organization's SDKs.
         expect(logged("https://dashboard.buildwithfern.com/claim/gs_123?from=sdk#secret")).toBe(true);
         expect(logged('the SDK keeps the names of organization "acme"')).toBe(true);
+        // The next step is the claim, not a login or a registry token.
+        expect(logged("published to GitHub, or given a Fern repository")).toBe(true);
+        expect(logged("fern claim --org <organization>")).toBe(true);
+    });
+
+    it("says what claiming a docs run gives", async () => {
+        auth.getToken.mockResolvedValue(undefined);
+        auth.getOrCreateGuestSession.mockResolvedValue({ token: GUEST_TOKEN, reused: false });
+        const { cliContext, logged } = createTestCliContext();
+
+        await resolveGuestProject({ project: testProject.project, cliContext, work: "docs" });
+
+        expect(logged("a GitHub repository can be connected to republish it")).toBe(true);
+        expect(logged("published to GitHub, or given a Fern repository")).toBe(false);
     });
 
     it("says when it reuses the repo's existing session", async () => {

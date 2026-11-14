@@ -47,6 +47,8 @@ export interface ApiReferenceConfiguration extends FernDocsConfig.WithPermission
     flattened?: boolean;
     /** If true, the API reference will be paginated rather than displayed in a single page (long-scrolling). */
     paginated?: boolean;
+    /** If `types` is set to true, every schema that no endpoint, webhook or WebSocket of the API references gets its own page, grouped under a `Types` section at the end of the API reference. Schemas an operation references are still documented inline on that operation's page. */
+    types?: boolean;
     /** Settings for the api playground that affects all endpoints. */
     playground?: FernDocsConfig.PlaygroundSettings;
 }

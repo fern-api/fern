@@ -1,4 +1,145 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.216.0
+  changelogEntry:
+    - summary: |
+        After deploying a Fern-hosted MCP server, `fern generate` now says whether callers sign in with OAuth.
+        When the API definition declares OAuth or OpenID Connect and sign-in is not on yet, it names the flows
+        and links to the server's settings in the dashboard, where OAuth sign-in can be turned on.
+      type: feat
+  createdAt: "2026-11-13"
+  irVersion: 67
+- version: 5.215.2
+  changelogEntry:
+    - summary: |
+        Docs profiles: each edition of a page now gets its own sitemap entry and canonical URL in `fern docs dev`.
+      type: fix
+  createdAt: "2026-11-13"
+  irVersion: 67
+- version: 5.215.1
+  changelogEntry:
+    - summary: |
+        `fern --version` in a project that pins a CLI older than 5.215.0 prints the pinned version again
+        instead of failing; it no longer runs the older CLI to do it. When the CLI refuses to run an older
+        version, the message now goes to stderr, so scripts that capture stdout (for example
+        `$(fern --version)`) no longer pick it up.
+      type: fix
+  createdAt: "2026-11-13"
+  irVersion: 67
+- version: 5.215.0
+  changelogEntry:
+    - summary: |
+        The CLI no longer silently hands off to a version in `fern.config.json` older than 5.215.0. Those
+        versions run `npx` from the project directory, so a project could run its own executables in place
+        of the CLI or its tools. Interactive terminals ask for confirmation; elsewhere, pass
+        `--allow-old-cli-version` or set `FERN_ALLOW_OLD_CLI_VERSION=true` to run the older version anyway.
+        Without that opt-in, `fern upgrade` from such a project runs in the current CLI instead of the older one.
+      type: feat
+    - summary: |
+        Bundling custom MDX components now runs `npx rolldown` from a temporary npm project instead of
+        the component's folder, so rolldown always comes from the registry.
+      type: fix
+    - summary: |
+        When `fern.config.json` pins a different CLI version, the CLI now runs `npx` from a temporary
+        npm project instead of the project directory, so the pinned version always comes from the registry.
+      type: fix
+  createdAt: "2026-11-13"
+  irVersion: 67
+- version: 5.214.0
+  changelogEntry:
+    - summary: |
+        `fern init` ends with a hint for users who drive Fern through a coding agent: `npx skills add fern-api/skills --all`
+        installs the Fern skills, which teach the agent the whole workflow (docs, SDKs, publishing). The "No Fern account
+        found" error a run hits without a login or `FERN_TOKEN` carries the same hint next to its `--guest` suggestion.
+      type: feat
+  createdAt: "2026-11-13"
+  irVersion: 67
+- version: 5.213.0
+  changelogEntry:
+    - summary: |
+        Standalone type pages (`types: true` on an `api` navigation item) use the schema's own example:
+        an OpenAPI object schema's `example`/`examples`, or one assembled from its property-level `example`
+        values, reaches the Fern definition (`examples`), the IR (`userProvidedExamples`) and FDR
+        (`TypeDefinition.examples`), so the XML/JSON example on the page shows those values instead of
+        placeholders and renders every variant of a `oneOf` array the example lists. The schema examples are
+        only attached for API sections with `types: true` (parser option `objectSchemaExamples`); SDK
+        generation and `fern write-definition` output are unchanged.
+      type: feat
+  createdAt: "2026-11-13"
+  irVersion: 67
+- version: 5.212.0
+  changelogEntry:
+    - summary: |
+        Add docs profiles. A profile is a named set of values, like a product name or CLI command, that
+        fills `${NAME}` placeholders. Publish one set of pages as several editions without copying them.
+      type: feat
+  createdAt: "2026-11-13"
+  irVersion: 67
+- version: 5.211.0
+  changelogEntry:
+    - summary: |
+        `fern generate --local --version AUTO` logs a stable `AUTO versioning fallback: reason=<code>` line
+        (`diff-too-large` or `analysis-failed`) when it falls back to a PATCH bump, so CI can tell the
+        two cases apart. The diff size limit for AI analysis is raised from 10MB to 50MB.
+      type: feat
+    - summary: |
+        `fern generate --docs --guest` no longer prints a "Missing redirects check skipped: could not
+        reach FDR (FDR returned 403)" warning. The check needs to read the site's previously published
+        pages, which a guest token is not allowed to do, and a guest's drop site has no redirects to
+        protect, so the check is skipped silently for guest publishes.
+      type: fix
+  createdAt: "2026-11-13"
+  irVersion: 67
+- version: 5.210.3
+  changelogEntry:
+    - summary: |
+        `fern generate --guest` says what the claim gives (the SDK's card in the Fern Dashboard: download, Publish to
+        GitHub, Fern repository; for `--docs`, connecting a GitHub repository) and how to claim from the CLI, and the
+        `--guest` help text describes the SDK path. A guest build refused because it repeats one that already ended
+        (409 on the idempotency key) now says to change the input or use `--new-session`.
+      type: fix
+  createdAt: "2026-11-12"
+  irVersion: 67
+- version: 5.210.2
+  changelogEntry:
+    - summary: |
+        `fern generate` now warns with the GitHub error when `github.auto-merge: true` (or `--auto-merge`)
+        was requested but auto-merge could not be enabled on the pull request (for example when the
+        repository has "Allow auto-merge" disabled or no required status checks), instead of failing
+        silently. Hosted-generation telemetry now reports `auto_merge_requested` from the effective
+        setting (flag or generators.yml) rather than the CLI flag alone.
+      type: fix
+  createdAt: "2026-11-12"
+  irVersion: 67
+- version: 5.210.1
+  changelogEntry:
+    - summary: |
+        When an API with `types: true` also has a GraphQL schema, the standalone schema section is titled
+        `Schemas` (matching its `schemas` slug) instead of a second `Types` section; type pages sort
+        with an explicit locale so their order is the same on every machine.
+      type: fix
+  createdAt: "2026-11-12"
+  irVersion: 67
+- version: 5.210.0
+  changelogEntry:
+    - summary: |
+        Add `types: true` to the `api` navigation item in `docs.yml`. When set, every schema that no endpoint,
+        webhook or WebSocket of the API references gets its own page under a `Types` section at the end of the
+        API reference (e.g. a schema-only OpenAPI document such as TwiML). Enums and objects declared inline in
+        another schema stay nested on their parent's page. The XML encoding of a type (OpenAPI `xml` object,
+        `x-fern-xml-text`) is kept so an XML element's page shows an XML example. Off by default.
+      type: feat
+  createdAt: "2026-11-12"
+  irVersion: 67
+- version: 5.209.1
+  changelogEntry:
+    - summary: |
+        `fern docs link check --output csv` and `--output json` now print only the results to stdout.
+        Warnings from loading the local Fern project (such as `Missing file: examples.yml`) and their
+        GitHub Actions `::error::` annotations go to stderr, so `> results.csv` no longer puts log lines
+        above the CSV header.
+      type: fix
+  createdAt: "2026-11-12"
+  irVersion: 67
 - version: 5.209.0
   changelogEntry:
     - summary: |

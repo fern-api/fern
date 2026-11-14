@@ -354,6 +354,12 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "email": "string",
+          "name": "string",
+        },
+      ],
       "name": "Client",
       "shape": {
         "extends": [],
@@ -401,6 +407,9 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {},
+      ],
       "name": "ClientRequest",
       "shape": {
         "extends": [],
@@ -429,6 +438,9 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {},
+      ],
       "name": "ClientResponse",
       "shape": {
         "extends": [],
@@ -457,6 +469,13 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "email": "string",
+          "id": "string",
+          "name": "string",
+        },
+      ],
       "name": "ClientWithId",
       "shape": {
         "extends": [],

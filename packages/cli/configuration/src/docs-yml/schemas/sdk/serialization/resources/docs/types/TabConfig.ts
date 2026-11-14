@@ -22,6 +22,7 @@ export const TabConfig: core.serialization.ObjectSchema<serializers.TabConfig.Ra
             target: Target.optional(),
             changelog: ChangelogFolderRelativePath.optional(),
             blog: ChangelogFolderRelativePath.optional(),
+            profile: core.serialization.string().optional(),
             tabMenu: core.serialization.property("tab-menu", core.serialization.list(TabMenuEntry).optional()),
             tabMenuColumnHeight: core.serialization.property("tab-menu-column-height", VariantsColumnHeight.optional()),
         })
@@ -39,6 +40,7 @@ export declare namespace TabConfig {
         target?: Target.Raw | null;
         changelog?: ChangelogFolderRelativePath.Raw | null;
         blog?: ChangelogFolderRelativePath.Raw | null;
+        profile?: string | null;
         "tab-menu"?: TabMenuEntry.Raw[] | null;
         "tab-menu-column-height"?: VariantsColumnHeight.Raw | null;
     }

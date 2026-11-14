@@ -119,6 +119,7 @@ function createObjectSchema(nameOverride: string): Schema {
         additionalProperties: false,
         minProperties: undefined,
         maxProperties: undefined,
+        examples: undefined,
         nameOverride,
         generatedName: nameOverride,
         groupName: undefined,

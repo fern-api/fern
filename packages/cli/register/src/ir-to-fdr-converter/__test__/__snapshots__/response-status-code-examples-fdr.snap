@@ -304,6 +304,11 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "amount": 1,
+        },
+      ],
       "name": "CreateSessionRequest",
       "shape": {
         "extends": [],
@@ -335,6 +340,12 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "id": "string",
+          "redirect_url": "string",
+        },
+      ],
       "name": "CreateSessionResponse",
       "shape": {
         "extends": [],
@@ -382,6 +393,12 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "error": "string",
+          "message": "string",
+        },
+      ],
       "name": "ErrorResponse",
       "shape": {
         "extends": [],

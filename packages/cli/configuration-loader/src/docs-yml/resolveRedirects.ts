@@ -7,13 +7,24 @@ import type { Stats } from "fs";
 import { readFile, stat } from "fs/promises";
 import yaml from "js-yaml";
 
+import type { ProfileConfigWithResolvedVars } from "./resolveProfileVars.js";
+
 const RedirectsFile = docsYml.DocsYmlSchemas.RedirectsFile;
 
 /**
  * A docs.yml configuration whose `redirects` filepath (if any) has already been read off disk.
  */
-export type DocsConfigurationWithResolvedRedirects = Omit<docsYml.RawSchemas.DocsConfiguration, "redirects"> & {
+export type DocsConfigurationWithResolvedRedirects = Omit<
+    docsYml.RawSchemas.DocsConfiguration,
+    "redirects" | "profiles"
+> & {
     redirects?: docsYml.RawSchemas.RedirectConfig[];
+    /** `profiles` with every `vars` filepath already read off disk. */
+    profiles?: Record<string, ProfileConfigWithResolvedVars>;
+    /** The external files that profile `vars` referenced, if any. Consumers watch these for changes. */
+    _absoluteFilepathsToProfileVarsFiles?: AbsoluteFilePath[];
+    /** Errors encountered while reading profile `vars` files, reported by the `valid-profiles` docs rule. */
+    _profileVarsFileErrors?: string[];
     /** The external files that `redirects` referenced, if any. Consumers watch these for changes. */
     _absoluteFilepathsToRedirectsFiles?: AbsoluteFilePath[];
     /**

@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    After deploying a Fern-hosted MCP server, `fern generate` now says whether callers sign in with OAuth.
+    When the API definition declares OAuth or OpenID Connect and sign-in is not on yet, it names the flows
+    and links to the server's settings in the dashboard, where OAuth sign-in can be turned on.
+  type: feat

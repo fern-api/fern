@@ -230,6 +230,15 @@ Examples should use the first available auth scheme (admin).
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "amount": {
+            "value": 1.1,
+          },
+          "target": "string",
+          "type": "typeA",
+        },
+      ],
       "name": "ResourceRequest",
       "shape": {
         "extends": [],
@@ -282,6 +291,11 @@ Examples should use the first available auth scheme (admin).
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "value": 1.1,
+        },
+      ],
       "name": "ResourceRequestAmount",
       "shape": {
         "extends": [],
@@ -313,6 +327,9 @@ Examples should use the first available auth scheme (admin).
       "availability": undefined,
       "description": "Resource type",
       "displayName": undefined,
+      "examples": [
+        "typeA",
+      ],
       "name": "ResourceRequestType",
       "shape": {
         "default": undefined,
@@ -335,6 +352,11 @@ Examples should use the first available auth scheme (admin).
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "id": "string",
+        },
+      ],
       "name": "ResourceResponse",
       "shape": {
         "extends": [],

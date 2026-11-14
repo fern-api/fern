@@ -1,10 +1,13 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
-import { mkdir, rm, symlink, writeFile } from "fs/promises";
+import { existsSync } from "fs";
+import { chmod, mkdir, rm, symlink, writeFile } from "fs/promises";
+import os from "os";
 import path from "path";
 import tmp from "tmp-promise";
+import { vi } from "vitest";
 
-import { getThirdPartyImports, maybeBundleMdxComponent } from "../bundleMdxComponent.js";
+import { getThirdPartyImports, maybeBundleMdxComponent, ROLLDOWN_VERSION } from "../bundleMdxComponent.js";
 
 const context = createMockTaskContext();
 
@@ -64,6 +67,7 @@ describe("getThirdPartyImports", () => {
             getThirdPartyImports(`
                 import { test } from "node:test";
                 import assert from "node:assert/strict";
+                import os from "os";
                 import path from "path";
                 import { readFile } from "fs/promises";
             `)
@@ -71,7 +75,7 @@ describe("getThirdPartyImports", () => {
     });
 });
 
-describe("maybeBundleMdxComponent", () => {
+describe.sequential("maybeBundleMdxComponent", () => {
     it("returns undefined for files without third-party imports", async () => {
         const result = await maybeBundleMdxComponent({
             absoluteFilePath: AbsoluteFilePath.of("/project/components/Foo.tsx"),
@@ -133,6 +137,58 @@ describe("maybeBundleMdxComponent", () => {
             expect(bundled).toContain("react");
             expect(bundled).toContain("./constants");
         } finally {
+            await cleanup();
+        }
+    }, 120_000);
+
+    it.each([false, true])("does not run a docs project executable (nested temp directory: %s)", async (nestedTemp) => {
+        const { path: projectDir, cleanup } = await tmp.dir({ unsafeCleanup: true });
+        try {
+            const packageDir = path.join(projectDir, "node_modules", "fake-greeting-lib");
+            await mkdir(packageDir, { recursive: true });
+            await writeFile(
+                path.join(packageDir, "package.json"),
+                JSON.stringify({ name: "fake-greeting-lib", version: "1.0.0", main: "index.js" })
+            );
+            await writeFile(
+                path.join(packageDir, "index.js"),
+                `export function greet(name) { return "MARKER_FROM_FAKE_LIB " + name; }`
+            );
+
+            // Cover both npx's versioned-binary shortcut and the plain command name.
+            const markerPath = path.join(projectDir, "marker.txt");
+            await writeFile(path.join(projectDir, "package.json"), JSON.stringify({ private: true }));
+            await writeFile(path.join(projectDir, ".npmrc"), "registry=not-a-registry\n");
+            for (const name of [`rolldown@${ROLLDOWN_VERSION}`, "rolldown"]) {
+                const plantedPath = path.join(projectDir, "node_modules", ".bin", name);
+                await mkdir(path.dirname(plantedPath), { recursive: true });
+                await writeFile(plantedPath, `#!/bin/sh\necho ran > "${markerPath}"\n`);
+                await chmod(plantedPath, 0o755);
+                await writeFile(`${plantedPath}.cmd`, `@echo ran > "${markerPath}"\r\n`);
+            }
+            if (nestedTemp) {
+                vi.spyOn(os, "tmpdir").mockReturnValue(projectDir);
+            }
+
+            const componentsDir = path.join(projectDir, "components");
+            await mkdir(componentsDir, { recursive: true });
+            const componentPath = path.join(componentsDir, "Greeting.tsx");
+            const contents = [
+                `import { greet } from "fake-greeting-lib";`,
+                `export const Greeting = ({ name }: { name: string }) => <div>{greet(name)}</div>;`
+            ].join("\n");
+            await writeFile(componentPath, contents);
+
+            const bundled = await maybeBundleMdxComponent({
+                absoluteFilePath: AbsoluteFilePath.of(componentPath),
+                contents,
+                context
+            });
+
+            expect(existsSync(markerPath)).toBe(false);
+            expect(bundled).toContain("MARKER_FROM_FAKE_LIB");
+        } finally {
+            vi.restoreAllMocks();
             await cleanup();
         }
     }, 120_000);

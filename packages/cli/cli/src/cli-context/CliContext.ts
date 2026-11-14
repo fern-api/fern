@@ -206,6 +206,18 @@ export class CliContext {
         }
     }
 
+    /** Runs `write` against the real stdout, so a command in JSON mode can still emit its own output there. */
+    public async withRealStdout<T>(write: () => Promise<T>): Promise<T> {
+        this.stdoutRedirector.restore();
+        try {
+            return await write();
+        } finally {
+            if (this.jsonMode) {
+                this.stdoutRedirector.redirect();
+            }
+        }
+    }
+
     /**
      * Logs a line that belongs after the command's task boxes, e.g. a next step. On a TTY, logs
      * print above the boxes, so it is held until they finish; without one it is logged now.
