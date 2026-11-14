@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    The `fern init` setup wizard now pins new projects to the newest released Fern CLI, even when run from an unreleased build. SDKs are now generated on Fern's servers from `sdk-config.yml` targets, and `fern agent setup` writes the Fern skill next to the fern-docs skill.
+  type: fix
+- summary: |
+    `fern init --docs --template` falls back to Fern's basic docs site when the docs starter can't be downloaded, and `--no-docs --template` is rejected like `--template` without `--docs`.
+  type: fix

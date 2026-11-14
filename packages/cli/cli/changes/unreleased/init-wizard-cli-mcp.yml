@@ -1,0 +1,20 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    The `fern init` setup wizard now asks what to set up with a checklist of SDKs, Docs, CLI, and MCP Server. Picking CLI or MCP Server adds a `cli` or `mcp` target to `fern/sdk-config.yml` and generates it into `cli/` or `mcp-server/` in the same step as SDKs.
+  type: feat
+- summary: |
+    The `fern init` setup wizard's docs site now keeps the docs starter and your company's logo, favicon, and accent color. Before, the API step also created a basic docs.yml first, which the starter left in place, and new projects with `fern/sdk-config.yml` also got the starter's sample Plant Store API.
+  type: fix
+- summary: |
+    When your Fern login has expired, the `fern init` setup wizard now signs you in again and repeats the brand search, instead of skipping your company's branding.
+  type: fix
+- summary: |
+    The `fern init` setup wizard now shows the logo, favicon, and accent color it found for your company and asks before using them, so you can choose a different company or keep the starter branding.
+  type: feat
+- summary: |
+    The `fern init` setup wizard now generates the MCP server separately from SDKs and the CLI, so when Fern can't generate an MCP server for the organization, the SDKs and CLI are still generated and the wizard explains how to retry.
+  type: fix
+- summary: |
+    When a `fern` command fails during the `fern init` setup wizard, the wizard now shows the reason Fern printed after the error and saves the command's full output to `~/.fern/logs/`.
+  type: fix

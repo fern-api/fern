@@ -1,6 +1,11 @@
 import { describe, expect, it } from "vitest";
 
-import { getInvokedCommandName, isVersionQuery, isVersionRedirectionExempt } from "../versionRedirection.js";
+import {
+    getInvokedCommandName,
+    isBareInit,
+    isVersionQuery,
+    isVersionRedirectionExempt
+} from "../versionRedirection.js";
 
 // argv mimics process.argv: [node, script, ...args]
 function argv(...args: string[]): string[] {
@@ -43,10 +48,27 @@ describe("isVersionRedirectionExempt", () => {
         );
     });
 
+    it("exempts a bare `fern init`, which starts the setup wizard, but not `fern init` with flags", () => {
+        expect(isVersionRedirectionExempt(argv("init"))).toBe(true);
+        expect(isVersionRedirectionExempt(argv("--log-level", "debug", "init"))).toBe(true);
+        expect(isVersionRedirectionExempt(argv("init", "--openapi", "openapi.yaml"))).toBe(false);
+        expect(isVersionRedirectionExempt(argv("init", "--docs"))).toBe(false);
+    });
+
     it("does not exempt other commands", () => {
         expect(isVersionRedirectionExempt(argv("check"))).toBe(false);
         expect(isVersionRedirectionExempt(argv("generate"))).toBe(false);
         expect(isVersionRedirectionExempt(argv())).toBe(false);
+    });
+});
+
+describe("isBareInit", () => {
+    it("is true only for `fern init` with nothing but global options", () => {
+        expect(isBareInit(argv("init"))).toBe(true);
+        expect(isBareInit(argv("--log-level=debug", "init"))).toBe(true);
+        expect(isBareInit(argv("init", "--org", "acme"))).toBe(false);
+        expect(isBareInit(argv("init", "--api"))).toBe(false);
+        expect(isBareInit(argv("check"))).toBe(false);
     });
 });
 

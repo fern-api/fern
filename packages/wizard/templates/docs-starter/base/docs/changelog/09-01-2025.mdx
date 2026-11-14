@@ -1,0 +1,28 @@
+---
+title: September 1, 2025
+slug: 09-01-2025
+tags: ["plants-api", "orders", "webhooks", "security"]
+---
+
+## New features
+
+### Order refunds API
+Introduced comprehensive refund management:
+- `POST /orders/{id}/refund` - Process full or partial refunds
+- `GET /orders/{id}/refunds` - View refund history
+- Automatic inventory restoration on refunded items
+
+### Webhook signature verification
+All webhooks now include `x-plantstore-signature` header for verifying webhook authenticity using HMAC-SHA256.
+
+## Enhancements
+
+- Added `description` field to plant objects for detailed product information
+- Customer addresses can now be labeled (e.g., "Home", "Work", "Gift Address")
+- Improved API response times by 40% through database optimization
+
+## Documentation
+
+- Added new tutorial: "Managing plant inventory"
+- Updated webhook setup guide with signature verification examples
+- Added code samples for Python, JavaScript, and Go SDKs
