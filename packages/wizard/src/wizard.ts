@@ -1,8 +1,9 @@
 // biome-ignore-all lint/suspicious/noConsole: CLI output is intentionally written to stdout.
 import { assertNever } from "@fern-api/core-utils";
 import chalk from "chalk";
-import { readFile, stat, writeFile } from "fs/promises";
+import { mkdir, readFile, stat, writeFile } from "fs/promises";
 import inquirer from "inquirer";
+import os from "os";
 import path from "path";
 import { pathToFileURL } from "url";
 import { parse as parseYaml } from "yaml";
@@ -1204,13 +1205,37 @@ async function runFernQuietly(args: string[], dir: string, detection: Detection)
             throw error;
         }
         const takenDomain = error.output.match(/domains belong to another organization:\s*(\S+)/)?.[1];
-        throw new FernCommandError(summarizeFailure(error.output), error.output, takenDomain);
+        const logPath = await saveFailureLog(args, error.output);
+        const summary = summarizeFailure(error.output);
+        throw new FernCommandError(
+            logPath === undefined ? summary : `${summary}\nFull output: ${logPath}`,
+            error.output,
+            takenDomain
+        );
+    }
+}
+
+/**
+ * Saves everything a failed fern command printed to ~/.fern/logs/, next to the Fern CLI's own logs,
+ * since the wizard only shows a few lines of it. Returns the file's path, or undefined if it can't
+ * be written.
+ */
+async function saveFailureLog(args: string[], output: string): Promise<string | undefined> {
+    try {
+        const directory = path.join(os.homedir(), ".fern", "logs");
+        await mkdir(directory, { recursive: true });
+        const file = path.join(directory, `fern-init-${new Date().toISOString().replace(/[:.]/g, "-")}.log`);
+        await writeFile(file, `$ fern ${args.join(" ")}\n\n${output}`);
+        return file;
+    } catch {
+        return undefined;
     }
 }
 
 /**
  * The few lines of fern's output that explain a failure, without the warnings and progress
- * messages that surround them.
+ * messages that surround them. A line that ends with ":" keeps the line after it, which holds the
+ * reason (for example "Failed to submit sdk-gen-api build:").
  */
 export function summarizeFailure(output: string): string {
     const lines = output
@@ -1218,10 +1243,12 @@ export function summarizeFailure(output: string): string {
         .map((line) => line.trim())
         // Skip warnings and the "Upgrades available" box.
         .filter((line) => line.length > 0 && !/\[warning\]/i.test(line) && !/^[│╭╰]/.test(line));
-    const explaining = lines.filter((line) =>
-        /error|fail|denied|forbidden|unauthori[sz]ed|belong|not found|invalid|must|cannot|unsupported|not currently available|no such file/i.test(
-            line
-        )
+    const explaining = lines.filter(
+        (line, index) =>
+            /error|fail|denied|forbidden|unauthori[sz]ed|belong|not found|invalid|must|cannot|unsupported|not currently available|no such file/i.test(
+                line
+            ) ||
+            (lines[index - 1]?.endsWith(":") === true && !/^(DEBUG|INFO)\b/.test(line))
     );
     const unique = [...new Set(explaining.map((line) => line.replace(/^\[[^\]]+\]:\s*/, "")))];
     if (unique.length === 0) {

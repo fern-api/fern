@@ -15,3 +15,6 @@
 - summary: |
     The `fern init` setup wizard now generates the MCP server separately from SDKs and the CLI, so when Fern can't generate an MCP server for the organization, the SDKs and CLI are still generated and the wizard explains how to retry.
   type: fix
+- summary: |
+    When a `fern` command fails during the `fern init` setup wizard, the wizard now shows the reason Fern printed after the error and saves the command's full output to `~/.fern/logs/`.
+  type: fix

@@ -282,4 +282,19 @@ describe("SDK configuration", () => {
         ].join("\n");
         expect(summarizeFailure(output)).toBe("Unsupported OpenAPI version: 3.2.0");
     });
+
+    it("keeps the reason fern prints on the line after a failure", () => {
+        const output = [
+            "[api]: sdk-config TypeScript SDK Failed to submit sdk-gen-api build:",
+            '[api]: sdk-gen-api response body: {"code":"quota_exceeded"}',
+            "[api]: sdk-config TypeScript SDK Failed."
+        ].join("\n");
+        expect(summarizeFailure(output)).toBe(
+            [
+                "sdk-config TypeScript SDK Failed to submit sdk-gen-api build:",
+                'sdk-gen-api response body: {"code":"quota_exceeded"}',
+                "sdk-config TypeScript SDK Failed."
+            ].join("\n")
+        );
+    });
 });
