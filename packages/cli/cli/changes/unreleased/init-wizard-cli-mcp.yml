@@ -6,3 +6,6 @@
 - summary: |
     The `fern init` setup wizard's docs site now keeps the docs starter and your company's logo, favicon, and accent color. Before, the API step also created a basic docs.yml first, which the starter left in place, and new projects with `fern/sdk-config.yml` also got the starter's sample Plant Store API.
   type: fix
+- summary: |
+    When your Fern login has expired, the `fern init` setup wizard now signs you in again and repeats the brand search, instead of skipping your company's branding.
+  type: fix

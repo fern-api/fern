@@ -58,28 +58,30 @@ export async function chooseBrand({
         }
     }
 
+    const guess = query === undefined ? await guessBrand(dir, org) : { query, source: "--brand" };
+    // Remembers the company the user typed, so a retry after signing in doesn't ask again.
+    const search: SearchState = { query: guess?.query };
     try {
-        const guess = query === undefined ? await guessBrand(dir, org) : { query, source: "--brand" };
-        const match = await pickBrand(guess?.query, token, yes, query !== undefined);
-        if (match === undefined) {
-            printSkipped("Keeping the starter branding");
+        return await lookUpBrand(search, token, yes, query !== undefined);
+    } catch (error) {
+        if (!(error instanceof BrandLookupUnauthorizedError)) {
+            throw error;
+        }
+        if (yes) {
+            printSkipped(`${error.message} Keeping the starter branding for now.`);
             return undefined;
         }
-        const brandToken = token;
-        const selection = await withStatus(`Fetching ${match.name}'s logo and colors`, async () => {
-            const brand = await fetchBrand(match.domain, brandToken);
-            if (brand === undefined) {
-                return undefined;
-            }
-            const withFavicon = withSearchResultFavicon(brand, match);
-            return { brand: withFavicon, files: await downloadBrandFiles(withFavicon) };
-        });
-        if (selection === undefined) {
-            printSkipped(`Couldn't load ${match.name}'s brand, so keeping the starter branding`);
-            return undefined;
-        }
-        printBrandSummary(selection, match.name);
-        return selection;
+    }
+    // The saved login has expired: sign in again, then repeat the same search.
+    printSkipped("Your Fern login has expired, so signing you in again");
+    await login();
+    const renewed = await readFernToken();
+    if (renewed === undefined || renewed === token) {
+        printSkipped("Keeping the starter branding (sign-in did not complete)");
+        return undefined;
+    }
+    try {
+        return await lookUpBrand(search, renewed, yes, query !== undefined);
     } catch (error) {
         if (error instanceof BrandLookupUnauthorizedError) {
             printSkipped(`${error.message} Keeping the starter branding for now.`);
@@ -87,6 +89,39 @@ export async function chooseBrand({
         }
         throw error;
     }
+}
+
+interface SearchState {
+    /** The company to search for; the last one searched once a search has run. */
+    query: string | undefined;
+}
+
+/** Searches for the brand, lets the user confirm it, and downloads its logos, favicon, and color. */
+async function lookUpBrand(
+    search: SearchState,
+    token: string,
+    yes: boolean,
+    explicit: boolean
+): Promise<BrandSelection | undefined> {
+    const match = await pickBrand(search, token, yes, explicit);
+    if (match === undefined) {
+        printSkipped("Keeping the starter branding");
+        return undefined;
+    }
+    const selection = await withStatus(`Fetching ${match.name}'s logo and colors`, async () => {
+        const brand = await fetchBrand(match.domain, token);
+        if (brand === undefined) {
+            return undefined;
+        }
+        const withFavicon = withSearchResultFavicon(brand, match);
+        return { brand: withFavicon, files: await downloadBrandFiles(withFavicon) };
+    });
+    if (selection === undefined) {
+        printSkipped(`Couldn't load ${match.name}'s brand, so keeping the starter branding`);
+        return undefined;
+    }
+    printBrandSummary(selection, match.name);
+    return selection;
 }
 
 /** Applies a brand on top of the template defaults. */
@@ -117,13 +152,13 @@ export function toSubdomain(value: string): string | undefined {
 }
 
 async function pickBrand(
-    initialQuery: string | undefined,
+    search: SearchState,
     token: string,
     yes: boolean,
     /** The user named the brand with --brand, so the top result can be trusted. */
     explicit: boolean
 ): Promise<BrandSearchResult | undefined> {
-    let query = initialQuery;
+    let query = search.query;
     for (;;) {
         if (query === undefined || query.trim().length === 0) {
             if (yes) {
@@ -135,6 +170,7 @@ async function pickBrand(
             }
         }
         const currentQuery = query;
+        search.query = currentQuery;
         const results = await withStatus(`Looking up ${currentQuery}`, () => searchBrands(currentQuery, token));
         if (yes) {
             // Without a prompt, only apply a brand we are sure of.
