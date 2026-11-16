@@ -1,4 +1,4 @@
-import { mkdtemp, readFile, rm, stat } from "node:fs/promises";
+import { mkdtemp, readFile, rm, stat, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { GUEST_SESSION_POINTER_FILENAME, getPathToGuestSessionFile, writeStoredGuestSession } from "@fern-api/auth";
@@ -89,6 +89,10 @@ describe("claimGuestSession", () => {
             sites: [{ domain: "pets.docs.buildwithfern.com", previousDomain: "drop-abc.docs.buildwithfern.com" }]
         });
         const moveSdks = vi.fn<MoveSdks>().mockResolvedValue({ kind: "moved", buildIds: ["b1", "b2"] });
+        await writeFile(
+            path.join(fernDirectory, "docs.yml"),
+            "# the site\ninstances:\n  - url: example.docs.buildwithfern.com\n    edit-this-page: true\ntitle: Pets\n"
+        );
         const { cliContext, logged } = createTestCliContext();
 
         await claimGuestSession({
@@ -122,6 +126,9 @@ describe("claimGuestSession", () => {
             sdkName: "pets-sdk"
         });
         expect(logged("Docs site moved to https://pets.docs.buildwithfern.com")).toBe(true);
+        expect(await readFile(path.join(fernDirectory, "docs.yml"), "utf-8")).toBe(
+            "# the site\ninstances:\n  - url: pets.docs.buildwithfern.com\n    edit-this-page: true\ntitle: Pets\n"
+        );
         expect(logged("Moved 2 SDK build(s) into acme")).toBe(true);
         expect(JSON.parse(await readFile(path.join(fernDirectory, "fern.config.json"), "utf-8"))).toEqual({
             organization: "acme",

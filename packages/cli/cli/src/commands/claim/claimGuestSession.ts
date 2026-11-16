@@ -18,8 +18,10 @@ import { askToLogin } from "@fern-api/login";
 import { getFernSdkGenApiOrigin } from "@fern-api/remote-workspace-runner";
 import { CliError, InstructionsTopic } from "@fern-api/task-context";
 import chalk from "chalk";
-import { writeFile } from "fs/promises";
+import { readFile, writeFile } from "fs/promises";
 import { produce } from "immer";
+import path from "path";
+import { isMap, isSeq, parseDocument } from "yaml";
 
 import { CliContext } from "../../cli-context/CliContext.js";
 import { ensureFinalNewline } from "../../utils/ensureFinalNewline.js";
@@ -208,6 +210,10 @@ export async function claimGuestSession({
                     ? `Docs site moved to ${chalk.bold(`https://${site.domain}`)} (from ${site.previousDomain}); it shows "getting ready" until the new address serves.`
                     : `Docs site ${chalk.bold(`https://${site.domain}`)} is now in ${organizationId}.`
             );
+        }
+        const site = docs.sites[0];
+        if (site != null && (await pointDocsYmlAt({ fernDirectory, domain: site.domain }))) {
+            cliContext.logger.info(`Updated docs.yml: the first instance URL is now ${chalk.bold(site.domain)}.`);
         }
     } else {
         failures.push(describeDocsMoveFailure(docs, docsUrl));
@@ -450,4 +456,38 @@ function readReason(error: unknown): string | undefined {
         return undefined;
     }
     return typeof error.data.reason === "string" ? error.data.reason : undefined;
+}
+
+/**
+ * A guest publish ignores docs.yml's `instances` URL, so after the claim the first instance is pointed at
+ * the claimed site; otherwise the next `fern generate --docs` publishes to a different site.
+ * Returns whether docs.yml changed.
+ */
+async function pointDocsYmlAt({
+    fernDirectory,
+    domain
+}: {
+    fernDirectory: AbsoluteFilePath;
+    domain: string;
+}): Promise<boolean> {
+    const docsYml = path.join(fernDirectory, "docs.yml");
+    const text = await readFile(docsYml, "utf-8").catch(() => undefined);
+    if (text == null) {
+        return false;
+    }
+    const document = parseDocument(text);
+    if (!isMap(document.contents)) {
+        return false;
+    }
+    const instances = document.get("instances");
+    if (isSeq(instances) && instances.items.length > 0) {
+        if (document.getIn(["instances", 0, "url"]) === domain) {
+            return false;
+        }
+        document.setIn(["instances", 0, "url"], domain);
+    } else {
+        document.set("instances", [{ url: domain }]);
+    }
+    await writeFile(docsYml, document.toString());
+    return true;
 }
