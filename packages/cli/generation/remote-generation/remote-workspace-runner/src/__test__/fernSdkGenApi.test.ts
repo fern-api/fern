@@ -47,6 +47,7 @@ import {
 } from "../runRemoteGenerationForAPIWorkspace.js";
 import { type GenerationConfigRoute, validateGeneratorConfigCompatibility } from "../sdk-gen-client/index.js";
 import { SDK_CONFIG_UNPINNED_GENERATOR_VERSION } from "../sdkConfigGeneratorVersion.js";
+import type { FernSdkGenApiProvenance } from "../sdkGenApiProvenance";
 
 const migrationMocks = vi.hoisted(() => ({
     getIrVersionForGenerator: vi.fn(),
@@ -1825,6 +1826,35 @@ describe("isEligibleForFernSdkGenApi", () => {
             }
         });
         expect(JSON.stringify(request)).not.toContain("secret");
+    });
+
+    it("sends the run's provenance with the request, outside the idempotency key", () => {
+        const generatorInvocation = invocation();
+        const build = (provenance?: FernSdkGenApiProvenance) =>
+            createFernSdkGenApiBatchRequest({
+                apiName: "Petstore",
+                organization: "acme",
+                cliVersion: "0.0.0",
+                ...(provenance != null ? { provenance } : {}),
+                specsTarGzBuffer: Buffer.from("archive"),
+                targets: [
+                    {
+                        generatorInvocation,
+                        sdkVersion: "1.2.3",
+                        targetIdSeed: "0",
+                        payload: runtimePayload(Buffer.from("bundle-0"))
+                    }
+                ]
+            });
+        const provenance: FernSdkGenApiProvenance = {
+            git: { host: "github.com", owner: "acme", repo: "fern-config", branch: "main", commit: "abc1234" },
+            ci: { source: "github", runUrl: "https://github.com/acme/fern-config/actions/runs/42" },
+            invokedBy: "octocat"
+        };
+
+        expect(build(provenance).provenance).toEqual(provenance);
+        expect(build().provenance).toBeUndefined();
+        expect(build(provenance).idempotencyKey).toBe(build().idempotencyKey);
     });
 
     it("maps all direct registry credential variants by target ID without leaking them into the request", () => {

@@ -73,6 +73,7 @@ import {
     validateGeneratorConfigCompatibility
 } from "./sdk-gen-client/index.js";
 import { createSdkConfigTargetPayload, resolveSdkConfigTarget } from "./sdkConfigTarget.js";
+import { detectSdkGenApiProvenance } from "./sdkGenApiProvenance";
 
 export async function runRemoteGenerationForGenerator({
     projectConfig,
@@ -743,7 +744,14 @@ export async function runRemoteGenerationForGenerator({
                       githubOptions,
                       skipFernignore
                   };
-        result = await (sdkGenApiBatch?.run(parameters) ?? runFernSdkGenApiBuild(parameters));
+        const provenance = detectSdkGenApiProvenance({
+            absolutePathToFernDirectory: workspace.absoluteFilePath,
+            absolutePathToGeneratorsYml: workspace.generatorsConfiguration?.absolutePathToConfiguration
+        });
+        const parametersWithProvenance: FernSdkGenApiBuildParameters =
+            provenance != null ? { ...parameters, provenance } : parameters;
+        result = await (sdkGenApiBatch?.run(parametersWithProvenance) ??
+            runFernSdkGenApiBuild(parametersWithProvenance));
     } else {
         const job = await createAndStartJob({
             projectConfig,
