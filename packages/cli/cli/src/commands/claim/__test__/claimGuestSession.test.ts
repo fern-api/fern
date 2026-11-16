@@ -6,7 +6,13 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { createTestCliContext, createTestProject, type TestProject } from "../../generate/__test__/commandHarness.js";
-import { type ClaimResult, claimGuestSession } from "../claimGuestSession.js";
+import {
+    type ClaimResult,
+    claimGuestSession,
+    type MoveDocs,
+    type MoveSdks,
+    type ReadSession
+} from "../claimGuestSession.js";
 
 const fakeHome = vi.hoisted(() => ({ path: "" }));
 vi.mock("os", async (importOriginal) => {
@@ -46,6 +52,10 @@ async function exists(file: string): Promise<boolean> {
     );
 }
 
+const unclaimed: ReadSession = async () => ({ kind: "unclaimed" });
+const movedDocs: MoveDocs = async () => ({ kind: "moved", sites: [] });
+const movedSdks: MoveSdks = async () => ({ kind: "moved", buildIds: [] });
+
 describe("claimGuestSession", () => {
     let home: string;
     let testProject: TestProject;
@@ -74,13 +84,23 @@ describe("claimGuestSession", () => {
         const claim = vi
             .fn<(request: unknown) => Promise<ClaimResult>>()
             .mockResolvedValue({ ok: true, organizationId: "acme", nextSteps: ["Run fern login"] });
+        const moveDocs = vi.fn<MoveDocs>().mockResolvedValue({
+            kind: "moved",
+            sites: [{ domain: "pets.docs.buildwithfern.com", previousDomain: "drop-abc.docs.buildwithfern.com" }]
+        });
+        const moveSdks = vi.fn<MoveSdks>().mockResolvedValue({ kind: "moved", buildIds: ["b1", "b2"] });
         const { cliContext, logged } = createTestCliContext();
 
         await claimGuestSession({
+            docsUrl: "pets",
+            sdkName: "pets-sdk",
             cliContext,
             organization: "acme",
             absolutePathToFernDirectory: fernDirectory,
-            claim
+            claim,
+            readSession: unclaimed,
+            moveDocs,
+            moveSdks
         });
 
         expect(claim).toHaveBeenCalledWith({
@@ -90,6 +110,19 @@ describe("claimGuestSession", () => {
             claimSecret: "the-secret",
             organizationId: "acme"
         });
+        expect(moveDocs).toHaveBeenCalledWith({
+            token: "user-jwt",
+            guestOrganizationId: "guest-gs_123",
+            docsUrl: "pets"
+        });
+        expect(moveSdks).toHaveBeenCalledWith({
+            token: "user-jwt",
+            organizationId: "acme",
+            guestOrganizationId: "guest-gs_123",
+            sdkName: "pets-sdk"
+        });
+        expect(logged("Docs site moved to https://pets.docs.buildwithfern.com")).toBe(true);
+        expect(logged("Moved 2 SDK build(s) into acme")).toBe(true);
         expect(JSON.parse(await readFile(path.join(fernDirectory, "fern.config.json"), "utf-8"))).toEqual({
             organization: "acme",
             version: "*"
@@ -110,7 +143,10 @@ describe("claimGuestSession", () => {
                 cliContext,
                 organization: undefined,
                 absolutePathToFernDirectory: fernDirectory,
-                claim
+                claim,
+                readSession: unclaimed,
+                moveDocs: movedDocs,
+                moveSdks: movedSdks
             })
         ).rejects.toThrow();
 
@@ -129,7 +165,10 @@ describe("claimGuestSession", () => {
                 cliContext,
                 organization: undefined,
                 absolutePathToFernDirectory: fernDirectory,
-                claim
+                claim,
+                readSession: unclaimed,
+                moveDocs: movedDocs,
+                moveSdks: movedSdks
             })
         ).rejects.toThrow();
 
@@ -151,7 +190,10 @@ describe("claimGuestSession", () => {
                 cliContext,
                 organization: undefined,
                 absolutePathToFernDirectory: fernDirectory,
-                claim
+                claim,
+                readSession: unclaimed,
+                moveDocs: movedDocs,
+                moveSdks: movedSdks
             })
         ).rejects.toThrow();
 
@@ -161,5 +203,74 @@ describe("claimGuestSession", () => {
             "guest-gs_123"
         );
         expect(await exists(path.join(fernDirectory, GUEST_SESSION_POINTER_FILENAME))).toBe(true);
+    });
+
+    it("keeps the session when a move fails, and a rerun only retries the moves", async () => {
+        const claim = vi
+            .fn<(request: unknown) => Promise<ClaimResult>>()
+            .mockResolvedValue({ ok: true, organizationId: "acme", nextSteps: [] });
+        const moveDocs = vi
+            .fn<MoveDocs>()
+            .mockResolvedValueOnce({ kind: "failed", statusCode: 409, reason: "domain_taken" })
+            .mockResolvedValueOnce({
+                kind: "moved",
+                sites: [{ domain: "pets2.docs.buildwithfern.com", previousDomain: undefined }]
+            });
+        const first = createTestCliContext();
+
+        await expect(
+            claimGuestSession({
+                cliContext: first.cliContext,
+                organization: "acme",
+                docsUrl: "pets",
+                absolutePathToFernDirectory: fernDirectory,
+                claim,
+                readSession: unclaimed,
+                moveDocs,
+                moveSdks: movedSdks
+            })
+        ).rejects.toThrow();
+
+        expect(first.logged("pets is already taken")).toBe(true);
+        expect(first.logged("Run `fern claim` again to retry")).toBe(true);
+        expect(JSON.parse(await readFile(path.join(fernDirectory, "fern.config.json"), "utf-8")).organization).toBe(
+            "acme"
+        );
+        expect(await exists(path.join(fernDirectory, GUEST_SESSION_POINTER_FILENAME))).toBe(true);
+
+        const second = createTestCliContext();
+        await claimGuestSession({
+            cliContext: second.cliContext,
+            organization: undefined,
+            docsUrl: "pets2",
+            absolutePathToFernDirectory: fernDirectory,
+            claim,
+            readSession: async () => ({ kind: "claimed", organizationId: "acme" }),
+            moveDocs,
+            moveSdks: movedSdks
+        });
+
+        expect(claim).toHaveBeenCalledTimes(1);
+        expect(second.logged("already claimed into acme")).toBe(true);
+        expect(await exists(path.join(fernDirectory, GUEST_SESSION_POINTER_FILENAME))).toBe(false);
+    });
+
+    it("finishes without moving SDK builds when no sdk-gen-api is configured", async () => {
+        const claim = vi
+            .fn<(request: unknown) => Promise<ClaimResult>>()
+            .mockResolvedValue({ ok: true, organizationId: "guest-gs_123", nextSteps: [] });
+        const { cliContext } = createTestCliContext();
+
+        await claimGuestSession({
+            cliContext,
+            organization: undefined,
+            absolutePathToFernDirectory: fernDirectory,
+            claim,
+            readSession: unclaimed,
+            moveDocs: movedDocs,
+            moveSdks: async () => ({ kind: "not_configured" })
+        });
+
+        expect(await exists(path.join(fernDirectory, GUEST_SESSION_POINTER_FILENAME))).toBe(false);
     });
 });
