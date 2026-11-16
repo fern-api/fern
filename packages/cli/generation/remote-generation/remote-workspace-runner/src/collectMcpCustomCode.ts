@@ -49,6 +49,47 @@ export async function collectMcpCustomCode(
     return await collectStream(zip.outputStream);
 }
 
+/**
+ * Narrows a generator's raw `config` (an MCP generator's `config:` block, typed `unknown`) to the
+ * subset that references customer-authored files. Returns an empty config when nothing is declared,
+ * so callers can feed the result straight into {@link collectMcpCustomCode} (which no-ops on empty).
+ */
+export function extractMcpCustomCodeConfig(config: unknown): McpCustomCodeConfig {
+    const result: McpCustomCodeConfig = {};
+    if (typeof config !== "object" || config == null) {
+        return result;
+    }
+    const record = config as Record<string, unknown>;
+
+    const hooks = record.hooks;
+    if (hasStringPath(hooks)) {
+        result.hooks = { path: hooks.path };
+    }
+
+    const customTools = record.customTools;
+    if (typeof customTools === "object" && customTools != null) {
+        const tools: Record<string, { path: string }> = {};
+        for (const [name, value] of Object.entries(customTools as Record<string, unknown>)) {
+            if (hasStringPath(value)) {
+                tools[name] = { path: value.path };
+            }
+        }
+        if (Object.keys(tools).length > 0) {
+            result.customTools = tools;
+        }
+    }
+
+    return result;
+}
+
+function hasStringPath(value: unknown): value is { path: string } {
+    return (
+        typeof value === "object" &&
+        value != null &&
+        typeof (value as Record<string, unknown>).path === "string"
+    );
+}
+
 function collectStream(stream: NodeJS.ReadableStream): Promise<Buffer> {
     return new Promise<Buffer>((resolve, reject) => {
         const chunks: Buffer[] = [];

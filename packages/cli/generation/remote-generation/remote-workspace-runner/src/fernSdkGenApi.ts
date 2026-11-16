@@ -1379,10 +1379,15 @@ function prepareFernSdkGenApiSubmission(participants: FernSdkGenApiBuildParamete
             { code: CliError.Code.ConfigError }
         );
     }
+    // MCP targets may carry a zip of customer custom-tool/hook modules (see collectMcpCustomCode).
+    // At most one per build — the multipart `customCode` part is singular and sdk-gen-api routes it
+    // to the MCP target's hooksLocation.
+    const mcpCustomCode = participants.find((participant) => participant.mcpCustomCode != null)?.mcpCustomCode;
     const aggregateUploadBytes =
         first.specsTarGzBuffer.length +
         participants.reduce((total, participant) => total + participant.payload.body.length, 0) +
-        (credentialsBody?.length ?? 0);
+        (credentialsBody?.length ?? 0) +
+        (mcpCustomCode?.length ?? 0);
     if (aggregateUploadBytes > MAX_TOTAL_UPLOAD_FILE_BYTES) {
         return first.context.failAndThrow(
             `sdk-gen-api source archive, target payloads, and publish credentials total ${formatMiB(aggregateUploadBytes)}, exceeding the 50 MiB in-memory upload limit`,
@@ -1422,6 +1427,12 @@ function prepareFernSdkGenApiSubmission(participants: FernSdkGenApiBuildParamete
         form.append("credentials", credentialsBody, {
             filename: "publish-credentials.v1.json",
             contentType: "application/json"
+        });
+    }
+    if (mcpCustomCode != null) {
+        form.append("customCode", mcpCustomCode, {
+            filename: "custom-code.zip",
+            contentType: "application/zip"
         });
     }
     const multipartBodyLength = form.getLengthSync();

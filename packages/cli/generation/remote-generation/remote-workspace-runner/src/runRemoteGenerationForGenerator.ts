@@ -72,6 +72,7 @@ import {
     GeneratorConfigCompatibilityError,
     validateGeneratorConfigCompatibility
 } from "./sdk-gen-client/index.js";
+import { collectMcpCustomCode, extractMcpCustomCodeConfig } from "./collectMcpCustomCode.js";
 import { createSdkConfigTargetPayload, resolveSdkConfigTarget } from "./sdkConfigTarget.js";
 
 export async function runRemoteGenerationForGenerator({
@@ -480,6 +481,18 @@ export async function runRemoteGenerationForGenerator({
                     undefined,
                     { code: CliError.Code.ConfigError }
                 );
+            }
+        }
+        if (sdkConfigBuildParameters != null) {
+            // MCP targets: zip the customer-authored custom-tool/hook modules referenced by the
+            // generator config and attach them, so the build uploads them as the `customCode` part
+            // (sdk-gen-api routes it to the target's hooksLocation). No-op when none are declared.
+            const mcpCustomCode = await collectMcpCustomCode(
+                extractMcpCustomCodeConfig(candidate.generatorInvocation.config),
+                workspace.absoluteFilePath
+            );
+            if (mcpCustomCode != null) {
+                sdkConfigBuildParameters.mcpCustomCode = mcpCustomCode;
             }
         }
         if (sdkGenApiTargetIdSeed == null) {
