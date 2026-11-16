@@ -6,7 +6,7 @@ import os from "os";
 import path from "path";
 import { CliContext } from "./cli-context/CliContext.js";
 import { FERN_CWD_ENV_VAR } from "./cwd.js";
-import { confirmOldCliVersionAllowed, withoutAllowOldCliVersionFlag } from "./oldCliVersionGate.js";
+import { warnAboutOldCliVersion, withoutAllowOldCliVersionFlag } from "./oldCliVersionGate.js";
 
 export class RerunCliError extends Error {
     public readonly stdout: string;
@@ -38,7 +38,7 @@ export async function rerunFernCliAtVersion({
     throwOnError?: boolean;
 }): Promise<void> {
     const forwardedArgs = args ?? process.argv.slice(2);
-    await confirmOldCliVersionAllowed({ version, cliContext, args: forwardedArgs });
+    warnAboutOldCliVersion({ version, cliContext, args: forwardedArgs });
     await runFernCliAtVersion({
         version,
         cliContext,
