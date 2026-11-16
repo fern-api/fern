@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `generator-cli generate-skill` and the `generateSkill` / `getSkillDirectory` API. Given the same
+    config as `generate readme`, it renders an agent skill (`.agents/skills/<api>-<language>-sdk/SKILL.md`)
+    that teaches coding agents how to install, authenticate with and call the generated SDK, using the
+    SDK's real snippets.
+  type: feat
