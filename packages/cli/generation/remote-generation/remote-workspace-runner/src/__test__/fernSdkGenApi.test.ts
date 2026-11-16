@@ -79,10 +79,14 @@ const zlibMocks = vi.hoisted(() => ({
     createGunzip: vi.fn<typeof import("zlib").createGunzip>()
 }));
 
-vi.mock("zlib", async (importOriginal) => {
-    const actual = await importOriginal<typeof import("zlib")>();
-    zlibMocks.createGunzip.mockImplementation(actual.createGunzip);
-    return { ...actual, createGunzip: zlibMocks.createGunzip };
+vi.mock("zlib", async (importOriginal) => ({
+    ...(await importOriginal<typeof import("zlib")>()),
+    createGunzip: zlibMocks.createGunzip
+}));
+
+beforeEach(async () => {
+    const actualZlib = await vi.importActual<typeof import("zlib")>("zlib");
+    zlibMocks.createGunzip.mockReset().mockImplementation(actualZlib.createGunzip);
 });
 
 vi.mock("@fern-api/ir-migrations", () => ({
@@ -163,6 +167,8 @@ function gzipWithExactLength(length: number): Buffer {
 }
 
 const gzipOfOneMiBOfZeros = gzipSync(Buffer.alloc(1024 * 1024));
+// Inflating 512 MiB with real zlib takes about a second on a busy CI runner, against the 5 s default timeout.
+const REAL_ZLIB_512_MIB_DECODE_TIMEOUT_MS = 30_000;
 
 /**
  * A gzip stream that decodes to `bytes` zero bytes. It concatenates gzip members, which gunzip decodes in order,
@@ -174,6 +180,37 @@ function gzipOfZeros(bytes: number): Buffer {
         ...Array.from({ length: Math.floor(bytes / (1024 * 1024)) }, () => gzipOfOneMiBOfZeros),
         ...(remainderBytes > 0 ? [gzipSync(Buffer.alloc(remainderBytes))] : [])
     ]);
+}
+
+const FAKE_GZIP_OF_ZEROS_PREFIX = "fake-gzip-of-zeros:";
+const zeroMiB = Buffer.alloc(1024 * 1024);
+
+/** Input for {@link decodeFakeGzipOfZeros}: stands for a gzip stream that decodes to `bytes` zero bytes. */
+function fakeGzipOfZeros(bytes: number): Buffer {
+    return Buffer.from(`${FAKE_GZIP_OF_ZEROS_PREFIX}${bytes}`);
+}
+
+/**
+ * Replaces gunzip for the multi-GiB decoded-total tests: it emits the zero bytes a {@link fakeGzipOfZeros} input
+ * stands for without inflating them, so the counter sees gigabytes of output for almost no CPU. Real zlib covers
+ * the per-bundle tests.
+ */
+function decodeFakeGzipOfZeros(): Transform {
+    return new Transform({
+        transform(chunk: Buffer, _encoding, callback) {
+            const text = chunk.toString();
+            if (!text.startsWith(FAKE_GZIP_OF_ZEROS_PREFIX)) {
+                callback(new Error("Expected a fake gzip of zeros"));
+                return;
+            }
+            for (let remainingBytes = Number(text.slice(FAKE_GZIP_OF_ZEROS_PREFIX.length)); remainingBytes > 0; ) {
+                const length = Math.min(remainingBytes, zeroMiB.length);
+                this.push(zeroMiB.subarray(0, length));
+                remainingBytes -= length;
+            }
+            callback();
+        }
+    });
 }
 
 function sdkConfigPayload(body: string): FernSdkGenApiPayload {
@@ -3442,33 +3479,55 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(post).not.toHaveBeenCalled();
     });
 
-    it("accepts runtime bundles of exactly 512 MiB decompressed each and 2 GiB decoded in total", async () => {
-        const bundle = gzipOfZeros(512 * 1024 * 1024);
+    it(
+        "accepts a bundle of exactly 512 MiB decompressed",
+        async () => {
+            const { builds, post } = createPreflightBatch({
+                payloads: [runtimePayload(gzipOfZeros(512 * 1024 * 1024))]
+            });
+            await expect(Promise.all(builds)).rejects.toThrow("Failed to submit sdk-gen-api build");
+            expect(post).toHaveBeenCalledTimes(1);
+        },
+        REAL_ZLIB_512_MIB_DECODE_TIMEOUT_MS
+    );
+
+    it(
+        "rejects a bundle one byte over 512 MiB decompressed before submission",
+        async () => {
+            const { builds, post } = createPreflightBatch({
+                payloads: [runtimePayload(gzipOfZeros(512 * 1024 * 1024 + 1))]
+            });
+            await expect(Promise.all(builds)).rejects.toThrow(
+                "fern-runtime-bundle 0 is 512.00 MiB decompressed, exceeding the 512.00 MiB decompressed limit"
+            );
+            expect(post).not.toHaveBeenCalled();
+        },
+        REAL_ZLIB_512_MIB_DECODE_TIMEOUT_MS
+    );
+
+    it(
+        "stops decoding a bundle once it passes 512 MiB decompressed",
+        async () => {
+            const { builds, post } = createPreflightBatch({
+                payloads: [runtimePayload(gzipOfZeros(16 * 1024 * 1024 * 1024))]
+            });
+            await expect(Promise.all(builds)).rejects.toThrow(
+                "fern-runtime-bundle 0 exceeds the 512.00 MiB decompressed limit"
+            );
+            expect(post).not.toHaveBeenCalled();
+        },
+        REAL_ZLIB_512_MIB_DECODE_TIMEOUT_MS
+    );
+
+    it("accepts exactly 2 GiB of decoded payloads", async () => {
+        zlibMocks.createGunzip.mockImplementation(() => decodeFakeGzipOfZeros() as never);
+        const bundle = fakeGzipOfZeros(512 * 1024 * 1024);
         const { builds, post } = createPreflightBatch({
-            payloads: Array.from({ length: 4 }, () => runtimePayload(bundle))
+            payloads: Array.from({ length: 4 }, () => runtimePayload(bundle)),
+            specsTarGzBuffer: fakeGzipOfZeros(1024)
         });
         await expect(Promise.all(builds)).rejects.toThrow("Failed to submit sdk-gen-api build");
         expect(post).toHaveBeenCalledTimes(1);
-    });
-
-    it("rejects a bundle one byte over 512 MiB decompressed before submission", async () => {
-        const { builds, post } = createPreflightBatch({
-            payloads: [runtimePayload(gzipOfZeros(512 * 1024 * 1024 + 1))]
-        });
-        await expect(Promise.all(builds)).rejects.toThrow(
-            "fern-runtime-bundle 0 is 512.00 MiB decompressed, exceeding the 512.00 MiB decompressed limit"
-        );
-        expect(post).not.toHaveBeenCalled();
-    });
-
-    it("stops decoding a bundle once it passes 512 MiB decompressed", async () => {
-        const { builds, post } = createPreflightBatch({
-            payloads: [runtimePayload(gzipOfZeros(16 * 1024 * 1024 * 1024))]
-        });
-        await expect(Promise.all(builds)).rejects.toThrow(
-            "fern-runtime-bundle 0 exceeds the 512.00 MiB decompressed limit"
-        );
-        expect(post).not.toHaveBeenCalled();
     });
 
     it("accepts exactly 128 MiB of runtime bundle payloads", async () => {
@@ -3591,10 +3650,12 @@ describe("isEligibleForFernSdkGenApi", () => {
     });
 
     it("rejects decoded payloads one byte over 2 GiB before submission", async () => {
-        const bundle = gzipOfZeros(512 * 1024 * 1024);
+        zlibMocks.createGunzip.mockImplementation(() => decodeFakeGzipOfZeros() as never);
+        const bundle = fakeGzipOfZeros(512 * 1024 * 1024);
         const { builds, post } = createPreflightBatch({
             payloads: [...Array.from({ length: 4 }, () => runtimePayload(bundle)), sdkConfigPayload("x")],
-            generatorInvocations: [...Array.from({ length: 4 }, () => invocation()), invocation({ version: "4.0.0" })]
+            generatorInvocations: [...Array.from({ length: 4 }, () => invocation()), invocation({ version: "4.0.0" })],
+            specsTarGzBuffer: fakeGzipOfZeros(1024)
         });
         await expect(Promise.all(builds)).rejects.toThrow(
             "target payloads total 2048.00 MiB, exceeding the 2048 MiB decoded limit"
@@ -3603,14 +3664,19 @@ describe("isEligibleForFernSdkGenApi", () => {
     });
 
     it("stops decoding a bundle once decoded payloads pass 2 GiB", async () => {
-        const bundle = gzipOfZeros(512 * 1024 * 1024);
+        zlibMocks.createGunzip.mockImplementation(() => decodeFakeGzipOfZeros() as never);
+        const bundle = fakeGzipOfZeros(512 * 1024 * 1024);
         const { builds, post } = createPreflightBatch({
             payloads: [
                 ...Array.from({ length: 4 }, () => runtimePayload(bundle)),
-                runtimePayload(gzipOfZeros(16 * 1024 * 1024 * 1024))
-            ]
+                runtimePayload(fakeGzipOfZeros(16 * 1024 * 1024 * 1024))
+            ],
+            specsTarGzBuffer: fakeGzipOfZeros(1024)
         });
-        await expect(Promise.all(builds)).rejects.toThrow("exceeding the 2048 MiB decoded limit");
+        // The count stops one 1 MiB chunk past the exhausted budget, not at the 512 MiB per-bundle limit.
+        await expect(Promise.all(builds)).rejects.toThrow(
+            "target payloads total 2049.00 MiB, exceeding the 2048 MiB decoded limit"
+        );
         expect(post).not.toHaveBeenCalled();
     });
 
