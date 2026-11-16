@@ -165,9 +165,131 @@ export interface PdfSettings {
     footerRight?: string;
 }
 
+/**
+ * `--page`, `--section`, `--exclude-page` and `--exclude-section` for `fern docs export --format pdf`:
+ * site-absolute slugs, as in the page URL.
+ */
+export interface PdfScopeFlags {
+    pages: string[];
+    sections: string[];
+    excludePages: string[];
+    excludeSections: string[];
+}
+
+export function hasPdfScope(flags: PdfScopeFlags): boolean {
+    return (
+        flags.pages.length > 0 ||
+        flags.sections.length > 0 ||
+        flags.excludePages.length > 0 ||
+        flags.excludeSections.length > 0
+    );
+}
+
+/** A slug as typed (`/docs/quickstart/`) in the form the site lists it (`docs/quickstart`). */
+export function normalizeSlug(slug: string): string {
+    return slug.trim().replace(/^\/+|\/+$/g, "");
+}
+
+/** Whether `slug` is the section `section` or a page under it. */
+function isInSection(slug: string, section: string): boolean {
+    return slug === section || slug.startsWith(`${section}/`);
+}
+
+function normalizeFlag(flag: string, slugs: string[]): string[] {
+    return slugs.map((slug) => {
+        const normalized = normalizeSlug(slug);
+        if (normalized === "") {
+            throw new Error(`--${flag} needs a slug such as docs/guides; "${slug}" is empty.`);
+        }
+        return normalized;
+    });
+}
+
+/**
+ * The pages a scoped PDF keeps, in the site's order. The selection is each `--page` plus every page
+ * under each `--section`, or the whole site when neither is given. `--exclude-page` and
+ * `--exclude-section` then drop matching pages from it; excludes outside the selection do nothing.
+ * Throws when a `--page` is not on the site, a `--section` holds no pages, or nothing is left.
+ */
+export function resolvePdfScope(flags: PdfScopeFlags, sitePageSlugs: string[]): string[] {
+    const pages = normalizeFlag("page", flags.pages);
+    const sections = normalizeFlag("section", flags.sections);
+    const excludePages = normalizeFlag("exclude-page", flags.excludePages);
+    const excludeSections = normalizeFlag("exclude-section", flags.excludeSections);
+    const missingPages = pages.filter((page) => !sitePageSlugs.includes(page));
+    if (missingPages.length > 0) {
+        const list = missingPages.map((page) => `--page ${page}`).join(", ");
+        throw new Error(`${list} ${missingPages.length === 1 ? "is not a page" : "are not pages"} on the site.`);
+    }
+    const emptySections = sections.filter((section) => !sitePageSlugs.some((slug) => isInSection(slug, section)));
+    if (emptySections.length > 0) {
+        const list = emptySections.map((section) => `--section ${section}`).join(", ");
+        throw new Error(`${list} ${emptySections.length === 1 ? "has" : "have"} no pages on the site.`);
+    }
+    const selected =
+        pages.length === 0 && sections.length === 0
+            ? sitePageSlugs
+            : sitePageSlugs.filter(
+                  (slug) => pages.includes(slug) || sections.some((section) => isInSection(slug, section))
+              );
+    const kept = selected.filter(
+        (slug) => !excludePages.includes(slug) && !excludeSections.some((section) => isInSection(slug, section))
+    );
+    if (kept.length === 0) {
+        throw new Error("--exclude-page and --exclude-section leave no pages to export.");
+    }
+    return kept;
+}
+
+/** The URL of the site's printable page list, the same list the PDF exporter renders. */
+export function printPagesUrl(docsUrl: string): string {
+    const url = new URL(/^https?:\/\//.test(docsUrl) ? docsUrl : `https://${docsUrl}`);
+    url.pathname = `${stripTrailingSlashes(url.pathname)}/_print/pages`;
+    url.search = "";
+    url.hash = "";
+    return url.toString();
+}
+
+function isPrintPagesResponse(value: unknown): value is { pages: { slug: string }[] } {
+    if (typeof value !== "object" || value == null || !("pages" in value) || !Array.isArray(value.pages)) {
+        return false;
+    }
+    return value.pages.every(
+        (page: unknown) => typeof page === "object" && page != null && "slug" in page && typeof page.slug === "string"
+    );
+}
+
+const PRINT_PAGES_TIMEOUT_MS = 30_000;
+
+/**
+ * The slugs of every page the PDF exporter would render for the live site, in order. Sent without the
+ * Fern token: the docs URL comes from the project, which may not be trusted.
+ */
+async function fetchSitePageSlugs(docsUrl: string): Promise<string[]> {
+    const url = printPagesUrl(docsUrl);
+    let response: Response;
+    try {
+        response = await fetch(url, {
+            headers: { Accept: "application/json" },
+            signal: AbortSignal.timeout(PRINT_PAGES_TIMEOUT_MS)
+        });
+    } catch (error) {
+        throw new Error(`Listing the site's pages failed: ${extractErrorMessage(error)} (${url})`);
+    }
+    if (!response.ok) {
+        throw new Error(`Listing the site's pages failed: HTTP ${response.status} from ${url}`);
+    }
+    const body: unknown = await response.json();
+    if (!isPrintPagesResponse(body)) {
+        throw new Error(`Listing the site's pages failed: unexpected response from ${url}`);
+    }
+    return body.pages.map((page) => page.slug);
+}
+
 /** The export options for `settings`, or `undefined` when every setting is the site's default. */
-export function pdfExportOptions(settings: PdfSettings): PdfExportOptions | undefined {
+export function pdfExportOptions(settings: PdfSettings, pageSlugs: string[] = []): PdfExportOptions | undefined {
     const options = {
+        scope: pageSlugs.length > 0 ? { pageSlugs } : undefined,
         hideCover: settings.cover === false ? true : undefined,
         hideToc: settings.toc === false ? true : undefined,
         coverTitle: settings.coverTitle,
@@ -200,18 +322,20 @@ export async function exportDocs({
     format,
     output: requestedOutput,
     instance,
-    pdf = {}
+    pdf = {},
+    scope = { pages: [], sections: [], excludePages: [], excludeSections: [] }
 }: {
     cliContext: CliContext;
     format: DocsExportFormat;
     output: string | undefined;
     instance: string | undefined;
     pdf?: PdfSettings;
+    scope?: PdfScopeFlags;
 }): Promise<void> {
-    const options = pdfExportOptions(pdf);
-    if (format !== "pdf" && options != null) {
+    const scoped = hasPdfScope(scope);
+    if (format !== "pdf" && (pdfExportOptions(pdf) != null || scoped)) {
         return cliContext.failAndThrow(
-            "--no-cover, --no-toc, --cover-title, --cover-subtitle, --header-* and --footer-* only apply to --format pdf.",
+            "--no-cover, --no-toc, --cover-title, --cover-subtitle, --header-*, --footer-*, --page, --section, --exclude-page and --exclude-section only apply to --format pdf.",
             undefined,
             { code: CliError.Code.ConfigError }
         );
@@ -222,8 +346,10 @@ export async function exportDocs({
         const outputFile = path.resolve(pdfOutputPath(output));
         await cliContext.runTask(async (context) => {
             await withSpinner(context, cliContext.isTTY, { name: "Exporting PDF" }, async () => {
-                await downloadHostedPdf({ ...hosted, outputFile, options });
-                return [chalk.green(`Exported PDF to ${displayPath(outputFile, process.cwd())}`)];
+                const pageSlugs = scoped ? resolvePdfScope(scope, await fetchSitePageSlugs(hosted.docsUrl)) : [];
+                await downloadHostedPdf({ ...hosted, outputFile, options: pdfExportOptions(pdf, pageSlugs) });
+                const pages = scoped ? ` (${pageSlugs.length} ${pageSlugs.length === 1 ? "page" : "pages"})` : "";
+                return [chalk.green(`Exported PDF${pages} to ${displayPath(outputFile, process.cwd())}`)];
             });
         });
         return;

@@ -10,8 +10,11 @@ import {
     exportFailureMessage,
     isSafeOutputDir,
     keepsFile,
+    normalizeSlug,
     pdfExportOptions,
     pdfOutputPath,
+    printPagesUrl,
+    resolvePdfScope,
     safeRelativePath,
     writeExport
 } from "../exportDocs.js";
@@ -88,6 +91,83 @@ describe("pdfExportOptions", () => {
             coverTitle: "Acme API",
             footerRightTemplate: "{pageIndex}"
         });
+    });
+
+    it("scopes the export to the given pages", () => {
+        expect(pdfExportOptions({}, ["docs/a", "docs/b"])).toEqual({
+            version: "v1",
+            scope: { pageSlugs: ["docs/a", "docs/b"] }
+        });
+        expect(pdfExportOptions({}, [])).toBeUndefined();
+    });
+});
+
+describe("resolvePdfScope", () => {
+    const site = ["docs/welcome", "docs/guides/install", "docs/guides/configure", "docs/guides-extra", "docs/api/auth"];
+    const none = { pages: [], sections: [], excludePages: [], excludeSections: [] };
+
+    it("keeps each page and every page under each section, in the site's order", () => {
+        expect(resolvePdfScope({ ...none, pages: ["docs/api/auth"], sections: ["/docs/guides/"] }, site)).toEqual([
+            "docs/guides/install",
+            "docs/guides/configure",
+            "docs/api/auth"
+        ]);
+        expect(resolvePdfScope({ ...none, pages: ["docs/welcome", "/docs/welcome"] }, site)).toEqual(["docs/welcome"]);
+        expect(resolvePdfScope({ ...none, sections: ["docs/guides", "docs/api"] }, site)).toEqual([
+            "docs/guides/install",
+            "docs/guides/configure",
+            "docs/api/auth"
+        ]);
+    });
+
+    it("drops excluded pages and sections from the selection, or from the whole site", () => {
+        expect(
+            resolvePdfScope(
+                { ...none, sections: ["docs/guides", "docs/api"], excludePages: ["docs/guides/configure"] },
+                site
+            )
+        ).toEqual(["docs/guides/install", "docs/api/auth"]);
+        expect(
+            resolvePdfScope({ ...none, excludeSections: ["docs/guides"], excludePages: ["docs/welcome"] }, site)
+        ).toEqual(["docs/guides-extra", "docs/api/auth"]);
+        expect(
+            resolvePdfScope({ ...none, pages: ["docs/welcome"], excludePages: ["docs/api/auth", "docs/missing"] }, site)
+        ).toEqual(["docs/welcome"]);
+    });
+
+    it("refuses a page that is not on the site, a section with no pages and an empty slug", () => {
+        expect(() => resolvePdfScope({ ...none, pages: ["docs/missing"] }, site)).toThrow(
+            "--page docs/missing is not a page on the site."
+        );
+        expect(() => resolvePdfScope({ ...none, pages: ["docs/a", "docs/b"] }, site)).toThrow(
+            "--page docs/a, --page docs/b are not pages on the site."
+        );
+        expect(() => resolvePdfScope({ ...none, sections: ["docs/gui"] }, site)).toThrow(
+            "--section docs/gui has no pages on the site."
+        );
+        expect(() => resolvePdfScope({ ...none, sections: ["/"] }, site)).toThrow(
+            '--section needs a slug such as docs/guides; "/" is empty.'
+        );
+    });
+
+    it("refuses excludes that leave nothing", () => {
+        expect(() => resolvePdfScope({ ...none, sections: ["docs/api"], excludeSections: ["docs/api"] }, site)).toThrow(
+            "--exclude-page and --exclude-section leave no pages to export."
+        );
+    });
+});
+
+describe("normalizeSlug", () => {
+    it("drops surrounding slashes and spaces", () => {
+        expect(normalizeSlug(" /docs/quickstart/ ")).toBe("docs/quickstart");
+    });
+});
+
+describe("printPagesUrl", () => {
+    it("points at the site's print page list", () => {
+        expect(printPagesUrl("acme.docs.buildwithfern.com")).toBe("https://acme.docs.buildwithfern.com/_print/pages");
+        expect(printPagesUrl("https://acme.com/docs/")).toBe("https://acme.com/docs/_print/pages");
+        expect(printPagesUrl("https://acme.com/docs?preview=1#top")).toBe("https://acme.com/docs/_print/pages");
     });
 });
 
