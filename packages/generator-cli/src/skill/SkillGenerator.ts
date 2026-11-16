@@ -25,7 +25,12 @@ const SKIPPED_FEATURE_IDS = new Set<string>([FernGeneratorCli.StructuredFeatureI
  * Skill names must be lowercase alphanumerics and hyphens, at most 64 characters.
  */
 export function getSkillName(readmeConfig: FernGeneratorCli.ReadmeConfig): string {
-    const base = toKebabCase(readmeConfig.apiName ?? readmeConfig.organization);
+    const rawName = readmeConfig.apiName ?? readmeConfig.organization;
+    // A name with no ASCII letters or digits (e.g. a non-Latin API name) would kebab-case to "", so fall
+    // back to a hash of the original to keep distinct APIs in distinct directories.
+    const base =
+        toKebabCase(rawName) ||
+        `api-${createHash("sha1").update(rawName).digest("hex").slice(0, TRUNCATION_HASH_LENGTH)}`;
     const suffix = `-${readmeConfig.language.type}-sdk`;
     const budget = MAX_SKILL_NAME_LENGTH - suffix.length;
     // When the name has to be truncated, keep a short stable hash of the full name so two APIs that

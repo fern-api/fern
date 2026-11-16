@@ -18,6 +18,11 @@ describe("generate skill", () => {
     it("derives a valid skill name and directory", () => {
         expect(getSkillName(COHERE_GO)).toBe("cohere-go-sdk");
         expect(getSkillName(ADVANCED)).toBe("imdb-inc-typescript-sdk");
+        const japanese = getSkillName({ ...ADVANCED, apiName: "天気" });
+        const greek = getSkillName({ ...ADVANCED, apiName: "Καιρός" });
+        expect(japanese).toMatch(/^api-[0-9a-f]{6}-typescript-sdk$/);
+        expect(greek).toMatch(/^api-[0-9a-f]{6}-typescript-sdk$/);
+        expect(japanese).not.toBe(greek);
         expect(getSkillDirectory(ADVANCED)).toBe(".agents/skills/imdb-inc-typescript-sdk");
         const first = getSkillName({ ...ADVANCED, apiName: `${"A".repeat(60)}First` });
         const second = getSkillName({ ...ADVANCED, apiName: `${"A".repeat(60)}Second` });
