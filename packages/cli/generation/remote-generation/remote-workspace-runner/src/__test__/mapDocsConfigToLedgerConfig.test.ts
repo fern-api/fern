@@ -1,7 +1,7 @@
 import type { DocsV1Write } from "@fern-api/fdr-sdk";
 import { describe, expect, it } from "vitest";
 
-import { mapDocsConfigToLedgerConfig } from "../mapDocsConfigToLedgerConfig";
+import { mapDeclaredRoles, mapDocsConfigToLedgerConfig } from "../mapDocsConfigToLedgerConfig";
 
 function mapAgents(agents: Record<string, unknown>) {
     return mapDocsConfigToLedgerConfig({
@@ -38,20 +38,13 @@ describe("mapDocsConfigToLedgerConfig remotePaths", () => {
     });
 });
 
-describe("mapDocsConfigToLedgerConfig roles", () => {
-    const mapRoles = (roles: string[] | undefined) =>
-        mapDocsConfigToLedgerConfig({
-            docsConfig: { root: { roles } } as unknown as DocsV1Write.DocsConfig,
-            fileManifest: undefined,
-            fileIdToPath: undefined
-        }).roles;
-
-    it("forwards docs.yml's declared roles from the root node", () => {
-        expect(mapRoles(["internal", "partner"])).toEqual(["internal", "partner"]);
+describe("mapDeclaredRoles", () => {
+    it("forwards docs.yml's declared roles", () => {
+        expect(mapDeclaredRoles(["internal", "partner"])).toEqual(["internal", "partner"]);
     });
 
     it("omits roles when docs.yml declares none", () => {
-        expect(mapRoles(undefined)).toBeUndefined();
-        expect(mapRoles([])).toBeUndefined();
+        expect(mapDeclaredRoles(undefined)).toBeUndefined();
+        expect(mapDeclaredRoles([])).toBeUndefined();
     });
 });

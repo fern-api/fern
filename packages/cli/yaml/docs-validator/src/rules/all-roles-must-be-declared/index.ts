@@ -6,35 +6,37 @@ export const AllRolesMustBeDeclaredRule: Rule = {
     name: "all-roles-must-be-declared",
     create: (context) => {
         const declaredRoles = context.workspace.config.roles;
-        const isDeclared = (role: string) => declaredRoles != null && declaredRoles.includes(role);
         return {
             permissions: (permissions) => {
-                const usedRoles = [...(permissions.viewers ?? [])];
-
-                const violations: RuleViolation[] = [];
-                for (const usedRole of usedRoles) {
-                    if (!isDeclared(usedRole)) {
-                        violations.push({
-                            severity: "fatal",
-                            // TODO: add a link to the docs
-                            message: `Role "${usedRole}" is used but not declared at the top level of the docs.yml file.`
-                        });
-                    }
-                }
-                return violations;
+                return getUndeclaredRoles([...(permissions.viewers ?? [])], declaredRoles).map(
+                    (usedRole): RuleViolation => ({
+                        severity: "fatal",
+                        // TODO: add a link to the docs
+                        message: `Role "${usedRole}" is used but not declared at the top level of the docs.yml file.`
+                    })
+                );
             },
             markdownPage: ({ content, absoluteFilepath }) => {
-                const undeclaredRoles = collectIfRoles(content).filter((role) => !isDeclared(role));
+                const undeclaredRoles = getUndeclaredRoles(collectIfRoles(content), declaredRoles);
                 if (undeclaredRoles.length === 0) {
                     return [];
                 }
                 const relativeFilepath = relative(context.workspace.absoluteFilePath, absoluteFilepath);
-                return undeclaredRoles.map((role) => ({
-                    severity: "fatal",
-                    relativeFilepath,
-                    message: `Role "${role}" is used in an <If> component but not declared at the top level of the docs.yml file.`
-                }));
+                return undeclaredRoles.map(
+                    (role): RuleViolation => ({
+                        severity: "fatal",
+                        relativeFilepath,
+                        message: `Role "${role}" is used in an <If> component but not declared at the top level of the docs.yml file.`
+                    })
+                );
             }
         };
     }
 };
+
+export function getUndeclaredRoles(
+    usedRoles: readonly string[],
+    declaredRoles: readonly string[] | undefined
+): string[] {
+    return usedRoles.filter((role) => declaredRoles == null || !declaredRoles.includes(role));
+}

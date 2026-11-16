@@ -288,12 +288,11 @@ export function mapDocsConfigToLedgerConfig({
     remotePaths?: RemotePathConfig[];
     roles?: string[];
 } {
-    const roles = docsConfig.root?.roles;
     return {
         title: docsConfig.title,
         // docs.yml's declared `roles`, which the resolver puts on the root node. The ledger keeps them in
         // the config so the docs preview's role picker can list them.
-        roles: roles != null && roles.length > 0 ? roles : undefined,
+        roles: mapDeclaredRoles(docsConfig.root?.roles),
         defaultLanguage: docsConfig.defaultLanguage,
         translations: docsConfig.translations,
         announcement: docsConfig.announcement,
@@ -332,4 +331,8 @@ export function mapDocsConfigToLedgerConfig({
         header: docsConfig.header,
         footer: docsConfig.footer
     };
+}
+
+export function mapDeclaredRoles(roles: readonly string[] | undefined): string[] | undefined {
+    return roles != null && roles.length > 0 ? [...roles] : undefined;
 }
