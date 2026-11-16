@@ -3,7 +3,7 @@ import chalk from "chalk";
 // FDR's custom-domain routing check (and its older Vercel-only check) leads every message with one of these headlines.
 const BLOCKED_HEADLINE = /^Publishing is blocked: your custom domains? /;
 const WARNING_HEADLINE = /^(Action required|Published under a temporary bypass)\b.*?: your custom domains? /;
-const MAX_SEARCH_DEPTH = 4;
+const MAX_SEARCH_DEPTH = 6;
 
 /** Finds FDR's custom-domain routing rejection in an FDR client error, wherever the client put the message. */
 export function findCustomDomainBlockedMessage(error: unknown): string | undefined {
@@ -36,7 +36,7 @@ function findString(
             return trimmed;
         }
         // Some clients hand back the raw response body, e.g. `{"message":"Publishing is blocked: …"}`.
-        if (trimmed.startsWith("{") && depth < MAX_SEARCH_DEPTH) {
+        if ((trimmed.startsWith("{") || trimmed.startsWith("[")) && depth < MAX_SEARCH_DEPTH) {
             try {
                 return findString(JSON.parse(trimmed), matches, depth + 1, seen);
             } catch {

@@ -41,6 +41,9 @@ describe("findCustomDomainBlockedMessage", () => {
                 content: { reason: "status-code", statusCode: 400, body: JSON.stringify({ message: LEGACY_BLOCKED }) }
             })
         ).toBe(LEGACY_BLOCKED);
+        expect(findCustomDomainBlockedMessage({ content: { body: JSON.stringify([{ message: BLOCKED }]) } })).toBe(
+            BLOCKED
+        );
     });
 
     it("finds the message on a wrapped cause", () => {
