@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern check` now also requires the roles used in `<If roles={...}>` and `<If viewer={...}>`
+    components to be declared in the top-level `roles:` list of `docs.yml`, as it already does for
+    `viewers:`. Docs publishes now also send the declared `roles:` to the docs ledger, so the preview
+    role picker can list every declared role.
+  type: feat

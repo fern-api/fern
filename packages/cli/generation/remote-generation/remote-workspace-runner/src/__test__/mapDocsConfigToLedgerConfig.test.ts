@@ -37,3 +37,21 @@ describe("mapDocsConfigToLedgerConfig remotePaths", () => {
         expect(ledger.remotePaths).toEqual(remotePaths);
     });
 });
+
+describe("mapDocsConfigToLedgerConfig roles", () => {
+    const mapRoles = (roles: string[] | undefined) =>
+        mapDocsConfigToLedgerConfig({
+            docsConfig: { root: { roles } } as unknown as DocsV1Write.DocsConfig,
+            fileManifest: undefined,
+            fileIdToPath: undefined
+        }).roles;
+
+    it("forwards docs.yml's declared roles from the root node", () => {
+        expect(mapRoles(["internal", "partner"])).toEqual(["internal", "partner"]);
+    });
+
+    it("omits roles when docs.yml declares none", () => {
+        expect(mapRoles(undefined)).toBeUndefined();
+        expect(mapRoles([])).toBeUndefined();
+    });
+});

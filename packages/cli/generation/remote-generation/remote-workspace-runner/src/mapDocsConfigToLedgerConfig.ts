@@ -286,9 +286,14 @@ export function mapDocsConfigToLedgerConfig({
     editThisPageGithub?: { owner: string; repo: string; branch: string; host: string };
     embedding?: EmbeddingConfig;
     remotePaths?: RemotePathConfig[];
+    roles?: string[];
 } {
+    const roles = docsConfig.root?.roles;
     return {
         title: docsConfig.title,
+        // docs.yml's declared `roles`, which the resolver puts on the root node. The ledger keeps them in
+        // the config so the docs preview's role picker can list them.
+        roles: roles != null && roles.length > 0 ? roles.map(String) : undefined,
         defaultLanguage: docsConfig.defaultLanguage,
         translations: docsConfig.translations,
         announcement: docsConfig.announcement,
