@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.217.0
+  changelogEntry:
+    - summary: |
+        `fern claim` now moves the guest session's work, like the dashboard's claim page: after the claim it
+        moves the docs sites and SDK builds into the organization (also with `--org`), which drops the guest
+        expiry and the drop banner. New `--docs-url` renames the docs site and `--sdk-name` names the SDK. When docs.yml has a
+        single instance, its URL is pointed at the claimed site so the next `fern generate --docs` updates it. If a
+        move fails, the session is kept and rerunning `fern claim` retries the move.
+      type: feat
+  createdAt: "2026-11-16"
+  irVersion: 67
 - version: 5.216.0
   changelogEntry:
     - summary: |
