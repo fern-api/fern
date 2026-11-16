@@ -278,7 +278,8 @@ export class SkillGenerator {
 function applyTemplateOptions(content: string, options: Record<string, string>): string {
     try {
         return template(content, { interpolate: /{{([^}]+)}}/g })(options);
-    } catch {
+    } catch (error) {
+        console.error(`[templates] ${JSON.stringify(error)}`);
         return content;
     }
 }
