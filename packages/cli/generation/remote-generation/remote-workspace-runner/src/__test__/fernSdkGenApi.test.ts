@@ -136,6 +136,19 @@ function runtimePayload(body: Buffer): FernSdkGenApiPayload {
     return { payloadKind: "fern-runtime-bundle", body };
 }
 
+/** A valid stored (level 0) gzip stream of exactly `length` bytes, for compressed-size boundaries. */
+function gzipWithExactLength(length: number): Buffer {
+    let inputBytes = length;
+    for (let attempt = 0; attempt < 10; attempt++) {
+        const compressed = gzipSync(Buffer.alloc(inputBytes), { level: 0 });
+        if (compressed.length === length) {
+            return compressed;
+        }
+        inputBytes += length - compressed.length;
+    }
+    throw new Error(`Could not create a ${length} byte gzip stream`);
+}
+
 function sdkConfigPayload(body: string): FernSdkGenApiPayload {
     return { payloadKind: "sdk-config-v1", body: Buffer.from(body) };
 }
@@ -2891,6 +2904,51 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(telemetry).not.toContain("Authorization");
     });
 
+    it("explains an HTTP 413 from sdk-gen-api with the upload sizes the CLI computed", async () => {
+        vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "https://sdk-gen-api.test");
+        const failures: Array<{ message: string; error: unknown; options: unknown }> = [];
+        const capturingContext = {
+            logger: { debug: vi.fn(), info: vi.fn() },
+            failAndThrow: (message: string, error: unknown, options: unknown) => {
+                failures.push({ message, error, options });
+                throw new Error(message);
+            }
+        } as never;
+        vi.spyOn(axios, "post").mockRejectedValue(
+            new AxiosError("Request failed with status code 413", "ERR_BAD_REQUEST", undefined, undefined, {
+                status: 413,
+                statusText: "Payload Too Large",
+                headers: {},
+                config: {} as never,
+                data: "<html><body>413 Request Entity Too Large</body></html>"
+            })
+        );
+
+        await expect(
+            runFernSdkGenApiBuild({
+                apiName: "Petstore",
+                organization: "acme",
+                cliVersion: "0.0.0",
+                generatorInvocation: invocation(),
+                sdkVersion: "1.2.3",
+                token: { value: "token" } as never,
+                specsTarGzBuffer: validSourceArchive,
+                payload: runtimePayload(gzipWithExactLength(3 * 1024 * 1024)),
+                absolutePathToPreview: undefined,
+                context: capturingContext
+            })
+        ).rejects.toThrow("(HTTP 413)");
+
+        expect(failures).toHaveLength(1);
+        const captured = failures[0];
+        expect(captured?.message).toMatch(
+            /^Failed to submit sdk-gen-api build: the request exceeded the sdk-gen-api server's size limit \(HTTP 413\)\. Sizes computed by the CLI: multipart request 3\.\d\d MiB; source archive 0\.00 MiB; fern-runtime-bundle 0 3\.00 MiB compressed \(3\.00 MiB decoded\)\. Upgrade the Fern CLI \(`fern upgrade`\), or retry later: the server may not have rolled out larger limits yet\.$/
+        );
+        expect(captured?.message).not.toContain("<html>");
+        expect(captured?.error).toMatchObject({ name: "FernSdkGenApiSubmissionError", status: 413 });
+        expect(captured?.options).toEqual({ code: CliError.Code.ConfigError });
+    });
+
     it("removes credentials, bearer tokens, and Axios request state from polling errors", async () => {
         vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "https://sdk-gen-api.test");
         const failures: Array<{ message: string; error: unknown }> = [];
@@ -3316,11 +3374,22 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(post).not.toHaveBeenCalled();
     });
 
-    it("rejects a bundle larger than 5 MiB before submission", async () => {
+    it("accepts a bundle exactly 64 MiB compressed", async () => {
+        const bundle = gzipWithExactLength(64 * 1024 * 1024);
         const { builds, post } = createPreflightBatch({
-            payloads: [runtimePayload(Buffer.alloc(5 * 1024 * 1024 + 1))]
+            payloads: [runtimePayload(bundle)]
         });
-        await expect(Promise.all(builds)).rejects.toThrow("exceeding the 5.00 MiB upload limit");
+
+        expect(bundle.length).toBe(64 * 1024 * 1024);
+        await expect(Promise.all(builds)).rejects.toThrow("Failed to submit sdk-gen-api build");
+        expect(post).toHaveBeenCalledTimes(1);
+    });
+
+    it("rejects a bundle one byte over 64 MiB compressed before submission", async () => {
+        const { builds, post } = createPreflightBatch({
+            payloads: [runtimePayload(Buffer.alloc(64 * 1024 * 1024 + 1))]
+        });
+        await expect(Promise.all(builds)).rejects.toThrow("exceeding the 64.00 MiB upload limit");
         expect(post).not.toHaveBeenCalled();
     });
 
@@ -3342,43 +3411,59 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(post).not.toHaveBeenCalled();
     });
 
-    it("accepts a bundle exactly 100 MiB decompressed before submission", async () => {
+    it("accepts runtime bundles of exactly 512 MiB decompressed each and 2 GiB decoded in total", async () => {
+        const bundle = gzipSync(Buffer.alloc(512 * 1024 * 1024), { level: 1 });
         const { builds, post } = createPreflightBatch({
-            payloads: [runtimePayload(gzipSync(Buffer.alloc(100 * 1024 * 1024)))]
+            payloads: Array.from({ length: 4 }, () => runtimePayload(bundle))
         });
         await expect(Promise.all(builds)).rejects.toThrow("Failed to submit sdk-gen-api build");
         expect(post).toHaveBeenCalledTimes(1);
     });
 
-    it("rejects a bundle one byte over 100 MiB decompressed before submission", async () => {
+    it("rejects a bundle one byte over 512 MiB decompressed before submission", async () => {
         const { builds, post } = createPreflightBatch({
-            payloads: [runtimePayload(gzipSync(Buffer.alloc(100 * 1024 * 1024 + 1)))]
+            payloads: [runtimePayload(gzipSync(Buffer.alloc(512 * 1024 * 1024 + 1), { level: 1 }))]
         });
         await expect(Promise.all(builds)).rejects.toThrow(
-            "fern-runtime-bundle 0 is 100.00 MiB decompressed, exceeding the 100.00 MiB decompressed limit"
+            "fern-runtime-bundle 0 is 512.00 MiB decompressed, exceeding the 512.00 MiB decompressed limit"
         );
         expect(post).not.toHaveBeenCalled();
     });
 
-    it("rejects more than 25 MiB of runtime bundle payloads before submission", async () => {
+    it("accepts exactly 128 MiB of runtime bundle payloads", async () => {
+        const bundle = gzipWithExactLength(64 * 1024 * 1024);
         const { builds, post } = createPreflightBatch({
-            payloads: Array.from({ length: 6 }, () => runtimePayload(Buffer.alloc(5 * 1024 * 1024)))
+            payloads: [runtimePayload(bundle), runtimePayload(bundle)]
         });
-        await expect(Promise.all(builds)).rejects.toThrow("exceeding the 25 MiB compressed limit");
+        await expect(Promise.all(builds)).rejects.toThrow("Failed to submit sdk-gen-api build");
+        expect(post).toHaveBeenCalledTimes(1);
+    });
+
+    it("rejects runtime bundle payloads one byte over 128 MiB before submission", async () => {
+        const bundle = gzipWithExactLength(64 * 1024 * 1024);
+        const { builds, post } = createPreflightBatch({
+            payloads: [runtimePayload(bundle), runtimePayload(bundle), runtimePayload(Buffer.alloc(1))]
+        });
+        await expect(Promise.all(builds)).rejects.toThrow(
+            "runtime bundles total 128.00 MiB, exceeding the 128 MiB compressed limit"
+        );
         expect(post).not.toHaveBeenCalled();
     });
 
-    it("accepts exactly 50 MiB of source and mixed target payload files", async () => {
+    it("accepts exactly 160 MiB of source and mixed target payload files", async () => {
         const sdkConfigPayloadBytes = 25 * 1024 * 1024;
         const remainingPayloadBytes =
-            50 * 1024 * 1024 - validSourceArchive.length - validRuntimeBundle.length - sdkConfigPayloadBytes;
+            160 * 1024 * 1024 - validSourceArchive.length - validRuntimeBundle.length - 6 * sdkConfigPayloadBytes;
         const { builds, post } = createPreflightBatch({
             payloads: [
                 runtimePayload(validRuntimeBundle),
-                {
-                    payloadKind: "sdk-config-v1",
-                    body: Buffer.alloc(sdkConfigPayloadBytes)
-                },
+                ...Array.from(
+                    { length: 6 },
+                    (): FernSdkGenApiPayload => ({
+                        payloadKind: "sdk-config-v1",
+                        body: Buffer.alloc(sdkConfigPayloadBytes)
+                    })
+                ),
                 {
                     payloadKind: "sdk-config-v1",
                     body: Buffer.alloc(remainingPayloadBytes)
@@ -3386,8 +3471,7 @@ describe("isEligibleForFernSdkGenApi", () => {
             ],
             generatorInvocations: [
                 invocation({ version: "3.999.999" }),
-                invocation({ version: "4.0.0" }),
-                invocation({ version: "4.0.1" })
+                ...Array.from({ length: 7 }, (_, index) => invocation({ version: `4.0.${index}` }))
             ]
         });
 
@@ -3395,17 +3479,20 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(post).toHaveBeenCalledTimes(1);
     });
 
-    it("rejects source and mixed target payload files one byte over 50 MiB", async () => {
+    it("rejects source and mixed target payload files one byte over 160 MiB", async () => {
         const sdkConfigPayloadBytes = 25 * 1024 * 1024;
         const remainingPayloadBytes =
-            50 * 1024 * 1024 - validSourceArchive.length - validRuntimeBundle.length - sdkConfigPayloadBytes + 1;
+            160 * 1024 * 1024 - validSourceArchive.length - validRuntimeBundle.length - 6 * sdkConfigPayloadBytes + 1;
         const { builds, post } = createPreflightBatch({
             payloads: [
                 runtimePayload(validRuntimeBundle),
-                {
-                    payloadKind: "sdk-config-v1",
-                    body: Buffer.alloc(sdkConfigPayloadBytes)
-                },
+                ...Array.from(
+                    { length: 6 },
+                    (): FernSdkGenApiPayload => ({
+                        payloadKind: "sdk-config-v1",
+                        body: Buffer.alloc(sdkConfigPayloadBytes)
+                    })
+                ),
                 {
                     payloadKind: "sdk-config-v1",
                     body: Buffer.alloc(remainingPayloadBytes)
@@ -3413,20 +3500,19 @@ describe("isEligibleForFernSdkGenApi", () => {
             ],
             generatorInvocations: [
                 invocation({ version: "3.999.999" }),
-                invocation({ version: "4.0.0" }),
-                invocation({ version: "4.0.1" })
+                ...Array.from({ length: 7 }, (_, index) => invocation({ version: `4.0.${index}` }))
             ]
         });
 
         await expect(Promise.all(builds)).rejects.toThrow(
-            "exceeding the 50 MiB in-memory upload limit; reduce the source archive size, target payload size, or number of targets"
+            "exceeding the 160 MiB in-memory upload limit; reduce the source archive size, target payload size, or number of targets"
         );
         expect(post).not.toHaveBeenCalled();
     });
 
-    it("includes publish credentials in the 50 MiB aggregate upload limit", async () => {
-        const firstPayloadBytes = 25 * 1024 * 1024;
-        const secondPayloadBytes = 50 * 1024 * 1024 - validSourceArchive.length - firstPayloadBytes;
+    it("includes publish credentials in the 160 MiB aggregate upload limit", async () => {
+        const sdkConfigPayloadBytes = 25 * 1024 * 1024;
+        const remainingPayloadBytes = 160 * 1024 * 1024 - validSourceArchive.length - 6 * sdkConfigPayloadBytes;
         const directOutput = () =>
             FernFiddle.OutputMode.publishV2(
                 FernFiddle.PublishOutputModeV2.npmOverride({
@@ -3437,16 +3523,21 @@ describe("isEligibleForFernSdkGenApi", () => {
             );
         const { builds, post } = createPreflightBatch({
             payloads: [
-                { payloadKind: "sdk-config-v1", body: Buffer.alloc(firstPayloadBytes) },
+                ...Array.from(
+                    { length: 6 },
+                    (): FernSdkGenApiPayload => ({
+                        payloadKind: "sdk-config-v1",
+                        body: Buffer.alloc(sdkConfigPayloadBytes)
+                    })
+                ),
                 {
                     payloadKind: "sdk-config-v1",
-                    body: Buffer.alloc(secondPayloadBytes)
+                    body: Buffer.alloc(remainingPayloadBytes)
                 }
             ],
-            generatorInvocations: [
-                invocation({ version: "4.0.0", outputMode: directOutput() }),
-                invocation({ version: "4.0.1", outputMode: directOutput() })
-            ]
+            generatorInvocations: Array.from({ length: 7 }, (_, index) =>
+                invocation({ version: `4.0.${index}`, outputMode: directOutput() })
+            )
         });
 
         await expect(Promise.all(builds)).rejects.toThrow(
@@ -3455,11 +3546,15 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(post).not.toHaveBeenCalled();
     });
 
-    it("rejects more than 100 MiB of decoded payloads before submission", async () => {
+    it("rejects decoded payloads one byte over 2 GiB before submission", async () => {
+        const bundle = gzipSync(Buffer.alloc(512 * 1024 * 1024), { level: 1 });
         const { builds, post } = createPreflightBatch({
-            payloads: Array.from({ length: 5 }, () => runtimePayload(gzipSync(Buffer.alloc(21 * 1024 * 1024))))
+            payloads: [...Array.from({ length: 4 }, () => runtimePayload(bundle)), sdkConfigPayload("x")],
+            generatorInvocations: [...Array.from({ length: 4 }, () => invocation()), invocation({ version: "4.0.0" })]
         });
-        await expect(Promise.all(builds)).rejects.toThrow("exceeding the 100 MiB decoded limit");
+        await expect(Promise.all(builds)).rejects.toThrow(
+            "target payloads total 2048.00 MiB, exceeding the 2048 MiB decoded limit"
+        );
         expect(post).not.toHaveBeenCalled();
     });
 
@@ -3506,12 +3601,26 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(post).not.toHaveBeenCalled();
     });
 
-    it("rejects a multipart body larger than 60 MiB before submission", async () => {
-        vi.spyOn(FormData.prototype, "getLengthSync").mockReturnValue(60 * 1024 * 1024 + 1);
+    it("submits a multipart body of exactly 170 MiB with a 170 MiB body cap and a 180 second timeout", async () => {
+        vi.spyOn(FormData.prototype, "getLengthSync").mockReturnValue(170 * 1024 * 1024);
         const { builds, post } = createPreflightBatch({
             payloads: [runtimePayload(validRuntimeBundle)]
         });
-        await expect(Promise.all(builds)).rejects.toThrow("exceeding the 60 MiB limit");
+        await expect(Promise.all(builds)).rejects.toThrow("Failed to submit sdk-gen-api build");
+        expect(post).toHaveBeenCalledTimes(1);
+        expect(post).toHaveBeenCalledWith(
+            "https://sdk-gen-api.test/v1/fern/build",
+            expect.any(FormData),
+            expect.objectContaining({ maxBodyLength: 170 * 1024 * 1024, timeout: 180_000 })
+        );
+    });
+
+    it("rejects a multipart body one byte over 170 MiB before submission", async () => {
+        vi.spyOn(FormData.prototype, "getLengthSync").mockReturnValue(170 * 1024 * 1024 + 1);
+        const { builds, post } = createPreflightBatch({
+            payloads: [runtimePayload(validRuntimeBundle)]
+        });
+        await expect(Promise.all(builds)).rejects.toThrow("exceeding the 170 MiB limit");
         expect(post).not.toHaveBeenCalled();
     });
 });

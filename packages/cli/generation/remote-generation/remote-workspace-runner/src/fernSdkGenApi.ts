@@ -45,18 +45,19 @@ import { FERN_GENERATOR_LATEST_VERSION, isGeneratorVersionForUnpinnedRoute } fro
 
 const POLL_INTERVAL_MS = 2_000;
 const POLL_TIMEOUT_MS = 18 * 60 * 1_000;
-const REQUEST_TIMEOUT_MS = 60_000;
+const REQUEST_TIMEOUT_MS = 180_000;
 const MAX_PAYLOADS = 64;
 const MAX_SOURCE_COMPRESSED_BYTES = 25 * 1024 * 1024;
 const MAX_SOURCE_DECOMPRESSED_BYTES = 25 * 1024 * 1024;
-const MAX_RUNTIME_BUNDLE_COMPRESSED_BYTES = 5 * 1024 * 1024;
+const MAX_RUNTIME_BUNDLE_COMPRESSED_BYTES = 64 * 1024 * 1024;
 const MAX_PAYLOAD_BYTES = 25 * 1024 * 1024;
-const MAX_TOTAL_RUNTIME_BUNDLE_COMPRESSED_BYTES = 25 * 1024 * 1024;
-const MAX_TOTAL_PAYLOAD_BYTES = 100 * 1024 * 1024;
-const MAX_RUNTIME_BUNDLE_DECOMPRESSED_BYTES = MAX_TOTAL_PAYLOAD_BYTES;
-const MAX_TOTAL_UPLOAD_FILE_BYTES = 50 * 1024 * 1024;
+const MAX_TOTAL_RUNTIME_BUNDLE_COMPRESSED_BYTES = 128 * 1024 * 1024;
+const MAX_TOTAL_PAYLOAD_BYTES = 2 * 1024 * 1024 * 1024;
+// Node generators read the IR as one string, and V8 caps strings at about 512 MiB.
+const MAX_RUNTIME_BUNDLE_DECOMPRESSED_BYTES = 512 * 1024 * 1024;
+const MAX_TOTAL_UPLOAD_FILE_BYTES = 160 * 1024 * 1024;
 const MAX_REQUEST_FIELD_BYTES = 1024 * 1024;
-const MAX_MULTIPART_BODY_BYTES = 60 * 1024 * 1024;
+const MAX_MULTIPART_BODY_BYTES = 170 * 1024 * 1024;
 const MAX_DEBUG_LOG_BYTES = 20 * 1024;
 const UNPINNED_FERN_GENERATOR_VERSION_KEY = "unpinned";
 const LOOPBACK_HOSTNAMES = new Set(["localhost", "127.0.0.1", "[::1]", "::1"]);
@@ -191,6 +192,19 @@ class FernSdkGenApiSubmissionError extends Error {
         this.status = status;
         this.code = code;
     }
+}
+
+interface FernSdkGenApiPayloadSize {
+    label: string;
+    uploadBytes: number;
+    /** Set for gzip runtime bundles only; other payloads upload their decoded bytes. */
+    decodedBytes: number | undefined;
+}
+
+interface FernSdkGenApiUploadSizes {
+    multipartBodyBytes: number;
+    sourceArchiveBytes: number;
+    payloads: FernSdkGenApiPayloadSize[];
 }
 
 export interface FernSdkGenApiRequest {
@@ -1310,6 +1324,7 @@ function prepareFernSdkGenApiSubmission(participants: FernSdkGenApiBuildParamete
     request: FernSdkGenApiRequest;
     form: FormData;
     sensitiveValues: string[];
+    uploadSizes: FernSdkGenApiUploadSizes;
 } {
     const first = participants[0];
     if (first == null) {
@@ -1337,7 +1352,7 @@ function prepareFernSdkGenApiSubmission(participants: FernSdkGenApiBuildParamete
     }
 
     assertSameBatchInput(participants);
-    validateProtocolInputs(participants, first);
+    const payloadSizes = validateProtocolInputs(participants, first);
     const request = createFernSdkGenApiBatchRequest({
         apiName: first.apiName,
         organization: first.organization,
@@ -1379,7 +1394,7 @@ function prepareFernSdkGenApiSubmission(participants: FernSdkGenApiBuildParamete
         (credentialsBody?.length ?? 0);
     if (aggregateUploadBytes > MAX_TOTAL_UPLOAD_FILE_BYTES) {
         return first.context.failAndThrow(
-            `sdk-gen-api source archive, target payloads, and publish credentials total ${formatMiB(aggregateUploadBytes)}, exceeding the 50 MiB in-memory upload limit`,
+            `sdk-gen-api source archive, target payloads, and publish credentials total ${formatMiB(aggregateUploadBytes)}, exceeding the ${formatLimitMiB(MAX_TOTAL_UPLOAD_FILE_BYTES)} in-memory upload limit`,
             undefined,
             { code: CliError.Code.ConfigError }
         );
@@ -1421,7 +1436,7 @@ function prepareFernSdkGenApiSubmission(participants: FernSdkGenApiBuildParamete
     const multipartBodyLength = form.getLengthSync();
     if (multipartBodyLength > MAX_MULTIPART_BODY_BYTES) {
         return first.context.failAndThrow(
-            `sdk-gen-api multipart request is ${formatMiB(multipartBodyLength)}, exceeding the 60 MiB limit; reduce source or target payload size`,
+            `sdk-gen-api multipart request is ${formatMiB(multipartBodyLength)}, exceeding the ${formatLimitMiB(MAX_MULTIPART_BODY_BYTES)} limit; reduce source or target payload size`,
             undefined,
             { code: CliError.Code.ConfigError }
         );
@@ -1431,14 +1446,19 @@ function prepareFernSdkGenApiSubmission(participants: FernSdkGenApiBuildParamete
         origin,
         request,
         form,
-        sensitiveValues: normalizeSensitiveValues([first.token.value, ...getCredentialSecretValues(credentials)])
+        sensitiveValues: normalizeSensitiveValues([first.token.value, ...getCredentialSecretValues(credentials)]),
+        uploadSizes: {
+            multipartBodyBytes: multipartBodyLength,
+            sourceArchiveBytes: first.specsTarGzBuffer.length,
+            payloads: payloadSizes
+        }
     };
 }
 
 async function executeFernSdkGenApiBuild(
     participants: FernSdkGenApiBuildParameters[]
 ): Promise<PromiseSettledResult<FernSdkGenApiBuildResponse>[]> {
-    const { first, origin, request, form, sensitiveValues } = prepareFernSdkGenApiSubmission(participants);
+    const { first, origin, request, form, sensitiveValues, uploadSizes } = prepareFernSdkGenApiSubmission(participants);
 
     logFernSdkGenApiSubmissionDebug({ first, origin, request, participants, sensitiveValues });
 
@@ -1459,6 +1479,11 @@ async function executeFernSdkGenApiBuild(
     } catch (error) {
         logFernSdkGenApiSubmissionFailureDebug(first.context, error, sensitiveValues);
         const sanitizedError = sanitizeFernSdkGenApiSubmissionError(error, sensitiveValues);
+        if (sanitizedError.status === 413) {
+            return first.context.failAndThrow(describeRequestTooLarge(uploadSizes), sanitizedError, {
+                code: CliError.Code.ConfigError
+            });
+        }
         return first.context.failAndThrow(
             `Failed to submit sdk-gen-api build: ${sanitizedError.message}${describeSpentGuestBuild(sanitizedError, first.token)}`,
             sanitizedError,
@@ -1729,6 +1754,23 @@ function describeSpentGuestBuild(error: FernSdkGenApiSubmissionError, token: Fer
         return "";
     }
     return " This run is identical to an earlier guest build that has already ended. Change the input (for example --version), or start a fresh guest session with --new-session.";
+}
+
+/**
+ * sdk-gen-api (or a proxy in front of it) answers 413 when the upload exceeds its size limits. Those limits roll
+ * out separately from this CLI's local checks, so a request that passed them can still be too large for the server.
+ */
+function describeRequestTooLarge(uploadSizes: FernSdkGenApiUploadSizes): string {
+    const sizes = [
+        `multipart request ${formatMiB(uploadSizes.multipartBodyBytes)}`,
+        `source archive ${formatMiB(uploadSizes.sourceArchiveBytes)}`,
+        ...uploadSizes.payloads.map((payload) =>
+            payload.decodedBytes == null
+                ? `${payload.label} ${formatMiB(payload.uploadBytes)}`
+                : `${payload.label} ${formatMiB(payload.uploadBytes)} compressed (${formatMiB(payload.decodedBytes)} decoded)`
+        )
+    ];
+    return `Failed to submit sdk-gen-api build: the request exceeded the sdk-gen-api server's size limit (HTTP 413). Sizes computed by the CLI: ${sizes.join("; ")}. Upgrade the Fern CLI (\`fern upgrade\`), or retry later: the server may not have rolled out larger limits yet.`;
 }
 
 function sanitizeFernSdkGenApiSubmissionError(error: unknown, sensitiveValues: string[]): FernSdkGenApiSubmissionError {
@@ -2013,7 +2055,7 @@ function compareFernSdkGenApiParticipants(
 function validateProtocolInputs(
     participants: FernSdkGenApiBuildParameters[],
     first: FernSdkGenApiBuildParameters
-): void {
+): FernSdkGenApiPayloadSize[] {
     if (participants.length > MAX_PAYLOADS) {
         first.context.failAndThrow(
             `sdk-gen-api supports at most ${MAX_PAYLOADS} target payloads per build; received ${participants.length}`,
@@ -2053,7 +2095,7 @@ function validateProtocolInputs(
     );
     if (totalUploadFileBytes > MAX_TOTAL_UPLOAD_FILE_BYTES) {
         first.context.failAndThrow(
-            `sdk-gen-api source archive and target payloads total ${formatMiB(totalUploadFileBytes)}, exceeding the 50 MiB in-memory upload limit; reduce the source archive size, target payload size, or number of targets`,
+            `sdk-gen-api source archive and target payloads total ${formatMiB(totalUploadFileBytes)}, exceeding the ${formatLimitMiB(MAX_TOTAL_UPLOAD_FILE_BYTES)} in-memory upload limit; reduce the source archive size, target payload size, or number of targets`,
             undefined,
             { code: CliError.Code.ConfigError }
         );
@@ -2065,7 +2107,7 @@ function validateProtocolInputs(
     );
     if (totalRuntimeBundleBytes > MAX_TOTAL_RUNTIME_BUNDLE_COMPRESSED_BYTES) {
         first.context.failAndThrow(
-            `sdk-gen-api runtime bundles total ${formatMiB(totalRuntimeBundleBytes)}, exceeding the 25 MiB compressed limit; reduce the number or size of targets`,
+            `sdk-gen-api runtime bundles total ${formatMiB(totalRuntimeBundleBytes)}, exceeding the ${formatLimitMiB(MAX_TOTAL_RUNTIME_BUNDLE_COMPRESSED_BYTES)} compressed limit; reduce the number or size of targets`,
             undefined,
             { code: CliError.Code.ConfigError }
         );
@@ -2076,25 +2118,30 @@ function validateProtocolInputs(
         label: "source archive",
         context: first.context
     });
+    const payloadSizes: FernSdkGenApiPayloadSize[] = [];
     let totalPayloadBytes = 0;
     for (const [index, participant] of participants.entries()) {
-        totalPayloadBytes +=
+        const label = payloadLabel(participant, index);
+        const decodedBytes =
             participant.payload.payloadKind === "fern-runtime-bundle"
                 ? getBoundedGzipSize({
                       buffer: participant.payload.body,
                       maxBytes: MAX_RUNTIME_BUNDLE_DECOMPRESSED_BYTES,
-                      label: payloadLabel(participant, index),
+                      label,
                       context: first.context
                   })
-                : participant.payload.body.length;
+                : undefined;
+        totalPayloadBytes += decodedBytes ?? participant.payload.body.length;
         if (totalPayloadBytes > MAX_TOTAL_PAYLOAD_BYTES) {
             first.context.failAndThrow(
-                `sdk-gen-api target payloads total ${formatMiB(totalPayloadBytes)}, exceeding the 100 MiB decoded limit; reduce the number or size of targets`,
+                `sdk-gen-api target payloads total ${formatMiB(totalPayloadBytes)}, exceeding the ${formatLimitMiB(MAX_TOTAL_PAYLOAD_BYTES)} decoded limit; reduce the number or size of targets`,
                 undefined,
                 { code: CliError.Code.ConfigError }
             );
         }
+        payloadSizes.push({ label, uploadBytes: participant.payload.body.length, decodedBytes });
     }
+    return payloadSizes;
 }
 
 function payloadLabel(participant: FernSdkGenApiBuildParameters | undefined, index: number): string {
@@ -2144,6 +2191,10 @@ function isMaxOutputLengthError(error: unknown): boolean {
 
 function formatMiB(bytes: number): string {
     return `${(bytes / (1024 * 1024)).toFixed(2)} MiB`;
+}
+
+function formatLimitMiB(bytes: number): string {
+    return `${bytes / (1024 * 1024)} MiB`;
 }
 
 function formatKiB(bytes: number): string {
