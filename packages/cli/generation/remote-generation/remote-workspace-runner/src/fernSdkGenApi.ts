@@ -1081,6 +1081,12 @@ export interface FernSdkGenApiBuildParameters {
     sourceSpecIndexes?: number[];
     audiences?: string[];
     skipFernignore?: boolean;
+    /**
+     * MCP targets only: a zip of the target's customer-authored custom-tool + hook modules, laid out
+     * under `mcp/` (see `collectMcpCustomCode`). Uploaded as the `customCode` multipart part; sdk-gen-api
+     * stores it and supplies it as the build's `hooksLocation`.
+     */
+    mcpCustomCode?: Buffer;
 }
 
 export interface FernSdkGenApiBuildResponse {
