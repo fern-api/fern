@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.218.1
+  changelogEntry:
+    - summary: |
+        `fern generate --docs` now prints the warnings Fern returns when it registers your docs, such as a custom domain that is not routed through Fern yet. The custom-domain DNS check now runs on Fern's side for every root custom domain, not just domains on Vercel, so the CLI no longer runs its own copy.
+      type: fix
+  createdAt: "2026-11-16"
+  irVersion: 67
 - version: 5.218.0
   changelogEntry:
     - summary: |
