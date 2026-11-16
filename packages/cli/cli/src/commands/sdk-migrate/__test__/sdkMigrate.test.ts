@@ -841,7 +841,7 @@ describe("SDK Config migration", () => {
         );
     });
 
-    it("treats omitted path parameter behavior as neutral", () => {
+    it("uses the effective OpenAPI default for omitted path parameter behavior", () => {
         const inline = {
             ...createResolvedSourceSpec("inline", undefined),
             clientPathParameterStyle: "inline" as const,
@@ -850,6 +850,26 @@ describe("SDK Config migration", () => {
         const omitted = createResolvedSourceSpec("omitted", undefined);
 
         expect(resolveMigrationPathParameterStyle([inline, omitted])).toBe("inline");
+    });
+
+    it("uses the OpenAPI default when every path parameter behavior is omitted", () => {
+        const first = createResolvedSourceSpec("first", undefined);
+        const second = createResolvedSourceSpec("second", undefined);
+
+        expect(resolveMigrationPathParameterStyle([first, second])).toBe("inline");
+    });
+
+    it("rejects an explicit wrapped style combined with the omitted OpenAPI default", () => {
+        const wrapped = {
+            ...createResolvedSourceSpec("wrapped", undefined),
+            clientPathParameterStyle: "wrapped" as const,
+            clientPathParameterStyleExplicit: true
+        };
+        const omitted = createResolvedSourceSpec("omitted", undefined);
+
+        expect(() => resolveMigrationPathParameterStyle([wrapped, omitted])).toThrow(
+            "conflicting inline-path-parameters settings across API specifications: wrapped=wrapped, omitted=inline"
+        );
     });
 
     it("uses a common project root when source files live outside the Fern configuration directory", () => {

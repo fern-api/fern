@@ -294,18 +294,15 @@ function serializeProtobufSpec(
 export function resolveMigrationPathParameterStyle(
     specs: ResolvedMigrationSourceSpec[]
 ): "inline" | "wrapped" | undefined {
-    const explicitlyConfiguredSpecs = specs.filter(
-        (spec): spec is ResolvedMigrationFileSpec =>
-            spec.type === "openapi" && spec.clientPathParameterStyleExplicit === true
-    );
-    if (explicitlyConfiguredSpecs.length === 0) {
+    const openApiSpecs = specs.filter((spec): spec is ResolvedMigrationFileSpec => spec.type === "openapi");
+    if (openApiSpecs.length === 0) {
         return undefined;
     }
     const configuredStyles = new Set(
-        explicitlyConfiguredSpecs.map((spec) => spec.clientPathParameterStyle ?? DEFAULT_PATH_PARAMETER_STYLE)
+        openApiSpecs.map((spec) => spec.clientPathParameterStyle ?? DEFAULT_PATH_PARAMETER_STYLE)
     );
     if (configuredStyles.size > 1) {
-        const conflictingSpecs = explicitlyConfiguredSpecs
+        const conflictingSpecs = openApiSpecs
             .map(
                 (spec) =>
                     `${spec.idHint ?? spec.namespace ?? spec.name ?? spec.absolutePath}=${spec.clientPathParameterStyle ?? DEFAULT_PATH_PARAMETER_STYLE}`
