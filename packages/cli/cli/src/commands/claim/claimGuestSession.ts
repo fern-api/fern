@@ -11,7 +11,7 @@ import {
     PROJECT_CONFIG_FILENAME
 } from "@fern-api/configuration-loader";
 import { createVenusService } from "@fern-api/core";
-import { assertNeverNoThrow } from "@fern-api/core-utils";
+import { assertNever } from "@fern-api/core-utils";
 import { createDocsAnonymousClient } from "@fern-api/fdr-sdk/orpc-client";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
@@ -225,7 +225,7 @@ export async function claimGuestSession({
             failures.push(describeSdkMoveFailure(sdks, sdkName));
             break;
         default:
-            assertNeverNoThrow(sdks);
+            assertNever(sdks);
     }
 
     if (failures.length > 0) {
