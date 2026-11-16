@@ -46,6 +46,7 @@ import { FERN_GENERATOR_LATEST_VERSION, isGeneratorVersionForUnpinnedRoute } fro
 const POLL_INTERVAL_MS = 2_000;
 const POLL_TIMEOUT_MS = 18 * 60 * 1_000;
 const REQUEST_TIMEOUT_MS = 180_000;
+const POLL_REQUEST_TIMEOUT_MS = 60_000;
 const MAX_PAYLOADS = 64;
 const MAX_SOURCE_COMPRESSED_BYTES = 25 * 1024 * 1024;
 const MAX_SOURCE_DECOMPRESSED_BYTES = 25 * 1024 * 1024;
@@ -1512,7 +1513,7 @@ async function executeFernSdkGenApiBuild(
                     Authorization: `Bearer ${first.token.value}`,
                     "X-Fern-Organization-Id": first.organization
                 },
-                timeout: REQUEST_TIMEOUT_MS
+                timeout: POLL_REQUEST_TIMEOUT_MS
             });
             status = sanitizeFernBuildStatus(response.data, sensitiveValues);
         } catch (error) {
@@ -2214,15 +2215,29 @@ function countGunzipBytes(buffer: Buffer, stopAfterBytes: number): Promise<Gunzi
     return new Promise((resolve) => {
         const gunzip = createGunzip({ chunkSize: GUNZIP_COUNT_CHUNK_BYTES });
         let bytes = 0;
+        let settled = false;
+        const settle = (count: GunzipByteCount): void => {
+            if (!settled) {
+                settled = true;
+                resolve(count);
+            }
+        };
         gunzip.on("data", (chunk: Buffer) => {
+            if (settled) {
+                return;
+            }
             bytes += chunk.length;
             if (bytes > stopAfterBytes) {
-                resolve({ type: "stopped", bytes });
+                settle({ type: "stopped", bytes });
                 gunzip.destroy();
             }
         });
-        gunzip.on("end", () => resolve({ type: "complete", bytes }));
-        gunzip.on("error", (error) => resolve({ type: "malformed", error }));
+        gunzip.on("end", () => settle({ type: "complete", bytes }));
+        gunzip.on("error", (error) => settle({ type: "malformed", error }));
+        // A stream that closes before `end` or `error` did not decode its whole input, so fail closed.
+        gunzip.on("close", () =>
+            settle({ type: "malformed", error: new Error("gzip stream closed before decoding finished") })
+        );
         gunzip.end(buffer);
     });
 }

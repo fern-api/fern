@@ -5,6 +5,7 @@ import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import axios, { AxiosError } from "axios";
 import { createHash } from "crypto";
 import FormData from "form-data";
+import { Transform } from "stream";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { gunzipSync, gzipSync } from "zlib";
 import {
@@ -73,6 +74,16 @@ vi.mock("@fern-api/core", async (importOriginal) => ({
     ...(await importOriginal<typeof import("@fern-api/core")>()),
     getIrVersionForGenerator: migrationMocks.getIrVersionForGenerator
 }));
+
+const zlibMocks = vi.hoisted(() => ({
+    createGunzip: vi.fn<typeof import("zlib").createGunzip>()
+}));
+
+vi.mock("zlib", async (importOriginal) => {
+    const actual = await importOriginal<typeof import("zlib")>();
+    zlibMocks.createGunzip.mockImplementation(actual.createGunzip);
+    return { ...actual, createGunzip: zlibMocks.createGunzip };
+});
 
 vi.mock("@fern-api/ir-migrations", () => ({
     migrateIntermediateRepresentationForGenerator: migrationMocks.migrateForGenerator,
@@ -3620,6 +3631,45 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(post).not.toHaveBeenCalled();
     });
 
+    it("fails closed when a gzip stream closes before it ends or errors", async () => {
+        // Destroying without an error emits only `close`, never `end` or `error`.
+        zlibMocks.createGunzip.mockImplementationOnce(
+            () =>
+                new Transform({
+                    transform(_chunk, _encoding, callback) {
+                        this.destroy();
+                        callback();
+                    }
+                }) as never
+        );
+        vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "https://sdk-gen-api.test");
+        const failures: Array<{ message: string; error: unknown }> = [];
+        const capturingContext = {
+            logger: contextLogger,
+            failAndThrow: (message: string, error: unknown) => {
+                failures.push({ message, error });
+                throw new Error(message);
+            }
+        } as never;
+
+        await expect(
+            preflightFernSdkGenApiBuild({
+                apiName: "Petstore",
+                organization: "acme",
+                cliVersion: "0.0.0",
+                generatorInvocation: invocation(),
+                sdkVersion: "1.2.3",
+                token: { value: "token" } as never,
+                specsTarGzBuffer: validSourceArchive,
+                payload: runtimePayload(validRuntimeBundle),
+                absolutePathToPreview: undefined,
+                context: capturingContext
+            })
+        ).rejects.toThrow("sdk-gen-api source archive is malformed gzip; regenerate it and retry");
+        expect(failures).toHaveLength(1);
+        expect(failures[0]?.error).toMatchObject({ message: "gzip stream closed before decoding finished" });
+    });
+
     it("accepts a serialized UTF-8 request field of exactly 1 MiB", async () => {
         const generatorInvocation = invocationWithSerializedRequestBytes(1024 * 1024);
         const { builds, post } = createPreflightBatch({
@@ -4283,11 +4333,11 @@ describe("sdk-gen-api build status polling", () => {
         const submitted = new Promise<void>((resolve) => {
             markSubmitted = resolve;
         });
-        vi.spyOn(axios, "post").mockImplementation((() => {
+        const post = vi.spyOn(axios, "post").mockImplementation((() => {
             markSubmitted();
             return Promise.resolve({ data: { buildId: "build-1" } });
         }) as never);
-        vi.spyOn(axios, "get").mockImplementation((() => {
+        const get = vi.spyOn(axios, "get").mockImplementation((() => {
             const now = Date.now();
             pollTimes.push(now);
             const target =
@@ -4306,7 +4356,7 @@ describe("sdk-gen-api build status polling", () => {
             absolutePathToPreview: undefined,
             context: capturingContext
         }).catch((error: unknown) => error);
-        return { outcome, failures, pollTimes, submitted };
+        return { outcome, failures, pollTimes, submitted, post, get };
     }
 
     beforeEach(() => {
@@ -4331,6 +4381,29 @@ describe("sdk-gen-api build status polling", () => {
         await expect(outcome).resolves.toMatchObject({ actualVersion: "1.2.4" });
         expect(failures).toEqual([]);
         expect(pollTimes.filter((time) => time >= pollTimeoutMs)).toEqual([pollTimeoutMs]);
+    });
+
+    it("times out each status poll after 60 seconds and the submission after 180 seconds", async () => {
+        const { outcome, submitted, post, get } = startBuild({
+            status: "succeeded",
+            logs: [],
+            result: { artifactUrl: "https://example.test/artifact.zip", actualVersion: "1.2.4" }
+        });
+
+        await submitted;
+        await vi.advanceTimersByTimeAsync(pollTimeoutMs);
+        await outcome;
+
+        expect(post).toHaveBeenCalledWith(
+            "https://sdk-gen-api.test/v1/fern/build",
+            expect.any(FormData),
+            expect.objectContaining({ timeout: 180_000 })
+        );
+        expect(get.mock.calls.length).toBeGreaterThan(1);
+        for (const [url, config] of get.mock.calls) {
+            expect(url).toBe("https://sdk-gen-api.test/v1/fern/build/build-1");
+            expect(config).toMatchObject({ timeout: 60_000 });
+        }
     });
 
     it("fails with a non-network error when the final poll after the deadline is not terminal", async () => {
