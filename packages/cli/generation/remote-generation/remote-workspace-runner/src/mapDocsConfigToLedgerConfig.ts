@@ -293,7 +293,7 @@ export function mapDocsConfigToLedgerConfig({
         title: docsConfig.title,
         // docs.yml's declared `roles`, which the resolver puts on the root node. The ledger keeps them in
         // the config so the docs preview's role picker can list them.
-        roles: roles != null && roles.length > 0 ? roles.map(String) : undefined,
+        roles: roles != null && roles.length > 0 ? roles : undefined,
         defaultLanguage: docsConfig.defaultLanguage,
         translations: docsConfig.translations,
         announcement: docsConfig.announcement,

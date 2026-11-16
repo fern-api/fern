@@ -10,6 +10,7 @@ const ROLE_ATTRIBUTE_NAMES = new Set(["roles", "viewer"]);
  * can't be resolved statically, so they are skipped.
  */
 export function collectIfRoles(content: string): string[] {
+    // Skips the MDX parse for pages with no `<If`; also matches e.g. `<Iframe`, which only costs a parse.
     if (!content.includes("<If")) {
         return [];
     }
