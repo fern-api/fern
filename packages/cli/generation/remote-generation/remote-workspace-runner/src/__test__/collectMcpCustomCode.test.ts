@@ -2,7 +2,11 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { mkdir, mkdtemp, rm, writeFile } from "fs/promises";
 import { tmpdir } from "os";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { collectMcpCustomCode, extractMcpCustomCodeConfig } from "../collectMcpCustomCode.js";
+import {
+    collectMcpCustomCode,
+    extractMcpCustomCodeConfig,
+    extractMcpCustomCodeFromSdkConfigBody
+} from "../collectMcpCustomCode.js";
 
 describe("collectMcpCustomCode", () => {
     let root: AbsoluteFilePath;
@@ -108,5 +112,59 @@ describe("extractMcpCustomCodeConfig", () => {
             hooks: { path: "custom/hooks.ts" },
             customTools: { query_journals: { path: "custom/tools/query_journals.ts" } }
         });
+    });
+});
+
+describe("extractMcpCustomCodeFromSdkConfigBody", () => {
+    function body(doc: unknown): Buffer {
+        return Buffer.from(JSON.stringify(doc), "utf8");
+    }
+
+    it("reads customTools/hooks from the target generation (sdk-config.yml style)", () => {
+        expect(
+            extractMcpCustomCodeFromSdkConfigBody(
+                body({
+                    targets: [
+                        {
+                            language: "mcp",
+                            generation: {
+                                serverName: "fynapse",
+                                hooks: { path: "custom/hooks.ts" },
+                                customTools: { query_balances: { path: "custom/tools/query_balances.ts" } }
+                            }
+                        }
+                    ]
+                })
+            )
+        ).toEqual({
+            hooks: { path: "custom/hooks.ts" },
+            customTools: { query_balances: { path: "custom/tools/query_balances.ts" } }
+        });
+    });
+
+    it("reads from root generation when the target declares none", () => {
+        expect(
+            extractMcpCustomCodeFromSdkConfigBody(
+                body({ generation: { hooks: { path: "custom/hooks.ts" } }, targets: [{ language: "mcp" }] })
+            )
+        ).toEqual({ hooks: { path: "custom/hooks.ts" } });
+    });
+
+    it("lets target generation win over root", () => {
+        expect(
+            extractMcpCustomCodeFromSdkConfigBody(
+                body({
+                    generation: { hooks: { path: "root/hooks.ts" } },
+                    targets: [{ language: "mcp", generation: { hooks: { path: "target/hooks.ts" } } }]
+                })
+            )
+        ).toEqual({ hooks: { path: "target/hooks.ts" } });
+    });
+
+    it("returns empty for an unparseable body or one with no custom code", () => {
+        expect(extractMcpCustomCodeFromSdkConfigBody(Buffer.from("not json"))).toEqual({});
+        expect(
+            extractMcpCustomCodeFromSdkConfigBody(body({ targets: [{ language: "typescript" }] }))
+        ).toEqual({});
     });
 });

@@ -82,6 +82,37 @@ export function extractMcpCustomCodeConfig(config: unknown): McpCustomCodeConfig
     return result;
 }
 
+/**
+ * Reads the MCP custom-code config from a serialized SDK Config v1 document (the per-target build
+ * payload body). This is the uniform source across both build paths — the explicit `sdk-config.yml`
+ * flow and the synthesized `generators.yml` (hosted-MCP) flow both serialize a single-target document
+ * here, with the custom tools/hooks under the target's (or root) `generation`. Returns an empty
+ * config when the body isn't parseable or declares none.
+ */
+export function extractMcpCustomCodeFromSdkConfigBody(body: Buffer): McpCustomCodeConfig {
+    let document: unknown;
+    try {
+        document = JSON.parse(body.toString("utf8"));
+    } catch {
+        return {};
+    }
+    if (typeof document !== "object" || document == null) {
+        return {};
+    }
+    const doc = document as Record<string, unknown>;
+    const target =
+        Array.isArray(doc.targets) && typeof doc.targets[0] === "object" && doc.targets[0] != null
+            ? (doc.targets[0] as Record<string, unknown>)
+            : undefined;
+    const rootGeneration = typeof doc.generation === "object" && doc.generation != null ? doc.generation : {};
+    const targetGeneration =
+        target != null && typeof target.generation === "object" && target.generation != null
+            ? target.generation
+            : {};
+    // Target generation wins over root, matching how the generator merges them.
+    return extractMcpCustomCodeConfig({ ...rootGeneration, ...targetGeneration });
+}
+
 function hasStringPath(value: unknown): value is { path: string } {
     return (
         typeof value === "object" &&

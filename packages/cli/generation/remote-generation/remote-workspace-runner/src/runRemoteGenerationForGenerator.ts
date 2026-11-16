@@ -72,7 +72,7 @@ import {
     GeneratorConfigCompatibilityError,
     validateGeneratorConfigCompatibility
 } from "./sdk-gen-client/index.js";
-import { collectMcpCustomCode, extractMcpCustomCodeConfig } from "./collectMcpCustomCode.js";
+import { collectMcpCustomCode, extractMcpCustomCodeFromSdkConfigBody } from "./collectMcpCustomCode.js";
 import { createSdkConfigTargetPayload, resolveSdkConfigTarget } from "./sdkConfigTarget.js";
 
 export async function runRemoteGenerationForGenerator({
@@ -484,11 +484,13 @@ export async function runRemoteGenerationForGenerator({
             }
         }
         if (sdkConfigBuildParameters != null) {
-            // MCP targets: zip the customer-authored custom-tool/hook modules referenced by the
-            // generator config and attach them, so the build uploads them as the `customCode` part
-            // (sdk-gen-api routes it to the target's hooksLocation). No-op when none are declared.
+            // MCP targets: zip the customer-authored custom-tool/hook modules referenced by the SDK
+            // Config and attach them, so the build uploads them as the `customCode` part (sdk-gen-api
+            // routes it to the target's hooks source). Reading from the serialized SDK Config payload
+            // covers both the explicit `sdk-config.yml` and synthesized `generators.yml` paths. No-op
+            // when none are declared.
             const mcpCustomCode = await collectMcpCustomCode(
-                extractMcpCustomCodeConfig(candidate.generatorInvocation.config),
+                extractMcpCustomCodeFromSdkConfigBody(sdkConfigBuildParameters.payload.body),
                 workspace.absoluteFilePath
             );
             if (mcpCustomCode != null) {
