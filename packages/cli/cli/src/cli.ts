@@ -316,7 +316,7 @@ async function tryRunCli(cliContext: CliContext) {
         })
         .option(ALLOW_OLD_CLI_VERSION_FLAG.slice(2), {
             boolean: true,
-            description: `Acknowledge running a CLI version pinned in fern.config.json older than ${MINIMUM_ISOLATED_CLI_VERSION}, which can run executables from the project directory`
+            description: `Run the CLI version pinned in fern.config.json even if it is older than ${MINIMUM_ISOLATED_CLI_VERSION}, which can run executables from the project directory`
         })
         .demandCommand()
         .recommendCommands();
