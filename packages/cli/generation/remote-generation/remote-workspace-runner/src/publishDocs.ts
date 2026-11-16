@@ -87,6 +87,7 @@ import { getDocsDeployMode } from "./docsDeployMode.js";
 import { buildDocsSourceArchive, findFernRoot } from "./docsSourceArchive.js";
 import { computeDynamicIRs, type DynamicIrGeneratorJob } from "./dynamicIr/computeDynamicIRs.js";
 import { DynamicIrWorkerPool, parseDynamicIrResult } from "./dynamicIr/DynamicIrWorkerPool.js";
+import { logFdrWarnings } from "./fdrWarnings.js";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
 import { getFdrOrigin, readGuestPublishOutcome } from "./guestDocsSite.js";
 import { measureImageSizes } from "./measureImageSizes.js";
@@ -883,6 +884,7 @@ export async function publishDocs({
                     }
                     docsRegistrationId = startDocsRegisterResponse.docsRegistrationId;
                     deployLocked = true;
+                    logFdrWarnings(startDocsRegisterResponse, context);
                     context.logger.debug(`Received production registration ID: ${docsRegistrationId}`);
 
                     const skippedCount = startDocsRegisterResponse.skippedFiles?.length || 0;
