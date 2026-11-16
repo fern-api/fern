@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.218.2
+  changelogEntry:
+    - summary: |
+        Show FDR's custom-domain routing rejection in the red bordered box the CLI's own Vercel check used to print,
+        instead of a generic "Failed to publish docs" error, and box FDR's custom-domain routing warnings in yellow.
+      type: fix
+  createdAt: "2026-11-16"
+  irVersion: 67
 - version: 5.218.1
   changelogEntry:
     - summary: |
