@@ -11,45 +11,61 @@ import {
     PROJECT_CONFIG_FILENAME
 } from "@fern-api/configuration-loader";
 import { createVenusService } from "@fern-api/core";
+import { assertNever, assertNeverNoThrow, delay } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { askToLogin } from "@fern-api/login";
 import { CliError, InstructionsTopic } from "@fern-api/task-context";
 import chalk from "chalk";
 import { writeFile } from "fs/promises";
 import { produce } from "immer";
+import open from "open";
 
 import { CliContext } from "../../cli-context/CliContext.js";
 import { ensureFinalNewline } from "../../utils/ensureFinalNewline.js";
 
-export interface ClaimRequest {
-    /** The Venus the session was issued by; the claim has to go to the same one. */
+export interface ReadSessionRequest {
+    /** The Venus the session was issued by. */
     venusOrigin: string;
-    token: string;
     sessionId: string;
     claimSecret: string;
-    organizationId: string | undefined;
 }
 
-export type ClaimResult =
-    | { ok: true; organizationId: string; nextSteps: string[] }
-    | { ok: false; statusCode: number | undefined; message: string | undefined };
+export type SessionState =
+    | { kind: "unclaimed" }
+    | { kind: "claimed"; organizationId: string }
+    | { kind: "gone"; status: string }
+    | { kind: "not_found" }
+    | { kind: "unreachable"; statusCode: number | undefined };
 
-export type Claim = (request: ClaimRequest) => Promise<ClaimResult>;
+export type ReadSession = (request: ReadSessionRequest) => Promise<SessionState>;
+export type OpenBrowser = (url: string) => Promise<void>;
+
+const DEFAULT_POLL_INTERVAL_MS = 3_000;
+const DEFAULT_TIMEOUT_MS = 30 * 60 * 1_000;
 
 /**
- * `fern claim [--org]`: claims the guest session recorded in this repo with the signed-in user, points
- * fern.config.json at the organization that now owns the work, and forgets the session.
+ * `fern claim`: opens the session's claim link in the browser, where the dashboard runs the whole claim (pick
+ * or create the organization, rename the site, move the docs and SDK builds). Meanwhile it waits for Venus to
+ * report the session claimed, then points fern.config.json at the organization that now owns the work and
+ * forgets the session.
  */
 export async function claimGuestSession({
     cliContext,
-    organization,
     absolutePathToFernDirectory,
-    claim = claimWithVenus
+    readSession = readSessionFromVenus,
+    openBrowser = openInBrowser,
+    sleep = delay,
+    pollIntervalMs = DEFAULT_POLL_INTERVAL_MS,
+    timeoutMs = DEFAULT_TIMEOUT_MS,
+    now = Date.now
 }: {
     cliContext: CliContext;
-    organization: string | undefined;
     absolutePathToFernDirectory?: AbsoluteFilePath;
-    claim?: Claim;
+    readSession?: ReadSession;
+    openBrowser?: OpenBrowser;
+    sleep?: (ms: number) => Promise<void>;
+    pollIntervalMs?: number;
+    timeoutMs?: number;
+    now?: () => number;
 }): Promise<void> {
     const fernDirectory = absolutePathToFernDirectory ?? (await getFernDirectory());
     if (fernDirectory == null) {
@@ -75,104 +91,135 @@ export async function claimGuestSession({
             { code: CliError.Code.ConfigError, instructionsTopic: InstructionsTopic.NewSite }
         );
     }
+    const request = { venusOrigin: stored.venusOrigin, sessionId: stored.sessionId, claimSecret };
 
-    const token = await cliContext.runTask((context) => askToLogin(context));
-    if (token.type !== "user") {
-        return cliContext.failAndThrow(
-            "Claiming needs a signed-in user. Unset the FERN_TOKEN environment variable and run `fern login`, then retry `fern claim`.",
-            undefined,
-            { code: CliError.Code.AuthError, instructionsTopic: InstructionsTopic.NewSite }
-        );
+    let state = await readSession(request);
+    if (state.kind === "unclaimed" || state.kind === "unreachable") {
+        cliContext.logger.info(`Opening the claim page for guest session ${chalk.bold(stored.sessionId)}:`);
+        cliContext.logger.info(`  ${chalk.cyan(stored.claimUrl)}`);
+        try {
+            await openBrowser(stored.claimUrl);
+        } catch {
+            cliContext.logger.info("Couldn't open a browser automatically. Open the link above to claim the session.");
+        }
+        cliContext.logger.info("Finish the claim in the browser. Waiting for it here (Ctrl+C to stop)...");
+
+        const deadline = now() + timeoutMs;
+        while (state.kind === "unclaimed" || state.kind === "unreachable") {
+            if (state.kind === "unreachable") {
+                cliContext.logger.debug(
+                    `Could not read guest session ${stored.sessionId}${state.statusCode != null ? ` (status ${state.statusCode})` : ""}; retrying.`
+                );
+            }
+            if (now() >= deadline) {
+                return cliContext.failAndThrow(
+                    `Guest session ${stored.sessionId} was not claimed within ${Math.round(timeoutMs / 60_000)} minutes. Claim it at ${stored.claimUrl}, then run \`fern claim\` again to update ${PROJECT_CONFIG_FILENAME}.`,
+                    undefined,
+                    { code: CliError.Code.NetworkError, instructionsTopic: InstructionsTopic.NewSite }
+                );
+            }
+            await sleep(pollIntervalMs);
+            state = await readSession(request);
+        }
     }
 
-    const result = await cliContext.runTask(() =>
-        claim({
-            venusOrigin: stored.venusOrigin,
-            token: token.value,
-            sessionId: stored.sessionId,
-            claimSecret,
-            organizationId: organization
-        })
-    );
-    if (!result.ok) {
-        return cliContext.failAndThrow(describeClaimFailure(result, stored, organization), undefined, {
-            code:
-                result.statusCode === 401 || result.statusCode === 403
-                    ? CliError.Code.AuthError
-                    : CliError.Code.NetworkError
-        });
+    switch (state.kind) {
+        case "claimed":
+            return finishClaim({ cliContext, fernDirectory, stored, organizationId: state.organizationId });
+        case "gone":
+            return cliContext.failAndThrow(
+                `Guest session ${stored.sessionId} can no longer be claimed (${state.status}). Run \`fern generate --guest --new-session\` to start a new one.`,
+                undefined,
+                { code: CliError.Code.ConfigError, instructionsTopic: InstructionsTopic.NewSite }
+            );
+        case "not_found":
+            return cliContext.failAndThrow(
+                `Venus has no guest session ${stored.sessionId} for this claim secret. It may have been deleted; run \`fern generate --guest --new-session\` to start a new one.`,
+                undefined,
+                { code: CliError.Code.ConfigError, instructionsTopic: InstructionsTopic.NewSite }
+            );
+        default:
+            assertNever(state);
     }
+}
 
+async function finishClaim({
+    cliContext,
+    fernDirectory,
+    stored,
+    organizationId
+}: {
+    cliContext: CliContext;
+    fernDirectory: AbsoluteFilePath;
+    stored: StoredGuestSession;
+    organizationId: string;
+}): Promise<void> {
     const projectConfig = await cliContext.runTask((context) =>
         loadProjectConfig({ directory: fernDirectory, context })
     );
-    if (projectConfig.rawConfig.organization !== result.organizationId) {
+    if (projectConfig.rawConfig.organization !== organizationId) {
         const updated = produce(projectConfig.rawConfig, (draft) => {
-            draft.organization = result.organizationId;
+            draft.organization = organizationId;
         });
         await writeFile(projectConfig._absolutePath, ensureFinalNewline(JSON.stringify(updated, undefined, 2)));
         cliContext.logger.info(
-            `Updated ${PROJECT_CONFIG_FILENAME}: organization is now ${chalk.bold(result.organizationId)}.`
+            `Updated ${PROJECT_CONFIG_FILENAME}: organization is now ${chalk.bold(organizationId)}.`
         );
     }
     await removeStoredGuestSession({ sessionId: stored.sessionId, absolutePathToFernDirectory: fernDirectory });
 
     cliContext.logger.info(
-        `Claimed guest session ${chalk.bold(stored.sessionId)} into organization ${chalk.bold(result.organizationId)}. Its guest token no longer works; run \`fern login\` or set FERN_TOKEN to keep generating.`
+        `Claimed guest session ${chalk.bold(stored.sessionId)} into organization ${chalk.bold(organizationId)}. Its guest token no longer works; run \`fern login\` or set FERN_TOKEN to keep generating.`
     );
-    for (const step of result.nextSteps) {
-        cliContext.logger.info(`  - ${step}`);
-    }
 }
 
-async function claimWithVenus({
+async function readSessionFromVenus({
     venusOrigin,
-    token,
     sessionId,
-    claimSecret,
-    organizationId
-}: ClaimRequest): Promise<ClaimResult> {
-    const response = await createVenusService({ environment: venusOrigin, token }).guestSession.claim(
-        { sessionId, organizationId },
-        { headers: { "X-Fern-Claim-Secret": claimSecret } }
-    );
-    if (response.ok) {
-        return { ok: true, organizationId: response.body.organizationId, nextSteps: response.body.nextSteps ?? [] };
+    claimSecret
+}: ReadSessionRequest): Promise<SessionState> {
+    try {
+        const response = await createVenusService({ environment: venusOrigin, token: undefined }).guestSession.get(
+            { sessionId },
+            { headers: { "X-Fern-Claim-Secret": claimSecret } }
+        );
+        if (!response.ok) {
+            const statusCode = (response.error as { statusCode?: number }).statusCode;
+            switch (statusCode) {
+                case 404:
+                    return { kind: "not_found" };
+                case 410:
+                    return { kind: "gone", status: "expired, deleted or taken down" };
+                default:
+                    return { kind: "unreachable", statusCode };
+            }
+        }
+        const { status } = response.body;
+        switch (status) {
+            case "claimed":
+                // No claimedOrganizationId means the guest organization itself became the claimant's.
+                return {
+                    kind: "claimed",
+                    organizationId: response.body.claimedOrganizationId ?? response.body.organizationId
+                };
+            case "active":
+            case "claiming":
+                return { kind: "unclaimed" };
+            case "expired":
+            case "deleted":
+            case "takenDown":
+                return { kind: "gone", status };
+            default:
+                // A status this CLI doesn't know yet: keep waiting rather than fail.
+                assertNeverNoThrow(status);
+                return { kind: "unreachable", statusCode: undefined };
+        }
+    } catch {
+        // Network errors are retried by the caller until its deadline.
+        return { kind: "unreachable", statusCode: undefined };
     }
-    const error = response.error as { statusCode?: number; content?: unknown };
-    return { ok: false, statusCode: error.statusCode, message: readSuggestedFix(error.content) };
 }
 
-function describeClaimFailure(
-    result: Extract<ClaimResult, { ok: false }>,
-    stored: StoredGuestSession,
-    organization: string | undefined
-): string {
-    const suffix = result.message != null ? ` ${result.message}` : "";
-    switch (result.statusCode) {
-        case 401:
-            return `Venus rejected your login while claiming guest session ${stored.sessionId}. Run \`fern login\` and retry.${suffix}`;
-        case 403:
-            return organization != null
-                ? `You are not an admin of organization "${organization}", so the guest session cannot be moved there.${suffix}`
-                : `Venus refused to claim guest session ${stored.sessionId}.${suffix}`;
-        case 404:
-            return `Venus has no guest session ${stored.sessionId} for this claim secret. It may have been deleted; run \`fern generate --guest\` to start a new one.${suffix}`;
-        case 410:
-            return `Guest session ${stored.sessionId} has nothing left to claim (expired, taken down or already claimed). Run \`fern generate --guest\` to start a new one.${suffix}`;
-        default:
-            return `Failed to claim guest session ${stored.sessionId}${result.statusCode != null ? ` (status ${result.statusCode})` : ""}.${suffix}`;
-    }
-}
-
-function readSuggestedFix(body: unknown): string | undefined {
-    if (typeof body !== "object" || body == null) {
-        return undefined;
-    }
-    const record = body as Record<string, unknown>;
-    const content =
-        typeof record.content === "object" && record.content != null
-            ? (record.content as Record<string, unknown>)
-            : record;
-    return typeof content.suggestedFix === "string" ? content.suggestedFix : undefined;
+async function openInBrowser(url: string): Promise<void> {
+    await open(url);
 }

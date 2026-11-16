@@ -92,7 +92,7 @@ describe("resolveGuestProject", () => {
         expect(logged('the SDK keeps the names of organization "acme"')).toBe(true);
         // The next step is the claim, not a login or a registry token.
         expect(logged("published to GitHub, or given a Fern repository")).toBe(true);
-        expect(logged("fern claim --org <organization>")).toBe(true);
+        expect(logged("fern claim opens the same claim page")).toBe(true);
     });
 
     it("says what claiming a docs run gives", async () => {

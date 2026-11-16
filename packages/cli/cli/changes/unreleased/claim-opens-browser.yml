@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern claim` now opens the guest session's claim page in your browser and waits there, instead of claiming
+    from the terminal. The browser claim is the full flow: choose or create the organization, rename the docs
+    site, and move the docs sites and SDK builds into it. Once the claim lands, `fern claim` points
+    `fern.config.json` at the new organization and forgets the guest session. `--org` is deprecated and ignored;
+    pick the organization on the claim page.
+  type: feat

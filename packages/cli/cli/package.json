@@ -137,6 +137,7 @@
     "latest-version": "catalog:",
     "mime-types": "catalog:",
     "lodash-es": "catalog:",
+    "open": "catalog:",
     "openapi-types": "^12.1.3",
     "pixelmatch": "catalog:",
     "pngjs": "catalog:",

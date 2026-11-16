@@ -39,7 +39,7 @@ export function describeClaimLink(claimUrl: string, work: GuestWork): string {
  * step is the claim and not a login, a GitHub repository or a registry token.
  */
 export function describeClaimOutcome(work: GuestWork): string {
-    const claimCommand = "from the CLI: fern login, then fern claim --org <organization>";
+    const claimCommand = "from the CLI: fern claim opens the same claim page";
     return work === "sdk"
         ? `After the claim the SDK appears on the organization's SDKs page in the Fern Dashboard, where it can be downloaded, published to GitHub, or given a Fern repository that regenerates it on push (${claimCommand}).`
         : `After the claim the site is listed under the organization's docs in the Fern Dashboard, where a GitHub repository can be connected to republish it (${claimCommand}).`;
