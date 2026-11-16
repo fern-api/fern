@@ -236,7 +236,16 @@ export async function claimGuestSession({
                 "Run `fern claim` again to retry; the claim itself is not repeated."
             ].join("\n"),
             undefined,
-            { code: CliError.Code.NetworkError, instructionsTopic: InstructionsTopic.NewSite }
+            {
+                code: [docs, sdks].some(
+                    (move) => move.kind === "failed" && (move.statusCode === 401 || move.statusCode === 403)
+                )
+                    ? CliError.Code.AuthError
+                    : [docs, sdks].some((move) => move.kind === "failed" && move.statusCode == null)
+                      ? CliError.Code.NetworkError
+                      : CliError.Code.ConfigError,
+                instructionsTopic: InstructionsTopic.NewSite
+            }
         );
     }
 
@@ -296,7 +305,11 @@ async function readSessionFromVenus({
 
 async function moveDocsWithFdr({ token, guestOrganizationId, docsUrl }: MoveDocsRequest): Promise<MoveDocsResult> {
     try {
-        const moved = await createDocsAnonymousClient({ baseUrl: getFdrOrigin(), token }).rehomeGuestSession({
+        const moved = await createDocsAnonymousClient({
+            baseUrl: getFdrOrigin(),
+            token,
+            fetch: (input, init) => fetch(input, { ...init, signal: AbortSignal.timeout(MOVE_TIMEOUT_MS) })
+        }).rehomeGuestSession({
             guestOrgId: guestOrganizationId,
             ...(docsUrl == null ? {} : { domain: docsUrl })
         });
@@ -424,7 +437,7 @@ function readSuggestedFix(body: unknown): string | undefined {
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
-    return typeof value === "object" && value != null;
+    return typeof value === "object" && value != null && !Array.isArray(value);
 }
 
 function readStatus(error: unknown): number | undefined {
