@@ -623,6 +623,7 @@ function convertSettingsConfig(
             // Left undefined when unset so the docs renderer applies its default.
             prioritizeCurrentProduct: settings.search?.prioritizeCurrentProduct,
             defaultFilterByCurrentProduct,
+            popularSearches: settings.search?.popularSearches,
             externalSitemaps: undefined
         },
         language: settings.language ?? "en",
