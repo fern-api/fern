@@ -7,7 +7,38 @@ const MAX_SEARCH_DEPTH = 6;
 
 /** Finds FDR's custom-domain routing rejection in an FDR client error, wherever the client put the message. */
 export function findCustomDomainBlockedMessage(error: unknown): string | undefined {
-    return findString(error, (value) => BLOCKED_HEADLINE.test(value), 0, new Set());
+    const visited = new Set<unknown>();
+    const search = (value: unknown, depth: number): string | undefined => {
+        if (typeof value === "string") {
+            const trimmed = value.trim();
+            if (BLOCKED_HEADLINE.test(trimmed)) {
+                return trimmed;
+            }
+            // Some clients hand back the raw response body, e.g. `{"message":"Publishing is blocked: …"}`.
+            if ((trimmed.startsWith("{") || trimmed.startsWith("[")) && depth < MAX_SEARCH_DEPTH) {
+                try {
+                    return search(JSON.parse(trimmed), depth + 1);
+                } catch {
+                    return undefined;
+                }
+            }
+            return undefined;
+        }
+        if (value == null || typeof value !== "object" || depth >= MAX_SEARCH_DEPTH || visited.has(value)) {
+            return undefined;
+        }
+        visited.add(value);
+        const record = value as Record<string, unknown>;
+        // `message` and `cause` are non-enumerable on Error instances.
+        for (const key of new Set(["message", "cause", ...Object.keys(record)])) {
+            const found = search(record[key], depth + 1);
+            if (found != null) {
+                return found;
+            }
+        }
+        return undefined;
+    };
+    return search(error, 0);
 }
 
 export function isCustomDomainRoutingWarning(warning: string): boolean {
@@ -22,42 +53,6 @@ export function formatCustomDomainRoutingNotice(message: string, severity: "bloc
     const width = Math.max(...lines.map((line) => stripAnsi(line).length)) + 2;
     const border = color("━".repeat(width));
     return ["", border, ...lines.map((line) => (line === "" ? "" : ` ${line}`)), border, ""].join("\n");
-}
-
-function findString(
-    value: unknown,
-    matches: (value: string) => boolean,
-    depth: number,
-    seen: Set<object>
-): string | undefined {
-    if (typeof value === "string") {
-        const trimmed = value.trim();
-        if (matches(trimmed)) {
-            return trimmed;
-        }
-        // Some clients hand back the raw response body, e.g. `{"message":"Publishing is blocked: …"}`.
-        if ((trimmed.startsWith("{") || trimmed.startsWith("[")) && depth < MAX_SEARCH_DEPTH) {
-            try {
-                return findString(JSON.parse(trimmed), matches, depth + 1, seen);
-            } catch {
-                return undefined;
-            }
-        }
-        return undefined;
-    }
-    if (value == null || typeof value !== "object" || depth >= MAX_SEARCH_DEPTH || seen.has(value)) {
-        return undefined;
-    }
-    seen.add(value);
-    const record = value as Record<string, unknown>;
-    // `message` and `cause` are non-enumerable on Error instances.
-    for (const key of new Set(["message", "cause", ...Object.keys(record)])) {
-        const found = findString(record[key], matches, depth + 1, seen);
-        if (found != null) {
-            return found;
-        }
-    }
-    return undefined;
 }
 
 function stripAnsi(value: string): string {
