@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern --version` in a project that pins a CLI older than 5.215.0 prints the pinned version again
+    instead of failing; it no longer runs the older CLI to do it. When the CLI refuses to run an older
+    version, the message now goes to stderr, so scripts that capture stdout (for example
+    `$(fern --version)`) no longer pick it up.
+  type: fix

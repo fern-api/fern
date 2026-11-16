@@ -649,6 +649,9 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {},
+      ],
       "name": "Plant",
       "shape": {
         "extends": [],
@@ -745,6 +748,9 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {},
+      ],
       "name": "PlantResponse",
       "shape": {
         "extends": [],
@@ -848,6 +854,9 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        "available",
+      ],
       "name": "PlantStatus",
       "shape": {
         "default": undefined,

@@ -1,0 +1,5 @@
+- summary: |
+    Add the `layout.breadcrumbs.sticky` docs.yml setting. When set to true, the
+    breadcrumb row stays pinned below the header while the page scrolls.
+    Defaults to false.
+  type: feat

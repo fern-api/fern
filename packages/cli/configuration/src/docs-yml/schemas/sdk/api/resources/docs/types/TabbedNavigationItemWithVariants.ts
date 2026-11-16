@@ -4,5 +4,6 @@ import type * as FernDocsConfig from "../../../index.js";
 
 export interface TabbedNavigationItemWithVariants {
     tab: FernDocsConfig.TabId;
-    variants: FernDocsConfig.TabVariant[];
+    /** Variants shown in a selector at the top of the tab's sidebar. */
+    variants: FernDocsConfig.TabVariantItem[];
 }

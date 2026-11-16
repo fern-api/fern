@@ -171,6 +171,11 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "temperature": 1.1,
+        },
+      ],
       "name": "Measurement",
       "shape": {
         "extends": [],

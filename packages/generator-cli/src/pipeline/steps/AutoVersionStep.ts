@@ -4,9 +4,12 @@ import { existsSync } from "fs";
 import { readFile, writeFile } from "fs/promises";
 import { join } from "path";
 import {
+    type AutoVersionFallbackReason,
     AutoVersioningException,
     AutoVersioningService,
+    changelogContainsVersion,
     countFilesInDiff,
+    formatAutoVersionFallbackLog,
     formatSizeKB,
     incrementVersion,
     isPlaceholderVersion,
@@ -15,6 +18,7 @@ import {
     MAX_AI_DIFF_BYTES,
     MAX_CHUNKS,
     MAX_RAW_DIFF_BYTES,
+    MAX_SINGLE_REQUEST_DIFF_BYTES,
     mapMagicVersionForLanguage,
     maxVersionBump,
     prependChangelogBlock
@@ -28,6 +32,17 @@ const COMMIT_MARKER = "[fern-autoversion]";
 const FERN_TRAILER = "\n\n🌿 Generated with Fern";
 
 type VersionBumpLabel = "MAJOR" | "MINOR" | "PATCH" | "NO_CHANGE";
+
+interface AnalysisWarning {
+    reason: AutoVersionFallbackReason;
+    message: string;
+}
+
+function warningFields(
+    warning: AnalysisWarning | undefined
+): Pick<AutoVersionStepResult, "analysisWarning" | "analysisWarningCode"> {
+    return warning == null ? {} : { analysisWarning: warning.message, analysisWarningCode: warning.reason };
+}
 
 /**
  * Runs SDK autoversioning in one of two modes:
@@ -52,7 +67,12 @@ type VersionBumpLabel = "MAJOR" | "MINOR" | "PATCH" | "NO_CHANGE";
  * Falls back to a PATCH bump with a neutral commit message when:
  *  - The cleaned diff exceeds MAX_RAW_DIFF_BYTES.
  *  - The FAI call throws (network error, rate limit, malformed response, …).
- * In both cases the result carries `analysisWarning` so GithubStep can flag the PR.
+ * In both cases the result carries `analysisWarning` so GithubStep can flag the PR, plus a
+ * machine-readable `analysisWarningCode`, and the step logs a stable
+ * `AUTO versioning fallback: reason=<code>` line.
+ *
+ * **Fixed-version mode** (`fixedVersion` set, i.e. `--version X.Y.Z`): keeps the given
+ * version and runs the analysis only to write the changelog entry and PR description.
  */
 export class AutoVersionStep extends BaseStep {
     readonly name = "autoVersion";
@@ -66,14 +86,23 @@ export class AutoVersionStep extends BaseStep {
     }
 
     async execute(context: PipelineContext): Promise<AutoVersionStepResult> {
-        const prepared = context.previousStepResults.generationCommit?.preparedReplay;
+        const prepared = context.previousStepResults.generationCommit?.preparedReplay ?? undefined;
+        if (prepared?.flow === "skip-application") {
+            this.logger.info("AutoVersionStep: replay flow is skip-application; skipping autoversion.");
+            return { executed: true, success: true };
+        }
+        if (this.config.fixedVersion != null) {
+            return await this.handleFixedVersion(this.config.fixedVersion, prepared);
+        }
+        const result = await this.runAutoVersion(prepared);
+        if (result.analysisWarningCode != null) {
+            this.logger.warn(formatAutoVersionFallbackLog(result.analysisWarningCode, result.analysisWarning));
+        }
+        return result;
+    }
 
+    private async runAutoVersion(prepared: PreparedReplay | undefined): Promise<AutoVersionStepResult> {
         if (prepared) {
-            if (prepared.flow === "skip-application") {
-                this.logger.info("AutoVersionStep: replay flow is skip-application; skipping autoversion.");
-                return { executed: true, success: true };
-            }
-
             const language = this.config.language;
             const mappedMagicVersion = mapMagicVersionForLanguage(MAGIC_VERSION, language);
             const service = new AutoVersioningService({ logger: this.toTaskLogger() });
@@ -208,22 +237,19 @@ export class AutoVersionStep extends BaseStep {
             });
         }
 
-        if (cleanedBytes > MAX_RAW_DIFF_BYTES) {
-            const warning =
-                `diff too large for FAI (${formatSizeKB(cleanedBytes)}KB, ` +
-                `limit ${formatSizeKB(MAX_RAW_DIFF_BYTES)}KB)`;
-            this.logger.warn(`AutoVersionStep: ${warning}. Falling back to PATCH.`);
+        const tooLarge = this.diffTooLargeWarning(cleanedBytes, "AutoVersionStep");
+        if (tooLarge != null) {
             return await this.finalizeWithBump({
                 service,
                 language,
                 mappedMagicVersion,
                 previousVersion,
                 analysis: this.fallbackPatchAnalysis(),
-                analysisWarning: warning
+                warning: tooLarge
             });
         }
 
-        const { analysis, analysisWarning } = await this.analyze({
+        const { analysis, warning } = await this.analyze({
             service,
             cleanedDiff,
             language,
@@ -239,7 +265,7 @@ export class AutoVersionStep extends BaseStep {
                 mappedMagicVersion,
                 previousVersion,
                 reason: "FAI returned NO_CHANGE",
-                analysisWarning
+                warning
             });
         }
 
@@ -249,7 +275,7 @@ export class AutoVersionStep extends BaseStep {
             mappedMagicVersion,
             previousVersion,
             analysis,
-            analysisWarning
+            warning
         });
     }
 
@@ -307,22 +333,19 @@ export class AutoVersionStep extends BaseStep {
             });
         }
 
-        if (cleanedBytes > MAX_RAW_DIFF_BYTES) {
-            const warning =
-                `diff too large for FAI (${formatSizeKB(cleanedBytes)}KB, ` +
-                `limit ${formatSizeKB(MAX_RAW_DIFF_BYTES)}KB)`;
-            this.logger.warn(`AutoVersionStep (non-replay): ${warning}. Falling back to PATCH.`);
+        const tooLarge = this.diffTooLargeWarning(cleanedBytes, "AutoVersionStep (non-replay)");
+        if (tooLarge != null) {
             return await this.finalizeWithBumpNonReplay({
                 service,
                 language,
                 mappedMagicVersion,
                 previousVersion,
                 analysis: this.fallbackPatchAnalysis(),
-                analysisWarning: warning
+                warning: tooLarge
             });
         }
 
-        const { analysis, analysisWarning } = await this.analyze({
+        const { analysis, warning } = await this.analyze({
             service,
             cleanedDiff,
             language,
@@ -340,7 +363,7 @@ export class AutoVersionStep extends BaseStep {
                 mappedMagicVersion,
                 previousVersion,
                 reason: "FAI returned NO_CHANGE",
-                analysisWarning
+                warning
             });
         }
 
@@ -350,7 +373,7 @@ export class AutoVersionStep extends BaseStep {
             mappedMagicVersion,
             previousVersion,
             analysis,
-            analysisWarning
+            warning
         });
     }
 
@@ -358,11 +381,22 @@ export class AutoVersionStep extends BaseStep {
         return { versionBump: "PATCH", message: this.brandMessage("SDK regeneration") };
     }
 
+    private diffTooLargeWarning(cleanedBytes: number, label: string): AnalysisWarning | undefined {
+        if (cleanedBytes <= MAX_RAW_DIFF_BYTES) {
+            return undefined;
+        }
+        const message =
+            `diff too large for FAI (${formatSizeKB(cleanedBytes)}KB, ` +
+            `limit ${formatSizeKB(MAX_RAW_DIFF_BYTES)}KB)`;
+        this.logger.warn(`${label}: ${message}.`);
+        return { reason: "diff-too-large", message };
+    }
+
     /**
      * Runs FAI analysis over the cleaned diff. Never throws: when analysis cannot be
-     * obtained at all, returns a PATCH fallback together with an `analysisWarning`
-     * describing why, so callers can surface it in the step result / PR body instead
-     * of shipping a silent PATCH for what may be a breaking change.
+     * obtained at all, returns a PATCH fallback together with a `warning` describing
+     * why, so callers can surface it in the step result / PR body instead of shipping
+     * a silent PATCH for what may be a breaking change.
      */
     private async analyze(params: {
         service: AutoVersioningService;
@@ -370,7 +404,7 @@ export class AutoVersionStep extends BaseStep {
         language: string;
         previousVersion: string;
         label: string;
-    }): Promise<{ analysis: FAIAnalysis | null; analysisWarning?: string }> {
+    }): Promise<{ analysis: FAIAnalysis | null; warning?: AnalysisWarning }> {
         const { service, cleanedDiff, language, previousVersion, label } = params;
         const chunks = service.chunkDiff(cleanedDiff, MAX_AI_DIFF_BYTES);
         const cappedChunks = chunks.slice(0, MAX_CHUNKS);
@@ -390,47 +424,160 @@ export class AutoVersionStep extends BaseStep {
                 // FAI service with the fern token. FAI chunks internally, so send the full
                 // cleaned diff in one request first; if that single large request fails,
                 // retry chunk-by-chunk so one timeout/5xx can't discard the whole analysis.
-                try {
-                    return { analysis: await this.analyzeViaFaiService(cleanedDiff, language, previousVersion) };
-                } catch (error) {
-                    if (cappedChunks.length <= 1) {
-                        throw error;
-                    }
-                    this.logger.warn(
-                        `${label}: FAI analysis of the full diff failed (${String(error)}); retrying in ${cappedChunks.length} chunks.`
-                    );
-                    logSplit();
-                    const chunked = await this.analyzeChunksViaFaiService(
-                        cappedChunks,
-                        language,
-                        previousVersion,
-                        label
-                    );
-                    const warnings = [chunked.analysisWarning];
-                    if (skippedChunks > 0) {
-                        warnings.push(
-                            `${skippedChunks} of ${chunks.length} diff chunks were not analyzed (capped at ${MAX_CHUNKS})`
+                // Diffs over MAX_SINGLE_REQUEST_DIFF_BYTES skip the single request and go
+                // straight to the highest-priority chunks. A successful single request covers the
+                // whole diff (FAI does its own chunking), so MAX_CHUNKS doesn't apply to it.
+                const cleanedBytes = Buffer.byteLength(cleanedDiff, "utf-8");
+                if (cleanedBytes <= MAX_SINGLE_REQUEST_DIFF_BYTES || cappedChunks.length <= 1) {
+                    try {
+                        return { analysis: await this.analyzeViaFaiService(cleanedDiff, language, previousVersion) };
+                    } catch (error) {
+                        if (cappedChunks.length <= 1) {
+                            throw error;
+                        }
+                        this.logger.warn(
+                            `${label}: FAI analysis of the full diff failed (${String(error)}); retrying in ${cappedChunks.length} chunks.`
                         );
                     }
-                    const analysisWarning = warnings.filter(hasText).join("; ");
-                    return {
-                        analysis: chunked.analysis,
-                        analysisWarning: analysisWarning.length > 0 ? analysisWarning : undefined
-                    };
+                } else {
+                    this.logger.info(
+                        `${label}: diff is ${formatSizeKB(cleanedBytes)}KB, over the ` +
+                            `${formatSizeKB(MAX_SINGLE_REQUEST_DIFF_BYTES)}KB single-request limit; analyzing in chunks.`
+                    );
                 }
+                logSplit();
+                const chunked = await this.analyzeChunksViaFaiService(cappedChunks, language, previousVersion, label);
+                const warnings = [chunked.analysisWarning];
+                if (skippedChunks > 0) {
+                    warnings.push(
+                        `${skippedChunks} of ${chunks.length} diff chunks were not analyzed (capped at ${MAX_CHUNKS})`
+                    );
+                }
+                const message = warnings.filter(hasText).join("; ");
+                return {
+                    analysis: chunked.analysis,
+                    warning: message.length > 0 ? { reason: "partial-analysis", message } : undefined
+                };
             }
             logSplit();
+            const analysis =
+                cappedChunks.length <= 1
+                    ? await this.analyzeSingle(cleanedDiff, language, previousVersion)
+                    : await this.analyzeChunks(cappedChunks, language, previousVersion);
+            if (skippedChunks === 0) {
+                return { analysis };
+            }
             return {
-                analysis:
-                    cappedChunks.length <= 1
-                        ? await this.analyzeSingle(cleanedDiff, language, previousVersion)
-                        : await this.analyzeChunks(cappedChunks, language, previousVersion)
+                analysis,
+                warning: {
+                    reason: "partial-analysis",
+                    message: `${skippedChunks} of ${chunks.length} diff chunks were not analyzed (capped at ${MAX_CHUNKS})`
+                }
             };
         } catch (error) {
-            const warning = `FAI analysis failed (${String(error)})`;
-            this.logger.warn(`${label}: ${warning}; falling back to PATCH bump.`);
-            return { analysis: this.fallbackPatchAnalysis(), analysisWarning: warning };
+            const message = `FAI analysis failed (${String(error)})`;
+            this.logger.warn(`${label}: ${message}; falling back to PATCH bump.`);
+            return { analysis: this.fallbackPatchAnalysis(), warning: { reason: "analysis-failed", message } };
         }
+    }
+
+    /**
+     * Explicit `--version X.Y.Z`: the version is already in the generated files, so the
+     * diff is analyzed only to write the changelog entry and PR description. The result
+     * never sets `versionBump` or `analysisWarning`, so it can't change the version or
+     * block automerge; an unavailable analysis just leaves the version-only changelog
+     * entry that GithubStep writes.
+     */
+    private async handleFixedVersion(
+        fixedVersion: string,
+        prepared: PreparedReplay | undefined
+    ): Promise<AutoVersionStepResult> {
+        const label = "AutoVersionStep (fixed version)";
+        const base: AutoVersionStepResult = {
+            executed: true,
+            success: true,
+            version: fixedVersion,
+            previousVersion: this.config.baseVersion
+        };
+        const withReason = (warning: AnalysisWarning | undefined): AutoVersionStepResult => {
+            if (warning == null) {
+                return base;
+            }
+            this.logger.warn(formatAutoVersionFallbackLog(warning.reason, warning.message));
+            return { ...base, analysisWarningCode: warning.reason };
+        };
+
+        const rawDiff = this.fixedVersionDiff(prepared);
+        if (rawDiff == null || rawDiff.trim().length === 0) {
+            this.logger.info(`${label}: no previous generation to diff against; skipping changelog analysis.`);
+            return base;
+        }
+
+        const service = new AutoVersioningService({ logger: this.toTaskLogger() });
+        const cleanedDiff = service.cleanDiffForAI(rawDiff, fixedVersion);
+        if (cleanedDiff.trim().length === 0) {
+            this.logger.info(`${label}: cleaned diff is empty; no changelog entry to write.`);
+            return base;
+        }
+
+        const tooLarge = this.diffTooLargeWarning(Buffer.byteLength(cleanedDiff, "utf-8"), label);
+        if (tooLarge != null) {
+            return withReason(tooLarge);
+        }
+
+        const { analysis, warning } = await this.analyze({
+            service,
+            cleanedDiff,
+            language: this.config.language,
+            previousVersion: this.config.baseVersion ?? fixedVersion,
+            label
+        });
+        // On analysis-failed, analyze() returns the PATCH fallback analysis. Its placeholder
+        // message must not become the changelog entry for an explicit version, so bail out too.
+        if (analysis == null || warning?.reason === "analysis-failed") {
+            return withReason(warning);
+        }
+
+        const withEntry = this.withChangelogFallback(analysis);
+        const result: AutoVersionStepResult = {
+            ...withReason(warning),
+            prDescription: withEntry.prDescription,
+            versionBumpReason: withEntry.versionBumpReason
+        };
+        const entry = withEntry.changelogEntry;
+        if (!hasText(entry)) {
+            return result;
+        }
+
+        const changelogPath = join(this.outputDir, "changelog.md");
+        const existing = existsSync(changelogPath) ? await readFile(changelogPath, "utf-8") : "";
+        if (changelogContainsVersion(existing, fixedVersion)) {
+            this.logger.info(`${label}: changelog.md already has an entry for ${fixedVersion}; leaving it as is.`);
+            return result;
+        }
+        await this.prependChangelogEntry({ version: fixedVersion, entry });
+        this.logger.info(`${label}: wrote AI changelog entry for ${fixedVersion}.`);
+        return {
+            ...result,
+            commitMessage: withEntry.message,
+            changelogEntry: entry,
+            // Replay mode commits each step; non-replay leaves the change for GithubStep's commit.
+            commitSha: prepared != null ? this.commitAutoversion(withEntry.message) : undefined
+        };
+    }
+
+    private fixedVersionDiff(prepared: PreparedReplay | undefined): string | undefined {
+        if (prepared == null) {
+            return this.gitDiffHead();
+        }
+        if (prepared.previousGenerationSha == null) {
+            return undefined;
+        }
+        const diffBase = this.resolveReachableGenerationBase(
+            prepared.previousGenerationSha,
+            prepared.currentGenerationSha
+        );
+        return diffBase != null ? this.safeGitDiff(diffBase, prepared.currentGenerationSha) : undefined;
     }
 
     /**
@@ -448,9 +595,9 @@ export class AutoVersionStep extends BaseStep {
         mappedMagicVersion: string;
         previousVersion: string;
         reason: string;
-        analysisWarning?: string;
+        warning?: AnalysisWarning;
     }): Promise<AutoVersionStepResult> {
-        const { service, language, mappedMagicVersion, previousVersion, reason, analysisWarning } = params;
+        const { service, language, mappedMagicVersion, previousVersion, reason, warning } = params;
 
         // `previousVersion` flows into the same `bash -c` + single-quoted sed
         // expression that `handleFirstGeneration` guards against with
@@ -481,7 +628,7 @@ export class AutoVersionStep extends BaseStep {
             versionBump: "NO_CHANGE",
             commitMessage,
             commitSha,
-            analysisWarning
+            ...warningFields(warning)
         };
     }
 
@@ -491,9 +638,9 @@ export class AutoVersionStep extends BaseStep {
         mappedMagicVersion: string;
         previousVersion: string;
         analysis: FAIAnalysis;
-        analysisWarning?: string;
+        warning?: AnalysisWarning;
     }): Promise<AutoVersionStepResult> {
-        const { service, language, mappedMagicVersion, previousVersion, analysisWarning } = params;
+        const { service, language, mappedMagicVersion, previousVersion, warning } = params;
         const analysis = this.withChangelogFallback(params.analysis);
 
         const newVersion = incrementVersion(previousVersion, analysis.versionBump as VersionBumpEnum);
@@ -520,7 +667,7 @@ export class AutoVersionStep extends BaseStep {
             versionBump: analysis.versionBump as VersionBumpLabel,
             prDescription: analysis.prDescription,
             versionBumpReason: analysis.versionBumpReason,
-            analysisWarning,
+            ...warningFields(warning),
             commitSha
         };
     }
@@ -535,9 +682,9 @@ export class AutoVersionStep extends BaseStep {
         mappedMagicVersion: string;
         previousVersion: string;
         reason: string;
-        analysisWarning?: string;
+        warning?: AnalysisWarning;
     }): Promise<AutoVersionStepResult> {
-        const { service, language, mappedMagicVersion, previousVersion, reason, analysisWarning } = params;
+        const { service, language, mappedMagicVersion, previousVersion, reason, warning } = params;
 
         if (!isValidSemver(previousVersion)) {
             const errorMessage =
@@ -560,7 +707,7 @@ export class AutoVersionStep extends BaseStep {
             previousVersion,
             versionBump: "NO_CHANGE",
             commitMessage,
-            analysisWarning
+            ...warningFields(warning)
         };
     }
 
@@ -574,9 +721,9 @@ export class AutoVersionStep extends BaseStep {
         mappedMagicVersion: string;
         previousVersion: string;
         analysis: FAIAnalysis;
-        analysisWarning?: string;
+        warning?: AnalysisWarning;
     }): Promise<AutoVersionStepResult> {
-        const { service, language, mappedMagicVersion, previousVersion, analysisWarning } = params;
+        const { service, language, mappedMagicVersion, previousVersion, warning } = params;
         const analysis = this.withChangelogFallback(params.analysis);
 
         const newVersion = incrementVersion(previousVersion, analysis.versionBump as VersionBumpEnum);
@@ -603,7 +750,7 @@ export class AutoVersionStep extends BaseStep {
             versionBump: analysis.versionBump as VersionBumpLabel,
             prDescription: analysis.prDescription,
             versionBumpReason: analysis.versionBumpReason,
-            analysisWarning
+            ...warningFields(warning)
         };
     }
 

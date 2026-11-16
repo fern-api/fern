@@ -5,6 +5,7 @@ import { createFdrService } from "@fern-api/core";
 import {
     asyncPool,
     errorMessageOrString,
+    getProfileVarNames,
     MediaType,
     replaceEnvVariables,
     sanitizePreviewId
@@ -957,7 +958,7 @@ export async function publishDocs({
             const substitutedDocs = replaceEnvVariables(
                 docsWithoutJsFiles,
                 { onError: (e) => context.failAndThrow(undefined, e, { code: CliError.Code.EnvironmentError }) },
-                { substituteAsEmpty: false }
+                { substituteAsEmpty: false, keep: getProfileVarNames(docsWorkspace.config.profiles) }
             );
             docsDefinition = { ...substitutedDocs, jsFiles };
         }
@@ -972,13 +973,19 @@ export async function publishDocs({
             `Memory after resolve: RSS=${(resolveMemory.rss / 1024 / 1024).toFixed(2)}MB, Heap=${(resolveMemory.heapUsed / 1024 / 1024).toFixed(2)}MB`
         );
 
-        const missingRedirects = await validateMissingRedirects({
-            workspace: docsWorkspace,
-            docsDefinition,
-            instanceUrl: domain,
-            token: token.value,
-            logger: context.logger
-        });
+        // A guest token cannot read the drop site's published pages from FDR (it only gets
+        // the publish routes), so the comparison would always be skipped with a confusing
+        // "FDR returned 403" warning. A drop site is throwaway, so there is nothing to protect.
+        const missingRedirects =
+            token.type === "guest"
+                ? []
+                : await validateMissingRedirects({
+                      workspace: docsWorkspace,
+                      docsDefinition,
+                      instanceUrl: domain,
+                      token: token.value,
+                      logger: context.logger
+                  });
         logViolations({
             context,
             violations: missingRedirects,

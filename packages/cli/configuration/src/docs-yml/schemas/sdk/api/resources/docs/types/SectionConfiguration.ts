@@ -7,6 +7,8 @@ export interface SectionConfiguration extends FernDocsConfig.WithPermissions, Fe
     /** The relative path to the markdown file that will be displayed when the section is clicked. */
     path?: string;
     contents: FernDocsConfig.NavigationItem[];
+    /** Name of a profile in `profiles:`. Pages under this item use its values for `${NAME}`. The innermost `profile:` wins. */
+    profile?: string;
     /** Deprecated. Use `collapsible` and `collapsed-by-default` instead. */
     collapsed?: FernDocsConfig.CollapsedValue;
     /** Whether the section can be expanded/collapsed by the user. */

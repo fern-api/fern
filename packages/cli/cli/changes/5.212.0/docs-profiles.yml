@@ -1,0 +1,6 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add docs profiles. A profile is a named set of values, like a product name or CLI command, that
+    fills `${NAME}` placeholders. Publish one set of pages as several editions without copying them.
+  type: feat

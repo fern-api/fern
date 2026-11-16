@@ -34,6 +34,17 @@ export function describeClaimLink(claimUrl: string, work: GuestWork): string {
     return parsed.toString();
 }
 
+/**
+ * What the claim gives, so whoever reads the log (often an agent handing the link to a person) knows the next
+ * step is the claim and not a login, a GitHub repository or a registry token.
+ */
+export function describeClaimOutcome(work: GuestWork): string {
+    const claimCommand = "from the CLI: fern login, then fern claim --org <organization>";
+    return work === "sdk"
+        ? `After the claim the SDK appears on the organization's SDKs page in the Fern Dashboard, where it can be downloaded, published to GitHub, or given a Fern repository that regenerates it on push (${claimCommand}).`
+        : `After the claim the site is listed under the organization's docs in the Fern Dashboard, where a GitHub repository can be connected to republish it (${claimCommand}).`;
+}
+
 export async function resolveGuestProject({
     project,
     cliContext,
@@ -74,6 +85,7 @@ export async function resolveGuestProject({
         `${verb} guest session ${chalk.bold(token.sessionId)} as organization ${chalk.bold(token.organizationId)} (expires ${token.expiresAt.toLocaleString()}).`
     );
     cliContext.logger.info(`Claim it to keep this work: ${chalk.cyan(describeClaimLink(token.claimUrl, work))}`);
+    cliContext.logger.info(describeClaimOutcome(work));
     const msLeft = token.expiresAt.getTime() - now.getTime();
     if (msLeft < EXPIRY_WARNING_MS) {
         cliContext.logger.warn(

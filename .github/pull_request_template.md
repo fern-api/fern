@@ -1,6 +1,6 @@
 ## Description
-Linear ticket: Closes 
-<!-- Use "Closes" to automatically close the ticket when PR merges, or "Refs" to link without closing -->
+Jira ticket: 
+<!-- Jira issue key, e.g. FSDK-123 or FERNDOC-123. The key links this PR to the ticket. -->
 <!-- Provide a clear and concise description of the changes made in this PR -->
 
 ## Changes Made

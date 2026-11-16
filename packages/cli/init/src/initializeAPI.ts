@@ -6,6 +6,7 @@ import {
     SDK_CONFIG_FILENAME
 } from "@fern-api/configuration-loader";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { CODING_AGENT_SKILLS_HINT } from "@fern-api/login";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import { mkdir } from "fs/promises";
@@ -125,6 +126,7 @@ export async function initializeAPI({
         context.logger.info(chalk.green("Created new API: ./" + path.relative(process.cwd(), directoryOfWorkspace)));
     }
 
+    let docsInitialized = false;
     // The docs cannot read an SDK Config API, so they are given its spec instead.
     if (useSdkConfig) {
         await repointRelocatedSpecs({ absolutePathToFernDirectory, taskContext: context });
@@ -136,7 +138,12 @@ export async function initializeAPI({
                 useSdkConfig,
                 openApi: openApiUrl ?? getSpecPathOfNewApi({ directoryOfWorkspace, relocatedOpenApiPath })
             });
+            docsInitialized = true;
         }
+    }
+    // initializeDocs ends with the same hint.
+    if (!docsInitialized) {
+        context.logger.info(CODING_AGENT_SKILLS_HINT);
     }
 }
 

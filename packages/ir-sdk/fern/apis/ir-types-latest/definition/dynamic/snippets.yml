@@ -1,4 +1,5 @@
 imports:
+  commons: ./commons.yml
   auth: ./auth.yml
   endpoints: ./endpoints.yml
   environment: ./environment.yml
@@ -52,6 +53,39 @@ types:
       If there are any errors, the snippet will still sometimes represent a
       partial and/or valid result. This is useful for rendering a snippet alongside
       error messages the user can use to diagnose and resolve the problem.
+    properties:
+      snippet: string
+      errors: optional<list<Error>>
+
+  TypeSnippetRequest:
+    audiences:
+      - dynamic
+    docs: |
+      The user-facing request type used to generate a snippet that constructs a value of a named
+      type with the SDK (no endpoint call), e.g. for a type reference page in the docs.
+    properties:
+      typeId: commons.TypeId
+      value:
+        docs: The JSON value to construct, in the type's wire representation.
+        type: unknown
+      serializeAs:
+        docs: |
+          When set, the snippet also serializes the constructed value in the given format
+          (e.g. an XML-encoded type's `toXml()` call).
+        type: optional<TypeSnippetSerialization>
+
+  TypeSnippetSerialization:
+    audiences:
+      - dynamic
+    enum:
+      - xml
+
+  TypeSnippetResponse:
+    audiences:
+      - dynamic
+    docs: |
+      The user-facing response type containing the generated type snippet; see `EndpointSnippetResponse`
+      for how `errors` relates to `snippet`.
     properties:
       snippet: string
       errors: optional<list<Error>>

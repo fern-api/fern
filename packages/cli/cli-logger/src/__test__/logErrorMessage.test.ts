@@ -84,6 +84,37 @@ describe("logErrorMessage instructions hint", () => {
         expect(lines).toEqual(["Oops.", "cause"]);
     });
 
+    it("prints one hint per topic, without duplicates", () => {
+        vi.stubEnv("CLAUDECODE", "1");
+        const { lines, logger } = captureLogs();
+        logErrorMessage({
+            message: "Something failed.",
+            error: undefined,
+            logger,
+            instructionsTopic: [InstructionsTopic.DocsWrite, InstructionsTopic.Spec, InstructionsTopic.DocsWrite]
+        });
+        expect(lines).toEqual([
+            "Something failed.",
+            "For guidance, run `fern instructions docs write`.",
+            "For guidance, run `fern instructions spec`."
+        ]);
+    });
+
+    it("prints hints when there is no message or error", () => {
+        vi.stubEnv("CLAUDECODE", "1");
+        const { lines, logger } = captureLogs();
+        logErrorMessage({ message: undefined, error: undefined, logger, instructionsTopic: [InstructionsTopic.Spec] });
+        expect(lines).toEqual(["For guidance, run `fern instructions spec`."]);
+    });
+
+    it("prints nothing without a message, error or topic", () => {
+        vi.stubEnv("CLAUDECODE", "1");
+        const { lines, logger } = captureLogs();
+        logErrorMessage({ message: undefined, error: undefined, logger, instructionsTopic: [] });
+        logErrorMessage({ message: undefined, error: undefined, logger });
+        expect(lines).toEqual([]);
+    });
+
     it("leaves already-logged TaskAbortSignal failures alone", () => {
         vi.stubEnv("CLAUDECODE", "1");
         const { lines, logger } = captureLogs();

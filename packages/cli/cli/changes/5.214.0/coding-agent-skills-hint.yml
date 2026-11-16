@@ -1,0 +1,5 @@
+- summary: |
+    `fern init` ends with a hint for users who drive Fern through a coding agent: `npx skills add fern-api/skills --all`
+    installs the Fern skills, which teach the agent the whole workflow (docs, SDKs, publishing). The "No Fern account
+    found" error a run hits without a login or `FERN_TOKEN` carries the same hint next to its `--guest` suggestion.
+  type: feat

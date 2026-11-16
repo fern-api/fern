@@ -957,6 +957,7 @@ function convertMultipartRequestToSchema(request: RequestWithExample.Multipart):
         source: request.source,
         inline: undefined,
         minProperties: undefined,
-        maxProperties: undefined
+        maxProperties: undefined,
+        examples: undefined
     });
 }

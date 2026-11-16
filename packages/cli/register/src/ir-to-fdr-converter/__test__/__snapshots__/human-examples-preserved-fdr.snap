@@ -375,6 +375,12 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "price": 1.1,
+          "title": "string",
+        },
+      ],
       "name": "CreateProductRequest",
       "shape": {
         "extends": [],
@@ -458,6 +464,13 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "id": "string",
+          "price": 1.1,
+          "title": "string",
+        },
+      ],
       "name": "Product",
       "shape": {
         "extends": [],

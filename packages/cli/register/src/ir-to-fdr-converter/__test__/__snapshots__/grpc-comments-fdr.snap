@@ -220,6 +220,9 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {},
+      ],
       "name": "Comment",
       "shape": {
         "extends": [],
@@ -339,6 +342,9 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {},
+      ],
       "name": "CreateCommentRequest",
       "shape": {
         "extends": [],
@@ -415,6 +421,9 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {},
+      ],
       "name": "CreateCommentResponse",
       "shape": {
         "extends": [],

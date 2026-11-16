@@ -85,7 +85,11 @@ describe("siteHosts", () => {
 
 describe("ValidRemotePathsRule", () => {
     const run = async (remotePaths: unknown) => {
-        const { redirects: _redirects, ...config } = docsYml.RawSchemas.Serializer.DocsConfiguration.parseOrThrow({
+        const {
+            redirects: _redirects,
+            profiles: _profiles,
+            ...config
+        } = docsYml.RawSchemas.Serializer.DocsConfiguration.parseOrThrow({
             instances: [{ url: "fernwood.docs.buildwithfern.com" }],
             "remote-paths": remotePaths
         });

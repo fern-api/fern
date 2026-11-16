@@ -1,5 +1,5 @@
 import { getUserToken } from "@fern-api/auth";
-import { extractErrorMessage, replaceEnvVariables } from "@fern-api/core-utils";
+import { extractErrorMessage, getProfileVarNames, replaceEnvVariables } from "@fern-api/core-utils";
 import {
     isValidRelativeSlug,
     parseImagePaths,
@@ -452,7 +452,7 @@ export async function getPreviewDocsDefinition({
         const substitutedDocs = replaceEnvVariables(
             docsWithoutJsFiles,
             { onError: (e) => context.logger.error(e ?? "Unknown error during environment variable substitution") },
-            { substituteAsEmpty: true }
+            { substituteAsEmpty: true, keep: getProfileVarNames(docsWorkspace.config.profiles) }
         );
         docsDefinition = { ...substitutedDocs, jsFiles };
     }

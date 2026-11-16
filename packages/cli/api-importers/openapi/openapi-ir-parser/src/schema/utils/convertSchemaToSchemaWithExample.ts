@@ -30,7 +30,8 @@ export function convertSchemaToSchemaWithExample(schema: Schema): SchemaWithExam
                 source: schema.source,
                 inline: undefined,
                 minProperties: schema.minProperties,
-                maxProperties: schema.maxProperties
+                maxProperties: schema.maxProperties,
+                examples: schema.examples
             });
         case "array":
             return SchemaWithExample.array({

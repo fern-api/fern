@@ -52,6 +52,8 @@ export interface LayoutConfig {
      * Note: this setting is ignored when `disable-header` is set to true.
      */
     searchbarPlacement?: FernDocsConfig.SearchbarPlacement;
+    /** Defaults for header tab menus. */
+    tabMenu?: FernDocsConfig.TabMenuLayoutConfig;
     /**
      * Set the placement of the tabs
      *

@@ -271,6 +271,11 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "message": "Basic auth successful",
+        },
+      ],
       "name": "getBasicProtected_Response_200",
       "shape": {
         "extends": [],
@@ -305,6 +310,11 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "message": "Bearer auth successful",
+        },
+      ],
       "name": "getBearerProtected_Response_200",
       "shape": {
         "extends": [],

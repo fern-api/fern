@@ -51,6 +51,8 @@ interface DeployResponse {
     activeDeploymentId: string | null;
     latestDeployment?: { status?: string; error?: unknown };
     url: string;
+    /** How callers authenticate; absent from FDRs that predate OAuth sign-in. */
+    auth?: { mode?: string; issuer?: string };
 }
 
 export interface HostedMcpDeployResult {
@@ -144,7 +146,12 @@ export async function deployHostedMcpServer({
     context.logger.info("");
     context.logger.info(`  ${chalk.bold(result.url)}`);
     context.logger.info("");
-    context.logger.info(`Manage it at ${getDashboardBaseUrl()}/${organization}/mcp/${result.slug}`);
+    const dashboardUrl = `${getDashboardBaseUrl()}/${organization}/mcp/${result.slug}`;
+    const authLine = describeHostedMcpAuth(bundle.metadata, result.auth, dashboardUrl);
+    if (authLine != null) {
+        context.logger.info(authLine);
+    }
+    context.logger.info(`Manage it at ${dashboardUrl}`);
 
     return { slug: result.slug, url: result.url, deploymentStatus };
 }
@@ -424,6 +431,57 @@ interface ToolEntry {
 
 function isToolEntry(value: unknown): value is ToolEntry {
     return isRecord(value) && typeof value.name === "string";
+}
+
+/**
+ * One line about sign-in after a deploy: that OAuth is on, or that the API
+ * definition declares OAuth (the generator's `auth.oauth`) and the dashboard
+ * can turn sign-in on. Undefined when neither applies.
+ */
+export function describeHostedMcpAuth(
+    metadata: unknown,
+    serverAuth: DeployResponse["auth"],
+    dashboardUrl: string
+): string | undefined {
+    if (serverAuth?.mode === "oauth") {
+        const issuer = serverAuth.issuer == null ? "" : ` with ${serverAuth.issuer}`;
+        return `Sign-in: OAuth${issuer}. MCP clients sign users in when they connect.`;
+    }
+    // Only a registry that reports header mode says sign-in is off; an older one reports nothing.
+    if (serverAuth?.mode !== "headers") {
+        return undefined;
+    }
+    const flows = declaredOAuthFlows(metadata);
+    if (flows == null) {
+        return undefined;
+    }
+    return `OAuth detected in your API definition (${flows.join(", ")}). Turn on OAuth sign-in at ${dashboardUrl}?tab=settings`;
+}
+
+/** The OAuth flow names the spec declares, or undefined when it declares none this CLI recognizes. */
+function declaredOAuthFlows(metadata: unknown): string[] | undefined {
+    if (!isRecord(metadata) || !isRecord(metadata.auth) || !isRecord(metadata.auth.oauth)) {
+        return undefined;
+    }
+    const schemes = metadata.auth.oauth.schemes;
+    if (!Array.isArray(schemes) || schemes.length === 0) {
+        return undefined;
+    }
+    const flows = new Set<string>();
+    for (const scheme of schemes) {
+        if (!isRecord(scheme)) {
+            continue;
+        }
+        if (scheme.type === "openIdConnect") {
+            flows.add("OpenID Connect");
+        }
+        if (isRecord(scheme.flows)) {
+            for (const name of Object.keys(scheme.flows)) {
+                flows.add(name);
+            }
+        }
+    }
+    return flows.size > 0 ? [...flows] : undefined;
 }
 
 export function getToolNameValidationErrors(metadata: unknown): string[] {

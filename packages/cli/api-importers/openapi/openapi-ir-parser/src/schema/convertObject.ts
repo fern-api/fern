@@ -527,7 +527,8 @@ export function wrapObject({
         source,
         inline: undefined,
         minProperties,
-        maxProperties
+        maxProperties,
+        examples: undefined
     });
     if (wrapAsNullable) {
         result = SchemaWithExample.nullable({

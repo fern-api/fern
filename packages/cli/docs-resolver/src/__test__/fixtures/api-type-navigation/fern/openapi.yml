@@ -1,0 +1,71 @@
+openapi: 3.0.1
+info:
+  title: Types navigation
+  version: 1.0.0
+paths:
+  /pets:
+    get:
+      operationId: listPets
+      tags: [pets]
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Pet"
+components:
+  schemas:
+    Pet:
+      type: object
+      description: A pet, returned by the endpoint.
+      properties:
+        id:
+          type: string
+        owner:
+          $ref: "#/components/schemas/Owner"
+    Owner:
+      type: object
+      description: Reached only through Pet, so documented inline on the endpoint.
+      properties:
+        name:
+          type: string
+    Say:
+      type: object
+      description: A TwiML verb no endpoint returns.
+      xml:
+        name: Say
+      properties:
+        voice:
+          type: string
+          enum: [man, woman]
+          description: An inline enum; the importer lifts it to its own type, which gets no page.
+          xml:
+            attribute: true
+        loop:
+          type: integer
+          xml:
+            name: loop
+            attribute: true
+        message:
+          type: string
+          x-fern-xml-text: true
+        children:
+          type: array
+          items:
+            $ref: "#/components/schemas/Break"
+          xml:
+            wrapped: false
+    Break:
+      type: object
+      description: Reached only through Say, which is itself unreferenced.
+      properties:
+        time:
+          type: string
+    Dial:
+      type: object
+      properties:
+        number:
+          type: string
