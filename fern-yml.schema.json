@@ -3566,6 +3566,9 @@
                 },
                 "default-filter-by-current-product": {
                   "type": "boolean"
+                },
+                "popular-searches": {
+                  "type": "boolean"
                 }
               },
               "additionalProperties": false
