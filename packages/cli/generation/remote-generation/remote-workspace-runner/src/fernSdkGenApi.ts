@@ -101,6 +101,8 @@ export interface FernSdkGenApiGithubOptions {
     replay?: FernSdkGenApiReplayConfig;
     verify?: boolean;
     skipIfNoDiff?: boolean;
+    /** Applied only to GitHub pull-request output. */
+    autoMerge?: boolean;
 }
 
 export type FernSdkGenApiRequestedOutput =
@@ -550,20 +552,22 @@ function mapGithubOutput({
     // credentials to approved GitHub installations/repositories and registry hosts/package namespaces.
     return {
         ...(publication?.package != null ? { package: publication.package } : {}),
-        requestedOutput: {
-            type: "github",
-            repository: `${owner}/${repo}`,
-            ...(host != null ? { host } : {}),
-            ...(branch != null ? { branch } : {}),
-            mode,
-            ...(reviewers != null ? { reviewers } : {}),
-            ...(license != null ? { license } : {}),
-            ...(publication != null ? { publish: publication.publish } : {}),
-            // generators.yml resolves an unset `github.workflows` to true, so only the opt-out is
-            // sent. Every request that keeps the default stays unchanged on the wire.
-            ...(workflows === false ? { workflows: false } : {}),
-            ...githubOptions
-        }
+        requestedOutput: applyGithubOptionsToRequestedOutput(
+            {
+                type: "github",
+                repository: `${owner}/${repo}`,
+                ...(host != null ? { host } : {}),
+                ...(branch != null ? { branch } : {}),
+                mode,
+                ...(reviewers != null ? { reviewers } : {}),
+                ...(license != null ? { license } : {}),
+                ...(publication != null ? { publish: publication.publish } : {}),
+                // generators.yml resolves an unset `github.workflows` to true, so only the opt-out is
+                // sent. Every request that keeps the default stays unchanged on the wire.
+                ...(workflows === false ? { workflows: false } : {})
+            },
+            githubOptions
+        )
     };
 }
 
@@ -571,9 +575,17 @@ function applyGithubOptionsToRequestedOutput(
     requestedOutput: FernSdkGenApiRequestedOutput,
     githubOptions: FernSdkGenApiGithubOptions | undefined
 ): FernSdkGenApiRequestedOutput {
-    return requestedOutput.type === "github" && githubOptions != null
-        ? { ...requestedOutput, ...githubOptions }
-        : requestedOutput;
+    if (requestedOutput.type !== "github" || githubOptions == null) {
+        return requestedOutput;
+    }
+    const { autoMerge, ...options } = githubOptions;
+    return {
+        ...requestedOutput,
+        ...options,
+        // GitHub auto-merge applies only to a pull request Fern opens, as on Fiddle, so other modes never
+        // send it. Requests without auto-merge stay unchanged on the wire.
+        ...(autoMerge === true && requestedOutput.mode === "pull-request" ? { autoMerge: true } : {})
+    };
 }
 
 function mapGithubReviewers(

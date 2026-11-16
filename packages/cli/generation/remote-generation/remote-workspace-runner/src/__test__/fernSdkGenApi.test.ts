@@ -15,6 +15,7 @@ import {
     type FernSdkConfigV1Payload,
     FernSdkGenApiBatch,
     type FernSdkGenApiBuildParameters,
+    type FernSdkGenApiGithubOptions,
     type FernSdkGenApiPayload,
     FernSdkGenApiPreparationBatch,
     type FernSdkGenApiRequestedOutput,
@@ -892,6 +893,31 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(result?.error).toBeUndefined();
     });
 
+    it("routes legacy GitHub pull-request auto-merge through sdk-gen-api", () => {
+        const [result] = prepareFernSdkGenApiRoutes({
+            generators: [
+                invocation({
+                    version: "3.999.999",
+                    outputMode: FernFiddle.OutputMode.githubV2(
+                        FernFiddle.GithubOutputModeV2.pullRequest({ owner: "acme", repo: "sdk", reviewers: [] })
+                    ),
+                    raw: {
+                        name: "fernapi/fern-typescript-sdk",
+                        version: "3.999.999",
+                        github: { repository: "acme/sdk", mode: "pull-request", "auto-merge": true }
+                    }
+                })
+            ],
+            isSdkGenApiEnabled: () => true,
+            requireEnvVars: true,
+            isPreview: false
+        });
+
+        expect(result?.route?.payloadKind).toBe("fern-runtime-bundle");
+        expect(result?.error).toBeUndefined();
+        expect(result?.fallbackReason).toBeUndefined();
+    });
+
     it("allows SDK Config GitHub verification through sdk-gen-api", () => {
         const [result] = prepareFernSdkGenApiRoutes({
             generators: [invocation({ version: "4.0.0" })],
@@ -921,7 +947,7 @@ describe("isEligibleForFernSdkGenApi", () => {
             sdkConfigV1: sdkConfigV1({ language: "typescript" }),
             requireEnvVars: true,
             isPreview: false,
-            autoMerge: true
+            skipIfNoDiff: true
         });
 
         expect(result?.error).toHaveProperty("message", expect.stringContaining("(unpinned)"));
@@ -942,8 +968,7 @@ describe("isEligibleForFernSdkGenApi", () => {
             }
         ],
         ["verification", { verify: true }],
-        ["skip-if-no-diff", { skipIfNoDiff: true }],
-        ["auto-merge", { autoMerge: true }]
+        ["skip-if-no-diff", { skipIfNoDiff: true }]
     ] as const)("rejects post-cutover %s before source preparation", (_name, options) => {
         const [result] = prepareFernSdkGenApiRoutes({
             generators: [
@@ -956,8 +981,7 @@ describe("isEligibleForFernSdkGenApi", () => {
             requireEnvVars: true,
             isPreview: false,
             verify: "verify" in options ? options.verify : undefined,
-            skipIfNoDiff: "skipIfNoDiff" in options ? options.skipIfNoDiff : undefined,
-            autoMerge: "autoMerge" in options ? options.autoMerge : undefined
+            skipIfNoDiff: "skipIfNoDiff" in options ? options.skipIfNoDiff : undefined
         });
 
         expect(result?.route).toBeUndefined();
@@ -1281,6 +1305,96 @@ describe("isEligibleForFernSdkGenApi", () => {
                 expect(wire).not.toHaveProperty("workflows");
                 expect(JSON.stringify(wire)).not.toContain("workflows");
             }
+        });
+    });
+
+    describe("GitHub auto-merge", () => {
+        const pullRequest = FernFiddle.OutputMode.githubV2(
+            FernFiddle.GithubOutputModeV2.pullRequest({ owner: "acme", repo: "sdk", reviewers: [] })
+        );
+        const push = FernFiddle.OutputMode.githubV2(FernFiddle.GithubOutputModeV2.push({ owner: "acme", repo: "sdk" }));
+        const release = FernFiddle.OutputMode.githubV2(
+            FernFiddle.GithubOutputModeV2.commitAndRelease({ owner: "acme", repo: "sdk" })
+        );
+
+        function requestFor(
+            outputMode: FernFiddle.OutputMode,
+            githubOptions?: FernSdkGenApiGithubOptions,
+            requestedOutput?: FernSdkGenApiRequestedOutput
+        ) {
+            return createFernSdkGenApiRequest({
+                apiName: "Petstore",
+                organization: "acme",
+                cliVersion: "0.0.0",
+                generatorInvocation: invocation({ outputMode }),
+                sdkVersion: "1.2.3",
+                specsTarGzBuffer: Buffer.from("archive"),
+                payload: runtimePayload(validRuntimeBundle),
+                requestedOutput,
+                githubOptions
+            });
+        }
+
+        it.each([
+            ["pull-request", pullRequest, { autoMerge: true }],
+            ["push", push, {}],
+            ["release", release, {}]
+        ] as const)("sends autoMerge only with pull-request output (%s)", (mode, outputMode, autoMerge) => {
+            expect(requestFor(outputMode, { verify: true, autoMerge: true }).targets[0]?.requestedOutput).toStrictEqual(
+                {
+                    type: "github",
+                    repository: "acme/sdk",
+                    mode,
+                    verify: true,
+                    ...autoMerge
+                }
+            );
+        });
+
+        it.each([
+            ["download", FernFiddle.OutputMode.downloadFiles({})],
+            [
+                "registry publication",
+                FernFiddle.OutputMode.publishV2(
+                    FernFiddle.PublishOutputModeV2.npmOverride({
+                        registryUrl: "https://registry.npmjs.org",
+                        packageName: "@acme/sdk",
+                        token: "secret"
+                    })
+                )
+            ]
+        ])("never sends autoMerge with %s output", (_name, outputMode) => {
+            expect(requestFor(outputMode, { autoMerge: true })).toStrictEqual(requestFor(outputMode));
+        });
+
+        it("leaves requests without auto-merge unchanged on the wire", () => {
+            expect(requestFor(pullRequest, { verify: true, autoMerge: false })).toStrictEqual(
+                requestFor(pullRequest, { verify: true })
+            );
+            expect(requestFor(push, { verify: true, autoMerge: true })).toStrictEqual(
+                requestFor(push, { verify: true })
+            );
+            expect(requestFor(pullRequest, { autoMerge: true }).idempotencyKey).not.toBe(
+                requestFor(pullRequest).idempotencyKey
+            );
+        });
+
+        it("applies auto-merge to SDK Config pull-request output only", () => {
+            const sdkConfigOutput = (mode?: "pull-request" | "push") =>
+                requestFor(
+                    FernFiddle.OutputMode.downloadFiles({}),
+                    { autoMerge: true },
+                    { type: "github", repository: "acme/sdk", ...(mode != null ? { mode } : {}) }
+                ).targets[0]?.requestedOutput;
+
+            expect(sdkConfigOutput("pull-request")).toStrictEqual({
+                type: "github",
+                repository: "acme/sdk",
+                mode: "pull-request",
+                autoMerge: true
+            });
+            expect(sdkConfigOutput("push")).toStrictEqual({ type: "github", repository: "acme/sdk", mode: "push" });
+            expect(sdkConfigOutput()).toStrictEqual({ type: "github", repository: "acme/sdk" });
         });
     });
 
