@@ -2459,7 +2459,20 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(pypiWithSecret?.type === "pypi" ? pypiWithSecret.passwordEnvironmentVariable : undefined).toBe("");
     });
 
-    it("omits credentials for registries without trusted-publishing markers", () => {
+    it("does not add a Maven signature when none is configured", () => {
+        const maven = getGithubPublishConfig(
+            FernFiddle.GithubPublishInfo.maven({
+                registryUrl: "https://central.sonatype.com/api/v1/publisher/upload",
+                coordinate: "com.acme:sdk",
+                credentials: { username: "user", password: "secret" }
+            }),
+            { omitPublishCredentials: true }
+        );
+
+        expect(maven?.type === "maven" ? maven.signature : undefined).toBeUndefined();
+    });
+
+    it("omits credentials but keeps an empty Maven signature for registries without trusted-publishing markers", () => {
         const options = { omitPublishCredentials: true };
         const maven = getGithubPublishConfig(
             FernFiddle.GithubPublishInfo.maven({
@@ -2491,7 +2504,11 @@ describe("isEligibleForFernSdkGenApi", () => {
             usernameEnvironmentVariable: "",
             passwordEnvironmentVariable: ""
         });
-        expect(maven?.type === "maven" ? maven.signature : undefined).toBeUndefined();
+        expect(maven?.type === "maven" ? maven.signature : undefined).toEqual({
+            keyIdEnvironmentVariable: "",
+            passwordEnvironmentVariable: "",
+            secretKeyEnvironmentVariable: ""
+        });
         expect(rubygems?.type === "rubygems" ? rubygems.apiKeyEnvironmentVariable : undefined).toBe("");
         expect(crates?.type === "crates" ? crates.tokenEnvironmentVariable : undefined).toBe("");
     });

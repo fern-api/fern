@@ -53,6 +53,7 @@ function getChildAvailability(
         case "grpc":
         case "graphql":
         case "graphqlType":
+        case "apiType":
         case "page":
             return child.availability;
         case "link":

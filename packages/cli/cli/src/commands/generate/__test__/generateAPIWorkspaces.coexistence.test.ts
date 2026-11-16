@@ -593,10 +593,6 @@ describe("generateAPIWorkspaces coexistence", () => {
     });
 
     describe("cli target", () => {
-        afterEach(() => {
-            vi.unstubAllEnvs();
-        });
-
         const githubNpm = (repository: string, token: string) => ({
             delivery: "github",
             github: { repository, mode: "release" },
@@ -638,78 +634,61 @@ describe("generateAPIWorkspaces coexistence", () => {
         }
 
         it.each([
-            { name: "every target", targetNames: undefined },
-            { name: "--target cli", targetNames: ["cli"] },
-            { name: "--target go cli", targetNames: ["go", "cli"] }
-        ])("passes the cli target's own token, not another target's, with $name", async ({ targetNames }) => {
+            { name: "every target", targetNames: undefined, expected: ["cli", "go", "typescript"] },
+            { name: "--target cli", targetNames: ["cli"], expected: ["cli"] },
+            { name: "--target go cli", targetNames: ["go", "cli"], expected: ["cli", "go"] }
+        ])("sends the cli target as SDK Config, like any other language, with $name", async ({
+            targetNames,
+            expected
+        }) => {
             await writeSdkConfig(TARGETS);
             await runGenerate({ project, cliContext, groupNames: undefined, targetNames });
+            expect(sdkConfigLanguages().sort()).toEqual(expected);
+            expect(cliNpmToken()).toBeUndefined();
+        });
+
+        it.each([
+            { generatorVersion: undefined },
+            { generatorVersion: "1.0.0" }
+        ])("sends the cli target as SDK Config with --sdk-config and a generator index, generatorVersion $generatorVersion", async ({
+            generatorVersion
+        }) => {
+            const configPath = path.join(temporaryDirectory, "npm-sdk-config.yml");
+            await writeFile(
+                configPath,
+                YAML.stringify({
+                    schemaVersion: "sdk-config/v1",
+                    sdkName: "payments",
+                    source: { specs: [{ id: "payments", type: "openapi", path: "./openapi/openapi.yml" }] },
+                    targets: [
+                        TARGETS[0],
+                        TARGETS[1],
+                        { ...TARGETS[2], ...(generatorVersion != null ? { generatorVersion } : {}) }
+                    ]
+                })
+            );
+            await runGenerate({
+                project,
+                cliContext,
+                groupNames: undefined,
+                targetNames: undefined,
+                generatorIndex: 2,
+                sdkConfigPath: configPath
+            });
+            expect(vi.mocked(generateWorkspace)).toHaveBeenCalledOnce();
+            expect(sdkConfigLanguages()).toEqual(["cli"]);
+        });
+
+        it.each([
+            { name: "--target cli", targetNames: ["cli"] },
+            { name: "--target go cli", targetNames: ["go", "cli"] }
+        ])("translates the cli target for Fern's CLI generator with --local, using its own npm token, with $name", async ({
+            targetNames
+        }) => {
+            await writeSdkConfig(TARGETS);
+            await runGenerate({ project, cliContext, groupNames: undefined, targetNames, useLocalDocker: true });
             expect(sdkConfigLanguages()).not.toContain("cli");
             expect(cliNpmToken()).toMatchObject({ type: "npm", packageName: "@acme/cli", token: "${CLI_NPM_TOKEN}" });
-        });
-
-        it("does not send the cli target as SDK Config when ENABLE_SDK_GEN_RUST_CLI is not exactly true", async () => {
-            vi.stubEnv("ENABLE_SDK_GEN_RUST_CLI", "1");
-            await writeSdkConfig(TARGETS);
-            await runGenerate({ project, cliContext, groupNames: undefined, targetNames: ["cli"] });
-            expect(sdkConfigLanguages()).not.toContain("cli");
-            expect(cliNpmToken()).toBeDefined();
-        });
-
-        describe("with ENABLE_SDK_GEN_RUST_CLI=true", () => {
-            beforeEach(() => {
-                vi.stubEnv("ENABLE_SDK_GEN_RUST_CLI", "true");
-            });
-
-            afterEach(() => {
-                vi.unstubAllEnvs();
-            });
-
-            it.each([
-                { name: "every target", targetNames: undefined, expected: ["cli", "go", "typescript"] },
-                { name: "--target cli", targetNames: ["cli"], expected: ["cli"] },
-                { name: "--target go cli", targetNames: ["go", "cli"], expected: ["cli", "go"] }
-            ])("sends the cli target as SDK Config, like any other language, with $name", async ({
-                targetNames,
-                expected
-            }) => {
-                await writeSdkConfig(TARGETS);
-                await runGenerate({ project, cliContext, groupNames: undefined, targetNames });
-                expect(sdkConfigLanguages().sort()).toEqual(expected);
-                expect(cliNpmToken()).toBeUndefined();
-            });
-
-            it.each([
-                { generatorVersion: undefined },
-                { generatorVersion: "1.0.0" }
-            ])("sends the cli target as SDK Config with --sdk-config and a generator index, generatorVersion $generatorVersion", async ({
-                generatorVersion
-            }) => {
-                const configPath = path.join(temporaryDirectory, "npm-sdk-config.yml");
-                await writeFile(
-                    configPath,
-                    YAML.stringify({
-                        schemaVersion: "sdk-config/v1",
-                        sdkName: "payments",
-                        source: { specs: [{ id: "payments", type: "openapi", path: "./openapi/openapi.yml" }] },
-                        targets: [
-                            TARGETS[0],
-                            TARGETS[1],
-                            { ...TARGETS[2], ...(generatorVersion != null ? { generatorVersion } : {}) }
-                        ]
-                    })
-                );
-                await runGenerate({
-                    project,
-                    cliContext,
-                    groupNames: undefined,
-                    targetNames: undefined,
-                    generatorIndex: 2,
-                    sdkConfigPath: configPath
-                });
-                expect(vi.mocked(generateWorkspace)).toHaveBeenCalledOnce();
-                expect(sdkConfigLanguages()).toEqual(["cli"]);
-            });
         });
     });
 });

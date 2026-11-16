@@ -21,6 +21,10 @@ components:
       type: object
       xml:
         name: Say
+      example:
+        message: Thanks for calling.
+        voice: alice
+        loop: 2
       properties:
         message:
           type: string
@@ -29,6 +33,7 @@ components:
           type: string
           xml:
             attribute: true
+          example: alice
         loop:
           type: integer
           xml:
@@ -96,6 +101,11 @@ components:
       properties:
         length:
           type: integer
+          xml:
+            attribute: true
+          example: 5
+        label:
+          type: string
           xml:
             attribute: true
     PlainObject:

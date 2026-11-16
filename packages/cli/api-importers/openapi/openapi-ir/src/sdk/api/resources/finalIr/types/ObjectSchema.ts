@@ -18,4 +18,9 @@ export interface ObjectSchema
     additionalProperties: boolean;
     minProperties: number | undefined;
     maxProperties: number | undefined;
+    /**
+     * Validated examples of the whole object: the schema-level `example`/`examples` when present,
+     * otherwise one assembled from the property-level examples. Empty when neither exists.
+     */
+    examples: FernOpenapiIr.FullExample[] | undefined;
 }

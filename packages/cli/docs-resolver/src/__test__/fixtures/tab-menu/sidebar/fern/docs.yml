@@ -1,0 +1,44 @@
+instances:
+  - url: https://example.docs.buildwithfern.com
+title: Tab menu
+layout:
+  tabs-placement: sidebar
+tabs:
+  guides:
+    display-name: Guides
+  products:
+    display-name: Products
+    tab-menu-column-height: 2
+    tab-menu:
+      - group: Platform
+        tabs:
+          - tab: agents
+            display-name: Agents
+            subtitle: Build AI agents
+          - link: Status
+            href: https://status.example.com
+      - tab: studio
+        display-name: Studio
+        default: true
+      - tab: agents-legacy
+        display-name: Agents
+        slug: agents-legacy
+        hidden: true
+navigation:
+  - tab: guides
+    layout:
+      - page: Guides
+        path: guides.mdx
+  - tab: products
+  - tab: agents
+    layout:
+      - page: Overview
+        path: agents.mdx
+  - tab: studio
+    layout:
+      - page: Overview
+        path: studio.mdx
+  - tab: agents-legacy
+    layout:
+      - page: Overview
+        path: agents-legacy.mdx

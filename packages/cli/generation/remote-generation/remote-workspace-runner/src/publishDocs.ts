@@ -5,6 +5,7 @@ import { createFdrService } from "@fern-api/core";
 import {
     asyncPool,
     errorMessageOrString,
+    getProfileVarNames,
     MediaType,
     replaceEnvVariables,
     sanitizePreviewId
@@ -82,10 +83,12 @@ import {
     type SdkGenSnippets
 } from "./attachSdkGenSnippets.js";
 import { shouldMergeThemeServerSide } from "./compileGlobalTheme.js";
+import { findCustomDomainBlockedMessage, formatCustomDomainRoutingNotice } from "./customDomainRoutingNotice.js";
 import { getDocsDeployMode } from "./docsDeployMode.js";
 import { buildDocsSourceArchive, findFernRoot } from "./docsSourceArchive.js";
 import { computeDynamicIRs, type DynamicIrGeneratorJob } from "./dynamicIr/computeDynamicIRs.js";
 import { DynamicIrWorkerPool, parseDynamicIrResult } from "./dynamicIr/DynamicIrWorkerPool.js";
+import { logFdrWarnings } from "./fdrWarnings.js";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
 import { getFdrOrigin, readGuestPublishOutcome } from "./guestDocsSite.js";
 import { measureImageSizes } from "./measureImageSizes.js";
@@ -882,6 +885,7 @@ export async function publishDocs({
                     }
                     docsRegistrationId = startDocsRegisterResponse.docsRegistrationId;
                     deployLocked = true;
+                    logFdrWarnings(startDocsRegisterResponse, context);
                     context.logger.debug(`Received production registration ID: ${docsRegistrationId}`);
 
                     const skippedCount = startDocsRegisterResponse.skippedFiles?.length || 0;
@@ -957,7 +961,7 @@ export async function publishDocs({
             const substitutedDocs = replaceEnvVariables(
                 docsWithoutJsFiles,
                 { onError: (e) => context.failAndThrow(undefined, e, { code: CliError.Code.EnvironmentError }) },
-                { substituteAsEmpty: false }
+                { substituteAsEmpty: false, keep: getProfileVarNames(docsWorkspace.config.profiles) }
             );
             docsDefinition = { ...substitutedDocs, jsFiles };
         }
@@ -972,13 +976,19 @@ export async function publishDocs({
             `Memory after resolve: RSS=${(resolveMemory.rss / 1024 / 1024).toFixed(2)}MB, Heap=${(resolveMemory.heapUsed / 1024 / 1024).toFixed(2)}MB`
         );
 
-        const missingRedirects = await validateMissingRedirects({
-            workspace: docsWorkspace,
-            docsDefinition,
-            instanceUrl: domain,
-            token: token.value,
-            logger: context.logger
-        });
+        // A guest token cannot read the drop site's published pages from FDR (it only gets
+        // the publish routes), so the comparison would always be skipped with a confusing
+        // "FDR returned 403" warning. A drop site is throwaway, so there is nothing to protect.
+        const missingRedirects =
+            token.type === "guest"
+                ? []
+                : await validateMissingRedirects({
+                      workspace: docsWorkspace,
+                      docsDefinition,
+                      instanceUrl: domain,
+                      token: token.value,
+                      logger: context.logger
+                  });
         logViolations({
             context,
             violations: missingRedirects,
@@ -1100,6 +1110,7 @@ export async function publishDocs({
             try {
                 await runLedgerPublish();
             } catch (error) {
+                throwIfCustomDomainBlocked(error, context);
                 const detail = formatLedgerError(error);
                 return context.failAndThrow("Failed to publish docs via ledger to " + domain + ": " + detail, error, {
                     code: CliError.Code.NetworkError
@@ -1572,6 +1583,8 @@ async function startDocsRegisterFailed(
     if (errorContent?.reason === "status-code" && errorContent?.statusCode === 409) {
         throw new DocsPublishConflictError();
     }
+
+    throwIfCustomDomainBlocked(error, context);
 
     if (tokenType === "guest") {
         const rejection = readGuestRejection(error);
@@ -2497,6 +2510,15 @@ function isTransientError(error: unknown): boolean {
         return true;
     }
     return status === 429 || status >= 500;
+}
+
+function throwIfCustomDomainBlocked(error: unknown, context: TaskContext): void {
+    const blocked = findCustomDomainBlockedMessage(error);
+    if (blocked != null) {
+        context.failAndThrow(formatCustomDomainRoutingNotice(blocked, "blocked"), undefined, {
+            code: CliError.Code.ConfigError
+        });
+    }
 }
 
 /**

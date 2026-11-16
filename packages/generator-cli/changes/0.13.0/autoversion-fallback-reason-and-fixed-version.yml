@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    The `autoVersion` step accepts diffs up to 50MB (was 10MB). Hosted diffs over 10MB skip the
+    single full-diff FAI request and analyze the highest-priority chunks instead of falling back to PATCH.
+  type: feat
+- summary: |
+    `AutoVersionStepResult` has a machine-readable `analysisWarningCode` (`diff-too-large`,
+    `analysis-failed` or `partial-analysis`), and the step logs a stable
+    `AUTO versioning fallback: reason=<code>` line whenever analysis was unavailable or incomplete.
+  type: feat
+- summary: |
+    New `autoVersion.fixedVersion` option for explicit `--version X.Y.Z` runs: the step keeps the
+    given version and runs the AI analysis only to write the changelog entry and PR description.
+  type: feat

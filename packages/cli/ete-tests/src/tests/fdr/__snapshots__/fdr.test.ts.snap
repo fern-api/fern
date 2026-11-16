@@ -75,7 +75,13 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                         }
                     }
                 ]
-            }
+            },
+            "examples": [
+                {
+                    "name": "George the Director",
+                    "age": 20
+                }
+            ]
         },
         "type_director:Age": {
             "name": "Age",
@@ -87,7 +93,10 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                         "type": "integer"
                     }
                 }
-            }
+            },
+            "examples": [
+                20
+            ]
         },
         "type_director:LiteralString": {
             "name": "LiteralString",
@@ -112,7 +121,10 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                         "type": "string"
                     }
                 }
-            }
+            },
+            "examples": [
+                "$4.50"
+            ]
         },
         "type_imdb:MovieId": {
             "name": "MovieId",
@@ -124,7 +136,11 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                         "type": "string"
                     }
                 }
-            }
+            },
+            "examples": [
+                "id1",
+                "id2"
+            ]
         },
         "type_imdb:ActorId": {
             "name": "ActorId",
@@ -170,7 +186,14 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                         }
                     }
                 ]
-            }
+            },
+            "examples": [
+                {
+                    "id": "my-movie-id",
+                    "title": "Goodwill Hunting",
+                    "rating": 14.5
+                }
+            ]
         },
         "type_imdb:CreateMovieRequest": {
             "name": "CreateMovieRequest",
@@ -200,7 +223,17 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                         }
                     }
                 ]
-            }
+            },
+            "examples": [
+                {
+                    "title": "Winnie the Pooh",
+                    "ratings": [
+                        1,
+                        2,
+                        3
+                    ]
+                }
+            ]
         },
         "type_imdb:DirectorWrapper": {
             "name": "DirectorWrapper",
@@ -216,7 +249,15 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                         }
                     }
                 ]
-            }
+            },
+            "examples": [
+                {
+                    "director": {
+                        "name": "George the Director",
+                        "age": 20
+                    }
+                }
+            ]
         },
         "type_imdb:EmptyObject": {
             "name": "EmptyObject",
@@ -276,7 +317,21 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                         }
                     }
                 ]
-            }
+            },
+            "examples": [
+                {
+                    "type": "actor",
+                    "value": "Matt Damon"
+                },
+                {
+                    "type": "director",
+                    "name": "George the Directory",
+                    "age": 100
+                },
+                {
+                    "type": "producer"
+                }
+            ]
         },
         "type_imdb:RecursiveType": {
             "name": "RecursiveType",
@@ -297,7 +352,41 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                         }
                     }
                 ]
-            }
+            },
+            "examples": [
+                {
+                    "title": "The Godfather",
+                    "ratings": [
+                        10,
+                        5,
+                        9
+                    ],
+                    "selfReferencing": [
+                        {
+                            "title": "The Godfather II",
+                            "ratings": [
+                                10,
+                                11
+                            ],
+                            "selfReferencing": []
+                        },
+                        {
+                            "title": "The Godfather III",
+                            "ratings": [],
+                            "selfReferencing": []
+                        }
+                    ]
+                },
+                {
+                    "title": "Goodfellas",
+                    "ratings": [
+                        1,
+                        2,
+                        3
+                    ],
+                    "selfReferencing": []
+                }
+            ]
         }
     },
     "subpackages": {
@@ -922,7 +1011,13 @@ exports[`fdr > {"name":"simple"} 1`] = `
                         }
                     }
                 ]
-            }
+            },
+            "examples": [
+                {
+                    "name": "George the Director",
+                    "age": 20
+                }
+            ]
         },
         "type_director:Age": {
             "name": "Age",
@@ -934,7 +1029,10 @@ exports[`fdr > {"name":"simple"} 1`] = `
                         "type": "integer"
                     }
                 }
-            }
+            },
+            "examples": [
+                20
+            ]
         },
         "type_director:LiteralString": {
             "name": "LiteralString",
@@ -959,7 +1057,10 @@ exports[`fdr > {"name":"simple"} 1`] = `
                         "type": "string"
                     }
                 }
-            }
+            },
+            "examples": [
+                "$4.50"
+            ]
         },
         "type_imdb:MovieId": {
             "name": "MovieId",
@@ -971,7 +1072,11 @@ exports[`fdr > {"name":"simple"} 1`] = `
                         "type": "string"
                     }
                 }
-            }
+            },
+            "examples": [
+                "id1",
+                "id2"
+            ]
         },
         "type_imdb:ActorId": {
             "name": "ActorId",
@@ -1017,7 +1122,14 @@ exports[`fdr > {"name":"simple"} 1`] = `
                         }
                     }
                 ]
-            }
+            },
+            "examples": [
+                {
+                    "id": "my-movie-id",
+                    "title": "Goodwill Hunting",
+                    "rating": 14.5
+                }
+            ]
         },
         "type_imdb:CreateMovieRequest": {
             "name": "CreateMovieRequest",
@@ -1047,7 +1159,17 @@ exports[`fdr > {"name":"simple"} 1`] = `
                         }
                     }
                 ]
-            }
+            },
+            "examples": [
+                {
+                    "title": "Winnie the Pooh",
+                    "ratings": [
+                        1,
+                        2,
+                        3
+                    ]
+                }
+            ]
         },
         "type_imdb:DirectorWrapper": {
             "name": "DirectorWrapper",
@@ -1063,7 +1185,15 @@ exports[`fdr > {"name":"simple"} 1`] = `
                         }
                     }
                 ]
-            }
+            },
+            "examples": [
+                {
+                    "director": {
+                        "name": "George the Director",
+                        "age": 20
+                    }
+                }
+            ]
         },
         "type_imdb:EmptyObject": {
             "name": "EmptyObject",
@@ -1123,7 +1253,21 @@ exports[`fdr > {"name":"simple"} 1`] = `
                         }
                     }
                 ]
-            }
+            },
+            "examples": [
+                {
+                    "type": "actor",
+                    "value": "Matt Damon"
+                },
+                {
+                    "type": "director",
+                    "name": "George the Directory",
+                    "age": 100
+                },
+                {
+                    "type": "producer"
+                }
+            ]
         },
         "type_imdb:RecursiveType": {
             "name": "RecursiveType",
@@ -1144,7 +1288,41 @@ exports[`fdr > {"name":"simple"} 1`] = `
                         }
                     }
                 ]
-            }
+            },
+            "examples": [
+                {
+                    "title": "The Godfather",
+                    "ratings": [
+                        10,
+                        5,
+                        9
+                    ],
+                    "selfReferencing": [
+                        {
+                            "title": "The Godfather II",
+                            "ratings": [
+                                10,
+                                11
+                            ],
+                            "selfReferencing": []
+                        },
+                        {
+                            "title": "The Godfather III",
+                            "ratings": [],
+                            "selfReferencing": []
+                        }
+                    ]
+                },
+                {
+                    "title": "Goodfellas",
+                    "ratings": [
+                        1,
+                        2,
+                        3
+                    ],
+                    "selfReferencing": []
+                }
+            ]
         }
     },
     "subpackages": {

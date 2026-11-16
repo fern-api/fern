@@ -278,6 +278,11 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "transport": "string",
+        },
+      ],
       "name": "ApiResourceGetResponsesHeadersXMediaExample",
       "shape": {
         "extends": [],
@@ -308,6 +313,11 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "content_type": "image/jpeg",
+        },
+      ],
       "name": "ApiResult",
       "shape": {
         "extends": [],
@@ -338,6 +348,11 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "detail": "Request was throttled. Expected available in 10 seconds.",
+        },
+      ],
       "name": "GetResourceRequestTooManyRequestsError",
       "shape": {
         "extends": [],
@@ -372,6 +387,12 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "id": "string",
+          "name": "string",
+        },
+      ],
       "name": "getResource_Response_200",
       "shape": {
         "extends": [],

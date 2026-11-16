@@ -752,7 +752,7 @@ export class ExampleTypeFactory {
         }
     }
 
-    private hasExample(
+    public hasExample(
         schema: SchemaWithExample,
         depth: number,
         visitedSchemaIds: Set<SchemaId> = new Set(),

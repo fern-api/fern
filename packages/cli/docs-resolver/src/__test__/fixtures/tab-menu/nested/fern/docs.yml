@@ -1,0 +1,39 @@
+instances:
+  - url: https://example.docs.buildwithfern.com
+title: Tab menu
+layout:
+  tabs-placement: header
+tabs:
+  guides:
+    display-name: Guides
+  products:
+    display-name: Products
+    tab-menu:
+      - tab: agents
+        display-name: Agents
+      - tab: studio
+        display-name: Studio
+navigation:
+  - tab: guides
+    layout:
+      - page: Guides
+        path: guides.mdx
+  - tab: products
+  - tab: agents
+    variants:
+      - group: SDKs
+        items:
+          - title: Python
+            default: true
+            layout:
+              - page: Overview
+                path: python.mdx
+          - title: TypeScript
+            slug: typescript
+            layout:
+              - page: Overview
+                path: typescript.mdx
+  - tab: studio
+    layout:
+      - page: Overview
+        path: studio.mdx

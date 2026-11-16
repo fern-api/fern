@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Running a version in `fern.config.json` older than 5.215.0 no longer fails in CI or asks for
+    confirmation. The CLI prints a prominent warning and runs the pinned version. Run `fern upgrade` to
+    update the pin; `--allow-old-cli-version` or `FERN_ALLOW_OLD_CLI_VERSION=true` shortens the warning.
+  type: fix

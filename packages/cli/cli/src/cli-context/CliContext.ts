@@ -141,7 +141,7 @@ export class CliContext {
     public failAndThrow(
         message?: string,
         error?: unknown,
-        options?: { code?: CliError.Code; instructionsTopic?: InstructionsTopic }
+        options?: { code?: CliError.Code; instructionsTopic?: InstructionsTopic | readonly InstructionsTopic[] }
     ): never {
         this.failWithoutThrowing(message, error, options);
         throw new TaskAbortSignal(
@@ -157,7 +157,7 @@ export class CliContext {
     public failWithoutThrowing(
         message?: string,
         error?: unknown,
-        options?: { code?: CliError.Code; instructionsTopic?: InstructionsTopic }
+        options?: { code?: CliError.Code; instructionsTopic?: InstructionsTopic | readonly InstructionsTopic[] }
     ): void {
         this.didSucceed = false;
         if (error instanceof TaskAbortSignal) {
@@ -203,6 +203,18 @@ export class CliContext {
         process.stdout.write(value);
         if (this.jsonMode) {
             this.stdoutRedirector.redirect();
+        }
+    }
+
+    /** Runs `write` against the real stdout, so a command in JSON mode can still emit its own output there. */
+    public async withRealStdout<T>(write: () => Promise<T>): Promise<T> {
+        this.stdoutRedirector.restore();
+        try {
+            return await write();
+        } finally {
+            if (this.jsonMode) {
+                this.stdoutRedirector.redirect();
+            }
         }
     }
 

@@ -10,4 +10,6 @@ export interface ProductConfigBase extends FernDocsConfig.WithPermissions, FernD
     image?: string;
     versions?: FernDocsConfig.VersionConfig[];
     audiences?: FernDocsConfig.Audience;
+    /** Name of a profile in `profiles:`. Pages under this item use its values for `${NAME}`. The innermost `profile:` wins. */
+    profile?: string;
 }

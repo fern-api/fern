@@ -1,4 +1,4 @@
-import { type docsYml, resolveRedirects } from "@fern-api/configuration-loader";
+import { type docsYml, resolveProfiles, resolveRedirects } from "@fern-api/configuration-loader";
 import { type AbsoluteFilePath, dirname } from "@fern-api/fs-utils";
 import type { DocsWorkspace } from "@fern-api/workspace-loader";
 import type { DocsConfig } from "../config/DocsConfig.js";
@@ -22,6 +22,10 @@ export class LegacyDocsWorkspaceAdapter {
             absoluteFilepathToDocsConfig: docsFilePath,
             config: {
                 ...raw,
+                profiles: await resolveProfiles({
+                    profiles: raw.profiles,
+                    absoluteFilepathToDocsConfig: docsFilePath
+                }),
                 redirects: await resolveRedirects({
                     redirects: raw.redirects,
                     absoluteFilepathToDocsConfig: docsFilePath

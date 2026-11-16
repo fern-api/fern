@@ -8,7 +8,6 @@ import { stripCustomDomainProtocol, validateBasepathAlignment } from "./customDo
 import { getDocsDeployMode } from "./docsDeployMode.js";
 import { fetchGuestDocsSite, getFdrOrigin } from "./guestDocsSite.js";
 import { DocsPublishConflictError, publishDocs } from "./publishDocs.js";
-import { checkCustomDomainsNotOnVercel } from "./vercelDomainCheck.js";
 
 const PUBLISH_CONFLICT_RETRY_DELAYS_MS = [
     1 * 60 * 1000, // 1 minute
@@ -158,7 +157,6 @@ export async function runRemoteGenerationForDocsWorkspace({
     }
 
     validateBasepathAlignment(publishUrl, customDomains, context);
-    await checkCustomDomainsNotOnVercel({ customDomains, context });
 
     context.logger.info(`Starting docs publishing for ${preview ? "preview" : "production"}: ${publishUrl}`);
     context.logger.debug(

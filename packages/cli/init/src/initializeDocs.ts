@@ -21,6 +21,7 @@ import {
     resolve,
     toPosixPath
 } from "@fern-api/fs-utils";
+import { CODING_AGENT_SKILLS_HINT } from "@fern-api/login";
 import { CliError, TaskContext } from "@fern-api/task-context";
 import { loadAPIWorkspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
@@ -128,7 +129,7 @@ async function getNextStepsMessage(): Promise<string> {
         (await getToken().catch(() => undefined)) == null
             ? `${chalk.bold("fern generate --docs --guest")} publishes it without a Fern account, to a temporary site you can claim later with ${chalk.bold("fern claim")}; or run ${chalk.bold("fern login")} first and publish with ${chalk.bold("fern generate --docs")}.`
             : `${chalk.bold("fern generate --docs")} publishes it.`;
-    return `Next: ${chalk.bold("fern docs dev")} previews the site locally; ${publishCommand}`;
+    return `Next: ${chalk.bold("fern docs dev")} previews the site locally; ${publishCommand}\n${CODING_AGENT_SKILLS_HINT}`;
 }
 
 /** Declares the spec in an existing `docs.yml`, on its first `api` entry or on a new one. */

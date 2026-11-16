@@ -11,7 +11,7 @@ export function tabbedNavigationItemHasLayout(
 export function tabbedNavigationItemHasVariants(
     item: docsYml.RawSchemas.TabbedNavigationItem
 ): item is docsYml.RawSchemas.TabbedNavigationItemWithVariants & {
-    variants: docsYml.RawSchemas.TabVariant[];
+    variants: docsYml.RawSchemas.TabVariantItem[];
 } {
     return "variants" in item && Array.isArray(item.variants);
 }

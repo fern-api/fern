@@ -10,4 +10,6 @@ export interface PageConfiguration extends FernDocsConfig.WithPermissions, FernD
     hidden?: boolean;
     noindex?: boolean;
     availability?: FernDocsConfig.Availability;
+    /** Name of a profile in `profiles:`. Pages under this item use its values for `${NAME}`. The innermost `profile:` wins. */
+    profile?: string;
 }

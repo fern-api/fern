@@ -350,12 +350,20 @@ export const BreadcrumbsConfig = z.object({
     sticky: z.boolean().optional()
 });
 
+export const VariantsColumnHeight = z.union([z.number().int().positive(), z.literal("no-limit")]);
+
+export const TabMenuLayoutConfig = z.object({
+    "default-column-height": VariantsColumnHeight.nullable().optional(),
+    "interact-on-click-only": z.boolean().optional()
+});
+
 export const LayoutConfig = z.object({
     "page-width": z.string().optional(),
     "content-width": z.string().optional(),
     "sidebar-width": z.string().optional(),
     "header-height": z.string().optional(),
     "searchbar-placement": SearchbarPlacement.optional(),
+    "tab-menu": TabMenuLayoutConfig.optional(),
     "tabs-placement": TabsPlacement.optional(),
     "switcher-placement": SwitcherPlacement.optional(),
     "content-alignment": ContentAlignment.optional(),
@@ -376,7 +384,8 @@ export const LayoutConfig = z.object({
 
 export const SearchSettingsConfig = z.object({
     "prioritize-current-product": z.boolean().optional(),
-    "default-filter-by-current-product": z.boolean().optional()
+    "default-filter-by-current-product": z.boolean().optional(),
+    "popular-searches": z.boolean().optional()
 });
 
 export const DocsSettingsConfig = z.object({
@@ -755,6 +764,7 @@ export const LibraryConfiguration = z.object({
 export const PageConfiguration = WithPermissions.merge(WithFeatureFlags).merge(
     z.object({
         page: z.string(),
+        profile: z.string().optional(),
         path: z.string(),
         slug: z.string().optional(),
         icon: z.string().optional(),
@@ -957,6 +967,7 @@ export const ApiReferenceConfiguration = WithPermissions.merge(WithFeatureFlags)
         "sort-by-availability": z.array(SortByAvailabilityValue).optional(),
         flattened: z.boolean().optional(),
         paginated: z.boolean().optional(),
+        types: z.boolean().optional(),
         playground: PlaygroundSettings.optional()
     })
 );
@@ -980,6 +991,7 @@ export const NavigationItem: z.ZodType<unknown> = z.lazy(() =>
 export const SectionConfiguration = WithPermissions.merge(WithFeatureFlags).merge(
     z.object({
         section: z.string(),
+        profile: z.string().optional(),
         path: z.string().optional(),
         contents: z.array(NavigationItem),
         collapsed: CollapsedValue.optional(),
@@ -1000,6 +1012,7 @@ export const UntabbedNavigationConfig = z.array(NavigationItem);
 export const TabVariant = WithPermissions.merge(WithFeatureFlags).merge(
     z.object({
         title: z.string(),
+        profile: z.string().optional(),
         subtitle: z.string().optional(),
         icon: z.string().optional(),
         layout: z.array(NavigationItem),
@@ -1015,9 +1028,18 @@ export const TabbedNavigationItemWithLayout = z.object({
     layout: z.array(NavigationItem).optional()
 });
 
+export const TabVariantGroupItem = z.union([TabVariant, LinkConfiguration]);
+
+export const TabVariantGroup = z.object({
+    group: z.string(),
+    items: z.array(TabVariantGroupItem)
+});
+
+export const TabVariantItem = z.union([TabVariant, TabVariantGroup, LinkConfiguration]);
+
 export const TabbedNavigationItemWithVariants = z.object({
     tab: TabId,
-    variants: z.array(TabVariant)
+    variants: z.array(TabVariantItem)
 });
 
 export const TabbedNavigationItem = z.union([TabbedNavigationItemWithLayout, TabbedNavigationItemWithVariants]);
@@ -1026,11 +1048,54 @@ export const TabbedNavigationConfig = z.array(TabbedNavigationItem);
 
 export const NavigationConfig = z.union([TabbedNavigationConfig, UntabbedNavigationConfig]);
 
+// ===== Profile Config =====
+
+/**
+ * Either an inline map of values, or one or more filepaths to YAML files containing only a `vars` map.
+ */
+export const ProfileVarsConfiguration = z.union([z.record(z.string(), z.string()), z.string(), z.array(z.string())]);
+
+/**
+ * The contents of a standalone vars file referenced by a profile's `vars` in docs.yml.
+ */
+export const ProfileVarsFile = z
+    .object({
+        vars: z.record(z.string(), z.string())
+    })
+    .strict();
+
+export const ProfileConfig = z.object({
+    vars: ProfileVarsConfiguration.optional()
+});
+
 // ===== Tab Config =====
+
+export const TabMenuTab = WithPermissions.merge(WithFeatureFlags).merge(
+    z.object({
+        tab: TabId,
+        "display-name": z.string(),
+        subtitle: z.string().optional(),
+        icon: z.string().optional(),
+        slug: z.string().optional(),
+        "skip-slug": z.boolean().optional(),
+        hidden: z.boolean().optional(),
+        default: z.boolean().optional()
+    })
+);
+
+export const TabMenuGroupItem = z.union([TabMenuTab, LinkConfiguration]);
+
+export const TabMenuGroup = z.object({
+    group: z.string(),
+    tabs: z.array(TabMenuGroupItem)
+});
+
+export const TabMenuEntry = z.union([TabMenuTab, TabMenuGroup, LinkConfiguration]);
 
 export const TabConfig = WithPermissions.merge(WithFeatureFlags).merge(
     z.object({
         "display-name": z.string(),
+        profile: z.string().optional(),
         icon: z.string().optional(),
         slug: z.string().optional(),
         "skip-slug": z.boolean().optional(),
@@ -1038,7 +1103,9 @@ export const TabConfig = WithPermissions.merge(WithFeatureFlags).merge(
         href: z.string().optional(),
         target: Target.optional(),
         changelog: ChangelogFolderRelativePath.optional(),
-        blog: ChangelogFolderRelativePath.optional()
+        blog: ChangelogFolderRelativePath.optional(),
+        "tab-menu": z.array(TabMenuEntry).optional(),
+        "tab-menu-column-height": VariantsColumnHeight.nullable().optional()
     })
 );
 
@@ -1047,6 +1114,7 @@ export const TabConfig = WithPermissions.merge(WithFeatureFlags).merge(
 export const VersionConfig = WithPermissions.merge(WithFeatureFlags).merge(
     z.object({
         "display-name": z.string(),
+        profile: z.string().optional(),
         path: z.string().optional(),
         ref: z.string().optional(),
         slug: z.string().optional(),
@@ -1072,6 +1140,7 @@ export const ProductConfigBase = WithPermissions.merge(WithFeatureFlags).merge(
         icon: z.string().optional(),
         image: z.string().optional(),
         versions: z.array(VersionConfig).optional(),
+        profile: z.string().optional(),
         audiences: Audience.optional()
     })
 );
@@ -1137,6 +1206,8 @@ export function normalizeTranslationConfig(config: z.infer<typeof TranslationCon
 export const DocsConfiguration = z.object({
     instances: z.array(DocsInstance),
     title: z.string().optional(),
+    profiles: z.record(z.string(), ProfileConfig).optional(),
+    profile: z.string().optional(),
     libraries: z.record(LibraryName, LibraryConfiguration).optional(),
     analytics: AnalyticsConfig.optional(),
     announcement: AnnouncementConfig.optional(),

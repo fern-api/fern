@@ -170,7 +170,14 @@ export class PostGenerationPipeline {
                     result.steps.verify = verifyResult;
                     pipelineContext.previousStepResults.verify = verifyResult;
                 } else if (step.name === "github") {
-                    result.steps.github = stepResult as GithubStepResult;
+                    const githubResult = stepResult as GithubStepResult;
+                    result.steps.github = githubResult;
+                    if (githubResult.autoMergeError != null) {
+                        result.warnings = result.warnings ?? [];
+                        result.warnings.push(
+                            `Could not enable automerge on PR${githubResult.prNumber != null ? ` #${githubResult.prNumber}` : ""}: ${githubResult.autoMergeError}`
+                        );
+                    }
                 }
 
                 if (!stepResult.success) {

@@ -576,6 +576,9 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {},
+      ],
       "name": "Plant",
       "shape": {
         "extends": [],
@@ -672,6 +675,17 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        {
+          "id": 12345,
+          "name": "Snake Plant",
+          "status": "available",
+          "tags": [
+            "low-maintenance",
+            "air-purifying",
+          ],
+        },
+      ],
       "name": "PlantResponse",
       "shape": {
         "extends": [],
@@ -775,6 +789,9 @@
       "availability": undefined,
       "description": undefined,
       "displayName": undefined,
+      "examples": [
+        "available",
+      ],
       "name": "PlantStatus",
       "shape": {
         "default": undefined,
