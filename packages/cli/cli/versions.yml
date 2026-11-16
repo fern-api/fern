@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.218.0
+  changelogEntry:
+    - summary: |
+        Add `settings.search.popular-searches` to `docs.yml`. When set to `true`, the
+        empty search box lists the site's most popular searches before the reader
+        types. Defaults to `false`.
+      type: feat
+  createdAt: "2026-11-16"
+  irVersion: 67
 - version: 5.217.2
   changelogEntry:
     - summary: |
