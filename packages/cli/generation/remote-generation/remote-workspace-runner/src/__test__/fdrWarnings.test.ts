@@ -22,6 +22,16 @@ describe("logFdrWarnings", () => {
         expect(warn).not.toHaveBeenCalled();
     });
 
+    it("boxes FDR's custom-domain routing warnings", () => {
+        const { context, warn } = createContext();
+        const warning = "Action required by December 1, 2026: your custom domain is not routed through Fern.";
+        logFdrWarnings({ warnings: [warning] }, context);
+        const printed = String(warn.mock.calls[0]?.[0]);
+        expect(printed).not.toBe(warning);
+        expect(printed).toContain("━");
+        expect(printed).toContain(warning);
+    });
+
     it("skips malformed entries", () => {
         const { context, warn } = createContext();
         logFdrWarnings({ warnings: "not an array" }, context);

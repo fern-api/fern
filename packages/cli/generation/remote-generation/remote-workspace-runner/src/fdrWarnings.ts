@@ -1,5 +1,7 @@
 import type { TaskContext } from "@fern-api/task-context";
 
+import { formatCustomDomainRoutingNotice, isCustomDomainRoutingWarning } from "./customDomainRoutingNotice.js";
+
 /**
  * Prints the optional `warnings` FDR returns from docs registration (e.g. a
  * custom domain that is not routed through Fern). Read off the raw response so
@@ -15,7 +17,9 @@ export function logFdrWarnings(response: unknown, context: TaskContext): void {
     }
     for (const warning of warnings) {
         if (typeof warning === "string" && warning.trim() !== "") {
-            context.logger.warn(warning);
+            context.logger.warn(
+                isCustomDomainRoutingWarning(warning) ? formatCustomDomainRoutingNotice(warning, "warning") : warning
+            );
         }
     }
 }
