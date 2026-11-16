@@ -11,7 +11,7 @@ import {
     PROJECT_CONFIG_FILENAME
 } from "@fern-api/configuration-loader";
 import { createVenusService } from "@fern-api/core";
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, isRecord } from "@fern-api/core-utils";
 import { createDocsAnonymousClient } from "@fern-api/fdr-sdk/orpc-client";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
@@ -212,8 +212,15 @@ export async function claimGuestSession({
             );
         }
         const site = docs.sites[0];
-        if (site != null && (await pointDocsYmlAt({ fernDirectory, domain: site.domain }))) {
-            cliContext.logger.info(`Updated docs.yml: the first instance URL is now ${chalk.bold(site.domain)}.`);
+        if (site != null) {
+            const docsYml = await pointDocsYmlAt({ fernDirectory, domain: site.domain });
+            if (docsYml === "updated") {
+                cliContext.logger.info(`Updated docs.yml: the instance URL is now ${chalk.bold(site.domain)}.`);
+            } else if (docsYml === "several_instances") {
+                cliContext.logger.warn(
+                    `docs.yml has several instances; set the URL of the one you published to ${chalk.bold(site.domain)}.`
+                );
+            }
         }
     } else {
         failures.push(describeDocsMoveFailure(docs, docsUrl));
@@ -442,10 +449,6 @@ function readSuggestedFix(body: unknown): string | undefined {
     return typeof content.suggestedFix === "string" ? content.suggestedFix : undefined;
 }
 
-function isRecord(value: unknown): value is Record<string, unknown> {
-    return typeof value === "object" && value != null && !Array.isArray(value);
-}
-
 function readStatus(error: unknown): number | undefined {
     return isRecord(error) && typeof error.status === "number" ? error.status : undefined;
 }
@@ -459,9 +462,9 @@ function readReason(error: unknown): string | undefined {
 }
 
 /**
- * A guest publish ignores docs.yml's `instances` URL, so after the claim the first instance is pointed at
- * the claimed site; otherwise the next `fern generate --docs` publishes to a different site.
- * Returns whether docs.yml changed.
+ * A guest publish ignores docs.yml's `instances` URL, so after the claim a single instance is pointed at
+ * the claimed site; otherwise the next `fern generate --docs` publishes to a different site. With several
+ * instances the published one is not known, so docs.yml is left alone.
  */
 async function pointDocsYmlAt({
     fernDirectory,
@@ -469,25 +472,28 @@ async function pointDocsYmlAt({
 }: {
     fernDirectory: AbsoluteFilePath;
     domain: string;
-}): Promise<boolean> {
+}): Promise<"updated" | "unchanged" | "several_instances"> {
     const docsYml = path.join(fernDirectory, "docs.yml");
     const text = await readFile(docsYml, "utf-8").catch(() => undefined);
     if (text == null) {
-        return false;
+        return "unchanged";
     }
     const document = parseDocument(text);
     if (!isMap(document.contents)) {
-        return false;
+        return "unchanged";
     }
     const instances = document.get("instances");
-    if (isSeq(instances) && instances.items.length > 0) {
+    if (isSeq(instances) && instances.items.length > 1) {
+        return "several_instances";
+    }
+    if (isSeq(instances) && instances.items.length === 1) {
         if (document.getIn(["instances", 0, "url"]) === domain) {
-            return false;
+            return "unchanged";
         }
         document.setIn(["instances", 0, "url"], domain);
     } else {
         document.set("instances", [{ url: domain }]);
     }
     await writeFile(docsYml, document.toString());
-    return true;
+    return "updated";
 }
