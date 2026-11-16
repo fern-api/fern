@@ -5,4 +5,6 @@
     page under a slug (`--section docs/guides`) and `--page <slug>` includes single pages.
     `--exclude-page` and `--exclude-section` then drop pages from that selection, or from the whole site
     when no `--page` or `--section` is given. All four can be repeated; pages keep the site's order.
+    The page list is read from the registry with your Fern login, so scoping works for any site your
+    organization has published.
   type: feat

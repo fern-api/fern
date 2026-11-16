@@ -26,6 +26,7 @@ import {
     type SiteExportClient,
     safeRelativePath
 } from "./exportSources.js";
+import { fetchSitePageSlugs } from "./sitePages.js";
 
 export { safeRelativePath };
 
@@ -241,51 +242,6 @@ export function resolvePdfScope(flags: PdfScopeFlags, sitePageSlugs: string[]): 
     return kept;
 }
 
-/** The URL of the site's printable page list, the same list the PDF exporter renders. */
-export function printPagesUrl(docsUrl: string): string {
-    const url = new URL(/^https?:\/\//.test(docsUrl) ? docsUrl : `https://${docsUrl}`);
-    url.pathname = `${stripTrailingSlashes(url.pathname)}/_print/pages`;
-    url.search = "";
-    url.hash = "";
-    return url.toString();
-}
-
-function isPrintPagesResponse(value: unknown): value is { pages: { slug: string }[] } {
-    if (typeof value !== "object" || value == null || !("pages" in value) || !Array.isArray(value.pages)) {
-        return false;
-    }
-    return value.pages.every(
-        (page: unknown) => typeof page === "object" && page != null && "slug" in page && typeof page.slug === "string"
-    );
-}
-
-const PRINT_PAGES_TIMEOUT_MS = 30_000;
-
-/**
- * The slugs of every page the PDF exporter would render for the live site, in order. Sent without the
- * Fern token: the docs URL comes from the project, which may not be trusted.
- */
-async function fetchSitePageSlugs(docsUrl: string): Promise<string[]> {
-    const url = printPagesUrl(docsUrl);
-    let response: Response;
-    try {
-        response = await fetch(url, {
-            headers: { Accept: "application/json" },
-            signal: AbortSignal.timeout(PRINT_PAGES_TIMEOUT_MS)
-        });
-    } catch (error) {
-        throw new Error(`Listing the site's pages failed: ${extractErrorMessage(error)} (${url})`);
-    }
-    if (!response.ok) {
-        throw new Error(`Listing the site's pages failed: HTTP ${response.status} from ${url}`);
-    }
-    const body: unknown = await response.json();
-    if (!isPrintPagesResponse(body)) {
-        throw new Error(`Listing the site's pages failed: unexpected response from ${url}`);
-    }
-    return body.pages.map((page) => page.slug);
-}
-
 /** The export options for `settings`, or `undefined` when every setting is the site's default. */
 export function pdfExportOptions(settings: PdfSettings, pageSlugs: string[] = []): PdfExportOptions | undefined {
     const options = {
@@ -346,7 +302,16 @@ export async function exportDocs({
         const outputFile = path.resolve(pdfOutputPath(output));
         await cliContext.runTask(async (context) => {
             await withSpinner(context, cliContext.isTTY, { name: "Exporting PDF" }, async () => {
-                const pageSlugs = scoped ? resolvePdfScope(scope, await fetchSitePageSlugs(hosted.docsUrl)) : [];
+                const pageSlugs = scoped
+                    ? resolvePdfScope(
+                          scope,
+                          await fetchSitePageSlugs({
+                              fdrOrigin: FDR_ORIGIN,
+                              token: hosted.token,
+                              docsUrl: hosted.docsUrl
+                          })
+                      )
+                    : [];
                 await downloadHostedPdf({ ...hosted, outputFile, options: pdfExportOptions(pdf, pageSlugs) });
                 const pages = scoped ? ` (${pageSlugs.length} ${pageSlugs.length === 1 ? "page" : "pages"})` : "";
                 return [chalk.green(`Exported PDF${pages} to ${displayPath(outputFile, process.cwd())}`)];
@@ -439,7 +404,7 @@ async function resolveHostedExport({
 }: {
     cliContext: CliContext;
     instance: string | undefined;
-}): Promise<{ client: SiteExportClient; orgId: string; docsUrl: string }> {
+}): Promise<{ client: SiteExportClient; orgId: string; docsUrl: string; token: string }> {
     const fernDirectory = await getFernDirectory();
     if (fernDirectory == null) {
         return cliContext.failAndThrow(
@@ -491,6 +456,7 @@ async function resolveHostedExport({
     return {
         client: createExportClient({ baseUrl: FDR_ORIGIN, token: token.value }),
         orgId: projectConfig.organization,
-        docsUrl: instanceUrl
+        docsUrl: instanceUrl,
+        token: token.value
     };
 }
