@@ -3536,6 +3536,9 @@
                 },
                 "sticky": {
                   "type": "boolean"
+                },
+                "disable-non-page-ancestors": {
+                  "type": "boolean"
                 }
               },
               "additionalProperties": false

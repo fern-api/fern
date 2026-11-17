@@ -347,7 +347,8 @@ export const ThemeConfig = z.object({
 
 export const BreadcrumbsConfig = z.object({
     "current-page": z.boolean().optional(),
-    sticky: z.boolean().optional()
+    sticky: z.boolean().optional(),
+    "disable-non-page-ancestors": z.boolean().optional()
 });
 
 export const VariantsColumnHeight = z.union([z.number().int().positive(), z.literal("no-limit")]);

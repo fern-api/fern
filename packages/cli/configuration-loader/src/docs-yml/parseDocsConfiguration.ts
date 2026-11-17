@@ -770,13 +770,15 @@ function convertLayoutConfig(
         // Opt-in (default off, resolved by the fern-platform companion PR):
         // `breadcrumbs.current-page` appends the current page to the breadcrumb trail
         // as a non-clickable item; `breadcrumbs.sticky` pins the breadcrumb row below
-        // the header on scroll. Part of the `as unknown as` cast below until the
-        // published FDR SDK adds the field.
+        // the header on scroll; `breadcrumbs.disable-non-page-ancestors` renders
+        // ancestors that aren't pages as disabled, non-clickable items. Part of the
+        // `as unknown as` cast below until the published FDR SDK adds the field.
         breadcrumbs:
             layout.breadcrumbs != null
                 ? {
                       currentPage: layout.breadcrumbs.currentPage ?? false,
-                      sticky: layout.breadcrumbs.sticky ?? false
+                      sticky: layout.breadcrumbs.sticky ?? false,
+                      disableNonPageAncestors: layout.breadcrumbs.disableNonPageAncestors ?? false
                   }
                 : undefined,
         tabsAlignment: resolvedTabsAlignment
