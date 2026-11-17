@@ -1,0 +1,5 @@
+- summary: |
+    Add `page-actions.options.mcp-auth` to `docs.yml`. When `true`, MCP clients can sign in to the
+    docs site's MCP server through the site's own password, JWT or OAuth2 login and get results
+    scoped to that user. Defaults to `false`; sites without it are unchanged.
+  type: feat
