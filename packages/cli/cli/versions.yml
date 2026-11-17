@@ -1,4 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.218.3
+  changelogEntry:
+    - summary: |
+        `fern generate` now retries Fiddle job creation refused with 429 Too Many Requests by default
+        (previously only with `--retry-rate-limited`), and retries up to 10 times (about 10 minutes of
+        backoff) instead of 5 (about 1 minute), so large groups wait for the organization's rate limit
+        instead of failing. Opt out with `--no-retry-rate-limited`.
+      type: fix
+    - summary: |
+        `fern generate` now retries an sdk-gen-api build submission that is refused with 429 Too Many Requests
+        (organization rate limit, organization lock or concurrent build cap), waiting as long as the server's
+        `Retry-After` header asks, for up to 10 minutes in total. Previously the first 429 failed the generation.
+      type: fix
+  createdAt: "2026-11-17"
+  irVersion: 67
 - version: 5.218.2
   changelogEntry:
     - summary: |
