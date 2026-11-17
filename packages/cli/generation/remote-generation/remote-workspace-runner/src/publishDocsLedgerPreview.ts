@@ -9,6 +9,7 @@ import {
 import type { AbsoluteFilePath } from "@fern-api/fs-utils";
 import type { TaskContext } from "@fern-api/task-context";
 
+import { getPublishWarnings } from "./getPublishWarnings.js";
 import { buildAllTranslationInputs, buildLedgerInput, uploadMissingBlobs } from "./publishDocsLedger.js";
 
 type DocsDefinition = DocsV1Write.DocsDefinition;
@@ -159,6 +160,10 @@ export async function publishDocsViaLedgerPreview({
         `[ledger-preview] Finished in ${finishTime.toFixed(0)}ms — deploymentId=${finishResult.deploymentId}, ` +
             `reused=${finishResult.reusedDeployment}`
     );
+
+    for (const warning of getPublishWarnings(finishResult)) {
+        context.logger.warn(warning);
+    }
 
     // Log translation results if any were processed.
     if (finishResult.translationsProcessed != null) {

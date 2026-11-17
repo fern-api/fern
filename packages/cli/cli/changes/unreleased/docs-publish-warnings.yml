@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern generate --docs` now prints warnings returned by the docs registry when a publish finishes.
+    For example, a site on a plan without custom CSS, JavaScript or React components is told to
+    upgrade or remove them by December 31, 2026.
+  type: feat
