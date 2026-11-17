@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.222.0
+  changelogEntry:
+    - summary: |
+        `fern generate` now uploads an MCP target's customer-authored custom-tool and hook modules
+        (the files referenced by `customTools`/`hooks` in the SDK Config) so they reach the generator
+        and are emitted into the generated MCP server.
+      type: feat
+  createdAt: "2026-11-17"
+  irVersion: 67
 - version: 5.221.0
   changelogEntry:
     - summary: |
