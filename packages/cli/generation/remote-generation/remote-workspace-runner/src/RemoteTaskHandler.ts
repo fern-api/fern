@@ -13,7 +13,7 @@ import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import axios from "axios";
 import chalk from "chalk";
 import { createWriteStream } from "fs";
-import { chmod, cp, mkdir, readdir, rm } from "fs/promises";
+import { chmod, cp, mkdir, readdir, readFile, rm } from "fs/promises";
 import path from "path";
 import { pipeline } from "stream/promises";
 import terminalLink from "terminal-link";
@@ -699,8 +699,12 @@ async function downloadAndExtractZipToDirectory({
 }
 
 export async function extractZipToDirectory(zipPath: string, outputDir: AbsoluteFilePath): Promise<void> {
+    // Read the archive into memory rather than with yauzl.open: on Node 24, yauzl's file reader can stop
+    // partway through a large compressed entry without an error or an end event, so the files after it were
+    // never written and the CLI exited as if generation had finished.
+    const zipBuffer = await readFile(zipPath);
     return new Promise((resolve, reject) => {
-        yauzl.open(zipPath, { lazyEntries: true }, (err, zipFile) => {
+        yauzl.fromBuffer(zipBuffer, { lazyEntries: true }, (err, zipFile) => {
             if (err || !zipFile) {
                 reject(err ?? new Error("Failed to open zip file"));
                 return;
