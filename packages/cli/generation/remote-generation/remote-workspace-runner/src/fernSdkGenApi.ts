@@ -42,6 +42,7 @@ import {
     validateGeneratorConfigCompatibility
 } from "./sdk-gen-client/index.js";
 import { FERN_GENERATOR_LATEST_VERSION, isGeneratorVersionForUnpinnedRoute } from "./sdkConfigGeneratorVersion.js";
+import type { FernSdkGenApiProvenance } from "./sdkGenApiProvenance";
 
 const POLL_INTERVAL_MS = 2_000;
 const POLL_TIMEOUT_MS = 18 * 60 * 1_000;
@@ -204,6 +205,8 @@ export interface FernSdkGenApiRequest {
     protocolVersion: 2;
     apiName: string;
     cliVersion?: string;
+    /** Where this run happened; describes the build, so it is kept out of the idempotency key. */
+    provenance?: FernSdkGenApiProvenance;
     idempotencyKey: string;
     credentialSetId?: string;
     apiInputs: Array<{ id: string; specIndexes: "all" | number[] }>;
@@ -1078,6 +1081,8 @@ export interface FernSdkGenApiBuildParameters {
     apiName: string;
     organization: string;
     cliVersion: string | undefined;
+    /** Where this run happened (see `detectSdkGenApiProvenance`); absent when nothing could be read. */
+    provenance?: FernSdkGenApiProvenance;
     generatorInvocation: generatorsYml.GeneratorInvocation;
     resolvedGeneratorVersion?: string;
     sdkGenApiRoute?: GenerationConfigRoute;
@@ -1360,6 +1365,7 @@ function prepareFernSdkGenApiSubmission(participants: FernSdkGenApiBuildParamete
         apiName: first.apiName,
         organization: first.organization,
         cliVersion: first.cliVersion,
+        provenance: first.provenance,
         specsTarGzBuffer: first.specsTarGzBuffer,
         targets: participants.map((participant) => ({
             generatorInvocation: participant.generatorInvocation,
@@ -2597,12 +2603,14 @@ export function createFernSdkGenApiBatchRequest({
     apiName,
     organization,
     cliVersion,
+    provenance,
     specsTarGzBuffer,
     targets
 }: {
     apiName: string;
     organization: string;
     cliVersion: string | undefined;
+    provenance?: FernSdkGenApiProvenance;
     specsTarGzBuffer: Buffer;
     targets: Array<{
         generatorInvocation: generatorsYml.GeneratorInvocation;
@@ -2765,6 +2773,7 @@ export function createFernSdkGenApiBatchRequest({
         protocolVersion: 2,
         apiName,
         ...(cliVersion ? { cliVersion } : {}),
+        ...(provenance != null ? { provenance } : {}),
         idempotencyKey,
         ...(credentialSetId != null ? { credentialSetId } : {}),
         apiInputs,
