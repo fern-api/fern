@@ -1313,6 +1313,7 @@ function prepareFernSdkGenApiSubmission(participants: FernSdkGenApiBuildParamete
     first: FernSdkGenApiBuildParameters;
     origin: string;
     request: FernSdkGenApiRequest;
+    initialForm: FormData;
     createForm: () => FormData;
     sensitiveValues: string[];
 } {
@@ -1426,7 +1427,8 @@ function prepareFernSdkGenApiSubmission(participants: FernSdkGenApiBuildParamete
         }
         return form;
     };
-    const multipartBodyLength = createForm().getLengthSync();
+    const initialForm = createForm();
+    const multipartBodyLength = initialForm.getLengthSync();
     if (multipartBodyLength > MAX_MULTIPART_BODY_BYTES) {
         return first.context.failAndThrow(
             `sdk-gen-api multipart request is ${formatMiB(multipartBodyLength)}, exceeding the 60 MiB limit; reduce source or target payload size`,
@@ -1438,6 +1440,7 @@ function prepareFernSdkGenApiSubmission(participants: FernSdkGenApiBuildParamete
         first,
         origin,
         request,
+        initialForm,
         createForm,
         sensitiveValues: normalizeSensitiveValues([first.token.value, ...getCredentialSecretValues(credentials)])
     };
@@ -1451,15 +1454,18 @@ function prepareFernSdkGenApiSubmission(participants: FernSdkGenApiBuildParamete
 async function postFernSdkGenApiBuild({
     first,
     origin,
+    initialForm,
     createForm
 }: {
     first: FernSdkGenApiBuildParameters;
     origin: string;
+    initialForm: FormData;
     createForm: () => FormData;
 }): Promise<string> {
     let waitedMs = 0;
     for (let attempt = 1; ; attempt++) {
-        const form = createForm();
+        // A FormData stream can only be sent once, so each retry needs a fresh body.
+        const form = attempt === 1 ? initialForm : createForm();
         try {
             const response = await axios.post<{ buildId: string }>(`${origin}/v1/fern/build`, form, {
                 headers: {
@@ -1505,27 +1511,28 @@ function getRateLimitRetryDelayMs(error: unknown, attempt: number): number | und
 }
 
 function parseRetryAfterMs(header: unknown): number | undefined {
-    if (typeof header !== "string" || header.trim() === "") {
+    if (typeof header !== "string") {
         return undefined;
     }
-    const seconds = Number(header);
-    if (Number.isFinite(seconds) && seconds >= 0) {
-        return seconds * 1_000;
+    const value = header.trim();
+    if (/^\d+$/.test(value)) {
+        return Number(value) * 1_000;
     }
-    const date = Date.parse(header);
+    const date = Date.parse(value);
     return Number.isNaN(date) ? undefined : Math.max(0, date - Date.now());
 }
 
 async function executeFernSdkGenApiBuild(
     participants: FernSdkGenApiBuildParameters[]
 ): Promise<PromiseSettledResult<FernSdkGenApiBuildResponse>[]> {
-    const { first, origin, request, createForm, sensitiveValues } = prepareFernSdkGenApiSubmission(participants);
+    const { first, origin, request, initialForm, createForm, sensitiveValues } =
+        prepareFernSdkGenApiSubmission(participants);
 
     logFernSdkGenApiSubmissionDebug({ first, origin, request, participants, sensitiveValues });
 
     let buildId: string;
     try {
-        buildId = await postFernSdkGenApiBuild({ first, origin, createForm });
+        buildId = await postFernSdkGenApiBuild({ first, origin, initialForm, createForm });
     } catch (error) {
         logFernSdkGenApiSubmissionFailureDebug(first.context, error, sensitiveValues);
         const sanitizedError = sanitizeFernSdkGenApiSubmissionError(error, sensitiveValues);
