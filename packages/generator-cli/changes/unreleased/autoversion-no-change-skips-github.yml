@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=../../../../fern-changes-yml.schema.json
+
+- summary: |
+    When `--version AUTO` finds no semantic changes (`NO_CHANGE`), the pipeline no longer commits, pushes,
+    opens a pull request or creates a release. It previously opened a "no semver change" PR that only
+    contained metadata and lockfile churn. This matches local `--version AUTO` generation, which already
+    skipped GitHub delivery. A NO_CHANGE result from incomplete analysis (failed diff chunks, or no
+    reachable previous generation to compare against) is still delivered so it can be reviewed; the
+    missing-baseline case reports `analysisWarningCode: no-baseline`.
+  type: fix

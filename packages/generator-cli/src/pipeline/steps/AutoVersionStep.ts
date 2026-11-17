@@ -212,7 +212,14 @@ export class AutoVersionStep extends BaseStep {
                 language,
                 mappedMagicVersion,
                 previousVersion,
-                reason: "no diff between generations"
+                reason: "no diff between generations",
+                warning:
+                    diffBase == null
+                        ? {
+                              reason: "no-baseline",
+                              message: "no reachable previous generation baseline; generated output was not compared"
+                          }
+                        : undefined
             });
         }
 
