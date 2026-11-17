@@ -1,3 +1,4 @@
+import { errorMessageOrString } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 import { ZipFile } from "yazl";
@@ -59,7 +60,7 @@ export async function collectMcpCustomCode(
             contents = await readFile(absolute);
         } catch (error) {
             throw new Error(
-                `MCP custom code: cannot read ${configKey} file "${sourcePath}" (resolved to ${absolute}). Make sure the path in your config is correct and the file is committed. (${error instanceof Error ? error.message : String(error)})`
+                `MCP custom code: cannot read ${configKey} file "${sourcePath}" (resolved to ${absolute}). Make sure the path in your config is correct and the file is committed. (${errorMessageOrString(error)})`
             );
         }
         zip.addBuffer(contents, zipPath);
