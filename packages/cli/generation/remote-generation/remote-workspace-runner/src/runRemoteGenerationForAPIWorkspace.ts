@@ -279,8 +279,7 @@ export async function runRemoteGenerationForAPIWorkspace({
         requireEnvVars,
         isPreview: isSdkPreview,
         verify,
-        skipIfNoDiff,
-        autoMerge
+        skipIfNoDiff
     });
     for (const result of routePreparation) {
         if (result.fallbackReason != null) {
@@ -481,8 +480,7 @@ export function prepareFernSdkGenApiRoutes({
     requireEnvVars,
     isPreview,
     verify,
-    skipIfNoDiff,
-    autoMerge
+    skipIfNoDiff
 }: {
     generators: generatorsYml.GeneratorInvocation[];
     /** Whether the `use-sdk-gen-api` flag routes this generator, keyed by its configured name. */
@@ -492,7 +490,6 @@ export function prepareFernSdkGenApiRoutes({
     isPreview: boolean;
     verify?: boolean;
     skipIfNoDiff?: boolean;
-    autoMerge?: boolean;
 }): Array<{
     generatorInvocation: generatorsYml.GeneratorInvocation;
     route: GenerationConfigRoute | undefined;
@@ -639,8 +636,7 @@ export function prepareFernSdkGenApiRoutes({
                 generatorInvocation: resolved,
                 requestedOutput: configuredTarget?.requestedOutput,
                 verify,
-                skipIfNoDiff,
-                autoMerge
+                skipIfNoDiff
             });
             if (route != null && unsupportedOutput != null) {
                 if (route.configKind === "legacy-fern") {
@@ -703,14 +699,12 @@ function getFernSdkGenApiUnsupportedOutput({
     generatorInvocation,
     requestedOutput,
     verify,
-    skipIfNoDiff,
-    autoMerge
+    skipIfNoDiff
 }: {
     generatorInvocation: generatorsYml.GeneratorInvocation;
     requestedOutput?: FernSdkGenApiRequestedOutput;
     verify?: boolean;
     skipIfNoDiff?: boolean;
-    autoMerge?: boolean;
 }): string | undefined {
     const resolvedRequestedOutput = requestedOutput ?? mapFernSdkGenApiOutput(generatorInvocation).requestedOutput;
     const unsupported: string[] = [];
@@ -719,9 +713,6 @@ function getFernSdkGenApiUnsupportedOutput({
     }
     if (skipIfNoDiff === true && resolvedRequestedOutput.type !== "github") {
         unsupported.push("skipIfNoDiff=true is not implemented by sdk-gen-api for non-GitHub output");
-    }
-    if (autoMerge === true || generatorsYml.isGithubAutoMergeEnabled(generatorInvocation.raw?.github)) {
-        unsupported.push("autoMerge=true is not implemented by sdk-gen-api");
     }
     return unsupported.length > 0 ? unsupported.join("; ") : undefined;
 }
