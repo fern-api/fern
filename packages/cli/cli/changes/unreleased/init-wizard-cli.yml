@@ -18,3 +18,6 @@
 - summary: |
     When a `fern` command fails during the `fern init` setup wizard, the wizard now shows the reason Fern printed after the error and saves the command's full output to `~/.fern/logs/`.
   type: fix
+- summary: |
+    In a new project, the `fern init` setup wizard now lets you uncheck TypeScript when picking SDK languages. Before, it showed the TypeScript target that `fern init` adds to every new `fern/sdk-config.yml` as "already set up" and always generated it.
+  type: fix

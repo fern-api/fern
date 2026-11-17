@@ -865,7 +865,10 @@ async function generateSdks(
     const sdkConfig = await usesSdkConfig(dir);
     const group = sdkConfig ? undefined : await ensureSdkGroup(dir);
     const groupArgs = group === undefined ? [] : ["--group", group];
-    const configured = await readConfiguredSdks(dir);
+    // `fern init` starts every new sdk-config.yml with a TypeScript target. In a project this run
+    // created, that's only a placeholder, so the language question replaces it instead of locking it in.
+    const newProject = sdkConfig && !detection.fernProject.exists;
+    const configured = newProject ? [] : await readConfiguredSdks(dir);
     const configuredGenerators = new Set(configured.map((sdk) => sdk.language.generator));
     const chosen = products.includes("sdks") ? await chooseSdkLanguages(configured, configuredGenerators) : [];
     const enterprise = chosen.filter((language) => !language.free);
@@ -877,8 +880,15 @@ async function generateSdks(
         ([product, target]) => products.includes(product) && !configuredGenerators.has(target.generator)
     ).map(([, target]) => target);
     const added = chosen.filter((language) => language.free);
+    if (newProject && added.length + tools.length === 0) {
+        // Enterprise languages were explained above; otherwise nothing was picked.
+        if (chosen.length === 0) {
+            printSkipped(`No ${generatedLabel} picked, so nothing to generate`);
+        }
+        return;
+    }
     if (sdkConfig) {
-        await addSdkConfigTargets(dir, [...added, ...tools]);
+        await addSdkConfigTargets(dir, [...added, ...tools], { replace: newProject });
     } else {
         for (const language of added) {
             await withStatus(`Adding the ${language.displayName}`, () =>

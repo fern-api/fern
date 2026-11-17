@@ -140,7 +140,11 @@ async function readSdkConfig(dir: string): Promise<Record<string, unknown> | und
  * target's own folder, like cli/) in this repository. Targets pin no generator version, so Fern uses
  * the newest one.
  */
-export async function addSdkConfigTargets(dir: string, languages: SdkLanguage[]): Promise<void> {
+export async function addSdkConfigTargets(
+    dir: string,
+    languages: SdkLanguage[],
+    { replace = false }: { replace?: boolean } = {}
+): Promise<void> {
     if (languages.length === 0) {
         return;
     }
@@ -151,7 +155,7 @@ export async function addSdkConfigTargets(dir: string, languages: SdkLanguage[])
         language: language.target,
         output: { delivery: "files", path: `../${language.outputDirectory ?? `sdks/${language.target}`}` }
     }));
-    if (isSeq(existing)) {
+    if (isSeq(existing) && !replace) {
         for (const target of targets) {
             existing.add(document.createNode(target));
         }

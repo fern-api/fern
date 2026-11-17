@@ -87,6 +87,31 @@ describe("SDK configuration", () => {
         await rm(dir, { recursive: true, force: true });
     });
 
+    it("replaces the starter TypeScript target that `fern init` writes with the languages picked", async () => {
+        const dir = await project({
+            "fern/sdk-config.yml": [
+                "schemaVersion: sdk-config/v1",
+                "sdkName: api",
+                "targets:",
+                "  - language: typescript",
+                "    output:",
+                "      delivery: files",
+                "      path: ../sdks/typescript"
+            ].join("\n")
+        });
+        const python = SDK_LANGUAGES.find((language) => language.target === "python");
+        if (python === undefined) {
+            throw new Error("Python is missing from SDK_LANGUAGES");
+        }
+        await addSdkConfigTargets(dir, [python, CLI_TARGET], { replace: true });
+        const sdks = await readConfiguredSdks(dir);
+        expect(sdks.map((sdk) => [sdk.language.label, sdk.outputPath])).toEqual([
+            ["Python", path.join(dir, "sdks", "python")],
+            ["CLI", path.join(dir, "cli")]
+        ]);
+        await rm(dir, { recursive: true, force: true });
+    });
+
     it("adds the CLI as an sdk-config.yml target in its own folder and ignores an MCP server", async () => {
         const dir = await project({
             "fern/sdk-config.yml": [
