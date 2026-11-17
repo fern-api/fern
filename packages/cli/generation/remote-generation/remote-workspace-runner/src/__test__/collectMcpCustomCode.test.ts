@@ -163,8 +163,6 @@ describe("extractMcpCustomCodeFromSdkConfigBody", () => {
 
     it("returns empty for an unparseable body or one with no custom code", () => {
         expect(extractMcpCustomCodeFromSdkConfigBody(Buffer.from("not json"))).toEqual({});
-        expect(
-            extractMcpCustomCodeFromSdkConfigBody(body({ targets: [{ language: "typescript" }] }))
-        ).toEqual({});
+        expect(extractMcpCustomCodeFromSdkConfigBody(body({ targets: [{ language: "typescript" }] }))).toEqual({});
     });
 });

@@ -35,6 +35,7 @@ import { CliError, InteractiveTaskContext } from "@fern-api/task-context";
 import { FernWorkspace, IdentifiableSource } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import type { FernConfigMappingDiagnostic } from "@postman/sdk-config/sdk-config/v1";
+import { collectMcpCustomCode, extractMcpCustomCodeFromSdkConfigBody } from "./collectMcpCustomCode.js";
 import { createAndStartJob } from "./createAndStartJob.js";
 import { discoverLatestSdkGenApiGeneratorVersions } from "./discoverSdkGenApiGeneratorVersions.js";
 import {
@@ -72,7 +73,6 @@ import {
     GeneratorConfigCompatibilityError,
     validateGeneratorConfigCompatibility
 } from "./sdk-gen-client/index.js";
-import { collectMcpCustomCode, extractMcpCustomCodeFromSdkConfigBody } from "./collectMcpCustomCode.js";
 import { createSdkConfigTargetPayload, resolveSdkConfigTarget } from "./sdkConfigTarget.js";
 
 export async function runRemoteGenerationForGenerator({

@@ -28,9 +28,7 @@ export async function collectMcpCustomCode(
     projectRoot: AbsoluteFilePath
 ): Promise<Buffer | undefined> {
     const entries: { zipPath: string; sourcePath: string }[] = [
-        ...(generation.hooks != null
-            ? [{ zipPath: "mcp/custom-hook.ts", sourcePath: generation.hooks.path }]
-            : []),
+        ...(generation.hooks != null ? [{ zipPath: "mcp/custom-hook.ts", sourcePath: generation.hooks.path }] : []),
         ...Object.values(generation.customTools ?? {}).map((tool) => ({
             zipPath: `mcp/${tool.path}`,
             sourcePath: tool.path
@@ -106,19 +104,13 @@ export function extractMcpCustomCodeFromSdkConfigBody(body: Buffer): McpCustomCo
             : undefined;
     const rootGeneration = typeof doc.generation === "object" && doc.generation != null ? doc.generation : {};
     const targetGeneration =
-        target != null && typeof target.generation === "object" && target.generation != null
-            ? target.generation
-            : {};
+        target != null && typeof target.generation === "object" && target.generation != null ? target.generation : {};
     // Target generation wins over root, matching how the generator merges them.
     return extractMcpCustomCodeConfig({ ...rootGeneration, ...targetGeneration });
 }
 
 function hasStringPath(value: unknown): value is { path: string } {
-    return (
-        typeof value === "object" &&
-        value != null &&
-        typeof (value as Record<string, unknown>).path === "string"
-    );
+    return typeof value === "object" && value != null && typeof (value as Record<string, unknown>).path === "string";
 }
 
 function collectStream(stream: NodeJS.ReadableStream): Promise<Buffer> {
