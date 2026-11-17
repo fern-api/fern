@@ -37,6 +37,11 @@ export class GithubStep extends BaseStep {
         const replayConflictInfo = this.config.replayConflictInfo ?? this.deriveReplayConflictInfo(replayResult);
         const resolvedPrFields = this.resolvePrFields(autoVersionResult);
 
+        if (shouldSkipForNoChange(this.config, autoVersionResult, replayResult)) {
+            this.logger.info("AutoVersion found no semantic changes (NO_CHANGE) — skipping GitHub delivery.");
+            return { executed: true, success: true, skippedNoDiff: true };
+        }
+
         try {
             this.logger.debug("Starting GitHub self-hosted flow in directory: " + this.outputDir);
             const repository = ClonedRepository.createAtPath(this.outputDir);
@@ -183,10 +188,9 @@ export class GithubStep extends BaseStep {
             await repository.commit(resolved.commitMessage);
         }
 
-        // When skipIfNoDiff is enabled, detect no-diff before pushing.
-        // --version AUTO already returns shouldCommit=false for NO_CHANGE, which prevents the
-        // pipeline from running at all. This tree-hash check is a safety net for edge cases
-        // where the version changes but the generated output doesn't.
+        // When skipIfNoDiff is enabled, detect no-diff before pushing. A NO_CHANGE autoversion
+        // result never gets here (see shouldSkipForNoChange); this tree-hash check is a safety
+        // net for edge cases where the version changes but the generated output doesn't.
         if (shouldCheckNoDiff(this.config)) {
             const noDiff = await repository.treeHashEquals(`origin/${baseBranch}`);
             if (noDiff) {
@@ -707,6 +711,28 @@ export function shouldEnableAutomerge(
     const hasBreakingChanges = breaking.hasBreakingChanges ?? config.hasBreakingChanges;
     const analysisUnavailable = breaking.analysisWarning != null && breaking.analysisWarning.length > 0;
     return config.autoMerge === true && hasBreakingChanges !== true && !analysisUnavailable;
+}
+
+/**
+ * A NO_CHANGE autoversion result means the generation has no semantic changes, so there is
+ * nothing to deliver: no commit, push or PR (same as local `--version AUTO` generation).
+ * Delivery still happens when the analysis was incomplete (`analysisWarning`), since the
+ * NO_CHANGE verdict is then unverified, when replay hit conflicts that need review, and in
+ * preview mode.
+ */
+export function shouldSkipForNoChange(
+    config: Pick<GithubStepConfig, "previewMode">,
+    autoVersionResult: AutoVersionStepResult | undefined,
+    replayResult?: ReplayStepResult
+): boolean {
+    const analysisIncomplete = (autoVersionResult?.analysisWarning ?? "").trim().length > 0;
+    const replayHasConflicts = (replayResult?.patchesWithConflicts ?? 0) > 0;
+    return (
+        autoVersionResult?.versionBump === "NO_CHANGE" &&
+        !analysisIncomplete &&
+        !replayHasConflicts &&
+        config.previewMode !== true
+    );
 }
 
 /**

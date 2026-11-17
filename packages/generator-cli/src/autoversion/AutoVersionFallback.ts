@@ -3,12 +3,14 @@
  *  - `diff-too-large`: the cleaned diff exceeded MAX_RAW_DIFF_BYTES; no AI analysis ran.
  *  - `analysis-failed`: every AI request failed (network error, rate limit, timeout, …).
  *  - `partial-analysis`: only part of the diff was analyzed (chunk cap or some chunk requests failed).
+ *  - `no-baseline`: no reachable previous generation to diff against, so the output was not compared.
  */
-export type AutoVersionFallbackReason = "diff-too-large" | "analysis-failed" | "partial-analysis";
+export type AutoVersionFallbackReason = "diff-too-large" | "analysis-failed" | "partial-analysis" | "no-baseline";
 
 export const AUTO_VERSION_FALLBACK_LOG_PREFIX = "AUTO versioning fallback:";
 
-const FALLBACK_LOG_REGEX = /AUTO versioning fallback: reason=(diff-too-large|analysis-failed|partial-analysis)\b/;
+const FALLBACK_LOG_REGEX =
+    /AUTO versioning fallback: reason=(diff-too-large|analysis-failed|partial-analysis|no-baseline)\b/;
 
 /**
  * Stable, machine-readable log line, e.g.
@@ -26,6 +28,7 @@ export function parseAutoVersionFallbackReason(message: string): AutoVersionFall
         case "diff-too-large":
         case "analysis-failed":
         case "partial-analysis":
+        case "no-baseline":
             return match[1];
         default:
             return undefined;
