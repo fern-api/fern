@@ -259,7 +259,8 @@ catalog:
   ws: ^8.21.0
   xml2js: ^0.6.2
   yaml: ^2.8.3
-  yauzl: ^3.2.1
+  # Needs 3.3.1+: on Node 26, older versions stall partway through a large entry and extractZipToDirectory never settles.
+  yauzl: ^3.4.0
   yazl: ^3.3.1
   zod: ^3.22.3
 overrides:
@@ -274,7 +275,7 @@ overrides:
   "@fern-api/ui-core-utils": 0.145.12-b50d999d1
   vite: ^7.3.5
   esbuild: ^0.28.1
-  yauzl: ^3.2.1
+  yauzl: ^3.4.0
   "@opentelemetry/core": ">=2.8.0"
   js-yaml: ">=4.2.0"
 patchedDependencies:
