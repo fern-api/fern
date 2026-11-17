@@ -129,7 +129,11 @@ export function printNextSteps(
         claimExpires?: string;
     }
 ): void {
-    const guest = results.guest === true || results.claimUrl !== undefined;
+    const guest =
+        results.guest === true ||
+        results.claimUrl !== undefined ||
+        results.guestSiteUrl !== undefined ||
+        results.buildPageUrl !== undefined;
     const guestFlag = guest ? " --guest" : "";
     console.log(chalk.bold("\nNext steps\n"));
     if (results.organization !== undefined) {

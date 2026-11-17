@@ -527,6 +527,8 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 return;
             }
             if (argv.guest) {
+                // `fern init --guest` is a bare init, so it only gets here without a terminal (the wizard ran
+                // above otherwise); any other flag next to --guest is the second case.
                 return cliContext.failWithoutThrowing(
                     isBareInit(process.argv)
                         ? "--guest starts the setup wizard, which needs a terminal. In a script or an agent, run `fern init --organization <name>` and then `fern generate --guest`."

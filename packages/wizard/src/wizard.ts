@@ -440,8 +440,17 @@ export async function runWizard(flags: WizardFlags): Promise<number> {
                 const choice = await chooseAccount(looksUpBrand);
                 if (choice === "login") {
                     await runFernCommand(["login"], dir, detection);
+                    // A sign-in that didn't finish would otherwise ask again at every later step.
+                    if (
+                        (await readFernToken()) === undefined &&
+                        (await confirm("Sign-in didn't complete. Continue without an account, as a guest?"))
+                    ) {
+                        guest = true;
+                    }
                 } else if (choice === "guest") {
                     guest = true;
+                }
+                if (guest) {
                     printGuestModeNote();
                 }
             }
