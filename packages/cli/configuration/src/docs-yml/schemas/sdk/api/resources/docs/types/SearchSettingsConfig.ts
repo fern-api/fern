@@ -19,4 +19,12 @@ export interface SearchSettingsConfig {
      * @default: false
      */
     defaultFilterByCurrentProduct?: boolean;
+    /**
+     * If set to true, the empty search box lists the site's most popular
+     * searches from the last 30 days, before the reader types. Only
+     * searches that return public results are shown.
+     *
+     * @default: false
+     */
+    popularSearches?: boolean;
 }

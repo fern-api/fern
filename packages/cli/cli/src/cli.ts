@@ -1006,9 +1006,9 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 })
                 .option("retry-rate-limited", {
                     boolean: true,
-                    default: false,
+                    default: true,
                     description:
-                        "Automatically retry with exponential backoff when receiving 429 Too Many Requests responses"
+                        "Automatically retry with exponential backoff when receiving 429 Too Many Requests responses. Disable with --no-retry-rate-limited"
                 })
                 .option("require-env-vars", {
                     boolean: true,
@@ -1952,15 +1952,31 @@ function addClaimCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         "claim",
         "Claim this repo's guest session (from `fern generate --guest`) into your Fern organization",
         (yargs) =>
-            yargs.option("org", {
-                alias: "organization",
-                string: true,
-                description:
-                    "Move the guest session's work into an organization you administer. Defaults to turning the guest organization into your own."
-            }),
+            yargs
+                .option("org", {
+                    alias: "organization",
+                    string: true,
+                    description:
+                        "Move the guest session's docs sites and SDK builds into an organization you administer. Defaults to turning the guest organization into your own."
+                })
+                .option("docs-url", {
+                    string: true,
+                    description:
+                        "Give the claimed docs site this address (<name>.docs.buildwithfern.com, or just <name>) instead of its drop-<id> address."
+                })
+                .option("sdk-name", {
+                    string: true,
+                    description:
+                        "Name the claimed SDK builds' SDK in the organization. Defaults to the name they were built with."
+                }),
         async (argv) => {
             cliContext.instrumentPostHogEvent({ command: "fern claim" });
-            await claimGuestSession({ cliContext, organization: argv.org });
+            await claimGuestSession({
+                cliContext,
+                organization: argv.org,
+                docsUrl: argv.docsUrl,
+                sdkName: argv.sdkName
+            });
         }
     );
 }

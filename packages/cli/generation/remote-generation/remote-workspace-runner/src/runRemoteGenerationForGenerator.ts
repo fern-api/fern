@@ -329,7 +329,7 @@ export async function runRemoteGenerationForGenerator({
     const previewRequestedOutput: FernSdkGenApiRequestedOutput | undefined = isDryRunPreview
         ? { type: "download" }
         : undefined;
-    const githubOptions = getFernSdkGenApiGithubOptions({ replay, verify, skipIfNoDiff, noReplay });
+    const githubOptions = getFernSdkGenApiGithubOptions({ replay, verify, skipIfNoDiff, autoMerge, noReplay });
     const legacyRequestedOutput =
         sdkGenApiRoute != null && sdkConfigTarget == null
             ? mapFernSdkGenApiOutput(generatorInvocation, githubOptions).requestedOutput
@@ -927,11 +927,13 @@ function getFernSdkGenApiGithubOptions({
     replay,
     verify,
     skipIfNoDiff,
+    autoMerge,
     noReplay
 }: {
     replay: generatorsYml.ReplayConfigSchema | undefined;
     verify?: boolean;
     skipIfNoDiff?: boolean;
+    autoMerge?: boolean;
     noReplay?: boolean;
 }): FernSdkGenApiGithubOptions | undefined {
     const effectiveReplay =
@@ -939,7 +941,8 @@ function getFernSdkGenApiGithubOptions({
     const options: FernSdkGenApiGithubOptions = {
         ...(effectiveReplay != null ? { replay: effectiveReplay } : {}),
         ...(verify === true ? { verify: true } : {}),
-        ...(skipIfNoDiff === true ? { skipIfNoDiff: true } : {})
+        ...(skipIfNoDiff === true ? { skipIfNoDiff: true } : {}),
+        ...(autoMerge === true ? { autoMerge: true } : {})
     };
     return Object.keys(options).length > 0 ? options : undefined;
 }

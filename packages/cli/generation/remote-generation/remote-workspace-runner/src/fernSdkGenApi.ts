@@ -47,6 +47,11 @@ const POLL_INTERVAL_MS = 2_000;
 const POLL_TIMEOUT_MS = 18 * 60 * 1_000;
 const REQUEST_TIMEOUT_MS = 180_000;
 const POLL_REQUEST_TIMEOUT_MS = 60_000;
+const RATE_LIMIT_MAX_ATTEMPTS = 20;
+const RATE_LIMIT_MAX_TOTAL_WAIT_MS = 10 * 60 * 1_000;
+const RATE_LIMIT_BASE_DELAY_MS = 2_000;
+const RATE_LIMIT_MAX_BACKOFF_MS = 60_000;
+const RATE_LIMIT_JITTER_MS = 1_000;
 const MAX_PAYLOADS = 64;
 const MAX_SOURCE_COMPRESSED_BYTES = 25 * 1024 * 1024;
 const MAX_SOURCE_DECOMPRESSED_BYTES = 25 * 1024 * 1024;
@@ -104,6 +109,8 @@ export interface FernSdkGenApiGithubOptions {
     replay?: FernSdkGenApiReplayConfig;
     verify?: boolean;
     skipIfNoDiff?: boolean;
+    /** Applied only to GitHub pull-request output. */
+    autoMerge?: boolean;
 }
 
 export type FernSdkGenApiRequestedOutput =
@@ -566,20 +573,22 @@ function mapGithubOutput({
     // credentials to approved GitHub installations/repositories and registry hosts/package namespaces.
     return {
         ...(publication?.package != null ? { package: publication.package } : {}),
-        requestedOutput: {
-            type: "github",
-            repository: `${owner}/${repo}`,
-            ...(host != null ? { host } : {}),
-            ...(branch != null ? { branch } : {}),
-            mode,
-            ...(reviewers != null ? { reviewers } : {}),
-            ...(license != null ? { license } : {}),
-            ...(publication != null ? { publish: publication.publish } : {}),
-            // generators.yml resolves an unset `github.workflows` to true, so only the opt-out is
-            // sent. Every request that keeps the default stays unchanged on the wire.
-            ...(workflows === false ? { workflows: false } : {}),
-            ...githubOptions
-        }
+        requestedOutput: applyGithubOptionsToRequestedOutput(
+            {
+                type: "github",
+                repository: `${owner}/${repo}`,
+                ...(host != null ? { host } : {}),
+                ...(branch != null ? { branch } : {}),
+                mode,
+                ...(reviewers != null ? { reviewers } : {}),
+                ...(license != null ? { license } : {}),
+                ...(publication != null ? { publish: publication.publish } : {}),
+                // generators.yml resolves an unset `github.workflows` to true, so only the opt-out is
+                // sent. Every request that keeps the default stays unchanged on the wire.
+                ...(workflows === false ? { workflows: false } : {})
+            },
+            githubOptions
+        )
     };
 }
 
@@ -587,9 +596,17 @@ function applyGithubOptionsToRequestedOutput(
     requestedOutput: FernSdkGenApiRequestedOutput,
     githubOptions: FernSdkGenApiGithubOptions | undefined
 ): FernSdkGenApiRequestedOutput {
-    return requestedOutput.type === "github" && githubOptions != null
-        ? { ...requestedOutput, ...githubOptions }
-        : requestedOutput;
+    if (requestedOutput.type !== "github" || githubOptions == null) {
+        return requestedOutput;
+    }
+    const { autoMerge, ...options } = githubOptions;
+    return {
+        ...requestedOutput,
+        ...options,
+        // GitHub auto-merge applies only to a pull request Fern opens, as on Fiddle, so other modes never
+        // send it. Requests without auto-merge stay unchanged on the wire.
+        ...(autoMerge === true && requestedOutput.mode === "pull-request" ? { autoMerge: true } : {})
+    };
 }
 
 function mapGithubReviewers(
@@ -1328,7 +1345,8 @@ async function prepareFernSdkGenApiSubmission(participants: FernSdkGenApiBuildPa
     first: FernSdkGenApiBuildParameters;
     origin: string;
     request: FernSdkGenApiRequest;
-    form: FormData;
+    initialForm: FormData;
+    createForm: () => FormData;
     sensitiveValues: string[];
     uploadSizes: FernSdkGenApiUploadSizes;
 }> {
@@ -1415,31 +1433,35 @@ async function prepareFernSdkGenApiSubmission(participants: FernSdkGenApiBuildPa
         );
     }
 
-    const form = new FormData();
-    form.append("request", serializedRequest);
-    form.append("sources", first.specsTarGzBuffer, {
-        filename: "specs.tar.gz",
-        contentType: "application/gzip"
-    });
-    participants.forEach((participant, index) => {
-        const target = request.targets[index];
-        if (target == null) {
-            throw new Error(`Cannot pair sdk-gen-api payload at index ${index} with a target`);
+    const createForm = (): FormData => {
+        const form = new FormData();
+        form.append("request", serializedRequest);
+        form.append("sources", first.specsTarGzBuffer, {
+            filename: "specs.tar.gz",
+            contentType: "application/gzip"
+        });
+        participants.forEach((participant, index) => {
+            const target = request.targets[index];
+            if (target == null) {
+                throw new Error(`Cannot pair sdk-gen-api payload at index ${index} with a target`);
+            }
+            const isRuntimeBundle = participant.payload.payloadKind === "fern-runtime-bundle";
+            // sdk-gen-api correlates payloads by this filename; ordering is only deterministic batching.
+            form.append("payloads", participant.payload.body, {
+                filename: `${target.targetId}.json${isRuntimeBundle ? ".gz" : ""}`,
+                contentType: isRuntimeBundle ? "application/gzip" : "application/json"
+            });
+        });
+        if (credentialsBody != null) {
+            form.append("credentials", credentialsBody, {
+                filename: "publish-credentials.v1.json",
+                contentType: "application/json"
+            });
         }
-        const isRuntimeBundle = participant.payload.payloadKind === "fern-runtime-bundle";
-        // sdk-gen-api correlates payloads by this filename; ordering is only deterministic batching.
-        form.append("payloads", participant.payload.body, {
-            filename: `${target.targetId}.json${isRuntimeBundle ? ".gz" : ""}`,
-            contentType: isRuntimeBundle ? "application/gzip" : "application/json"
-        });
-    });
-    if (credentialsBody != null) {
-        form.append("credentials", credentialsBody, {
-            filename: "publish-credentials.v1.json",
-            contentType: "application/json"
-        });
-    }
-    const multipartBodyLength = form.getLengthSync();
+        return form;
+    };
+    const initialForm = createForm();
+    const multipartBodyLength = initialForm.getLengthSync();
     if (multipartBodyLength > MAX_MULTIPART_BODY_BYTES) {
         return first.context.failAndThrow(
             `sdk-gen-api multipart request is ${formatMiB(multipartBodyLength)}, exceeding the ${formatLimitMiB(MAX_MULTIPART_BODY_BYTES)} limit; reduce source or target payload size`,
@@ -1451,7 +1473,8 @@ async function prepareFernSdkGenApiSubmission(participants: FernSdkGenApiBuildPa
         first,
         origin,
         request,
-        form,
+        initialForm,
+        createForm,
         sensitiveValues: normalizeSensitiveValues([first.token.value, ...getCredentialSecretValues(credentials)]),
         uploadSizes: {
             multipartBodyBytes: multipartBodyLength,
@@ -1461,28 +1484,93 @@ async function prepareFernSdkGenApiSubmission(participants: FernSdkGenApiBuildPa
     };
 }
 
+/**
+ * Posts the build, retrying a 429 (rate limit, organization lock or concurrency cap) after the server's
+ * Retry-After. A refused create writes nothing, so a retry cannot duplicate the build. A wait longer than
+ * the remaining budget (e.g. a paused organization) is not retried and fails with the server's message.
+ */
+async function postFernSdkGenApiBuild({
+    first,
+    origin,
+    initialForm,
+    createForm
+}: {
+    first: FernSdkGenApiBuildParameters;
+    origin: string;
+    initialForm: FormData;
+    createForm: () => FormData;
+}): Promise<string> {
+    let waitedMs = 0;
+    for (let attempt = 1; ; attempt++) {
+        // A FormData stream can only be sent once, so each retry needs a fresh body.
+        const form = attempt === 1 ? initialForm : createForm();
+        try {
+            const response = await axios.post<{ buildId: string }>(`${origin}/v1/fern/build`, form, {
+                headers: {
+                    ...form.getHeaders(),
+                    // TODO: Replace the reusable Fern bearer token with a short-lived, audience-restricted
+                    // sdk-generation token once cross-service token exchange is available.
+                    Authorization: `Bearer ${first.token.value}`,
+                    "X-Fern-Organization-Id": first.organization
+                },
+                maxBodyLength: MAX_MULTIPART_BODY_BYTES,
+                timeout: REQUEST_TIMEOUT_MS
+            });
+            return response.data.buildId;
+        } catch (error) {
+            const delayMs = getRateLimitRetryDelayMs(error, attempt);
+            if (
+                delayMs == null ||
+                attempt >= RATE_LIMIT_MAX_ATTEMPTS ||
+                waitedMs + delayMs > RATE_LIMIT_MAX_TOTAL_WAIT_MS
+            ) {
+                throw error;
+            }
+            first.context.logger.warn(
+                `sdk-gen-api is rate limiting build submissions (429). Retrying in ${Math.ceil(delayMs / 1_000)}s (attempt ${attempt + 1}/${RATE_LIMIT_MAX_ATTEMPTS})...`
+            );
+            await delay(delayMs);
+            waitedMs += delayMs;
+        }
+    }
+}
+
+/** The wait before retrying a 429: Retry-After (seconds or HTTP date) plus jitter, else exponential backoff. */
+function getRateLimitRetryDelayMs(error: unknown, attempt: number): number | undefined {
+    if (!(error instanceof AxiosError) || error.response?.status !== 429) {
+        return undefined;
+    }
+    const jitterMs = Math.floor(Math.random() * RATE_LIMIT_JITTER_MS);
+    const retryAfterMs = parseRetryAfterMs(error.response.headers?.["retry-after"]);
+    if (retryAfterMs != null) {
+        return retryAfterMs + jitterMs;
+    }
+    return Math.min(RATE_LIMIT_BASE_DELAY_MS * 2 ** (attempt - 1), RATE_LIMIT_MAX_BACKOFF_MS) + jitterMs;
+}
+
+function parseRetryAfterMs(header: unknown): number | undefined {
+    if (typeof header !== "string") {
+        return undefined;
+    }
+    const value = header.trim();
+    if (/^\d+$/.test(value)) {
+        return Number(value) * 1_000;
+    }
+    const date = Date.parse(value);
+    return Number.isNaN(date) ? undefined : Math.max(0, date - Date.now());
+}
+
 async function executeFernSdkGenApiBuild(
     participants: FernSdkGenApiBuildParameters[]
 ): Promise<PromiseSettledResult<FernSdkGenApiBuildResponse>[]> {
-    const { first, origin, request, form, sensitiveValues, uploadSizes } =
+    const { first, origin, request, initialForm, createForm, sensitiveValues, uploadSizes } =
         await prepareFernSdkGenApiSubmission(participants);
 
     logFernSdkGenApiSubmissionDebug({ first, origin, request, participants, sensitiveValues });
 
     let buildId: string;
     try {
-        const response = await axios.post<{ buildId: string }>(`${origin}/v1/fern/build`, form, {
-            headers: {
-                ...form.getHeaders(),
-                // TODO: Replace the reusable Fern bearer token with a short-lived, audience-restricted
-                // sdk-generation token once cross-service token exchange is available.
-                Authorization: `Bearer ${first.token.value}`,
-                "X-Fern-Organization-Id": first.organization
-            },
-            maxBodyLength: MAX_MULTIPART_BODY_BYTES,
-            timeout: REQUEST_TIMEOUT_MS
-        });
-        buildId = response.data.buildId;
+        buildId = await postFernSdkGenApiBuild({ first, origin, initialForm, createForm });
     } catch (error) {
         logFernSdkGenApiSubmissionFailureDebug(first.context, error, sensitiveValues);
         const sanitizedError = sanitizeFernSdkGenApiSubmissionError(error, sensitiveValues);

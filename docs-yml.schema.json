@@ -7335,6 +7335,17 @@
             }
           ],
           "description": "If set to true, the current product is automatically selected as a\nfacet filter, so only results from the current product are shown by\ndefault. Equivalent to the legacy `settings.default-search-filters`\nsetting, which is preserved as an alias for backwards compatibility.\n\n@default: false"
+        },
+        "popular-searches": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If set to true, the empty search box lists the site's most popular\nsearches from the last 30 days, before the reader types. Only\nsearches that return public results are shown.\n\n@default: false"
         }
       },
       "additionalProperties": false

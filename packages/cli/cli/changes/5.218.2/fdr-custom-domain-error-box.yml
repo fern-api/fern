@@ -1,0 +1,4 @@
+- summary: |
+    Show FDR's custom-domain routing rejection in the red bordered box the CLI's own Vercel check used to print,
+    instead of a generic "Failed to publish docs" error, and box FDR's custom-domain routing warnings in yellow.
+  type: fix

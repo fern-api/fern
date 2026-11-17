@@ -1,14 +1,13 @@
 import * as loggingExecaModule from "@fern-api/logging-execa";
-import { TaskAbortSignal } from "@fern-api/task-context";
 import { afterEach, describe, expect, it, vi } from "vitest";
 
 import {
     ALLOW_OLD_CLI_VERSION_ENV_VAR,
     ALLOW_OLD_CLI_VERSION_FLAG,
-    confirmOldCliVersionAllowed,
     hasOldCliVersionConsent,
     isOlderThanMinimumIsolatedCliVersion,
     MINIMUM_ISOLATED_CLI_VERSION,
+    warnAboutOldCliVersion,
     withoutAllowOldCliVersionFlag
 } from "../oldCliVersionGate.js";
 import { rerunFernCliAtVersion } from "../rerunFernCliAtVersion.js";
@@ -81,83 +80,68 @@ describe("hasOldCliVersionConsent", () => {
     });
 });
 
-describe("confirmOldCliVersionAllowed", () => {
+describe("warnAboutOldCliVersion", () => {
     afterEach(() => {
         vi.restoreAllMocks();
         vi.unstubAllEnvs();
     });
 
-    it("allows the minimum version without prompting", async () => {
-        const { cliContext, confirmPrompt } = await createContext({ isInteractive: true });
-        await confirmOldCliVersionAllowed({ version: MINIMUM_ISOLATED_CLI_VERSION, cliContext, args: [] });
-        expect(confirmPrompt).not.toHaveBeenCalled();
+    it("does not warn for the minimum version", async () => {
+        const { cliContext, warn } = await createContext({ isInteractive: true });
+        warnAboutOldCliVersion({ version: MINIMUM_ISOLATED_CLI_VERSION, cliContext, args: [] });
+        expect(warn).not.toHaveBeenCalled();
     });
 
-    it("fails without a prompt when not interactive", async () => {
+    it.each([true, false])("warns loudly without prompting or failing (interactive: %s)", async (isInteractive) => {
         vi.stubEnv(ALLOW_OLD_CLI_VERSION_ENV_VAR, "");
-        const { cliContext, confirmPrompt, failAndThrow, error, stdoutInfo, stdoutWarn, stdoutError } =
-            await createContext({ isInteractive: false });
-        await expect(
-            confirmOldCliVersionAllowed({ version: OLD_VERSION, cliContext, args: ["generate"] })
-        ).rejects.toBeInstanceOf(TaskAbortSignal);
+        const { cliContext, confirmPrompt, failAndThrow, warn, stdoutInfo, stdoutWarn, stdoutError } =
+            await createContext({ isInteractive });
+        warnAboutOldCliVersion({ version: OLD_VERSION, cliContext, args: ["generate"] });
         expect(confirmPrompt).not.toHaveBeenCalled();
-        expect(failAndThrow).toHaveBeenCalled();
-        expect(error.mock.calls[0]?.[0]).toContain(ALLOW_OLD_CLI_VERSION_FLAG);
+        expect(failAndThrow).not.toHaveBeenCalled();
+        expect(warn).toHaveBeenCalledTimes(1);
+        expect(warn.mock.calls[0]?.[0]).toContain("WARNING");
+        expect(warn.mock.calls[0]?.[0]).toContain("fern upgrade");
         // Scripts capture stdout (e.g. `$(fern --version)`), so nothing may be printed there.
         expect(stdoutInfo).not.toHaveBeenCalled();
         expect(stdoutWarn).not.toHaveBeenCalled();
         expect(stdoutError).not.toHaveBeenCalled();
     });
 
-    it("allows the version with the flag", async () => {
-        const { cliContext, confirmPrompt, warn } = await createContext({ isInteractive: false });
-        await confirmOldCliVersionAllowed({
-            version: OLD_VERSION,
-            cliContext,
-            args: ["generate", ALLOW_OLD_CLI_VERSION_FLAG]
-        });
-        expect(confirmPrompt).not.toHaveBeenCalled();
-        expect(warn).toHaveBeenCalled();
-    });
-
-    it("allows the version with the environment variable", async () => {
-        vi.stubEnv(ALLOW_OLD_CLI_VERSION_ENV_VAR, "true");
-        const { cliContext, confirmPrompt } = await createContext({ isInteractive: false });
-        await confirmOldCliVersionAllowed({ version: OLD_VERSION, cliContext, args: ["generate"] });
-        expect(confirmPrompt).not.toHaveBeenCalled();
-    });
-
-    it.each([
-        { answer: true, allowed: true },
-        { answer: false, allowed: false }
-    ])("asks in an interactive terminal (answer: $answer)", async ({ answer, allowed }) => {
+    it("prints a short warning with the flag", async () => {
         vi.stubEnv(ALLOW_OLD_CLI_VERSION_ENV_VAR, "");
-        const { cliContext, confirmPrompt } = await createContext({ isInteractive: true });
-        confirmPrompt.mockResolvedValue(answer);
-        const result = confirmOldCliVersionAllowed({ version: OLD_VERSION, cliContext, args: ["generate"] });
-        if (allowed) {
-            await expect(result).resolves.toBeUndefined();
-        } else {
-            await expect(result).rejects.toBeInstanceOf(TaskAbortSignal);
-        }
-        expect(confirmPrompt).toHaveBeenCalledWith(`Run Fern CLI ${OLD_VERSION} anyway?`, false);
+        const { cliContext, warn } = await createContext({ isInteractive: false });
+        warnAboutOldCliVersion({ version: OLD_VERSION, cliContext, args: ["generate", ALLOW_OLD_CLI_VERSION_FLAG] });
+        expect(warn).toHaveBeenCalledTimes(1);
+        expect(warn.mock.calls[0]?.[0]).not.toContain("WARNING");
+    });
+
+    it("prints a short warning with the environment variable", async () => {
+        vi.stubEnv(ALLOW_OLD_CLI_VERSION_ENV_VAR, "true");
+        const { cliContext, warn } = await createContext({ isInteractive: false });
+        warnAboutOldCliVersion({ version: OLD_VERSION, cliContext, args: ["generate"] });
+        expect(warn).toHaveBeenCalledTimes(1);
+        expect(warn.mock.calls[0]?.[0]).not.toContain("WARNING");
     });
 });
 
-describe("rerunFernCliAtVersion old CLI gate", () => {
+describe("rerunFernCliAtVersion old CLI warning", () => {
     afterEach(() => {
         vi.restoreAllMocks();
         vi.unstubAllEnvs();
     });
 
-    it("does not start npx for an old version that is not allowed", async () => {
+    it("runs an old version after warning", async () => {
         vi.stubEnv(ALLOW_OLD_CLI_VERSION_ENV_VAR, "");
-        const { cliContext } = await createContext({ isInteractive: false });
-        const execa = vi.spyOn(loggingExecaModule, "loggingExeca");
-        await expect(
-            rerunFernCliAtVersion({ version: OLD_VERSION, cliContext, args: ["generate"], throwOnError: true })
-        ).rejects.toBeInstanceOf(TaskAbortSignal);
-        expect(execa).not.toHaveBeenCalled();
+        const { cliContext, warn } = await createContext({ isInteractive: false });
+        const execa = vi.spyOn(loggingExecaModule, "loggingExeca").mockResolvedValue({
+            failed: false,
+            stdout: "",
+            stderr: ""
+        } as Awaited<ReturnType<typeof loggingExecaModule.loggingExeca>>);
+        await rerunFernCliAtVersion({ version: OLD_VERSION, cliContext, args: ["generate"] });
+        expect(warn).toHaveBeenCalled();
+        expect(execa.mock.calls[0]?.[2]).toContain(`${cliContext.environment.packageName}@${OLD_VERSION}`);
     });
 
     it("does not forward the flag to the older CLI", async () => {

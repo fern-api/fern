@@ -27,6 +27,7 @@ import type { TaskContext } from "@fern-api/task-context";
 import { createHash } from "crypto";
 import { readFile } from "fs/promises";
 import * as mime from "mime-types";
+import { logFdrWarnings } from "./fdrWarnings.js";
 import { mapDocsConfigToLedgerConfig } from "./mapDocsConfigToLedgerConfig.js";
 
 const UPLOAD_CONCURRENCY = 10;
@@ -427,6 +428,7 @@ export async function publishDocsViaLedger({
     context.logger.debug(
         `[ledger] Registered in ${registerTime.toFixed(0)}ms — hash=${registerResult.deploymentHash}, missing=${registerResult.missingContent.length} blobs`
     );
+    logFdrWarnings(registerResult, context);
 
     // Upload all blobs the server doesn't have yet (all locales combined).
     await uploadMissingBlobs(registerResult.missingContent, blobs, context, filePaths);

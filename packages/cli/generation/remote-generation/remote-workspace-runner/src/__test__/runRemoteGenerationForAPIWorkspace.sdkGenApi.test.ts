@@ -679,6 +679,89 @@ describe("runRemoteGenerationForAPIWorkspace sdk-gen-api preparation", () => {
         expect(runGenerator).toHaveBeenCalledWith(expect.objectContaining({ sdkGenApiRoute: undefined }));
     });
 
+    it.each([
+        ["generators.yml github.auto-merge", { autoMerge: undefined, githubAutoMerge: true }],
+        ["--auto-merge", { autoMerge: true, githubAutoMerge: undefined }]
+    ] as const)("routes a legacy pull-request target with %s through sdk-gen-api", async (_name, {
+        autoMerge,
+        githubAutoMerge
+    }) => {
+        const generator = invocation("fernapi/fern-typescript-sdk", "typescript", "3.96.0");
+        generator.outputMode = FernFiddle.OutputMode.githubV2(
+            FernFiddle.GithubOutputModeV2.pullRequest({ owner: "acme", repo: "sdk", reviewers: [] })
+        );
+        generator.raw = {
+            name: generator.name,
+            version: generator.version,
+            github: {
+                repository: "acme/sdk",
+                mode: "pull-request",
+                ...(githubAutoMerge != null ? { "auto-merge": githubAutoMerge } : {})
+            }
+        };
+        const sourceArchive: FernSdkGenApiSourceArchive = {
+            buffer: Buffer.from("archive"),
+            manifest: { specs: [{ type: "openapi", specPath: "/fern/specs/openapi0.json" }] },
+            specIndexes: [0]
+        };
+        runGenerator.mockResolvedValue({
+            createdSnippets: false,
+            snippetsS3PreSignedReadUrl: undefined,
+            actualVersion: "1.2.3",
+            pullRequestUrl: undefined,
+            noChangesDetected: undefined,
+            publishTarget: undefined
+        });
+        const warn = vi.fn();
+
+        await runRemoteGenerationForAPIWorkspace({
+            projectConfig: { organization: "acme" } as never,
+            organization: "acme",
+            workspace: {
+                workspaceName: "petstore",
+                generatorsConfiguration: undefined,
+                toFernWorkspace: vi.fn().mockResolvedValue({
+                    definition: { rootApiFile: { contents: { name: "Petstore" } } },
+                    cliVersion: "0.0.0"
+                })
+            } as never,
+            context: {
+                logger: { warn, debug: vi.fn() },
+                runInteractiveTask: async (_options: { name: string }, run: (taskContext: never) => Promise<void>) => {
+                    await run({ logger: { warn: vi.fn(), debug: vi.fn(), info: vi.fn() } } as never);
+                    return true;
+                }
+            } as never,
+            generatorGroup: { groupName: "sdk", generators: [generator], audiences: { type: "all" } } as never,
+            version: "1.2.3",
+            shouldLogS3Url: false,
+            token: { value: "token" } as never,
+            whitelabel: undefined,
+            replay: undefined,
+            absolutePathToPreview: undefined,
+            mode: undefined,
+            fernignorePath: undefined,
+            skipFernignore: true,
+            dynamicIrOnly: false,
+            validateWorkspace: false,
+            retryRateLimited: false,
+            requireEnvVars: true,
+            autoMerge,
+            getSpecsTarGzBuffer: async (requests) => ({
+                sourceArchives: new Map(requests.map((request) => [request.generatorIndex, sourceArchive])),
+                errors: new Map()
+            })
+        });
+
+        expect(warn).not.toHaveBeenCalled();
+        expect(runGenerator).toHaveBeenCalledWith(
+            expect.objectContaining({
+                autoMerge: true,
+                sdkGenApiRoute: expect.objectContaining({ payloadKind: "fern-runtime-bundle" })
+            })
+        );
+    });
+
     describe("direct RubyGems publishing", () => {
         function directRubyGemsGenerator(): generatorsYml.GeneratorInvocation {
             const generator = invocation("fernapi/fern-ruby-sdk", "ruby", "1.999.999");

@@ -1,0 +1,5 @@
+- summary: |
+    Add `settings.search.popular-searches` to `docs.yml`. When set to `true`, the
+    empty search box lists the site's most popular searches before the reader
+    types. Defaults to `false`.
+  type: feat
