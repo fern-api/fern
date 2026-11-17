@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.222.1
+  changelogEntry:
+    - summary: |
+        On Node 26, `fern generate` could stop partway through unpacking the output of a remote
+        generation and still exit with code 0. The rest of the output was never written, and the
+        steps after it never ran, such as deploying a hosted MCP server. The CLI now uses yauzl
+        3.4.0, whose read streams work on Node 26.
+      type: fix
+  createdAt: "2026-11-17"
+  irVersion: 67
 - version: 5.222.0
   changelogEntry:
     - summary: |
