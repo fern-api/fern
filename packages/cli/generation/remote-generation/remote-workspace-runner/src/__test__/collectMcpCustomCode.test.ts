@@ -61,6 +61,22 @@ describe("collectMcpCustomCode", () => {
     it("returns undefined when the target declares no custom code", async () => {
         expect(await collectMcpCustomCode({}, root)).toBeUndefined();
     });
+
+    it("throws a config-aware error when a referenced file is missing", async () => {
+        await expect(
+            collectMcpCustomCode({ customTools: { query_balances: { path: "custom/tools/missing.ts" } } }, root)
+        ).rejects.toThrow(/customTools\.query_balances.*custom\/tools\/missing\.ts/);
+    });
+
+    it("throws when a custom tool collides with the reserved hook path", async () => {
+        await writeFile(join(root, RelativeFilePath.of("custom-hook.ts")), "export const definition = {};");
+        await expect(
+            collectMcpCustomCode(
+                { hooks: { path: "custom/hooks.ts" }, customTools: { dup: { path: "custom-hook.ts" } } },
+                root
+            )
+        ).rejects.toThrow(/mcp\/custom-hook\.ts.*already used/);
+    });
 });
 
 describe("extractMcpCustomCodeConfig", () => {

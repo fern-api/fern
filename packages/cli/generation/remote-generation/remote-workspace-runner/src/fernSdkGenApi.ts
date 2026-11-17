@@ -1380,9 +1380,18 @@ function prepareFernSdkGenApiSubmission(participants: FernSdkGenApiBuildParamete
         );
     }
     // MCP targets may carry a zip of customer custom-tool/hook modules (see collectMcpCustomCode).
-    // At most one per build — the multipart `customCode` part is singular and sdk-gen-api routes it
-    // to the MCP target's hooksLocation.
-    const mcpCustomCode = participants.find((participant) => participant.mcpCustomCode != null)?.mcpCustomCode;
+    // The multipart `customCode` part is singular, so enforce at most one per build rather than
+    // silently dropping the rest — fail loudly if a batch has more than one MCP target with custom code.
+    const customCodeParticipants = participants.filter((participant) => participant.mcpCustomCode != null);
+    if (customCodeParticipants.length > 1) {
+        return first.context.failAndThrow(
+            "sdk-gen-api supports custom code for at most one MCP target per build, but this batch has " +
+                `${customCodeParticipants.length}. Generate the MCP targets with custom code in separate builds.`,
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
+    }
+    const mcpCustomCode = customCodeParticipants[0]?.mcpCustomCode;
     const aggregateUploadBytes =
         first.specsTarGzBuffer.length +
         participants.reduce((total, participant) => total + participant.payload.body.length, 0) +

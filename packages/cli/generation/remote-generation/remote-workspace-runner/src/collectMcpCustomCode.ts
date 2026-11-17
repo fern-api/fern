@@ -1,5 +1,5 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { readFileSync } from "fs";
+import { readFile } from "fs/promises";
 import { ZipFile } from "yazl";
 
 /**
@@ -27,11 +27,14 @@ export async function collectMcpCustomCode(
     generation: McpCustomCodeConfig,
     projectRoot: AbsoluteFilePath
 ): Promise<Buffer | undefined> {
-    const entries: { zipPath: string; sourcePath: string }[] = [
-        ...(generation.hooks != null ? [{ zipPath: "mcp/custom-hook.ts", sourcePath: generation.hooks.path }] : []),
-        ...Object.values(generation.customTools ?? {}).map((tool) => ({
+    const entries: { zipPath: string; sourcePath: string; configKey: string }[] = [
+        ...(generation.hooks != null
+            ? [{ zipPath: "mcp/custom-hook.ts", sourcePath: generation.hooks.path, configKey: "hooks" }]
+            : []),
+        ...Object.entries(generation.customTools ?? {}).map(([name, tool]) => ({
             zipPath: `mcp/${tool.path}`,
-            sourcePath: tool.path
+            sourcePath: tool.path,
+            configKey: `customTools.${name}`
         }))
     ];
     if (entries.length === 0) {
@@ -39,9 +42,27 @@ export async function collectMcpCustomCode(
     }
 
     const zip = new ZipFile();
-    for (const { zipPath, sourcePath } of entries) {
+    const seenZipPaths = new Set<string>();
+    for (const { zipPath, sourcePath, configKey } of entries) {
+        // `custom-hook.ts` is reserved for the hook; reject a custom tool whose path collides with it
+        // (or any two modules that resolve to the same archive path), since the second would be lost.
+        if (seenZipPaths.has(zipPath)) {
+            throw new Error(
+                `MCP custom code: ${configKey} ("${sourcePath}") maps to the archive path "${zipPath}", which is already used by another module. Custom-tool paths must be distinct and must not be "custom-hook.ts" (reserved for hooks).`
+            );
+        }
+        seenZipPaths.add(zipPath);
+
         const absolute = join(projectRoot, RelativeFilePath.of(sourcePath));
-        zip.addBuffer(readFileSync(absolute), zipPath);
+        let contents: Buffer;
+        try {
+            contents = await readFile(absolute);
+        } catch (error) {
+            throw new Error(
+                `MCP custom code: cannot read ${configKey} file "${sourcePath}" (resolved to ${absolute}). Make sure the path in your config is correct and the file is committed. (${error instanceof Error ? error.message : String(error)})`
+            );
+        }
+        zip.addBuffer(contents, zipPath);
     }
     zip.end();
     return await collectStream(zip.outputStream);
@@ -98,10 +119,14 @@ export function extractMcpCustomCodeFromSdkConfigBody(body: Buffer): McpCustomCo
         return {};
     }
     const doc = document as Record<string, unknown>;
+    const targets = Array.isArray(doc.targets) ? doc.targets : [];
+    const isObject = (value: unknown): value is Record<string, unknown> => typeof value === "object" && value != null;
+    // Prefer the MCP target explicitly (a multi-target document could order it after another); fall
+    // back to the sole target (the per-target payload body is single-target in practice).
     const target =
-        Array.isArray(doc.targets) && typeof doc.targets[0] === "object" && doc.targets[0] != null
-            ? (doc.targets[0] as Record<string, unknown>)
-            : undefined;
+        targets.find(
+            (candidate): candidate is Record<string, unknown> => isObject(candidate) && candidate.language === "mcp"
+        ) ?? (isObject(targets[0]) ? targets[0] : undefined);
     const rootGeneration = typeof doc.generation === "object" && doc.generation != null ? doc.generation : {};
     const targetGeneration =
         target != null && typeof target.generation === "object" && target.generation != null ? target.generation : {};
