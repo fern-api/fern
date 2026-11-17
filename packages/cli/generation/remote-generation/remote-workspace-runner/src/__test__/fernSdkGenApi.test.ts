@@ -15,6 +15,7 @@ import {
     type FernSdkConfigV1Payload,
     FernSdkGenApiBatch,
     type FernSdkGenApiBuildParameters,
+    type FernSdkGenApiGithubOptions,
     type FernSdkGenApiPayload,
     FernSdkGenApiPreparationBatch,
     type FernSdkGenApiRequestedOutput,
@@ -892,6 +893,31 @@ describe("isEligibleForFernSdkGenApi", () => {
         expect(result?.error).toBeUndefined();
     });
 
+    it("routes legacy GitHub pull-request auto-merge through sdk-gen-api", () => {
+        const [result] = prepareFernSdkGenApiRoutes({
+            generators: [
+                invocation({
+                    version: "3.999.999",
+                    outputMode: FernFiddle.OutputMode.githubV2(
+                        FernFiddle.GithubOutputModeV2.pullRequest({ owner: "acme", repo: "sdk", reviewers: [] })
+                    ),
+                    raw: {
+                        name: "fernapi/fern-typescript-sdk",
+                        version: "3.999.999",
+                        github: { repository: "acme/sdk", mode: "pull-request", "auto-merge": true }
+                    }
+                })
+            ],
+            isSdkGenApiEnabled: () => true,
+            requireEnvVars: true,
+            isPreview: false
+        });
+
+        expect(result?.route?.payloadKind).toBe("fern-runtime-bundle");
+        expect(result?.error).toBeUndefined();
+        expect(result?.fallbackReason).toBeUndefined();
+    });
+
     it("allows SDK Config GitHub verification through sdk-gen-api", () => {
         const [result] = prepareFernSdkGenApiRoutes({
             generators: [invocation({ version: "4.0.0" })],
@@ -921,7 +947,7 @@ describe("isEligibleForFernSdkGenApi", () => {
             sdkConfigV1: sdkConfigV1({ language: "typescript" }),
             requireEnvVars: true,
             isPreview: false,
-            autoMerge: true
+            skipIfNoDiff: true
         });
 
         expect(result?.error).toHaveProperty("message", expect.stringContaining("(unpinned)"));
@@ -942,8 +968,7 @@ describe("isEligibleForFernSdkGenApi", () => {
             }
         ],
         ["verification", { verify: true }],
-        ["skip-if-no-diff", { skipIfNoDiff: true }],
-        ["auto-merge", { autoMerge: true }]
+        ["skip-if-no-diff", { skipIfNoDiff: true }]
     ] as const)("rejects post-cutover %s before source preparation", (_name, options) => {
         const [result] = prepareFernSdkGenApiRoutes({
             generators: [
@@ -956,8 +981,7 @@ describe("isEligibleForFernSdkGenApi", () => {
             requireEnvVars: true,
             isPreview: false,
             verify: "verify" in options ? options.verify : undefined,
-            skipIfNoDiff: "skipIfNoDiff" in options ? options.skipIfNoDiff : undefined,
-            autoMerge: "autoMerge" in options ? options.autoMerge : undefined
+            skipIfNoDiff: "skipIfNoDiff" in options ? options.skipIfNoDiff : undefined
         });
 
         expect(result?.route).toBeUndefined();
@@ -1281,6 +1305,96 @@ describe("isEligibleForFernSdkGenApi", () => {
                 expect(wire).not.toHaveProperty("workflows");
                 expect(JSON.stringify(wire)).not.toContain("workflows");
             }
+        });
+    });
+
+    describe("GitHub auto-merge", () => {
+        const pullRequest = FernFiddle.OutputMode.githubV2(
+            FernFiddle.GithubOutputModeV2.pullRequest({ owner: "acme", repo: "sdk", reviewers: [] })
+        );
+        const push = FernFiddle.OutputMode.githubV2(FernFiddle.GithubOutputModeV2.push({ owner: "acme", repo: "sdk" }));
+        const release = FernFiddle.OutputMode.githubV2(
+            FernFiddle.GithubOutputModeV2.commitAndRelease({ owner: "acme", repo: "sdk" })
+        );
+
+        function requestFor(
+            outputMode: FernFiddle.OutputMode,
+            githubOptions?: FernSdkGenApiGithubOptions,
+            requestedOutput?: FernSdkGenApiRequestedOutput
+        ) {
+            return createFernSdkGenApiRequest({
+                apiName: "Petstore",
+                organization: "acme",
+                cliVersion: "0.0.0",
+                generatorInvocation: invocation({ outputMode }),
+                sdkVersion: "1.2.3",
+                specsTarGzBuffer: Buffer.from("archive"),
+                payload: runtimePayload(validRuntimeBundle),
+                requestedOutput,
+                githubOptions
+            });
+        }
+
+        it.each([
+            ["pull-request", pullRequest, { autoMerge: true }],
+            ["push", push, {}],
+            ["release", release, {}]
+        ] as const)("sends autoMerge only with pull-request output (%s)", (mode, outputMode, autoMerge) => {
+            expect(requestFor(outputMode, { verify: true, autoMerge: true }).targets[0]?.requestedOutput).toStrictEqual(
+                {
+                    type: "github",
+                    repository: "acme/sdk",
+                    mode,
+                    verify: true,
+                    ...autoMerge
+                }
+            );
+        });
+
+        it.each([
+            ["download", FernFiddle.OutputMode.downloadFiles({})],
+            [
+                "registry publication",
+                FernFiddle.OutputMode.publishV2(
+                    FernFiddle.PublishOutputModeV2.npmOverride({
+                        registryUrl: "https://registry.npmjs.org",
+                        packageName: "@acme/sdk",
+                        token: "secret"
+                    })
+                )
+            ]
+        ])("never sends autoMerge with %s output", (_name, outputMode) => {
+            expect(requestFor(outputMode, { autoMerge: true })).toStrictEqual(requestFor(outputMode));
+        });
+
+        it("leaves requests without auto-merge unchanged on the wire", () => {
+            expect(requestFor(pullRequest, { verify: true, autoMerge: false })).toStrictEqual(
+                requestFor(pullRequest, { verify: true })
+            );
+            expect(requestFor(push, { verify: true, autoMerge: true })).toStrictEqual(
+                requestFor(push, { verify: true })
+            );
+            expect(requestFor(pullRequest, { autoMerge: true }).idempotencyKey).not.toBe(
+                requestFor(pullRequest).idempotencyKey
+            );
+        });
+
+        it("applies auto-merge to SDK Config pull-request output only", () => {
+            const sdkConfigOutput = (mode?: "pull-request" | "push") =>
+                requestFor(
+                    FernFiddle.OutputMode.downloadFiles({}),
+                    { autoMerge: true },
+                    { type: "github", repository: "acme/sdk", ...(mode != null ? { mode } : {}) }
+                ).targets[0]?.requestedOutput;
+
+            expect(sdkConfigOutput("pull-request")).toStrictEqual({
+                type: "github",
+                repository: "acme/sdk",
+                mode: "pull-request",
+                autoMerge: true
+            });
+            expect(sdkConfigOutput("push")).toStrictEqual({ type: "github", repository: "acme/sdk", mode: "push" });
+            expect(sdkConfigOutput()).toStrictEqual({ type: "github", repository: "acme/sdk" });
         });
     });
 
@@ -4196,6 +4310,134 @@ describe("sdk-gen-api build status polling", () => {
         await expect(outcome).resolves.toMatchObject({ message });
         expect(failures).toEqual([{ message, code: CliError.Code.InternalError }]);
         expect(pollTimes.filter((time) => time >= pollTimeoutMs)).toEqual([pollTimeoutMs]);
+    });
+});
+
+describe("sdk-gen-api build submission rate limiting", () => {
+    function rateLimited(retryAfter: string | undefined, message = "Rate limit exceeded"): AxiosError {
+        const headers = retryAfter != null ? { "retry-after": retryAfter } : {};
+        return new AxiosError("Request failed with status code 429", "ERR_BAD_REQUEST", undefined, undefined, {
+            status: 429,
+            statusText: "Too Many Requests",
+            headers,
+            config: {} as never,
+            data: { statusCode: 429, message }
+        });
+    }
+
+    function startBuild() {
+        vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "https://sdk-gen-api.test");
+        const generatorInvocation = invocation();
+        const targetId = createFernSdkGenApiRequest({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation,
+            sdkVersion: "1.2.3",
+            specsTarGzBuffer: validSourceArchive,
+            payload: runtimePayload(validRuntimeBundle)
+        }).targets[0]?.targetId;
+        vi.spyOn(axios, "get").mockResolvedValue({
+            data: {
+                buildId: "build-1",
+                status: "succeeded",
+                targets: [
+                    {
+                        targetId,
+                        status: "succeeded",
+                        logs: [],
+                        result: { artifactUrl: "https://example.test/artifact.zip", actualVersion: "1.2.4" }
+                    }
+                ]
+            }
+        } as never);
+        return runFernSdkGenApiBuild({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation,
+            sdkVersion: "1.2.3",
+            token: { value: "token" } as never,
+            specsTarGzBuffer: validSourceArchive,
+            payload: runtimePayload(validRuntimeBundle),
+            absolutePathToPreview: undefined,
+            context
+        }).catch((error: unknown) => error);
+    }
+
+    beforeEach(() => {
+        vi.useFakeTimers({ toFake: ["setTimeout", "Date"] });
+        vi.setSystemTime(0);
+        vi.spyOn(Math, "random").mockReturnValue(0);
+    });
+
+    afterEach(() => {
+        vi.useRealTimers();
+    });
+
+    it("retries a 429 after Retry-After with a fresh multipart body and then succeeds", async () => {
+        const post = vi
+            .spyOn(axios, "post")
+            .mockRejectedValueOnce(rateLimited("60"))
+            .mockRejectedValueOnce(rateLimited("2"))
+            .mockResolvedValue({ data: { buildId: "build-1" } } as never);
+
+        const outcome = startBuild();
+        await vi.advanceTimersByTimeAsync(59_999);
+        expect(post).toHaveBeenCalledTimes(1);
+        await vi.advanceTimersByTimeAsync(1);
+        expect(post).toHaveBeenCalledTimes(2);
+        await vi.advanceTimersByTimeAsync(2_000);
+
+        await expect(outcome).resolves.toMatchObject({ actualVersion: "1.2.4" });
+        expect(post).toHaveBeenCalledTimes(3);
+        const forms = post.mock.calls.map((call) => call[1]);
+        expect(new Set(forms).size).toBe(3);
+        expect(contextLogger.warn).toHaveBeenCalledWith(
+            "sdk-gen-api is rate limiting build submissions (429). Retrying in 60s (attempt 2/20)..."
+        );
+    });
+
+    it("backs off exponentially when a 429 has no Retry-After", async () => {
+        const post = vi
+            .spyOn(axios, "post")
+            .mockRejectedValueOnce(rateLimited(undefined))
+            .mockRejectedValueOnce(rateLimited(undefined))
+            .mockResolvedValue({ data: { buildId: "build-1" } } as never);
+
+        const outcome = startBuild();
+        await vi.advanceTimersByTimeAsync(2_000);
+        expect(post).toHaveBeenCalledTimes(2);
+        await vi.advanceTimersByTimeAsync(3_999);
+        expect(post).toHaveBeenCalledTimes(2);
+        await vi.advanceTimersByTimeAsync(1);
+
+        await expect(outcome).resolves.toMatchObject({ actualVersion: "1.2.4" });
+        expect(post).toHaveBeenCalledTimes(3);
+    });
+
+    it("fails without waiting when Retry-After exceeds the retry budget", async () => {
+        const message = "SDK generation is temporarily unavailable. Please try again in about 10 minutes.";
+        const post = vi.spyOn(axios, "post").mockRejectedValue(rateLimited("601", message));
+
+        const outcome = await startBuild();
+
+        expect(outcome).toBeInstanceOf(Error);
+        expect((outcome as Error).message).toContain(`Failed to submit sdk-gen-api build: ${message}`);
+        expect(post).toHaveBeenCalledTimes(1);
+    });
+
+    it("does not retry errors other than 429", async () => {
+        const error = rateLimited("1");
+        if (error.response != null) {
+            error.response.status = 503;
+        }
+        const post = vi.spyOn(axios, "post").mockRejectedValue(error);
+
+        const outcome = await startBuild();
+
+        expect((outcome as Error).message).toContain("Failed to submit sdk-gen-api build");
+        expect(post).toHaveBeenCalledTimes(1);
     });
 });
 
