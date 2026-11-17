@@ -1,3 +1,5 @@
+import { stripTrailingSlashes } from "@fern-api/core-utils";
+import { toPosixPath } from "@fern-api/fs-utils";
 import { execFileSync } from "child_process";
 import path from "path";
 
@@ -33,7 +35,7 @@ export function parseGitRemoteUrl(url: string): { host: string; owner: string; r
     }
     try {
         const parsed = new URL(trimmed);
-        const [owner, ...rest] = parsed.pathname.replace(/^\/+/, "").replace(/\/+$/, "").split("/");
+        const [owner, ...rest] = stripTrailingSlashes(parsed.pathname.replace(/^\/+/, "")).split("/");
         const repo = rest.join("/").replace(/\.git$/, "");
         if (!owner || !repo) {
             return undefined;
@@ -177,7 +179,7 @@ function git(cwd: string, args: string[]): string | undefined {
 }
 
 function relativePath(root: string, absolutePath: string): string | undefined {
-    const relative = path.relative(root, absolutePath).split(path.sep).join("/");
+    const relative = toPosixPath(path.relative(root, absolutePath));
     return relative.startsWith("..") ? undefined : relative.length > 0 ? relative : ".";
 }
 
