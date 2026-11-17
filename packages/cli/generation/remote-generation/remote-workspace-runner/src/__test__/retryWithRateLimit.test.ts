@@ -121,7 +121,7 @@ describe("retryWithRateLimit", () => {
         expect(logger.warn).toHaveBeenCalledTimes(4);
     });
 
-    it("should throw after exhausting all 5 retries", async () => {
+    it("should throw after exhausting all 10 retries", async () => {
         const logger = createMockLogger();
         let callCount = 0;
 
@@ -140,9 +140,9 @@ describe("retryWithRateLimit", () => {
             })
         ).rejects.toThrow(TooManyRequestsError);
 
-        // 1 initial + 5 retries = 6 total calls
-        expect(callCount).toBe(6);
-        expect(logger.warn).toHaveBeenCalledTimes(5);
+        // 1 initial + 10 retries = 11 total calls
+        expect(callCount).toBe(11);
+        expect(logger.warn).toHaveBeenCalledTimes(10);
     });
 
     it("should rethrow non-429 errors immediately even when retryRateLimited is true", async () => {
@@ -204,7 +204,9 @@ describe("retryWithRateLimit", () => {
         // Attempt 2: 2000 * 2^2 = 8000ms
         // Attempt 3: 2000 * 2^3 = 16000ms
         // Attempt 4: 2000 * 2^4 = 32000ms
-        expect(delays).toEqual([2000, 4000, 8000, 16000, 32000]);
+        // Attempt 5: 2000 * 2^5 = 64000ms
+        // Attempts 6-9: capped at 120000ms
+        expect(delays).toEqual([2000, 4000, 8000, 16000, 32000, 64000, 120000, 120000, 120000, 120000]);
     });
 
     it("should apply jitter to delays", async () => {
@@ -241,7 +243,9 @@ describe("retryWithRateLimit", () => {
         // Attempt 2: round(8000 * 0.75) = 6000ms
         // Attempt 3: round(16000 * 0.75) = 12000ms
         // Attempt 4: round(32000 * 0.75) = 24000ms
-        expect(delays).toEqual([1500, 3000, 6000, 12000, 24000]);
+        // Attempt 5: round(64000 * 0.75) = 48000ms
+        // Attempts 6-9: round(120000 * 0.75) = 90000ms
+        expect(delays).toEqual([1500, 3000, 6000, 12000, 24000, 48000, 90000, 90000, 90000, 90000]);
     });
 
     it("should cap exponential backoff delay at max retry delay", async () => {
@@ -301,8 +305,8 @@ describe("retryWithRateLimit", () => {
         expect(logger.warn).toHaveBeenCalledTimes(2);
         const firstCall = logger.warn.mock.calls[0]?.[0] as string;
         const secondCall = logger.warn.mock.calls[1]?.[0] as string;
-        expect(firstCall).toContain("attempt 1/5");
-        expect(secondCall).toContain("attempt 2/5");
+        expect(firstCall).toContain("attempt 1/10");
+        expect(secondCall).toContain("attempt 2/10");
     });
 
     it("should use server retryAfter hint as minimum delay when provided", async () => {

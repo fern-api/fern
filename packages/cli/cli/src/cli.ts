@@ -1006,9 +1006,9 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 })
                 .option("retry-rate-limited", {
                     boolean: true,
-                    default: false,
+                    default: true,
                     description:
-                        "Automatically retry with exponential backoff when receiving 429 Too Many Requests responses"
+                        "Automatically retry with exponential backoff when receiving 429 Too Many Requests responses. Disable with --no-retry-rate-limited"
                 })
                 .option("require-env-vars", {
                     boolean: true,
