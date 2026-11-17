@@ -62,6 +62,15 @@ export interface PageActionOptions {
      */
     mcp?: boolean;
     /**
+     * Lets MCP clients sign in to this docs site's MCP server (`/_mcp/server?sign_in=true`) through
+     * the site's own password, JWT or OAuth2 login, so their results include the docs that user can
+     * read. Only applies to sites with one of those logins; WorkOS SSO sites offer MCP sign-in without
+     * this flag. Clients that don't sign in still read the public docs.
+     *
+     * @default: false
+     */
+    mcpAuth?: boolean;
+    /**
      * When enabled, displays an "Open in VS Code" button that allows users to open the page content in Visual Studio Code for editing and development.
      *
      * @default: false
