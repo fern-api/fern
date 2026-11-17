@@ -4199,6 +4199,134 @@ describe("sdk-gen-api build status polling", () => {
     });
 });
 
+describe("sdk-gen-api build submission rate limiting", () => {
+    function rateLimited(retryAfter: string | undefined, message = "Rate limit exceeded"): AxiosError {
+        const headers = retryAfter != null ? { "retry-after": retryAfter } : {};
+        return new AxiosError("Request failed with status code 429", "ERR_BAD_REQUEST", undefined, undefined, {
+            status: 429,
+            statusText: "Too Many Requests",
+            headers,
+            config: {} as never,
+            data: { statusCode: 429, message }
+        });
+    }
+
+    function startBuild() {
+        vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "https://sdk-gen-api.test");
+        const generatorInvocation = invocation();
+        const targetId = createFernSdkGenApiRequest({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation,
+            sdkVersion: "1.2.3",
+            specsTarGzBuffer: validSourceArchive,
+            payload: runtimePayload(validRuntimeBundle)
+        }).targets[0]?.targetId;
+        vi.spyOn(axios, "get").mockResolvedValue({
+            data: {
+                buildId: "build-1",
+                status: "succeeded",
+                targets: [
+                    {
+                        targetId,
+                        status: "succeeded",
+                        logs: [],
+                        result: { artifactUrl: "https://example.test/artifact.zip", actualVersion: "1.2.4" }
+                    }
+                ]
+            }
+        } as never);
+        return runFernSdkGenApiBuild({
+            apiName: "Petstore",
+            organization: "acme",
+            cliVersion: "0.0.0",
+            generatorInvocation,
+            sdkVersion: "1.2.3",
+            token: { value: "token" } as never,
+            specsTarGzBuffer: validSourceArchive,
+            payload: runtimePayload(validRuntimeBundle),
+            absolutePathToPreview: undefined,
+            context
+        }).catch((error: unknown) => error);
+    }
+
+    beforeEach(() => {
+        vi.useFakeTimers({ toFake: ["setTimeout", "Date"] });
+        vi.setSystemTime(0);
+        vi.spyOn(Math, "random").mockReturnValue(0);
+    });
+
+    afterEach(() => {
+        vi.useRealTimers();
+    });
+
+    it("retries a 429 after Retry-After with a fresh multipart body and then succeeds", async () => {
+        const post = vi
+            .spyOn(axios, "post")
+            .mockRejectedValueOnce(rateLimited("60"))
+            .mockRejectedValueOnce(rateLimited("2"))
+            .mockResolvedValue({ data: { buildId: "build-1" } } as never);
+
+        const outcome = startBuild();
+        await vi.advanceTimersByTimeAsync(59_999);
+        expect(post).toHaveBeenCalledTimes(1);
+        await vi.advanceTimersByTimeAsync(1);
+        expect(post).toHaveBeenCalledTimes(2);
+        await vi.advanceTimersByTimeAsync(2_000);
+
+        await expect(outcome).resolves.toMatchObject({ actualVersion: "1.2.4" });
+        expect(post).toHaveBeenCalledTimes(3);
+        const forms = post.mock.calls.map((call) => call[1]);
+        expect(new Set(forms).size).toBe(3);
+        expect(contextLogger.warn).toHaveBeenCalledWith(
+            "sdk-gen-api is rate limiting build submissions (429). Retrying in 60s (attempt 2/20)..."
+        );
+    });
+
+    it("backs off exponentially when a 429 has no Retry-After", async () => {
+        const post = vi
+            .spyOn(axios, "post")
+            .mockRejectedValueOnce(rateLimited(undefined))
+            .mockRejectedValueOnce(rateLimited(undefined))
+            .mockResolvedValue({ data: { buildId: "build-1" } } as never);
+
+        const outcome = startBuild();
+        await vi.advanceTimersByTimeAsync(2_000);
+        expect(post).toHaveBeenCalledTimes(2);
+        await vi.advanceTimersByTimeAsync(3_999);
+        expect(post).toHaveBeenCalledTimes(2);
+        await vi.advanceTimersByTimeAsync(1);
+
+        await expect(outcome).resolves.toMatchObject({ actualVersion: "1.2.4" });
+        expect(post).toHaveBeenCalledTimes(3);
+    });
+
+    it("fails without waiting when Retry-After exceeds the retry budget", async () => {
+        const message = "SDK generation is temporarily unavailable. Please try again in about 10 minutes.";
+        const post = vi.spyOn(axios, "post").mockRejectedValue(rateLimited("601", message));
+
+        const outcome = await startBuild();
+
+        expect(outcome).toBeInstanceOf(Error);
+        expect((outcome as Error).message).toContain(`Failed to submit sdk-gen-api build: ${message}`);
+        expect(post).toHaveBeenCalledTimes(1);
+    });
+
+    it("does not retry errors other than 429", async () => {
+        const error = rateLimited("1");
+        if (error.response != null) {
+            error.response.status = 503;
+        }
+        const post = vi.spyOn(axios, "post").mockRejectedValue(error);
+
+        const outcome = await startBuild();
+
+        expect((outcome as Error).message).toContain("Failed to submit sdk-gen-api build");
+        expect(post).toHaveBeenCalledTimes(1);
+    });
+});
+
 describe("sdk-gen-api build telemetry", () => {
     function startBuild(instrumentPostHogEvent: ReturnType<typeof vi.fn>) {
         vi.stubEnv("FERN_SDK_GEN_API_ORIGIN", "https://sdk-gen-api.test");
