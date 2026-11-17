@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern generate` now retries Fiddle job creation refused with 429 Too Many Requests by default
+    (previously only with `--retry-rate-limited`), and retries up to 10 times (about 10 minutes of
+    backoff) instead of 5 (about 1 minute), so large groups wait for the organization's rate limit
+    instead of failing. Opt out with `--no-retry-rate-limited`.
+  type: fix
