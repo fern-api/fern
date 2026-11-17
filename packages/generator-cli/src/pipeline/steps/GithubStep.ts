@@ -37,7 +37,7 @@ export class GithubStep extends BaseStep {
         const replayConflictInfo = this.config.replayConflictInfo ?? this.deriveReplayConflictInfo(replayResult);
         const resolvedPrFields = this.resolvePrFields(autoVersionResult);
 
-        if (shouldSkipForNoChange(this.config, autoVersionResult)) {
+        if (shouldSkipForNoChange(this.config, autoVersionResult, replayResult)) {
             this.logger.info("AutoVersion found no semantic changes (NO_CHANGE) — skipping GitHub delivery.");
             return { executed: true, success: true, skippedNoDiff: true };
         }
@@ -717,14 +717,22 @@ export function shouldEnableAutomerge(
  * A NO_CHANGE autoversion result means the generation has no semantic changes, so there is
  * nothing to deliver: no commit, push or PR (same as local `--version AUTO` generation).
  * Delivery still happens when the analysis was incomplete (`analysisWarning`), since the
- * NO_CHANGE verdict is then unverified, and in preview mode.
+ * NO_CHANGE verdict is then unverified, when replay hit conflicts that need review, and in
+ * preview mode.
  */
 export function shouldSkipForNoChange(
     config: Pick<GithubStepConfig, "previewMode">,
-    autoVersionResult: AutoVersionStepResult | undefined
+    autoVersionResult: AutoVersionStepResult | undefined,
+    replayResult?: ReplayStepResult
 ): boolean {
     const analysisIncomplete = (autoVersionResult?.analysisWarning ?? "").trim().length > 0;
-    return autoVersionResult?.versionBump === "NO_CHANGE" && !analysisIncomplete && config.previewMode !== true;
+    const replayHasConflicts = (replayResult?.patchesWithConflicts ?? 0) > 0;
+    return (
+        autoVersionResult?.versionBump === "NO_CHANGE" &&
+        !analysisIncomplete &&
+        !replayHasConflicts &&
+        config.previewMode !== true
+    );
 }
 
 /**

@@ -1,10 +1,10 @@
-import { mkdtemp } from "fs/promises";
+import { mkdtemp, rm } from "fs/promises";
 import { tmpdir } from "os";
 import { join } from "path";
 import { describe, expect, it } from "vitest";
 import { consolePipelineLogger } from "../pipeline/PipelineLogger.js";
 import { GithubStep, shouldSkipForNoChange } from "../pipeline/steps/GithubStep.js";
-import type { AutoVersionStepResult, GithubStepConfig } from "../pipeline/types.js";
+import type { AutoVersionStepResult, GithubStepConfig, ReplayStepResult } from "../pipeline/types.js";
 
 const baseConfig: GithubStepConfig = {
     enabled: true,
@@ -42,6 +42,16 @@ describe("shouldSkipForNoChange", () => {
         expect(shouldSkipForNoChange(baseConfig, result)).toBe(false);
     });
 
+    it("does not skip when replay reported conflicts", () => {
+        const replayResult: ReplayStepResult = { executed: true, success: true, patchesWithConflicts: 1 };
+        expect(shouldSkipForNoChange(baseConfig, autoVersionResult("NO_CHANGE"), replayResult)).toBe(false);
+    });
+
+    it("skips when replay applied every patch cleanly", () => {
+        const replayResult: ReplayStepResult = { executed: true, success: true, patchesWithConflicts: 0 };
+        expect(shouldSkipForNoChange(baseConfig, autoVersionResult("NO_CHANGE"), replayResult)).toBe(true);
+    });
+
     it("does not skip in preview mode", () => {
         expect(shouldSkipForNoChange({ previewMode: true }, autoVersionResult("NO_CHANGE"))).toBe(false);
     });
@@ -55,12 +65,16 @@ describe("GithubStep with a NO_CHANGE autoversion result", () => {
     ] as const)("returns skippedNoDiff without touching the repository in %s mode", async (mode) => {
         // Not a git repository: any commit, push or PR attempt would fail the step.
         const outputDir = await mkdtemp(join(tmpdir(), "github-step-no-change-"));
-        const step = new GithubStep(outputDir, consolePipelineLogger, { ...baseConfig, mode });
+        try {
+            const step = new GithubStep(outputDir, consolePipelineLogger, { ...baseConfig, mode });
 
-        const result = await step.execute({
-            previousStepResults: { autoVersion: autoVersionResult("NO_CHANGE") }
-        });
+            const result = await step.execute({
+                previousStepResults: { autoVersion: autoVersionResult("NO_CHANGE") }
+            });
 
-        expect(result).toStrictEqual({ executed: true, success: true, skippedNoDiff: true });
+            expect(result).toStrictEqual({ executed: true, success: true, skippedNoDiff: true });
+        } finally {
+            await rm(outputDir, { recursive: true, force: true });
+        }
     });
 });
