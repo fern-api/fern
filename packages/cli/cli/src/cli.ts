@@ -511,12 +511,29 @@ function addInitCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     type: "string",
                     choices: LAYOUTS.map((layout) => layout.flag),
                     description: "With --docs, start from Fern's docs starter in this layout"
+                })
+                .option("guest", {
+                    boolean: true,
+                    default: false,
+                    description:
+                        "Run the setup wizard without a Fern account: docs and SDKs are published and generated under a temporary guest session, and the wizard ends with the link that claims them into your organization. On its own, in a terminal."
                 }),
         async (argv) => {
             if (isBareInit(process.argv) && cliContext.isInteractive) {
-                cliContext.instrumentPostHogEvent({ command: "fern init (wizard)" });
-                await runInitWizard({ cliContext });
+                cliContext.instrumentPostHogEvent({
+                    command: argv.guest ? "fern init --guest (wizard)" : "fern init (wizard)"
+                });
+                await runInitWizard({ cliContext, guest: argv.guest });
                 return;
+            }
+            if (argv.guest) {
+                return cliContext.failWithoutThrowing(
+                    isBareInit(process.argv)
+                        ? "--guest starts the setup wizard, which needs a terminal. In a script or an agent, run `fern init --organization <name>` and then `fern generate --guest`."
+                        : "--guest only works on its own (`fern init --guest`), where it runs the setup wizard without a Fern account. To generate without an account in a project, run `fern generate --guest`.",
+                    undefined,
+                    { code: CliError.Code.ConfigError }
+                );
             }
             if (argv.template != null && argv.docs !== true) {
                 return cliContext.failWithoutThrowing("--template only works with --docs.", undefined, {

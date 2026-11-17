@@ -73,6 +73,14 @@ export type ActionId =
 export interface PublishResult {
     previewUrl?: string;
     publishedUrl?: string;
+    /** The temporary site a guest publish made; it lives as long as the guest session. */
+    guestSiteUrl?: string;
+    /** The dashboard page of a guest SDK build, kept for 7 days. */
+    buildPageUrl?: string;
+    /** The link that moves a guest session's docs and SDKs into a Fern organization. */
+    claimUrl?: string;
+    /** When the guest session expires, as Fern printed it. */
+    claimExpires?: string;
     /** SDKs and CLIs written to this repository, with their output directories. */
     generated?: Array<{ label: string; path: string }>;
 }
@@ -122,6 +130,12 @@ export interface WizardFlags {
     spec?: string;
     /** Don't connect Fern's MCP server to the coding agents. */
     skipMcp?: boolean;
+    /**
+     * Run without a Fern account: docs are published and SDKs generated under a temporary guest
+     * session (`fern generate --guest`), and the wizard ends with the link that claims them into an
+     * organization. Without the flag, the wizard offers this when the user isn't signed in.
+     */
+    guest?: boolean;
     /** Set when the Fern CLI runs the wizard: the version of that CLI. */
     fernVersion?: string;
     /**

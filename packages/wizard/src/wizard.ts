@@ -395,8 +395,16 @@ export async function runWizard(flags: WizardFlags): Promise<number> {
         console.error(validationError);
         return 1;
     }
+    let guest = flags.guest === true;
+    if (guest) {
+        const conflict = await guestModeError();
+        if (conflict !== undefined) {
+            console.error(conflict);
+            return 1;
+        }
+    }
     if (flags.dryRun) {
-        printPlan(steps, planned.notes);
+        printPlan(guest ? steps.map((step) => guestStep(step, detection, flags)) : steps, planned.notes);
         return 0;
     }
 
@@ -405,7 +413,9 @@ export async function runWizard(flags: WizardFlags): Promise<number> {
     let orgTaken = false;
     let scaffoldedDocsSite: DocsSiteChoices | undefined;
     const published: PublishResult = {};
-    for (const [index, step] of steps.entries()) {
+    for (const [index, plannedStep] of steps.entries()) {
+        // Guest mode can be chosen during the first step, so each later step is shown in that light.
+        const step = guest ? guestStep(plannedStep, detection, flags) : plannedStep;
         printStepHeader(index + 1, steps.length, step.title);
         if (step.id === "cli-setup") {
             for (const note of planned.notes) {
@@ -422,9 +432,23 @@ export async function runWizard(flags: WizardFlags): Promise<number> {
         if (step.id === "cli-setup") {
             const buildsDocsSite =
                 step.actions.some((action) => action.id === "init-docs") && findMintJson(detection) === undefined;
+            const looksUpBrand = buildsDocsSite && !flags.skipBrand;
+            const needsOrg = step.actions.some((action) => action.id === "init-api" || action.id === "init-docs");
+            // One account question for the step: the brand lookup and the organization check both need
+            // one, and a user without an account can go on as a guest and claim the result later.
+            if (!flags.yes && !guest && (looksUpBrand || needsOrg) && (await readFernToken()) === undefined) {
+                const choice = await chooseAccount(looksUpBrand);
+                if (choice === "login") {
+                    await runFernCommand(["login"], dir, detection);
+                } else if (choice === "guest") {
+                    guest = true;
+                    printGuestModeNote();
+                }
+            }
+            const token = await readFernToken();
             // Look up the brand first so the docs site, and the suggested org name, come pre-filled.
             const brand =
-                buildsDocsSite && !flags.skipBrand
+                looksUpBrand && token !== undefined
                     ? await chooseBrand({
                           dir,
                           org,
@@ -433,16 +457,13 @@ export async function runWizard(flags: WizardFlags): Promise<number> {
                           login: () => runFernCommand(["login"], dir, detection)
                       })
                     : undefined;
-            const needsOrg = step.actions.some((action) => action.id === "init-api" || action.id === "init-docs");
-            // The brand lookup already offered to sign in; otherwise offer it here so the org name is
-            // checked and created now, not when publishing in a later step.
-            const offeredSignIn = buildsDocsSite && !flags.skipBrand;
-            if (needsOrg && !flags.yes && !offeredSignIn && (await readFernToken()) === undefined) {
-                if (await confirm("Sign in to Fern to check and reserve your organization name?")) {
-                    await runFernCommand(["login"], dir, detection);
-                }
+            if (looksUpBrand && token === undefined) {
+                printSkipped(
+                    guest
+                        ? "Keeping the starter branding; `fern docs brand <company>` applies yours once you've claimed"
+                        : "Keeping the starter branding (not signed in to Fern)"
+                );
             }
-            const token = await readFernToken();
             const availability = token === undefined ? undefined : createAvailabilityChecker(token);
             if (needsOrg && org === undefined) {
                 const brandSlug = brand?.brand.slug === undefined ? undefined : toSubdomain(brand.brand.slug);
@@ -486,6 +507,12 @@ export async function runWizard(flags: WizardFlags): Promise<number> {
         }
 
         for (const action of step.actions) {
+            if (action.id === "agent-mcp" && guest) {
+                printSkipped(
+                    "Fern's MCP server needs an account. After you claim, run `fern login`, then `fern mcp install`."
+                );
+                continue;
+            }
             if (action.id === "agent-mcp" && !flags.yes && !(await confirm(mcpQuestion(detection)))) {
                 continue;
             }
@@ -494,7 +521,7 @@ export async function runWizard(flags: WizardFlags): Promise<number> {
                     action,
                     dir,
                     detection,
-                    { ...flags, org, products },
+                    { ...flags, org, products, guest },
                     docsSiteChoices ?? scaffoldedDocsSite,
                     published
                 );
@@ -509,9 +536,11 @@ export async function runWizard(flags: WizardFlags): Promise<number> {
     }
     printNextSteps(products, {
         // Prefer fern.config.json, but fall back to the organization this run used, so the Dashboard
-        // link matches the one shown after publishing even if the file can't be read.
-        organization: orgTaken ? undefined : ((await readOrganization(dir)) ?? org),
+        // link matches the one shown after publishing even if the file can't be read. A guest has no
+        // organization on Fern yet: the claim creates or picks one.
+        organization: orgTaken || guest ? undefined : ((await readOrganization(dir)) ?? org),
         docsUrl: await docsSiteUrl(dir, scaffoldedDocsSite),
+        guest,
         ...published
     });
     return failed ? 1 : 0;
@@ -658,10 +687,14 @@ async function runAction(
             printDone("Connected Fern's MCP server to your coding agents");
             return;
         case "publish-docs":
-            await previewAndPublish(dir, detection, docsSiteChoices, published);
+            if (flags.guest === true) {
+                await publishAsGuest(dir, detection, published);
+            } else {
+                await previewAndPublish(dir, detection, docsSiteChoices, published);
+            }
             return;
         case "generate-sdks":
-            await generateSdks(dir, detection, published, flags.products ?? SDKS_AND_DOCS);
+            await generateSdks(dir, detection, published, flags.products ?? SDKS_AND_DOCS, flags.guest === true);
             return;
         default:
             assertNever(action.id);
@@ -845,7 +878,8 @@ async function generateSdks(
     dir: string,
     detection: Detection,
     results: PublishResult,
-    products: Product[]
+    products: Product[],
+    guest: boolean
 ): Promise<void> {
     const generatedLabel = generatedProductsLabel(products) ?? "SDKs";
     const apis = await listApis(dir);
@@ -855,9 +889,9 @@ async function generateSdks(
         );
         return;
     }
-    if ((await readFernToken()) === undefined) {
-        // Fern's servers generate the SDKs, which needs a signed-in user. Signing in may open a
-        // browser and wait for it, so it keeps the terminal.
+    if (!guest && (await readFernToken()) === undefined) {
+        // Fern's servers generate the SDKs, which needs a signed-in user (or a guest session). Signing
+        // in may open a browser and wait for it, so it keeps the terminal.
         await runFernCommand(["login"], dir, detection);
     }
     await checkProjectOrganization(dir);
@@ -920,8 +954,12 @@ async function generateSdks(
         detection,
         groupArgs,
         targetArgs: sdkConfig ? targetArgs(sdks) : [],
-        names: sdks.map((sdk) => sdk.language.displayName).join(", ")
+        names: sdks.map((sdk) => sdk.language.displayName).join(", "),
+        guest
     });
+    if (guest) {
+        recordGuestOutcome(output, results);
+    }
 
     const generated: Array<{ label: string; path: string }> = [];
     const empty: string[] = [];
@@ -938,6 +976,9 @@ async function generateSdks(
         printDone(
             `${sdk.language.displayName}  ${chalk.cyan(hyperlink(relative, pathToFileURL(sdk.outputPath).href))}`
         );
+    }
+    if (guest && results.buildPageUrl !== undefined) {
+        printDone(`Build page (kept 7 days): ${chalk.cyan(results.buildPageUrl)}`);
     }
     results.generated = generated;
     if (empty.length > 0) {
@@ -994,7 +1035,8 @@ async function generateSdkFiles({
     detection,
     groupArgs,
     targetArgs,
-    names
+    names,
+    guest
 }: {
     dir: string;
     detection: Detection;
@@ -1002,12 +1044,22 @@ async function generateSdkFiles({
     /** Limits generation to some sdk-config.yml targets; empty generates all of them. */
     targetArgs: string[];
     names: string;
+    /** Generate under the guest session instead of a signed-in organization. */
+    guest: boolean;
 }): Promise<string> {
     // Every output is a folder in this repository (checked above), so a version only names the package.
     const generate = (): Promise<string> =>
         withStatus(`Generating ${names} on Fern's servers (this can take a few minutes)`, () =>
             runFernQuietly(
-                ["generate", ...groupArgs, ...targetArgs, "--version", FIRST_SDK_VERSION, "--no-prompt"],
+                [
+                    "generate",
+                    ...groupArgs,
+                    ...targetArgs,
+                    ...(guest ? ["--guest"] : []),
+                    "--version",
+                    FIRST_SDK_VERSION,
+                    "--no-prompt"
+                ],
                 dir,
                 detection
             )
@@ -1221,6 +1273,131 @@ export function summarizeFailure(output: string): string {
 /** The link `fern generate --docs` prints after "Published docs to". */
 export function parsePublishedUrl(output: string): string | undefined {
     return output.match(/Published docs to (https?:\/\/\S+)/)?.[1]?.replace(/[.,)]+$/, "");
+}
+
+/** The claim link `fern generate --guest` prints after "Claim it to keep this work:". */
+export function parseClaimUrl(output: string): string | undefined {
+    return output.match(/Claim it to keep this work: (https?:\/\/\S+)/)?.[1]?.replace(/[.,)]+$/, "");
+}
+
+/** When the guest session expires, from "… guest session gs_… as organization guest-… (expires <date>)". */
+export function parseGuestSessionExpiry(output: string): string | undefined {
+    return output.match(/guest session \S+ as organization \S+ \(expires ([^)]+)\)/)?.[1]?.trim();
+}
+
+/** The build page `fern generate --guest` prints after "Build <id> is kept for 7 days:". */
+export function parseGuestBuildUrl(output: string): string | undefined {
+    return output.match(/Build \S+ is kept for 7 days: (https?:\/\/\S+)/)?.[1]?.replace(/[.,)]+$/, "");
+}
+
+/** Keeps the claim link, session expiry and build page a guest run printed; an earlier run's values stay. */
+export function recordGuestOutcome(output: string, published: PublishResult): void {
+    published.claimUrl = parseClaimUrl(output) ?? published.claimUrl;
+    published.claimExpires = parseGuestSessionExpiry(output) ?? published.claimExpires;
+    published.buildPageUrl = parseGuestBuildUrl(output) ?? published.buildPageUrl;
+}
+
+type AccountChoice = "login" | "guest" | "skip";
+
+/** Without a saved login, the first step asks how to go on: sign in, continue as a guest, or neither. */
+async function chooseAccount(looksUpBrand: boolean): Promise<AccountChoice> {
+    const answer = await inquirer.prompt<{ account: AccountChoice }>([
+        {
+            type: "list",
+            name: "account",
+            message: looksUpBrand
+                ? "You're not signed in to Fern. An account checks your organization name and pulls your logo and colors. How do you want to continue?"
+                : "You're not signed in to Fern. An account checks and reserves your organization name. How do you want to continue?",
+            choices: [
+                { name: "Sign in to Fern (opens a browser)", value: "login" },
+                {
+                    name: "Continue without an account: publish and generate as a guest, then claim the result",
+                    value: "guest"
+                },
+                { name: "Skip for now", value: "skip" }
+            ]
+        }
+    ]);
+    return answer.account;
+}
+
+function printGuestModeNote(): void {
+    printSkipped(
+        "Guest mode: docs and SDKs go to a temporary guest session. The claim link at the end moves them into your Fern organization, where you pick its name and your docs URL."
+    );
+}
+
+/** `--guest` can't run next to a saved login or FERN_TOKEN, as `fern generate --guest` refuses them. */
+export async function guestModeError(): Promise<string | undefined> {
+    if ((await readFernToken()) === undefined) {
+        return undefined;
+    }
+    return process.env.FERN_TOKEN?.trim()
+        ? "--guest cannot be combined with FERN_TOKEN. Unset it to continue as a guest, or drop --guest to use the token."
+        : "--guest cannot be combined with a saved login. Run `fern logout` to continue as a guest, or drop --guest to use your account.";
+}
+
+/**
+ * A step as a guest runs it: publishing makes a temporary site with a claim link instead of a preview
+ * and a Dashboard entry, and every `fern generate` carries `--guest`.
+ */
+export function guestStep(step: SetupStep, detection: Detection, flags: WizardFlags): SetupStep {
+    if (step.id === "publish") {
+        return {
+            ...step,
+            title: "Publish your docs as a guest",
+            question: "Publish your docs to a temporary site now? You claim it afterwards.",
+            actions: step.actions.map((action) =>
+                action.id === "publish-docs"
+                    ? {
+                          ...action,
+                          title: "Publish a temporary docs site, with a link to claim it",
+                          description:
+                              "Publishes your docs under a temporary guest session. Claiming moves the site into your Fern organization and gives it its real URL.",
+                          commands: [displayFernCommand(detection, flags, ["generate", "--docs", "--guest"])]
+                      }
+                    : action
+            )
+        };
+    }
+    if (step.id === "generate") {
+        return {
+            ...step,
+            actions: step.actions.map((action) =>
+                action.id === "generate-sdks"
+                    ? { ...action, commands: [displayFernCommand(detection, flags, ["generate", "--guest"])] }
+                    : action
+            )
+        };
+    }
+    return step;
+}
+
+/** Publishes the docs under the guest session and reports the temporary site and the claim link. */
+async function publishAsGuest(dir: string, detection: Detection, published: PublishResult): Promise<void> {
+    const output = await withStatus("Publishing your docs to a temporary site (this can take a minute)", () =>
+        runFernQuietly(["generate", "--docs", "--guest", "--no-prompt"], dir, detection)
+    );
+    recordGuestOutcome(output, published);
+    const siteUrl = parsePublishedUrl(output);
+    if (siteUrl === undefined) {
+        printSkipped(
+            published.claimUrl === undefined
+                ? "Fern didn't report a published site. Run `fern generate --docs --guest` to see its output."
+                : `Fern didn't report a published site. Claim link: ${published.claimUrl}`
+        );
+        return;
+    }
+    published.guestSiteUrl = siteUrl;
+    printDone(`Your docs are up at ${chalk.cyan(siteUrl)}`);
+    printDetail(
+        chalk.dim(
+            "A temporary site that lives as long as the guest session. Claiming moves it into your organization and gives it its real URL."
+        )
+    );
+    if (published.claimUrl !== undefined) {
+        printDone(`Claim it: ${chalk.cyan(published.claimUrl)}`);
+    }
 }
 
 /** The public docs URL, from the template choices or the first instance in fern/docs.yml. */

@@ -20,7 +20,10 @@ export function isVersionRedirectionExempt(argv: string[]): boolean {
     return command != null && VERSION_REDIRECTION_EXEMPT_COMMANDS.has(command);
 }
 
-/** Whether `fern init` was run with nothing but global options, which starts the setup wizard. */
+/**
+ * Whether `fern init` was run with nothing but global options, which starts the setup wizard.
+ * `--guest` is the wizard's own flag (run it without a Fern account), so `fern init --guest` counts too.
+ */
 export function isBareInit(argv: string[]): boolean {
     const rest: string[] = [];
     const args = hideBin(argv);
@@ -28,7 +31,7 @@ export function isBareInit(argv: string[]): boolean {
         const arg = args[i];
         if (arg === "--log-level") {
             i++;
-        } else if (arg != null && !arg.startsWith("--log-level=")) {
+        } else if (arg != null && !arg.startsWith("--log-level=") && arg !== "--guest") {
             rest.push(arg);
         }
     }
