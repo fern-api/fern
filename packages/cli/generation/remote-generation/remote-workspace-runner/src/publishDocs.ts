@@ -83,10 +83,12 @@ import {
     type SdkGenSnippets
 } from "./attachSdkGenSnippets.js";
 import { shouldMergeThemeServerSide } from "./compileGlobalTheme.js";
+import { findCustomDomainBlockedMessage, formatCustomDomainRoutingNotice } from "./customDomainRoutingNotice.js";
 import { getDocsDeployMode } from "./docsDeployMode.js";
 import { buildDocsSourceArchive, findFernRoot } from "./docsSourceArchive.js";
 import { computeDynamicIRs, type DynamicIrGeneratorJob } from "./dynamicIr/computeDynamicIRs.js";
 import { DynamicIrWorkerPool, parseDynamicIrResult } from "./dynamicIr/DynamicIrWorkerPool.js";
+import { logFdrWarnings } from "./fdrWarnings.js";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig.js";
 import { getFdrOrigin, readGuestPublishOutcome } from "./guestDocsSite.js";
 import { measureImageSizes } from "./measureImageSizes.js";
@@ -883,6 +885,7 @@ export async function publishDocs({
                     }
                     docsRegistrationId = startDocsRegisterResponse.docsRegistrationId;
                     deployLocked = true;
+                    logFdrWarnings(startDocsRegisterResponse, context);
                     context.logger.debug(`Received production registration ID: ${docsRegistrationId}`);
 
                     const skippedCount = startDocsRegisterResponse.skippedFiles?.length || 0;
@@ -1107,6 +1110,7 @@ export async function publishDocs({
             try {
                 await runLedgerPublish();
             } catch (error) {
+                throwIfCustomDomainBlocked(error, context);
                 const detail = formatLedgerError(error);
                 return context.failAndThrow("Failed to publish docs via ledger to " + domain + ": " + detail, error, {
                     code: CliError.Code.NetworkError
@@ -1579,6 +1583,8 @@ async function startDocsRegisterFailed(
     if (errorContent?.reason === "status-code" && errorContent?.statusCode === 409) {
         throw new DocsPublishConflictError();
     }
+
+    throwIfCustomDomainBlocked(error, context);
 
     if (tokenType === "guest") {
         const rejection = readGuestRejection(error);
@@ -2504,6 +2510,15 @@ function isTransientError(error: unknown): boolean {
         return true;
     }
     return status === 429 || status >= 500;
+}
+
+function throwIfCustomDomainBlocked(error: unknown, context: TaskContext): void {
+    const blocked = findCustomDomainBlockedMessage(error);
+    if (blocked != null) {
+        context.failAndThrow(formatCustomDomainRoutingNotice(blocked, "blocked"), undefined, {
+            code: CliError.Code.ConfigError
+        });
+    }
 }
 
 /**

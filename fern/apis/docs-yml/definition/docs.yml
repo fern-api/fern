@@ -1404,6 +1404,14 @@ types:
           setting, which is preserved as an alias for backwards compatibility.
 
           @default: false
+      popular-searches:
+        type: optional<boolean>
+        docs: |
+          If set to true, the empty search box lists the site's most popular
+          searches from the last 30 days, before the reader types. Only
+          searches that return public results are shown.
+
+          @default: false
 
   ThemeConfig:
     properties:
