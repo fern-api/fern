@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.220.0
+  changelogEntry:
+    - summary: |
+        Send where `fern generate` ran with each sdk-gen-api build: the Fern project's Git repository, branch and
+        commit, the paths of its `fern/` folder and `generators.yml`, and the CI run with its actor. The Fern dashboard
+        shows it as each version's author and source, and keeps the SDK's Fern repository current. Nothing of it goes
+        into generated files, and it is not part of the build's idempotency key.
+      type: feat
+  createdAt: "2026-11-17"
+  irVersion: 67
 - version: 5.219.0
   changelogEntry:
     - summary: |
