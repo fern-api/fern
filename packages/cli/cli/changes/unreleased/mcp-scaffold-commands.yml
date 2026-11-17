@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Add `fern sdk add-tool <name>` and `fern sdk add-hook` to scaffold MCP custom-tool and hook modules
+    into `fern/custom/` and register them under the MCP target's `generation` block in `sdk-config.yml`.
+    The scaffolded modules import the authoring contract from the new `@fern-api/mcp-tooling` package
+    (so they type-check before `fern generate` runs) and call `context.fetch`.
+  type: feat
