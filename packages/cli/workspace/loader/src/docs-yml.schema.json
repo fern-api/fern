@@ -7081,6 +7081,17 @@
             }
           ],
           "description": "If `sticky` is set to true, the breadcrumb row stays pinned below the header\nwhile the page scrolls. Defaults to false."
+        },
+        "disable-non-page-ancestors": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "If `disable-non-page-ancestors` is set to true, ancestors in the breadcrumb trail that\naren't pages (sections, API references and API packages without an overview page) are\nshown as disabled, non-clickable items. Defaults to false."
         }
       },
       "additionalProperties": false
