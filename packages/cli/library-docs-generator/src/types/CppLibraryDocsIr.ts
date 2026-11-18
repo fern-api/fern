@@ -211,6 +211,8 @@ export interface CppTypedefIr {
     typeInfo: CppTypeInfo | undefined;
     templateParams: CppTemplateParamIr[];
     docstring: CppDocstringIr | undefined;
+    /** `using X = T;` (true) or `typedef T X;` (false); absent from older parsers. */
+    isUsingAlias?: boolean | undefined;
 }
 
 export interface CppVariableIr {
@@ -278,6 +280,8 @@ export interface CppClassIr {
     includeHeader: string | undefined;
     /** `typedef struct X {...} X;` alias folded into this record by the parser. */
     typedefAlias?: string | undefined;
+    /** No tag (`typedef struct { ... } X;`); `typedefAlias` is the only name. */
+    isAnonymous?: boolean | undefined;
     methods: CppFunctionIr[];
     staticMethods: CppFunctionIr[];
     friendFunctions: CppFunctionIr[];

@@ -1,4 +1,4 @@
-import type { CppFileIr } from "../../../src/types/CppLibraryDocsIr.js";
+import type { CppEnumIr, CppFileIr } from "../../../src/types/CppLibraryDocsIr.js";
 import { buildLinkPath } from "../context.js";
 import {
     renderDescriptionBlocksDeduped,
@@ -21,7 +21,7 @@ const SECTIONS: {
 ];
 
 /** Render `headers/<file>.mdx`: what one source header declares, linked to the symbol pages. */
-export function renderHeaderPage(file: CppFileIr): string {
+export function renderHeaderPage(file: CppFileIr, enumsByPath: ReadonlyMap<string, CppEnumIr> = new Map()): string {
     const lines: string[] = [];
     const docstring = file.docstring;
     const summaryText = docstring ? renderSegmentsPlainText(docstring.summary) : "";
@@ -46,9 +46,14 @@ export function renderHeaderPage(file: CppFileIr): string {
         }
         lines.push("", `## ${section.heading}`, "");
         for (const path of paths) {
-            const displayName = path.startsWith("@") ? "(anonymous enum)" : path;
-            const linkPath = path.startsWith("@") ? undefined : buildLinkPath(path);
-            lines.push(linkPath ? `- [\`${displayName}\`](${linkPath})` : `- \`${displayName}\``);
+            if (isAnonymousEnumPath(path)) {
+                // Unnamed enums have no page; list their enumerators so they stay findable
+                const values = enumsByPath.get(path)?.values.map((value) => `\`${value.name}\``) ?? [];
+                lines.push(values.length > 0 ? `- (anonymous enum): ${values.join(", ")}` : "- `(anonymous enum)`");
+                continue;
+            }
+            const linkPath = buildLinkPath(path);
+            lines.push(linkPath ? `- [\`${path}\`](${linkPath})` : `- \`${path}\``);
         }
     }
     if (file.includes.length > 0) {
@@ -59,6 +64,10 @@ export function renderHeaderPage(file: CppFileIr): string {
     }
     trimTrailingBlankLines(lines);
     return lines.join("\n") + "\n";
+}
+
+function isAnonymousEnumPath(path: string): boolean {
+    return (path.split("::").pop() ?? "").startsWith("@");
 }
 
 export function renderHeadersIndexPage(

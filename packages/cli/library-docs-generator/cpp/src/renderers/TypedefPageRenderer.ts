@@ -73,7 +73,9 @@ function formatTypedefSignature(typedef: CppTypedefIr): string {
     const underlyingType = typedef.typeInfo?.display
         ? normalizeAngleBracketSpacing(typedef.typeInfo.display)
         : "/* unspecified */";
-    if (getTypedefSyntax() === "c" && renderableParams.length === 0) {
+    // Parsers that record the declared syntax win; older IR falls back to the library-wide guess
+    const isCTypedef = typedef.isUsingAlias != null ? !typedef.isUsingAlias : getTypedefSyntax() === "c";
+    if (isCTypedef && renderableParams.length === 0) {
         parts.push(formatCTypedef(shortName, underlyingType));
     } else {
         parts.push(`using ${shortName} = ${underlyingType};`);
