@@ -3,7 +3,9 @@
     The plain URL goes to the name it represents most closely (`foo_bar` over `foo__bar`, public
     names over `_`-prefixed ones); every other colliding symbol, header, or group gets a short
     suffix derived from its own name instead of `-2`, `-3`, so adding or removing a symbol never
-    moves another page. Pages that previously ended in `-2`, `-3` move once to the new suffix.
+    moves another page. One-time change on upgrade: pages that ended in `-2`, `-3` move to the
+    new suffix, and in a few existing collisions the plain URL changes owner (e.g. `sa_b` now
+    takes `sab` from `s_a_b`).
   type: fix
 - summary: |
     C/C++ library docs render typedefs the way they were declared: `typedef uint8_t SeverityLevel;`

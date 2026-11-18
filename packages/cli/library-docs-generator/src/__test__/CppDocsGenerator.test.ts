@@ -253,7 +253,9 @@ describe("generateCpp()", () => {
                     typedef("SeverityLevel", "uint8_t", false),
                     typedef("doca_error_t", "enum doca_error", false),
                     typedef("Clock", "std::chrono::steady_clock", true),
-                    typedef("Legacy", "int", undefined)
+                    typedef("Legacy", "int", undefined),
+                    typedef("Matrix", "float[4][4]", false),
+                    typedef("Handler", "void(Widget::*)(int)", false)
                 ] as unknown as CppNamespaceIr["typedefs"]
             })
         );
@@ -264,6 +266,28 @@ describe("generateCpp()", () => {
         expect(read("Clock")).toContain("using Clock = std::chrono::steady_clock;");
         // Older IR without the flag keeps the library-wide choice (C++ here)
         expect(read("Legacy")).toContain("using Legacy = int;");
+        expect(read("Matrix")).toContain("typedef float Matrix[4][4];");
+        // Member-function pointers have no C spelling here; keep the alias form
+        expect(read("Handler")).toContain("using Handler = void(Widget::*)(int);");
+    });
+
+    it("gives an exact class name the plain URL ahead of a specialization that slugifies the same", () => {
+        const ir = makeIr(
+            makeNamespace({
+                classes: [
+                    makeClass({ name: "Foo", path: "Foo" }),
+                    makeClass({ name: "Foo<int>", path: "Foo<int>" }),
+                    makeClass({ name: "FooInt", path: "FooInt" })
+                ]
+            }),
+            { packageName: "lib" }
+        );
+        generateCpp({ ir, outputDir: tmpDir, slug: "reference/lib" });
+        const relativePaths = collectMdxFiles(tmpDir).map((f) => f.substring(tmpDir.length + 1));
+        const fooInt = relativePaths.find((f) => /\/FooInt\.mdx$/.test(f));
+        expect(fooInt).toBeDefined();
+        expect(readFileSync(join(tmpDir, fooInt ?? ""), "utf-8")).toContain("title: FooInt");
+        expect(relativePaths.some((f) => f.endsWith(`Foo_int-${stable("Foo<int>")}.mdx`))).toBe(true);
     });
 
     it("never moves an existing page when a colliding symbol is added", () => {

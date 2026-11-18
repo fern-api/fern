@@ -730,6 +730,12 @@ function comparePageEntries(a: PageEntry, b: PageEntry): number {
     if (internalA !== internalB) {
         return internalA - internalB;
     }
+    // An exact name (`FooInt`) keeps the plain URL ahead of a specialization (`Foo<int>`)
+    const specializationA = a.collected.path.includes("<") ? 1 : 0;
+    const specializationB = b.collected.path.includes("<") ? 1 : 0;
+    if (specializationA !== specializationB) {
+        return specializationA - specializationB;
+    }
     const lossA = slugLoss(a);
     const lossB = slugLoss(b);
     if (lossA !== lossB) {
