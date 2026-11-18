@@ -3,11 +3,16 @@ name: Publish MCP Tooling
 # Publishes via npm trusted publishing (OIDC); the trusted publisher on npmjs.com points at this file name.
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - "packages/commons/mcp-tooling/package.json"
   workflow_dispatch:
     inputs:
       version:
-        description: "The version to publish (e.g., 0.1.0)"
-        required: true
+        description: "Version to publish (e.g., 0.1.0). Leave empty to publish the version in package.json."
+        required: false
         type: string
 
 env:
@@ -45,30 +50,36 @@ jobs:
       - name: Update npm for OIDC publishing
         run: npm install -g npm@11
 
-      - name: Validate version
+      - name: Resolve version
+        id: version
         env:
-          VERSION: ${{ inputs.version }}
+          INPUT_VERSION: ${{ inputs.version }}
         run: |
+          VERSION="${INPUT_VERSION:-$(node -p "require('./${PACKAGE_DIR}/package.json').version")}"
           if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[a-zA-Z0-9.]+)?$ ]]; then
             echo "::error::Invalid version format: $VERSION"
             exit 1
           fi
-
-      - name: Check version not already published
-        env:
-          VERSION: ${{ inputs.version }}
-        run: |
-          if npm view "${PACKAGE_NAME}@${VERSION}" version 2>/dev/null; then
-            echo "::error::Version ${VERSION} is already published"
-            exit 1
+          if npm view "${PACKAGE_NAME}@${VERSION}" version 2>/dev/null | grep -q .; then
+            if [[ "${GITHUB_EVENT_NAME}" == "workflow_dispatch" ]]; then
+              echo "::error::Version ${VERSION} is already published"
+              exit 1
+            fi
+            echo "::notice::${PACKAGE_NAME}@${VERSION} is already published; skipping"
+            echo "publish=false" >> "$GITHUB_OUTPUT"
+            exit 0
           fi
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+          echo "publish=true" >> "$GITHUB_OUTPUT"
 
       - name: Compile (types-only package -> lib/)
+        if: steps.version.outputs.publish == 'true'
         run: pnpm turbo run compile --filter "${PACKAGE_NAME}"
 
       - name: Set version and publish
+        if: steps.version.outputs.publish == 'true'
         env:
-          VERSION: ${{ inputs.version }}
+          VERSION: ${{ steps.version.outputs.version }}
         run: |
           cd "${PACKAGE_DIR}"
           # npm version would run an install that can't resolve pnpm's catalog:/workspace: specifiers.
