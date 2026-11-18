@@ -95,12 +95,14 @@ function formatTypedefSignature(typedef: CppTypedefIr): string {
  * function type must be a plain function pointer (`noexcept` and friends keep `using`).
  */
 function hasCSpelling(type: string): boolean {
-    if (/^[^()]*::\*/.test(type) || /^[^()]*\(\s*[\w:<>, ]+::\*\s*\)/.test(type)) {
+    // Array extents (`int[2 * (3 + 1)]`) are expressions, not declarators
+    const declarator = type.replace(/\[[^\]]*\]/g, "[]");
+    if (/^[^()]*::\*/.test(declarator) || /^[^()]*\(\s*[\w:<>, ]+::\*\s*\)/.test(declarator)) {
         return false;
     }
     // Other parentheses must belong to a call-like operator (`__typeof__(sizeof(0))`); a bare `(`
     // starts a declarator (`void (int)`, `int (*)[4]`) whose name would have to go inside it
-    return parseFunctionPointerType(type) != null || !/(^|[^\w\s])\s*\(|\s\(/.test(type);
+    return parseFunctionPointerType(type) != null || !/(^|[^\w\s])\s*\(|\s\(/.test(declarator);
 }
 
 function formatCTypedef(name: string, underlyingType: string): string {
