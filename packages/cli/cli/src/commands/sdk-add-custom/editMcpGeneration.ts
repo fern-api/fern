@@ -1,6 +1,5 @@
-import { errorMessageOrString } from "@fern-api/core-utils";
-import { validateSdkConfigV1 } from "@postman/sdk-config/sdk-config/v1";
-import YAML, { isMap, isSeq } from "yaml";
+import { sdkConfigV1McpGenerationConfigSchema } from "@postman/sdk-config/sdk-config/v1";
+import YAML, { isAlias, isMap, isSeq } from "yaml";
 
 export type McpCustomCodeEdit = { kind: "tool"; name: string; path: string } | { kind: "hook"; path: string };
 
@@ -44,10 +43,14 @@ export function addMcpCustomCodeToSdkConfig({
         generation.set("hooks", document.createNode({ path: edit.path }));
     }
 
-    try {
-        validateSdkConfigV1(document.toJS());
-    } catch (error) {
-        throw new Error(`Updated SDK Config at ${configPath} is invalid: ${errorMessageOrString(error)}`);
+    // Validate just the MCP generation block, not the whole document — the loader accepts configs the
+    // strict whole-doc schema rejects (duplicate non-MCP languages, legacy nested publish credentials).
+    const validation = sdkConfigV1McpGenerationConfigSchema.safeParse(generation.toJSON());
+    if (!validation.success) {
+        const issues = validation.error.issues
+            .map((issue) => `${issue.path.join(".") || "<root>"}: ${issue.message}`)
+            .join("; ");
+        throw new Error(`Updated MCP generation block in ${configPath} is invalid: ${issues}`);
     }
     return ensureTrailingNewline(document.toString({ lineWidth: 0 }));
 }
@@ -73,7 +76,17 @@ function findMcpTarget(document: YAML.Document, configPath: string): YAML.YAMLMa
 }
 
 function getOrCreateMap(document: YAML.Document, parent: YAML.YAMLMap, key: string, configPath: string): YAML.YAMLMap {
-    const existing = parent.get(key, true);
+    let existing = parent.get(key, true);
+    if (isAlias(existing)) {
+        // The value is a YAML alias (`*anchor`). Resolve it and inline a private copy on this target so
+        // we edit the target's own generation, without mutating the shared anchored node (root/others).
+        const resolved = existing.resolve(document);
+        if (!isMap(resolved)) {
+            throw new Error(`\`${key}\` in ${configPath} aliases a non-mapping node.`);
+        }
+        parent.set(key, document.createNode(resolved.toJSON()));
+        existing = parent.get(key, true);
+    }
     if (isMap(existing)) {
         return existing;
     }

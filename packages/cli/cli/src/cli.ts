@@ -3326,6 +3326,10 @@ function addSdkAddToolCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                     demandOption: true,
                     description: "Tool name (letters, digits, and underscores; starts with a letter)"
                 })
+                .option("api", {
+                    type: "string",
+                    description: "API workspace to target when the project has more than one sdk-config.yml"
+                })
                 .option("force", {
                     type: "boolean",
                     default: false,
@@ -3333,7 +3337,7 @@ function addSdkAddToolCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
                 }),
         async (argv) => {
             cliContext.instrumentPostHogEvent({ command: "fern sdk add-tool" });
-            await addCustomTool({ name: argv.name, force: argv.force, cliContext });
+            await addCustomTool({ name: argv.name, api: argv.api, force: argv.force, cliContext });
         }
     );
 }
@@ -3343,14 +3347,19 @@ function addSdkAddHookCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContex
         "add-hook",
         "Scaffold the MCP hooks module and register it in sdk-config.yml",
         (yargs) =>
-            yargs.option("force", {
-                type: "boolean",
-                default: false,
-                description: "Overwrite the hooks file and config entry if they already exist"
-            }),
+            yargs
+                .option("api", {
+                    type: "string",
+                    description: "API workspace to target when the project has more than one sdk-config.yml"
+                })
+                .option("force", {
+                    type: "boolean",
+                    default: false,
+                    description: "Overwrite the hooks file and config entry if they already exist"
+                }),
         async (argv) => {
             cliContext.instrumentPostHogEvent({ command: "fern sdk add-hook" });
-            await addHook({ force: argv.force, cliContext });
+            await addHook({ api: argv.api, force: argv.force, cliContext });
         }
     );
 }
