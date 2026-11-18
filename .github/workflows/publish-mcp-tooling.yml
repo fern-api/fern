@@ -1,8 +1,6 @@
 name: Publish MCP Tooling
 
-# DRAFT — requires npm trusted-publisher (OIDC) configuration for @fern-api/mcp-tooling before it can
-# publish. Modeled on publish-browser-compatible-fern-workspace.yml. A maintainer should confirm the
-# trusted-publisher setup on npmjs.com (repo + workflow) before relying on this.
+# Publishes via npm trusted publishing (OIDC); the trusted publisher on npmjs.com points at this file name.
 
 on:
   workflow_dispatch:
@@ -73,8 +71,11 @@ jobs:
           VERSION: ${{ inputs.version }}
         run: |
           cd "${PACKAGE_DIR}"
-          npm version "${VERSION}" --no-git-tag-version --allow-same-version
+          # npm version would run an install that can't resolve pnpm's catalog:/workspace: specifiers.
+          npm pkg set version="${VERSION}"
+          # pnpm pack rewrites catalog:/workspace: specifiers to real versions.
+          pnpm pack --pack-destination "${RUNNER_TEMP}"
           echo "Publishing ${PACKAGE_NAME}@${VERSION}"
-          cat package.json
-          npm publish --provenance --access public --tag latest
+          tar -xzOf "${RUNNER_TEMP}/fern-api-mcp-tooling-${VERSION}.tgz" package/package.json
+          npm publish "${RUNNER_TEMP}/fern-api-mcp-tooling-${VERSION}.tgz" --provenance --access public --tag latest
           echo "✓ Successfully published ${PACKAGE_NAME}@${VERSION}"
