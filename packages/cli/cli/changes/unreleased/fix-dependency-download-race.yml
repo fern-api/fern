@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Fix `fern generate` failing with `Failed to load dependency` / `Incorrect type at path $: expected
+    object but received undefined` when several generators in a group download the same versioned
+    dependency at once on a cold cache (e.g. CI). Dependencies are now extracted into a staging
+    directory and moved into place atomically, so one generator can no longer parse another's
+    half-written files.
+  type: fix
