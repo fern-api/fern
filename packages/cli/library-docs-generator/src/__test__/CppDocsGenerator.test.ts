@@ -259,7 +259,9 @@ describe("generateCpp()", () => {
                     typedef("Visitor", "void(*)(int Widget::*)", false),
                     typedef("Field", "int Widget::*", false),
                     typedef("Safe", "void(*)(int Widget::*) noexcept", false),
-                    typedef("Size", "__typeof__(sizeof(0))", false)
+                    typedef("Size", "__typeof__(sizeof(0))", false),
+                    typedef("Fn", "void (int)", false),
+                    typedef("RowPtr", "int (*)[4]", false)
                 ] as unknown as CppNamespaceIr["typedefs"]
             })
         );
@@ -277,6 +279,8 @@ describe("generateCpp()", () => {
         expect(read("Field")).toContain("using Field = int Widget::*;");
         expect(read("Safe")).toContain("using Safe = void(*)(int Widget::*) noexcept;");
         expect(read("Size")).toContain("typedef __typeof__(sizeof(0)) Size;");
+        expect(read("Fn")).toContain("using Fn = void (int);");
+        expect(read("RowPtr")).toContain("using RowPtr = int (*)[4];");
     });
 
     it("gives an exact class name the plain URL ahead of a specialization that slugifies the same", () => {

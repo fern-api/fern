@@ -98,8 +98,9 @@ function hasCSpelling(type: string): boolean {
     if (/^[^()]*::\*/.test(type) || /^[^()]*\(\s*[\w:<>, ]+::\*\s*\)/.test(type)) {
         return false;
     }
-    // `__typeof__(sizeof(0))` is fine; only a declarator followed by a parameter list is a function type
-    return parseFunctionPointerType(type) != null || !/\)\s*\(/.test(type);
+    // Other parentheses must belong to a call-like operator (`__typeof__(sizeof(0))`); a bare `(`
+    // starts a declarator (`void (int)`, `int (*)[4]`) whose name would have to go inside it
+    return parseFunctionPointerType(type) != null || !/(^|[^\w\s])\s*\(|\s\(/.test(type);
 }
 
 function formatCTypedef(name: string, underlyingType: string): string {
