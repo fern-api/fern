@@ -741,9 +741,23 @@ function comparePageEntries(a: PageEntry, b: PageEntry): number {
     return a.collected.path < b.collected.path ? -1 : a.collected.path > b.collected.path ? 1 : 0;
 }
 
-/** Suffix derived from the symbol itself, so it never changes when other symbols are added. */
-function stableSuffix(path: string, length: number): string {
-    return createHash("sha256").update(path).digest("hex").slice(0, length);
+/**
+ * `base-<hash>` with the hash taken from `key`, so it never changes when other symbols are
+ * added. Lengthens the hash on the (practically impossible) clash, then counts up.
+ */
+function suffixedName(base: string, key: string, isTaken: (name: string) => boolean): string {
+    const hash = createHash("sha256").update(key).digest("hex");
+    for (let length = 6; length <= hash.length; length += 2) {
+        const name = `${base}-${hash.slice(0, length)}`;
+        if (!isTaken(name)) {
+            return name;
+        }
+    }
+    let n = 2;
+    while (isTaken(`${base}-${hash}-${n}`)) {
+        n += 1;
+    }
+    return `${base}-${hash}-${n}`;
 }
 
 /**
@@ -785,12 +799,9 @@ function disambiguateSlugCollisions(entries: PageEntry[]): PageEntry[] {
                 return;
             }
             const base = entry.pageKey.replace(/\.mdx$/, "");
-            let length = 6;
-            let candidate = `${base}-${stableSuffix(entry.collected.path, length)}`;
-            while (taken.has(pageKeyToSlugPath(`${candidate}.mdx`)) && length < 64) {
-                length += 2;
-                candidate = `${base}-${stableSuffix(entry.collected.path, length)}`;
-            }
+            const candidate = suffixedName(base, entry.collected.path, (name) =>
+                taken.has(pageKeyToSlugPath(`${name}.mdx`))
+            );
             taken.add(pageKeyToSlugPath(`${candidate}.mdx`));
             result.push({ pageKey: `${candidate}.mdx`, collected: entry.collected });
         });
@@ -1016,12 +1027,7 @@ function assignStableNames<T>(
                 result.set(item, base);
                 return;
             }
-            let length = 6;
-            let name = `${base}-${stableSuffix(options.key(item), length)}`;
-            while (taken.has(options.slug(name)) && length < 64) {
-                length += 2;
-                name = `${base}-${stableSuffix(options.key(item), length)}`;
-            }
+            const name = suffixedName(base, options.key(item), (candidate) => taken.has(options.slug(candidate)));
             taken.add(options.slug(name));
             result.set(item, name);
         });
@@ -1109,14 +1115,14 @@ function generateHeaderPages(
     if (files.length === 0) {
         return;
     }
-    const baseOf = (file: CppFileIr): string =>
-        slugifySegment(file.path.replace(/\.[^.]+$/, "").replace(/[\\/]+/g, "-")) || "header";
+    const stemOf = (file: CppFileIr): string => file.path.replace(/\.[^.]+$/, "").replace(/[\\/]+/g, "-");
+    const baseOf = (file: CppFileIr): string => slugifySegment(stemOf(file)) || "header";
     const slugs = assignStableNames(files, {
         base: baseOf,
         key: (file) => file.path,
         slug: (name) => name,
         // `pss_protocol.h` keeps the plain URL ahead of `pss__protocol.h`
-        rank: (file) => file.path.length - baseOf(file).length,
+        rank: (file) => stemOf(file).length - baseOf(file).length,
         reserved: new Set(["index"])
     });
     const entries = files.map((file) => ({ file, slug: slugs.get(file) ?? baseOf(file) }));
