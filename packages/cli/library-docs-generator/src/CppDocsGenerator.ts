@@ -724,9 +724,11 @@ function slugLoss(entry: PageEntry): number {
     return name.length - (pageKeyToSlugPath(entry.pageKey).split("/").pop() ?? "").length;
 }
 
-/** `Foo<int>`, but not `operator<` or `operator<<`. */
+/** `Foo<int>` or `Buffer<io::File>`, but not `operator<` or `operator>`. */
 function isSpecialization(entry: PageEntry): boolean {
-    return /^(?!operator\W)[^<]+<.*>$/.test(entry.collected.path.split("::").pop() ?? "");
+    const path = entry.collected.path;
+    const name = stripTemplateArgs(path).split("::").pop() ?? "";
+    return path.endsWith(">") && !/^operator\W/.test(name);
 }
 
 function comparePageEntries(a: PageEntry, b: PageEntry): number {

@@ -257,7 +257,8 @@ describe("generateCpp()", () => {
                     typedef("Matrix", "float[4][4]", false),
                     typedef("Handler", "void(Widget::*)(int)", false),
                     typedef("Visitor", "void(*)(int Widget::*)", false),
-                    typedef("Field", "int Widget::*", false)
+                    typedef("Field", "int Widget::*", false),
+                    typedef("Safe", "void(*)(int Widget::*) noexcept", false)
                 ] as unknown as CppNamespaceIr["typedefs"]
             })
         );
@@ -273,6 +274,7 @@ describe("generateCpp()", () => {
         expect(read("Handler")).toContain("using Handler = void(Widget::*)(int);");
         expect(read("Visitor")).toContain("typedef void (*Visitor)(int Widget::*);");
         expect(read("Field")).toContain("using Field = int Widget::*;");
+        expect(read("Safe")).toContain("using Safe = void(*)(int Widget::*) noexcept;");
     });
 
     it("gives an exact class name the plain URL ahead of a specialization that slugifies the same", () => {
@@ -281,7 +283,10 @@ describe("generateCpp()", () => {
                 classes: [
                     makeClass({ name: "Foo", path: "Foo" }),
                     makeClass({ name: "Foo<int>", path: "Foo<int>" }),
-                    makeClass({ name: "FooInt", path: "FooInt" })
+                    makeClass({ name: "FooInt", path: "FooInt" }),
+                    makeClass({ name: "Buffer", path: "Buffer" }),
+                    makeClass({ name: "Buffer<io::File>", path: "Buffer<io::File>" }),
+                    makeClass({ name: "BufferIoFile", path: "BufferIoFile" })
                 ]
             }),
             { packageName: "lib" }
@@ -292,6 +297,9 @@ describe("generateCpp()", () => {
         expect(fooInt).toBeDefined();
         expect(readFileSync(join(tmpDir, fooInt ?? ""), "utf-8")).toContain("title: FooInt");
         expect(relativePaths.some((f) => f.endsWith(`Foo_int-${stable("Foo<int>")}.mdx`))).toBe(true);
+        const bufferIoFile = relativePaths.find((f) => /\/BufferIoFile\.mdx$/.test(f));
+        expect(bufferIoFile).toBeDefined();
+        expect(readFileSync(join(tmpDir, bufferIoFile ?? ""), "utf-8")).toContain("title: BufferIoFile");
     });
 
     it("does not treat operator< as a template specialization when ranking collisions", () => {
