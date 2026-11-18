@@ -75,7 +75,7 @@ function formatTypedefSignature(typedef: CppTypedefIr): string {
         : "/* unspecified */";
     // Parsers that record the declared syntax win; older IR falls back to the library-wide guess
     const isCTypedef = typedef.isUsingAlias != null ? !typedef.isUsingAlias : getTypedefSyntax() === "c";
-    if (isCTypedef && renderableParams.length === 0 && !underlyingType.includes("::*")) {
+    if (isCTypedef && renderableParams.length === 0 && !isMemberPointerType(underlyingType)) {
         parts.push(formatCTypedef(shortName, underlyingType));
     } else {
         parts.push(`using ${shortName} = ${underlyingType};`);
@@ -89,6 +89,11 @@ function formatTypedefSignature(typedef: CppTypedefIr): string {
  *   typedef void *cuOptOptimizationProblem;
  *   typedef void (*cuOptCallback)(const float *solution, void *user_data);
  */
+/** `int Widget::*` or `void (Widget::*)(int)`: no C spelling; a `::*` inside a parameter list does not count. */
+function isMemberPointerType(type: string): boolean {
+    return /^[^()]*::\*/.test(type) || /^[^()]*\(\s*[\w:<>, ]+::\*\s*\)/.test(type);
+}
+
 function formatCTypedef(name: string, underlyingType: string): string {
     const fnPtr = parseFunctionPointerType(underlyingType);
     if (fnPtr) {
