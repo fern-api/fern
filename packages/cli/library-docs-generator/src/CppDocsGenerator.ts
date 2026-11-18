@@ -724,6 +724,11 @@ function slugLoss(entry: PageEntry): number {
     return name.length - (pageKeyToSlugPath(entry.pageKey).split("/").pop() ?? "").length;
 }
 
+/** `Foo<int>`, but not `operator<` or `operator<<`. */
+function isSpecialization(entry: PageEntry): boolean {
+    return /^(?!operator\W)[^<]+<.*>$/.test(entry.collected.path.split("::").pop() ?? "");
+}
+
 function comparePageEntries(a: PageEntry, b: PageEntry): number {
     const internalA = isInternalName(a) ? 1 : 0;
     const internalB = isInternalName(b) ? 1 : 0;
@@ -731,8 +736,8 @@ function comparePageEntries(a: PageEntry, b: PageEntry): number {
         return internalA - internalB;
     }
     // An exact name (`FooInt`) keeps the plain URL ahead of a specialization (`Foo<int>`)
-    const specializationA = a.collected.path.includes("<") ? 1 : 0;
-    const specializationB = b.collected.path.includes("<") ? 1 : 0;
+    const specializationA = isSpecialization(a) ? 1 : 0;
+    const specializationB = isSpecialization(b) ? 1 : 0;
     if (specializationA !== specializationB) {
         return specializationA - specializationB;
     }

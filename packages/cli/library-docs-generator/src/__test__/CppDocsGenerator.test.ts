@@ -255,7 +255,9 @@ describe("generateCpp()", () => {
                     typedef("Clock", "std::chrono::steady_clock", true),
                     typedef("Legacy", "int", undefined),
                     typedef("Matrix", "float[4][4]", false),
-                    typedef("Handler", "void(Widget::*)(int)", false)
+                    typedef("Handler", "void(Widget::*)(int)", false),
+                    typedef("Visitor", "void(*)(int Widget::*)", false),
+                    typedef("Field", "int Widget::*", false)
                 ] as unknown as CppNamespaceIr["typedefs"]
             })
         );
@@ -269,6 +271,8 @@ describe("generateCpp()", () => {
         expect(read("Matrix")).toContain("typedef float Matrix[4][4];");
         // Member-function pointers have no C spelling here; keep the alias form
         expect(read("Handler")).toContain("using Handler = void(Widget::*)(int);");
+        expect(read("Visitor")).toContain("typedef void (*Visitor)(int Widget::*);");
+        expect(read("Field")).toContain("using Field = int Widget::*;");
     });
 
     it("gives an exact class name the plain URL ahead of a specialization that slugifies the same", () => {
@@ -288,6 +292,29 @@ describe("generateCpp()", () => {
         expect(fooInt).toBeDefined();
         expect(readFileSync(join(tmpDir, fooInt ?? ""), "utf-8")).toContain("title: FooInt");
         expect(relativePaths.some((f) => f.endsWith(`Foo_int-${stable("Foo<int>")}.mdx`))).toBe(true);
+    });
+
+    it("does not treat operator< as a template specialization when ranking collisions", () => {
+        const ir = makeIr(
+            makeNamespace({
+                functions: [
+                    makeFunction({ name: "operator_lt", path: "operator_lt" }),
+                    makeFunction({ name: "operator<", path: "operator<" })
+                ]
+            }),
+            { packageName: "lib" }
+        );
+        generateCpp({ ir, outputDir: tmpDir, slug: "reference/lib" });
+        const titled = collectMdxFiles(tmpDir)
+            .filter((f) => !f.endsWith("index.mdx"))
+            .map((f) => ({
+                file: f.substring(tmpDir.length + 1),
+                title: /^title: (.*)$/m.exec(readFileSync(f, "utf-8"))?.[1]
+            }));
+        const suffixed = titled.filter((t) => /-[0-9a-f]{6}\.mdx$/.test(t.file));
+        expect(titled).toHaveLength(2);
+        expect(suffixed).toHaveLength(1);
+        expect(suffixed[0]?.title).not.toBe("operator<");
     });
 
     it("never moves an existing page when a colliding symbol is added", () => {
