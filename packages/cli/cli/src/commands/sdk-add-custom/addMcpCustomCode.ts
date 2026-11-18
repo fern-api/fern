@@ -1,7 +1,7 @@
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import { getFernDirectory, SDK_CONFIG_FILENAME } from "@fern-api/configuration-loader";
 import { dirname, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
-import type { CliContext } from "../../cli-context/CliContext";
+import type { CliContext } from "../../cli-context/CliContext.js";
 import { addMcpCustomCodeToSdkConfig, type McpCustomCodeEdit } from "./editMcpGeneration.js";
 import { customToolModule, customToolRelativePath, hookModule, hookRelativePath } from "./templates.js";
 
@@ -71,12 +71,13 @@ async function scaffold({
     }
 
     const modulePath = join(fernDirectory, RelativeFilePath.of(relativePath));
-    if ((await doesPathExist(modulePath)) && !force) {
+    const moduleExisted = await doesPathExist(modulePath);
+    if (moduleExisted && !force) {
         return cliContext.failAndThrow(`${modulePath} already exists. Re-run with --force to overwrite it.`);
     }
 
     const existingContents = await readFile(sdkConfigPath, "utf8");
-    // Edit + validate the config first so a config error leaves no half-written stub behind.
+    // Compute + validate the updated config first, so a config error leaves no file written at all.
     let updatedConfig: string;
     try {
         updatedConfig = addMcpCustomCodeToSdkConfig({ existingContents, edit, configPath: sdkConfigPath, force });
@@ -86,5 +87,14 @@ async function scaffold({
 
     await mkdir(dirname(modulePath), { recursive: true });
     await writeFile(modulePath, contents);
-    await writeFile(sdkConfigPath, updatedConfig);
+    // Keep the two writes consistent: if registering the module in the config fails, roll back a
+    // stub we just created so the user isn't left with an orphaned, unregistered file.
+    try {
+        await writeFile(sdkConfigPath, updatedConfig);
+    } catch (error) {
+        if (!moduleExisted) {
+            await rm(modulePath, { force: true });
+        }
+        return cliContext.failAndThrow(`Wrote ${modulePath} but failed to update ${SDK_CONFIG_FILENAME}.`, error);
+    }
 }

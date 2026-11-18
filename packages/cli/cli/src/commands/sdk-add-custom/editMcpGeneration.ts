@@ -37,11 +37,9 @@ export function addMcpCustomCodeToSdkConfig({
         }
         customTools.set(edit.name, document.createNode({ path: edit.path }));
     } else {
-        const existingHook = generation.get("hooks", true);
-        if (isMap(existingHook) && existingHook.get("path") !== edit.path && !force) {
-            throw new Error(
-                `hooks is already configured in ${configPath} with a different path. Re-run with --force to overwrite it.`
-            );
+        // Guard on existence regardless of node shape (map, scalar, etc.), mirroring the customTools check.
+        if (generation.get("hooks", true) != null && !force) {
+            throw new Error(`hooks is already configured in ${configPath}. Re-run with --force to overwrite it.`);
         }
         generation.set("hooks", document.createNode({ path: edit.path }));
     }

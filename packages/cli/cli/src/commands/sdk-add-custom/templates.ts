@@ -34,7 +34,10 @@ export const definition: ToolDefinition = {
 export const handler = async (args: ToolArgs, context: RequestContext): Promise<CallToolResult> => {
     // context.fetch runs the server's hooks + request timeout, and attaches your API credentials when
     // the target is the configured baseUrl. Prefer it over the global fetch.
-    const response = await context.fetch(context.baseUrl + "/TODO", { method: "GET" });
+    const response = await context.fetch(context.baseUrl.replace(/\\/$/, "") + "/TODO", {
+        method: "POST",
+        body: JSON.stringify(args)
+    });
     if (!response.ok) {
         return { isError: true, content: [{ type: "text", text: "HTTP " + response.status }] };
     }
@@ -50,21 +53,23 @@ export function hookModule(): string {
     return `import type { AuthInfo, CallToolResult } from "@fern-api/mcp-tooling";
 
 // Runs before every outbound request; modify headers or the URL here. The caller's token is never
-// forwarded upstream.
-export async function beforeRequest(request: Request, auth?: AuthInfo): Promise<Request> {
+// forwarded upstream. (Unused params are prefixed with _; rename them when you use them.)
+export async function beforeRequest(request: Request, _auth?: AuthInfo): Promise<Request> {
     return request;
 }
 
 // Runs after every response, before result processing.
-export async function afterResponse(request: Request, response: Response): Promise<Response> {
+export async function afterResponse(_request: Request, response: Response): Promise<Response> {
     return response;
 }
 
 // Observes transport and non-2xx failures.
-export async function onError(request: Request, error: unknown): Promise<void> {}
+export async function onError(_request: Request, error: unknown): Promise<void> {
+    console.error("MCP tool request failed:", error);
+}
 
 // May reshape or redact a tool result before it is returned to the caller.
-export async function transformResult(toolName: string, result: CallToolResult): Promise<CallToolResult> {
+export async function transformResult(_toolName: string, result: CallToolResult): Promise<CallToolResult> {
     return result;
 }
 `;

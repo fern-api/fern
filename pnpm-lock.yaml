@@ -4816,14 +4816,13 @@ importers:
         version: 4.1.4(@opentelemetry/api@1.9.1)(@types/node@22.19.17)(@vitest/coverage-v8@4.1.4)(vite@7.3.5(@types/node@22.19.17)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.3))
 
   packages/commons/mcp-tooling:
-    dependencies:
-      '@modelcontextprotocol/server':
-        specifier: 2.3.0
-        version: 2.3.0
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../configs
+      '@modelcontextprotocol/server':
+        specifier: 2.3.0
+        version: 2.3.0
       '@types/node':
         specifier: 'catalog:'
         version: 22.19.17
