@@ -113,6 +113,7 @@ import { createOrgToken, listOrgTokens, revokeOrgToken } from "./commands/org/or
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1.js";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2.js";
 import { resolveSpecsForWorkspaces } from "./commands/resolve-specs/resolveSpecsForWorkspaces.js";
+import { addCustomTool, addHook } from "./commands/sdk-add-custom/addMcpCustomCode.js";
 import { sdkDiffCommand } from "./commands/sdk-diff/sdkDiffCommand.js";
 import { sdkMigrate } from "./commands/sdk-migrate/sdkMigrate.js";
 import type { SdkPreviewResult, SdkPreviewSuccess } from "./commands/sdk-preview/sdkPreview.js";
@@ -3308,8 +3309,59 @@ function addSdkCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command("sdk", "Configure and generate SDKs", (yargs) => {
         addSdkMigrateCommand(yargs, cliContext);
         addSdkPreviewCommand(yargs, cliContext);
+        addSdkAddToolCommand(yargs, cliContext);
+        addSdkAddHookCommand(yargs, cliContext);
         return yargs.demandCommand();
     });
+}
+
+function addSdkAddToolCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext): void {
+    cli.command(
+        "add-tool <name>",
+        "Scaffold an MCP custom tool module and register it in sdk-config.yml",
+        (yargs) =>
+            yargs
+                .positional("name", {
+                    type: "string",
+                    demandOption: true,
+                    description: "Tool name (letters, digits, and underscores; starts with a letter)"
+                })
+                .option("api", {
+                    type: "string",
+                    description: "API workspace to target when the project has more than one sdk-config.yml"
+                })
+                .option("force", {
+                    type: "boolean",
+                    default: false,
+                    description: "Overwrite the tool file and config entry if they already exist"
+                }),
+        async (argv) => {
+            cliContext.instrumentPostHogEvent({ command: "fern sdk add-tool" });
+            await addCustomTool({ name: argv.name, api: argv.api, force: argv.force, cliContext });
+        }
+    );
+}
+
+function addSdkAddHookCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext): void {
+    cli.command(
+        "add-hook",
+        "Scaffold the MCP hooks module and register it in sdk-config.yml",
+        (yargs) =>
+            yargs
+                .option("api", {
+                    type: "string",
+                    description: "API workspace to target when the project has more than one sdk-config.yml"
+                })
+                .option("force", {
+                    type: "boolean",
+                    default: false,
+                    description: "Overwrite the hooks file and config entry if they already exist"
+                }),
+        async (argv) => {
+            cliContext.instrumentPostHogEvent({ command: "fern sdk add-hook" });
+            await addHook({ api: argv.api, force: argv.force, cliContext });
+        }
+    );
 }
 
 function addSdkMigrateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext): void {
