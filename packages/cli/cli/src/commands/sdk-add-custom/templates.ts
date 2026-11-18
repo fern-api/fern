@@ -1,3 +1,5 @@
+import { capitalizeFirstLetter } from "@fern-api/core-utils";
+
 const CUSTOM_DIR = "custom";
 
 /** Path, relative to the fern directory, of a scaffolded custom tool module. */
@@ -79,6 +81,6 @@ function toTitle(name: string): string {
     return name
         .split(/[_-]/)
         .filter((part) => part.length > 0)
-        .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+        .map((part) => capitalizeFirstLetter(part))
         .join(" ");
 }
