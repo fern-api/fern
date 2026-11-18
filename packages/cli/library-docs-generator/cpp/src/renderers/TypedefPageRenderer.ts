@@ -75,7 +75,7 @@ function formatTypedefSignature(typedef: CppTypedefIr): string {
         : "/* unspecified */";
     // Parsers that record the declared syntax win; older IR falls back to the library-wide guess
     const isCTypedef = typedef.isUsingAlias != null ? !typedef.isUsingAlias : getTypedefSyntax() === "c";
-    if (isCTypedef && renderableParams.length === 0) {
+    if (isCTypedef && renderableParams.length === 0 && !underlyingType.includes("::*")) {
         parts.push(formatCTypedef(shortName, underlyingType));
     } else {
         parts.push(`using ${shortName} = ${underlyingType};`);
@@ -93,6 +93,11 @@ function formatCTypedef(name: string, underlyingType: string): string {
     const fnPtr = parseFunctionPointerType(underlyingType);
     if (fnPtr) {
         return `typedef ${fnPtr.returnType} (*${name})(${fnPtr.params.join(", ")});`;
+    }
+    // `int[4]` is declared `typedef int name[4];`
+    const array = /^(.*?)\s*((?:\[[^\]]*\])+)$/.exec(underlyingType);
+    if (array?.[1] && array[2]) {
+        return `typedef ${array[1]} ${name}${array[2]};`;
     }
     const separator = /[*&]$/.test(underlyingType) ? "" : " ";
     return `typedef ${underlyingType}${separator}${name};`;
