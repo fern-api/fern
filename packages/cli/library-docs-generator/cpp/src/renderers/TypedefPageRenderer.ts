@@ -98,7 +98,8 @@ function hasCSpelling(type: string): boolean {
     if (/^[^()]*::\*/.test(type) || /^[^()]*\(\s*[\w:<>, ]+::\*\s*\)/.test(type)) {
         return false;
     }
-    return !type.includes("(") || parseFunctionPointerType(type) != null;
+    // `__typeof__(sizeof(0))` is fine; only a declarator followed by a parameter list is a function type
+    return parseFunctionPointerType(type) != null || !/\)\s*\(/.test(type);
 }
 
 function formatCTypedef(name: string, underlyingType: string): string {
