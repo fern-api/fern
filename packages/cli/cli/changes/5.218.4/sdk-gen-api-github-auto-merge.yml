@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    Generators with GitHub auto-merge (`github.auto-merge: true` or `--auto-merge`) no longer fall back to
+    legacy Fiddle generation when sdk-gen-api is enabled. The CLI now sends `autoMerge` to sdk-gen-api with
+    GitHub pull-request output, so auto-merge is enabled on the pull request it opens. Other output modes
+    never open a pull request, so they do not send it.
+  type: fix

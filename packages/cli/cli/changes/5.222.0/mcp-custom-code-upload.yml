@@ -1,0 +1,7 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    `fern generate` now uploads an MCP target's customer-authored custom-tool and hook modules
+    (the files referenced by `customTools`/`hooks` in the SDK Config) so they reach the generator
+    and are emitted into the generated MCP server.
+  type: feat

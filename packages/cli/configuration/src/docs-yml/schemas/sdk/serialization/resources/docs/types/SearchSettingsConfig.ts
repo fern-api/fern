@@ -16,11 +16,13 @@ export const SearchSettingsConfig: core.serialization.ObjectSchema<
         "default-filter-by-current-product",
         core.serialization.boolean().optional(),
     ),
+    popularSearches: core.serialization.property("popular-searches", core.serialization.boolean().optional()),
 });
 
 export declare namespace SearchSettingsConfig {
     export interface Raw {
         "prioritize-current-product"?: boolean | null;
         "default-filter-by-current-product"?: boolean | null;
+        "popular-searches"?: boolean | null;
     }
 }

@@ -104,9 +104,12 @@ function renderPreamble(cls: CppClassIr, ctx: RenderContext): string {
         lines.push(renderBareCodeBlock(`#include <${prefix}${cls.includeHeader}>`, "cpp"));
         lines.push("");
     }
-    // Only the C idiom `typedef struct X {...} X;` is folded by the parser; templates never carry one
+    // Only the C idioms `typedef struct X {...} X;` and `typedef struct {...} X;` set an alias; templates never carry one
     if (cls.typedefAlias && !cls.name.includes("<")) {
-        lines.push(renderBareCodeBlock(`typedef ${cls.kind} ${cls.name} ${cls.typedefAlias};`, "c"));
+        const declaration = cls.isAnonymous
+            ? `typedef ${cls.kind} { ... } ${cls.typedefAlias};`
+            : `typedef ${cls.kind} ${cls.name} ${cls.typedefAlias};`;
+        lines.push(renderBareCodeBlock(declaration, "c"));
         lines.push("");
     }
 

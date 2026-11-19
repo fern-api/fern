@@ -2205,6 +2205,9 @@
                 "mcp": {
                   "type": "boolean"
                 },
+                "mcp-auth": {
+                  "type": "boolean"
+                },
                 "vscode": {
                   "type": "boolean"
                 },
@@ -3536,6 +3539,9 @@
                 },
                 "sticky": {
                   "type": "boolean"
+                },
+                "disable-non-page-ancestors": {
+                  "type": "boolean"
                 }
               },
               "additionalProperties": false
@@ -3565,6 +3571,9 @@
                   "type": "boolean"
                 },
                 "default-filter-by-current-product": {
+                  "type": "boolean"
+                },
+                "popular-searches": {
                   "type": "boolean"
                 }
               },

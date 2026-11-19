@@ -121,6 +121,7 @@ import { createOrgToken, listOrgTokens, revokeOrgToken } from "./commands/org/or
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1.js";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2.js";
 import { resolveSpecsForWorkspaces } from "./commands/resolve-specs/resolveSpecsForWorkspaces.js";
+import { addCustomTool, addHook } from "./commands/sdk-add-custom/addMcpCustomCode.js";
 import { sdkDiffCommand } from "./commands/sdk-diff/sdkDiffCommand.js";
 import { sdkMigrate } from "./commands/sdk-migrate/sdkMigrate.js";
 import type { SdkPreviewResult, SdkPreviewSuccess } from "./commands/sdk-preview/sdkPreview.js";
@@ -1062,9 +1063,9 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 })
                 .option("retry-rate-limited", {
                     boolean: true,
-                    default: false,
+                    default: true,
                     description:
-                        "Automatically retry with exponential backoff when receiving 429 Too Many Requests responses"
+                        "Automatically retry with exponential backoff when receiving 429 Too Many Requests responses. Disable with --no-retry-rate-limited"
                 })
                 .option("require-env-vars", {
                     boolean: true,
@@ -2008,15 +2009,31 @@ function addClaimCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         "claim",
         "Claim this repo's guest session (from `fern generate --guest`) into your Fern organization",
         (yargs) =>
-            yargs.option("org", {
-                alias: "organization",
-                string: true,
-                description:
-                    "Move the guest session's work into an organization you administer. Defaults to turning the guest organization into your own."
-            }),
+            yargs
+                .option("org", {
+                    alias: "organization",
+                    string: true,
+                    description:
+                        "Move the guest session's docs sites and SDK builds into an organization you administer. Defaults to turning the guest organization into your own."
+                })
+                .option("docs-url", {
+                    string: true,
+                    description:
+                        "Give the claimed docs site this address (<name>.docs.buildwithfern.com, or just <name>) instead of its drop-<id> address."
+                })
+                .option("sdk-name", {
+                    string: true,
+                    description:
+                        "Name the claimed SDK builds' SDK in the organization. Defaults to the name they were built with."
+                }),
         async (argv) => {
             cliContext.instrumentPostHogEvent({ command: "fern claim" });
-            await claimGuestSession({ cliContext, organization: argv.org });
+            await claimGuestSession({
+                cliContext,
+                organization: argv.org,
+                docsUrl: argv.docsUrl,
+                sdkName: argv.sdkName
+            });
         }
     );
 }
@@ -3401,8 +3418,59 @@ function addSdkCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command("sdk", "Configure and generate SDKs", (yargs) => {
         addSdkMigrateCommand(yargs, cliContext);
         addSdkPreviewCommand(yargs, cliContext);
+        addSdkAddToolCommand(yargs, cliContext);
+        addSdkAddHookCommand(yargs, cliContext);
         return yargs.demandCommand();
     });
+}
+
+function addSdkAddToolCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext): void {
+    cli.command(
+        "add-tool <name>",
+        "Scaffold an MCP custom tool module and register it in sdk-config.yml",
+        (yargs) =>
+            yargs
+                .positional("name", {
+                    type: "string",
+                    demandOption: true,
+                    description: "Tool name (letters, digits, and underscores; starts with a letter)"
+                })
+                .option("api", {
+                    type: "string",
+                    description: "API workspace to target when the project has more than one sdk-config.yml"
+                })
+                .option("force", {
+                    type: "boolean",
+                    default: false,
+                    description: "Overwrite the tool file and config entry if they already exist"
+                }),
+        async (argv) => {
+            cliContext.instrumentPostHogEvent({ command: "fern sdk add-tool" });
+            await addCustomTool({ name: argv.name, api: argv.api, force: argv.force, cliContext });
+        }
+    );
+}
+
+function addSdkAddHookCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext): void {
+    cli.command(
+        "add-hook",
+        "Scaffold the MCP hooks module and register it in sdk-config.yml",
+        (yargs) =>
+            yargs
+                .option("api", {
+                    type: "string",
+                    description: "API workspace to target when the project has more than one sdk-config.yml"
+                })
+                .option("force", {
+                    type: "boolean",
+                    default: false,
+                    description: "Overwrite the hooks file and config entry if they already exist"
+                }),
+        async (argv) => {
+            cliContext.instrumentPostHogEvent({ command: "fern sdk add-hook" });
+            await addHook({ api: argv.api, force: argv.force, cliContext });
+        }
+    );
 }
 
 function addSdkMigrateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext): void {
