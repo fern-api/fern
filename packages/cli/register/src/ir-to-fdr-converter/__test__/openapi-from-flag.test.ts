@@ -944,6 +944,44 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/auth-name-collision-ir.snap");
     });
 
+    it("includes per-scheme scopes in multiAuth only when showScopes is set", async () => {
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/endpoint-scopes")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "endpoint-scopes"
+        });
+        assert(workspace.didSucceed);
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(`Expected OSSWorkspace, got ${workspace.workspace.constructor.name}`);
+        }
+        const ir = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+        const getMultiAuth = (showScopes: boolean | undefined) => {
+            const fdr = convertIrToFdrApi({ ir, snippetsConfig: {}, context, showScopes });
+            const endpoints = [
+                ...fdr.rootPackage.endpoints,
+                ...Object.values(fdr.subpackages).flatMap((subpackage) => subpackage.endpoints)
+            ];
+            return endpoints[0]?.multiAuth;
+        };
+
+        expect(getMultiAuth(true)).toEqual([
+            { schemes: ["legacyApiKey"] },
+            { schemes: ["oauth"], scopes: { oauth: ["audiences:read"] } }
+        ]);
+        expect(getMultiAuth(undefined)).toEqual([{ schemes: ["legacyApiKey"] }, { schemes: ["oauth"] }]);
+    });
+
     it("should preserve user's explicit docs over OpenAPI description", async () => {
         // Test that when generators.yml has explicit docs for an auth scheme,
         // it takes priority over the OpenAPI securityScheme description

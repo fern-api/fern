@@ -580,6 +580,7 @@ export declare namespace DocsNavigationItem {
         sortByAvailability: SortByAvailabilityValue[] | undefined;
         flattened: boolean;
         paginated: boolean;
+        showScopes: boolean;
         types: boolean;
         playground: PlaygroundSettings | undefined;
     }

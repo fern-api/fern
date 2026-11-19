@@ -638,7 +638,8 @@ export function buildLocaleApiDefinitions({
                 graphqlOperations: spec.graphqlOperations,
                 graphqlTypes: spec.graphqlTypes,
                 context,
-                apiNameOverride: spec.apiName
+                apiNameOverride: spec.apiName,
+                showScopes: spec.showScopes
             });
             localeApiDefs.set(baseApiId, translatedApiDef);
         } catch (error) {

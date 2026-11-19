@@ -553,7 +553,8 @@ export async function publishDocs({
             apiName,
             workspace,
             graphqlOperations,
-            graphqlTypes
+            graphqlTypes,
+            showScopes
         }) => {
             // apiName (docs.yml folder name) becomes the FDR API identifier, so users can
             // reference APIs by their folder name in docs components.
@@ -568,7 +569,8 @@ export async function publishDocs({
                     graphqlOperations,
                     graphqlTypes,
                     context,
-                    apiNameOverride: apiName
+                    apiNameOverride: apiName,
+                    showScopes
                 }),
                 sdkGenSnippets
             );

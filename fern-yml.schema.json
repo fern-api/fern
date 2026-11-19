@@ -6646,6 +6646,9 @@
             "paginated": {
               "type": "boolean"
             },
+            "show-scopes": {
+              "type": "boolean"
+            },
             "types": {
               "type": "boolean"
             },

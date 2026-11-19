@@ -45,6 +45,7 @@ export const ApiReferenceConfiguration: core.serialization.ObjectSchema<
         ),
         flattened: core.serialization.boolean().optional(),
         paginated: core.serialization.boolean().optional(),
+        showScopes: core.serialization.property("show-scopes", core.serialization.boolean().optional()),
         types: core.serialization.boolean().optional(),
         playground: PlaygroundSettings.optional(),
     })
@@ -74,6 +75,7 @@ export declare namespace ApiReferenceConfiguration {
         "sort-by-availability"?: SortByAvailabilityValue.Raw[] | null;
         flattened?: boolean | null;
         paginated?: boolean | null;
+        "show-scopes"?: boolean | null;
         types?: boolean | null;
         playground?: PlaygroundSettings.Raw | null;
     }

@@ -14,7 +14,8 @@ export function convertIrToFdrApi({
     graphqlOperations = {},
     graphqlTypes = {},
     context,
-    apiNameOverride
+    apiNameOverride,
+    showScopes = false
 }: {
     ir: IntermediateRepresentation;
     snippetsConfig: FdrCjsSdk.api.v1.register.SnippetsConfig;
@@ -23,11 +24,13 @@ export function convertIrToFdrApi({
     graphqlTypes?: Record<FdrCjsSdk.TypeId, FdrCjsSdk.api.v1.register.TypeDefinition>;
     context: TaskContext;
     apiNameOverride?: string;
+    /** Include each endpoint's required scopes in its `multiAuth` requirements. */
+    showScopes?: boolean;
 }): FdrCjsSdk.api.v1.register.ApiDefinition {
     const fdrApi: FdrCjsSdk.api.v1.register.ApiDefinition = {
         types: {},
         subpackages: {},
-        rootPackage: convertPackage(ir.rootPackage, ir, graphqlOperations, graphqlTypes),
+        rootPackage: convertPackage(ir.rootPackage, ir, graphqlOperations, graphqlTypes, { showScopes }),
         apiName: apiNameOverride ?? getOriginalName(ir.apiName),
         auth: convertAuth({ auth: ir.auth, playgroundConfig, context }),
         authSchemes: convertAllAuthSchemes({ auth: ir.auth, playgroundConfig, context }),
@@ -66,7 +69,7 @@ export function convertIrToFdrApi({
             displayName: service?.displayName ?? subpackage.displayName,
             name: getOriginalName(subpackage.name),
             description: subpackage.docs ?? undefined,
-            ...convertPackage(subpackage, ir)
+            ...convertPackage(subpackage, ir, undefined, undefined, { showScopes })
         };
     }
 

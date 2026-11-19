@@ -147,6 +147,8 @@ export type RegisterApiFn = (opts: {
     workspace?: FernWorkspace;
     graphqlOperations?: Record<APIV1Write.GraphQlOperationId, APIV1Write.GraphQlOperation>;
     graphqlTypes?: Record<APIV1Write.TypeId, APIV1Write.TypeDefinition>;
+    /** Include each endpoint's required scopes in its auth requirements (`show-scopes` in docs.yml). */
+    showScopes?: boolean;
 }) => AsyncOrSync<string>;
 
 /** Called as each API's IR is built during navigation, before its deferred registration. */
@@ -171,6 +173,7 @@ export interface TranslatedApiSpec {
     apiName?: string;
     graphqlOperations?: Record<APIV1Write.GraphQlOperationId, APIV1Write.GraphQlOperation>;
     graphqlTypes?: Record<APIV1Write.TypeId, APIV1Write.TypeDefinition>;
+    showScopes?: boolean;
     /**
      * The base API's Fern workspace, reused as-is when registering the translated
      * definition for production publishing (it carries the generators.yml config and
@@ -558,6 +561,7 @@ export class DocsDefinitionResolver {
         workspace?: FernWorkspace;
         graphqlOperations?: Record<APIV1Write.GraphQlOperationId, APIV1Write.GraphQlOperation>;
         graphqlTypes?: Record<APIV1Write.TypeId, APIV1Write.TypeDefinition>;
+        showScopes?: boolean;
         tempApiDefinitionId: string;
         apiReferenceNode: FernNavigation.V1.ApiReferenceNode;
         /**
@@ -827,7 +831,8 @@ export class DocsDefinitionResolver {
                             apiName: pending.apiName,
                             workspace: sourceFiles,
                             graphqlOperations: pending.graphqlOperations,
-                            graphqlTypes: pending.graphqlTypes
+                            graphqlTypes: pending.graphqlTypes,
+                            showScopes: pending.showScopes
                         })
                     )
                     .digest("hex");
@@ -850,7 +855,8 @@ export class DocsDefinitionResolver {
                         apiName: pending.apiName,
                         workspace: pending.workspace,
                         graphqlOperations: pending.graphqlOperations,
-                        graphqlTypes: pending.graphqlTypes
+                        graphqlTypes: pending.graphqlTypes,
+                        showScopes: pending.showScopes
                     })
             );
             const apiDefinitionIdsByRegistration = new Map(
@@ -888,6 +894,7 @@ export class DocsDefinitionResolver {
                             apiName: pending.apiName,
                             graphqlOperations: pending.graphqlOperations,
                             graphqlTypes: pending.graphqlTypes,
+                            showScopes: pending.showScopes,
                             workspace: pending.workspace
                         });
                     }
@@ -2584,6 +2591,7 @@ export class DocsDefinitionResolver {
             workspace,
             graphqlOperations: graphqlData.operations,
             graphqlTypes: graphqlData.types,
+            showScopes: item.showScopes,
             tempApiDefinitionId,
             apiReferenceNode,
             translatedIrsByLocale

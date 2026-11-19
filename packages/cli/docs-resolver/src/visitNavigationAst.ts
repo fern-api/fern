@@ -91,6 +91,7 @@ async function visitNavigationItem({
     await visitObjectAsync(navigationItem, {
         alphabetized: noop,
         sortByAvailability: noop,
+        showScopes: noop,
         api: noop,
         apiName: noop,
         specs: noop,

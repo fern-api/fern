@@ -969,6 +969,7 @@ export const ApiReferenceConfiguration = WithPermissions.merge(WithFeatureFlags)
         "sort-by-availability": z.array(SortByAvailabilityValue).optional(),
         flattened: z.boolean().optional(),
         paginated: z.boolean().optional(),
+        "show-scopes": z.boolean().optional(),
         types: z.boolean().optional(),
         playground: PlaygroundSettings.optional()
     })
