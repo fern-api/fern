@@ -491,6 +491,15 @@ types:
           discovering the endpoint would cause confusion.
 
           @default: true
+      mcp-auth:
+        type: optional<boolean>
+        docs: |
+          Lets MCP clients sign in to this docs site's MCP server (`/_mcp/server?sign_in=true`) through
+          the site's own password, JWT or OAuth2 login, so their results include the docs that user can
+          read. Only applies to sites with one of those logins; WorkOS SSO sites offer MCP sign-in without
+          this flag. Clients that don't sign in still read the public docs.
+
+          @default: false
       vscode:
         type: optional<boolean>
         docs: |
@@ -1263,6 +1272,12 @@ types:
         docs: |
           If `sticky` is set to true, the breadcrumb row stays pinned below the header
           while the page scrolls. Defaults to false.
+      disable-non-page-ancestors:
+        type: optional<boolean>
+        docs: |
+          If `disable-non-page-ancestors` is set to true, ancestors in the breadcrumb trail that
+          aren't pages (sections, API references and API packages without an overview page) are
+          shown as disabled, non-clickable items. Defaults to false.
 
   DocsSettingsConfig:
     properties:
@@ -1402,6 +1417,14 @@ types:
           facet filter, so only results from the current product are shown by
           default. Equivalent to the legacy `settings.default-search-filters`
           setting, which is preserved as an alias for backwards compatibility.
+
+          @default: false
+      popular-searches:
+        type: optional<boolean>
+        docs: |
+          If set to true, the empty search box lists the site's most popular
+          searches from the last 30 days, before the reader types. Only
+          searches that return public results are shown.
 
           @default: false
 

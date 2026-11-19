@@ -10,7 +10,11 @@ const FAKE_CONFIG_PATH = "/fern/docs.yml" as AbsoluteFilePath;
 
 // The published FDR SDK's DocsLayoutConfig does not carry this field yet
 // (parseDocsConfiguration casts it through), so read it structurally here.
-type LayoutWithBreadcrumbs = { breadcrumbs?: { currentPage: boolean; sticky: boolean } } | undefined;
+type LayoutWithBreadcrumbs =
+    | {
+          breadcrumbs?: { currentPage: boolean; sticky: boolean; disableNonPageAncestors: boolean };
+      }
+    | undefined;
 
 async function parseLayout(rawDocsYml: unknown): Promise<LayoutWithBreadcrumbs> {
     const rawDocsConfiguration = docsYml.RawSchemas.Serializer.DocsConfiguration.parseOrThrow(rawDocsYml);
@@ -34,9 +38,9 @@ describe("parseDocsConfiguration — layout.breadcrumbs", () => {
         expect(layout?.breadcrumbs).toBeUndefined();
     });
 
-    it("defaults current-page and sticky to false when breadcrumbs is an empty object", async () => {
+    it("defaults every breadcrumbs flag to false when breadcrumbs is an empty object", async () => {
         const layout = await parseLayout({ instances: [], navigation: [], layout: { breadcrumbs: {} } });
-        expect(layout?.breadcrumbs).toEqual({ currentPage: false, sticky: false });
+        expect(layout?.breadcrumbs).toEqual({ currentPage: false, sticky: false, disableNonPageAncestors: false });
     });
 
     it("maps the kebab-case key to the camelCase currentPage field", async () => {
@@ -45,14 +49,14 @@ describe("parseDocsConfiguration — layout.breadcrumbs", () => {
             navigation: [],
             layout: { breadcrumbs: { "current-page": true } }
         });
-        expect(enabled?.breadcrumbs).toEqual({ currentPage: true, sticky: false });
+        expect(enabled?.breadcrumbs).toEqual({ currentPage: true, sticky: false, disableNonPageAncestors: false });
 
         const disabled = await parseLayout({
             instances: [],
             navigation: [],
             layout: { breadcrumbs: { "current-page": false } }
         });
-        expect(disabled?.breadcrumbs).toEqual({ currentPage: false, sticky: false });
+        expect(disabled?.breadcrumbs).toEqual({ currentPage: false, sticky: false, disableNonPageAncestors: false });
     });
 
     it("maps sticky independently of current-page", async () => {
@@ -61,13 +65,22 @@ describe("parseDocsConfiguration — layout.breadcrumbs", () => {
             navigation: [],
             layout: { breadcrumbs: { sticky: true } }
         });
-        expect(sticky?.breadcrumbs).toEqual({ currentPage: false, sticky: true });
+        expect(sticky?.breadcrumbs).toEqual({ currentPage: false, sticky: true, disableNonPageAncestors: false });
 
         const both = await parseLayout({
             instances: [],
             navigation: [],
             layout: { breadcrumbs: { "current-page": true, sticky: true } }
         });
-        expect(both?.breadcrumbs).toEqual({ currentPage: true, sticky: true });
+        expect(both?.breadcrumbs).toEqual({ currentPage: true, sticky: true, disableNonPageAncestors: false });
+    });
+
+    it("maps the kebab-case disable-non-page-ancestors key", async () => {
+        const layout = await parseLayout({
+            instances: [],
+            navigation: [],
+            layout: { breadcrumbs: { "disable-non-page-ancestors": true } }
+        });
+        expect(layout?.breadcrumbs).toEqual({ currentPage: false, sticky: false, disableNonPageAncestors: true });
     });
 });

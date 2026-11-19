@@ -347,7 +347,8 @@ export const ThemeConfig = z.object({
 
 export const BreadcrumbsConfig = z.object({
     "current-page": z.boolean().optional(),
-    sticky: z.boolean().optional()
+    sticky: z.boolean().optional(),
+    "disable-non-page-ancestors": z.boolean().optional()
 });
 
 export const VariantsColumnHeight = z.union([z.number().int().positive(), z.literal("no-limit")]);
@@ -384,7 +385,8 @@ export const LayoutConfig = z.object({
 
 export const SearchSettingsConfig = z.object({
     "prioritize-current-product": z.boolean().optional(),
-    "default-filter-by-current-product": z.boolean().optional()
+    "default-filter-by-current-product": z.boolean().optional(),
+    "popular-searches": z.boolean().optional()
 });
 
 export const DocsSettingsConfig = z.object({
@@ -448,6 +450,7 @@ export const PageActionOptions = z.object({
     claude: z.boolean().optional(),
     cursor: z.boolean().optional(),
     mcp: z.boolean().optional(),
+    "mcp-auth": z.boolean().optional(),
     vscode: z.boolean().optional(),
     custom: z.array(CustomPageAction).optional()
 });

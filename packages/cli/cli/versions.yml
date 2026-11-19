@@ -1,4 +1,160 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.223.1
+  changelogEntry:
+    - summary: |
+        C/C++ library docs keep existing URLs stable when a symbol with a colliding name is added.
+        The plain URL goes to the name it represents most closely (`foo_bar` over `foo__bar`, public
+        names over `_`-prefixed ones); every other colliding symbol, header, or group gets a short
+        suffix derived from its own name instead of `-2`, `-3`, so adding or removing a symbol never
+        moves another page. One-time change on upgrade: pages that ended in `-2`, `-3` move to the
+        new suffix, and in a few existing collisions the plain URL changes owner (e.g. `sa_b` now
+        takes `sab` from `s_a_b`).
+      type: fix
+    - summary: |
+        C/C++ library docs render typedefs the way they were declared: `typedef uint8_t SeverityLevel;`
+        and `typedef enum doca_error doca_error_t;` stay C typedefs even in libraries that also contain
+        C++ symbols, and untagged structs show `typedef struct { ... } AnonymousPacket;`. Header pages
+        list the enumerators of unnamed enums. Requires the matching C/C++ parser update.
+      type: fix
+  createdAt: "2026-11-18"
+  irVersion: 67
+- version: 5.223.0
+  changelogEntry:
+    - summary: |
+        Add `fern sdk add-tool <name>` and `fern sdk add-hook` to scaffold MCP custom-tool and hook modules
+        into `fern/custom/` and register them under the MCP target's `generation` block in `sdk-config.yml`.
+        The scaffolded modules import the authoring contract from the new `@fern-api/mcp-tooling` package
+        (so they type-check before `fern generate` runs) and call `context.fetch`.
+      type: feat
+  createdAt: "2026-11-18"
+  irVersion: 67
+- version: 5.222.1
+  changelogEntry:
+    - summary: |
+        On Node 26, `fern generate` could stop partway through unpacking the output of a remote
+        generation and still exit with code 0. The rest of the output was never written, and the
+        steps after it never ran, such as deploying a hosted MCP server. The CLI now uses yauzl
+        3.4.0, whose read streams work on Node 26.
+      type: fix
+  createdAt: "2026-11-17"
+  irVersion: 67
+- version: 5.222.0
+  changelogEntry:
+    - summary: |
+        `fern generate` now uploads an MCP target's customer-authored custom-tool and hook modules
+        (the files referenced by `customTools`/`hooks` in the SDK Config) so they reach the generator
+        and are emitted into the generated MCP server.
+      type: feat
+  createdAt: "2026-11-17"
+  irVersion: 67
+- version: 5.221.0
+  changelogEntry:
+    - summary: |
+        Add `page-actions.options.mcp-auth` to `docs.yml`. When `true`, MCP clients can sign in to the
+        docs site's MCP server through the site's own password, JWT or OAuth2 login and get results
+        scoped to that user. Defaults to `false`; sites without it are unchanged.
+      type: feat
+  createdAt: "2026-11-17"
+  irVersion: 67
+- version: 5.220.0
+  changelogEntry:
+    - summary: |
+        Send where `fern generate` ran with each sdk-gen-api build: the Fern project's Git repository, branch and
+        commit, the paths of its `fern/` folder and `generators.yml`, and the CI run with its actor. The Fern dashboard
+        shows it as each version's author and source, and keeps the SDK's Fern repository current. Nothing of it goes
+        into generated files, and it is not part of the build's idempotency key.
+      type: feat
+  createdAt: "2026-11-17"
+  irVersion: 67
+- version: 5.219.0
+  changelogEntry:
+    - summary: |
+        Add the `layout.breadcrumbs.disable-non-page-ancestors` docs.yml setting. When set to
+        true, breadcrumb ancestors that aren't pages (sections, API references and API packages
+        without an overview page) are shown as disabled, non-clickable items. Defaults to false.
+      type: feat
+  createdAt: "2026-11-17"
+  irVersion: 67
+- version: 5.218.4
+  changelogEntry:
+    - summary: |
+        Generators with GitHub auto-merge (`github.auto-merge: true` or `--auto-merge`) no longer fall back to
+        legacy Fiddle generation when sdk-gen-api is enabled. The CLI now sends `autoMerge` to sdk-gen-api with
+        GitHub pull-request output, so auto-merge is enabled on the pull request it opens. Other output modes
+        never open a pull request, so they do not send it.
+      type: fix
+  createdAt: "2026-11-17"
+  irVersion: 67
+- version: 5.218.3
+  changelogEntry:
+    - summary: |
+        `fern generate` now retries Fiddle job creation refused with 429 Too Many Requests by default
+        (previously only with `--retry-rate-limited`), and retries up to 10 times (about 10 minutes of
+        backoff) instead of 5 (about 1 minute), so large groups wait for the organization's rate limit
+        instead of failing. Opt out with `--no-retry-rate-limited`.
+      type: fix
+    - summary: |
+        `fern generate` now retries an sdk-gen-api build submission that is refused with 429 Too Many Requests
+        (organization rate limit, organization lock or concurrent build cap), waiting as long as the server's
+        `Retry-After` header asks, for up to 10 minutes in total. Previously the first 429 failed the generation.
+      type: fix
+  createdAt: "2026-11-17"
+  irVersion: 67
+- version: 5.218.2
+  changelogEntry:
+    - summary: |
+        Show FDR's custom-domain routing rejection in the red bordered box the CLI's own Vercel check used to print,
+        instead of a generic "Failed to publish docs" error, and box FDR's custom-domain routing warnings in yellow.
+      type: fix
+  createdAt: "2026-11-16"
+  irVersion: 67
+- version: 5.218.1
+  changelogEntry:
+    - summary: |
+        `fern generate --docs` now prints the warnings Fern returns when it registers your docs, such as a custom domain that is not routed through Fern yet. The custom-domain DNS check now runs on Fern's side for every root custom domain, not just domains on Vercel, so the CLI no longer runs its own copy.
+      type: fix
+  createdAt: "2026-11-16"
+  irVersion: 67
+- version: 5.218.0
+  changelogEntry:
+    - summary: |
+        Add `settings.search.popular-searches` to `docs.yml`. When set to `true`, the
+        empty search box lists the site's most popular searches before the reader
+        types. Defaults to `false`.
+      type: feat
+  createdAt: "2026-11-16"
+  irVersion: 67
+- version: 5.217.2
+  changelogEntry:
+    - summary: |
+        Running a version in `fern.config.json` older than 5.215.0 no longer fails in CI or asks for
+        confirmation. The CLI prints a prominent warning and runs the pinned version. Run `fern upgrade` to
+        update the pin; `--allow-old-cli-version` or `FERN_ALLOW_OLD_CLI_VERSION=true` shortens the warning.
+      type: fix
+  createdAt: "2026-11-16"
+  irVersion: 67
+- version: 5.217.1
+  changelogEntry:
+    - summary: |
+        Keep the Maven `signature` block when GitHub SDK generation runs through sdk-gen-api. The runtime
+        bundle omits publish credentials on that route and dropped the signature with them, so Java SDKs
+        configured for Maven Central got a release workflow that ran `./gradlew publish` without the
+        `MAVEN_SIGNATURE_*` secrets. The signature is now sent with empty values, so the generator writes
+        the signed `./gradlew sonatypeCentralUpload` workflow without receiving any credentials.
+      type: fix
+  createdAt: "2026-11-16"
+  irVersion: 67
+- version: 5.217.0
+  changelogEntry:
+    - summary: |
+        `fern claim` now moves the guest session's work, like the dashboard's claim page: after the claim it
+        moves the docs sites and SDK builds into the organization (also with `--org`), which drops the guest
+        expiry and the drop banner. New `--docs-url` renames the docs site and `--sdk-name` names the SDK. When docs.yml has a
+        single instance, its URL is pointed at the claimed site so the next `fern generate --docs` updates it. If a
+        move fails, the session is kept and rerunning `fern claim` retries the move.
+      type: feat
+  createdAt: "2026-11-16"
+  irVersion: 67
 - version: 5.216.0
   changelogEntry:
     - summary: |

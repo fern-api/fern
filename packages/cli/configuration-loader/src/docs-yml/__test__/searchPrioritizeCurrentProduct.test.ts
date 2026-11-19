@@ -37,3 +37,30 @@ describe("parseDocsConfiguration — settings.search.prioritize-current-product"
         expect(await parsePrioritizeCurrentProduct(settings(false))).toBe(false);
     });
 });
+
+describe("parseDocsConfiguration — settings.search.popular-searches", () => {
+    async function parsePopularSearches(rawDocsYml: unknown): Promise<boolean | undefined> {
+        const rawDocsConfiguration = docsYml.RawSchemas.Serializer.DocsConfiguration.parseOrThrow(rawDocsYml);
+        const parsed = await parseDocsConfiguration({
+            rawDocsConfiguration,
+            absolutePathToFernFolder: FAKE_FERN_DIR,
+            absoluteFilepathToDocsConfig: FAKE_CONFIG_PATH,
+            context: createMockTaskContext()
+        });
+        return parsed.settings?.search?.popularSearches;
+    }
+
+    it("is left undefined when unset, so popular searches stay off", async () => {
+        expect(await parsePopularSearches({ instances: [], navigation: [], settings: { search: {} } })).toBeUndefined();
+    });
+
+    it("passes an explicit value through", async () => {
+        const settings = (value: boolean) => ({
+            instances: [],
+            navigation: [],
+            settings: { search: { "popular-searches": value } }
+        });
+        expect(await parsePopularSearches(settings(true))).toBe(true);
+        expect(await parsePopularSearches(settings(false))).toBe(false);
+    });
+});

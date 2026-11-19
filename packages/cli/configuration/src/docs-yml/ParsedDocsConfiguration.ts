@@ -41,6 +41,7 @@ export interface ParsedPageActionsConfig {
         claudeCode: boolean;
         vscode: boolean;
         mcp: boolean;
+        mcpAuth: boolean;
         custom: ParsedCustomPageAction[];
         skills: CjsFdrSdk.docs.v1.commons.PageActionOptions["skills"];
     };
@@ -58,6 +59,7 @@ interface ParsedDocsSettingsConfig extends Omit<CjsFdrSdk.docs.v1.commons.DocsSe
         | {
               prioritizeCurrentProduct: boolean | undefined;
               defaultFilterByCurrentProduct: boolean | undefined;
+              popularSearches: boolean | undefined;
               externalSitemaps: ExternalSitemap[] | undefined;
           }
         | undefined;
