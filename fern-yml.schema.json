@@ -2205,6 +2205,9 @@
                 "mcp": {
                   "type": "boolean"
                 },
+                "mcp-auth": {
+                  "type": "boolean"
+                },
                 "vscode": {
                   "type": "boolean"
                 },
@@ -3535,6 +3538,9 @@
                   "type": "boolean"
                 },
                 "sticky": {
+                  "type": "boolean"
+                },
+                "disable-non-page-ancestors": {
                   "type": "boolean"
                 }
               },

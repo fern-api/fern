@@ -1,4 +1,80 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.223.1
+  changelogEntry:
+    - summary: |
+        C/C++ library docs keep existing URLs stable when a symbol with a colliding name is added.
+        The plain URL goes to the name it represents most closely (`foo_bar` over `foo__bar`, public
+        names over `_`-prefixed ones); every other colliding symbol, header, or group gets a short
+        suffix derived from its own name instead of `-2`, `-3`, so adding or removing a symbol never
+        moves another page. One-time change on upgrade: pages that ended in `-2`, `-3` move to the
+        new suffix, and in a few existing collisions the plain URL changes owner (e.g. `sa_b` now
+        takes `sab` from `s_a_b`).
+      type: fix
+    - summary: |
+        C/C++ library docs render typedefs the way they were declared: `typedef uint8_t SeverityLevel;`
+        and `typedef enum doca_error doca_error_t;` stay C typedefs even in libraries that also contain
+        C++ symbols, and untagged structs show `typedef struct { ... } AnonymousPacket;`. Header pages
+        list the enumerators of unnamed enums. Requires the matching C/C++ parser update.
+      type: fix
+  createdAt: "2026-11-18"
+  irVersion: 67
+- version: 5.223.0
+  changelogEntry:
+    - summary: |
+        Add `fern sdk add-tool <name>` and `fern sdk add-hook` to scaffold MCP custom-tool and hook modules
+        into `fern/custom/` and register them under the MCP target's `generation` block in `sdk-config.yml`.
+        The scaffolded modules import the authoring contract from the new `@fern-api/mcp-tooling` package
+        (so they type-check before `fern generate` runs) and call `context.fetch`.
+      type: feat
+  createdAt: "2026-11-18"
+  irVersion: 67
+- version: 5.222.1
+  changelogEntry:
+    - summary: |
+        On Node 26, `fern generate` could stop partway through unpacking the output of a remote
+        generation and still exit with code 0. The rest of the output was never written, and the
+        steps after it never ran, such as deploying a hosted MCP server. The CLI now uses yauzl
+        3.4.0, whose read streams work on Node 26.
+      type: fix
+  createdAt: "2026-11-17"
+  irVersion: 67
+- version: 5.222.0
+  changelogEntry:
+    - summary: |
+        `fern generate` now uploads an MCP target's customer-authored custom-tool and hook modules
+        (the files referenced by `customTools`/`hooks` in the SDK Config) so they reach the generator
+        and are emitted into the generated MCP server.
+      type: feat
+  createdAt: "2026-11-17"
+  irVersion: 67
+- version: 5.221.0
+  changelogEntry:
+    - summary: |
+        Add `page-actions.options.mcp-auth` to `docs.yml`. When `true`, MCP clients can sign in to the
+        docs site's MCP server through the site's own password, JWT or OAuth2 login and get results
+        scoped to that user. Defaults to `false`; sites without it are unchanged.
+      type: feat
+  createdAt: "2026-11-17"
+  irVersion: 67
+- version: 5.220.0
+  changelogEntry:
+    - summary: |
+        Send where `fern generate` ran with each sdk-gen-api build: the Fern project's Git repository, branch and
+        commit, the paths of its `fern/` folder and `generators.yml`, and the CI run with its actor. The Fern dashboard
+        shows it as each version's author and source, and keeps the SDK's Fern repository current. Nothing of it goes
+        into generated files, and it is not part of the build's idempotency key.
+      type: feat
+  createdAt: "2026-11-17"
+  irVersion: 67
+- version: 5.219.0
+  changelogEntry:
+    - summary: |
+        Add the `layout.breadcrumbs.disable-non-page-ancestors` docs.yml setting. When set to
+        true, breadcrumb ancestors that aren't pages (sections, API references and API packages
+        without an overview page) are shown as disabled, non-clickable items. Defaults to false.
+      type: feat
+  createdAt: "2026-11-17"
+  irVersion: 67
 - version: 5.218.4
   changelogEntry:
     - summary: |

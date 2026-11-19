@@ -35,6 +35,7 @@ import { CliError, InteractiveTaskContext } from "@fern-api/task-context";
 import { FernWorkspace, IdentifiableSource } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import type { FernConfigMappingDiagnostic } from "@postman/sdk-config/sdk-config/v1";
+import { collectMcpCustomCode, extractMcpCustomCodeFromSdkConfigBody } from "./collectMcpCustomCode.js";
 import { createAndStartJob } from "./createAndStartJob.js";
 import { discoverLatestSdkGenApiGeneratorVersions } from "./discoverSdkGenApiGeneratorVersions.js";
 import {
@@ -73,6 +74,7 @@ import {
     validateGeneratorConfigCompatibility
 } from "./sdk-gen-client/index.js";
 import { createSdkConfigTargetPayload, resolveSdkConfigTarget } from "./sdkConfigTarget.js";
+import { detectSdkGenApiProvenance } from "./sdkGenApiProvenance";
 
 export async function runRemoteGenerationForGenerator({
     projectConfig,
@@ -482,6 +484,20 @@ export async function runRemoteGenerationForGenerator({
                 );
             }
         }
+        if (sdkConfigBuildParameters != null) {
+            // MCP targets: zip the customer-authored custom-tool/hook modules referenced by the SDK
+            // Config and attach them, so the build uploads them as the `customCode` part (sdk-gen-api
+            // routes it to the target's hooks source). Reading from the serialized SDK Config payload
+            // covers both the explicit `sdk-config.yml` and synthesized `generators.yml` paths. No-op
+            // when none are declared.
+            const mcpCustomCode = await collectMcpCustomCode(
+                extractMcpCustomCodeFromSdkConfigBody(sdkConfigBuildParameters.payload.body),
+                workspace.absoluteFilePath
+            );
+            if (mcpCustomCode != null) {
+                sdkConfigBuildParameters.mcpCustomCode = mcpCustomCode;
+            }
+        }
         if (sdkGenApiTargetIdSeed == null) {
             throw new Error("sdk-gen-api target is missing its preparation ID");
         }
@@ -743,7 +759,14 @@ export async function runRemoteGenerationForGenerator({
                       githubOptions,
                       skipFernignore
                   };
-        result = await (sdkGenApiBatch?.run(parameters) ?? runFernSdkGenApiBuild(parameters));
+        const provenance = detectSdkGenApiProvenance({
+            absolutePathToFernDirectory: workspace.absoluteFilePath,
+            absolutePathToGeneratorsYml: workspace.generatorsConfiguration?.absolutePathToConfiguration
+        });
+        const parametersWithProvenance: FernSdkGenApiBuildParameters =
+            provenance != null ? { ...parameters, provenance } : parameters;
+        result = await (sdkGenApiBatch?.run(parametersWithProvenance) ??
+            runFernSdkGenApiBuild(parametersWithProvenance));
     } else {
         const job = await createAndStartJob({
             projectConfig,

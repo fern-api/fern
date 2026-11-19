@@ -73,7 +73,9 @@ function formatTypedefSignature(typedef: CppTypedefIr): string {
     const underlyingType = typedef.typeInfo?.display
         ? normalizeAngleBracketSpacing(typedef.typeInfo.display)
         : "/* unspecified */";
-    if (getTypedefSyntax() === "c" && renderableParams.length === 0) {
+    // Parsers that record the declared syntax win; older IR falls back to the library-wide guess
+    const isCTypedef = typedef.isUsingAlias != null ? !typedef.isUsingAlias : getTypedefSyntax() === "c";
+    if (isCTypedef && renderableParams.length === 0 && hasCSpelling(underlyingType)) {
         parts.push(formatCTypedef(shortName, underlyingType));
     } else {
         parts.push(`using ${shortName} = ${underlyingType};`);
@@ -87,10 +89,31 @@ function formatTypedefSignature(typedef: CppTypedefIr): string {
  *   typedef void *cuOptOptimizationProblem;
  *   typedef void (*cuOptCallback)(const float *solution, void *user_data);
  */
+/**
+ * Whether `formatCTypedef` can spell the type: not a member pointer (`int Widget::*`,
+ * `void (Widget::*)(int)`; a `::*` inside a parameter list does not count), and any
+ * function type must be a plain function pointer (`noexcept` and friends keep `using`).
+ */
+function hasCSpelling(type: string): boolean {
+    // Array extents (`int[2 * (3 + 1)]`) are expressions, not declarators
+    const declarator = type.replace(/\[[^\]]*\]/g, "[]");
+    if (/^[^()]*::\*/.test(declarator) || /^[^()]*\(\s*[\w:<>, ]+::\*\s*\)/.test(declarator)) {
+        return false;
+    }
+    // Other parentheses must belong to a call-like operator (`__typeof__(sizeof(0))`); a bare `(`
+    // starts a declarator (`void (int)`, `int (*)[4]`) whose name would have to go inside it
+    return parseFunctionPointerType(type) != null || !/(^|[^\w\s])\s*\(|\s\(/.test(declarator);
+}
+
 function formatCTypedef(name: string, underlyingType: string): string {
     const fnPtr = parseFunctionPointerType(underlyingType);
     if (fnPtr) {
         return `typedef ${fnPtr.returnType} (*${name})(${fnPtr.params.join(", ")});`;
+    }
+    // `int[4]` is declared `typedef int name[4];`
+    const array = /^(.*?)\s*((?:\[[^\]]*\])+)$/.exec(underlyingType);
+    if (array?.[1] && array[2]) {
+        return `typedef ${array[1]} ${name}${array[2]};`;
     }
     const separator = /[*&]$/.test(underlyingType) ? "" : " ";
     return `typedef ${underlyingType}${separator}${name};`;

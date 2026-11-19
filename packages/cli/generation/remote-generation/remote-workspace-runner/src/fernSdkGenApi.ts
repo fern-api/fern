@@ -42,6 +42,7 @@ import {
     validateGeneratorConfigCompatibility
 } from "./sdk-gen-client/index.js";
 import { FERN_GENERATOR_LATEST_VERSION, isGeneratorVersionForUnpinnedRoute } from "./sdkConfigGeneratorVersion.js";
+import type { FernSdkGenApiProvenance } from "./sdkGenApiProvenance";
 
 const POLL_INTERVAL_MS = 2_000;
 const POLL_TIMEOUT_MS = 18 * 60 * 1_000;
@@ -220,6 +221,8 @@ export interface FernSdkGenApiRequest {
     protocolVersion: 2;
     apiName: string;
     cliVersion?: string;
+    /** Where this run happened; describes the build, so it is kept out of the idempotency key. */
+    provenance?: FernSdkGenApiProvenance;
     idempotencyKey: string;
     credentialSetId?: string;
     apiInputs: Array<{ id: string; specIndexes: "all" | number[] }>;
@@ -1094,6 +1097,8 @@ export interface FernSdkGenApiBuildParameters {
     apiName: string;
     organization: string;
     cliVersion: string | undefined;
+    /** Where this run happened (see `detectSdkGenApiProvenance`); absent when nothing could be read. */
+    provenance?: FernSdkGenApiProvenance;
     generatorInvocation: generatorsYml.GeneratorInvocation;
     resolvedGeneratorVersion?: string;
     sdkGenApiRoute?: GenerationConfigRoute;
@@ -1114,6 +1119,12 @@ export interface FernSdkGenApiBuildParameters {
     sourceSpecIndexes?: number[];
     audiences?: string[];
     skipFernignore?: boolean;
+    /**
+     * MCP targets only: a zip of the target's customer-authored custom-tool + hook modules, laid out
+     * under `mcp/` (see `collectMcpCustomCode`). Uploaded as the `customCode` multipart part; sdk-gen-api
+     * stores it and supplies it as the build's `hooksLocation`.
+     */
+    mcpCustomCode?: Buffer;
 }
 
 export interface FernSdkGenApiBuildResponse {
@@ -1381,6 +1392,7 @@ async function prepareFernSdkGenApiSubmission(participants: FernSdkGenApiBuildPa
         apiName: first.apiName,
         organization: first.organization,
         cliVersion: first.cliVersion,
+        provenance: first.provenance,
         specsTarGzBuffer: first.specsTarGzBuffer,
         targets: participants.map((participant) => ({
             generatorInvocation: participant.generatorInvocation,
@@ -1412,10 +1424,24 @@ async function prepareFernSdkGenApiSubmission(participants: FernSdkGenApiBuildPa
             { code: CliError.Code.ConfigError }
         );
     }
+    // MCP targets may carry a zip of customer custom-tool/hook modules (see collectMcpCustomCode).
+    // The multipart `customCode` part is singular, so enforce at most one per build rather than
+    // silently dropping the rest — fail loudly if a batch has more than one MCP target with custom code.
+    const customCodeParticipants = participants.filter((participant) => participant.mcpCustomCode != null);
+    if (customCodeParticipants.length > 1) {
+        return first.context.failAndThrow(
+            "sdk-gen-api supports custom code for at most one MCP target per build, but this batch has " +
+                `${customCodeParticipants.length}. Generate the MCP targets with custom code in separate builds.`,
+            undefined,
+            { code: CliError.Code.ConfigError }
+        );
+    }
+    const mcpCustomCode = customCodeParticipants[0]?.mcpCustomCode;
     const aggregateUploadBytes =
         first.specsTarGzBuffer.length +
         participants.reduce((total, participant) => total + participant.payload.body.length, 0) +
-        (credentialsBody?.length ?? 0);
+        (credentialsBody?.length ?? 0) +
+        (mcpCustomCode?.length ?? 0);
     if (aggregateUploadBytes > MAX_TOTAL_UPLOAD_FILE_BYTES) {
         return first.context.failAndThrow(
             `sdk-gen-api source archive, target payloads, and publish credentials total ${formatMiB(aggregateUploadBytes)}, exceeding the ${formatLimitMiB(MAX_TOTAL_UPLOAD_FILE_BYTES)} in-memory upload limit`,
@@ -1456,6 +1482,12 @@ async function prepareFernSdkGenApiSubmission(participants: FernSdkGenApiBuildPa
             form.append("credentials", credentialsBody, {
                 filename: "publish-credentials.v1.json",
                 contentType: "application/json"
+            });
+        }
+        if (mcpCustomCode != null) {
+            form.append("customCode", mcpCustomCode, {
+                filename: "custom-code.zip",
+                contentType: "application/zip"
             });
         }
         return form;
@@ -2700,12 +2732,14 @@ export function createFernSdkGenApiBatchRequest({
     apiName,
     organization,
     cliVersion,
+    provenance,
     specsTarGzBuffer,
     targets
 }: {
     apiName: string;
     organization: string;
     cliVersion: string | undefined;
+    provenance?: FernSdkGenApiProvenance;
     specsTarGzBuffer: Buffer;
     targets: Array<{
         generatorInvocation: generatorsYml.GeneratorInvocation;
@@ -2868,6 +2902,7 @@ export function createFernSdkGenApiBatchRequest({
         protocolVersion: 2,
         apiName,
         ...(cliVersion ? { cliVersion } : {}),
+        ...(provenance != null ? { provenance } : {}),
         idempotencyKey,
         ...(credentialSetId != null ? { credentialSetId } : {}),
         apiInputs,

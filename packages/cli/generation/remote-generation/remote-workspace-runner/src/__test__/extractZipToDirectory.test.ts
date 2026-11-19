@@ -1,4 +1,5 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { randomBytes } from "crypto";
 import { createWriteStream } from "fs";
 import { mkdir, readdir, readFile } from "fs/promises";
 import path from "path";
@@ -101,6 +102,28 @@ describe("extractZipToDirectory", () => {
 
         const content = await readFile(path.join(outputDir, "implicit", "path", "file.txt"), "utf-8");
         expect(content).toBe("implicit dirs");
+
+        await tmpDir.cleanup();
+    });
+
+    // yauzl <= 3.3.0's read stream stalls partway through an entry like this one on Node 26. The extraction promise
+    // never settled, so the CLI exited 0 without writing the rest of the output or running what came after it.
+    it("extracts an entry that spans many read chunks", async () => {
+        const tmpDir = await tmp.dir({ unsafeCleanup: true });
+        // Random, so it barely compresses: about 1 MiB of entry data, read in many chunks.
+        const large = randomBytes(768 * 1024).toString("base64");
+        const zipPath = await createTestZip(tmpDir, [
+            { name: "dist/engine.mjs", content: large },
+            { name: "dist/after.txt", content: "after the large entry" }
+        ]);
+
+        const outputDir = AbsoluteFilePath.of(path.join(tmpDir.path, "output"));
+        await mkdir(outputDir, { recursive: true });
+
+        await extractZipToDirectory(zipPath, outputDir);
+
+        expect(await readFile(path.join(outputDir, "dist", "engine.mjs"), "utf-8")).toBe(large);
+        expect(await readFile(path.join(outputDir, "dist", "after.txt"), "utf-8")).toBe("after the large entry");
 
         await tmpDir.cleanup();
     });

@@ -1,0 +1,92 @@
+name: Publish MCP Tooling
+
+# Publishes via npm trusted publishing (OIDC); the trusted publisher on npmjs.com points at this file name.
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "packages/commons/mcp-tooling/package.json"
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to publish (e.g., 0.1.0). Leave empty to publish the version in package.json."
+        required: false
+        type: string
+
+env:
+  DO_NOT_TRACK: "1"
+  PACKAGE_NAME: "@fern-api/mcp-tooling"
+  PACKAGE_DIR: "packages/commons/mcp-tooling"
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: "buildwithfern"
+  TURBO_REMOTE_CACHE_TIMEOUT: 10
+  TURBO_NO_UPDATE_NOTIFIER: "1"
+  TURBO_DAEMON: "false"
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  publish-package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v6
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Setup Node for npm publish
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+          scope: "@fern-api"
+
+      # npm >= 11.5.1 is required for OIDC trusted publishing.
+      - name: Update npm for OIDC publishing
+        run: npm install -g npm@11
+
+      - name: Resolve version
+        id: version
+        env:
+          INPUT_VERSION: ${{ inputs.version }}
+        run: |
+          VERSION="${INPUT_VERSION:-$(node -p "require('./${PACKAGE_DIR}/package.json').version")}"
+          if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[a-zA-Z0-9.]+)?$ ]]; then
+            echo "::error::Invalid version format: $VERSION"
+            exit 1
+          fi
+          if npm view "${PACKAGE_NAME}@${VERSION}" version 2>/dev/null | grep -q .; then
+            if [[ "${GITHUB_EVENT_NAME}" == "workflow_dispatch" ]]; then
+              echo "::error::Version ${VERSION} is already published"
+              exit 1
+            fi
+            echo "::notice::${PACKAGE_NAME}@${VERSION} is already published; skipping"
+            echo "publish=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+          echo "publish=true" >> "$GITHUB_OUTPUT"
+
+      - name: Compile (types-only package -> lib/)
+        if: steps.version.outputs.publish == 'true'
+        run: pnpm turbo run compile --filter "${PACKAGE_NAME}"
+
+      - name: Set version and publish
+        if: steps.version.outputs.publish == 'true'
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          cd "${PACKAGE_DIR}"
+          # npm version would run an install that can't resolve pnpm's catalog:/workspace: specifiers.
+          npm pkg set version="${VERSION}"
+          # pnpm pack rewrites catalog:/workspace: specifiers to real versions.
+          pnpm pack --pack-destination "${RUNNER_TEMP}"
+          echo "Publishing ${PACKAGE_NAME}@${VERSION}"
+          tar -xzOf "${RUNNER_TEMP}/fern-api-mcp-tooling-${VERSION}.tgz" package/package.json
+          npm publish "${RUNNER_TEMP}/fern-api-mcp-tooling-${VERSION}.tgz" --provenance --access public --tag latest
+          echo "✓ Successfully published ${PACKAGE_NAME}@${VERSION}"

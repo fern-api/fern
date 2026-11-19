@@ -432,6 +432,9 @@ describe("AutoVersionStep.execute() — unreachable baseline never ships the pla
         expect(pkg.version).not.toContain("fern-placeholder");
         expect(pkg.version).toBe("2.3.4");
         expect(mockAnalyzeSdkDiff).not.toHaveBeenCalled();
+        expect(result.versionBump).toBe("NO_CHANGE");
+        expect(result.analysisWarning).toContain("no reachable previous generation baseline");
+        expect(result.analysisWarningCode).toBe("no-baseline");
     });
 });
 
