@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 5.224.0
+  changelogEntry:
+    - summary: |
+        Add a `show-scopes` option to API Reference sections in `docs.yml`. When set to `true`, the CLI publishes the
+        scopes from each endpoint's `security` requirements, and the endpoint's Authentication section lists them under
+        the scheme that requires them (for example `Required scopes: audiences:read`). Off by default.
+      type: feat
+  createdAt: "2026-11-19"
+  irVersion: 67
 - version: 5.223.2
   changelogEntry:
     - summary: |
