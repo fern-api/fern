@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../../fern-changes-yml.schema.json
+
+- summary: |
+    The `fern init` setup wizard works without a Fern account. When you aren't signed in, its first step asks whether to sign in, continue without an account, or skip; `fern init --guest` picks the second from the start. Without an account the wizard publishes your docs to a temporary site and generates your SDKs with `fern generate --guest`, and ends with the link that claims both into your Fern organization (where you pick its name and your docs URL), plus the session's expiry.
+  type: feat

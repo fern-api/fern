@@ -70,6 +70,13 @@ describe("isBareInit", () => {
         expect(isBareInit(argv("init", "--api"))).toBe(false);
         expect(isBareInit(argv("check"))).toBe(false);
     });
+
+    it("counts --guest, the wizard's own flag, as a bare init", () => {
+        expect(isBareInit(argv("init", "--guest"))).toBe(true);
+        expect(isBareInit(argv("--log-level", "debug", "init", "--guest"))).toBe(true);
+        expect(isBareInit(argv("init", "--guest", "--docs"))).toBe(false);
+        expect(isVersionRedirectionExempt(argv("init", "--guest"))).toBe(true);
+    });
 });
 
 describe("isVersionQuery", () => {

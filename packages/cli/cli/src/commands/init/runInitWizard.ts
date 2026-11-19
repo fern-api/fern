@@ -13,12 +13,20 @@ const UNRELEASED_VERSION = "0.0.0";
  * `fern init` on its own in a terminal: the guided setup wizard, which sets up a Fern project, a docs
  * site, coding-agent instructions, docs publishing, and SDKs.
  */
-export async function runInitWizard({ cliContext }: { cliContext: CliContext }): Promise<void> {
+export async function runInitWizard({
+    cliContext,
+    guest = false
+}: {
+    cliContext: CliContext;
+    /** `fern init --guest`: run without a Fern account; publishing and generating use a guest session. */
+    guest?: boolean;
+}): Promise<void> {
     const exitCode = await runWizard({
         dir: process.cwd(),
         yes: false,
         dryRun: false,
         skipInstall: true,
+        guest,
         fernVersion: cliContext.environment.packageVersion,
         projectFernVersion: await getCliVersionForNewProject(cliContext.environment),
         // The wizard's own `fern` commands run this same CLI, and shouldn't switch to another version.

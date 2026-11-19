@@ -121,8 +121,20 @@ export function printNextSteps(
         previewUrl?: string;
         publishedUrl?: string;
         generated?: Array<{ label: string; path: string }>;
+        /** The run went on without a Fern account; publishing and generating used a guest session. */
+        guest?: boolean;
+        guestSiteUrl?: string;
+        buildPageUrl?: string;
+        claimUrl?: string;
+        claimExpires?: string;
     }
 ): void {
+    const guest =
+        results.guest === true ||
+        results.claimUrl !== undefined ||
+        results.guestSiteUrl !== undefined ||
+        results.buildPageUrl !== undefined;
+    const guestFlag = guest ? " --guest" : "";
     console.log(chalk.bold("\nNext steps\n"));
     if (results.organization !== undefined) {
         const dashboard = dashboardUrl(results.organization);
@@ -132,27 +144,48 @@ export function printNextSteps(
     }
     if (results.publishedUrl !== undefined) {
         console.log(`  ${Icons.success} Your docs are live at ${chalk.cyan(results.publishedUrl)}`);
+    } else if (results.guestSiteUrl !== undefined) {
+        console.log(
+            `  ${Icons.success} Your docs are up at ${chalk.cyan(results.guestSiteUrl)} ${chalk.dim("(temporary, until you claim)")}`
+        );
     } else if (results.previewUrl !== undefined) {
         console.log(`  ${Icons.success} Preview: ${chalk.cyan(results.previewUrl)}`);
     }
     for (const output of results.generated ?? []) {
         console.log(`  ${Icons.success} ${output.label}: ${chalk.cyan(output.path)}`);
     }
+    if (results.buildPageUrl !== undefined) {
+        console.log(
+            `  ${Icons.success} SDK build page ${chalk.dim("(kept 7 days)")}: ${chalk.cyan(results.buildPageUrl)}`
+        );
+    }
+    if (results.claimUrl !== undefined) {
+        console.log(
+            `  ${Icons.info} Claim this work to keep it and move it into your Fern organization: ${chalk.cyan(results.claimUrl)}`
+        );
+        console.log(
+            `      ${chalk.dim(`${results.claimExpires === undefined ? "The guest session expires in a few hours" : `The guest session expires ${results.claimExpires}`}. From the CLI: fern login, then fern claim --org <organization>.`)}`
+        );
+    }
     if (products.includes("docs")) {
         console.log(`  ${Icons.info} Edit your docs locally: fern docs dev`);
-        if (results.publishedUrl === undefined) {
+        if (results.publishedUrl === undefined && results.guestSiteUrl === undefined) {
             console.log(
-                `  ${Icons.info} Publish${results.docsUrl === undefined ? "" : ` to ${results.docsUrl}`}: fern generate --docs`
+                `  ${Icons.info} Publish${results.docsUrl === undefined || guest ? "" : ` to ${results.docsUrl}`}: fern generate --docs${guestFlag}`
             );
         }
     }
     const generatedProducts = generatedProductsLabel(products);
     if (generatedProducts !== undefined) {
         console.log(
-            `  ${Icons.info} ${(results.generated ?? []).length > 0 ? "Regenerate" : "Generate"} ${generatedProducts}: fern generate`
+            `  ${Icons.info} ${(results.generated ?? []).length > 0 ? "Regenerate" : "Generate"} ${generatedProducts}: fern generate${guestFlag}`
         );
     }
-    if (results.organization === undefined) {
+    if (guest && results.claimUrl === undefined) {
+        console.log(
+            `  ${Icons.info} A guest run prints a claim link; claiming moves its docs and SDKs into your Fern organization.`
+        );
+    } else if (results.organization === undefined && !guest) {
         console.log(`  ${Icons.info} Dashboard: ${dashboardUrl(undefined)}`);
     }
 }
